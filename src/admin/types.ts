@@ -761,3 +761,25 @@ export interface PerfCaptureStatus {
   endsAt: number | null; // epoch ms the in-flight capture closes
   last: PerfCaptureResult | null;
 }
+
+// One open gold conservation finding (server/economy_admin.ts). `detail` is the
+// reconciler's own operator-facing English sentence, rendered as data.
+export interface EconomyAlertRow {
+  id: number;
+  realm: string;
+  kind: string;
+  severity: 'critical' | 'warning' | 'info';
+  characterId: number | null;
+  delta: number;
+  detail: string;
+  acknowledgedAt: string | null;
+  createdAt: string;
+}
+
+export interface EconomyAlertsData {
+  rows: EconomyAlertRow[];
+  // Served by the endpoint rather than derived client-side: this is the number
+  // an operator triages on, and counting a truncated page would under-report
+  // exactly when the queue is deepest.
+  criticals: number;
+}

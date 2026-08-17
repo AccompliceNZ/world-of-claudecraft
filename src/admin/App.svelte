@@ -34,6 +34,7 @@
   import ChatFilter from './pages/ChatFilter.svelte';
   import BlockedIps from './pages/BlockedIps.svelte';
   import BugReports from './pages/BugReports.svelte';
+  import EconomyAlerts from './pages/EconomyAlerts.svelte';
   import UnstuckReports from './pages/UnstuckReports.svelte';
   import IpAssociations from './pages/IpAssociations.svelte';
   import Staff from './pages/Staff.svelte';
@@ -58,6 +59,7 @@
     'antibot-config': AntibotConfig,
     'shared-ips': SharedIps,
     'chat-filter': ChatFilter,
+    'economy-alerts': EconomyAlerts,
     'blocked-ips': BlockedIps,
     'bug-reports': BugReports,
     'unstuck-reports': UnstuckReports,

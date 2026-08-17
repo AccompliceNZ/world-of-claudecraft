@@ -20,6 +20,7 @@ export type AdminPage =
   | 'antibot-config'
   | 'shared-ips'
   | 'chat-filter'
+  | 'economy-alerts'
   | 'blocked-ips'
   | 'bug-reports'
   | 'unstuck-reports'
@@ -76,6 +77,10 @@ export const NAV_SECTIONS: readonly AdminNavSection[] = [
       { id: 'shared-ips', labelKey: 'nav.sharedIps', permission: 'moderation.read' },
       { id: 'blocked-ips', labelKey: 'nav.blockedIps', permission: 'moderation.read' },
       { id: 'chat-filter', labelKey: 'nav.chatFilter', permission: 'moderation.read' },
+      // The gold conservation queue. economy.read, not moderation.read: a
+      // finding names a character the ledger cannot explain, an anti-abuse
+      // internal the server gates separately (admin_routes.ts).
+      { id: 'economy-alerts', labelKey: 'nav.economyAlerts', permission: 'economy.read' },
     ],
   },
   {
