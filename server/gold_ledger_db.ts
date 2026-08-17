@@ -165,22 +165,6 @@ export async function insertGoldLedgerBatch(rows: readonly GoldLedgerInsert[]): 
 }
 
 /**
- * Insert ONE ledger row on a caller-supplied client, for the paths where the
- * money mutation already rides a Postgres transaction (market, mail, guild
- * bank). Writing the row on the same client makes it commit or roll back WITH
- * the balance change it explains, which is the whole point: a ledger row that
- * survives a rolled-back transfer is worse than no row, because the
- * reconciler would then report a violation that never happened.
- */
-export async function insertGoldLedgerRowInTx(
-  client: { query: (sql: string, params: unknown[]) => Promise<{ rows: { id: string }[] }> },
-  row: GoldLedgerInsert,
-): Promise<number> {
-  const res = await client.query(buildBatchInsertSql(1), rowParams(row));
-  return Number(res.rows[0]?.id ?? 0);
-}
-
-/**
  * The current chain head (highest id) per character, for the characters named.
  * The writer seeds its in-process chain map from this on first write after a
  * boot, so a restart continues the chain instead of restarting it at NULL and
