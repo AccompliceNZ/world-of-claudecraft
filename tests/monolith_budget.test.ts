@@ -81,6 +81,11 @@ const MONOLITHS: MonolithRow[] = [
     // Down 2487 -> 2475 at the desktop-signing round: the WocMarketHooks
     // contract moved to src/ui/woc_market_hooks.ts (wiring, window, and the
     // trade arm all consume it), paying for the signer-reference plumbing.
+    // Held at 2475 through the Browse scroll/filter fix: the scroll-keeper
+    // keying moved to the view core (WocMarketScrollKeys and friends) and the
+    // dropdown-hold heuristic landed as its own module
+    // (src/ui/native_select_hold.ts), together paying exactly for the hold
+    // wiring, the wallet re-arm, and the scroll-after-focus ordering.
     ceiling: 2475,
     seam: 'a pure view-core module beside it (src/ui/woc_market_view.ts) that this window renders from',
   },

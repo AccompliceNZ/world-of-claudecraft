@@ -796,6 +796,87 @@ describe('WocMarketWindow live rig: tabs, rebuild, focus and scroll', () => {
     expect(ranges).toContainEqual([1, 1]);
   });
 
+  it('holds rebuilds only while a filter dropdown may be open, and resumes on the pick', async () => {
+    // The report behind this: the Browse filters kept closing before anything
+    // could be clicked. A native select exposes no open state, so the
+    // interaction watch is the proxy (mousedown on the select arms it), ANDed
+    // with focus; the pick disarms it, so countdowns resume immediately even
+    // though a picked select KEEPS focus.
+    const r = rig();
+    r.win.open();
+    await flush();
+    // Land a data change so the digest genuinely moves: the poll fetch is
+    // kicked while nothing is armed and settles into state.
+    r.fake.answers.browse = async () => ({
+      ok: true,
+      hasMore: false,
+      page: 0,
+      listings: [listing(1, { currentBidCents: 7777, minNextBidCents: 7877 })],
+    });
+    r.win.refreshIfChanged();
+    await flush();
+    // The SORT select, deliberately: a filter pick marks the view filtered,
+    // which the background poll excludes by design, so the resume half below
+    // would be untestable through a filter.
+    const sel = q<HTMLSelectElement>(r.root, 'select[data-field="sort"]');
+    sel.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    sel.focus();
+    expect(document.activeElement).toBe(sel);
+    // The digest has moved, but the hold is on: the same ELEMENT stays in
+    // the DOM (a rebuild would have replaced it and closed its dropdown).
+    r.win.refreshIfChanged();
+    await flush();
+    expect(q<HTMLSelectElement>(r.root, 'select[data-field="sort"]')).toBe(sel);
+    // The pick: a change event both repaints THROUGH the user path (the
+    // sort handler reloads, with the select still focused, as real browsers
+    // always fire change) and releases the hold.
+    sel.value = 'price_asc';
+    sel.dispatchEvent(new Event('change', { bubbles: true }));
+    await flush();
+    const rebuilt = q<HTMLSelectElement>(r.root, 'select[data-field="sort"]');
+    expect(rebuilt).not.toBe(sel);
+    // Background rebuilds are live again even though the fresh select holds
+    // focus (the focus restore put it back): only the armed hold waits.
+    expect(document.activeElement).toBe(rebuilt);
+    r.fake.answers.browse = async () => ({
+      ok: true,
+      hasMore: false,
+      page: 0,
+      listings: [listing(1, { currentBidCents: 8888, minNextBidCents: 8988 })],
+    });
+    // Step past the background poll's own cadence throttle (a real slow-band
+    // gap) so the re-ask fires now instead of minutes from now.
+    (r.win as unknown as { pollStartedMs: number }).pollStartedMs = 0;
+    r.win.refreshIfChanged();
+    await flush();
+    r.win.refreshIfChanged();
+    await flush();
+    expect(q<HTMLSelectElement>(r.root, 'select[data-field="sort"]')).not.toBe(rebuilt);
+  });
+
+  it('a wallet beat skipped under the hold repaints on the first unheld tick', async () => {
+    // onWalletChanged is event-driven with no retry of its own, so the skip
+    // arms walletRepaintDue and the poll repaints even though the data digest
+    // never moved (without the flag the card would sit stale on a quiet page).
+    const r = rig();
+    r.win.open();
+    await flush();
+    const sel = q<HTMLSelectElement>(r.root, 'select[data-field="filter-quality"]');
+    sel.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    sel.focus();
+    setWalletUiEnabled(true);
+    setWalletConnectionAddresses('9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin', null);
+    r.win.onWalletChanged();
+    await flush();
+    // Held: same element, no rebuild.
+    expect(q<HTMLSelectElement>(r.root, 'select[data-field="filter-quality"]')).toBe(sel);
+    // Released without any data change: the due flag alone repaints.
+    sel.blur();
+    r.win.refreshIfChanged();
+    await flush();
+    expect(q<HTMLSelectElement>(r.root, 'select[data-field="filter-quality"]')).not.toBe(sel);
+  });
+
   it('keeps the detail pane scroll on the same listing and resets it on another', async () => {
     const r = rig({
       rows: [listing(1), listing(2, { itemId: EPIC_TWO, item: { itemId: EPIC_TWO, count: 1 } })],
