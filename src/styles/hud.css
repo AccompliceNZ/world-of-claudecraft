@@ -3097,7 +3097,6 @@
     border-radius: 7px;
   }
 
-
   /* ---------- aura tracks ---------- */
   /* Six bars of the auras YOU have out (src/ui/hud/aura_tracks/), one movable,
      resizable frame per question. One row vocabulary across all six: the fill
@@ -3123,12 +3122,30 @@
   /* Default seats, stacked down the left rail and paired across from it. A
      player moves them; these only decide where an opted-in track first appears,
      and none of them sits under the action bars or the minimap. */
-  #aura-track-defensives { left: 18px; top: 30%; }
-  #aura-track-self { left: 18px; top: 44%; }
-  #aura-track-power { left: 18px; top: 58%; }
-  #aura-track-utility { left: 268px; top: 30%; }
-  #aura-track-friendly { left: 268px; top: 44%; }
-  #aura-track-shields { left: 268px; top: 62%; }
+  #aura-track-defensives {
+    left: 18px;
+    top: 30%;
+  }
+  #aura-track-self {
+    left: 18px;
+    top: 44%;
+  }
+  #aura-track-power {
+    left: 18px;
+    top: 58%;
+  }
+  #aura-track-utility {
+    left: 268px;
+    top: 30%;
+  }
+  #aura-track-friendly {
+    left: 268px;
+    top: 44%;
+  }
+  #aura-track-shields {
+    left: 268px;
+    top: 62%;
+  }
 
   .at-row {
     display: flex;
@@ -3166,20 +3183,44 @@
     width: 100%;
     background: var(--at-fill, var(--color-buff));
   }
-  #aura-track-defensives { --at-fill: #b0563c; }
-  #aura-track-self { --at-fill: #3f7fa8; }
-  #aura-track-power { --at-fill: #a2478c; }
-  #aura-track-utility { --at-fill: #6a7f9e; }
-  #aura-track-friendly { --at-fill: #2e8b57; }
-  #aura-track-shields { --at-fill: #c8a24a; }
+  #aura-track-defensives {
+    --at-fill: #b0563c;
+  }
+  #aura-track-self {
+    --at-fill: #3f7fa8;
+  }
+  #aura-track-power {
+    --at-fill: #a2478c;
+  }
+  #aura-track-utility {
+    --at-fill: #6a7f9e;
+  }
+  #aura-track-friendly {
+    --at-fill: #2e8b57;
+  }
+  #aura-track-shields {
+    --at-fill: #c8a24a;
+  }
   /* A debuff school still tints where one applies, so a school reads the same
      here as on the aura strips. */
-  .at-fill[data-school="fire"] { background: var(--color-debuff-fire); }
-  .at-fill[data-school="frost"] { background: var(--color-debuff-frost); }
-  .at-fill[data-school="arcane"] { background: var(--color-debuff-arcane); }
-  .at-fill[data-school="shadow"] { background: var(--color-debuff-shadow); }
-  .at-fill[data-school="nature"] { background: var(--color-debuff-nature); }
-  .at-fill[data-school="holy"] { background: var(--color-debuff-holy); }
+  .at-fill[data-school="fire"] {
+    background: var(--color-debuff-fire);
+  }
+  .at-fill[data-school="frost"] {
+    background: var(--color-debuff-frost);
+  }
+  .at-fill[data-school="arcane"] {
+    background: var(--color-debuff-arcane);
+  }
+  .at-fill[data-school="shadow"] {
+    background: var(--color-debuff-shadow);
+  }
+  .at-fill[data-school="nature"] {
+    background: var(--color-debuff-nature);
+  }
+  .at-fill[data-school="holy"] {
+    background: var(--color-debuff-holy);
+  }
   .at-label {
     position: relative;
     display: block;
@@ -3234,8 +3275,13 @@
   }
   /* A MODE has no timer, so nothing in its row may look like it is draining:
      the bar sits full and dim and the readout is a steady chip. */
-  .at-mode-row .at-bar { background: rgba(8, 8, 12, 0.6); }
-  .at-mode-row .at-fill { width: 100% !important; opacity: 0.34; }
+  .at-mode-row .at-bar {
+    background: rgba(8, 8, 12, 0.6);
+  }
+  .at-mode-row .at-fill {
+    width: 100% !important;
+    opacity: 0.34;
+  }
   .at-mode-row .at-time {
     font: 700 9px var(--body-font);
     letter-spacing: 0.09em;
@@ -3244,10 +3290,17 @@
   }
   /* Final seconds: the same cue and the same reduced-motion fallback the aura
      strips use, so one aura never blinks on one surface and not the other. */
-  .at-row.at-expiring .at-time { color: #ffcf40; }
-  .at-row.at-expiring .at-fill { animation: aura-expire-blink 0.8s ease-in-out infinite; }
+  .at-row.at-expiring .at-time {
+    color: #ffcf40;
+  }
+  .at-row.at-expiring .at-fill {
+    animation: aura-expire-blink 0.8s ease-in-out infinite;
+  }
   @media (prefers-reduced-motion: reduce) {
-    .at-row.at-expiring .at-fill { animation: none; filter: brightness(1.4); }
+    .at-row.at-expiring .at-fill {
+      animation: none;
+      filter: brightness(1.4);
+    }
   }
   .at-overflow {
     padding-left: 21px;
