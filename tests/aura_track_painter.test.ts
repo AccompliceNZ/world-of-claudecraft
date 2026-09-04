@@ -122,7 +122,6 @@ const row = (over: Partial<AuraTrackRow> = {}): AuraTrackRow => ({
   auraName: 'Aura',
   unitName: '',
   iconKey: 'icon',
-  school: '',
   remaining: 12,
   fraction: 0.5,
   decimals: 0,
@@ -215,14 +214,25 @@ describe('aura track painter: what it paints', () => {
     expect(text(0, '.at-label')).toBe('Renew on Bob');
   });
 
-  it('fills the bar by the row fraction and tints by school', () => {
+  it('fills the bar by the row fraction', () => {
     const { painter, rows } = harness();
-    painter.update(state([row({ fraction: 0.333, school: 'frost' })]));
-    const fill = rows()[0].querySelector<HTMLElement>('.at-fill');
-    expect(fill?.style.width).toBe('33.3%');
-    expect(fill?.getAttribute('data-school')).toBe('frost');
-    painter.update(state([row({ fraction: 1, school: '' })]));
-    expect(rows()[0].querySelector('.at-fill')?.getAttribute('data-school')).toBeNull();
+    painter.update(state([row({ fraction: 0.333 })]));
+    expect(rows()[0].querySelector<HTMLElement>('.at-fill')?.style.width).toBe('33.3%');
+    painter.update(state([row({ fraction: 1 })]));
+    expect(rows()[0].querySelector<HTMLElement>('.at-fill')?.style.width).toBe('100%');
+  });
+
+  it('never tints a row by spell school, so the track colour is the only one', () => {
+    // The enemy-dot family tints by school and is right to: there, school IS the
+    // question. Here the colour has to say WHICH TRACK a row is in, and a school
+    // tint silently wins over it: every druid spell is nature, so a druid saw six
+    // identical green bars and the whole point of splitting them was invisible.
+    // Caught by looking at the first capture, not by a test, which is why this one
+    // exists.
+    const { painter, rows } = harness();
+    painter.update(state([row({ fraction: 0.5 })]));
+    expect(rows()[0].querySelector('.at-fill')?.hasAttribute('data-school')).toBe(false);
+    expect(source).not.toContain('data-school');
   });
 
   it('shows stacks only when the core sent some', () => {

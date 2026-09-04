@@ -3201,26 +3201,6 @@
   #aura-track-shields {
     --at-fill: #c8a24a;
   }
-  /* A debuff school still tints where one applies, so a school reads the same
-     here as on the aura strips. */
-  .at-fill[data-school="fire"] {
-    background: var(--color-debuff-fire);
-  }
-  .at-fill[data-school="frost"] {
-    background: var(--color-debuff-frost);
-  }
-  .at-fill[data-school="arcane"] {
-    background: var(--color-debuff-arcane);
-  }
-  .at-fill[data-school="shadow"] {
-    background: var(--color-debuff-shadow);
-  }
-  .at-fill[data-school="nature"] {
-    background: var(--color-debuff-nature);
-  }
-  .at-fill[data-school="holy"] {
-    background: var(--color-debuff-holy);
-  }
   .at-label {
     position: relative;
     display: block;

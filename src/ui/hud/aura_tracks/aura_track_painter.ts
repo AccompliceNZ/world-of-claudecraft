@@ -30,7 +30,6 @@ const ROW_CLASS = 'at-row';
 const MODE_CLASS = 'at-mode-row';
 const POINTS_CLASS = 'at-points-row';
 const EXPIRING_CLASS = 'at-expiring';
-const SCHOOL_ATTR = 'data-school';
 const HIDDEN = 'none';
 const SHOWN = '';
 const SHOWN_FLEX = 'flex';
@@ -151,7 +150,6 @@ export class AuraTrackPainter {
       if (els.label === '') els.label = this.deps.rowLabel(model.auraName, model.unitName);
       w.setText(els.labelEl, els.label);
       w.setWidth(els.fill, `${Math.round(model.fraction * 1000) / 10}%`);
-      w.setAttr(els.fill, SCHOOL_ATTR, model.school || null);
       w.toggleClass(els.row, MODE_CLASS, model.mode);
       w.toggleClass(els.row, EXPIRING_CLASS, model.expiring);
 

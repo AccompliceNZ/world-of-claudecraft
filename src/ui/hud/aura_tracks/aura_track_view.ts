@@ -43,7 +43,6 @@ export interface AuraTrackAuraInput {
    *  same (id, kind) pair the aura strips give them, rather than the core
    *  keeping a second list of what counts as a toggle. */
   kind?: string;
-  school?: string;
   stacks?: number;
   /** An absorb's REMAINING SHIELD POINTS (sim types.ts: "absorb: remaining"),
    *  which is what a points row fills by. Meaningless on other kinds. */
@@ -69,7 +68,6 @@ export interface AuraTrackRow {
    *  wastes no width repeating your own name). */
   unitName: string;
   iconKey: string;
-  school: string;
   remaining: number;
   /** Fraction the bar fills by: time remaining for a timer row, POINTS
    *  remaining for a points row, always 1 for a mode. */
@@ -128,7 +126,6 @@ function newRow(): AuraTrackRow {
     auraName: '',
     unitName: '',
     iconKey: '',
-    school: '',
     remaining: 0,
     fraction: 1,
     decimals: 0,
@@ -203,7 +200,6 @@ export function createAuraTrackView<TEntity extends AuraTrackEntityInput>(
       row.auraName = deps.auraName(aura);
       row.unitName = onSelf ? '' : deps.unitName(entity);
       row.iconKey = deps.iconKey(aura);
-      row.school = aura.school ?? '';
       row.remaining = Math.max(0, aura.remaining);
       row.stacks = aura.stacks !== undefined && aura.stacks > 1 ? aura.stacks : 0;
       row.mode = mode;

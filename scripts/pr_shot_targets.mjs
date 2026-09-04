@@ -2021,6 +2021,146 @@ export const TARGETS = [
     },
   },
   {
+    key: 'aura-tracks',
+    label: 'Aura tracks: the six bars of the buffs you have out, and their Combat toggles',
+    // Output lands in docs/screenshots/aura-tracks/, the subtree the ci.yml
+    // sparse-checkout cone carries; this entry is what references it.
+    when: ['ui/hud/aura_tracks', 'hud/aura_tracks'],
+    // TWO CLASSES, because between them they cover all three row shapes and the
+    // druid alone does not. The druid fills the timer tracks and the one MODE row
+    // (Travel Form, a toggle drawn with no countdown); the priest is the only way
+    // to see a POINTS row, since an absorb bar drains with damage rather than
+    // with the clock. The default warrior knows none of these.
+    //
+    // Every spell below is castable in caster form: an earlier cut reached for
+    // Dash and Tigers Fury, which are cat-form only, and shot two empty frames.
+    variants: [
+      // The frames on both layouts (the mobile seat is its own stylesheet rule,
+      // so it is a real second surface rather than a resize), then the options
+      // rows that turn them on, which is where a player meets the feature at all
+      // given every track ships off.
+      { key: 'frames-desktop', shot: 'frames', charClass: 'druid', charName: 'Morphalo' },
+      {
+        key: 'frames-mobile',
+        shot: 'frames',
+        mobile: true,
+        charClass: 'druid',
+        charName: 'Morphalo',
+      },
+      { key: 'shields-desktop', shot: 'frames', charClass: 'priest', charName: 'Elowen' },
+      { key: 'options-desktop', shot: 'options' },
+      { key: 'options-mobile', shot: 'options', mobile: true },
+    ],
+    async capture(page, variant) {
+      // Turn every track on through the SETTINGS STORE the option rows write, not
+      // by poking the frames: what is being shot has to be the state a player can
+      // actually reach, and all six ship off.
+      await page.evaluate(() => {
+        const settings = window.__game?.hud?.optionsHooks?.settings;
+        if (!settings) return;
+        for (const key of [
+          'showDefensivesTrack',
+          'showSelfBuffTrack',
+          'showOffensiveTrack',
+          'showUtilityTrack',
+          'showFriendlyTrack',
+          'showShieldTrack',
+        ]) {
+          settings.set(key, true);
+        }
+      });
+      if (variant.shot === 'options') {
+        await openInterfaceCombatTab(page);
+        return { clip: '#options-menu' };
+      }
+      // The shared entry flow's overlays (the loading veil, the intro cards).
+      // The Proving Shore greeter's own dialog and the first-login deed banner
+      // outlive it and are deliberately LEFT ALONE: both sit centre-right while
+      // the tracks seat down the left rail, so they obstruct nothing, and every
+      // way of forcing them (a style write, clicking the confirm, teleporting off
+      // the beach) either does not hold for a frame or puts the camera in the sea.
+      await dismissEntryOverlays(page);
+      // Cast real abilities rather than injecting auras: a tracker shot whose rows
+      // came from a harness write proves the painter and nothing else, and the
+      // whole claim of this change is that the SIM's auras reach the right track.
+      await page.evaluate(() => {
+        const game = window.__game;
+        const sim = game?.sim;
+        const player = sim?.player;
+        if (!sim || !player) return;
+        sim.setPlayerLevel?.(30, player.id);
+        player.resource = player.maxResource;
+        if (
+          ![...sim.entities.values()].some(
+            (e) => e.friendlyPracticeTarget || e.name === 'Healing Dummy',
+          )
+        ) {
+          sim.spawnHealerPracticeDummy?.();
+        }
+      });
+      await wait(600);
+      // The level bump above grants the ranks; every spell here is learned well
+      // under the cap. The GCD is cleared between casts because the recipe stages
+      // a STATE rather than simulating a rotation, and the resource is topped up
+      // for the same reason.
+      const staged = await page.evaluate((cls) => {
+        const game = window.__game;
+        const sim = game?.sim;
+        const player = sim?.player;
+        if (!sim || !player) return { ok: false, reason: 'offline world is unavailable' };
+        const ally = [...sim.entities.values()].find(
+          (e) => e.friendlyPracticeTarget || e.name === 'Healing Dummy',
+        );
+        const cast = (id) => {
+          player.gcdRemaining = 0;
+          player.resource = player.maxResource;
+          sim.castAbility?.(id, player.id);
+        };
+        if (cls === 'priest') {
+          // An absorb (the points row), a HoT, and an output window on the ally.
+          cast('power_word_shield');
+          cast('renew');
+          if (ally) {
+            sim.targetEntity?.(ally.id, player.id);
+            cast('power_infusion');
+          }
+        } else {
+          // A long-cooldown guard, a self HoT, a toggle (the MODE row), and a
+          // heal on someone else: one spell into each of four different frames.
+          cast('barkskin');
+          cast('rejuvenation');
+          cast('travel_form');
+          if (ally) {
+            sim.targetEntity?.(ally.id, player.id);
+            cast('regrowth');
+          }
+        }
+        return { ok: true, allyId: ally?.id ?? 0 };
+      }, variant.charClass);
+      if (!staged.ok) throw new Error(staged.reason);
+      // Prove the rows exist before shooting. An empty track renders as a HIDDEN
+      // frame, so a capture that staged nothing looks exactly like a clean HUD:
+      // without this the rig would happily ship a screenshot as evidence of a
+      // feature that never appeared in it, which is what the first cut did.
+      await page.waitForFunction(
+        () =>
+          [
+            '#aura-track-defensives',
+            '#aura-track-self',
+            '#aura-track-power',
+            '#aura-track-utility',
+            '#aura-track-friendly',
+            '#aura-track-shields',
+          ].filter((sel) => {
+            const el = document.querySelector(sel);
+            return el && getComputedStyle(el).display !== 'none';
+          }).length >= 2,
+        { timeout: 20000, polling: 250 },
+      );
+      return { clip: '#ui' };
+    },
+  },
+  {
     key: 'interface-unlock-option',
     label: 'Interface options, Combat tab: the Unlock interface row',
     when: ['ui/interface_unlock', 'ui/options_window', 'ui/options_view'],
