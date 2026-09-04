@@ -68,6 +68,23 @@ export class AuraTrackFamily<TEntity extends AuraTrackEntityInput> {
     enabled: true,
     includeModes: true,
   };
+  /**
+   * The allies of THIS tick, collected once into a reused array.
+   *
+   * THIS IS NOT AN OPTIMIZATION, it is the fix for a real defect. The Hud hands
+   * in `sim.entities.values()`, which is an ITERATOR, and an iterator is spent
+   * after one pass. Handing the same one to six tracks in a loop meant the first
+   * track drained it and the other five saw an empty world: every ally row in
+   * the game was invisible, and only the tracks that read the player at all
+   * showed anything. Nothing failed, which is why it survived until a screenshot
+   * of a priest healing a dummy came back with two auras on the target and not
+   * one row anywhere.
+   *
+   * Collecting once also keeps the per-frame cost honest: the array is reused,
+   * so a steady frame allocates nothing, and the six tracks walk a real array
+   * rather than re-running the world's iterator six times.
+   */
+  private readonly allyScratch: TEntity[] = [];
 
   constructor(deps: AuraTrackHostDeps<TEntity>) {
     this.tracks = composeAuraTracks(deps);
@@ -85,7 +102,9 @@ export class AuraTrackFamily<TEntity extends AuraTrackEntityInput> {
     includeModes: boolean,
   ): void {
     this.input.player = player;
-    this.input.allies = allies;
+    this.allyScratch.length = 0;
+    for (const ally of allies) this.allyScratch.push(ally);
+    this.input.allies = this.allyScratch;
     this.input.includeModes = includeModes;
     for (const track of this.tracks) {
       this.input.enabled = enabled(track.descriptor.settingKey);
