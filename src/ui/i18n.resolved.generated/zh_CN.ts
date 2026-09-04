@@ -1307,6 +1307,18 @@ export const zh_CN: EnTranslations = {
       "separate": "分离{meter}",
       "regroup": "合并{meter}"
     },
+    "auraTracks": {
+      "defensives": "防御性冷却",
+      "self": "我的增益",
+      "power": "攻击性冷却",
+      "utility": "移动与潜行",
+      "friendly": "我给队友的增益",
+      "shields": "我的护盾",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "还有{count}项未显示"
+    },
     "targetAuras": {
       "title": "目标光环",
       "keybindLabel": "目标增益和减益效果",
@@ -1598,6 +1610,13 @@ export const zh_CN: EnTranslations = {
       "showTargetOfTarget": "显示目标的目标",
       "showTargetSwingTimer": "显示目标的挥击计时器",
       "showPetFrame": "显示你的宠物",
+      "showDefensivesTrack": "显示防御性冷却",
+      "showSelfBuffTrack": "显示我的增益",
+      "showOffensiveTrack": "显示攻击性冷却",
+      "showUtilityTrack": "显示移动与潜行",
+      "showUtilityModes": "包含潜行与旅行形态",
+      "showFriendlyTrack": "显示我给队友的增益",
+      "showShieldTrack": "显示我的护盾",
       "waterRipples": "水面涟漪（尾波）",
       "showAttackButton": "显示攻击按钮",
       "showDailyRewardsChest": "显示每日奖励宝箱",

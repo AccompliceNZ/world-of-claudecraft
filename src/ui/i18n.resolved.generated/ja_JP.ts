@@ -1307,6 +1307,18 @@ export const ja_JP: EnTranslations = {
       "separate": "{meter}を分離",
       "regroup": "{meter}を統合"
     },
+    "auraTracks": {
+      "defensives": "防御クールダウン",
+      "self": "自分のバフ",
+      "power": "攻撃クールダウン",
+      "utility": "移動とステルス",
+      "friendly": "味方へのバフ",
+      "shields": "自分のシールド",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "他{count}件は非表示"
+    },
     "targetAuras": {
       "title": "ターゲットのオーラ",
       "keybindLabel": "ターゲットのバフとデバフ",
@@ -1598,6 +1610,13 @@ export const ja_JP: EnTranslations = {
       "showTargetOfTarget": "ターゲットのターゲットを表示",
       "showTargetSwingTimer": "ターゲットの攻撃タイマーを表示",
       "showPetFrame": "自分のペットを表示",
+      "showDefensivesTrack": "防御クールダウンを表示",
+      "showSelfBuffTrack": "自分のバフを表示",
+      "showOffensiveTrack": "攻撃クールダウンを表示",
+      "showUtilityTrack": "移動とステルスを表示",
+      "showUtilityModes": "ステルスと移動形態を含める",
+      "showFriendlyTrack": "味方へのバフを表示",
+      "showShieldTrack": "自分のシールドを表示",
       "waterRipples": "水面の波紋（航跡）",
       "showAttackButton": "攻撃ボタンを表示",
       "showDailyRewardsChest": "デイリー報酬の宝箱を表示",

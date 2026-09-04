@@ -1307,6 +1307,18 @@ export const da_DK: EnTranslations = {
       "separate": "Adskil {meter}",
       "regroup": "Saml {meter} igen"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Målets auraer",
       "keybindLabel": "Målets forstærkninger og svækkelser",
@@ -1598,6 +1610,13 @@ export const da_DK: EnTranslations = {
       "showTargetOfTarget": "Vis målets mål",
       "showTargetSwingTimer": "Vis målets svingtimer",
       "showPetFrame": "Vis dit kæledyr",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Vandkrusninger (kølvand)",
       "showAttackButton": "Vis angrebsknap",
       "showDailyRewardsChest": "Vis kisten med daglige belønninger",

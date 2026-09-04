@@ -1307,6 +1307,18 @@ export const pt_BR: EnTranslations = {
       "separate": "Separar {meter}",
       "regroup": "Reagrupar {meter}"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Auras do alvo",
       "keybindLabel": "Benefícios e penalidades do alvo",
@@ -1598,6 +1610,13 @@ export const pt_BR: EnTranslations = {
       "showTargetOfTarget": "Mostrar Alvo do Alvo",
       "showTargetSwingTimer": "Mostrar temporizador de ataque do alvo",
       "showPetFrame": "Mostrar seu mascote",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Ondulações na água (esteiras)",
       "showAttackButton": "Exibir Botão de Ataque",
       "showDailyRewardsChest": "Mostrar Baú de Recompensas Diárias",

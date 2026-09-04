@@ -387,6 +387,22 @@ export const BOOL_SETTINGS = {
   // decluttering crowded hubs on short mobile viewports. Purely a local display
   // preference; mob nameplates and unit frames are unaffected.
   showPlayerNameplates: { def: true },
+  // The six aura tracks (src/ui/hud/aura_tracks/): bars listing the player's OWN
+  // beneficial auras, one frame per question. ALL OFF BY DEFAULT and opted into
+  // individually: six frames on at once would put roughly twenty rows on screen
+  // for a healer in a raid, on a first login, for a player who asked for none of
+  // it. The options panel is the discovery surface. None is graphics-tier gated:
+  // these are timers a player acts on, so the setting is the only switch.
+  showDefensivesTrack: { def: false },
+  showSelfBuffTrack: { def: false },
+  showOffensiveTrack: { def: false },
+  showUtilityTrack: { def: false },
+  showFriendlyTrack: { def: false },
+  showShieldTrack: { def: false },
+  // Sub-options, live only while their track is on: the utility modes (stealth,
+  // travel form, Shadewolf) are steady chips rather than timers, so a player who
+  // wants Dash timed may not want a permanent stealth row parked in the bar.
+  showUtilityModes: { def: true },
   // off by default: invert the vertical axis of mouselook (push mouse forward
   // to look down), the classic flight-sim preference.
   invertLookY: { def: false },

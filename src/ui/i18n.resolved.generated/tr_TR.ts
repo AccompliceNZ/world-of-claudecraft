@@ -1307,6 +1307,18 @@ export const tr_TR: EnTranslations = {
       "separate": "Ayır: {meter}",
       "regroup": "Yeniden grupla: {meter}"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Hedef Auraları",
       "keybindLabel": "Hedefin Takviyeleri ve Zayıflatmaları",
@@ -1598,6 +1610,13 @@ export const tr_TR: EnTranslations = {
       "showTargetOfTarget": "Hedefin Hedefini Göster",
       "showTargetSwingTimer": "Hedefin savurma zamanlayıcısını göster",
       "showPetFrame": "Yoldaşını Göster",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Su Dalgacıkları (İz Dalgaları)",
       "showAttackButton": "Saldırı Düğmesini Göster",
       "showDailyRewardsChest": "Günlük Ödül Sandığını Göster",

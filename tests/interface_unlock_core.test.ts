@@ -3,6 +3,7 @@
 // swap, and the eligibility rule that decides which frames a flip may loosen.
 // DOM-free by construction, so this drives the real module directly.
 import { describe, expect, it } from 'vitest';
+import { AURA_TRACKS } from '../src/ui/hud/aura_tracks';
 import {
   framesToLock,
   HUD_FRAME_SPECS,
@@ -33,6 +34,13 @@ describe('HUD_FRAME_SPECS', () => {
       'xpBar',
       'buffBar',
       'debuffBar',
+      // The six aura tracks, appended by generating one spec per descriptor.
+      'auraTrack_defensives',
+      'auraTrack_self',
+      'auraTrack_power',
+      'auraTrack_utility',
+      'auraTrack_friendly',
+      'auraTrack_shields',
     ]);
     expect(HUD_FRAME_SPECS.map((s) => s.elementId)).toEqual([
       'actionbar',
@@ -49,6 +57,12 @@ describe('HUD_FRAME_SPECS', () => {
       'xpbar',
       'buff-bar',
       'debuff-bar',
+      'aura-track-defensives',
+      'aura-track-self',
+      'aura-track-power',
+      'aura-track-utility',
+      'aura-track-friendly',
+      'aura-track-shields',
     ]);
     // A duplicated storage key would make two frames overwrite each other's
     // saved box, which is silent and only shows up after a reload.
@@ -72,6 +86,12 @@ describe('HUD_FRAME_SPECS', () => {
       'woc_hud_frame_xpbar',
       'woc_hud_frame_buffbar',
       'woc_hud_frame_debuffbar',
+      'woc_hud_frame_track_defensives',
+      'woc_hud_frame_track_self',
+      'woc_hud_frame_track_power',
+      'woc_hud_frame_track_utility',
+      'woc_hud_frame_track_friendly',
+      'woc_hud_frame_track_shields',
     ]);
   });
 
@@ -99,7 +119,12 @@ describe('HUD_FRAME_SPECS', () => {
     // Everything else is fixed content (46px slots, a minimap canvas, a
     // portrait), where stretching one axis only grew empty space.
     const box = HUD_FRAME_SPECS.filter((s) => s.resizeMode === 'box').map((s) => s.id);
-    expect(box).toEqual(['buffBar', 'debuffBar']);
+    // The six aura tracks reflow too: a wider frame is a longer bar and more
+    // room for a spell name before it ellipses, so a side drag is a real
+    // layout width rather than a zoom. Generated from the descriptor table, so
+    // this list is the proof the generator kept the mode.
+    expect(box).toEqual(['buffBar', 'debuffBar', ...AURA_TRACKS.map((t) => `auraTrack_${t.id}`)]);
+    expect(box).toHaveLength(8);
   });
 
   it('names every frame with a label key so no placeholder is anonymous', () => {

@@ -1307,6 +1307,18 @@ export const sv_SE: EnTranslations = {
       "separate": "Separera {meter}",
       "regroup": "Gruppera {meter} igen"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Målets auror",
       "keybindLabel": "Målets buffar och debuffar",
@@ -1598,6 +1610,13 @@ export const sv_SE: EnTranslations = {
       "showTargetOfTarget": "Visa målets mål",
       "showTargetSwingTimer": "Visa målets svingtimer",
       "showPetFrame": "Visa ditt djur",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Vattenkrusningar (kölvatten)",
       "showAttackButton": "Visa attackknapp",
       "showDailyRewardsChest": "Visa kistan för dagliga belöningar",

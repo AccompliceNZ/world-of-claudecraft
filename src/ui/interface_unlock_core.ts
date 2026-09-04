@@ -50,6 +50,8 @@ export interface HudFrameSpec {
  * same toggle at the wiring site, so they are deliberately NOT rows here: their
  * storage keys and labels already live in frame_pos_reset.ts.
  */
+import { AURA_TRACKS } from './hud/aura_tracks';
+
 export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
   {
     id: 'actionBar1',
@@ -181,7 +183,25 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
     detachToUiRoot: true,
     resizeMode: 'box',
   },
-] as const;
+  // The six aura tracks (src/ui/hud/aura_tracks/). Generated from the descriptor
+  // table rather than written out six times: the table already names each
+  // track's element, storage key and label, and a seventh track should not mean
+  // a seventh row here. All REFLOW (a wider frame is a longer bar and more room
+  // for a name before it ellipses), so their side edges resize the real box, the
+  // same choice the two aura rows above make. Already #ui children, so none
+  // detaches.
+  ...AURA_TRACKS.map(
+    (track): HudFrameSpec => ({
+      id: `auraTrack_${track.id}`,
+      elementId: track.elementId,
+      storageKey: track.storageKey,
+      labelKey: track.labelKey,
+      fallbackSize: { w: 236, h: 120 },
+      detachToUiRoot: false,
+      resizeMode: 'box',
+    }),
+  ),
+];
 
 /** Every storage key the option owns, so a reset can clear the whole set. */
 export const HUD_FRAME_STORAGE_KEYS: readonly string[] = HUD_FRAME_SPECS.map((s) => s.storageKey);

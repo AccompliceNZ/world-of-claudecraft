@@ -1307,6 +1307,18 @@ export const id_ID: EnTranslations = {
       "separate": "Pisahkan {meter}",
       "regroup": "Gabungkan kembali {meter}"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Aura Target",
       "keybindLabel": "Buff dan Debuff Target",
@@ -1598,6 +1610,13 @@ export const id_ID: EnTranslations = {
       "showTargetOfTarget": "Tampilkan Sasaran dari Sasaran",
       "showTargetSwingTimer": "Tampilkan pengatur waktu ayunan target",
       "showPetFrame": "Tampilkan Peliharaan Anda",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Riak Air (Ombak Jejak)",
       "showAttackButton": "Tampilkan Tombol Serang",
       "showDailyRewardsChest": "Tampilkan Peti Hadiah Harian",

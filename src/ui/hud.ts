@@ -8,6 +8,7 @@ import { InstanceMusicController, type InstanceMusicDecision } from '../game/ins
 import { type Keybinds, keyCapLabel, keyLabel } from '../game/keybinds';
 import { music } from '../game/music';
 import {
+  type BoolSettingKey,
   type GameSettings,
   type NumericSettingKey,
   SETTING_RANGES,
@@ -49,6 +50,7 @@ import {
   normalizeStreamerLink,
   type StreamerLinks,
 } from '../sim/account_flair';
+import { isOwnAura } from '../sim/aura_classify';
 import { bagPools } from '../sim/bags';
 import { resolveActionReplacement } from '../sim/combat/action_replacement';
 import { resolveColdsightAbilityForSpec } from '../sim/combat/hunter_coldsight';
@@ -165,7 +167,12 @@ import { resolveHudAuraIconId, resolveHudAuraIconUrl } from './aura_icon_runtime
 import { AuraOverlayController } from './aura_overlay_controller';
 import { renderAuraTooltipBodyHtml } from './aura_tooltip';
 import { AurasPainter, type AurasPainterDeps } from './auras_painter';
-import { type AurasDeps, auraCancelNeedsConfirm, createAurasView } from './auras_view';
+import {
+  type AurasDeps,
+  auraCancelNeedsConfirm,
+  createAurasView,
+  isToggleAura,
+} from './auras_view';
 import { attachAvatarFallback } from './avatar_fallback';
 import { BagItemActionMenu, CTX_MENU_PICKER_CLASS } from './bag_item_action_menu';
 import { bagSlotsLineKey, bagsWindowShown } from './bags_view';
@@ -461,6 +468,7 @@ import { buildMobileActionRing } from './hud/action_bar/mobile_action_ring_contr
 import type { MobileActionRingPainter } from './hud/action_bar/mobile_action_ring_painter';
 import { playerStealthed } from './hud/action_bar/player_stealthed';
 import { RADIAL_DIRECTIONS, type RadialDirection } from './hud/action_bar/radial_action_core';
+import { AuraTrackFamily, auraTrackForFrameId } from './hud/aura_tracks';
 import {
   BattlegroundKillFeed,
   BattlegroundMapPainter,
@@ -778,6 +786,7 @@ import { mountStorePromoCard, type StorePromoCardController } from './store_prom
 import { recordStoreStackSample } from './store_stack_diag';
 import { nearestSubzone } from './subzone';
 import { SwingTimerBars } from './swing_timer_bars';
+import { localizeSystemText } from './system_text_i18n';
 import { TalentsWindow } from './talents_window';
 import { targetAuraSourceName } from './target_auras_view';
 import { TargetAurasWindow } from './target_auras_window';
@@ -4038,6 +4047,11 @@ export class Hud {
     if (id === 'petFrame') return isPetClass(this.sim.cfg.playerClass);
     // The stance-style choice bar exists only for the two classes that get one
     // (warrior stances, paladin auras), mirroring renderStanceBar's own gate.
+    // An aura track answers "possible", not "visible": every class has some
+    // trackable aura, so unlocking shows its placeholder even though the frame
+    // itself hides whenever the track is empty. Its own setting is the only gate.
+    const auraTrack = auraTrackForFrameId(id);
+    if (auraTrack) return this.boolSetting(auraTrack.settingKey);
     if (id === 'stanceBar') {
       const cls = this.sim.cfg.playerClass;
       return cls === 'warrior' || cls === 'paladin';
@@ -5019,6 +5033,39 @@ export class Hud {
     document,
     () => this.fxTier(),
   );
+  // The six aura tracks (src/ui/hud/aura_tracks/), composed by their own module
+  // from the descriptor table. All the Hud owes them is the host facts a pure
+  // core must not resolve for itself: the ownership predicate and the toggle
+  // classifier it already shares with the aura strips, the naming, the artwork,
+  // and the localization.
+  /** A boolean Interface setting, or `fallback` before the options panel has
+   *  wired its hooks. Shared by the aura tracks, which read seven of them on the
+   *  per-frame path and in the unlock-eligibility check. */
+  private boolSetting(key: string, fallback = false): boolean {
+    return (this.optionsHooks?.settings.get(key as BoolSettingKey) ?? fallback) === true;
+  }
+  private readonly auraTracks = new AuraTrackFamily<Entity>({
+    isOwn: (a) => isOwnAura(a, this.sim.playerId),
+    isMode: (a) => isToggleAura(a.id, (a.kind ?? '') as AuraKind),
+    auraName: (a) =>
+      auraDisplayNameForHud(a.name, ABILITIES[a.id] ? abilityDisplayName(ABILITIES[a.id]) : null),
+    unitName: (e) => entityDisplayName(e),
+    iconKey: (a) => resolveHudAuraIconId({ id: a.id, kind: a.kind ?? '' }),
+    iconBackground: resolveHudAuraIconUrl,
+    writers: this.writerFacet,
+    container: (elementId) => $(`#${elementId}`),
+    rowLabel: (aura, unit) =>
+      unit
+        ? t('hudChrome.auraTracks.row', { aura, unit })
+        : t('hudChrome.auraTracks.selfRow', { aura }),
+    frameLabel: (track) => t(track.labelKey),
+    overflowLabel: (count) =>
+      t('hudChrome.auraTracks.overflow', {
+        count: formatNumber(count, { maximumFractionDigits: 0 }),
+      }),
+    secondsSuffix: () => t('hudChrome.unitFrame.durationUnitSeconds'),
+    modeLabel: () => t('hudChrome.auraTracks.mode'),
+  });
   private readonly targetDebuffsPainter = new AurasPainter(
     this.writerFacet,
     this.targetDebuffsEl,
@@ -6902,6 +6949,7 @@ export class Hud {
   }
 
   private refreshLocalizedDynamicUi(): void {
+    this.auraTracks.relocalize();
     this.doomMeter.relocalize();
     // The chat box's geometry chrome (move/resize labels, the arrange-mode
     // name chip) is written once at init, so the switch must rewrite it.
@@ -9087,6 +9135,16 @@ export class Hud {
     // paint call for why).
     this.buffBarPainter.paint(this.buffBarView.tick(p));
     this.debuffBarPainter.paint(this.debuffBarView.tick(p));
+
+    // The aura tracks: the auras the LOCAL player has out, one frame per
+    // question. Same band as the aura strips above, since their countdowns are
+    // what a refresh is timed against, and never tier-gated for the same reason.
+    this.auraTracks.tick(
+      p,
+      sim.entities.values(),
+      (key) => this.boolSetting(key),
+      this.boolSetting('showUtilityModes', true),
+    );
 
     // target frame: the SECOND instance of the unit_frame family. The shared
     // frame (display/name/level/hp/absorb/portrait gate) goes through the family
@@ -13636,7 +13694,7 @@ export class Hud {
           break;
         }
         case 'log': {
-          const text = this.localizeSystemText(this.bankWindow.observeStorageText(ev.text));
+          const text = localizeSystemText(this.bankWindow.observeStorageText(ev.text));
           // Route mob/boss combat-flavor chatter to the Combat Log tab instead of
           // General/Chat (see log_event_route.ts): pid-scoped personal narrative and
           // entityId-anchored actionable mechanic telegraphs both stay in General/Chat,
@@ -14584,130 +14642,6 @@ export class Hud {
 
   private localizeErrorText(text: string): string {
     return localizeErrorTextCore(text, this.errorTextDeps);
-  }
-
-  private localizeSystemText(text: string): string {
-    const exact: Record<string, TranslationKey> = {
-      'You stand up.': 'hud.logs.standUp',
-      'Your party has disbanded.': 'hud.logs.partyDisbanded',
-      'The duel has begun!': 'hud.logs.duelBegun',
-      'The duel has ended.': 'hud.logs.duelEnded',
-      'You join the Ashen Coliseum queue. Stand by for a worthy opponent...': 'hud.logs.arenaJoin',
-      'You join the Ashen Coliseum queue. Stand by for a worthy opponent…': 'hud.logs.arenaJoin',
-      'You leave the Ashen Coliseum queue.': 'hud.logs.arenaLeave',
-      'You step onto the sands of the Ashen Coliseum.': 'hud.logs.arenaSands',
-      'You step onto the flooded stones of the Drowned Court.': 'hud.logs.arenaSandsDrowned',
-      'Fight!': 'hud.system.arenaStart',
-      'Trade window opened.': 'hud.logs.tradeOpened',
-      'Trade complete.': 'hud.logs.tradeComplete',
-      'Trade cancelled.': 'hud.logs.tradeCancelled',
-      'Trade window closed.': 'hudChrome.trade.windowClosed',
-      'Loot method set to Group Loot.': 'hudChrome.masterLoot.methodGroup',
-      'Loot Settings: Group Loot.': 'hudChrome.masterLoot.summaryGroup',
-    };
-    const key = exact[text];
-    if (key) return t(key);
-    for (const dungeon of DUNGEON_LIST) {
-      if (text === dungeon.enterText) return dungeonText(dungeon.id, 'enterText');
-      if (text === dungeon.leaveText) return dungeonText(dungeon.id, 'leaveText');
-    }
-    for (const delve of DELVE_LIST) {
-      if (text === delve.enterText) return delveText(delve.id, 'enterText');
-      if (text === delve.leaveText) return delveText(delve.id, 'leaveText');
-    }
-
-    let match = /^Loot method set to Master Loot\. Master Looter: (.+)\.$/.exec(text);
-    if (match) return t('hudChrome.masterLoot.methodMaster', { name: match[1] });
-    match = /^Master Looter is now (.+)\.$/.exec(text);
-    if (match) return t('hudChrome.masterLoot.looterChanged', { name: match[1] });
-    match = /^Loot threshold set to (uncommon|rare|epic)\.$/.exec(text);
-    if (match)
-      return t('hudChrome.masterLoot.thresholdSet', {
-        threshold: t(
-          `hudChrome.masterLoot.threshold${match[1][0].toUpperCase()}${match[1].slice(1)}` as TranslationKey,
-        ),
-      });
-    match =
-      /^Loot Settings: Master Loot, Master Looter (.+), threshold (uncommon|rare|epic)\.$/.exec(
-        text,
-      );
-    if (match)
-      return t('hudChrome.masterLoot.summaryMaster', {
-        name: match[1],
-        threshold: t(
-          `hudChrome.masterLoot.threshold${match[2][0].toUpperCase()}${match[2].slice(1)}` as TranslationKey,
-        ),
-      });
-    match = /^You have invited (.+) to your party\.$/.exec(text);
-    if (match) return t('hud.logs.partyInviteSent', { name: match[1] });
-    match = /^(.+) joins the party\.$/.exec(text);
-    if (match) return t('hud.logs.partyJoin', { name: match[1] });
-    match = /^(.+) declines your invitation\.$/.exec(text);
-    if (match) return t('hud.logs.partyDecline', { name: match[1] });
-    match = /^(.+) is now the party leader\.$/.exec(text);
-    if (match) return t('hud.logs.partyLeader', { name: match[1] });
-    match = /^You have challenged (.+) to a duel\.$/.exec(text);
-    if (match) return t('hud.logs.duelChallengeSent', { name: match[1] });
-    match = /^(.+) declines your challenge\.$/.exec(text);
-    if (match) return t('hud.logs.duelDecline', { name: match[1] });
-    match = /^You have requested to trade with (.+)\.$/.exec(text);
-    if (match) return t('hud.logs.tradeRequestSent', { name: match[1] });
-    match = /^(.+) has come online\.$/.exec(text);
-    if (match) return t('hud.logs.friendOnline', { name: match[1] });
-    match = /^(.+) has gone offline\.$/.exec(text);
-    if (match) return t('hud.logs.friendOffline', { name: match[1] });
-    match = /^Quest accepted: (.+)$/.exec(text);
-    if (match)
-      return t('questUi.logs.accepted', {
-        name: questTitleFromSource(match[1]),
-      });
-    match = /^Quest abandoned: (.+)$/.exec(text);
-    if (match)
-      return t('questUi.logs.abandoned', {
-        name: questTitleFromSource(match[1]),
-      });
-    match = /^Quest completed: (.+)$/.exec(text);
-    if (match)
-      return t('questUi.logs.completed', {
-        name: questTitleFromSource(match[1]),
-      });
-    match = /^(.+) accepted your shared quest\.$/.exec(text);
-    if (match) return t('hudChrome.questShare.accepted', { name: match[1] });
-    match = /^(.+) \(Complete\)$/.exec(text);
-    if (match)
-      return t('questUi.logs.ready', {
-        name: questTitleFromSource(match[1]),
-        status: t('questUi.log.readyStatus'),
-      });
-    match = /^Your market listing of (.+) expired and waits at the Merchant\.$/.exec(text);
-    if (match)
-      return t('itemUi.logs.expiredListing', {
-        item: itemDisplayNameFromSource(match[1]),
-      });
-    // The dungeon party-size warning is emitted as a 'log' event (sim.ts), so it must be
-    // matched on this path, not in localizeLootText.
-    match = /^(.+) is meant for a full party of (\d+)\. Tread carefully\.$/.exec(text);
-    if (match) {
-      return t('worldContent.dungeonPartyWarning', {
-        name: dungeonDisplayNameFromSource(match[1]),
-        count: formatNumber(Number(match[2]), { maximumFractionDigits: 0 }),
-      });
-    }
-    match = /^(\d+) daily rewards points gained\.$/.exec(text);
-    if (match)
-      return t('hudChrome.dailyRewards.pointsGained', {
-        points: formatNumber(Number(match[1]), { maximumFractionDigits: 0 }),
-      });
-    // Server-sent friends/guild/who/world messages arrive as 'log' events; fall
-    // back to the shared server-message localizer (same as localizeErrorText /
-    // localizeLootText) so they are not displayed in raw English.
-    const server = localizeServerText(text);
-    if (server !== null) return server;
-    // Sim-emitted log/error/loot text (src/sim) is English at the source; localize it
-    // here, the same way server-sent text is handled above.
-    const simLocalized = localizeSimText(text);
-    if (simLocalized !== null) return simLocalized;
-    return text;
   }
 
   private localizeLootText(text: string): string {

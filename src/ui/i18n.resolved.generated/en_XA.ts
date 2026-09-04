@@ -1307,6 +1307,18 @@ export const en_XA: EnTranslations = {
       "separate": "[Šéþáŕáţé {meter}]",
       "regroup": "[Ŕéĝŕóúþ {meter}]"
     },
+    "auraTracks": {
+      "defensives": "[Ðéƒéñšíʋé Çóóļðóŵñš]",
+      "self": "[Ɱý Ɓúƒƒš]",
+      "power": "[Óƒƒéñšíʋé Çóóļðóŵñš]",
+      "utility": "[Ɱóʋéɱéñţ áñð Šţéáļţĥ]",
+      "friendly": "[Ɱý Ɓúƒƒš óñ Áļļíéš]",
+      "shields": "[Ɱý Šĥíéļðš]",
+      "row": "[{aura} óñ {unit}]",
+      "selfRow": "[{aura}]",
+      "mode": "[óñ]",
+      "overflow": "[{count} ɱóŕé ñóţ šĥóŵñ]"
+    },
     "targetAuras": {
       "title": "[Ţáŕĝéţ Áúŕáš]",
       "keybindLabel": "[Ţáŕĝéţ Ɓúƒƒš áñð Ðéƀúƒƒš]",
@@ -1598,6 +1610,13 @@ export const en_XA: EnTranslations = {
       "showTargetOfTarget": "[Šĥóŵ Ţáŕĝéţ óƒ Ţáŕĝéţ]",
       "showTargetSwingTimer": "[Šĥóŵ Ţáŕĝéţ Šŵíñĝ Ţíɱéŕ]",
       "showPetFrame": "[Šĥóŵ Ýóúŕ Þéţ]",
+      "showDefensivesTrack": "[Šĥóŵ Ðéƒéñšíʋé Çóóļðóŵñš]",
+      "showSelfBuffTrack": "[Šĥóŵ Ɱý Ɓúƒƒš]",
+      "showOffensiveTrack": "[Šĥóŵ Óƒƒéñšíʋé Çóóļðóŵñš]",
+      "showUtilityTrack": "[Šĥóŵ Ɱóʋéɱéñţ áñð Šţéáļţĥ]",
+      "showUtilityModes": "[Íñçļúðé Šţéáļţĥ áñð Ţŕáʋéļ Ɱóðéš]",
+      "showFriendlyTrack": "[Šĥóŵ Ɱý Ɓúƒƒš óñ Áļļíéš]",
+      "showShieldTrack": "[Šĥóŵ Ɱý Šĥíéļðš]",
       "waterRipples": "[Ŵáţéŕ Ŕíþþļéš (Ŵáķéš)]",
       "showAttackButton": "[Šĥóŵ Áţţáçķ Ɓúţţóñ]",
       "showDailyRewardsChest": "[Šĥóŵ Ðáíļý Ŕéŵáŕðš Çĥéšţ]",

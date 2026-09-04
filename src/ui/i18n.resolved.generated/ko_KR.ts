@@ -1307,6 +1307,18 @@ export const ko_KR: EnTranslations = {
       "separate": "{meter} 분리",
       "regroup": "{meter} 통합"
     },
+    "auraTracks": {
+      "defensives": "방어 재사용 대기시간",
+      "self": "내 버프",
+      "power": "공격 재사용 대기시간",
+      "utility": "이동 및 은신",
+      "friendly": "아군에게 건 내 버프",
+      "shields": "내 보호막",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count}개 더 표시되지 않음"
+    },
     "targetAuras": {
       "title": "대상 오라",
       "keybindLabel": "대상 강화 및 약화 효과",
@@ -1598,6 +1610,13 @@ export const ko_KR: EnTranslations = {
       "showTargetOfTarget": "대상의 대상 표시",
       "showTargetSwingTimer": "대상의 공격 타이머 표시",
       "showPetFrame": "내 펫 표시",
+      "showDefensivesTrack": "방어 재사용 대기시간 표시",
+      "showSelfBuffTrack": "내 버프 표시",
+      "showOffensiveTrack": "공격 재사용 대기시간 표시",
+      "showUtilityTrack": "이동 및 은신 표시",
+      "showUtilityModes": "은신 및 이동 형태 포함",
+      "showFriendlyTrack": "아군에게 건 내 버프 표시",
+      "showShieldTrack": "내 보호막 표시",
       "waterRipples": "수면 물결 (물살)",
       "showAttackButton": "공격 버튼 표시",
       "showDailyRewardsChest": "일일 보상 보물상자 표시",

@@ -89,6 +89,15 @@ const NEVER_SHED_IDS: ReadonlySet<string> = new Set([CARRIED_FLAG_AURA_ID]);
 // buff, not a toggle, so it must show its remaining time like any other buff.
 const TIMED_IDS: ReadonlySet<string> = new Set(['greater_invisibility']);
 
+/** Whether this aura reads as a MODE rather than a timed effect: a toggle you
+ *  cast again to cancel, which the sim backs with a long finite duration purely
+ *  so nothing can expire it. Exported because the aura TRACKS ask the same
+ *  question and a second list of toggles would drift from this one. */
+export function isToggleAura(id: string, kind: AuraKind): boolean {
+  if (TIMED_IDS.has(id)) return false;
+  return TOGGLE_KINDS.has(kind) || TOGGLE_IDS.has(id) || isPersistentEngineAura(id);
+}
+
 /** Whether cancelling this aura performs a GAMEPLAY action rather than merely
  *  dropping a buff, so a touch host must confirm it before it fires. Today that
  *  is exactly the carried-flag buff: on a touch device the cancel gesture is a

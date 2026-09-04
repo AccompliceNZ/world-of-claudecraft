@@ -562,6 +562,12 @@ const HOT_PAINTERS: ReadonlyArray<ScannedPainter> = [
   { file: 'hud/quest/quest_strip_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'hud/cross_hotbar/cross_hotbar_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'hud/warlock/doom_meter_painter.ts', allow: {}, reflowAllow: {} },
+  // The one painter behind all six aura tracks. Its skeleton (a fixed pool of
+  // AURA_TRACK_ROW_CAP rows plus the overflow line) is built in ONE constructor
+  // innerHTML write and never touched again: every refresh, including the two
+  // accessible-name attributes, routes through the elided facet, which is what
+  // lets six instances share the per-frame band the aura strips run on.
+  { file: 'hud/aura_tracks/aura_track_painter.ts', allow: { '.innerHTML': 1 }, reflowAllow: {} },
   { file: 'party_frames_painter.ts', allow: {}, reflowAllow: {} },
   // party_below_target measures the target frame, its #tf-debuffs strip, the
   // party container, and (on mobile) the rows wrapper + move zone (five rect

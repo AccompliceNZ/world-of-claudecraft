@@ -1307,6 +1307,18 @@ export const vi_VN: EnTranslations = {
       "separate": "Tách {meter}",
       "regroup": "Ghép lại {meter}"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Hào Quang Mục Tiêu",
       "keybindLabel": "Buff và Debuff Mục Tiêu",
@@ -1598,6 +1610,13 @@ export const vi_VN: EnTranslations = {
       "showTargetOfTarget": "Hiện Mục Tiêu Của Mục Tiêu",
       "showTargetSwingTimer": "Hiển thị bộ đếm vung đòn của mục tiêu",
       "showPetFrame": "Hiện Thú Cưng Của Bạn",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Gợn nước (sóng rẽ nước)",
       "showAttackButton": "Hiển Thị Nút Tấn Công",
       "showDailyRewardsChest": "Hiện Rương Phần Thưởng Hằng Ngày",

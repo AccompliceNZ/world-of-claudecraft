@@ -146,11 +146,12 @@ const ALLOW_V07_SLASH: ReadonlySet<string> = new Set<string>(
 const RELEASE_TIER = process.env.I18N_RELEASE_TIER === '1';
 
 // The three client-side matchers that re-localize the English src/sim and server
-// emit. They no longer share one file: localizeErrorText was extracted to its own
-// registered pure core (src/ui/error_text_i18n_core.ts) when hud.ts hit its
-// monolith ceiling, while localizeSystemText and localizeLootText are still Hud
-// methods. Every source-text guard below anchors on this table rather than
-// assuming hud.ts, so the next extraction is a one-line move here.
+// emit. They no longer share one file: localizeErrorText and now localizeSystemText
+// were each extracted to their own module when hud.ts hit its monolith ceiling,
+// while localizeLootText is still a Hud method (it reaches this.localizeSimMoney,
+// so it cannot move until that does). Every source-text guard below anchors on
+// this table rather than assuming hud.ts, which is what made each extraction a
+// one-line move here.
 const MATCHER_ARMS = [
   {
     fn: 'localizeErrorText',
@@ -159,8 +160,8 @@ const MATCHER_ARMS = [
   },
   {
     fn: 'localizeSystemText',
-    file: 'src/ui/hud.ts',
-    signature: 'private localizeSystemText(text: string): string {',
+    file: 'src/ui/system_text_i18n.ts',
+    signature: 'export function localizeSystemText(text: string): string {',
   },
   {
     fn: 'localizeLootText',

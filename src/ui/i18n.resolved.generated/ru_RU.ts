@@ -1307,6 +1307,18 @@ export const ru_RU: EnTranslations = {
       "separate": "Отделить: {meter}",
       "regroup": "Вернуть: {meter}"
     },
+    "auraTracks": {
+      "defensives": "Защитные умения",
+      "self": "Мои эффекты",
+      "power": "Атакующие умения",
+      "utility": "Движение и скрытность",
+      "friendly": "Мои эффекты на союзниках",
+      "shields": "Мои щиты",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "Ещё {count} не показано"
+    },
     "targetAuras": {
       "title": "Ауры цели",
       "keybindLabel": "Усиления и ослабления цели",
@@ -1598,6 +1610,13 @@ export const ru_RU: EnTranslations = {
       "showTargetOfTarget": "Показывать цель цели",
       "showTargetSwingTimer": "Показывать таймер замаха цели",
       "showPetFrame": "Показывать вашего питомца",
+      "showDefensivesTrack": "Показывать защитные умения",
+      "showSelfBuffTrack": "Показывать мои эффекты",
+      "showOffensiveTrack": "Показывать атакующие умения",
+      "showUtilityTrack": "Показывать движение и скрытность",
+      "showUtilityModes": "Включать скрытность и формы передвижения",
+      "showFriendlyTrack": "Показывать мои эффекты на союзниках",
+      "showShieldTrack": "Показывать мои щиты",
       "waterRipples": "Рябь на воде (кильватер)",
       "showAttackButton": "Показывать кнопку атаки",
       "showDailyRewardsChest": "Показывать сундук ежедневных наград",

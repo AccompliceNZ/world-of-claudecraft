@@ -1307,6 +1307,18 @@ export const en: EnTranslations = {
       "separate": "Separate {meter}",
       "regroup": "Regroup {meter}"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Target Auras",
       "keybindLabel": "Target Buffs and Debuffs",
@@ -1598,6 +1610,13 @@ export const en: EnTranslations = {
       "showTargetOfTarget": "Show Target of Target",
       "showTargetSwingTimer": "Show Target Swing Timer",
       "showPetFrame": "Show Your Pet",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Water Ripples (Wakes)",
       "showAttackButton": "Show Attack Button",
       "showDailyRewardsChest": "Show Daily Rewards Chest",

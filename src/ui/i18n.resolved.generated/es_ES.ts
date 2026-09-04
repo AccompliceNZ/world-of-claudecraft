@@ -1307,6 +1307,18 @@ export const es_ES: EnTranslations = {
       "separate": "Separar {meter}",
       "regroup": "Reagrupar {meter}"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Auras del objetivo",
       "keybindLabel": "Beneficios y perjuicios del objetivo",
@@ -1598,6 +1610,13 @@ export const es_ES: EnTranslations = {
       "showTargetOfTarget": "Mostrar objetivo del objetivo",
       "showTargetSwingTimer": "Mostrar temporizador de golpe del objetivo",
       "showPetFrame": "Mostrar tu mascota",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Ondas en el agua (estelas)",
       "showAttackButton": "Mostrar boton de ataque",
       "showDailyRewardsChest": "Mostrar cofre de recompensas diarias",

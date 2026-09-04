@@ -1307,6 +1307,18 @@ export const pl_PL: EnTranslations = {
       "separate": "Odłącz {meter}",
       "regroup": "Zgrupuj {meter} ponownie"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Aury celu",
       "keybindLabel": "Wzmocnienia i osłabienia celu",
@@ -1598,6 +1610,13 @@ export const pl_PL: EnTranslations = {
       "showTargetOfTarget": "Pokaż cel celu",
       "showTargetSwingTimer": "Pokaż licznik zamachu celu",
       "showPetFrame": "Pokaż swoje zwierzę",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Zmarszczki na wodzie (kilwater)",
       "showAttackButton": "Pokaż Przycisk Ataku",
       "showDailyRewardsChest": "Pokaż skrzynię codziennych nagród",

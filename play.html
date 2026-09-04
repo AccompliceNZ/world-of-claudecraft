@@ -234,6 +234,17 @@
     <div id="buff-bar"></div>
     <div id="debuff-bar"></div>
 
+    <!-- Aura tracks: the player's own beneficial auras, one movable frame per
+         question (see src/ui/hud/aura_tracks/). Each painter builds its rows and
+         sets role/aria-label; each stays display:none while its track is empty
+         or its setting is off. -->
+    <div id="aura-track-defensives"></div>
+    <div id="aura-track-self"></div>
+    <div id="aura-track-power"></div>
+    <div id="aura-track-utility"></div>
+    <div id="aura-track-friendly"></div>
+    <div id="aura-track-shields"></div>
+
     <div id="ctx-menu" class="panel"></div>
     <div id="prompt-stack"></div>
     <div id="trade-window" class="window panel"></div>

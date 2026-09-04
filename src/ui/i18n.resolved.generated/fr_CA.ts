@@ -1307,6 +1307,18 @@ export const fr_CA: EnTranslations = {
       "separate": "Séparer {meter}",
       "regroup": "Regrouper {meter}"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Auras de la cible",
       "keybindLabel": "Améliorations et affaiblissements de la cible",
@@ -1598,6 +1610,13 @@ export const fr_CA: EnTranslations = {
       "showTargetOfTarget": "Afficher la cible de la cible",
       "showTargetSwingTimer": "Afficher le minuteur d'attaque de la cible",
       "showPetFrame": "Afficher votre familier",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Ondulations de l'eau (sillages)",
       "showAttackButton": "Afficher le bouton d'attaque",
       "showDailyRewardsChest": "Afficher le coffre des récompenses quotidiennes",

@@ -3585,6 +3585,61 @@
     top: calc(max(140px, env(safe-area-inset-top)) + 36px);
     max-width: calc(180px * var(--mobile-chrome-scale, 1));
   }
+  /* The six aura tracks. All six are off by default, so a phone only ever sees
+     the ones its owner opted into, but a track that IS on has to fit a narrow
+     screen: the frame narrows, the rows lose a little height, and the seats
+     stack down the left rail clear of the action ring on the right. A player
+     moves them from there like any other frame. */
+  body.mobile-touch #aura-track-defensives,
+  body.mobile-touch #aura-track-self,
+  body.mobile-touch #aura-track-power,
+  body.mobile-touch #aura-track-utility,
+  body.mobile-touch #aura-track-friendly,
+  body.mobile-touch #aura-track-shields {
+    left: max(8px, env(safe-area-inset-left));
+    width: calc(190px * var(--mobile-chrome-scale, 1));
+    max-width: 52vw;
+  }
+  body.mobile-touch #aura-track-defensives {
+    top: max(150px, calc(env(safe-area-inset-top) + 90px));
+  }
+  body.mobile-touch #aura-track-self {
+    top: calc(max(150px, calc(env(safe-area-inset-top) + 90px)) + 92px);
+  }
+  body.mobile-touch #aura-track-power {
+    top: calc(max(150px, calc(env(safe-area-inset-top) + 90px)) + 184px);
+  }
+  body.mobile-touch #aura-track-utility {
+    top: calc(max(150px, calc(env(safe-area-inset-top) + 90px)) + 276px);
+  }
+  body.mobile-touch #aura-track-friendly {
+    top: calc(max(150px, calc(env(safe-area-inset-top) + 90px)) + 368px);
+  }
+  body.mobile-touch #aura-track-shields {
+    top: calc(max(150px, calc(env(safe-area-inset-top) + 90px)) + 460px);
+  }
+  /* A shorter row and a smaller readout: the countdown still has to be legible
+     at arm's length, so the type shrinks less than the box does. */
+  body.mobile-touch .at-row {
+    height: 18px;
+  }
+  body.mobile-touch .at-icon,
+  body.mobile-touch .at-bar {
+    height: 16px;
+  }
+  body.mobile-touch .at-icon {
+    width: 16px;
+  }
+  body.mobile-touch .at-label {
+    font: 600 10px / 16px var(--body-font);
+  }
+  body.mobile-touch .at-time,
+  body.mobile-touch .at-points {
+    font-size: 10px;
+  }
+  body.mobile-touch .at-points {
+    min-width: 36px;
+  }
   body.mobile-touch #minimap-wrap {
     right: max(20px, calc(env(safe-area-inset-right) + 10px));
     top: max(8px, env(safe-area-inset-top));

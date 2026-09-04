@@ -503,6 +503,13 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     why: 'the SELF debuff row: never tier-gated (your own debuffs are the ACTIONABLE read, docs/design/graphics-settings-fairness.md), so it paints every frame on every graphics preset, same as the target debuffs strip',
   },
   {
+    call: 'this.auraTracks.tick',
+    band: 'frame',
+    gate: '',
+    surface: 'chrome',
+    why: 'the six aura tracks (src/ui/hud/aura_tracks/), ONE call, because AuraTrackFamily owns the loop over the descriptor table and the reused per-frame input, which is why a seventh track adds no row here. Same band and same rule as the two aura rows above: these are countdowns a refresh is timed against, so they are never tier-gated. Each track is driven UNCONDITIONALLY and its core answers with an empty state when the setting is off, which keeps the enabled check in one place instead of six gates on this path',
+  },
+  {
     call: 'this.targetReannounce.mark',
     band: 'frame',
     gate: "target && target.kind !== 'object' && target.id !== this.lastAnnouncedTargetId",
@@ -1680,7 +1687,7 @@ describe('Hud.update() drives exactly the registered set, on the registered band
       // window 44 -> 46: the crucible vendor's out-of-range close (the third
       // #vendor-window tenant, on the heroic vendor's exact row shape).
       // Both deltas apply on the merged tree.
-    ).toEqual({ window: 46, chrome: 84, none: 17 });
+    ).toEqual({ window: 46, chrome: 85, none: 17 });
     const windows = HUD_UPDATE_DRIVES.filter((r) => r.surface === 'window');
     expect(windows.map((r) => r.call)).toContain('this.spellbookWindow.tickOpen');
     expect(windows.map((r) => r.call)).toContain('this.refreshOpenTownFocusIfChanged');
