@@ -221,6 +221,46 @@ describe('chat channels', () => {
     expect(msgs[0].text).toBe('anyone for crypt');
   });
 
+  it('the /all and /gen aliases reach the General channel, like /general', () => {
+    const sim = makeWorld();
+    const a = sim.addPlayer('warrior', 'Aleph');
+    const far = sim.addPlayer('mage', 'Bet');
+    teleport(sim, a, 0, -40);
+    teleport(sim, far, 0, -900);
+    sim.tick();
+
+    expect(sim.chat('/all anyone for crypt', a)).toEqual({
+      channel: 'general',
+      message: 'anyone for crypt',
+    });
+    const allMsgs = chatEvents(sim.tick());
+    expect(allMsgs).toHaveLength(1);
+    expect(allMsgs[0].channel).toBe('general');
+    expect(allMsgs[0].pid).toBeUndefined(); // no pid = routed to everyone
+
+    expect(sim.chat('/gen still looking', a)).toEqual({
+      channel: 'general',
+      message: 'still looking',
+    });
+    const genMsgs = chatEvents(sim.tick());
+    expect(genMsgs).toHaveLength(1);
+    expect(genMsgs[0].channel).toBe('general');
+    expect(genMsgs[0].text).toBe('still looking');
+  });
+
+  it('/help lists the /all and /gen aliases beside /general', () => {
+    const sim = makeWorld();
+    const a = sim.addPlayer('warrior', 'Aleph');
+    sim.tick();
+    sim.chat('/help', a);
+    const lines = sim.tick().flatMap((e) => (e.type === 'error' && e.pid === a ? [e.text] : []));
+    const channels = lines.find((text) => /^Chat channels:/.test(text));
+    expect(channels).toBeDefined();
+    expect(channels).toContain('/general');
+    expect(channels).toContain('/all');
+    expect(channels).toContain('/gen');
+  });
+
   it('unknown slash commands error instead of being said out loud', () => {
     const sim = makeWorld();
     const a = sim.addPlayer('warrior', 'Aleph');

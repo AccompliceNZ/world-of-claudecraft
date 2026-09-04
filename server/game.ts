@@ -1728,7 +1728,7 @@ function chatChannelHint(session: ClientSession, text: string): string {
   if (/^\/(?:w|whisper|t|tell|r|reply)\s/i.test(text)) return 'whisper';
   if (/^\/(?:y|yell)\s/i.test(text)) return 'yell';
   if (/^\/(?:p|party)\s/i.test(text)) return 'party';
-  if (/^\/(?:general|world)\s/i.test(text)) return 'general';
+  if (/^\/(?:general|all|gen|world)\s/i.test(text)) return 'general';
   if (/^\/(?:s|say)\s/i.test(text)) return 'say';
   return session.rememberedChat.channel;
 }

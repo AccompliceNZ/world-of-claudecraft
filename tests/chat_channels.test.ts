@@ -387,6 +387,8 @@ describe('chat channel tabs — pure model', () => {
   it('sentLineChannel maps the /1 shortcut to General (but never /g, which is guild online)', () => {
     expect(sentLineChannel('/1 hey everyone')).toBe('general');
     expect(sentLineChannel('/general hey everyone')).toBe('general');
+    expect(sentLineChannel('/all hey everyone')).toBe('general');
+    expect(sentLineChannel('/gen hey everyone')).toBe('general');
     expect(sentLineChannel('/p on my way')).toBe('party');
     expect(sentLineChannel('/w Bob hi')).toBeNull();
     expect(sentLineChannel('/r sure')).toBeNull();
@@ -416,6 +418,8 @@ describe('chat channel tabs — pure model', () => {
       for (const online of [true, false]) {
         expect(sentLineTargetForHost('/1 hey', { online })).toBe('general');
         expect(sentLineTargetForHost('/general hey', { online })).toBe('general');
+        expect(sentLineTargetForHost('/all hey', { online })).toBe('general');
+        expect(sentLineTargetForHost('/gen hey', { online })).toBe('general');
         expect(sentLineTargetForHost('/gu ready', { online })).toBe('guild');
         expect(sentLineTargetForHost('/p on my way', { online })).toBe('party');
         expect(sentLineTargetForHost('/r sure', { online })).toBe(WHISPER_TAB);

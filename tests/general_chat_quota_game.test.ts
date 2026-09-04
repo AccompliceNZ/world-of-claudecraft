@@ -213,6 +213,24 @@ describe('GameServer General quota authority', () => {
     await vi.waitFor(() => expect(sender.session.rememberedChat).toEqual({ channel: 'general' }));
   });
 
+  it('routes the /all and /gen aliases through the same quota-gated General path', async () => {
+    consumeQuota.mockResolvedValue({ status: 'allowed' });
+    const server = new GameServer();
+    const sender = joinConfigured(server, 11, 'Aleph');
+    const simChat = vi.spyOn(server.sim, 'chat');
+    vi.spyOn(server.chatLog, 'log').mockImplementation(() => {});
+
+    send(server, sender.session, '/all hello everyone');
+    await vi.waitFor(() =>
+      expect(simChat).toHaveBeenCalledWith('/general hello everyone', sender.session.pid),
+    );
+    send(server, sender.session, '/gen short form too');
+    await vi.waitFor(() =>
+      expect(simChat).toHaveBeenCalledWith('/general short form too', sender.session.pid),
+    );
+    expect(consumeQuota).toHaveBeenCalledTimes(2);
+  });
+
   it('does not rewrite a newer sticky channel selected while the send was in flight', async () => {
     let resolve!: (result: { status: 'allowed' }) => void;
     consumeQuota.mockReturnValue(

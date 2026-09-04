@@ -17,6 +17,10 @@ describe('classifyOnlineGeneralChat', () => {
   it.each([
     ['/general hello', 'say', '/general hello'],
     ['/GENERAL   hello there ', 'guild', '/general hello there'],
+    ['/all hello', 'say', '/general hello'],
+    ['/ALL   hello there ', 'guild', '/general hello there'],
+    ['/gen hello', 'say', '/general hello'],
+    ['/GEN   hello there ', 'guild', '/general hello there'],
     ['/1 hello', 'say', '/general hello'],
     ['sticky hello', 'general', '/general sticky hello'],
   ] as const)('classifies %j with sticky %s as General', (text, remembered, canonicalText) => {

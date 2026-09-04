@@ -16,8 +16,9 @@ export interface OnlineGeneralChat {
 }
 
 /**
- * Classify only the online server's General spellings. In particular, `/g` is
- * guild online even though the offline sim retains it as a General alias.
+ * Classify only the online server's General spellings (`/general`, its `/all`
+ * and `/gen` aliases, and the numbered `/1`). In particular, `/g` is guild
+ * online even though the offline sim retains it as a General alias.
  */
 export function classifyOnlineGeneralChat(
   rawText: string,
@@ -25,7 +26,7 @@ export function classifyOnlineGeneralChat(
 ): OnlineGeneralChat | null {
   const text = rawText.trim();
   if (!text) return null;
-  const explicit = /^\/(?:general|1)\s+([\s\S]+)$/i.exec(text);
+  const explicit = /^\/(?:general|all|gen|1)\s+([\s\S]+)$/i.exec(text);
   if (explicit) {
     const body = explicit[1].trim();
     return body ? { canonicalText: `/general ${body}` } : null;

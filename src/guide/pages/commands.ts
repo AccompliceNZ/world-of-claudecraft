@@ -47,7 +47,10 @@ const GROUPS: Group[] = [
     heading: 'guide.commandsPage.groupChannels',
     intro: 'guide.commandsPage.channelsIntro',
     rows: [
-      { cmds: ['/general <message>', '/1 <message>'], desc: 'guide.commandsPage.general' },
+      {
+        cmds: ['/general <message>', '/all <message>', '/gen <message>', '/1 <message>'],
+        desc: 'guide.commandsPage.general',
+      },
       { cmds: ['/g <message>'], desc: 'guide.commandsPage.gAlias' },
       { cmds: ['/guild <message>', '/gu <message>'], desc: 'guide.commandsPage.guild' },
       { cmds: ['/officer <message>', '/o <message>'], desc: 'guide.commandsPage.officer' },

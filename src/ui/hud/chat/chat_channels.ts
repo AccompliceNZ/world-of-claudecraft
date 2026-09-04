@@ -197,9 +197,10 @@ export function sentLineChannel(line: string): ChatTabChannel | null {
   if (/^\/s(ay)?\s/i.test(text)) return 'say';
   if (/^\/gu(ild)?\s/i.test(text)) return 'guild';
   if (/^\/o(fficer)?\s/i.test(text)) return 'officer';
-  // "/1" is the numbered-channel shortcut for General (see sentLineTarget below and
-  // the sim router); "/g" is intentionally NOT here because it routes to guild online.
-  if (/^\/(?:general|1)\s/i.test(text)) return 'general';
+  // "/1" is the numbered-channel shortcut for General and "/all"/"/gen" its newer
+  // aliases (see sentLineTarget below and the sim router); "/g" is intentionally
+  // NOT here because it routes to guild online.
+  if (/^\/(?:general|all|gen|1)\s/i.test(text)) return 'general';
   if (/^\/world\s/i.test(text)) return 'world';
   if (/^\/lfg\s/i.test(text)) return 'lfg';
   return null;

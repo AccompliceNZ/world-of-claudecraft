@@ -829,8 +829,10 @@ export function chat(ctx: SimContext, text: string, pid?: number): SentChat | nu
   // "/g message" / "/1 message": world-wide general channel (no pid = broadcast to
   // all). "/1" is the classic numbered-channel shortcut for General; unlike "/g" it
   // is never claimed by the online guild router, so it always reaches General.
-  if (/^\/(?:g(?:eneral)?|1)\s/i.test(raw)) {
-    const clean = raw.replace(/^\/(?:g(?:eneral)?|1)\s+/i, '').trim();
+  // "/all" and its short form "/gen" are newer aliases for the same channel,
+  // added so the channel can be addressed without the /g-vs-guild ambiguity.
+  if (/^\/(?:g(?:eneral)?|all|gen|1)\s/i.test(raw)) {
+    const clean = raw.replace(/^\/(?:g(?:eneral)?|all|gen|1)\s+/i, '').trim();
     if (!clean) return null;
     ctx.emit({
       type: 'chat',
@@ -1079,7 +1081,7 @@ export function playEmote(ctx: SimContext, emoteId: OverheadEmoteId, pid?: numbe
 // in sync with the commands handled in chat() above.
 export function helpLines(): string[] {
   return [
-    'Chat channels: /s say, /y yell, /general, /p party, /bg battleground, /world, /lfg.',
+    'Chat channels: /s say, /y yell, /general (also /all or /gen), /p party, /bg battleground, /world, /lfg.',
     'Whisper a player with /w <name> <message>, reply with /r.',
     'Other commands: /join <world|lfg>, /roll, /invite <name>, /inspect <name>, /follow <name>, /unfollow, /assist <name>, /ready, /afk, /dnd, /who.',
     'Recovery: /unstuck starts a stationary countdown, then moves you to the nearest graveyard, reviving you if you had fallen. It leaves you with Unstuck Sickness for up to 5 minutes.',
