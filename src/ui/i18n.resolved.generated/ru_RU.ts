@@ -13998,6 +13998,48 @@ export const ru_RU: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Жезл угасших искр"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtiers Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Сотворённая родниковая вода"
       },
@@ -19003,6 +19045,12 @@ export const ru_RU: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Авангард Связанного камня",
         "bonus3": "Скорость атаки и произнесения заклинаний повышается на 15%."
+      },
+      "bramblehide": {
+        "name": "Тернистая шкура Рутса",
+        "bonus2": "Сила повышается на 10, выносливость повышается на 10.",
+        "bonus4": "Сила атаки повышается на 25. Критические удары оружием с вероятностью 50% даруют «Могильную мощь», увеличивая силу атаки на 40 на 10 сек.",
+        "bonus6": "Скорость атаки и чтения заклинаний повышается на 4%, меткость на 3%. Критические удары оружием оставляют в цели «Костяной осколок»: 5 ед. урона от кровотечения каждые 2 сек. в течение 12 сек. Суммируется до 3 раз."
       },
       "chronoweave": {
         "name": "Одеяние эфирного плетения",

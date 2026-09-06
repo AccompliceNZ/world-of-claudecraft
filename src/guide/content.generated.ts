@@ -5639,6 +5639,13 @@ export const GUIDE_DEEDS: GuideDeed[] = [
     "category": "progression",
     "renown": 5,
     "feat": false
+  },
+  {
+    "id": "col_set_bramblehide",
+    "name": "Roots' Bramblehide",
+    "category": "collection",
+    "renown": 0,
+    "feat": false
   }
 ];
 
@@ -6137,6 +6144,62 @@ export const GUIDE_RELIQUARY: GuideReliquaryPage[] = [
       {
         "kind": "item",
         "name": "Direfang Quiver"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Crown"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Mantle"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Harness"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Cinch"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Legguards"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Grips"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Treads"
+      },
+      {
+        "kind": "item",
+        "name": "Courtiers Bonefang"
+      },
+      {
+        "kind": "item",
+        "name": "Thornpeak Wardblade"
+      },
+      {
+        "kind": "item",
+        "name": "Gravecourt Hewer"
+      },
+      {
+        "kind": "item",
+        "name": "Votive Ward of the Deathless Court"
+      },
+      {
+        "kind": "item",
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      {
+        "kind": "item",
+        "name": "Stormhymn Chain Grips"
+      },
+      {
+        "kind": "item",
+        "name": "Stormhymn Chain Treads"
       }
     ]
   },
@@ -7415,6 +7478,41 @@ export const GUIDE_RELIQUARY: GuideReliquaryPage[] = [
       {
         "kind": "item",
         "name": "Riftbound Band of Guile"
+      }
+    ]
+  },
+  {
+    "id": "conquerors_set_bramblehide",
+    "shelf": "conquerors",
+    "name": "Roots' Bramblehide",
+    "relics": [
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Crown"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Mantle"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Harness"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Cinch"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Legguards"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Grips"
+      },
+      {
+        "kind": "item",
+        "name": "Roots' Bramblehide Treads"
       }
     ]
   }

@@ -2938,6 +2938,30 @@ export const DEEDS: Record<string, DeedDef> = {
     trigger: { kind: 'manual' },
     reward: { kind: 'title', text: 'the Unscorched' },
   },
+  // Roots' Bramblehide, the feral druid's Strength leather family off the
+  // Nythraxis raid (zone3.ts). Appended at the END per the append-only
+  // contract; col_seven_regalia keeps its shipped seven-family trigger (rule
+  // 9: never retro-edit an existing trigger), so this family is not part of
+  // that meta.
+  col_set_bramblehide: {
+    id: 'col_set_bramblehide',
+    name: "Roots' Bramblehide",
+    desc: "Discover every piece of Roots' Bramblehide.",
+    category: 'collection',
+    renown: 0,
+    trigger: {
+      kind: 'collectItems',
+      itemIds: [
+        'bramblehide_crown',
+        'bramblehide_mantle',
+        'bramblehide_harness',
+        'bramblehide_cinch',
+        'bramblehide_legguards',
+        'bramblehide_grips',
+        'bramblehide_treads',
+      ],
+    },
+  },
 };
 
 for (const def of Object.values(DEEDS)) {

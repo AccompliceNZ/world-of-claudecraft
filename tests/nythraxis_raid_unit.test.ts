@@ -325,13 +325,16 @@ describe('Nythraxis raid encounter', () => {
     );
     const groups = new Map<string, typeof loot>();
     for (const entry of loot) {
-      expect(entry.rollGroup).toMatch(/^nythraxis_drop_[1-5]$/);
+      expect(entry.rollGroup).toMatch(/^nythraxis_drop_[1-7]$/);
       const group = entry.rollGroup!;
       groups.set(group, [...(groups.get(group) ?? []), entry]);
       expect(ITEMS[entry.itemId!], entry.itemId).toBeTruthy();
     }
 
-    expect(groups.size).toBe(5);
+    // Seven: four guaranteed set-piece groups, the maul's and Bramblehide's
+    // bonus draws, and the guaranteed gap-fill group (nythraxis_drop_7, seven
+    // FERAL-agnostic lane fillers summing to exactly 1.00 like groups 1 to 4).
+    expect(groups.size).toBe(7);
     for (const [name, entries] of groups) {
       const total = entries.reduce((sum, entry) => sum + entry.chance, 0);
       // nythraxis_drop_5 is the feral ladder's bonus draw (maul_of_the_scourged_wilds):
@@ -340,6 +343,25 @@ describe('Nythraxis raid encounter', () => {
       if (name === 'nythraxis_drop_5') {
         expect(entries.map((entry) => entry.itemId)).toEqual(['maul_of_the_scourged_wilds']);
         expect(total).toBe(0.25);
+      } else if (name === 'nythraxis_drop_6') {
+        // Roots' Bramblehide, the feral druid's Strength leather family: a
+        // second independent bonus draw, seven FERAL-locked pieces at 0.08
+        // each (56% for one piece per kill), never displacing a shared piece.
+        expect(entries.map((entry) => entry.itemId)).toEqual([
+          'bramblehide_crown',
+          'bramblehide_mantle',
+          'bramblehide_harness',
+          'bramblehide_cinch',
+          'bramblehide_legguards',
+          'bramblehide_grips',
+          'bramblehide_treads',
+        ]);
+        for (const entry of entries) {
+          expect(entry.chance).toBe(0.08);
+          expect(ITEMS[entry.itemId!].requiredClass).toEqual(['druid']);
+          expect(ITEMS[entry.itemId!].set).toBe('bramblehide');
+        }
+        expect(total).toBeCloseTo(0.56, 5);
       } else {
         expect(total).toBeCloseTo(1, 5);
       }

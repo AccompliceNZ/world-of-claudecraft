@@ -6373,6 +6373,20 @@
       "itemIds": [
         "reins_mech_bird"
       ]
+    },
+    {
+      "batchId": "nythraxis-gap-weapon-renders-2026-09-04",
+      "source": "In-engine render of the committed weapon models (scripts/render_nythraxis_gap_icons.mjs: models/weapons/dagger.glb, models/weapons/sword_1handed.glb and models/weapons/axe_1handed.glb through the shared weapon still entry, composited on the item-icon vignette)",
+      "owner": "World of ClaudeCraft",
+      "license": "World of ClaudeCraft project-generated art, project asset, rights reserved",
+      "styleReference": "existing painted WebP catalog in public/ui/items/; subjects are the exact held weapon models the three Nythraxis gap-fill one-handers equip",
+      "provenanceRecord": "scripts/render_nythraxis_gap_icons.mjs",
+      "itemIds": [
+        "courtiers_bonefang",
+        "thornpeak_wardblade",
+        "gravecourt_hewer"
+      ],
+      "commonPrompt": "Not a text-to-image prompt: deterministic in-engine still of the committed weapon model (shared framing rig, three-point lighting, alpha subject trimmed and centered with safe margins) composited on the item-icon radial vignette at 128px."
     }
   ]
 }

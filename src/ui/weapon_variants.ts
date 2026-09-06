@@ -140,6 +140,12 @@ export const ITEM_WEAPON_VARIANTS: Record<string, string> = {
   gorraks_cleaver: 'adv_axe_1handed',
   tradesman_hatchet: 'adv_axe_1handed',
   gravewyrm_cleaver: 'adv_axe_1handed', // EPIC: Heroic Korzul axe
+  // Nythraxis gap-fill one-handers (content/zone3.ts): the base KayKit dagger,
+  // sword and axe, rendered in-engine for their inventory icons
+  // (scripts/render_nythraxis_gap_icons.mjs).
+  courtiers_bonefang: 'dagger',
+  thornpeak_wardblade: 'sword_1handed',
+  gravecourt_hewer: 'axe_1handed',
   pitlords_cleaver: 'adv_axe_1handed', // rift rare cleaver (heroic clone rides heroicOf)
   tunnelkings_spade: 'adv_axe_2handed',
 

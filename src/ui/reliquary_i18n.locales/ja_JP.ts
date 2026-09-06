@@ -192,4 +192,8 @@ export const table: ReliquaryLocaleTable = {
     name: '英雄: 内部るつぼ',
     desc: '最後の炎の鍛造父、ヴァルクルからヒロイックでのみ得られる盾と武器。',
   },
+  conquerors_set_bramblehide: {
+    name: 'ルーツのブランブルハイド',
+    desc: 'ブランブルハイドのレザー一式。',
+  },
 };

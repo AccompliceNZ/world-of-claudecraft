@@ -208,8 +208,10 @@ describe('v0.36 release-audit Reliquary deed art', () => {
       'dgn_varkhul',
       'dgn_varkhul_heroic',
       'dgn_varkhul_flawless',
+      // The Roots' Bramblehide set collection deed (post-audit append).
+      'col_set_bramblehide',
     ]);
-    expect(DEED_ORDER).toHaveLength(281);
+    expect(DEED_ORDER).toHaveLength(282);
     expect(DEED_IMAGE_IDS.size).toBe(271);
     expect(DEED_ORDER.filter((id) => !DEED_IMAGE_IDS.has(id))).toEqual([...DEED_ART_PENDING]);
     expect(sorted(DEED_IMAGE_IDS)).toEqual(

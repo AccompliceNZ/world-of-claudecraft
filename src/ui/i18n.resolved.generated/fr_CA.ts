@@ -13998,6 +13998,48 @@ export const fr_CA: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Baguette des Étincelles éteintes"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtiers Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Eau de source conjurée"
       },
@@ -19003,6 +19045,12 @@ export const fr_CA: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Avant-garde de pierre-liée",
         "bonus3": "Augmente la vitesse d'attaque et d'incantation de 15%."
+      },
+      "bramblehide": {
+        "name": "Peau de Ronces de Roots",
+        "bonus2": "Augmente la puissance d'attaque de 40.",
+        "bonus4": "Vos coups critiques d'arme lacèrent la cible avec Éclat d'os, lui infligeant 8 points de dégâts de saignement toutes les 2 s pendant 12 s. Se cumule jusqu'à 3 fois.",
+        "bonus6": "Augmente la vitesse d’attaque et d’incantation de 4 % et le Toucher de 3 %. Vos coups critiques d’arme fendent la cible avec Fendos, lui infligeant 5 points de dégâts toutes les 2 s pendant 12 s. Cumulable jusqu’à 3 fois."
       },
       "chronoweave": {
         "name": "Vêtements tissés d’éther",

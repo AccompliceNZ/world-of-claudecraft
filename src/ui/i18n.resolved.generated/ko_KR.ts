@@ -13998,6 +13998,48 @@ export const ko_KR: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "꺼진 불꽃의 마법봉"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtiers Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "창조된 샘물"
       },
@@ -19003,6 +19045,12 @@ export const ko_KR: EnTranslations = {
       "boundstone_vanguard": {
         "name": "속박석 선봉대",
         "bonus3": "공격 속도와 시전 속도가 15% 증가합니다."
+      },
+      "bramblehide": {
+        "name": "루츠의 가시덤불가죽",
+        "bonus2": "힘이 10, 체력이 10만큼 증가합니다.",
+        "bonus4": "전투력이 25만큼 증가합니다. 무기 치명타 적중 시 50% 확률로 \"무덤의 위력\"이 발동하여 전투력이 40만큼 증가합니다. 10초 동안 지속됩니다.",
+        "bonus6": "공격 및 시전 속도가 4%, 적중이 3% 증가합니다. 무기 치명타 적중 시 대상에게 \"뼈 파편\"을 남겨 12초 동안 2초마다 5의 출혈 피해를 입힙니다. 최대 3번 중첩됩니다."
       },
       "chronoweave": {
         "name": "에테르직조 예복",
