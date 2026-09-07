@@ -1364,6 +1364,10 @@ export const vi_VN: EnTranslations = {
       "conflictTitle": "Phím Đã Được Gán",
       "conflictBody": "{key} đã được gán cho {other}. Gán nó cho {action} sẽ hủy gán {other}.",
       "conflictAccept": "Vẫn Gán Lại",
+      "replaceTitle": "Replace Key Binding?",
+      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
+      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
+      "replaceAccept": "Replace",
       "resetConfirmTitle": "Đặt lại phím thanh hành động?",
       "resetConfirmBody": "Thanh thứ nhất trở về phím mặc định. Thanh thứ hai và thứ ba sẽ không còn phím gán. Không thể hoàn tác."
     },

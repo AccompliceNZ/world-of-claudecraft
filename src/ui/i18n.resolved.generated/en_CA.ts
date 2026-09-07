@@ -1364,6 +1364,10 @@ export const en_CA: EnTranslations = {
       "conflictTitle": "Key Already Bound",
       "conflictBody": "{key} is already bound to {other}. Binding it to {action} will unbind {other}.",
       "conflictAccept": "Rebind Anyway",
+      "replaceTitle": "Replace Key Binding?",
+      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
+      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
+      "replaceAccept": "Replace",
       "resetConfirmTitle": "Reset action bar keys?",
       "resetConfirmBody": "The first bar returns to its default keys. The second and third bars become unbound. This cannot be undone."
     },

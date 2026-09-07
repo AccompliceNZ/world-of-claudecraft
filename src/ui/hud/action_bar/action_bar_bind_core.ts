@@ -11,6 +11,8 @@
  * null after a cancelled/rejected capture), shown as transient feedback until
  * the next slot is selected.
  */
+import type { TranslationKey } from '../../i18n';
+
 export interface ActionBarBindState {
   selectedSlot: number | null;
   lastBoundKeyLabel: string | null;
@@ -41,4 +43,58 @@ export function actionBarBindStatus(state: ActionBarBindState): ActionBarBindSta
   if (state.selectedSlot !== null) return 'capturing';
   if (state.lastBoundKeyLabel !== null) return 'bound';
   return 'idle';
+}
+
+/** The are-you-sure prompt the on-bar mode raises before a capture commits,
+ *  as label keys plus their {token} values (the controller localizes and
+ *  shows it), or null when the bind can commit silently. */
+export interface ActionBarBindPrompt {
+  titleKey: TranslationKey;
+  bodyKey: TranslationKey;
+  acceptKey: TranslationKey;
+  params: Record<string, string>;
+}
+
+/**
+ * Decide whether binding `key` to the selected slot needs a warning first.
+ * `current` is the label of the key the slot ALREADY holds (null when the slot
+ * is unbound, or when the player pressed the very key it already has, which
+ * changes nothing); `other` is the name of the action that would LOSE `key`
+ * (null when the key is free); `slot` names the slot being bound. A slot
+ * with a pre-existing key always warns before it is replaced; a free slot
+ * warns only when the key is stolen from elsewhere; both facts in one prompt
+ * when both apply.
+ */
+export function actionBarBindPrompt(input: {
+  key: string;
+  current: string | null;
+  other: string | null;
+  slot: string;
+}): ActionBarBindPrompt | null {
+  const { key, current, other, slot } = input;
+  if (current !== null && other !== null) {
+    return {
+      titleKey: 'hudChrome.actionBar.replaceTitle',
+      bodyKey: 'hudChrome.actionBar.replaceConflictBody',
+      acceptKey: 'hudChrome.actionBar.replaceAccept',
+      params: { slot, current, key, other },
+    };
+  }
+  if (current !== null) {
+    return {
+      titleKey: 'hudChrome.actionBar.replaceTitle',
+      bodyKey: 'hudChrome.actionBar.replaceBody',
+      acceptKey: 'hudChrome.actionBar.replaceAccept',
+      params: { slot, current, key },
+    };
+  }
+  if (other !== null) {
+    return {
+      titleKey: 'hudChrome.actionBar.conflictTitle',
+      bodyKey: 'hudChrome.actionBar.conflictBody',
+      acceptKey: 'hudChrome.actionBar.conflictAccept',
+      params: { key, other, action: slot },
+    };
+  }
+  return null;
 }

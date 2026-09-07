@@ -467,13 +467,23 @@ describe('options_window: keybind rebind dispatch (cluster 5)', () => {
   }
 
   it('localizes the Target Buffs and Debuffs row through its chrome key', () => {
-    expect(painter).toContain("targetAuras: 'hudChrome.targetAuras.keybindLabel'");
+    // The label table lives in the shared keybind_action_names.ts (the on-bar
+    // rebind prompts name actions from the same table); the painter's
+    // actionDisplayName must resolve through it, never a private copy.
+    const names = readFileSync(
+      new URL('../src/ui/keybind_action_names.ts', import.meta.url),
+      'utf8',
+    );
+    expect(names).toContain("targetAuras: 'hudChrome.targetAuras.keybindLabel'");
+    expect(names).toContain('t(key)');
     const displayName = painter.slice(
       painter.indexOf('private actionDisplayName('),
       painter.indexOf('private gamepadActionOptions('),
     );
-    expect(displayName).toContain('BIND_ACTION_LABEL_KEYS[actionId]');
-    expect(displayName).toContain('t(BIND_ACTION_LABEL_KEYS[actionId])');
+    expect(displayName).toContain(
+      'bindActionDisplayName(actionId, fallback, this.deps.slotActionName)',
+    );
+    expect(painter).not.toContain('const BIND_ACTION_LABEL_KEYS');
   });
 
   it('captures a key and binds it to the same action/index', () => {

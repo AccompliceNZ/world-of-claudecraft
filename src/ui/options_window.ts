@@ -94,6 +94,7 @@ import {
 } from './i18n';
 import type { TranslationKey } from './i18n.catalog';
 import { interfaceUnlockLabelKey } from './interface_unlock_core';
+import { BIND_CATEGORY_LABEL_KEYS, bindActionDisplayName } from './keybind_action_names';
 import { buildKeybindCode, parseKeybindCode } from './keybind_transfer_core';
 import {
   type BoolToggleControl,
@@ -200,70 +201,6 @@ const LANGUAGE_ENDONYMS: Record<SupportedLanguage, string> = {
   sv_SE: 'Svenska',
   vi_VN: 'Tiếng Việt',
   da_DK: 'Dansk',
-};
-
-// Localized labels for the keybind category headers + action rows.
-const BIND_CATEGORY_LABEL_KEYS: Partial<Record<string, TranslationKey>> = {
-  Movement: 'hud.keybinds.categories.movement',
-  Targeting: 'hud.keybinds.categories.targeting',
-  Interface: 'hud.keybinds.categories.interface',
-  'Action Bar': 'hud.keybinds.categories.actionBar',
-  Pet: 'hudChrome.keybinds.categoryPet',
-};
-const BIND_ACTION_LABEL_KEYS: Partial<Record<string, TranslationKey>> = {
-  forward: 'hud.keybinds.actions.forward',
-  back: 'hud.keybinds.actions.back',
-  turnLeft: 'hud.keybinds.actions.turnLeft',
-  turnRight: 'hud.keybinds.actions.turnRight',
-  strafeLeft: 'hud.keybinds.actions.strafeLeft',
-  strafeRight: 'hud.keybinds.actions.strafeRight',
-  jump: 'hud.keybinds.actions.jump',
-  // English-only chrome key, like every keybind row added since the `hud`
-  // domain was tsc-locked to inline per-locale blocks.
-  dive: 'hudChrome.keybinds.dive',
-  autorun: 'hud.keybinds.actions.autorun',
-  target: 'hud.keybinds.actions.target',
-  attackMove: 'hud.keybinds.actions.attackMove',
-  interact: 'hud.keybinds.actions.interact',
-  char: 'hud.keybinds.actions.char',
-  spellbook: 'hud.keybinds.actions.spellbook',
-  questlog: 'hud.keybinds.actions.questlog',
-  map: 'hud.keybinds.actions.map',
-  bags: 'hud.keybinds.actions.bags',
-  nameplates: 'hud.keybinds.actions.nameplates',
-  meters: 'hud.keybinds.actions.meters',
-  targetAuras: 'hudChrome.targetAuras.keybindLabel',
-  social: 'hud.keybinds.actions.social',
-  arena: 'hud.keybinds.actions.arena',
-  dungeonFinder: 'hudChrome.finder.title',
-  chat: 'hud.keybinds.actions.chat',
-  // Combat/social target + emote-wheel actions. English-only chrome keys (the
-  // `hud` catalog domain is tsc-locked to inline per-locale blocks).
-  emoteWheel: 'hudChrome.keybinds.emoteWheel',
-  targetFriendly: 'hudChrome.keybinds.targetFriendly',
-  targetFriendlyNext: 'hudChrome.keybinds.targetFriendlyNext',
-  targetPrev: 'hudChrome.keybinds.targetPrev',
-  discord: 'hudChrome.keybinds.discord',
-  bgFlag: 'hudChrome.keybinds.bgFlag',
-  sheathe: 'hudChrome.keybinds.sheathe',
-  petAttack: 'hudChrome.keybinds.petAttack',
-  petStop: 'hudChrome.keybinds.petStop',
-  petTaunt: 'hudChrome.keybinds.petTaunt',
-  petDefensive: 'hudChrome.keybinds.petDefensive',
-  petAggressive: 'hudChrome.keybinds.petAggressive',
-  targetPet: 'hudChrome.keybinds.targetPet',
-
-  // Reuse the existing window/feature names so these labels localize everywhere
-  // without duplicating strings (these two ids were previously absent from the
-  // map and fell back to the raw English BIND_ACTIONS labels).
-  talents: 'game.talents.title',
-  leaderboard: 'game.leaderboard.title',
-  calendar: 'hudChrome.calendar.keybindLabel',
-  crafting: 'hudChrome.crafting.title',
-  mount: 'hudChrome.keybinds.mount',
-  deeds: 'hudChrome.deeds.title',
-  professions: 'hudChrome.professions.title',
-  reliquary: 'hudChrome.reliquary.title',
 };
 
 /**
@@ -2232,13 +2169,7 @@ export class OptionsWindow {
   // currently occupies them (slot 0 is always Attack); everything else uses its
   // registry label.
   private actionDisplayName(actionId: string, fallback: string): string {
-    if (!actionId.startsWith('slot'))
-      return BIND_ACTION_LABEL_KEYS[actionId] ? t(BIND_ACTION_LABEL_KEYS[actionId]) : fallback;
-    const slot = Number(actionId.slice(4));
-    if (slot === 0) return t('hud.keybinds.actions.attack');
-    return (
-      this.deps.slotActionName(slot) ?? t('hud.keybinds.actions.actionBarSlot', { slot: slot + 1 })
-    );
+    return bindActionDisplayName(actionId, fallback, this.deps.slotActionName);
   }
 
   // Action ids a gamepad button may be bound to: explicit unbind, the game menu,

@@ -1364,6 +1364,10 @@ export const tr_TR: EnTranslations = {
       "conflictTitle": "Tuş Zaten Atanmış",
       "conflictBody": "{key} tuşu zaten {other} eylemine atanmış. Onu {action} eylemine atamak {other} eylemini serbest bırakır.",
       "conflictAccept": "Yine de Yeniden Ata",
+      "replaceTitle": "Replace Key Binding?",
+      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
+      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
+      "replaceAccept": "Replace",
       "resetConfirmTitle": "Eylem çubuğu tuşları sıfırlansın mı?",
       "resetConfirmBody": "İlk çubuk varsayılan tuşlarına döner. İkinci ve üçüncü çubukların tuş atamaları kaldırılır. Bu geri alınamaz."
     },

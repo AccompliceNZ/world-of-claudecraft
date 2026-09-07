@@ -1364,6 +1364,10 @@ export const zh_TW: EnTranslations = {
       "conflictTitle": "按鍵已被佔用",
       "conflictBody": "{key} 已綁定到{other}。將其綁定到{action}會解除{other}的綁定。",
       "conflictAccept": "仍然重新綁定",
+      "replaceTitle": "取代按鍵綁定？",
+      "replaceBody": "{slot} 已綁定到 {current}。要取代為 {key} 嗎？",
+      "replaceConflictBody": "{slot} 已綁定到 {current}，而 {key} 已綁定到 {other}。取代後將解除 {other} 的綁定。",
+      "replaceAccept": "取代",
       "resetConfirmTitle": "重設動作列按鍵？",
       "resetConfirmBody": "第一列動作列將恢復為預設按鍵，第二列與第三列將變為未綁定狀態。此操作無法復原。"
     },

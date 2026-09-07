@@ -1364,6 +1364,10 @@ export const de_DE: EnTranslations = {
       "conflictTitle": "Taste bereits belegt",
       "conflictBody": "{key} ist bereits {other} zugewiesen. Wird es {action} zugewiesen, verliert {other} seine Belegung.",
       "conflictAccept": "Trotzdem neu belegen",
+      "replaceTitle": "Replace Key Binding?",
+      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
+      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
+      "replaceAccept": "Replace",
       "resetConfirmTitle": "Aktionsleisten-Tasten zurücksetzen?",
       "resetConfirmBody": "Die erste Leiste kehrt zu ihren Standardtasten zurück. Die zweite und dritte Leiste verlieren ihre Belegung. Das lässt sich nicht rückgängig machen."
     },

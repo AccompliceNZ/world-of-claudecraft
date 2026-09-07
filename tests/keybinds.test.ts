@@ -914,17 +914,18 @@ describe('mouse buttons as bindable keys', () => {
   });
 });
 
-// Every bindable action's Key Bindings row must localize. actionDisplayName
-// (src/ui/options_window.ts) resolves a row's label through BIND_ACTION_LABEL_KEYS
-// and falls back to the RAW ENGLISH BindAction.label when the id is absent, so a
-// missing entry ships hard-coded English in all 22 locales and silently orphans the
+// Every bindable action's Key Bindings row must localize. bindActionDisplayName
+// (src/ui/keybind_action_names.ts, shared by the options window rows and the
+// on-bar rebind prompts) resolves a label through BIND_ACTION_LABEL_KEYS and falls
+// back to the RAW ENGLISH BindAction.label when the id is absent, so a missing
+// entry ships hard-coded English in all 22 locales and silently orphans the
 // catalog key someone added for it. Nothing else catches that: the i18n gates check
 // that keys EXIST, not that a key is reachable, and every keybind test before this
-// one asserted on codes rather than labels. Scanned from source because the map is
-// module-private in a DOM window module this Node suite cannot import.
+// one asserted on codes rather than labels. Scanned from source so a rename of the
+// map is caught too (tests/keybind_action_names.test.ts checks the export itself).
 describe('every bind action has a localized label key', () => {
   const optionsWindowSrc = readFileSync(
-    new URL('../src/ui/options_window.ts', import.meta.url),
+    new URL('../src/ui/keybind_action_names.ts', import.meta.url),
     'utf8',
   );
   const mapBody = optionsWindowSrc.slice(

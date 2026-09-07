@@ -1364,6 +1364,10 @@ export const id_ID: EnTranslations = {
       "conflictTitle": "Tombol Sudah Terikat",
       "conflictBody": "{key} sudah terikat pada {other}. Mengikatnya ke {action} akan melepas ikatan {other}.",
       "conflictAccept": "Tetap Ikat Ulang",
+      "replaceTitle": "Replace Key Binding?",
+      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
+      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
+      "replaceAccept": "Replace",
       "resetConfirmTitle": "Atur ulang tombol bilah aksi?",
       "resetConfirmBody": "Bilah pertama kembali ke tombol bawaannya. Bilah kedua dan ketiga menjadi tak terikat. Ini tidak bisa dibatalkan."
     },

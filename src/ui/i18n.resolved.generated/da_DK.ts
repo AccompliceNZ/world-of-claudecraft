@@ -1364,6 +1364,10 @@ export const da_DK: EnTranslations = {
       "conflictTitle": "Tasten er allerede bundet",
       "conflictBody": "{key} er allerede bundet til {other}. Binder du den til {action}, fjernes bindingen fra {other}.",
       "conflictAccept": "Bind om alligevel",
+      "replaceTitle": "Replace Key Binding?",
+      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
+      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
+      "replaceAccept": "Replace",
       "resetConfirmTitle": "Nulstil handlingslinjens taster?",
       "resetConfirmBody": "Den første linje vender tilbage til sine standardtaster. Den anden og tredje linje bliver ubundne. Dette kan ikke fortrydes."
     },

@@ -1364,6 +1364,10 @@ export const sv_SE: EnTranslations = {
       "conflictTitle": "Tangenten är redan bunden",
       "conflictBody": "{key} är redan bunden till {other}. Om du binder den till {action} tas bindningen till {other} bort.",
       "conflictAccept": "Bind om ändå",
+      "replaceTitle": "Replace Key Binding?",
+      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
+      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
+      "replaceAccept": "Replace",
       "resetConfirmTitle": "Återställa handlingsfältets tangenter?",
       "resetConfirmBody": "Det första fältet återgår till sina standardtangenter. Det andra och tredje fältet blir obundna. Detta kan inte ångras."
     },

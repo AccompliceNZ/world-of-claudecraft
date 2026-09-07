@@ -1364,6 +1364,10 @@ export const nl_NL: EnTranslations = {
       "conflictTitle": "Toets Al Gebonden",
       "conflictBody": "{key} is al gebonden aan {other}. Als je het bindt aan {action}, wordt {other} ontbonden.",
       "conflictAccept": "Toch Herbinden",
+      "replaceTitle": "Replace Key Binding?",
+      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
+      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
+      "replaceAccept": "Replace",
       "resetConfirmTitle": "Actiebalktoetsen herstellen?",
       "resetConfirmBody": "De eerste balk keert terug naar zijn standaardtoetsen. De tweede en derde balk raken hun toewijzing kwijt. Dit kan niet ongedaan worden gemaakt."
     },

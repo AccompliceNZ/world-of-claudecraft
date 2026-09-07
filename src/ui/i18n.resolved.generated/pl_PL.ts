@@ -1364,6 +1364,10 @@ export const pl_PL: EnTranslations = {
       "conflictTitle": "Klawisz już przypisany",
       "conflictBody": "{key} jest już przypisany do {other}. Przypisanie go do {action} usunie przypisanie {other}.",
       "conflictAccept": "Przypisz mimo to",
+      "replaceTitle": "Replace Key Binding?",
+      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
+      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
+      "replaceAccept": "Replace",
       "resetConfirmTitle": "Zresetować klawisze paska akcji?",
       "resetConfirmBody": "Pierwszy pasek wraca do domyślnych klawiszy. Drugi i trzeci tracą przypisania. Tego nie można cofnąć."
     },

@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   actionBarBindEnter,
+  actionBarBindPrompt,
   actionBarBindResolveCapture,
   actionBarBindSelectSlot,
   actionBarBindStatus,
@@ -47,5 +48,44 @@ describe('actionBarBindResolveCapture', () => {
     const state = actionBarBindResolveCapture(null);
     expect(state).toEqual({ selectedSlot: null, lastBoundKeyLabel: null });
     expect(actionBarBindStatus(state)).toBe('idle');
+  });
+});
+
+describe('actionBarBindPrompt', () => {
+  it('binds silently when the slot is empty and the key is free', () => {
+    expect(
+      actionBarBindPrompt({ key: 'R', current: null, other: null, slot: 'Fireball' }),
+    ).toBeNull();
+  });
+
+  it('warns before replacing a pre-existing key on the slot', () => {
+    expect(actionBarBindPrompt({ key: 'R', current: '3', other: null, slot: 'Fireball' })).toEqual({
+      titleKey: 'hudChrome.actionBar.replaceTitle',
+      bodyKey: 'hudChrome.actionBar.replaceBody',
+      acceptKey: 'hudChrome.actionBar.replaceAccept',
+      params: { slot: 'Fireball', current: '3', key: 'R' },
+    });
+  });
+
+  it('warns with the classic conflict prompt when a free slot steals a key', () => {
+    expect(
+      actionBarBindPrompt({ key: 'R', current: null, other: 'Toggle Autorun', slot: 'Slot 4' }),
+    ).toEqual({
+      titleKey: 'hudChrome.actionBar.conflictTitle',
+      bodyKey: 'hudChrome.actionBar.conflictBody',
+      acceptKey: 'hudChrome.actionBar.conflictAccept',
+      params: { key: 'R', other: 'Toggle Autorun', action: 'Slot 4' },
+    });
+  });
+
+  it('names both facts in one prompt when a bound slot also steals a key', () => {
+    expect(
+      actionBarBindPrompt({ key: 'R', current: '3', other: 'Toggle Autorun', slot: 'Fireball' }),
+    ).toEqual({
+      titleKey: 'hudChrome.actionBar.replaceTitle',
+      bodyKey: 'hudChrome.actionBar.replaceConflictBody',
+      acceptKey: 'hudChrome.actionBar.replaceAccept',
+      params: { slot: 'Fireball', current: '3', key: 'R', other: 'Toggle Autorun' },
+    });
   });
 });

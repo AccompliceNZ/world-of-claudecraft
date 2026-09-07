@@ -2323,6 +2323,7 @@ const UI_DOM_MODULES = [
   'src/ui/guild_bank_window.ts',
   'src/ui/hud.ts',
   'src/ui/hud/action_bar/action_bar_toggle_controller.ts',
+  'src/ui/hud/action_bar/action_bar_bind_banner.ts',
   'src/ui/hud/chat/chat_geometry_controller.ts',
   'src/ui/hud/chat/chat_window_controller.ts',
   'src/ui/hud/cosmetics/skin_event_controller.ts',

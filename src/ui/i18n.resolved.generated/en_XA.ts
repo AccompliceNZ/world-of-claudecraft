@@ -1364,6 +1364,10 @@ export const en_XA: EnTranslations = {
       "conflictTitle": "[Ķéý Áļŕéáðý Ɓóúñð]",
       "conflictBody": "[{key} íš áļŕéáðý ƀóúñð ţó {other}. Ɓíñðíñĝ íţ ţó {action} ŵíļļ úñƀíñð {other}.]",
       "conflictAccept": "[Ŕéƀíñð Áñýŵáý]",
+      "replaceTitle": "[Ŕéþļáçé Ķéý Ɓíñðíñĝ?]",
+      "replaceBody": "[{slot} íš ƀóúñð ţó {current}. Ŕéþļáçé íţ ŵíţĥ {key}?]",
+      "replaceConflictBody": "[{slot} íš ƀóúñð ţó {current}, áñð {key} íš áļŕéáðý ƀóúñð ţó {other}. Ŕéþļáçíñĝ íţ ŵíļļ úñƀíñð {other}.]",
+      "replaceAccept": "[Ŕéþļáçé]",
       "resetConfirmTitle": "[Ŕéšéţ áçţíóñ ƀáŕ ķéýš?]",
       "resetConfirmBody": "[Ţĥé ƒíŕšţ ƀáŕ ŕéţúŕñš ţó íţš ðéƒáúļţ ķéýš. Ţĥé šéçóñð áñð ţĥíŕð ƀáŕš ƀéçóɱé úñƀóúñð. Ţĥíš çáññóţ ƀé úñðóñé.]"
     },

@@ -301,7 +301,13 @@ const MONOLITHS: MonolithRow[] = [
     // captured home and the dead body class left applyAuraAnchor for
     // restoreFrameHome (src/ui/interface_unlock.ts), and Reset Frame Positions
     // re-applies the anchor in one line. Exact merged count.
-    ceiling: 18851,
+    // Lowered 18851 -> 18728 by the on-bar key-binding mode extraction: the
+    // mode's controller (slot select, capture, the replace / conflict warning
+    // prompts, Reset confirm) moved to
+    // src/ui/hud/action_bar/action_bar_bind_controller.ts and its banner DOM to
+    // action_bar_bind_banner.ts; the HUD keeps one deps object and the slot
+    // click intercept. Exact count.
+    ceiling: 18728,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
