@@ -163,10 +163,12 @@ function clickLogTab(h: Harness): void {
   (h.root.querySelector('.gbank-view-tab[data-tab="log"]') as HTMLElement).click();
 }
 
+/** The whole text of each history row (every column), newest first. */
 const logRows = (h: Harness): string[] =>
-  Array.from(h.root.querySelectorAll('.gbank-log-row .gbank-log-text')).map(
-    (n) => n.textContent ?? '',
-  );
+  Array.from(h.root.querySelectorAll('.gbank-log-row')).map((n) => n.textContent ?? '');
+/** One column of the history table, newest first. */
+const logColumn = (h: Harness, cls: string): string[] =>
+  Array.from(h.root.querySelectorAll(`.gbank-log-row .${cls}`)).map((n) => n.textContent ?? '');
 
 beforeEach(() => {
   localStorage.clear();
@@ -1644,5 +1646,65 @@ describe('the transaction HISTORY controls (filters and older pages)', () => {
     h.kinds.length = 0;
     openHistory(h);
     expect(h.kinds[0]).toBe('all');
+  });
+});
+
+describe('the transaction HISTORY table (columns and the pinned header)', () => {
+  const openHistory = (h: Harness): void => {
+    h.window.open();
+    clickGuildTab(h);
+    clickLogTab(h);
+  };
+
+  it('is a real table with four column headers inside the scroller', () => {
+    const h = harness(guildInfo());
+    h.world.logView = logView({ entries: [logEntry({ id: 3 })] });
+    openHistory(h);
+    const table = h.root.querySelector('.bank-scroll table.gbank-log-list');
+    expect(table).not.toBeNull();
+    const headers = Array.from(table?.querySelectorAll('thead th') ?? []);
+    expect(headers.length).toBe(4);
+    for (const th of headers) {
+      expect(th.getAttribute('scope')).toBe('col');
+      expect(th.textContent?.length).toBeGreaterThan(0);
+    }
+    // The rows are body rows with one cell per column.
+    const cells = table?.querySelectorAll('tbody tr.gbank-log-row td') ?? [];
+    expect(cells.length).toBe(4);
+  });
+
+  it('puts the member, the action and the details in their own cells', () => {
+    const h = harness(guildInfo());
+    h.world.logView = logView({
+      entries: [
+        logEntry({ id: 9, actor: 'Bren', op: 'deposit', count: 5 }),
+        logEntry({ id: 3, op: 'withdraw_gold', itemId: null, count: null, copper: 25_000 }),
+      ],
+    });
+    openHistory(h);
+    expect(logColumn(h, 'gbank-log-member')).toEqual(['Bren', 'Kara']);
+    const actions = logColumn(h, 'gbank-log-action');
+    expect(actions[0]).not.toBe(actions[1]);
+    // The item row's details name the stack; the money row's details are the
+    // formatted sum, never a raw copper count.
+    const details = logColumn(h, 'gbank-log-text');
+    expect(details[0]).toContain('5');
+    expect(details[0]).not.toContain(plainId);
+    expect(details[1]).not.toContain('25000');
+    // Direction rides the row as a class on top of the Action word.
+    const rows = h.root.querySelectorAll('.gbank-log-row');
+    expect(rows[0].classList.contains('gbank-log-in')).toBe(true);
+    expect(rows[1].classList.contains('gbank-log-out')).toBe(true);
+  });
+
+  it('names an administrator, not the carrier, in the member cell of a purge', () => {
+    const h = harness(guildInfo());
+    h.world.logView = logView({
+      entries: [logEntry({ id: 3, op: 'admin_purge', actor: 'Carrier' })],
+    });
+    openHistory(h);
+    const member = logColumn(h, 'gbank-log-member')[0];
+    expect(member.length).toBeGreaterThan(0);
+    expect(member).not.toContain('Carrier');
   });
 });

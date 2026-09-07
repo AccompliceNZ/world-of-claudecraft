@@ -5888,6 +5888,18 @@
       margin: 0 0 2px;
       font-size: 10px;
     }
+    /* The history table on a phone: tighter cells, and the two prose columns
+       may wrap; the pinned header keeps the columns readable regardless. */
+    body.mobile-touch #bank-window .gbank-log-list {
+      font-size: 11px;
+    }
+    body.mobile-touch #bank-window .gbank-log-list th,
+    body.mobile-touch #bank-window .gbank-log-list td {
+      padding: 3px 5px;
+    }
+    body.mobile-touch #bank-window .gbank-log-action {
+      white-space: normal;
+    }
   }
   /* Short landscape phones: the 50/50 pairing box (viewport minus the 10px top
      inset and the 72px tray reservation) cannot hold the full-toolbar chrome, the

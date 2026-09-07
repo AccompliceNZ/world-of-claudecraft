@@ -38,18 +38,36 @@ import type {
 } from './guild_bank_log_view';
 import { formatDateTime, formatMoney, formatNumber, type TranslationKey, t } from './i18n';
 
-/** The sentence key per row kind. Exhaustive over the core's discriminator, so
- *  a new kind cannot ship without its own line of copy. */
-const ROW_KEY: Record<GuildBankLogRowKind, TranslationKey> = {
-  depositItem: 'hudChrome.bank.logDepositItem',
-  withdrawItem: 'hudChrome.bank.logWithdrawItem',
-  depositMoney: 'hudChrome.bank.logDepositMoney',
-  withdrawMoney: 'hudChrome.bank.logWithdrawMoney',
-  buySlots: 'hudChrome.bank.logBuySlots',
-  openBank: 'hudChrome.bank.logOpenBank',
-  charterFee: 'hudChrome.bank.logCharterFee',
-  adminPurge: 'hudChrome.bank.logAdminPurge',
+/** The ACTION column's word per row kind. Exhaustive over the core's
+ *  discriminator, so a new kind cannot ship without its own line of copy.
+ *  Deposits and withdrawals share a verb across items and money: the
+ *  DETAILS column is what says whether an item stack or a sum moved. */
+const ACTION_KEY: Record<GuildBankLogRowKind, TranslationKey> = {
+  depositItem: 'hudChrome.bank.logActionDeposit',
+  withdrawItem: 'hudChrome.bank.logActionWithdraw',
+  depositMoney: 'hudChrome.bank.logActionDeposit',
+  withdrawMoney: 'hudChrome.bank.logActionWithdraw',
+  buySlots: 'hudChrome.bank.logActionBuySlots',
+  openBank: 'hudChrome.bank.logActionOpenBank',
+  charterFee: 'hudChrome.bank.logActionCharterFee',
+  adminPurge: 'hudChrome.bank.logActionAdminPurge',
 };
+
+/** Kinds that put something INTO the guild's holdings; every other kind takes
+ *  something out (or pays from a purse). Only a styling hint on the row: the
+ *  Action word carries the meaning, never the colour alone. */
+const INBOUND_KINDS: ReadonlySet<GuildBankLogRowKind> = new Set<GuildBankLogRowKind>([
+  'depositItem',
+  'depositMoney',
+]);
+
+/** The column headers, in column order. */
+const COLUMN_KEYS: readonly TranslationKey[] = [
+  'hudChrome.bank.logColTime',
+  'hudChrome.bank.logColMember',
+  'hudChrome.bank.logColAction',
+  'hudChrome.bank.logColDetail',
+];
 
 /** The chip label per filter kind. Exhaustive over the seam's vocabulary. */
 const FILTER_KEY: Record<GuildBankLogKind, TranslationKey> = {
@@ -108,11 +126,26 @@ export class GuildBankLogPane {
     // bottom of the list a reader has just scrolled to the end of.
     const scroll = document.createElement('div');
     scroll.className = 'bank-scroll';
-    const list = document.createElement('ul');
-    list.className = 'gbank-log-list';
-    list.setAttribute('aria-label', t('hudChrome.bank.logAria'));
-    for (const row of model.rows) list.appendChild(this.buildRow(row));
-    scroll.appendChild(list);
+    // A real TABLE: four columns (when, member, action, details) with a header
+    // row the stylesheet keeps pinned to the top of the scroller, so a reader
+    // fifty rows deep still knows which column is which. Semantic markup on
+    // purpose: assistive tech reads a cell with its column header for free.
+    const table = document.createElement('table');
+    table.className = 'gbank-log-list';
+    table.setAttribute('aria-label', t('hudChrome.bank.logAria'));
+    const head = document.createElement('thead');
+    const headRow = document.createElement('tr');
+    for (const key of COLUMN_KEYS) {
+      const th = document.createElement('th');
+      th.scope = 'col';
+      th.textContent = t(key);
+      headRow.appendChild(th);
+    }
+    head.appendChild(headRow);
+    const body = document.createElement('tbody');
+    for (const row of model.rows) body.appendChild(this.buildRow(row));
+    table.append(head, body);
+    scroll.appendChild(table);
     scroll.appendChild(this.buildFooter(model.footer));
     wrap.appendChild(scroll);
     el.appendChild(wrap);
@@ -221,43 +254,53 @@ export class GuildBankLogPane {
   }
 
   private buildRow(row: GuildBankLogRowModel): HTMLElement {
-    const li = document.createElement('li');
-    li.className = 'gbank-log-row';
-    const time = document.createElement('span');
+    const tr = document.createElement('tr');
+    tr.className = `gbank-log-row ${INBOUND_KINDS.has(row.kind) ? 'gbank-log-in' : 'gbank-log-out'}`;
+    const time = document.createElement('td');
     time.className = 'gbank-log-time';
     // Through the i18n date formatter, so the locale decides ordering,
     // separators, and the 12/24 hour clock. Never a hand-built string.
     time.textContent = formatDateTime(row.at, { dateStyle: 'short', timeStyle: 'short' });
-    const text = document.createElement('span');
+    const member = document.createElement('td');
+    member.className = 'gbank-log-member';
+    // textContent: the character name is player-authored and is spliced
+    // verbatim into a text sink, which is the escape. A missing actor is a
+    // LOCALIZED stand-in, never an empty cell: a blank member cell on the one
+    // surface that has to look trustworthy would read as a rendering bug. The
+    // operator purge names NOBODY (the core already nulled the carrier), and
+    // says who did it instead.
+    member.textContent =
+      row.kind === 'adminPurge'
+        ? t('hudChrome.bank.logActorAdmin')
+        : (row.actor ?? t('hudChrome.bank.logFormerMember'));
+    const action = document.createElement('td');
+    action.className = 'gbank-log-action';
+    action.textContent = t(ACTION_KEY[row.kind]);
+    const text = document.createElement('td');
     text.className = 'gbank-log-text';
-    // textContent: the character name inside this sentence is player-authored
-    // and is spliced verbatim into a text sink, which is the escape.
-    text.textContent = this.sentence(row);
-    li.append(time, text);
-    return li;
+    text.textContent = this.detail(row);
+    tr.append(time, member, action, text);
+    return tr;
   }
 
-  private sentence(row: GuildBankLogRowModel): string {
-    // A missing actor is a LOCALIZED stand-in, never an empty splice: a row
-    // reading "  deposited 5 Iron Ore" would look like a rendering bug on the
-    // one surface that has to look trustworthy. adminPurge has no actor slot in
-    // its sentence at all (the operator is described, not named).
-    const actor = row.actor ?? t('hudChrome.bank.logFormerMember');
-    const key = ROW_KEY[row.kind];
-    // EXHAUSTIVE, with no default arm: a default would silently route a future
-    // kind into the money sentence and render formatMoney(0) for it.
+  // The DETAILS cell: the stack that moved, or the sum. EXHAUSTIVE, with no
+  // default arm: a default would silently route a future kind into the money
+  // cell and render formatMoney(0) for it.
+  private detail(row: GuildBankLogRowModel): string {
     switch (row.kind) {
       case 'depositItem':
       case 'withdrawItem':
-        return t(key, { actor, count: this.count(row.count), item: this.itemName(row.itemId) });
       case 'adminPurge':
-        return t(key, { count: this.count(row.count), item: this.itemName(row.itemId) });
+        return t('hudChrome.bank.logDetailItem', {
+          count: this.count(row.count),
+          item: this.itemName(row.itemId),
+        });
       case 'depositMoney':
       case 'withdrawMoney':
       case 'buySlots':
       case 'openBank':
       case 'charterFee':
-        return t(key, { actor, amount: formatMoney(row.copper) });
+        return formatMoney(row.copper);
       default: {
         const unreachable: never = row.kind;
         return String(unreachable);

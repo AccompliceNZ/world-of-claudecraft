@@ -368,6 +368,15 @@ gate green). Teardown of docs/guild-bank/ awaits the user's explicit confirmatio
     (passed into the core), never the answer's echo, so a stale answer cannot un-press it;
     closing the window resets it to All. Five non-Latin fills landed with the wordy keys
     (M16).
+  - TABLE (2026-09-07, user feedback "make the lines clearer, add columns with floating
+    headers"): the rows are a real `<table>` (When / Member / Action / Details, `th
+    scope=col`) whose header is `position: sticky` inside `.bank-scroll`, so fifty rows
+    deep the columns still read; each row carries its own rule plus the zebra stripe. The
+    sentence keys (`logDepositItem` and friends) are retired in favour of an Action word
+    per row kind (`logAction*`) and a Details cell (the stack or the sum); the Member cell
+    of an operator purge reads "An administrator" (`logActorAdmin`), never the carrier.
+    Direction is a row class (`gbank-log-in`/`-out`) tinting the Action word on top of the
+    word itself, never colour alone.
 - Purse-paid rung 0 (2026-08-03, user-directed pricing redesign): the guild bank is no
   longer open by default. A new guild starts with a 0-slot bank; an officer OPENS it via
   the existing `guild_bank_buy_slots` token (no new wire surface: the sim decides which
