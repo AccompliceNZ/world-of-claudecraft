@@ -443,9 +443,10 @@ describe('Reliquary Conqueror catalog structure', () => {
     // Varkhul legendary slots reached 419; then 418 when the maintainer
     // pulled Forgebreaker to route it through crafting. Moving Emberward
     // from Varkhul's normal page to its heroic page keeps the total fixed.
-    // Roots' Bramblehide adds 14 slots (seven on the Nythraxis page, seven on
-    // its own set page): 435. The seven Nythraxis gap-fill drops add seven
-    // slots on the Nythraxis page: 442.
+    // The release/v0.42.0 waves after that measured 424. Roots' Bramblehide
+    // adds 14 slots (seven on the Nythraxis page, seven on its own set page):
+    // 438. The seven Nythraxis gap-fill drops add seven slots on the Nythraxis
+    // page: 445.
     expect(
       slots,
       `slot total moved; per page: ${RELIQUARY_PAGES.map((p) => `${p.id}=${p.relics.length}`).join(', ')}`,

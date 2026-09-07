@@ -194,8 +194,9 @@ the heroic twins carry the same silhouette with a faint moss-green sheen.
 
 Four new item ids from the Nythraxis gap-fill wave (the three one-handers in
 the same wave ship deterministic in-engine renders of their held models via
-`scripts/render_nythraxis_gap_icons.mjs`, so no commission is outstanding for
-them). Commission per `docs/design/item-icon-art-style.md`, file provenance in
+`scripts/render_weapon_still_icons.mjs` and the jobs table under
+`docs/achievements/nythraxis-gap-weapon-renders-2026-09-04/`, so no commission
+is outstanding for them). Commission per `docs/design/item-icon-art-style.md`, file provenance in
 `public/ui/items/mapping.json`, then empty `NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS`
 (`src/sim/content/zone3.ts`). Heroic variants follow the shipped heroic-set
 convention of a distinct painting per variant. Family language: the Deathless

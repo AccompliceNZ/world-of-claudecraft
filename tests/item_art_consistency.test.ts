@@ -343,7 +343,7 @@ describe('item-art consistency accepted-art provenance', () => {
       },
       {
         path: `${evidenceDir}/final-item-art-audit-verdict.json`,
-        acceptedSha256: 'a1fa47deeb9495b02406404354a2c420b79171e19561718353a10e5675d40ecc',
+        acceptedSha256: 'a2857e832c3ad15ec66a70277d813949d19ff5d134e76d1754ba2e560f2c6e46',
         acceptedBytes: 124_848,
       },
     ]);
@@ -461,7 +461,7 @@ describe('item-art consistency accepted-art provenance', () => {
     const verdictBytes = readFileSync(path.join(repoRoot, verdictPath));
     expect(verdictBytes.length).toBe(124_848);
     expect(sha256(verdictBytes)).toBe(
-      'a1fa47deeb9495b02406404354a2c420b79171e19561718353a10e5675d40ecc',
+      'a2857e832c3ad15ec66a70277d813949d19ff5d134e76d1754ba2e560f2c6e46',
     );
     const verdict = JSON.parse(verdictBytes.toString('utf8')) as FinalAuditVerdict;
 
@@ -471,9 +471,10 @@ describe('item-art consistency accepted-art provenance', () => {
       baselineCommit: 'aee195551b5aef628eb7a72192117d7e3079818e',
       branch: 'feature/placeholder-art-completion-v036',
       shippingDirectory: 'public/ui/items',
-      // Hand-carried for the Nythraxis gap-fill weapons (three rendered base
-      // paintings, three heroic aliases), the way the Varkhul renders were.
-      // + the roots-bramblehide-icons-2026-09-07 wave: 22 paintings, 11 of them heroic variants.
+      // Hand-carried for the two Nythraxis waves, the way the Varkhul renders
+      // were: the three gap-fill weapon renders (three base files, three heroic
+      // aliases) and the roots-bramblehide-icons-2026-09-07 paintings (22
+      // files, 11 of them heroic variants): 1044 + 3 + 22 files.
       itemArtFilesReviewed: 1069,
       liveItemDefinitions: 1087,
       generatedHeroicDefinitions: 78,
@@ -542,7 +543,8 @@ describe('item-art consistency accepted-art provenance', () => {
     ]);
     expect(verdict.visualVerdict).toMatchObject({
       status: 'pass',
-      // + the three Nythraxis gap-fill weapon renders, hand-carried.
+      // + the three Nythraxis gap-fill weapon renders and the 22 Bramblehide
+      // wave paintings, hand-carried: 1044 + 25.
       passCount: 1069,
       watchCount: 0,
       watch: [],
@@ -653,7 +655,7 @@ describe('item-art consistency accepted-art provenance', () => {
       shippingCatalogDigest.update(`${id}\0${sha256(bytes)}\0${bytes.length}\n`);
     }
     expect(verdict.evidence.shippingCatalogSha256).toBe(
-      '8c847399bc1ffd8ed759faa3d830f4a04c9f97748fe0b133b0546c989ebbec80',
+      '8efefbdb39729e9d08383c4ac5d954b9eed2381875bd9a7b9798f1b5862632db',
     );
     expect(shippingCatalogDigest.digest('hex')).toBe(verdict.evidence.shippingCatalogSha256);
   });
@@ -765,7 +767,7 @@ describe('item-art consistency accepted-art provenance', () => {
     ).toBeUndefined();
     expect(mapping.entries).toHaveLength(43);
     expect(mapping.entries.every(({ license }) => Boolean(license))).toBe(true);
-    // 24 + nythraxis-gap-weapon-renders-2026-09-04.
+    // 24 + nythraxis-gap-weapon-renders-2026-09-04 + roots-bramblehide-icons-2026-09-07.
     expect(mapping.generatedBatches).toHaveLength(26);
     const batch = mapping.generatedBatches.find(({ batchId }) => batchId === BATCH_ID);
     expect(batch).toBeDefined();
@@ -783,7 +785,8 @@ describe('item-art consistency accepted-art provenance', () => {
     const oldGeneratedIds = mapping.generatedBatches
       .filter(({ batchId }) => batchId !== BATCH_ID)
       .flatMap(({ itemIds }) => itemIds);
-    // 727 + the three Nythraxis gap-fill weapon renders.
+    // 727 + the three Nythraxis gap-fill weapon renders + the 22 Bramblehide
+    // wave paintings.
     expect(oldGeneratedIds).toHaveLength(752);
     const allCurrentOwnerIds = [
       ...mapping.entries.map(({ itemId }) => itemId),
@@ -927,7 +930,8 @@ describe('item-art consistency accepted-art provenance', () => {
 
     const violations: string[] = [];
     // 1044 + the three Nythraxis gap-fill weapon renders
-    // (nythraxis-gap-weapon-renders-2026-09-04).
+    // (nythraxis-gap-weapon-renders-2026-09-04) + the 22 Bramblehide wave
+    // paintings (roots-bramblehide-icons-2026-09-07).
     if (ownerIds.length !== 1069)
       violations.push(`mapping owner count: ${ownerIds.length} != 1069`);
     if (fileIds.length !== 1069) violations.push(`shipping WebP count: ${fileIds.length} != 1069`);

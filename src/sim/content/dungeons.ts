@@ -1124,10 +1124,11 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
       // family: a sixth independent bonus group, the same shape as the maul's
       // group 5, so the four guaranteed groups keep their exact 1.00
       // partitions and no other class's set piece is displaced. Seven pieces at
-      // 0.08 each: a 56% shot at ONE family piece per kill, druid-only (the
-      // pieces are FERAL-locked), so it never competes with the shared
-      // helm/shoulder groups above. Appended AFTER group 5 so the earlier draw
-      // order stays byte-identical.
+      // 0.08 each: a 56% shot at ONE family piece per kill. The pieces carry
+      // the FERAL tag, which armor equips do not enforce (canEquipItem gates
+      // armor by weight alone), but as a separate bonus draw the family never
+      // displaces a piece from the shared helm/shoulder groups above. Appended
+      // AFTER group 5 so the earlier draw order stays byte-identical.
       { itemId: 'bramblehide_crown', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
       { itemId: 'bramblehide_mantle', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
       { itemId: 'bramblehide_harness', chance: 0.08, rollGroup: 'nythraxis_drop_6' },

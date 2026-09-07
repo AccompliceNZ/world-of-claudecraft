@@ -1,14 +1,23 @@
-// Deterministic inventory icons for the three Nythraxis gap-fill weapons: in-engine
-// stills of the committed weapon GLBs (renderWeaponAlpha in
-// scripts/weapon_render_entry.js) composited on the shared item-icon vignette,
-// shipped at 128px webp. Sibling of scripts/render_varkhul_drop_icons.mjs, which
-// owns the recipe this copies (poses take the catalog diagonal).
+// Deterministic inventory icons for weapons that ship in-engine stills of their
+// committed held GLBs (renderWeaponAlpha in scripts/weapon_render_entry.js)
+// composited on the shared item-icon vignette, shipped at 128px webp.
+//
+// One script, one jobs table per batch: the recipe is the one
+// scripts/render_island_item_icons.mjs (vignette) and
+// scripts/render_varkhul_drop_icons.mjs (weapon stills) established; this
+// generalizes it so a new render wave adds a jobs JSON under its
+// docs/achievements/<batch>/ provenance directory instead of a third copy of
+// the script. Jobs table shape:
+//   { "jobs": [{ "itemId": "<item id>", "glb": "models/weapons/<key>.glb",
+//                "pose": [x, y, z] }] }
+// where pose is an XYZ euler into the shared framing rig (the catalog diagonal
+// is [0.18, -0.5, -0.42]).
 //
 // Prereq: bundle the entry first:
 //   npx esbuild scripts/weapon_render_entry.js --bundle --format=iife \
 //     --define:import.meta.url='"http://127.0.0.1/"' --outfile=tmp/weapon_render_bundle.js
 // Run:
-//   node scripts/render_nythraxis_gap_icons.mjs
+//   node scripts/render_weapon_still_icons.mjs docs/achievements/<batch>/render-jobs.json
 import { readFileSync, writeFileSync } from 'node:fs';
 import http from 'node:http';
 import path from 'node:path';
@@ -22,25 +31,18 @@ const OUT_PX = 128;
 const repoDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const publicDir = path.join(repoDir, 'public');
 
-// Poses are XYZ eulers into the shared framing rig: all three take the catalog
-// diagonal the Forgebreaker maul uses.
-const JOBS = [
-  {
-    itemId: 'courtiers_bonefang',
-    glb: 'models/weapons/dagger.glb',
-    pose: [0.18, -0.5, -0.42],
-  },
-  {
-    itemId: 'thornpeak_wardblade',
-    glb: 'models/weapons/sword_1handed.glb',
-    pose: [0.18, -0.5, -0.42],
-  },
-  {
-    itemId: 'gravecourt_hewer',
-    glb: 'models/weapons/axe_1handed.glb',
-    pose: [0.18, -0.5, -0.42],
-  },
-];
+const jobsPath = process.argv[2];
+if (!jobsPath) {
+  console.error('usage: node scripts/render_weapon_still_icons.mjs <render-jobs.json>');
+  process.exit(1);
+}
+const { jobs: JOBS } = JSON.parse(readFileSync(path.resolve(repoDir, jobsPath), 'utf8'));
+if (!Array.isArray(JOBS) || JOBS.length === 0) throw new Error(`${jobsPath}: no jobs`);
+for (const job of JOBS) {
+  if (!job.itemId || !job.glb || !Array.isArray(job.pose) || job.pose.length !== 3) {
+    throw new Error(`${jobsPath}: malformed job ${JSON.stringify(job)}`);
+  }
+}
 
 const BUNDLE = path.join(repoDir, 'tmp', 'weapon_render_bundle.js');
 const bundle = readFileSync(BUNDLE, 'utf8');

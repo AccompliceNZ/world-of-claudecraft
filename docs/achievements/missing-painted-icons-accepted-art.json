@@ -256,12 +256,12 @@
       {
         "id": "heroic_courtiers_bonefang",
         "baseId": "courtiers_bonefang",
-        "variant": "dagger",
-        "bagIconUrl": "/ui/weapons/dagger.jpg",
-        "portraitPath": "public/ui/weapons/dagger.jpg",
-        "heldModelPath": "public/models/weapons/dagger.glb",
-        "canonicalDisplayName": "Courtiers Bonefang",
-        "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Courtiers Bonefang; inherits base visual variant dagger.",
+        "variant": "purple_dagger",
+        "bagIconUrl": "/ui/weapons/purple_dagger.jpg",
+        "portraitPath": "public/ui/weapons/purple_dagger.jpg",
+        "heldModelPath": "public/models/weapons/purple_dagger.glb",
+        "canonicalDisplayName": "Courtier's Bonefang",
+        "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Courtier's Bonefang; inherits base visual variant purple_dagger.",
         "validationStatus": "implemented and focused tests passing"
       },
       {
@@ -322,12 +322,12 @@
       {
         "id": "heroic_gravecourt_hewer",
         "baseId": "gravecourt_hewer",
-        "variant": "axe_1handed",
-        "bagIconUrl": "/ui/weapons/axe_1handed.jpg",
-        "portraitPath": "public/ui/weapons/axe_1handed.jpg",
-        "heldModelPath": "public/models/weapons/axe_1handed.glb",
+        "variant": "purple_axe",
+        "bagIconUrl": "/ui/weapons/purple_axe.jpg",
+        "portraitPath": "public/ui/weapons/purple_axe.jpg",
+        "heldModelPath": "public/models/weapons/purple_axe.glb",
         "canonicalDisplayName": "Gravecourt Hewer",
-        "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Gravecourt Hewer; inherits base visual variant axe_1handed.",
+        "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Gravecourt Hewer; inherits base visual variant purple_axe.",
         "validationStatus": "implemented and focused tests passing"
       },
       {
@@ -399,12 +399,12 @@
       {
         "id": "heroic_thornpeak_wardblade",
         "baseId": "thornpeak_wardblade",
-        "variant": "sword_1handed",
-        "bagIconUrl": "/ui/weapons/sword_1handed.jpg",
-        "portraitPath": "public/ui/weapons/sword_1handed.jpg",
-        "heldModelPath": "public/models/weapons/sword_1handed.glb",
+        "variant": "purple_sword",
+        "bagIconUrl": "/ui/weapons/purple_sword.jpg",
+        "portraitPath": "public/ui/weapons/purple_sword.jpg",
+        "heldModelPath": "public/models/weapons/purple_sword.glb",
         "canonicalDisplayName": "Thornpeak Wardblade",
-        "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Thornpeak Wardblade; inherits base visual variant sword_1handed.",
+        "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Thornpeak Wardblade; inherits base visual variant purple_sword.",
         "validationStatus": "implemented and focused tests passing"
       },
       {

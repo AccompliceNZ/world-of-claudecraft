@@ -96,26 +96,20 @@ const { items, artPendingIds } = await loadItems(repoRoot);
 const mapping = JSON.parse(
   await readFile(path.join(repoRoot, 'public/ui/items/mapping.json'), 'utf8'),
 );
-// The art-pending ledger stages a content wave OUTSIDE the audited item set
-// until its paintings land: its ids ship the procedural icon, and a staged
-// wave's generated heroic armor variants are unpainted set pieces awaiting
-// their own WebPs rather than intentional aliases of base art (which the
-// library's Heroic accounting rightly reserves for weapons). The exclusion
-// lives here rather than in scripts/lib/item_art_audit.mjs because that file's
-// bytes ARE the tracked verdict's renderer fingerprint (frozen evidence); the
-// tracked verdict and the library's expected counts below therefore describe
-// the audited catalog, and tests/item_icons.test.ts A2/A3 force each pending
-// id back in as its art is committed.
-const pendingIds = new Set(artPendingIds);
-const auditedItems = Object.fromEntries(
-  Object.entries(items).filter(([id]) => !pendingIds.has(id)),
-);
+// The art-pending ledger (artPendingIds) reaches the library as-is: pending
+// ids stay in the live counts and are excluded only from the missing-file
+// sweep (scripts/lib/item_art_audit.mjs, whose bytes are the tracked verdict's
+// renderer fingerprint). A staged wave whose generated heroic ARMOR variants
+// lack their own WebPs trips the library's weapon-only alias assertion; the
+// wave that next needs staging teaches the alias accounting about
+// artPendingIds there, rather than pre-filtering the item set here, so the
+// live counts keep one meaning.
 const build = await buildItemArtAudit({
   repoRoot,
   itemDirectory: 'public/ui/items',
   outputDirectory: arguments_.outputDirectory,
   renderOutputs: !arguments_.verifyOnly,
-  items: auditedItems,
+  items,
   artPendingIds,
   mapping,
   expected: {

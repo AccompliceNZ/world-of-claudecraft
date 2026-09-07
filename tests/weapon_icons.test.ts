@@ -156,8 +156,9 @@ describe('painted weapon inventory icons', () => {
       .filter((id) => Object.hasOwn(ITEM_WEAPON_VARIANTS, id))
       .sort();
     expect(varkhulWeaponIds).toEqual(['varkhul_forgebreaker']);
-    // The Nythraxis gap-fill one-handers ship in-engine renders of their base
-    // KayKit held models in a dedicated batch (nythraxis-gap-weapon-renders-2026-09-04).
+    // The Nythraxis gap-fill one-handers ship in-engine renders of their
+    // violet-gem KayKit held models in a dedicated batch
+    // (nythraxis-gap-weapon-renders-2026-09-04).
     const gapBatch = weaponBatches.find(
       ({ batchId }) => batchId === 'nythraxis-gap-weapon-renders-2026-09-04',
     );

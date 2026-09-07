@@ -317,9 +317,9 @@ describe('Nythraxis raid encounter', () => {
     expect(boss.aggroTargetId).toBe(tank.id);
   });
 
-  it('defines four Nythraxis equipment drops with 3 percent legendary rolls', () => {
+  it('defines the seven Nythraxis equipment roll groups with 3 percent legendary rolls', () => {
     // Equipment drops only: the collectible mount reins (kind 'mount') is its
-    // own independent draw outside the four roll groups, pinned by tests/mounts.test.ts.
+    // own independent draw outside the equipment roll groups, pinned by tests/mounts.test.ts.
     const loot = MOBS.nythraxis_scourge_of_thornpeak.loot.filter(
       (entry) => entry.itemId && ITEMS[entry.itemId]?.kind !== 'mount',
     );
@@ -333,7 +333,7 @@ describe('Nythraxis raid encounter', () => {
 
     // Seven: four guaranteed set-piece groups, the maul's and Bramblehide's
     // bonus draws, and the guaranteed gap-fill group (nythraxis_drop_7, seven
-    // FERAL-agnostic lane fillers summing to exactly 1.00 like groups 1 to 4).
+    // lane fillers summing to exactly 1.00 like groups 1 to 4).
     expect(groups.size).toBe(7);
     for (const [name, entries] of groups) {
       const total = entries.reduce((sum, entry) => sum + entry.chance, 0);
@@ -345,8 +345,10 @@ describe('Nythraxis raid encounter', () => {
         expect(total).toBe(0.25);
       } else if (name === 'nythraxis_drop_6') {
         // Roots' Bramblehide, the feral druid's Strength leather family: a
-        // second independent bonus draw, seven FERAL-locked pieces at 0.08
+        // second independent bonus draw, seven FERAL-tagged pieces at 0.08
         // each (56% for one piece per kill), never displacing a shared piece.
+        // The tag is a data pin, not an equip lock: canEquipItem gates armor
+        // by weight alone (equipment_rules.ts).
         expect(entries.map((entry) => entry.itemId)).toEqual([
           'bramblehide_crown',
           'bramblehide_mantle',
@@ -362,6 +364,21 @@ describe('Nythraxis raid encounter', () => {
           expect(ITEMS[entry.itemId!].set).toBe('bramblehide');
         }
         expect(total).toBeCloseTo(0.56, 5);
+      } else if (name === 'nythraxis_drop_7') {
+        // The seven gap-fill lane fillers (zone3.ts NYTHRAXIS_GAP_ITEM_IDS): a
+        // guaranteed fifth equipment draw partitioned like groups 1 to 4, the
+        // two larger shares on the rogue dagger and the tank one-hander.
+        // Membership and chances pinned exactly, like group 6.
+        expect(entries.map((entry) => [entry.itemId, entry.chance])).toEqual([
+          ['courtiers_bonefang', 0.15],
+          ['thornpeak_wardblade', 0.15],
+          ['gravecourt_hewer', 0.14],
+          ['votive_ward_of_the_deathless_court', 0.14],
+          ['thornpeak_moonhide_cowl', 0.14],
+          ['stormhymn_chain_grips', 0.14],
+          ['stormhymn_chain_treads', 0.14],
+        ]);
+        expect(total).toBeCloseTo(1, 5);
       } else {
         expect(total).toBeCloseTo(1, 5);
       }

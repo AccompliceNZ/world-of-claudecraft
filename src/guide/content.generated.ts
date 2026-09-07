@@ -6176,7 +6176,7 @@ export const GUIDE_RELIQUARY: GuideReliquaryPage[] = [
       },
       {
         "kind": "item",
-        "name": "Courtiers Bonefang"
+        "name": "Courtier's Bonefang"
       },
       {
         "kind": "item",

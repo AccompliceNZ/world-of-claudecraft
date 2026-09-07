@@ -14020,7 +14020,7 @@ export const en_XA: EnTranslations = {
         "name": "[Ŕóóţš' Ɓŕáɱƀļéĥíðé Ţŕéáðš]"
       },
       "courtiers_bonefang": {
-        "name": "[Çóúŕţíéŕš Ɓóñéƒáñĝ]"
+        "name": "[Çóúŕţíéŕ'š Ɓóñéƒáñĝ]"
       },
       "thornpeak_wardblade": {
         "name": "[Ţĥóŕñþéáķ Ŵáŕðƀļáðé]"

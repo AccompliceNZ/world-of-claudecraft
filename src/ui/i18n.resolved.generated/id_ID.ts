@@ -14020,7 +14020,7 @@ export const id_ID: EnTranslations = {
         "name": "Roots' Bramblehide Treads"
       },
       "courtiers_bonefang": {
-        "name": "Courtiers Bonefang"
+        "name": "Courtier's Bonefang"
       },
       "thornpeak_wardblade": {
         "name": "Thornpeak Wardblade"

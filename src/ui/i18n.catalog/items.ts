@@ -3046,7 +3046,7 @@ const APPENDED_ITEM_NAMES: Partial<Record<ItemEntityId, string>> = {
   bramblehide_legguards: "Roots' Bramblehide Legguards",
   bramblehide_grips: "Roots' Bramblehide Grips",
   bramblehide_treads: "Roots' Bramblehide Treads",
-  courtiers_bonefang: 'Courtiers Bonefang',
+  courtiers_bonefang: "Courtier's Bonefang",
   thornpeak_wardblade: 'Thornpeak Wardblade',
   gravecourt_hewer: 'Gravecourt Hewer',
   votive_ward_of_the_deathless_court: 'Votive Ward of the Deathless Court',

@@ -6376,11 +6376,11 @@
     },
     {
       "batchId": "nythraxis-gap-weapon-renders-2026-09-04",
-      "source": "In-engine render of the committed weapon models (scripts/render_nythraxis_gap_icons.mjs: models/weapons/dagger.glb, models/weapons/sword_1handed.glb and models/weapons/axe_1handed.glb through the shared weapon still entry, composited on the item-icon vignette)",
+      "source": "In-engine render of the committed weapon models (scripts/render_weapon_still_icons.mjs over docs/achievements/nythraxis-gap-weapon-renders-2026-09-04/render-jobs.json: models/weapons/purple_dagger.glb, models/weapons/purple_sword.glb and models/weapons/purple_axe.glb through the shared weapon still entry, composited on the item-icon vignette)",
       "owner": "World of ClaudeCraft",
       "license": "World of ClaudeCraft project-generated art, project asset, rights reserved",
       "styleReference": "existing painted WebP catalog in public/ui/items/; subjects are the exact held weapon models the three Nythraxis gap-fill one-handers equip",
-      "provenanceRecord": "scripts/render_nythraxis_gap_icons.mjs",
+      "provenanceRecord": "docs/achievements/nythraxis-gap-weapon-renders-2026-09-04/",
       "itemIds": [
         "courtiers_bonefang",
         "thornpeak_wardblade",

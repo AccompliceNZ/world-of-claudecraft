@@ -762,8 +762,10 @@ describe('item-art audit builder', () => {
       // roots-bramblehide-icons-2026-09-07 and the three Nythraxis gap-fill weapon
       // renders joined the shipping catalog: 1044 + 25 files, 28 more live
       // definitions (14 heroic), 11 more heroic pieces with their own WebP.
-      catalogSha256: 'cd0231b79b1083cd16876ede16e725837bb55e96a958e9c0710992d38b3ab961',
-      catalogBytes: 583041,
+      // The three gap-fill one-handers were re-rendered on the violet-gem
+      // models after review (same ids, same batch, new bytes).
+      catalogSha256: 'a13dc520421837edf472b006baa762dd0eebbae02dd64ab646a88699180124b2',
+      catalogBytes: 583042,
       rendererFingerprint: 'd80ff4868f979e1717e106c889b7d6505841caf8d4cf887776ecb60848b1b2b7',
       catalogCount: 1069,
       liveItemCount: 1087,
@@ -775,7 +777,7 @@ describe('item-art audit builder', () => {
       sheetCount: 216,
       sheetModeCounts: Object.fromEntries(ITEM_ART_AUDIT_MODES.map((mode) => [mode, 27])),
       sheetSetSha256: null,
-      shippingCatalogSha256: '8c847399bc1ffd8ed759faa3d830f4a04c9f97748fe0b133b0546c989ebbec80',
+      shippingCatalogSha256: '8efefbdb39729e9d08383c4ac5d954b9eed2381875bd9a7b9798f1b5862632db',
       machineChecksPassed: true,
       verdict: null,
     });

@@ -4016,9 +4016,11 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
   // table, the feral druid's tier-2 armor beside the Maul above. Named for
   // Roots, the druid. Feral swings pay 2 attack power per Strength
   // (entity.ts apFromStats), so the family is str/sta rather than the
-  // Direfang agi line, and it is FERAL-locked (druid only) the way the bear-form
-  // weapon ladder is, so the rogue/hunter agility wearers never see it as a
-  // slot competitor. Every piece is item level 29 (level-20 raid boss + epic 6
+  // Direfang agi line. It carries the FERAL tag the bear-form weapon ladder
+  // uses, but on ARMOR that tag is advisory: canEquipItem (equipment_rules.ts)
+  // gates armor by weight alone, so every leather-or-better wearer can equip a
+  // piece (only dev_kit and pbe_boost re-check the list), and the str/sta
+  // shape is what keeps it off the rogue/hunter agility wish lists. Every piece is item level 29 (level-20 raid boss + epic 6
   // + raid 3) on the exact primaryStatBudget(29, epic, slot) sum, and carries
   // exactly ONE rating at 20 like every ilvl-29 raid epic (the ladder pin in
   // tests/combat_rating.test.ts): Hit on the big pieces (the Heroic +3 answer),
@@ -4139,7 +4141,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
   // the dagger flag the positional rogue strikes gate on.
   courtiers_bonefang: {
     id: 'courtiers_bonefang',
-    name: 'Courtiers Bonefang',
+    name: "Courtier's Bonefang",
     kind: 'weapon',
     slot: 'mainhand',
     hand: 'onehand',
@@ -4205,7 +4207,8 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
   },
   // Leather caster helm: no leather int/spi helmet existed above the level 20
   // band, so balance and restoration druids wore the cloth Wraithfire Cowl.
-  // Armor matches the Direfang Crown; the armorType gates equips.
+  // Armor matches the Direfang Crown; the leather armorType is the only equip
+  // gate (every non-cloth class can wear it), no class list is claimed.
   thornpeak_moonhide_cowl: {
     id: 'thornpeak_moonhide_cowl',
     name: 'Thornpeak Moonhide Cowl',
@@ -4324,9 +4327,10 @@ export const BRAMBLEHIDE_ART_PENDING_ITEM_IDS: readonly string[] = [];
 
 // The Nythraxis gap-fill drops (see the ZONE3_ITEMS block above), in loot
 // table order. The three weapons ship in-engine rendered icons
-// (scripts/render_nythraxis_gap_icons.mjs); the shield and the three armor
-// pieces are art-pending on the same ledger model as Roots' Bramblehide, with
-// their generated heroic variants (heroicVariantId prefixes `heroic_`).
+// (scripts/render_weapon_still_icons.mjs, jobs table under
+// docs/achievements/nythraxis-gap-weapon-renders-2026-09-04/); the shield and
+// the three armor pieces were painted in the roots-bramblehide-icons-2026-09-07
+// wave with their generated heroic variants (heroicVariantId prefixes `heroic_`).
 export const NYTHRAXIS_GAP_ITEM_IDS: readonly string[] = [
   'courtiers_bonefang',
   'thornpeak_wardblade',
