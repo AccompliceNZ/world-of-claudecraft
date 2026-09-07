@@ -1059,13 +1059,17 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
 // the Realm Builder monument (PR #3695) and this branch's renderer changes
 // land together on the merged tree. No capture was retaken.
+// Re-minted at the 2026-09-07 release/v0.42.0 sync of the Drakelands epic (PR #3746):
+// the renderer shed its castle-features arm (remint_polish_provenance.mjs).
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  'bd53b31882af899715dcc7bb4a2d9159fa63b5ac1eb5b4ff3b342d2f63b76a08';
+  '0d3722a80dd1d5681c6103ca1afc7c337658330171e3657e6d10da1958ab84e9';
 // Re-minted at the release/v0.42.0 sync of PR #3439: renderer.ts moved for the
 // mount lifecycle seam (mount_lifecycle.ts) and the rickshaw hooks it absorbed.
 // Re-minted again for the PR #3695 review fixes (the impostor fragment tail).
+// Re-minted at the 2026-09-07 release/v0.42.0 sync of the Drakelands epic (PR #3746):
+// the renderer shed its castle-features arm (remint_polish_provenance.mjs).
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  '3a5b183e08a217c7421c7fecd4b61e43598b3a081fe8b07ba7fdabed559d0f7b';
+  'b89aee13a6231a2bc195d61d202b9c9d7fd628e2522016d97182083bbf6b6274';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2238,7 +2242,7 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
       // the Realm Builder monument (PR #3695) and this branch's renderer changes
       // land together on the merged tree. No capture was retaken.
-    ).toBe('7691517f80fb2fc7620a55adcfc2e5fbfb6ded72bb5f0d77ca4e050c90dfe9ff');
+    ).toBe('c67e2ca6a9cd8e32f9fdf12a74b5c807377150e30de80b617939238bb67ddda6');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

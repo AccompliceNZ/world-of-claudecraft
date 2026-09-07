@@ -378,8 +378,10 @@ interface AttributionTargetFixture {
 // Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
 // the Realm Builder monument (PR #3695) and this branch's renderer changes
 // land together on the merged tree. No capture was retaken.
+// Re-minted at the 2026-09-07 release/v0.42.0 sync of the Drakelands epic (PR #3746):
+// the renderer shed its castle-features arm (remint_polish_provenance.mjs).
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '3a5b183e08a217c7421c7fecd4b61e43598b3a081fe8b07ba7fdabed559d0f7b';
+  'b89aee13a6231a2bc195d61d202b9c9d7fd628e2522016d97182083bbf6b6274';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

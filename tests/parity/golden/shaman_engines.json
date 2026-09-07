@@ -2536,29 +2536,29 @@
       "tick": 280,
       "time": 14,
       "nextId": 1004,
-      "state": "b102ec90",
-      "events": "bd7651f7",
+      "state": "df49b8b6",
+      "events": "c4688c61",
       "rng": {
-        "draws": 2341,
-        "digest": "d7bcb626"
+        "draws": 2340,
+        "digest": "54a3667a"
       }
     },
     {
       "tick": 300,
       "time": 15,
       "nextId": 1004,
-      "state": "bf52c37e",
-      "events": "8b618caf",
+      "state": "5f525356",
+      "events": "03b7ef80",
       "rng": {
-        "draws": 2541,
-        "digest": "f3291dfc"
+        "draws": 2538,
+        "digest": "08e4c72d"
       }
     },
     {
       "tick": 306,
       "time": 15.3,
       "nextId": 1004,
-      "state": "59fab945",
+      "state": "a22ca559",
       "events": "741638a5",
       "rng": {
         "draws": 2588,
@@ -2698,12 +2698,12 @@
           "cls": "shaman",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 458
+            "damageDealt": 504
           },
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "dummyDamage": 458
+              "dummyDamage": 504
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -3293,7 +3293,7 @@
           "fallStartY": -2,
           "fiveSecondRule": 114.3,
           "healPower": 5,
-          "hp": 708,
+          "hp": 720,
           "id": 1002,
           "kind": "player",
           "level": 20,
@@ -3343,7 +3343,7 @@
           "fallStartY": -2,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 999316,
+          "hp": 999270,
           "id": 1003,
           "inCombat": true,
           "kind": "mob",
@@ -3379,7 +3379,7 @@
             ],
             [
               1000,
-              1025
+              1151.5
             ]
           ],
           "weapon": {
@@ -3392,7 +3392,7 @@
       "tick": 306,
       "time": 15.3,
       "nextId": 1004,
-      "state": "59fab945",
+      "state": "a22ca559",
       "events": "741638a5",
       "rng": {
         "draws": 2588,
@@ -3532,12 +3532,12 @@
           "cls": "shaman",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 458
+            "damageDealt": 504
           },
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "dummyDamage": 458
+              "dummyDamage": 504
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -4127,7 +4127,7 @@
           "fallStartY": -2,
           "fiveSecondRule": 114.3,
           "healPower": 5,
-          "hp": 708,
+          "hp": 720,
           "id": 1002,
           "kind": "player",
           "level": 20,
@@ -4177,7 +4177,7 @@
           "fallStartY": -2,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 999316,
+          "hp": 999270,
           "id": 1003,
           "inCombat": true,
           "kind": "mob",
@@ -4213,7 +4213,7 @@
             ],
             [
               1000,
-              1025
+              1151.5
             ]
           ],
           "weapon": {
