@@ -14146,8 +14146,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.warfareShop.weapons': 'Silahlar',
   'hudChrome.warlock.doomEmptyStatus': '{value} / {max} Mahkûmiyet.',
   'hudChrome.warlock.doomLabel': 'Mahkûmiyet',
-  'hudChrome.warlock.doomMeterLock': 'Istırap kaynak çubuğunu kilitle',
-  'hudChrome.warlock.doomMeterUnlock': 'Istırap kaynak çubuğunu taşı',
   'hudChrome.warlock.doomStatus': '{value} / {max} Mahkûmiyet; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Üç Kader İpliği: Tüketme onları ek Mahkûmiyete dönüştürebilir.',

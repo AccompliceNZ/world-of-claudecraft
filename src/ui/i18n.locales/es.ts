@@ -14369,8 +14369,6 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.warfareShop.weapons': 'Armas',
   'hudChrome.warlock.doomEmptyStatus': '{value} de {max} de Condena.',
   'hudChrome.warlock.doomLabel': 'Condena',
-  'hudChrome.warlock.doomMeterLock': 'Bloquear la barra de recursos de Aflicción',
-  'hudChrome.warlock.doomMeterUnlock': 'Mover la barra de recursos de Aflicción',
   'hudChrome.warlock.doomStatus': '{value} de {max} de Condena; quedan {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tres Hilos del destino: Consumir puede tejerlos en Condena adicional.',

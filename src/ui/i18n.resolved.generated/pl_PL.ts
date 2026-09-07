@@ -324,8 +324,6 @@ export const pl_PL: EnTranslations = {
     "warlock": {
       "doomLabel": "Potępienie",
       "fateThreadsLabel": "Nici Przeznaczenia",
-      "doomMeterUnlock": "Przesuń pasek zasobu Udręki",
-      "doomMeterLock": "Zablokuj pasek zasobu Udręki",
       "doomEmptyStatus": "{value} z {max} Potępienia.",
       "doomStatus": "{value} z {max} Potępienia; {remaining}.",
       "fateThreadsStatus": "{value} z {max} Nici Przeznaczenia.",
@@ -3028,7 +3026,17 @@ export const pl_PL: EnTranslations = {
         "targetFrame": "Cel",
         "partyFrames": "Drużyna",
         "swingBar": "Automatyczny atak",
-        "targetDots": "Punkty docelowe"
+        "targetDots": "Punkty docelowe",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Ustawienia ramek",
       "framesMenuTitle": "Pokazuj lub ukrywaj poszczególne ramki. Odznaczona ramka pozostaje ukryta, dopóki jej ponownie nie zaznaczysz albo nie przywrócisz ustawień domyślnych.",

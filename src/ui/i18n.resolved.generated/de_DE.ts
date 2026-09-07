@@ -324,8 +324,6 @@ export const de_DE: EnTranslations = {
     "warlock": {
       "doomLabel": "Verdammnis",
       "fateThreadsLabel": "Schicksalsfäden",
-      "doomMeterUnlock": "Verdammnis-Leiste verschieben",
-      "doomMeterLock": "Verdammnis-Leiste sperren",
       "doomEmptyStatus": "{value} von {max} Verdammnis.",
       "doomStatus": "{value} von {max} Verdammnis; {remaining}.",
       "fateThreadsStatus": "{value} von {max} Schicksalsfäden.",
@@ -3028,7 +3026,17 @@ export const de_DE: EnTranslations = {
         "targetFrame": "Ziel",
         "partyFrames": "Gruppe",
         "swingBar": "Automatischer Angriff",
-        "targetDots": "Zielpunkte"
+        "targetDots": "Zielpunkte",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Rahmeneinstellungen",
       "framesMenuTitle": "Einzelne Rahmen ein- oder ausblenden. Ein deaktivierter Rahmen bleibt verborgen, bis du ihn wieder aktivierst oder auf die Standardeinstellungen zurücksetzt.",

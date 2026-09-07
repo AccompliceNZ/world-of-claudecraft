@@ -447,8 +447,6 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
   'hudChrome.statInfo.desc.parry':
     'Tu probabilidad de rechazar por completo un ataque cuerpo a cuerpo frontal, sin recibir daño. Un golpe por la espalda no se puede rechazar.',
   'hudChrome.statInfo.names.parry': 'Rechazo',
-  'hudChrome.warlock.doomMeterLock': 'Bloquear la barra de recurso de Aflicción',
-  'hudChrome.warlock.doomMeterUnlock': 'Mover la barra de recurso de Aflicción',
   'hudChrome.warlock.fateThreadsStatus': '{value} de {max} Hilos del destino.',
   'hudChrome.wocStore.charter.inProgress':
     'Todavía se está completando una compra para este personaje. Vuelve a intentarlo en un momento.',

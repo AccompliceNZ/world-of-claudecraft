@@ -14295,8 +14295,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.warfareShop.weapons': 'Armas',
   'hudChrome.warlock.doomEmptyStatus': 'Condenação {value} de {max}.',
   'hudChrome.warlock.doomLabel': 'Condenação',
-  'hudChrome.warlock.doomMeterLock': 'Travar barra de recurso de Aflição',
-  'hudChrome.warlock.doomMeterUnlock': 'Mover barra de recurso de Aflição',
   'hudChrome.warlock.doomStatus': 'Condenação {value} de {max}; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Três Fios do Destino: Consumir pode tecê-los em Condenação adicional.',

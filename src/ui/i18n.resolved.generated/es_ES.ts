@@ -324,8 +324,6 @@ export const es_ES: EnTranslations = {
     "warlock": {
       "doomLabel": "Condena",
       "fateThreadsLabel": "Hilos del destino",
-      "doomMeterUnlock": "Mover la barra de recurso de Aflicción",
-      "doomMeterLock": "Bloquear la barra de recurso de Aflicción",
       "doomEmptyStatus": "{value} de {max} de Condena.",
       "doomStatus": "{value} de {max} de Condena; quedan {remaining}.",
       "fateThreadsStatus": "{value} de {max} Hilos del destino.",
@@ -3028,7 +3026,17 @@ export const es_ES: EnTranslations = {
         "targetFrame": "Objetivo",
         "partyFrames": "Grupo",
         "swingBar": "Ataque automático",
-        "targetDots": "Puntos de destino"
+        "targetDots": "Puntos de destino",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Ajustes de marcos",
       "framesMenuTitle": "Muestra u oculta marcos individuales. Un marco sin marcar permanece oculto hasta que vuelvas a marcarlo o restablezcas los valores predeterminados.",

@@ -324,8 +324,6 @@ export const id_ID: EnTranslations = {
     "warlock": {
       "doomLabel": "Kecaman",
       "fateThreadsLabel": "Benang Takdir",
-      "doomMeterUnlock": "Pindahkan bilah sumber daya Penderitaan",
-      "doomMeterLock": "Kunci bilah sumber daya Penderitaan",
       "doomEmptyStatus": "{value} dari {max} Kecaman.",
       "doomStatus": "{value} dari {max} Kecaman; {remaining}.",
       "fateThreadsStatus": "{value} dari {max} Benang Takdir.",
@@ -3028,7 +3026,17 @@ export const id_ID: EnTranslations = {
         "targetFrame": "Target",
         "partyFrames": "Party",
         "swingBar": "Serangan Otomatis",
-        "targetDots": "Titik Sasaran"
+        "targetDots": "Titik Sasaran",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Pengaturan Bingkai",
       "framesMenuTitle": "Tampilkan atau sembunyikan bingkai satu per satu. Bingkai yang tidak dicentang tetap tersembunyi sampai kamu mencentangnya lagi atau mengatur ulang ke bawaan.",

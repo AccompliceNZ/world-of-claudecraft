@@ -14414,8 +14414,6 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.warfareShop.weapons': 'Waffen',
   'hudChrome.warlock.doomEmptyStatus': '{value} von {max} Verdammnis.',
   'hudChrome.warlock.doomLabel': 'Verdammnis',
-  'hudChrome.warlock.doomMeterLock': 'Verdammnis-Leiste sperren',
-  'hudChrome.warlock.doomMeterUnlock': 'Verdammnis-Leiste verschieben',
   'hudChrome.warlock.doomStatus': '{value} von {max} Verdammnis; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Drei Schicksalsfäden: Verzehren kann sie zu zusätzlicher Verdammnis verweben.',

@@ -618,6 +618,14 @@ same file), and each module's header carries its own contract.
   helper in `target_frame_pos.ts` (`scaleFromKeyStep`). A frame gesture with no keyboard path is
   a defect: unlocking is the only route to these frames, so a pointer-only affordance leaves a
   keyboard-only player unable to reach what it changes at all.
+  **Every NEW standing HUD surface joins the frames system in the same change** (owner rule,
+  2026-09): any persistent positioned element that is not a `.window`, not a transient
+  banner/toast/tooltip/veil, and not a child of an already-governed frame gets a
+  `HUD_FRAME_SPECS` row, or a reasoned exemption in `tests/hud_frame_coverage.test.ts`, which
+  sweeps the `#ui` subtree of both entries plus the exact file set allowed to mount chrome on
+  the `#ui` root and fails until the question is answered. If the surface's painter rebuilds
+  its own root's HTML, give it an inner body element and paint THAT (the `#qt-body` /
+  `#delve-body` pattern), so the mover chrome survives repaints.
 - **deeds_view.ts** / **deeds_window.ts** (+ the `deed_*` siblings): the Book of Deeds
   window: DOM-free category/entry/unlock model, a cold window painter, and the write-elided
   HUD watch tracker. `deed_i18n.ts` re-localizes deed names/descriptions/titles from ids

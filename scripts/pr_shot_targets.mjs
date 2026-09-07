@@ -386,14 +386,15 @@ async function openInterfaceTab(page, tabIndex) {
   return pollForSize(page, '#options-menu');
 }
 
+const openInterfaceFramesTab = (page) => openInterfaceTab(page, 1);
 const openInterfaceCombatTab = (page) => openInterfaceTab(page, 3);
 const openInterfaceChatTab = (page) => openInterfaceTab(page, 2);
 
-// Press the real "Unlock interface" button (the first row of the Combat tabpanel,
+// Press the real "Unlock interface" button (the first row of the Frames tabpanel,
 // which interfaceUnlockRow appends ahead of the declarative list), then close the
 // menu so the loosened HUD is what the camera sees.
 async function unlockInterfaceThroughTheOption(page) {
-  await openInterfaceCombatTab(page);
+  await openInterfaceFramesTab(page);
   await page.evaluate(() => {
     document.querySelector('#interface-tabpanel .set-row button')?.click();
   });
@@ -2417,13 +2418,14 @@ export const TARGETS = [
   },
   {
     key: 'interface-unlock-option',
-    label: 'Interface options, Combat tab: the Unlock interface row',
+    label: 'Interface options, Frames tab: the Edit Frames entry row',
     when: ['ui/interface_unlock', 'ui/options_window', 'ui/options_view'],
-    // Desktop and mobile: the row is an ordinary options control on both, and the
-    // template asks for the mobile arm of any options-panel change.
+    // Desktop and mobile: the tab is an ordinary options panel on both (the entry
+    // row itself is desktop-only), and the template asks for the mobile arm of any
+    // options-panel change.
     variants: [{ key: 'desktop' }, { key: 'mobile', mobile: true }],
     async capture(page) {
-      await openInterfaceCombatTab(page);
+      await openInterfaceFramesTab(page);
       return { clip: '#options-menu' };
     },
   },

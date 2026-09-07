@@ -14196,8 +14196,6 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.warfareShop.weapons': 'Vũ Khí',
   'hudChrome.warlock.doomEmptyStatus': '{value} trên {max} Kết Án.',
   'hudChrome.warlock.doomLabel': 'Kết Án',
-  'hudChrome.warlock.doomMeterLock': 'Khóa thanh tài nguyên Affliction',
-  'hudChrome.warlock.doomMeterUnlock': 'Di chuyển thanh tài nguyên Affliction',
   'hudChrome.warlock.doomStatus': '{value} trên {max} Kết Án; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Ba Sợi Định Mệnh: Nuốt Chửng có thể dệt chúng thành Kết Án bổ sung.',

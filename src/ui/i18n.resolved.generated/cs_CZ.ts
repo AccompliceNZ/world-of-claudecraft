@@ -324,8 +324,6 @@ export const cs_CZ: EnTranslations = {
     "warlock": {
       "doomLabel": "Odsouzení",
       "fateThreadsLabel": "Nitě osudu",
-      "doomMeterUnlock": "Přesunout lištu zdroje Utrpení",
-      "doomMeterLock": "Zamknout lištu zdroje Utrpení",
       "doomEmptyStatus": "Odsouzení {value} z {max}.",
       "doomStatus": "Odsouzení {value} z {max}; {remaining}.",
       "fateThreadsStatus": "Nitě osudu {value} z {max}.",
@@ -3028,7 +3026,17 @@ export const cs_CZ: EnTranslations = {
         "targetFrame": "Cíl",
         "partyFrames": "Skupina",
         "swingBar": "Automatický útok",
-        "targetDots": "Cílové body"
+        "targetDots": "Cílové body",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Nastavení rámečků",
       "framesMenuTitle": "Zobraz nebo skryj jednotlivé rámečky. Nezaškrtnutý rámeček zůstane skrytý, dokud ho znovu nezaškrtneš nebo neobnovíš výchozí nastavení.",

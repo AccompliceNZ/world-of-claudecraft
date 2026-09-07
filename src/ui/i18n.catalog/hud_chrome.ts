@@ -13,8 +13,9 @@ export const hudChromeStrings = {
   warlock: {
     doomLabel: 'Condemnation',
     fateThreadsLabel: 'Fate Threads',
-    doomMeterUnlock: 'Move Affliction resource bar',
-    doomMeterLock: 'Lock Affliction resource bar',
+    // The doom meter's per-frame move/lock strings retired with its private
+    // mover: the frame rides the shared interfaceUnlock chrome now, and its
+    // name chip is frameNames.doomMeter below.
     doomEmptyStatus: '{value} of {max} Condemnation.',
     doomStatus: '{value} of {max} Condemnation; {remaining}.',
     fateThreadsStatus: '{value} of {max} Fate Threads.',
@@ -4066,6 +4067,28 @@ export const hudChromeStrings = {
       // no debuffs out, so its chip is what names the placeholder. Wordy (M16):
       // the five non-Latin fills land in this same change.
       targetDots: 'Target Dots',
+      // The right-stack trackers and the doom meter, movable frames since
+      // the 0.42 round. All wordy (M16): their five non-Latin fills land in
+      // the same change. The devotion medallion reuses its existing name key
+      // (hudChrome.paladin.devotion); the doom meter needs its own row
+      // because doomLabel names the RESOURCE (Condemnation), not the frame.
+      questTracker: 'Quest Tracker',
+      reliquaryTracker: 'Reliquary Tracker',
+      doomMeter: 'Affliction Bar',
+      // The pet ACTION bar (#petbar); the pet unit frame reuses its aria key.
+      petBar: 'Pet Bar',
+      // The spell-proc overlay (#proc-overlay: the mage birds, the warlock
+      // soul bank and Ruin ritual) and the tabbed combat meter
+      // (#meters-window). Both wordy (M16): non-Latin fills in this change.
+      procOverlay: 'Spell Procs',
+      damageMeter: 'Damage Meter',
+      // The remaining right-stack trackers and the off-hand swing timer.
+      // The three trackers are wordy (M16, fills in this change); Off Hand
+      // is not (no four-letter lowercase run).
+      deedTracker: 'Deed Tracker',
+      delveTracker: 'Delve Tracker',
+      riftTracker: 'Rift Tracker',
+      swingBarOffhand: 'Off Hand',
     },
     // The frames settings dropdown beside the floating Lock Interface button:
     // a show/hide sub-menu plus the frame-behavior toggles that used to live

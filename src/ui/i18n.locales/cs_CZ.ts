@@ -14051,8 +14051,6 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.warfareShop.weapons': 'Zbraně',
   'hudChrome.warlock.doomEmptyStatus': 'Odsouzení {value} z {max}.',
   'hudChrome.warlock.doomLabel': 'Odsouzení',
-  'hudChrome.warlock.doomMeterLock': 'Zamknout lištu zdroje Utrpení',
-  'hudChrome.warlock.doomMeterUnlock': 'Přesunout lištu zdroje Utrpení',
   'hudChrome.warlock.doomStatus': 'Odsouzení {value} z {max}; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tři Nitě osudu: Vysát je dokáže vetkat do dalšího Odsouzení.',
