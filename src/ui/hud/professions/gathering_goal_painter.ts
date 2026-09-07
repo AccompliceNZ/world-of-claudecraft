@@ -12,6 +12,24 @@
 // so no `.textContent`/`.setAttribute`/`.classList`/`.dataset` write is
 // needed anywhere else in the file.
 //
+// Intentional Gathering PR5: a material row whose id resolves to a known
+// gathering source (`gathering_source_locations.ts`) gets a native
+// `<details>`/`<summary>` "Sources" disclosure, closed by default, reusing
+// `renderGatheringSourceDetail` (gathering_source_painter.ts) unmodified: the
+// SAME module the general harvest-preference picker already paints from,
+// never a second source renderer. The disclosure is pure markup plus native
+// browser toggle behavior; it wires NO click handler of its own, so opening
+// one never sets a harvest preference, changes the tracked goal, grants
+// anything, or reaches the network. Its content is painted into an empty
+// per-row container AFTER the panel's own `.innerHTML` write, through calls
+// that live entirely inside `gathering_source_painter.ts`'s own file (so its
+// `.textContent`/DOM-build writes are counted there, not here); a material
+// with no known source (`kind: 'unknown'`, e.g. vendor-only) gets no
+// `<details>` at all, never an empty one. Both the open/closed state of each
+// disclosure and the captured focus key survive a rebuild by reading the
+// PRE-rebuild DOM before the innerHTML write and re-applying it after,
+// exactly like `captureFocusKey`/`restoreFirstEnabled` already do for focus.
+//
 // This is NOT a window: it attaches to a parent-supplied root element (the
 // root tracker element the parent composition owns) and paints in place,
 // with no open/close lifecycle, no dialog role, and no focus trap of its own.
@@ -33,6 +51,7 @@
 // other callback here only reads or clears the tracked goal).
 
 import type { GatheringGoalUnavailableReason } from '../../../sim/professions/gathering_goal_types';
+import { materialSourceInfo } from '../../../sim/professions/gathering_source_locations';
 import { itemDisplayName } from '../../entity_i18n';
 import { esc } from '../../esc';
 import {
@@ -48,6 +67,8 @@ import type {
   GatheringGoalSourceFamilyId,
 } from './gathering_goal_view';
 import { gatheringProfessionNameKey } from './gathering_profession_name';
+import { renderGatheringSourceDetail } from './gathering_source_painter';
+import { buildGatheringSourceView } from './gathering_source_view';
 
 export interface GatheringGoalPanelDeps {
   onClearGoal(): void;
@@ -131,7 +152,43 @@ function craftCountLineHtml(model: GatheringGoalPanelModel): string {
   )}</p>`;
 }
 
-function materialLineHtml(row: GatheringGoalMaterialRow): string {
+/** True when `itemId` resolves to a real, known gathering source (corpse,
+ *  node, farm, or fishing): the sole gate on whether a material row gets a
+ *  Sources disclosure at all. A vendor-only or crafted-intermediate reagent
+ *  (`kind: 'unknown'`) gets no disclosure, never an empty one. */
+function hasKnownGatheringSource(itemId: string): boolean {
+  return buildGatheringSourceView(materialSourceInfo(itemId)).kind !== 'unknown';
+}
+
+/** The per-row "Sources" disclosure (Intentional Gathering PR5): a native
+ *  `<details>`/`<summary>` pair, closed by default unless `itemId` is in
+ *  `expandedSourceItemIds` (the pre-rebuild open set the caller captured).
+ *  The body starts empty; `renderGatheringSourceDetail` fills it AFTER this
+ *  markup is committed via `.innerHTML`, so nothing here duplicates that
+ *  module's own resolution or DOM-build logic. Native disclosure semantics
+ *  mean no click handler, no aria-expanded management, and no preference/
+ *  goal side effect is wired here at all. */
+function sourceDisclosureHtml(
+  row: GatheringGoalMaterialRow,
+  name: string,
+  expandedSourceItemIds: ReadonlySet<string>,
+): string {
+  if (!hasKnownGatheringSource(row.itemId)) return '';
+  const open = expandedSourceItemIds.has(row.itemId) ? ' open' : '';
+  return (
+    `<details class="gathering-goal-source"${open} data-source-item="${esc(row.itemId)}">` +
+    `<summary${focusKeyAttr(`source:${row.itemId}`)} aria-label="${esc(
+      t('hudChrome.gatheringGoal.sourcesToggleAria', { name }),
+    )}">${esc(t('hudChrome.gatheringGoal.sourcesToggle'))}</summary>` +
+    `<div class="gathering-goal-source-body"></div>` +
+    `</details>`
+  );
+}
+
+function materialLineHtml(
+  row: GatheringGoalMaterialRow,
+  expandedSourceItemIds: ReadonlySet<string>,
+): string {
   const name = row.item ? itemDisplayName(row.item) : unavailableMaterialLabel();
   const line = t('hudChrome.gatheringGoal.materialLine', {
     name,
@@ -190,11 +247,14 @@ function materialLineHtml(row: GatheringGoalMaterialRow): string {
   return (
     `<li class="gathering-goal-material${row.satisfied ? ' satisfied' : ''}">` +
     `<span class="gathering-goal-material-line">${esc(line)}${esc(carried)}${esc(stored)}${esc(missing)}${esc(inaccessible)}</span>` +
-    `${metaHtml}</li>`
+    `${metaHtml}${sourceDisclosureHtml(row, name, expandedSourceItemIds)}</li>`
   );
 }
 
-function panelBodyHtml(model: GatheringGoalPanelModel): string {
+function panelBodyHtml(
+  model: GatheringGoalPanelModel,
+  expandedSourceItemIds: ReadonlySet<string>,
+): string {
   const reasonLine =
     model.reason !== null
       ? `<p class="gathering-goal-reason">${esc(t(REASON_KEY[model.reason] as never))}</p>`
@@ -231,8 +291,25 @@ function panelBodyHtml(model: GatheringGoalPanelModel): string {
     `</div>` +
     `</div>` +
     `${craftCountLineHtml(model)}${reasonLine}${readyHint}${payableLine}${storageNote}` +
-    `<ul class="gathering-goal-materials">${model.materials.map(materialLineHtml).join('')}</ul>`
+    `<ul class="gathering-goal-materials">${model.materials
+      .map((row) => materialLineHtml(row, expandedSourceItemIds))
+      .join('')}</ul>`
   );
+}
+
+/** The itemIds whose Sources disclosure is currently open, read off the
+ *  LIVE (pre-rebuild) DOM under `el`. Captured before the wipe so a rebuild
+ *  (a preference set, a goal change, a locale repaint) can re-open the same
+ *  rows afterward, provided that reagent still appears in the new model
+ *  (`sourceDisclosureHtml` simply omits an itemId this set names but the
+ *  fresh materials list no longer has). */
+function capturedExpandedSourceItemIds(el: HTMLElement): ReadonlySet<string> {
+  const expanded = new Set<string>();
+  for (const details of el.querySelectorAll('.gathering-goal-source[open]')) {
+    const itemId = details.getAttribute('data-source-item');
+    if (itemId !== null) expanded.add(itemId);
+  }
+  return expanded;
 }
 
 /** Paint the panel from a prepared model into `el`, the parent-owned root.
@@ -245,9 +322,10 @@ export function renderGatheringGoalPanel(
   deps: GatheringGoalPanelDeps,
 ): void {
   const focusKey = captureFocusKey(el);
+  const expandedSourceItemIds = capturedExpandedSourceItemIds(el);
   const empty = isTrulyEmpty(model);
   el.style.display = empty ? 'none' : 'flex';
-  el.innerHTML = empty ? '' : panelBodyHtml(model);
+  el.innerHTML = empty ? '' : panelBodyHtml(model, expandedSourceItemIds);
   if (empty) return;
 
   el.querySelector('[data-clear]')?.addEventListener('click', () => deps.onClearGoal());
@@ -268,6 +346,18 @@ export function renderGatheringGoalPanel(
       deps.onSetHarvestPreference(preferenceItemId);
     });
   });
+
+  // Fill every Sources disclosure body (open or closed): renderGatheringSourceDetail
+  // is the SAME renderer the general harvest-preference picker uses, called here
+  // with the container this module minted; every DOM write it performs is counted
+  // in gathering_source_painter.ts's own file, not this one's raw-write budget.
+  for (const details of el.querySelectorAll('.gathering-goal-source')) {
+    const itemId = details.getAttribute('data-source-item');
+    const body = details.querySelector('.gathering-goal-source-body');
+    if (itemId !== null && body instanceof HTMLElement) {
+      renderGatheringSourceDetail(body, itemId);
+    }
+  }
 
   if (focusKey !== null) restoreFirstEnabled([findFocusKey(el, focusKey)]);
 }

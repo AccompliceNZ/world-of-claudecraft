@@ -3276,6 +3276,14 @@ export const hudChromeStrings = {
     // never a second Set action for the same target.
     currentPreferenceLabel: 'Current harvest preference',
     currentPreferenceAria: '{name} is your current harvest preference',
+    // The per-material "Sources" disclosure (Intentional Gathering PR5): a
+    // native <details>/<summary> label, so no separate aria-expanded copy is
+    // needed (the browser announces the disclosure state on its own).
+    sourcesToggle: 'Sources',
+    // The disclosure's accessible name: every row shares the visible label
+    // "Sources" (rail-width), so a screen reader hears "Sources for {name}"
+    // per row instead of an unhelpful repeated "Sources, Sources, Sources".
+    sourcesToggleAria: 'Sources for {name}',
   },
   // Party leadership: the right-click "Promote to Leader" handoff action shown on a
   // party member's context menu to the current leader. Lives in the English-only

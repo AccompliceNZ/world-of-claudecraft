@@ -1,12 +1,15 @@
 // Thin painter for the gathering source-info detail (Intentional Gathering
 // PR5): paints the capped GatheringSourceViewModel (gathering_source_view.ts)
 // for one material item id. Reused by the general harvest-preference picker
-// only (componentTags undefined); the corpse Change picker never shows it,
-// since it already lists that body's own supported choices. Resolves every
-// creature/zone/material name at the UI seam (tEntity/itemDisplayName), every
-// tier/proficiency number through formatNumber, and every duration through
-// durationText; nothing here ever prints a raw internal id or a hand-built
-// number string via textContent.
+// (componentTags undefined) AND, since the PR5 goal-row wiring, by the
+// persistent gathering goal panel's per-material Sources disclosure
+// (gathering_goal_painter.ts): both callers paint into a container THEY mint
+// and own, and neither reaches into it beyond that. The corpse Change picker
+// never shows it, since it already lists that body's own supported choices.
+// Resolves every creature/zone/material name at the UI seam
+// (tEntity/itemDisplayName), every tier/proficiency number through
+// formatNumber, and every duration through durationText; nothing here ever
+// prints a raw internal id or a hand-built number string via textContent.
 //
 // `render` replaces the whole subtree under `container` on every call and
 // returns void, the harvest_preference_picker.ts contract. A material with no

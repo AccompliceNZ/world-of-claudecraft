@@ -2470,6 +2470,23 @@ export const pl_PL: EnTranslations = {
       "unknownMaterial": "Unavailable material",
       "currentChoiceLabel": "Current: {choice}"
     },
+    "gatheringSource": {
+      "title": "Where to find {material}",
+      "corpseExample": "{creature} ({zone})",
+      "corpseExampleTagged": "{creature} ({zone}, {tag})",
+      "rareTag": "rare",
+      "eliteTag": "elite",
+      "gatedTag": "quest-gated",
+      "moreSources": "and {count} more",
+      "moreZones": "and {count} more zones",
+      "premiumChance": "Rare or better {material} harvests also yield {specimen} when there is room in your bags.",
+      "specimenOfBase": "{material} is a rare or better harvest bonus from {base}, from the same creatures shown above, never a separate guaranteed find.",
+      "nodeZone": "{zone} (tier {tier}+ tool)",
+      "nodeFineNote": "A gathering tool of tier {tier}+ upgrades this to its fine grade at a matching vein.",
+      "farmNote": "Grown from a planted seed, ready after about {duration}. Needs farming skill {skill}+ and a tier {tier}+ hoe.",
+      "fishingZoneProven": "{zone} waters (proficiency {skill}+, rod tier {tier}+)",
+      "fishingZoneUnproven": "Some waters need proficiency {skill}+ and rod tier {tier}+; no specific spot is confirmed yet."
+    },
     "gatheringGoal": {
       "title": "Gathering Goal",
       "close": "Clear gathering goal",
@@ -2503,7 +2520,9 @@ export const pl_PL: EnTranslations = {
       "setPreferenceButton": "Set as harvest preference",
       "setPreferenceButtonAria": "Set {name} as your harvest preference",
       "currentPreferenceLabel": "Current harvest preference",
-      "currentPreferenceAria": "{name} is your current harvest preference"
+      "currentPreferenceAria": "{name} is your current harvest preference",
+      "sourcesToggle": "Sources",
+      "sourcesToggleAria": "Sources for {name}"
     },
     "party": {
       "promoteLeader": "Mianuj przywódcą",

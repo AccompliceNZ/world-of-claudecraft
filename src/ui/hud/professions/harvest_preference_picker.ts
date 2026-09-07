@@ -220,8 +220,13 @@ export function renderHarvestPreferencePicker(
     }
     hint.hidden = true;
     applyButton.disabled = false;
-    refreshSourceDetail(sourceDetail, view.rows[index].itemId);
-    setDescribedRadio(button);
+    const itemId = view.rows[index].itemId;
+    refreshSourceDetail(sourceDetail, itemId);
+    // All (itemId null) clears the detail to empty, so nothing describes it:
+    // associating a row with an empty description is worse than no
+    // association at all, and would leave a stale non-empty aria-describedby
+    // reference if that same row is picked again after a real material.
+    setDescribedRadio(itemId !== null ? button : null);
     if (focus) button.focus();
     deps.onDraftChange(token);
   };
@@ -259,8 +264,12 @@ export function renderHarvestPreferencePicker(
     root.appendChild(sourceDetail);
     // Associate the already-checked row with the freshly painted detail, the
     // same content-before-focus order selectRow keeps (no focus move happens
-    // here; this paint has not moved focus at all yet).
-    if (initialRow) setDescribedRadio(buttons[view.rows.indexOf(initialRow)] ?? null);
+    // here; this paint has not moved focus at all yet). All (itemId null)
+    // leaves the detail empty, so it gets no association either, matching
+    // selectRow's own empty-description guard above.
+    if (initialRow && initialRow.itemId !== null) {
+      setDescribedRadio(buttons[view.rows.indexOf(initialRow)] ?? null);
+    }
   }
 
   const actions = document.createElement('div');

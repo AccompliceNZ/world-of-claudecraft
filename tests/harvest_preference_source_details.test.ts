@@ -113,6 +113,30 @@ describe('gathering source detail: general picker only', () => {
     expect(hideRow.getAttribute('aria-describedby')).toBeNull();
   });
 
+  it('returning to All clears the previous radio aria-describedby and never assigns an empty-description reference', () => {
+    const container = makeContainer();
+    renderHarvestPreferencePicker(
+      container,
+      { preference: { kind: 'all' } },
+      { onDraftChange: vi.fn(), onCommit: vi.fn(), onDismiss: vi.fn() },
+    );
+    const detail = sourceDetail(container)!;
+    const allRow = radioRowFor(container, HARVEST_PREFERENCE_ALL_TOKEN);
+    const hideRow = radioRowFor(container, 'rough_hide');
+
+    hideRow.click();
+    expect(hideRow.getAttribute('aria-describedby')).toBe(detail.id);
+
+    allRow.click();
+    expect(detail.textContent).toBe('');
+    // The previously-described row loses the association entirely, and All
+    // itself never gains one: an aria-describedby pointing at an empty
+    // detail is worse than none, since a screen reader would announce
+    // nothing for it.
+    expect(hideRow.getAttribute('aria-describedby')).toBeNull();
+    expect(allRow.getAttribute('aria-describedby')).toBeNull();
+  });
+
   it('rewrites the detail content before a keyboard landing moves focus to the new row', () => {
     const container = makeContainer();
     renderHarvestPreferencePicker(
