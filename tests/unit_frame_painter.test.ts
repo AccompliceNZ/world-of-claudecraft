@@ -129,6 +129,7 @@ describe('UnitFramePainter: the player instance routes every write through the e
       { m: 'toggleClass', args: [RES_CONTAINER, 'energy', false] },
       { m: 'toggleClass', args: [RES_CONTAINER, 'focus', false] },
       { m: 'toggleClass', args: [RES_CONTAINER, 'mana', true] },
+      { m: 'toggleClass', args: [RES_CONTAINER, 'is-empty', false] },
       { m: 'setTransform', args: [RES_FILL, 'scaleX(0.8)'] },
       { m: 'setText', args: [RES_TEXT, '80 / 100'] },
     ]);
@@ -150,6 +151,13 @@ describe('UnitFramePainter: the player instance routes every write through the e
     const focus = paint(playerDescriptor({ resourceKind: 'focus' }));
     expect(focus).toContainEqual({ m: 'toggleClass', args: [RES_CONTAINER, 'focus', true] });
     expect(focus).toContainEqual({ m: 'toggleClass', args: [RES_CONTAINER, 'mana', false] });
+  });
+
+  it('shrinks the empty resource rail and restores it when text returns', () => {
+    const empty = paint(playerDescriptor({ resourceKind: 'none', resFrac: 0, resText: '' }));
+    expect(empty).toContainEqual({ m: 'toggleClass', args: [RES_CONTAINER, 'is-empty', true] });
+    const filled = paint(playerDescriptor());
+    expect(filled).toContainEqual({ m: 'toggleClass', args: [RES_CONTAINER, 'is-empty', false] });
   });
 
   it('folds the absorb overshield toggle onto the elided writers', () => {

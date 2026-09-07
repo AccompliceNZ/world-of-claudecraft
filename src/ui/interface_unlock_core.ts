@@ -154,7 +154,7 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
     elementId: 'pet-frame',
     storageKey: 'woc_hud_frame_pet',
     labelKey: 'hudChrome.unitFrame.petLabel',
-    fallbackSize: { w: 180, h: 54 },
+    fallbackSize: { w: 278, h: 60 },
     detachToUiRoot: true,
   },
   // The pet ACTION bar, the command half of #pet-cluster. Its own row rather

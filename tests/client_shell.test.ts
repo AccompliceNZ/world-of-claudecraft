@@ -236,7 +236,9 @@ function splitGameUiTemplate(): { templateHtml: string; liveHtml: string } {
 describe('client HTML shell', () => {
   it('uses the painted combat-status crest in both game entries', () => {
     for (const entry of [html, playHtml]) {
-      const combat = entry.match(/<div class="combat-flash"[^>]*>[\s\S]*?<\/div>/)?.[0];
+      const combat = entry.match(
+        /<div class="combat-flash ui-combat-badge"[^>]*>[\s\S]*?<\/div>/,
+      )?.[0];
       expect(combat).toBeDefined();
       expect(combat).toContain('id="pf-combat"');
       expect(combat).toContain('role="status"');
@@ -558,6 +560,29 @@ describe('client HTML shell', () => {
       expect(entry).toContain(
         'id="tf-castbar" role="progressbar" aria-valuemin="0" aria-valuemax="100" data-i18n-aria="hudChrome.castBar.targetAria"',
       );
+    }
+  });
+
+  it('composes the unit-frame and cast primitives identically in both entries', () => {
+    for (const entry of [html, playHtml]) {
+      expect(entry.match(/class="portrait-wrap ui-portrait-wrap"/g) ?? []).toHaveLength(4);
+      expect(entry.match(/class="portrait ui-portrait"/g) ?? []).toHaveLength(4);
+      expect(entry.match(/class="level-chip ui-medal/g) ?? []).toHaveLength(4);
+      expect(entry.match(/ui-cast-icon" hidden/g) ?? []).toHaveLength(2);
+      expect(entry).toContain('class="ui-cast ui-cast--hostile"');
+      expect(entry).toContain('class="uf-name ui-ribbon" id="totf-name"');
+      expect(entry).toContain('class="uf-name ui-ribbon" id="petf-name"');
+      expect(entry).toMatch(
+        /id="tf-name-header"[\s\S]*?<div id="tf-elite-tag" class="ui-ribbon-tag"/,
+      );
+
+      const tickRows = [
+        ...entry.matchAll(/<div class="ui-bevel-ticks" aria-hidden="true">([\s\S]*?)<\/div>/g),
+      ];
+      expect(tickRows).toHaveLength(6);
+      for (const ticks of tickRows) {
+        expect(ticks[1].match(/<span><\/span>/g) ?? []).toHaveLength(4);
+      }
     }
   });
 
@@ -1980,7 +2005,7 @@ describe('client HTML shell', () => {
     // re-created on every party rebuild in hud.ts. (Leaving the party moved from a
     // per-row button to the self portrait context menu, so the row no longer builds
     // a #party-leave button.)
-    expect(partyFrameRowTs).toContain("row.className = 'party-frame panel';");
+    expect(partyFrameRowTs).toContain("row.className = 'party-frame panel ui-panel';");
     expect(hudTs).toContain("else if (act === 'leave-party') this.sim.partyLeave();");
 
     // Aura slots: one node per aura id, held in a keyed pool and built once in

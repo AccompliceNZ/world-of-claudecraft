@@ -904,6 +904,33 @@
     --glow-action-bind-selected:
       0 0 calc(10px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 80%, transparent),
       inset 0 0 0 2px var(--gold);
+
+    /* unit and party frames */
+    /* Shared authored geometry for the plateless unit-frame family. */
+    --unit-frame-w: 278px;
+    /* Classic party bars keep a readable health-to-resource hierarchy. */
+    --party-hp-h: 9px;
+    --party-res-h: 5px;
+    /* Compact raid cells use one stable board-approved footprint. */
+    --party-raid-cell-w: 122px;
+    --party-raid-cell-h: 42px;
+    /* Party rows fall back to a readable class accent before their live class resolves. */
+    --color-party-class-default: #7fb8ff;
+    /* Raid-cell materials stay flat and darker than classic party panels. */
+    --color-party-raid-border: #050505;
+    --color-party-raid-ground: #101010;
+    --color-party-raid-track: #171717;
+    /* Role swatches remain legible independently of the class-colored health fill. */
+    --color-party-role-tank: #5a8fd8;
+    --color-party-role-healer: #7fdc4f;
+    --color-party-role-damage: #d8563a;
+    /* Party pet tracks and dead-state stripes stay subordinate to member health. */
+    --color-party-pet-track: #0c0c14;
+    --color-party-pet-dead-hi: #3a3a3a;
+    --color-party-pet-dead-lo: #262626;
+    --color-party-pet-dead-border: #555555;
+    /* Live party-pet health fill. */
+    --party-pet-fill: linear-gradient(180deg, #6fbf5a, #3f8a33);
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal

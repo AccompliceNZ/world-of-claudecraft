@@ -4099,6 +4099,7 @@ export const hudChromeStrings = {
     lock: 'Lock player frame',
   },
   partyFrames: {
+    header: 'Party',
     section: 'Party and Raid Frames',
     // The Frames tab's one labelled subsection (options window): every
     // declarative row there tunes the party frames now. Wordy (M16):
