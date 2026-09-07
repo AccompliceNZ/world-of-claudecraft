@@ -165,3 +165,26 @@ describe('mailbox_window: house style', () => {
     expect(painter.includes('\u2013'), 'en dash found').toBe(false);
   });
 });
+
+// W20: the Delete rail carried its danger colour only on :hover, which a touch
+// device never enters, so the destructive action looked identical to the safe
+// one there. The cue moved onto the resting state.
+describe('mailbox: the Delete rail is marked at rest', () => {
+  const components = readFileSync(new URL('../src/styles/components.css', import.meta.url), 'utf8');
+  const ruleBody = (selector: string): string => {
+    const at = components.indexOf(`\n  ${selector} {`);
+    expect(at, `no rule for ${selector}`).toBeGreaterThan(-1);
+    return components.slice(at, components.indexOf('}', at));
+  };
+
+  it('still stamps the danger class on the Delete button', () => {
+    expect(painter).toContain("del.className = 'mail-action-btn danger ui-btn';");
+  });
+
+  it('colours the danger rail without a hover state', () => {
+    const rest = ruleBody('.mail-action-btn.danger');
+    expect(rest).toContain('color: var(--color-text-error);');
+    expect(rest).toContain('border-color: var(--color-border-invalid);');
+    expect(components).not.toContain('.mail-action-btn.danger:hover');
+  });
+});

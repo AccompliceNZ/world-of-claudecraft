@@ -189,3 +189,17 @@ describe('arena_window: map row (slot-parity arena maps)', () => {
     expect(src).toContain("t('hud.arena.mapName', { name: t(ARENA_MAP_KEY[matchMap]) })");
   });
 });
+
+// W20: the height ignored the #ui zoom divisor every sibling window applies, so
+// at a non-default ui-scale the window overshot the viewport it was capped to.
+describe('arena window height', () => {
+  it('divides the viewport cap by --window-scale like its siblings', () => {
+    const at = css.indexOf('\n  #arena-window {');
+    expect(at).toBeGreaterThan(-1);
+    const body = css.slice(at, css.indexOf('}', at));
+    expect(body).toContain(
+      'height: min(480px, calc(var(--app-vh, 100vh) * 0.85 / var(--window-scale) - 24px));',
+    );
+    expect(body).not.toContain('calc(var(--app-vh, 100vh) * 0.85 - 24px)');
+  });
+});

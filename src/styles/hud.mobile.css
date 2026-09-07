@@ -94,7 +94,7 @@
     --color-mobile-seat-caption: #bfb28a;
     /* The shared top glint and drop lift every round touch button carries. */
     --mobile-btn-edge: inset 0 1px 0 color-mix(in srgb, var(--color-white) 8%, transparent);
-    --mobile-btn-shadow: 0 2px 8px color-mix(in srgb, var(--color-keyline) 56%, transparent);
+    --mobile-btn-shadow: 0 2px 8px color-mix(in srgb, var(--color-keyline) 60%, transparent);
     /* The local band that dims the world under an open strip or radial: one
        stop, two translucencies, never a full-screen scrim. */
     --color-mobile-dim-band: #05050c;
@@ -437,7 +437,7 @@
       color-mix(in srgb, var(--color-mobile-autorun-lo) 91%, transparent) 72%
     );
     box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--color-keyline) 56%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--color-keyline) 60%, transparent),
       inset 0 1px 0 color-mix(in srgb, var(--color-white) 13%, transparent),
       0 0 calc(16px * var(--fx-shadow, 1)) color-mix(in srgb, var(--color-keyline) 53%, transparent);
     display: flex;
@@ -469,7 +469,7 @@
     color: var(--color-mobile-autorun-ink-locked);
     border-color: var(--gold);
     box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--color-keyline) 56%, transparent),
+      0 0 0 1px color-mix(in srgb, var(--color-keyline) 60%, transparent),
       inset 0 1px 0 color-mix(in srgb, var(--color-white) 14%, transparent),
       0 0 calc(18px * var(--fx-shadow, 1))
       color-mix(in srgb, var(--color-mobile-joy-glow) 60%, transparent);
@@ -531,7 +531,7 @@
       color-mix(in srgb, var(--color-mobile-joy-knob-lo) 60%, transparent) 70%
     );
     box-shadow:
-      0 2px 10px color-mix(in srgb, var(--color-keyline) 56%, transparent),
+      0 2px 10px color-mix(in srgb, var(--color-keyline) 60%, transparent),
       inset 0 1px 0 color-mix(in srgb, var(--color-white) 11%, transparent);
     transition: transform 0.06s linear;
   }
@@ -3750,10 +3750,14 @@
      needs the coarse-pointer floor as well as its column seat. Same invisible
      hit extension the compact tracker chips use: the visual pill stays small
      under the map, and a ::after rectangle reaches the 40px reach around it
-     rather than inflating the pill itself. position: static + margin auto is
-     what centres it in the column (the desktop rule seats it absolutely). */
+     rather than inflating the pill itself. The pill is position: relative so the
+     ::after can hang off it, which means the desktop rule's left / bottom would
+     otherwise apply as FLOW offsets and shove it right and up; both are reset to
+     auto, and margin auto is what centres it in the column. */
   body.mobile-touch #minimap-clock {
     position: relative;
+    left: auto;
+    bottom: auto;
     order: 4;
     transform: none;
     margin: 5px auto 0;
@@ -6916,11 +6920,18 @@
     font-size: 16px;
   }
   /* Desktop lays the spell list out as a landscape grid; touch stays a single
-     scrollable column so the existing 40x40px tap targets below keep working. */
+     column so the existing 40x40px tap targets below keep working. The desktop
+     rule's `height: calc(100% - var(--win-head-h))` plus `overflow-y: auto`
+     would make the list its own bounded scroller inside the sheet, a second
+     nested scroll region the touch model does not have: the sheet's own
+     overflow-y (mobile sheet base) is the single scroll here, so the list
+     grows to its content instead. */
   body.mobile-touch #spellbook .spell-list {
     display: flex;
     flex-direction: column;
     gap: 2px;
+    height: auto;
+    overflow-y: visible;
   }
   body.mobile-touch #spellbook .spell-row {
     min-height: 52px;
@@ -7120,9 +7131,14 @@
   body.mobile-touch #quest-log-window .ql-empty {
     font-size: 16px;
   }
+  /* height: auto is what keeps the row unbounded here: the components-layer
+     rule caps it at `calc(100% - var(--win-head-h))`, which on the sheet would
+     clip the columns instead of letting the sheet scroll them (see the
+     single-outer-scroll note below). */
   body.mobile-touch #quest-log-window .ql-cols {
     gap: var(--spacing-sm);
     min-width: 0;
+    height: auto;
   }
   body.mobile-touch #quest-log-window .ql-list {
     width: min(42%, 220px);

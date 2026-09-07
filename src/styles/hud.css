@@ -1654,7 +1654,7 @@
   #reliquary-tracker.hud-frame-detached,
   #delve-tracker.hud-frame-detached,
   #rift-tracker.hud-frame-detached {
-    width: 240px;
+    width: var(--tracker-w);
   }
   #actionbar .tf-move-btn,
   #actionbar2 .tf-move-btn,
@@ -4435,7 +4435,7 @@
     position: absolute;
     left: 12px;
     bottom: 8px;
-    width: min(370px, calc(50vw - 330px));
+    width: min(var(--chat-w), calc(50vw - 330px));
   }
   #chatlog-tabs {
     /* Stay a single clean row as tabs are added: never wrap the "+" to its own
@@ -4849,7 +4849,7 @@
     position: absolute;
     right: 14px;
     top: 262px;
-    width: 240px;
+    width: var(--tracker-w);
     display: flex;
     flex-direction: column;
     gap: 14px;
@@ -5301,7 +5301,7 @@
      .hud-frame-detached. Either class turns the panel into the fixed-height
      scrolling column below. */
   .mt-panel {
-    width: 240px;
+    width: var(--tracker-w);
     padding: 8px 10px;
     display: none;
     align-self: flex-end;
@@ -8098,7 +8098,7 @@
     position: absolute;
     left: 12px;
     bottom: 220px;
-    width: 370px;
+    width: var(--chat-w);
     display: none;
     z-index: 25;
     line-height: 1.35;
@@ -9576,24 +9576,6 @@
     width: 460px;
     box-sizing: border-box;
     overflow-x: hidden;
-  }
-  #trade-window .btn {
-    background: revert-layer;
-    color: revert-layer;
-    border: revert-layer;
-    outline: revert-layer;
-    border-radius: revert-layer;
-    font-family: revert-layer;
-    letter-spacing: revert-layer;
-    text-shadow: revert-layer;
-    box-shadow: revert-layer;
-    filter: revert-layer;
-    transition: revert-layer;
-  }
-  #trade-window .btn:focus-visible {
-    outline: 2px solid var(--color-border-focus) !important;
-    outline-offset: 2px !important;
-    box-shadow: revert-layer !important;
   }
   .trade-cols {
     display: flex;
