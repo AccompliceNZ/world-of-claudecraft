@@ -1656,7 +1656,8 @@ describe('client HTML shell', () => {
       expect(hudTs).toContain(`className = '${className}';`);
     }
     expect(hudTs).toContain("el.className = 'ui-panel-strong';");
-    expect(hudTs.match(/className = 'btn ui-btn';/g)).toHaveLength(2);
+    // Bind banner Reset and Done, plus the emote editor's Done.
+    expect(hudTs.match(/className = 'btn ui-btn';/g)).toHaveLength(3);
     expect(hudTs).toContain("const bar3 = $('#actionbar3');");
     expect(hudTs).toContain('const container = bars[actionBarRowForSlot(i) - 1];');
     expect(hudTs).toContain('keyCapLabel(this.keybinds.primaryLabel(slotKey))');
@@ -2477,11 +2478,10 @@ describe('client HTML shell', () => {
     expect(marketWindowTs).toContain('data-market-page="next"');
     expect(marketWindowTs).toContain('itemUi.market.pageRange');
     expect(marketWindowTs).toContain('class="mkt-filters"');
-    // Search and every visible filter must participate in the same responsive grid.
-    // A nested wrapping flex row makes the search align against the full filter block,
-    // so it drops beside the last filter row as the window narrows.
+    // Search and every visible filter stack in the persistent browse sidebar, which
+    // scrolls on its own so a tall filter set never pushes the listing body away.
     expect(componentsCss).toContain(
-      '.mkt-controls {\n    display: grid;\n    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));',
+      '.mkt-controls {\n    display: flex;\n    flex-direction: column;\n    gap: var(--spacing-sm);\n    margin: 0;\n    position: relative;\n    z-index: 3;\n    min-height: 0;\n    overflow-y: auto;',
     );
     expect(componentsCss).toContain('.mkt-filters {\n    display: contents;');
     expect(componentsCss).toContain('.mkt-search {\n    width: 100%;\n    max-width: none;');
@@ -2503,11 +2503,15 @@ describe('client HTML shell', () => {
     // controls back inside #market-body would silently break the mobile
     // sheet-scroll fix (hud.mobile.css keys off this exact sibling shape) with no
     // other test catching it. controlsHtml (built with `.mkt-controls` as its own
-    // top-level div) is spliced into el.innerHTML as a sibling ahead of the
+    // top-level div) is spliced into the `.mkt-layout` row as a sibling ahead of the
     // `#market-body` div, never inside it.
     expect(marketWindowTs).toContain('`<div class="mkt-controls" role="group"');
     const markupIdx = marketWindowTs.indexOf('el.innerHTML =');
-    const controlsHtmlIdx = marketWindowTs.indexOf('controlsHtml +', markupIdx);
+    // biome-ignore lint/suspicious/noTemplateCurlyInString: asserting the source literally contains this template expression
+    const controlsHtmlIdx = marketWindowTs.indexOf(
+      '${controlsHtml}<div id="market-body">',
+      markupIdx,
+    );
     const bodyIdx = marketWindowTs.indexOf('<div id="market-body">', markupIdx);
     expect(controlsHtmlIdx).toBeGreaterThan(markupIdx);
     expect(bodyIdx).toBeGreaterThan(controlsHtmlIdx);

@@ -1103,19 +1103,15 @@ describe('border accent graphics fairness (cosmetic identity, preset-identical)'
           const tierUses = normalized.match(/var\(--fx-shadow/g) ?? [];
           allTierShadowDeclarations.push(...tierUses.map(() => normalized));
           const property = normalized.slice(0, normalized.indexOf(':')).trim();
-          // The library glow composites (tokens.css) are box-shadow values by
-          // construction, so a tier may scale them like any other bloom.
+          // The library glow composites (tokens.css --glow-*) are box-shadow values
+          // by construction, so a tier may scale them like any other bloom.
+          const tierScalable =
+            ['box-shadow', 'filter', '--art-shadow-sm', '--art-shadow-lg'].includes(property) ||
+            property.startsWith('--glow-');
           expect(
-            [
-              'box-shadow',
-              'filter',
-              '--art-shadow-sm',
-              '--art-shadow-lg',
-              '--glow-gold',
-              '--glow-gold-soft',
-            ],
+            tierScalable,
             `${rel} has an identity-affecting --fx-shadow property: ${rule[1].trim()}`,
-          ).toContain(property);
+          ).toBe(true);
           if (property === 'filter') {
             expect(normalized, `${rel} may use --fx-shadow filters only for bloom`).toMatch(
               /^filter\s*:\s*drop-shadow\(/,
@@ -1144,8 +1140,8 @@ describe('border accent graphics fairness (cosmetic identity, preset-identical)'
     expect(
       allTierShadowDeclarations,
       // Shipped uses plus the two library glow composites in tokens.css.
-      'the style graph owns 50 reviewed tier-shadow uses',
-    ).toHaveLength(50);
+      'the style graph owns 70 reviewed tier-shadow uses',
+    ).toHaveLength(70);
 
     for (const [name, body] of [
       [

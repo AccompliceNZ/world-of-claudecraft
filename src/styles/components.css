@@ -12993,6 +12993,7 @@
   }
   #market-body {
     overflow-y: auto;
+    flex: 1;
     min-height: 0;
     padding-right: 2px;
     touch-action: pan-y;
