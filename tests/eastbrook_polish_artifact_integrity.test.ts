@@ -1034,18 +1034,47 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // Re-minted for the Drakelands entrance merge into the raid branch (PRs 3689
 // plus 3734: both arms had re-minted, the merged renderer and evidence inputs
 // land together). No capture was retaken.
+// Re-minted for the 2026-08-31 v0.41.0 sync into the shader-warm branch: both
+// arms had re-minted, the merged renderer, lockfile, and re-stamped GLB inputs
+// land together. No capture was retaken.
+// Re-minted for the shader-warm PR's give-up rule and its review fixes
+// (renderer.ts: the census bracket and the cast units' compile-arm host).
+// No capture was retaken.
 // Re-minted at the release/v0.42.0 sync of PR #3439: renderer.ts moved for the
 // mount lifecycle seam (mount_lifecycle.ts) and the rickshaw hooks it absorbed.
 // Re-minted for the Cluckwork Mech Bird store mount (PR #3464) on top of the
 // v0.42.0 mount-lifecycle move: the renderer's stride accumulator moved to
 // src/render/stride_audio_core.ts and the mounted audio branch gained the
 // idle-hum poll. No capture was retaken.
+// Re-minted for the 2026-09-04 release/v0.42.0 sync into the shader-warm branch:
+// both arms had re-minted, and the merged renderer (the mount lifecycle and
+// stride audio moves beside this branch's changes) and evidence inputs land
+// together. No capture was retaken.
+// Re-minted for the Realm Builder monument (PR #3695) at its release/v0.42.0
+// base merge: the civic centrepiece changed asset, subject and shader cache
+// key, so every provenance block was swept onto the merged fingerprinted
+// inputs. No capture was retaken.
+// Re-minted for the PR #3695 review fixes: the impostor fragment's fog and
+// tone-mapping tail moved realm_builder_monument_fx.ts. No capture was retaken.
+// Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
+// the Realm Builder monument (PR #3695) and this branch's renderer changes
+// land together on the merged tree. No capture was retaken.
+// Re-minted for the release/v0.42.0 merge into the Nythraxis playtest-tuning
+// branch (PR #3903's Varkhul heroic add-health lands beside this branch's
+// Nythraxis hazard-color renderer change): the composite first, then this
+// seal. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  'f8d1df1d60bb2bc3fa8020cc8bf23da5f42bc99dc315dd80a718886a9673b509';
+  'bfa519a71ef1be70c96d93588b9883ec7e36ba2616eec6faf1d23a80631e6d6c';
 // Re-minted at the release/v0.42.0 sync of PR #3439: renderer.ts moved for the
 // mount lifecycle seam (mount_lifecycle.ts) and the rickshaw hooks it absorbed.
+// Re-minted again for the PR #3695 review fixes (the impostor fragment tail).
+// Re-minted for the release/v0.42.0 merge into the Nythraxis playtest-tuning
+// branch (PR #3903's Varkhul heroic add-health lands beside this branch's
+// Nythraxis hazard-color renderer change): both arms had re-minted, so the
+// merged renderer.ts bytes replace either side's value. No capture was
+// retaken.
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  '8ae24529f62c56634b8f16c8f5d85e8964f44d41bcbcbe43b9a3700ab4859c41';
+  'fe96bae53b2d75d68d4123d21d0d3b0d59e66ecff72ee0f3f8d6c1fee8447927';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2201,7 +2230,28 @@ describe('Eastbrook polish performance and contact evidence', () => {
       `the second-order performance digest moved; if every input moved legitimately, re-mint with: ${REMINT_COMMAND} (it recomputes this literal LAST, from the swept files)`,
       // Re-minted for the Drakelands entrance merge into the raid branch: the
       // composite first, then this seal. No capture was retaken.
-    ).toBe('c39e61b97e0da13f673b46cfa1a956c77229edf10978aa60550486bba365c7da');
+      // Re-minted for review round 3 of the shader-warm PR: the composite
+      // follows the moved ward walk, then this seal. No capture was retaken.
+      // Re-minted for the shader-warm PR's give-up rule and its review fixes:
+      // the composite first, then this seal. No capture was retaken.
+      // Re-minted for the 2026-09-04 release/v0.42.0 sync into the shader-warm
+      // branch: the composite first, then this seal. No capture was retaken.
+      // Re-minted for the Realm Builder monument (PR #3695) at its
+      // release/v0.42.0 base merge: the first-order composite follows the
+      // renderer, town and civicShader leaves, then this second-order seal
+      // follows the swept evidence bytes. No capture was retaken.
+      // Re-minted for the PR #3695 review fixes: the impostor fragment's fog
+      // and tone-mapping tail moved realm_builder_monument_fx.ts, the composite
+      // followed it, then this seal followed the swept bytes. No capture was
+      // retaken.
+      // Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
+      // the Realm Builder monument (PR #3695) and this branch's renderer changes
+      // land together on the merged tree. No capture was retaken.
+      // Re-minted for the release/v0.42.0 merge into the Nythraxis
+      // playtest-tuning branch (PR #3903's Varkhul heroic add-health lands
+      // beside this branch's Nythraxis hazard-color renderer change): the
+      // composite first, then this seal. No capture was retaken.
+    ).toBe('e4642fc28b5874f883448ba359b88246284c82a8e1ea172507743d0eb73f633a');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

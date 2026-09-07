@@ -1307,6 +1307,11 @@ export const da_DK: EnTranslations = {
       "separate": "Adskil {meter}",
       "regroup": "Saml {meter} igen"
     },
+    "targetDots": {
+      "title": "Target Dots",
+      "row": "{aura} on {target}",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Målets auraer",
       "keybindLabel": "Målets forstærkninger og svækkelser",
@@ -1567,6 +1572,26 @@ export const da_DK: EnTranslations = {
       "showPlaytime": "Vis spilletid på karakterskærm",
       "forceHighPerfGpu": "Brug den dedikerede gaming-GPU",
       "forceHighPerfGpuNote": "Slået til som standard: skrivebordsappen beder denne computer om dens dedikerede gaming-GPU. Slå dette fra, hvis spillet ikke vil starte, åbner til en sort skærm, eller den bærbares skærm går i sort. Træder i kraft, næste gang spillet starter.",
+      "shaderWarm": "Shader Warm-up Worker",
+      "shaderWarmAuto": "Auto",
+      "shaderWarmOff": "Off",
+      "shaderWarmOn": "On",
+      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
+      "gpuBackend": "Graphics Backend",
+      "gpuBackendAuto": "Auto",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL (slow)",
+      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
+      "gpuBackendActive": "Currently using {backend}.",
+      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
+      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
+      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "Some changes take effect after a restart.",
+      "restartGame": "Restart Game",
+      "restartInProgress": "Restarting the game...",
+      "restartFailed": "The game could not restart itself. Quit and start it again.",
       "discordPresence": "Detaljeret Discord-tilstedeværelse",
       "discordPresenceNote": "Viser den zone, du er i, og hvor længe du har spillet i denne session, som din Discord-aktivitet, og alle, der kan se din Discord-profil, kan se begge dele. Kun zonens navn, din sessionstid og spillet deles, aldrig din karakter, din konto eller hvem du spiller med. Kræver, at Discord-appen kører på denne computer.",
       "showDevBadges": "Vis udviklermærker",
@@ -1598,6 +1623,9 @@ export const da_DK: EnTranslations = {
       "showTargetOfTarget": "Vis målets mål",
       "showTargetSwingTimer": "Vis målets svingtimer",
       "showPetFrame": "Vis dit kæledyr",
+      "showNameplateDots": "Show My Dots on Nameplates",
+      "nameplateDotScale": "Nameplate Dot Size",
+      "showTargetDots": "Show Target Dots",
       "waterRipples": "Vandkrusninger (kølvand)",
       "showAttackButton": "Vis angrebsknap",
       "showDailyRewardsChest": "Vis kisten med daglige belønninger",
@@ -3072,7 +3100,8 @@ export const da_DK: EnTranslations = {
         "playerFrame": "Spiller",
         "targetFrame": "Mål",
         "partyFrames": "Gruppe",
-        "swingBar": "Autoangreb"
+        "swingBar": "Autoangreb",
+        "targetDots": "Target Dots"
       },
       "framesMenu": "Rammeindstillinger",
       "framesMenuTitle": "Vis eller skjul enkelte rammer. En fravalgt ramme forbliver skjult, indtil du vælger den igen eller nulstiller til standard.",
@@ -3104,11 +3133,42 @@ export const da_DK: EnTranslations = {
       "invalid": "Det er ikke en gyldig eksportkode.",
       "wrongKind": "Den kode er en anden eksporttype."
     },
+    "riftForge": {
+      "title": "Rift Forge",
+      "subtitle": "Riftbound bands",
+      "currency": "{name}: {count}",
+      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
+      "wornHint": "Worn. Unequip it to forge.",
+      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
+      "upgradeMax": "Fully upgraded",
+      "gemPickAria": "Gem to socket",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
+      "socketBtn": "Socket",
+      "socketsNone": "no gems",
+      "noGems": "No Rift gems in your bags",
+      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "reason": {
+        "notFound": "That band is not in your bags.",
+        "notRiftGear": "Only a Riftbound band can be forged.",
+        "maxUpgrade": "That band is fully upgraded.",
+        "insufficientEssence": "Not enough Rift Essence.",
+        "invalidGem": "You have no such Rift gem.",
+        "dead": "You can't do that while dead.",
+        "tooFar": "You are too far from the Rift Forge."
+      },
+      "done": {
+        "upgrade": "Upgraded {name}.",
+        "socket": "Socketed a gem into {name}.",
+        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "Kræver niveau {level}",
       "riftTier": "{tier}-rangs Rift-genstand",
       "riftUpgrade": "Rift-opgradering {level}/{max}",
       "riftSockets": "Rift-juveler {used}/{total}",
+      "riftGemSocket": "Socket bonus for a Riftbound band",
       "statEnchanted": "+{value} {stat} (Fortryllet)",
       "enchantedFallback": "Fortryllet",
       "partyTradeWindow": "Du kan handle denne genstand til spillere, der delte dens bytte, i de næste {time}. Udstyrer du den, afsluttes handelsvinduet."
@@ -3389,6 +3449,15 @@ export const da_DK: EnTranslations = {
       "popupTitle": "Laugsskilt",
       "close": "Luk"
     },
+    "realmBuilder": {
+      "title": "Realm Builder of the Month",
+      "currentLabel": "Honoured this month",
+      "placeholderName": "Your Name Here",
+      "placeholderHint": "This plate is waiting for its first name.",
+      "pastTitle": "Past honourees",
+      "pastEmpty": "No names on the roll yet.",
+      "close": "Close"
+    },
     "bank": {
       "title": "Bank",
       "subtitle": "Det Forgyldte Pengeskrin",
@@ -3615,6 +3684,20 @@ export const da_DK: EnTranslations = {
         "result": {
           "set": "Laugsopslagstavlen blev opdateret.",
           "notOfficer": "Kun officerer og lavsmesteren kan redigere opslagstavlen."
+        }
+      },
+      "roster": {
+        "seats": "{count} of {cap} seats",
+        "expand": "Expand roster (+{seats} seats for {price})",
+        "maxed": "The roster is at its largest size",
+        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
+        "confirmAction": "Expand",
+        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "result": {
+          "notLeader": "Only the Guild Master may expand the guild roster.",
+          "maxed": "The guild roster cannot grow any larger.",
+          "cannotAfford": "You need {price} to expand the guild roster.",
+          "retry": "The guild roster changed while you were buying. Try again."
         }
       }
     },
@@ -4033,6 +4116,7 @@ export const da_DK: EnTranslations = {
       "yieldLineRange": "{min} til {max} {item}",
       "alreadyEnchanted": "Den genstand er allerede fortryllet.",
       "sameEnchant": "Den genstand har allerede den fortryllelse.",
+      "riftGear": "Riftbound bands take Rift gems, not enchants.",
       "replaceTag": "Erstatter {enchant}",
       "sameEnchantTag": "Allerede anvendt",
       "plainTag": "Ikke fortryllet",
@@ -6136,6 +6220,8 @@ export const da_DK: EnTranslations = {
       "raceBody": "Enhver gruppe i riget kan angribe den samme rift på samme tid, hver i sin egen kopi, og kun den første til at fælde tingen på bunden forsegler den. Når en gruppe vinder, hører riget deres navne og deres tid, og vejen ind lukker bag dem. At tabe løbet afslutter ikke jeres tur: jeres kopi forbliver åben, tingen på bunden falder stadig for jer, og I går stadig ud for egen kraft. Det, det koster jer, er alt det, en oprydning ville have betalt. Bossen efterlader intet til den gruppe, der kom nummer to, så det, I bærer hjem, er det, der droppede fra mobs på vejen ned, og intet mere. Bedrifternes Bog tæller stadig oprydningen, for I fik faktisk fældet tingen. Det er det eneste løb i spillet, du kan tabe uden nogensinde at se de folk, der slog dig.",
       "rewardsHeading": "Det du bærer ud",
       "rewardsBody": "At forsegle en rift, ikke blot at overleve den, er det, der betaler sig. Fæld riften først, og den betaler som det instansindhold, dens rang står ved siden af, så de hårdere rangeringer er den hårdere tur værd. At forsegle lægger også et Riftbundet Bånd i hænderne på alle, der var der, skåret til din klasses rolle og personligt til dig, og efterlader Rift-Essens i dine tasker oven i det, med Rift-Juveler oven i det igen ved de hårdere rangeringer. Ved siden af vejen hjem efterlader tingen på bunden en forseglet kiste, som din gruppe kan dirke op for ekstra bytte, med den samme Tappens vej-dirkning, du kender fra delve-kister, så et rent, tålmodigt arbejde betaler bedre end et forhastet et. Intet af det når frem til en gruppe, der kom nummer to: et tabt løb efterlader jer kun det, der droppede fra mobs på vejen ned. Bedrifternes Bog er undtagelsen, og den tæller jeres oprydning under alle omstændigheder, med en bedrift for at lukke jeres første rift og endnu en for at fælde en S-rangs rift.",
+      "forgeHeading": "The Rift Forge",
+      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
       "trackerHeading": "Sporingen på din skærm",
       "trackerBody": "Mens du er indenfor, holder en lille strimmel på din skærm dig orienteret: hvilken etage du er på ud af hvor mange, og en live nedtælling. Læs den nedtælling omhyggeligt, for det er ikke din tur, der løber ud. Det er indgangen tilbage i verden, der lukker. Når du først er igennem, spiller din gruppe riften færdig i sit eget tempo, hvor lang tid det end tager, men når det ur når nul, er vejen ind væk for alle, så tænk dig om, før du træder udenfor tæt på slutningen af den."
     },
@@ -8027,6 +8113,7 @@ export const da_DK: EnTranslations = {
       "forgeUpgraded": "Rift-opgradering fuldført for {name}.",
       "forgeEnchanted": "Rift-fortryllelse fuldført for {name}.",
       "forgeSocketed": "Rift-juvel indsat for {name}.",
+      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
       "detonateGlacialGrave": "Iskold Grav detonerer!",
       "detonateAbsoluteZero": "Absolut Nulpunkt bryder ud!",
       "detonateMagmaWell": "Magmakilde bryder ud!",
@@ -8771,6 +8858,7 @@ export const da_DK: EnTranslations = {
     "bodyWeb": "Spillet kører uden GPU-acceleration og vil være langsomt. Aktiver hardwareacceleration i din browsers indstillinger, opdater dine grafikdrivere og genstart derefter din browser.",
     "hybridBodyWindows": "Denne session kører på den integrerede (strømbesparende) GPU. Hvis denne computer også har en gaming-GPU, skal du indstille din browser til Høj ydeevne under Indstillinger, System, Skærm, Grafik, og derefter genstarte den. Skrivebordsappen vælger selv gaming-GPU'en.",
     "hybridBodyLinux": "Denne session kører på den integrerede (strømbesparende) GPU. Hvis denne computer også har en gaming-GPU, tilbyder din browser eller grafikdriver måske sin egen GPU-valgindstilling, eller din distribution tilbyder måske et GPU-skifteværktøj (såsom PRIME eller optimus-manager). Skrivebordsappen vælger selv gaming-GPU'en.",
+    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
     "hybridBodyOther": "Denne session kører på den integrerede (strømbesparende) GPU. Hvis denne computer også har en gaming-GPU, så tjek din browsers og dit styresystems grafikindstillinger for at aktivere den. Skrivebordsappen vælger selv gaming-GPU'en.",
     "dismiss": "Afvis"
   },
@@ -15952,6 +16040,11 @@ export const da_DK: EnTranslations = {
         "title": "Fisker fra Mågehavn",
         "greeting": "Den åbnede sig lige der, hvor nettene tørrer. Lige der, hvor jeg stod hver morgen hele mit liv. Jeg går ikke ned til kysten mere. Jeg går egentlig ikke mange steder mere."
       },
+      "riftwright_maelis": {
+        "name": "Riftwright Maelis",
+        "title": "Rift Forgemaster",
+        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
+      },
       "forgemistress_darva": {
         "name": "Smedemester Darva",
         "title": "Smedjens mester",
@@ -19241,6 +19334,7 @@ export const da_DK: EnTranslations = {
     "delveRiteShrineReedInteract": "Sivskrin: Tryk på F for at røre det",
     "delveRiteShrineSkullInteract": "Kranieskrin: Tryk på F for at røre det",
     "mailboxName": "Postkasse",
-    "noticeboardName": "Opslagstavle"
+    "noticeboardName": "Opslagstavle",
+    "realmBuilderMonumentName": "Realm Builder Monument"
   }
 };

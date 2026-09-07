@@ -592,10 +592,13 @@ For off-box safety, sync the directory to S3 occasionally:
 - **Never** set `ALLOW_DEV_COMMANDS=1` in production: it enables the full
   `/dev` cheat set (the level/teleport cheats the test bots use, plus item
   grants, mob spawns, instance teleports, and the dev command GUI).
-- Leave `RIFT_FORGE_ENABLED` unset in production: it opens the Rift forge
-  wire commands (upgrade/enchant/socket), whose client UI has not shipped.
-  Enable it only on PTR or internal playtest realms
-  (`server/rift_forge_gate.ts`).
+- `RIFT_FORGE_ENABLED` is a kill switch, not an opt-in: the Rift forge wire
+  commands (upgrade/socket at the Riftwright) are open by default. Set it to
+  `0` (or `false`, `off`, `no`) to pause the forge on a realm
+  (`server/rift_forge_gate.ts`); leave it unset otherwise. The switch only
+  works when the server actually sees the variable: `docker-compose.yml`
+  forwards it through the per-key `environment` block, so a deploy template
+  that renders its own compose must carry the same line.
 - **Community test profile**: on a disposable public test realm, set
   `PROVISION_TEST_ACCOUNTS=1` in the host `.env`, then restart the game
   container. The flag gives newly created accounts nine level-20 characters,
@@ -661,6 +664,17 @@ For off-box safety, sync the directory to S3 occasionally:
   rate limit, and per-session insert throttle bound the write rate), so
   corroborate a surprising shift against the client_perf_reports table before
   treating it as fleet truth.
+  `woc_client_shader_warm_reports_total` (same module, same stored gameplay reports) is
+  the shader warm-up cut of that population: `shader_warm_active` says whether
+  the warm-up worker was alive on the reporting client, and
+  `shader_warm_refusal` carries the cause when it was not (`none` when there is
+  none, one `extension-drift` series for the whole family, `other` for a cause
+  this server's vocabulary does not know). Its cardinality is the two active
+  values times that fixed vocabulary, pre-registered at zero like the rest of
+  the family. The SQL drill-down is the two client_perf_reports columns behind
+  it (`shader_warm_worker_active`, `shader_warm_refusal`, both bounded at
+  ingest), plus `raw_summary.shaderWarm` for the per-session detail (mode,
+  setting, backend, and the warmed / held counts).
 - **Multi-realm scraping**: one server process hosts exactly one realm, and no
   exported series carries a `realm` label (pinned by the exporter tests; the
   DB-backed business family filters on the realm in its queries instead). Give
