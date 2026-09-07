@@ -14,6 +14,19 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 // 500ms. Some windows (crafting: several icon-bearing rows) settle their layout
 // noticeably slower than others in headless swiftshader; a fixed wait is either
 // too short (flaky) or wastefully long, so this returns as soon as it is ready.
+// The tutorial island's one-shot arrival greeting (#tutorial-greeting) spawns a
+// beat after the reveal and sits over every window; a panel shot taken under it
+// shows the greeting, not the panel. Wait for it briefly and dismiss it.
+async function dismissArrivalGreeting(page) {
+  if (await pollForSize(page, '#tutorial-greeting', 4, 500)) {
+    await page.evaluate(() => {
+      document.querySelector('#tutorial-greeting button')?.click();
+      document.querySelector('#tutorial-greeting')?.remove();
+    });
+    await wait(200);
+  }
+}
+
 async function pollForSize(page, selector, attempts = 20, intervalMs = 500) {
   for (let i = 0; i < attempts; i++) {
     await wait(intervalMs);
@@ -7173,8 +7186,13 @@ export const TARGETS = [
         buttons[0]?.click();
       });
       const open = await pollForSize(page, '#options-menu .kb-actionbar-edit');
-      await pollForSize(page, '#options-menu .kbm-key', 6);
-      return open ? { clip: '#options-menu' } : {};
+      const board = await pollForSize(page, '#options-menu .kbm-key', 6);
+      await dismissArrivalGreeting(page);
+      // The panel outgrows the capture viewport, so clip the overview section
+      // itself (the board, its legend and option rows); a base without the
+      // board frames the whole panel instead.
+      if (!open) return {};
+      return board ? { clip: '#options-menu .kbm' } : { clip: '#options-menu' };
     },
   },
   {
@@ -7198,10 +7216,11 @@ export const TARGETS = [
       if (!open) return {};
       await page.evaluate(() => {
         document.querySelector('#options-menu .kb-transfer .set-toggle')?.click();
-        document.querySelector('#options-menu .kb-transfer')?.scrollIntoView({ block: 'end' });
       });
       await pollForSize(page, '#options-menu .kb-transfer .transfer-code');
-      return { clip: '#options-menu' };
+      await dismissArrivalGreeting(page);
+      // The row sits at the foot of a panel taller than the viewport: clip it.
+      return { clip: '#options-menu .kb-transfer' };
     },
   },
   {
@@ -7225,6 +7244,7 @@ export const TARGETS = [
       if (!ready) return {};
       await page.evaluate(() => document.querySelector('#options-menu .kbm-popout')?.click());
       const open = await pollForSize(page, '#keyboard-map-window .kbm-key');
+      await dismissArrivalGreeting(page);
       return open ? { clip: '#keyboard-map-window' } : {};
     },
   },
@@ -7254,6 +7274,7 @@ export const TARGETS = [
         document.querySelector('#options-menu .transfer-body .set-toggle')?.click(),
       );
       await pollForSize(page, '#options-menu .transfer-body .transfer-code');
+      await dismissArrivalGreeting(page);
       return { clip: '#options-menu' };
     },
   },
@@ -7285,6 +7306,7 @@ export const TARGETS = [
       // W is Move Forward by default: pressing it for a bar slot raises the prompt.
       await page.keyboard.press('KeyW');
       const prompt = await pollForSize(page, '#confirm-dialog', 6);
+      await dismissArrivalGreeting(page);
       return prompt ? { clip: '#confirm-dialog' } : {};
     },
   },
