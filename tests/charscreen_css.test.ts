@@ -70,7 +70,7 @@ describe('character sheet showcase CSS', () => {
 
 describe('inspect showcase CSS', () => {
   it('the inspect window is 740px wide', () => {
-    expect(shell).toContain('#inspect-window { width: 740px; }');
+    expect(shell).toContain('#inspect-window { width: 740px; overflow-y: auto; }');
   });
 
   it('the model stage takes the inspected player class color via a CSS custom property', () => {
@@ -78,10 +78,10 @@ describe('inspect showcase CSS', () => {
       '#inspect-window .inspect-model-panel { min-height: 400px; border: 1px solid var(--color-border-showcase);',
     );
     expect(shell).toContain(
-      'outline: 1px solid color-mix(in srgb, var(--inspect-class-color, #5a4a20) 38%, transparent);',
+      'outline: 1px solid color-mix(in srgb, var(--inspect-class-color, var(--color-border-default)) 38%, transparent);',
     );
     expect(shell).toContain(
-      'color-mix(in srgb, var(--inspect-class-color, #5a4a20) 15%, transparent),',
+      'color-mix(in srgb, var(--inspect-class-color, var(--color-border-default)) 15%, transparent),',
     );
   });
 
