@@ -2862,7 +2862,7 @@ export const zh_TW: EnTranslations = {
       "suddenDeath": "下一次斬殺不消耗怒氣並無視生命值要求",
       "aoeEcho": "剩餘 {charges} 次迴響：單體技能對附近最多 {targets} 個敵人造成 {pct}% 傷害",
       "sureCrit": "接下來 {charges} 個傷害技能必定造成致命一擊",
-      "temporalEcho": "施法者的秘法傷害會治療你，單體傷害轉化 {singlePct}%，範圍傷害轉化 {areaPct}%。以太湧動和乙太飛鏢對單體時光迴響獲得 4 倍加成。群體回音會產生等量的治療儲備，並依照已損失的生命值分配給生命值低於 60% 的受印記盟友",
+      "temporalEcho": "施法者的秘法傷害會治療你，單體傷害轉化 {singlePct}%，範圍傷害轉化 {areaPct}%",
       "arcaneCharge": "{stacks} 層秘法充能：乙太湧動傷害提高 {damagePct}%，施法加快 {castPct}%，法力消耗變為 {costMult} 倍",
       "physicalReduction": "受到的物理傷害降低 {pct}%",
       "temporalHourglass": "免疫傷害且無法行動；恢復生命並加速冷卻。按右鍵可取消。",
@@ -3118,9 +3118,9 @@ export const zh_TW: EnTranslations = {
         "targetDots": "目標減益",
         "questTracker": "任務追蹤器",
         "reliquaryTracker": "聖物庫追蹤器",
-        "doomMeter": "痛苦資源條",
         "petBar": "寵物列",
         "procOverlay": "法術觸發",
+        "procOverlayFrost": "冰柱",
         "damageMeter": "傷害統計",
         "deedTracker": "功績追蹤器",
         "delveTracker": "秘探追蹤器",
@@ -5516,7 +5516,7 @@ export const zh_TW: EnTranslations = {
       "ifPartyStyle": "隊伍的排列方式：「自動」會依你的隊伍人數調整，「經典」是傳統的直列堆疊，「團隊」則把所有人塞進緊湊的格線。",
       "ifPlayerHealthText": "自己的血條上寫什麼：不顯示、百分比、目前生命、目前與最大生命，或兩者並附上百分比。",
       "ifTargetHealthText": "目標和目標的目標血條上寫什麼，選項與自己的框體相同。",
-      "ifPartyHealthText": "隊伍血條上寫什麼：不顯示、百分比、目前生命、目前與最大生命，或兩者並附上百分比。",
+      "ifPartyHealthText": "隊伍血條上印出什麼：不顯示、百分比、目前生命，或目前與最大生命。",
       "ifPartySort": "隊伍成員的排列順序：入隊順序、定位，或名字。",
       "ifPartyShowAuras": "隊伍框上是否顯示增益與減益。另有對應的開關管理資源條、吸收護盾、寵物，以及你自己是否出現在自己的隊伍清單裡。",
       "ifAurasOnPlayerFrame": "除了光環列之外，也把你的增益與減益顯示在你自己的單位框上。",
@@ -5541,7 +5541,7 @@ export const zh_TW: EnTranslations = {
       "ifHideUnused": "隱藏空的動作格，只畫出你實際會用的按鈕。",
       "ifLockBars": "鎖定你的動作列，讓你不會不小心把技能拖出格子。",
       "keybindsHeading": "「按鍵設定」面板",
-      "keybindsBody": "按鍵清單只是這個面板的一半。上方還有幾個開關，決定滑鼠如何驅動遊戲：滑鼠鏡頭、旋轉時是否鎖定游標、點擊移動及使用哪個滑鼠鍵、攻擊移動，以及左手觸控版面。",
+      "keybindsBody": "按鍵清單只是那個面板的一半。清單上方是決定滑鼠如何驅動遊戲的那些開關：滑鼠鏡頭、旋轉視角時游標是否鎖定、點擊移動以及用哪個滑鼠鍵觸發、攻擊移動、左撇子的觸控佈局，還有聊天的髒話過濾。",
       "keybindsMouseBody": "那裡有兩件事很容易錯過。滑鼠鍵和一般按鍵一樣可以綁定，因此滾輪按下與拇指鍵都能承載技能，而左鍵與右鍵則保留給鏡頭以及點擊世界。另外，你也可以直接從動作列綁定：在這裡開啟列上綁定模式，然後點一個格子，再按下你想要的按鍵。"
     },
     "combat": {
@@ -10736,11 +10736,11 @@ export const zh_TW: EnTranslations = {
       },
       "melting_acid": {
         "name": "溶解酸",
-        "description": "在你的武器上塗抹毒藥，持續 30 分鐘。你的每次近戰揮擊都會向目標潑灑腐蝕性強酸，使其護甲降低 5%，持續 12 秒。"
+        "description": "向目標潑灑腐蝕性毒液，造成 {damage} 點自然傷害，並使其護甲降低 5%，持續 12 秒。"
       },
       "nightshade_coating": {
         "name": "夜影塗層",
-        "description": "在你的武器上塗抹毒藥，持續 30 分鐘。你的每次近戰揮擊都會用夜影覆蓋目標，使其受到的治療降低 25%，持續 12 秒。"
+        "description": "用夜影覆蓋目標，造成 {damage} 點自然傷害，並使其受到的治療降低 25%，持續 12 秒。"
       },
       "expose_armor": {
         "name": "裂甲",
@@ -10760,7 +10760,7 @@ export const zh_TW: EnTranslations = {
       },
       "deadly_poison": {
         "name": "潰爛之毒",
-        "description": "在你的武器上塗抹毒藥，持續 30 分鐘。你的每次近戰揮擊都會為目標疊加 1 層毒素，最多 5 層，並刷新 12 秒的持續時間。每層每 2 秒造成 {damage} 點自然傷害。"
+        "description": "在你的武器上塗抹毒藥，持續 30 分鐘。你的每次近戰揮擊都會在目標身上疊加一層毒液，最多 5 層，並刷新 12 秒持續時間。每層每 2 秒造成 {damage} 點自然傷害。"
       },
       "blind": {
         "name": "揚塵",
@@ -11859,11 +11859,11 @@ export const zh_TW: EnTranslations = {
       },
       "temporal_echo": {
         "name": "時光迴響",
-        "description": "以更健康時刻的迴響標記一名盟友，立即恢復{damage}點生命值。{duration}秒內，你其他單體秘法傷害的 {echoSinglePct}% 和範圍秘法傷害的 {echoAreaPct}% 會治療該盟友。以太湧動和乙太飛鏢則會以其造成傷害的 {echoDriverPct}% 治療該盟友。"
+        "description": "以更健康時刻的迴響標記一名盟友，立即恢復{damage}點生命值。{duration}秒內，你造成的秘法傷害有一部分會透過迴響轉化為對其的治療。"
       },
       "temporal_cascade": {
         "name": "時光奔流",
-        "description": "讓一道回音在隊伍中奔流：立即治療目標及其至多四名最近的盟友，並為每人施加持續 {duration} 秒的印記；你造成的部分秘法傷害會透過回音轉化為對他們的治療。以太湧動和乙太飛鏢會從每個群體回音中產生等量的治療儲備，並依照已損失的生命值分配給生命值低於 60% 的受印記盟友。（時光術）"
+        "description": "讓一道回音在隊伍中奔流：立即治療目標及其至多四名最近的盟友，並為每人施加持續 {duration} 秒的印記；你造成的部分秘法傷害會透過回音轉化為對他們的治療。（時光術）"
       },
       "temporal_reversal": {
         "name": "時光逆轉",
@@ -19312,8 +19312,8 @@ export const zh_TW: EnTranslations = {
       },
       "chronoweave": {
         "name": "以太織法衣",
-        "bonus2": "時光迴響將你其他單體秘法傷害的 50% 轉化為治療。以太湧動和乙太飛鏢則轉化其傷害的 200%。受到傷害不再延遲你的施法。",
-        "bonus4": "時光奔流的冷卻時間縮短 5 秒，法力消耗降低 30%。"
+        "bonus2": "時光迴響將你 50% 的單體秘法傷害轉化為治療。受到傷害不再延遲你的施法。",
+        "bonus4": "時光奔流的冷卻時間縮短 5 秒。"
       },
       "cinderbark": {
         "name": "燼皮守禦甲",

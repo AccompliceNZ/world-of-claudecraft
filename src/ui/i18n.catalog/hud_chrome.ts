@@ -15,7 +15,7 @@ export const hudChromeStrings = {
     fateThreadsLabel: 'Fate Threads',
     // The doom meter's per-frame move/lock strings retired with its private
     // mover: the frame rides the shared interfaceUnlock chrome now, and its
-    // name chip is frameNames.doomMeter below.
+    // name chip reuses doomLabel above (the mechanic's own in-game name).
     doomEmptyStatus: '{value} of {max} Condemnation.',
     doomStatus: '{value} of {max} Condemnation; {remaining}.',
     fateThreadsStatus: '{value} of {max} Fate Threads.',
@@ -4219,20 +4219,25 @@ export const hudChromeStrings = {
       // no debuffs out, so its chip is what names the placeholder. Wordy (M16):
       // the five non-Latin fills land in this same change.
       targetDots: 'Target Dots',
-      // The right-stack trackers and the doom meter, movable frames since
-      // the 0.42 round. All wordy (M16): their five non-Latin fills land in
-      // the same change. The devotion medallion reuses its existing name key
-      // (hudChrome.paladin.devotion); the doom meter needs its own row
-      // because doomLabel names the RESOURCE (Condemnation), not the frame.
+      // The right-stack trackers, movable frames since the 0.42 round. All
+      // wordy (M16): their five non-Latin fills land in the same change. The
+      // MECHANIC frames reuse the mechanic's own in-game name instead of a
+      // minted row (interface_unlock_core.ts frameRowLabelKey): the devotion
+      // medallion hudChrome.paladin.devotion, the doom meter
+      // hudChrome.warlock.doomLabel (Condemnation), the proc overlay its
+      // active spec's meter or ability name.
       questTracker: 'Quest Tracker',
       reliquaryTracker: 'Reliquary Tracker',
-      doomMeter: 'Affliction Bar',
       // The pet ACTION bar (#petbar); the pet unit frame reuses its aria key.
       petBar: 'Pet Bar',
-      // The spell-proc overlay (#proc-overlay: the mage birds, the warlock
-      // soul bank and Ruin ritual) and the tabbed combat meter
-      // (#meters-window). Both wordy (M16): non-Latin fills in this change.
+      // The spell-proc overlay's FALLBACK name, for a character whose spec
+      // never lights it (an affliction warlock's placeholder); lit specs chip
+      // their mechanic's name instead (frameRowLabelKey above). The frost
+      // mage's Icicle bank has no existing name key anywhere, so its row is
+      // minted here. Both wordy (M16): non-Latin fills in this change, and
+      // the tabbed combat meter (#meters-window) likewise.
       procOverlay: 'Spell Procs',
+      procOverlayFrost: 'Icicles',
       damageMeter: 'Damage Meter',
       // The remaining right-stack trackers and the off-hand swing timer.
       // The three trackers are wordy (M16, fills in this change); Off Hand

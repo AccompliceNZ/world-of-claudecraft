@@ -15720,7 +15720,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Skademätare',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Dådspårare',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Delve-spårare',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Plågofält',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Husdjursfält',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Besvärjelseproccar',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Uppdragsspårare',
@@ -15907,4 +15906,5 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Flytta ut ur den lila pölen så snart markeringarna detonerar. Håll nästa samlingspunkt fri från aktiv eld.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Varje Själsslitningsdetonation lämnar en pöl av lila eld med {radius} yd radie där varje markering stod, som brinner i {seconds} sek med {tickNormal} av maximal hälsa varje sekund. Att stå där pölar överlappar ger en tick från varje pöl. Pölar bildas aldrig inom {clearance} yd från en värnsten.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Istappar',
 };

@@ -16103,7 +16103,6 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Compteur de dégâts',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Suivi des hauts faits',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Suivi des explorations',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Barre d affliction',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Barre du familier',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Déclenchements de sorts',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Suivi des quêtes',
@@ -16292,4 +16291,5 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
     'Sortez de la flaque violette dès que les marques explosent. Gardez le prochain point de regroupement libre de feu actif.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     "Chaque détonation de Déchirure d'âme laisse une flaque de feu violet d'un rayon de {radius} yd là où chaque marque se tenait, brûlant pendant {seconds} s à raison de {tickNormal} des points de vie maximum chaque seconde. Se tenir là où les flaques se chevauchent fait subir un tick de chacune. Les flaques ne se forment jamais à moins de {clearance} yd d'une pierre de garde.",
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Glaçons',
 };

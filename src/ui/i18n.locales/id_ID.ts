@@ -15899,7 +15899,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Meter Kerusakan',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Pelacak Perbuatan',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Pelacak Delve',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Bilah Derita',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Bilah Peliharaan',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Proc Mantra',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Pelacak Quest',
@@ -16086,4 +16085,5 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Keluar dari kolam ungu segera setelah tanda meledak. Jaga titik tumpuk berikutnya bebas dari api aktif.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Setiap ledakan Robekan Jiwa meninggalkan kolam api ungu dengan radius {radius} yd di tempat setiap tanda berdiri, terbakar selama {seconds} dtk sebesar {tickNormal} kesehatan maksimum setiap detik. Berdiri di tempat kolam bertumpang tindih menerima tick dari masing-masing. Kolam tidak pernah muncul dalam {clearance} yd dari batu pelindung.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Es runcing',
 };

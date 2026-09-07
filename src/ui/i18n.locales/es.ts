@@ -15997,7 +15997,6 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Medidor de daño',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Seguimiento de hazañas',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Seguimiento de exploraciones',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Barra de aflicción',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Barra de mascota',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Activaciones de hechizos',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Seguimiento de misiones',
@@ -16185,4 +16184,5 @@ export const es: Partial<Record<TranslationKey, string>> = {
     'Sal del charco morado en cuanto detonen las marcas. Mantén el siguiente punto de agrupamiento libre de fuego activo.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Cada detonación de Desgarro de alma deja un charco de fuego morado con {radius} yd de radio donde estaba cada marca, que arde durante {seconds} s e inflige {tickNormal} de la salud máxima cada segundo. Estar donde los charcos se solapan aplica un pulso de cada uno. Los charcos nunca aparecen a menos de {clearance} yd de una piedra de resguardo.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Carámbanos',
 };

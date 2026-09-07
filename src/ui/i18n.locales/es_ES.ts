@@ -519,4 +519,5 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
   'stats.playersOnline': 'Jugadores en línea',
   'stats.realmName': 'Nombre del mundo',
   'wiki.title': 'Wiki y guía del juego',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Carámbanos',
 };

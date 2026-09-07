@@ -16042,7 +16042,6 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Schadensanzeige',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Tatentracker',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Tiefentracker',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Leidensleiste',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Begleiterleiste',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Zauber-Auslöser',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Questtracker',
@@ -16231,4 +16230,5 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
     'Lauft aus der violetten Fläche, sobald die Markierungen detonieren. Haltet den nächsten Sammelpunkt frei von aktivem Feuer.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Jede Seelenriss-Detonation hinterlässt dort, wo jede Markierung stand, eine violette Feuerfläche mit {radius} yd Radius, die {seconds} Sek. lang brennt und jede Sekunde {tickNormal} der maximalen Gesundheit verursacht. Wer dort steht, wo Flächen überlappen, erleidet von jeder Fläche einen Tick. Flächen entstehen nie innerhalb von {clearance} yd eines Schutzsteins.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Eiszapfen',
 };

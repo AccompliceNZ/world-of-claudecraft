@@ -15820,7 +15820,6 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Miernik obrażeń',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Śledzenie czynów',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Śledzenie wypraw',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Pasek Udręki',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Pasek chowańca',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Aktywacje zaklęć',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Śledzenie zadań',
@@ -16008,4 +16007,5 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Wyjdźcie z fioletowej kałuży, gdy tylko znaki zdetonują. Utrzymujcie kolejny punkt zbiórki wolny od aktywnego ognia.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Każda detonacja Rozdarcia Duszy zostawia kałużę fioletowego ognia o promieniu {radius} jardów tam, gdzie stał każdy znak, płonącą przez {seconds} sek. za {tickNormal} maksymalnego zdrowia co sekundę. Stanie tam, gdzie kałuże się nakładają, zadaje tik z każdej z nich. Kałuże nigdy nie powstają w promieniu {clearance} jardów od kamienia ochronnego.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Sople lodu',
 };

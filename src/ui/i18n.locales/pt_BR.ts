@@ -15913,7 +15913,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Medidor de dano',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Rastreador de feitos',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Rastreador de explorações',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Barra de aflição',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Barra de mascote',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Ativações de feitiços',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Rastreador de missões',
@@ -16100,4 +16099,5 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
     'Saia da poça roxa assim que as marcas detonarem. Mantenha o próximo ponto de agrupamento livre de fogo ativo.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Cada detonação de Rasgo de alma deixa uma poça de fogo roxo com raio de {radius} yd onde cada marca estava, queimando por {seconds} s a {tickNormal} da vida máxima por segundo. Ficar onde poças se sobrepõem causa um pulso de cada uma. Poças nunca se formam em até {clearance} yd de uma pedra de proteção.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Pingentes de gelo',
 };

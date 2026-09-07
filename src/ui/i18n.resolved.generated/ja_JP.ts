@@ -3118,9 +3118,9 @@ export const ja_JP: EnTranslations = {
         "targetDots": "ターゲットデバフ",
         "questTracker": "クエストトラッカー",
         "reliquaryTracker": "聖遺物庫トラッカー",
-        "doomMeter": "苦痛リソースバー",
         "petBar": "ペットバー",
         "procOverlay": "スペル発動",
+        "procOverlayFrost": "アイシクル",
         "damageMeter": "ダメージメーター",
         "deedTracker": "功績トラッカー",
         "delveTracker": "デルヴトラッカー",
@@ -10736,11 +10736,11 @@ export const ja_JP: EnTranslations = {
       },
       "melting_acid": {
         "name": "溶解酸",
-        "description": "武器に30分間毒を塗り、近接攻撃ごとに対象に腐食性の酸を浴びせ、12秒間その防御力を5%低下させます。"
+        "description": "対象に腐食性の毒を浴びせ、{damage}の自然ダメージを与え、12秒間その防御力を5%低下させます。"
       },
       "nightshade_coating": {
         "name": "ナス科毒の塗布",
-        "description": "武器に30分間毒を塗り、近接攻撃ごとに対象をナス科毒で覆い、12秒間受ける回復量を25%低下させます。"
+        "description": "対象をナス科毒で覆い、{damage}の自然ダメージを与え、12秒間受ける回復量を25%低下させます。"
       },
       "expose_armor": {
         "name": "装甲破り",
@@ -10760,7 +10760,7 @@ export const ja_JP: EnTranslations = {
       },
       "deadly_poison": {
         "name": "腐敗の毒",
-        "description": "武器に30分間毒を塗ります。近接攻撃ごとに対象へ毒のスタックを1つ追加し（最大5）、持続時間12秒を更新します。1スタックにつき2秒ごとに{damage}の自然ダメージを与えます。"
+        "description": "武器に30分間毒を塗ります。近接攻撃ごとに対象へ毒の累積を1つ追加し、最大5累積まで蓄積して12秒の持続時間を更新します。各累積は2秒ごとに{damage}の自然ダメージを与えます。"
       },
       "blind": {
         "name": "砂かけ",
@@ -11859,7 +11859,7 @@ export const ja_JP: EnTranslations = {
       },
       "temporal_echo": {
         "name": "時の残響",
-        "description": "より健やかだった瞬間の残響で味方に刻印し、即座に{damage}の体力を回復する。{duration}秒間、あなたの他の単体秘術ダメージの{echoSinglePct}%と範囲秘術ダメージの{echoAreaPct}%がその味方を癒やす。エーテルサージとエーテルダーツは代わりに、それらが与えたダメージの{echoDriverPct}%分その味方を癒やす。"
+        "description": "より健やかだった瞬間の残響で味方に刻印し、即座に{damage}の体力を回復する。{duration}秒間、与えた秘術ダメージの一部が残響を通じてその味方を癒やす。"
       },
       "temporal_cascade": {
         "name": "時の連鎖",

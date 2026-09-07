@@ -15701,7 +15701,6 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Skademåler',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Bedriftssporer',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Delve-sporer',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Lidelsesbjælke',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Kæledyrsbjælke',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Besværgelsesprocs',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Questsporer',
@@ -15888,4 +15887,5 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Flyt ud af den lilla sø, så snart mærkerne detonerer. Hold det næste samlingspunkt fri for aktiv ild.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Hver Sjæleflængen-detonation efterlader en sø af lilla ild med {radius} yd radius, hvor hvert mærke stod, som brænder i {seconds} sek med {tickNormal} af maksimal sundhed hvert sekund. At stå hvor søer overlapper giver et tick fra hver enkelt. Søer dannes aldrig inden for {clearance} yd af en værnsten.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Istapper',
 };

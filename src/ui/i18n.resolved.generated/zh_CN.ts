@@ -2862,7 +2862,7 @@ export const zh_CN: EnTranslations = {
       "suddenDeath": "下一次斩杀不消耗怒气并无视生命值要求",
       "aoeEcho": "剩余 {charges} 次回响：单体技能对附近最多 {targets} 个敌人造成 {pct}% 伤害",
       "sureCrit": "接下来 {charges} 个伤害技能必定暴击",
-      "temporalEcho": "施法者的奥术伤害会治疗你，单体伤害转化 {singlePct}%，范围伤害转化 {areaPct}%。以太涌动和以太飞镖对单体时光回响获得 4 倍加成。群体回响会产生等量的治疗储备，并根据缺失生命值在生命值低于 60% 的标记盟友之间分配",
+      "temporalEcho": "施法者的奥术伤害会治疗你，单体伤害转化 {singlePct}%，范围伤害转化 {areaPct}%",
       "arcaneCharge": "{stacks} 层奥术充能：以太涌动伤害提高 {damagePct}%，施法加快 {castPct}%，法力消耗变为 {costMult} 倍",
       "physicalReduction": "受到的物理伤害降低 {pct}%",
       "temporalHourglass": "免疫伤害且无法行动；恢复生命并加速冷却。右键点击可取消。",
@@ -3118,9 +3118,9 @@ export const zh_CN: EnTranslations = {
         "targetDots": "目标减益",
         "questTracker": "任务追踪器",
         "reliquaryTracker": "圣物库追踪器",
-        "doomMeter": "痛苦资源条",
         "petBar": "宠物栏",
         "procOverlay": "法术触发",
+        "procOverlayFrost": "冰刺",
         "damageMeter": "伤害统计",
         "deedTracker": "功绩追踪器",
         "delveTracker": "探秘追踪器",
@@ -5516,7 +5516,7 @@ export const zh_CN: EnTranslations = {
       "ifPartyStyle": "队伍布局：“自动”跟随你的队伍规模，“经典”是传统的竖排，“团队”把所有人压进紧凑网格。",
       "ifPlayerHealthText": "自己的血条上写什么：不显示、百分比、当前生命、当前与最大生命，或两者并附上百分比。",
       "ifTargetHealthText": "目标和目标的目标血条上写什么，选项与自己的框体相同。",
-      "ifPartyHealthText": "队伍血条上写什么：不显示、百分比、当前生命、当前与最大生命，或两者并附上百分比。",
+      "ifPartyHealthText": "队伍血条上写什么：不显示、百分比、当前生命，或当前与最大生命。",
       "ifPartySort": "队伍成员的排列顺序：入队顺序、职责或名字。",
       "ifPartyShowAuras": "队伍框体上是否显示增益和减益。相应的开关还涵盖资源条、吸收盾、宠物，以及你自己是否出现在队伍列表里。",
       "ifAurasOnPlayerFrame": "除了光环条之外，也把你的增益和减益显示在你自己的单位框体上。",
@@ -5541,7 +5541,7 @@ export const zh_CN: EnTranslations = {
       "ifHideUnused": "隐藏空的动作格，只绘制你真正会用到的按钮。",
       "ifLockBars": "锁定你的技能栏，免得不小心把技能从格子里拖出来。",
       "keybindsHeading": "“按键绑定”面板",
-      "keybindsBody": "按键列表只是这个面板的一半。它上方还有一排开关，决定鼠标怎样驱动游戏：鼠标镜头、旋转时是否锁定指针、点击移动及其使用的鼠标键、攻击移动，以及左手触控布局。",
+      "keybindsBody": "按键列表只是那个面板的一半。它上面还有一排开关，决定你的鼠标如何驾驭这个游戏：鼠标镜头、旋转视角时是否锁定光标、点击移动以及由哪个鼠标键触发、攻击移动、左手触控布局，还有聊天的脏话过滤。",
       "keybindsMouseBody": "那里有两件事很容易被忽略。鼠标按键可以像键盘按键一样绑定，所以滚轮点击和拇指键都能承载技能，而左右键则保留给镜头和点击世界。此外，你可以直接从动作条上绑定：在这里打开条上绑定模式，然后点一个格子，按下你想要的键。"
     },
     "combat": {
@@ -10736,11 +10736,11 @@ export const zh_CN: EnTranslations = {
       },
       "melting_acid": {
         "name": "溶解酸",
-        "description": "为你的武器淬毒，持续 30 分钟。你的每次近战攻击都会向目标泼洒腐蚀性强酸，使其护甲降低 5%，持续 12 秒。"
+        "description": "向目标泼洒腐蚀性毒液，造成 {damage} 点自然伤害，并使其护甲降低 5%，持续 12 秒。"
       },
       "nightshade_coating": {
         "name": "夜影涂层",
-        "description": "为你的武器淬毒，持续 30 分钟。你的每次近战攻击都会用夜影覆盖目标，使其受到的治疗降低 25%，持续 12 秒。"
+        "description": "用夜影覆盖目标，造成 {damage} 点自然伤害，并使其受到的治疗降低 25%，持续 12 秒。"
       },
       "expose_armor": {
         "name": "护甲突破",
@@ -10760,7 +10760,7 @@ export const zh_CN: EnTranslations = {
       },
       "deadly_poison": {
         "name": "溃烂毒液",
-        "description": "为你的武器淬毒，持续 30 分钟。你的每次近战攻击都会为目标叠加 1 层毒素，最多 5 层，并刷新 12 秒的持续时间。每层每 2 秒造成 {damage} 点自然伤害。"
+        "description": "为你的武器淬毒，持续 30 分钟。你的每次近战攻击都会在目标身上叠加一层毒液，最多 5 层，并刷新 12 秒持续时间。每层每 2 秒造成 {damage} 点自然伤害。"
       },
       "blind": {
         "name": "扬尘",
@@ -11859,11 +11859,11 @@ export const zh_CN: EnTranslations = {
       },
       "temporal_echo": {
         "name": "时光回响",
-        "description": "以更健康时刻的回响标记一名盟友，立即恢复{damage}点生命值。{duration}秒内，你其他单体奥术伤害的 {echoSinglePct}% 和范围奥术伤害的 {echoAreaPct}% 会治疗该盟友。以太涌动和以太飞镖则会以其造成伤害的 {echoDriverPct}% 治疗该盟友。"
+        "description": "以更健康时刻的回响标记一名盟友，立即恢复{damage}点生命值。{duration}秒内，你造成的奥术伤害有一部分会通过回响转化为对其的治疗。"
       },
       "temporal_cascade": {
         "name": "时光奔流",
-        "description": "让一道回响在队伍中奔流：立即治疗目标及其至多四名最近的盟友，并为每人施加持续 {duration} 秒的印记；你造成的部分奥术伤害会通过回响转化为对他们的治疗。以太涌动和以太飞镖会从每个群体回响中产生等量的治疗储备，并根据缺失生命值在生命值低于 60% 的标记盟友之间分配。（时光术）"
+        "description": "让一道回响在队伍中奔流：立即治疗目标及其至多四名最近的盟友，并为每人施加持续 {duration} 秒的印记；你造成的部分奥术伤害会通过回响转化为对他们的治疗。（时光术）"
       },
       "temporal_reversal": {
         "name": "时光逆转",
@@ -19312,8 +19312,8 @@ export const zh_CN: EnTranslations = {
       },
       "chronoweave": {
         "name": "以太织法衣",
-        "bonus2": "时光回响将你其他单体奥术伤害的 50% 转化为治疗。以太涌动和以太飞镖则转化其伤害的 200%。受到伤害不再延迟你的施法。",
-        "bonus4": "时光奔流的冷却时间缩短 5 秒，法力消耗降低 30%。"
+        "bonus2": "时光回响将你 50% 的单体奥术伤害转化为治疗。受到伤害不再延迟你的施法。",
+        "bonus4": "时光奔流的冷却时间缩短 5 秒。"
       },
       "cinderbark": {
         "name": "烬皮守御甲",

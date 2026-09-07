@@ -15629,7 +15629,6 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Měřič poškození',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Sledování skutků',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Sledování výprav do hlubin',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Lišta utrpení',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Lišta mazlíčka',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Aktivace kouzel',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Sledování úkolů',
@@ -15813,4 +15812,5 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
     'Jakmile značky vybuchnou, odejdi z fialové kaluže. Udrž další místo shromáždění čisté od aktivního ohně.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Každý výbuch Trhání duše zanechá fialovou ohnivou kaluž s poloměrem {radius} yardů na místě, kde stála každá značka, která hoří {seconds} s a každou sekundu způsobuje {tickNormal} maximálního zdraví. Stání v překryvu kaluží způsobí tik z každé z nich. Kaluže nikdy nevzniknou do {clearance} yardů od ochranného kamene.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Rampouchy',
 };

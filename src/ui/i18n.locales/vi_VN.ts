@@ -15793,7 +15793,6 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Đồng Hồ Sát Thương',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Theo Dõi Chiến Công',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Theo Dõi Delve',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Thanh Tai Ương',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Thanh Linh Thú',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Kích Hoạt Phép',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Theo Dõi Nhiệm Vụ',
@@ -15979,4 +15978,5 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Rời khỏi vũng tím ngay khi các dấu phát nổ. Giữ điểm tụ tiếp theo sạch khỏi lửa đang hoạt động.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Mỗi vụ nổ Xé Linh Hồn để lại một vũng lửa tím bán kính {radius} yd tại nơi từng dấu đứng, cháy trong {seconds} giây với {tickNormal} máu tối đa mỗi giây. Đứng nơi các vũng chồng lên nhau nhận tick từ từng vũng. Vũng không bao giờ xuất hiện trong phạm vi {clearance} yd quanh đá hộ vệ.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Nhũ băng',
 };

@@ -3118,9 +3118,9 @@ export const ko_KR: EnTranslations = {
         "targetDots": "대상 디버프",
         "questTracker": "퀘스트 추적기",
         "reliquaryTracker": "성물고 추적기",
-        "doomMeter": "고통 자원 막대",
         "petBar": "소환수 바",
         "procOverlay": "주문 발동",
+        "procOverlayFrost": "고드름",
         "damageMeter": "피해 측정기",
         "deedTracker": "업적 추적기",
         "delveTracker": "탐굴 추적기",
@@ -10736,11 +10736,11 @@ export const ko_KR: EnTranslations = {
       },
       "melting_acid": {
         "name": "용해 산",
-        "description": "30분 동안 무기에 독을 바릅니다. 근접 공격마다 대상에게 부식성 산을 끼얹어 12초 동안 방어도를 5% 감소시킵니다."
+        "description": "대상에게 부식성 독을 끼얹어 {damage}의 자연 피해를 주고 12초 동안 방어도를 5% 감소시킵니다."
       },
       "nightshade_coating": {
         "name": "가지독 코팅",
-        "description": "30분 동안 무기에 독을 바릅니다. 근접 공격마다 대상을 가지독으로 뒤덮어 12초 동안 받는 치유 효과를 25% 감소시킵니다."
+        "description": "대상을 가지독으로 뒤덮어 {damage}의 자연 피해를 주고 12초 동안 받는 치유 효과를 25% 감소시킵니다."
       },
       "expose_armor": {
         "name": "방어구 돌파",
@@ -10760,7 +10760,7 @@ export const ko_KR: EnTranslations = {
       },
       "deadly_poison": {
         "name": "곪는 독",
-        "description": "30분 동안 무기에 독을 바릅니다. 근접 공격마다 대상에게 독 중첩을 1 추가하고(최대 5) 지속시간 12초를 갱신합니다. 중첩 1당 2초마다 {damage}의 자연 피해를 입힙니다."
+        "description": "30분 동안 무기에 독을 바릅니다. 근접 공격마다 대상에게 독 중첩을 하나 추가해 최대 5중첩까지 쌓고, 12초 지속시간을 갱신합니다. 각 중첩은 2초마다 {damage}의 자연 피해를 입힙니다."
       },
       "blind": {
         "name": "흙 뿌리기",
@@ -11859,7 +11859,7 @@ export const ko_KR: EnTranslations = {
       },
       "temporal_echo": {
         "name": "시간의 메아리",
-        "description": "더 건강했던 순간의 메아리로 아군에게 표식을 남겨 즉시 생명력을 {damage} 회복시킵니다. {duration}초 동안 당신의 다른 단일 대상 비전 피해의 {echoSinglePct}%와 범위 비전 피해의 {echoAreaPct}%가 그 아군을 치유합니다. 에테르 쇄도와 에테르 화살은 대신 자신이 입힌 피해의 {echoDriverPct}%만큼 그 아군을 치유합니다."
+        "description": "더 건강했던 순간의 메아리로 아군에게 표식을 남겨 즉시 생명력을 {damage} 회복시킵니다. {duration}초 동안 당신이 입힌 비전 피해의 일부가 메아리를 통해 그 아군을 치유합니다."
       },
       "temporal_cascade": {
         "name": "시간의 연쇄",

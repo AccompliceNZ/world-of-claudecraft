@@ -15735,7 +15735,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Hasar Ölçer',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Edim Takipçisi',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Delve Takipçisi',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Musibet Çubuğu',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Evcil Çubuğu',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Büyü Tetiklenmeleri',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Görev Takipçisi',
@@ -15920,4 +15919,5 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'İşaretler patlar patlamaz mor havuzdan çıkın. Sonraki toplanma noktasını aktif ateşten temiz tutun.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Her Ruh Yırtma patlaması, her işaretin durduğu yerde {radius} yd yarıçaplı mor ateş havuzu bırakır; {seconds} sn boyunca yanar ve her saniye azami canın {tickNormal} kadarını verir. Havuzların çakıştığı yerde durmak her birinden tik alır. Havuzlar bir muhafaza taşının {clearance} yd içinde asla oluşmaz.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Buz sarkıtları',
 };

@@ -16022,7 +16022,6 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Misuratore danni',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Tracciatore imprese',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Tracciatore esplorazioni',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Barra afflizione',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Barra famiglio',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Attivazioni incantesimi',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Tracciatore missioni',
@@ -16211,4 +16210,5 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
     'Esci dalla pozza viola appena i marchi detonano. Mantieni il prossimo punto di raggruppamento libero dal fuoco attivo.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     "Ogni detonazione di Squarcio d'anima lascia una pozza di fuoco viola con raggio di {radius} yd dove si trovava ogni marchio, che brucia per {seconds} s al ritmo di {tickNormal} della salute massima ogni secondo. Stare dove le pozze si sovrappongono infligge un tick da ciascuna. Le pozze non si formano mai entro {clearance} yd da una pietra di guardia.",
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Ghiaccioli',
 };

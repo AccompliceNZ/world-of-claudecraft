@@ -34,6 +34,7 @@ import { buildMakeupDecal } from './makeup';
 import {
   type AttachDef,
   characterPreloadUrls,
+  isAuthoredHeldModelUrl,
   itemOffhandModelUrl,
   itemWeaponModelUrl,
   manifestUrlsForGraphics,
@@ -406,8 +407,14 @@ function attachProp(
   const payload = flattenWeaponScene(cloneSkinned(gltf.scene));
   if (gltf.animations.length) registerHeldPropIdle(root, payload, gltf.animations);
   primeSkinnedSortSpheres(payload);
+  // An authored held model (manifest AUTHORED_HELD_MODELS) keeps its shipped
+  // surface response through applyMaterials instead of the kit polish.
+  const authoredSurface = isAuthoredHeldModelUrl(att.url);
   payload.traverse((o) => {
-    if ((o as THREE.Mesh).isMesh) o.userData.weaponMesh = true;
+    if ((o as THREE.Mesh).isMesh) {
+      o.userData.weaponMesh = true;
+      if (authoredSurface) o.userData.authoredSurface = true;
+    }
   });
   if (swapKind === 'mainhand') {
     payload.userData[SWAP_WEAPON_TAG] = true;
@@ -1904,6 +1911,7 @@ type MaterialRole = 'body' | 'weapon';
 function applyLowReadabilityLift(
   mat: THREE.MeshStandardMaterial | THREE.MeshLambertMaterial | THREE.MeshBasicMaterial,
   role: MaterialRole,
+  authored: boolean,
 ): void {
   const lift = role === 'weapon' ? 0.14 : 0.075;
   const emissive = role === 'weapon' ? 0.075 : 0.045;
@@ -1911,6 +1919,23 @@ function applyLowReadabilityLift(
   if ((mat as THREE.MeshLambertMaterial).isMeshLambertMaterial) {
     const lambert = mat as THREE.MeshLambertMaterial;
     lambert.emissive = mat.color.clone().multiplyScalar(emissive);
+    // An authored atlas (VisualDef.authoredAtlas, AUTHORED_HELD_MODELS) takes
+    // the floor THROUGH its map. The uniform floor was sized for the KayKit
+    // palettes, whose swatches sit mid-to-bright and barely notice it; an
+    // authored baked atlas is largely dark texels, and the same constant
+    // lifted every one of them to the same grey, a flat film over the whole
+    // texture. Scaled by the atlas, bright texels keep the lift and black
+    // stays black. Every other rig (player bodies included) keeps the uniform
+    // floor it always had. The rebuild owns this fresh Lambert (never
+    // compiled), so adding the map slot here costs no recompile.
+    // Only the ADDITIVE floor is map-scaled: the colour lift above stays on
+    // authored surfaces too. It is a multiply on the atlas (black stays
+    // black), so it cannot film a dark texture the way the floor did, and it
+    // is what keeps a low-tier character readable at all. That leaves the
+    // authored drops a touch warmer on this tier than on standard, where the
+    // polish (and its cream lift) is skipped outright: deliberate, the tiers
+    // trade colour accuracy for readability in different places.
+    if (authored && lambert.map) lambert.emissiveMap = lambert.map;
   }
 }
 
@@ -1993,6 +2018,10 @@ export function tintedMaterial(
   selfIllumination = 0,
   envMapIntensity?: number,
   matte = false,
+  // An authored surface (VisualDef.authoredAtlas for a body, an
+  // AUTHORED_HELD_MODELS prop for a weapon): keeps its shipped response
+  // instead of the kit polish, and takes the low-tier floor through its map.
+  authored = false,
 ): THREE.Material {
   // A source with no color property (the weapon-skin fresnel shell's
   // ShaderMaterial) has nothing this factory can tint, lift, or polish.
@@ -2008,7 +2037,13 @@ export function tintedMaterial(
   // material would mint two identical Lambert clones there. Accepted, since
   // no GLB is shared across matte and non-matte defs today, and keying on
   // the derivation INPUTS keeps the key honest if the derivation changes.
-  const key = `${src.uuid}|${tint ?? 'n'}|${tint === null ? 0 : strength}|${GFX.standardMaterials ? 's' : 'l'}|${skinTex ? skinTex.uuid : 'n'}|${emisTex ? emisTex.uuid : 'n'}|${role}|${mount}|${shapeKey}|${selfIllumination}|${envMapIntensity ?? 'n'}|${matte ? 'm' : 'n'}`;
+  // authored partitions it too, and that one IS load-bearing on a shared GLB:
+  // mob_wolf (authoredAtlas) and the druid form_cat (never flagged) both load
+  // wolf_basic.glb and reach here with the same source uuid. Without the
+  // suffix, whichever derived first would hand its Lambert clone to the
+  // other, and the low-tier emissiveMap would land on a player form
+  // (tests/tinted_material.test.ts pins the partition).
+  const key = `${src.uuid}|${tint ?? 'n'}|${tint === null ? 0 : strength}|${GFX.standardMaterials ? 's' : 'l'}|${skinTex ? skinTex.uuid : 'n'}|${emisTex ? emisTex.uuid : 'n'}|${role}|${mount}|${shapeKey}|${selfIllumination}|${envMapIntensity ?? 'n'}|${matte ? 'm' : 'n'}|${authored ? 'a' : 'n'}`;
   const build = () =>
     buildTintedClone(
       src as THREE.MeshStandardMaterial,
@@ -2020,6 +2055,7 @@ export function tintedMaterial(
       selfIllumination,
       envMapIntensity,
       matte,
+      authored,
     );
   if (claims) {
     if (claims.has(key)) {
@@ -2053,6 +2089,7 @@ function buildTintedClone(
   selfIllumination: number,
   envMapIntensity?: number,
   matte = false,
+  authored = false,
 ): THREE.Material {
   const src: THREE.Material = s;
   let mat: THREE.MeshStandardMaterial | THREE.MeshLambertMaterial | THREE.MeshBasicMaterial;
@@ -2133,7 +2170,12 @@ function buildTintedClone(
     sm.needsUpdate = true;
   }
   if (role === 'weapon') {
-    applyWeaponMaterialPolish(mat);
+    // The polish is authored for the KayKit kit palettes. An authored surface
+    // (manifest AUTHORED_HELD_MODELS: a Tripo or Blender atlas that already
+    // carries its own shading) keeps its response as shipped: on it the same
+    // cream lift, gloss clamp, and emissive floor read as a flat grey film
+    // over the texture.
+    if (!authored) applyWeaponMaterialPolish(mat);
   } else if ((mat as THREE.MeshStandardMaterial).isMeshStandardMaterial) {
     // Body/armor: clamp the authored roughness into a matte cloth/leather band.
     // Some kit materials ship near-zero roughness (reads wet/plastic under the
@@ -2160,7 +2202,7 @@ function buildTintedClone(
     }
     if (envMapIntensity !== undefined) std.envMapIntensity = envMapIntensity;
   }
-  if (!GFX.standardMaterials) applyLowReadabilityLift(mat, role);
+  if (!GFX.standardMaterials) applyLowReadabilityLift(mat, role, authored);
   return mat;
 }
 
@@ -2204,6 +2246,10 @@ export function applyMaterials(
     sourceMaterials.set(mesh, source);
     const role: MaterialRole = mesh.userData.weaponMesh ? 'weapon' : 'body';
     const materialTint = role === 'weapon' ? null : tint;
+    // An authored surface: the def says so for the body atlas, attachProp
+    // tagged it for an AUTHORED_HELD_MODELS prop.
+    const authored =
+      role === 'weapon' ? mesh.userData.authoredSurface === true : (def.authoredAtlas ?? false);
     // skin/emissive override only touches the character's own atlas meshes, not weapons
     const sk = skinTex && mesh.userData.bodyMesh ? skinTex : null;
     const em = emisTex && mesh.userData.bodyMesh ? emisTex : null;
@@ -2223,6 +2269,7 @@ export function applyMaterials(
           role === 'body' ? (def.selfIllumination ?? 0) : 0,
           role === 'body' ? def.envMapIntensity : undefined,
           role === 'body' && (def.matte ?? false),
+          authored,
         ),
       );
     } else {
@@ -2239,6 +2286,7 @@ export function applyMaterials(
         role === 'body' ? (def.selfIllumination ?? 0) : 0,
         role === 'body' ? def.envMapIntensity : undefined,
         role === 'body' && (def.matte ?? false),
+        authored,
       );
     }
     attachSharedDepthMaterials(mesh, mesh.material);
@@ -2278,6 +2326,7 @@ export function tintedFarMaterials(
       isBody[i] ? (def.selfIllumination ?? 0) : 0,
       isBody[i] ? def.envMapIntensity : undefined,
       isBody[i] && (def.matte ?? false),
+      isBody[i] && (def.authoredAtlas ?? false),
     ),
   );
 }

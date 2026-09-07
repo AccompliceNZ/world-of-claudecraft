@@ -15911,7 +15911,6 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Schademeter',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Daadvolger',
   'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Delve-volger',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Kwellingbalk',
   'hudChrome.interfaceUnlock.frameNames.petBar': 'Huisdierenbalk',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Spreukprocs',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Questvolger',
@@ -16098,4 +16097,5 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Ga uit de paarse poel zodra de markeringen detoneren. Houd het volgende stapelpunt vrij van actief vuur.',
   'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
     'Elke Zielenscheur-detonatie laat een poel paars vuur achter met een straal van {radius} yd waar elke markering stond, die {seconds} sec brandt voor {tickNormal} van maximale gezondheid per seconde. Staan waar poelen overlappen geeft een tik van elke poel. Poelen ontstaan nooit binnen {clearance} yd van een wachtsteen.',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'IJskegels',
 };
