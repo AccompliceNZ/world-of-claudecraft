@@ -4,6 +4,7 @@
 // settings/frames code, nothing usable).
 import { describe, expect, it } from 'vitest';
 import { buildKeybindCode, parseKeybindCode } from '../src/ui/keybind_transfer_core';
+import { TRANSFER_CODE_MAX_CHARS } from '../src/ui/settings_transfer_core';
 
 const SETUP = {
   slot0: ['KeyR', null],
@@ -82,5 +83,32 @@ describe('keybind_transfer_core', () => {
       ok: true,
       binds: SETUP,
     });
+  });
+
+  it('with the known actions given, a code naming none of them is hollow (it would import as a reset)', () => {
+    const known = new Set(['slot0', 'jump']);
+    const alien = JSON.stringify({ woc: 'woc-keybinds', v: 1, binds: { foo: ['KeyR', null] } });
+    expect(parseKeybindCode(alien, known)).toEqual({ ok: false, reason: 'empty' });
+    // One known row is enough; the unknown ones ride along for the model to ignore.
+    const mixed = JSON.stringify({
+      woc: 'woc-keybinds',
+      v: 1,
+      binds: { foo: ['KeyR', null], jump: ['KeyY', null] },
+    });
+    expect(parseKeybindCode(mixed, known)).toEqual({
+      ok: true,
+      binds: { foo: ['KeyR', null], jump: ['KeyY', null] },
+    });
+    // Without the set the check is off (the core alone knows no registry).
+    expect(parseKeybindCode(alien).ok).toBe(true);
+  });
+
+  it('shares the settings code size bound', () => {
+    const code = buildKeybindCode(SETUP);
+    expect(parseKeybindCode(`${code}${' '.repeat(TRANSFER_CODE_MAX_CHARS)}`)).toEqual({
+      ok: false,
+      reason: 'format',
+    });
+    expect(parseKeybindCode(code).ok).toBe(true);
   });
 });

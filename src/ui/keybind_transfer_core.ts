@@ -16,6 +16,8 @@
 // frame-layout code (settings_transfer_core.ts) and vice versa; a pasted code
 // of that other family is reported as 'kind' so the message can say so.
 
+import { TRANSFER_CODE_MAX_CHARS } from './settings_transfer_core';
+
 /** The envelope marker, so a random pasted JSON blob never reads as a code. */
 const ENVELOPE = 'woc-keybinds';
 /** The settings/frame-layout family's marker, recognised only to name it. */
@@ -40,10 +42,16 @@ export type ParsedKeybindCode =
   | { ok: false; reason: 'format' | 'kind' | 'empty' };
 
 /** Parse a pasted code. Returns the shape-valid bindings, or why not: 'format'
- *  (not a code at all), 'kind' (a settings / frame-layout code, so the message
- *  can say "that is a settings export" instead of "invalid"), 'empty' (a valid
- *  code carrying no usable binding row). */
-export function parseKeybindCode(text: string): ParsedKeybindCode {
+ *  (not a code at all, or past the size bound), 'kind' (a settings /
+ *  frame-layout code, so the message can say "that is a settings export"
+ *  instead of "invalid"), 'empty' (a valid code carrying no usable binding row,
+ *  or, when `knownActions` is given, none for an action this build knows: such a
+ *  code would import as a full reset). */
+export function parseKeybindCode(
+  text: string,
+  knownActions?: ReadonlySet<string>,
+): ParsedKeybindCode {
+  if (text.length > TRANSFER_CODE_MAX_CHARS) return { ok: false, reason: 'format' };
   let raw: unknown;
   try {
     raw = JSON.parse(text.trim());
@@ -65,7 +73,10 @@ export function parseKeybindCode(text: string): ParsedKeybindCode {
     return { ok: false, reason: 'format' };
   }
   const binds = sanitizeSetup(env.binds as Record<string, unknown>);
-  if (Object.keys(binds).length === 0) return { ok: false, reason: 'empty' };
+  const ids = Object.keys(binds);
+  if (ids.length === 0) return { ok: false, reason: 'empty' };
+  if (knownActions && !ids.some((id) => knownActions.has(id)))
+    return { ok: false, reason: 'empty' };
   return { ok: true, binds };
 }
 

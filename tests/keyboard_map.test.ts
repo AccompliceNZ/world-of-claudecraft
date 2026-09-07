@@ -192,6 +192,11 @@ describe('keyboard overview painter', () => {
     expect(r.dialogs[0].body).toContain('name:back');
     expect(r.keybinds.codeAt('back', 0)).toBe(back);
     expect(r.changed).toEqual([]);
+    // The board is idle under the prompt: no ring, no Cancel, the prompt's
+    // title as the status, nothing armed (cancelling the prompt leaves it so).
+    expect(r.root.querySelector('.kbm-key.capturing')).toBeNull();
+    expect(r.actionButtons()).toEqual([]);
+    expect(r.detail()).toBe(t('hudChrome.actionBar.conflictTitle'));
     r.dialogs[0].onOk();
     expect(r.keybinds.actionForCode('KeyW')).toBe('back');
     expect(r.changed).toHaveLength(1);
@@ -258,10 +263,39 @@ describe('keyboard overview painter', () => {
     // (Left Ctrl is Swim Down by default, so it is a bound cap, not a fixed one.)
     for (const code of ['Escape', 'ShiftLeft', 'AltRight', 'MetaLeft']) {
       expect(r.cap(code).classList.contains('kbm-fixed'), code).toBe(true);
+      expect(r.cap(code).disabled, code).toBe(true);
       r.cap(code).click();
     }
     expect(r.armed).toEqual([]);
     expect(r.dropdown.onChange).toBeUndefined();
+  });
+
+  it('keeps focus on the rebound cap across the rebuild, and one Tab stop per block with arrows inside', async () => {
+    const r = await rig();
+    const w = r.cap('KeyW');
+    w.focus();
+    expect(document.activeElement).toBe(w);
+    w.click();
+    r.latest()('F9');
+    // The board was rebuilt; focus stayed on the W cap rather than dropping to body.
+    expect(document.activeElement).toBe(r.cap('KeyW'));
+    // Roving tabindex: the focused cap is the block's stop, the rest are -1.
+    const main = r.cap('KeyW').closest('.kbm-block');
+    const stops = [...(main?.querySelectorAll('button.kbm-key:not(:disabled)') ?? [])].filter(
+      (b) => (b as HTMLButtonElement).tabIndex === 0,
+    );
+    expect(stops).toEqual([r.cap('KeyW')]);
+    r.cap('KeyW').dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    expect(document.activeElement).toBe(r.cap('KeyE'));
+    r.cap('KeyE').dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+    expect((document.activeElement as HTMLElement).dataset.code).toBe('KeyD');
+    // The numpad is its own block with its own single stop.
+    const numpad = r.cap('Numpad7').closest('.kbm-block');
+    expect(
+      [...(numpad?.querySelectorAll('button.kbm-key') ?? [])].filter(
+        (b) => (b as HTMLButtonElement).tabIndex === 0,
+      ),
+    ).toHaveLength(1);
   });
 
   it('dispose() and an outside repaint disarm a capture in progress', async () => {

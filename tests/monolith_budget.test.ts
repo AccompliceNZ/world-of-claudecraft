@@ -312,6 +312,15 @@ const MONOLITHS: MonolithRow[] = [
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
+    // The Esc options window: joined the ratchet at the keyboard-overview /
+    // import-export round (review request on PR #3926) so the next feature
+    // there lands as a sibling module the window composes, not another
+    // inline sub-panel. Exact count at the time of joining.
+    file: 'src/ui/options_window.ts',
+    ceiling: 2813,
+    seam: 'a pure view model (src/ui/options_view.ts) painted with the shared settings_controls.ts builders; sub-panels as sibling modules',
+  },
+  {
     file: 'src/render/renderer.ts',
     // Lowered after extracting the fire-light adopter, the budget pass, the
     // stranded-light reparent and the registry prune into

@@ -1,5 +1,6 @@
 // Localized display names for the key-binding actions (src/game/keybinds.ts
-// BIND_ACTIONS): the category headers and the per-action row labels the Key
+// BIND_ACTIONS), a pure core (tests/architecture.test.ts UI_PURE_CORES; it
+// imports only the i18n surface): the category headers and the per-action row labels the Key
 // Bindings panel paints, and the same names the keyboard overview and the
 // on-bar rebind mode's prompts speak (action_bar_bind_controller.ts, through
 // the actionName dep hud.ts supplies). One table so the surfaces can never
@@ -74,15 +75,16 @@ export const BIND_ACTION_LABEL_KEYS: Partial<Record<string, TranslationKey>> = {
 };
 
 /** The localized name of a bind action for prompts and rows. `fallback` is the
- *  registry's English label, used for an action the table does not know. */
+ *  registry's English label (Keybinds' bindActionLabel), used for an action the
+ *  table does not know; the id itself is the last resort. */
 export function bindActionDisplayName(
   actionId: string,
-  fallback: string,
+  fallback: string | undefined,
   slotActionName: (slot: number) => string | null,
 ): string {
   if (!actionId.startsWith('slot')) {
     const key = BIND_ACTION_LABEL_KEYS[actionId];
-    return key ? t(key) : fallback;
+    return key ? t(key) : (fallback ?? actionId);
   }
   const slot = Number(actionId.slice(4));
   if (slot === 0) return t('hud.keybinds.actions.attack');

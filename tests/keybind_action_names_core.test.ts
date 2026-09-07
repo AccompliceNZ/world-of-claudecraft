@@ -1,9 +1,9 @@
-// The shared key-binding action names (src/ui/keybind_action_names.ts): the
+// The shared key-binding action names (src/ui/keybind_action_names_core.ts): the
 // Key Bindings rows and the on-bar rebind prompts must name an action the same
 // way, so both read this one table.
 import { describe, expect, it } from 'vitest';
 import { BIND_ACTIONS } from '../src/game/keybinds';
-import { BIND_ACTION_LABEL_KEYS, bindActionDisplayName } from '../src/ui/keybind_action_names';
+import { BIND_ACTION_LABEL_KEYS, bindActionDisplayName } from '../src/ui/keybind_action_names_core';
 
 const noSlotName = () => null;
 

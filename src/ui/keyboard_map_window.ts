@@ -94,7 +94,7 @@ export class KeyboardMapWindow {
 
   private paint(root: HTMLElement): void {
     this.map?.dispose();
-    root.innerHTML = `<div class="panel-title"><span id="${TITLE_ID}">${esc(t('hudChrome.keyboardMap.title'))}</span><button type="button" class="x-btn" data-close aria-label="${esc(t('hudChrome.mounts.close'))}">${svgIcon('close')}</button></div>`;
+    root.innerHTML = `<div class="panel-title"><span id="${TITLE_ID}">${esc(t('hudChrome.keyboardMap.title'))}</span><button type="button" class="x-btn" data-close aria-label="${esc(t('hudChrome.keyboardMap.close'))}">${svgIcon('close')}</button></div>`;
     root.querySelector('[data-close]')?.addEventListener('click', () => this.close());
     const body = document.createElement('div');
     body.className = 'keyboard-map-body';

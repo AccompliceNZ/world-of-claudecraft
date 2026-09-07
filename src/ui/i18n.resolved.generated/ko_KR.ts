@@ -3065,6 +3065,7 @@ export const ko_KR: EnTranslations = {
       "hint": "사용 중인 키는 범주별로 색이 칠해집니다. 키에 마우스를 올리거나 포커스하면 그 키의 모든 지정을 볼 수 있습니다.",
       "hintInteractive": "사용 중인 키는 범주별로 색이 칠해집니다. 키를 클릭하면 기능을 바꿀 수 있고, 마우스를 올리거나 포커스하면 그 키의 모든 지정을 볼 수 있습니다.",
       "popOut": "Pop Out",
+      "close": "키보드 개요 닫기",
       "pressKey": "{action}에 지정할 키를 누르세요. Esc 키로 취소합니다.",
       "boundTo": "{action}을(를) {key} 키에 지정했습니다.",
       "notBindable": "그 키는 지정할 수 없습니다.",

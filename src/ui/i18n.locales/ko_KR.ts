@@ -860,6 +860,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keybindTransfer.imported': '단축키 설정을 가져왔습니다.',
   'hudChrome.keybindTransfer.wrongKind': '이 코드는 설정 내보내기이며 단축키 설정이 아닙니다.',
   'hudChrome.keyboardMap.title': '키보드 개요',
+  'hudChrome.keyboardMap.close': '키보드 개요 닫기',
   'hudChrome.keyboardMap.hint': '사용 중인 키는 범주별로 색이 칠해집니다. 키에 마우스를 올리거나 포커스하면 그 키의 모든 지정을 볼 수 있습니다.',
   'hudChrome.keyboardMap.hintInteractive': '사용 중인 키는 범주별로 색이 칠해집니다. 키를 클릭하면 기능을 바꿀 수 있고, 마우스를 올리거나 포커스하면 그 키의 모든 지정을 볼 수 있습니다.',
   'hudChrome.keyboardMap.pressKey': '{action}에 지정할 키를 누르세요. Esc 키로 취소합니다.',

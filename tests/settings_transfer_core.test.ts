@@ -2,6 +2,7 @@
 // (src/ui/settings_transfer_core.ts): round-trips, the key ALLOWLIST that
 // keeps a pasted code from planting arbitrary localStorage keys, and the
 // three distinct rejections (not a code, wrong kind, nothing usable).
+import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
   buildTransferCode,
@@ -11,6 +12,8 @@ import {
   TRANSFER_VALUE_MAX_CHARS,
   transferKeyAllowed,
 } from '../src/ui/settings_transfer_core';
+import { expectScansOnlyThroughSharedWalkers } from './helpers/scan_guard_self_audit';
+import { tsFilesUnder } from './helpers/ts_files_under';
 
 const FRAME_ENTRIES = {
   woc_hud_frame_minimap: '{"left":10,"top":20}',
@@ -43,7 +46,6 @@ const FULL_ENTRIES = {
   clock24h: '1',
   minimapZoom: '2',
   woc_bag_filter: 'all',
-  woc_ignored_chat_names: '["Griefer"]',
   ev_music_on: '0',
   locale: 'de_DE',
   woc_perf_overlay: '{}',
@@ -145,7 +147,6 @@ describe('settings_transfer_core', () => {
       'woc_crafting_tab',
       'woc_guild_hide_offline',
       'woc_party_collapsed',
-      'woc_ignored_chat_names',
       'woc_haptics_on',
       'ev_music_on',
       'woc_homepage_music_muted',
@@ -259,15 +260,54 @@ describe('settings_transfer_core', () => {
       data: { woc_chat_geometry: 'x'.repeat(TRANSFER_VALUE_MAX_CHARS + 1) },
     });
     expect(parseTransferCode('frames', fat)).toEqual({ ok: false, reason: 'format' });
-    const many: Record<string, string> = {};
-    for (let i = 0; i <= TRANSFER_MAX_ENTRIES; i++) many[`woc_keybinds:char:${i}`] = '{}';
-    const crowded = JSON.stringify({ woc: 'woc-transfer', v: 1, kind: 'full', data: many });
-    expect(parseTransferCode('full', crowded)).toEqual({ ok: false, reason: 'format' });
-    expect(parseTransferCode('frames', ' '.repeat(TRANSFER_CODE_MAX_CHARS + 1))).toEqual({
+    // Entry count: exactly at the cap imports, one past it is refused.
+    const atCap: Record<string, string> = {};
+    for (let i = 0; i < TRANSFER_MAX_ENTRIES; i++) atCap[`woc_keybinds:char:${i}`] = '{}';
+    expect(
+      parseTransferCode(
+        'full',
+        JSON.stringify({ woc: 'woc-transfer', v: 1, kind: 'full', data: atCap }),
+      ).ok,
+    ).toBe(true);
+    atCap[`woc_keybinds:char:${TRANSFER_MAX_ENTRIES}`] = '{}';
+    expect(
+      parseTransferCode(
+        'full',
+        JSON.stringify({ woc: 'woc-transfer', v: 1, kind: 'full', data: atCap }),
+      ),
+    ).toEqual({ ok: false, reason: 'format' });
+    // Total size: the SAME valid, allowlisted code just under the cap parses
+    // and just over it is refused, so the guard (not JSON.parse) is what the
+    // pin exercises.
+    // The padding is spread over several frame keys so each value stays under
+    // its own cap and only the TOTAL bound decides.
+    const padded = (total: number) => {
+      const keys = [
+        'woc_hud_frame_a',
+        'woc_hud_frame_b',
+        'woc_hud_frame_c',
+        'woc_hud_frame_d',
+        'woc_hud_frame_e',
+      ];
+      const data: Record<string, string> = {};
+      for (const k of keys) data[k] = '';
+      const shell = JSON.stringify({ woc: 'woc-transfer', v: 1, kind: 'frames', data });
+      let room = total - shell.length;
+      for (const k of keys) {
+        const take = Math.min(room, TRANSFER_VALUE_MAX_CHARS);
+        data[k] = 'x'.repeat(take);
+        room -= take;
+      }
+      const code = JSON.stringify({ woc: 'woc-transfer', v: 1, kind: 'frames', data });
+      expect(code.length).toBe(total);
+      return code;
+    };
+    expect(parseTransferCode('frames', padded(TRANSFER_CODE_MAX_CHARS)).ok).toBe(true);
+    expect(parseTransferCode('frames', padded(TRANSFER_CODE_MAX_CHARS + 1))).toEqual({
       ok: false,
       reason: 'format',
     });
-    // A value right at the cap still imports.
+    // A value right at the per-value cap still imports.
     const ok = JSON.stringify({
       woc: 'woc-transfer',
       v: 1,
@@ -288,5 +328,96 @@ describe('settings_transfer_core', () => {
       ok: true,
       entries: { woc_chat_geometry: '{"w":1}' },
     });
+  });
+
+  it('refuses every woc* storage literal under src/ that is not an expected export (the durable sweep)', () => {
+    // The allowlist admits prefixes, so a hand-written forbidden list rots: a
+    // future woc_chat_relay_token would ride the woc_chat_ prefix with the
+    // suite green. Enumerate every woc* string literal in the client tree and
+    // require each one that the FULL tier admits to be on this explicit list.
+    expectScansOnlyThroughSharedWalkers(import.meta.url, ['ts_files_under']);
+    const EXPECTED_EXPORTABLE = new Set([
+      'woc_settings',
+      'woc_theme',
+      'woc_keybinds',
+      'woc_gamepad',
+      'woc_gamepad_xhb',
+      'woc_gamepad_xhb_claimed',
+      'woc_mobile_chat_bottom',
+      'woc_chat_geometry',
+      'woc_chat_tabs',
+      'woc_chat_active_tab',
+      'woc_player_frame_pos',
+      'woc_target_frame_pos',
+      'woc_party_frame_pos',
+      'woc_meters_frame_heal',
+      'woc_meters_frame_threat',
+      'woc_meters_detached',
+      'woc_target_auras_frame',
+      'woc_target_auras_filter',
+      'woc_target_auras_visible',
+      'woc_target_auras_visible_rows',
+      'woc_target_auras_show_sources',
+      'woc_target_auras_opacity',
+      'woc_warlock_doom_frame_pos',
+      'woc_warlock_doom_frame_pos_hidden',
+      'woc_player_frame_pos_hidden',
+      'woc_target_frame_pos_hidden',
+      'woc_party_frame_pos_hidden',
+      'woc_layout_reset_epoch',
+      'woc_bag_filter',
+      'woc_bank_filter',
+      'woc_crafting_tab',
+      'woc_guild_hide_offline',
+      'woc_party_collapsed',
+      'woc_haptics_on',
+      'woc_homepage_music_muted',
+      'woc_native_auto_locale',
+      'woc_perf_overlay',
+      'woc_unsupported_browser_dismissed',
+      'woc_gpu_notice_dismissed',
+      'woc_gpu_notice_hybrid_dismissed',
+      'woc_perf_nudge_dismissed',
+      'woc_keyboard_layout',
+      'woc_keyboard_legends',
+      'woc.tutorial.v1',
+      'woc.ferrybellhint.v1',
+      'wocc.charSort',
+      // Prefix heads as they appear in source (template literal openings).
+      'woc_hud_frame_',
+      'woc_keybinds:',
+      'woc_gamepad_xhb:',
+      'woc_aura_overlays:',
+      'woc_emote_wheel_',
+      'woc_deed_watch_',
+      'woc_reliquary_pins_',
+      'woc_spawn_intro_seen:',
+      'woc_target_auras_',
+      'woc_chat_',
+    ]);
+    const literalRe = /['"\x60](woc[A-Za-z0-9_.:-]*)/g;
+    const admitted = new Set<string>();
+    const files = tsFilesUnder(
+      new URL('../src', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'),
+    );
+    expect(files.length).toBeGreaterThan(500);
+    for (const { file, full } of files) {
+      if (file.includes('i18n.') || file.includes('.generated.')) continue;
+      const code = readFileSync(full, 'utf8');
+      for (const m of code.matchAll(literalRe)) {
+        const literal = m[1];
+        // The frame registry's own family (interface_unlock_core.ts mints one
+        // woc_hud_frame_<id> per movable frame) is prefix-governed by design;
+        // every other admitted literal must be listed above.
+        if (literal.startsWith('woc_hud_frame_')) continue;
+        if (transferKeyAllowed('full', literal) && !EXPECTED_EXPORTABLE.has(literal))
+          admitted.add(`${literal} (${file})`);
+      }
+    }
+    expect([...admitted].sort()).toEqual([]);
+    // Positive control: a key the allowlist would admit through a prefix but
+    // which is not expected is exactly what the sweep reports.
+    expect(transferKeyAllowed('full', 'woc_chat_relay_token')).toBe(true);
+    expect(EXPECTED_EXPORTABLE.has('woc_chat_relay_token')).toBe(false);
   });
 });

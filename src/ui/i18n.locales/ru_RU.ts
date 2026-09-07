@@ -857,6 +857,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keybindTransfer.imported': 'Набор горячих клавиш импортирован.',
   'hudChrome.keybindTransfer.wrongKind': 'Этот код является экспортом настроек, а не набором горячих клавиш.',
   'hudChrome.keyboardMap.title': 'Обзор клавиатуры',
+  'hudChrome.keyboardMap.close': 'Закрыть обзор клавиатуры',
   'hudChrome.keyboardMap.hint': 'Используемые клавиши окрашены по категориям. Наведите курсор или сфокусируйтесь на клавише, чтобы увидеть все её назначения.',
   'hudChrome.keyboardMap.hintInteractive': 'Используемые клавиши окрашены по категориям. Нажмите на клавишу, чтобы изменить её назначение; наведите курсор или сфокусируйтесь на ней, чтобы увидеть все её назначения.',
   'hudChrome.keyboardMap.pressKey': 'Нажмите клавишу для {action}. Esc отменяет.',

@@ -427,6 +427,18 @@ describe('snapshot / importBindings (hotkey setup export + import)', () => {
     expect(kb.codeAt('slot3', 0)).toBe(null);
     expect(kb.codeAt('slot3', 1)).toBe(null);
     expect(kb.codeAt('slot4', 0)).toBe('Ctrl+Shift+KeyA');
+    // Combos are re-spelled the way makeCombo spells them, and a shape no
+    // keydown produces (a repeated head, a modifier under a head) is skipped,
+    // so the board and the rows never show a live-looking binding that can
+    // never fire. A bare modifier stays legal: Swim Down is Left Ctrl.
+    kb.importBindings({
+      slot5: ['Shift+Ctrl+KeyA', 'Shift+Shift+KeyB'],
+      slot6: ['ShiftLeft', 'Alt+ControlRight'],
+    });
+    expect(kb.codeAt('slot5', 0)).toBe('Ctrl+Shift+KeyA');
+    expect(kb.codeAt('slot5', 1)).toBe(null);
+    expect(kb.codeAt('slot6', 0)).toBe('ShiftLeft');
+    expect(kb.codeAt('slot6', 1)).toBe(null);
   });
 
   it('a snapshot re-imported elsewhere reproduces the setup exactly', () => {
@@ -926,7 +938,7 @@ describe('mouse buttons as bindable keys', () => {
 });
 
 // Every bindable action's Key Bindings row must localize. bindActionDisplayName
-// (src/ui/keybind_action_names.ts, shared by the options window rows and the
+// (src/ui/keybind_action_names_core.ts, shared by the options window rows and the
 // on-bar rebind prompts) resolves a label through BIND_ACTION_LABEL_KEYS and falls
 // back to the RAW ENGLISH BindAction.label when the id is absent, so a missing
 // entry ships hard-coded English in all 22 locales and silently orphans the
@@ -936,7 +948,7 @@ describe('mouse buttons as bindable keys', () => {
 // map is caught too (tests/keybind_action_names.test.ts checks the export itself).
 describe('every bind action has a localized label key', () => {
   const actionNamesSrc = readFileSync(
-    new URL('../src/ui/keybind_action_names.ts', import.meta.url),
+    new URL('../src/ui/keybind_action_names_core.ts', import.meta.url),
     'utf8',
   );
   const mapBody = actionNamesSrc.slice(

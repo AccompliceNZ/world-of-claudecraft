@@ -94,7 +94,7 @@ import {
 } from './i18n';
 import type { TranslationKey } from './i18n.catalog';
 import { interfaceUnlockLabelKey } from './interface_unlock_core';
-import { BIND_CATEGORY_LABEL_KEYS, bindActionDisplayName } from './keybind_action_names';
+import { BIND_CATEGORY_LABEL_KEYS, bindActionDisplayName } from './keybind_action_names_core';
 import { keybindConflictPrompt } from './keybind_conflict_prompt_core';
 import { buildKeybindCode, parseKeybindCode } from './keybind_transfer_core';
 import {
@@ -182,6 +182,9 @@ const KEYBIND_PANEL_SETTING_KEYS: (keyof GameSettings)[] = [
   'leftHandedTouch',
   'filterProfanity',
 ];
+// Every action id the registry knows: a pasted hotkey code naming none of them
+// would import as a full reset, so parseKeybindCode refuses it as hollow.
+const KNOWN_ACTION_IDS: ReadonlySet<string> = new Set(BIND_ACTIONS.map((a) => a.id));
 
 // Endonyms for the in-game language picker; never localized (they render
 // identically in every locale, matching the homepage footer picker), keyed by
@@ -1745,7 +1748,7 @@ export class OptionsWindow {
       exportCode: () => buildKeybindCode(this.deps.keybinds().snapshot()),
       applyLabel: t('hudChrome.keybindTransfer.apply'),
       importCode: (text) => {
-        const parsed = parseKeybindCode(text);
+        const parsed = parseKeybindCode(text, KNOWN_ACTION_IDS);
         if (!parsed.ok) {
           return t(
             parsed.reason === 'kind'
@@ -1753,10 +1756,6 @@ export class OptionsWindow {
               : 'hudChrome.transfer.invalid',
           );
         }
-        // The core checks shape only; a code naming no action this build knows
-        // would import as a full reset, so it is refused like a hollow one.
-        if (!Object.keys(parsed.binds).some((id) => BIND_ACTIONS.some((a) => a.id === id)))
-          return t('hudChrome.transfer.invalid');
         this.deps.keybinds().importBindings(parsed.binds);
         this.dropKeyCapture();
         this.keybindNote = t('hudChrome.keybindTransfer.imported');
@@ -2267,7 +2266,12 @@ export class OptionsWindow {
       rebind: hooks
         ? {
             keybinds: () => this.deps.keybinds(),
-            captureKey: (cb) => hooks.captureKey(cb),
+            // A board capture replaces any row capture on the one-shot seam, so
+            // the row must stop painting as "capturing" too.
+            captureKey: (cb) => {
+              this.capturingKey = null;
+              hooks.captureKey(cb);
+            },
             confirmDialog: (title, body, okText, cancelText, onOk) =>
               this.deps.confirmDialog(title, body, okText, cancelText, onOk),
             onChanged: (status) => {

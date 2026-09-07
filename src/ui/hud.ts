@@ -5,7 +5,7 @@ import { syncDeathControllerHints } from '../game/death_controller_hint';
 import type { GamepadKind } from '../game/gamepad_map';
 import type { GraphicsSettingsSnapshot } from '../game/graphics_rebuild_core';
 import { InstanceMusicController, type InstanceMusicDecision } from '../game/instance_music';
-import { type Keybinds, keyCapLabel } from '../game/keybinds';
+import { bindActionLabel, type Keybinds, keyCapLabel } from '../game/keybinds';
 import { music } from '../game/music';
 import {
   type GameSettings,
@@ -579,7 +579,7 @@ import {
   itemSetTooltipModel,
 } from './item_set_tooltip_view';
 import { itemSlotLabel as itemSlotName } from './item_slot_labels';
-import { bindActionDisplayName } from './keybind_action_names';
+import { bindActionDisplayName } from './keybind_action_names_core';
 import { knownItemDef, ownEntry } from './known_item';
 import { LeaderboardWindow } from './leaderboard_window';
 import { ReannounceMarker } from './live_region_reannounce';
@@ -1258,13 +1258,13 @@ export class Hud {
   // in buildActionBar; main.ts applySetting pushes the resolved visibility back
   // through setActionBarVisibility so the buttons track the options checkboxes.
   private actionBarToggle: ActionBarToggleControl | null = null;
-  // On-bar key-binding mode (issue #1238): the controller behind Edit action bar keys.
   private readonly actionBarBind = new ActionBarBindController({
     keybinds: () => this.keybinds,
     captureKey: (cb) => this.optionsHooks?.captureKey(cb),
     confirmDialog: (...args) => this.confirmDialog(...args),
     refreshKeybindLabels: () => this.refreshKeybindLabels(),
-    actionName: (id) => bindActionDisplayName(id, id, (slot) => this.slotActionName(slot)),
+    actionName: (id) =>
+      bindActionDisplayName(id, bindActionLabel(id), (slot) => this.slotActionName(slot)),
     closeOptions: () => this.optionsWindow.close(),
     bannerParent: () => $('#actionbar-stack'),
     syncSlotClasses: (s, active) => {

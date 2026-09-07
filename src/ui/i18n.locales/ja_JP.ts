@@ -859,6 +859,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keybindTransfer.imported': 'ホットキー設定をインポートしました。',
   'hudChrome.keybindTransfer.wrongKind': 'このコードは設定のエクスポートで、ホットキー設定ではありません。',
   'hudChrome.keyboardMap.title': 'キーボード一覧',
+  'hudChrome.keyboardMap.close': 'キーボード一覧を閉じる',
   'hudChrome.keyboardMap.hint': '使用中のキーはカテゴリ別に色分けされています。キーにカーソルを合わせるかフォーカスすると、そのキーの割り当てがすべて表示されます。',
   'hudChrome.keyboardMap.hintInteractive': '使用中のキーはカテゴリ別に色分けされています。キーをクリックすると割り当てを変更できます。カーソルを合わせるかフォーカスすると、そのキーの割り当てがすべて表示されます。',
   'hudChrome.keyboardMap.pressKey': '{action} に割り当てるキーを押してください。Esc でキャンセルします。',

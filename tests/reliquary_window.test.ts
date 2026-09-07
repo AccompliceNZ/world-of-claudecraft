@@ -1249,9 +1249,9 @@ describe('entry HTML and i18n chrome', () => {
 
   it('maps the reliquary keybind action through t() in Options', () => {
     // Without this entry, Options/gamepad fall back to raw English BIND_ACTIONS
-    // labels. The table lives in the shared keybind_action_names.ts (the on-bar
+    // labels. The table lives in the shared keybind_action_names_core.ts (the on-bar
     // rebind prompts read the same one).
-    expect(read('../src/ui/keybind_action_names.ts')).toContain(
+    expect(read('../src/ui/keybind_action_names_core.ts')).toContain(
       "reliquary: 'hudChrome.reliquary.title'",
     );
   });

@@ -3065,6 +3065,7 @@ export const zh_TW: EnTranslations = {
       "hint": "正在使用的按鍵依類別著色。將滑鼠懸停或聚焦到某個按鍵即可查看其全部綁定。",
       "hintInteractive": "正在使用的按鍵依類別著色。點擊某個按鍵可更改其功能；將滑鼠懸停或聚焦到按鍵上可查看其全部綁定。",
       "popOut": "Pop Out",
+      "close": "關閉鍵盤總覽",
       "pressKey": "按下一個鍵以綁定到 {action}。按 Esc 取消。",
       "boundTo": "已將 {action} 綁定到 {key}。",
       "notBindable": "該鍵無法綁定。",

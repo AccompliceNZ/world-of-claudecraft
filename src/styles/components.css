@@ -13949,6 +13949,7 @@
     --kbm-key-bg: #1a150e;
     --kbm-key-fg: #b9ac82;
     --kbm-key-fg-active: #f4ead0;
+    --kbm-text: #e8dcb8;
     --kbm-cat-movement: #2f5a34;
     --kbm-cat-targeting: #6a3a2a;
     --kbm-cat-interface: #2d4a66;
@@ -13987,7 +13988,7 @@
   .kbm-opt-label {
     min-width: 96px;
     font-size: 11px;
-    color: #b9ac82;
+    color: var(--kbm-key-fg);
   }
   .kbm-layers {
     display: flex;
@@ -14003,7 +14004,7 @@
     margin-top: 4px;
     font-size: 11px;
     line-height: 1.4;
-    color: #b9ac82;
+    color: var(--kbm-key-fg);
   }
   .kbm-layer {
     font-size: 11px;
@@ -14065,8 +14066,13 @@
   }
   /* A cap that can never take a binding (Escape, the modifier keys) reads as
      a plain key, not a control. */
-  .kbm-key.kbm-fixed {
+  .kbm-key.kbm-fixed,
+  .kbm-key:disabled {
     cursor: default;
+    opacity: 1;
+  }
+  .kbm-key:disabled:hover {
+    border-color: var(--border);
   }
   .kbm-spacer {
     visibility: hidden;
@@ -14133,7 +14139,7 @@
     gap: 4px 12px;
     margin-top: 4px;
     font-size: 11px;
-    color: #b9ac82;
+    color: var(--kbm-key-fg);
   }
   .kbm-legend-item {
     display: inline-flex;
@@ -14160,7 +14166,7 @@
     margin-top: 4px;
     font-size: 11px;
     line-height: 1.4;
-    color: #e8dcb8;
+    color: var(--kbm-text);
   }
   /* Unbind / Cancel while a capture is armed, or the assign picker for an
      empty key; sits under the detail line. */

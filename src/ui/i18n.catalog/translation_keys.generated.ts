@@ -9647,6 +9647,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.keyboardMap.assignPlaceholder'
   | 'hudChrome.keyboardMap.bindingLine'
   | 'hudChrome.keyboardMap.boundTo'
+  | 'hudChrome.keyboardMap.close'
   | 'hudChrome.keyboardMap.form60'
   | 'hudChrome.keyboardMap.form75'
   | 'hudChrome.keyboardMap.formFull'

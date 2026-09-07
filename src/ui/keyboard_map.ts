@@ -28,6 +28,12 @@ import {
   type Keybinds,
   keyLabel,
 } from '../game/keybinds';
+import {
+  captureFocusKey,
+  FOCUS_KEY_ATTR,
+  findFocusKey,
+  restoreFirstEnabled,
+} from './focus_restore';
 import { type TranslationKey, t } from './i18n';
 import { keybindConflictPrompt } from './keybind_conflict_prompt_core';
 import {
@@ -373,6 +379,11 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
       commit();
       return;
     }
+    // The capture has fired: drop the board to idle (ring off, Cancel gone, the
+    // prompt's title as the status) before asking, like the rows and the on-bar
+    // mode, so a cancelled prompt never leaves a "Press a key" state behind
+    // with nothing armed.
+    finish(t(prompt.titleKey));
     io.confirmDialog(
       t(prompt.titleKey),
       t(prompt.bodyKey, prompt.params),
@@ -464,7 +475,43 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
     detail.textContent = status;
   };
 
+  /** Roving tabindex: one Tab stop per block, arrows walk the caps. */
+  const roveBlock = (el: HTMLElement, rows: HTMLButtonElement[][]): void => {
+    const caps = rows.flat();
+    if (caps.length === 0) return;
+    for (const cap of caps) cap.tabIndex = -1;
+    caps[0].tabIndex = 0;
+    el.addEventListener('focusin', (e) => {
+      const target = e.target;
+      if (!(target instanceof HTMLButtonElement) || !caps.includes(target)) return;
+      for (const cap of caps) cap.tabIndex = cap === target ? 0 : -1;
+    });
+    el.addEventListener('keydown', (e) => {
+      const target = e.target;
+      if (!(target instanceof HTMLButtonElement) || !caps.includes(target)) return;
+      const r = rows.findIndex((row) => row.includes(target));
+      const c = rows[r].indexOf(target);
+      let next: HTMLButtonElement | undefined;
+      if (e.key === 'ArrowRight') next = caps[(caps.indexOf(target) + 1) % caps.length];
+      else if (e.key === 'ArrowLeft')
+        next = caps[(caps.indexOf(target) - 1 + caps.length) % caps.length];
+      else if (e.key === 'ArrowDown' && rows[r + 1])
+        next = rows[r + 1][Math.min(c, rows[r + 1].length - 1)];
+      else if (e.key === 'ArrowUp' && rows[r - 1])
+        next = rows[r - 1][Math.min(c, rows[r - 1].length - 1)];
+      else if (e.key === 'Home') next = caps[0];
+      else if (e.key === 'End') next = caps[caps.length - 1];
+      if (!next) return;
+      e.preventDefault();
+      next.focus();
+    });
+  };
+
   const paintBoard = (): void => {
+    // A rebuild from a focused cap keeps that cap focused (src/ui/CLAUDE.md,
+    // focus across a REBUILD): in the pop-out the trap cycles Tab only while
+    // focus is inside, so a drop to <body> would hand Tab to the game.
+    const focusKey = captureFocusKey(board);
     board.replaceChildren();
     const view = buildKeyboardMap(
       deps.bindings(),
@@ -476,7 +523,9 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
       const el = document.createElement('div');
       el.className = `kbm-block kbm-block-${block.id}`;
       el.style.setProperty('--kbm-cols', String(block.units * COLS_PER_UNIT));
+      const capRows: HTMLButtonElement[][] = [];
       for (const row of block.rows) {
+        const capRow: HTMLButtonElement[] = [];
         for (const key of row) {
           if (key.spacer) {
             const cell = document.createElement('div');
@@ -490,6 +539,7 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
           const cell = document.createElement('button');
           cell.type = 'button';
           cell.dataset.code = key.code;
+          cell.setAttribute(FOCUS_KEY_ATTR, key.code);
           cell.style.setProperty('--kbm-w', String(key.w * COLS_PER_UNIT));
           cell.style.setProperty('--kbm-h', String(key.h));
           const bound = key.layerBinding;
@@ -527,15 +577,22 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
               else startAssign(rebind, key);
             });
           } else if (rebind) {
+            // A cap that can take no binding is not a control: out of the Tab
+            // order and the arrow walk, still hoverable for its detail line.
             cell.classList.add('kbm-fixed');
+            cell.disabled = true;
           }
           if (armed && splitCombo(armed.binding.combo).code === key.code)
             cell.classList.add('capturing');
+          if (!cell.disabled) capRow.push(cell);
           el.appendChild(cell);
         }
+        if (capRow.length > 0) capRows.push(capRow);
       }
+      roveBlock(el, capRows);
       board.appendChild(el);
     }
+    if (focusKey !== null) restoreFirstEnabled([findFocusKey(board, focusKey)]);
     // Bindings on keys this board does not draw stay listed, so shrinking the
     // picture never hides a live binding.
     hiddenLine.hidden = view.hidden.length === 0;
@@ -548,8 +605,9 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
   paintOptions();
   paintBoard();
   // Real legends arrive asynchronously on first use; repaint (and offer the
-  // legend choice) once they do. Only the first board pays the round trip.
-  if (!layoutMapLoad)
+  // legend choice) once they do. The promise is memoized, so every board
+  // painted while the first fetch is in flight still hears the answer.
+  if (!layoutMap)
     loadLayoutMap().then(() => {
       if (disposed || !wrap.isConnected) return;
       paintOptions();

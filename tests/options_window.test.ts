@@ -64,7 +64,12 @@ describe('options_window: hotkey setup row', () => {
     expect(rows).toContain('buildKeybindCode(this.deps.keybinds().snapshot())');
     expect(rows).toContain('importBindings(parsed.binds)');
     expect(rows).toContain("'hudChrome.keybindTransfer.wrongKind'");
-    expect(rows).toContain('BIND_ACTIONS.some((a) => a.id === id)');
+    // The hollow-code refusal lives in the core (pinned in
+    // tests/keybind_transfer_core.test.ts); the panel hands it the registry ids.
+    expect(rows).toContain('parseKeybindCode(text, KNOWN_ACTION_IDS)');
+    expect(painter).toContain(
+      'const KNOWN_ACTION_IDS: ReadonlySet<string> = new Set(BIND_ACTIONS.map((a) => a.id));',
+    );
     expect(rows).toContain('this.dropKeyCapture();');
     expect(rows).toContain('this.renderKeybinds();');
     expect(rows).not.toContain('window.location.reload()');
@@ -82,6 +87,20 @@ describe('options_window: hotkey setup row', () => {
       painter.indexOf('private beginCapture('),
     );
     expect(keybinds).toContain('this.keyboardBoard?.dispose();');
+    // A board capture replaces a row capture on the one-shot seam, so the row
+    // stops painting as capturing.
+    const deps = painter.slice(painter.indexOf('private keyboardMapDeps('));
+    expect(deps.slice(0, deps.indexOf('\n  }\n'))).toMatch(
+      /captureKey: \(cb\) => \{\s*this\.capturingKey = null;\s*hooks\.captureKey\(cb\);/,
+    );
+  });
+
+  it('every rebind path repaints the pop-out through the HUD keycap refresh', () => {
+    expect(painter).toContain('repaintKeyboardWindow(): void {');
+    const refresh = hudTs.slice(hudTs.indexOf('refreshKeybindLabels(): void {'));
+    expect(refresh.slice(0, refresh.indexOf('\n  }\n'))).toContain(
+      'this.optionsWindow.repaintKeyboardWindow();',
+    );
   });
 });
 
@@ -512,11 +531,11 @@ describe('options_window: keybind rebind dispatch (cluster 5)', () => {
   }
 
   it('localizes the Target Buffs and Debuffs row through its chrome key', () => {
-    // The label table lives in the shared keybind_action_names.ts (the on-bar
+    // The label table lives in the shared keybind_action_names_core.ts (the on-bar
     // rebind prompts name actions from the same table); the painter's
     // actionDisplayName must resolve through it, never a private copy.
     const names = readFileSync(
-      new URL('../src/ui/keybind_action_names.ts', import.meta.url),
+      new URL('../src/ui/keybind_action_names_core.ts', import.meta.url),
       'utf8',
     );
     expect(names).toContain("targetAuras: 'hudChrome.targetAuras.keybindLabel'");

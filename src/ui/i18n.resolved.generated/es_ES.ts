@@ -3065,6 +3065,7 @@ export const es_ES: EnTranslations = {
       "hint": "Keys in use are coloured by category. Hover or focus a key to see everything bound to it.",
       "hintInteractive": "Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.",
       "popOut": "Pop Out",
+      "close": "Close keyboard overview",
       "pressKey": "Press a key for {action}. Esc cancels.",
       "boundTo": "Bound {action} to {key}.",
       "notBindable": "That key cannot be bound.",

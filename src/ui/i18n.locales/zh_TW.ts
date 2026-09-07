@@ -841,6 +841,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keybindTransfer.imported': '快捷鍵配置已匯入。',
   'hudChrome.keybindTransfer.wrongKind': '該代碼是設定匯出，不是快捷鍵配置。',
   'hudChrome.keyboardMap.title': '鍵盤總覽',
+  'hudChrome.keyboardMap.close': '關閉鍵盤總覽',
   'hudChrome.keyboardMap.hint': '正在使用的按鍵依類別著色。將滑鼠懸停或聚焦到某個按鍵即可查看其全部綁定。',
   'hudChrome.keyboardMap.hintInteractive': '正在使用的按鍵依類別著色。點擊某個按鍵可更改其功能；將滑鼠懸停或聚焦到按鍵上可查看其全部綁定。',
   'hudChrome.keyboardMap.pressKey': '按下一個鍵以綁定到 {action}。按 Esc 取消。',

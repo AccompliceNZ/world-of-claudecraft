@@ -96,7 +96,8 @@ const FULL_KEYS = [
   'woc_crafting_tab',
   'woc_guild_hide_offline',
   'woc_party_collapsed',
-  'woc_ignored_chat_names',
+  // (woc_ignored_chat_names is deliberately NOT here: it names other players,
+  // and a shared setup code must never carry someone's ignore list.)
   'woc_haptics_on',
   'ev_music_on',
   'woc_homepage_music_muted',

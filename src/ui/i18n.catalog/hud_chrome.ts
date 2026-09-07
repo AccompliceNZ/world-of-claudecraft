@@ -4132,8 +4132,10 @@ export const hudChromeStrings = {
     hint: 'Keys in use are coloured by category. Hover or focus a key to see everything bound to it.',
     hintInteractive:
       'Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.',
-    // The header button that opens the overview in its own movable window.
+    // The header button that opens the overview in its own movable window,
+    // and that window's close control.
     popOut: 'Pop Out',
+    close: 'Close keyboard overview',
     // Status lines while rebinding through a key: {action} is the binding's
     // action name, {key} the key label just pressed or clicked.
     pressKey: 'Press a key for {action}. Esc cancels.',

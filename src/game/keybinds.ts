@@ -536,11 +536,40 @@ function codeLabel(code: string): string {
   return named[code] ?? code;
 }
 
-// The only shape a binding may take: canonical modifier heads over a bare
-// KeyboardEvent.code (or a Mouse<n> pseudo-code). Anything else in a stored or
-// imported blob is skipped: it could never match a keydown, and one sink
-// (the keyboard overview) turns a code into a DOM lookup.
-const COMBO_RE = /^(?:(?:Ctrl|Alt|Shift|Meta)\+)*[A-Za-z0-9]+$/;
+const MODIFIER_NAMES = new Set(['Ctrl', 'Alt', 'Shift', 'Meta']);
+const CODE_RE = /^[A-Za-z0-9]+$/;
+
+/**
+ * The one shape a stored or imported binding may take, re-spelled the way
+ * makeCombo spells it: each modifier at most once, in canonical order, over a
+ * bare KeyboardEvent.code (or a Mouse<n> pseudo-code). A modifier key may be the
+ * bare code (Swim Down is Left Ctrl by default, polled as a held key) but never
+ * under a modifier head, and no head repeats. Returns null for anything else
+ * (`Shift+Shift+KeyA`, `Alt+ControlRight`, a garbage string), which applyBlob
+ * then skips: such a value could never match a keydown, and one sink (the
+ * keyboard overview) turns a code into a DOM lookup. A hand-edited
+ * `Shift+Ctrl+KeyA` comes back as `Ctrl+Shift+KeyA`.
+ */
+export function canonicalCombo(raw: string): string | null {
+  const parts = raw.split('+');
+  const code = parts.pop() ?? '';
+  if (!CODE_RE.test(code)) return null;
+  if (isModifierCode(code) && parts.length > 0) return null;
+  if (parts.some((m) => !MODIFIER_NAMES.has(m)) || new Set(parts).size !== parts.length)
+    return null;
+  return makeCombo(code, {
+    ctrl: parts.includes('Ctrl'),
+    alt: parts.includes('Alt'),
+    shift: parts.includes('Shift'),
+    meta: parts.includes('Meta'),
+  });
+}
+
+/** The registry's English label for an action id (the fallback name the
+ *  display-name table uses for an action it does not know). */
+export function bindActionLabel(id: string): string | undefined {
+  return ACTION_BY_ID.get(id)?.label;
+}
 
 // Read a stored bindings blob, returning a plain object map or null. A missing,
 // corrupt (unparseable), or non-object value (including a JSON array) counts as
@@ -636,11 +665,12 @@ export class Keybinds {
       const shared = actionAllowsShared(a.id);
       for (let i = 0; i < SLOTS_PER_ACTION; i++) {
         const raw = entry[i];
-        if (typeof raw !== 'string' || !COMBO_RE.test(raw)) continue;
+        const combo = typeof raw === 'string' ? canonicalCombo(raw) : null;
+        if (combo === null) continue;
         // Held (movement) actions are stored bare, as bind() stores them; a
         // modifier on one (only a hand-edited import can carry it) is dropped
         // so the poll and the eviction sweep keep matching.
-        const v = a.kind === 'held' ? comboCode(raw) : raw;
+        const v = a.kind === 'held' ? comboCode(combo) : combo;
         if (isReservedCode(v)) continue;
         // Shared actions keep their code even if another action already claimed
         // it, and never claim it themselves, so the overlap survives a round-trip.
