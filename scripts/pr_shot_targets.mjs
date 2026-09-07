@@ -362,14 +362,14 @@ async function openMarketBrowse(page) {
   return pollForSize(page, '#market-window');
 }
 
-// Open Esc options -> Interface -> Frames by CLICKING the rendered controls rather
+// Open Esc options -> Interface -> <tab> by CLICKING the rendered controls rather
 // than reaching past them, so the shot proves the row is reachable the way a player
 // reaches it. Interface is the 4th main-menu row (buildOptionsMenu; the optional Bug
-// Report row is appended AFTER it, so the index is stable) and Frames the 2nd tab of
-// the Interface panel (INTERFACE_TAB_ORDER; the Edit Frames entry row moved there
-// when the tab was minted). The window is force-hidden first so the
-// toggle is deterministic regardless of prior state, the same trick the bags target uses.
-async function openInterfaceFramesTab(page) {
+// Report row is appended AFTER it, so the index is stable); `tabIndex` is the tab's
+// position in INTERFACE_TAB_ORDER (general, frames, chat, combat). The window is
+// force-hidden first so the toggle is deterministic regardless of prior state, the
+// same trick the bags target uses.
+async function openInterfaceTab(page, tabIndex) {
   await page.evaluate(() => {
     const el = document.querySelector('#options-menu');
     if (el) el.style.display = 'none';
@@ -380,11 +380,16 @@ async function openInterfaceFramesTab(page) {
     document.querySelectorAll('#options-menu .opt-btn')[3]?.click();
   });
   await wait(400);
-  await page.evaluate(() => {
-    document.querySelectorAll('#options-menu .opt-tab')[1]?.click();
-  });
+  await page.evaluate((index) => {
+    document.querySelectorAll('#options-menu .opt-tab')[index]?.click();
+  }, tabIndex);
   return pollForSize(page, '#options-menu');
 }
+
+// Frames is the 2nd tab (the Edit Frames entry row moved there when the tab was
+// minted); Combat the 4th, where the aura-track and Target dots toggles live.
+const openInterfaceFramesTab = (page) => openInterfaceTab(page, 1);
+const openInterfaceCombatTab = (page) => openInterfaceTab(page, 3);
 
 // Press the real "Unlock interface" button (the first row of the Frames tabpanel,
 // which interfaceUnlockRow appends ahead of the declarative list), then close the
