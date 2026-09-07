@@ -1696,7 +1696,15 @@ export const da_DK: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Bærer {action}: bekræft på en celle for at placere den, annuller for at sætte den tilbage.",
       "crossHotbarEditHint": "Arrangering: bekræft henter fra en celle eller stavebogen og falder på en celle, annuller sletter en.",
-      "crossHotbarEditHelp": "Hold den venstre kofanger, og tryk på den øverste knap for at arrangere stangen med controlleren."
+      "crossHotbarEditHelp": "Hold den venstre kofanger, og tryk på den øverste knap for at arrangere stangen med controlleren.",
+      "padHintLabel": "Controller hints",
+      "padHintInteract": "Interact",
+      "padHintTargetMenu": "Target menu",
+      "padHintSwapSet": "Swap set",
+      "padHintArrangeBar": "Arrange bar",
+      "padLegendBags": "Bags",
+      "padLegendMenu": "Menu",
+      "padLegendCycleHud": "Cycle HUD"
     },
     "perf": {
       "title": "Ydelsesoverlay",

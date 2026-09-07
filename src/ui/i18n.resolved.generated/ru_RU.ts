@@ -1695,8 +1695,16 @@ export const ru_RU: EnTranslations = {
       "crossHotbarDisplayMinimal": "Только при удержании",
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "В руках {action}: подтверждение на ячейке кладет действие, отмена возвращает его.",
-      "crossHotbarEditHint": "Перестановка: подтверждение берет действие из ячейки или книги заклинаний и кладет его в ячейку, отмена очищает ячейку.",
-      "crossHotbarEditHelp": "Удерживайте левый бампер и нажмите верхнюю лицевую кнопку, чтобы переставить панель геймпадом."
+      "crossHotbarEditHint": "Перестановка · крестовина перемещает · подтверждение берет и кладет · отмена очищает ячейку",
+      "crossHotbarEditHelp": "Удерживайте левый бампер и нажмите верхнюю лицевую кнопку, чтобы переставить панель геймпадом.",
+      "padHintLabel": "Подсказки геймпада",
+      "padHintInteract": "Взаимодействовать",
+      "padHintTargetMenu": "Меню цели",
+      "padHintSwapSet": "Сменить набор",
+      "padHintArrangeBar": "Перестановка панели",
+      "padLegendBags": "Сумки",
+      "padLegendMenu": "Меню",
+      "padLegendCycleHud": "Переключить интерфейс"
     },
     "perf": {
       "title": "Оверлей производительности",

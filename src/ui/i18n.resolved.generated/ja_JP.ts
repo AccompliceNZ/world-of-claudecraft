@@ -1695,8 +1695,16 @@ export const ja_JP: EnTranslations = {
       "crossHotbarDisplayMinimal": "押している間のみ",
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "{action}を持っています。マスで決定を押すと置き、キャンセルで戻します。",
-      "crossHotbarEditHint": "配置変更中：決定でマスまたはスペルブックからアクションを持ち上げてマスに置き、キャンセルでマスを空にします。",
-      "crossHotbarEditHelp": "左バンパーを押しながら上の面ボタンを押すと、コントローラーでバーを配置変更できます。"
+      "crossHotbarEditHint": "配置変更中 · 十字キーで移動 · 決定で持ち上げて配置 · キャンセルでマスを空に",
+      "crossHotbarEditHelp": "左バンパーを押しながら上の面ボタンを押すと、コントローラーでバーを配置変更できます。",
+      "padHintLabel": "コントローラーのヒント",
+      "padHintInteract": "調べる",
+      "padHintTargetMenu": "ターゲットメニュー",
+      "padHintSwapSet": "セット切替",
+      "padHintArrangeBar": "バーの配置変更",
+      "padLegendBags": "バッグ",
+      "padLegendMenu": "メニュー",
+      "padLegendCycleHud": "インターフェース切替"
     },
     "perf": {
       "title": "パフォーマンスオーバーレイ",

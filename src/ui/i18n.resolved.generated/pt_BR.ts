@@ -1696,7 +1696,15 @@ export const pt_BR: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Carregando {action}: confirme em uma célula para colocá-la, cancele para colocá-la de volta.",
       "crossHotbarEditHint": "Organizando: confirme pega de uma célula ou do livro de feitiços e cai em uma célula, cancele limpa uma.",
-      "crossHotbarEditHelp": "Segure o pára-choque esquerdo e pressione o botão superior para organizar a barra com o controlador."
+      "crossHotbarEditHelp": "Segure o pára-choque esquerdo e pressione o botão superior para organizar a barra com o controlador.",
+      "padHintLabel": "Controller hints",
+      "padHintInteract": "Interact",
+      "padHintTargetMenu": "Target menu",
+      "padHintSwapSet": "Swap set",
+      "padHintArrangeBar": "Arrange bar",
+      "padLegendBags": "Bags",
+      "padLegendMenu": "Menu",
+      "padLegendCycleHud": "Cycle HUD"
     },
     "perf": {
       "title": "Sobreposição de Desempenho",

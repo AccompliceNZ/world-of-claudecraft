@@ -1696,7 +1696,15 @@ export const tr_TR: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "{action} taşıma: hücreye yerleştirmeyi onaylayın, geri takmak için iptal edin.",
       "crossHotbarEditHint": "Düzenleme: Bir hücreden veya büyü kitabından alımları onaylayın ve bir hücreye bırakın, iptal birini siler.",
-      "crossHotbarEditHelp": "Çubuğu kontrol cihazıyla ayarlamak için sol tamponu tutun ve üst taraftaki düğmeye basın."
+      "crossHotbarEditHelp": "Çubuğu kontrol cihazıyla ayarlamak için sol tamponu tutun ve üst taraftaki düğmeye basın.",
+      "padHintLabel": "Controller hints",
+      "padHintInteract": "Interact",
+      "padHintTargetMenu": "Target menu",
+      "padHintSwapSet": "Swap set",
+      "padHintArrangeBar": "Arrange bar",
+      "padLegendBags": "Bags",
+      "padLegendMenu": "Menu",
+      "padLegendCycleHud": "Cycle HUD"
     },
     "perf": {
       "title": "Performans Katmanı",

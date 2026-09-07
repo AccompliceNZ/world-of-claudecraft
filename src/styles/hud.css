@@ -11759,7 +11759,9 @@
     pointer-events: none;
   }
   .xhb-half.xhb-armed::before {
-    opacity: var(--fx-shadow, 1);
+    opacity: 1;
+    box-shadow: 0 0 calc(24px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--gold) 18%, transparent);
   }
   .xhb-diamond {
     position: relative;

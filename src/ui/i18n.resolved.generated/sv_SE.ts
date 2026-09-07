@@ -1696,7 +1696,15 @@ export const sv_SE: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Bär {action}: bekräfta på en cell för att placera den, avbryt för att sätta tillbaka den.",
       "crossHotbarEditHint": "Ordna: bekräfta plockar upp från en cell eller stavningsboken och släpper på en cell, avbryt rensar en.",
-      "crossHotbarEditHelp": "Håll i den vänstra stötfångaren och tryck på den övre ansiktsknappen för att placera stången med kontrollen."
+      "crossHotbarEditHelp": "Håll i den vänstra stötfångaren och tryck på den övre ansiktsknappen för att placera stången med kontrollen.",
+      "padHintLabel": "Controller hints",
+      "padHintInteract": "Interact",
+      "padHintTargetMenu": "Target menu",
+      "padHintSwapSet": "Swap set",
+      "padHintArrangeBar": "Arrange bar",
+      "padLegendBags": "Bags",
+      "padLegendMenu": "Menu",
+      "padLegendCycleHud": "Cycle HUD"
     },
     "perf": {
       "title": "Prestandaöverlägg",

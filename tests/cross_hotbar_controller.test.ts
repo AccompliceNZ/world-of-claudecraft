@@ -227,7 +227,9 @@ describe('the cross hotbar stylesheet', () => {
   });
 
   it('rides the armed halo on the decorative-glow scale', () => {
-    expect(section).toContain('.xhb-half.xhb-armed::before {\n    opacity: var(--fx-shadow, 1);');
+    expect(section).toContain(
+      '.xhb-half.xhb-armed::before {\n    opacity: 1;\n    box-shadow: 0 0 calc(24px * var(--fx-shadow, 1))',
+    );
   });
 
   it('still drops the unreachable half in the expanded bank', () => {

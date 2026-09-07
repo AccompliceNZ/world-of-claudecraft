@@ -1696,7 +1696,15 @@ export const de_DE: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Tragen von {action}: Bestätigen Sie auf einer Zelle, um sie zu platzieren, und brechen Sie ab, um sie zurückzusetzen.",
       "crossHotbarEditHint": "Ordnen: Bestätigen: Nimmt eine Zelle oder das Zauberbuch auf und legt sie auf eine Zelle ab, Abbrechen löscht eine.",
-      "crossHotbarEditHelp": "Halten Sie den linken Stoßfänger fest und drücken Sie die Taste auf der Oberseite, um die Leiste mit dem Controller auszurichten."
+      "crossHotbarEditHelp": "Halten Sie den linken Stoßfänger fest und drücken Sie die Taste auf der Oberseite, um die Leiste mit dem Controller auszurichten.",
+      "padHintLabel": "Controller hints",
+      "padHintInteract": "Interact",
+      "padHintTargetMenu": "Target menu",
+      "padHintSwapSet": "Swap set",
+      "padHintArrangeBar": "Arrange bar",
+      "padLegendBags": "Bags",
+      "padLegendMenu": "Menu",
+      "padLegendCycleHud": "Cycle HUD"
     },
     "perf": {
       "title": "Leistungsanzeige",

@@ -1695,8 +1695,16 @@ export const en_XA: EnTranslations = {
       "crossHotbarDisplayMinimal": "[Óñļý Ŵĥíļé Ĥéļð]",
       "crossHotbarArrangeChord": "[{bumper} + {button}]",
       "crossHotbarCarrying": "[Çáŕŕýíñĝ {action}: çóñƒíŕɱ óñ á çéļļ ţó þļáçé íţ, çáñçéļ ţó þúţ íţ ƀáçķ.]",
-      "crossHotbarEditHint": "[Áŕŕáñĝíñĝ: çóñƒíŕɱ þíçķš úþ ƒŕóɱ á çéļļ óŕ ţĥé šþéļļƀóóķ áñð ðŕóþš óñ á çéļļ, çáñçéļ çļéáŕš óñé.]",
-      "crossHotbarEditHelp": "[Ĥóļð ţĥé ļéƒţ ƀúɱþéŕ áñð þŕéšš ţĥé ţóþ ƒáçé ƀúţţóñ ţó áŕŕáñĝé ţĥé ƀáŕ ŵíţĥ ţĥé çóñţŕóļļéŕ.]"
+      "crossHotbarEditHint": "[Áŕŕáñĝíñĝ · ð-þáð ɱóʋéš · çóñƒíŕɱ þíçķš úþ áñð þļáçéš · çáñçéļ çļéáŕš á çéļļ]",
+      "crossHotbarEditHelp": "[Ĥóļð ţĥé ļéƒţ ƀúɱþéŕ áñð þŕéšš ţĥé ţóþ ƒáçé ƀúţţóñ ţó áŕŕáñĝé ţĥé ƀáŕ ŵíţĥ ţĥé çóñţŕóļļéŕ.]",
+      "padHintLabel": "[Çóñţŕóļļéŕ ĥíñţš]",
+      "padHintInteract": "[Íñţéŕáçţ]",
+      "padHintTargetMenu": "[Ţáŕĝéţ ɱéñú]",
+      "padHintSwapSet": "[Šŵáþ šéţ]",
+      "padHintArrangeBar": "[Áŕŕáñĝé ƀáŕ]",
+      "padLegendBags": "[Ɓáĝš]",
+      "padLegendMenu": "[Ɱéñú]",
+      "padLegendCycleHud": "[Çýçļé ĤÚÐ]"
     },
     "perf": {
       "title": "[Þéŕƒóŕɱáñçé Óʋéŕļáý]",
