@@ -1401,8 +1401,10 @@ describe('client HTML shell', () => {
     // band, so the darkening never reaches full strength on the control the row
     // grew from and never has to be paid for by widening the span.
     expect(hudMobileCss).toContain('    --strip-dim-anchor-fade: 14px;');
+    // W13: the band's two stops moved onto --mobile-dim-band-near/-far so the
+    // strip dim carries no raw literal; the ramp geometry is unchanged.
     expect(hudMobileCss).toContain(
-      '      transparent 0,\n      #05050cb0 var(--strip-dim-anchor-fade),\n',
+      '      transparent 0,\n      var(--mobile-dim-band-near) var(--strip-dim-anchor-fade),\n',
     );
     // Touch-router coverage. The SEAT is covered by #mobile-action-ring
     // containment (it is a child), but the ROW is a sibling, so it needs its own
@@ -1933,9 +1935,13 @@ describe('client HTML shell', () => {
     expect(hudMobileCss).toContain(
       'body.mobile-touch #player-frame .uf-bars {\n    position: relative;\n    z-index: 1;',
     );
+    // W13: the ring mask's opaque stop reads --color-keyline instead of #000.
     expect(hudMobileCss).toContain(
-      '-webkit-mask: radial-gradient(\n      farthest-side,\n      transparent calc(100% - 7px),\n      #000 calc(100% - 6px)\n    );',
+      '-webkit-mask: radial-gradient(\n      farthest-side,\n      transparent calc(100% - 7px),\n      var(--color-keyline) calc(100% - 6px)\n    );',
     );
+    // The ring's purple is the shared XP token pair, not a local literal.
+    expect(hudMobileCss).toContain('var(--color-xp) 0deg calc(var(--xp-fill, 0) * 360deg),');
+    expect(hudMobileCss).toContain('color-mix(in srgb, var(--color-xp-deep) 34%, transparent)');
     expect(hudMobileCss).toContain(
       'body.mobile-touch #xpbar .fill,\n  body.mobile-touch #xpbar .ticks {\n    display: none;\n  }',
     );
@@ -2573,10 +2579,14 @@ describe('client HTML shell', () => {
     // multi-column landscape grid would otherwise go undetected.
     expect(componentsCss).toContain('.mkt-list {');
     expect(marketWindowTs).toContain("list.className = 'mkt-list';");
-    // Mobile reduces the shared controls grid to one column and forces the listing
-    // grid back to a single column instead of relying on auto-fill alone.
+    // W13: the controls are a flex-column browse SIDEBAR now, so the mobile arm
+    // collapses `.mkt-layout` to one column (sidebar stacked above the body) and
+    // drops the sidebar's own scroller instead of restating a dead grid column.
     expect(hudMobileCss).toContain(
-      'body.mobile-touch .mkt-controls {\n    grid-template-columns: 1fr;\n    align-items: stretch;',
+      'body.mobile-touch .mkt-layout {\n    grid-template-columns: minmax(0, 1fr);\n  }',
+    );
+    expect(hudMobileCss).toContain(
+      'body.mobile-touch .mkt-controls {\n    align-items: stretch;\n    min-height: 0;\n    overflow-y: visible;',
     );
     expect(hudMobileCss).toContain(
       'body.mobile-touch .mkt-list {\n    grid-template-columns: 1fr;',
@@ -3368,8 +3378,15 @@ describe('client HTML shell', () => {
   });
 
   it('sizes the mobile Bags window as a usable modal', () => {
+    // W13: `height: auto` now sits between `width` and `transform`. The desktop
+    // sheet carries a fixed 560px height, and with all four edges pinned here a
+    // non-auto height over-constrains the box, so the browser drops `bottom` and
+    // the sheet renders off the bottom of a landscape phone.
     expect(hudMobileCss).toContain(
-      'body.mobile-touch #bags {\n    position: fixed;\n    left: max(10px, env(safe-area-inset-left));\n    right: max(10px, env(safe-area-inset-right));\n    top: max(10px, env(safe-area-inset-top));\n    bottom: max(10px, env(safe-area-inset-bottom));\n    width: auto;\n    transform: none;',
+      'body.mobile-touch #bags {\n    position: fixed;\n    left: max(10px, env(safe-area-inset-left));\n    right: max(10px, env(safe-area-inset-right));\n    top: max(10px, env(safe-area-inset-top));\n    bottom: max(10px, env(safe-area-inset-bottom));\n    width: auto;',
+    );
+    expect(hudMobileCss).toMatch(
+      /body\.mobile-touch #bags \{[^}]*height: auto;[^}]*transform: none;/,
     );
     expect(hudMobileCss).toContain('body.mobile-touch #bags .bag-grid {\n    min-height: 150px;');
     expect(hudMobileCss).not.toContain(

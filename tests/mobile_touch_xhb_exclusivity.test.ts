@@ -246,12 +246,16 @@ describe('the lift composes into the mobile #player-frame/#castbar transform in 
   it('composes the lift into #castbar (the only #castbar transform rule in this file)', () => {
     const body = ruleBody('body\\.mobile-touch\\.xhb-mode #castbar');
     expect(body).toContain('translateX(-50%)');
-    expect(body).toContain('translateY(calc(-1 * var(--xhb-lift, 56px)))');
+    expect(body).toContain(
+      'translateY(calc(-1 * var(--xhb-lift, var(--mobile-xhb-lift-fallback))))',
+    );
   });
 
   it('composes the lift into the PORTRAIT #player-frame scale (0.82)', () => {
     const body = ruleBody('body\\.mobile-touch\\.xhb-mode #player-frame');
-    expect(body).toContain('translateY(calc(-1 * var(--xhb-lift, 56px)))');
+    expect(body).toContain(
+      'translateY(calc(-1 * var(--xhb-lift, var(--mobile-xhb-lift-fallback))))',
+    );
     expect(body).toContain('scale(calc(0.82 * var(--mobile-chrome-scale, 1)))');
   });
 
@@ -270,7 +274,9 @@ describe('the lift composes into the mobile #player-frame/#castbar transform in 
       'no xhb-mode #player-frame override found after the landscape media open',
     ).toBeTruthy();
     const body = landscapeRule?.[1] ?? '';
-    expect(body).toContain('translateY(calc(-1 * var(--xhb-lift, 56px)))');
+    expect(body).toContain(
+      'translateY(calc(-1 * var(--xhb-lift, var(--mobile-xhb-lift-fallback))))',
+    );
     expect(body).toContain('scale(calc(0.6 * var(--mobile-chrome-scale, 1)))');
   });
 });
