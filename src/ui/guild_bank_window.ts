@@ -32,7 +32,7 @@
 import { audio } from '../game/audio';
 import { ITEMS } from '../sim/data';
 import { isItemLocked } from '../sim/item_lock';
-import type { IWorld } from '../world_api';
+import type { GuildBankLogKind, IWorld } from '../world_api';
 import { bagCornerMark, bagRimClasses } from './bag_corner_mark_view';
 import { bagFineMark } from './bag_fine_mark_view';
 import { bagInstanceGlyphKind } from './bag_instance_glyph_view';
@@ -103,7 +103,9 @@ export interface GuildBankTabDeps extends PainterHostPresentation {
   requestRender(): void;
 }
 
-/** The two views inside the Guild pane: the bank itself, and its activity log. */
+/** The two views inside the Guild pane: the bank itself, and its transaction
+ *  history (the `log` id is the wire-era name and stays: it is a DOM/test hook,
+ *  not player text). */
 export type GuildBankPaneView = 'contents' | 'log';
 
 /** The Guild pane's role=tabpanel element id. Exported so BankWindow can point
@@ -123,8 +125,33 @@ export class GuildBankTab {
   // all this pane's business; BankWindow reads it through the getters below for
   // its repaint gate and its scroll scoping.
   private view: GuildBankPaneView = 'contents';
+  // The history's selected filter slice. Owned here beside the sub-view for
+  // the same reason: the pane's read passes it to the world, and the world
+  // drops its loaded pages the moment the kind it is read under changes.
+  private logKind: GuildBankLogKind = 'all';
+  // The history's search text, raw as typed (the core normalizes it). Owned
+  // here so it survives the pane rebuild every keystroke causes and resets
+  // with the sub-view on close.
+  private logQuery = '';
   private readonly logPane = new GuildBankLogPane({
     itemDef: (id) => knownItemDef(ITEMS, id),
+    selectFilter: (kind) => {
+      if (this.logKind === kind) return;
+      audio.click();
+      this.logKind = kind;
+      this.deps.requestRender();
+    },
+    loadOlder: () => {
+      // The world decides whether there is a page to ask for; the repaint
+      // flips the footer to its loading line when it sent one.
+      this.deps.world().guildBankLogOlder();
+      this.deps.requestRender();
+    },
+    setSearch: (query) => {
+      if (this.logQuery === query) return;
+      this.logQuery = query;
+      this.deps.requestRender();
+    },
   });
   private readonly purchaseEcho: StorageRungEchoLatch;
   // A stale confirmation result belongs to the purchase surface, not the
@@ -161,6 +188,8 @@ export class GuildBankTab {
    *  read-only edge detector resets with it so a reopening never announces. */
   resetView(): void {
     this.view = 'contents';
+    this.logKind = 'all';
+    this.logQuery = '';
     this.prevReadOnly = null;
     this.priceChangedStatus = null;
   }
@@ -180,7 +209,9 @@ export class GuildBankTab {
    */
   readAndRequestLog(): string | null {
     if (this.view !== 'log') return null;
-    return guildBankLogSignature(this.deps.world().guildBankLog());
+    // The search text joins the key: it changes what the pane draws, and the
+    // window's repaint gate compares this string rather than rendering it.
+    return `${guildBankLogSignature(this.deps.world().guildBankLog(this.logKind))}|${this.logQuery}`;
   }
 
   /** Build the guild pane model from the live world. Exposed so BankWindow can
@@ -233,7 +264,13 @@ export class GuildBankTab {
       // Reading the log is what REQUESTS it (cold data, no snapshot key), so
       // this call is the whole fetch trigger and it only happens here, on a
       // paint of the open log view.
-      this.logPane.renderInto(el, buildGuildBankLogView(this.deps.world().guildBankLog()));
+      this.logPane.renderInto(
+        el,
+        buildGuildBankLogView(this.deps.world().guildBankLog(this.logKind), this.logKind, {
+          query: this.logQuery,
+          textOf: (row) => this.logPane.searchText(row),
+        }),
+      );
       return;
     }
     this.appendPriceChangedStatus(el);
@@ -346,7 +383,7 @@ export class GuildBankTab {
           selectedClass: 'on',
           tabs: [
             { id: 'contents', label: t('hudChrome.bank.guildContentsTab') },
-            { id: 'log', label: t('hudChrome.bank.guildLogTab') },
+            { id: 'log', label: t('hudChrome.bank.guildHistoryTab') },
           ],
           selected: this.view,
         }),

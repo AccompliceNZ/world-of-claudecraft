@@ -231,8 +231,15 @@
 
     <div id="party-frames" role="group" data-i18n-aria="hudChrome.unitFrame.partyLabel" aria-label="Your Band"></div>
 
-    <div id="buff-bar"></div>
-    <div id="debuff-bar"></div>
+    <div id="aura-stack">
+      <div id="buff-bar"></div>
+      <div id="debuff-bar"></div>
+    </div>
+
+    <!-- Target dots: every debuff YOU have out, across every enemy in range. The
+         painter builds its rows and sets role/aria-label; it stays display:none
+         whenever the list is empty. -->
+    <div id="target-dots"></div>
 
     <!-- Aura tracks: the player's own beneficial auras, one movable frame per
          question (see src/ui/hud/aura_tracks/). Each painter builds its rows and
@@ -510,6 +517,7 @@
     <div id="bg-proposal-popup" class="panel"></div>
     <div id="leaderboard-window" class="window panel"></div>
     <div id="guild-board-window" class="window panel"></div>
+    <div id="rift-forge-window" class="window panel"></div>
     <div id="daily-rewards-window" class="window panel"></div>
     <div id="claudium-window" class="window panel"></div>
     <div id="market-window" class="window panel"></div>

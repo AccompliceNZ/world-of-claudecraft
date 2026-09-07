@@ -20,7 +20,7 @@
 // rule below rather than by duration.
 
 import { ABILITIES } from '../../../sim/data';
-import type { AbilityDef, AuraKind } from '../../../sim/types';
+import type { AbilityDef } from '../../../sim/types';
 
 /** What kind of thing an aura is, which decides its track and its row shape. */
 export type AuraTrackCategory = 'hot' | 'guard' | 'absorb' | 'utility' | 'power';

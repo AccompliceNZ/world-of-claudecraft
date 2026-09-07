@@ -172,7 +172,9 @@ describe('profile page Reliquary pair + Curator rank lines', () => {
     // Crucible raid relics and the raid's flawless title; Forgebreaker left
     // the pages for its crafting chain; then the Lanternback Troll and the
     // Chimeglass Tortoise's two developer mount slots).
-    expect(catalogTotal).toBe(360);
+    // Then the seven Roots' Bramblehide pieces and the seven Nythraxis gap-fill
+    // drops, one relic apiece: 374.
+    expect(catalogTotal).toBe(374);
   });
 
   it('renders the owned/total pair and the English rank name for a ranked character', async () => {

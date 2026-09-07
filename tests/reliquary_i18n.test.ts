@@ -72,13 +72,14 @@ describe('reliquary_i18n English resolution', () => {
     // later contributes only its name row instead of an empty-string row.
     // This count is the FILL TRIPWIRE: adding a catalog page must be accompanied
     // by a name row in every shipped locale chunk (the per-locale row count is
-    // pinned to the same 39 below), so a new page cannot quietly render English
-    // to a CJK or Cyrillic reader. 35 + the four Crucible raid pages.
-    expect(pageCount).toBe(39);
-    expect(descCount).toBe(39);
+    // pinned to the same 40 below), so a new page cannot quietly render English
+    // to a CJK or Cyrillic reader. 35 + the four Crucible raid pages + the
+    // Roots' Bramblehide set page.
+    expect(pageCount).toBe(40);
+    expect(descCount).toBe(40);
     expect(manifest.length).toBe(pageCount + descCount);
-    expect(manifest.filter((row) => row.field === 'name').length).toBe(39);
-    expect(manifest.filter((row) => row.field === 'desc').length).toBe(39);
+    expect(manifest.filter((row) => row.field === 'name').length).toBe(40);
+    expect(manifest.filter((row) => row.field === 'desc').length).toBe(40);
     expect(manifest).toContainEqual({
       id: 'conquerors_thunzharr',
       field: 'name',
@@ -168,7 +169,7 @@ describe('reliquary locale chunks (the shipped non-Latin fill)', () => {
     for (const lang of tableLocales()) {
       // Vacuity floor: an emptied chunk would satisfy every for-loop in this
       // suite silently. One row per catalog page, in every shipped locale.
-      expect(Object.keys(tables[lang]).length, `${lang} row count`).toBe(39);
+      expect(Object.keys(tables[lang]).length, `${lang} row count`).toBe(40);
       for (const [id, entry] of Object.entries(tables[lang])) {
         expect(RELIQUARY_PAGES_BY_ID[id], `${lang}.${id} is not a catalog page`).toBeDefined();
         for (const field of ['name', 'desc'] as const) {

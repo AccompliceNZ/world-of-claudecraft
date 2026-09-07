@@ -127,6 +127,9 @@ const FANOUT_ARMS: readonly string[] = [
   'this.interfaceUnlock.relocalize|',
   'this.targetAurasWindow.relocalize|',
   'this.doomMeter.relocalize|',
+  // The Target dots frame: only its aria-label is constructor-written, so this
+  // arm is what keeps that one string from sticking in the previous locale.
+  'this.targetDotsPainter.relocalize|',
   // One arm for all six aura tracks: AuraTrackFamily forwards to each track's
   // painter, the same shape interfaceUnlock uses for the movable frames. Every
   // track caches its accessible name, its seconds suffix, its mode chip and each
@@ -177,7 +180,12 @@ const FANOUT_ARMS: readonly string[] = [
   'this.tutorial.relocalize|',
   'this.bootcamp.relocalize|',
   'this.noticeboardPopup.relocalize|',
+  // the Realm Builder monument's honour-roll card: the month labels are
+  // Intl-formatted and the placeholder hint is prose, so a locale switch alone
+  // moves both without any state changing.
+  'this.realmBuilderPopup.relocalize|',
   'this.guildBoardWindow.relocalize|',
+  'this.riftForgeWindow.relocalize|',
   'this.mobileActionRingPainter.relocalize|',
   'this.mountRaceStrip.relocalize|',
   'this.mountRaceControls.relocalize|',
@@ -443,9 +451,9 @@ const NOT_A_LANGUAGE_GATE: ReadonlyArray<{
   },
   {
     file: 'guild_bank_log_window.ts',
-    memos: ['lastAnnounced'],
+    memos: ['lastAnnounced', 'lastFooter'],
     reason:
-      'lastAnnounced gates nothing that is drawn: it decides only whether the refusal line RE-ANNOUNCES to assistive tech (a live region inserted already-populated is not announced, so the pane re-writes the same text one task later). The visible text is rebuilt unconditionally on every paint, and the pane is repainted wholesale by BankWindow.render(), which the language fan-out already drives. A locale switch therefore relocalizes the log by itself; at worst the refusal is not re-announced in the new locale, which is the correct behaviour anyway (the refusal did not change).',
+      'lastAnnounced and lastFooter gate nothing that is drawn: lastFooter decides only whether the older-page loading line RE-ANNOUNCES on the paint it first appears (the same rule), and lastAnnounced it decides only whether the refusal line RE-ANNOUNCES to assistive tech (a live region inserted already-populated is not announced, so the pane re-writes the same text one task later). The visible text is rebuilt unconditionally on every paint, and the pane is repainted wholesale by BankWindow.render(), which the language fan-out already drives. A locale switch therefore relocalizes the log by itself; at worst the refusal is not re-announced in the new locale, which is the correct behaviour anyway (the refusal did not change).',
   },
   {
     file: 'guild_bank_window.ts',

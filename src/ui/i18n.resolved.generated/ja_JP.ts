@@ -1319,6 +1319,11 @@ export const ja_JP: EnTranslations = {
       "mode": "on",
       "overflow": "他{count}件は非表示"
     },
+    "targetDots": {
+      "title": "ターゲットデバフ",
+      "row": "{aura} on {target}",
+      "overflow": "他に{count}件は非表示"
+    },
     "targetAuras": {
       "title": "ターゲットのオーラ",
       "keybindLabel": "ターゲットのバフとデバフ",
@@ -1579,6 +1584,26 @@ export const ja_JP: EnTranslations = {
       "showPlaytime": "キャラクター画面にプレイ時間を表示",
       "forceHighPerfGpu": "専用ゲーミングGPUを使用",
       "forceHighPerfGpuNote": "既定でオン：デスクトップ版はこのコンピューターの専用ゲーミングGPUを要求します。ゲームが起動しない、起動後に画面が真っ暗になる、またはノートパソコンの画面が映らない場合はオフにしてください。この設定は次回ゲームを起動したときに反映されます。",
+      "shaderWarm": "シェーダー事前ウォームアップ ワーカー",
+      "shaderWarmAuto": "自動",
+      "shaderWarmOff": "オフ",
+      "shaderWarmOn": "オン",
+      "shaderWarmNote": "ゲーム中のカクつきを防ぐため、バックグラウンドでシェーダーキャッシュを事前に温めます。自動：グラフィックス環境が対応している場合のみ有効になります（推奨）。オン：どの環境でも強制的に有効にします。環境によっては動作が重くなることがあります。オフ：無効にします。",
+      "gpuBackend": "グラフィックスバックエンド",
+      "gpuBackendAuto": "自動",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL（低速）",
+      "gpuBackendNote": "自動はあなたに最適な選択肢を選びます。Vulkanのほうが高速で、ほとんどのプレイヤーにおすすめです。OpenGLは低速ですが、Vulkanが正しく動作しない場合に役立つことがあります。次回のゲーム起動時に反映されます。",
+      "gpuBackendActive": "現在は {backend} を使用しています。",
+      "gpuBackendActiveUnavailable": "現在は {backend} を使用しています（Vulkan を有効にできませんでした）。",
+      "gpuBackendActiveAutoCapped": "現在 {backend} を使用中です。このグラフィックカードでは自動はまだVulkanを試しません。試すにはVulkanを選んでください。",
+      "gpuBackendSaveFailed": "この選択を保存できませんでした。次回の起動でも {backend} が使用されます。",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "一部の変更は再起動後に反映されます。",
+      "restartGame": "ゲームを再起動",
+      "restartInProgress": "ゲームを再起動しています...",
+      "restartFailed": "ゲームを自動で再起動できませんでした。終了してからもう一度起動してください。",
       "discordPresence": "Discord リッチプレゼンス",
       "discordPresenceNote": "プレイ中、現在いるゾーンとこのセッションのプレイ時間をDiscordのアクティビティとして表示します。あなたのDiscordプロフィールを見られる人は誰でもその両方を見られます。共有されるのはゾーン名、このセッションのプレイ時間、ゲーム名だけで、キャラクターやアカウント、一緒に遊んでいる相手が共有されることはありません。このコンピューターでDiscordアプリが起動している必要があります。",
       "showDevBadges": "開発者バッジを表示",
@@ -1610,6 +1635,9 @@ export const ja_JP: EnTranslations = {
       "showTargetOfTarget": "ターゲットのターゲットを表示",
       "showTargetSwingTimer": "ターゲットの攻撃タイマーを表示",
       "showPetFrame": "自分のペットを表示",
+      "showNameplateDots": "ネームプレートに自分のデバフを表示",
+      "nameplateDotScale": "ネームプレートのデバフ表示サイズ",
+      "showTargetDots": "ターゲットデバフ一覧を表示",
       "showDefensivesTrack": "防御クールダウンを表示",
       "showSelfBuffTrack": "自分のバフを表示",
       "showOffensiveTrack": "攻撃クールダウンを表示",
@@ -3004,7 +3032,8 @@ export const ja_JP: EnTranslations = {
         "playerFrame": "プレイヤー",
         "targetFrame": "ターゲット",
         "partyFrames": "パーティ",
-        "swingBar": "オートアタック"
+        "swingBar": "オートアタック",
+        "targetDots": "ターゲットデバフ"
       },
       "framesMenu": "フレーム設定",
       "framesMenuTitle": "各フレームの表示・非表示を切り替えます。チェックを外したフレームは、再度チェックするか初期設定に戻すまで非表示のままです。",
@@ -3036,11 +3065,42 @@ export const ja_JP: EnTranslations = {
       "invalid": "有効なエクスポートコードではありません。",
       "wrongKind": "このコードは別の種類のエクスポートです。"
     },
+    "riftForge": {
+      "title": "リフトの炉",
+      "subtitle": "リフトバウンドリング",
+      "currency": "{name}: {count}",
+      "empty": "カバンにリフトバウンドリングがありません。ランク付きリフトの初回踏破で1つ鋳造されます。",
+      "wornHint": "装備中です。炉にかけるには外してください。",
+      "upgradeBtn": "アイテムレベル{level}へ強化（エッセンス {cost}）",
+      "upgradeMax": "強化完了",
+      "gemPickAria": "はめ込む宝石",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "ソケットは満杯です。次の宝石は最も古い{gem}と入れ替わります。",
+      "socketBtn": "はめ込む",
+      "socketsNone": "宝石なし",
+      "noGems": "カバンにリフトの宝石がありません",
+      "refused": "炉に拒まれました。リフトライトのそばに立ってやり直してください。",
+      "reason": {
+        "notFound": "そのリングはカバンにありません。",
+        "notRiftGear": "炉にかけられるのはリフトバウンドリングだけです。",
+        "maxUpgrade": "そのリングは強化しきっています。",
+        "insufficientEssence": "リフトのエッセンスが足りません。",
+        "invalidGem": "そのリフトの宝石を持っていません。",
+        "dead": "死亡中はできません。",
+        "tooFar": "リフトの炉から離れすぎています。"
+      },
+      "done": {
+        "upgrade": "{name}を強化しました。",
+        "socket": "{name}に宝石をはめ込みました。",
+        "socketReplaced": "{name}に宝石をはめ込みました。{gem}は破壊されました。"
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "必要レベル {level}",
       "riftTier": "{tier}ランク・リフト装備",
       "riftUpgrade": "リフト強化 {level}/{max}",
       "riftSockets": "リフト宝石 {used}/{total}",
+      "riftGemSocket": "リフトバウンドリングのソケット効果",
       "statEnchanted": "+{value} {stat}（エンチャント）",
       "enchantedFallback": "エンチャント済み",
       "partyTradeWindow": "このアイテムはあと{time}の間、同じドロップを分かち合ったプレイヤーと取引できます。装備すると取引期間は終了します。"
@@ -3321,6 +3381,15 @@ export const ja_JP: EnTranslations = {
       "popupTitle": "ギルドの掲示柱",
       "close": "閉じる"
     },
+    "realmBuilder": {
+      "title": "今月の王国建設者",
+      "currentLabel": "今月の受賞者",
+      "placeholderName": "あなたの名前",
+      "placeholderHint": "この銘板は最初の名前を待っています。",
+      "pastTitle": "これまでの受賞者",
+      "pastEmpty": "まだ名前が刻まれていません。",
+      "close": "閉じる"
+    },
     "bank": {
       "title": "銀行",
       "subtitle": "金張りの金庫",
@@ -3448,8 +3517,34 @@ export const ja_JP: EnTranslations = {
       "guildViewsAria": "ギルド銀行の表示",
       "guildContentsTab": "内容",
       "guildLogTab": "ログ",
+      "guildHistoryTab": "履歴",
       "logAria": "ギルド銀行の活動ログ",
       "logNote": "直近{count}件のギルド銀行の操作です。",
+      "logShowing": "ギルド銀行の操作 {count} 件を新しい順に表示しています。",
+      "logFilterAria": "ギルド銀行の履歴を絞り込む",
+      "logFilterAll": "すべて",
+      "logFilterItems": "アイテム",
+      "logFilterMoney": "お金",
+      "logOlder": "以前の履歴を表示",
+      "logOlderLoading": "以前の操作を読み込んでいます...",
+      "logEnd": "これがギルド銀行の全履歴です。",
+      "logEmptyFiltered": "この絞り込みに一致するギルド銀行の操作はありません。",
+      "logColTime": "日時",
+      "logColMember": "メンバー",
+      "logColAction": "操作",
+      "logColDetail": "詳細",
+      "logActionDeposit": "預けた",
+      "logActionWithdraw": "引き出した",
+      "logActionBuySlots": "拡張を購入した",
+      "logActionOpenBank": "銀行を開設した",
+      "logActionCharterFee": "設立費用を支払った",
+      "logActionAdminPurge": "削除した",
+      "logActorAdmin": "管理者",
+      "logDetailItem": "{item} x{count}",
+      "logSearchPlaceholder": "この履歴を検索",
+      "logSearchAria": "読み込み済みのギルド銀行の操作をメンバー、操作、アイテムで検索",
+      "logShowingMatched": "読み込み済みのギルド銀行の操作 {count} 件のうち {matched} 件を表示しています。",
+      "logSearchNoMatch": "検索に一致する読み込み済みの操作はありません。以前の履歴を表示して範囲を広げてください。",
       "logLoading": "ギルド銀行のログを読み込んでいます...",
       "logEmpty": "ギルド銀行にはまだ何も出し入れされていません。",
       "logUnavailable": "現在、ギルド銀行のログを閲覧できません。",
@@ -3547,6 +3642,20 @@ export const ja_JP: EnTranslations = {
         "result": {
           "set": "ギルド掲示板を更新しました。",
           "notOfficer": "掲示板を編集できるのは幹部とギルドマスターだけです。"
+        }
+      },
+      "roster": {
+        "seats": "{count} / {cap} 席",
+        "expand": "名簿を拡張（+{seats}席、{price}）",
+        "maxed": "名簿はすでに最大です",
+        "confirm": "{price}でギルド名簿を{seats}席拡張しますか？ゴールドはあなた自身の所持金から支払われ、返金されません。",
+        "confirmAction": "拡張",
+        "expandedLine": "{name}がギルド名簿を{cap}人に拡張しました。",
+        "result": {
+          "notLeader": "ギルド名簿を拡張できるのはギルドマスターだけです。",
+          "maxed": "ギルド名簿はこれ以上拡張できません。",
+          "cannotAfford": "ギルド名簿の拡張には{price}が必要です。",
+          "retry": "購入中にギルド名簿が変更されました。もう一度お試しください。"
         }
       }
     },
@@ -3965,6 +4074,7 @@ export const ja_JP: EnTranslations = {
       "yieldLineRange": "{item} {min}から{max}個",
       "alreadyEnchanted": "そのアイテムにはすでにエンチャントが付与されています。",
       "sameEnchant": "そのアイテムにはすでに同じエンチャントが付与されています。",
+      "riftGear": "リフトバウンドリングはリフト宝石を嵌めるもので、エンチャントはできません。",
       "replaceTag": "{enchant}を置き換え",
       "sameEnchantTag": "付与済み",
       "plainTag": "エンチャントなし",
@@ -6059,6 +6169,8 @@ export const ja_JP: EnTranslations = {
       "raceBody": "レルム中のどのグループも、同じリフトに同時に挑めます。それぞれが自分の写しの中で戦い、底にいるものを最初に倒したグループだけがそれを封印します。勝ったグループの名前と時間はレルム全体に告げられ、入口はその背後で閉じます。競争に敗れても、あなたの挑戦が終わるわけではありません。写しは開いたままで、底にいるものはあなたの手でも倒せますし、自分の足で外へ出ることもできます。失われるのは、踏破が支払ってくれるはずだったものすべてです。ボスは二番手のグループには何も残さないので、持ち帰れるのは下りながら雑魚から落ちたものだけになります。功績の書はそれでも踏破を数えてくれます。あなたは確かにそれを倒したのですから。相手の顔をひと目も見ないまま負けうる、このゲームで唯一の競争です。",
       "rewardsHeading": "持ち帰れるもの",
       "rewardsBody": "報酬を支払うのは、リフトを生き延びることではなく封印することです。最初に沈めたなら、そのランクが並び立つインスタンス内容と同じだけの支払いがあるので、厳しいランクほど厳しい挑戦に見合います。封印すると、その場にいた全員の手にリフトバウンドリングが渡ります。あなたのクラスの役割に合わせて仕立てられた、あなただけのものです。さらにリフトエッセンスとリフト宝石も鞄に残ります。帰り道のかたわらでは、底にいたものが封印された宝庫を残していきます。デルヴの宝箱でおなじみの錠前の道を使ってグループでこじ開ければ、追加の戦利品が手に入ります。急がず丁寧に開けたほうが実入りは良くなります。以上のどれも、二番手のグループには届きません。競争に敗れた場合、手元に残るのは下りながら雑魚から落ちたものだけです。例外は功績の書で、こちらはどちらであれあなたの踏破を数えてくれます。初めてリフトを封じたことへの功績と、Sランクを沈めたことへの功績が用意されています。",
+      "forgeHeading": "リフトの炉",
+      "forgeBody": "ランク付きリフトの初回踏破で鋳造されるリングは、受け取った時点では完成していません。ファーショアのウォッチメドウ、カモメ港から岸を上った破れの学者の隣で炉を守るリフトライトのマエリスが、アイテムレベルを一段ずつ引き上げ、リフトが落とす色とりどりの宝石をソケットにはめ込んでくれます。宝石の色はそれぞれひとつの戦闘レーティングです。ソケットが埋まったリングは新しい宝石を最も古いものと入れ替えるので、あとから調整し直せます。その代価はすべてリフトのエッセンスとリフトの宝石。リフトのボスから落ち、自由に取引できる炉の通貨なので、足りないぶんは仲間から分けてもらえます。持ち込む前にリングは外しておきましょう。彼女が扱うのはカバンの中のものだけで、しかも彼女の炉のそばに立っていなければ何もしてくれません。",
       "trackerHeading": "画面のトラッカー",
       "trackerBody": "中にいるあいだ、画面の小さな帯が現在地を教えてくれます。全体で何フロアのうちの何階にいるのか、そして進行するカウントダウンです。このカウントダウンは注意して読んでください。これはあなたの挑戦の残り時間ではありません。世界に開いた入口が、新しいパーティを受け付けなくなるまでの時間です。いったん中に入ってしまえば、あなたのグループはどれだけ時間がかかっても自分たちのペースでリフトを進められます。"
     },
@@ -7397,10 +7509,7 @@ export const ja_JP: EnTranslations = {
     "playAria": "World of ClaudeCraftをプレイ",
     "serverLabel": "ワールドを選択",
     "serverAria": "ワールドを選択：オンラインまたはオフライン",
-    "serverOfflineSub": "即座にローカルの世界へ",
-    "caLabel": "$WOC コントラクトアドレス",
-    "caCopyAria": "コントラクトアドレスをコピー",
-    "caNote": "WOCはコミュニティトークンです。プレイには必要ありません。Discordに参加して、WOCのユーティリティとフライホイールについて語り合いましょう。"
+    "serverOfflineSub": "即座にローカルの世界へ"
   },
   "auth": {
     "enterRealm": "ワールドに入る",
@@ -7950,6 +8059,7 @@ export const ja_JP: EnTranslations = {
       "forgeUpgraded": "{name} のリフト強化が完了しました。",
       "forgeEnchanted": "{name} のリフト付与が完了しました。",
       "forgeSocketed": "{name} にリフトの宝石をはめ込みました。",
+      "forgeGemReplaced": "{name} のリフトの宝石を交換しました。{gem} は破壊されました。",
       "detonateGlacialGrave": "氷河の墓が炸裂する！",
       "detonateAbsoluteZero": "絶対零度が爆発する！",
       "detonateMagmaWell": "マグマの泉が噴出する！",
@@ -8694,6 +8804,7 @@ export const ja_JP: EnTranslations = {
     "bodyWeb": "ゲームがGPUアクセラレーションなしで動作しているため、非常に重くなります。ブラウザーの設定でハードウェアアクセラレーションを有効にし、グラフィックドライバーを更新してから、ブラウザーを再起動してください。",
     "hybridBodyWindows": "このセッションは統合（省電力）GPUで描画しています。このパソコンにディスクリート（専用）ゲーミングGPUも搭載されている場合は、設定 > システム > ディスプレイ > グラフィックス でブラウザを「高パフォーマンス」に設定してから再起動してください。デスクトップアプリでは自動的にディスクリートGPUが選択されます。",
     "hybridBodyLinux": "このセッションは統合（省電力）GPUで描画しています。このパソコンにディスクリート（専用）ゲーミングGPUも搭載されている場合は、ブラウザやグラフィックスドライバに独自のGPU選択設定があるか、お使いのディストリビューションにGPU切り替えツール（PRIMEやoptimus-managerなど）が用意されている場合があります。デスクトップアプリでは自動的にディスクリートGPUが選択されます。",
+    "bodyRequestedBackend": "選択したグラフィックスバックエンドでゲームを起動できなかったため、OpenGL で動作しています。動作に問題はありませんが、読み込みと最初の数分は引っかかりが増えることがあります。バックエンドはオプション > グラフィック > システムで選び直せます。",
     "hybridBodyOther": "このセッションは統合（省電力）GPUで描画しています。このパソコンにディスクリート（専用）ゲーミングGPUも搭載されている場合は、ブラウザやオペレーティングシステムのグラフィックス設定を確認して有効にしてください。デスクトップアプリでは自動的にディスクリートGPUが選択されます。",
     "dismiss": "閉じる"
   },
@@ -13929,6 +14040,48 @@ export const ja_JP: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "消えた火花のワンド"
       },
+      "bramblehide_crown": {
+        "name": "ルーツのブランブルハイドの冠"
+      },
+      "bramblehide_mantle": {
+        "name": "ルーツのブランブルハイドの肩当て"
+      },
+      "bramblehide_harness": {
+        "name": "ルーツのブランブルハイドの胴当て"
+      },
+      "bramblehide_cinch": {
+        "name": "ルーツのブランブルハイドの帯"
+      },
+      "bramblehide_legguards": {
+        "name": "ルーツのブランブルハイドの脚甲"
+      },
+      "bramblehide_grips": {
+        "name": "ルーツのブランブルハイドの握り"
+      },
+      "bramblehide_treads": {
+        "name": "ルーツのブランブルハイドの靴"
+      },
+      "courtiers_bonefang": {
+        "name": "廷臣の骨牙"
+      },
+      "thornpeak_wardblade": {
+        "name": "ソーンピークの守護刃"
+      },
+      "gravecourt_hewer": {
+        "name": "墓廷の斬斧"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "不死の宮廷の奉納の盾"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "ソーンピークの月皮のフード"
+      },
+      "stormhymn_chain_grips": {
+        "name": "嵐の賛歌の鎖の握り"
+      },
+      "stormhymn_chain_treads": {
+        "name": "嵐の賛歌の鎖の靴"
+      },
       "conjured_water4": {
         "name": "魔法の湧き水"
       },
@@ -15871,6 +16024,11 @@ export const ja_JP: EnTranslations = {
         "name": "怯えるネル",
         "title": "カモメ港の漁師",
         "greeting": "網を干す、まさにあの場所で開いたんだ。あそこだよ、私が生まれてからずっと毎朝立っていた場所さ。もう岸へは下りない。もう、どこへもろくに行かなくなっちまった。"
+      },
+      "riftwright_maelis": {
+        "name": "リフトライトのマエリス",
+        "title": "リフト鍛冶の親方",
+        "greeting": "リフトバウンドリングは、自分を生んだ裂け目を覚えている、{className}。リングと、裂け目が落とすエッセンスを持ってくれば、もっと多くを覚えさせてやろう。"
       },
       "forgemistress_darva": {
         "name": "鍛冶長ダルヴァ",
@@ -18930,6 +19088,12 @@ export const ja_JP: EnTranslations = {
         "name": "束縛石の前衛",
         "bonus3": "攻撃速度と詠唱速度が15%上昇します。"
       },
+      "bramblehide": {
+        "name": "ルーツのブランブルハイド",
+        "bonus2": "筋力が10、スタミナが10上昇します。",
+        "bonus4": "攻撃力が25上昇します。武器のクリティカルヒット時に50%の確率で「グレイブマイト」が発動し、攻撃力が10秒間40上昇します。",
+        "bonus6": "攻撃速度と詠唱速度が4%、命中が3%上昇します。武器のクリティカルヒットで対象に「ボーンスプリンター」を刻み、2秒ごとに5ダメージの出血を12秒間与えます。最大3回まで累積します。"
+      },
       "chronoweave": {
         "name": "エーテルウィーブの祭服",
         "bonus2": "時の残響が、単体対象への秘術ダメージの50%を回復に変換します。被ダメージで詠唱が遅れなくなります。",
@@ -19161,6 +19325,7 @@ export const ja_JP: EnTranslations = {
     "delveRiteShrineReedInteract": "葦の祠：Fで触れる",
     "delveRiteShrineSkullInteract": "髑髏の祠：Fで触れる",
     "mailboxName": "メールボックス",
-    "noticeboardName": "掲示板"
+    "noticeboardName": "掲示板",
+    "realmBuilderMonumentName": "王国建設者の記念碑"
   }
 };

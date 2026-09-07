@@ -9065,10 +9065,6 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Graj w poziomym trybie pełnoekranowym, aby uzyskać najlepsze wrażenia na urządzeniu mobilnym.',
   'mobilePreflight.rotateTitle': 'Obróć do poziomu',
   'mobilePreflight.title': 'Graj w poziomym trybie pełnoekranowym',
-  'mode.caCopyAria': 'Skopiuj adres kontraktu',
-  'mode.caLabel': 'Adres kontraktu $WOC',
-  'mode.caNote':
-    'WOC to nasz token społecznościowy. Nie jest potrzebny do gry. Dołącz do Discorda, aby porozmawiać o użyteczności WOC i jego napędzie.',
   'mode.offlineAria': 'Graj offline: rozpocznij natychmiastową lokalną sesję jednoosobową',
   'mode.offlineDesc':
     'Natychmiastowy świat jednoosobowy w twojej przeglądarce. Nic nie jest zapisywane: idealny na szybką potyczkę lub testy.',
@@ -14258,6 +14254,10 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Trafienia krytyczne Długiego Naciągnięcia wydłużają Zimne Skupienie o 2 sek., maksymalnie o 6 sek. na aktywację.',
   'entities.itemSets.coldsight_trackers.name': 'Tropiciele Zimnego Wzroku',
   'entities.itemSets.crownforged.bonus6': 'Zwiększa szybkość ataku i rzucania zaklęć o 4% oraz trafienie o 3%. Twoje krytyczne trafienia bronią rozłupują cel Kościaną Drzazgą, zadając 5 obrażeń od krwawienia co 2 sek. przez 12 sek. Kumuluje się do 3 razy.',
+  'entities.itemSets.bramblehide.name': 'Cierniowa Skóra Rootsa',
+  'entities.itemSets.bramblehide.bonus2': 'Zwiększa siłę ataku o 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Twoje krytyczne trafienia bronią rozłupują cel Kościaną Drzazgą, zadając 8 obrażeń od krwawienia co 2 s przez 12 s. Kumuluje się do 3 razy.',
+  'entities.itemSets.bramblehide.bonus6': 'Zwiększa szybkość ataku i rzucania zaklęć o 4% oraz trafienie o 3%. Twoje krytyczne trafienia bronią rozłupują cel Kościaną Drzazgą, zadając 5 obrażeń od krwawienia co 2 sek. przez 12 sek. Kumuluje się do 3 razy.',
   'entities.itemSets.dawnforged.bonus2': 'Latarnia Światła kopiuje 55 procent twoich bezpośrednich uzdrowień. Otrzymywane obrażenia nie opóźniają już rzucania zaklęć.',
   'entities.itemSets.dawnforged.bonus4': 'Wzmocniony przez Promienny Rezonans Uścisk Świtu jest natychmiastowy.',
   'entities.itemSets.dawnforged.name': 'Szaty Wykute o Świcie',

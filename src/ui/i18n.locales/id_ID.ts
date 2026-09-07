@@ -9654,10 +9654,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Mainkan dalam layar penuh posisi lanskap untuk pengalaman seluler terbaik.',
   'mobilePreflight.rotateTitle': 'Putar ke Lanskap',
   'mobilePreflight.title': 'Mainkan dalam Layar Penuh Lanskap',
-  'mode.caCopyAria': 'Salin alamat kontrak',
-  'mode.caLabel': 'Alamat Kontrak $WOC',
-  'mode.caNote':
-    'WOC adalah token komunitas kami. Token ini tidak diperlukan untuk bermain. Gabung Discord untuk membahas utilitas dan flywheel WOC.',
   'mode.offlineAria': 'Main Luring: mulai sesi pemain-tunggal lokal seketika',
   'mode.offlineDesc':
     'Dunia pemain-tunggal seketika di peramban kamu. Tidak ada yang disimpan: sempurna untuk pertarungan singkat atau pengujian.',
@@ -14308,6 +14304,10 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Serangan kritis Tarikan Panjang memperpanjang Fokus Dingin 2 detik, hingga 6 detik per aktivasi.',
   'entities.itemSets.coldsight_trackers.name': 'Pelacak Pandangan Dingin',
   'entities.itemSets.crownforged.bonus6': 'Meningkatkan kecepatan serangan dan perapalan sebesar 4% serta Hit sebesar 3%. Serangan kritis senjata Anda memecah target dengan Pecah Tulang, menyebabkan pendarahan 5 kerusakan tiap 2 detik selama 12 detik. Menumpuk hingga 3 kali.',
+  'entities.itemSets.bramblehide.name': 'Kulit Semak Duri Roots',
+  'entities.itemSets.bramblehide.bonus2': 'Meningkatkan daya serang sebesar 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Serangan kritis senjatamu menyerpihkan target dengan Serpih Tulang, membuatnya berdarah sebesar 8 kerusakan setiap 2 detik selama 12 detik. Menumpuk hingga 3 kali.',
+  'entities.itemSets.bramblehide.bonus6': 'Meningkatkan kecepatan serangan dan perapalan sebesar 4% serta Hit sebesar 3%. Serangan kritis senjata Anda memecah target dengan Pecah Tulang, menyebabkan pendarahan 5 kerusakan tiap 2 detik selama 12 detik. Menumpuk hingga 3 kali.',
   'entities.itemSets.dawnforged.bonus2': 'Mercusuar Cahaya menyalin 55 persen penyembuhan langsung Anda. Kerusakan yang diterima tidak lagi menunda perapalan mantra Anda.',
   'entities.itemSets.dawnforged.bonus4': 'Pelukan Fajar yang diperkuat oleh Resonansi Cahaya bersifat instan.',
   'entities.itemSets.dawnforged.name': 'Busana Tempa Fajar',

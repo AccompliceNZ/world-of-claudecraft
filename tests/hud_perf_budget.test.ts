@@ -100,6 +100,7 @@ import {
 } from '../src/ui/hud/action_bar/action_bar_view';
 import { AURA_TRACKS } from '../src/ui/hud/aura_tracks/aura_track_descriptors';
 import { createAuraTrackView } from '../src/ui/hud/aura_tracks/aura_track_view';
+import { createTargetDotsView } from '../src/ui/hud/target_dots';
 import { makeWriterFacet, type PainterHostWriters } from '../src/ui/painter_host';
 import type { SwingTimerState } from '../src/ui/swing_timer';
 import { SwingTimerPainter } from '../src/ui/swing_timer_painter';
@@ -564,6 +565,16 @@ const HOT_PAINTERS: ReadonlyArray<ScannedPainter> = [
   { file: 'hud/quest/quest_strip_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'hud/cross_hotbar/cross_hotbar_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'hud/warlock/doom_meter_painter.ts', allow: {}, reflowAllow: {} },
+  // target_dots is the tracker-painter contract on the same budget as the deed
+  // and reliquary strips: ONE constructor innerHTML write for the whole row pool,
+  // the frame's role + aria-label set once in that same constructor, and every
+  // per-frame write (fill width, school attr, label, countdown, stacks, the
+  // on-target and expiring classes) facet-routed.
+  {
+    file: 'hud/target_dots/target_dots_painter.ts',
+    allow: { '.innerHTML': 1, '.setAttribute': 2 },
+    reflowAllow: {},
+  },
   // The one painter behind all six aura tracks. Its skeleton (a fixed pool of
   // AURA_TRACK_ROW_CAP rows plus the overflow line) is built in ONE constructor
   // innerHTML write and never touched again: every refresh, including the two
@@ -601,6 +612,25 @@ const HOT_PAINTERS: ReadonlyArray<ScannedPainter> = [
   {
     file: 'trade_woc_arm_painter.ts',
     allow: { '.textContent': 2, '.classList': 2, '.dataset': 1 },
+    reflowAllow: {},
+  },
+  // The options window's restart strip: cold (built with the panel that hosts a
+  // next-launch row, no driver of its own) and held to the full write contract
+  // like tab_strip above. buildRestartStrip mints the row once: 3 class
+  // assignments, the [data-restart-game] hook, the button label, and the two
+  // focus keys (status and button), setAttributes through the shared
+  // FOCUS_KEY_ATTR constant rather than dataset writes. paintRestartStrip moves a BUILT row to a new
+  // state in place, which is the other half of each count: the state stamp on
+  // [data-restart-strip], the status text, and the status/alert role swap (the
+  // second setAttribute), at most one pass per player-caused transition
+  // (ready -> restarting -> failed). Those repaint writes are raw and unelided
+  // by design: the painter is cold (no driver, no per-frame call), every
+  // transition is a value change, and a read-compare would guard nothing. A
+  // write this list does not name is a new write path, the shape these counts
+  // exist to make a conscious act.
+  {
+    file: 'restart_strip_painter.ts',
+    allow: { '.className': 3, '.dataset': 2, '.textContent': 2, '.setAttribute': 3 },
     reflowAllow: {},
   },
   // yumi builds its whole strip + respawn overlay once in ensureEls (14 class
@@ -2873,6 +2903,42 @@ describe('hud_perf_budget ARM 2: per-frame allocation budget (Node, npm test)', 
     });
   }
 
+  // target_dots_view sits in the same band as auras_view above and makes the
+  // same reuse claim, so it is held to the same probe rather than to a
+  // hand-rolled identity assertion in its own suite.
+  it('target_dots_view reuses its state container and row array every tick', () => {
+    const view = createTargetDotsView({
+      isOwn: () => true,
+      auraName: (a) => a.id,
+      targetName: (e) => e.name,
+      iconKey: (a) => a.id,
+    });
+    const entities = [
+      {
+        id: 1,
+        kind: 'mob',
+        name: 'Dummy',
+        dead: false,
+        auras: [
+          {
+            id: 'corruption',
+            name: 'Blackrot',
+            kind: 'dot' as const,
+            value: 6,
+            remaining: 12,
+            duration: 18,
+            sourceId: 4,
+            school: 'shadow',
+          },
+        ],
+      },
+    ];
+    const tick = () => view.tick({ entities, targetId: 1, enabled: true });
+    expect(() => {
+      assertAllocationStable(tick, 64, 'target_dots_view container');
+      assertAllocationStable(() => tick().rows, 64, 'target_dots_view rows');
+    }).not.toThrow();
+  });
   // The aura tracks ride the same per-frame band as the strips above, and SIX of
   // them tick every frame, so a container minted per tick is six allocations per
   // frame rather than one. The core claims its state, its row array and every row

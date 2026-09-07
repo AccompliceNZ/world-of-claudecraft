@@ -8886,10 +8886,6 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Spil i liggende fuldskærm for den bedste mobiloplevelse.',
   'mobilePreflight.rotateTitle': 'Drej til liggende format',
   'mobilePreflight.title': 'Spil i liggende fuldskærm',
-  'mode.caCopyAria': 'Kopiér kontraktadresse',
-  'mode.caLabel': '$WOC Kontraktadresse',
-  'mode.caNote':
-    'WOC er vores fællesskabstoken. Det er ikke nødvendigt for at spille. Tilslut dig Discord for at diskutere WOC-nytten og svinghjulet.',
   'mode.offlineAria': 'Spil offline: start en øjeblikkelig lokal singleplayer-session',
   'mode.offlineDesc':
     'Øjeblikkelig singleplayer-verden i din browser. Intet gemmes: perfekt til en hurtig dyst eller test.',
@@ -14129,6 +14125,10 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Kritiske træffere fra Long Draw forlænger Cold Focus med 2 sek., op til 6 sek. pr. aktivering.',
   'entities.itemSets.coldsight_trackers.name': 'Koldesynsspejdere',
   'entities.itemSets.crownforged.bonus6': 'Øger angrebs- og besværgelseshastigheden med 4% og træfsikkerheden med 3%. Kritiske våbentræffere splintrer målet med Bonesplinter, så det bløder for 5 skade hvert 2. sek. i 12 sek. Stables op til 3 gange.',
+  'entities.itemSets.bramblehide.name': "Roots' Tornehud",
+  'entities.itemSets.bramblehide.bonus2': 'Øger angrebskraft med 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Dine kritiske våbenslag splintrer målet med Bensplint og påfører 8 blødningsskade hvert 2. sek. i 12 sek. Stakker op til 3 gange.',
+  'entities.itemSets.bramblehide.bonus6': 'Øger angrebs- og besværgelseshastigheden med 4% og træfsikkerheden med 3%. Kritiske våbentræffere splintrer målet med Bonesplinter, så det bløder for 5 skade hvert 2. sek. i 12 sek. Stables op til 3 gange.',
   'entities.itemSets.dawnforged.bonus2': 'Beacon of Light kopierer 55 procent af dine direkte helinger. Modtaget skade forsinker ikke længere dine besværgelser.',
   'entities.itemSets.dawnforged.bonus4': 'Radiant Resonances styrkede Dawn\'s Embrace er øjeblikkelig.',
   'entities.itemSets.dawnforged.name': 'Daggryssmedede gevandter',

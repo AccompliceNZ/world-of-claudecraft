@@ -17,6 +17,7 @@ export type ItemWeaponType = WeaponSkinType | 'polearm';
 
 export const WEAPON_TYPE_BY_ITEM: Record<string, ItemWeaponType> = {
   // Swords
+  thornpeak_wardblade: 'sword', // EPIC: Nythraxis gap-fill tank one-hander
   worn_sword: 'sword',
   ironedge_longsword: 'sword',
   thorium_warblade: 'sword',
@@ -45,6 +46,7 @@ export const WEAPON_TYPE_BY_ITEM: Record<string, ItemWeaponType> = {
   wildheart_tuskblade: 'sword',
   greatfang_of_the_basin: 'sword',
   // Daggers
+  courtiers_bonefang: 'dagger', // EPIC: Nythraxis gap-fill rogue dagger
   rusty_dagger: 'dagger',
   whetted_iron_dirk: 'dagger',
   keen_dirk: 'dagger',
@@ -97,6 +99,7 @@ export const WEAPON_TYPE_BY_ITEM: Record<string, ItemWeaponType> = {
   wildsoul_maul: 'mace',
   varkhul_forgebreaker: 'mace',
   // Axes
+  gravecourt_hewer: 'axe', // EPIC: Nythraxis gap-fill dual-wield one-hander
   rusty_hatchet: 'axe',
   copper_bearded_axe: 'axe',
   arcanite_war_axe: 'axe',

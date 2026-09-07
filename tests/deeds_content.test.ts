@@ -70,8 +70,9 @@ describe('audited launch totals (literals: update deliberately with the catalog)
     // board), the walk-in castle visit pair (exp_the_last_keep,
     // exp_dawnhold_castle, renown 5 each), the Proving Shore graduation
     // deed (prog_ready_for_an_adventure, renown 5), and the five Crucible
-    // raid deeds (four clears at 25 plus the flawless 50: +150).
-    expect(DEED_ORDER.length).toBe(281);
+    // raid deeds (four clears at 25 plus the flawless 50: +150), and the
+    // Roots' Bramblehide set collection (col_set_bramblehide, renown 0).
+    expect(DEED_ORDER.length).toBe(282);
     expect(ALL.reduce((sum, d) => sum + d.renown, 0)).toBe(3340);
   });
 
@@ -88,8 +89,9 @@ describe('audited launch totals (literals: update deliberately with the catalog)
       delve: 13,
       chronicle: 49,
       // +4 Reliquary Curator rank bridges and +5 Phase 18 completion ladder
-      // deeds on top of the release collection set.
-      collection: 37,
+      // deeds on top of the release collection set, +1 the Roots' Bramblehide
+      // set collection (col_set_bramblehide).
+      collection: 38,
       // Release's Thornhollow battlegrounds plus the WARFARE honor ladder.
       pvp: 35,
       // +2 bank socket ladder deeds (soc_strongbox_outfitter,
@@ -239,6 +241,9 @@ describe('audited launch totals (literals: update deliberately with the catalog)
       'dgn_varkhul',
       'dgn_varkhul_heroic',
       'dgn_varkhul_flawless',
+      // Roots' Bramblehide, the feral druid's Strength leather family off the
+      // Nythraxis raid: its set collection deed closes the tail.
+      'col_set_bramblehide',
     ]);
     expect(DEEDS.dgn_wildheart_basin.renown).toBe(10);
     expect(DEEDS.dgn_wildheart_basin_heroic.renown).toBe(10);
@@ -656,7 +661,10 @@ describe('frozen trigger + renown catalog (design rule 9: never retro-edit a tri
   // deeds, the per-boss clear pairs (dgn_ignivar, dgn_ignivar_heroic,
   // dgn_varkhul, dgn_varkhul_heroic) and the Varkhul flawless task
   // (dgn_varkhul_flawless). No shipped trigger or renown changed.
-  const FROZEN_CATALOG_SHA256 = 'bd95099f837871f85329aefff1478adc621cc8e83a386b2535826cf29d730219';
+  // Re-baselined for Roots' Bramblehide (the feral druid's Strength leather
+  // family off the Nythraxis raid): one appended zero-Renown collection deed
+  // (col_set_bramblehide). No shipped trigger or renown changed.
+  const FROZEN_CATALOG_SHA256 = '9068b0b39b68dba288c9501934211b0809422f09cb95a15b904ddc31a4354693';
 
   it('every shipped deed keeps its trigger and renown unchanged', () => {
     const canonical = JSON.stringify(
@@ -854,9 +862,9 @@ describe('table shape', () => {
     // (forbidden: the order is an append-only determinism contract; new
     // deeds append). hid_codfather's index is pinned in the refresh test.
     expect(DEED_ORDER[0]).toBe('prog_first_steps');
-    // The Crucible raid block closes the tail (appended behind the Proving
-    // Shore graduation deed; the flawless task is its final entry).
-    expect(DEED_ORDER[DEED_ORDER.length - 1]).toBe('dgn_varkhul_flawless');
+    // The Roots' Bramblehide set collection closes the tail (appended behind
+    // the Crucible raid block, whose flawless task was the previous final entry).
+    expect(DEED_ORDER[DEED_ORDER.length - 1]).toBe('col_set_bramblehide');
   });
 
   it('every entry key matches its id and its prefix matches its category', () => {

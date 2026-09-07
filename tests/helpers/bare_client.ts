@@ -7,6 +7,8 @@
 // hand-rolling either fixture again.
 
 import type { ClientSession, GameServer } from '../../server/game';
+import { ActionBarLayoutUploader } from '../../src/net/action_bar_upload';
+import { GuildBankLogMirror } from '../../src/net/guild_bank_log_mirror';
 import { ClientWorld } from '../../src/net/online';
 import { emptyAllocation } from '../../src/sim/content/talents';
 import { ALL_RECIPES } from '../../src/sim/data';
@@ -219,9 +221,7 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   // class initializers exactly; guildBankInfo in particular is read through
   // `!== null` gates, where undefined would behave differently.
   c.guildBankInfo = null;
-  c.guildBankLogEntries = [];
-  c.guildBankLogState = 'idle';
-  c.guildBankLogAt = 0;
+  c.guildBankLogMirror = new GuildBankLogMirror();
   c.toolEffectSlots = [];
   c.commissionOrders = [];
   c.socialDirty = false;
@@ -236,9 +236,7 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   c.cosmeticsChanged = false;
   c.actionBarRestore = undefined;
   c.actionBarRestoreResolved = false;
-  c.actionBarSaveTimer = null;
-  c.actionBarSaveLastJson = null;
-  c.actionBarSavePending = null;
+  c.actionBarUploader = new ActionBarLayoutUploader((command) => c.cmd(command));
   c.profanityDirty = false;
   c.pendingTargetEcho = null;
   c.nextCommandOutcomeId = 1;
