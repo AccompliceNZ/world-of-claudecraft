@@ -1086,7 +1086,11 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED 1941 -> 1928 after the socket prompt's consent/echo state and
     // DOM feedback moved behind bank_socket_purchase_core/controller, with the
     // family live-region mechanics shared through bank_status_line.ts.
-    ceiling: 1928,
+    // Down 1928 -> 1915 for the guild bank history search: the search-box
+    // focus + caret carry (capture before the wipe, restore after) moved to
+    // src/ui/bank_search_focus.ts so the personal and guild arms share one
+    // rule. Exact count, zero slack.
+    ceiling: 1915,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/CLAUDE.md)',
   },
 ];

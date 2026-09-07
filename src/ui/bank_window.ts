@@ -51,6 +51,7 @@ import {
   bankRungTopUpCopy,
   claudiumAmountText,
 } from './bank_rung_view';
+import { captureSearchCaret, restoreSearchCaret } from './bank_search_focus';
 import { BankSocketPurchaseController } from './bank_socket_purchase_controller';
 import {
   type BankBuySlotsModel,
@@ -573,16 +574,9 @@ export class BankWindow {
     // drop parks pointer focus on this root, and the parked root is not a control
     // to re-land on (it resolves no key and would take the close-button fallback).
     const hadFocus = focusedWithin(el) !== null || active?.closest(BANK_PROMPT_SELECTOR) != null;
-    // Search focus survives a FULL rebuild too: the slow-band refreshIfChanged can
-    // land a data repaint (a deposit's echo) moments after the player focused the
-    // search box, and stealing focus to the close button mid-typing was a live bug
-    // (proven by the online browser smoke probe). The fresh input's value is restored from
-    // this.filter.search, so only focus + caret need carrying across.
-    const searchEl = el.querySelector('.bag-search') as HTMLInputElement | null;
-    const searchFocus =
-      searchEl !== null && active === searchEl
-        ? { start: searchEl.selectionStart, end: searchEl.selectionEnd }
-        : null;
+    // Search focus survives a FULL rebuild too (bank_search_focus.ts owns the
+    // why): captured before the wipe, restored onto the fresh input after.
+    const searchFocus = captureSearchCaret(el, active);
     // The focused control's identity (data-focus-key), captured BEFORE the wipe:
     // the guild refresh arm repaints on ANY officer's op, so an external echo
     // must not yank a keyboard user off the tab, cell, or button they were on.
@@ -719,16 +713,9 @@ export class BankWindow {
       }
       this.annotateGuildFocusKeys(el, guildModel);
       this.restoreScroll(el, prevScroll);
-      // The history view's search box shares `.bag-search`, so the caret
-      // capture above applies here exactly as on the personal pane: every
-      // keystroke rebuilds the pane, and the caret must land where it was.
-      const guildSearch = el.querySelector('.bag-search') as HTMLInputElement | null;
-      if (searchFocus && guildSearch) {
-        guildSearch.focus({ preventScroll: true });
-        guildSearch.setSelectionRange(searchFocus.start, searchFocus.end);
-      } else if (hadFocus) {
-        this.restoreControlFocus(el, focusKey);
-      }
+      // The history view's search box shares `.bag-search`: every keystroke
+      // rebuilds the pane, and the caret must land where it was.
+      if (!restoreSearchCaret(el, searchFocus) && hadFocus) this.restoreControlFocus(el, focusKey);
       return;
     }
     if (model.kind === 'away') {
@@ -783,18 +770,11 @@ export class BankWindow {
     // AFTER the footer: in the compact regime the window is the scroller, and a
     // write against a pane one band short clamps to that height and stays.
     this.restoreScroll(el, prevScroll);
-    if (searchFocus) {
-      const fresh = el.querySelector('.bag-search') as HTMLInputElement | null;
-      if (fresh) {
-        // preventScroll: the offset was just restored and on a short phone this
-        // box can sit far above the fold (focus_restore.ts records the why).
-        fresh.focus({ preventScroll: true });
-        fresh.setSelectionRange(searchFocus.start, searchFocus.end);
-      } else if (hadFocus) {
-        // The rebuild dropped the search box (the bank emptied): fall back to the
-        // close button rather than dropping focus to <body>.
-        (el.querySelector('[data-close]') as HTMLElement | null)?.focus();
-      }
+    if (restoreSearchCaret(el, searchFocus)) return;
+    if (searchFocus !== null && hadFocus) {
+      // The rebuild dropped the search box (the bank emptied): fall back to the
+      // close button rather than dropping focus to <body>.
+      (el.querySelector('[data-close]') as HTMLElement | null)?.focus();
     } else if (hadFocus) {
       this.restoreControlFocus(el, focusKey);
     }
