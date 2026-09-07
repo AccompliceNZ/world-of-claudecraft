@@ -546,6 +546,7 @@ import { InspectWindow } from './inspect_window';
 import { InterfaceUnlock, makeUiRootDetacher, restoreFrameHome } from './interface_unlock';
 import {
   classGatedFrameActive,
+  frameRowLabelKey,
   frameRowSettingKey,
   HUD_FRAME_SPECS,
 } from './interface_unlock_core';
@@ -3892,9 +3893,8 @@ export class Hud {
   // The frames the "Unlock interface" option governs. Each row of the pure table
   // becomes a MovableFrame with no permanent chrome (buttonOnlyWhenUnlocked) and
   // the shared SE grip, plus the `isActive` probe that decides whether unlocking
-  // may loosen it: a character with no pet out, or with the optional action bars
-  // switched off, has no frame there to move. The three unit frames keep their
-  // own corner buttons and simply join the same registry.
+  // may loosen it (no pet out, optional bars off: no frame there to move). The
+  // unit frames keep their own corner buttons and simply join the registry.
   private initInterfaceUnlock(isMobileLayout: () => boolean): void {
     for (const spec of HUD_FRAME_SPECS) {
       const frame = document.getElementById(spec.elementId);
@@ -3915,7 +3915,7 @@ export class Hud {
         unlockLabelKey: 'hudChrome.interfaceUnlock.unlockFrame',
         lockLabelKey: 'hudChrome.interfaceUnlock.lockFrame',
         resizeLabelKey: 'hudChrome.interfaceUnlock.resizeFrame',
-        frameLabelKey: spec.labelKey,
+        frameLabelKey: () => frameRowLabelKey(spec, this.sim.cfg.playerClass, this.sim.talentSpec),
         draggingBodyClass: 'hud-frame-dragging',
         fallbackSize: spec.fallbackSize,
         isMobileLayout,

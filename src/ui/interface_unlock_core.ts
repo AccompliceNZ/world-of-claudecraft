@@ -273,12 +273,14 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
   // The doom meter docks beside the player frame inside the transformed
   // #actionbar-stack, so it detaches like the action bars. Its storage key is
   // the one its pre-registry MovableFrame persisted under, so every saved
-  // spot survives the move into this table.
+  // spot survives the move into this table. The chip reuses the resource's
+  // own in-game name (Condemnation, hudChrome.warlock.doomLabel): mechanic
+  // frames name themselves the way the game names the mechanic.
   {
     id: 'doomMeter',
     elementId: 'warlock-doom-frame',
     storageKey: 'woc_warlock_doom_frame_pos',
-    labelKey: 'hudChrome.interfaceUnlock.frameNames.doomMeter',
+    labelKey: 'hudChrome.warlock.doomLabel',
     fallbackSize: { w: 300, h: 48 },
     detachToUiRoot: true,
   },
@@ -406,6 +408,38 @@ export function frameRowSettingKey(
   // state.
   if (id === 'targetDots') return 'showTargetDots';
   return null;
+}
+
+/**
+ * The name chip a frame row wears, resolved per CHARACTER: mechanic frames
+ * name themselves the way the game names the mechanic, so the proc overlay
+ * chips the active spec's own meter (Soul Fragments for a demonology warlock,
+ * Wrack for destruction, Hot Streak / Aether Surge / Icicles for the mage
+ * specs) instead of the generic "Spell Procs", which stays the fallback for a
+ * character whose spec never lights it (an affliction warlock's placeholder).
+ * Every other row keeps its static labelKey. The keys reuse the mechanics'
+ * existing names wherever one exists (the meter aria labels, the ability
+ * names), so no second copy of an in-game term is minted.
+ */
+export function frameRowLabelKey(
+  spec: HudFrameSpec,
+  playerClass: PlayerClass,
+  talentSpec: string | null,
+): TranslationKey {
+  if (spec.id !== 'procOverlay') return spec.labelKey;
+  if (playerClass === 'warlock') {
+    if (talentSpec === 'demonology') return 'hudChrome.procOverlay.soulFragmentsMeter';
+    if (talentSpec === 'destruction') return 'hudChrome.procOverlay.ruinMeter';
+    return spec.labelKey;
+  }
+  if (playerClass === 'mage') {
+    if (talentSpec === 'arcane') return 'entities.abilities.arcane_surge.name';
+    if (talentSpec === 'frost') return 'hudChrome.interfaceUnlock.frameNames.procOverlayFrost';
+    // Fire, and an unspecced mage: the frame paints the Heating Up / Hot
+    // Streak rule either way (hud.ts's else arm), so Hot Streak names it.
+    return 'entities.abilities.hot_streak.name';
+  }
+  return spec.labelKey;
 }
 
 /** Label the Interface option row shows: it names the ACTION the press performs,
