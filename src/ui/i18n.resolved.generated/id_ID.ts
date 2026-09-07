@@ -3585,8 +3585,34 @@ export const id_ID: EnTranslations = {
       "guildViewsAria": "Tampilan bank guild",
       "guildContentsTab": "Isi",
       "guildLogTab": "Log",
+      "guildHistoryTab": "History",
       "logAria": "Log aktivitas bank guild",
       "logNote": "{count} tindakan bank guild terbaru.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Memuat log bank guild...",
       "logEmpty": "Belum ada yang keluar masuk bank guild.",
       "logUnavailable": "Log bank guild tidak dapat dibaca saat ini.",
@@ -14094,6 +14120,48 @@ export const id_ID: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Tongkat Percik Padam"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Air Mata Air Sihir"
       },
@@ -19102,6 +19170,12 @@ export const id_ID: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Garda Depan Batu Terikat",
         "bonus3": "Meningkatkan kecepatan serangan dan rapal sebesar 15%."
+      },
+      "bramblehide": {
+        "name": "Kulit Semak Duri Roots",
+        "bonus2": "Meningkatkan daya serang sebesar 40.",
+        "bonus4": "Serangan kritis senjatamu menyerpihkan target dengan Serpih Tulang, membuatnya berdarah sebesar 8 kerusakan setiap 2 detik selama 12 detik. Menumpuk hingga 3 kali.",
+        "bonus6": "Meningkatkan kecepatan serangan dan perapalan sebesar 4% serta Hit sebesar 3%. Serangan kritis senjata Anda memecah target dengan Pecah Tulang, menyebabkan pendarahan 5 kerusakan tiap 2 detik selama 12 detik. Menumpuk hingga 3 kali."
       },
       "chronoweave": {
         "name": "Busana Tenunan Aether",

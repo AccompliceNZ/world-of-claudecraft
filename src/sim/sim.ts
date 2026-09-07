@@ -1734,7 +1734,10 @@ export type { RewardCounters };
 // caller into a per-Sim divergence.
 const OFFLINE_GUILD_BANK_LOG: import('../world_api').GuildBankLogView = Object.freeze({
   state: 'ready' as const,
+  kind: 'all' as const,
   entries: Object.freeze([]) as readonly import('../world_api').GuildBankLogEntry[],
+  more: false,
+  olderPending: false,
 });
 
 // isPetClass relocated to types.ts (P1b; imported in the './types' block above). The
@@ -10277,9 +10280,12 @@ export class Sim {
    *  never 'loading' (nothing is ever in flight) and never 'refused' (nothing
    *  declined it). The Guild pane never renders offline anyway, so this is the
    *  inert-arm answer that keeps the facet total: no request, no wire send. */
-  guildBankLog(): import('../world_api').GuildBankLogView {
+  guildBankLog(
+    _kind?: import('../world_api').GuildBankLogKind,
+  ): import('../world_api').GuildBankLogView {
     return OFFLINE_GUILD_BANK_LOG;
   }
+  guildBankLogOlder(): void {}
   searchCharacters(_query: string): Promise<import('../world_api').CharacterSearchResult[]> {
     return Promise.resolve([]);
   }

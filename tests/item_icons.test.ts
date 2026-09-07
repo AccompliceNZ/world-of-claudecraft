@@ -309,7 +309,8 @@ function missingPaintedWaveItemIds(): string[] {
 describe('item webp icons', () => {
   it('has image-backed item ids wired (guards the fixture)', () => {
     expect(ITEM_IMAGE_IDS.size).toBeGreaterThan(0);
-    expect(WEAPON_IMAGE_IDS.size).toBe(133);
+    // 136 with the three Nythraxis gap-fill one-handers (nythraxis-gap-weapon-renders-2026-09-04).
+    expect(WEAPON_IMAGE_IDS.size).toBe(136);
   });
 
   it('A) every image-backed item and weapon resolves to a committed, decodable .webp', async () => {
@@ -357,10 +358,11 @@ describe('item webp icons', () => {
     for (const id of ITEM_ART_PENDING) {
       expect(itemImageUrl(id), `${id} must not resolve to uncommitted art`).toBeNull();
     }
-    // The Crucible wave is fully painted (crucible-set-icons-2026-08-29), so
-    // the ledger is back to the EMPTY set: no artless item can hide behind an
-    // open wave, and the next commissioned wave re-pins its exact membership
-    // here when it stages.
+    // The Crucible wave (crucible-set-icons-2026-08-29) and the Roots'
+    // Bramblehide plus Nythraxis gap-fill wave (roots-bramblehide-icons-2026-09-07) are
+    // fully painted, so the ledger is back to the EMPTY set: no artless item can
+    // hide behind an open wave, and the next commissioned wave re-pins its exact
+    // membership here when it stages.
     expect([...ITEM_ART_PENDING]).toEqual([]);
     // And the inverse: an id with committed art must still win the static url.
     expect(itemImageUrl('linen_pouch')).toBe('/ui/items/linen_pouch.webp');

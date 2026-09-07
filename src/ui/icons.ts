@@ -10,6 +10,10 @@
 
 import { IGNIVAR_ART_PENDING_ITEM_IDS } from '../sim/content/ignivar_loot';
 import { isRawCookingCatch } from '../sim/content/items';
+import {
+  BRAMBLEHIDE_ART_PENDING_ITEM_IDS,
+  NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS,
+} from '../sim/content/zone3';
 import { ABILITIES, ITEMS } from '../sim/data';
 import { crestIconUrl } from './crest_icon_art';
 import { currencyImageUrl } from './currency_art';
@@ -5432,7 +5436,11 @@ export const UI_ITEM_IMAGE_IDS = new Set<string>(['backpack']);
 // dev-only entrance, so no player-facing surface shows a procedural icon yet).
 // The 10 raid weapons are excluded: weapons never enter this set (guard A2);
 // they ship painted art through WEAPON_IMAGE_IDS like every other weapon.
-export const ITEM_ART_PENDING = new Set<string>(IGNIVAR_ART_PENDING_ITEM_IDS);
+export const ITEM_ART_PENDING = new Set<string>([
+  ...IGNIVAR_ART_PENDING_ITEM_IDS,
+  ...BRAMBLEHIDE_ART_PENDING_ITEM_IDS,
+  ...NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS,
+]);
 
 /** Static URL of an item's (or a UI pseudo-item's) image icon, or null if it uses a recipe. */
 export function itemImageUrl(id: string): string | null {

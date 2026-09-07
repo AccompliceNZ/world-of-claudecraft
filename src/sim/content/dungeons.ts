@@ -1153,6 +1153,38 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
       // independent draw so the four guaranteed groups above keep their exact
       // 1.00 partitions (a 25% bonus shot, never displacing a set piece).
       { itemId: 'maul_of_the_scourged_wilds', chance: 0.25, rollGroup: 'nythraxis_drop_5' },
+      // Roots' Bramblehide (zone3.ts), the feral druid's Strength leather
+      // family: a sixth independent bonus group, the same shape as the maul's
+      // group 5, so the four guaranteed groups keep their exact 1.00
+      // partitions and no other class's set piece is displaced. Seven pieces at
+      // 0.08 each: a 56% shot at ONE family piece per kill. The pieces carry
+      // the FERAL tag, which armor equips do not enforce (canEquipItem gates
+      // armor by weight alone), but as a separate bonus draw the family never
+      // displaces a piece from the shared helm/shoulder groups above. Appended
+      // AFTER group 5 so the earlier draw order stays byte-identical.
+      { itemId: 'bramblehide_crown', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_mantle', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_harness', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_cinch', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_legguards', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_grips', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_treads', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      // The seven gap-fill drops (zone3.ts, owner request 2026-09-04): a fifth
+      // GUARANTEED group (sums to exactly 1.00) so each lane the top-parse review
+      // found empty at the raid tier gets the same per-kill availability as a
+      // set piece. Appended AFTER group 6 so the earlier draw order stays
+      // byte-identical.
+      { itemId: 'courtiers_bonefang', chance: 0.15, rollGroup: 'nythraxis_drop_7' },
+      { itemId: 'thornpeak_wardblade', chance: 0.15, rollGroup: 'nythraxis_drop_7' },
+      { itemId: 'gravecourt_hewer', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
+      {
+        itemId: 'votive_ward_of_the_deathless_court',
+        chance: 0.14,
+        rollGroup: 'nythraxis_drop_7',
+      },
+      { itemId: 'thornpeak_moonhide_cowl', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
+      { itemId: 'stormhymn_chain_grips', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
+      { itemId: 'stormhymn_chain_treads', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
     ],
     scale: 3.1,
     color: 0x221b2d,

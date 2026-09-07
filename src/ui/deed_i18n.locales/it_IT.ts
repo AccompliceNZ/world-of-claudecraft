@@ -1105,4 +1105,8 @@ export const table: DeedLocaleTable = {
     desc: 'Sconfiggi Varkhul, Forgefather of the Last Flame, in difficoltà Eroica senza che un solo membro del raid muoia.',
     title: "l'Incombusto",
   },
+  col_set_bramblehide: {
+    name: 'Pelle di Rovo di Roots',
+    desc: 'Scopri ogni pezzo della Pelle di Rovo di Roots.',
+  },
 };
