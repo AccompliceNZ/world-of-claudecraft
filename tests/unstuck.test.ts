@@ -171,6 +171,42 @@ function forceBattlegroundWallTrap(
   return p;
 }
 
+function forceOutboardBattlegroundWallTrap(
+  sim: Sim,
+  match: NonNullable<ReturnType<Sim['bgMatchFor']>>,
+  pid: number,
+): Sim['player'] {
+  const wall = required(
+    battlegroundColliders().find(
+      (candidate) =>
+        candidate.type === 'obb' &&
+        !candidate.standable &&
+        (Math.abs(candidate.x) > BG_HALF_X + PLAYER_BODY_RADIUS + 1 ||
+          Math.abs(candidate.z) > BG_HALF_Z + PLAYER_BODY_RADIUS + 1),
+    ),
+    'outboard battleground wall collider',
+  );
+  const origin = battlegroundOrigin(match.slot);
+  const p = required(sim.entities.get(pid), 'trapped battleground player');
+  p.pos = sim.groundPos(origin.x + wall.x, origin.z + wall.z);
+  p.prevPos = { ...p.pos };
+  p.vx = 0;
+  p.vy = 0;
+  p.vz = 0;
+  p.onGround = true;
+  p.jumping = false;
+  p.inCombat = false;
+  p.combatTimer = 999;
+  sim.ctx.rebucket(p);
+  expect(
+    Math.abs(p.pos.x - origin.x) > BG_HALF_X + PLAYER_BODY_RADIUS + 1 ||
+      Math.abs(p.pos.z - origin.z) > BG_HALF_Z + PLAYER_BODY_RADIUS + 1,
+  ).toBe(true);
+  const resolved = resolvePosition(sim.cfg.seed, p.pos.x, p.pos.z, PLAYER_BODY_RADIUS);
+  expect(Math.hypot(resolved.x - p.pos.x, resolved.z - p.pos.z)).toBeGreaterThan(0.01);
+  return p;
+}
+
 function forceBattlegroundWallContact(
   sim: Sim,
   match: NonNullable<ReturnType<Sim['bgMatchFor']>>,
@@ -981,6 +1017,35 @@ describe('unstuck area identity', () => {
     });
     expect(sim.bgMatchFor(pid)).toBe(match);
     expect(isBgPos(player.pos.x)).toBe(true);
+    const plot = BG_GRAVEYARDS[0];
+    expect(Math.abs(player.pos.x - (origin.x + plot.x))).toBeLessThanOrEqual(plot.hw);
+    expect(Math.abs(player.pos.z - (origin.z + plot.z))).toBeLessThanOrEqual(plot.hd);
+  });
+
+  it('accepts a battleground trap in generated outboard wall geometry', () => {
+    const { sim, match, pid } = activeBattleground();
+    const player = forceOutboardBattlegroundWallTrap(sim, match, pid);
+    const origin = battlegroundOrigin(match.slot);
+
+    expect(unstuckLocationAt(sim.ctx, pid, player.pos)?.area).toMatchObject({
+      kind: 'battleground',
+      id: 'thornhollow_fields',
+      instanceId: String(match.id),
+      slot: match.slot,
+    });
+
+    expect(sim.unstuck(pid)).toBe(true);
+    sim.drainEvents();
+    const events = tickMany(sim, UNSTUCK_COUNTDOWN_SECONDS * 20);
+    const completed = eventsOf(events).find((event) => event.phase === 'completed');
+
+    expect(completed?.area).toMatchObject({
+      kind: 'battleground',
+      id: 'thornhollow_fields',
+      instanceId: String(match.id),
+      slot: match.slot,
+    });
+    expect(sim.bgMatchFor(pid)).toBe(match);
     const plot = BG_GRAVEYARDS[0];
     expect(Math.abs(player.pos.x - (origin.x + plot.x))).toBeLessThanOrEqual(plot.hw);
     expect(Math.abs(player.pos.z - (origin.z + plot.z))).toBeLessThanOrEqual(plot.hd);

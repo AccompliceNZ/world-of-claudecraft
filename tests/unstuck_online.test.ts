@@ -31,7 +31,13 @@ import {
 } from '../server/movement_input_timeline_v2';
 import { recordUnstuckEvent } from '../server/unstuck_records';
 import { ClientWorld } from '../src/net/online';
-import { BG_GRAVEYARDS, bgFieldPlanWalls } from '../src/sim/battleground_layout';
+import {
+  BG_GRAVEYARDS,
+  BG_HALF_X,
+  BG_HALF_Z,
+  battlegroundColliders,
+  bgFieldPlanWalls,
+} from '../src/sim/battleground_layout';
 import { resolvePosition } from '../src/sim/colliders';
 import { battlegroundOrigin } from '../src/sim/data';
 import { PLAYER_BODY_RADIUS } from '../src/sim/pathfind';
@@ -158,6 +164,45 @@ function forceIntoBgWallTrap(server: GameServer, match: BgMatch, pid: number): E
   player.inCombat = false;
   player.combatTimer = 999;
   server.sim.ctx.rebucket(player);
+  const resolved = resolvePosition(
+    server.sim.cfg.seed,
+    player.pos.x,
+    player.pos.z,
+    PLAYER_BODY_RADIUS,
+  );
+  expect(Math.hypot(resolved.x - player.pos.x, resolved.z - player.pos.z)).toBeGreaterThan(0.01);
+  return player;
+}
+
+function forceIntoOutboardBgWallTrap(server: GameServer, match: BgMatch, pid: number): Entity {
+  const wall = must(
+    battlegroundColliders().find(
+      (candidate) =>
+        candidate.type === 'obb' &&
+        !candidate.standable &&
+        (Math.abs(candidate.x) > BG_HALF_X + PLAYER_BODY_RADIUS + 1 ||
+          Math.abs(candidate.z) > BG_HALF_Z + PLAYER_BODY_RADIUS + 1),
+    ),
+    'outboard battleground wall collider',
+  );
+  const origin = battlegroundOrigin(match.slot);
+  const player = must(server.sim.entities.get(pid), 'wall-trapped player');
+  player.pos = server.sim.ctx.groundPos(origin.x + wall.x, origin.z + wall.z);
+  player.prevPos = { ...player.pos };
+  player.vx = 0;
+  player.vy = 0;
+  player.vz = 0;
+  player.onGround = true;
+  player.jumping = false;
+  player.inCombat = false;
+  player.combatTimer = 999;
+  server.sim.ctx.rebucket(player);
+  const localX = player.pos.x - origin.x;
+  const localZ = player.pos.z - origin.z;
+  expect(
+    Math.abs(localX) > BG_HALF_X + PLAYER_BODY_RADIUS + 1 ||
+      Math.abs(localZ) > BG_HALF_Z + PLAYER_BODY_RADIUS + 1,
+  ).toBe(true);
   const resolved = resolvePosition(
     server.sim.cfg.seed,
     player.pos.x,
@@ -305,6 +350,44 @@ describe('online unstuck command wiring', () => {
       1e-6,
     );
     expect(player.cooldowns.get(UNSTUCK_COOLDOWN_ID)).toBe(UNSTUCK_SUCCESS_COOLDOWN_SECONDS);
+  });
+
+  it('the Settings command completes from generated outboard battleground wall geometry', () => {
+    const server = new GameServer();
+    const { session } = join(server, 30);
+    const { match, pid } = activeBattlegroundForSession(server, session);
+    const player = forceIntoOutboardBgWallTrap(server, match, pid);
+
+    send(server, session, { cmd: 'unstuck' });
+
+    expect(server.sim.meta(pid)?.pendingUnstuck).toMatchObject({
+      area: {
+        kind: 'battleground',
+        id: 'thornhollow_fields',
+        instanceId: String(match.id),
+        slot: match.slot,
+      },
+    });
+
+    const events: SimEvent[] = [];
+    for (let i = 0; i < UNSTUCK_COUNTDOWN_SECONDS * 20; i++) events.push(...server.sim.tick());
+
+    expect(events).toContainEqual(
+      expect.objectContaining({ type: 'unstuck', phase: 'completed', pid }),
+    );
+    expect(server.sim.bgMatchFor(pid)).toBe(match);
+    expect(player.dead).toBe(false);
+    expect(player.ghost).toBe(false);
+    expect(inBgGraveyard(server, match, pid)).toBe(true);
+    const resolved = resolvePosition(
+      server.sim.cfg.seed,
+      player.pos.x,
+      player.pos.z,
+      PLAYER_BODY_RADIUS,
+    );
+    expect(Math.hypot(resolved.x - player.pos.x, resolved.z - player.pos.z)).toBeLessThanOrEqual(
+      1e-6,
+    );
   });
 
   it('the Settings command completes for a battleground wall-contact fighter holding movement', () => {
