@@ -86,7 +86,6 @@ const FULL_KEYS = [
   'woc_player_frame_pos_hidden',
   'woc_target_frame_pos_hidden',
   'woc_party_frame_pos_hidden',
-  'woc_warlock_doom_frame_pos_hidden',
   'woc_layout_reset_epoch',
   'chatTimestamps',
   'chatClock',
