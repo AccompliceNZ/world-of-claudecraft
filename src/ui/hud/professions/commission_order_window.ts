@@ -29,6 +29,15 @@ export interface CommissionOrderWindowDeps extends PainterHostPresentation {
   onAccept(orderId: number): void;
   onDeliver(orderId: number): void;
   onClose(): void;
+  /**
+   * The gathering goal Track control (Intentional Gathering PR4). Optional:
+   * omitted, no row renders the affordance. Rendered ONLY alongside Deliver,
+   * i.e. exactly `row.canDeliver` (accepted AND mineToCraft): a targeted
+   * order that is still open also carries mineToCraft, and that row must NOT
+   * offer Track, which is exactly what reusing canDeliver's own gate gives
+   * for free rather than a second, easily-drifting condition here.
+   */
+  onTrack?(orderId: number): void;
 }
 
 function statusLabel(status: CommissionOrderRowModel['status']): string {
@@ -120,6 +129,18 @@ function renderRow(row: CommissionOrderRowModel, deps: CommissionOrderWindowDeps
     btn.textContent = t('hudChrome.commissionBoard.deliverButton');
     btn.title = t('hudChrome.commissionBoard.deliverHint');
     btn.addEventListener('click', () => deps.onDeliver(row.id));
+    actions.appendChild(btn);
+  }
+  // The gathering goal Track control: `row.canDeliver` alone (accepted AND
+  // mineToCraft) so an open targeted order, which also carries mineToCraft,
+  // never shows it.
+  if (row.canDeliver && deps.onTrack) {
+    const onTrack = deps.onTrack;
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'vi-price-chip commission-order-btn commission-order-track-btn';
+    btn.textContent = t('hudChrome.commissionBoard.trackButton');
+    btn.addEventListener('click', () => onTrack(row.id));
     actions.appendChild(btn);
   }
   if (actions.childElementCount > 0) item.appendChild(actions);

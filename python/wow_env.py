@@ -18,6 +18,11 @@ alongside the ordinary `step` API; none of it advances sim time or the episode
 step, and it covers only corpse harvesting, not other professions. See
 `env.gathering_capability` for discovery and `headless/CLAUDE.md` for the contract.
 
+A SEPARATE, closed one-goal tracking family (`inspect_gathering_goal`/
+`track_gathering_recipe`/`track_gathering_commission`/`clear_gathering_goal`)
+sits beside it; see `env.gathering_goal_capability` and
+`docs/protocols/gathering-goal.md`.
+
 For parallel training just create N envs (each owns its own subprocess) or use
 gymnasium.vector.AsyncVectorEnv / SyncVectorEnv with `make_env`.
 """
@@ -98,6 +103,9 @@ class WoWClassicEnv(gym.Env):
         # or None on a server bundle built before it existed. See the gathering
         # methods below and headless/CLAUDE.md.
         self.gathering_capability: dict[str, Any] | None = meta.get("gathering")
+        # Discovery for the separate one-goal tracking family below, or None
+        # on a server bundle built before it existed.
+        self.gathering_goal_capability: dict[str, Any] | None = meta.get("gathering_goal")
 
     # ------------------------------------------------------------------
     def _request(self, msg: dict[str, Any]) -> dict[str, Any]:
@@ -157,6 +165,27 @@ class WoWClassicEnv(gym.Env):
 
     def harvest_corpse(self, corpse_id) -> dict[str, Any]:
         return self._request({"cmd": "gathering", "verb": "harvest", "corpseId": corpse_id})
+
+    # -- Optional one-goal tracking command family (PR4, Intentional Gathering) --
+    # Exact mirrors of the `{"cmd":"gathering_goal","verb":...}` requests documented
+    # in `headless/env_server.ts` / `gathering_goal_protocol.ts`. Same rules as the
+    # gathering family above: no sim-time advance, no argument coercion, full reply
+    # returned verbatim (refusal reason included).
+    def inspect_gathering_goal(self) -> dict[str, Any]:
+        return self._request({"cmd": "gathering_goal", "verb": "inspect"})
+
+    def track_gathering_recipe(self, recipe_id, count) -> dict[str, Any]:
+        return self._request(
+            {"cmd": "gathering_goal", "verb": "track_recipe", "recipeId": recipe_id, "count": count}
+        )
+
+    def track_gathering_commission(self, order_id) -> dict[str, Any]:
+        return self._request(
+            {"cmd": "gathering_goal", "verb": "track_commission", "orderId": order_id}
+        )
+
+    def clear_gathering_goal(self) -> dict[str, Any]:
+        return self._request({"cmd": "gathering_goal", "verb": "clear"})
 
     def close(self):
         if self._proc.poll() is None:

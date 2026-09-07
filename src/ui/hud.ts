@@ -518,6 +518,7 @@ import { handleFarmEvent } from './hud/professions/farm_event_feedback';
 import { FarmPressAffordanceController } from './hud/professions/farm_press_affordance_controller';
 import { PlantSheetWindow } from './hud/professions/farming_plant_sheet_window';
 import { feastTooltipLines } from './hud/professions/feast_tooltip_view';
+import { GatheringGoalController } from './hud/professions/gathering_goal_controller';
 import { gatheringProfessionNameKey } from './hud/professions/gathering_profession_name';
 import {
   handleGatherResult,
@@ -1850,6 +1851,7 @@ export class Hud {
   private readonly delveBoard: DelveBoardController;
   private readonly delveTracker: DelveTrackerController;
   private readonly riftTracker: RiftFloorTrackerController;
+  private readonly gatheringGoalController: GatheringGoalController;
   private readonly lockpickController: LockpickController;
   private readonly riteController: RiteController;
   private readonly questTracker: QuestTrackerController;
@@ -2259,6 +2261,14 @@ export class Hud {
     });
     this.riftTracker = new RiftFloorTrackerController({
       element: $('#rift-tracker'),
+      world: () => this.sim,
+    });
+    // The gathering goal tracker (Intentional Gathering PR4): a persistent
+    // #right-tracker-stack member like the two above; `this.sim` (typed
+    // IWorld) structurally satisfies the controller's narrow GatheringGoalWorld
+    // shape (see that module's header for why it is not `Pick<IWorld, ...>`).
+    this.gatheringGoalController = new GatheringGoalController({
+      element: $('#gathering-goal-tracker'),
       world: () => this.sim,
     });
     this.delveBoard = new DelveBoardController({
@@ -7012,6 +7022,10 @@ export class Hud {
     // Same reason as delveTracker above: the rift floor tracker's signature is
     // floor/timer numbers, none of which move with the locale.
     this.riftTracker.relocalize();
+    // Same shape again: the gathering goal panel's signature is the raw
+    // GatheringGoalView (ids/counts/enums), none of which moves with the
+    // locale, so relocalize() clears the latch for exactly one rebuild.
+    this.gatheringGoalController.relocalize();
     this.partyFramesPainter.relocalize();
     this.raidBossGuideWindow.relocalize();
     // The world map rasterizes its labels into sprites keyed on the RESOLVED
@@ -9853,6 +9867,11 @@ export class Hud {
     // The Reliquary tracker is always-on chrome for the same reason: pinned
     // pages fill from normal play, and an illuminated page drops off.
     if (slowHud) this.updateReliquaryTracker();
+    // The gathering goal tracker is always-on chrome too: a projection
+    // change (inventory/bank/vault moves the reachable/missing counts) has
+    // no dedicated event, so it rides the same slow poll; update() is
+    // signature-gated, so an unchanged goal costs nothing.
+    if (slowHud) this.gatheringGoalController.update();
     // Re-seat the tracker stack under the minimap column (bounded layout read).
     if (slowHud) this.trackerStackAnchor.apply();
     if (slowHud && this.calendarWindow.isOpen) this.calendarWindow.refreshIfChanged();
@@ -16016,6 +16035,20 @@ export class Hud {
           this.craftQtyByRecipe.set(recipeId, Math.max(1, Math.floor(qty)));
           this.renderCrafting();
         },
+        // The gathering goal Track control (Intentional Gathering PR4): its
+        // OWN qty map, held by the gathering goal controller rather than
+        // craftQtyByRecipe above (deliberately uncoupled from mats-fit).
+        goalQty: (recipeId) => this.gatheringGoalController.goalQty(recipeId),
+        onGoalQty: (recipeId, qty) => {
+          this.gatheringGoalController.onGoalQty(recipeId, qty);
+          this.renderCrafting();
+        },
+        // The crafting window itself renders no "tracked" indicator (there is
+        // nothing in its own row state that changes), so Track does not
+        // repaint it; the panel's own immediate update() is what shows the
+        // new goal, and focus stays on the Track button the player pressed.
+        onTrackRecipe: (recipeId, count) =>
+          this.gatheringGoalController.onTrackRecipe(recipeId, count),
         announce: (text) => this.announceCraftCast(text),
         selectedCraft: () => this.selectedCraftTab,
         onSelectCraft: (professionId) => {
@@ -16135,6 +16168,10 @@ export class Hud {
         onCancel: (orderId) => this.sim.cancelCommissionOrder(orderId),
         onAccept: (orderId) => this.sim.acceptCommissionOrder(orderId),
         onDeliver: (orderId) => this.sim.deliverCommissionOrder(orderId),
+        // The gathering goal Track control (Intentional Gathering PR4):
+        // renders only on a row this viewer accepted to craft (canDeliver),
+        // so no separate accepted-mine check is needed here.
+        onTrack: (orderId) => this.gatheringGoalController.onTrack(orderId),
         onClose: () => this.closeCommissionBoard(),
       },
     );

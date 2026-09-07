@@ -146,8 +146,11 @@ const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 // Intentional Gathering PR3 adds a second command, inspectCorpseHarvest (the
 // selected-corpse status query, also a client-sent + dispatched pair):
 // 217/230, dispatch-only stays 13.
-const EXPECTED_SEND_COUNT = 217;
-const EXPECTED_DISPATCH_COUNT = 230;
+// Intentional Gathering PR4 adds three more client-sent + dispatched pairs
+// (track_gathering_recipe, track_gathering_commission, clear_gathering_goal):
+// 220/233, dispatch-only stays 13.
+const EXPECTED_SEND_COUNT = 220;
+const EXPECTED_DISPATCH_COUNT = 233;
 const EXPECTED_DISPATCH_ONLY_COUNT = 13;
 
 // The chat sub-channel routing switch (server/game.ts `switch

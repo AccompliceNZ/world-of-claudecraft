@@ -251,6 +251,12 @@ import { assembleEventsFrame, filterRoutableEvents, serializeEventFragments } fr
 import { buildEventPidIndex, forEachSelectedEventIndex } from './event_pid_index';
 import { appendFarmPlotsWire, dispatchFarmingCommand } from './farming_commands';
 import { fishingBandLabel, isKoi, isRodFeeRecipe } from './fishing_telemetry';
+import {
+  clearGatheringGoalCommandOutcome,
+  trackGatheringCommissionCommandOutcome,
+  trackGatheringRecipeCommandOutcome,
+} from './gathering_goal_commands';
+import { appendGatheringGoalSelfWire } from './gathering_goal_wire';
 import { appendGatheringSelfWire } from './gathering_self_wire';
 import {
   classifyOnlineGeneralChat,
@@ -6624,6 +6630,17 @@ export class GameServer {
       case 'set_harvest_preference':
         if (typeof msg.raw === 'string') sim.setHarvestPreference(msg.raw, pid);
         break;
+      // Intentional Gathering PR4: track/clear the viewer's single explicit
+      // gathering goal (see gathering_goal_commands.ts for the validation).
+      case 'track_gathering_recipe':
+        trackGatheringRecipeCommandOutcome(sim, msg, pid);
+        break;
+      case 'track_gathering_commission':
+        trackGatheringCommissionCommandOutcome(sim, msg, pid);
+        break;
+      case 'clear_gathering_goal':
+        clearGatheringGoalCommandOutcome(sim, msg, pid);
+        break;
       case 'lootRoll':
         if (
           typeof msg.rollId === 'number' &&
@@ -9127,6 +9144,10 @@ export class GameServer {
     // gathering_self_wire.ts to keep this coordinator under its monolith
     // ceiling; see that module for the per-field comments this call replaces.
     appendGatheringSelfWire(this.sim, anchorSession.pid, maybe, maybeSerialized);
+    // Intentional Gathering PR4: the owner-only tracked-goal full view. Its
+    // own leaf (gathering_goal_wire.ts) rather than folded into the call
+    // above: a distinct feature's single field, a full-view replacement.
+    appendGatheringGoalSelfWire(this.sim, anchorSession.pid, maybe);
     // Riding skill: persisted, so the client knows whether to show the riding
     // trainer UI without waiting on a mount/select command to fail. Wire key
     // `mntRtd`; delta-guarded, only changes once (false to true, never back).

@@ -341,6 +341,14 @@ const baseEnTable = {
   'error.corpseHarvestInterrupted': 'The harvest was interrupted.',
   'error.gatherNodeMissing': 'That resource node does not exist.',
   'error.gatherNodeNotRespawned': 'This resource node has not respawned for you yet.',
+  // The gathering goal command validation (Intentional Gathering PR4,
+  // src/sim/professions/gathering_goal_actions.ts): trackGatheringRecipe's
+  // quantity and recipe-id checks, trackGatheringCommission's live-binding
+  // check. Placeholder-free, so all three register in the EXACT matcher
+  // automatically.
+  'error.gatheringGoalQtyRange': 'Choose a goal quantity from 1 to 50.',
+  'error.gatheringGoalRecipeUnavailable': 'That recipe is unavailable.',
+  'error.gatheringGoalCommissionUnavailable': 'That commission is no longer available.',
   'error.toolEffectSlotFromWindow': 'Open Professions to slot that.',
   // Raw fishing catches refuse useItem (src/sim/items.ts): cooking reagents
   // only; cook before eating. EXACT-matched; English falls through per locale

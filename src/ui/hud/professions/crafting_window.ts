@@ -35,6 +35,7 @@ import { qualityGlowShadow } from '../../quality_glow';
 import { svgIcon } from '../../ui_icons';
 import { type ApexPatternChannel, apexRecipePresentation } from './apex_recipe_view';
 import {
+  CRAFT_BATCH_UI_MAX,
   type CraftButtonState,
   type CraftCastSessionView,
   clampCraftQty,
@@ -135,6 +136,19 @@ export interface CraftingWindowDeps extends PainterHostPresentation {
    *  live tab list (resolveSelectedCraft) so a stale pick falls back safely. */
   selectedCraft(): string | null;
   onSelectCraft(professionId: string): void;
+  /**
+   * The gathering goal Track control (Intentional Gathering PR4): a SEPARATE
+   * per-recipe quantity, 1..50, uncoupled from `craftQty` above (which clamps
+   * to the current mats-fit and so cannot express a shortage worth planning a
+   * goal around). All three are optional and rendered together or not at
+   * all: a caller that supplies none of them gets no goal-tracking row.
+   * `onTrackRecipe` REPLACES the player's current gathering goal; it is
+   * called ONLY from the explicit Track button, never from a Create click,
+   * never from selecting a recipe row, and never from a repaint.
+   */
+  goalQty?(recipeId: string): number;
+  onGoalQty?(recipeId: string, qty: number): void;
+  onTrackRecipe?(recipeId: string, count: number): void;
 }
 
 /** Format a cast duration for the row chip (localized number + s unit key). */
@@ -652,6 +666,76 @@ export function renderCraftingWindow(
         batchRow.appendChild(perfectingLink);
       }
       item.appendChild(batchRow);
+      // The gathering goal Track control (Intentional Gathering PR4): its OWN
+      // qty stepper and an explicit Track button, rendered only when the
+      // parent composition supplies all three optional deps. Deliberately a
+      // SIBLING row of the batch controls above, never merged with them: the
+      // goal quantity must be free to exceed the current mats-fit (planning a
+      // shortage is the whole point), and Track must never fire implicitly
+      // off a Create/Create All click.
+      if (deps.onTrackRecipe && deps.goalQty && deps.onGoalQty) {
+        const onGoalQty = deps.onGoalQty;
+        const onTrackRecipe = deps.onTrackRecipe;
+        // Reuses the batch row's existing flex layout (components.css) and
+        // the qty stepper's existing button styling: `crafting-goal-row` /
+        // `crafting-goal-qty-row` are semantic/test hooks with no rule of
+        // their own, the crafting-daily-chip precedent this file already
+        // documents, so this control needs no new CSS.
+        const goalRow = document.createElement('div');
+        goalRow.className = 'crafting-batch-row crafting-goal-row';
+        const goalQtyGroup = document.createElement('div');
+        goalQtyGroup.className = 'crafting-qty-row crafting-goal-qty-row';
+        goalQtyGroup.setAttribute('role', 'group');
+        goalQtyGroup.setAttribute('aria-label', t('hudChrome.crafting.goalQtyRowAria'));
+        const goalQty = clampCraftQty(deps.goalQty(row.recipeId), CRAFT_BATCH_UI_MAX);
+        const goalQtyCount = formatNumber(goalQty, { maximumFractionDigits: 0 });
+        const goalDecBtn = document.createElement('button');
+        goalDecBtn.type = 'button';
+        goalDecBtn.className = 'crafting-qty-btn';
+        goalDecBtn.dataset.focusKey = `goal-qty-dec:${row.recipeId}`;
+        goalDecBtn.textContent = '-';
+        goalDecBtn.setAttribute(
+          'aria-label',
+          t('hudChrome.crafting.goalQtyDecreaseAria', { count: goalQtyCount }),
+        );
+        goalDecBtn.disabled = goalQty <= 1;
+        goalDecBtn.addEventListener('click', () => {
+          onGoalQty(row.recipeId, clampCraftQty(goalQty - 1, CRAFT_BATCH_UI_MAX));
+        });
+        const goalQtyValue = document.createElement('span');
+        goalQtyValue.className = 'crafting-qty-value';
+        goalQtyValue.textContent = goalQtyCount;
+        goalQtyValue.setAttribute('aria-hidden', 'true');
+        const goalIncBtn = document.createElement('button');
+        goalIncBtn.type = 'button';
+        goalIncBtn.className = 'crafting-qty-btn';
+        goalIncBtn.dataset.focusKey = `goal-qty-inc:${row.recipeId}`;
+        goalIncBtn.textContent = '+';
+        goalIncBtn.setAttribute(
+          'aria-label',
+          t('hudChrome.crafting.goalQtyIncreaseAria', { count: goalQtyCount }),
+        );
+        goalIncBtn.disabled = goalQty >= CRAFT_BATCH_UI_MAX;
+        goalIncBtn.addEventListener('click', () => {
+          onGoalQty(row.recipeId, clampCraftQty(goalQty + 1, CRAFT_BATCH_UI_MAX));
+        });
+        goalQtyGroup.appendChild(goalDecBtn);
+        goalQtyGroup.appendChild(goalQtyValue);
+        goalQtyGroup.appendChild(goalIncBtn);
+        goalRow.appendChild(goalQtyGroup);
+        const trackBtn = document.createElement('button');
+        trackBtn.type = 'button';
+        trackBtn.className = 'crafting-create-all-btn crafting-track-goal-btn';
+        trackBtn.dataset.focusKey = `track-goal:${row.recipeId}`;
+        trackBtn.textContent = t('hudChrome.crafting.trackGoalButton');
+        trackBtn.setAttribute(
+          'aria-label',
+          t('hudChrome.crafting.trackGoalButtonAria', { name: resultName, count: goalQtyCount }),
+        );
+        trackBtn.addEventListener('click', () => onTrackRecipe(row.recipeId, goalQty));
+        goalRow.appendChild(trackBtn);
+        item.appendChild(goalRow);
+      }
       // Commission opt-in (the Maker's Bond): a per-recipe pill toggle-chip
       // in the card's chip language, right-aligned in the card footer so it
       // stacks under the gold Craft chip as one action column. Rendered ONLY

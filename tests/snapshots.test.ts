@@ -5077,6 +5077,7 @@ const ALL_DELTA_KEYS = [
   'ench',
   'equip',
   'fplot',
+  'ggoal',
   'gprof',
   'guildBank',
   'hbl',
@@ -5195,6 +5196,7 @@ const TERSE_TO_IWORLD: Record<string, string> = {
   ench: 'lastEnchantResult',
   equip: 'equipment',
   fplot: 'myFarmPlots',
+  ggoal: 'gatheringGoal',
   gprof: 'gatheringProficiency',
   guildBank: 'guildBankInfo',
   hirat: 'hitRating',
@@ -6282,7 +6284,7 @@ describe('gather node cooldown wire round trip (ncd)', () => {
 });
 
 describe('delta-key contract pins (anti-drift)', () => {
-  it('ALL_DELTA_KEYS contains exactly 91 unique keys in sorted order', () => {
+  it('ALL_DELTA_KEYS contains exactly 93 unique keys in sorted order', () => {
     // +1: guildBank (Guild Bank Phase 2), +1: the battleground bg key, +1: the
     // commission order board's corder key (issue #1298), +1: the character
     // sheet's lifetime played-time key ptime, for 67, then +16: the static
@@ -6322,9 +6324,11 @@ describe('delta-key contract pins (anti-drift)', () => {
     // counted from the merged registry above rather than from either side.
     // Intentional Gathering PR3 then adds the corpse-harvest preference key
     // hpref (a gathering-adjacent self scalar, sibling of gprof/tfocus/tslot),
-    // for 92.
-    expect(ALL_DELTA_KEYS).toHaveLength(92);
-    expect(new Set(ALL_DELTA_KEYS).size).toBe(92);
+    // for 92. Intentional Gathering PR4 adds the owner-only tracked-goal
+    // full-view key ggoal (its own leaf, gathering_goal_wire.ts, not folded
+    // into the gprof/tfocus/tslot/hpref cluster), for 93.
+    expect(ALL_DELTA_KEYS).toHaveLength(93);
+    expect(new Set(ALL_DELTA_KEYS).size).toBe(93);
     expect([...ALL_DELTA_KEYS]).toEqual([...ALL_DELTA_KEYS].sort());
   });
 
@@ -6482,8 +6486,10 @@ describe('delta-key contract pins (anti-drift)', () => {
     // Masterwrought branch) then makes 90, and the release's off-hand bar key
     // offhandWeapon makes 91 on the merged tree. Intentional Gathering PR3's
     // hpref (emitted from the new gathering_self_wire.ts sibling, still
-    // inside the recursive server-tree scrape) makes 92.
-    expect(scraped.size).toBe(92);
+    // inside the recursive server-tree scrape) makes 92. Intentional
+    // Gathering PR4's ggoal (emitted from the new gathering_goal_wire.ts
+    // sibling, likewise inside the recursive scrape) makes 93.
+    expect(scraped.size).toBe(93);
     expect([...scraped].sort()).toEqual([...ALL_DELTA_KEYS].sort());
   });
 
