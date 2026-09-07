@@ -16,8 +16,8 @@
     "Grave Eruption hash-placed warning + impact damage + Grave Flame residue tick",
     "class:warrior"
   ],
-  "draws": 11442,
-  "drawDigest": "0fd971f5",
+  "draws": 11447,
+  "drawDigest": "b232a1a7",
   "frames": [
     {
       "tick": 0,
@@ -16825,11 +16825,11 @@
       "tick": 1248,
       "time": 62.4,
       "nextId": 1014,
-      "state": "20d85b7c",
+      "state": "0c951577",
       "events": "8de4824c",
       "rng": {
-        "draws": 10914,
-        "digest": "6f9c93be"
+        "draws": 10916,
+        "digest": "74af4bf2"
       },
       "label": "death",
       "players": [
@@ -17807,6 +17807,10 @@
               {
                 "count": 1,
                 "itemId": "stormcallers_spaulders"
+              },
+              {
+                "count": 1,
+                "itemId": "stormhymn_chain_grips"
               }
             ]
           },
@@ -18088,77 +18092,77 @@
       "tick": 1250,
       "time": 62.5,
       "nextId": 1014,
-      "state": "2df6ecc2",
+      "state": "58ba3dc9",
       "events": "741638a5",
       "rng": {
-        "draws": 10933,
-        "digest": "6d678b38"
+        "draws": 10935,
+        "digest": "3d3306df"
       }
     },
     {
       "tick": 1260,
       "time": 63,
       "nextId": 1014,
-      "state": "a1f2e6f1",
+      "state": "113f789c",
       "events": "741638a5",
       "rng": {
-        "draws": 11018,
-        "digest": "ce3281f2"
+        "draws": 11019,
+        "digest": "bf864601"
       }
     },
     {
       "tick": 1270,
       "time": 63.5,
       "nextId": 1014,
-      "state": "be1a8254",
+      "state": "2af46343",
       "events": "741638a5",
       "rng": {
-        "draws": 11100,
-        "digest": "ff4bca7a"
+        "draws": 11099,
+        "digest": "c73052e3"
       }
     },
     {
       "tick": 1280,
       "time": 64,
       "nextId": 1014,
-      "state": "566dce05",
+      "state": "8a75151c",
       "events": "741638a5",
       "rng": {
-        "draws": 11201,
-        "digest": "a706c3d9"
+        "draws": 11203,
+        "digest": "7809584f"
       }
     },
     {
       "tick": 1290,
       "time": 64.5,
       "nextId": 1014,
-      "state": "6d67ba66",
+      "state": "2ab561b9",
       "events": "741638a5",
       "rng": {
-        "draws": 11290,
-        "digest": "f30400fa"
+        "draws": 11296,
+        "digest": "4ee573a6"
       }
     },
     {
       "tick": 1300,
       "time": 65,
       "nextId": 1014,
-      "state": "07845981",
+      "state": "54c00470",
       "events": "741638a5",
       "rng": {
-        "draws": 11370,
-        "digest": "50edd4aa"
+        "draws": 11377,
+        "digest": "4a2e9393"
       }
     },
     {
       "tick": 1308,
       "time": 65.4,
       "nextId": 1014,
-      "state": "27ceb022",
+      "state": "c326c8a9",
       "events": "84a8fbfa",
       "rng": {
-        "draws": 11442,
-        "digest": "0fd971f5"
+        "draws": 11447,
+        "digest": "b232a1a7"
       },
       "label": "final",
       "players": [
@@ -19136,6 +19140,10 @@
               {
                 "count": 1,
                 "itemId": "stormcallers_spaulders"
+              },
+              {
+                "count": 1,
+                "itemId": "stormhymn_chain_grips"
               }
             ]
           },
