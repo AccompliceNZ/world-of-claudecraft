@@ -5051,16 +5051,17 @@
   .cd-input {
     width: 100%;
     box-sizing: border-box;
-    background: #14100a;
-    color: #e8dcb0;
-    border: 1px solid #5a4a22;
-    border-radius: 4px;
+    background: var(--color-bg-input);
+    color: var(--color-text-light);
+    border: 1px solid var(--color-border-showcase);
+    border-radius: var(--radius-sm);
     padding: 7px 8px;
     font-size: 12px;
     font-family: inherit;
   }
-  .cd-input:focus {
-    outline: none;
+  .cd-input:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
     border-color: var(--gold);
   }
   textarea.cd-input {
@@ -5112,7 +5113,7 @@
   }
   .hud-select:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: -2px;
+    outline-offset: 2px;
     border-color: var(--color-border-focus);
   }
   .hud-select:disabled {
@@ -5162,10 +5163,10 @@
     min-width: 100%;
     max-height: 184px;
     overflow-y: auto;
-    background: #1a140a;
+    background: var(--panel-bg-strong);
     border: 1px solid var(--gold);
-    border-radius: 5px;
-    box-shadow: 0 6px 18px #000a;
+    border-radius: var(--radius-card);
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--color-keyline) 67%, transparent);
     z-index: 80;
     padding: 3px;
   }
@@ -5175,21 +5176,21 @@
   .ui-dd-item {
     padding: 5px 8px;
     font-size: 12px;
-    color: #e8dcb0;
-    border-radius: 3px;
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-xs);
     cursor: var(--cursor-point);
     white-space: nowrap;
   }
   .ui-dd-item:hover {
-    background: #ffffff12;
+    background: color-mix(in srgb, var(--color-glint) 7%, transparent);
   }
   .ui-dd-item.sel {
     color: var(--gold);
   }
   .ui-dd-item:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: -2px;
-    background: #ffffff1f;
+    outline-offset: 2px;
+    background: color-mix(in srgb, var(--color-glint) 12%, transparent);
     color: var(--gold);
     box-shadow: inset 0 0 0 1px var(--color-border-focus);
   }
@@ -5247,8 +5248,8 @@
     gap: 8px;
   }
   #confirm-dialog .cd-ok {
-    background: linear-gradient(#8a6a26, #5a4413 55%, #473409);
-    color: #ffe6a8;
+    background: var(--btn-fill-gold);
+    color: var(--color-accent);
   }
   /* Coarse-pointer touch floor for the whole confirm family (the R40 dialog
      made this modal a routine mobile surface; the prof-effect-btn idiom). */
@@ -5363,7 +5364,7 @@
     align-items: center;
     justify-content: center;
     padding: 24px;
-    background: rgba(0, 0, 0, 0.72);
+    background: var(--color-options-scrim);
   }
   .native-update-dialog {
     position: fixed;
@@ -5392,8 +5393,8 @@
     margin-top: 14px;
   }
   .native-update-cta {
-    background: linear-gradient(#8a6a26, #5a4413 55%, #473409);
-    color: #ffe6a8;
+    background: var(--btn-fill-gold);
+    color: var(--color-accent);
   }
 
   /* OTA update gate (src/ui/ota_update_overlay.ts): the native-update dialog
@@ -5401,15 +5402,15 @@
   .ota-update-progress {
     margin-top: 12px;
     height: 12px;
-    border: 1px solid #5a4413;
-    border-radius: 3px;
-    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius-xs);
+    background: color-mix(in srgb, var(--color-keyline) 55%, transparent);
     overflow: hidden;
   }
   .ota-update-fill {
     height: 100%;
     width: 0%;
-    background: linear-gradient(#8a6a26, #5a4413 55%, #473409);
+    background: var(--btn-fill-gold);
   }
 
   /* ---------- first-run camera mode prompt ---------- */
@@ -5421,7 +5422,7 @@
     align-items: center;
     justify-content: center;
     padding: 24px;
-    background: rgba(0, 0, 0, 0.72);
+    background: var(--color-options-scrim);
   }
   .camera-prompt-dialog {
     width: min(440px, calc(100vw - 32px));
@@ -5468,7 +5469,7 @@
   }
   .camera-prompt-option:focus-within {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
+    outline-offset: 2px;
   }
   .camera-prompt-radio {
     flex: none;
@@ -5507,14 +5508,17 @@
     margin-top: 14px;
   }
   .camera-prompt-confirm {
-    background: linear-gradient(#8a6a26, #5a4413 55%, #473409);
-    color: #ffe6a8;
+    background: var(--btn-fill-gold);
+    color: var(--color-accent);
     min-width: 120px;
   }
   @media (prefers-reduced-motion: reduce) {
     .camera-prompt-dialog {
       animation: none;
     }
+  }
+  body.reduce-motion .camera-prompt-dialog {
+    animation: none;
   }
 
   /* player card: char-window entry button + share modal */
@@ -13864,20 +13868,112 @@
     touch-action: none;
   }
   /* ---------- options / game menu (Esc) ---------- */
+  #ui::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 39;
+    display: none;
+    pointer-events: none;
+    background: var(--color-options-scrim);
+  }
+  #ui:has(> #options-menu[style*="display: block"])::before,
+  #ui:has(> #options-menu[style*="display: flex"])::before {
+    display: block;
+  }
   #options-menu {
-    width: 420px;
+    width: 320px;
     z-index: 40;
+    overflow-y: auto;
+  }
+  #options-menu:has(> .audio-options) {
+    width: min(520px, calc(100vw - 32px));
+  }
+  #options-menu:has(> .bug-report-options) {
+    width: min(420px, calc(100vw - 32px));
+  }
+  #options-menu:has(> #interface-tabpanel),
+  #options-menu:has(> .controller-options) {
+    width: min(760px, calc(100vw - 32px));
+  }
+  #options-menu :is(button.ui-btn, button.ui-keycap, button.ui-seg-tab),
+  #report-window button.ui-btn {
+    all: revert-layer;
+    box-sizing: border-box;
+  }
+  #options-menu :is(.ui-btn, .ui-keycap, .ui-seg-tab):focus-visible,
+  #options-menu .ui-x-btn:focus-visible,
+  #report-window .ui-btn:focus-visible {
+    outline: 2px solid var(--color-border-focus) !important;
+    outline-offset: 2px !important;
+    box-shadow: none !important;
+  }
+  #options-menu .ui-x-btn {
+    outline: none;
+  }
+  #options-menu .ui-input:focus-visible,
+  #report-window .ui-input:focus-visible,
+  .theme-color-row input[type="color"]:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+  #options-menu > .ui-win-head {
+    min-height: var(--win-head-h);
+    padding-block: 0;
+  }
+  #options-menu .set-row.ui-stat-row {
+    height: auto;
+    min-height: var(--stat-row-h);
+  }
+  #options-menu .ui-dd-btn,
+  #report-window .ui-dd-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    width: 100%;
+    min-width: 112px;
   }
   .opt-list {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 6px;
     align-items: stretch;
-    padding: 4px 0;
+    padding: 2px 0;
   }
   .opt-btn {
+    position: relative;
+    width: 100%;
     margin: 0;
     text-align: center;
+  }
+  .opt-btn-hostile {
+    color: var(--color-hostile);
+    border-color: var(--color-hostile);
+  }
+  .opt-btn.ui-btn--lg {
+    margin-top: 6px;
+  }
+  .opt-btn-chevron,
+  .opt-btn-status {
+    position: absolute;
+    inset-inline-end: 10px;
+  }
+  .opt-btn-chevron {
+    width: 12px;
+    height: 12px;
+  }
+  .opt-btn-chevron svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .opt-btn-status {
+    font-family: var(--font-ui);
+    font-size: 10px;
+    color: var(--color-text-success);
+    letter-spacing: 0;
+    text-shadow: none;
   }
   /* Running build, secondary text at the foot of the game menu (issue #1541).
      Unobtrusive: muted, small, centered, and not competing with the buttons. */
@@ -13902,25 +13998,11 @@
     flex: 1;
     padding: 7px 4px;
     font-size: 13px;
-    font-family: var(--title-font);
-    color: var(--color-text-muted);
-    cursor: var(--cursor-point);
-    background: #1a1410;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 4px;
     text-align: center;
-  }
-  .opt-tab:hover {
-    color: var(--gold);
   }
   .opt-tab:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
-  }
-  .opt-tab.on {
-    color: var(--gold);
-    border-color: #6f5a2a;
-    background: linear-gradient(#2a2436, #161220);
   }
   .kb-rows {
     display: flex;
@@ -13969,14 +14051,14 @@
     align-items: center;
     gap: 6px;
     padding: 5px 8px;
-    border-radius: 4px;
-    border-bottom: 1px solid #ffffff10;
+    border-radius: var(--radius-sm);
+    border-bottom: 1px solid color-mix(in srgb, var(--color-glint) 7%, transparent);
   }
   .kb-row:last-child {
     border-bottom: 0;
   }
   .kb-row:nth-of-type(odd) {
-    background: #ffffff0a;
+    background: color-mix(in srgb, var(--color-glint) 4%, transparent);
   }
   .kb-name {
     font-size: 12.5px;
@@ -13994,36 +14076,46 @@
   }
   .kb-inline-key {
     flex: 0 0 auto;
-    color: #ffd100;
+    color: var(--gold);
     font-family: var(--title-font);
     font-size: 11px;
     opacity: 0.9;
   }
   .kb-key {
+    width: 64px;
+    min-width: 64px;
+    height: 24px;
     margin: 0;
     text-align: center;
-    padding: 3px 6px;
     font-size: 12px;
-    background: linear-gradient(#2c2c3a, #15151f);
-    color: #ffd9a0;
-    border-color: #4a3d1d;
   }
   .kb-key.capturing {
     border-color: var(--gold);
-    color: #fff;
-    box-shadow: 0 0 8px #ffd100aa;
+    color: var(--color-white);
+    box-shadow: 0 0 calc(8px * var(--fx-shadow, 1)) var(--color-primary-glow);
+  }
+  .kb-key.is-conflict {
+    border-color: var(--color-hostile);
+    color: var(--color-hostile);
+  }
+  .kb-key.is-unbound {
+    color: var(--color-text-faint);
+    border-style: dashed;
   }
   .kb-note {
     font-size: 11px;
-    color: #b9ac82;
+    color: var(--color-text-muted);
     margin: 2px 0 6px;
     min-height: 14px;
     line-height: 1.4;
   }
   .kb-toggle-row {
     margin-bottom: 6px;
-    background: #ffffff0a;
-    border-radius: 4px;
+  }
+  .kb-toggle-row.ui-card {
+    background: revert-layer;
+    border: revert-layer;
+    border-radius: revert-layer;
   }
   .kb-toggle-row .kb-toggle {
     grid-column: 2;
@@ -14039,14 +14131,29 @@
     justify-self: start;
     box-sizing: border-box;
   }
-  .kb-toggle-row .kb-mouse-toggle {
-    width: var(--kb-btn-w, 78px);
-    min-width: var(--kb-btn-w, 78px);
-    max-width: var(--kb-btn-w, 78px);
+  .kb-options-rail {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px;
+    margin-bottom: 8px;
   }
-  .kb-toggle.off {
-    filter: grayscale(0.6) brightness(0.8);
-    color: #b9ac82;
+  .kb-options-rail .kb-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 58px;
+    margin: 0;
+    border-bottom: 1px solid var(--color-border-showcase);
+  }
+  .kb-options-rail .kb-note {
+    margin: 0;
+    padding: 4px 8px;
+  }
+  .kb-mouse-choice {
+    min-width: 138px;
+  }
+  .kb-mouse-toggle {
+    min-width: 64px;
+    height: 26px;
+    padding-inline: 6px;
   }
   .set-rows {
     display: flex;
@@ -14080,9 +14187,6 @@
     margin: 0;
     padding: 3px 14px;
   }
-  .set-toggle.off {
-    filter: grayscale(0.6) brightness(0.8);
-  }
   .set-lang-select {
     grid-column: 2 / 4;
     width: 100%;
@@ -14100,14 +14204,9 @@
     padding: 3px 9px;
     font-size: 12px;
   }
-  .set-choice-btn.sel {
-    outline: 1px solid var(--gold);
-    box-shadow: inset 0 0 8px #ffd10033;
-    color: #fff4c7;
-  }
   .set-note {
     font-size: 11px;
-    color: #b9ac82;
+    color: var(--color-text-muted);
     margin: 6px 0 2px;
     line-height: 1.4;
   }
@@ -14145,10 +14244,18 @@
     padding: 6px 8px;
     font-family: monospace;
     font-size: 12px;
-    color: #e8dcb8;
-    background: #0c0a07;
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    height: auto;
+  }
+  .options-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-border-showcase);
+  }
+  .options-footer .ui-btn {
+    min-width: 128px;
   }
   /* The graphics panel's one inline action row: Back, the stretching status,
      then Reset (a quiet text button) beside the primary Apply at the end. */
@@ -14169,10 +14276,6 @@
   /* The text-button variant: keeps .btn's box, focus ring and target size,
      sheds the chrome so it reads as a secondary action beside Apply. */
   .gfx-btn-text {
-    background: none;
-    border-color: transparent;
-    box-shadow: none;
-    color: var(--color-text-muted);
     text-decoration: underline;
     text-underline-offset: 3px;
   }
@@ -14205,8 +14308,8 @@
     margin-top: 8px;
     padding: 6px 10px;
     border: 1px solid var(--border);
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.25);
+    border-radius: var(--radius-sm);
+    background: color-mix(in srgb, var(--color-keyline) 25%, transparent);
   }
   .restart-strip .btn {
     margin: 0;
@@ -14234,11 +14337,80 @@
   }
   .set-seg-btn.active {
     opacity: 1;
-    box-shadow: 0 0 0 1px var(--gold) inset;
-    color: var(--color-accent);
   }
   .set-row.disabled {
     opacity: 0.45;
+  }
+  .controller-options {
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    align-items: start;
+    gap: 14px;
+  }
+  .controller-pane {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    gap: 6px;
+  }
+  .controller-pane-layout {
+    padding: 2px 12px 12px;
+    border-inline-start: 1px solid var(--color-border-showcase);
+  }
+  .controller-device-card.ui-card,
+  .gfx-card.ui-card,
+  .theme-palette-card.ui-card {
+    background: revert-layer;
+    border: revert-layer;
+    border-radius: revert-layer;
+  }
+  .controller-device-card {
+    padding: 4px 12px 12px;
+  }
+  .controller-device-status {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 5px 8px;
+    color: var(--color-text-secondary);
+  }
+  .controller-device-status::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--color-hostile);
+    box-shadow: 0 0 calc(6px * var(--fx-shadow, 1)) currentColor;
+  }
+  .controller-device-status[data-connected="true"]::before {
+    background: var(--color-text-success);
+  }
+  .controller-device-state {
+    font-family: var(--font-display);
+    font-size: 12px;
+    color: var(--color-accent);
+  }
+  .controller-device-name {
+    grid-column: 2;
+    min-width: 0;
+    overflow: hidden;
+    color: var(--color-text-muted);
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .controller-pane .ui-dd {
+    grid-column: 2 / 4;
+    width: 100%;
+  }
+  .controller-pane .ui-dd-menu {
+    bottom: auto;
+    top: calc(100% + 4px);
+  }
+  .controller-ownership-note {
+    padding: 7px 8px;
+    border-inline-start: 2px solid var(--gold-dim);
+    background: color-mix(in srgb, var(--color-keyline) 25%, transparent);
   }
   /* Graphics panel: wide, categorized two-column card form. The cards ride
      the shared perf-card family (settings_controls.ts settingsCard() with the
@@ -14333,15 +14505,19 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
     gap: 6px 12px;
-    padding: 4px 6px 8px;
+    padding: 0 12px 12px;
   }
   .theme-color-row {
     display: flex;
     align-items: center;
     gap: 8px;
+    min-height: 38px;
+    padding: 5px 8px;
     font-size: 12px;
-    color: var(--color-text-light);
     cursor: var(--cursor-point);
+  }
+  .theme-palette-card {
+    margin-top: 8px;
   }
   .theme-color-row input[type="color"] {
     width: 26px;
