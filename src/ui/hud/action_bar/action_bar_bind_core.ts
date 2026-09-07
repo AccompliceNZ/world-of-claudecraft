@@ -1,9 +1,9 @@
 // On-bar action-bar key-binding mode (issue #1238): pure phase/state helpers for
 // the click-a-slot-then-press-a-key rebind flow. DOM-free (no button refs, no key
-// capture) so the state transitions are Vitest-testable directly; the thin
-// controller in hud.ts owns the banner DOM, the action-bar click intercept, the
-// Reset confirm dialog, and the shared key-capture seam (Input.captureNextKey via
-// OptionsHooks.captureKey) every other rebind flow already uses.
+// capture) so the state transitions are Vitest-testable directly. The controller
+// (action_bar_bind_controller.ts) owns the slot clicks, the key capture and the
+// confirm dialogs, the banner DOM lives in action_bar_bind_banner.ts, and hud.ts
+// keeps only the action-bar click intercept.
 
 /**
  * selectedSlot: the bar slot index awaiting a keypress, or null between
@@ -11,7 +11,10 @@
  * null after a cancelled/rejected capture), shown as transient feedback until
  * the next slot is selected.
  */
-import type { TranslationKey } from '../../i18n';
+import {
+  type KeybindConflictPrompt,
+  keybindConflictPrompt,
+} from '../../keybind_conflict_prompt_core';
 
 export interface ActionBarBindState {
   selectedSlot: number | null;
@@ -45,15 +48,9 @@ export function actionBarBindStatus(state: ActionBarBindState): ActionBarBindSta
   return 'idle';
 }
 
-/** The are-you-sure prompt the on-bar mode raises before a capture commits,
- *  as label keys plus their {token} values (the controller localizes and
- *  shows it), or null when the bind can commit silently. */
-export interface ActionBarBindPrompt {
-  titleKey: TranslationKey;
-  bodyKey: TranslationKey;
-  acceptKey: TranslationKey;
-  params: Record<string, string>;
-}
+/** The are-you-sure prompt the on-bar mode raises before a capture commits:
+ *  the shared keybind conflict prompt, with the slot as the gaining action. */
+export type ActionBarBindPrompt = KeybindConflictPrompt;
 
 /**
  * Decide whether binding `key` to the selected slot needs a warning first.
@@ -67,12 +64,5 @@ export function actionBarBindPrompt(input: {
   other: string | null;
   slot: string;
 }): ActionBarBindPrompt | null {
-  const { key, other, slot } = input;
-  if (other === null) return null;
-  return {
-    titleKey: 'hudChrome.actionBar.conflictTitle',
-    bodyKey: 'hudChrome.actionBar.conflictBody',
-    acceptKey: 'hudChrome.actionBar.conflictAccept',
-    params: { key, other, action: slot },
-  };
+  return keybindConflictPrompt({ key: input.key, other: input.other, action: input.slot });
 }

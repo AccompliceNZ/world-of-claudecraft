@@ -6,6 +6,9 @@ import { describe, expect, it } from 'vitest';
 import {
   buildTransferCode,
   parseTransferCode,
+  TRANSFER_CODE_MAX_CHARS,
+  TRANSFER_MAX_ENTRIES,
+  TRANSFER_VALUE_MAX_CHARS,
   transferKeyAllowed,
 } from '../src/ui/settings_transfer_core';
 
@@ -123,6 +126,48 @@ describe('settings_transfer_core', () => {
   it('the full kind carries every preference family and still no identity, purchase or cache key', () => {
     for (const key of Object.keys(FULL_ENTRIES))
       expect(transferKeyAllowed('full', key), key).toBe(true);
+    // The exact FULL_KEYS literals, pinned here so dropping one from the
+    // allowlist (silently orphaning that preference on import) fails.
+    for (const key of [
+      'woc_gamepad',
+      'woc_gamepad_xhb',
+      'woc_gamepad_xhb_claimed',
+      'woc_player_frame_pos_hidden',
+      'woc_target_frame_pos_hidden',
+      'woc_party_frame_pos_hidden',
+      'woc_warlock_doom_frame_pos_hidden',
+      'woc_layout_reset_epoch',
+      'chatTimestamps',
+      'chatClock',
+      'clock24h',
+      'minimapZoom',
+      'woc_bag_filter',
+      'woc_bank_filter',
+      'woc_crafting_tab',
+      'woc_guild_hide_offline',
+      'woc_party_collapsed',
+      'woc_ignored_chat_names',
+      'woc_haptics_on',
+      'ev_music_on',
+      'woc_homepage_music_muted',
+      'locale',
+      'woc_native_auto_locale',
+      'paladinDevotionAnchor',
+      'procOverlayAnchor',
+      'woc_perf_overlay',
+      'wocc.charSort',
+      'woc.tutorial.v1',
+      'woc.ferrybellhint.v1',
+      'woc_unsupported_browser_dismissed',
+      'woc_gpu_notice_dismissed',
+      'woc_gpu_notice_hybrid_dismissed',
+      'woc_perf_nudge_dismissed',
+      'woc_keyboard_layout',
+      'woc_keyboard_legends',
+    ]) {
+      expect(transferKeyAllowed('full', key), key).toBe(true);
+      expect(transferKeyAllowed('settings', key), key).toBe(false);
+    }
     // The families the narrower kinds never carried: per-character keybinds
     // and controller binds are the ones players most often lose between devices.
     for (const key of ['woc_keybinds:char:12', 'woc_gamepad', 'woc_gamepad_xhb:char:12']) {
@@ -177,9 +222,11 @@ describe('settings_transfer_core', () => {
       ok: false,
       reason: 'kind',
     });
-    // An unknown kind is a mismatch, not a crash.
-    const alien = JSON.stringify({ woc: 'woc-transfer', v: 1, kind: 'alien', data: FRAME_ENTRIES });
-    expect(parseTransferCode('frames', alien)).toEqual({ ok: false, reason: 'kind' });
+    // An unknown kind is a mismatch, not a crash, and a prototype name is no kind.
+    for (const kind of ['alien', 'constructor', 'toString', '__proto__']) {
+      const alien = JSON.stringify({ woc: 'woc-transfer', v: 1, kind, data: FRAME_ENTRIES });
+      expect(parseTransferCode('frames', alien), kind).toEqual({ ok: false, reason: 'kind' });
+    }
   });
 
   it('rejects garbage as format, the reverse kind as kind, and a hollow code as empty', () => {
@@ -201,6 +248,34 @@ describe('settings_transfer_core', () => {
       data: { nope: '1' },
     });
     expect(parseTransferCode('frames', hollow)).toEqual({ ok: false, reason: 'empty' });
+  });
+
+  it('refuses a code that could fill the storage quota', () => {
+    // One oversized value, too many prefixed keys, or an oversized paste are
+    // all malformed: a real export is tens of kilobytes at most.
+    const fat = JSON.stringify({
+      woc: 'woc-transfer',
+      v: 1,
+      kind: 'frames',
+      data: { woc_chat_geometry: 'x'.repeat(TRANSFER_VALUE_MAX_CHARS + 1) },
+    });
+    expect(parseTransferCode('frames', fat)).toEqual({ ok: false, reason: 'format' });
+    const many: Record<string, string> = {};
+    for (let i = 0; i <= TRANSFER_MAX_ENTRIES; i++) many[`woc_keybinds:char:${i}`] = '{}';
+    const crowded = JSON.stringify({ woc: 'woc-transfer', v: 1, kind: 'full', data: many });
+    expect(parseTransferCode('full', crowded)).toEqual({ ok: false, reason: 'format' });
+    expect(parseTransferCode('frames', ' '.repeat(TRANSFER_CODE_MAX_CHARS + 1))).toEqual({
+      ok: false,
+      reason: 'format',
+    });
+    // A value right at the cap still imports.
+    const ok = JSON.stringify({
+      woc: 'woc-transfer',
+      v: 1,
+      kind: 'frames',
+      data: { woc_chat_geometry: 'x'.repeat(TRANSFER_VALUE_MAX_CHARS) },
+    });
+    expect(parseTransferCode('frames', ok).ok).toBe(true);
   });
 
   it('drops non-string values rather than writing objects into storage', () => {

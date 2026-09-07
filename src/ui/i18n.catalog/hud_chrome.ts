@@ -4137,9 +4137,9 @@ export const hudChromeStrings = {
     // Status lines while rebinding through a key: {action} is the binding's
     // action name, {key} the key label just pressed or clicked.
     pressKey: 'Press a key for {action}. Esc cancels.',
-    unbind: 'Unbind',
-    unbound_: 'Unbound {action}.',
     boundTo: 'Bound {action} to {key}.',
+    // The key refused by Keybinds.bind (Escape, the camera mouse buttons).
+    notBindable: 'That key cannot be bound.',
     assignHint: 'Choose an action to bind to {key}.',
     assignPlaceholder: 'Assign an action to {key}',
     layerGroup: 'Modifier layer',
@@ -4168,7 +4168,10 @@ export const hudChromeStrings = {
     // separator-joined list of "combo: action" pairs (or the unbound row).
     keyDetail: '{key}: {bindings}',
     separator: ', ',
-    unbound: 'Not bound',
+    // One binding in a list: the (modified) key and the action it drives.
+    bindingLine: '{key}: {action}',
+    // An entry of the assign picker: the action's category and name.
+    assignOption: '{category}: {action}',
     // Legend entry for the dot on a key that also carries bindings in other layers.
     otherLayers: 'Also bound with a modifier',
   },

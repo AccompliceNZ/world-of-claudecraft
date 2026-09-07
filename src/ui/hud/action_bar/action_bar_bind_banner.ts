@@ -1,15 +1,15 @@
 // The on-bar action-bar key-binding mode's banner (issue #1238): the hint, the
 // status line and the Reset / Done buttons that sit under the bar while the
 // mode is active. Owns only that DOM; the mode's state machine is the pure
-// action_bar_bind_core.ts and the controller in hud.ts owns the slot clicks,
-// the key capture and the confirm dialogs. Registered in
+// action_bar_bind_core.ts and action_bar_bind_controller.ts owns the slot
+// clicks, the key capture and the confirm dialogs. Registered in
 // tests/architecture.test.ts UI_DOM_MODULES.
 
 import { audio } from '../../../game/audio';
 import { t } from '../../i18n';
 import { type ActionBarBindState, actionBarBindStatus } from './action_bar_bind_core';
 
-export const ACTION_BAR_BIND_BANNER_ID = 'actionbar-bind-banner';
+const ACTION_BAR_BIND_BANNER_ID = 'actionbar-bind-banner';
 
 /** Build the banner and append it to `parent`. Returns the banner root. */
 export function mountActionBarBindBanner(

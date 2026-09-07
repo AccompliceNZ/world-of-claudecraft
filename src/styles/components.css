@@ -13944,6 +13944,16 @@
   .kbm {
     margin: 4px 0 10px;
     --kbm-u: 34px;
+    /* Cap colours and the five category tints (shared by the caps and the
+       legend swatches); a new category adds one token here and one rule pair. */
+    --kbm-key-bg: #1a150e;
+    --kbm-key-fg: #b9ac82;
+    --kbm-key-fg-active: #f4ead0;
+    --kbm-cat-movement: #2f5a34;
+    --kbm-cat-targeting: #6a3a2a;
+    --kbm-cat-interface: #2d4a66;
+    --kbm-cat-pet: #5a4a7a;
+    --kbm-cat-action-bar: #7a5a1e;
   }
   .kbm-head {
     display: flex;
@@ -13995,9 +14005,6 @@
     line-height: 1.4;
     color: #b9ac82;
   }
-  .kbm-hidden[hidden] {
-    display: none;
-  }
   .kbm-layer {
     font-size: 11px;
     padding: 2px 8px;
@@ -14034,23 +14041,32 @@
     overflow: hidden;
     border: 1px solid var(--border);
     border-radius: 4px;
-    background: #1a150e;
-    color: #b9ac82;
+    background: var(--kbm-key-bg);
+    color: var(--kbm-key-fg);
     font: inherit;
     font-size: 10px;
     line-height: 1.1;
     cursor: var(--cursor-point);
   }
-  .kbm-key:hover,
-  .kbm-key:focus-visible {
+  .kbm-key:hover {
     border-color: var(--gold);
   }
+  /* The same steady token ring every .btn carries (the caps are not .btn). */
+  .kbm-key:focus-visible {
+    outline: 3px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
   .kbm-key.in-use {
-    color: #f4ead0;
+    color: var(--kbm-key-fg-active);
   }
   .kbm-key.capturing {
     border-color: var(--gold);
     box-shadow: 0 0 0 1px var(--gold);
+  }
+  /* A cap that can never take a binding (Escape, the modifier keys) reads as
+     a plain key, not a control. */
+  .kbm-key.kbm-fixed {
+    cursor: default;
   }
   .kbm-spacer {
     visibility: hidden;
@@ -14080,23 +14096,36 @@
   }
   .kbm-cat-movement.in-use,
   .kbm-swatch.kbm-cat-movement {
-    background: #2f5a34;
+    background: var(--kbm-cat-movement);
   }
   .kbm-cat-targeting.in-use,
   .kbm-swatch.kbm-cat-targeting {
-    background: #6a3a2a;
+    background: var(--kbm-cat-targeting);
   }
   .kbm-cat-interface.in-use,
   .kbm-swatch.kbm-cat-interface {
-    background: #2d4a66;
+    background: var(--kbm-cat-interface);
   }
   .kbm-cat-pet.in-use,
   .kbm-swatch.kbm-cat-pet {
-    background: #5a4a7a;
+    background: var(--kbm-cat-pet);
   }
   .kbm-cat-action-bar.in-use,
   .kbm-swatch.kbm-cat-action-bar {
-    background: #7a5a1e;
+    background: var(--kbm-cat-action-bar);
+  }
+  /* forced-colors strips the category fills and the layer dot, so an in-use
+     cap and an empty one would read identically (the #tf-name.hostile class of
+     failure): a redundant non-colour cue on the cap and the capturing ring. */
+  @media (forced-colors: active) {
+    .kbm-key.in-use {
+      border-width: 2px;
+      border-color: Highlight;
+      text-decoration: underline;
+    }
+    .kbm-key.capturing {
+      outline: 2px dashed Highlight;
+    }
   }
   .kbm-legend-row {
     display: flex;
@@ -14141,9 +14170,6 @@
     flex-wrap: wrap;
     gap: 6px;
     margin-top: 4px;
-  }
-  .kbm-actions[hidden] {
-    display: none;
   }
   /* The pop-out window (src/ui/keyboard_map_window.ts): the same board in a
      movable panel that can stay up while playing. Desktop only. */

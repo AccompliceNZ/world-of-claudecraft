@@ -62,6 +62,7 @@ describe('actionBarBindPrompt', () => {
       titleKey: 'hudChrome.actionBar.conflictTitle',
       bodyKey: 'hudChrome.actionBar.conflictBody',
       acceptKey: 'hudChrome.actionBar.conflictAccept',
+      cancelKey: 'hudChrome.actionBar.cancel',
       params: { key: 'R', other: 'Toggle Autorun', action: 'Fireball' },
     });
   });

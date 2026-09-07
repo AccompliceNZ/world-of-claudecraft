@@ -3066,9 +3066,8 @@ export const zh_CN: EnTranslations = {
       "hintInteractive": "正在使用的按键按类别着色。点击某个按键可更改其功能；将鼠标悬停或聚焦到按键上可查看其全部绑定。",
       "popOut": "Pop Out",
       "pressKey": "按下一个键以绑定到 {action}。按 Esc 取消。",
-      "unbind": "解除绑定",
-      "unbound_": "已解除 {action} 的绑定。",
       "boundTo": "已将 {action} 绑定到 {key}。",
+      "notBindable": "该键无法绑定。",
       "assignHint": "选择一个动作绑定到 {key}。",
       "assignPlaceholder": "为 {key} 指定一个动作",
       "layerGroup": "修饰键层",
@@ -3087,7 +3086,8 @@ export const zh_CN: EnTranslations = {
       "layerAlt": "Alt",
       "keyDetail": "{key}: {bindings}",
       "separator": ", ",
-      "unbound": "未绑定",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
       "otherLayers": "也与修饰键组合绑定"
     },
     "fullTransfer": {

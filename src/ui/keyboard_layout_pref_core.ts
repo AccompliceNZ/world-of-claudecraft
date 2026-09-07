@@ -4,8 +4,8 @@
 // physically on the board). A tiny DOM-free, deterministic state helper
 // (the guild_hide_offline.ts shape): the localStorage key plus load/save, driven
 // over an injected Storage in Node tests. Registered in
-// tests/architecture.test.ts UI_PURE_CORES; the key rides the full settings
-// export (settings_transfer_core.ts FULL_KEYS).
+// tests/architecture.test.ts UI_PURE_CORES; both keys are listed by literal in
+// the full settings export allowlist (settings_transfer_core.ts FULL_KEYS).
 //
 // A browser cannot tell what physical keyboard is plugged in (key events carry
 // only codes), so the player picks the form factor once and the overview hides

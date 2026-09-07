@@ -536,6 +536,12 @@ function codeLabel(code: string): string {
   return named[code] ?? code;
 }
 
+// The only shape a binding may take: canonical modifier heads over a bare
+// KeyboardEvent.code (or a Mouse<n> pseudo-code). Anything else in a stored or
+// imported blob is skipped: it could never match a keydown, and one sink
+// (the keyboard overview) turns a code into a DOM lookup.
+const COMBO_RE = /^(?:(?:Ctrl|Alt|Shift|Meta)\+)*[A-Za-z0-9]+$/;
+
 // Read a stored bindings blob, returning a plain object map or null. A missing,
 // corrupt (unparseable), or non-object value (including a JSON array) counts as
 // "no profile"; the caller then falls back to the legacy seed or to defaults.
@@ -629,8 +635,13 @@ export class Keybinds {
       const slots: (string | null)[] = [null, null];
       const shared = actionAllowsShared(a.id);
       for (let i = 0; i < SLOTS_PER_ACTION; i++) {
-        const v = entry[i];
-        if (typeof v !== 'string' || isReservedCode(v)) continue;
+        const raw = entry[i];
+        if (typeof raw !== 'string' || !COMBO_RE.test(raw)) continue;
+        // Held (movement) actions are stored bare, as bind() stores them; a
+        // modifier on one (only a hand-edited import can carry it) is dropped
+        // so the poll and the eviction sweep keep matching.
+        const v = a.kind === 'held' ? comboCode(raw) : raw;
+        if (isReservedCode(v)) continue;
         // Shared actions keep their code even if another action already claimed
         // it, and never claim it themselves, so the overlap survives a round-trip.
         if (!shared && claimed.has(v)) continue;

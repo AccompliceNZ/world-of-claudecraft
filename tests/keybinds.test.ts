@@ -416,6 +416,17 @@ describe('snapshot / importBindings (hotkey setup export + import)', () => {
     kb.importBindings({ slot5: ['KeyW', null] });
     expect(kb.actionForCode('KeyW')).toBe('slot5');
     expect(kb.codeAt('forward', 0)).toBe(null);
+    // A held action stores the bare key, as bind() does, so a hand-edited
+    // modifier combo on one is dropped and still evicts the bare key elsewhere.
+    kb.importBindings({ forward: ['Shift+KeyQ', null] });
+    expect(kb.codeAt('forward', 0)).toBe('KeyQ');
+    expect(kb.codeAt('strafeLeft', 0)).toBe(null);
+    // A string that is not a combo (no keydown could ever produce it) is skipped,
+    // so a crafted code cannot park garbage in a slot or reach a DOM lookup.
+    kb.importBindings({ slot3: ['Digit1"]', 'shift+KeyA'], slot4: ['Ctrl+Shift+KeyA', null] });
+    expect(kb.codeAt('slot3', 0)).toBe(null);
+    expect(kb.codeAt('slot3', 1)).toBe(null);
+    expect(kb.codeAt('slot4', 0)).toBe('Ctrl+Shift+KeyA');
   });
 
   it('a snapshot re-imported elsewhere reproduces the setup exactly', () => {
@@ -924,13 +935,13 @@ describe('mouse buttons as bindable keys', () => {
 // one asserted on codes rather than labels. Scanned from source so a rename of the
 // map is caught too (tests/keybind_action_names.test.ts checks the export itself).
 describe('every bind action has a localized label key', () => {
-  const optionsWindowSrc = readFileSync(
+  const actionNamesSrc = readFileSync(
     new URL('../src/ui/keybind_action_names.ts', import.meta.url),
     'utf8',
   );
-  const mapBody = optionsWindowSrc.slice(
-    optionsWindowSrc.indexOf('const BIND_ACTION_LABEL_KEYS'),
-    optionsWindowSrc.indexOf('};', optionsWindowSrc.indexOf('const BIND_ACTION_LABEL_KEYS')),
+  const mapBody = actionNamesSrc.slice(
+    actionNamesSrc.indexOf('const BIND_ACTION_LABEL_KEYS'),
+    actionNamesSrc.indexOf('};', actionNamesSrc.indexOf('const BIND_ACTION_LABEL_KEYS')),
   );
 
   it('reads a non-empty map (the scan would pass vacuously on a rename)', () => {
@@ -938,7 +949,7 @@ describe('every bind action has a localized label key', () => {
     expect(mapBody.split('\n').filter((l) => /^\s+\w+:\s+'/.test(l)).length).toBeGreaterThan(30);
   });
 
-  // Action-bar slots resolve through their own numeric branch in actionDisplayName,
+  // Action-bar slots resolve through their own numeric branch in bindActionDisplayName,
   // never the map, so they are the one exempt family.
   const mapped = BIND_ACTIONS.filter((a) => !a.id.startsWith('slot'));
 

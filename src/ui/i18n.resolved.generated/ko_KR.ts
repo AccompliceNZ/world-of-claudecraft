@@ -3066,9 +3066,8 @@ export const ko_KR: EnTranslations = {
       "hintInteractive": "사용 중인 키는 범주별로 색이 칠해집니다. 키를 클릭하면 기능을 바꿀 수 있고, 마우스를 올리거나 포커스하면 그 키의 모든 지정을 볼 수 있습니다.",
       "popOut": "Pop Out",
       "pressKey": "{action}에 지정할 키를 누르세요. Esc 키로 취소합니다.",
-      "unbind": "지정 해제",
-      "unbound_": "{action}의 지정을 해제했습니다.",
       "boundTo": "{action}을(를) {key} 키에 지정했습니다.",
+      "notBindable": "그 키는 지정할 수 없습니다.",
       "assignHint": "{key} 키에 지정할 행동을 선택하세요.",
       "assignPlaceholder": "{key} 키에 행동 지정",
       "layerGroup": "보조키 레이어",
@@ -3087,7 +3086,8 @@ export const ko_KR: EnTranslations = {
       "layerAlt": "Alt",
       "keyDetail": "{key}: {bindings}",
       "separator": ", ",
-      "unbound": "지정되지 않음",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
       "otherLayers": "보조키 조합으로도 지정됨"
     },
     "fullTransfer": {

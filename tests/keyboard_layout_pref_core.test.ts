@@ -1,6 +1,7 @@
-// The persisted keyboard size behind the keyboard overview's size switch
-// (src/ui/keyboard_layout_pref_core.ts): load/save over an injected storage,
-// full size for anything unset, unknown or unreadable.
+// The persisted keyboard size and legend source behind the keyboard overview's
+// switches (src/ui/keyboard_layout_pref_core.ts): load/save over an injected
+// storage, with full size / the OS layout for anything unset, unknown or
+// unreadable.
 import { describe, expect, it } from 'vitest';
 import {
   KEYBOARD_LAYOUT_STORE_KEY,

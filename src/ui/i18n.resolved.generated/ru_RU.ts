@@ -3066,9 +3066,8 @@ export const ru_RU: EnTranslations = {
       "hintInteractive": "Используемые клавиши окрашены по категориям. Нажмите на клавишу, чтобы изменить её назначение; наведите курсор или сфокусируйтесь на ней, чтобы увидеть все её назначения.",
       "popOut": "Pop Out",
       "pressKey": "Нажмите клавишу для {action}. Esc отменяет.",
-      "unbind": "Снять назначение",
-      "unbound_": "Назначение {action} снято.",
       "boundTo": "{action} назначено на {key}.",
+      "notBindable": "Эту клавишу нельзя назначить.",
       "assignHint": "Выберите действие для клавиши {key}.",
       "assignPlaceholder": "Назначить действие на {key}",
       "layerGroup": "Слой модификаторов",
@@ -3087,7 +3086,8 @@ export const ru_RU: EnTranslations = {
       "layerAlt": "Alt",
       "keyDetail": "{key}: {bindings}",
       "separator": ", ",
-      "unbound": "Не назначено",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
       "otherLayers": "Также назначено с модификатором"
     },
     "fullTransfer": {

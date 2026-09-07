@@ -1258,12 +1258,7 @@ export class Hud {
   // in buildActionBar; main.ts applySetting pushes the resolved visibility back
   // through setActionBarVisibility so the buttons track the options checkboxes.
   private actionBarToggle: ActionBarToggleControl | null = null;
-  // On-bar key-binding mode (issue #1238): null while inactive. Entered from the
-  // Key Bindings menu's single "Edit action bar keys" entry (replacing the wall
-  // of per-slot rebind rows), it lets a slot click on the live action bar select
-  // itself for rebinding instead of casting; the next physical keypress captures
-  // through the same Input.captureNextKey seam every other rebind flow uses, so
-  // it never fires the ability. Exited via the banner's Done button.
+  // On-bar key-binding mode (issue #1238): the controller behind Edit action bar keys.
   private readonly actionBarBind = new ActionBarBindController({
     keybinds: () => this.keybinds,
     captureKey: (cb) => this.optionsHooks?.captureKey(cb),
@@ -1272,10 +1267,10 @@ export class Hud {
     actionName: (id) => bindActionDisplayName(id, id, (slot) => this.slotActionName(slot)),
     closeOptions: () => this.optionsWindow.close(),
     bannerParent: () => $('#actionbar-stack'),
-    syncSlotClasses: (selected, active) => {
-      this.abilityButtons.forEach(({ btn }, i) => {
-        btn.classList.toggle('bind-selected', i === selected);
-      });
+    syncSlotClasses: (s, active) => {
+      this.abilityButtons.forEach(
+        ({ btn }, i) => void btn.classList.toggle('bind-selected', i === s),
+      );
       document.body.classList.toggle('actionbar-bind-active', active);
     },
   });
@@ -6872,6 +6867,7 @@ export class Hud {
 
   private refreshLocalizedDynamicUi(): void {
     this.doomMeter.relocalize();
+    this.optionsWindow.relocalize();
     // The Target dots frame's accessible name is written once in its painter's
     // constructor, so it is the one string in that frame a runtime language
     // switch would otherwise leave in the previous locale (the row text itself
@@ -8097,6 +8093,7 @@ export class Hud {
 
   // Repaint the side-menu button keycaps + aria labels from the current bindings.
   private refreshKeybindLabels(): void {
+    this.optionsWindow.repaintKeyboardWindow();
     // The action-bar keycaps are owned by the per-frame ActionBarPainter, which writes
     // each slot's keybind label through the elided setText every frame; a rebind or
     // language switch therefore lands on the next update() tick (update() runs every

@@ -22,7 +22,10 @@ export type TransferKind = 'frames' | 'settings' | 'full';
 /** Superset order: a code of rank N carries everything a rank < N import wants. */
 const KIND_RANK: Record<TransferKind, number> = { frames: 0, settings: 1, full: 2 };
 function kindRank(kind: unknown): number | null {
-  return typeof kind === 'string' && kind in KIND_RANK ? KIND_RANK[kind as TransferKind] : null;
+  // Own keys only: `'constructor' in KIND_RANK` is true through the prototype.
+  return typeof kind === 'string' && Object.hasOwn(KIND_RANK, kind)
+    ? KIND_RANK[kind as TransferKind]
+    : null;
 }
 
 /** Frame-geometry families: every key the movable frames, the chat box, the
@@ -136,6 +139,12 @@ export function transferKeyAllowed(kind: TransferKind, key: string): boolean {
 /** The envelope marker, so a random pasted JSON blob never reads as a code. */
 const ENVELOPE = 'woc-transfer';
 const VERSION = 1;
+/** Bounds on a pasted code, so an import can never fill the origin's storage
+ *  quota (which would silently break every later save, the session's
+ *  included). A real full export is a few tens of kilobytes. */
+export const TRANSFER_CODE_MAX_CHARS = 512 * 1024;
+export const TRANSFER_VALUE_MAX_CHARS = 128 * 1024;
+export const TRANSFER_MAX_ENTRIES = 400;
 
 /** Build the shareable code for `entries` (already filtered by the caller or
  *  not: disallowed keys are dropped here too, so the code never leaks a
@@ -157,6 +166,7 @@ export type ParsedTransfer =
  *  the message can say "that is a settings export" instead of "invalid"),
  *  'empty' (a valid code carrying nothing this build accepts). */
 export function parseTransferCode(kind: TransferKind, text: string): ParsedTransfer {
+  if (text.length > TRANSFER_CODE_MAX_CHARS) return { ok: false, reason: 'format' };
   let raw: unknown;
   try {
     raw = JSON.parse(text.trim());
@@ -181,7 +191,12 @@ export function parseTransferCode(kind: TransferKind, text: string): ParsedTrans
   if (envRank === null || envRank < KIND_RANK[kind]) return { ok: false, reason: 'kind' };
   const entries: Record<string, string> = {};
   for (const [key, value] of Object.entries(env.data as Record<string, unknown>)) {
-    if (transferKeyAllowed(kind, key) && typeof value === 'string') entries[key] = value;
+    if (!transferKeyAllowed(kind, key) || typeof value !== 'string') continue;
+    // One oversized value or an absurd key count is a malformed code, not a
+    // partial import: nothing this size is a real export.
+    if (value.length > TRANSFER_VALUE_MAX_CHARS) return { ok: false, reason: 'format' };
+    entries[key] = value;
+    if (Object.keys(entries).length > TRANSFER_MAX_ENTRIES) return { ok: false, reason: 'format' };
   }
   if (Object.keys(entries).length === 0) return { ok: false, reason: 'empty' };
   return { ok: true, entries };

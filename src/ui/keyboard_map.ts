@@ -21,8 +21,15 @@
 // the DOM. Registered in tests/architecture.test.ts UI_DOM_MODULES.
 
 import { audio } from '../game/audio';
-import { type Keybinds, keyLabel } from '../game/keybinds';
+import {
+  actionKind,
+  isModifierCode,
+  isReservedCode,
+  type Keybinds,
+  keyLabel,
+} from '../game/keybinds';
 import { type TranslationKey, t } from './i18n';
+import { keybindConflictPrompt } from './keybind_conflict_prompt_core';
 import {
   loadKeyboardFormFactor,
   loadKeyboardLegendSource,
@@ -90,9 +97,12 @@ export interface KeyboardMapRebindDeps {
 }
 
 export interface KeyboardMapHandle {
-  el: HTMLElement;
   /** Redraw the board from the live bindings (after an outside rebind). */
   repaint: () => void;
+  /** Drop any key capture this board armed. Call before discarding the board
+   *  (a panel rebuild, the window closing), or the one-shot capture outlives
+   *  it and the player's next keypress rebinds through a detached board. */
+  dispose: () => void;
 }
 
 /** Quarter-unit grid columns per key unit (keys are 1, 1.25, 1.5 ... wide). */
@@ -141,7 +151,7 @@ function layoutCharacter(code: string): string | null {
 
 /** The keycap legend for a bare code: the printed character when the browser
  *  knows it, else the code label ("KeyA" -> "A"). */
-export function keyLegend(code: string): string {
+function keyLegend(code: string): string {
   return layoutCharacter(code) ?? keyLabel(code);
 }
 
@@ -201,6 +211,8 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
   // clear it instead of leaving a stale one-shot callback behind.
   let armed: { binding: KeyboardKeyBinding } | null = null;
   const rebind = deps.rebind;
+
+  let disposed = false;
 
   const hint = (): string =>
     t(rebind ? 'hudChrome.keyboardMap.hintInteractive' : 'hudChrome.keyboardMap.hint');
@@ -292,13 +304,14 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
     }
   };
 
-  const bindingLine = (b: KeyboardKeyBinding): string => `${comboLegend(b.combo)}: ${b.name}`;
+  const bindingLine = (b: KeyboardKeyBinding): string =>
+    t('hudChrome.keyboardMap.bindingLine', { key: comboLegend(b.combo), action: b.name });
 
   const describe = (key: KeyboardKeyView): string => {
     if (key.bindings.length === 0)
       return t('hudChrome.keyboardMap.keyDetail', {
         key: key.legend,
-        bindings: t('hudChrome.keyboardMap.unbound'),
+        bindings: t('hud.options.unbound'),
       });
     // A bare binding is already named by the {key} prefix; only a modifier
     // combo needs its own label ("3: Iron Bellow, Ctrl+3: Pet: Taunt").
@@ -341,25 +354,30 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
     done: () => string,
   ): void => {
     const commit = () => {
-      io.keybinds().bind(actionId, index, combo);
+      if (!io.keybinds().bind(actionId, index, combo)) {
+        // A reserved code (Escape, the camera buttons): nothing changed.
+        finish(t('hudChrome.keyboardMap.notBindable'));
+        return;
+      }
       const status = done();
       finish(status);
       io.onChanged(status);
     };
     const conflict = io.keybinds().findBindConflict(actionId, index, combo);
-    if (!conflict) {
+    const prompt = keybindConflictPrompt({
+      key: comboLegend(conflict?.code ?? combo),
+      other: conflict ? deps.actionName(conflict.id) : null,
+      action: deps.actionName(actionId),
+    });
+    if (!prompt) {
       commit();
       return;
     }
     io.confirmDialog(
-      t('hudChrome.actionBar.conflictTitle'),
-      t('hudChrome.actionBar.conflictBody', {
-        key: comboLegend(conflict.code),
-        other: deps.actionName(conflict.id),
-        action: deps.actionName(actionId),
-      }),
-      t('hudChrome.actionBar.conflictAccept'),
-      t('hudChrome.actionBar.cancel'),
+      t(prompt.titleKey),
+      t(prompt.bodyKey, prompt.params),
+      t(prompt.acceptKey),
+      t(prompt.cancelKey),
       commit,
     );
   };
@@ -369,21 +387,13 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
     resetInteraction();
     armed = { binding };
     detail.textContent = t('hudChrome.keyboardMap.pressKey', { action: binding.name });
-    for (const cell of board.querySelectorAll<HTMLElement>('.kbm-key.capturing'))
-      cell.classList.remove('capturing');
-    board
-      .querySelector(`[data-code="${splitCombo(binding.combo).code}"]`)
-      ?.classList.add('capturing');
+    const code = splitCombo(binding.combo).code;
+    for (const cell of board.querySelectorAll<HTMLElement>('.kbm-key[data-code]'))
+      cell.classList.toggle('capturing', cell.dataset.code === code);
+    // No Unbind here on purpose: the panel rows offer none either, and a stored
+    // [null, null] row is exactly the shape the load-time repair
+    // (keybinds_repair.ts, Signature B) reads as loader eviction and re-seeds.
     actions.replaceChildren(
-      actionButton(t('hudChrome.keyboardMap.unbind'), () => {
-        if (armed?.binding !== binding) return;
-        io.captureKey(null);
-        armed = null;
-        io.keybinds().clear(binding.actionId, binding.index);
-        const status = t('hudChrome.keyboardMap.unbound_', { action: binding.name });
-        finish(status);
-        io.onChanged(status);
-      }),
       actionButton(t('hudChrome.actionBar.cancel'), () => {
         resetInteraction();
         paintBoard();
@@ -422,10 +432,13 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
         // The primary slot when free, else the alternate (replacing it when
         // both are taken): the primary is the one the panel rows show first.
         const index = kb.codeAt(actionId, 0) === null ? 0 : 1;
-        bindWithConfirm(io, actionId, index, combo, () =>
+        // A held (movement) action ignores modifiers and stores the bare key
+        // (Keybinds.bind), so check and report the combo that actually lands.
+        const stored = actionKind(actionId) === 'held' ? key.code : combo;
+        bindWithConfirm(io, actionId, index, stored, () =>
           t('hudChrome.keyboardMap.boundTo', {
             action: deps.actionName(actionId),
-            key: comboLabel,
+            key: comboLegend(stored),
           }),
         );
       },
@@ -504,13 +517,20 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
           };
           cell.addEventListener('mouseenter', show);
           cell.addEventListener('focus', show);
-          if (rebind) {
+          // Escape is reserved and a bare modifier never reaches a keydown
+          // capture (Input skips it), so neither can take a binding here.
+          const assignable = !isReservedCode(key.code) && !isModifierCode(key.code);
+          if (rebind && (bound || assignable)) {
             cell.addEventListener('click', () => {
               audio.click();
               if (bound) startRebind(rebind, bound);
               else startAssign(rebind, key);
             });
+          } else if (rebind) {
+            cell.classList.add('kbm-fixed');
           }
+          if (armed && splitCombo(armed.binding.combo).code === key.code)
+            cell.classList.add('capturing');
           el.appendChild(cell);
         }
       }
@@ -528,10 +548,10 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
   paintOptions();
   paintBoard();
   // Real legends arrive asynchronously on first use; repaint (and offer the
-  // legend choice) once they do.
-  if (!layoutMap)
+  // legend choice) once they do. Only the first board pays the round trip.
+  if (!layoutMapLoad)
     loadLayoutMap().then(() => {
-      if (!wrap.isConnected) return;
+      if (disposed || !wrap.isConnected) return;
       paintOptions();
       paintBoard();
     });
@@ -558,12 +578,15 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
   wrap.append(head, board, hiddenLine, legend, options, detail, actions);
   root.appendChild(wrap);
   return {
-    el: wrap,
     repaint: () => {
       // A repaint from outside during an interaction drops it (the bindings it
       // was about moved); a quiet one keeps the status line the last action set.
       if (armed || !actions.hidden) resetInteraction();
       paintBoard();
+    },
+    dispose: () => {
+      disposed = true;
+      resetInteraction();
     },
   };
 }

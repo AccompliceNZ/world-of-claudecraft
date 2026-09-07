@@ -128,13 +128,17 @@ export class ActionBarBindController {
         t(prompt.titleKey),
         t(prompt.bodyKey, prompt.params),
         t(prompt.acceptKey),
-        t('hudChrome.actionBar.cancel'),
+        t(prompt.cancelKey),
         () => this.commit(slot, code),
       );
     });
   }
 
   private commit(slot: number, code: string): void {
+    // The conflict prompt is not modal to the banner: Done can end the mode
+    // while it is up, and committing then would resurrect the mode with no
+    // banner to leave it by.
+    if (!this.state) return;
     const keybinds = this.deps.keybinds();
     let boundLabel: string | null = null;
     if (keybinds.bind(`slot${slot}`, 0, code)) {
@@ -164,6 +168,7 @@ export class ActionBarBindController {
       t('hudChrome.actionBar.reset'),
       t('hudChrome.actionBar.cancel'),
       () => {
+        if (!this.state) return; // Done was clicked under the dialog
         this.deps.keybinds().resetSlots();
         this.deps.refreshKeybindLabels();
         this.state = actionBarBindEnter();

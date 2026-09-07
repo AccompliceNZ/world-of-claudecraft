@@ -3066,9 +3066,8 @@ export const ja_JP: EnTranslations = {
       "hintInteractive": "使用中のキーはカテゴリ別に色分けされています。キーをクリックすると割り当てを変更できます。カーソルを合わせるかフォーカスすると、そのキーの割り当てがすべて表示されます。",
       "popOut": "Pop Out",
       "pressKey": "{action} に割り当てるキーを押してください。Esc でキャンセルします。",
-      "unbind": "割り当て解除",
-      "unbound_": "{action} の割り当てを解除しました。",
       "boundTo": "{action} を {key} に割り当てました。",
+      "notBindable": "そのキーは割り当てできません。",
       "assignHint": "{key} に割り当てるアクションを選んでください。",
       "assignPlaceholder": "{key} にアクションを割り当てる",
       "layerGroup": "修飾キーレイヤー",
@@ -3087,7 +3086,8 @@ export const ja_JP: EnTranslations = {
       "layerAlt": "Alt",
       "keyDetail": "{key}: {bindings}",
       "separator": ", ",
-      "unbound": "未割り当て",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
       "otherLayers": "修飾キーとの組み合わせでも割り当て済み"
     },
     "fullTransfer": {

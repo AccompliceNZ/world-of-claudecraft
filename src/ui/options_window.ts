@@ -95,8 +95,13 @@ import {
 import type { TranslationKey } from './i18n.catalog';
 import { interfaceUnlockLabelKey } from './interface_unlock_core';
 import { BIND_CATEGORY_LABEL_KEYS, bindActionDisplayName } from './keybind_action_names';
+import { keybindConflictPrompt } from './keybind_conflict_prompt_core';
 import { buildKeybindCode, parseKeybindCode } from './keybind_transfer_core';
-import { type KeyboardMapPaintDeps, paintKeyboardMap } from './keyboard_map';
+import {
+  type KeyboardMapHandle,
+  type KeyboardMapPaintDeps,
+  paintKeyboardMap,
+} from './keyboard_map';
 import type { KeyboardLayer } from './keyboard_map_core';
 import { KeyboardMapWindow } from './keyboard_map_window';
 import {
@@ -365,7 +370,12 @@ export class OptionsWindow {
   // The keyboard overview's modifier layer, kept across the panel's rebuilds
   // (every rebind repaints the whole panel) and shared with the pop-out.
   private keyboardLayer: KeyboardLayer = '';
-  private readonly keyboardWindow = new KeyboardMapWindow(() => this.keyboardMapDeps());
+  private readonly keyboardWindow = new KeyboardMapWindow(() => this.keyboardMapDeps(), {
+    openFocusTrap: (root, returnFocusTo) => this.deps.openFocusTrap(root, returnFocusTo),
+  });
+  // The in-panel board, so a panel rebuild or the window closing can drop the
+  // key capture it may have armed.
+  private keyboardBoard: KeyboardMapHandle | null = null;
   // The Options > Performance panel, lazily built and reused (it caches the live
   // position-slider handles so a drag-to-move can update them in place).
   private perfSettings: PerfOverlaySettingsPanel | null = null;
@@ -445,7 +455,12 @@ export class OptionsWindow {
     this.syncGpuBackendWatch();
     this.deps.root().removeAttribute('aria-busy');
     this.deps.root().style.display = 'none';
+    // A key capture armed from a row or the keyboard overview must not outlive
+    // the window: the one-shot would fire on the player's next in-game keypress.
+    if (this.capturingKey) this.deps.options()?.captureKey(null);
     this.capturingKey = null;
+    this.keyboardBoard?.dispose();
+    this.keyboardBoard = null;
     this.deps.options()?.perfOverlay.setPlacement(false);
     this.auraSettings?.closePlacement();
     this.deps.auraOverlays?.().setPlacement(false);
@@ -1738,10 +1753,15 @@ export class OptionsWindow {
               : 'hudChrome.transfer.invalid',
           );
         }
+        // The core checks shape only; a code naming no action this build knows
+        // would import as a full reset, so it is refused like a hollow one.
+        if (!Object.keys(parsed.binds).some((id) => BIND_ACTIONS.some((a) => a.id === id)))
+          return t('hudChrome.transfer.invalid');
         this.deps.keybinds().importBindings(parsed.binds);
-        this.capturingKey = null;
+        this.dropKeyCapture();
         this.keybindNote = t('hudChrome.keybindTransfer.imported');
         this.deps.refreshKeybindLabels();
+        this.keyboardWindow.repaint();
         this.renderKeybinds();
         return null;
       },
@@ -2184,8 +2204,29 @@ export class OptionsWindow {
     this.keyboardWindow.close();
   }
 
+  /** A runtime language switch (the Hud.refreshLocalizedDynamicUi arm): the
+   *  options window itself rebuilds on its next open, so this only forwards to
+   *  the keyboard pop-out, which can stay open across the switch. */
+  relocalize(): void {
+    this.keyboardWindow.relocalize();
+  }
+
+  /** Redraw an open keyboard pop-out from the live bindings: every rebind path
+   *  (panel rows, imports, resets, the on-bar mode) ends in
+   *  Hud.refreshKeybindLabels, which calls this. */
+  repaintKeyboardWindow(): void {
+    this.keyboardWindow.repaint();
+  }
+
+  /** Forget a row capture in progress AND disarm it, so the one-shot never
+   *  fires on a later keypress against a panel that has moved on. */
+  private dropKeyCapture(): void {
+    if (this.capturingKey) this.deps.options()?.captureKey(null);
+    this.capturingKey = null;
+  }
+
   private paintKeyboardOverview(el: HTMLElement): void {
-    paintKeyboardMap(el, {
+    this.keyboardBoard = paintKeyboardMap(el, {
       ...this.keyboardMapDeps(),
       onPopOut: () => {
         // The pop-out replaces the in-menu board: close the menu so the
@@ -2203,7 +2244,8 @@ export class OptionsWindow {
   private keyboardMapDeps(): KeyboardMapPaintDeps {
     const byId = new Map(BIND_ACTIONS.map((a) => [a.id, a]));
     const hooks = this.deps.options();
-    const attackMoveOn = !!hooks?.settings.get('attackMove');
+    // Read at every use, not once: the pop-out keeps these deps while open.
+    const attackMoveOn = () => !!hooks?.settings.get('attackMove');
     const name = (id: string) => this.actionDisplayName(id, byId.get(id)?.label ?? id);
     const categoryLabel = (id: string) => {
       const key = BIND_CATEGORY_LABEL_KEYS[id];
@@ -2212,7 +2254,7 @@ export class OptionsWindow {
     return {
       bindings: () => {
         const snapshot = this.deps.keybinds().snapshot();
-        if (!attackMoveOn) delete snapshot.attackMove;
+        if (!attackMoveOn()) delete snapshot.attackMove;
         return snapshot;
       },
       actionName: name,
@@ -2238,9 +2280,12 @@ export class OptionsWindow {
               }
             },
             assignable: () =>
-              BIND_ACTIONS.filter((a) => attackMoveOn || a.id !== 'attackMove').map((a) => ({
+              BIND_ACTIONS.filter((a) => attackMoveOn() || a.id !== 'attackMove').map((a) => ({
                 id: a.id,
-                label: `${categoryLabel(a.category)}: ${name(a.id)}`,
+                label: t('hudChrome.keyboardMap.assignOption', {
+                  category: categoryLabel(a.category),
+                  action: name(a.id),
+                }),
               })),
             buildDropdown: (options, current, onChange, placeholder, a11y) =>
               this.deps.buildDropdown(options, current, onChange, placeholder, a11y),
@@ -2494,7 +2539,8 @@ export class OptionsWindow {
   }
 
   // The Import / Export sub-panel: the FULL preference set as one text code
-  // (copy / paste, like every other transfer here). Same envelope and allowlist boundary as the Interface
+  // (copy / paste, like every other transfer here). Same envelope and allowlist
+  // boundary as the Interface
   // tab's rows (settings_transfer_core.ts, kind 'full'), so a pasted blob still
   // cannot plant a session, wallet, purchase or cache key; a successful import
   // reloads, since every family it writes is read at boot.
@@ -2573,6 +2619,8 @@ export class OptionsWindow {
     // The keyboard overview: every key in use, coloured by category and
     // captioned with its action, one modifier layer at a time. Desktop only
     // (touch has no keyboard); it hides the same Attack Move row the list does.
+    this.keyboardBoard?.dispose();
+    this.keyboardBoard = null;
     if (!useTouchInterface()) this.paintKeyboardOverview(el);
     const cols = document.createElement('div');
     cols.className = 'kb-cols';
@@ -2675,6 +2723,7 @@ export class OptionsWindow {
     reset.addEventListener('click', () => {
       audio.click();
       this.deps.keybinds().reset();
+      this.keyboardWindow.repaint();
       // The panel also renders seven GameSettings toggles alongside the
       // rebindable keys (mouse camera, click-to-move and its mouse button,
       // attack move, left-handed touch, profanity filter); Reset to Defaults
@@ -2682,7 +2731,7 @@ export class OptionsWindow {
       const hooks = this.deps.options();
       hooks?.settings.reset(KEYBIND_PANEL_SETTING_KEYS);
       for (const k of KEYBIND_PANEL_SETTING_KEYS) hooks?.onSettingChange(k, hooks.settings.get(k));
-      this.capturingKey = null;
+      this.dropKeyCapture();
       this.keybindNote = t('hud.options.keybindReset');
       this.deps.refreshKeybindLabels();
       this.renderKeybinds();
@@ -2714,19 +2763,19 @@ export class OptionsWindow {
       // look-ahead reports exactly what bind() would evict, so the prompt can
       // name it, and cancelling leaves both bindings untouched.
       const conflict = this.deps.keybinds().findBindConflict(actionId, index, code);
-      if (conflict) {
-        const other = this.actionDisplayName(conflict.id, conflict.id);
-        this.keybindNote = t('hudChrome.actionBar.conflictTitle');
+      const prompt = keybindConflictPrompt({
+        key: keyLabel(conflict?.code ?? code),
+        other: conflict ? this.actionDisplayName(conflict.id, conflict.id) : null,
+        action: name,
+      });
+      if (prompt) {
+        this.keybindNote = t(prompt.titleKey);
         if (this.isOpen) this.renderKeybinds();
         this.deps.confirmDialog(
-          t('hudChrome.actionBar.conflictTitle'),
-          t('hudChrome.actionBar.conflictBody', {
-            key: keyLabel(conflict.code),
-            other,
-            action: name,
-          }),
-          t('hudChrome.actionBar.conflictAccept'),
-          t('hud.chat.context.cancel'),
+          t(prompt.titleKey),
+          t(prompt.bodyKey, prompt.params),
+          t(prompt.acceptKey),
+          t(prompt.cancelKey),
           () => {
             this.commitCapturedBind(actionId, index, code, name);
             if (this.isOpen) this.renderKeybinds();
@@ -2752,6 +2801,7 @@ export class OptionsWindow {
         key: keyLabel(this.deps.keybinds().codeAt(actionId, index)),
       });
       this.deps.refreshKeybindLabels();
+      this.keyboardWindow.repaint();
     } else if (isReservedCode(code)) {
       this.keybindNote = t('hud.options.keybindReserved', { key: keyLabel(code) });
     }

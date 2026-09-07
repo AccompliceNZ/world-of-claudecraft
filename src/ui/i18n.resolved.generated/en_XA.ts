@@ -3066,9 +3066,8 @@ export const en_XA: EnTranslations = {
       "hintInteractive": "[Ķéýš íñ úšé áŕé çóļóúŕéð ƀý çáţéĝóŕý. Çļíçķ á ķéý ţó çĥáñĝé ŵĥáţ íţ ðóéš; ĥóʋéŕ óŕ ƒóçúš óñé ţó šéé éʋéŕýţĥíñĝ ƀóúñð ţó íţ.]",
       "popOut": "[Þóþ Óúţ]",
       "pressKey": "[Þŕéšš á ķéý ƒóŕ {action}. Éšç çáñçéļš.]",
-      "unbind": "[Úñƀíñð]",
-      "unbound_": "[Úñƀóúñð {action}.]",
       "boundTo": "[Ɓóúñð {action} ţó {key}.]",
+      "notBindable": "[Ţĥáţ ķéý çáññóţ ƀé ƀóúñð.]",
       "assignHint": "[Çĥóóšé áñ áçţíóñ ţó ƀíñð ţó {key}.]",
       "assignPlaceholder": "[Áššíĝñ áñ áçţíóñ ţó {key}]",
       "layerGroup": "[Ɱóðíƒíéŕ ļáýéŕ]",
@@ -3087,7 +3086,8 @@ export const en_XA: EnTranslations = {
       "layerAlt": "[Áļţ]",
       "keyDetail": "[{key}: {bindings}]",
       "separator": "[, ]",
-      "unbound": "[Ñóţ ƀóúñð]",
+      "bindingLine": "[{key}: {action}]",
+      "assignOption": "[{category}: {action}]",
       "otherLayers": "[Áļšó ƀóúñð ŵíţĥ á ɱóðíƒíéŕ]"
     },
     "fullTransfer": {

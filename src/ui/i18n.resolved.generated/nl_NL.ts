@@ -3066,9 +3066,8 @@ export const nl_NL: EnTranslations = {
       "hintInteractive": "Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.",
       "popOut": "Pop Out",
       "pressKey": "Press a key for {action}. Esc cancels.",
-      "unbind": "Unbind",
-      "unbound_": "Unbound {action}.",
       "boundTo": "Bound {action} to {key}.",
+      "notBindable": "That key cannot be bound.",
       "assignHint": "Choose an action to bind to {key}.",
       "assignPlaceholder": "Assign an action to {key}",
       "layerGroup": "Modifier layer",
@@ -3087,7 +3086,8 @@ export const nl_NL: EnTranslations = {
       "layerAlt": "Alt",
       "keyDetail": "{key}: {bindings}",
       "separator": ", ",
-      "unbound": "Not bound",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
       "otherLayers": "Also bound with a modifier"
     },
     "fullTransfer": {

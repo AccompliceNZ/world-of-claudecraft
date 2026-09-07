@@ -1,7 +1,8 @@
 // Localized display names for the key-binding actions (src/game/keybinds.ts
 // BIND_ACTIONS): the category headers and the per-action row labels the Key
-// Bindings panel paints, and the same names the on-bar rebind mode's
-// are-you-sure prompts speak (hud.ts). One table so the two surfaces can never
+// Bindings panel paints, and the same names the keyboard overview and the
+// on-bar rebind mode's prompts speak (action_bar_bind_controller.ts, through
+// the actionName dep hud.ts supplies). One table so the surfaces can never
 // name an action differently. Slot actions resolve to what sits in the slot
 // (the caller's slotActionName, an ability or item name) and fall back to the
 // numbered slot label; slot 0 is always Attack.
