@@ -171,6 +171,8 @@ const UI_ROOT_TOUCHERS: Record<string, string> = {
   'src/ui/noticeboard_popup.ts': 'transient noticeboard popup card',
   'src/ui/realm_builder_popup.ts': 'transient Realm Builder honour roll card',
   'src/ui/dev_command_window.ts': 'dev-only command window (a .window, window_drag governs it)',
+  'src/ui/keyboard_map_window.ts':
+    'the keyboard overview pop-out (a .window, window_drag governs it; closeManagedWindow closes it)',
   'src/ui/hud/fiesta/fiesta_controller.ts': 'match-scoped fiesta strips and confetti',
   'src/ui/hud/loot/loot_roll_controller.ts': 'transient loot roll stack',
 };
