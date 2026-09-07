@@ -9,6 +9,7 @@
 import { Pool } from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { WocMarketCustody, WocMarketService, WocSettlementRow } from '../server/woc_market';
+import { materialSourceConnection } from '../server/material_source_connection';
 import type { PgWocMarketDb } from '../server/woc_market_db';
 
 const ADMIN_URL = process.env.TEST_DATABASE_URL;
@@ -66,7 +67,7 @@ describeDb('woc market settlement guards against real Postgres', () => {
     await db.ensureSchema();
     await db.runConcurrentIndexMigrations();
 
-    pool = new Pool({ connectionString: verifyUrl(ADMIN_URL as string), max: 12 });
+    pool = new Pool({ ...materialSourceConnection(verifyUrl(ADMIN_URL as string)), max: 12 });
     marketDb = new marketDbMod.PgWocMarketDb(pool);
   }, 120_000);
 

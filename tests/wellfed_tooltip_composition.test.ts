@@ -16,8 +16,18 @@ import { wellFedTooltipLines } from '../src/ui/hud/professions/wellfed_tooltip_v
 
 function tooltipHtml(itemId: string): string {
   const h = Object.create(Hud.prototype) as unknown as {
+    sim: {
+      player: { level: number };
+      cfg: { playerClass: string };
+      equipment: Record<string, string>;
+    };
     itemTooltip(item: unknown, compare?: boolean): string;
   };
+  // Real host shape (masterwrought_tooltip.test.ts / weapon_type_tooltip.test.ts
+  // convention): itemTooltip unconditionally reads this.sim.player.level for
+  // itemRequiredLevelLine even on a non-equipment food item; cfg/equipment cover
+  // the slot/masterwrought arms neither buff dish takes.
+  h.sim = { player: { level: 80 }, cfg: { playerClass: 'warrior' }, equipment: {} };
   const item = ITEMS[itemId];
   if (!item) throw new Error(`missing item ${itemId}`);
   return h.itemTooltip(item, false);

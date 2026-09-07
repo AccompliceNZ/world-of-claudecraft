@@ -485,7 +485,7 @@
       "tick": 91,
       "time": 4.55,
       "nextId": 1003,
-      "state": "83c44dff",
+      "state": "3cc1bf99",
       "events": "4ff1c3ab",
       "rng": {
         "draws": 2,
@@ -556,7 +556,13 @@
             },
             {
               "count": 1,
-              "itemId": "raw_river_perch"
+              "itemId": "raw_river_perch",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -654,7 +660,7 @@
       "tick": 99,
       "time": 4.95,
       "nextId": 1003,
-      "state": "fbe119aa",
+      "state": "98ea0444",
       "events": "183f90d2",
       "rng": {
         "draws": 3,
@@ -733,7 +739,13 @@
             },
             {
               "count": 1,
-              "itemId": "raw_river_perch"
+              "itemId": "raw_river_perch",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,

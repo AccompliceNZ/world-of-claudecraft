@@ -10072,7 +10072,7 @@
       "tick": 628,
       "time": 31.4,
       "nextId": 1015,
-      "state": "70233e08",
+      "state": "46a4beb7",
       "events": "0ce140a6",
       "rng": {
         "draws": 5530,
@@ -10210,7 +10210,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -10376,7 +10382,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -10538,7 +10550,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -10700,7 +10718,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -10861,7 +10885,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -11603,7 +11633,7 @@
       "tick": 630,
       "time": 31.5,
       "nextId": 1015,
-      "state": "69f9180e",
+      "state": "2dbf0945",
       "events": "741638a5",
       "rng": {
         "draws": 5552,
@@ -11614,7 +11644,7 @@
       "tick": 640,
       "time": 32,
       "nextId": 1015,
-      "state": "8715dfb2",
+      "state": "92d9be01",
       "events": "741638a5",
       "rng": {
         "draws": 5631,
@@ -11625,7 +11655,7 @@
       "tick": 650,
       "time": 32.5,
       "nextId": 1015,
-      "state": "acec796a",
+      "state": "faf0ecd9",
       "events": "741638a5",
       "rng": {
         "draws": 5726,
@@ -11636,7 +11666,7 @@
       "tick": 660,
       "time": 33,
       "nextId": 1015,
-      "state": "22a956da",
+      "state": "5cfceba9",
       "events": "741638a5",
       "rng": {
         "draws": 5812,
@@ -11647,7 +11677,7 @@
       "tick": 670,
       "time": 33.5,
       "nextId": 1015,
-      "state": "5842f2da",
+      "state": "a6c6c7a9",
       "events": "741638a5",
       "rng": {
         "draws": 5883,
@@ -11658,7 +11688,7 @@
       "tick": 680,
       "time": 34,
       "nextId": 1015,
-      "state": "b403dace",
+      "state": "ce7aa005",
       "events": "741638a5",
       "rng": {
         "draws": 5989,
@@ -11669,7 +11699,7 @@
       "tick": 688,
       "time": 34.4,
       "nextId": 1015,
-      "state": "3e677030",
+      "state": "8c75875f",
       "events": "fd122966",
       "rng": {
         "draws": 6080,
@@ -11807,7 +11837,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -11973,7 +12009,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -12135,7 +12177,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -12297,7 +12345,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -12458,7 +12512,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,

@@ -183,7 +183,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "f4c571af",
+      "state": "1ddfca6e",
       "events": "5412654f",
       "rng": {
         "draws": 0,
@@ -206,7 +206,13 @@
             "inventory": [
               {
                 "count": 20,
-                "itemId": "copper_ore"
+                "itemId": "copper_ore",
+                "materialSources": [
+                  {
+                    "count": 20,
+                    "source": {}
+                  }
+                ]
               },
               {
                 "count": 1,
@@ -347,7 +353,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "3232f801",
+      "state": "6d58ab34",
       "events": "04b33e45",
       "rng": {
         "draws": 0,
@@ -370,7 +376,13 @@
             "inventory": [
               {
                 "count": 20,
-                "itemId": "copper_ore"
+                "itemId": "copper_ore",
+                "materialSources": [
+                  {
+                    "count": 20,
+                    "source": {}
+                  }
+                ]
               },
               {
                 "count": 1,
@@ -571,7 +583,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "e1c82ff5",
+      "state": "f663d4fc",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -704,7 +716,13 @@
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -795,7 +813,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "e1c82ff5",
+      "state": "f663d4fc",
       "events": "51708589",
       "rng": {
         "draws": 0,
@@ -928,7 +946,13 @@
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1019,7 +1043,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "b6079637",
+      "state": "f4817cf6",
       "events": "de89f67f",
       "rng": {
         "draws": 0,
@@ -1100,55 +1124,133 @@
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1239,7 +1341,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "3898aa7b",
+      "state": "aad27dea",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1314,55 +1416,133 @@
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -1457,7 +1637,7 @@
       "tick": 2,
       "time": 0.1,
       "nextId": 1003,
-      "state": "25dc0e06",
+      "state": "7cdd1667",
       "events": "c7ababe8",
       "rng": {
         "draws": 0,
@@ -1538,55 +1718,133 @@
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 20,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 20,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,

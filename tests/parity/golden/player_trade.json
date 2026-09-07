@@ -30,7 +30,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "56afa5a3",
+      "state": "c77a5f0b",
       "events": "867a75d7",
       "rng": {
         "draws": 0,
@@ -93,7 +93,13 @@
             },
             {
               "count": 3,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 3,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -306,7 +312,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "a0702ee1",
+      "state": "f072ada2",
       "events": "41a79782",
       "rng": {
         "draws": 0,
@@ -371,7 +377,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -450,7 +462,13 @@
             },
             {
               "count": 2,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -591,7 +609,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "a0702ee1",
+      "state": "f072ada2",
       "events": "41a385f8",
       "rng": {
         "draws": 0,
@@ -656,7 +674,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -735,7 +759,13 @@
             },
             {
               "count": 2,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -876,7 +906,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "a0702ee1",
+      "state": "f072ada2",
       "events": "4a03ffb1",
       "rng": {
         "draws": 0,
@@ -941,7 +971,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1020,7 +1056,13 @@
             },
             {
               "count": 2,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1161,7 +1203,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1004,
-      "state": "cee3cbe7",
+      "state": "8efc2e7a",
       "events": "1df2b823",
       "rng": {
         "draws": 0,
@@ -1232,7 +1274,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1318,7 +1366,13 @@
             },
             {
               "count": 2,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1460,7 +1514,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1004,
-      "state": "cee3cbe7",
+      "state": "8efc2e7a",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1531,7 +1585,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1617,7 +1677,13 @@
             },
             {
               "count": 2,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,

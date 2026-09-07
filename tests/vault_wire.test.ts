@@ -376,11 +376,16 @@ describe('materials vault wire round-trip', () => {
       slot: meta.inventory.length - 1,
     });
     expect(meta.vault.stock).toEqual({});
+    // The legacy premium signer moves off the instance payload and into the
+    // exact per-unit composition (material_stack.ts normalizeMaterialStack)
+    // as source.signer; no gatherer is invented, signer and gatherer are
+    // distinct concepts (material_sources.ts).
     expect(meta.vault.special).toEqual([
       {
         itemId: 'copper_ore',
         count: 1,
-        instance: { signer: 'Ada', rolled: { quality: 'rare', stats: { sta: 2 } } },
+        instance: { rolled: { quality: 'rare', stats: { sta: 2 } } },
+        materialSources: [{ count: 1, source: { signer: 'Ada' } }],
       },
     ]);
 
@@ -398,9 +403,10 @@ describe('materials vault wire round-trip', () => {
     });
 
     expect(meta.vault.special).toEqual([]);
+    // The withdrawn copy's signer now rides materialSources, not instance.
     expect(
-      meta.inventory.find(
-        (slot: { instance?: { signer?: string } }) => slot.instance?.signer === 'Ada',
+      meta.inventory.find((slot: { materialSources?: { source?: { signer?: string } }[] }) =>
+        slot.materialSources?.some((s) => s.source?.signer === 'Ada'),
       ),
     ).toMatchObject({ itemId: 'copper_ore', count: 1 });
     expect(journalLedgerRows(session).map((row) => [row.op, row.instance])).toEqual([
@@ -1264,6 +1270,51 @@ describe('materials vault wire round-trip', () => {
     expect(batch).toHaveLength(2);
   });
 
+  /** Exact per-row proof for a sweep of lone signed `pristine_hide` units,
+   *  keyed by signer (order-independent): every stored special row is a lone
+   *  unit carrying EXACTLY its own signer bucket (never dropped or merged),
+   *  its stats identity survived, and the ledger reconstruction carries the
+   *  same source leg back (signer merged onto the effective payload,
+   *  server/bank_ledger.ts effectiveCountPayload). Never weakens the
+   *  caller's own row-count / uniqueness proof; this only adds content. */
+  function expectExactSignedVaultRows(
+    special: readonly {
+      itemId: string;
+      count: number;
+      materialSources?: { source?: { signer?: string } }[];
+    }[],
+    batch: readonly Record<string, unknown>[],
+    signers: readonly string[],
+    statsFor: (index: number) => number,
+  ): void {
+    const specialBySigner = new Map(
+      special.map((row) => [row.materialSources?.[0]?.source?.signer, row]),
+    );
+    const ledgerBySigner = new Map(
+      batch.map((row) => [
+        (row.instance as { instance?: { signer?: string } } | null)?.instance?.signer,
+        row,
+      ]),
+    );
+    signers.forEach((signer, index) => {
+      expect(specialBySigner.get(signer)).toEqual({
+        itemId: 'pristine_hide',
+        count: 1,
+        instance: { rolled: { stats: { sta: statsFor(index) } } },
+        materialSources: [{ count: 1, source: { signer } }],
+      });
+      const ledgerRow = ledgerBySigner.get(signer);
+      expect(ledgerRow?.itemId).toBe('pristine_hide');
+      expect(ledgerRow?.op).toBe('deposit');
+      expect(ledgerRow?.count).toBe(1);
+      expect(ledgerRow?.instance).toEqual({
+        vaultSpecial: 1,
+        instance: { rolled: { stats: { sta: statsFor(index) } }, signer },
+        craftedRecipeId: null,
+      });
+    });
+  }
+
   it.each([56, 112])(
     'vault_deposit_all: admits %i distinct signed identities in one batch',
     (identityCount) => {
@@ -1272,11 +1323,18 @@ describe('materials vault wire round-trip', () => {
       const fw = fakeWs();
       const { session, sim, meta } = seat(server, fw, 1, 'Vaultsigners', 0);
       meta.vault.upgrades = 5;
+      // The signer alone no longer keeps a unit in its own row: it legally
+      // rides the composition (materialSources; the signer is a legacy
+      // PREMIUM marker moved into source.signer, never an invented gatherer),
+      // and stacks with an otherwise-equal payload MERGE (that is the
+      // feature). A genuinely incompatible, non-signer payload field
+      // (`rolled.stats.sta`, distinct per unit, a legal rolled field) is what
+      // still forces `identityCount` separate slots here.
       meta.inventory.push(
         ...Array.from({ length: identityCount }, (_, index) => ({
           itemId: 'pristine_hide',
           count: 1,
-          instance: { signer: `Crafter ${index}` },
+          instance: { signer: `Crafter ${index}`, rolled: { stats: { sta: index + 1 } } },
         })),
       );
       const journalStart = journalBatchCount(session);
@@ -1293,6 +1351,12 @@ describe('materials vault wire round-trip', () => {
       expect(batch).toHaveLength(identityCount);
       expect(new Set(batch.map((ledgerRow) => JSON.stringify(ledgerRow.instance))).size).toBe(
         identityCount,
+      );
+      expectExactSignedVaultRows(
+        meta.vault.special,
+        batch,
+        Array.from({ length: identityCount }, (_, index) => `Crafter ${index}`),
+        (index) => index + 1,
       );
       expect(session.escrowQuarantined).toBe(false);
       expect(sim.events.slice(eventStart)).not.toContainEqual({
@@ -1318,30 +1382,57 @@ describe('materials vault wire round-trip', () => {
         seat(server, fakeWs(), 2, 'Realmsweeptwo', 0),
         seat(server, fakeWs(), 3, 'Realmsweepthree', 0),
       ];
+      // Short, legal signer names: isLegalCrafterName caps a signer at 16
+      // chars (src/sim/professions/tools.ts MAX_CRAFTED_BY_LENGTH).
+      // Overlong names refuse the sweep, leaving the units in bags.
+      const signerFor = (playerIndex: number, signerIndex: number): string =>
+        `A${playerIndex}C${signerIndex}`;
       for (const [playerIndex, player] of players.entries()) {
         player.meta.vault.upgrades = 5;
+        // See the identity-count test above: a distinct non-signer payload
+        // field is what keeps each unit in its own row now that the signer
+        // alone rides the (mergeable) composition instead.
         player.meta.inventory.push(
           ...Array.from({ length: 112 }, (_, signerIndex) => ({
             itemId: 'pristine_hide',
             count: 1,
-            instance: { signer: `Account ${playerIndex} Crafter ${signerIndex}` },
+            instance: {
+              signer: signerFor(playerIndex, signerIndex),
+              rolled: { stats: { sta: signerIndex + 1 } },
+            },
           })),
         );
       }
 
-      for (const player of players.slice(0, 2)) {
+      for (const [playerIndex, player] of players.slice(0, 2).entries()) {
+        const journalStart = journalBatchCount(player.session);
         send(server, player.session, { cmd: 'vault_deposit_all' });
         expect(player.meta.vault.special).toHaveLength(112);
-        expect(journalLedgerRows(player.session)).toHaveLength(112);
+        const batch = journalLedgerRows(player.session, journalStart);
+        expect(batch).toHaveLength(112);
+        expectExactSignedVaultRows(
+          player.meta.vault.special,
+          batch,
+          Array.from({ length: 112 }, (_, signerIndex) => signerFor(playerIndex, signerIndex)),
+          (signerIndex) => signerIndex + 1,
+        );
       }
 
       // The THIRD legitimate account's sweep lands past the realm burst: it
       // ADMITS, its rows commit, no drop is counted, and the breach counter
       // records the admission the old refusing guard would have dropped.
       const third = players[2];
+      const thirdJournalStart = journalBatchCount(third.session);
       send(server, third.session, { cmd: 'vault_deposit_all' });
       expect(third.meta.vault.special).toHaveLength(112);
-      expect(journalLedgerRows(third.session)).toHaveLength(112);
+      const thirdBatch = journalLedgerRows(third.session, thirdJournalStart);
+      expect(thirdBatch).toHaveLength(112);
+      expectExactSignedVaultRows(
+        third.meta.vault.special,
+        thirdBatch,
+        Array.from({ length: 112 }, (_, signerIndex) => signerFor(2, signerIndex)),
+        (signerIndex) => signerIndex + 1,
+      );
       expect(dropped).not.toHaveBeenCalledWith('bank_vault');
       // biome-ignore lint/suspicious/noExplicitAny: private coordinator probe
       const snapshot = (server as any).bankVaultLedgerGuardCoordinator.snapshot();
