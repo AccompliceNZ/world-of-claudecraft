@@ -74,7 +74,7 @@ const CEILINGS: Record<string, number> = {
   'base.css': 23,
   'components.css': 453,
   'hud.css': 423,
-  'hud.mobile.css': 262,
+  'hud.mobile.css': 29,
   'index.css': 0,
   'index.extra.css': 43,
   'layout.css': 0,
