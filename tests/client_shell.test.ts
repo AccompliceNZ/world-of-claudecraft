@@ -1681,8 +1681,8 @@ describe('client HTML shell', () => {
       expect(hudTs).toContain(`className = '${className}';`);
     }
     expect(hudTs).toContain("el.className = 'ui-panel-strong';");
-    // Bind banner Reset and Done, plus the emote editor's Done.
-    expect(hudTs.match(/className = 'btn ui-btn';/g)).toHaveLength(3);
+    // Bind banner Reset and Done, the emote editor's Done, and the prompt's Decline.
+    expect(hudTs.match(/className = 'btn ui-btn';/g)).toHaveLength(4);
     expect(hudTs).toContain("const bar3 = $('#actionbar3');");
     expect(hudTs).toContain('const container = bars[actionBarRowForSlot(i) - 1];');
     expect(hudTs).toContain('keyCapLabel(this.keybinds.primaryLabel(slotKey))');

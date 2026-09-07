@@ -607,8 +607,8 @@ describe('entry HTMLs', () => {
     // the painter then skips the ring silently: an index-only edit would ship a
     // border that never appears for online players (the /play shared-entry trap).
     for (const html of [indexHtml, playHtml]) {
-      expect(html).toContain('class="portrait-wrap" id="pf-portrait-wrap"');
-      expect(html).toContain('class="portrait-wrap" id="tf-portrait-wrap"');
+      expect(html).toContain('class="portrait-wrap ui-portrait-wrap" id="pf-portrait-wrap"');
+      expect(html).toContain('class="portrait-wrap ui-portrait-wrap" id="tf-portrait-wrap"');
     }
   });
 

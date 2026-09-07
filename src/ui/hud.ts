@@ -18560,7 +18560,7 @@ export class Hud {
   ): HTMLElement {
     const stack = $('#prompt-stack');
     const prompt = document.createElement('div');
-    prompt.className = 'prompt panel';
+    prompt.className = 'prompt panel ui-panel-strong';
     prompt.innerHTML = `<div class="prompt-text">${text}</div>`;
     prompt.setAttribute('role', 'alertdialog');
     prompt.setAttribute('aria-modal', 'false');
@@ -18568,11 +18568,11 @@ export class Hud {
     promptText.id = `hud-prompt-title-${this.promptSequence++}`;
     prompt.setAttribute('aria-labelledby', promptText.id);
     const accept = document.createElement('button');
-    accept.className = 'btn';
+    accept.className = 'btn ui-btn ui-btn--red';
     accept.type = 'button';
     accept.textContent = acceptLabel;
     const decline = document.createElement('button');
-    decline.className = 'btn';
+    decline.className = 'btn ui-btn';
     decline.type = 'button';
     decline.textContent = declineLabel;
     accept.addEventListener('click', () => {
@@ -18583,7 +18583,13 @@ export class Hud {
       prompt.remove();
       onDecline();
     });
-    prompt.append(accept, decline);
+    const actions = document.createElement('div');
+    actions.className = 'prompt-actions';
+    actions.append(accept, decline);
+    const timeout = document.createElement('div');
+    timeout.className = 'prompt-timeout ui-bar';
+    timeout.innerHTML = '<span class="ui-bar-fill"></span>';
+    prompt.append(actions, timeout);
     stack.appendChild(prompt);
     if (focusFirst) accept.focus();
     window.setTimeout(() => {
