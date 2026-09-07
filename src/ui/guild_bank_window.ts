@@ -129,6 +129,10 @@ export class GuildBankTab {
   // the same reason: the pane's read passes it to the world, and the world
   // drops its loaded pages the moment the kind it is read under changes.
   private logKind: GuildBankLogKind = 'all';
+  // The history's search text, raw as typed (the core normalizes it). Owned
+  // here so it survives the pane rebuild every keystroke causes and resets
+  // with the sub-view on close.
+  private logQuery = '';
   private readonly logPane = new GuildBankLogPane({
     itemDef: (id) => knownItemDef(ITEMS, id),
     selectFilter: (kind) => {
@@ -141,6 +145,11 @@ export class GuildBankTab {
       // The world decides whether there is a page to ask for; the repaint
       // flips the footer to its loading line when it sent one.
       this.deps.world().guildBankLogOlder();
+      this.deps.requestRender();
+    },
+    setSearch: (query) => {
+      if (this.logQuery === query) return;
+      this.logQuery = query;
       this.deps.requestRender();
     },
   });
@@ -180,6 +189,7 @@ export class GuildBankTab {
   resetView(): void {
     this.view = 'contents';
     this.logKind = 'all';
+    this.logQuery = '';
     this.prevReadOnly = null;
     this.priceChangedStatus = null;
   }
@@ -199,7 +209,9 @@ export class GuildBankTab {
    */
   readAndRequestLog(): string | null {
     if (this.view !== 'log') return null;
-    return guildBankLogSignature(this.deps.world().guildBankLog(this.logKind));
+    // The search text joins the key: it changes what the pane draws, and the
+    // window's repaint gate compares this string rather than rendering it.
+    return `${guildBankLogSignature(this.deps.world().guildBankLog(this.logKind))}|${this.logQuery}`;
   }
 
   /** Build the guild pane model from the live world. Exposed so BankWindow can
@@ -254,7 +266,10 @@ export class GuildBankTab {
       // paint of the open log view.
       this.logPane.renderInto(
         el,
-        buildGuildBankLogView(this.deps.world().guildBankLog(this.logKind), this.logKind),
+        buildGuildBankLogView(this.deps.world().guildBankLog(this.logKind), this.logKind, {
+          query: this.logQuery,
+          textOf: (row) => this.logPane.searchText(row),
+        }),
       );
       return;
     }

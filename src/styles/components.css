@@ -8261,6 +8261,17 @@
     color: var(--color-text-muted);
     margin: 0 0 4px;
   }
+  /* The history's search row: one `.bag-search` input (the bank's shared
+     search styling and focus-carry), full width above the scope line. */
+  .gbank-log-tools {
+    display: flex;
+    gap: 6px;
+    margin: 0 0 4px;
+    flex: none;
+  }
+  .gbank-log-search {
+    width: 100%;
+  }
   /* The history's filter chips (All / Items / Money): a labelled group of
      toggle buttons; the pressed one is carried by aria-pressed and styled from
      it, so state is never colour-only. Sized like the bank's small gold

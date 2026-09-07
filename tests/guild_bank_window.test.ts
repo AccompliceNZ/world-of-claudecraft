@@ -1708,3 +1708,112 @@ describe('the transaction HISTORY table (columns and the pinned header)', () => 
     expect(member).not.toContain('Carrier');
   });
 });
+
+describe('the transaction HISTORY search (over the loaded rows)', () => {
+  const openHistory = (h: Harness): void => {
+    h.window.open();
+    clickGuildTab(h);
+    clickLogTab(h);
+  };
+  const searchBox = (h: Harness): HTMLInputElement =>
+    h.root.querySelector('.gbank-log-search') as HTMLInputElement;
+  const type = (h: Harness, text: string): void => {
+    const box = searchBox(h);
+    box.value = text;
+    box.dispatchEvent(new Event('input', { bubbles: true }));
+  };
+  const twoRows = () =>
+    logView({
+      entries: [
+        logEntry({ id: 9, actor: 'Bren', op: 'deposit', count: 5 }),
+        logEntry({ id: 3, op: 'withdraw_gold', itemId: null, count: null, copper: 25_000 }),
+      ],
+      more: true,
+    });
+
+  it('renders a labelled search box above the table, empty by default', () => {
+    const h = harness(guildInfo());
+    h.world.logView = twoRows();
+    openHistory(h);
+    const box = searchBox(h);
+    expect(box).not.toBeNull();
+    expect(box.getAttribute('aria-label')?.length).toBeGreaterThan(0);
+    expect(box.placeholder.length).toBeGreaterThan(0);
+    expect(box.value).toBe('');
+    // Shares the bank's search class so the window carries focus + caret across.
+    expect(box.classList.contains('bag-search')).toBe(true);
+  });
+
+  it('narrows the rows to the member typed, case-insensitively, and says so', () => {
+    const h = harness(guildInfo());
+    h.world.logView = twoRows();
+    openHistory(h);
+    type(h, 'bREN');
+    expect(logColumn(h, 'gbank-log-member')).toEqual(['Bren']);
+    expect(searchBox(h).value).toBe('bREN');
+    const note = h.root.querySelector('.gbank-log-note')?.textContent ?? '';
+    expect(note).toContain('1');
+    expect(note).toContain('2');
+  });
+
+  it('matches the action word and the item name too (what the row shows)', () => {
+    const h = harness(guildInfo());
+    h.world.logView = twoRows();
+    openHistory(h);
+    // Captured BEFORE searching: a search redraws only its matches.
+    const actionOfMoneyRow = logColumn(h, 'gbank-log-action')[1];
+    const itemName = logColumn(h, 'gbank-log-text')[0];
+    type(h, actionOfMoneyRow.slice(0, 4));
+    expect(logColumn(h, 'gbank-log-member')).toContain('Kara');
+    type(h, itemName.slice(-4));
+    expect(logColumn(h, 'gbank-log-member')).toEqual(['Bren']);
+  });
+
+  it('a search with no match says so and STILL offers older rows to widen it', () => {
+    const h = harness(guildInfo());
+    h.world.logView = twoRows();
+    openHistory(h);
+    type(h, 'zzzz-nobody');
+    expect(h.root.querySelectorAll('.gbank-log-row').length).toBe(0);
+    expect(h.root.querySelector('.gbank-log-nomatch')?.textContent?.length).toBeGreaterThan(0);
+    expect(h.root.querySelector('.gbank-log-older')).not.toBeNull();
+    // Clearing the box brings every loaded row back.
+    type(h, '');
+    expect(h.root.querySelectorAll('.gbank-log-row').length).toBe(2);
+  });
+
+  it('the search never touches the wire: no request carries the text', () => {
+    const h = harness(guildInfo());
+    h.world.logView = twoRows();
+    openHistory(h);
+    h.calls.length = 0;
+    type(h, 'Bren');
+    expect(h.calls.filter((c) => c !== 'guildBankLog')).toEqual([]);
+  });
+
+  it('closing the window clears the search', () => {
+    const h = harness(guildInfo());
+    h.world.logView = twoRows();
+    openHistory(h);
+    type(h, 'Bren');
+    h.window.close();
+    openHistory(h);
+    expect(searchBox(h).value).toBe('');
+    expect(h.root.querySelectorAll('.gbank-log-row').length).toBe(2);
+  });
+
+  it('keeps focus and caret in the search box across the repaint a keystroke causes', () => {
+    const h = harness(guildInfo());
+    h.world.logView = twoRows();
+    openHistory(h);
+    const box = searchBox(h);
+    box.focus();
+    box.value = 'Br';
+    box.setSelectionRange(1, 1);
+    box.dispatchEvent(new Event('input', { bubbles: true }));
+    const fresh = searchBox(h);
+    expect(fresh).not.toBe(box);
+    expect(document.activeElement).toBe(fresh);
+    expect(fresh.selectionStart).toBe(1);
+  });
+});

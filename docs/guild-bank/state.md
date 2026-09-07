@@ -377,6 +377,16 @@ gate green). Teardown of docs/guild-bank/ awaits the user's explicit confirmatio
     of an operator purge reads "An administrator" (`logActorAdmin`), never the carrier.
     Direction is a row class (`gbank-log-in`/`-out`) tinting the Action word on top of the
     word itself, never colour alone.
+  - SEARCH (2026-09-07, user request "add an option to search"): a `.bag-search` box above
+    the scope line filters the LOADED rows by what each row shows (member, action, details,
+    localized; `GuildBankLogPane.searchText` handed to the core as `GuildBankLogSearch.textOf`,
+    so the core stays i18n-free). Client-side on purpose: the server pages by cursor, item
+    names are localized only on the client, and the wire never carries the text. The scope
+    line says "{matched} of {count} loaded"; a search with no match keeps the rows STATE
+    (the history is loaded) and the footer still offers Show older to widen it. The box
+    reuses `.bag-search` so BankWindow's existing focus + caret capture carries typing across
+    the rebuild each keystroke causes (the guild arm now restores it like the personal arm).
+    The query lives on GuildBankTab, joins the repaint key, and resets on close.
 - Purse-paid rung 0 (2026-08-03, user-directed pricing redesign): the guild bank is no
   longer open by default. A new guild starts with a 0-slot bank; an officer OPENS it via
   the existing `guild_bank_buy_slots` token (no new wire surface: the sim decides which

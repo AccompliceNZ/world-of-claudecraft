@@ -121,6 +121,32 @@ export interface GuildBankLogFilterModel {
  *  "the list stopped here". */
 export type GuildBankLogFooter = 'older' | 'loading' | 'end';
 
+/** The pane's search, over the LOADED rows only (the server pages by cursor;
+ *  a search never reaches it). `textOf` is the painter's localized text for a
+ *  row (member, action, details), so the core stays i18n-free while a player
+ *  can type what they actually see on screen. */
+export interface GuildBankLogSearch {
+  query: string;
+  textOf: (row: GuildBankLogRowModel) => string;
+}
+
+/** The comparable form of a search query: trimmed and case-folded. Empty
+ *  means "no search". */
+export function normalizeGuildBankLogQuery(query: string): string {
+  return query.trim().toLowerCase();
+}
+
+/** The rows whose text contains the query (case-insensitive substring);
+ *  every row when the query is empty. Order is preserved. */
+export function filterGuildBankLogRows(
+  rows: readonly GuildBankLogRowModel[],
+  search: GuildBankLogSearch | undefined,
+): GuildBankLogRowModel[] {
+  const query = normalizeGuildBankLogQuery(search?.query ?? '');
+  if (query === '' || search === undefined) return [...rows];
+  return rows.filter((row) => search.textOf(row).toLowerCase().includes(query));
+}
+
 export type GuildBankLogPaneModel = {
   /** The chip strip renders on EVERY pane state, so a viewer can leave an
    *  empty filter slice and a refusal repaints under the chip that was
@@ -133,7 +159,18 @@ export type GuildBankLogPaneModel = {
    *  painter words that as "nothing matches this filter" rather than "the
    *  bank was never touched", which under a filter would be false. */
   | { kind: 'empty'; filtered: boolean }
-  | { kind: 'rows'; rows: GuildBankLogRowModel[]; footer: GuildBankLogFooter }
+  /** `rows` are the rows to DRAW (the search's matches; every loaded row when
+   *  the query is empty), `total` how many are loaded, `query` the raw text
+   *  the search box shows. `rows` can be EMPTY here: a search that matched
+   *  nothing is still a loaded history, and the footer still offers older
+   *  rows to widen it. */
+  | {
+      kind: 'rows';
+      rows: GuildBankLogRowModel[];
+      footer: GuildBankLogFooter;
+      total: number;
+      query: string;
+    }
 );
 
 /**
@@ -182,6 +219,7 @@ export function buildGuildBankLogView(
   // caller that remembers the selection passes it, so a stale or offline
   // answer can never un-press the chip somebody just pressed.
   selected: GuildBankLogKind = view.kind,
+  search?: GuildBankLogSearch,
 ): GuildBankLogPaneModel {
   const filters = guildBankLogFilters(selected);
   if (view.state === 'refused') return { filters, kind: 'refused' };
@@ -203,7 +241,14 @@ export function buildGuildBankLogView(
   // window with older rows behind it offers them even when it is short (a
   // filtered slice can be sparse).
   const footer: GuildBankLogFooter = view.olderPending ? 'loading' : view.more ? 'older' : 'end';
-  return { filters, kind: 'rows', rows, footer };
+  return {
+    filters,
+    kind: 'rows',
+    rows: filterGuildBankLogRows(rows, search),
+    footer,
+    total: rows.length,
+    query: search?.query ?? '',
+  };
 }
 
 /**

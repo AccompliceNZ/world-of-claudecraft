@@ -86,6 +86,9 @@ export interface GuildBankLogPaneDeps {
   /** The show-older button was pressed: the owner asks the world for the
    *  next page and repaints (the footer flips to its loading line). */
   loadOlder(): void;
+  /** The search box changed: the owner remembers the raw text and repaints
+   *  (the core filters the loaded rows through searchText below). */
+  setSearch(query: string): void;
 }
 
 export class GuildBankLogPane {
@@ -117,7 +120,14 @@ export class GuildBankLogPane {
     // never reads as proof that nothing happened.
     const note = document.createElement('div');
     note.className = 'gbank-log-note';
-    note.textContent = t('hudChrome.bank.logShowing', { count: this.count(model.rows.length) });
+    note.textContent =
+      model.query.trim() === ''
+        ? t('hudChrome.bank.logShowing', { count: this.count(model.total) })
+        : t('hudChrome.bank.logShowingMatched', {
+            matched: this.count(model.rows.length),
+            count: this.count(model.total),
+          });
+    wrap.appendChild(this.buildSearch(model.query));
     wrap.appendChild(note);
     // .bank-scroll is the window's one scroll-region class; BankWindow captures
     // and restores its offset (and scopes that restore to one pane), so the log
@@ -145,10 +155,46 @@ export class GuildBankLogPane {
     const body = document.createElement('tbody');
     for (const row of model.rows) body.appendChild(this.buildRow(row));
     table.append(head, body);
-    scroll.appendChild(table);
+    if (model.rows.length > 0) {
+      scroll.appendChild(table);
+    } else {
+      // A search that matched none of the LOADED rows: said in words, with the
+      // footer still offering older rows so the search can be widened.
+      const none = document.createElement('div');
+      none.className = 'bank-empty gbank-log-notice gbank-log-nomatch';
+      none.textContent = t('hudChrome.bank.logSearchNoMatch');
+      scroll.appendChild(none);
+    }
     scroll.appendChild(this.buildFooter(model.footer));
     wrap.appendChild(scroll);
     el.appendChild(wrap);
+  }
+
+  /** The text a search matches against for one row: exactly what the row
+   *  shows in its Member, Action and Details cells, so a player can type what
+   *  they see. Exposed for the owner to hand the core (GuildBankLogSearch). */
+  searchText(row: GuildBankLogRowModel): string {
+    return `${this.member(row)} ${t(ACTION_KEY[row.kind])} ${this.detail(row)}`;
+  }
+
+  // The search box, over the loaded rows. It reuses the bank's `.bag-search`
+  // class on purpose: BankWindow's repaint captures and restores focus and
+  // caret for that class, so typing survives the full rebuild every keystroke
+  // causes (the bags search's live-bug precedent). The value is re-installed
+  // from the owner's remembered query, never read back from the old node.
+  private buildSearch(query: string): HTMLElement {
+    const tools = document.createElement('div');
+    tools.className = 'gbank-log-tools';
+    const input = document.createElement('input');
+    input.type = 'search';
+    input.className = 'bag-search gbank-log-search';
+    input.placeholder = t('hudChrome.bank.logSearchPlaceholder');
+    input.setAttribute('aria-label', t('hudChrome.bank.logSearchAria'));
+    input.autocomplete = 'off';
+    input.value = query;
+    input.addEventListener('input', () => this.deps.setSearch(input.value));
+    tools.appendChild(input);
+    return tools;
   }
 
   // The filter chip strip: a labelled GROUP of toggle buttons (aria-pressed),
@@ -264,15 +310,8 @@ export class GuildBankLogPane {
     const member = document.createElement('td');
     member.className = 'gbank-log-member';
     // textContent: the character name is player-authored and is spliced
-    // verbatim into a text sink, which is the escape. A missing actor is a
-    // LOCALIZED stand-in, never an empty cell: a blank member cell on the one
-    // surface that has to look trustworthy would read as a rendering bug. The
-    // operator purge names NOBODY (the core already nulled the carrier), and
-    // says who did it instead.
-    member.textContent =
-      row.kind === 'adminPurge'
-        ? t('hudChrome.bank.logActorAdmin')
-        : (row.actor ?? t('hudChrome.bank.logFormerMember'));
+    // verbatim into a text sink, which is the escape.
+    member.textContent = this.member(row);
     const action = document.createElement('td');
     action.className = 'gbank-log-action';
     action.textContent = t(ACTION_KEY[row.kind]);
@@ -281,6 +320,15 @@ export class GuildBankLogPane {
     text.textContent = this.detail(row);
     tr.append(time, member, action, text);
     return tr;
+  }
+
+  // The MEMBER cell's text. A missing actor is a LOCALIZED stand-in, never an
+  // empty cell: a blank member cell on the one surface that has to look
+  // trustworthy would read as a rendering bug. The operator purge names
+  // NOBODY (the core already nulled the carrier), and says who did it instead.
+  private member(row: GuildBankLogRowModel): string {
+    if (row.kind === 'adminPurge') return t('hudChrome.bank.logActorAdmin');
+    return row.actor ?? t('hudChrome.bank.logFormerMember');
   }
 
   // The DETAILS cell: the stack that moved, or the sum. EXHAUSTIVE, with no

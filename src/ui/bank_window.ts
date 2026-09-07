@@ -719,9 +719,16 @@ export class BankWindow {
       }
       this.annotateGuildFocusKeys(el, guildModel);
       this.restoreScroll(el, prevScroll);
-      // The guild pane has no search box, so a searchFocus capture degrades
-      // through the key ladder to the close button, never to <body>.
-      if (hadFocus) this.restoreControlFocus(el, focusKey);
+      // The history view's search box shares `.bag-search`, so the caret
+      // capture above applies here exactly as on the personal pane: every
+      // keystroke rebuilds the pane, and the caret must land where it was.
+      const guildSearch = el.querySelector('.bag-search') as HTMLInputElement | null;
+      if (searchFocus && guildSearch) {
+        guildSearch.focus({ preventScroll: true });
+        guildSearch.setSelectionRange(searchFocus.start, searchFocus.end);
+      } else if (hadFocus) {
+        this.restoreControlFocus(el, focusKey);
+      }
       return;
     }
     if (model.kind === 'away') {

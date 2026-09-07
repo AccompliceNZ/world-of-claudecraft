@@ -11,6 +11,7 @@ import { describe, expect, it } from 'vitest';
 import { Sim } from '../src/sim/sim';
 import {
   buildGuildBankLogView,
+  filterGuildBankLogRows,
   guildBankLogFilters,
   guildBankLogRow,
   guildBankLogSignature,
@@ -261,5 +262,51 @@ describe('buildGuildBankLogView: the transaction history (filters and paging)', 
       guildBankLogSignature({ ...base, entries: [entry({ id: 5 }), entry({ id: 2 })] }),
     ];
     expect(new Set(sigs).size).toBe(sigs.length);
+  });
+});
+
+describe('buildGuildBankLogView: the search over loaded rows', () => {
+  const textOf = (row: { actor: string | null; itemId: string | null }) =>
+    `${row.actor ?? ''} ${row.itemId ?? ''}`;
+
+  it('draws only the matching rows, keeps the loaded total, and echoes the raw query', () => {
+    const v = view({ entries: [entry({ id: 2, actor: 'Bren' }), entry({ id: 1, actor: 'Kara' })] });
+    const model = buildGuildBankLogView(v, 'all', { query: '  bReN ', textOf });
+    expect(model.kind).toBe('rows');
+    if (model.kind !== 'rows') return;
+    expect(model.rows.map((r) => r.id)).toEqual([2]);
+    expect(model.total).toBe(2);
+    expect(model.query).toBe('  bReN ');
+  });
+
+  it('an empty or whitespace query draws every row', () => {
+    const v = view({ entries: [entry({ id: 2 }), entry({ id: 1 })] });
+    for (const query of ['', '   ']) {
+      const model = buildGuildBankLogView(v, 'all', { query, textOf });
+      expect(model.kind === 'rows' && model.rows.length).toBe(2);
+    }
+  });
+
+  it('a search with no match is STILL the rows state (the history is loaded), with no rows', () => {
+    const v = view({ entries: [entry({ id: 2 })], more: true });
+    const model = buildGuildBankLogView(v, 'all', { query: 'nobody', textOf });
+    expect(model.kind).toBe('rows');
+    if (model.kind !== 'rows') return;
+    expect(model.rows).toEqual([]);
+    expect(model.total).toBe(1);
+    expect(model.footer).toBe('older');
+  });
+
+  it('filterGuildBankLogRows preserves order and never mutates its input', () => {
+    const v = view({
+      entries: [entry({ id: 3, actor: 'Ann' }), entry({ id: 2 }), entry({ id: 1, actor: 'Anna' })],
+    });
+    const model = buildGuildBankLogView(v);
+    if (model.kind !== 'rows') throw new Error('rows expected');
+    const frozen = Object.freeze([...model.rows]);
+    expect(filterGuildBankLogRows(frozen, { query: 'ann', textOf }).map((r) => r.id)).toEqual([
+      3, 1,
+    ]);
+    expect(filterGuildBankLogRows(frozen, undefined).map((r) => r.id)).toEqual([3, 2, 1]);
   });
 });
