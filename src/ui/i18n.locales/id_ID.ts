@@ -3394,7 +3394,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Setiap {points} poin pada komponen meningkatkan tingkat panennya satu langkah, hingga {steps} langkah; kurang dari {points} poin tetap meningkatkan hasilnya.',
   'hudChrome.townFocus.title': 'Fokus Kota',
   'hudChrome.townFocus.townOnlyHint': 'Fokus hanya bisa diubah saat kamu berada di kota.',
-  'hudChrome.archetypeTitle.label': 'Gelar',
   'hudChrome.archetypeTitle.none': 'Tidak Ada',
   'entities.itemSets.crownforged.bonus4':
     'Serangan kritis senjatamu menyerpihkan target dengan Serpih Tulang, membuatnya berdarah sebesar 8 kerusakan setiap 2 detik selama 12 detik. Menumpuk hingga 3 kali.',
@@ -10473,7 +10472,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gathering.herbalism': 'Herbalisme',
   'hudChrome.gathering.logging': 'Penebangan',
   'hudChrome.gathering.mining': 'Penambangan',
-  'hudChrome.gathering.title': 'Pengumpulan',
   'errors.api.accountSessionLimit':
     'Terlalu banyak karakter dari akun ini yang sudah berada di dalam dunia.',
   'errors.api.crossSiteOrigin': 'Permintaan diblokir karena alasan keamanan.',
@@ -10708,7 +10706,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Merobek zirah target, menguranginya sebesar {damage}% per penerapan. Menumpuk hingga 5 kali. Menghasilkan ancaman dalam jumlah besar.',
   'entities.mobs.training_dummy.name': 'Boneka Latihan',
   'entities.mobs.yumi_cat.name': 'Yumi',
-  'hudChrome.archetypeTitle.hobbyLabel': 'Hobi',
   'hudChrome.auraEffect.armorPct': 'Mengurangi zirah sebesar {pct}%',
   'hudChrome.auraEffect.armorPctStacks': 'Mengurangi zirah sebesar {pct}% ({stacks} tumpukan)',
   'hudChrome.auraEffect.increasePct.allStats': 'Meningkatkan semua atribut sebesar {pct}%',
