@@ -4042,10 +4042,8 @@ export class Hud {
     // forget every saved frame box (every registered mover, trackers and
     // class resource bars included), and re-dock the panels with their own
     // geometry (chat, meters, target auras). Combined action bars split back
-    // apart through the settings seam; settings that merely SHOW or HIDE
-    // content (optional bars, the pet frame, buffs on the player frame) keep
-    // the player's choice; the buff row's reset can seat it in the aura
-    // column, so its anchor re-applies.
+    // apart through the settings seam; show/hide settings keep the player's
+    // choice. The buff row's reset can seat it in the aura column: re-anchor.
     this.interfaceUnlock.resetAll();
     this.applyAuraAnchor();
     this.chatGeometry.reset();
