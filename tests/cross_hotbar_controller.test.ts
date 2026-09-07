@@ -31,7 +31,7 @@ let writes = 0;
 let skips = 0;
 
 function build(): CrossHotbarController {
-  document.body.innerHTML = '<div id="cross-hotbar"></div>';
+  document.body.innerHTML = '<div id="cross-hotbar" class="xhb"></div>';
   writes = 0;
   skips = 0;
   const writers = makeWriterFacet(
@@ -85,6 +85,63 @@ describe('the cells', () => {
     // and a reachable one made the pad's confirm press land on a dead control.
     expect(document.querySelectorAll(FOCUSABLE_SELECTOR)).toHaveLength(0);
     for (const cell of cells()) expect(cell.getAttribute('tabindex')).toBe('-1');
+  });
+
+  it('composes every action cell from the shared socket primitive', () => {
+    for (const cell of cells()) {
+      expect(cell.classList.contains('ui-socket')).toBe(true);
+      expect(cell.querySelector('.icon-label')?.classList.contains('ui-socket-art')).toBe(true);
+      expect(cell.querySelector('.item-count')?.classList.contains('ui-socket-count')).toBe(true);
+      expect(cell.querySelector('.keybind')?.classList.contains('ui-socket-key')).toBe(true);
+      expect(cell.querySelector('.cd-overlay')?.classList.contains('ui-socket-cd')).toBe(true);
+      expect(cell.querySelector('.cdtext')?.classList.contains('ui-socket-cd-text')).toBe(true);
+    }
+  });
+
+  it('builds four crosses with a shared medal stud at each center', () => {
+    const crosses = [...document.querySelectorAll<HTMLElement>('.xhb-diamond')];
+    expect(crosses).toHaveLength(4);
+    for (const cross of crosses) {
+      const stud = cross.querySelector<HTMLElement>(':scope > .xhb-stud');
+      expect(stud?.classList.contains('ui-medal')).toBe(true);
+      expect(stud?.classList.contains('ui-medal--stud')).toBe(true);
+      expect(stud?.getAttribute('aria-hidden')).toBe('true');
+    }
+  });
+
+  it('keeps the two halves around the two-pip set rail', () => {
+    const root = document.getElementById('cross-hotbar');
+    if (!root) throw new Error('cross hotbar root was not built');
+    expect([...root.children].map((el) => el.className)).toEqual([
+      'xhb-half xhb-half-left',
+      'xhb-set-rail',
+      'xhb-half xhb-half-right',
+      'xhb-hint',
+    ]);
+    expect(
+      [...root.querySelectorAll<HTMLElement>('.xhb-pip')].map((pip) => [
+        pip.getAttribute('data-xhb-set'),
+        pip.classList.contains('ui-medal'),
+        pip.classList.contains('ui-medal--stud'),
+      ]),
+    ).toEqual([
+      ['0', true, true],
+      ['1', true, true],
+    ]);
+  });
+
+  it('composes both trigger tabs from the shared keycap primitive', () => {
+    const tabs = [...document.querySelectorAll<HTMLElement>('.xhb-trigger')];
+    expect(tabs).toHaveLength(2);
+    for (const tab of tabs) expect(tab.classList.contains('ui-keycap')).toBe(true);
+  });
+
+  it('distinguishes d-pad discs from the four physical face-button colors', () => {
+    expect(document.querySelectorAll('.xhb-glyph-dpad')).toHaveLength(8);
+    expect(document.querySelectorAll('.xhb-glyph-face')).toHaveLength(8);
+    for (const button of ['a', 'b', 'x', 'y']) {
+      expect(document.querySelectorAll(`.xhb-glyph-face-${button}`)).toHaveLength(2);
+    }
   });
 });
 
@@ -152,5 +209,65 @@ describe('the trigger pair', () => {
       'utf8',
     );
     expect(src).toContain("t('hudChrome.controller.crossHotbarPosition'");
+  });
+});
+
+// The bar's look is CSS, so these pin the rules the redesign is FOR alongside the
+// shipped states it must not quietly drop. Text pins on the sheet, because jsdom
+// resolves neither @layer nor a cascade this deep.
+describe('the cross hotbar stylesheet', () => {
+  const hudCss = readFileSync(join(__dirname, '../src/styles/hud.css'), 'utf8');
+  const section = hudCss.slice(hudCss.indexOf('---------- controller cross hotbar ----------'));
+
+  it('sizes and rounds the cells off the shared socket tokens', () => {
+    expect(section).toContain('--xhb-cell: var(--socket-size);');
+    expect(section).toContain('border-radius: var(--radius-cell);');
+    // The art inset follows the cell's own radius rather than a second literal.
+    expect(section).toContain('border-radius: calc(var(--radius-cell) - 2px);');
+  });
+
+  it('rides the armed halo on the decorative-glow scale', () => {
+    expect(section).toContain('.xhb-half.xhb-armed::before {\n    opacity: var(--fx-shadow, 1);');
+  });
+
+  it('still drops the unreachable half in the expanded bank', () => {
+    // The pips say WHICH set; this says which half a press can reach, and a bank
+    // drawn with both halves reads as an ordinary trigger page.
+    expect(section).toContain('.xhb.xhb-expanded .xhb-half:not(.xhb-armed) {\n    display: none;');
+  });
+
+  it('keeps the compact preset label standdown as well as the new cell fade', () => {
+    expect(section).toContain('body.xhb-compact .xhb-half:not(.xhb-armed) .xhb-trigger {');
+    expect(section).toContain(
+      'body.xhb-compact .xhb-half:not(.xhb-armed) .xhb-slot {\n    opacity: 0.45;',
+    );
+  });
+
+  it('colors each face glyph with its own hardware token', () => {
+    for (const button of ['a', 'b', 'x', 'y']) {
+      expect(section).toContain(
+        `.xhb-glyph-face-${button} {\n    color: var(--color-pad-${button});`,
+      );
+    }
+  });
+
+  it('mounts the pad hint strip and the launcher legend behind pad mode', () => {
+    expect(section).toContain('#pad-hint-strip,\n  #pad-legend {');
+    expect(section).toContain(
+      'body.xhb-mode:not(.mobile-touch) #pad-hint-strip,\n  body.xhb-mode:not(.mobile-touch) #pad-legend {\n    display: flex;',
+    );
+    // The keycaps come back the moment the player touches the keyboard, so the
+    // standdown reads pad-active rather than the mode class.
+    expect(section).toContain(
+      'body.xhb-mode.pad-active:not(.mobile-touch) #side-buttons .keybind {',
+    );
+  });
+
+  it('draws the pad focus ring as an outline, never a shadow', () => {
+    const rule = section.slice(section.indexOf('.pad-focus {'));
+    const body = rule.slice(0, rule.indexOf('}'));
+    expect(body).toContain('outline: 2px solid var(--color-border-focus);');
+    expect(body).toContain('outline-offset: 2px;');
+    expect(body).not.toContain('box-shadow');
   });
 });
