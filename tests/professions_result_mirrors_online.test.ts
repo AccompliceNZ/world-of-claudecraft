@@ -107,7 +107,7 @@ function placeAt(server: GameServer, pid: number, pos: { x: number; z: number })
 // (corpse_harvest_session.ts) cancels on `actor.inCombat`, and over real
 // ticks an ambient mob can wander into aggro range and flip that flag: not a
 // production defect, just an unrelated ambient actor this fixture never
-// asked for. Strip every non-player entity BEFORE the owned corpse is
+// asked for. Strip every ambient mob entity BEFORE the owned corpse is
 // planted (never the player) so the cast has nothing to fight.
 function removeAmbientMobs(server: GameServer): void {
   for (const [id, entity] of server.sim.entities) {

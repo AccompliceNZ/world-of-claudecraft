@@ -31,6 +31,7 @@ import {
   restoreMatchPet,
   snapshotMatchPet,
 } from '../pet/pet_match_return';
+import { releaseCorpseHarvest } from '../professions/corpse_harvest_session';
 import { removeMatchFeasts } from '../professions/feast_lifecycle';
 import { awardFiestaCompletionHonor, awardRankedArenaResultHonor, honorTeamIdentity } from '../pvp';
 import { aurasSurvivingCleanSlate, SICKNESS_AURA_IDS, UNSTUCK_SICKNESS_ID } from '../resurrection';
@@ -1102,6 +1103,13 @@ export function readyArenaFighter(
   e.queuedCastAbility = null;
   e.queuedCastAim = null;
   emitRainOfFireStop(ctx, e);
+  // An in-flight corpse-harvest cast owns a reservation + a frozen session
+  // beyond `castingAbility` itself (professions/corpse_harvest_session.ts);
+  // blanking the cast flag alone would strand both. Explicit, idempotent
+  // release here, the same shape the damage/death hub uses, rather than the
+  // general `cancelCast` (which would also fire ability-specific interrupt
+  // side effects unrelated to an ordinary arena/Fiesta seat reset).
+  releaseCorpseHarvest(ctx, e.id);
   e.castingAbility = null;
   e.castRemaining = 0;
   e.castTargetId = null;
