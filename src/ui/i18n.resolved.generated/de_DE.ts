@@ -7464,10 +7464,7 @@ export const de_DE: EnTranslations = {
     "playAria": "World of ClaudeCraft spielen",
     "serverLabel": "Wähle deine Welt",
     "serverAria": "Welt wählen: Online oder Offline",
-    "serverOfflineSub": "Sofortige lokale Welt",
-    "caLabel": "$WOC-Vertragsadresse",
-    "caCopyAria": "Vertragsadresse kopieren",
-    "caNote": "WOC ist unser Community-Token. Es wird zum Spielen nicht benötigt. Tritt dem Discord bei, um über den Nutzen und das Schwungrad von WOC zu sprechen."
+    "serverOfflineSub": "Sofortige lokale Welt"
   },
   "auth": {
     "enterRealm": "Welt betreten",

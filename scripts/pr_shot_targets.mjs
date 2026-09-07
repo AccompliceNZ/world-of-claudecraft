@@ -10862,6 +10862,30 @@ export const TARGETS = [
     },
   },
   {
+    key: 'landing-play-console',
+    label: 'Landing page play console (world picker, Play button, tip) on the web shell',
+    // The pre-game home page: any index.html or shell.css change can move what a
+    // first-time visitor sees before they log in, so shoot the console itself.
+    // Web only: the native and desktop shells hide parts of the console (see the
+    // body.native-app / desktop-app rules in hud.css); the phone variant shows the
+    // trimmed mode-select layout hud.mobile.css owns.
+    when: ['index.html', 'styles/shell.css'],
+    variants: [
+      { key: 'desktop-web', landing: true, beforeLoad: lowGraphicsSeed },
+      { key: 'mobile-web', landing: true, mobile: true, beforeLoad: lowGraphicsSeed },
+    ],
+    async capture(page) {
+      if (!(await pollForSize(page, '#mode-select'))) {
+        throw new Error('landing play console did not render');
+      }
+      await page.evaluate(() => {
+        document.querySelector('#mode-select')?.scrollIntoView({ block: 'center' });
+      });
+      await wait(300);
+      return { clip: '#mode-select' };
+    },
+  },
+  {
     key: 'steam-wishlist',
     label: 'Steam wishlist reminder on the landing shell and desktop/mobile chrome',
     when: ['src/ui/steam_wishlist'],

@@ -7464,10 +7464,7 @@ export const sv_SE: EnTranslations = {
     "playAria": "Spela World of ClaudeCraft",
     "serverLabel": "Välj din värld",
     "serverAria": "Välj värld: Online eller Offline",
-    "serverOfflineSub": "Direkt lokal värld",
-    "caLabel": "$WOC Kontraktsadress",
-    "caCopyAria": "Kopiera kontraktsadress",
-    "caNote": "WOC är vår community-token. Den behövs inte för att spela. Gå med i Discord för att diskutera WOC:s nytta och svänghjul."
+    "serverOfflineSub": "Direkt lokal värld"
   },
   "auth": {
     "enterRealm": "Träd in i världen",
