@@ -127,3 +127,84 @@ describe('map sidebar controller', () => {
     expect(test.root.querySelector('[data-map-untrack]')?.hasAttribute('disabled')).toBe(true);
   });
 });
+
+describe('map sidebar controller: walking cadence', () => {
+  beforeEach(() => {
+    document.body.innerHTML = '';
+  });
+
+  /** The offers list is the only part of the rail that moves with the player, so
+   *  it needs live offers to be worth measuring (the default harness has none). */
+  function walkingHarness() {
+    const root = document.createElement('aside');
+    document.body.appendChild(root);
+    const giver = NPCS[QUESTS.q_wolves.giverNpcId];
+    const world = {
+      player: { name: 'Adventurer', pos: { x: giver.pos.x, y: 0, z: giver.pos.z } },
+      questLog: new Map<string, QuestProgress>([
+        ['q_wolves', { questId: 'q_wolves', counts: [2], state: 'active' }],
+      ]),
+      questState: () => 'available',
+    } as unknown as IWorld;
+    const controller = new MapSidebarController({
+      root: () => root,
+      click: vi.fn(),
+      onFiltersChanged: vi.fn(),
+      onShowRoute: vi.fn(),
+      onUntrackQuest: vi.fn(),
+    });
+    const zone = zoneAt(giver.pos.x, giver.pos.z);
+    const writes = { count: 0 };
+    let descriptor: PropertyDescriptor | undefined;
+    for (
+      let proto = Object.getPrototypeOf(root);
+      proto && !descriptor;
+      proto = Object.getPrototypeOf(proto)
+    ) {
+      descriptor = Object.getOwnPropertyDescriptor(proto, 'innerHTML');
+    }
+    if (!descriptor?.set) throw new Error('no innerHTML accessor to count writes through');
+    const innerHtml = descriptor;
+    Object.defineProperty(root, 'innerHTML', {
+      configurable: true,
+      get: () => innerHtml.get?.call(root),
+      set: (value: string) => {
+        writes.count += 1;
+        innerHtml.set?.call(root, value);
+      },
+    });
+    const walk = (dx: number) => {
+      world.player.pos.x = giver.pos.x + dx;
+      controller.update(world, zone);
+    };
+    return { root, walk, writes };
+  }
+
+  it('repaints nothing while the player walks a few yards', () => {
+    const test = walkingHarness();
+    test.walk(0);
+    expect(test.writes.count, 'the first update paints the rail').toBe(1);
+    expect(test.root.querySelectorAll('.map-atlas-nearby-row').length).toBeGreaterThan(0);
+    const painted = test.root.firstElementChild;
+
+    test.walk(3);
+
+    // A live distance moved every tick, so the rail used to rebuild its whole
+    // subtree four times a second while the player walked.
+    expect(test.writes.count).toBe(1);
+    expect(test.root.firstElementChild).toBe(painted);
+  });
+
+  it('repaints once the offers list actually reads differently', () => {
+    const test = walkingHarness();
+    test.walk(0);
+    const painted = test.root.firstElementChild;
+    const before = test.root.querySelector('.map-atlas-nearby-row')?.textContent;
+
+    test.walk(30);
+
+    expect(test.writes.count).toBe(2);
+    expect(test.root.firstElementChild).not.toBe(painted);
+    expect(test.root.querySelector('.map-atlas-nearby-row')?.textContent).not.toBe(before);
+  });
+});

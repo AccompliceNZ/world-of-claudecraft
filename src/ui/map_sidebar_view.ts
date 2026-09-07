@@ -79,6 +79,40 @@ export function toggleMapAtlasFilter(
   return { ...filters, [id]: !filters[id] };
 }
 
+/** Yards per step of the offers list's rendered distance. A live distance moves
+ *  every tick while the player walks, which is what made the rail rebuild its
+ *  whole subtree four times a second; a bucketed one holds still until the
+ *  reading really changes. */
+export const MAP_ATLAS_DISTANCE_BUCKET = 10;
+
+export function bucketMapAtlasDistance(distance: number): number {
+  return Math.round(distance / MAP_ATLAS_DISTANCE_BUCKET) * MAP_ATLAS_DISTANCE_BUCKET;
+}
+
+/**
+ * Everything the rail's markup is derived from, as one comparable string: the
+ * whole view with the offers' distances bucketed, plus the chrome state the
+ * view itself does not carry. Serialized wholesale rather than field by field
+ * so a view field added later cannot silently fall out of the comparison and
+ * leave the rail stale, and the i18n revision rides along because the markup
+ * this gates resolves every label through t().
+ */
+export function mapSidebarSignature(
+  view: MapSidebarView,
+  chrome: { shownRouteQuestId: string | null; i18nRevision: number },
+): string {
+  return JSON.stringify({
+    view: {
+      ...view,
+      nearby: view.nearby.map((quest) => ({
+        ...quest,
+        distance: bucketMapAtlasDistance(quest.distance),
+      })),
+    },
+    chrome,
+  });
+}
+
 function primaryObjective(progress: QuestProgress): {
   objectiveIndex: number | null;
   current: number;

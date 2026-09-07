@@ -418,9 +418,9 @@ const NOT_A_LANGUAGE_GATE: ReadonlyArray<{
   },
   {
     file: 'map_sidebar_controller.ts',
-    memos: ['lastHtml'],
+    memos: ['lastHtml', 'lastSig'],
     reason:
-      'lastHtml retains the last BUILT rail html, which embeds every localized string through t(), so a locale switch changes the freshly built side of the comparison and the atlas rail repaints by itself on its next update. Write-elision, not a data signature.',
+      'lastHtml retains the last BUILT rail html, which embeds every localized string through t(), so a locale switch changes the freshly built side of the comparison and the atlas rail repaints by itself on its next update. Write-elision, not a data signature. lastSig is the same elision one step earlier (it skips the markup mint, not just the DOM write) and it is explicitly locale-aware: mapSidebarSignature folds getI18nRevision() into the compared string, so a locale switch moves it exactly like lastHtml does and the rail cannot hold stale text.',
   },
   {
     file: 'hud/quest/quest_tracker_controller.ts',
