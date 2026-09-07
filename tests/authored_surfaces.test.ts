@@ -78,6 +78,9 @@ const LEGACY_UNFLAGGED_DEFS = new Set([
   'mob_grubjaw',
   'mob_mech',
   'mob_mushroom_pixie',
+  // Nythraxis raid prop rig (models/props, Tripo): landed on the release base after
+  // this guard was cut and was tuned under the uniform floor, so it stays there.
+  'mob_nythraxis_bone_spike',
   'mob_pyre_colossus',
   'mob_reedbound_acolyte',
   'mob_spider_egg_sac',
@@ -107,7 +110,9 @@ const LEGACY_UNFLAGGED_DEFS = new Set([
  *  AUTHORED_HELD_MODELS instead. */
 const LEGACY_POLISHED_HELD_MODELS = new Set([
   'ice_fang',
+  'purple_axe', // same Tripo family as purple_dagger; landed after this guard was cut
   'purple_dagger',
+  'purple_sword', // same Tripo family as purple_dagger; landed after this guard was cut
   'redskull_dagger',
   'whittler_s_knife',
 ]);
