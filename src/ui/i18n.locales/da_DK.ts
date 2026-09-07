@@ -15609,4 +15609,292 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'yumi.queue.leave': 'Du forlader Beskyt Yumi-køen.',
   'yumi.queue.teamLeave': 'Dit hold forlader Beskyt Yumi-køen.',
   'yumi.respawn.title': 'SLÅET NED!',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    'Koldsynsberedskab fra et fuldført Febertræk får dit næste Skæbneskud til at give 75% mere skade. At affyre skuddet bruger Beredskab.',
+  'entities.items.bramblehide_cinch.name': 'Rods Tjørnehudsbælte',
+  'entities.items.bramblehide_crown.name': 'Rods Tjørnehudskrone',
+  'entities.items.bramblehide_grips.name': 'Rods Tjørnehudsgreb',
+  'entities.items.bramblehide_harness.name': 'Rods Tjørnehudssele',
+  'entities.items.bramblehide_legguards.name': 'Rods Tjørnehudsbenværn',
+  'entities.items.bramblehide_mantle.name': 'Rods Tjørnehudskappe',
+  'entities.items.bramblehide_treads.name': 'Rods Tjørnehudsstøvler',
+  'entities.items.courtiers_bonefang.name': 'Hoffolkets Knogletand',
+  'entities.items.gravecourt_hewer.name': 'Gravgårdens Hugger',
+  'entities.items.stormhymn_chain_grips.name': 'Stormhymnens Kædegreb',
+  'entities.items.stormhymn_chain_treads.name': 'Stormhymnens Kædestøvler',
+  'entities.items.thornpeak_moonhide_cowl.name': 'Tjørnetops Månehudshætte',
+  'entities.items.thornpeak_wardblade.name': 'Tjørnetops Værnklinge',
+  'entities.items.votive_ward_of_the_deathless_court.name':
+    'Votivværn fra det Dødsløse Hof',
+  'entities.mobs.nythraxis_bone_spike.name': 'Knoglespyd',
+  'gpuNotice.bodyRequestedBackend':
+    'Spillet kunne ikke starte på den grafik-backend, du valgte, så det kører på OpenGL i stedet. Alt fungerer, men indlæsning og de første minutter kan hakke mere. Du kan vælge en backend igen under Indstillinger, Grafik, System.',
+  'hudChrome.auraEffect.coldsightRead':
+    'Dit næste Langtræk giver {longDrawPct}% mere skade, eller dit næste Skæbneskud giver {fellShotPct}% mere',
+  'hudChrome.auraEffect.nythraxisAscension':
+    'Dødsløs Opstigning: {stacks} stakke, {pct}% mere skade og angrebshastighed. Træk Nythraxis hen på Bindingssigillet for at rense det.',
+  'hudChrome.auraEffect.nythraxisBoneStorm':
+    'Knoglestorm: Nythraxis ignorerer trussel, hvirvler for {tick}% af maksimal sundhed hvert sekund inden for {radius} yd og stormer mod raiddeltagere. Spred jer og løb.',
+  'hudChrome.auraEffect.nythraxisBound':
+    'Bundet af de gamle værn: Nythraxis tager {pct}% mere skade i {duration} sek.',
+  'hudChrome.auraEffect.nythraxisCrownEndures':
+    'Kronen holder stand: {stacks} stakke, {pct}% mere skade og {haste}% hurtigere angreb. Raidet er løbet tør for tid.',
+  'hudChrome.auraEffect.nythraxisDreadCurse':
+    'Hver stak øger skaden taget fra Nythraxis med {perStack}% i {duration} sek: {stacks} af {max} stakke nu, {pct}% mere skade. Hvert {every} sek giver hans næste træffer på sit mål {hit}% af maksimal sundhed og tilføjer en stak. Tanks bør skifte ved {swap} stakke.',
+  'hudChrome.auraEffect.nythraxisImpaled':
+    'Spiddet på et Knoglespyd: du kan ikke handle og mister {normal}% af din maksimale sundhed hvert {interval} sek ({heroic}% på Heroic), indtil raidet ødelægger spyddet.',
+  'hudChrome.auraEffect.nythraxisKingsWrath':
+    'Kongens vrede: Nythraxis giver {pct}% mere skade resten af kampen.',
+  'hudChrome.auraEffect.nythraxisUnbound':
+    'Ubundet: Nythraxis giver {pct}% mere skade, indtil et Bindingssigil holder ham.',
+  'hudChrome.auraEffect.veiledEdgeStrike':
+    'Dit næste Lureslag giver {pct}% mere våbenskade',
+  'hudChrome.bank.guildHistoryTab': 'Historik',
+  'hudChrome.bank.logActionAdminPurge': 'Fjernet',
+  'hudChrome.bank.logActionBuySlots': 'Købte en udvidelse',
+  'hudChrome.bank.logActionCharterFee': 'Betalte chartergebyret',
+  'hudChrome.bank.logActionDeposit': 'Indsat',
+  'hudChrome.bank.logActionOpenBank': 'Åbnede banken',
+  'hudChrome.bank.logActionWithdraw': 'Hævet',
+  'hudChrome.bank.logActorAdmin': 'En administrator',
+  'hudChrome.bank.logColAction': 'Handling',
+  'hudChrome.bank.logColDetail': 'Detaljer',
+  'hudChrome.bank.logColMember': 'Medlem',
+  'hudChrome.bank.logColTime': 'Hvornår',
+  'hudChrome.bank.logDetailItem': '{count} {item}',
+  'hudChrome.bank.logEmptyFiltered': 'Ingen gildebankhandlinger matcher dette filter.',
+  'hudChrome.bank.logEnd': 'Det er hele gildebankhistorikken.',
+  'hudChrome.bank.logFilterAll': 'Alle',
+  'hudChrome.bank.logFilterAria': 'Filtrer gildebankhistorikken',
+  'hudChrome.bank.logFilterItems': 'Genstande',
+  'hudChrome.bank.logFilterMoney': 'Penge',
+  'hudChrome.bank.logOlder': 'Vis ældre',
+  'hudChrome.bank.logOlderLoading': 'Indlæser ældre handlinger...',
+  'hudChrome.bank.logSearchAria':
+    'Søg i de indlæste gildebankhandlinger efter medlem, handling eller genstand',
+  'hudChrome.bank.logSearchNoMatch':
+    'Ingen indlæste gildebankhandlinger matcher din søgning. Vis ældre rækker for at udvide den.',
+  'hudChrome.bank.logSearchPlaceholder': 'Søg i denne historik',
+  'hudChrome.bank.logShowing': 'Viser {count} gildebankhandlinger, nyeste først.',
+  'hudChrome.bank.logShowingMatched':
+    'Viser {matched} af {count} indlæste gildebankhandlinger.',
+  'hudChrome.finder.mech.binding_sigil':
+    'Bindingssigil (træk bossen hen på sigillet, ellers betaler raidet)',
+  'hudChrome.finder.mech.bone_spike':
+    'Knoglespyd (spiddede raiddeltagere drænes, indtil spyddet ødelægges)',
+  'hudChrome.finder.mech.bone_storm':
+    'Knoglestorm (han ignorerer trussel, hvirvler og stormer mod raidet)',
+  'hudChrome.finder.mech.crown_endures':
+    'Kronen holder stand (hård rasen ved 6:00, heroic 5:00)',
+  'hudChrome.finder.mech.deathless_court':
+    'Det Dødsløse Hof (kun heroic, kongehofet rejser sig efter Dødsløs Rasen)',
+  'hudChrome.finder.mech.grave_eruption':
+    'Gravudbrud (advarselscirkler, der efterlader brændende jord)',
+  'hudChrome.finder.mech.gravefire': 'Gravild (en vandrende ildlinje at træde udenom)',
+  'hudChrome.finder.mech.kings_wrath':
+    'Kongens vrede (30%: permanent skadebonus, hurtigere gulvfarer)',
+  'hudChrome.finder.mech.soulfire':
+    'Sjæleild (detonationer fra Sjæleflængen efterlader brændende søer)',
+  'hudChrome.fullTransfer.excluded':
+    'Aldrig inkluderet: dit login, din konto, din wallet eller købsdata. Handlingsbjælkelayouts gemmes på din konto og følger med.',
+  'hudChrome.fullTransfer.fullSettings': 'Fuldstændige indstillinger',
+  'hudChrome.fullTransfer.intro':
+    'Eksportér hver gemt præference på denne enhed som én kode, og indsæt den på en anden enhed eller i en anden browser for at importere: grafik, lyd, grænseflade, tema, rammelayout, tastebindinger for hver karakter, controller- og cross-hotbar-bindinger, chat, vinduesfiltre, sprog og afviste tips.',
+  'hudChrome.fullTransfer.menu': 'Importér / eksportér',
+  'hudChrome.fullTransfer.title': 'Importér / eksportér indstillinger',
+  'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Skademåler',
+  'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Bedriftssporer',
+  'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Delve-sporer',
+  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Lidelsesbjælke',
+  'hudChrome.interfaceUnlock.frameNames.petBar': 'Kæledyrsbjælke',
+  'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Besværgelsesprocs',
+  'hudChrome.interfaceUnlock.frameNames.questTracker': 'Questsporer',
+  'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': 'Relikviesporer',
+  'hudChrome.interfaceUnlock.frameNames.riftTracker': 'Riftsporer',
+  'hudChrome.interfaceUnlock.frameNames.swingBarOffhand': 'Venstre hånd',
+  'hudChrome.keybindTransfer.apply': 'Anvend',
+  'hudChrome.keybindTransfer.imported': 'Genvejsopsætning importeret.',
+  'hudChrome.keybindTransfer.setup': 'Genvejsopsætning',
+  'hudChrome.keybindTransfer.wrongKind':
+    'Den kode er en indstillingseksport, ikke en genvejsopsætning.',
+  'hudChrome.keyboardMap.assignHint': 'Vælg en handling at binde til {key}.',
+  'hudChrome.keyboardMap.assignOption': '{category}: {action}',
+  'hudChrome.keyboardMap.assignPlaceholder': 'Tildel en handling til {key}',
+  'hudChrome.keyboardMap.bindingLine': '{key}: {action}',
+  'hudChrome.keyboardMap.boundTo': 'Bandt {action} til {key}.',
+  'hudChrome.keyboardMap.close': 'Luk tastaturoversigt',
+  'hudChrome.keyboardMap.form60': '60%',
+  'hudChrome.keyboardMap.form75': '75%',
+  'hudChrome.keyboardMap.formFull': 'Fuld størrelse',
+  'hudChrome.keyboardMap.formGroup': 'Tastaturstørrelse',
+  'hudChrome.keyboardMap.formTkl': 'Uden numerisk tastatur',
+  'hudChrome.keyboardMap.hint':
+    'Taster i brug er farvet efter kategori. Hold musen over eller fokusér på en tast for at se alt, der er bundet til den.',
+  'hudChrome.keyboardMap.hintInteractive':
+    'Taster i brug er farvet efter kategori. Klik på en tast for at ændre, hvad den gør. Hold musen over eller fokusér på en for at se alt, der er bundet til den.',
+  'hudChrome.keyboardMap.keyDetail': '{key}: {bindings}',
+  'hudChrome.keyboardMap.layerAlt': 'Alt',
+  'hudChrome.keyboardMap.layerCtrl': 'Ctrl',
+  'hudChrome.keyboardMap.layerGroup': 'Modifikatorlag',
+  'hudChrome.keyboardMap.layerNone': 'Ingen modifikator',
+  'hudChrome.keyboardMap.layerShift': 'Shift',
+  'hudChrome.keyboardMap.legendGroup': 'Tastetiketter',
+  'hudChrome.keyboardMap.legendLayout': 'Dit layout',
+  'hudChrome.keyboardMap.legendQwerty': 'QWERTY',
+  'hudChrome.keyboardMap.notBindable': 'Den tast kan ikke bindes.',
+  'hudChrome.keyboardMap.notOnLayout': 'Ikke på dette tastatur: {bindings}',
+  'hudChrome.keyboardMap.otherLayers': 'Også bundet med en modifikator',
+  'hudChrome.keyboardMap.popOut': 'Åbn separat',
+  'hudChrome.keyboardMap.pressKey': 'Tryk på en tast for {action}. Esc annullerer.',
+  'hudChrome.keyboardMap.separator': ', ',
+  'hudChrome.keyboardMap.title': 'Tastaturoversigt',
+  'hudChrome.nythraxisCallout.boneStormBegins': 'Knoglestorm! Spred jer og løb!',
+  'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis stormer mod DIG! Løb!',
+  'hudChrome.nythraxisCallout.boneStormEnds': 'Knoglestorm ovre. Tanks, saml ham op!',
+  'hudChrome.nythraxisCallout.crownEndures':
+    'Kronen holder stand! Nythraxis er rasende!',
+  'hudChrome.nythraxisCallout.crownEndures10': 'Ti sekunder! Brænd ham ned!',
+  'hudChrome.nythraxisCallout.crownEndures30':
+    'Tredive sekunder til Kronen holder stand!',
+  'hudChrome.nythraxisCallout.crownEndures60': 'Et minut til Kronen holder stand!',
+  'hudChrome.nythraxisCallout.dreadCurseSwap': 'Rædselsforbandelse: skift tanks!',
+  'hudChrome.nythraxisCallout.gravefireTarget':
+    'Gravild farer mod dig! Træd til siden!',
+  'hudChrome.nythraxisCallout.impaled': 'Knoglespyd! Befri de spiddede!',
+  'hudChrome.nythraxisCallout.kingsWrath':
+    'Kongen rejser sig i vrede! Alt rammer hårdere nu!',
+  'hudChrome.nythraxisCallout.sigilAppears':
+    'Et Bindingssigil flammer op! Træk Nythraxis hen på det!',
+  'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis er bundet! Brænd ham ned!',
+  'hudChrome.nythraxisCallout.sigilUnbound':
+    'Sigillet falmer ubundet! Nythraxis bliver stærkere!',
+  'hudChrome.nythraxisCallout.spikeBroken': 'Spyd knust!',
+  'hudChrome.nythraxisCallout.youAreImpaled': 'Du er spiddet! Hold ud!',
+  'hudChrome.options.gpuBackend': 'Grafik-backend',
+  'hudChrome.options.gpuBackendActive': 'Bruger i øjeblikket {backend}.',
+  'hudChrome.options.gpuBackendActiveAutoCapped':
+    'Bruger i øjeblikket {backend}. Automatisk prøver endnu ikke Vulkan på dette grafikkort. Vælg Vulkan for at prøve.',
+  'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
+  'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
+  'hudChrome.options.gpuBackendActiveUnavailable':
+    'Bruger i øjeblikket {backend} (kan ikke aktivere Vulkan).',
+  'hudChrome.options.gpuBackendAuto': 'Automatisk',
+  'hudChrome.options.gpuBackendNote':
+    'Automatisk vælger den bedste mulighed for dig. Vulkan er hurtigere og anbefales til de fleste spillere. OpenGL er langsommere, men kan hjælpe, hvis Vulkan ikke fungerer korrekt. Træder i kraft næste gang spillet starter.',
+  'hudChrome.options.gpuBackendOpenGL': 'OpenGL (langsom)',
+  'hudChrome.options.gpuBackendSaveFailed':
+    'Valget kunne ikke gemmes. Næste start beholder {backend}.',
+  'hudChrome.options.gpuBackendVulkan': 'Vulkan',
+  'hudChrome.options.restartFailed':
+    'Spillet kunne ikke genstarte sig selv. Afslut og start det igen.',
+  'hudChrome.options.restartGame': 'Genstart spil',
+  'hudChrome.options.restartInProgress': 'Genstarter spillet...',
+  'hudChrome.options.restartPending': 'Nogle ændringer træder i kraft efter en genstart.',
+  'hudChrome.options.shaderWarm': 'Shader-opvarmningsarbejder',
+  'hudChrome.options.shaderWarmAuto': 'Automatisk',
+  'hudChrome.options.shaderWarmNote':
+    'Forvarm shadercachen i baggrunden for at forhindre hakken i spillet. Automatisk: aktiveret kun når dit grafiksystem understøtter det. (Anbefalet). Til: tvunget overalt. Kan forværre ydeevnen på nogle systemer. Fra: deaktiveret.',
+  'hudChrome.options.shaderWarmOff': 'Fra',
+  'hudChrome.options.shaderWarmOn': 'Til',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilHeroicSummary':
+    'Hvert {everyHeroic} sek flammer et sigil fra de gamle værn op på gulvet {minDist} til {maxDist} yd fra Nythraxis, og han begynder Dødsløs Opstigning, der giver ham {ascensionHeroic} skade og angrebshastighed hvert {ascensionEvery} sek. Hvis han står på sigillet inden for {bindHeroic} sek, er han Bundet: Opstigningen renses, han bedøves i {stunHeroic} sek, og han tager {vulnerability} mere skade i {boundHeroic} sek. Ellers tager hver raiddeltager {unboundHitHeroic} af maksimal sundhed som Skyggeskade, og han beholder {unboundBonusHeroic} mere skade indtil næste binding.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilName': 'Bindingssigil',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilResponse':
+    'Tanken trækker straks Nythraxis hen på sigillet, gennem hvilken ild raidet end har efterladt. Nærkampsspillere følger trækket, og afstandsspillere holder sig ude af den nye Gravbryder-kegle. Alle brænder ham ned, mens han er Bundet.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilSummary':
+    'Hvert {everyNormal} sek flammer et sigil fra de gamle værn op på gulvet {minDist} til {maxDist} yd fra Nythraxis, og han begynder Dødsløs Opstigning, der giver ham {ascensionNormal} skade og angrebshastighed hvert {ascensionEvery} sek. Hvis han står på sigillet inden for {bindNormal} sek, er han Bundet: Opstigningen renses, han bedøves i {stunNormal} sek, og han tager {vulnerability} mere skade i {boundNormal} sek. Ellers tager hver raiddeltager {unboundHitNormal} af maksimal sundhed som Skyggeskade, og han beholder {unboundBonusNormal} mere skade indtil næste binding.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeHeroicSummary':
+    'Hvert {everyHeroic} sek spidder Nythraxis {victimsHeroic} raiddeltagere ud over sit nuværende mål på Knoglespyd. En spiddet raiddeltager kan ikke handle og mister {drainHeroic} af maksimal sundhed hvert sekund, indtil spyddet ødelægges.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeName': 'Knoglespyd',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeResponse':
+    'Skadesuddelerne skifter straks til Knoglespyddene og ødelægger dem for at befri de spiddede raiddeltagere. Helbredere holder de spiddede i live, mens spyddene falder.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
+    'Hvert {everyNormal} sek spidder Nythraxis {victimsNormal} raiddeltagere ud over sit nuværende mål på Knoglespyd. En spiddet raiddeltager kan ikke handle og mister {drainNormal} af maksimal sundhed hvert sekund, indtil spyddet ødelægges.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
+    'Fra {first} sek inde i Kongens vrede og hvert {everyHeroic} sek derefter begynder Nythraxis Knoglestorm i {duration} sek. Han ignorerer trussel, bevæger sig {speed} gange normal hastighed og laver {charges} stormløb, der varer {chargeSeconds} sek hver. Hans hvirvel giver {whirlHeroic} af maksimal sundhed hvert sekund inden for {radius} yd. Hvert stormløb ender i et Knogleslag inden for samme radius for {slamHeroic} af maksimal sundhed. Han kaster Knoglespyd {spikeAt} sek inde i stormen, derefter genaktiveres Gravbryder {rearm} sek efter den slutter.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Knoglestorm',
+  'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
+    'Spred jer og bliv ved med at løbe fra Nythraxis. Den jagede raiddeltager løber væk, mens alle andre giver plads omkring stormløbsvejen, og tanks samler ham op, når stormen slutter.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
+    'Fra {first} sek inde i Kongens vrede og hvert {everyNormal} sek derefter begynder Nythraxis Knoglestorm i {duration} sek. Han ignorerer trussel, bevæger sig {speed} gange normal hastighed og laver {charges} stormløb, der varer {chargeSeconds} sek hver. Hans hvirvel giver {whirlNormal} af maksimal sundhed hvert sekund inden for {radius} yd. Hvert stormløb ender i et Knogleslag inden for samme radius for {slamNormal} af maksimal sundhed. Han kaster Knoglespyd {spikeAt} sek inde i stormen, derefter genaktiveres Gravbryder {rearm} sek efter den slutter.',
+  'hudChrome.raidBossGuide.nythraxis.courtName': 'Det Dødsløse Hof',
+  'hudChrome.raidBossGuide.nythraxis.courtResponse':
+    'Tanks samler Aldren op og vender hans kløvning væk fra raidet. Bedøv eller tavsgør Malric i det øjeblik Malrics Heling begynder, og dræb ham først. Rodfæst eller bedøv derefter Voss væk fra helbrederne, da han ikke kan hånes, og gør ham færdig bagefter.',
+  'hudChrome.raidBossGuide.nythraxis.courtSummary':
+    'På Heroic rejser Nythraxis sit hof efter hver Dødsløs Rasen, afbrudt eller ej, når det forrige hof er faldet. Aldrens Ånd kløver alt nær sit mål med Kongelig Kløvning. Malrics Ånd kanaliserer Malrics Heling, der heler Nythraxis mere for hver kastning. Voss Ånd ignorerer hån og jager raidet.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresHeroicSummary':
+    'Ved {enrageHeroic} sek fra pullen (uret holder pause, mens Broder Aldric træder ind ved 70%) udløser Kronen holder stand som en hård rasen. Nythraxis får {damage} mere skade og {haste} hurtigere angreb, derefter yderligere {rampStep} skade hvert {rampEveryHeroic} sek. Der er ingen timerbjælke. Advarsler kommer som råb ved {warn60}, {warn30} og {warn10} sek tilbage.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresName': 'Kronen holder stand',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresResponse':
+    'Behandl den første advarsel som det sidste burn. Gem bevægelse og defensive nedkølinger til de resterende mekanikker, og besejr derefter Nythraxis før rasen.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresSummary':
+    'Ved {enrageNormal} sek fra pullen (uret holder pause, mens Broder Aldric træder ind ved 70%) udløser Kronen holder stand som en hård rasen. Nythraxis får {damage} mere skade og {haste} hurtigere angreb, derefter yderligere {rampStep} skade hvert {rampEveryNormal} sek. Der er ingen timerbjælke. Advarsler kommer som råb ved {warn60}, {warn30} og {warn10} sek tilbage.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageHeroicSummary':
+    'Hvert {every} sek kaster Nythraxis Dødsløs Rasen i {cast} sek. Mens han kaster, kan hver tændt værnsten kanaliseres af én raiddeltager i {channel} sek. Hvis tre forskellige raiddeltagere hver fuldfører en værnsten, før kastet slutter, afbrydes Rasen, og Nythraxis bedøves i {stun} sek. Ellers tager hver raiddeltager {damageHeroic} af maksimal sundhed som Skyggeskade, hvilket ingen sundhedspulje overlever.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageName': 'Dødsløs Rasen',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageResponse':
+    'Tildel én raiddeltager til hver værnsten før pullen. Når kastet begynder, løber hver til sin sten og kanaliserer den, indtil den fuldføres. Bedøvelser, at træde væk og død bryder kanaliseringen, så hold kanalisererne sikre og tildel aldrig en spiddet raiddeltager.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageSummary':
+    'Hvert {every} sek kaster Nythraxis Dødsløs Rasen i {cast} sek. Mens han kaster, kan hver tændt værnsten kanaliseres af én raiddeltager i {channel} sek. Hvis tre forskellige raiddeltagere hver fuldfører en værnsten, før kastet slutter, afbrydes Rasen, og Nythraxis bedøves i {stun} sek. Ellers tager hver raiddeltager {damageNormal} af maksimal sundhed som Skyggeskade.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseHeroicSummary':
+    'Hvert {every} sek rammer Nythraxis sin nuværende tank for {hitHeroic} af maksimal sundhed som Skyggeskade og tilføjer en stak Rædselsforbandelse. I {duration} sek øger hver stak den skade, den tank tager fra Nythraxis, med {perStackHeroic}, op til {max} stakke.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseName': 'Rædselsforbandelse',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseResponse':
+    'Tanks skifter ved {stacks} stakke: den anden tank håner, og den forbandede tank bliver ude af Gravbryder-keglen, mens stakkene forsvinder. Helbredere forbereder den indkommende tank før skiftet.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseSummary':
+    'Hvert {every} sek rammer Nythraxis sin nuværende tank for {hitNormal} af maksimal sundhed som Skyggeskade og tilføjer en stak Rædselsforbandelse. I {duration} sek øger hver stak den skade, den tank tager fra Nythraxis, med {perStackNormal}, op til {max} stakke.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionHeroicSummary':
+    'Hvert {everyHeroic} sek markerer skelethænder {countHeroic} cirkler på {radius} yd under raiddeltagere. Efter {warning} sek bryder hver cirkel ud for {burstHeroic} af maksimal sundhed som Skyggeskade og brænder derefter som Gravflamme i {flameHeroic} sek, hvilket giver {tickHeroic} af maksimal sundhed hvert sekund til alle, der står i den.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionName': 'Gravudbrud',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionResponse':
+    'Træd ud af hver advarselscirkel, før den bryder ud, og hold jer væk fra brændende jord. Tanks trækker Nythraxis væk fra flammerne, så nærkampsspillere har plads til at arbejde.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionSummary':
+    'Hvert {everyNormal} sek markerer skelethænder {countNormal} cirkler på {radius} yd under raiddeltagere. Efter {warning} sek bryder hver cirkel ud for {burstNormal} af maksimal sundhed som Skyggeskade og brænder derefter som Gravflamme i {flameNormal} sek, hvilket giver {tickNormal} af maksimal sundhed hvert sekund til alle, der står i den.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerName': 'Gravbryder',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerResponse':
+    'Tanks holder Nythraxis vendt væk fra raidet. Alle andre står bag eller ved siden af ham og krydser aldrig keglen.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerSummary':
+    'Hvert {seconds} sek oplader Nythraxis sit næste træffende sving. Hans mål tager kun selve svinget, men alle andre inden for {range} yd i den {arc} graders kegle foran ham tager {splash} af det sving som fysisk skade, reduceret af deres egen rustning.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireHeroicSummary':
+    'Hvert {everyHeroic} sek løber en linje af violet gravild fra Nythraxis mod en raiddeltager og vokser {speed} yd hvert sekund til {length} yd. Hver yard brænder i {burnHeroic} sek og giver {tickHeroic} af maksimal sundhed hvert sekund til alle, der står i den.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireName': 'Gravild',
+  'hudChrome.raidBossGuide.nythraxis.gravefireResponse':
+    'Træd til siden for linjen, når den kommer: den er smal og drejer aldrig. Afstandsspillere bliver ved med at bevæge sig i stedet for at stå ét sted.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireSummary':
+    'Hvert {everyNormal} sek løber en linje af violet gravild fra Nythraxis mod en raiddeltager og vokser {speed} yd hvert sekund til {length} yd. Hver yard brænder i {burnNormal} sek og giver {tickNormal} af maksimal sundhed hvert sekund til alle, der står i den.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathName': 'Kongens vrede',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathResponse':
+    'Brug resterende defensive nedkølinger til uundgåelig skade. Hold alle tidligere mekanikker rene, mens raidet afslutter kampen.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathSummary':
+    'Nythraxis giver {bonusNormal} mere skade på Normal eller {bonusHeroic} på Heroic resten af kampen. Gravudbrud sker hvert {eruptionEveryNormal} sek ({eruptionEveryHeroic} på Heroic), og Gravild hvert {gravefireEveryNormal} sek ({gravefireEveryHeroic} på Heroic).',
+  'hudChrome.raidBossGuide.nythraxis.overview':
+    'Ypperstepræst Malric nægtede at lade sin konge dø, og riten, der rejste Nythraxis, bandt hele hoffet til krypten. Mødet tester et disciplineret tankskifte, hurtige skift til Knoglespyd, bevægelse væk fra brændende jord og en koordineret værnsten-kanalisering, når Tronen falder.',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathName': 'Kongens vrede',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathSummary':
+    'Ved {health} sundhed brøler Nythraxis i Kongens vrede og får {bonusNormal} skade på Normal eller {bonusHeroic} på Heroic resten af kampen. Gravudbrud strammes til hvert {eruptionEveryNormal} sek ({eruptionEveryHeroic} på Heroic), og Gravild til hvert {gravefireEveryNormal} sek ({gravefireEveryHeroic} på Heroic). Alle andre mekanikker beholder deres rytme.',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneName': 'Tronen',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneSummary':
+    'Nythraxis holder sin tronsal med en opladet frontal kløvning, tankskiftet fra Rædselsforbandelse, Knoglespyd der spidder raiddeltagere, og Gravudbrud der efterlader brændende jord.',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesName': 'Værnstenene',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesSummary':
+    'Ved {health} sundhed holder Rystende Tramp raidet stille, mens Broder Aldric ankommer og tænder værnstenene. Hvert spyd knuses, og gulvet holder op med at brænde, derefter føjes Sjæleflængen og Dødsløs Rasen til Tronens mekanikker.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenName': 'Rejs faldne',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenResponse':
+    'Off-tanken samler hver bølge op, når den rejser sig. Skadesuddelerne rydder vagterne mellem Knoglespyd, så bølgerne aldrig hober sig op, før Tronen falder.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenSummary':
+    'Hvert {every} sek under Tronen rejser Nythraxis Genopstandne Kongelige Vagter bag sig. De stormer mod hans nuværende mål og kæmper, indtil de ødelægges.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendHeroicSummary':
+    'Nythraxis markerer {marksHeroic} raiddeltagere ud over sit nuværende mål med Sjæleflængen. Efter {fuse} sek giver hvert mærke {damageHeroic} af bærerens maksimale sundhed som Skyggeskade, delt med antallet af markerede raiddeltagere inden for {range} yd af dem. Et mærke, der udløses alene, er dødeligt.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendName': 'Sjæleflængen',
+  'hudChrome.raidBossGuide.nythraxis.soulRendResponse':
+    'Hver markeret raiddeltager løber til ét samlingspunkt og står inden for {range} yd af de andre mærker, før lunten på {fuse} sek løber ud. Helbredere fylder gruppen op, når mærkerne udløses.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendSummary':
+    'Nythraxis markerer {marksNormal} raiddeltagere ud over sit nuværende mål med Sjæleflængen. Efter {fuse} sek giver hvert mærke bærerens fulde maksimale sundhed som Skyggeskade, delt med antallet af markerede raiddeltagere inden for {range} yd af dem.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireHeroicSummary':
+    'Hver Sjæleflængen-detonation efterlader én sø af lilla ild med {radius} yd radius pr. samlet gruppe af mærker, som brænder i {secondsHeroic} sek med {tickHeroic} af maksimal sundhed hvert sekund. At stå hvor søer overlapper giver kun ét tick, aldrig stakkede kopier. Søer dannes aldrig inden for {clearance} yd af en værnsten.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireName': 'Sjæleild',
+  'hudChrome.raidBossGuide.nythraxis.soulfireResponse':
+    'Flyt ud af den lilla sø, så snart mærkerne detonerer. Hold det næste samlingspunkt fri for aktiv ild.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
+    'Hver Sjæleflængen-detonation efterlader en sø af lilla ild med {radius} yd radius, hvor hvert mærke stod, som brænder i {seconds} sek med {tickNormal} af maksimal sundhed hvert sekund. At stå hvor søer overlapper giver et tick fra hver enkelt. Søer dannes aldrig inden for {clearance} yd af en værnsten.',
 };

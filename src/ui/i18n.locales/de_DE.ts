@@ -15947,4 +15947,296 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'yumi.queue.leave': 'Ihr verlasst die Warteschlange für Yumi beschützen.',
   'yumi.queue.teamLeave': 'Euer Team verlässt die Warteschlange für Yumi beschützen.',
   'yumi.respawn.title': 'AM BODEN!',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    'Kaltblick-Bereit durch einen abgeschlossenen Fiebrigen Zug lässt Euren nächsten Unheilsschuss 75% mehr Schaden verursachen. Der Schuss verbraucht Bereit.',
+  'entities.items.bramblehide_cinch.name': 'Wurzels Dornhautgurt',
+  'entities.items.bramblehide_crown.name': 'Wurzels Dornhautkrone',
+  'entities.items.bramblehide_grips.name': 'Wurzels Dornhauthandschutz',
+  'entities.items.bramblehide_harness.name': 'Wurzels Dornhautharnisch',
+  'entities.items.bramblehide_legguards.name': 'Wurzels Dornhautbeinschutz',
+  'entities.items.bramblehide_mantle.name': 'Wurzels Dornhautmantel',
+  'entities.items.bramblehide_treads.name': 'Wurzels Dornhautstiefel',
+  'entities.items.courtiers_bonefang.name': 'Knochenfang des Höflings',
+  'entities.items.gravecourt_hewer.name': 'Grabeshof-Hauer',
+  'entities.items.stormhymn_chain_grips.name': 'Sturmhymnen-Kettenhandschutz',
+  'entities.items.stormhymn_chain_treads.name': 'Sturmhymnen-Kettenstiefel',
+  'entities.items.thornpeak_moonhide_cowl.name': 'Dorngipfel-Mondhautgugel',
+  'entities.items.thornpeak_wardblade.name': 'Dorngipfel-Schutzklinge',
+  'entities.items.votive_ward_of_the_deathless_court.name':
+    'Votivschutz des Todlosen Hofs',
+  'entities.mobs.nythraxis_bone_spike.name': 'Knochenspieß',
+  'gpuNotice.bodyRequestedBackend':
+    'Das Spiel konnte mit dem gewählten Grafik-Backend nicht starten und läuft deshalb stattdessen mit OpenGL. Alles funktioniert, Laden und die ersten Minuten können stärker ruckeln. Unter Optionen, Grafik, System könnt Ihr wieder ein Backend wählen.',
+  'hudChrome.auraEffect.coldsightRead':
+    'Euer nächster Langer Zug verursacht {longDrawPct}% mehr Schaden, oder Euer nächster Unheilsschuss verursacht {fellShotPct}% mehr',
+  'hudChrome.auraEffect.nythraxisAscension':
+    'Todlose Erhebung: {stacks} Stapel, {pct}% mehr Schaden und Angriffstempo. Zieht Nythraxis auf das Bindungssiegel, um sie zu bannen.',
+  'hudChrome.auraEffect.nythraxisBoneStorm':
+    'Knochensturm: Nythraxis ignoriert Bedrohung, wirbelt jede Sekunde innerhalb von {radius} yd für {tick}% der maximalen Gesundheit und stürmt Schlachtzügler an. Verteilt Euch und lauft.',
+  'hudChrome.auraEffect.nythraxisBound':
+    'Von den alten Schutzzaubern gebunden: Nythraxis erleidet {pct}% mehr Schaden für {duration} Sek.',
+  'hudChrome.auraEffect.nythraxisCrownEndures':
+    'Die Krone hält stand: {stacks} Stapel, {pct}% mehr Schaden und {haste}% schnellere Angriffe. Dem Schlachtzug läuft die Zeit davon.',
+  'hudChrome.auraEffect.nythraxisDreadCurse':
+    'Jeder Stapel erhöht den von Nythraxis erlittenen Schaden {duration} Sek. lang um {perStack}%: jetzt {stacks} von {max} Stapeln, {pct}% mehr Schaden. Alle {every} Sek. verursacht sein nächster Treffer gegen sein Ziel {hit}% der maximalen Gesundheit und fügt einen Stapel hinzu. Tanks sollten bei {swap} Stapeln wechseln.',
+  'hudChrome.auraEffect.nythraxisImpaled':
+    'Auf einem Knochenspieß aufgespießt: Ihr könnt nicht handeln und verliert alle {interval} Sek. {normal}% Eurer maximalen Gesundheit ({heroic}% auf Heroisch), bis der Schlachtzug den Spieß zerstört.',
+  'hudChrome.auraEffect.nythraxisKingsWrath':
+    'Zorn des Königs: Nythraxis verursacht für den Rest des Kampfes {pct}% mehr Schaden.',
+  'hudChrome.auraEffect.nythraxisUnbound':
+    'Ungebunden: Nythraxis verursacht {pct}% mehr Schaden, bis ein Bindungssiegel ihn hält.',
+  'hudChrome.auraEffect.veiledEdgeStrike':
+    'Euer nächster Lauerschlag verursacht {pct}% mehr Waffenschaden',
+  'hudChrome.bank.guildHistoryTab': 'Verlauf',
+  'hudChrome.bank.logActionAdminPurge': 'Entfernt',
+  'hudChrome.bank.logActionBuySlots': 'Erweiterung gekauft',
+  'hudChrome.bank.logActionCharterFee': 'Satzungsgebühr bezahlt',
+  'hudChrome.bank.logActionDeposit': 'Eingezahlt',
+  'hudChrome.bank.logActionOpenBank': 'Bank geöffnet',
+  'hudChrome.bank.logActionWithdraw': 'Abgehoben',
+  'hudChrome.bank.logActorAdmin': 'Ein Administrator',
+  'hudChrome.bank.logColAction': 'Aktion',
+  'hudChrome.bank.logColDetail': 'Einzelheiten',
+  'hudChrome.bank.logColMember': 'Mitglied',
+  'hudChrome.bank.logColTime': 'Wann',
+  'hudChrome.bank.logDetailItem': '{count} {item}',
+  'hudChrome.bank.logEmptyFiltered':
+    'Keine Gildenbankaktionen entsprechen diesem Filter.',
+  'hudChrome.bank.logEnd': 'Das ist der vollständige Gildenbankverlauf.',
+  'hudChrome.bank.logFilterAll': 'Alle',
+  'hudChrome.bank.logFilterAria': 'Gildenbankverlauf filtern',
+  'hudChrome.bank.logFilterItems': 'Gegenstände',
+  'hudChrome.bank.logFilterMoney': 'Geld',
+  'hudChrome.bank.logOlder': 'Ältere anzeigen',
+  'hudChrome.bank.logOlderLoading': 'Ältere Aktionen werden geladen...',
+  'hudChrome.bank.logSearchAria':
+    'Die geladenen Gildenbankaktionen nach Mitglied, Aktion oder Gegenstand durchsuchen',
+  'hudChrome.bank.logSearchNoMatch':
+    'Keine geladenen Gildenbankaktionen entsprechen Eurer Suche. Zeigt ältere Zeilen an, um sie zu erweitern.',
+  'hudChrome.bank.logSearchPlaceholder': 'Diesen Verlauf durchsuchen',
+  'hudChrome.bank.logShowing':
+    '{count} Gildenbankaktionen werden angezeigt, neueste zuerst.',
+  'hudChrome.bank.logShowingMatched':
+    '{matched} von {count} geladenen Gildenbankaktionen werden angezeigt.',
+  'hudChrome.finder.mech.binding_sigil':
+    'Bindungssiegel (zieht den Boss auf das Siegel, sonst bezahlt der Schlachtzug)',
+  'hudChrome.finder.mech.bone_spike':
+    'Knochenspieß (aufgespießte Schlachtzügler verlieren Leben, bis der Spieß zerstört ist)',
+  'hudChrome.finder.mech.bone_storm':
+    'Knochensturm (er ignoriert Bedrohung, wirbelt und stürmt den Schlachtzug an)',
+  'hudChrome.finder.mech.crown_endures':
+    'Die Krone hält stand (harte Raserei bei 6:00, heroisch 5:00)',
+  'hudChrome.finder.mech.deathless_court':
+    'Der Todlose Hof (nur heroisch, der Königshof erhebt sich nach Todloser Raserei)',
+  'hudChrome.finder.mech.grave_eruption':
+    'Graberuption (Warnkreise, die brennenden Boden hinterlassen)',
+  'hudChrome.finder.mech.gravefire':
+    'Grabfeuer (eine wandernde Feuerlinie zum Ausweichen)',
+  'hudChrome.finder.mech.kings_wrath':
+    'Zorn des Königs (30%: dauerhafter Schadensbonus, schnellere Bodengefahren)',
+  'hudChrome.finder.mech.soulfire':
+    'Seelenfeuer (Detonationen von Seelenriss hinterlassen brennende Flächen)',
+  'hudChrome.fullTransfer.excluded':
+    'Nie enthalten: Eure Anmeldung, Euer Konto, Eure Wallet oder Kaufdaten. Aktionsleistenlayouts werden in Eurem Konto gespeichert und reisen mit.',
+  'hudChrome.fullTransfer.fullSettings': 'Vollständige Einstellungen',
+  'hudChrome.fullTransfer.intro':
+    'Exportiert jede auf diesem Gerät gespeicherte Einstellung als einen Code und fügt ihn auf einem anderen Gerät oder Browser zum Importieren ein: Grafik, Audio, Oberfläche, Thema, Fensterlayout, Tastenbelegungen für jeden Charakter, Controller- und Cross-Hotbar-Belegungen, Chat, Fensterfilter, Sprache und ausgeblendete Hinweise.',
+  'hudChrome.fullTransfer.menu': 'Importieren / Exportieren',
+  'hudChrome.fullTransfer.title': 'Einstellungen importieren / exportieren',
+  'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Schadensanzeige',
+  'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Tatentracker',
+  'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Tiefentracker',
+  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Leidensleiste',
+  'hudChrome.interfaceUnlock.frameNames.petBar': 'Begleiterleiste',
+  'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Zauber-Auslöser',
+  'hudChrome.interfaceUnlock.frameNames.questTracker': 'Questtracker',
+  'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': 'Reliquiartracker',
+  'hudChrome.interfaceUnlock.frameNames.riftTracker': 'Riss-Tracker',
+  'hudChrome.interfaceUnlock.frameNames.swingBarOffhand': 'Nebenhand',
+  'hudChrome.keybindTransfer.apply': 'Anwenden',
+  'hudChrome.keybindTransfer.imported': 'Tastenkürzel-Einrichtung importiert.',
+  'hudChrome.keybindTransfer.setup': 'Tastenkürzel-Einrichtung',
+  'hudChrome.keybindTransfer.wrongKind':
+    'Dieser Code ist ein Einstellungsexport, keine Tastenkürzel-Einrichtung.',
+  'hudChrome.keyboardMap.assignHint': 'Wählt eine Aktion für {key}.',
+  'hudChrome.keyboardMap.assignOption': '{category}: {action}',
+  'hudChrome.keyboardMap.assignPlaceholder': 'Aktion für {key} zuweisen',
+  'hudChrome.keyboardMap.bindingLine': '{key}: {action}',
+  'hudChrome.keyboardMap.boundTo': '{action} an {key} gebunden.',
+  'hudChrome.keyboardMap.close': 'Tastaturübersicht schließen',
+  'hudChrome.keyboardMap.form60': '60%',
+  'hudChrome.keyboardMap.form75': '75%',
+  'hudChrome.keyboardMap.formFull': 'Vollgröße',
+  'hudChrome.keyboardMap.formGroup': 'Tastaturgröße',
+  'hudChrome.keyboardMap.formTkl': 'Ohne Nummernblock',
+  'hudChrome.keyboardMap.hint':
+    'Belegte Tasten sind nach Kategorie eingefärbt. Zeigt mit Mauszeiger oder Fokus auf eine Taste, um alle Belegungen zu sehen.',
+  'hudChrome.keyboardMap.hintInteractive':
+    'Belegte Tasten sind nach Kategorie eingefärbt. Klickt eine Taste, um ihre Aktion zu ändern. Zeigt mit Mauszeiger oder Fokus darauf, um alle Belegungen zu sehen.',
+  'hudChrome.keyboardMap.keyDetail': '{key}: {bindings}',
+  'hudChrome.keyboardMap.layerAlt': 'Alt',
+  'hudChrome.keyboardMap.layerCtrl': 'Ctrl',
+  'hudChrome.keyboardMap.layerGroup': 'Modifikatorebene',
+  'hudChrome.keyboardMap.layerNone': 'Kein Modifikator',
+  'hudChrome.keyboardMap.layerShift': 'Shift',
+  'hudChrome.keyboardMap.legendGroup': 'Tastenbeschriftungen',
+  'hudChrome.keyboardMap.legendLayout': 'Euer Layout',
+  'hudChrome.keyboardMap.legendQwerty': 'QWERTY',
+  'hudChrome.keyboardMap.notBindable': 'Diese Taste kann nicht belegt werden.',
+  'hudChrome.keyboardMap.notOnLayout': 'Nicht auf dieser Tastatur: {bindings}',
+  'hudChrome.keyboardMap.otherLayers': 'Auch mit einem Modifikator belegt',
+  'hudChrome.keyboardMap.popOut': 'Ausklappen',
+  'hudChrome.keyboardMap.pressKey': 'Drückt eine Taste für {action}. Esc bricht ab.',
+  'hudChrome.keyboardMap.separator': ', ',
+  'hudChrome.keyboardMap.title': 'Tastaturübersicht',
+  'hudChrome.nythraxisCallout.boneStormBegins': 'Knochensturm! Verteilt Euch und lauft!',
+  'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis stürmt auf EUCH zu! Lauft!',
+  'hudChrome.nythraxisCallout.boneStormEnds': 'Knochensturm vorbei. Tanks, nehmt ihn auf!',
+  'hudChrome.nythraxisCallout.crownEndures':
+    'Die Krone hält stand! Nythraxis ist rasend!',
+  'hudChrome.nythraxisCallout.crownEndures10': 'Zehn Sekunden! Brennt ihn nieder!',
+  'hudChrome.nythraxisCallout.crownEndures30':
+    'Dreißig Sekunden bis Die Krone hält stand!',
+  'hudChrome.nythraxisCallout.crownEndures60':
+    'Eine Minute bis Die Krone hält stand!',
+  'hudChrome.nythraxisCallout.dreadCurseSwap': 'Schreckensfluch: Tanks wechseln!',
+  'hudChrome.nythraxisCallout.gravefireTarget':
+    'Grabfeuer rast auf Euch zu! Seitlich ausweichen!',
+  'hudChrome.nythraxisCallout.impaled': 'Knochenspieße! Befreit die Aufgespießten!',
+  'hudChrome.nythraxisCallout.kingsWrath':
+    'Der König erhebt sich im Zorn! Jetzt trifft alles härter!',
+  'hudChrome.nythraxisCallout.sigilAppears':
+    'Ein Bindungssiegel flammt auf! Zieht Nythraxis darauf!',
+  'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis ist gebunden! Brennt ihn nieder!',
+  'hudChrome.nythraxisCallout.sigilUnbound':
+    'Das Siegel verblasst ungebunden! Nythraxis wird stärker!',
+  'hudChrome.nythraxisCallout.spikeBroken': 'Spieß zerschmettert!',
+  'hudChrome.nythraxisCallout.youAreImpaled': 'Ihr seid aufgespießt! Haltet durch!',
+  'hudChrome.options.gpuBackend': 'Grafik-Backend',
+  'hudChrome.options.gpuBackendActive': 'Derzeit wird {backend} verwendet.',
+  'hudChrome.options.gpuBackendActiveAutoCapped':
+    'Derzeit wird {backend} verwendet. Automatisch versucht Vulkan auf dieser Grafikkarte noch nicht. Wählt Vulkan, um es zu versuchen.',
+  'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
+  'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
+  'hudChrome.options.gpuBackendActiveUnavailable':
+    'Derzeit wird {backend} verwendet (Vulkan kann nicht aktiviert werden).',
+  'hudChrome.options.gpuBackendAuto': 'Automatisch',
+  'hudChrome.options.gpuBackendNote':
+    'Automatisch wählt die beste Option für Euch. Vulkan ist schneller und für die meisten Spieler empfohlen. OpenGL ist langsamer, kann aber helfen, wenn Vulkan nicht richtig funktioniert. Wirkt beim nächsten Spielstart.',
+  'hudChrome.options.gpuBackendOpenGL': 'OpenGL (langsam)',
+  'hudChrome.options.gpuBackendSaveFailed':
+    'Die Auswahl konnte nicht gespeichert werden. Beim nächsten Start bleibt {backend}.',
+  'hudChrome.options.gpuBackendVulkan': 'Vulkan',
+  'hudChrome.options.restartFailed':
+    'Das Spiel konnte sich nicht selbst neu starten. Beendet es und startet es erneut.',
+  'hudChrome.options.restartGame': 'Spiel neu starten',
+  'hudChrome.options.restartInProgress': 'Spiel wird neu gestartet...',
+  'hudChrome.options.restartPending': 'Einige Änderungen wirken erst nach einem Neustart.',
+  'hudChrome.options.shaderWarm': 'Shader-Aufwärm-Worker',
+  'hudChrome.options.shaderWarmAuto': 'Automatisch',
+  'hudChrome.options.shaderWarmNote':
+    'Wärmt den Shader-Cache im Hintergrund vor, um Ruckler im Spiel zu verhindern. Automatisch: nur aktiviert, wenn Euer Grafiksystem es unterstützt. (Empfohlen). An: überall erzwungen. Kann auf manchen Systemen die Leistung verschlechtern. Aus: deaktiviert.',
+  'hudChrome.options.shaderWarmOff': 'Aus',
+  'hudChrome.options.shaderWarmOn': 'An',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilHeroicSummary':
+    'Alle {everyHeroic} Sek. flammt ein Siegel der alten Schutzzauber {minDist} bis {maxDist} yd von Nythraxis entfernt auf dem Boden auf, und er beginnt Todlose Erhebung, wodurch er alle {ascensionEvery} Sek. {ascensionHeroic} Schaden und Angriffstempo erhält. Steht er innerhalb von {bindHeroic} Sek. auf dem Siegel, wird er gebunden: Die Erhebung wird gebannt, er ist {stunHeroic} Sek. betäubt und er erleidet {boundHeroic} Sek. lang {vulnerability} mehr Schaden. Andernfalls erleidet jeder Schlachtzügler {unboundHitHeroic} der maximalen Gesundheit als Schattenschaden, und er behält bis zur nächsten Bindung {unboundBonusHeroic} mehr Schaden.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilName': 'Bindungssiegel',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilResponse':
+    'Der Tank zieht Nythraxis sofort auf das Siegel, auch durch jedes Feuer, das der Schlachtzug zurückgelassen hat. Nahkämpfer folgen dem Zug, Fernkämpfer bleiben aus dem neuen Grabbrecher-Kegel. Alle brennen ihn nieder, solange er gebunden ist.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilSummary':
+    'Alle {everyNormal} Sek. flammt ein Siegel der alten Schutzzauber {minDist} bis {maxDist} yd von Nythraxis entfernt auf dem Boden auf, und er beginnt Todlose Erhebung, wodurch er alle {ascensionEvery} Sek. {ascensionNormal} Schaden und Angriffstempo erhält. Steht er innerhalb von {bindNormal} Sek. auf dem Siegel, wird er gebunden: Die Erhebung wird gebannt, er ist {stunNormal} Sek. betäubt und er erleidet {boundNormal} Sek. lang {vulnerability} mehr Schaden. Andernfalls erleidet jeder Schlachtzügler {unboundHitNormal} der maximalen Gesundheit als Schattenschaden, und er behält bis zur nächsten Bindung {unboundBonusNormal} mehr Schaden.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeHeroicSummary':
+    'Alle {everyHeroic} Sek. spießt Nythraxis {victimsHeroic} Schlachtzügler außer seinem aktuellen Ziel auf Knochenspieße. Ein aufgespießter Schlachtzügler kann nicht handeln und verliert jede Sekunde {drainHeroic} der maximalen Gesundheit, bis sein Spieß zerstört ist.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeName': 'Knochenspieß',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeResponse':
+    'Schadensklassen wechseln sofort auf die Knochenspieße und zerstören sie, um die aufgespießten Schlachtzügler zu befreien. Heiler halten die Aufgespießten am Leben, während die Spieße fallen.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
+    'Alle {everyNormal} Sek. spießt Nythraxis {victimsNormal} Schlachtzügler außer seinem aktuellen Ziel auf Knochenspieße. Ein aufgespießter Schlachtzügler kann nicht handeln und verliert jede Sekunde {drainNormal} der maximalen Gesundheit, bis sein Spieß zerstört ist.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
+    'Ab {first} Sek. nach Beginn von Zorn des Königs und danach alle {everyHeroic} Sek. beginnt Nythraxis {duration} Sek. lang Knochensturm. Er ignoriert Bedrohung, bewegt sich {speed}-mal so schnell wie normal und führt {charges} Anstürme aus, die jeweils {chargeSeconds} Sek. dauern. Sein Wirbel verursacht jede Sekunde innerhalb von {radius} yd {whirlHeroic} der maximalen Gesundheit. Jeder Ansturm endet mit einem Knochenschlag im selben Radius für {slamHeroic} der maximalen Gesundheit. Er wirkt {spikeAt} Sek. nach Beginn des Sturms Knochenspieß, dann wird Grabbrecher {rearm} Sek. nach seinem Ende wieder bereit.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Knochensturm',
+  'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
+    'Verteilt Euch und lauft weiter vor Nythraxis weg. Der anvisierte Schlachtzügler läuft davon, während alle anderen Platz um die Ansturmroute lassen. Danach nehmen die Tanks ihn wieder auf.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
+    'Ab {first} Sek. nach Beginn von Zorn des Königs und danach alle {everyNormal} Sek. beginnt Nythraxis {duration} Sek. lang Knochensturm. Er ignoriert Bedrohung, bewegt sich {speed}-mal so schnell wie normal und führt {charges} Anstürme aus, die jeweils {chargeSeconds} Sek. dauern. Sein Wirbel verursacht jede Sekunde innerhalb von {radius} yd {whirlNormal} der maximalen Gesundheit. Jeder Ansturm endet mit einem Knochenschlag im selben Radius für {slamNormal} der maximalen Gesundheit. Er wirkt {spikeAt} Sek. nach Beginn des Sturms Knochenspieß, dann wird Grabbrecher {rearm} Sek. nach seinem Ende wieder bereit.',
+  'hudChrome.raidBossGuide.nythraxis.courtName': 'Der Todlose Hof',
+  'hudChrome.raidBossGuide.nythraxis.courtResponse':
+    'Tanks nehmen Aldren auf und drehen seinen Spaltangriff vom Schlachtzug weg. Betäubt oder unterbrecht Malric, sobald Malrics Heilung beginnt, und tötet ihn zuerst. Verwurzelt oder betäubt danach Voss weg von den Heilern, da er nicht verspottet werden kann, und erledigt ihn als Nächstes.',
+  'hudChrome.raidBossGuide.nythraxis.courtSummary':
+    'Auf Heroisch erhebt Nythraxis seinen Hof nach jeder Todlosen Raserei, unterbrochen oder nicht, sobald der vorherige Hof gefallen ist. Der Geist von Aldren spaltet alles nahe seinem Ziel mit Königlicher Spalt. Der Geist von Malric kanalisiert Malrics Heilung und heilt Nythraxis mit jedem Zauber stärker. Der Geist von Voss ignoriert Spott und jagt den Schlachtzug.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresHeroicSummary':
+    'Bei {enrageHeroic} Sek. nach Kampfbeginn (die Uhr pausiert, während Bruder Aldric bei 70% eintritt) löst Die Krone hält stand eine harte Raserei aus. Nythraxis erhält {damage} mehr Schaden und {haste} schnellere Angriffe, danach alle {rampEveryHeroic} Sek. weitere {rampStep} Schaden. Es gibt keine Timerleiste. Warnungen kommen als Rufe bei {warn60}, {warn30} und {warn10} Sek. verbleibend.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresName': 'Die Krone hält stand',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresResponse':
+    'Behandelt die erste Warnung als letzten Schadensrausch. Spart Bewegung und defensive Abklingzeiten für die übrigen Mechaniken, dann besiegt Nythraxis vor der Raserei.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresSummary':
+    'Bei {enrageNormal} Sek. nach Kampfbeginn (die Uhr pausiert, während Bruder Aldric bei 70% eintritt) löst Die Krone hält stand eine harte Raserei aus. Nythraxis erhält {damage} mehr Schaden und {haste} schnellere Angriffe, danach alle {rampEveryNormal} Sek. weitere {rampStep} Schaden. Es gibt keine Timerleiste. Warnungen kommen als Rufe bei {warn60}, {warn30} und {warn10} Sek. verbleibend.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageHeroicSummary':
+    'Alle {every} Sek. wirkt Nythraxis {cast} Sek. lang Todlose Raserei. Während er wirkt, kann jeder erleuchtete Schutzstein von einem Schlachtzügler {channel} Sek. lang kanalisiert werden. Wenn drei verschiedene Schlachtzügler jeweils einen Schutzstein abschließen, bevor der Zauber endet, wird die Raserei unterbrochen und Nythraxis {stun} Sek. lang betäubt. Andernfalls erleidet jeder Schlachtzügler {damageHeroic} der maximalen Gesundheit als Schattenschaden, was kein Lebenspool überlebt.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageName': 'Todlose Raserei',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageResponse':
+    'Weist vor dem Pull jedem Schutzstein einen Schlachtzügler zu. Wenn der Zauber beginnt, läuft jeder zu seinem Stein und kanalisiert ihn bis zum Abschluss. Betäubungen, Wegtreten und Tod brechen die Kanalisierung, also schützt die Kanalisierer und weist niemals einen aufgespießten Schlachtzügler zu.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageSummary':
+    'Alle {every} Sek. wirkt Nythraxis {cast} Sek. lang Todlose Raserei. Während er wirkt, kann jeder erleuchtete Schutzstein von einem Schlachtzügler {channel} Sek. lang kanalisiert werden. Wenn drei verschiedene Schlachtzügler jeweils einen Schutzstein abschließen, bevor der Zauber endet, wird die Raserei unterbrochen und Nythraxis {stun} Sek. lang betäubt. Andernfalls erleidet jeder Schlachtzügler {damageNormal} der maximalen Gesundheit als Schattenschaden.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseHeroicSummary':
+    'Alle {every} Sek. trifft Nythraxis seinen aktuellen Tank für {hitHeroic} der maximalen Gesundheit als Schattenschaden und fügt einen Stapel Schreckensfluch hinzu. Für {duration} Sek. erhöht jeder Stapel den Schaden, den dieser Tank von Nythraxis erleidet, um {perStackHeroic}, bis zu {max} Stapeln.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseName': 'Schreckensfluch',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseResponse':
+    'Tanks wechseln bei {stacks} Stapeln: Der andere Tank verspottet, und der verfluchte Tank bleibt aus dem Grabbrecher-Kegel, während die Stapel auslaufen. Heiler bereiten den kommenden Tank vor dem Wechsel vor.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseSummary':
+    'Alle {every} Sek. trifft Nythraxis seinen aktuellen Tank für {hitNormal} der maximalen Gesundheit als Schattenschaden und fügt einen Stapel Schreckensfluch hinzu. Für {duration} Sek. erhöht jeder Stapel den Schaden, den dieser Tank von Nythraxis erleidet, um {perStackNormal}, bis zu {max} Stapeln.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionHeroicSummary':
+    'Alle {everyHeroic} Sek. markieren Skeletthände {countHeroic} Kreise von {radius} yd unter Schlachtzüglern. Nach {warning} Sek. bricht jeder Kreis für {burstHeroic} der maximalen Gesundheit als Schattenschaden aus und brennt dann {flameHeroic} Sek. lang als Grabflamme, die jedem darin Stehenden jede Sekunde {tickHeroic} der maximalen Gesundheit zufügt.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionName': 'Graberuption',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionResponse':
+    'Tretet aus jedem Warnkreis, bevor er ausbricht, und bleibt vom brennenden Boden weg. Tanks ziehen Nythraxis aus den Flammen, damit Nahkämpfer Platz zum Arbeiten behalten.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionSummary':
+    'Alle {everyNormal} Sek. markieren Skeletthände {countNormal} Kreise von {radius} yd unter Schlachtzüglern. Nach {warning} Sek. bricht jeder Kreis für {burstNormal} der maximalen Gesundheit als Schattenschaden aus und brennt dann {flameNormal} Sek. lang als Grabflamme, die jedem darin Stehenden jede Sekunde {tickNormal} der maximalen Gesundheit zufügt.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerName': 'Grabbrecher',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerResponse':
+    'Tanks halten Nythraxis vom Schlachtzug weggedreht. Alle anderen bleiben hinter oder neben ihm und kreuzen nie den Kegel.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerSummary':
+    'Alle {seconds} Sek. lädt Nythraxis seinen nächsten gelandeten Schlag auf. Sein Ziel erleidet nur den Schlag selbst, aber alle anderen innerhalb von {range} yd im {arc}-Grad-Kegel vor ihm erleiden {splash} dieses Schlags als körperlichen Schaden, reduziert durch ihre eigene Rüstung.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireHeroicSummary':
+    'Alle {everyHeroic} Sek. läuft eine Linie aus violettem Grabfeuer von Nythraxis auf einen Schlachtzügler zu und wächst jede Sekunde um {speed} yd bis auf {length} yd. Jeder Yard brennt {burnHeroic} Sek. lang und verursacht jede Sekunde {tickHeroic} der maximalen Gesundheit bei jedem, der darin steht.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireName': 'Grabfeuer',
+  'hudChrome.raidBossGuide.nythraxis.gravefireResponse':
+    'Weicht seitlich aus, wenn die Linie kommt: Sie ist schmal und dreht nie. Fernkämpfer bleiben in Bewegung, statt an einer Stelle stehen zu bleiben.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireSummary':
+    'Alle {everyNormal} Sek. läuft eine Linie aus violettem Grabfeuer von Nythraxis auf einen Schlachtzügler zu und wächst jede Sekunde um {speed} yd bis auf {length} yd. Jeder Yard brennt {burnNormal} Sek. lang und verursacht jede Sekunde {tickNormal} der maximalen Gesundheit bei jedem, der darin steht.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathName': 'Zorn des Königs',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathResponse':
+    'Nutzt verbleibende defensive Abklingzeiten für unvermeidbaren Schaden. Haltet jede frühere Mechanik sauber, während der Schlachtzug den Kampf beendet.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathSummary':
+    'Nythraxis verursacht auf Normal {bonusNormal} mehr Schaden oder auf Heroisch {bonusHeroic} für den Rest des Kampfes. Graberuption tritt alle {eruptionEveryNormal} Sek. auf ({eruptionEveryHeroic} auf Heroisch) und Grabfeuer alle {gravefireEveryNormal} Sek. ({gravefireEveryHeroic} auf Heroisch).',
+  'hudChrome.raidBossGuide.nythraxis.overview':
+    'Hohepriester Malric weigerte sich, seinen König sterben zu lassen, und der Ritus, der Nythraxis erhob, band den ganzen Hof an die Gruft. Die Begegnung prüft einen disziplinierten Tankwechsel, schnelle Wechsel auf Knochenspieße, Bewegung aus brennendem Boden und eine koordinierte Schutzstein-Kanalisierung, sobald der Thron fällt.',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathName': 'Zorn des Königs',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathSummary':
+    'Bei {health} Gesundheit brüllt Nythraxis im Zorn des Königs und erhält auf Normal {bonusNormal} Schaden oder auf Heroisch {bonusHeroic} für den Rest des Kampfes. Graberuption verkürzt sich auf alle {eruptionEveryNormal} Sek. ({eruptionEveryHeroic} auf Heroisch) und Grabfeuer auf alle {gravefireEveryNormal} Sek. ({gravefireEveryHeroic} auf Heroisch). Jede andere Mechanik behält ihren Rhythmus.',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneName': 'Der Thron',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneSummary':
+    'Nythraxis hält seinen Thronsaal mit einem aufgeladenen frontalen Spaltangriff, dem Schreckensfluch-Tankwechsel, Knochenspießen, die Schlachtzügler aufspießen, und Graberuptionen, die brennenden Boden hinterlassen.',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesName': 'Die Schutzsteine',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesSummary':
+    'Bei {health} Gesundheit hält Erschütterndes Stampfen den Schlachtzug fest, während Bruder Aldric eintrifft und die Schutzsteine entzündet. Jeder Spieß zerbricht und der Boden hört auf zu brennen, dann kommen Seelenriss und Todlose Raserei zu den Thron-Mechaniken hinzu.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenName': 'Gefallene erheben',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenResponse':
+    'Der zweite Tank nimmt jede Welle auf, sobald sie sich erhebt. Schadensklassen räumen die Wachen zwischen den Knochenspießen ab, damit die Wellen sich vor dem Fall des Throns nie stapeln.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenSummary':
+    'Alle {every} Sek. während des Throns erhebt Nythraxis Auferstandene Königswachen hinter sich. Sie stürmen auf sein aktuelles Ziel zu und kämpfen, bis sie zerstört sind.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendHeroicSummary':
+    'Nythraxis markiert {marksHeroic} Schlachtzügler außer seinem aktuellen Ziel mit Seelenriss. Nach {fuse} Sek. verursacht jede Markierung {damageHeroic} der maximalen Gesundheit ihres Trägers als Schattenschaden, geteilt durch die Anzahl markierter Schlachtzügler innerhalb von {range} yd um sie. Eine Markierung, die allein auslöst, ist tödlich.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendName': 'Seelenriss',
+  'hudChrome.raidBossGuide.nythraxis.soulRendResponse':
+    'Jeder markierte Schlachtzügler läuft zu einem Sammelpunkt und steht innerhalb von {range} yd der anderen Markierungen, bevor die {fuse} Sek. lange Zündzeit endet. Heiler bringen die Gruppe hoch, wenn die Markierungen auslösen.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendSummary':
+    'Nythraxis markiert {marksNormal} Schlachtzügler außer seinem aktuellen Ziel mit Seelenriss. Nach {fuse} Sek. verursacht jede Markierung die volle maximale Gesundheit ihres Trägers als Schattenschaden, geteilt durch die Anzahl markierter Schlachtzügler innerhalb von {range} yd um sie.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireHeroicSummary':
+    'Jede Seelenriss-Detonation hinterlässt pro gestapelter Markierungsgruppe eine violette Feuerfläche mit {radius} yd Radius, die {secondsHeroic} Sek. lang brennt und jede Sekunde {tickHeroic} der maximalen Gesundheit verursacht. Wer dort steht, wo Flächen überlappen, erleidet nur einen Tick, nie gestapelte Kopien. Flächen entstehen nie innerhalb von {clearance} yd eines Schutzsteins.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireName': 'Seelenfeuer',
+  'hudChrome.raidBossGuide.nythraxis.soulfireResponse':
+    'Lauft aus der violetten Fläche, sobald die Markierungen detonieren. Haltet den nächsten Sammelpunkt frei von aktivem Feuer.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
+    'Jede Seelenriss-Detonation hinterlässt dort, wo jede Markierung stand, eine violette Feuerfläche mit {radius} yd Radius, die {seconds} Sek. lang brennt und jede Sekunde {tickNormal} der maximalen Gesundheit verursacht. Wer dort steht, wo Flächen überlappen, erleidet von jeder Fläche einen Tick. Flächen entstehen nie innerhalb von {clearance} yd eines Schutzsteins.',
 };

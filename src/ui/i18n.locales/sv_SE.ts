@@ -15630,4 +15630,290 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'yumi.queue.leave': 'Du lämnar kön till Skydda Yumi.',
   'yumi.queue.teamLeave': 'Ditt lag lämnar kön till Skydda Yumi.',
   'yumi.respawn.title': 'NEDSLAGEN!',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    'Köldsynsberedskap från ett fullbordat Feberdrag gör att ditt nästa Olycksskott orsakar 75% mer skada. Skottet förbrukar Beredskap.',
+  'entities.items.bramblehide_cinch.name': 'Rotens Törnhudsgjord',
+  'entities.items.bramblehide_crown.name': 'Rotens Törnhudskrona',
+  'entities.items.bramblehide_grips.name': 'Rotens Törnhudsgrepp',
+  'entities.items.bramblehide_harness.name': 'Rotens Törnhudssele',
+  'entities.items.bramblehide_legguards.name': 'Rotens Törnhudsbenskydd',
+  'entities.items.bramblehide_mantle.name': 'Rotens Törnhudsmantel',
+  'entities.items.bramblehide_treads.name': 'Rotens Törnhudsstövlar',
+  'entities.items.courtiers_bonefang.name': 'Hovmannens Bentand',
+  'entities.items.gravecourt_hewer.name': 'Gravgårdens Huggare',
+  'entities.items.stormhymn_chain_grips.name': 'Stormhymnens Kedjegrepp',
+  'entities.items.stormhymn_chain_treads.name': 'Stormhymnens Kedjestövlar',
+  'entities.items.thornpeak_moonhide_cowl.name': 'Törntoppens Månhudskåpa',
+  'entities.items.thornpeak_wardblade.name': 'Törntoppens Värnklinga',
+  'entities.items.votive_ward_of_the_deathless_court.name':
+    'Votivvärn från det Dödslösa Hovet',
+  'entities.mobs.nythraxis_bone_spike.name': 'Benspett',
+  'gpuNotice.bodyRequestedBackend':
+    'Spelet kunde inte starta med grafikbakänden du valde, så det körs på OpenGL i stället. Allt fungerar, men laddning och de första minuterna kan hacka mer. Du kan välja en bakände igen under Alternativ, Grafik, System.',
+  'hudChrome.auraEffect.coldsightRead':
+    'Ditt nästa Långdrag orsakar {longDrawPct}% mer skada, eller ditt nästa Olycksskott orsakar {fellShotPct}% mer',
+  'hudChrome.auraEffect.nythraxisAscension':
+    'Dödslös Uppstigning: {stacks} staplar, {pct}% mer skada och anfallshastighet. Dra Nythraxis till Bindningssigillet för att rena det.',
+  'hudChrome.auraEffect.nythraxisBoneStorm':
+    'Benstorm: Nythraxis ignorerar hot, virvlar för {tick}% av maximal hälsa varje sekund inom {radius} yd och rusar mot raiddeltagare. Sprid ut er och spring.',
+  'hudChrome.auraEffect.nythraxisBound':
+    'Bunden av de gamla värnen: Nythraxis tar {pct}% mer skada i {duration} sek.',
+  'hudChrome.auraEffect.nythraxisCrownEndures':
+    'Kronan består: {stacks} staplar, {pct}% mer skada och {haste}% snabbare anfall. Raiden har slut på tid.',
+  'hudChrome.auraEffect.nythraxisDreadCurse':
+    'Varje stapel ökar skadan från Nythraxis med {perStack}% i {duration} sek: {stacks} av {max} staplar nu, {pct}% mer skada. Varje {every} sek orsakar hans nästa träff på sitt mål {hit}% av maximal hälsa och lägger till en stapel. Tankar bör byta vid {swap} staplar.',
+  'hudChrome.auraEffect.nythraxisImpaled':
+    'Spetsad på ett Benspett: du kan inte agera och förlorar {normal}% av din maximala hälsa var {interval} sek ({heroic}% på Heroic) tills raiden förstör spettet.',
+  'hudChrome.auraEffect.nythraxisKingsWrath':
+    'Kungens Vrede: Nythraxis orsakar {pct}% mer skada resten av striden.',
+  'hudChrome.auraEffect.nythraxisUnbound':
+    'Obunden: Nythraxis orsakar {pct}% mer skada tills ett Bindningssigill håller honom.',
+  'hudChrome.auraEffect.veiledEdgeStrike':
+    'Ditt nästa Smygarslag orsakar {pct}% mer vapenskada',
+  'hudChrome.bank.guildHistoryTab': 'Historik',
+  'hudChrome.bank.logActionAdminPurge': 'Togs bort',
+  'hudChrome.bank.logActionBuySlots': 'Köpte en utökning',
+  'hudChrome.bank.logActionCharterFee': 'Betalade stadgeavgiften',
+  'hudChrome.bank.logActionDeposit': 'Satte in',
+  'hudChrome.bank.logActionOpenBank': 'Öppnade banken',
+  'hudChrome.bank.logActionWithdraw': 'Tog ut',
+  'hudChrome.bank.logActorAdmin': 'En administratör',
+  'hudChrome.bank.logColAction': 'Åtgärd',
+  'hudChrome.bank.logColDetail': 'Detaljer',
+  'hudChrome.bank.logColMember': 'Medlem',
+  'hudChrome.bank.logColTime': 'När',
+  'hudChrome.bank.logDetailItem': '{count} {item}',
+  'hudChrome.bank.logEmptyFiltered': 'Inga gillesbanksåtgärder matchar filtret.',
+  'hudChrome.bank.logEnd': 'Det är hela gillesbankhistoriken.',
+  'hudChrome.bank.logFilterAll': 'Alla',
+  'hudChrome.bank.logFilterAria': 'Filtrera gillesbankhistoriken',
+  'hudChrome.bank.logFilterItems': 'Föremål',
+  'hudChrome.bank.logFilterMoney': 'Pengar',
+  'hudChrome.bank.logOlder': 'Visa äldre',
+  'hudChrome.bank.logOlderLoading': 'Läser in äldre åtgärder...',
+  'hudChrome.bank.logSearchAria':
+    'Sök bland inlästa gillesbanksåtgärder efter medlem, åtgärd eller föremål',
+  'hudChrome.bank.logSearchNoMatch':
+    'Inga inlästa gillesbanksåtgärder matchar din sökning. Visa äldre rader för att bredda sökningen.',
+  'hudChrome.bank.logSearchPlaceholder': 'Sök i historiken',
+  'hudChrome.bank.logShowing': 'Visar {count} gillesbanksåtgärder, nyaste först.',
+  'hudChrome.bank.logShowingMatched':
+    'Visar {matched} av {count} inlästa gillesbanksåtgärder.',
+  'hudChrome.finder.mech.binding_sigil':
+    'Bindningssigill (dra bossen till sigillet, annars får raiden betala)',
+  'hudChrome.finder.mech.bone_spike':
+    'Benspett (spetsade raiddeltagare dräneras tills spettet förstörs)',
+  'hudChrome.finder.mech.bone_storm':
+    'Benstorm (han ignorerar hot, virvlar och rusar mot raiden)',
+  'hudChrome.finder.mech.crown_endures':
+    'Kronan består (hård raseri vid 6:00, heroic 5:00)',
+  'hudChrome.finder.mech.deathless_court':
+    'Det Dödslösa Hovet (endast heroic, kungahovet reser sig efter Dödslöst Raseri)',
+  'hudChrome.finder.mech.grave_eruption':
+    'Gravutbrott (varningscirklar som lämnar brinnande mark)',
+  'hudChrome.finder.mech.gravefire': 'Graveld (en rörlig eldlinje att sidostega)',
+  'hudChrome.finder.mech.kings_wrath':
+    'Kungens Vrede (30%: permanent skadebonus, snabbare golvfaror)',
+  'hudChrome.finder.mech.soulfire':
+    'Själseld (detonationer av Själsslitning lämnar brinnande pölar)',
+  'hudChrome.fullTransfer.excluded':
+    'Ingår aldrig: din inloggning, ditt konto, din wallet eller köpdata. Handlingsfältslayouter sparas på ditt konto och följer med.',
+  'hudChrome.fullTransfer.fullSettings': 'Fullständiga inställningar',
+  'hudChrome.fullTransfer.intro':
+    'Exportera varje sparad inställning på den här enheten som en kod och klistra in den på en annan enhet eller i en annan webbläsare för att importera: grafik, ljud, gränssnitt, tema, ramlayout, tangentbindningar för varje karaktär, handkontroll- och cross-hotbar-bindningar, chatt, fönsterfilter, språk och avfärdade tips.',
+  'hudChrome.fullTransfer.menu': 'Importera / exportera',
+  'hudChrome.fullTransfer.title': 'Importera / exportera inställningar',
+  'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Skademätare',
+  'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Dådspårare',
+  'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Delve-spårare',
+  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Plågofält',
+  'hudChrome.interfaceUnlock.frameNames.petBar': 'Husdjursfält',
+  'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Besvärjelseproccar',
+  'hudChrome.interfaceUnlock.frameNames.questTracker': 'Uppdragsspårare',
+  'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': 'Relikvariespårare',
+  'hudChrome.interfaceUnlock.frameNames.riftTracker': 'Revspårare',
+  'hudChrome.interfaceUnlock.frameNames.swingBarOffhand': 'Avhand',
+  'hudChrome.keybindTransfer.apply': 'Tillämpa',
+  'hudChrome.keybindTransfer.imported': 'Snabbtangentsinställning importerad.',
+  'hudChrome.keybindTransfer.setup': 'Snabbtangentsinställning',
+  'hudChrome.keybindTransfer.wrongKind':
+    'Den koden är en inställningsexport, inte en snabbtangentsinställning.',
+  'hudChrome.keyboardMap.assignHint': 'Välj en handling att binda till {key}.',
+  'hudChrome.keyboardMap.assignOption': '{category}: {action}',
+  'hudChrome.keyboardMap.assignPlaceholder': 'Tilldela en handling till {key}',
+  'hudChrome.keyboardMap.bindingLine': '{key}: {action}',
+  'hudChrome.keyboardMap.boundTo': 'Band {action} till {key}.',
+  'hudChrome.keyboardMap.close': 'Stäng tangentbordsöversikt',
+  'hudChrome.keyboardMap.form60': '60%',
+  'hudChrome.keyboardMap.form75': '75%',
+  'hudChrome.keyboardMap.formFull': 'Fullstorlek',
+  'hudChrome.keyboardMap.formGroup': 'Tangentbordsstorlek',
+  'hudChrome.keyboardMap.formTkl': 'Utan numeriskt tangentbord',
+  'hudChrome.keyboardMap.hint':
+    'Tangenter som används är färgade efter kategori. Hovra över eller fokusera en tangent för att se allt som är bundet till den.',
+  'hudChrome.keyboardMap.hintInteractive':
+    'Tangenter som används är färgade efter kategori. Klicka på en tangent för att ändra vad den gör. Hovra över eller fokusera en tangent för att se allt som är bundet till den.',
+  'hudChrome.keyboardMap.keyDetail': '{key}: {bindings}',
+  'hudChrome.keyboardMap.layerAlt': 'Alt',
+  'hudChrome.keyboardMap.layerCtrl': 'Ctrl',
+  'hudChrome.keyboardMap.layerGroup': 'Modifierarlager',
+  'hudChrome.keyboardMap.layerNone': 'Ingen modifierare',
+  'hudChrome.keyboardMap.layerShift': 'Shift',
+  'hudChrome.keyboardMap.legendGroup': 'Tangentetiketter',
+  'hudChrome.keyboardMap.legendLayout': 'Din layout',
+  'hudChrome.keyboardMap.legendQwerty': 'QWERTY',
+  'hudChrome.keyboardMap.notBindable': 'Den tangenten kan inte bindas.',
+  'hudChrome.keyboardMap.notOnLayout': 'Inte på det här tangentbordet: {bindings}',
+  'hudChrome.keyboardMap.otherLayers': 'Också bunden med en modifierare',
+  'hudChrome.keyboardMap.popOut': 'Öppna separat',
+  'hudChrome.keyboardMap.pressKey': 'Tryck på en tangent för {action}. Esc avbryter.',
+  'hudChrome.keyboardMap.separator': ', ',
+  'hudChrome.keyboardMap.title': 'Tangentbordsöversikt',
+  'hudChrome.nythraxisCallout.boneStormBegins': 'Benstorm! Sprid ut er och spring!',
+  'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis rusar mot DIG! Spring!',
+  'hudChrome.nythraxisCallout.boneStormEnds': 'Benstorm över. Tankar, ta upp honom!',
+  'hudChrome.nythraxisCallout.crownEndures': 'Kronan består! Nythraxis är rasande!',
+  'hudChrome.nythraxisCallout.crownEndures10': 'Tio sekunder! Bränn ner honom!',
+  'hudChrome.nythraxisCallout.crownEndures30': 'Trettio sekunder till Kronan består!',
+  'hudChrome.nythraxisCallout.crownEndures60': 'En minut till Kronan består!',
+  'hudChrome.nythraxisCallout.dreadCurseSwap': 'Skräckförbannelse: byt tankar!',
+  'hudChrome.nythraxisCallout.gravefireTarget':
+    'Graveld rusar mot dig! Sidostega!',
+  'hudChrome.nythraxisCallout.impaled': 'Benspett! Befria de spetsade!',
+  'hudChrome.nythraxisCallout.kingsWrath':
+    'Kungen reser sig i vrede! Allt slår hårdare nu!',
+  'hudChrome.nythraxisCallout.sigilAppears':
+    'Ett Bindningssigill flammar upp! Dra Nythraxis till det!',
+  'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis är bunden! Bränn ner honom!',
+  'hudChrome.nythraxisCallout.sigilUnbound':
+    'Sigillet bleknar obundet! Nythraxis blir starkare!',
+  'hudChrome.nythraxisCallout.spikeBroken': 'Spettet krossat!',
+  'hudChrome.nythraxisCallout.youAreImpaled': 'Du är spetsad! Håll ut!',
+  'hudChrome.options.gpuBackend': 'Grafikbakände',
+  'hudChrome.options.gpuBackendActive': 'Använder {backend} just nu.',
+  'hudChrome.options.gpuBackendActiveAutoCapped':
+    'Använder {backend} just nu. Automatiskt försöker inte Vulkan på det här grafikkortet än. Välj Vulkan för att prova.',
+  'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
+  'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
+  'hudChrome.options.gpuBackendActiveUnavailable':
+    'Använder {backend} just nu (kan inte aktivera Vulkan).',
+  'hudChrome.options.gpuBackendAuto': 'Automatiskt',
+  'hudChrome.options.gpuBackendNote':
+    'Automatiskt väljer det bästa alternativet åt dig. Vulkan är snabbare och rekommenderas för de flesta spelare. OpenGL är långsammare, men kan hjälpa om Vulkan inte fungerar korrekt. Börjar gälla nästa gång spelet startar.',
+  'hudChrome.options.gpuBackendOpenGL': 'OpenGL (långsamt)',
+  'hudChrome.options.gpuBackendSaveFailed':
+    'Valet kunde inte sparas. Nästa start behåller {backend}.',
+  'hudChrome.options.gpuBackendVulkan': 'Vulkan',
+  'hudChrome.options.restartFailed':
+    'Spelet kunde inte starta om sig självt. Avsluta och starta det igen.',
+  'hudChrome.options.restartGame': 'Starta om spelet',
+  'hudChrome.options.restartInProgress': 'Startar om spelet...',
+  'hudChrome.options.restartPending': 'Vissa ändringar börjar gälla efter en omstart.',
+  'hudChrome.options.shaderWarm': 'Shader-uppvärmningsarbetare',
+  'hudChrome.options.shaderWarmAuto': 'Automatiskt',
+  'hudChrome.options.shaderWarmNote':
+    'Förvärm shadercachen i bakgrunden för att förhindra hack i spelet. Automatiskt: aktiveras bara när ditt grafiksystem stöder det. (Rekommenderas). På: tvingas överallt. Kan försämra prestanda på vissa system. Av: inaktiverat.',
+  'hudChrome.options.shaderWarmOff': 'Av',
+  'hudChrome.options.shaderWarmOn': 'På',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilHeroicSummary':
+    'Var {everyHeroic} sek flammar ett sigill från de gamla värnen upp på golvet {minDist} till {maxDist} yd från Nythraxis, och han börjar Dödslös Uppstigning, vilket ger honom {ascensionHeroic} skada och anfallshastighet var {ascensionEvery} sek. Om han står på sigillet inom {bindHeroic} sek blir han Bunden: Uppstigningen renas, han bedövas i {stunHeroic} sek och han tar {vulnerability} mer skada i {boundHeroic} sek. Annars tar varje raiddeltagare {unboundHitHeroic} av maximal hälsa som Skuggskada och han behåller {unboundBonusHeroic} mer skada tills nästa bindning.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilName': 'Bindningssigill',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilResponse':
+    'Tanken drar Nythraxis till sigillet direkt, genom vilken eld raiden än har lämnat. Närstrid följer dragningen och distansspelare håller sig borta från den nya Gravbrytarkonen. Alla bränner ner honom medan han är Bunden.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilSummary':
+    'Var {everyNormal} sek flammar ett sigill från de gamla värnen upp på golvet {minDist} till {maxDist} yd från Nythraxis, och han börjar Dödslös Uppstigning, vilket ger honom {ascensionNormal} skada och anfallshastighet var {ascensionEvery} sek. Om han står på sigillet inom {bindNormal} sek blir han Bunden: Uppstigningen renas, han bedövas i {stunNormal} sek och han tar {vulnerability} mer skada i {boundNormal} sek. Annars tar varje raiddeltagare {unboundHitNormal} av maximal hälsa som Skuggskada och han behåller {unboundBonusNormal} mer skada tills nästa bindning.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeHeroicSummary':
+    'Var {everyHeroic} sek spetsar Nythraxis {victimsHeroic} raiddeltagare utom sitt nuvarande mål på Benspett. En spetsad raiddeltagare kan inte agera och förlorar {drainHeroic} av maximal hälsa varje sekund tills spettet förstörs.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeName': 'Benspett',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeResponse':
+    'Skadegörare byter direkt till Benspetten och förstör dem för att befria de spetsade raiddeltagarna. Helare håller de spetsade vid liv medan spetten faller.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
+    'Var {everyNormal} sek spetsar Nythraxis {victimsNormal} raiddeltagare utom sitt nuvarande mål på Benspett. En spetsad raiddeltagare kan inte agera och förlorar {drainNormal} av maximal hälsa varje sekund tills spettet förstörs.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
+    'Från {first} sek in i Kungens Vrede och var {everyHeroic} sek därefter börjar Nythraxis Benstorm i {duration} sek. Han ignorerar hot, rör sig {speed} gånger normal hastighet och gör {charges} rusningar som varar {chargeSeconds} sek var. Hans virvel orsakar {whirlHeroic} av maximal hälsa varje sekund inom {radius} yd. Varje rusning slutar i en Bensmäll inom samma radie för {slamHeroic} av maximal hälsa. Han kastar Benspett {spikeAt} sek in i stormen, sedan återaktiveras Gravbrytare {rearm} sek efter att den slutar.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Benstorm',
+  'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
+    'Sprid ut er och fortsätt springa från Nythraxis. Den jagade raiddeltagaren springer bort medan alla andra lämnar utrymme runt rusningsvägen, sedan tar tankarna upp honom när stormen slutar.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
+    'Från {first} sek in i Kungens Vrede och var {everyNormal} sek därefter börjar Nythraxis Benstorm i {duration} sek. Han ignorerar hot, rör sig {speed} gånger normal hastighet och gör {charges} rusningar som varar {chargeSeconds} sek var. Hans virvel orsakar {whirlNormal} av maximal hälsa varje sekund inom {radius} yd. Varje rusning slutar i en Bensmäll inom samma radie för {slamNormal} av maximal hälsa. Han kastar Benspett {spikeAt} sek in i stormen, sedan återaktiveras Gravbrytare {rearm} sek efter att den slutar.',
+  'hudChrome.raidBossGuide.nythraxis.courtName': 'Det Dödslösa Hovet',
+  'hudChrome.raidBossGuide.nythraxis.courtResponse':
+    'Tankar tar upp Aldren och vänder hans klyvning bort från raiden. Bedöva eller tysta Malric i samma ögonblick som Malrics Läkning börjar och döda honom först, rota eller bedöva sedan Voss bort från helarna, eftersom han inte kan hånas, och avsluta honom därefter.',
+  'hudChrome.raidBossGuide.nythraxis.courtSummary':
+    'På Heroic reser Nythraxis sitt hov efter varje Dödslöst Raseri, avbrutet eller inte, när det föregående hovet har fallit. Aldrens ande klyver allt nära sitt mål med Kunglig Klyvning. Malrics ande kanaliserar Malrics Läkning, som läker Nythraxis mer för varje kast. Voss ande ignorerar hån och jagar raiden.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresHeroicSummary':
+    'Vid {enrageHeroic} sek från stridsstarten (klockan pausar medan Broder Aldric kommer in vid 70%) utlöser Kronan består en hård raseri. Nythraxis får {damage} mer skada och {haste} snabbare anfall, sedan ytterligare {rampStep} skada var {rampEveryHeroic} sek. Det finns ingen timerstapel. Varningar kommer som rop vid {warn60}, {warn30} och {warn10} sek kvar.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresName': 'Kronan består',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresResponse':
+    'Behandla den första varningen som den sista skadefasen. Spara rörelse och defensiva nedkylningar för de återstående mekanikerna och besegra sedan Nythraxis före raseriet.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresSummary':
+    'Vid {enrageNormal} sek från stridsstarten (klockan pausar medan Broder Aldric kommer in vid 70%) utlöser Kronan består en hård raseri. Nythraxis får {damage} mer skada och {haste} snabbare anfall, sedan ytterligare {rampStep} skada var {rampEveryNormal} sek. Det finns ingen timerstapel. Varningar kommer som rop vid {warn60}, {warn30} och {warn10} sek kvar.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageHeroicSummary':
+    'Var {every} sek kastar Nythraxis Dödslöst Raseri i {cast} sek. Medan han kastar kan varje tänt värnsten kanaliseras av en raiddeltagare i {channel} sek. Om tre olika raiddeltagare var slutför en värnsten innan kastet slutar avbryts Raseriet och Nythraxis bedövas i {stun} sek. Annars tar varje raiddeltagare {damageHeroic} av maximal hälsa som Skuggskada, vilket ingen hälsopool överlever.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageName': 'Dödslöst Raseri',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageResponse':
+    'Tilldela en raiddeltagare till varje värnsten före stridsstarten. När kastet börjar springer var och en till sin sten och kanaliserar den tills den fullbordas. Bedövningar, att kliva bort och död bryter kanaliseringen, så håll kanaliserarna säkra och tilldela aldrig en spetsad raiddeltagare.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageSummary':
+    'Var {every} sek kastar Nythraxis Dödslöst Raseri i {cast} sek. Medan han kastar kan varje tänt värnsten kanaliseras av en raiddeltagare i {channel} sek. Om tre olika raiddeltagare var slutför en värnsten innan kastet slutar avbryts Raseriet och Nythraxis bedövas i {stun} sek. Annars tar varje raiddeltagare {damageNormal} av maximal hälsa som Skuggskada.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseHeroicSummary':
+    'Var {every} sek träffar Nythraxis sin nuvarande tank för {hitHeroic} av maximal hälsa som Skuggskada och lägger till en stapel Skräckförbannelse. I {duration} sek ökar varje stapel skadan den tanken tar från Nythraxis med {perStackHeroic}, upp till {max} staplar.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseName': 'Skräckförbannelse',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseResponse':
+    'Tankar byter vid {stacks} staplar: den andra tanken hånar och den förbannade tanken håller sig utanför Gravbrytarkonen medan staplarna bleknar. Helare förbereder den inkommande tanken före bytet.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseSummary':
+    'Var {every} sek träffar Nythraxis sin nuvarande tank för {hitNormal} av maximal hälsa som Skuggskada och lägger till en stapel Skräckförbannelse. I {duration} sek ökar varje stapel skadan den tanken tar från Nythraxis med {perStackNormal}, upp till {max} staplar.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionHeroicSummary':
+    'Var {everyHeroic} sek markerar skeletthänder {countHeroic} cirklar på {radius} yd under raiddeltagare. Efter {warning} sek bryter varje cirkel ut för {burstHeroic} av maximal hälsa som Skuggskada och brinner sedan som Gravflamma i {flameHeroic} sek, vilket orsakar {tickHeroic} av maximal hälsa varje sekund för alla som står i den.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionName': 'Gravutbrott',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionResponse':
+    'Kliv ut ur varje varningscirkel innan den bryter ut och håll er borta från brinnande mark. Tankar drar Nythraxis bort från lågorna så att närstrid har plats att arbeta.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionSummary':
+    'Var {everyNormal} sek markerar skeletthänder {countNormal} cirklar på {radius} yd under raiddeltagare. Efter {warning} sek bryter varje cirkel ut för {burstNormal} av maximal hälsa som Skuggskada och brinner sedan som Gravflamma i {flameNormal} sek, vilket orsakar {tickNormal} av maximal hälsa varje sekund för alla som står i den.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerName': 'Gravbrytare',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerResponse':
+    'Tankar håller Nythraxis vänd bort från raiden. Alla andra står bakom eller bredvid honom och korsar aldrig konen.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerSummary':
+    'Var {seconds} sek laddar Nythraxis sin nästa träffade sving. Hans mål tar bara själva svingen, men alla andra inom {range} yd i den {arc} grader breda konen framför honom tar {splash} av den svingen som fysisk skada, minskad av deras egen rustning.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireHeroicSummary':
+    'Var {everyHeroic} sek löper en linje av violett graveld från Nythraxis mot en raiddeltagare och växer {speed} yd varje sekund till {length} yd. Varje yard brinner i {burnHeroic} sek och orsakar {tickHeroic} av maximal hälsa varje sekund för alla som står i den.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireName': 'Graveld',
+  'hudChrome.raidBossGuide.nythraxis.gravefireResponse':
+    'Sidostega linjen när den kommer: den är smal och svänger aldrig. Distansspelare fortsätter röra sig i stället för att stå på samma plats.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireSummary':
+    'Var {everyNormal} sek löper en linje av violett graveld från Nythraxis mot en raiddeltagare och växer {speed} yd varje sekund till {length} yd. Varje yard brinner i {burnNormal} sek och orsakar {tickNormal} av maximal hälsa varje sekund för alla som står i den.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathName': 'Kungens Vrede',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathResponse':
+    'Använd återstående defensiva nedkylningar för oundviklig skada. Håll varje tidigare mekanik ren medan raiden avslutar striden.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathSummary':
+    'Nythraxis orsakar {bonusNormal} mer skada på Normal eller {bonusHeroic} på Heroic resten av striden. Gravutbrott sker var {eruptionEveryNormal} sek ({eruptionEveryHeroic} på Heroic) och Graveld var {gravefireEveryNormal} sek ({gravefireEveryHeroic} på Heroic).',
+  'hudChrome.raidBossGuide.nythraxis.overview':
+    'Överstepräst Malric vägrade låta sin kung dö, och riten som reste Nythraxis band hela hovet till kryptan. Mötet prövar ett disciplinerat tankbyte, snabba byten till Benspett, rörelse bort från brinnande mark och samordnad kanalisering av värnstenar när Tronen faller.',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathName': 'Kungens Vrede',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathSummary':
+    'Vid {health} hälsa ryter Nythraxis i Kungens Vrede och får {bonusNormal} skada på Normal eller {bonusHeroic} på Heroic resten av striden. Gravutbrott tätnar till var {eruptionEveryNormal} sek ({eruptionEveryHeroic} på Heroic) och Graveld till var {gravefireEveryNormal} sek ({gravefireEveryHeroic} på Heroic). Varje annan mekanik behåller sin rytm.',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneName': 'Tronen',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneSummary':
+    'Nythraxis håller sin tronsal med en laddad frontal klyvning, tankbytet för Skräckförbannelse, Benspett som spetsar raiddeltagare och Gravutbrott som lämnar brinnande mark.',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesName': 'Värnstenarna',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesSummary':
+    'Vid {health} hälsa håller Skakande Stamp raiden stilla medan Broder Aldric anländer och tänder värnstenarna. Varje spett krossas och golvet slutar brinna, sedan ansluter Själsslitning och Dödslöst Raseri till Tronens mekaniker.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenName': 'Res fallna',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenResponse':
+    'Den andra tanken tar upp varje våg när den reser sig. Skadegörare rensar vakterna mellan Benspett så att vågorna aldrig staplas innan Tronen faller.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenSummary':
+    'Var {every} sek under Tronen reser Nythraxis Uppståndna Kungliga Vakter bakom sig. De rusar mot hans nuvarande mål och slåss tills de förstörs.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendHeroicSummary':
+    'Nythraxis markerar {marksHeroic} raiddeltagare utom sitt nuvarande mål med Själsslitning. Efter {fuse} sek orsakar varje markering {damageHeroic} av bärarens maximala hälsa som Skuggskada, delat med antalet markerade raiddeltagare inom {range} yd från dem. En markering som löses ensam är dödlig.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendName': 'Själsslitning',
+  'hudChrome.raidBossGuide.nythraxis.soulRendResponse':
+    'Varje markerad raiddeltagare springer till en samlingspunkt och står inom {range} yd från de andra markeringarna innan stubinen på {fuse} sek tar slut. Helare fyller upp gruppen när markeringarna löses.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendSummary':
+    'Nythraxis markerar {marksNormal} raiddeltagare utom sitt nuvarande mål med Själsslitning. Efter {fuse} sek orsakar varje markering bärarens fulla maximala hälsa som Skuggskada, delat med antalet markerade raiddeltagare inom {range} yd från dem.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireHeroicSummary':
+    'Varje Själsslitningsdetonation lämnar en pöl av lila eld med {radius} yd radie per samlad markeringsgrupp, som brinner i {secondsHeroic} sek med {tickHeroic} av maximal hälsa varje sekund. Att stå där pölar överlappar ger bara en tick, aldrig staplade kopior. Pölar bildas aldrig inom {clearance} yd från en värnsten.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireName': 'Själseld',
+  'hudChrome.raidBossGuide.nythraxis.soulfireResponse':
+    'Flytta ut ur den lila pölen så snart markeringarna detonerar. Håll nästa samlingspunkt fri från aktiv eld.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
+    'Varje Själsslitningsdetonation lämnar en pöl av lila eld med {radius} yd radie där varje markering stod, som brinner i {seconds} sek med {tickNormal} av maximal hälsa varje sekund. Att stå där pölar överlappar ger en tick från varje pöl. Pölar bildas aldrig inom {clearance} yd från en värnsten.',
 };
