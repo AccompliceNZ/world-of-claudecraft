@@ -1205,6 +1205,18 @@
     min-height: 34px;
     padding: 5px 4px;
   }
+  /* Classic Need / Greed / Pass colour code on a timed, irreversible choice:
+     Need green, Greed gold (ui-btn--gold), Pass red (ui-btn--red). The library
+     has no green button variant, so Need's green is host-scoped here. */
+  .loot-roll-btn--need {
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-fct-heal) 26%, var(--socket-fill)),
+      var(--socket-fill)
+    );
+    border-color: color-mix(in srgb, var(--color-fct-heal) 55%, transparent);
+    color: var(--color-friendly);
+  }
   .loot-roll-votes {
     margin: 0 0 7px;
   }

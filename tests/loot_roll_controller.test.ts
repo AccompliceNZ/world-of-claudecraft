@@ -175,9 +175,13 @@ describe('LootRollController', () => {
     expect(row?.className).toContain('ui-panel-strong');
     expect(row?.innerHTML).toContain('loot-roll-timer ui-bar');
     expect(row?.innerHTML).toMatch(/loot-roll-name[^"]*q-uncommon/);
-    expect(row?.innerHTML).toContain('loot-roll-btn need ui-btn ui-btn--red');
-    expect(row?.innerHTML).toContain('loot-roll-btn greed ui-btn');
-    expect(row?.innerHTML).toContain('loot-roll-btn pass ui-btn');
+    // The classic Need / Greed / Pass colour code on a timed, irreversible
+    // choice: Need green (host-scoped, the library has no green variant),
+    // Greed gold, Pass red. Red must never be the Need button.
+    expect(row?.innerHTML).toContain('loot-roll-btn loot-roll-btn--need need ui-btn"');
+    expect(row?.innerHTML).toContain('loot-roll-btn greed ui-btn ui-btn--gold"');
+    expect(row?.innerHTML).toContain('loot-roll-btn pass ui-btn ui-btn--red"');
+    expect(row?.innerHTML).not.toContain('need ui-btn ui-btn--red');
 
     test.setOpen([]);
     test.controller.update(test.now());
