@@ -10,6 +10,7 @@
 // getComputedStyle and are covered by the no-magic-values source guard instead.
 
 import { describe, expect, it } from 'vitest';
+import { buildingContainsPoint, buildingLocalToWorld } from '../src/sim/building_layout';
 import {
   BUILTIN_WORLD,
   CAMPS,
@@ -26,6 +27,7 @@ import {
   ZONES,
 } from '../src/sim/data';
 import { EASTBROOK_LAYOUT } from '../src/sim/eastbrook_layout';
+import { KIT_BUILDINGS } from '../src/sim/kit_buildings';
 import type { QuestObjectiveRef } from '../src/sim/quest_targets';
 import {
   emptyZoneProps,
@@ -39,6 +41,7 @@ import type { Decoration } from '../src/sim/world';
 import { isNodeToolLockedFor } from '../src/ui/gathering_view';
 import { STABLE_MAP_NAVIGATION_LANDMARKS } from '../src/ui/map_navigation_landmarks_core';
 import {
+  buildingFootprintCorners,
   buildOverworldMapModel,
   gatherNodeMarkerAt,
   MAP_GATHER_NODE_HIT_RADIUS,
@@ -1922,5 +1925,77 @@ describe('zone-map crafting stations', () => {
       );
       expect(nearest).toBeGreaterThanOrEqual(MAP_STATION_NPC_SEPARATION - 1e-6);
     }
+  });
+});
+
+describe('placed-kit silhouettes', () => {
+  it('draws the Drakelands rebuild kit buildings from the derived footprints', () => {
+    // The rebuilt Wyrmwatch draws through the env-prop pipeline, never through
+    // props.buildings, so the map takes its silhouettes from the derived kit
+    // footprints (sim/kit_buildings.ts): the tavern reads as the inn, the
+    // stables and halls as houses, and the church as a chapel.
+    const world = makeOverworldWorld('sim') as unknown as {
+      player: { pos: { x: number; z: number } };
+    };
+    const inn = KIT_BUILDINGS.find((b) => b.kind === 'inn');
+    expect(inn).toBeDefined();
+    if (!inn) return;
+    world.player.pos.x = inn.x;
+    world.player.pos.z = inn.z;
+    // the fixture zone is ZONES[0]; the kit stands in the Drakelands
+    const drakelands = ZONES.find((z) => z.pois.some((poi) => poi.id === 'wyrmwatch'));
+    expect(drakelands).toBeDefined();
+    if (!drakelands) return;
+    const detail = buildOverworldMapModel({
+      ...input(world as unknown as IWorld, MAP_MAX_ZOOM),
+      zone: drakelands,
+    }).detail;
+    expect(detail).not.toBeNull();
+    const kit = detail?.buildings.filter((b) => b.id?.startsWith('kit:')) ?? [];
+    expect(kit.map((b) => b.kind)).toContain('inn');
+    expect(kit.map((b) => b.kind)).toContain('house');
+    expect(kit.find((b) => b.kind === 'inn')?.id).toBe(inn.id);
+    for (const b of kit) expect(b.points).toHaveLength(4);
+    const chapel = KIT_BUILDINGS.find((b) => b.kind === 'chapel');
+    expect(chapel).toBeDefined();
+    if (!chapel) return;
+    world.player.pos.x = chapel.x;
+    world.player.pos.z = chapel.z;
+    const keep = buildOverworldMapModel({
+      ...input(world as unknown as IWorld, MAP_MAX_ZOOM),
+      zone: drakelands,
+    }).detail;
+    expect(keep?.buildings.some((b) => b.kind === 'chapel' && b.id === chapel.id)).toBe(true);
+  });
+});
+
+describe('building footprint corners', () => {
+  it('strokes the rectangle that blocks a body: the collider transform, not its mirror', () => {
+    // A rotated kit building (the Wyrmwatch tavern hall at 105 degrees): the
+    // four corners must be buildingLocalToWorld's corners, and every corner
+    // nudged inward must sit inside buildingContainsPoint's rectangle while
+    // nudged outward it must not. A mirrored transform passes neither.
+    const inn = KIT_BUILDINGS.find((b) => b.kind === 'inn');
+    expect(inn).toBeDefined();
+    if (!inn) return;
+    expect(Math.abs(Math.sin(2 * inn.rot))).toBeGreaterThan(0.3); // not axis-aligned
+    const corners = buildingFootprintCorners(inn);
+    const expected = [
+      buildingLocalToWorld(inn, -inn.w / 2, -inn.d / 2),
+      buildingLocalToWorld(inn, inn.w / 2, -inn.d / 2),
+      buildingLocalToWorld(inn, inn.w / 2, inn.d / 2),
+      buildingLocalToWorld(inn, -inn.w / 2, inn.d / 2),
+    ];
+    corners.forEach((corner, i) => {
+      expect(corner.x).toBeCloseTo(expected[i].x, 9);
+      expect(corner.z).toBeCloseTo(expected[i].z, 9);
+      const inward = { x: (corner.x - inn.x) * 0.9 + inn.x, z: (corner.z - inn.z) * 0.9 + inn.z };
+      const outward = {
+        x: (corner.x - inn.x) * 1.15 + inn.x,
+        z: (corner.z - inn.z) * 1.15 + inn.z,
+      };
+      expect(buildingContainsPoint(inn, inward.x, inward.z)).toBe(true);
+      expect(buildingContainsPoint(inn, outward.x, outward.z)).toBe(false);
+    });
   });
 });

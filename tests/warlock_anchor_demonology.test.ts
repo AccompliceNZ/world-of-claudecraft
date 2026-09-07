@@ -63,6 +63,8 @@ describe('demonology 200 DPS anchors at 120 seconds', () => {
     // kit (the zero-armor level-20 dummy still flatters undead, same as
     // every prior re-anchor here). Both floor and ceiling move by about
     // plus or minus 5% around the new measurement.
+    // The Drakelands camps/props move changes the shared random stream.
+    // Both post-buff bands pass unchanged on the merged world.
     expect(mean('dps')).toBeGreaterThanOrEqual(254);
     expect(mean('dps')).toBeLessThanOrEqual(281);
     expect(mean('starvedPct')).toBeLessThan(0.1);

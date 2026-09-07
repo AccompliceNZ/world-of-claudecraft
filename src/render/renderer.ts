@@ -93,7 +93,6 @@ import { BlobShadows } from './blob_shadows';
 import { createBuildLedger } from './build_ledger_core';
 import { BuildRetryGate } from './build_retry_gate';
 import { setBuildSpanSink } from './build_spans';
-import { type BulwarkFeaturesView, buildBulwarkFeatures } from './bulwark_features';
 import { BurningPactMarkers } from './burning_pact_markers';
 import { createCameraBoom, stepCameraBoom } from './camera_boom_core';
 import {
@@ -115,7 +114,6 @@ import { canopyDetailPrewarmTextures } from './canopy_detail';
 import { canvasDataUrlAsync } from './canvas_data_url';
 import { castVfxProgramUnits, createSceneCastVfxReadiness } from './cast_vfx_prewarm';
 import type { CastVfxReadiness } from './cast_vfx_readiness_core';
-import { buildCastleFeatures, type CastleFeaturesView } from './castle_features';
 import { buildCelestialSprites, type CelestialSprites } from './celestial_sprites';
 import { buildCharacterEffectPrewarmGroup } from './character_effect_prewarm';
 import {
@@ -1601,8 +1599,6 @@ export class Renderer {
   private impactSite: ImpactSiteView;
   private realmFlora: RealmFloraView | null = null;
   private emberFeatures: EmberFeaturesView | null = null;
-  private bulwarkFeatures: BulwarkFeaturesView | null = null;
-  private castleFeatures: CastleFeaturesView | null = null;
   private dawnholdFeatures: DawnholdFeaturesView | null = null;
   private frostSky: FrostSkyView | null = null;
   private fenFeatures: FenFeaturesView | null = null;
@@ -4147,14 +4143,6 @@ export class Renderer {
         if (!this.emberFeatures) {
           this.emberFeatures = this.timedBuild('buildEmberFeatures', buildEmberFeatures);
           this.attachZoneFeature(this.emberFeatures);
-        }
-        if (!this.castleFeatures) {
-          this.castleFeatures = this.timedBuild('buildCastleFeatures', buildCastleFeatures);
-          this.attachZoneFeature(this.castleFeatures);
-        }
-        if (!this.bulwarkFeatures) {
-          this.bulwarkFeatures = this.timedBuild('buildBulwarkFeatures', buildBulwarkFeatures);
-          this.attachZoneFeature(this.bulwarkFeatures);
         }
         break;
       case 'frost':
