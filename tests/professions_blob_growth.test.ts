@@ -1954,11 +1954,37 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
     // itemsDiscovered set gained `reins_mech_bird` (18 serialized bytes),
     // `reins_lanternback_troll` (26), and `reins_chimeglass_tortoise` (28).
     // Those three `"<id>",` terms sum to the measured delta; no persisted shape
-    // or legal ceiling moved. Re-measured and re-based per the rule above,
-    // never widened: the floor is measurement minus 380 and the edge is
+    // or legal ceiling moved.
+    //
+    // RE-BASED again after the Field Kit discovery (intentional gathering
+    // kit): 151,668 bytes, exactly +12. deedStats.itemsDiscovered gained one
+    // more entry, `field_kit` (9 characters, 12 bytes as `"field_kit",` in the
+    // array). MEASURED directly below, not inferred: cloning the settled state
+    // with that one entry removed and re-stringifying isolates the term from
+    // every other key in the blob. Re-measured and re-based per the rule
+    // above, never widened: the floor is measurement minus 380 and the edge is
     // measurement plus one, so the band remains exactly 381 bytes wide.
-    expect(bytes, reMint).toBeGreaterThan(151275);
-    expect(bytes, reMint).toBeLessThan(151657);
+    const fieldKitDiscoveries = (s2.deedStats?.itemsDiscovered ?? []).filter(
+      (id) => id === 'field_kit',
+    );
+    expect(
+      fieldKitDiscoveries,
+      'field_kit must appear exactly once in the settled itemsDiscovered set',
+    ).toHaveLength(1);
+    const withoutFieldKit: CharacterState = {
+      ...s2,
+      deedStats: {
+        ...s2.deedStats,
+        itemsDiscovered: (s2.deedStats?.itemsDiscovered ?? []).filter((id) => id !== 'field_kit'),
+      },
+    };
+    const counterfactualBytes = Buffer.byteLength(JSON.stringify(withoutFieldKit), 'utf8');
+    expect(counterfactualBytes, 'field_kit removed, isolating its byte contribution').toBe(151656);
+    expect(bytes, reMint).toBe(151668);
+    expect(bytes - counterfactualBytes, 'field_kit contributes exactly one array entry').toBe(12);
+
+    expect(bytes, reMint).toBeGreaterThan(151287);
+    expect(bytes, reMint).toBeLessThan(151669);
 
     // WHAT THE MEASUREMENT SAYS ABOUT THE WARN THRESHOLD, now that D122 has
     // ruled. The OLD 131,072 sat BELOW the measured legal worst case (about

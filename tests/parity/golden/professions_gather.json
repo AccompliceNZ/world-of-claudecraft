@@ -21,7 +21,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "2567625d",
+      "state": "e186bbc4",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -75,6 +75,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -170,7 +173,7 @@
       "tick": 51,
       "time": 2.55,
       "nextId": 1003,
-      "state": "12013589",
+      "state": "bf006ac6",
       "events": "28744d1f",
       "rng": {
         "draws": 2,
@@ -245,6 +248,9 @@
           "equipmentInstance": {},
           "gatheringProficiency": {
             "mining": 1
+          },
+          "harvestPreference": {
+            "kind": "all"
           },
           "heroicDaily": {},
           "inventory": [
@@ -369,7 +375,7 @@
       "tick": 104,
       "time": 5.2,
       "nextId": 1003,
-      "state": "360796e0",
+      "state": "beb60919",
       "events": "5a75e5b9",
       "rng": {
         "draws": 4,
@@ -456,6 +462,9 @@
           "gatheringProficiency": {
             "logging": 100,
             "mining": 1
+          },
+          "harvestPreference": {
+            "kind": "all"
           },
           "heroicDaily": {},
           "inventory": [
@@ -593,7 +602,7 @@
       "tick": 500,
       "time": 25,
       "nextId": 1003,
-      "state": "ade6d813",
+      "state": "432cb690",
       "events": "f75e9e3b",
       "rng": {
         "draws": 18,
@@ -604,7 +613,7 @@
       "tick": 1000,
       "time": 50,
       "nextId": 1003,
-      "state": "58e9ef97",
+      "state": "555287a4",
       "events": "ce40a661",
       "rng": {
         "draws": 38,
@@ -615,7 +624,7 @@
       "tick": 1500,
       "time": 75,
       "nextId": 1003,
-      "state": "8cfadff7",
+      "state": "a93aafc4",
       "events": "1805a506",
       "rng": {
         "draws": 58,
@@ -626,7 +635,7 @@
       "tick": 2000,
       "time": 100,
       "nextId": 1003,
-      "state": "20802cbe",
+      "state": "c1683bb3",
       "events": "c01c9ebd",
       "rng": {
         "draws": 78,
@@ -637,7 +646,7 @@
       "tick": 2500,
       "time": 125,
       "nextId": 1003,
-      "state": "d4690773",
+      "state": "d19892c0",
       "events": "440f715d",
       "rng": {
         "draws": 96,
@@ -648,7 +657,7 @@
       "tick": 3000,
       "time": 150,
       "nextId": 1003,
-      "state": "84a48773",
+      "state": "ab5024c0",
       "events": "c01c9ebd",
       "rng": {
         "draws": 116,
@@ -659,7 +668,7 @@
       "tick": 3500,
       "time": 175,
       "nextId": 1003,
-      "state": "135ce868",
+      "state": "407c9525",
       "events": "3c7cb4d4",
       "rng": {
         "draws": 136,
@@ -670,7 +679,7 @@
       "tick": 4000,
       "time": 200,
       "nextId": 1003,
-      "state": "38b91ad1",
+      "state": "1082d4b0",
       "events": "2519cdbd",
       "rng": {
         "draws": 156,
@@ -681,7 +690,7 @@
       "tick": 4500,
       "time": 225,
       "nextId": 1003,
-      "state": "17a3a926",
+      "state": "b7c1c5e3",
       "events": "1a2aecd6",
       "rng": {
         "draws": 176,
@@ -692,7 +701,7 @@
       "tick": 5000,
       "time": 250,
       "nextId": 1003,
-      "state": "431b7b27",
+      "state": "7924e0a8",
       "events": "5d3c359d",
       "rng": {
         "draws": 194,
@@ -703,7 +712,7 @@
       "tick": 5206,
       "time": 260.3,
       "nextId": 1003,
-      "state": "a870d014",
+      "state": "5c78bc01",
       "events": "d4cac1f5",
       "rng": {
         "draws": 204,
@@ -811,6 +820,9 @@
             "herbalism": 1,
             "logging": 100,
             "mining": 1
+          },
+          "harvestPreference": {
+            "kind": "all"
           },
           "heroicDaily": {},
           "inventory": [
@@ -967,7 +979,7 @@
       "tick": 5208,
       "time": 260.4,
       "nextId": 1003,
-      "state": "a3fc97b5",
+      "state": "dc9de36a",
       "events": "741638a5",
       "rng": {
         "draws": 204,
@@ -1075,6 +1087,9 @@
             "herbalism": 1,
             "logging": 100,
             "mining": 1
+          },
+          "harvestPreference": {
+            "kind": "all"
           },
           "heroicDaily": {},
           "inventory": [

@@ -61,11 +61,13 @@ describe('the farmer counters, purchased row by row', () => {
     // this pin keeps the purchase walk honest on its own (Phase 9 QA).
     // The two upper counters moved by exactly FOUR each at GATE 1 (Phase 11e):
     // their tier's two shipped seeds plus the two the roster widening minted.
+    // Intentional Gathering (PR3) added field_kit to every farmer's counter
+    // (the corpse-harvest key), one row each.
     const rowCounts: Record<string, number> = {
-      farmer_jessica: 5,
-      farmer_teasel: 3,
-      farmer_hollis: 5,
-      farmer_verbena: 5,
+      farmer_jessica: 6,
+      farmer_teasel: 4,
+      farmer_hollis: 6,
+      farmer_verbena: 6,
     };
     for (const id of FARMER_IDS) {
       expect(NPCS[id].vendorItems?.length, `${id} row count`).toBe(rowCounts[id]);

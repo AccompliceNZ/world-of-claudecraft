@@ -477,11 +477,13 @@ describe('release v0.39 icon-art second-pass lineage', () => {
       liveHotbarItemIds.length,
     );
     // The 79 identities in the final historical census plus the 20
-    // formerly parked farming, food, rod, and hoe hotbar items.
+    // formerly parked farming, food, rod, and hoe hotbar items, plus
+    // field_kit (Intentional Gathering, PR3: use.type 'harvestPreference'
+    // joined the hotbar-eligible set, with committed art from launch).
     expect(
       artSubjectHotbarItemIds,
       'production isHotbarItemId art-subject inventory (live minus ITEM_ART_PENDING)',
-    ).toHaveLength(99);
+    ).toHaveLength(100);
     expect(pendingHotbarItemIds, 'ITEM_ART_PENDING hotbar items').toHaveLength(0);
     expect(
       pendingHotbarItemIds.filter((id) => shippingImageExists(`/ui/items/${id}.webp`)),

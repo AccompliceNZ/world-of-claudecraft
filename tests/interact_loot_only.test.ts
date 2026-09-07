@@ -1,13 +1,29 @@
 import { describe, expect, it, vi } from 'vitest';
 import { MOBS } from '../src/sim/data';
 import { createMob } from '../src/sim/entity';
+import { HARVEST_CAST_SECONDS } from '../src/sim/professions/harvest_admission';
 import { Sim } from '../src/sim/sim';
+import { DT } from '../src/sim/types';
 import { EMPTY_TEST_WORLD } from './sim_shared';
+
+// Intentional Gathering PR3: corpse harvest now starts a timed cast rather
+// than resolving on the same tick (tests/corpse_harvest_command.test.ts).
+const TICKS_PER_CAST = Math.round(HARVEST_CAST_SECONDS / DT);
 
 function setup(targeted: boolean) {
   const sim = new Sim({ seed: 11, playerClass: 'warrior', world: EMPTY_TEST_WORLD });
-  sim.player.pos = { x: 0, y: 0, z: 0 };
-  const mob = createMob(9999, MOBS.forest_wolf, 1, { x: 1, y: 0, z: 0 });
+  // Grounded via sim.groundPos, with a matching prevPos and onGround true (the
+  // corpse_harvest_command.test.ts coherent-rest rig): a mismatched y reads
+  // as an airborne body to the physics step, and the resulting per-tick fall
+  // is exactly the position drift the timed harvest cast's own displacement
+  // check would catch and invalidate the cast on.
+  sim.player.pos = sim.groundPos(0, 0);
+  sim.player.prevPos = { ...sim.player.pos };
+  sim.player.vx = 0;
+  sim.player.vy = 0;
+  sim.player.vz = 0;
+  sim.player.onGround = true;
+  const mob = createMob(9999, MOBS.forest_wolf, 1, sim.groundPos(1, 0));
   mob.dead = true;
   mob.aiState = 'dead';
   mob.corpseTimer = 9999;
@@ -38,7 +54,15 @@ describe('ordinary sim interaction leaves gathering deliberate', () => {
     expect(draws).not.toHaveBeenCalled();
     expect(sim.countItem('rough_hide')).toBe(0);
 
-    sim.harvestCorpse(mob.id);
+    // Harvest is now a timed Field Kit cast (PR3), not an instant grant: it
+    // is refused with no kit, and even once admitted nothing lands until the
+    // real cast completes over HARVEST_CAST_SECONDS worth of ticks.
+    sim.addItem('field_kit', 1);
+    const started = sim.harvestCorpse(mob.id);
+    expect(started).toBe(true);
+    expect(mob.harvestClaimedBy).toBeNull();
+    expect(draws).not.toHaveBeenCalled();
+    for (let i = 0; i < TICKS_PER_CAST; i++) sim.tick();
     expect(mob.harvestClaimedBy).toBe(sim.playerId);
     expect(draws).toHaveBeenCalled();
   });
