@@ -3500,8 +3500,34 @@ export const da_DK: EnTranslations = {
       "guildViewsAria": "Laugsbankens visninger",
       "guildContentsTab": "Indhold",
       "guildLogTab": "Log",
+      "guildHistoryTab": "History",
       "logAria": "Laugsbankens aktivitetslog",
       "logNote": "De {count} seneste handlinger i laugsbanken.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Indlæser laugsbankens log...",
       "logEmpty": "Der er endnu ikke flyttet noget ind i eller ud af laugsbanken.",
       "logUnavailable": "Laugsbankens log kan ikke læses lige nu.",
@@ -14001,6 +14027,48 @@ export const da_DK: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Staven med slukkede gnister"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Fremmanet kildevand"
       },
@@ -19006,6 +19074,12 @@ export const da_DK: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Bundstens-fortrop",
         "bonus3": "Øger angrebs- og magihastighed med 15%."
+      },
+      "bramblehide": {
+        "name": "Roots' Tornehud",
+        "bonus2": "Øger angrebskraft med 40.",
+        "bonus4": "Dine kritiske våbenslag splintrer målet med Bensplint og påfører 8 blødningsskade hvert 2. sek. i 12 sek. Stakker op til 3 gange.",
+        "bonus6": "Øger angrebs- og besværgelseshastigheden med 4% og træfsikkerheden med 3%. Kritiske våbentræffere splintrer målet med Bonesplinter, så det bløder for 5 skade hvert 2. sek. i 12 sek. Stables op til 3 gange."
       },
       "chronoweave": {
         "name": "Aethervævede gevandter",

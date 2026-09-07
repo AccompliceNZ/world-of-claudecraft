@@ -3500,8 +3500,34 @@ export const en_XA: EnTranslations = {
       "guildViewsAria": "[Ĝúíļð ƀáñķ ʋíéŵš]",
       "guildContentsTab": "[Çóñţéñţš]",
       "guildLogTab": "[Ļóĝ]",
+      "guildHistoryTab": "[Ĥíšţóŕý]",
       "logAria": "[Ĝúíļð ƀáñķ áçţíʋíţý ļóĝ]",
       "logNote": "[Ţĥé {count} ɱóšţ ŕéçéñţ ĝúíļð ƀáñķ áçţíóñš.]",
+      "logShowing": "[Šĥóŵíñĝ {count} ĝúíļð ƀáñķ áçţíóñš, ñéŵéšţ ƒíŕšţ.]",
+      "logFilterAria": "[Ƒíļţéŕ ţĥé ĝúíļð ƀáñķ ĥíšţóŕý]",
+      "logFilterAll": "[Áļļ]",
+      "logFilterItems": "[Íţéɱš]",
+      "logFilterMoney": "[Ɱóñéý]",
+      "logOlder": "[Šĥóŵ óļðéŕ]",
+      "logOlderLoading": "[Ļóáðíñĝ óļðéŕ áçţíóñš...]",
+      "logEnd": "[Ţĥáţ íš ţĥé ŵĥóļé ĝúíļð ƀáñķ ĥíšţóŕý.]",
+      "logEmptyFiltered": "[Ñó ĝúíļð ƀáñķ áçţíóñš ɱáţçĥ ţĥíš ƒíļţéŕ.]",
+      "logColTime": "[Ŵĥéñ]",
+      "logColMember": "[Ɱéɱƀéŕ]",
+      "logColAction": "[Áçţíóñ]",
+      "logColDetail": "[Ðéţáíļš]",
+      "logActionDeposit": "[Ðéþóšíţéð]",
+      "logActionWithdraw": "[Ŵíţĥðŕéŵ]",
+      "logActionBuySlots": "[Ɓóúĝĥţ áñ éẋþáñšíóñ]",
+      "logActionOpenBank": "[Óþéñéð ţĥé ƀáñķ]",
+      "logActionCharterFee": "[Þáíð ţĥé çĥáŕţéŕ ƒéé]",
+      "logActionAdminPurge": "[Ŕéɱóʋéð]",
+      "logActorAdmin": "[Áñ áðɱíñíšţŕáţóŕ]",
+      "logDetailItem": "[{count} {item}]",
+      "logSearchPlaceholder": "[Šéáŕçĥ ţĥíš ĥíšţóŕý]",
+      "logSearchAria": "[Šéáŕçĥ ţĥé ļóáðéð ĝúíļð ƀáñķ áçţíóñš ƀý ɱéɱƀéŕ, áçţíóñ óŕ íţéɱ]",
+      "logShowingMatched": "[Šĥóŵíñĝ {matched} óƒ {count} ļóáðéð ĝúíļð ƀáñķ áçţíóñš.]",
+      "logSearchNoMatch": "[Ñó ļóáðéð ĝúíļð ƀáñķ áçţíóñš ɱáţçĥ ýóúŕ šéáŕçĥ. Šĥóŵ óļðéŕ ŕóŵš ţó ŵíðéñ íţ.]",
       "logLoading": "[Ļóáðíñĝ ţĥé ĝúíļð ƀáñķ ļóĝ...]",
       "logEmpty": "[Ñóţĥíñĝ ĥáš ƀééñ ɱóʋéð íñ óŕ óúţ óƒ ţĥé ĝúíļð ƀáñķ ýéţ.]",
       "logUnavailable": "[Ţĥé ĝúíļð ƀáñķ ļóĝ çáññóţ ƀé ŕéáð ŕíĝĥţ ñóŵ.]",
@@ -14001,6 +14027,48 @@ export const en_XA: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "[Ŵáñð óƒ Ɋúéñçĥéð Šþáŕķš]"
       },
+      "bramblehide_crown": {
+        "name": "[Ŕóóţš' Ɓŕáɱƀļéĥíðé Çŕóŵñ]"
+      },
+      "bramblehide_mantle": {
+        "name": "[Ŕóóţš' Ɓŕáɱƀļéĥíðé Ɱáñţļé]"
+      },
+      "bramblehide_harness": {
+        "name": "[Ŕóóţš' Ɓŕáɱƀļéĥíðé Ĥáŕñéšš]"
+      },
+      "bramblehide_cinch": {
+        "name": "[Ŕóóţš' Ɓŕáɱƀļéĥíðé Çíñçĥ]"
+      },
+      "bramblehide_legguards": {
+        "name": "[Ŕóóţš' Ɓŕáɱƀļéĥíðé Ļéĝĝúáŕðš]"
+      },
+      "bramblehide_grips": {
+        "name": "[Ŕóóţš' Ɓŕáɱƀļéĥíðé Ĝŕíþš]"
+      },
+      "bramblehide_treads": {
+        "name": "[Ŕóóţš' Ɓŕáɱƀļéĥíðé Ţŕéáðš]"
+      },
+      "courtiers_bonefang": {
+        "name": "[Çóúŕţíéŕ'š Ɓóñéƒáñĝ]"
+      },
+      "thornpeak_wardblade": {
+        "name": "[Ţĥóŕñþéáķ Ŵáŕðƀļáðé]"
+      },
+      "gravecourt_hewer": {
+        "name": "[Ĝŕáʋéçóúŕţ Ĥéŵéŕ]"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "[Ʋóţíʋé Ŵáŕð óƒ ţĥé Ðéáţĥļéšš Çóúŕţ]"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "[Ţĥóŕñþéáķ Ɱóóñĥíðé Çóŵļ]"
+      },
+      "stormhymn_chain_grips": {
+        "name": "[Šţóŕɱĥýɱñ Çĥáíñ Ĝŕíþš]"
+      },
+      "stormhymn_chain_treads": {
+        "name": "[Šţóŕɱĥýɱñ Çĥáíñ Ţŕéáðš]"
+      },
       "conjured_water4": {
         "name": "[Çóñĵúŕéð Šþŕíñĝŵáţéŕ]"
       },
@@ -19006,6 +19074,12 @@ export const en_XA: EnTranslations = {
       "boundstone_vanguard": {
         "name": "[Ɓóúñðšţóñé Ʋáñĝúáŕð]",
         "bonus3": "[Íñçŕéášéš áţţáçķ áñð çášţíñĝ šþééð ƀý 7.5%.]"
+      },
+      "bramblehide": {
+        "name": "[Ŕóóţš' Ɓŕáɱƀļéĥíðé]",
+        "bonus2": "[Íñçŕéášéš Šţŕéñĝţĥ ƀý 10 áñð Šţáɱíñá ƀý 10.]",
+        "bonus4": "[Íñçŕéášéš áţţáçķ þóŵéŕ ƀý 25. Ýóúŕ ŵéáþóñ çŕíţíçáļ šţŕíķéš ĥáʋé á 50% çĥáñçé ţó ĝŕáñţ Ĝŕáʋéɱíĝĥţ, íñçŕéášíñĝ áţţáçķ þóŵéŕ ƀý 40 ƒóŕ 10 šéç.]",
+        "bonus6": "[Íñçŕéášéš áţţáçķ áñð çášţíñĝ šþééð ƀý 4% áñð Ĥíţ ƀý 3%. Ýóúŕ ŵéáþóñ çŕíţíçáļ šţŕíķéš šþļíñţéŕ ţĥé ţáŕĝéţ ŵíţĥ Ɓóñéšþļíñţéŕ, ƀļééðíñĝ íţ ƒóŕ 5 ðáɱáĝé éʋéŕý 2 šéç ƒóŕ 12 šéç. Šţáçķš úþ ţó 3 ţíɱéš.]"
       },
       "chronoweave": {
         "name": "[Áéţĥéŕŵéáʋé Ʋéšţɱéñţš]",

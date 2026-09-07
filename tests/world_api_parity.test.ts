@@ -337,6 +337,7 @@ export const IWORLD_MEMBERS = [
   { name: 'guildBankWithdraw', kind: 'method' },
   { name: 'guildBankBuySlots', kind: 'method' },
   { name: 'guildBankLog', kind: 'method' },
+  { name: 'guildBankLogOlder', kind: 'method' },
   // --- dungeons + delves commands and reads ---
   { name: 'enterDungeon', kind: 'method' },
   { name: 'leaveDungeon', kind: 'method' },
@@ -601,7 +602,9 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // IWorldGuildBank members (guildBankInfo, one data read, plus five
     // commands), leaving 287. The guild bank ACTIVITY LOG adds one read member
     // (guildBankLog, a method because reading it is what requests the cold
-    // payload on demand: it has no snapshot key), leaving 288. Thornhollow
+    // payload on demand: it has no snapshot key), leaving 288; the transaction
+    // history adds guildBankLogOlder (method, the older-page request) on top
+    // of the final tally below. Thornhollow
     // Fields adds the four battleground facet members on top of that base:
     // the bgInfo data member plus the bgQueueJoin / bgQueueLeave / bgFlagAction
     // commands, leaving 292. The stop-auto-attack-on-target-switch setting
@@ -667,9 +670,14 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // even when the total agrees. Only running the suite says what these
     // numbers really are; never reconcile them by arithmetic in the diff (the
     // numbers below were set from a suite run, not from this narrative).
-    expect(IWORLD_MEMBERS.length).toBe(344);
+    //
+    // Re-pinned at the release/v0.42.0 sync into the class-rebalance branch: this
+    // branch's resolvedAbility and the release's guildBankLogOlder are two
+    // independently added methods, landing 344 -> 345 total / 249 -> 250 methods
+    // on a suite run over the merged tree.
+    expect(IWORLD_MEMBERS.length).toBe(345);
     expect(DATA_MEMBERS.length).toBe(95);
-    expect(METHOD_MEMBERS.length).toBe(249);
+    expect(METHOD_MEMBERS.length).toBe(250);
   });
   it('has no duplicate member names', () => {
     const names = IWORLD_MEMBERS.map((m) => m.name);
@@ -817,6 +825,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'guildBankDepositGold',
       'guildBankInfo',
       'guildBankLog',
+      'guildBankLogOlder',
       'guildBankWithdraw',
       'guildBankWithdrawGold',
       'guildBuyRosterPage',
@@ -1221,6 +1230,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'guildBankDeposit',
       'guildBankDepositGold',
       'guildBankLog',
+      'guildBankLogOlder',
       'guildBankWithdraw',
       'guildBankWithdrawGold',
       'guildBuyRosterPage',
@@ -1801,6 +1811,7 @@ const FACET_GUILD_BANK = [
   'guildBankWithdraw',
   'guildBankBuySlots',
   'guildBankLog',
+  'guildBankLogOlder',
 ] as const satisfies readonly (keyof IWorldGuildBank)[];
 type _ExhaustGuildBank = AssertNever<
   Exclude<keyof IWorldGuildBank, (typeof FACET_GUILD_BANK)[number]>
@@ -2028,8 +2039,11 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
 
   it('the facet union equals the pinned IWORLD_MEMBERS set', () => {
     const union = Object.values(FACET_MEMBER_ARRAYS).flatMap((arr) => [...arr]);
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(344);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(344);
+    // Re-pinned at the release/v0.42.0 sync: resolvedAbility (this branch) and
+    // guildBankLogOlder (release) are two independently added methods, so the
+    // union grows 344 -> 345 alongside the IWORLD_MEMBERS pin above.
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(345);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(345);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);

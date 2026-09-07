@@ -4770,11 +4770,58 @@ export const hudChromeStrings = {
     guildViewsAria: 'Guild bank views',
     guildContentsTab: 'Contents',
     guildLogTab: 'Log',
+    // The transaction history (paged, filterable) replaced the fixed recent
+    // window under a NEW tab key: `guildLogTab` and `logNote` keep their
+    // shipped locale rows for the retired "50 most recent" surface.
+    // (Wordy values, M16: the five non-Latin fills land in this same change.)
+    guildHistoryTab: 'History',
     logAria: 'Guild bank activity log',
     // {count} is interpolated from GUILD_BANK_LOG_LIMIT at the painter
     // boundary: a baked-in number would lie in six languages the moment the
     // window size moved.
     logNote: 'The {count} most recent guild bank actions.',
+    // {count} is the number of rows ON SCREEN (every page loaded so far), from
+    // formatNumber; the footer below the list says whether older rows exist.
+    logShowing: 'Showing {count} guild bank actions, newest first.',
+    logFilterAria: 'Filter the guild bank history',
+    logFilterAll: 'All',
+    logFilterItems: 'Items',
+    logFilterMoney: 'Money',
+    logOlder: 'Show older',
+    logOlderLoading: 'Loading older actions...',
+    // Said in words at the end of the list, so an absent row reads as "it did
+    // not happen" and never as "the list stopped here".
+    logEnd: 'That is the whole guild bank history.',
+    // An empty FILTERED slice: "nothing has been moved" would be false about
+    // a bank whose money moved while the Items chip is pressed.
+    logEmptyFiltered: 'No guild bank actions match this filter.',
+    // The history TABLE: four column headers (pinned to the top of the
+    // scroller), the Action column's word per row kind, the Member cell's
+    // stand-in for an operator action, and the Details cell's item form.
+    // The retired sentence keys (logDepositItem and friends) keep their
+    // shipped locale rows. (Wordy values, M16: the five non-Latin fills land
+    // in this same change.)
+    logColTime: 'When',
+    logColMember: 'Member',
+    logColAction: 'Action',
+    logColDetail: 'Details',
+    logActionDeposit: 'Deposited',
+    logActionWithdraw: 'Withdrew',
+    logActionBuySlots: 'Bought an expansion',
+    logActionOpenBank: 'Opened the bank',
+    logActionCharterFee: 'Paid the charter fee',
+    logActionAdminPurge: 'Removed',
+    logActorAdmin: 'An administrator',
+    // {count} from formatNumber, {item} the localized item name.
+    logDetailItem: '{count} {item}',
+    // The history search, over the LOADED rows (the server pages by cursor and
+    // never sees the query); the footer's Show older widens what it searches.
+    // (Wordy values, M16: the five non-Latin fills land in this same change.)
+    logSearchPlaceholder: 'Search this history',
+    logSearchAria: 'Search the loaded guild bank actions by member, action or item',
+    logShowingMatched: 'Showing {matched} of {count} loaded guild bank actions.',
+    logSearchNoMatch:
+      'No loaded guild bank actions match your search. Show older rows to widen it.',
     logLoading: 'Loading the guild bank log...',
     logEmpty: 'Nothing has been moved in or out of the guild bank yet.',
     // A refusal is deliberately NOT an empty list: "you cannot read this right

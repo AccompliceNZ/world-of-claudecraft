@@ -5,11 +5,11 @@
     "baselineCommit": "aee195551b5aef628eb7a72192117d7e3079818e",
     "branch": "feature/placeholder-art-completion-v036",
     "shippingDirectory": "public/ui/items",
-    "itemArtFilesReviewed": 1044,
-    "liveItemDefinitions": 1059,
-    "generatedHeroicDefinitions": 64,
-    "heroicDefinitionsWithOwnWebp": 48,
-    "heroicWeaponArtAliases": 16,
+    "itemArtFilesReviewed": 1069,
+    "liveItemDefinitions": 1087,
+    "generatedHeroicDefinitions": 78,
+    "heroicDefinitionsWithOwnWebp": 59,
+    "heroicWeaponArtAliases": 19,
     "modifiedItemArtCount": 274,
     "modifiedItemArtPaths": [
       "public/ui/items/acolytes_circlet.webp",
@@ -288,16 +288,16 @@
       "public/ui/items/ysols_pearl_greaves.webp"
     ],
     "groups": {
-      "armor-chest": 122,
-      "armor-feet": 76,
-      "armor-gloves": 69,
-      "armor-helmet": 70,
-      "armor-legs": 87,
+      "armor-chest": 124,
+      "armor-feet": 80,
+      "armor-gloves": 73,
+      "armor-helmet": 74,
+      "armor-legs": 89,
       "armor-neck": 12,
-      "armor-offhand": 8,
+      "armor-offhand": 10,
       "armor-ring": 22,
-      "armor-shoulder": 78,
-      "armor-waist": 37,
+      "armor-shoulder": 80,
+      "armor-waist": 39,
       "bag": 13,
       "drink": 9,
       "elixir": 4,
@@ -309,7 +309,7 @@
       "quest": 102,
       "tool": 60,
       "ui-backpack": 1,
-      "weapon": 133
+      "weapon": 136
     },
     "incrementalReviews": [
       {
@@ -427,7 +427,7 @@
   },
   "visualVerdict": {
     "status": "pass",
-    "passCount": 1044,
+    "passCount": 1069,
     "passIds": [
       "abyssal_loop",
       "abysswrought_band",
@@ -505,7 +505,14 @@
       "bonewrought_greatsword",
       "boundstone_girdle",
       "boundstone_helm",
+      "bramblehide_cinch",
+      "bramblehide_crown",
+      "bramblehide_grips",
+      "bramblehide_harness",
       "bramblehide_jerkin",
+      "bramblehide_legguards",
+      "bramblehide_mantle",
+      "bramblehide_treads",
       "breakscarred_steel",
       "briarroot_staff",
       "bridgemere_toll_chest",
@@ -581,6 +588,7 @@
       "coppermail_sabatons",
       "cord_of_the_last_flame",
       "corpse_candle_focus",
+      "courtiers_bonefang",
       "cracked_fetish",
       "cracked_ogre_tusk",
       "cracked_wyrm_scale",
@@ -791,6 +799,7 @@
       "gravecaller_blade",
       "gravecaller_sigil",
       "gravecaller_staff",
+      "gravecourt_hewer",
       "gravepath_treads",
       "gravescale_girdle",
       "gravewalker_softboots",
@@ -836,6 +845,13 @@
       "heroic_bonewrought_bulwark",
       "heroic_boundstone_girdle",
       "heroic_boundstone_helm",
+      "heroic_bramblehide_cinch",
+      "heroic_bramblehide_crown",
+      "heroic_bramblehide_grips",
+      "heroic_bramblehide_harness",
+      "heroic_bramblehide_legguards",
+      "heroic_bramblehide_mantle",
+      "heroic_bramblehide_treads",
       "heroic_crownforged_dreadhelm",
       "heroic_crownforged_warspaulders",
       "heroic_deathlord_legguards",
@@ -868,10 +884,14 @@
       "heroic_soulflame_mantle",
       "heroic_stormcallers_crown",
       "heroic_stormcallers_spaulders",
+      "heroic_stormhymn_chain_grips",
+      "heroic_stormhymn_chain_treads",
+      "heroic_thornpeak_moonhide_cowl",
       "heroic_tideguard_greaves",
       "heroic_tideguard_sabatons",
       "heroic_tidescale_vest",
       "heroic_verdant_walkers",
+      "heroic_votive_ward_of_the_deathless_court",
       "heroic_wildgrowth_leggings",
       "heroic_wraithfire_orb",
       "heroic_wyrmcult_grand_robe",
@@ -1300,6 +1320,8 @@
       "stormcallers_spaulders",
       "stormcallers_waistguard",
       "stormchant_gauntlets",
+      "stormhymn_chain_grips",
+      "stormhymn_chain_treads",
       "stormkindled_chain",
       "stormkindled_chest",
       "stormkindled_gloves",
@@ -1349,6 +1371,8 @@
       "thornhide_mantle",
       "thornhide_vestment",
       "thornling_grips",
+      "thornpeak_moonhide_cowl",
+      "thornpeak_wardblade",
       "thornpeak_wildwraps",
       "thundershock_treads",
       "thunderward_legguards",
@@ -1407,6 +1431,7 @@
       "voidweave_mantle",
       "voss_sanctified_mace",
       "votive_chain_belt",
+      "votive_ward_of_the_deathless_court",
       "wand_of_quenched_sparks",
       "wanderers_chestguard",
       "wardens_oathband",
@@ -1478,7 +1503,7 @@
     "watch": [],
     "rejectCount": 0,
     "reject": [],
-    "summary": "All 1044 shipping item-art files pass the visual contract: 817 reviewed in the 2026-08-09 campaign (documented retries included), plus the five class-overhaul integration additions owner-reviewed and passed on 2026-08-10, plus the Dawnhold posy addition (project-authored vector illustration) owner-reviewed and passed on 2026-08-12, plus the two Proving Shore prop renders (rendered from their own shipped world models) owner-reviewed and passed on 2026-08-17, plus the three pearl-detour icons (generated via the OpenAI proving-shore-mother-of-pearl-2026-08-20 batch) owner-reviewed and passed on 2026-08-20, plus the Proving Shore Passing Stone render (rendered from its own shipped world model by the same deterministic pipeline as the 2026-08-17 pair) added on 2026-08-22, machine-checked and awaiting owner visual review, plus the nine Crucible raid weapon icons (generated via the OpenAI crucible-raid-weapons-2026-08-28 batch) added on 2026-08-28, machine-checked and awaiting owner visual review, plus the two Ignivar legendary drop renders (varkhul_forgebreaker and varkhul_emberward, rendered from their own shipped held-weapon models by the deterministic weapon-still pipeline) added on 2026-08-28, machine-checked and awaiting owner visual review, plus the 192 Crucible set-piece, sigil, and off-set icons (generated via the OpenAI crucible-set-icons-2026-08-29 batch) added on 2026-08-29, machine-checked and awaiting owner visual review, plus the Core of the Last Flame reagent icon (staged early from the crucible-raid-professions-2026-08-28 batch) added on 2026-08-30, machine-checked and awaiting owner visual review, plus the seven bank-storage painted bags (implementation-agent reviewed and passed on 2026-08-26, joined at the v0.41.0 base sync), All 830 shipping item-art files pass the visual contract: 817 reviewed in the 2026-08-09 campaign (documented retries included), plus the five class-overhaul integration additions owner-reviewed and passed on 2026-08-10, plus the Dawnhold posy addition (project-authored vector illustration) owner-reviewed and passed on 2026-08-12, plus the two Proving Shore prop renders (rendered from their own shipped world models) owner-reviewed and passed on 2026-08-17, plus the three pearl-detour icons (generated via the OpenAI proving-shore-mother-of-pearl-2026-08-20 batch) owner-reviewed and passed on 2026-08-20, plus the Proving Shore Passing Stone render (rendered from its own shipped world model by the same deterministic pipeline as the 2026-08-17 pair) added on 2026-08-22, machine-checked and awaiting owner visual review, plus the Bonebound Rickshaw reins icon (generated under woc-item-icon-v1 from a user-directed prompt, its own provenance recorded against its mapping.json owner) owner-reviewed against the regenerated mount contact sheet and passed on 2026-08-21, plus the Lanternback Troll mount reins icon (owner-supplied painted master, downscaled to the shipping format) owner-reviewed and passed on 2026-08-15 and the Chimeglass Tortoise mount reins icon (rendered from its shipped mount model) owner-reviewed and passed on 2026-08-16, both joining this record at the release/v0.42.0 sync of PR #3439, plus the Cluckwork Mech Bird store-mount icon (project Blender render under the same contract) added for owner review on 2026-08-17."
+    "summary": "All 1069 shipping item-art files pass the visual contract: 817 reviewed in the 2026-08-09 campaign (documented retries included), plus the five class-overhaul integration additions owner-reviewed and passed on 2026-08-10, plus the Dawnhold posy addition (project-authored vector illustration) owner-reviewed and passed on 2026-08-12, plus the two Proving Shore prop renders (rendered from their own shipped world models) owner-reviewed and passed on 2026-08-17, plus the three pearl-detour icons (generated via the OpenAI proving-shore-mother-of-pearl-2026-08-20 batch) owner-reviewed and passed on 2026-08-20, plus the Proving Shore Passing Stone render (rendered from its own shipped world model by the same deterministic pipeline as the 2026-08-17 pair) added on 2026-08-22, machine-checked and awaiting owner visual review, plus the nine Crucible raid weapon icons (generated via the OpenAI crucible-raid-weapons-2026-08-28 batch) added on 2026-08-28, machine-checked and awaiting owner visual review, plus the two Ignivar legendary drop renders (varkhul_forgebreaker and varkhul_emberward, rendered from their own shipped held-weapon models by the deterministic weapon-still pipeline) added on 2026-08-28, machine-checked and awaiting owner visual review, plus the 192 Crucible set-piece, sigil, and off-set icons (generated via the OpenAI crucible-set-icons-2026-08-29 batch) added on 2026-08-29, machine-checked and awaiting owner visual review, plus the Core of the Last Flame reagent icon (staged early from the crucible-raid-professions-2026-08-28 batch) added on 2026-08-30, machine-checked and awaiting owner visual review, plus the seven bank-storage painted bags (implementation-agent reviewed and passed on 2026-08-26, joined at the v0.41.0 base sync), All 830 shipping item-art files pass the visual contract: 817 reviewed in the 2026-08-09 campaign (documented retries included), plus the five class-overhaul integration additions owner-reviewed and passed on 2026-08-10, plus the Dawnhold posy addition (project-authored vector illustration) owner-reviewed and passed on 2026-08-12, plus the two Proving Shore prop renders (rendered from their own shipped world models) owner-reviewed and passed on 2026-08-17, plus the three pearl-detour icons (generated via the OpenAI proving-shore-mother-of-pearl-2026-08-20 batch) owner-reviewed and passed on 2026-08-20, plus the Proving Shore Passing Stone render (rendered from its own shipped world model by the same deterministic pipeline as the 2026-08-17 pair) added on 2026-08-22, machine-checked and awaiting owner visual review, plus the Bonebound Rickshaw reins icon (generated under woc-item-icon-v1 from a user-directed prompt, its own provenance recorded against its mapping.json owner) owner-reviewed against the regenerated mount contact sheet and passed on 2026-08-21, plus the Lanternback Troll mount reins icon (owner-supplied painted master, downscaled to the shipping format) owner-reviewed and passed on 2026-08-15 and the Chimeglass Tortoise mount reins icon (rendered from its shipped mount model) owner-reviewed and passed on 2026-08-16, both joining this record at the release/v0.42.0 sync of PR #3439, plus the Cluckwork Mech Bird store-mount icon (project Blender render under the same contract) added for owner review on 2026-08-17, plus the three Nythraxis gap-fill one-hander renders (courtiers_bonefang, thornpeak_wardblade and gravecourt_hewer, rendered from their own shipped held-weapon models by the deterministic weapon-still pipeline) added on 2026-09-04, machine-checked and awaiting owner visual review, plus the twenty-two Roots' Bramblehide and Nythraxis gap-fill paintings (seven set pieces, the healer shield, the leather caster helm and the mail caster gloves and feet, each with its heroic variant, generated via the OpenAI roots-bramblehide-icons-2026-09-07 batch) added on 2026-09-07, machine-checked and awaiting owner visual review."
   },
   "nonVisualContentWatch": [
     {
@@ -3381,6 +3406,6 @@
         "format": "png"
       }
     ],
-    "shippingCatalogSha256": "017938ae50f70349630c15ffe2466b2f8ad4acf4ecf32022fddb0c27c8d7285d"
+    "shippingCatalogSha256": "8efefbdb39729e9d08383c4ac5d954b9eed2381875bd9a7b9798f1b5862632db"
   }
 }

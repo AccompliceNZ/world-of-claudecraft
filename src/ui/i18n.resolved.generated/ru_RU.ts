@@ -3500,8 +3500,34 @@ export const ru_RU: EnTranslations = {
       "guildViewsAria": "Виды банка гильдии",
       "guildContentsTab": "Содержимое",
       "guildLogTab": "Журнал",
+      "guildHistoryTab": "История",
       "logAria": "Журнал операций банка гильдии",
       "logNote": "{count} последних операций банка гильдии.",
+      "logShowing": "Показано операций гильдейского банка: {count}, сначала новые.",
+      "logFilterAria": "Фильтр истории гильдейского банка",
+      "logFilterAll": "Все",
+      "logFilterItems": "Предметы",
+      "logFilterMoney": "Деньги",
+      "logOlder": "Показать более ранние",
+      "logOlderLoading": "Загрузка более ранних операций...",
+      "logEnd": "Это вся история гильдейского банка.",
+      "logEmptyFiltered": "Нет операций гильдейского банка, подходящих под этот фильтр.",
+      "logColTime": "Когда",
+      "logColMember": "Участник",
+      "logColAction": "Действие",
+      "logColDetail": "Подробности",
+      "logActionDeposit": "Внёс",
+      "logActionWithdraw": "Забрал",
+      "logActionBuySlots": "Купил расширение",
+      "logActionOpenBank": "Открыл банк",
+      "logActionCharterFee": "Оплатил сбор за устав",
+      "logActionAdminPurge": "Удалил",
+      "logActorAdmin": "Администратор",
+      "logDetailItem": "{count} x {item}",
+      "logSearchPlaceholder": "Поиск по истории",
+      "logSearchAria": "Поиск по загруженным операциям гильдейского банка: участник, действие или предмет",
+      "logShowingMatched": "Показано {matched} из {count} загруженных операций гильдейского банка.",
+      "logSearchNoMatch": "Среди загруженных операций совпадений нет. Покажите более ранние строки, чтобы расширить поиск.",
       "logLoading": "Загрузка журнала банка гильдии...",
       "logEmpty": "В банк гильдии пока ничего не клали и ничего из него не брали.",
       "logUnavailable": "Журнал банка гильдии сейчас недоступен.",
@@ -14001,6 +14027,48 @@ export const ru_RU: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Жезл угасших искр"
       },
+      "bramblehide_crown": {
+        "name": "Тернистый венец Рутса"
+      },
+      "bramblehide_mantle": {
+        "name": "Тернистая мантия Рутса"
+      },
+      "bramblehide_harness": {
+        "name": "Тернистая упряжь Рутса"
+      },
+      "bramblehide_cinch": {
+        "name": "Тернистый пояс Рутса"
+      },
+      "bramblehide_legguards": {
+        "name": "Тернистые поножи Рутса"
+      },
+      "bramblehide_grips": {
+        "name": "Тернистые перчатки Рутса"
+      },
+      "bramblehide_treads": {
+        "name": "Тернистые сапоги Рутса"
+      },
+      "courtiers_bonefang": {
+        "name": "Костяной клык придворного"
+      },
+      "thornpeak_wardblade": {
+        "name": "Клинок-страж Тернистого пика"
+      },
+      "gravecourt_hewer": {
+        "name": "Секира Могильного двора"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Обетный щит Бессмертного двора"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Капюшон из лунной кожи Тернистого пика"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Кольчужные перчатки Штормового гимна"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Кольчужные сапоги Штормового гимна"
+      },
       "conjured_water4": {
         "name": "Сотворённая родниковая вода"
       },
@@ -19006,6 +19074,12 @@ export const ru_RU: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Авангард Связанного камня",
         "bonus3": "Скорость атаки и произнесения заклинаний повышается на 15%."
+      },
+      "bramblehide": {
+        "name": "Тернистая шкура Рутса",
+        "bonus2": "Сила повышается на 10, выносливость повышается на 10.",
+        "bonus4": "Сила атаки повышается на 25. Критические удары оружием с вероятностью 50% даруют «Могильную мощь», увеличивая силу атаки на 40 на 10 сек.",
+        "bonus6": "Скорость атаки и чтения заклинаний повышается на 4%, меткость на 3%. Критические удары оружием оставляют в цели «Костяной осколок»: 5 ед. урона от кровотечения каждые 2 сек. в течение 12 сек. Суммируется до 3 раз."
       },
       "chronoweave": {
         "name": "Одеяние эфирного плетения",

@@ -3500,8 +3500,34 @@ export const ko_KR: EnTranslations = {
       "guildViewsAria": "길드 은행 보기",
       "guildContentsTab": "내용물",
       "guildLogTab": "기록",
+      "guildHistoryTab": "기록",
       "logAria": "길드 은행 활동 기록",
       "logNote": "최근 길드 은행 활동 {count}건입니다.",
+      "logShowing": "길드 은행 활동 {count}건을 최신순으로 표시합니다.",
+      "logFilterAria": "길드 은행 기록 필터",
+      "logFilterAll": "전체",
+      "logFilterItems": "아이템",
+      "logFilterMoney": "골드",
+      "logOlder": "이전 기록 보기",
+      "logOlderLoading": "이전 활동을 불러오는 중...",
+      "logEnd": "길드 은행의 전체 기록입니다.",
+      "logEmptyFiltered": "이 필터와 일치하는 길드 은행 활동이 없습니다.",
+      "logColTime": "시간",
+      "logColMember": "구성원",
+      "logColAction": "활동",
+      "logColDetail": "내용",
+      "logActionDeposit": "입금",
+      "logActionWithdraw": "출금",
+      "logActionBuySlots": "확장 구매",
+      "logActionOpenBank": "은행 개설",
+      "logActionCharterFee": "창설 수수료 지불",
+      "logActionAdminPurge": "삭제",
+      "logActorAdmin": "관리자",
+      "logDetailItem": "{item} {count}개",
+      "logSearchPlaceholder": "이 기록 검색",
+      "logSearchAria": "불러온 길드 은행 활동을 구성원, 활동, 아이템으로 검색",
+      "logShowingMatched": "불러온 길드 은행 활동 {count}건 중 {matched}건을 표시합니다.",
+      "logSearchNoMatch": "검색과 일치하는 활동이 없습니다. 이전 기록을 불러와 범위를 넓히세요.",
       "logLoading": "길드 은행 기록을 불러오는 중...",
       "logEmpty": "아직 길드 은행에 넣거나 뺀 것이 없습니다.",
       "logUnavailable": "지금은 길드 은행 기록을 볼 수 없습니다.",
@@ -14001,6 +14027,48 @@ export const ko_KR: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "꺼진 불꽃의 마법봉"
       },
+      "bramblehide_crown": {
+        "name": "루츠의 가시덤불가죽 왕관"
+      },
+      "bramblehide_mantle": {
+        "name": "루츠의 가시덤불가죽 어깨보호구"
+      },
+      "bramblehide_harness": {
+        "name": "루츠의 가시덤불가죽 흉갑"
+      },
+      "bramblehide_cinch": {
+        "name": "루츠의 가시덤불가죽 허리띠"
+      },
+      "bramblehide_legguards": {
+        "name": "루츠의 가시덤불가죽 다리보호구"
+      },
+      "bramblehide_grips": {
+        "name": "루츠의 가시덤불가죽 장갑"
+      },
+      "bramblehide_treads": {
+        "name": "루츠의 가시덤불가죽 장화"
+      },
+      "courtiers_bonefang": {
+        "name": "조신의 뼈송곳니"
+      },
+      "thornpeak_wardblade": {
+        "name": "가시봉우리 수호검"
+      },
+      "gravecourt_hewer": {
+        "name": "무덤궁정 도끼"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "불사 궁정의 봉헌 방패"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "가시봉우리 달가죽 두건"
+      },
+      "stormhymn_chain_grips": {
+        "name": "폭풍찬가 사슬 장갑"
+      },
+      "stormhymn_chain_treads": {
+        "name": "폭풍찬가 사슬 장화"
+      },
       "conjured_water4": {
         "name": "창조된 샘물"
       },
@@ -19006,6 +19074,12 @@ export const ko_KR: EnTranslations = {
       "boundstone_vanguard": {
         "name": "속박석 선봉대",
         "bonus3": "공격 속도와 시전 속도가 15% 증가합니다."
+      },
+      "bramblehide": {
+        "name": "루츠의 가시덤불가죽",
+        "bonus2": "힘이 10, 체력이 10만큼 증가합니다.",
+        "bonus4": "전투력이 25만큼 증가합니다. 무기 치명타 적중 시 50% 확률로 \"무덤의 위력\"이 발동하여 전투력이 40만큼 증가합니다. 10초 동안 지속됩니다.",
+        "bonus6": "공격 및 시전 속도가 4%, 적중이 3% 증가합니다. 무기 치명타 적중 시 대상에게 \"뼈 파편\"을 남겨 12초 동안 2초마다 5의 출혈 피해를 입힙니다. 최대 3번 중첩됩니다."
       },
       "chronoweave": {
         "name": "에테르직조 예복",

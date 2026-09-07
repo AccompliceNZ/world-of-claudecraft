@@ -761,4 +761,8 @@ export const table: DeedLocaleTable = {
     desc: '以英雄難度擊敗「末焰鍛父瓦爾庫爾」，且沒有任何團隊成員死亡。',
     title: '未焚者',
   },
+  col_set_bramblehide: {
+    name: '魯茨的荊棘皮甲',
+    desc: '發現魯茨的荊棘皮甲的每一個部件。',
+  },
 };

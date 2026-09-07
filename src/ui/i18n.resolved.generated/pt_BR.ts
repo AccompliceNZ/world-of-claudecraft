@@ -3500,8 +3500,34 @@ export const pt_BR: EnTranslations = {
       "guildViewsAria": "Visualizações do banco da guilda",
       "guildContentsTab": "Conteúdo",
       "guildLogTab": "Registro",
+      "guildHistoryTab": "History",
       "logAria": "Registro de atividades do banco da guilda",
       "logNote": "As {count} ações mais recentes do banco da guilda.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Carregando o registro do banco da guilda...",
       "logEmpty": "Nada ainda entrou ou saiu do banco da guilda.",
       "logUnavailable": "O registro do banco da guilda não pode ser lido no momento.",
@@ -14001,6 +14027,48 @@ export const pt_BR: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Varinha das Faíscas Extintas"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Água de Nascente Conjurada"
       },
@@ -19006,6 +19074,12 @@ export const pt_BR: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Vanguarda Pedra-vínculo",
         "bonus3": "Aumenta a velocidade de ataque e de lançamento em 15%."
+      },
+      "bramblehide": {
+        "name": "Couro de Sarça de Roots",
+        "bonus2": "Aumenta o poder de ataque em 40.",
+        "bonus4": "Seus acertos críticos com armas estilhaçam o alvo com Estilhaço Ósseo, causando 8 de sangramento a cada 2 s por 12 s. Acumula até 3 vezes.",
+        "bonus6": "Aumenta em 4% as velocidades de ataque e conjuração e em 3% o Acerto. Acertos críticos da sua arma estilhaçam o alvo com Estilhaçaossos, causando 5 de dano a cada 2 s por 12 s. Acumula até 3 vezes."
       },
       "chronoweave": {
         "name": "Vestes da Trama Etérea",
