@@ -66,6 +66,25 @@ greys (`#e8d9b0`, `#b9ad86`, `#b6a472`, `#95886a`, `#8f8a76`) all read as
 `#06060a` and `#0b0b10` are one `--color-ink-deep`; the disc gradient's `#14141d` stop is
 `--panel-base`.
 
+## Requested variants (host rules today, candidates for the library)
+
+Each surface below wanted a primitive variant the library does not carry; the slice built it
+with the closest primitive plus a host-scoped geometry rule and named the variant it wanted.
+Add one when a third consumer appears (rule of three), never for a single site:
+
+- `ui-socket--pet` (36px) and a round `ui-socket--round` species taking `--ui-socket-size`
+  (the mobile ring, petals and strip items restate the round recipe).
+- `ui-keycap--tab` (trapezoid `clip-path` with an `is-armed` gold fill: the cross hotbar
+  trigger tabs) and `ui-keycap--pad-a/b/x/y` (or a `--pad-color` knob on `ui-keycap--round`).
+- `ui-badge--gold` (the quest acceptance-order chip) and `ui-badge--micro` (a corner badge
+  sized for a 34x30 launcher).
+- `ui-chip--gold`, `ui-chip--art` (`height: auto` around a crest or icon) and a fixed-plate
+  chip that floats over the world and stays preset independent (the Steam wishlist chip).
+- `ui-seg--column` (vertical rails need `flex: 0 0 auto` per tab), `ui-card--on` (an earned
+  or completed plate), `ui-btn--xs` (a 20px square toggle), `ui-disc--rim` (compact minimap
+  satellites), an opacity-aware `ui-panel-soft` that multiplies a player-controlled alpha
+  (chat), and a flat compact `ui-panel` raid-cell variant.
+
 ## Selector manifest
 Machine-read by `tests/ui_library.test.ts`: every `ui-*` class declared in `library.css`
 appears here and every line here is declared there. Compound state selectors are listed
