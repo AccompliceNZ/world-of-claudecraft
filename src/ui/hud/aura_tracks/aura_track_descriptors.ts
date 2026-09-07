@@ -18,6 +18,17 @@ import {
   DEFENSIVE_COOLDOWN_SEC,
 } from './aura_track_catalog';
 
+/** The BOOL_SETTINGS keys that switch the tracks on, named here rather than as
+ *  `BoolSettingKey` because this is a pure core and may not import from
+ *  src/game; tests/options_view.test.ts pins that each is a real setting. */
+export type AuraTrackSettingKey =
+  | 'showDefensivesTrack'
+  | 'showSelfBuffTrack'
+  | 'showOffensiveTrack'
+  | 'showUtilityTrack'
+  | 'showFriendlyTrack'
+  | 'showShieldTrack';
+
 export interface AuraTrackDescriptor {
   /** Stable id: the settings key suffix, the frame-spec id, and the test pin. */
   id: string;
@@ -26,7 +37,7 @@ export interface AuraTrackDescriptor {
   /** localStorage key its position and size persist under. */
   storageKey: string;
   /** The BOOL_SETTINGS key that switches this track on. */
-  settingKey: string;
+  settingKey: AuraTrackSettingKey;
   /** Frame name chip while the interface is unlocked, and the frame's own
    *  accessible name. */
   labelKey: TranslationKey;
@@ -137,4 +148,15 @@ export const AURA_TRACKS: readonly AuraTrackDescriptor[] = [
 /** Look one up by id (the Hud composes by id; tests pin by id). */
 export function auraTrackDescriptor(id: string): AuraTrackDescriptor | undefined {
   return AURA_TRACKS.find((track) => track.id === id);
+}
+
+/** The prefix `interface_unlock_core` generates each track's HUD frame id with. */
+export const AURA_TRACK_FRAME_PREFIX = 'auraTrack_';
+
+/** The descriptor behind a HUD frame id, or undefined when the id names another
+ *  frame. The frame specs are generated as `auraTrack_<id>`, so the unlock core
+ *  and the Hud reverse that here rather than re-deriving the prefix. */
+export function auraTrackForFrameId(frameId: string): AuraTrackDescriptor | undefined {
+  if (!frameId.startsWith(AURA_TRACK_FRAME_PREFIX)) return undefined;
+  return auraTrackDescriptor(frameId.slice(AURA_TRACK_FRAME_PREFIX.length));
 }

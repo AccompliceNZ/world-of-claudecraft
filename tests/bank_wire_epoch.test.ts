@@ -58,14 +58,15 @@ describe('BankInfo wire compatibility epoch', () => {
     // The runtime epoch pin: the world handshake version that fences the
     // pre-bank-storage shape out before any snapshot is admitted. The Ignivar
     // raid ladder moved the current epoch past the vault's own 11
-    // (src/world_api.ts); any epoch at or above 11 keeps the fence.
-    expect(ONLINE_WORLD_LAYOUT_VERSION).toBe(25);
-    expect(ONLINE_WORLD_AUTH_TYPE).toBe('auth-world-25');
+    // (src/world_api.ts) and the Drakelands site swap took it to 26 and then 27; any epoch
+    // at or above 11 keeps the fence.
+    expect(ONLINE_WORLD_LAYOUT_VERSION).toBe(27);
+    expect(ONLINE_WORLD_AUTH_TYPE).toBe('auth-world-27');
   });
 
   it('separates identity-preserving vault snapshots from auth-world-10 before admission', () => {
-    expect(ONLINE_WORLD_LAYOUT_VERSION).toBe(25);
-    expect(ONLINE_WORLD_AUTH_TYPE).toBe('auth-world-25');
+    expect(ONLINE_WORLD_LAYOUT_VERSION).toBe(27);
+    expect(ONLINE_WORLD_AUTH_TYPE).toBe('auth-world-27');
     expect(ONLINE_WORLD_AUTH_TYPE).not.toBe('auth-world-10');
     expect(ONLINE_WORLD_AUTH_TYPE).not.toBe('auth-world-9');
   });

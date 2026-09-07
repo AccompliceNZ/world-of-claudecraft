@@ -423,6 +423,7 @@ export type OptionsPanelId =
   | 'auras'
   | 'audio'
   | 'performance'
+  | 'transfer'
   | 'bugreport';
 
 export type OptionsMenuAction =
@@ -448,6 +449,9 @@ export function buildOptionsMenu(opts: { bugReportAvailable: boolean }): Options
     { labelKey: 'hudChrome.auraOverlay.title', action: { kind: 'goto', view: 'auras' } },
     { labelKey: 'hud.options.audio', action: { kind: 'goto', view: 'audio' } },
     { labelKey: 'hudChrome.perf.title', action: { kind: 'goto', view: 'performance' } },
+    // Full settings export/import: its own sub-panel, since the code it carries
+    // spans every family (the Interface tab's rows carry only their own).
+    { labelKey: 'hudChrome.fullTransfer.menu', action: { kind: 'goto', view: 'transfer' } },
     // The wiki row sits with the help-shaped entries (above Report a Bug /
     // Unstuck); it opens the confirm-first external hop, never a sub-panel.
     { labelKey: 'nav.wiki', action: { kind: 'wiki' } },

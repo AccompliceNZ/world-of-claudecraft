@@ -144,15 +144,3 @@ function composeAuraTracks<TEntity extends AuraTrackEntityInput>(
     }),
   }));
 }
-
-/** The descriptor behind a HUD frame id, or undefined when the id names another
- *  frame. The frame specs are generated as `auraTrack_<id>`, so the coordinator
- *  reverses that here rather than re-deriving the prefix at its call site. */
-export function auraTrackForFrameId(frameId: string): AuraTrackDescriptor | undefined {
-  if (!frameId.startsWith(AURA_TRACK_FRAME_PREFIX)) return undefined;
-  const id = frameId.slice(AURA_TRACK_FRAME_PREFIX.length);
-  return AURA_TRACKS.find((track) => track.id === id);
-}
-
-/** The prefix `interface_unlock_core` generates each track's frame id with. */
-export const AURA_TRACK_FRAME_PREFIX = 'auraTrack_';

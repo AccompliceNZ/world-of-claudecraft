@@ -12800,7 +12800,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Melindungi satu sekutu selama 30 dtk. Pukulan pertama yang membuatnya turun di bawah 35% nyawa menghabiskan Jaga dan menyembuhkannya sebesar {buff}. (Ciri khas Berkat)',
   'entities.abilities.scouring_mercy.description':
-    'Memberi 72 sampai 84 kerusakan Suci kepada musuh atau menyembuhkan sasaran sekutu sebesar 130 sampai 155. Kedua nilai meningkat dengan kekuatan mantra. Kerusakan juga menyembuhkan setiap sekutu yang terikat Doktrin sebesar 30%, atau anggota kelompok bernyawa terendah sebesar 15% bila tidak ada yang terikat. (Ciri khas Doktrin)',
+    'Memberi {damage} kerusakan Suci kepada musuh atau menyembuhkan sasaran sekutu sebesar {healing}. Kerusakan meningkat dengan kekuatan mantra; penyembuhan meningkat dengan kekuatan penyembuhan. Doktrin mengubah kerusakan ini menjadi penyembuhan lewat ikatanmu. Jika tidak ada anggota kelompok terikat yang terluka dalam 30 meter, sembuhkan anggota kelompok terluka dengan nyawa terendah dalam 30 meter sebesar 15% dari kerusakan. Menyembuhkan anggota kelompok juga menyembuhkan hingga 2 anggota kelompok terluka lainnya dalam 10 meter dari sasaran tersebut dan dalam garis pandangmu, masing-masing sebesar 50% dari nyawa yang dipulihkan. Penyembuhan tambahan ini tidak bisa kritis atau membuat ikatan Doktrin. (Ciri khas Doktrin)',
   'entities.abilities.solar_invocation.description':
     'Seketika menyembuhkan sekutu sebesar {damage} atau memberi kerusakan Suci sedang kepada musuh. Kedua penggunaan menghasilkan 1 Pengabdian. Selama Kenaikan, rapalan penyembuhan juga menyembuhkan pemain sekutu dalam 10 m dari sasaran sebesar separuhnya.',
   'entities.abilities.solar_step.description': 'Menambah kecepatan gerakmu 150% selama 2 dtk.',
@@ -13553,8 +13553,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Serpihan Jiwa',
   'hudChrome.warlock.doomEmptyStatus': '{value} dari {max} Kecaman.',
   'hudChrome.warlock.doomLabel': 'Kecaman',
-  'hudChrome.warlock.doomMeterLock': 'Kunci bilah sumber daya Penderitaan',
-  'hudChrome.warlock.doomMeterUnlock': 'Pindahkan bilah sumber daya Penderitaan',
   'hudChrome.warlock.doomStatus': '{value} dari {max} Kecaman; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tiga Benang Takdir: Melahap dapat menganyamnya menjadi Kecaman tambahan.',

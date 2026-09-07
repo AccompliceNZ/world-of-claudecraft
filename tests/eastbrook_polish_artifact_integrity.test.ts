@@ -1059,13 +1059,22 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
 // the Realm Builder monument (PR #3695) and this branch's renderer changes
 // land together on the merged tree. No capture was retaken.
+// Re-minted for the release/v0.42.0 merge into the Nythraxis playtest-tuning
+// branch (PR #3903's Varkhul heroic add-health lands beside this branch's
+// Nythraxis hazard-color renderer change): the composite first, then this
+// seal. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  'bd53b31882af899715dcc7bb4a2d9159fa63b5ac1eb5b4ff3b342d2f63b76a08';
+  '7d600a711fb4e932e16de3ad4f100c31453321bf158e85f8f8996ec9818dc72e';
 // Re-minted at the release/v0.42.0 sync of PR #3439: renderer.ts moved for the
 // mount lifecycle seam (mount_lifecycle.ts) and the rickshaw hooks it absorbed.
 // Re-minted again for the PR #3695 review fixes (the impostor fragment tail).
+// Re-minted for the release/v0.42.0 merge into the Nythraxis playtest-tuning
+// branch (PR #3903's Varkhul heroic add-health lands beside this branch's
+// Nythraxis hazard-color renderer change): both arms had re-minted, so the
+// merged renderer.ts bytes replace either side's value. No capture was
+// retaken.
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  '3a5b183e08a217c7421c7fecd4b61e43598b3a081fe8b07ba7fdabed559d0f7b';
+  'b106691f5bae01bbaeb5e1156dc3e5b25a903f4bd9278d4b2b9581891eb5a86a';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2238,7 +2247,11 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
       // the Realm Builder monument (PR #3695) and this branch's renderer changes
       // land together on the merged tree. No capture was retaken.
-    ).toBe('7691517f80fb2fc7620a55adcfc2e5fbfb6ded72bb5f0d77ca4e050c90dfe9ff');
+      // Re-minted for the release/v0.42.0 merge into the Nythraxis
+      // playtest-tuning branch (PR #3903's Varkhul heroic add-health lands
+      // beside this branch's Nythraxis hazard-color renderer change): the
+      // composite first, then this seal. No capture was retaken.
+    ).toBe('b3e2da9d573aa546b7ec590517fb40372a235d55f88ca3cbd97b3b0e452d45c1');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

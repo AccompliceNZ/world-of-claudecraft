@@ -12,15 +12,16 @@ export {
   DEFENSIVE_COOLDOWN_SEC,
 } from './aura_track_catalog';
 export {
+  AURA_TRACK_FRAME_PREFIX,
   AURA_TRACKS,
   type AuraTrackDescriptor,
+  type AuraTrackSettingKey,
   auraTrackDescriptor,
+  auraTrackForFrameId,
 } from './aura_track_descriptors';
 export {
-  AURA_TRACK_FRAME_PREFIX,
   AuraTrackFamily,
   type AuraTrackHostDeps,
-  auraTrackForFrameId,
   type ComposedAuraTrack,
 } from './aura_track_host';
 export { AuraTrackPainter, type AuraTrackPainterDeps } from './aura_track_painter';

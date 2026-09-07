@@ -1008,7 +1008,7 @@ const classAbilityNamesEn = {
         'Strike from the shadows for 250% weapon damage plus {damage}. Must be stealthed and behind the target. Requires a dagger. Awards 1 combo point.',
         {
           subtlety:
-            'Used from Duskveil this adds 1 Gloam (max 3). At 3 Gloam you can use it WITHOUT stealth and from any angle: that use costs nothing, spends all 3 Gloam, starts the 6 sec Shadow Veil, and hits for double.',
+            'From Duskveil, double both the weapon damage and flat bonus, and gain 1 Gloam (max 3). Stealth still requires a dagger and attacking from behind. At 3 Gloam, using this without stealth costs nothing, spends all 3 Gloam and starts Shadow Veil for 6 sec. Veiled Edge adds 50% to its weapon damage, without increasing the flat bonus. Veiled Edge does not stack with the stealth bonus.',
         },
       ],
       [
@@ -1337,6 +1337,10 @@ const classAbilityNamesEn = {
         'arcane_shot',
         'Fell Shot',
         'Shoot the target for {damage} Arcane damage. Damage increases with Ranged Attack Power.',
+        {
+          marksmanship:
+            'Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read.',
+        },
       ],
       [
         'concussive_shot',
@@ -1376,17 +1380,17 @@ const classAbilityNamesEn = {
       [
         'aimed_shot',
         'Long Draw',
-        'Shoot the target for {damage} Physical damage. Damage increases with Ranged Attack Power.',
+        'Shoot the target for {damage} Physical damage. Damage increases with Ranged Attack Power. Coldsight Read from a completed Fevered Draw makes your next Long Draw deal 50% more damage. Starting the cast spends Read.',
       ],
       [
         'rapid_fire',
         'Fevered Draw',
-        'Fire 6 shots over 2.4 sec while moving. Each shot deals {damage} Physical damage and increases with Ranged Attack Power.',
+        'Fire 6 shots over 2.4 sec while moving. Each shot deals {damage} Physical damage and increases with Ranged Attack Power. Completing all 6 shots grants Coldsight Read for 10 sec: your next Long Draw deals 50% more damage, or your next Fell Shot deals 75% more. Starting either shot spends Read, even if interrupted.',
       ],
       [
         'smite',
         'Scouring Hymn',
-        'Deal {damage} Holy damage. Damage increases with Spell Power. Doctrine: heal each linked ally for 30% of the damage. If no ally is linked, heal the lowest-health party member for 15%.',
+        'Deal {damage} Holy damage. Damage increases with Spell Power. Doctrine converts this damage into healing through your links. If no injured linked group member is within 30 yards, heal the lowest-health injured group member within 30 yards for 15% of the damage.',
       ],
       [
         'lesser_heal',
@@ -1401,12 +1405,12 @@ const classAbilityNamesEn = {
       [
         'shadow_word_pain',
         'Dirge of Decay',
-        'Deal {damage} total Shadow damage over 18 sec, once every 3 sec. Damage increases with Spell Power. Vespers: deal 10% more damage, and each tick on your Effigy grants 1 Gloomtithe.',
+        'Deal {damage} total Shadow damage over 18 sec, once every 3 sec. Damage increases with Spell Power. Vespers already includes 10% more damage and grants 1 Gloomtithe per tick on your Effigy. Reapplying your active Dirge to an enemy mob refreshes your existing Dirges on all living hostile mobs within 30 yards of you and in line of sight. This does not spread Dirge to new targets.',
       ],
       [
         'power_word_shield',
         'Psalm of Warding',
-        'Shield a friendly target, absorbing {damage} damage for 30 sec. Doctrine also links the target to your Holy damage for 30 sec.',
+        'Shield a friendly target, absorbing {damage} damage for 30 sec. Doctrine also links the target for 30 sec. Your Scouring Hymn and hostile Scouring Mercy heal linked group members while they are within 30 yards of you.',
       ],
       [
         'renew',
@@ -2590,7 +2594,7 @@ const classAbilityNamesEn = {
       [
         'scouring_mercy',
         'Scouring Mercy',
-        'Deal 72 to 84 Holy damage to an enemy or heal a friendly target for 130 to 155. Both amounts increase with Spell Power. Damage also heals each Doctrine-linked ally for 30%, or the lowest-health party member for 15% if no ally is linked. (Doctrine signature)',
+        'Deal {damage} Holy damage to an enemy or heal a friendly target for {healing}. Damage increases with Spell Power; healing increases with Healing Power. Doctrine converts this damage into healing through your links. If no injured linked group member is within 30 yards, heal the lowest-health injured group member within 30 yards for 15% of the damage. Healing a group member also heals up to 2 other injured group members within 10 yards of that target and in your line of sight, each for 50% of the health restored. These extra heals cannot critically heal or create Doctrine links. (Doctrine signature)',
       ],
       [
         'seraphic_vigil',

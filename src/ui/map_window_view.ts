@@ -26,6 +26,7 @@ import {
   STRIP_MIN_X,
   type ZoneDef,
 } from '../sim/data';
+import { KIT_BUILDINGS } from '../sim/kit_buildings';
 import { NODE_HARVEST_TABLE } from '../sim/professions/gathering';
 import { canGatherTier } from '../sim/professions/tools';
 import {
@@ -690,6 +691,33 @@ const MAP_MARKER_KIND: Readonly<Record<BuildingDef['kind'], MapBuildingMarker['k
 /** Resolve a map footprint independently from a building's gameplay kind. The
  *  Grand Armoury keeps the replaced inn lot's rest semantics, but must read as
  *  the civic landmark on the map. */
+/** The four world-space corners of a footprint rect, in the transform the
+ *  colliders, the renderer, and buildingLocalToWorld share (the three.js
+ *  rotation.y sense). The map used to rotate the other way, which is
+ *  invisible on an axis-aligned rect but mirrors every rotated one: the
+ *  rectangle the map strokes must be the one that blocks a body. Pure and
+ *  exported so a test can pin the sense against buildingContainsPoint. */
+export function buildingFootprintCorners(placement: {
+  x: number;
+  z: number;
+  w: number;
+  d: number;
+  rot: number;
+}): { x: number; z: number }[] {
+  const c = Math.cos(placement.rot);
+  const s = Math.sin(placement.rot);
+  const corner = (dx: number, dz: number): { x: number; z: number } => ({
+    x: placement.x + dx * c + dz * s,
+    z: placement.z - dx * s + dz * c,
+  });
+  return [
+    corner(-placement.w / 2, -placement.d / 2),
+    corner(placement.w / 2, -placement.d / 2),
+    corner(placement.w / 2, placement.d / 2),
+    corner(-placement.w / 2, placement.d / 2),
+  ];
+}
+
 export function mapBuildingMarkerKind(building: {
   kind: BuildingDef['kind'];
   landmark?: 'eastbrook_grand_armoury';
@@ -1228,19 +1256,19 @@ function buildDetail(
     kind: MapBuildingMarker['kind'],
   ): void => {
     if (!inView(placement.x, placement.z)) return;
-    const c = Math.cos(placement.rot);
-    const s = Math.sin(placement.rot);
-    const corner = (dx: number, dz: number): { mx: number; my: number } =>
-      toMap(placement.x + dx * c - dz * s, placement.z + dx * s + dz * c);
-    const points = [
-      corner(-placement.w / 2, -placement.d / 2),
-      corner(placement.w / 2, -placement.d / 2),
-      corner(placement.w / 2, placement.d / 2),
-      corner(-placement.w / 2, placement.d / 2),
-    ];
+    const points = buildingFootprintCorners(placement).map((corner) => toMap(corner.x, corner.z));
     buildings.push({ id: placement.id ?? null, points, kind });
   };
   for (const building of authoredProps.buildings) {
+    footprint(building, mapBuildingMarkerKind(building));
+  }
+  // The placed-kit architecture (the Drakelands rebuild's keep halls, chapel,
+  // tavern, and stables) draws through the env-prop pipeline, never through
+  // props.buildings, so its silhouettes come from the derived footprints
+  // (sim/kit_buildings.ts): the same OBBs the kit collides with. Like those
+  // colliders (staticWorldColliders bakes the fortress table into every
+  // world), the kit stands wherever the world does, so it draws unguarded.
+  for (const building of KIT_BUILDINGS) {
     footprint(building, mapBuildingMarkerKind(building));
   }
   // Walls are authored beside the active world's other static props. Treat each

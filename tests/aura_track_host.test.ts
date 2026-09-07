@@ -20,12 +20,12 @@
 // LAST track still sees the ally. Feeding an array would pass on the broken code.
 
 import { describe, expect, it } from 'vitest';
-import { AURA_TRACKS } from '../src/ui/hud/aura_tracks/aura_track_descriptors';
 import {
   AURA_TRACK_FRAME_PREFIX,
-  AuraTrackFamily,
+  AURA_TRACKS,
   auraTrackForFrameId,
-} from '../src/ui/hud/aura_tracks/aura_track_host';
+} from '../src/ui/hud/aura_tracks/aura_track_descriptors';
+import { AuraTrackFamily } from '../src/ui/hud/aura_tracks/aura_track_host';
 import type { AuraTrackEntityInput } from '../src/ui/hud/aura_tracks/aura_track_view';
 import type { PainterHostWriters } from '../src/ui/painter_host';
 

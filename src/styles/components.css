@@ -13937,6 +13937,258 @@
     width: min(880px, calc(100vw - 32px));
     --kb-btn-w: 96px;
   }
+  /* Key Bindings panel: the keyboard overview (src/ui/keyboard_map.ts). Keys sit
+     on a quarter-unit grid so the 1.25 / 1.5 / 2.25-wide caps line up; a key in
+     use takes its category colour, a dot marks bindings in other modifier
+     layers, and the detail line under the board spells the hovered key out. */
+  .kbm {
+    margin: 4px 0 10px;
+    --kbm-u: 34px;
+    /* Cap colours and the five category tints (shared by the caps and the
+       legend swatches); a new category adds one token here and one rule pair. */
+    --kbm-key-bg: #1a150e;
+    --kbm-key-fg: #b9ac82;
+    --kbm-key-fg-active: #f4ead0;
+    --kbm-text: #e8dcb8;
+    --kbm-cat-movement: #2f5a34;
+    --kbm-cat-targeting: #6a3a2a;
+    --kbm-cat-interface: #2d4a66;
+    --kbm-cat-pet: #5a4a7a;
+    --kbm-cat-action-bar: #7a5a1e;
+  }
+  .kbm-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .kbm-title {
+    font-family: var(--title-font);
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  /* The option rows under the board: modifier layer, keyboard size and (when
+     the OS layout is not QWERTY) which legends to print. */
+  .kbm-opts {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .kbm-opt-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+  }
+  .kbm-opt-label {
+    min-width: 96px;
+    font-size: 11px;
+    color: var(--kbm-key-fg);
+  }
+  .kbm-layers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .kbm-popout {
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+  /* Bindings on keys the chosen keyboard size does not draw. */
+  .kbm-hidden {
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--kbm-key-fg);
+  }
+  .kbm-layer {
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+  .kbm-layer[aria-pressed="true"] {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+  .kbm-board {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .kbm-block {
+    display: grid;
+    grid-template-columns: repeat(var(--kbm-cols), calc(var(--kbm-u) / 4));
+    grid-auto-rows: var(--kbm-u);
+    flex: none;
+  }
+  .kbm-key {
+    position: relative;
+    grid-column: span var(--kbm-w);
+    grid-row: span var(--kbm-h);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    margin: 1.5px;
+    padding: 0 2px;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--kbm-key-bg);
+    color: var(--kbm-key-fg);
+    font: inherit;
+    font-size: 10px;
+    line-height: 1.1;
+    cursor: var(--cursor-point);
+  }
+  .kbm-key:hover {
+    border-color: var(--gold);
+  }
+  /* The same steady token ring every .btn carries (the caps are not .btn). */
+  .kbm-key:focus-visible {
+    outline: 3px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+  .kbm-key.in-use {
+    color: var(--kbm-key-fg-active);
+  }
+  .kbm-key.capturing {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 1px var(--gold);
+  }
+  /* A cap that can never take a binding (Escape, the modifier keys) reads as
+     a plain key, not a control. */
+  .kbm-key.kbm-fixed,
+  .kbm-key:disabled {
+    cursor: default;
+    opacity: 1;
+  }
+  .kbm-key:disabled:hover {
+    border-color: var(--border);
+  }
+  .kbm-spacer {
+    visibility: hidden;
+  }
+  .kbm-legend {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .kbm-action {
+    max-width: 100%;
+    font-size: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0.95;
+  }
+  .kbm-dot {
+    position: absolute;
+    top: 2px;
+    right: 3px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .kbm-cat-movement.in-use,
+  .kbm-swatch.kbm-cat-movement {
+    background: var(--kbm-cat-movement);
+  }
+  .kbm-cat-targeting.in-use,
+  .kbm-swatch.kbm-cat-targeting {
+    background: var(--kbm-cat-targeting);
+  }
+  .kbm-cat-interface.in-use,
+  .kbm-swatch.kbm-cat-interface {
+    background: var(--kbm-cat-interface);
+  }
+  .kbm-cat-pet.in-use,
+  .kbm-swatch.kbm-cat-pet {
+    background: var(--kbm-cat-pet);
+  }
+  .kbm-cat-action-bar.in-use,
+  .kbm-swatch.kbm-cat-action-bar {
+    background: var(--kbm-cat-action-bar);
+  }
+  /* forced-colors strips the category fills and the layer dot, so an in-use
+     cap and an empty one would read identically (the #tf-name.hostile class of
+     failure): a redundant non-colour cue on the cap and the capturing ring. */
+  @media (forced-colors: active) {
+    .kbm-key.in-use {
+      border-width: 2px;
+      border-color: Highlight;
+      text-decoration: underline;
+    }
+    .kbm-key.capturing {
+      outline: 2px dashed Highlight;
+    }
+  }
+  .kbm-legend-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--kbm-key-fg);
+  }
+  .kbm-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .kbm-swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+  }
+  .kbm-swatch-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    background: var(--gold);
+    margin: 0 2px;
+  }
+  .kbm-detail {
+    min-height: 14px;
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: var(--kbm-text);
+  }
+  /* Unbind / Cancel while a capture is armed, or the assign picker for an
+     empty key; sits under the detail line. */
+  .kbm-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  /* The pop-out window (src/ui/keyboard_map_window.ts): the same board in a
+     movable panel that can stay up while playing. Desktop only. */
+  #keyboard-map-window {
+    width: min(900px, calc(100vw - 48px));
+    padding: 0 10px 10px;
+  }
+  #keyboard-map-window .kbm {
+    margin-top: 6px;
+  }
+  #keyboard-map-window .kbm-title {
+    display: none;
+  }
   .kb-cols {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -14137,6 +14389,15 @@
   }
   .transfer-pane[hidden] {
     display: none;
+  }
+  /* The Key Bindings panel's hotkey-setup Export/Import row: sits between the
+     binding columns and the Reset/Back buttons, with the same expando. */
+  .kb-transfer {
+    margin: 0 0 8px;
+  }
+  /* The Import / Export sub-panel's body around the Full Settings row. */
+  .transfer-body {
+    margin: 8px 0;
   }
   .transfer-code {
     width: 100%;
