@@ -45,6 +45,20 @@ export function installPromptDialog(
     idPrefix: string;
   },
 ): PromptDialogHandle {
+  prompt.classList.add('ui-panel-strong');
+  prompt.querySelectorAll<HTMLElement>('.prompt-number').forEach((input) => {
+    input.classList.add('ui-input');
+  });
+  prompt.querySelectorAll<HTMLElement>('button').forEach((button) => {
+    button.classList.add(
+      button.matches('.woc-store-prompt-close, .x-btn, [data-close]') ? 'ui-x-btn' : 'ui-btn',
+    );
+  });
+  const accept =
+    prompt.querySelector<HTMLElement>('[data-store-prompt-confirm]') ??
+    prompt.querySelector<HTMLElement>('.btn:not([data-store-prompt-cancel])') ??
+    prompt.querySelector<HTMLElement>('button');
+  accept?.classList.add('ui-btn--red');
   prompt.setAttribute('role', 'dialog');
   prompt.setAttribute('aria-modal', 'true');
   const { inertRoot } = opts;

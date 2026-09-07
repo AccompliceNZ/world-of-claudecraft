@@ -516,7 +516,7 @@
     <div id="mount-race-strip" style="display: none"></div>
     <button id="race-start-btn" type="button" data-i18n="hudChrome.mountRace.startButton" data-i18n-aria="hudChrome.mountRace.startButton" style="display: none">Start Race</button>
     <div id="race-countdown" aria-live="polite" aria-atomic="true" style="display: none"></div>
-    <div id="loot-window" class="window panel"></div>
+    <div id="loot-window" class="window panel ui-window"></div>
     <div id="bags" class="window panel"></div>
     <div id="char-window" class="window panel"></div>
     <div id="inspect-window" class="window panel"></div>
@@ -600,19 +600,23 @@
 
     <div id="error-msg"></div>
     <div id="quest-banner" aria-hidden="true"></div>
-    <div id="banner"></div>
+    <div id="banner" class="ui-panel-strong ui-cin"></div>
     <div id="low-health-vignette"></div>
-    <div id="subzone-banner"></div>
+    <div id="subzone-banner" class="ui-panel-strong ui-cin"></div>
 
     <div id="death-overlay" data-pad-nav-root data-pad-nav-required>
-      <h2 data-i18n="hud.core.deathTitle">You have died.</h2>
-      <button type="button" class="btn" id="release-btn" data-i18n="hud.core.releaseSpirit">Release Spirit</button>
+      <div class="death-panel ui-panel-strong">
+        <h2 class="ui-cin" data-i18n="hud.core.deathTitle">You have died.</h2>
+        <button type="button" class="btn ui-btn ui-btn--red ui-btn--lg" id="release-btn" data-i18n="hud.core.releaseSpirit">Release Spirit</button>
+      </div>
     </div>
     <!-- Ghost (spirit released): runs freely; this small non-blocking prompt appears
          only when in reach of the corpse or the Pale Keeper. -->
     <div id="ghost-prompt" data-pad-nav-root>
-      <button type="button" class="btn" id="resurrect-corpse-btn" data-i18n="hudChrome.death.resurrectAtCorpse">Resurrect at Corpse</button>
-      <button type="button" class="btn" id="resurrect-healer-btn" data-i18n="hudChrome.death.resurrectAtHealer">The Pale Keeper (Keeper's Toll)</button>
+      <div class="ghost-panel ui-panel-strong">
+        <button type="button" class="btn ui-btn" id="resurrect-corpse-btn" data-i18n="hudChrome.death.resurrectAtCorpse">Resurrect at Corpse</button>
+        <button type="button" class="btn ui-btn" id="resurrect-healer-btn" data-i18n="hudChrome.death.resurrectAtHealer">The Pale Keeper (Keeper's Toll)</button>
+      </div>
     </div>
   </div>
 

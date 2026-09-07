@@ -823,6 +823,79 @@
     --dur-press: 60ms;
     --dur-panel: 160ms;
     --dur-frame: 120ms;
+
+    /* W3 additions (auras and transient HUD) */
+    /* Self miss combat text keeps the shipped neutral grey. */
+    --color-fct-miss-self: #bbb;
+    /* Self dodge combat text keeps the shipped neutral grey. */
+    --color-fct-dodge-self: #bbb;
+    /* Other-target miss combat text keeps the shipped parchment white. */
+    --color-fct-miss-other: #fff;
+    /* Other-target dodge combat text keeps the shipped parchment white. */
+    --color-fct-dodge-other: #fff;
+    /* Auto-attack damage text keeps the shipped parchment white. */
+    --color-fct-damage-done-auto: #fff;
+    /* Ability damage text keeps the shipped warm parchment highlight. */
+    --color-fct-damage-done-ability: #ffe97a;
+    /* Incoming damage text keeps the shipped hostile red. */
+    --color-fct-damage-taken: #ff5544;
+    /* Outgoing blocked damage keeps the shipped steel grey. */
+    --color-fct-damage-done-block: #b8c4d9;
+    /* Incoming blocked damage keeps the shipped steel blue. */
+    --color-fct-damage-taken-block: #7ec8e3;
+    /* Absorbed damage text keeps the shipped pale blue. */
+    --color-fct-absorb: #9fd7ff;
+    /* Healing combat text keeps the shipped restorative green. */
+    --color-fct-heal: #3ce63c;
+    /* Experience combat text keeps the shipped violet reward hue. */
+    --color-fct-xp: #d9a3ff;
+    /* Rested experience text keeps the shipped blue reward hue. */
+    --color-fct-rested-xp: #6db8ff;
+    /* Honor combat text keeps the shipped primary gold. */
+    --color-fct-honor: #ffd100;
+    /* Self-note combat text keeps the shipped warm warning hue. */
+    --color-fct-self-note: #ff8c66;
+    /* Fire aura overlays keep their shipped orange school identity. */
+    --color-aura-overlay-fire: #ff8a33;
+    /* Frost aura overlays keep their shipped cyan school identity. */
+    --color-aura-overlay-frost: #54d9ff;
+    /* Aura countdown sweeps retain the shipped translucent ink mask. */
+    --color-aura-overlay-timer-mask: rgb(0 0 0 / 62%);
+    /* The death veil keeps the world visible beneath a hostile red wash. */
+    --death-overlay-veil: radial-gradient(
+      ellipse at center,
+      rgb(64 0 0 / 47%) 0%,
+      rgb(48 0 0 / 73%) 100%
+    );
+    /* Mana warnings retain their dynamic cool halo and inner glint. */
+    --shadow-low-resource-mana:
+      0 0 5px 1px rgb(150 205 255 / var(--lr-opacity)), inset 0 0 4px rgb(220 240 255 / 90%);
+    /* Energy warnings retain their dynamic warm halo and inner glint. */
+    --shadow-low-resource-energy:
+      0 0 5px 1px rgb(255 225 110 / var(--lr-opacity)), inset 0 0 4px rgb(255 245 200 / 90%);
+    /* Focus warnings retain their dynamic amber halo and inner glint. */
+    --shadow-low-resource-focus:
+      0 0 5px 1px rgb(255 180 70 / var(--lr-opacity)), inset 0 0 4px rgb(255 235 195 / 90%);
+    /* Mana warning labels keep their cool parchment tint. */
+    --color-low-resource-mana: #eaf4ff;
+    /* Energy warning labels keep their warm parchment tint. */
+    --color-low-resource-energy: #fff3c2;
+    /* Focus warning labels keep their amber parchment tint. */
+    --color-low-resource-focus: #ffe0a0;
+    /* Breath bars retain their translucent deep-water track. */
+    --color-breath-track: rgb(8 14 24 / 72%);
+    /* Breath bars retain their cool structural rim. */
+    --color-breath-border: rgb(150 190 230 / 55%);
+    /* Breath remaining retains the shipped water-blue gradient. */
+    --breath-fill: linear-gradient(180deg, #6fc2ff 0%, #2f7fd4 100%);
+    /* Drowning breath retains the shipped hostile-red gradient. */
+    --breath-drowning-fill: linear-gradient(180deg, #ff7d6f 0%, #c22f2f 100%);
+    /* The strong drowning pulse keeps its shipped urgent rim. */
+    --color-breath-drowning-strong: rgb(255 120 100 / 90%);
+    /* The soft drowning pulse keeps its shipped ebbing rim. */
+    --color-breath-drowning-soft: rgb(255 60 40 / 40%);
+    /* Breath text keeps its cool high-contrast parchment tint. */
+    --color-breath-label: #eaf4ff;
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal

@@ -43,6 +43,7 @@ describe('renderCorpseHarvestPicker: picker section', () => {
     const rows = container.querySelectorAll<HTMLElement>('.corpse-harvest-row');
     expect(rows.length).toBe(2);
     const boxes = container.querySelectorAll<HTMLInputElement>('.corpse-harvest-check');
+    expect(boxes[0].classList.contains('ui-check')).toBe(true);
     expect(boxes[0].checked).toBe(true);
     expect(boxes[1].checked).toBe(false);
   });
@@ -76,6 +77,7 @@ describe('renderCorpseHarvestPicker: picker section', () => {
     const attachTooltip = vi.fn();
     renderCorpseHarvestPicker(container, view(), { onHarvest: () => {}, attachTooltip });
     const btn = container.querySelector<HTMLButtonElement>('.corpse-harvest-btn');
+    expect(btn?.classList.contains('ui-btn')).toBe(true);
     // No native title: the shared idiom covers hover, mobile long-press, and
     // keyboard focus, where a bare title attribute is hover-only.
     expect(btn?.title).toBe('');

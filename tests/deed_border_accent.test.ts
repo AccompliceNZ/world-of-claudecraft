@@ -1143,9 +1143,9 @@ describe('border accent graphics fairness (cosmetic identity, preset-identical)'
     }
     expect(
       allTierShadowDeclarations,
-      // 30 shipped uses plus the two library glow composites in tokens.css.
-      'the style graph owns 32 reviewed tier-shadow uses',
-    ).toHaveLength(32);
+      // W3 removed the deed and skill host shadows when both adopted ui-panel-strong.
+      'the style graph owns 30 reviewed tier-shadow uses',
+    ).toHaveLength(30);
 
     for (const [name, body] of [
       [
