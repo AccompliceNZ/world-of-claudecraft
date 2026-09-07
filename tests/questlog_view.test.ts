@@ -98,7 +98,7 @@ describe('buildQuestLogView: list rows + selection', () => {
     expect(v.selectedQuestId).toBe(QUEST_A.id);
   });
 
-  it('groups active quests by their giver zone and keeps the completed group collapsed', () => {
+  it('groups active quests by their giver zone and keeps the completed tally unexpandable', () => {
     const questsByZone = new Map<string, (typeof QUEST_A)[]>();
     for (const quest of Object.values(QUESTS)) {
       const giver = NPCS[quest.giverNpcId];
@@ -126,12 +126,18 @@ describe('buildQuestLogView: list rows + selection', () => {
       [questB.id],
     ]);
     expect(activeGroups.map((group) => group.readyCount)).toEqual([0, 1]);
+    expect(activeGroups.every((group) => group.expandable)).toBe(true);
+    // Pin moved: the completed tally carries a count but never rows (the log
+    // mirrors only ACTIVE quests), so it is not expandable and its collapse
+    // state is meaningless: a stored 'completed' collapse id must not make it
+    // one, or the painter offers a disclosure onto nothing.
     expect(v.groups.at(-1)).toMatchObject({
       id: 'completed',
       zoneId: null,
       count: 7,
-      collapsed: true,
+      collapsed: false,
       dimmed: true,
+      expandable: false,
       items: [],
     });
   });

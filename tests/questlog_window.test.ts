@@ -148,9 +148,13 @@ describe('questlog_window: no magic values (DOM painter)', () => {
     expect(rgb, `rgb colors: ${rgb.join(', ')}`).toEqual([]);
   });
 
-  it('routes reward quality through the shared quality class instead of inline color', () => {
+  // Pin moved: the bare .q-* family is a socket RIM (border plus glow), so the
+  // class alone left the reward NAME uncolored and haloed. The color now comes
+  // from the shared itemNameColor (a token or the QUALITY_COLOR map, never a
+  // literal minted here), and the class stays for the rim and for this pin.
+  it('colors the reward name through the shared itemNameColor, keeping the quality class', () => {
     expect(code).toContain('q-$' + "{item.quality ?? 'common'}");
-    expect(code).not.toContain('style="color:');
+    expect(code).toContain('style="color:$' + '{itemNameColor(item)}');
   });
 
   it('carries no literal em dash in source', () => {
@@ -178,6 +182,20 @@ describe('questlog_window: W7 grouped-list interactions', () => {
     expect(rebuilt?.getAttribute('aria-expanded')).toBe('false');
     expect(root.querySelectorAll('.ql-item')).toHaveLength(2 - groupRows);
     expect(document.activeElement).toBe(rebuilt);
+  });
+
+  it('renders the completed tally as a count line, never as a toggle onto nothing', () => {
+    const { root } = renderQuestFixture();
+    const completed = root.querySelector<HTMLElement>('.ql-group.is-dimmed');
+    expect(completed, 'the completed group renders beside the active zone groups').not.toBeNull();
+    // No button, no aria-expanded, no chevron: the log lists only ACTIVE
+    // quests, so there is nothing behind the tally to disclose.
+    expect(completed?.querySelector('button')).toBeNull();
+    expect(completed?.querySelector('[data-quest-group]')).toBeNull();
+    expect(completed?.querySelector('[aria-expanded]')).toBeNull();
+    expect(completed?.querySelector('.ql-group-chevron')).toBeNull();
+    // The count itself still reads.
+    expect(completed?.querySelector('.ql-group-count')?.textContent).toBe('0');
   });
 
   it('routes Show on Map through the shipped minimap launcher', () => {

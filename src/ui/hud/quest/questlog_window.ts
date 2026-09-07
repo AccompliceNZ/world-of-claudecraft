@@ -13,8 +13,9 @@
 //
 // This is the quest LOG window, not the always-on quest TRACKER (quest_tracker.ts,
 // a separate pure core). It is NOT a canvas window (colors live in the extracted
-// stylesheet; the per-quality reward color comes from the shared QUALITY_COLOR
-// map, the fallback is a CSS token, so there is no literal hex/px in TS).
+// stylesheet; the per-quality reward color comes from the shared itemNameColor
+// over QUALITY_COLOR, the fallback is a CSS token, so there is no literal
+// hex/px in TS).
 
 import { ITEMS, NPCS } from '../../../sim/data';
 import type { IWorld } from '../../../world_api';
@@ -22,6 +23,7 @@ import { markDialogRoot } from '../../dialog_root';
 import { itemDisplayName, tEntity, zoneDisplayName } from '../../entity_i18n';
 import { esc } from '../../esc';
 import { formatNumber, t } from '../../i18n';
+import { itemNameColor } from '../../item_name_color';
 import type { PainterHostPresentation } from '../../painter_host';
 import { svgIcon } from '../../ui_icons';
 import { buildQuestLogView, type QuestDetailModel } from './questlog_view';
@@ -145,11 +147,6 @@ export class QuestLogWindow {
       if (view.empty && group.id === 'completed' && group.count === 0) continue;
       const section = document.createElement('section');
       section.className = `ql-group${group.dimmed ? ' is-dimmed' : ''}${group.collapsed ? ' is-collapsed' : ''}`;
-      const toggle = document.createElement('button');
-      toggle.type = 'button';
-      toggle.className = 'ql-group-toggle ui-btn';
-      toggle.dataset.questGroup = group.id;
-      toggle.setAttribute('aria-expanded', String(!group.collapsed));
       const name = group.zoneId ? zoneDisplayName(group.zoneId) : t('hudChrome.questLog.completed');
       const summary =
         group.readyCount > 0
@@ -158,17 +155,31 @@ export class QuestLogWindow {
               ready: this.questNumber(group.readyCount),
             })
           : this.questNumber(group.count);
-      toggle.innerHTML = `<span class="ql-group-chevron" aria-hidden="true">${svgIcon(group.collapsed ? 'next' : 'prev')}</span><span>${esc(name)}</span><span class="ql-group-count">${esc(summary)}</span>`;
-      toggle.addEventListener('click', () => {
-        if (this.collapsedGroups.has(group.id)) this.collapsedGroups.delete(group.id);
-        else this.collapsedGroups.add(group.id);
-        this.render();
-        const rebuilt = [
-          ...this.deps.root().querySelectorAll<HTMLElement>('[data-quest-group]'),
-        ].find((candidate) => candidate.dataset.questGroup === group.id);
-        rebuilt?.focus();
-      });
-      section.appendChild(toggle);
+      if (group.expandable) {
+        const toggle = document.createElement('button');
+        toggle.type = 'button';
+        toggle.className = 'ql-group-toggle ui-btn';
+        toggle.dataset.questGroup = group.id;
+        toggle.setAttribute('aria-expanded', String(!group.collapsed));
+        toggle.innerHTML = `<span class="ql-group-chevron" aria-hidden="true">${svgIcon(group.collapsed ? 'next' : 'prev')}</span><span>${esc(name)}</span><span class="ql-group-count">${esc(summary)}</span>`;
+        toggle.addEventListener('click', () => {
+          if (this.collapsedGroups.has(group.id)) this.collapsedGroups.delete(group.id);
+          else this.collapsedGroups.add(group.id);
+          this.render();
+          const rebuilt = [
+            ...this.deps.root().querySelectorAll<HTMLElement>('[data-quest-group]'),
+          ].find((candidate) => candidate.dataset.questGroup === group.id);
+          rebuilt?.focus();
+        });
+        section.appendChild(toggle);
+      } else {
+        // Nothing to open onto (the completed tally lists no rows), so the row
+        // is a plain count LINE: no button, no aria-expanded, no chevron.
+        const line = document.createElement('div');
+        line.className = 'ql-group-toggle ql-group-line';
+        line.innerHTML = `<span aria-hidden="true"></span><span>${esc(name)}</span><span class="ql-group-count">${esc(summary)}</span>`;
+        section.appendChild(line);
+      }
       if (!group.collapsed) {
         for (const item of group.items) {
           const status = item.ready ? t('questUi.log.readyStatus') : t('questUi.log.activeStatus');
@@ -226,7 +237,10 @@ export class QuestLogWindow {
     html += `<div class="qd-sub">${esc(t('questUi.detail.rewards'))}</div><div class="ui-divider"></div><div class="qd-obj qd-reward-currency">${esc(t('questUi.detail.xpReward', { xp: this.questNumber(d.xpReward) }))}<span class="ui-money">${this.deps.moneyHtml(d.copperReward)}</span></div>`;
     if (d.rewardItemId) {
       const item = ITEMS[d.rewardItemId];
-      html += `<div class="qd-reward-row ui-card" data-reward><span class="qd-reward-label">${esc(t('questUi.detail.itemReward'))}</span><span class="qd-reward-socket ui-socket ui-socket--bag">${this.deps.itemIcon(item)}</span><span class="qd-reward-name q-${item.quality ?? 'common'}">${esc(itemDisplayName(item))}</span></div>`;
+      // The bare .q-* family is the socket RIM (border plus glow), so it leaves
+      // a name uncolored and haloed; the name's quality color is the shared
+      // itemNameColor, exactly as chat links and loot names paint it.
+      html += `<div class="qd-reward-row ui-card" data-reward><span class="qd-reward-label">${esc(t('questUi.detail.itemReward'))}</span><span class="qd-reward-socket ui-socket ui-socket--bag">${this.deps.itemIcon(item)}</span><span class="qd-reward-name q-${item.quality ?? 'common'}" style="color:${itemNameColor(item)}">${esc(itemDisplayName(item))}</span></div>`;
     }
     const giver = NPCS[d.turnInNpcId];
     html += `<div class="qd-obj quest-return">${esc(t('questUi.log.returnTo', { name: giver ? this.npcDisplayName(giver.id) : '?' }))}</div>`;

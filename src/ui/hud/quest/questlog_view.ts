@@ -35,6 +35,13 @@ export interface QuestLogGroup {
   readyCount: number;
   collapsed: boolean;
   dimmed: boolean;
+  /**
+   * Whether the group opens to rows. The completed tally has never listed the
+   * quests behind it (the log mirrors only the ACTIVE entries; questsDone is a
+   * bare id set), so it renders as a plain count line: a toggle that opens to
+   * nothing is a disclosure that lies.
+   */
+  expandable: boolean;
   items: QuestLogItem[];
 }
 
@@ -119,6 +126,7 @@ export function buildQuestLogView(input: QuestLogInput): QuestLogView {
         readyCount: 0,
         collapsed: collapsed.has(id),
         dimmed: false,
+        expandable: true,
         items: [],
       };
       activeGroups.set(id, group);
@@ -134,8 +142,9 @@ export function buildQuestLogView(input: QuestLogInput): QuestLogView {
       zoneId: null,
       count: input.completedCount,
       readyCount: 0,
-      collapsed: collapsed.has('completed'),
+      collapsed: false,
       dimmed: true,
+      expandable: false,
       items: [],
     },
   ];
