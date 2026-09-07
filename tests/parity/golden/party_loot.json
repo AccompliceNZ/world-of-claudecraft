@@ -28,7 +28,7 @@
       "tick": 3,
       "time": 0.15,
       "nextId": 1005,
-      "state": "602b5780",
+      "state": "f73e2464",
       "events": "f3dc34b2",
       "rng": {
         "draws": 2,
@@ -89,6 +89,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -166,6 +169,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {

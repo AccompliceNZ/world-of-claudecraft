@@ -23,7 +23,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "c22ade12",
+      "state": "f38fe8b1",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -76,6 +76,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -171,7 +174,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "6b72e401",
+      "state": "8165c124",
       "events": "29ec29da",
       "rng": {
         "draws": 0,
@@ -234,6 +237,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -258,7 +264,13 @@
             },
             {
               "count": 14,
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 14,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167200,
@@ -350,7 +362,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "6b72e401",
+      "state": "8165c124",
       "events": "88234631",
       "rng": {
         "draws": 0,
@@ -413,6 +425,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -437,7 +452,13 @@
             },
             {
               "count": 14,
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 14,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167200,
@@ -529,7 +550,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "ffe3664c",
+      "state": "358dc104",
       "events": "9e005803",
       "rng": {
         "draws": 6,
@@ -592,6 +613,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -625,7 +649,13 @@
             },
             {
               "count": 8,
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 8,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167200,
@@ -717,7 +747,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "ffe3664c",
+      "state": "358dc104",
       "events": "c9f49ef8",
       "rng": {
         "draws": 6,
@@ -780,6 +810,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -813,7 +846,13 @@
             },
             {
               "count": 8,
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 8,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167200,
@@ -905,7 +944,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "de2c2bc3",
+      "state": "2162d395",
       "events": "375b1cd3",
       "rng": {
         "draws": 8,
@@ -974,6 +1013,9 @@
             }
           },
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1003,7 +1045,13 @@
             },
             {
               "count": 6,
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167200,
@@ -1097,7 +1145,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "4161dc27",
+      "state": "58db4939",
       "events": "741638a5",
       "rng": {
         "draws": 8,
@@ -1166,6 +1214,9 @@
             }
           },
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1191,7 +1242,13 @@
             },
             {
               "count": 6,
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167200,
@@ -1285,7 +1342,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "4161dc27",
+      "state": "58db4939",
       "events": "817ecfa4",
       "rng": {
         "draws": 8,
@@ -1354,6 +1411,9 @@
             }
           },
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1379,7 +1439,13 @@
             },
             {
               "count": 6,
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167200,
@@ -1473,7 +1539,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "4161dc27",
+      "state": "58db4939",
       "events": "741638a5",
       "rng": {
         "draws": 8,
@@ -1542,6 +1608,9 @@
             }
           },
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1567,7 +1636,13 @@
             },
             {
               "count": 6,
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167200,
@@ -1661,7 +1736,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "4161dc27",
+      "state": "58db4939",
       "events": "6fc96310",
       "rng": {
         "draws": 8,
@@ -1730,6 +1805,9 @@
             }
           },
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1755,7 +1833,13 @@
             },
             {
               "count": 6,
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167200,
@@ -1849,7 +1933,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "4161dc27",
+      "state": "58db4939",
       "events": "8dc2eb76",
       "rng": {
         "draws": 8,
@@ -1918,6 +2002,9 @@
             }
           },
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1943,7 +2030,13 @@
             },
             {
               "count": 6,
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167200,
@@ -2037,7 +2130,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "3c1e6713",
+      "state": "b9112dc1",
       "events": "60daa714",
       "rng": {
         "draws": 8,
@@ -2106,6 +2199,9 @@
             }
           },
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -2137,7 +2233,13 @@
               "instance": {
                 "locked": true
               },
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -2238,7 +2340,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "3c1e6713",
+      "state": "b9112dc1",
       "events": "35b3f77e",
       "rng": {
         "draws": 8,
@@ -2307,6 +2409,9 @@
             }
           },
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -2338,7 +2443,13 @@
               "instance": {
                 "locked": true
               },
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -2439,7 +2550,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "3c1e6713",
+      "state": "b9112dc1",
       "events": "741638a5",
       "rng": {
         "draws": 8,
@@ -2508,6 +2619,9 @@
             }
           },
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -2539,7 +2653,13 @@
               "instance": {
                 "locked": true
               },
-              "itemId": "prismglass_setting"
+              "itemId": "prismglass_setting",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,

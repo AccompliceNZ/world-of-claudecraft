@@ -38,11 +38,13 @@
 //    stray row click nor a roving key can move the draft afterward.
 //
 // Every focusable control carries `data-focus-key` (`radio:<token>`,
-// `apply`, `cancel`) so a caller that repaints in place (the controller's
-// relocalize, on a language switch) can carry the EXACT focused control
-// across via the shared `captureFocusKey`/`findFocusKey`/`restoreFirstEnabled`
-// seam (src/ui/focus_restore.ts), not merely re-derive "the checked row":
-// a player can focus Apply or Cancel before the language changes.
+// `apply`, `cancel`), written through the shared `FOCUS_KEY_ATTR` constant
+// rather than a hand-spelled attribute name, so a caller that repaints in
+// place (the controller's relocalize, on a language switch) can carry the
+// EXACT focused control across via the shared
+// `captureFocusKey`/`findFocusKey`/`restoreFirstEnabled` seam
+// (src/ui/focus_restore.ts), not merely re-derive "the checked row": a
+// player can focus Apply or Cancel before the language changes.
 //
 // The GENERAL picker's source-info detail (Intentional Gathering PR5) is
 // associated with the currently drafted row via `aria-describedby`, never a
@@ -55,6 +57,7 @@
 import { ITEMS } from '../../../sim/data';
 import type { HarvestPreference } from '../../../sim/professions/harvest_preference';
 import { itemDisplayName } from '../../entity_i18n';
+import { FOCUS_KEY_ATTR } from '../../focus_restore';
 import { t } from '../../i18n';
 import { knownItemDef } from '../../known_item';
 import { rovingTarget } from '../../roving_index';
@@ -158,14 +161,14 @@ export function renderHarvestPreferencePicker(
   const applyButton = document.createElement('button');
   applyButton.type = 'button';
   applyButton.className = 'btn';
-  applyButton.dataset.focusKey = 'apply';
+  applyButton.setAttribute(FOCUS_KEY_ATTR, 'apply');
   applyButton.textContent = t('hudChrome.harvestPreference.applyButton');
   applyButton.disabled = draftToken === null;
 
   const cancelButton = document.createElement('button');
   cancelButton.type = 'button';
   cancelButton.className = 'btn btn-secondary';
-  cancelButton.dataset.focusKey = 'cancel';
+  cancelButton.setAttribute(FOCUS_KEY_ATTR, 'cancel');
   cancelButton.textContent = t('hudChrome.harvestPreference.cancelButton');
 
   const list = document.createElement('ul');
@@ -239,7 +242,7 @@ export function renderHarvestPreferencePicker(
     button.setAttribute('role', 'radio');
     button.className = 'harvest-preference-row';
     button.dataset.harvestChoice = row.token;
-    button.dataset.focusKey = `radio:${row.token}`;
+    button.setAttribute(FOCUS_KEY_ATTR, `radio:${row.token}`);
     button.setAttribute('aria-checked', row.token === view.selectedToken ? 'true' : 'false');
     button.tabIndex = index === tabStop ? 0 : -1;
     button.textContent = rowLabelText(row.itemId);

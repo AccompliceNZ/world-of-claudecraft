@@ -470,6 +470,14 @@ export function serializeDeedStats(stats: DeedStats): SavedDeedStats | undefined
   return anyCounter || out.itemsDiscovered || out.visited || out.dungeonClears ? out : undefined;
 }
 
+/** The sparse CharacterState fragment for one save (the sim.ts
+ *  serializeCharacter shape every optional field follows): absent when
+ *  serializeDeedStats has nothing to write. */
+export function deedStatsSaveFragment(stats: DeedStats): { deedStats?: SavedDeedStats } {
+  const deedStats = serializeDeedStats(stats);
+  return deedStats ? { deedStats } : {};
+}
+
 export function restoreDeedStats(saved: SavedDeedStats | undefined): DeedStats {
   const stats = freshDeedStats();
   if (!saved) return stats;

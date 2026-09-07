@@ -441,7 +441,11 @@ const MONOLITHS: MonolithRow[] = [
     // src/ui/rest_indicator_painter.ts, which paid for writing the accessible
     // name beside the tooltip AND for the two-line arena-signature note.
     // Exact count, zero slack.
-    ceiling: 18695,
+    // LOWERED 18695 -> 18679 at the Intentional Gathering packet: the
+    // commission-order result line's param/tone resolution moved to
+    // src/ui/hud/professions/commission_order_feedback.ts. Exact count, zero
+    // slack.
+    ceiling: 18679,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -986,8 +990,12 @@ const MONOLITHS: MonolithRow[] = [
     // wc -l < src/sim/sim.ts after biome. Exact count.
     // Lowered 12028 -> 12006 in PR 3872 cleanup after removing the retired
     // tutorial action and its write-only account fact. Exact count, zero slack.
-    // Shared grant options and inventory consumption now live in their sibling modules.
-    ceiling: 11987,
+    // LOWERED 11987 -> 11985 at the Intentional Gathering packet:
+    // serializeCharacter's sparse save fragments now live beside their
+    // owning serializers instead of inline, paying for the new
+    // gathering-goal IWorld delegates and PlayerMeta fields. Exact count,
+    // zero slack.
+    ceiling: 11985,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1522,7 +1530,11 @@ const MONOLITHS: MonolithRow[] = [
     // formatting; exact count.
     // Copy-safe Perfecting command construction extracted to perfecting_command.ts.
     // Source-aware storage payload construction moved to material_storage_command.ts.
-    ceiling: 5856,
+    // LOWERED 5856 -> 5854 at the Intentional Gathering packet: the
+    // professions snapshot self-mirror decode moved to
+    // src/net/professions_self_mirror.ts (applyProfessionsSelfMirror). Exact
+    // count, zero slack.
+    ceiling: 5854,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -1967,8 +1979,13 @@ const MONOLITHS: MonolithRow[] = [
     // ADDED with the row above, same phase, same reasoning, same seam. The
     // crafting window composes the family view-cores; growth belongs in a
     // sibling module behind src/ui/hud/professions/index.ts.
+    // LOWERED 774 -> 766 at the Intentional Gathering packet: the gathering-
+    // goal Track control moved to
+    // src/ui/hud/professions/gathering_goal_track_row.ts, and the
+    // apex-channel-to-translation-key table moved to apex_recipe_view.ts.
+    // Exact count, zero slack.
     file: 'src/ui/hud/professions/crafting_window.ts',
-    ceiling: 774,
+    ceiling: 766,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/hud/CLAUDE.md)',
   },
 ];

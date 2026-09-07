@@ -150,6 +150,57 @@ const PARSE_CORE_COMMANDS: ReadonlyArray<{
   },
 ];
 
+/**
+ * Item commands whose full per-copy target is validated inside a dedicated
+ * host-agnostic parse-core module (server/material_stack_wire.ts) rather than
+ * an inline Number.isInteger dispatch arm: the Masterwrought stack-grouping
+ * commands (material_combine/material_separate). NOT an exemption:
+ * dispatchInventoryGroupingCommand validates the full target (bag slotIndex,
+ * the 32-hex copy pin, the ordinal+count anchor) before forwarding
+ * intent.target to the sim, and material_separate additionally validates any
+ * selected source composition before forwarding intent.selectedSources.
+ *
+ * `exactSend` is the EXACT (whitespace-normalized) sender window: the same
+ * strict-body precedent PARSE_CORE_COMMANDS uses below, not a substring
+ * `toContain`. A substring check on 'target'/'ordinal'/'count' would still
+ * pass with the validation or the forward deleted, since those words also
+ * appear in comments, types and imports; only an exact bounded body catches that.
+ */
+const STRUCTURED_PARSE_CORE_COMMANDS: ReadonlyArray<{
+  cmd: string;
+  exactSend: string;
+}> = [
+  {
+    cmd: 'material_separate',
+    exactSend: "cmd: 'material_separate', item: itemId, target, sources: selectedSources });",
+  },
+  { cmd: 'material_combine', exactSend: "cmd: 'material_combine', item: itemId, target });" },
+];
+
+// Comment-stripped so a validation or dispatch fragment quoted in prose can
+// neither satisfy a positive pin nor hide a deleted one (the stripComments
+// precedent in tests/pool_wiring_pins.test.ts, tests/architecture.test.ts).
+const stripComments = (src: string): string =>
+  src
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '))
+    .replace(/(^|[^:])\/\/.*$/gm, '$1');
+
+const MATERIAL_STACK_WIRE_SRC = stripComments(
+  readFileSync(new URL('../server/material_stack_wire.ts', import.meta.url), 'utf8'),
+);
+const SERVER_STRIPPED = stripComments(SERVER);
+
+/** The body of a top-level `export function <name>(` declaration, bounded to
+ *  the next top-level `export function` (or end of file if it is the last one). */
+function exportedFnBody(src: string, name: string): string {
+  const signature = `export function ${name}(`;
+  const at = src.indexOf(signature);
+  expect(at, `${signature} not found`).toBeGreaterThan(-1);
+  const rest = src.slice(at);
+  const next = rest.indexOf('\nexport function ', 1);
+  return next === -1 ? rest : rest.slice(0, next);
+}
+
 /** Sender windows from ClientWorld, one per token occurrence, keyed by the
  *  wire token they send. Every sender routes through the private cmd()
  *  helper, so the token literal appears inside the method that owns it. Each
@@ -287,6 +338,91 @@ describe('every item command can name the copy it acts on', () => {
     },
   );
 
+  it.each(STRUCTURED_PARSE_CORE_COMMANDS)(
+    '$cmd sends its EXACT full per-copy target shape on the wire',
+    ({ cmd, exactSend }) => {
+      const windows = senderWindowsFor(cmd);
+      expect(windows.length, `no ClientWorld sender found for ${cmd}`).toBeGreaterThan(0);
+      // Exact, not a substring: a deleted `target`/`sources` field, or an
+      // added override after the object literal, changes this string.
+      for (const [i, body] of windows.entries()) {
+        expect(
+          body.replace(/\s+/g, ' ').trim(),
+          `${cmd} occurrence ${i + 1} must send its exact target shape`,
+        ).toBe(exactSend);
+      }
+    },
+  );
+
+  it('server delegates both material stack commands to dispatchInventoryGroupingCommand, bounded to the next case', () => {
+    // A shared fall-through group (inv_move/inv_sort join it too), unlike the
+    // dispatchIn rows above which each own a single case label: material_stack_wire.ts
+    // is an if/else if dispatcher, not a switch of its own case labels. Bounded
+    // to the next `case '` (the same technique the ADDRESSED_COMMANDS arm test
+    // uses above), never a fixed char count that could drift past a deleted call.
+    const at = SERVER_STRIPPED.indexOf("case 'material_separate':");
+    expect(at, "no game.ts label for 'material_separate'").toBeGreaterThan(-1);
+    const afterLabel1 = SERVER_STRIPPED.slice(at + "case 'material_separate':".length);
+    expect(
+      afterLabel1.trimStart().startsWith("case 'material_combine':"),
+      'material_separate must fall through directly to material_combine, with no statement in between',
+    ).toBe(true);
+    const label2 = "case 'material_combine':";
+    const afterLabel2 = afterLabel1.slice(afterLabel1.indexOf(label2) + label2.length);
+    const nextCase = afterLabel2.indexOf("case '");
+    const group = nextCase === -1 ? afterLabel2 : afterLabel2.slice(0, nextCase);
+    expect(
+      group,
+      'the material stack group must delegate to dispatchInventoryGroupingCommand',
+    ).toContain('dispatchInventoryGroupingCommand(sim, pid, msg)');
+  });
+
+  it('parseMaterialGroupingIntent validates the full per-copy target BEFORE constructing it', () => {
+    const body = exportedFnBody(MATERIAL_STACK_WIRE_SRC, 'parseMaterialGroupingIntent');
+    const constructAt = body.indexOf('const target = {');
+    expect(constructAt, 'target construction site not found').toBeGreaterThan(-1);
+    // Every guard must sit in the VALIDATION prefix, before the target is
+    // built: a check moved after construction (or deleted) fails this rather
+    // than a loose file-wide toContain that a comment or a type could satisfy.
+    const validation = body.slice(0, constructAt);
+    for (const needle of [
+      "typeof slotIndex !== 'number'",
+      '!Number.isSafeInteger(slotIndex)',
+      'slotIndex < 0',
+      "typeof pin !== 'string'",
+      '/^[0-9a-f]{32}$/.test(pin)',
+      '!Number.isSafeInteger(ordinal)',
+      '!Number.isSafeInteger(count)',
+      'ordinal < 0',
+      'count <= ordinal',
+      'return null;',
+    ]) {
+      expect(
+        validation,
+        `parseMaterialGroupingIntent must validate "${needle}" before constructing target`,
+      ).toContain(needle);
+    }
+  });
+
+  it('dispatchInventoryGroupingCommand parses, refuses null, and forwards the EXACT intent shape to the sim', () => {
+    const body = exportedFnBody(MATERIAL_STACK_WIRE_SRC, 'dispatchInventoryGroupingCommand');
+    const parseAt = body.indexOf('const intent = parseMaterialGroupingIntent(msg);');
+    expect(parseAt, 'must call parseMaterialGroupingIntent(msg)').toBeGreaterThan(-1);
+    // Exact, whitespace-normalized, from the parse call to the end of the
+    // function: pins the null-refusal happening BEFORE either sim call, and
+    // pins both sim calls' exact argument lists (intent.target on both,
+    // intent.selectedSources only on separate) in one assertion a deleted or
+    // reordered line cannot survive.
+    const tail = body.slice(parseAt).replace(/\s+/g, ' ').trim();
+    expect(tail).toBe(
+      'const intent = parseMaterialGroupingIntent(msg); if (!intent) return; ' +
+        "if (msg.cmd === 'material_separate') " +
+        'sim.separateMaterialStack(intent.itemId, intent.target, intent.selectedSources, pid); ' +
+        "else if (msg.cmd === 'material_combine') " +
+        'sim.combineMaterialStacks(intent.itemId, intent.target, pid); } }',
+    );
+  });
+
   it('the actual Perfecting sender helper emits both copy-addressed shapes and preserves a capture', () => {
     const itemId = 'wyrmfall_pendant';
     const reads = {
@@ -325,14 +461,29 @@ describe('every item command can name the copy it acts on', () => {
     }
     const addressed = new Set(ADDRESSED_COMMANDS.map((r) => r.cmd));
     const parseCore = new Set(PARSE_CORE_COMMANDS.map((r) => r.cmd));
+    const structuredParseCore = new Set(STRUCTURED_PARSE_CORE_COMMANDS.map((r) => r.cmd));
     for (const row of EXEMPT) {
       expect(addressed.has(row.cmd), `${row.cmd} cannot be both addressed and exempt`).toBe(false);
       expect(parseCore.has(row.cmd), `${row.cmd} cannot be both parse-core and exempt`).toBe(false);
+      expect(
+        structuredParseCore.has(row.cmd),
+        `${row.cmd} cannot be both structured-parse-core and exempt`,
+      ).toBe(false);
     }
     for (const row of PARSE_CORE_COMMANDS) {
       expect(addressed.has(row.cmd), `${row.cmd} cannot be both addressed and parse-core`).toBe(
         false,
       );
+    }
+    for (const row of STRUCTURED_PARSE_CORE_COMMANDS) {
+      expect(
+        addressed.has(row.cmd),
+        `${row.cmd} cannot be both addressed and structured-parse-core`,
+      ).toBe(false);
+      expect(
+        parseCore.has(row.cmd),
+        `${row.cmd} cannot be both parse-core and structured-parse-core`,
+      ).toBe(false);
     }
   });
 
@@ -353,6 +504,7 @@ describe('every item command can name the copy it acts on', () => {
     const classified = new Set([
       ...ADDRESSED_COMMANDS.map((r) => r.cmd),
       ...PARSE_CORE_COMMANDS.map((r) => r.cmd),
+      ...STRUCTURED_PARSE_CORE_COMMANDS.map((r) => r.cmd),
       ...EXEMPT.map((r) => r.cmd),
     ]);
     const unclassified = [...sending].filter((c) => !classified.has(c)).sort();

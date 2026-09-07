@@ -16,7 +16,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "0a97d957",
+      "state": "1becb05e",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -69,6 +69,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -160,7 +163,7 @@
       "tick": 10,
       "time": 0.5,
       "nextId": 1013,
-      "state": "be4b8a6f",
+      "state": "c520d926",
       "events": "26a036dc",
       "rng": {
         "draws": 5,
@@ -171,7 +174,7 @@
       "tick": 20,
       "time": 1,
       "nextId": 1013,
-      "state": "8c0eb508",
+      "state": "f250457f",
       "events": "4bbc9573",
       "rng": {
         "draws": 5,
@@ -182,7 +185,7 @@
       "tick": 30,
       "time": 1.5,
       "nextId": 1013,
-      "state": "3c866897",
+      "state": "36b8ba9e",
       "events": "46cd5436",
       "rng": {
         "draws": 8,
@@ -193,7 +196,7 @@
       "tick": 38,
       "time": 1.9,
       "nextId": 1015,
-      "state": "206f7405",
+      "state": "ebcd14f2",
       "events": "afad65aa",
       "rng": {
         "draws": 11,
@@ -291,6 +294,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -424,6 +430,13 @@
           "aiState": "dead",
           "autoAttack": true,
           "comboUntil": -1,
+          "corpseHarvestState": {
+            "priorityEndsAt": 11.5,
+            "priorityMemberKeys": [
+              "entity:998"
+            ],
+            "token": {}
+          },
           "corpseTimer": 59.6,
           "critChance": 0.05,
           "dead": true,
@@ -520,7 +533,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 1015,
-      "state": "263ea451",
+      "state": "bcb3c39e",
       "events": "741638a5",
       "rng": {
         "draws": 11,
@@ -531,7 +544,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 1015,
-      "state": "263ea451",
+      "state": "bcb3c39e",
       "events": "741638a5",
       "rng": {
         "draws": 11,
@@ -629,6 +642,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -762,6 +778,13 @@
           "aiState": "dead",
           "autoAttack": true,
           "comboUntil": -1,
+          "corpseHarvestState": {
+            "priorityEndsAt": 11.5,
+            "priorityMemberKeys": [
+              "entity:998"
+            ],
+            "token": {}
+          },
           "corpseTimer": 59.5,
           "critChance": 0.05,
           "dead": true,

@@ -104,3 +104,30 @@ export function clearGatheringGoalCommandOutcome(
   sim.clearGatheringGoal(pid);
   return true;
 }
+
+interface GatheringGoalSim {
+  trackGatheringRecipe(recipeId: string, count: number, pid?: number): boolean;
+  trackGatheringCommission(orderId: number, pid?: number): boolean;
+  clearGatheringGoal(pid?: number): void;
+}
+
+/** Folds the three gathering-goal command bodies behind one call so game.ts's
+ *  switch keeps all three case labels (the command-schema suite scans them)
+ *  but grows only one dispatch line, not three. `cmd` is the frame's own
+ *  `msg.cmd` discriminant, already narrowed to one of these three labels by
+ *  the caller's case block. */
+export function dispatchGatheringGoalCommand(
+  sim: GatheringGoalSim,
+  cmd: 'track_gathering_recipe' | 'track_gathering_commission' | 'clear_gathering_goal',
+  msg: Readonly<Record<string, unknown>>,
+  pid: number,
+): boolean {
+  switch (cmd) {
+    case 'track_gathering_recipe':
+      return trackGatheringRecipeCommandOutcome(sim, msg, pid);
+    case 'track_gathering_commission':
+      return trackGatheringCommissionCommandOutcome(sim, msg, pid);
+    case 'clear_gathering_goal':
+      return clearGatheringGoalCommandOutcome(sim, msg, pid);
+  }
+}

@@ -17,6 +17,7 @@ import {
   gathererFor,
   INVALID_LOCAL_IDENTITY,
   type LocalGathererIdentity,
+  materialGathererIdentitySaveFragment,
   persistedLocalIdentity,
   readLocalGathererIdentity,
   readPersistedLocalIdentity,
@@ -137,6 +138,14 @@ describe('the persisted local identity', () => {
     expect(persistedLocalIdentity(undefined)).toBeUndefined();
     expect(persistedLocalIdentity(OFFLINE)).toEqual(OFFLINE);
     expect(persistedLocalIdentity(HEADLESS)).toEqual(HEADLESS);
+  });
+
+  it('materialGathererIdentitySaveFragment wraps persistedLocalIdentity into the sim.ts save shape', () => {
+    expect(materialGathererIdentitySaveFragment({ kind: 'character', id: 42 })).toEqual({});
+    expect(materialGathererIdentitySaveFragment(undefined)).toEqual({});
+    expect(materialGathererIdentitySaveFragment(OFFLINE)).toEqual({
+      materialGathererIdentity: OFFLINE,
+    });
   });
 });
 

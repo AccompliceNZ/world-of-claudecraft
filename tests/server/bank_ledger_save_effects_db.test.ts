@@ -18,6 +18,12 @@ const h = vi.hoisted(() => {
     ) {
       return Promise.resolve({ rows: [{ data: {} }], rowCount: 1 });
     }
+    // The boot's own material-source writer capability probe (applied before
+    // the guard DDL): an honest answer here, or the boot wiring test would be
+    // exercising a capability refusal it never means to drive.
+    if (String(sql).includes("current_setting('woc.material_source_writer'")) {
+      return Promise.resolve({ rows: [{ capability: '1' }], rowCount: 1 });
+    }
     return Promise.resolve({ rows: [], rowCount: 0 });
   });
   return { pool, bootCalls, bootQuery };
@@ -63,6 +69,8 @@ import {
   saveCharacterStateOnClient,
 } from '../../server/db';
 import { DbTransactionAborted } from '../../server/db_transaction_deadline';
+import { MATERIAL_SOURCE_CAPABILITY_PROBE_SQL } from '../../server/material_source_host';
+import { MATERIAL_SOURCE_WRITER_GUARD_SQL } from '../../server/material_source_writer';
 import { REALM } from '../../server/realm';
 import {
   STORAGE_PURCHASE_SCHEMA,
@@ -1018,6 +1026,16 @@ describe('fenced character save ledger effects', () => {
 
 describe('bank ledger receipt schema boot wiring', () => {
   it('applies the receipt DDL after core identities under the boot transaction', async () => {
+    // The guard's capability assertion probes BOTH the boot client (answered
+    // by bootQuery above) and the pool (server/material_source_host.ts
+    // applyMaterialSourceWriterGuard); an honestly-answering boot mock must
+    // answer that probe too, not bypass it.
+    h.pool.query.mockImplementation((sql: string) => {
+      if (String(sql).includes("current_setting('woc.material_source_writer'")) {
+        return Promise.resolve({ rows: [{ capability: '1' }], rowCount: 1 });
+      }
+      return Promise.resolve({ rows: [], rowCount: 0 });
+    });
     await ensureSchema();
 
     const core = h.bootCalls.findIndex((sql) =>
@@ -1030,7 +1048,16 @@ describe('bank ledger receipt schema boot wiring', () => {
     expect(core).toBeLessThan(receipts);
     expect(receipts).toBeLessThan(growthBudget);
     expect(growthBudget).toBeLessThan(commit);
-    expect(h.bootCalls.indexOf(STORAGE_PURCHASE_SCHEMA)).toBe(growthBudget - 1);
+    // Storage purchase DDL lands late (its first-rollout table locks stay brief
+    // before COMMIT), then the source-writer capability guard (its own boot
+    // client probe, then the idempotent guard DDL: TWO more boot-client calls,
+    // the pool's own probe of the SAME capability answers off h.pool.query and
+    // never lands in bootCalls), and only THEN the growth budget fragment.
+    const storage = h.bootCalls.indexOf(STORAGE_PURCHASE_SCHEMA);
+    expect(storage).toBeGreaterThanOrEqual(0);
+    expect(h.bootCalls.indexOf(MATERIAL_SOURCE_CAPABILITY_PROBE_SQL)).toBe(storage + 1);
+    expect(h.bootCalls.indexOf(MATERIAL_SOURCE_WRITER_GUARD_SQL)).toBe(storage + 2);
+    expect(growthBudget).toBe(storage + 3);
     // The growth fragment is followed by ONE single-statement counter readback
     // (multi-statement queries return an ARRAY of results, so db.ts reads the
     // counters back separately), then COMMIT. Pin both so a fragment inserted

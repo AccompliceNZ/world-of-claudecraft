@@ -30,7 +30,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "56afa5a3",
+      "state": "c6660801",
       "events": "867a75d7",
       "rng": {
         "draws": 0,
@@ -85,6 +85,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -93,7 +96,13 @@
             },
             {
               "count": 3,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 3,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -157,6 +166,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -306,7 +318,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "a0702ee1",
+      "state": "da0cedfc",
       "events": "41a79782",
       "rng": {
         "draws": 0,
@@ -363,6 +375,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -371,7 +386,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -438,6 +459,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -450,7 +474,13 @@
             },
             {
               "count": 2,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -591,7 +621,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "a0702ee1",
+      "state": "da0cedfc",
       "events": "41a385f8",
       "rng": {
         "draws": 0,
@@ -648,6 +678,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -656,7 +689,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -723,6 +762,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -735,7 +777,13 @@
             },
             {
               "count": 2,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -876,7 +924,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "a0702ee1",
+      "state": "da0cedfc",
       "events": "4a03ffb1",
       "rng": {
         "draws": 0,
@@ -933,6 +981,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -941,7 +992,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1008,6 +1065,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1020,7 +1080,13 @@
             },
             {
               "count": 2,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1161,7 +1227,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1004,
-      "state": "cee3cbe7",
+      "state": "f3cbb16e",
       "events": "1df2b823",
       "rng": {
         "draws": 0,
@@ -1224,6 +1290,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1232,7 +1301,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1306,6 +1381,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1318,7 +1396,13 @@
             },
             {
               "count": 2,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1460,7 +1544,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1004,
-      "state": "cee3cbe7",
+      "state": "f3cbb16e",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1523,6 +1607,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1531,7 +1618,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1605,6 +1698,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1617,7 +1713,13 @@
             },
             {
               "count": 2,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,

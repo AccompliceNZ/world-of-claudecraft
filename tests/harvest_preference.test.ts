@@ -9,6 +9,7 @@ import {
   yieldingFocusComponents,
 } from '../src/sim/professions/gathering';
 import {
+  applyHarvestPreferenceOnLoad,
   corpseHarvestPreferenceOptions,
   generalHarvestMaterialOptions,
   HARVEST_PREFERENCE_ALL,
@@ -21,6 +22,7 @@ import {
   parseHarvestPreferenceCommand,
   resolveHarvestPreferenceOnCorpse,
   savedHarvestPreference,
+  serializeHarvestPreference,
 } from '../src/sim/professions/harvest_preference';
 import { UNMAPPED_FAMILY, UNMAPPED_FAMILY_2 } from './helpers/unmapped_family';
 
@@ -335,6 +337,27 @@ describe('the serialized byte footprint of a saved harvest preference', () => {
     const saved = savedHarvestPreference(null);
     expect(saved).toBeNull();
     expect(wrapperBytes(saved) - BASELINE_BYTES).toBe(25);
+  });
+});
+
+describe('applyHarvestPreferenceOnLoad / serializeHarvestPreference (sim.ts wiring)', () => {
+  it('restores an ok load verbatim and folds a refusal to null', () => {
+    expect(applyHarvestPreferenceOnLoad(undefined)).toEqual(HARVEST_PREFERENCE_ALL);
+    expect(applyHarvestPreferenceOnLoad('rough_hide')).toEqual({
+      kind: 'material',
+      itemId: 'rough_hide',
+    });
+    expect(applyHarvestPreferenceOnLoad(42)).toBeNull();
+  });
+
+  it('the save fragment is absent for the sparse default and present otherwise', () => {
+    expect(serializeHarvestPreference(HARVEST_PREFERENCE_ALL)).toEqual({});
+    expect(serializeHarvestPreference({ kind: 'material', itemId: 'rough_hide' })).toEqual({
+      harvestPreference: 'rough_hide',
+    });
+    // The malformed sentinel (null) is written verbatim, never omitted (see
+    // the "adds 25 bytes for the malformed-load null sentinel" case above).
+    expect(serializeHarvestPreference(null)).toEqual({ harvestPreference: null });
   });
 });
 

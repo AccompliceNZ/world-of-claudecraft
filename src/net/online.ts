@@ -197,18 +197,13 @@ import {
   createCivicServicePlacementsReader,
 } from './civic_service_placements';
 import { applySelfCombatScalars } from './combat_scalar_wire';
-import {
-  decodeCraftingIdentity,
-  decodeMobileStationCrafts,
-  EMPTY_MST_CRAFTS,
-} from './crafting_wire';
+import { decodeMobileStationCrafts, EMPTY_MST_CRAFTS } from './crafting_wire';
 import {
   type DesktopWalletBrowserAction,
   type DesktopWalletStatus,
   parseDesktopWalletHandoffStatus,
 } from './desktop_wallet_handoff';
 import { dungeonEntrySnapshotFacing } from './dungeon_entry_facing';
-import { decodeGatheringGoalWire } from './gathering_goal_wire';
 import {
   decodeConsecrations,
   decodeFrostRings,
@@ -217,7 +212,6 @@ import {
   decodeVarkhulForgestormWarnings,
 } from './ground_telegraph_wire';
 import { decodeGuildBankLogFrame, GUILD_BANK_LOG_TTL_MS } from './guild_bank_log_wire';
-import { decodeHarvestPreferenceWire } from './harvest_preference_wire';
 import { foldInputAck } from './input_ack';
 import { INPUT_SEND_TIMER_INTERVAL_MS, inputFlushGateOpen } from './input_send_cadence';
 import { inputSignature } from './input_signature';
@@ -237,6 +231,7 @@ import { applyReconSelfWire, ReconWireState } from './movement_reconciliation_wi
 import { createNativeAttestationProof } from './native_attestation';
 import { createNetPipelineStats, type NetPipelineStats } from './net_pipeline_stats';
 import { perfectingCommand } from './perfecting_command';
+import { applyProfessionsSelfMirror } from './professions_self_mirror';
 import { optimisticQuestState } from './quest_state_optimistic';
 import { isTransientReconnectRejection, isTransientTimeoutRejection } from './reconnect_policy';
 import { isInputSendBackpressured } from './send_backpressure';
@@ -3682,36 +3677,12 @@ export class ClientWorld extends ReconWireState implements IWorld {
           this.activeMobileStationCrafts = decodeMobileStationCrafts(rawMst);
         }
       }
-      // Commission order board (issue #1298): server-gated on the board
-      // revision at the corder wire cadence (a passive party converges within
-      // one cadence window; the viewer's own commands re-arm for the next
-      // snapshot), and this is how BOTH sides of an accept/deliver converge
-      // (not the commissionOrderResult event, which is deny-toast only).
-      if (s.corder !== undefined) this.commissionOrders = s.corder ?? [];
-      // Enchanting-action outcome mirrors (Professions 2.0): the
-      // convergence arm for lastDisenchantResult/lastEnchantResult/lastSalvageResult
-      // (the event mirror above is the immediacy arm; both feed the same field).
-      // Server-diffed per tick, so two identical consecutive deny results produce
-      // no delta change, which is exactly why the event arm also exists.
-      if (s.denc !== undefined) this.lastDisenchantResult = s.denc ?? null;
-      if (s.ench !== undefined) this.lastEnchantResult = s.ench ?? null;
-      if (s.salv !== undefined) this.lastSalvageResult = s.salv ?? null;
-      if (s.gprof !== undefined) this.gatheringProficiency = s.gprof ?? {};
-      if (s.tslot !== undefined) this.toolEffectSlots = s.tslot ?? [];
-      // hpref: delta-omitted; present decodes via the shared wire leaf, which
-      // refuses a malformed value to null rather than reviving All.
-      if (s.hpref !== undefined) this.harvestPreference = decodeHarvestPreferenceWire(s.hpref);
-      // ggoal (Intentional Gathering PR4): delta-omitted; present decodes via
-      // the shared strict wire leaf, which refuses a malformed frame to null
-      // rather than rendering a partial or stale projection.
-      if (s.ggoal !== undefined) this.gatheringGoal = decodeGatheringGoalWire(s.ggoal);
-      if (s.fplot !== undefined) this.myFarmPlots = s.fplot ?? [];
-      if (s.prof !== undefined) this.professionsState = s.prof ?? { skills: [] };
-      if (s.cprof !== undefined && s.cprof) {
-        const decoded = decodeCraftingIdentity(s.cprof as CraftingIdentityView);
-        this.craftSkills = decoded.craftSkills;
-        this.craftingIdentity = decoded.identity;
-      }
+      // Profession self-mirror delta block (commission orders, enchanting
+      // result mirrors, gathering proficiency, tool slots, harvest
+      // preference, the gathering goal, farm plots, professionsState, and
+      // crafting identity): all delta-omitted, applied by the sibling
+      // module, where the delta contract and per-key malformed policy live.
+      applyProfessionsSelfMirror(this, s);
       // camera follows server-side facing changes when not mouselooking
       if (prevSelfFacing !== undefined && this.mouselookFacing === null) {
         let d = e.facing - prevSelfFacing;

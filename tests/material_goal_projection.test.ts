@@ -61,7 +61,7 @@ function baseInput(
     quantity: 1,
     crafterName: CRAFTER_NAME,
     craftSkills: {},
-    isJackOfAllTrades: false,
+    jackAttuned: false,
     carriedInventory: [],
     bankInventory: [],
     vault: emptyVault(),

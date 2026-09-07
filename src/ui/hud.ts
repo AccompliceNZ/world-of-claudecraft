@@ -472,6 +472,7 @@ import { MapMarkerInteractionController, MapMarkerTooltipContent } from './hud/m
 import { livingSecondaryPet } from './hud/pet_bar_core';
 import { CARD_POSES } from './hud/player_card/player_card';
 import { PlayerCardController } from './hud/player_card/player_card_controller';
+import { commissionOrderResultLine } from './hud/professions/commission_order_feedback';
 import { buildCommissionOrderBoardModel } from './hud/professions/commission_order_view';
 import { renderCommissionOrderWindow } from './hud/professions/commission_order_window';
 import { cookingCatchHintKey } from './hud/professions/cooking_catch_hint_view';
@@ -12134,66 +12135,12 @@ export class Hud {
           break;
         }
         case 'commissionOrderResult': {
-          // Commission order board (issue #1298). Text-free event: derive
-          // the item name from ev.itemId (resolved sim-side off the live
-          // board for every action, not just deliver) plus static content.
-          // ONE chat line either way (the trainResult/unbindResult
-          // single-surface rule: no toast, no extra sound cue).
-          const orderItem = ev.itemId ? ITEMS[ev.itemId] : undefined;
-          const orderItemName = orderItem ? itemDisplayName(orderItem) : (ev.itemId ?? '');
-          if (ev.ok) {
-            const successKey =
-              ev.action === 'open'
-                ? 'hudChrome.commissionBoard.opened'
-                : ev.action === 'cancel'
-                  ? 'hudChrome.commissionBoard.cancelled'
-                  : ev.action === 'accept'
-                    ? 'hudChrome.commissionBoard.accepted'
-                    : 'hudChrome.commissionBoard.delivered';
-            this.log(
-              t(successKey, {
-                item: orderItemName,
-                // Only 'deliver' interpolates {name}, and it names the
-                // REQUESTER (who receives the item), not ev.pid (the
-                // acting crafter): resolve off the event's own
-                // requesterName, never the crafter's own entity name.
-                name: ev.action === 'deliver' ? (ev.requesterName ?? '') : '',
-              }),
-              PROF_LOG_GRANT,
-            );
-          } else if (ev.reason) {
-            const denyKey =
-              ev.reason === 'unknown_recipe'
-                ? 'hudChrome.commissionBoard.denyUnknownRecipe'
-                : ev.reason === 'not_commission_eligible'
-                  ? 'hudChrome.commissionBoard.denyNotCommissionEligible'
-                  : ev.reason === 'unknown_crafter'
-                    ? 'hudChrome.commissionBoard.denyUnknownCrafter'
-                    : ev.reason === 'self_crafter'
-                      ? 'hudChrome.commissionBoard.denySelfCrafter'
-                      : ev.reason === 'too_many_open'
-                        ? 'hudChrome.commissionBoard.denyTooManyOpen'
-                        : ev.reason === 'unknown_order'
-                          ? 'hudChrome.commissionBoard.denyUnknownOrder'
-                          : ev.reason === 'order_not_open'
-                            ? 'hudChrome.commissionBoard.denyOrderNotOpen'
-                            : ev.reason === 'self_order'
-                              ? 'hudChrome.commissionBoard.denySelfOrder'
-                              : ev.reason === 'not_eligible_crafter'
-                                ? 'hudChrome.commissionBoard.denyNotEligibleCrafter'
-                                : ev.reason === 'not_your_order'
-                                  ? 'hudChrome.commissionBoard.denyNotYourOrder'
-                                  : ev.reason === 'order_not_accepted'
-                                    ? 'hudChrome.commissionBoard.denyOrderNotAccepted'
-                                    : ev.reason === 'not_your_acceptance'
-                                      ? 'hudChrome.commissionBoard.denyNotYourAcceptance'
-                                      : ev.reason === 'not_crafted'
-                                        ? 'hudChrome.commissionBoard.denyNotCrafted'
-                                        : ev.reason === 'deliver_out_of_range'
-                                          ? 'hudChrome.commissionBoard.denyOutOfRange'
-                                          : 'hudChrome.commissionBoard.denyNoSpace';
-            this.log(t(denyKey), PROF_LOG_DENY);
-          }
+          // Commission order board (issue #1298): the item name, chat key,
+          // params and tone are resolved by commission_order_feedback.ts;
+          // this arm only logs (a deny with no reason resolves to null, the
+          // historical no-op) and delegates the board/bag refresh.
+          const orderLine = commissionOrderResultLine(ev);
+          if (orderLine) this.log(t(orderLine.key, orderLine.params), orderLine.tone);
           // Refresh the board window if open (renderCommissionBoard no-ops
           // when it is not); deliver also touches bags on the crafter's own
           // arm (the requester's side rides the ordinary loot event's bag

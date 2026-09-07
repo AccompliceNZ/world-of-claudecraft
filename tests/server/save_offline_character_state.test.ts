@@ -19,6 +19,7 @@ vi.mock('pg', () => ({
   },
 }));
 
+import { CHARACTER_SAVE_PREIMAGE_SELECT } from '../../server/character_save_statement';
 import { DB_HEAVY_STATEMENT_TIMEOUT_MS, saveOfflineCharacterState } from '../../server/db';
 import {
   applyOfflineCharacterSaveBounds,
@@ -27,6 +28,11 @@ import {
   OFFLINE_CHARACTER_SAVE_STATEMENT_TIMEOUT_MS,
 } from '../../server/offline_character_save_db';
 import { type CharacterState, Sim } from '../../src/sim/sim';
+
+// The offline writer's row lock projects the SAME pre-image select as the live
+// save family (server/character_save_statement.ts), never a hand-duplicated
+// literal that could silently drift from it.
+const OFFLINE_ROW_LOCK_SQL = `SELECT ${CHARACTER_SAVE_PREIMAGE_SELECT} FROM characters WHERE id = $1 AND realm = $2 FOR UPDATE`;
 
 function realCharacterState(): CharacterState {
   const sim = new Sim({ seed: 11, playerClass: 'mage', autoEquip: true });
@@ -116,9 +122,7 @@ describe('saveOfflineCharacterState: fenced on the absence of a live lease', () 
     // source pre-image: this writer REPLACES the blob, so the state it
     // overwrites is the before-state its journal replays from, read under the
     // lock it already takes rather than as a second statement.
-    expect(statements[4]).toBe(
-      "SELECT state->'bank' AS before_bank, state->'vault' AS before_vault FROM characters WHERE id = $1 AND realm = $2 FOR UPDATE",
-    );
+    expect(statements[4]).toBe(OFFLINE_ROW_LOCK_SQL);
     // Every bound is set BEFORE the write it bounds.
     const update = statements.findIndex((text) => text.includes('UPDATE characters'));
     expect(update).toBe(5);
@@ -163,9 +167,7 @@ describe('saveOfflineCharacterState: fenced on the absence of a live lease', () 
     // The weaker mode the UPDATE alone would take is NOT what is asked for.
     expect(statements[lock]).not.toContain('FOR NO KEY UPDATE');
     // Realm-pinned like the write it precedes, so a cross-realm id locks nothing.
-    expect(statements[lock]).toBe(
-      "SELECT state->'bank' AS before_bank, state->'vault' AS before_vault FROM characters WHERE id = $1 AND realm = $2 FOR UPDATE",
-    );
+    expect(statements[lock]).toBe(OFFLINE_ROW_LOCK_SQL);
     const lockValues = client.query.mock.calls[lock][1] as unknown[];
     expect(lockValues[0]).toBe(41);
     const updateValues = client.query.mock.calls[update][1] as unknown[];

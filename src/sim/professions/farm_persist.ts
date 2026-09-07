@@ -155,6 +155,16 @@ export function serializeFarmPlots(
   return out;
 }
 
+/** The sparse CharacterState fragment for one save (the sim.ts
+ *  serializeCharacter shape every optional field follows): absent when
+ *  serializeFarmPlots has no planted bed to write. */
+export function farmPlotsSaveFragment(plots: ReadonlyMap<string, PlotState>): {
+  farmPlots?: Record<string, PersistedFarmPlot>;
+} {
+  const fp = serializeFarmPlots(plots);
+  return fp ? { farmPlots: fp } : {};
+}
+
 /** Rebuild saved rows into a fresh live plot map. This is where hand-edited
  *  JSONB enters, so it owns every anti-tamper arm: a bed id or crop id outside
  *  the allowlists drops (a retired bed self-heals out of the save on the next

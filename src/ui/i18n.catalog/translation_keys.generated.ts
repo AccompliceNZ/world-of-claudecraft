@@ -6370,6 +6370,7 @@ export type TranslationKeyFlat =
   | 'guide.interfacePage.framesMoveBody'
   | 'guide.interfacePage.framesMoveBodyEditFrames'
   | 'guide.interfacePage.framesTitle'
+  | 'guide.interfacePage.gatheringGoalTrackerBody'
   | 'guide.interfacePage.glanceBody'
   | 'guide.interfacePage.glanceTitle'
   | 'guide.interfacePage.intro'

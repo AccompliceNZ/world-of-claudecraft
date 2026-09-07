@@ -538,15 +538,38 @@ describe('coverage: each scenario fires its subsystem', { timeout: 90_000 }, () 
       legendary: 4,
     };
     expect(rareGather!.qty).toBe(qtyByRarity[rareGather!.rarity] * 5);
-    const signed = meta.inventory.filter(
-      (s: any) => s.itemId === rare!.itemId && s.instance?.signer === meta.name,
+    // The premium mark now rides the granted stack's materialSources bucket
+    // (material_gatherer.ts gatheredMaterialSources) instead of a distinct
+    // instance.signer payload, so a signed grant merges into the same mixed
+    // slot plain gather already occupies. Select the slots that carry a
+    // bucket signed by this player, then count ONLY the signed units inside
+    // each selected slot, never the slot's whole (mixed) count.
+    const mixedSlots = meta.inventory.filter(
+      (s: any) =>
+        s.itemId === rare!.itemId &&
+        s.materialSources?.some((bucket: any) => bucket.source.signer === meta.name),
     );
-    // Identical-payload stacking: the same-signer units merge into
-    // signed stacks, so count UNITS and pin that the merge actually collapsed
-    // them into far fewer slots than units (stack cap 20).
-    const signedUnits = signed.reduce((n: number, s: any) => n + s.count, 0);
+    const signedUnits = mixedSlots.reduce(
+      (n: number, s: any) =>
+        n +
+        s.materialSources
+          .filter((bucket: any) => bucket.source.signer === meta.name)
+          .reduce((m: number, bucket: any) => m + bucket.count, 0),
+      0,
+    );
     expect(signedUnits).toBeGreaterThanOrEqual(rareGather!.qty);
-    expect(signed.length).toBeLessThanOrEqual(Math.ceil(signedUnits / 20));
+    // Packing ceiling: a mixed slot's cap (20) bounds ALL units it holds,
+    // signed and plain alike, so the slot count is measured against the
+    // slots' total count, not the narrower signed-unit count above.
+    const mixedSlotUnits = mixedSlots.reduce((n: number, s: any) => n + s.count, 0);
+    expect(mixedSlots.length).toBeLessThanOrEqual(Math.ceil(mixedSlotUnits / 20));
+    // The old per-instance premium payload is retired: no slot of this item
+    // carries a signer on its instance payload anymore.
+    expect(
+      meta.inventory.every(
+        (s: any) => s.itemId !== rare!.itemId || s.instance?.signer === undefined,
+      ),
+    ).toBe(true);
   });
   it('druid_engines: all three live buttons arm and their payoffs fire', () => {
     const rec = run('druid_engines');

@@ -331,7 +331,7 @@ export const MATERIAL_SOURCE_JOURNAL_WRITE_SQL = `WITH input AS (
       AS t(ord int, realm text, container text, owner_id bigint,
            owner_character_id bigint, opening jsonb, movements jsonb)
 ), anchor AS (
-  INSERT INTO ${MATERIAL_SOURCE_CONTAINERS_TABLE}
+  INSERT INTO material_source_containers
       (realm, container, owner_id, owner_character_id, opening, current_revision)
   SELECT i.realm, i.container, i.owner_id, i.owner_character_id,
          CASE WHEN i.opening IS NOT NULL THEN i.opening
@@ -350,7 +350,7 @@ export const MATERIAL_SOURCE_JOURNAL_WRITE_SQL = `WITH input AS (
      SET current_revision = ${MATERIAL_SOURCE_CONTAINERS_TABLE}.current_revision + 1
   RETURNING realm, container, owner_id, current_revision
 ), journal AS (
-  INSERT INTO ${MATERIAL_SOURCE_JOURNAL_TABLE}
+  INSERT INTO material_source_journal
       (realm, container, owner_id, revision, movements)
   SELECT a.realm, a.container, a.owner_id, a.current_revision, i.movements
     FROM anchor a

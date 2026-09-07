@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { page } from 'vitest/browser';
-import { ensureLocaleLoaded, setLanguage, type SupportedLanguage } from '../../src/ui/i18n';
 import { BankWindow, type BankWindowDeps } from '../../src/ui/bank_window';
+import { ensureLocaleLoaded, type SupportedLanguage, setLanguage } from '../../src/ui/i18n';
 import {
   closeMaterialSourcesDialog,
   openMaterialSourcesDialog,

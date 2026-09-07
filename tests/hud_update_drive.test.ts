@@ -1061,7 +1061,8 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     guard: {
       kind: 'module',
       module: 'hud/loot/loot_window_controller.ts',
-      proof: 'if (!force && sig === this.corpseSig) return availability;',
+      proof:
+        'const unchanged = sig === this.corpseSig && harvestSig === this.harvestStatusSig; if (!force && unchanged) return availability;',
     },
     why: 'closes the loot window when the player walks away, and repaints the open corpse body when its advertised loot/harvest set changes',
   },
@@ -1321,7 +1322,7 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
       // local sig binding): render() re-latches lastSig from the one input it
       // painted, so this band never re-acts on a stale one.
       proof:
-        'const input = this.buildInput(); const sig = professionsRefreshSig(input); if (sig === this.lastSig) return;',
+        'const input = this.buildInput(); const sig = professionsRefreshSig(input, harvestPreferenceLocalSig(this.deps.world().harvestPreference)); if (sig === this.lastSig) return;',
     },
     why: 'the professions window',
   },
@@ -1811,7 +1812,7 @@ describe('Hud.update() drives exactly the registered set, on the registered band
         // The corpse popup's own latch. `force` is the relocalize arm, which
         // rebuilds through the same guard past a signature a locale switch
         // cannot move, so the flag is part of the line the pin looks for.
-        'hud/loot/loot_window_controller.ts: if (!force && sig === this.corpseSig) return availability;',
+        'hud/loot/loot_window_controller.ts: const unchanged = sig === this.corpseSig && harvestSig === this.harvestStatusSig; if (!force && unchanged) return availability;',
         'hud/professions/farming_plant_sheet_window.ts: if (view.status !== this.paintedStatus) this.paint();',
         'hud/quest/quest_dialog_controller.ts: if (this.introHintVisibleFor(npc) !== this.lastIntroHintVisible || gossipRowSig(this.offerableRows(npc)) !== this.lastGossipRowSig) { this.refresh(); }',
         'mailbox_window.ts: if (sig === this.lastSig) return;',
@@ -1822,7 +1823,7 @@ describe('Hud.update() drives exactly the registered set, on the registered band
         // The professions guard hashes the freshly built input inline (no local
         // sig binding): render() re-latches lastSig from the one input it
         // painted, so the band never re-acts on a stale signature.
-        'hud/professions/professions_window.ts: const input = this.buildInput(); const sig = professionsRefreshSig(input); if (sig === this.lastSig) return;',
+        'hud/professions/professions_window.ts: const input = this.buildInput(); const sig = professionsRefreshSig(input, harvestPreferenceLocalSig(this.deps.world().harvestPreference)); if (sig === this.lastSig) return;',
         'reliquary_window.ts: const input = this.buildInput(); const sig = this.sigFromInput(input); if (sig === this.lastSig) return;',
         'social_window.ts: if (struct !== this.lastStruct) {',
         // #2519 replaced the joined signature string this used to build every frame with
