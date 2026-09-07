@@ -326,6 +326,8 @@ export type {
   CraftingIdentityView,
   CraftResultView,
   DisenchantResultView,
+  PerfectingSwapInfoView,
+  PerfectingSwapRequest,
   PlayerProfessionsView,
   RecipeDef,
   ToolEffectSlotView,
@@ -787,6 +789,12 @@ export const COMMAND_NAMES = [
   'track_gathering_recipe',
   'track_gathering_commission',
   'clear_gathering_goal',
+  // The Perfecting rank exchange (Masterwrought phase 15): swap the rank
+  // progress of two owned pinned copies from the same Crucible collection
+  // (which may be different slots or item ids) after explicit confirmation.
+  // Appended at the END, after the gathering-goal cluster above, because wire
+  // tokens are never reordered.
+  'swap_perfecting_ranks',
 ] as const;
 
 // The union both the send path (`online.ts`) and the dispatch switch
@@ -847,6 +855,7 @@ export type WorldFacet =
   | 'IWorldCosmetics'
   | 'IWorldQuests'
   | 'IWorldProgressionXp'
+  | 'IWorldProfessions'
   | 'IWorldTalents'
   | 'IWorldPet'
   | 'IWorldParty'
@@ -900,12 +909,13 @@ export const COMMAND_FACETS = {
   // authoritative inventory copy; every cost and payload is validated again
   // in the sim before the item instance is changed. (salvage_item rides the
   // professions surface and, like the other enchanting-family commands and
-  // perfect_item, has no facet row here: the IWorldProfessions surface is
-  // row-less by the W6 PARTIAL design, its members pinned by
+  // perfect_item, has no facet row here: the legacy professions commands
+  // remain row-less by the W6 PARTIAL design, their members pinned by
   // tests/world_api_parity.test.ts FACET_PROFESSIONS instead.)
   rift_upgrade_item: 'IWorldInventory',
   rift_enchant_item: 'IWorldInventory',
   rift_socket_gem: 'IWorldInventory',
+  swap_perfecting_ranks: 'IWorldProfessions',
   // IWorldInventory: the one-shot bag clean-up; the sim re-derives the whole
   // arrangement, so there is no payload to validate.
   inv_sort: 'IWorldInventory',

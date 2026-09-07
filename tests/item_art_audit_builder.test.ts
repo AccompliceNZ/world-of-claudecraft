@@ -834,20 +834,26 @@ describe('item-art audit builder', () => {
     ) as Record<string, unknown>;
     expect(verified).toMatchObject({
       catalogPath: 'tmp/imagegen/item-art-consistency/final-audit/catalog.json',
-      catalogSha256: 'a3d76b8e6f402fc9523df5f1ee805a7220ab70dcf84c5d2e40b129f42c844170',
-      catalogBytes: 658239,
+      // Measured by an actual `--verify-only` run over the combined catalog
+      // (Masterwrought base + the Field Kit + Crucible professions art);
+      // receipt: /tmp/professions-merge-pr3884-art-verify.json.
+      catalogSha256: '14d10aa4889b44248e2bbfa2fe71691f4ede9a14e6a5d6b089066f64a7f10484',
+      catalogBytes: 683806,
       rendererFingerprint: '41f5404c4d6d9643c8f03b9d88a8546e44564cc03a1baabdd4a72cb9258a2da7',
-      catalogCount: 1210,
-      liveItemCount: 1225,
+      // 1,209 (Masterwrought) + 1 (Field Kit) + 45 (Crucible professions) = 1,255.
+      catalogCount: 1255,
+      // 1,224 (Masterwrought) + 1 (Field Kit) + 45 (Crucible professions) = 1,270.
+      liveItemCount: 1270,
       generatedHeroicDefinitions: 64,
       heroicDefinitionsWithOwnWebp: 48,
       heroicWeaponArtAliases: 16,
       groupCount: 25,
-      sheetPageCount: 30,
-      sheetCount: 240,
-      sheetModeCounts: Object.fromEntries(ITEM_ART_AUDIT_MODES.map((mode) => [mode, 30])),
+      sheetPageCount: 31,
+      sheetCount: 248,
+      sheetModeCounts: Object.fromEntries(ITEM_ART_AUDIT_MODES.map((mode) => [mode, 31])),
       sheetSetSha256: null,
-      shippingCatalogSha256: '6bc1e337f0abffbb6c7a105f698d860865946b96d5c44827f4eb7760eb862c2e',
+      // Same `--verify-only` receipt as the catalogSha256 note above.
+      shippingCatalogSha256: 'f425bc204cfb2d5619c7a1aed0764f7616183bf79e61ad968144d264bb6336e2',
       machineChecksPassed: true,
       verdict: null,
     });

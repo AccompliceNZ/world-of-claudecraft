@@ -418,6 +418,9 @@ export const IWORLD_MEMBERS = [
   { name: 'trackGatheringRecipe', kind: 'method' },
   { name: 'trackGatheringCommission', kind: 'method' },
   { name: 'clearGatheringGoal', kind: 'method' },
+  // Perfecting rank exchange (Masterwrought phase 15).
+  { name: 'swapPerfectingRanks', kind: 'method' },
+  { name: 'perfectingSwapInfo', kind: 'method' },
   { name: 'raidLockouts', kind: 'method' }, // read-returning (5/6)
   { name: 'riftFloor', kind: 'data' }, // active procedural rift floor (null outside)
   { name: 'riftCollisionToken', kind: 'data' }, // per-Sim rift collision registry key
@@ -799,9 +802,14 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // Intentional Gathering PR3 adds the selected-corpse status query
     // (corpseHarvestInfo, a read-returning method):
     // 358 members, 98 data, 260 methods.
-    expect(IWORLD_MEMBERS.length).toBe(362);
+    // Intentional Gathering PR4 adds the gathering-goal projection (gatheringGoal
+    // data plus trackGatheringRecipe/trackGatheringCommission/clearGatheringGoal):
+    // 362 members, 99 data, 263 methods.
+    // Masterwrought Perfecting rank exchange adds swapPerfectingRanks and
+    // perfectingSwapInfo (both methods): 364 members, 99 data, 265 methods.
+    expect(IWORLD_MEMBERS.length).toBe(364);
     expect(DATA_MEMBERS.length).toBe(99);
-    expect(METHOD_MEMBERS.length).toBe(263);
+    expect(METHOD_MEMBERS.length).toBe(265);
   });
   it('has no duplicate member names', () => {
     const names = IWORLD_MEMBERS.map((m) => m.name);
@@ -1049,6 +1057,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'partyTradeMsRemaining',
       'perfectItem',
       'perfectingInfo',
+      'perfectingSwapInfo',
       'petAttack',
       'petSpecial',
       'petSpecialCommandsSupported',
@@ -1134,6 +1143,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'stationPlacements',
       'stopAutoAttack',
       'submitLootRoll',
+      'swapPerfectingRanks',
       'switchLoadout',
       'tabTarget',
       'tabTargetPrev',
@@ -1452,6 +1462,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'partyTradeMsRemaining',
       'perfectItem',
       'perfectingInfo',
+      'perfectingSwapInfo',
       'petAttack',
       'petSpecial',
       'petTaunt',
@@ -1516,6 +1527,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'startAutoAttack',
       'stopAutoAttack',
       'submitLootRoll',
+      'swapPerfectingRanks',
       'switchLoadout',
       'tabTarget',
       'tabTargetPrev',
@@ -2095,6 +2107,8 @@ const FACET_PROFESSIONS = [
   'trackGatheringRecipe',
   'trackGatheringCommission',
   'clearGatheringGoal',
+  'swapPerfectingRanks',
+  'perfectingSwapInfo',
 ] as const satisfies readonly (keyof IWorldProfessions)[];
 type _ExhaustProfessions = AssertNever<
   Exclude<keyof IWorldProfessions, (typeof FACET_PROFESSIONS)[number]>
@@ -2275,8 +2289,8 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
 
   it('the facet union equals the pinned IWORLD_MEMBERS set', () => {
     const union = Object.values(FACET_MEMBER_ARRAYS).flatMap((arr) => [...arr]);
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(362);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(362);
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(364);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(364);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);

@@ -6,6 +6,10 @@ import type { MaterialRarity } from '../sim/professions/gathering';
 import type { GatheringGoalView } from '../sim/professions/gathering_goal_types';
 import type { HarvestPreference } from '../sim/professions/harvest_preference';
 import type { PerfectItemRef, PerfectingInfoView } from '../sim/professions/perfecting';
+import type {
+  PerfectingSwapInfoView,
+  PerfectingSwapRequest,
+} from '../sim/professions/perfecting_swap';
 import type { PlayerProfessionSkill, ProfessionRecipeRecord } from '../sim/professions/types';
 import type { EquipSlot, StationDef } from '../sim/types';
 import type { WorldInteractionOutcome } from './interaction';
@@ -16,6 +20,8 @@ export type {
   GatheringGoalView,
   PerfectItemRef,
   PerfectingInfoView,
+  PerfectingSwapInfoView,
+  PerfectingSwapRequest,
 };
 
 // Render-safe projection of a player's professions standing. Stub as of
@@ -180,6 +186,7 @@ export interface ApplyEnchantResultView {
   reason?:
     | 'unknown_item'
     | 'unknown_enchant'
+    | 'recipe_not_learned'
     | 'wrong_slot'
     | 'not_held'
     | 'insufficient_materials'
@@ -561,4 +568,8 @@ export interface IWorldProfessions {
   // Explicitly stop tracking any gathering goal. Server-authoritative;
   // ClientWorld sends the clear_gathering_goal command.
   clearGatheringGoal(): void;
+  // Exchange progress only after explicit confirmation of both pinned copies.
+  // The authoritative result is personal; neither online method predicts state.
+  swapPerfectingRanks(request: PerfectingSwapRequest): void;
+  perfectingSwapInfo(request: PerfectingSwapRequest): PerfectingSwapInfoView | null;
 }

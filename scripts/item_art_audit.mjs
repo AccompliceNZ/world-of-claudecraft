@@ -103,17 +103,29 @@ const build = await buildItemArtAudit({
   mapping,
   pendingArtIds: [...pendingArtIds].sort(),
   expected: {
-    // Current catalog: the reviewed Masterwrought census plus the Field Kit.
-    // Historical visual verdicts retain their original scope and hashes.
-    catalogCount: 1210,
-    liveItemCount: 1225,
+    // Masterwrought's completion wave adds 81 newly painted identities and
+    // replaces 84 interim project-owned placeholders. The replacements do
+    // not grow the catalog; the new identities take the shipping census from
+    // 1,128 to 1,209 after the three v0.42 mount reins join the reviewed base.
+    // The gathering Field Kit adds one more painted identity (1,209 to 1,210).
+    // Crucible professions adds 33 armor pieces, 11 patterns, and one formula,
+    // bringing the current shipping census to 1,255 without replacing old art.
+    catalogCount: 1255,
+    // The art-subject universe is every live definition minus the explicit
+    // pending-art ledger. Masterwrought cleared that ledger at 1,224 live
+    // definitions; the Field Kit raises it to 1,225; Crucible professions
+    // raises it to 1,270, all painted. Sixteen Heroic weapons intentionally
+    // alias base paintings; the implicit backpack is the one non-definition
+    // catalog id.
+    liveItemCount: 1270,
     pendingArtCount: 0,
     generatedHeroicDefinitions: 64,
     heroicDefinitionsWithOwnWebp: 48,
     heroicWeaponArtAliases: 16,
-    // The 81 additions land inside the existing 25 kind groups without
-    // crossing another 80-record page boundary: 30 pages, eight modes each.
-    sheetPageCount: 30,
+    // Masterwrought's 81 additions kept the existing 25 kind groups at 30 pages.
+    // The 11 Crucible boots raise armor-feet from 77 to 88, crossing its
+    // 80-record boundary: now 31 pages, eight modes each.
+    sheetPageCount: 31,
     groupCount: 25,
   },
 });

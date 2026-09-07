@@ -445,7 +445,9 @@ const MONOLITHS: MonolithRow[] = [
     // commission-order result line's param/tone resolution moved to
     // src/ui/hud/professions/commission_order_feedback.ts. Exact count, zero
     // slack.
-    ceiling: 18679,
+    // LOWERED 18679 -> 18677 at the professions-merge-crucible integration.
+    // Measured with wc -l < src/ui/hud.ts after biome. Exact count, zero slack.
+    ceiling: 18677,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -990,12 +992,17 @@ const MONOLITHS: MonolithRow[] = [
     // wc -l < src/sim/sim.ts after biome. Exact count.
     // Lowered 12028 -> 12006 in PR 3872 cleanup after removing the retired
     // tutorial action and its write-only account fact. Exact count, zero slack.
+    // Perfecting read/command adapters moved to professions/perfecting_world_view.ts.
     // LOWERED 11987 -> 11985 at the Intentional Gathering packet:
     // serializeCharacter's sparse save fragments now live beside their
     // owning serializers instead of inline, paying for the new
     // gathering-goal IWorld delegates and PlayerMeta fields. Exact count,
     // zero slack.
-    ceiling: 11985,
+    // LOWERED 11985 -> 11983 at the professions-merge-crucible integration:
+    // both the Perfecting adapter move and the Intentional Gathering
+    // save-fragment move land together, and their savings compose. Measured
+    // with wc -l < src/sim/sim.ts after biome. Exact count, zero slack.
+    ceiling: 11983,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1389,7 +1396,13 @@ const MONOLITHS: MonolithRow[] = [
     // Lowered 10347 -> 10336 in PR 3872 cleanup after removing the unused
     // feast signer wire field plus the retired tutorial dispatch and account-fact
     // plumbing. Measured after formatting; exact count.
-    ceiling: 10333,
+    // Perfecting command parsing and naming dispatch now live in
+    // server/perfect_item_command.ts; rank exchange remains a thin adapter.
+    // LOWERED 10330 -> 10327 at the professions-merge-crucible integration:
+    // both this extraction and the Intentional Gathering dispatch trimming
+    // (whose own arm read 10333) land together and their savings compose.
+    // Measured with wc -l < server/game.ts after biome. Exact count, zero slack.
+    ceiling: 10327,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {

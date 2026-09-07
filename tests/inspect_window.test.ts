@@ -3,15 +3,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { ITEMS } from '../src/sim/data';
-import type { EquipSlot, ItemInstancePayload, PlayerClass } from '../src/sim/types';
-import { borderAccent, borderMotifPrimitives } from '../src/ui/deed_border_view';
-import { deedName, deedTitleText } from '../src/ui/deed_i18n';
-import { QUALITY_COLOR } from '../src/ui/icons';
-import { classColorCss } from '../src/ui/inspect_view';
-import { type InspectEntity, InspectWindow } from '../src/ui/inspect_window';
-import { qualityGlowShadow } from '../src/ui/quality_glow';
-import { knownItemIconHtml } from '../src/ui/unknown_item_icon';
 
 // This suite exercises the inspect DOM and injected preview boundary, not
 // WebGL portraits. Importing the real portrait module starts GLB fetches that
@@ -21,6 +12,16 @@ vi.mock('../src/ui/portrait_chip', () => ({
   hydratePortraits: () => undefined,
   portraitChipHtml: () => '',
 }));
+
+import { ITEMS } from '../src/sim/data';
+import type { EquipSlot, ItemInstancePayload, PlayerClass } from '../src/sim/types';
+import { borderAccent, borderMotifPrimitives } from '../src/ui/deed_border_view';
+import { deedName, deedTitleText } from '../src/ui/deed_i18n';
+import { QUALITY_COLOR } from '../src/ui/icons';
+import { classColorCss } from '../src/ui/inspect_view';
+import { type InspectEntity, InspectWindow } from '../src/ui/inspect_window';
+import { qualityGlowShadow } from '../src/ui/quality_glow';
+import { knownItemIconHtml } from '../src/ui/unknown_item_icon';
 
 // The inspect ("Profile") window painter is a DOM module. Most guards below are
 // source scans, the char_window suite's shape: they pin the WCAG focus-trap the
@@ -642,10 +643,9 @@ describe('inspect_window: the real painter over a Sim-shaped and a ranked entity
     expect(row.querySelector<HTMLElement>('.item-icon')?.className).toContain('q-common');
   });
 
-  // The 2026-08-27 host-parity ruling: the ONLINE self entity's worn mirror is
-  // eqi-shaped (no perfected), so self-inspect takes the viewer's own full
-  // mirror through openInspect's fourth parameter. These pin the override in
-  // BOTH directions on what the hover actually reads.
+  // Self-inspect takes the viewer's full mirror through openInspect's fourth
+  // parameter, overriding stale broadcast values. Peers receive the public
+  // active Perfected marker too; intermediate ranks and binding remain private.
   it('the SELF override hands the tooltip the full worn payload: perfected rides', () => {
     openWith(
       {
@@ -666,7 +666,7 @@ describe('inspect_window: the real painter over a Sim-shaped and a ranked entity
     expect(call?.instance?.name).toBe('Oathkeeper');
   });
 
-  it('a peer row keeps the eqi shape: no perfected reaches the tooltip', () => {
+  it('an unperfected peer row does not invent a Perfected marker', () => {
     openWith({
       ...baseEntity,
       equippedItems: { mainhand: 'worn_sword' },
@@ -675,7 +675,22 @@ describe('inspect_window: the real painter over a Sim-shaped and a ranked entity
     for (const attached of attachedTooltips) attached.build();
     const call = tooltipCalls.find((c) => c.itemId === 'worn_sword');
     expect(call).toBeDefined();
-    expect(call?.instance?.perfected, 'a peer payload never grows perfected').toBeUndefined();
+    expect(call?.instance?.perfected, 'an absent marker stays absent').toBeUndefined();
+    expect(call?.instance?.name).toBe('Oathkeeper');
+  });
+
+  it('a perfected peer row passes its public active marker to the tooltip', () => {
+    openWith({
+      ...baseEntity,
+      equippedItems: { mainhand: 'worn_sword' },
+      equippedInstances: {
+        mainhand: { name: 'Oathkeeper', rolled: { quality: 'legendary' }, perfected: true },
+      },
+    });
+    for (const attached of attachedTooltips) attached.build();
+    const call = tooltipCalls.find((c) => c.itemId === 'worn_sword');
+    expect(call).toBeDefined();
+    expect(call?.instance?.perfected).toBe(true);
     expect(call?.instance?.name).toBe('Oathkeeper');
   });
 });
