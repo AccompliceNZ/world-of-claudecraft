@@ -10227,6 +10227,29 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'Ваш текущий выбор, {material}, здесь недоступен.',
   'hudChrome.harvestPreference.unknownMaterial': 'Недоступный материал',
   'hudChrome.harvestPreference.currentChoiceLabel': 'Текущий выбор: {choice}',
+  // Intentional Gathering PR5: source-info detail under the harvest
+  // preference picker (Field Kit use, Professions).
+  'hudChrome.gatheringSource.title': 'Где найти {material}',
+  'hudChrome.gatheringSource.corpseExample': '{creature} ({zone})',
+  'hudChrome.gatheringSource.corpseExampleTagged': '{creature} ({zone}, {tag})',
+  'hudChrome.gatheringSource.rareTag': 'Редкий',
+  'hudChrome.gatheringSource.eliteTag': 'Элита',
+  'hudChrome.gatheringSource.gatedTag': 'По заданию',
+  'hudChrome.gatheringSource.moreSources': 'и еще {count}',
+  'hudChrome.gatheringSource.moreZones': 'и еще {count} зон',
+  'hudChrome.gatheringSource.premiumChance':
+    'Добыча {material} редкого качества или выше также дает {specimen}, если в сумке есть место.',
+  'hudChrome.gatheringSource.specimenOfBase':
+    '{material}: дополнительный бонус за добычу {base} редкого качества или выше, от тех же существ, что указаны выше, а не отдельная гарантированная находка.',
+  'hudChrome.gatheringSource.nodeZone': '{zone} (инструмент {tier}+ уровня)',
+  'hudChrome.gatheringSource.nodeFineNote':
+    'Инструмент для добычи {tier}+ уровня улучшает эту добычу до высшего качества на такой же жиле.',
+  'hudChrome.gatheringSource.farmNote':
+    'Выращивается из посаженного семени, готово примерно через {duration}. Требуется навык земледелия {skill}+ и мотыга {tier}+ уровня.',
+  'hudChrome.gatheringSource.fishingZoneProven':
+    'воды {zone} (мастерство {skill}+, удочка {tier}+ уровня)',
+  'hudChrome.gatheringSource.fishingZoneUnproven':
+    'В некоторых водах нужно мастерство {skill}+ и удочка {tier}+ уровня; точное место пока не подтверждено.',
   'hudChrome.gatheringGoal.title': 'Цель сбора',
   'hudChrome.gatheringGoal.close': 'Очистить цель сбора',
   'hudChrome.gatheringGoal.clearButton': 'Очистить',
@@ -10263,6 +10286,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gatheringGoal.setPreferenceButtonAria': 'Сделать {name} вашей настройкой сбора',
   'hudChrome.gatheringGoal.currentPreferenceLabel': 'Текущая настройка сбора',
   'hudChrome.gatheringGoal.currentPreferenceAria': '{name} — ваша текущая настройка сбора',
+  'hudChrome.gatheringGoal.sourcesToggle': 'Источники',
+  'hudChrome.gatheringGoal.sourcesToggleAria': 'Источники для {name}',
   'hudChrome.crafting.goalQtyRowAria': 'Количество для цели',
   'hudChrome.crafting.goalQtyDecreaseAria': 'Уменьшить количество для цели (сейчас {count})',
   'hudChrome.crafting.goalQtyIncreaseAria': 'Увеличить количество для цели (сейчас {count})',

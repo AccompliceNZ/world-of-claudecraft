@@ -2470,6 +2470,23 @@ export const ru_RU: EnTranslations = {
       "unknownMaterial": "Недоступный материал",
       "currentChoiceLabel": "Текущий выбор: {choice}"
     },
+    "gatheringSource": {
+      "title": "Где найти {material}",
+      "corpseExample": "{creature} ({zone})",
+      "corpseExampleTagged": "{creature} ({zone}, {tag})",
+      "rareTag": "Редкий",
+      "eliteTag": "Элита",
+      "gatedTag": "По заданию",
+      "moreSources": "и еще {count}",
+      "moreZones": "и еще {count} зон",
+      "premiumChance": "Добыча {material} редкого качества или выше также дает {specimen}, если в сумке есть место.",
+      "specimenOfBase": "{material}: дополнительный бонус за добычу {base} редкого качества или выше, от тех же существ, что указаны выше, а не отдельная гарантированная находка.",
+      "nodeZone": "{zone} (инструмент {tier}+ уровня)",
+      "nodeFineNote": "Инструмент для добычи {tier}+ уровня улучшает эту добычу до высшего качества на такой же жиле.",
+      "farmNote": "Выращивается из посаженного семени, готово примерно через {duration}. Требуется навык земледелия {skill}+ и мотыга {tier}+ уровня.",
+      "fishingZoneProven": "воды {zone} (мастерство {skill}+, удочка {tier}+ уровня)",
+      "fishingZoneUnproven": "В некоторых водах нужно мастерство {skill}+ и удочка {tier}+ уровня; точное место пока не подтверждено."
+    },
     "gatheringGoal": {
       "title": "Цель сбора",
       "close": "Очистить цель сбора",
@@ -2503,7 +2520,9 @@ export const ru_RU: EnTranslations = {
       "setPreferenceButton": "Сделать настройкой сбора",
       "setPreferenceButtonAria": "Сделать {name} вашей настройкой сбора",
       "currentPreferenceLabel": "Текущая настройка сбора",
-      "currentPreferenceAria": "{name} — ваша текущая настройка сбора"
+      "currentPreferenceAria": "{name} — ваша текущая настройка сбора",
+      "sourcesToggle": "Источники",
+      "sourcesToggleAria": "Источники для {name}"
     },
     "party": {
       "promoteLeader": "Назначить лидером",

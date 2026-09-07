@@ -2470,6 +2470,23 @@ export const zh_TW: EnTranslations = {
       "unknownMaterial": "不可用的材料",
       "currentChoiceLabel": "目前：{choice}"
     },
+    "gatheringSource": {
+      "title": "在哪裡取得{material}",
+      "corpseExample": "{creature}（{zone}）",
+      "corpseExampleTagged": "{creature}（{zone}，{tag}）",
+      "rareTag": "稀有",
+      "eliteTag": "精英",
+      "gatedTag": "任務解鎖",
+      "moreSources": "另有{count}處",
+      "moreZones": "另有{count}個區域",
+      "premiumChance": "精良或更高品質的{material}採集，若背包有空間，還會額外獲得{specimen}。",
+      "specimenOfBase": "{material}是從{base}擲出精良或更高品質時獲得的額外獎勵，來自上方列出的同一批生物，但不是單獨保證獲得的戰利品。",
+      "nodeZone": "{zone}（{tier}階以上工具）",
+      "nodeFineNote": "使用{tier}階以上的採集工具，在同類型的採集點會升級為上等品質。",
+      "farmNote": "由播種培育而成，約{duration}後可收穫。需要農耕技能{skill}以上和{tier}階以上的鋤頭。",
+      "fishingZoneProven": "{zone}水域（熟練度{skill}以上，魚竿{tier}階以上）",
+      "fishingZoneUnproven": "有些水域需要熟練度{skill}以上和{tier}階以上的魚竿，但尚未確認具體地點。"
+    },
     "gatheringGoal": {
       "title": "採集目標",
       "close": "清除採集目標",
@@ -2503,7 +2520,9 @@ export const zh_TW: EnTranslations = {
       "setPreferenceButton": "設為採集偏好",
       "setPreferenceButtonAria": "將{name}設為你的採集偏好",
       "currentPreferenceLabel": "目前採集偏好",
-      "currentPreferenceAria": "{name}是你目前的採集偏好"
+      "currentPreferenceAria": "{name}是你目前的採集偏好",
+      "sourcesToggle": "來源",
+      "sourcesToggleAria": "{name}的來源"
     },
     "party": {
       "promoteLeader": "提升為隊長",

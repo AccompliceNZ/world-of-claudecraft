@@ -2470,6 +2470,23 @@ export const en_XA: EnTranslations = {
       "unknownMaterial": "[Úñáʋáíļáƀļé ɱáţéŕíáļ]",
       "currentChoiceLabel": "[Çúŕŕéñţ: {choice}]"
     },
+    "gatheringSource": {
+      "title": "[Ŵĥéŕé ţó ƒíñð {material}]",
+      "corpseExample": "[{creature} ({zone})]",
+      "corpseExampleTagged": "[{creature} ({zone}, {tag})]",
+      "rareTag": "[ŕáŕé]",
+      "eliteTag": "[éļíţé]",
+      "gatedTag": "[ɋúéšţ-ĝáţéð]",
+      "moreSources": "[áñð {count} ɱóŕé]",
+      "moreZones": "[áñð {count} ɱóŕé žóñéš]",
+      "premiumChance": "[Ŕáŕé óŕ ƀéţţéŕ {material} ĥáŕʋéšţš áļšó ýíéļð {specimen} ŵĥéñ ţĥéŕé íš ŕóóɱ íñ ýóúŕ ƀáĝš.]",
+      "specimenOfBase": "[{material} íš á ŕáŕé óŕ ƀéţţéŕ ĥáŕʋéšţ ƀóñúš ƒŕóɱ {base}, ƒŕóɱ ţĥé šáɱé çŕéáţúŕéš šĥóŵñ áƀóʋé, ñéʋéŕ á šéþáŕáţé ĝúáŕáñţééð ƒíñð.]",
+      "nodeZone": "[{zone} (ţíéŕ {tier}+ ţóóļ)]",
+      "nodeFineNote": "[Á ĝáţĥéŕíñĝ ţóóļ óƒ ţíéŕ {tier}+ úþĝŕáðéš ţĥíš ţó íţš ƒíñé ĝŕáðé áţ á ɱáţçĥíñĝ ʋéíñ.]",
+      "farmNote": "[Ĝŕóŵñ ƒŕóɱ á þļáñţéð šééð, ŕéáðý áƒţéŕ áƀóúţ {duration}. Ñééðš ƒáŕɱíñĝ šķíļļ {skill}+ áñð á ţíéŕ {tier}+ ĥóé.]",
+      "fishingZoneProven": "[{zone} ŵáţéŕš (þŕóƒíçíéñçý {skill}+, ŕóð ţíéŕ {tier}+)]",
+      "fishingZoneUnproven": "[Šóɱé ŵáţéŕš ñééð þŕóƒíçíéñçý {skill}+ áñð ŕóð ţíéŕ {tier}+; ñó šþéçíƒíç šþóţ íš çóñƒíŕɱéð ýéţ.]"
+    },
     "gatheringGoal": {
       "title": "[Ĝáţĥéŕíñĝ Ĝóáļ]",
       "close": "[Çļéáŕ ĝáţĥéŕíñĝ ĝóáļ]",
@@ -2503,7 +2520,9 @@ export const en_XA: EnTranslations = {
       "setPreferenceButton": "[Šéţ áš ĥáŕʋéšţ þŕéƒéŕéñçé]",
       "setPreferenceButtonAria": "[Šéţ {name} áš ýóúŕ ĥáŕʋéšţ þŕéƒéŕéñçé]",
       "currentPreferenceLabel": "[Çúŕŕéñţ ĥáŕʋéšţ þŕéƒéŕéñçé]",
-      "currentPreferenceAria": "[{name} íš ýóúŕ çúŕŕéñţ ĥáŕʋéšţ þŕéƒéŕéñçé]"
+      "currentPreferenceAria": "[{name} íš ýóúŕ çúŕŕéñţ ĥáŕʋéšţ þŕéƒéŕéñçé]",
+      "sourcesToggle": "[Šóúŕçéš]",
+      "sourcesToggleAria": "[Šóúŕçéš ƒóŕ {name}]"
     },
     "party": {
       "promoteLeader": "[Þŕóɱóţé ţó Ļéáðéŕ]",

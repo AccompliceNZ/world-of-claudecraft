@@ -9992,6 +9992,29 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '現在選択中の{material}はここでは利用できません。',
   'hudChrome.harvestPreference.unknownMaterial': '利用できない素材',
   'hudChrome.harvestPreference.currentChoiceLabel': '現在：{choice}',
+  // Intentional Gathering PR5: source-info detail under the harvest
+  // preference picker (Field Kit use, Professions).
+  'hudChrome.gatheringSource.title': '{material}の入手先',
+  'hudChrome.gatheringSource.corpseExample': '{creature}（{zone}）',
+  'hudChrome.gatheringSource.corpseExampleTagged': '{creature}（{zone}、{tag}）',
+  'hudChrome.gatheringSource.rareTag': 'レア',
+  'hudChrome.gatheringSource.eliteTag': 'エリート',
+  'hudChrome.gatheringSource.gatedTag': 'クエスト限定',
+  'hudChrome.gatheringSource.moreSources': '他{count}件',
+  'hudChrome.gatheringSource.moreZones': '他{count}エリア',
+  'hudChrome.gatheringSource.premiumChance':
+    'レア以上の{material}の採取では、バッグに空きがあれば{specimen}も得られることがあります。',
+  'hudChrome.gatheringSource.specimenOfBase':
+    '{material}は{base}のレア以上の採取で得られる追加ボーナスで、上記と同じ生物から得られますが、単独で確実に手に入るものではありません。',
+  'hudChrome.gatheringSource.nodeZone': '{zone}（ティア{tier}以上の道具）',
+  'hudChrome.gatheringSource.nodeFineNote':
+    'ティア{tier}以上の採集道具を使うと、同種の採集ポイントで上質な等級に格上げされます。',
+  'hudChrome.gatheringSource.farmNote':
+    '種を植えて育てるもので、約{duration}後に収穫できます。農耕スキル{skill}以上とティア{tier}以上の鍬が必要です。',
+  'hudChrome.gatheringSource.fishingZoneProven':
+    '{zone}の水域（熟練度{skill}以上、ティア{tier}以上の釣り竿）',
+  'hudChrome.gatheringSource.fishingZoneUnproven':
+    '熟練度{skill}以上とティア{tier}以上の釣り竿が必要な水域もありますが、具体的な場所はまだ確認されていません。',
   'hudChrome.gatheringGoal.title': '採集目標',
   'hudChrome.gatheringGoal.close': '採集目標をクリア',
   'hudChrome.gatheringGoal.clearButton': 'クリア',
@@ -10028,6 +10051,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gatheringGoal.setPreferenceButtonAria': '{name}を採取設定にする',
   'hudChrome.gatheringGoal.currentPreferenceLabel': '現在の採取設定',
   'hudChrome.gatheringGoal.currentPreferenceAria': '{name}が現在の採取設定です',
+  'hudChrome.gatheringGoal.sourcesToggle': '入手先',
+  'hudChrome.gatheringGoal.sourcesToggleAria': '{name}の入手先',
   'hudChrome.crafting.goalQtyRowAria': '目標数',
   'hudChrome.crafting.goalQtyDecreaseAria': '目標数を減らす（現在 {count}）',
   'hudChrome.crafting.goalQtyIncreaseAria': '目標数を増やす（現在 {count}）',

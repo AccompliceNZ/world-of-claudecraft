@@ -9973,6 +9973,29 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '현재 선택한 {material}은(는) 여기서 제공되지 않습니다.',
   'hudChrome.harvestPreference.unknownMaterial': '이용할 수 없는 재료',
   'hudChrome.harvestPreference.currentChoiceLabel': '현재: {choice}',
+  // Intentional Gathering PR5: source-info detail under the harvest
+  // preference picker (Field Kit use, Professions).
+  'hudChrome.gatheringSource.title': '{material}을(를) 구할 수 있는 곳',
+  'hudChrome.gatheringSource.corpseExample': '{creature} ({zone})',
+  'hudChrome.gatheringSource.corpseExampleTagged': '{creature} ({zone}, {tag})',
+  'hudChrome.gatheringSource.rareTag': '희귀',
+  'hudChrome.gatheringSource.eliteTag': '정예',
+  'hudChrome.gatheringSource.gatedTag': '퀘스트 필요',
+  'hudChrome.gatheringSource.moreSources': '외 {count}개',
+  'hudChrome.gatheringSource.moreZones': '외 {count}개 지역',
+  'hudChrome.gatheringSource.premiumChance':
+    '희귀 이상의 {material} 채집은 가방에 자리가 있으면 {specimen}도 함께 얻을 수 있습니다.',
+  'hudChrome.gatheringSource.specimenOfBase':
+    '{material}은(는) {base}의 희귀 이상 채집에서 얻는 추가 보너스로, 위와 같은 생물에게서 나오지만 별도로 확실히 얻을 수 있는 것은 아닙니다.',
+  'hudChrome.gatheringSource.nodeZone': '{zone} (티어 {tier} 이상 도구)',
+  'hudChrome.gatheringSource.nodeFineNote':
+    '티어 {tier} 이상의 채집 도구를 사용하면 같은 종류의 채집 지점에서 상급 등급으로 격상됩니다.',
+  'hudChrome.gatheringSource.farmNote':
+    '씨앗을 심어 기르는 것으로, 약 {duration} 후에 수확할 수 있습니다. 농사 스킬 {skill} 이상과 티어 {tier} 이상의 괭이가 필요합니다.',
+  'hudChrome.gatheringSource.fishingZoneProven':
+    '{zone} 수역 (숙련도 {skill} 이상, 낚싯대 티어 {tier} 이상)',
+  'hudChrome.gatheringSource.fishingZoneUnproven':
+    '숙련도 {skill} 이상과 낚싯대 티어 {tier} 이상이 필요한 수역도 있지만, 구체적인 지점은 아직 확인되지 않았습니다.',
   'hudChrome.gatheringGoal.title': '채집 목표',
   'hudChrome.gatheringGoal.close': '채집 목표 지우기',
   'hudChrome.gatheringGoal.clearButton': '지우기',
@@ -10009,6 +10032,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gatheringGoal.setPreferenceButtonAria': '{name}을(를) 채집 설정으로 지정',
   'hudChrome.gatheringGoal.currentPreferenceLabel': '현재 채집 설정',
   'hudChrome.gatheringGoal.currentPreferenceAria': '{name}이(가) 현재 채집 설정입니다',
+  'hudChrome.gatheringGoal.sourcesToggle': '출처',
+  'hudChrome.gatheringGoal.sourcesToggleAria': '{name}의 출처',
   'hudChrome.crafting.goalQtyRowAria': '목표 수량',
   'hudChrome.crafting.goalQtyDecreaseAria': '목표 수량 줄이기 (현재 {count})',
   'hudChrome.crafting.goalQtyIncreaseAria': '목표 수량 늘리기 (현재 {count})',

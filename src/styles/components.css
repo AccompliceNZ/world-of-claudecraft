@@ -1136,6 +1136,40 @@
   .harvest-preference-actions .btn {
     flex: 1;
   }
+  /* Source-info detail (Intentional Gathering PR5): the GENERAL picker only
+     (Field Kit use, Professions), shown for the drafted material row.
+     Reuses the same fixed-width popup; every line wraps rather than
+     overflowing. */
+  .harvest-preference-source-container:empty {
+    display: none;
+  }
+  .harvest-preference-source {
+    margin-bottom: 8px;
+    padding: 8px;
+    border: 1px solid var(--color-border-default);
+    border-radius: 4px;
+    font-size: 11px;
+  }
+  .harvest-preference-source-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+    overflow-wrap: anywhere;
+  }
+  .harvest-preference-source-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .harvest-preference-source-list li {
+    overflow-wrap: anywhere;
+    margin-bottom: 2px;
+  }
+  .harvest-preference-source-premium,
+  .harvest-preference-source-note {
+    margin-top: 4px;
+    opacity: 0.85;
+    overflow-wrap: anywhere;
+  }
 
   #loot-rolls {
     position: fixed;

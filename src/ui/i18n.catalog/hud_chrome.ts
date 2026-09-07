@@ -3164,6 +3164,49 @@ export const hudChromeStrings = {
     // or unknownMaterial, never a raw internal id.
     currentChoiceLabel: 'Current: {choice}',
   },
+  // Source-info detail shown under the GENERAL harvest-preference picker
+  // (Field Kit use, Professions) beside the currently drafted material row
+  // only, never on the corpse Change picker: Intentional Gathering PR5.
+  // Every {creature}/{zone}/{material} value is a pre-resolved display name,
+  // never a raw internal id.
+  gatheringSource: {
+    title: 'Where to find {material}',
+    corpseExample: '{creature} ({zone})',
+    corpseExampleTagged: '{creature} ({zone}, {tag})',
+    rareTag: 'rare',
+    eliteTag: 'elite',
+    gatedTag: 'quest-gated',
+    moreSources: 'and {count} more',
+    moreZones: 'and {count} more zones',
+    // {material} and {specimen} are both resolved item display names (the
+    // wording concept: "Rare or better Rough Hide harvests also yield
+    // Pristine Hide when there is room in your bags"). Named by the actual
+    // materials, never by the internal component tag, and stated as a
+    // chance on the roll itself, never a prediction about one corpse.
+    premiumChance:
+      'Rare or better {material} harvests also yield {specimen} when there is room in your bags.',
+    // Shown on a SPECIMEN's own source detail (viewing the specimen item
+    // directly, not the base material it rides on): {material} is the
+    // specimen's own display name, {base} the base material's. States the
+    // condition and the underlying material honestly: never implies the
+    // specimen is a separate guaranteed harvest or promises a specific body.
+    specimenOfBase:
+      '{material} is a rare or better harvest bonus from {base}, from the same creatures shown above, never a separate guaranteed find.',
+    // {zone} and {tier} name the CHEAPEST real vein this zone actually
+    // ships (the lowest GatherNodeDef.tier that yields this material there),
+    // never a blanket "any tool" claim.
+    nodeZone: '{zone} (tier {tier}+ tool)',
+    nodeFineNote:
+      'A gathering tool of tier {tier}+ upgrades this to its fine grade at a matching vein.',
+    farmNote:
+      'Grown from a planted seed, ready after about {duration}. Needs farming skill {skill}+ and a tier {tier}+ hoe.',
+    // {skill} is the fishing proficiency effectiveFishingBand needs to reach
+    // this catch's band; {tier} is the rod tier that band, or the zone's own
+    // access gate, actually demands (whichever is stricter).
+    fishingZoneProven: '{zone} waters (proficiency {skill}+, rod tier {tier}+)',
+    fishingZoneUnproven:
+      'Some waters need proficiency {skill}+ and rod tier {tier}+; no specific spot is confirmed yet.',
+  },
   // The persistent gathering goal panel (Intentional Gathering PR4): a
   // compact "what am I collecting for" readout, tracked from the crafting
   // window's own Track control or the commission board's Track control, and
@@ -3233,6 +3276,14 @@ export const hudChromeStrings = {
     // never a second Set action for the same target.
     currentPreferenceLabel: 'Current harvest preference',
     currentPreferenceAria: '{name} is your current harvest preference',
+    // The per-material "Sources" disclosure (Intentional Gathering PR5): a
+    // native <details>/<summary> label, so no separate aria-expanded copy is
+    // needed (the browser announces the disclosure state on its own).
+    sourcesToggle: 'Sources',
+    // The disclosure's accessible name: every row shares the visible label
+    // "Sources" (rail-width), so a screen reader hears "Sources for {name}"
+    // per row instead of an unhelpful repeated "Sources, Sources, Sources".
+    sourcesToggleAria: 'Sources for {name}',
   },
   // Party leadership: the right-click "Promote to Leader" handoff action shown on a
   // party member's context menu to the current leader. Lives in the English-only

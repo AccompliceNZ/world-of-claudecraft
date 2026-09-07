@@ -188,15 +188,50 @@
     border-color: var(--color-border-default);
   }
 
+  /* The per-material "Sources" disclosure (Intentional Gathering PR5): a
+     native <details>/<summary> pair, closed by default. Native semantics
+     mean no aria-expanded/toggle styling is needed here beyond the summary's
+     own tap target and the body's indent. */
+  .gathering-goal-source {
+    margin-top: 2px;
+  }
+
+  /* `display: list-item` (rather than inline-block) keeps the native
+     disclosure triangle marker while giving the summary a real block box to
+     size: min-height plus line-height brings the desktop tap target to the
+     24px WCAG 2.2 SC 2.5.8 absolute floor without changing the visible
+     "Sources" text or its rail-width layout. */
+  .gathering-goal-source > summary {
+    display: list-item;
+    min-height: 24px;
+    padding: 2px 0;
+    line-height: 20px;
+    color: var(--color-accent);
+    font-size: 9.5px;
+    cursor: pointer;
+    list-style-position: inside;
+  }
+
+  .gathering-goal-source > summary:focus-visible {
+    outline: 1px solid var(--color-border-focus);
+    outline-offset: 1px;
+  }
+
+  .gathering-goal-source-body {
+    margin-top: 3px;
+    padding-left: 8px;
+    border-left: 1px solid var(--color-border-default);
+  }
+
   /* Mobile touch: gated on the runtime body.mobile-touch state (not only a
      media feature: landscape phones need it too, src/ui/CLAUDE.md). Every
      tappable target here (Clear, the per-material harvest preference
-     shortcut) meets the >=40x40 floor; the panel narrows to fit a phone's
-     safe width instead of a fixed max-width, in both orientations. Kept in
-     THIS layer (never an unlayered bare @media) so it never outranks every
-     other layered rule regardless of import order; body.mobile-touch on its
-     own is enough specificity to win within the layer since no other rule
-     here shares its selector weight. */
+     shortcut, the Sources disclosure) meets the >=40x40 floor; the panel
+     narrows to fit a phone's safe width instead of a fixed max-width, in
+     both orientations. Kept in THIS layer (never an unlayered bare @media)
+     so it never outranks every other layered rule regardless of import
+     order; body.mobile-touch on its own is enough specificity to win within
+     the layer since no other rule here shares its selector weight. */
   body.mobile-touch .gathering-goal-panel {
     max-width: min(260px, calc(100vw - 24px));
   }
@@ -206,6 +241,13 @@
     min-height: 40px;
     min-width: 40px;
     padding: 6px 10px;
+    font-size: 12px;
+  }
+
+  body.mobile-touch .gathering-goal-source > summary {
+    min-height: 40px;
+    line-height: 40px;
+    padding: 0;
     font-size: 12px;
   }
 }

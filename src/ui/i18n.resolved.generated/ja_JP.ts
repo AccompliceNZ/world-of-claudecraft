@@ -2470,6 +2470,23 @@ export const ja_JP: EnTranslations = {
       "unknownMaterial": "利用できない素材",
       "currentChoiceLabel": "現在：{choice}"
     },
+    "gatheringSource": {
+      "title": "{material}の入手先",
+      "corpseExample": "{creature}（{zone}）",
+      "corpseExampleTagged": "{creature}（{zone}、{tag}）",
+      "rareTag": "レア",
+      "eliteTag": "エリート",
+      "gatedTag": "クエスト限定",
+      "moreSources": "他{count}件",
+      "moreZones": "他{count}エリア",
+      "premiumChance": "レア以上の{material}の採取では、バッグに空きがあれば{specimen}も得られることがあります。",
+      "specimenOfBase": "{material}は{base}のレア以上の採取で得られる追加ボーナスで、上記と同じ生物から得られますが、単独で確実に手に入るものではありません。",
+      "nodeZone": "{zone}（ティア{tier}以上の道具）",
+      "nodeFineNote": "ティア{tier}以上の採集道具を使うと、同種の採集ポイントで上質な等級に格上げされます。",
+      "farmNote": "種を植えて育てるもので、約{duration}後に収穫できます。農耕スキル{skill}以上とティア{tier}以上の鍬が必要です。",
+      "fishingZoneProven": "{zone}の水域（熟練度{skill}以上、ティア{tier}以上の釣り竿）",
+      "fishingZoneUnproven": "熟練度{skill}以上とティア{tier}以上の釣り竿が必要な水域もありますが、具体的な場所はまだ確認されていません。"
+    },
     "gatheringGoal": {
       "title": "採集目標",
       "close": "採集目標をクリア",
@@ -2503,7 +2520,9 @@ export const ja_JP: EnTranslations = {
       "setPreferenceButton": "採取設定にする",
       "setPreferenceButtonAria": "{name}を採取設定にする",
       "currentPreferenceLabel": "現在の採取設定",
-      "currentPreferenceAria": "{name}が現在の採取設定です"
+      "currentPreferenceAria": "{name}が現在の採取設定です",
+      "sourcesToggle": "入手先",
+      "sourcesToggleAria": "{name}の入手先"
     },
     "party": {
       "promoteLeader": "パーティリーダーに指定",
