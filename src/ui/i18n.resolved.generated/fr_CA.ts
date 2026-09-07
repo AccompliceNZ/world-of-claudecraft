@@ -7490,10 +7490,7 @@ export const fr_CA: EnTranslations = {
     "playAria": "Jouer à World of ClaudeCraft",
     "serverLabel": "Choisissez votre monde",
     "serverAria": "Choisir le monde : En ligne ou Hors ligne",
-    "serverOfflineSub": "Monde local instantané",
-    "caLabel": "Adresse du contrat $WOC",
-    "caCopyAria": "Copier l'adresse du contrat",
-    "caNote": "WOC est notre jeton communautaire. Il n'est pas nécessaire pour jouer. Rejoignez le Discord pour discuter de l'utilité et de la dynamique du WOC."
+    "serverOfflineSub": "Monde local instantané"
   },
   "auth": {
     "enterRealm": "Entrer dans le monde",
