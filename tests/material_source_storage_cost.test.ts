@@ -291,8 +291,11 @@ describe('material source storage cost: the real caps', () => {
 
   it('records CONTAINERS-ONLY bank+vault bytes, at each container unit ceiling', () => {
     // The ceiling is PINNED, not raised: this fixture measures against the
-    // number production actually uses today.
-    expect(CHARACTER_BLOB_WARN_BYTES).toBe(163_840);
+    // number production actually uses today. Re-minted to 229,376 (224 KiB)
+    // by the Crucible integration database review (server/character_blob_size.ts);
+    // this is a warning-only threshold, never a save limit. The whole-character
+    // suite verifies this warning remains above its combined gear fixture.
+    expect(CHARACTER_BLOB_WARN_BYTES).toBe(229_376);
 
     // Per-container unit ceilings, which differ and must not be conflated:
     //   bank slot  -> the item's stack size (20 for every shipped material)
@@ -344,10 +347,11 @@ describe('material source storage cost: the real caps', () => {
     // nothing else: no deedStats, quests, equipment, reliquary or loadouts, so
     // they are NOT a whole-character blob and must not be read as one, nor
     // compared pass/fail against a whole-character ceiling. The whole-character
-    // baseline lives in tests/professions_blob_growth.test.ts (the 151,656-byte
-    // Phase 18 arm), which this fixture does not rebuild and cannot substitute
-    // for; the ceiling is reported beside these numbers only as the scale an
-    // eventual whole-character re-measurement has to clear.
+    // baseline lives in tests/professions_blob_growth.test.ts, in "the
+    // whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)" arm, which
+    // this fixture does not rebuild and cannot substitute for; the ceiling is
+    // reported beside these numbers only as the scale an eventual
+    // whole-character re-measurement has to clear.
     record('container-only-bytes', {
       scope: 'bank+vault containers only, NOT a whole-character blob',
       wholeCharacterBaselineIncluded: false,
