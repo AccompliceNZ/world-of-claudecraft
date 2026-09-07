@@ -157,6 +157,8 @@ Dungeon (the Crucible of the Last Spring raid):
 
 ## Roots' Bramblehide (2026-09-04)
 
+> Landed 2026-09-07: every id below is painted (roots-bramblehide-icons-2026-09-07, the deed crest included).
+
 One new deed id and seven new item ids from the Roots' Bramblehide set (the
 feral druid's Strength leather family on the Nythraxis raid table, named for
 the druid Roots). Same delivery contract as above for the deed crest: one
@@ -187,6 +189,8 @@ the heroic twins carry the same silhouette with a faint moss-green sheen.
 - [v1] `bramblehide_treads`, Roots' Bramblehide Treads: a pair of soft leather boots with roots grown around the ankle and thorn-tipped toe caps.
 
 ## Nythraxis gap-fill drops (2026-09-04)
+
+> Landed 2026-09-07: the four paintings below shipped in roots-bramblehide-icons-2026-09-07.
 
 Four new item ids from the Nythraxis gap-fill wave (the three one-handers in
 the same wave ship deterministic in-engine renders of their held models via

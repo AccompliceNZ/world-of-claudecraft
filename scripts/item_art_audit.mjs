@@ -131,7 +131,8 @@ const build = await buildItemArtAudit({
     // moves with it.
     // + the nythraxis-gap-weapon-renders-2026-09-04 batch (3 rendered
     // one-handers).
-    catalogCount: 1047,
+    // + the roots-bramblehide-icons-2026-09-07 wave (22 paintings).
+    catalogCount: 1069,
     // 844 + the 201 Crucible raid loot definitions (192 of them art-pending)
     // + the base's 2 Varkhul legendary definitions, + the release sync's 7
     // bank-storage painted bags, + the two developer mount reins.
@@ -139,9 +140,11 @@ const build = await buildItemArtAudit({
     // (with their heroic variants) are art-pending and sit outside the audited
     // set (see auditedItems above); the three gap-fill weapons and their heroic
     // aliases are audited (rendered base art, alias variants): +6.
-    liveItemCount: 1065,
-    generatedHeroicDefinitions: 67,
-    heroicDefinitionsWithOwnWebp: 48,
+    // + the 22 now-painted Bramblehide and gap-fill definitions (11 bases, 11
+    // heroic variants with their own WebPs) that left the pending ledger.
+    liveItemCount: 1087,
+    generatedHeroicDefinitions: 78,
+    heroicDefinitionsWithOwnWebp: 59,
     heroicWeaponArtAliases: 19,
     sheetPageCount: 27,
     groupCount: 22,

@@ -5645,7 +5645,8 @@ export const GUIDE_DEEDS: GuideDeed[] = [
     "name": "Roots' Bramblehide",
     "category": "collection",
     "renown": 0,
-    "feat": false
+    "feat": false,
+    "crest": "/ui/deeds/col_set_bramblehide.webp"
   }
 ];
 

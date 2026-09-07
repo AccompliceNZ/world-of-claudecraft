@@ -5387,10 +5387,6 @@ export const DEED_ART_PENDING: ReadonlySet<string> = new Set([
   'dgn_varkhul',
   'dgn_varkhul_heroic',
   'dgn_varkhul_flawless',
-  // Roots' Bramblehide set collection (a 'collection' deed) rides the
-  // deed_cat_collection crest until its commissioned art lands
-  // (docs/achievements/icon-brief.md).
-  'col_set_bramblehide',
 ]);
 /** Static URL of a deed crest's painted art, or null when the crest id has no committed image. */
 export function deedImageUrl(crestId: string): string | null {

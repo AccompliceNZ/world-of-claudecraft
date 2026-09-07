@@ -365,7 +365,8 @@ describe('Book of Deeds webp icons', () => {
       ...DEED_ART_PENDING_IDS,
     ]);
     expect(DEED_ORDER, 'the merged live deed catalog').toHaveLength(282);
-    expect(DEED_IMAGE_IDS.size, 'every live deed but the pending set is painted').toBe(271);
+    // 271 + the Roots' Bramblehide collection crest (roots-bramblehide-icons-2026-09-07).
+    expect(DEED_IMAGE_IDS.size, 'every live deed but the pending set is painted').toBe(272);
     for (const id of artless) {
       const catCrestId = deedCrestId(id, DEEDS[id].category);
       expect(catCrestId, `${id} must fall back to a category base crest`).toMatch(/^deed_cat_/);

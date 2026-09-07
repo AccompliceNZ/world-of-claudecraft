@@ -358,38 +358,12 @@ describe('item webp icons', () => {
     for (const id of ITEM_ART_PENDING) {
       expect(itemImageUrl(id), `${id} must not resolve to uncommitted art`).toBeNull();
     }
-    // The Crucible wave is fully painted (crucible-set-icons-2026-08-29). The
-    // open wave is Roots' Bramblehide (the feral druid's Strength leather
-    // family off the Nythraxis raid): its seven bases plus their seven
-    // generated heroic raid variants, pinned by exact membership so no other
-    // artless item can hide behind the wave. Shrinks to [] when its paintings
-    // land (docs/achievements/icon-brief.md).
-    expect([...ITEM_ART_PENDING]).toEqual([
-      'bramblehide_crown',
-      'bramblehide_mantle',
-      'bramblehide_harness',
-      'bramblehide_cinch',
-      'bramblehide_legguards',
-      'bramblehide_grips',
-      'bramblehide_treads',
-      'heroic_bramblehide_crown',
-      'heroic_bramblehide_mantle',
-      'heroic_bramblehide_harness',
-      'heroic_bramblehide_cinch',
-      'heroic_bramblehide_legguards',
-      'heroic_bramblehide_grips',
-      'heroic_bramblehide_treads',
-      // The Nythraxis gap-fill shield and armor pieces (the three gap-fill
-      // weapons ship in-engine renders instead) with their heroic variants.
-      'votive_ward_of_the_deathless_court',
-      'thornpeak_moonhide_cowl',
-      'stormhymn_chain_grips',
-      'stormhymn_chain_treads',
-      'heroic_votive_ward_of_the_deathless_court',
-      'heroic_thornpeak_moonhide_cowl',
-      'heroic_stormhymn_chain_grips',
-      'heroic_stormhymn_chain_treads',
-    ]);
+    // The Crucible wave (crucible-set-icons-2026-08-29) and the Roots'
+    // Bramblehide plus Nythraxis gap-fill wave (roots-bramblehide-icons-2026-09-07) are
+    // fully painted, so the ledger is back to the EMPTY set: no artless item can
+    // hide behind an open wave, and the next commissioned wave re-pins its exact
+    // membership here when it stages.
+    expect([...ITEM_ART_PENDING]).toEqual([]);
     // And the inverse: an id with committed art must still win the static url.
     expect(itemImageUrl('linen_pouch')).toBe('/ui/items/linen_pouch.webp');
   });

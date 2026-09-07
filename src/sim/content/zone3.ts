@@ -4318,10 +4318,9 @@ export const BRAMBLEHIDE_SET_ITEM_IDS: readonly string[] = [
 // sweep, exactly as the Crucible wave staged before its paintings landed.
 // Commission per docs/design/item-icon-art-style.md, then EMPTY this list
 // (tests/item_icons.test.ts A2 reds on a stale entry once art is committed).
-export const BRAMBLEHIDE_ART_PENDING_ITEM_IDS: readonly string[] = [
-  ...BRAMBLEHIDE_SET_ITEM_IDS,
-  ...BRAMBLEHIDE_SET_ITEM_IDS.map((id) => `heroic_${id}`),
-];
+// EMPTY since the roots-bramblehide-icons-2026-09-07 wave painted all fourteen (seven bases and their
+// heroic variants); see docs/achievements/roots-bramblehide-icons-2026-09-07/generation-report.json.
+export const BRAMBLEHIDE_ART_PENDING_ITEM_IDS: readonly string[] = [];
 
 // The Nythraxis gap-fill drops (see the ZONE3_ITEMS block above), in loot
 // table order. The three weapons ship in-engine rendered icons
@@ -4337,16 +4336,9 @@ export const NYTHRAXIS_GAP_ITEM_IDS: readonly string[] = [
   'stormhymn_chain_grips',
   'stormhymn_chain_treads',
 ];
-const NYTHRAXIS_GAP_UNPAINTED_IDS: readonly string[] = [
-  'votive_ward_of_the_deathless_court',
-  'thornpeak_moonhide_cowl',
-  'stormhymn_chain_grips',
-  'stormhymn_chain_treads',
-];
-export const NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS: readonly string[] = [
-  ...NYTHRAXIS_GAP_UNPAINTED_IDS,
-  ...NYTHRAXIS_GAP_UNPAINTED_IDS.map((id) => `heroic_${id}`),
-];
+// EMPTY since the roots-bramblehide-icons-2026-09-07 wave painted the shield and the three armor pieces
+// with their heroic variants; the three weapons ship in-engine renders.
+export const NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS: readonly string[] = [];
 
 export const ZONE3_PROPS: ZonePropsDef = {
   buildings: [
