@@ -13999,46 +13999,46 @@ export const ko_KR: EnTranslations = {
         "name": "꺼진 불꽃의 마법봉"
       },
       "bramblehide_crown": {
-        "name": "Roots' Bramblehide Crown"
+        "name": "루츠의 가시덤불가죽 왕관"
       },
       "bramblehide_mantle": {
-        "name": "Roots' Bramblehide Mantle"
+        "name": "루츠의 가시덤불가죽 어깨보호구"
       },
       "bramblehide_harness": {
-        "name": "Roots' Bramblehide Harness"
+        "name": "루츠의 가시덤불가죽 흉갑"
       },
       "bramblehide_cinch": {
-        "name": "Roots' Bramblehide Cinch"
+        "name": "루츠의 가시덤불가죽 허리띠"
       },
       "bramblehide_legguards": {
-        "name": "Roots' Bramblehide Legguards"
+        "name": "루츠의 가시덤불가죽 다리보호구"
       },
       "bramblehide_grips": {
-        "name": "Roots' Bramblehide Grips"
+        "name": "루츠의 가시덤불가죽 장갑"
       },
       "bramblehide_treads": {
-        "name": "Roots' Bramblehide Treads"
+        "name": "루츠의 가시덤불가죽 장화"
       },
       "courtiers_bonefang": {
-        "name": "Courtiers Bonefang"
+        "name": "조신의 뼈송곳니"
       },
       "thornpeak_wardblade": {
-        "name": "Thornpeak Wardblade"
+        "name": "가시봉우리 수호검"
       },
       "gravecourt_hewer": {
-        "name": "Gravecourt Hewer"
+        "name": "무덤궁정 도끼"
       },
       "votive_ward_of_the_deathless_court": {
-        "name": "Votive Ward of the Deathless Court"
+        "name": "불사 궁정의 봉헌 방패"
       },
       "thornpeak_moonhide_cowl": {
-        "name": "Thornpeak Moonhide Cowl"
+        "name": "가시봉우리 달가죽 두건"
       },
       "stormhymn_chain_grips": {
-        "name": "Stormhymn Chain Grips"
+        "name": "폭풍찬가 사슬 장갑"
       },
       "stormhymn_chain_treads": {
-        "name": "Stormhymn Chain Treads"
+        "name": "폭풍찬가 사슬 장화"
       },
       "conjured_water4": {
         "name": "창조된 샘물"

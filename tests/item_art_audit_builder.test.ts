@@ -759,20 +759,23 @@ describe('item-art audit builder', () => {
     ) as Record<string, unknown>;
     expect(verified).toMatchObject({
       catalogPath: 'tmp/imagegen/item-art-consistency/final-audit/catalog.json',
-      catalogSha256: 'e3eb0b0083df930521d024db4503d3799d647061ae9048c8bcacdb029ca6697e',
-      catalogBytes: 569296,
+      // roots-bramblehide-icons-2026-09-07 and the three Nythraxis gap-fill weapon
+      // renders joined the shipping catalog: 1044 + 25 files, 28 more live
+      // definitions (14 heroic), 11 more heroic pieces with their own WebP.
+      catalogSha256: 'cd0231b79b1083cd16876ede16e725837bb55e96a958e9c0710992d38b3ab961',
+      catalogBytes: 583041,
       rendererFingerprint: 'd80ff4868f979e1717e106c889b7d6505841caf8d4cf887776ecb60848b1b2b7',
-      catalogCount: 1044,
-      liveItemCount: 1059,
-      generatedHeroicDefinitions: 64,
-      heroicDefinitionsWithOwnWebp: 48,
-      heroicWeaponArtAliases: 16,
+      catalogCount: 1069,
+      liveItemCount: 1087,
+      generatedHeroicDefinitions: 78,
+      heroicDefinitionsWithOwnWebp: 59,
+      heroicWeaponArtAliases: 19,
       groupCount: 22,
       sheetPageCount: 27,
       sheetCount: 216,
       sheetModeCounts: Object.fromEntries(ITEM_ART_AUDIT_MODES.map((mode) => [mode, 27])),
       sheetSetSha256: null,
-      shippingCatalogSha256: '017938ae50f70349630c15ffe2466b2f8ad4acf4ecf32022fddb0c27c8d7285d',
+      shippingCatalogSha256: '8c847399bc1ffd8ed759faa3d830f4a04c9f97748fe0b133b0546c989ebbec80',
       machineChecksPassed: true,
       verdict: null,
     });

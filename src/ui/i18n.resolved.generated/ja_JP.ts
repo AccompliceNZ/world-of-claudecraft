@@ -13999,46 +13999,46 @@ export const ja_JP: EnTranslations = {
         "name": "消えた火花のワンド"
       },
       "bramblehide_crown": {
-        "name": "Roots' Bramblehide Crown"
+        "name": "ルーツのブランブルハイドの冠"
       },
       "bramblehide_mantle": {
-        "name": "Roots' Bramblehide Mantle"
+        "name": "ルーツのブランブルハイドの肩当て"
       },
       "bramblehide_harness": {
-        "name": "Roots' Bramblehide Harness"
+        "name": "ルーツのブランブルハイドの胴当て"
       },
       "bramblehide_cinch": {
-        "name": "Roots' Bramblehide Cinch"
+        "name": "ルーツのブランブルハイドの帯"
       },
       "bramblehide_legguards": {
-        "name": "Roots' Bramblehide Legguards"
+        "name": "ルーツのブランブルハイドの脚甲"
       },
       "bramblehide_grips": {
-        "name": "Roots' Bramblehide Grips"
+        "name": "ルーツのブランブルハイドの握り"
       },
       "bramblehide_treads": {
-        "name": "Roots' Bramblehide Treads"
+        "name": "ルーツのブランブルハイドの靴"
       },
       "courtiers_bonefang": {
-        "name": "Courtiers Bonefang"
+        "name": "廷臣の骨牙"
       },
       "thornpeak_wardblade": {
-        "name": "Thornpeak Wardblade"
+        "name": "ソーンピークの守護刃"
       },
       "gravecourt_hewer": {
-        "name": "Gravecourt Hewer"
+        "name": "墓廷の斬斧"
       },
       "votive_ward_of_the_deathless_court": {
-        "name": "Votive Ward of the Deathless Court"
+        "name": "不死の宮廷の奉納の盾"
       },
       "thornpeak_moonhide_cowl": {
-        "name": "Thornpeak Moonhide Cowl"
+        "name": "ソーンピークの月皮のフード"
       },
       "stormhymn_chain_grips": {
-        "name": "Stormhymn Chain Grips"
+        "name": "嵐の賛歌の鎖の握り"
       },
       "stormhymn_chain_treads": {
-        "name": "Stormhymn Chain Treads"
+        "name": "嵐の賛歌の鎖の靴"
       },
       "conjured_water4": {
         "name": "魔法の湧き水"

@@ -13999,46 +13999,46 @@ export const zh_CN: EnTranslations = {
         "name": "熄火花魔杖"
       },
       "bramblehide_crown": {
-        "name": "Roots' Bramblehide Crown"
+        "name": "鲁茨的荆棘皮甲头冠"
       },
       "bramblehide_mantle": {
-        "name": "Roots' Bramblehide Mantle"
+        "name": "鲁茨的荆棘皮甲护肩"
       },
       "bramblehide_harness": {
-        "name": "Roots' Bramblehide Harness"
+        "name": "鲁茨的荆棘皮甲胸甲"
       },
       "bramblehide_cinch": {
-        "name": "Roots' Bramblehide Cinch"
+        "name": "鲁茨的荆棘皮甲腰带"
       },
       "bramblehide_legguards": {
-        "name": "Roots' Bramblehide Legguards"
+        "name": "鲁茨的荆棘皮甲护腿"
       },
       "bramblehide_grips": {
-        "name": "Roots' Bramblehide Grips"
+        "name": "鲁茨的荆棘皮甲手套"
       },
       "bramblehide_treads": {
-        "name": "Roots' Bramblehide Treads"
+        "name": "鲁茨的荆棘皮甲之靴"
       },
       "courtiers_bonefang": {
-        "name": "Courtiers Bonefang"
+        "name": "廷臣骨牙"
       },
       "thornpeak_wardblade": {
-        "name": "Thornpeak Wardblade"
+        "name": "荆峰守护之刃"
       },
       "gravecourt_hewer": {
-        "name": "Gravecourt Hewer"
+        "name": "墓庭劈斧"
       },
       "votive_ward_of_the_deathless_court": {
-        "name": "Votive Ward of the Deathless Court"
+        "name": "不死王庭的许愿护盾"
       },
       "thornpeak_moonhide_cowl": {
-        "name": "Thornpeak Moonhide Cowl"
+        "name": "荆峰月皮兜帽"
       },
       "stormhymn_chain_grips": {
-        "name": "Stormhymn Chain Grips"
+        "name": "风暴颂歌链甲手套"
       },
       "stormhymn_chain_treads": {
-        "name": "Stormhymn Chain Treads"
+        "name": "风暴颂歌链甲之靴"
       },
       "conjured_water4": {
         "name": "魔法泉水"

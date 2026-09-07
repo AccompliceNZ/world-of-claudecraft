@@ -13999,46 +13999,46 @@ export const ru_RU: EnTranslations = {
         "name": "Жезл угасших искр"
       },
       "bramblehide_crown": {
-        "name": "Roots' Bramblehide Crown"
+        "name": "Тернистый венец Рутса"
       },
       "bramblehide_mantle": {
-        "name": "Roots' Bramblehide Mantle"
+        "name": "Тернистая мантия Рутса"
       },
       "bramblehide_harness": {
-        "name": "Roots' Bramblehide Harness"
+        "name": "Тернистая упряжь Рутса"
       },
       "bramblehide_cinch": {
-        "name": "Roots' Bramblehide Cinch"
+        "name": "Тернистый пояс Рутса"
       },
       "bramblehide_legguards": {
-        "name": "Roots' Bramblehide Legguards"
+        "name": "Тернистые поножи Рутса"
       },
       "bramblehide_grips": {
-        "name": "Roots' Bramblehide Grips"
+        "name": "Тернистые перчатки Рутса"
       },
       "bramblehide_treads": {
-        "name": "Roots' Bramblehide Treads"
+        "name": "Тернистые сапоги Рутса"
       },
       "courtiers_bonefang": {
-        "name": "Courtiers Bonefang"
+        "name": "Костяной клык придворного"
       },
       "thornpeak_wardblade": {
-        "name": "Thornpeak Wardblade"
+        "name": "Клинок-страж Тернистого пика"
       },
       "gravecourt_hewer": {
-        "name": "Gravecourt Hewer"
+        "name": "Секира Могильного двора"
       },
       "votive_ward_of_the_deathless_court": {
-        "name": "Votive Ward of the Deathless Court"
+        "name": "Обетный щит Бессмертного двора"
       },
       "thornpeak_moonhide_cowl": {
-        "name": "Thornpeak Moonhide Cowl"
+        "name": "Капюшон из лунной кожи Тернистого пика"
       },
       "stormhymn_chain_grips": {
-        "name": "Stormhymn Chain Grips"
+        "name": "Кольчужные перчатки Штормового гимна"
       },
       "stormhymn_chain_treads": {
-        "name": "Stormhymn Chain Treads"
+        "name": "Кольчужные сапоги Штормового гимна"
       },
       "conjured_water4": {
         "name": "Сотворённая родниковая вода"
