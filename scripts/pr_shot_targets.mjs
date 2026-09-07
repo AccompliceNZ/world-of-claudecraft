@@ -11772,6 +11772,231 @@ export const TARGETS = [
       return { clip: '#ui' };
     },
   },
+  {
+    key: 'nythraxis-hazards',
+    label:
+      'Nythraxis arena: ground hazards (Grave Flame, Soulfire, Gravefire, Grave Eruption ' +
+      'warning), the blue Binding Sigil, and Soul Rend markers (red solo, green stacked)',
+    when: [
+      'nythraxis_soul_rend_marker',
+      'nythraxis_grave_flame_visual',
+      'nythraxis_gravefire_visual',
+      'nythraxis_sigil_visual',
+      'nythraxis_mechanic_visuals',
+      'nythraxis_grave_core',
+      'nythraxis_gravefire_core',
+      'nythraxis_sigil_core',
+      'sim/nythraxis_',
+      'sim/encounters/nythraxis',
+    ],
+    // A staged fixture, not a live pull: the real /dev practice raid spawns the
+    // boss and nine invulnerable bots, then the tick is frozen and the four
+    // ground-hazard readouts plus two bots' auras are overwritten directly so
+    // every mechanic this PR touches is visible in one frame, never waiting on
+    // the encounter's own cadence. See docs/screenshots/nythraxis-playtest-tuning.
+    variants: [
+      { key: 'desktop', beforeLoad: seedLowGraphicsPreset },
+      { key: 'mobile', mobile: true, beforeLoad: seedLowGraphicsPreset },
+    ],
+    async capture(page) {
+      await page.waitForFunction(() => window.__game?.sim?.player, { timeout: 90000 });
+      await dismissEntryOverlays(page);
+      let staged = { ok: false, reason: 'world is unavailable' };
+      for (let i = 0; i < 20 && !staged.ok; i++) {
+        staged = await page.evaluate(() => {
+          const game = window.__game;
+          const sim = game?.sim;
+          if (!sim?.player) return { ok: false, reason: 'offline world is unavailable' };
+          document.querySelector('#gpu-notice')?.remove();
+          document.querySelector('.camera-prompt-confirm')?.click();
+          const banner = document.querySelector('#banner');
+          if (banner) banner.style.opacity = '0';
+          // A freshly-created character spawns into the New Adventurer tutorial
+          // zone (the Proving Shore) and a nearby NPC auto-greets: neither is
+          // dismissed by the shared entry flow's dismissEntryOverlays (that
+          // only covers the intro cinematic, the FIRST tutorial overlay, and
+          // the camera prompt), and both persist after /dev nythraxisraid
+          // teleports the party into the arena. Becoming a raid leader also
+          // auto-opens Loot Settings (see the party-pets target above).
+          document.querySelector('.tut-card')?.remove();
+          document.getElementById('tutorial-greeting')?.remove();
+          const loot = document.querySelector('#loot-settings-window');
+          if (loot) loot.style.display = 'none';
+          // Unconditional and idempotent: setupNythraxisDevRaid reuses an
+          // existing matching roster, so calling it again is a no-op. Never
+          // skip it on the presence of SOME Nythraxis mob: an unclaimed
+          // instance from an earlier claim in this same world would then be
+          // mistaken for our player's own raid, and no bots would ever spawn.
+          sim.chat('/dev nythraxisraid heroic');
+          const player = sim.player;
+          const bossCandidates = [...sim.entities.values()].filter(
+            (e) => e.templateId === 'nythraxis_scourge_of_thornpeak' && !e.dead,
+          );
+          if (bossCandidates.length === 0) return { ok: false, reason: 'Nythraxis did not spawn' };
+          // The boss in OUR player's own claimed instance: nearest to the
+          // player, who /dev nythraxisraid just zoned in beside him.
+          const boss = bossCandidates.reduce((closest, candidate) => {
+            const d = (a) => (a.pos.x - player.pos.x) ** 2 + (a.pos.z - player.pos.z) ** 2;
+            return d(candidate) < d(closest) ? candidate : closest;
+          });
+          const bots = [...sim.players.values()]
+            .filter((meta) => meta.isDevBot && /^NythraxisBot\d$/.test(meta.name))
+            .map((meta) => sim.entities.get(meta.entityId))
+            .filter((e) => e && !e.dead);
+          if (bots.length < 3) return { ok: false, reason: 'practice bots did not spawn' };
+
+          // Freeze the encounter driver so the injected fixture below survives
+          // to the screenshot instead of being overwritten by the next tick.
+          sim.tick = () => [];
+
+          const bx = boss.pos.x;
+          const bz = boss.pos.z;
+
+          // Two Soul Rend marks: one isolated (reads red), two close together
+          // (reads green, the stack-range rule the redo introduced).
+          const soulRendAura = (sourceId) => ({
+            id: 'nythraxis_soul_rend',
+            name: 'Soul Rend',
+            kind: 'vulnerability',
+            remaining: 8,
+            duration: 8,
+            value: 0,
+            sourceId,
+            school: 'shadow',
+            encounterOwned: true,
+          });
+          const solo = bots[0];
+          solo.pos = { x: bx - 14, y: solo.pos.y, z: bz + 6 };
+          solo.prevPos = { ...solo.pos };
+          solo.auras = [
+            ...solo.auras.filter((a) => a.id !== 'nythraxis_soul_rend'),
+            soulRendAura(boss.id),
+          ];
+          const [stackedA, stackedB] = [bots[1], bots[2]];
+          stackedA.pos = { x: bx + 12, y: stackedA.pos.y, z: bz + 6 };
+          stackedA.prevPos = { ...stackedA.pos };
+          stackedB.pos = { x: bx + 14, y: stackedB.pos.y, z: bz + 8 };
+          stackedB.prevPos = { ...stackedB.pos };
+          for (const e of [stackedA, stackedB])
+            e.auras = [
+              ...e.auras.filter((a) => a.id !== 'nythraxis_soul_rend'),
+              soulRendAura(boss.id),
+            ];
+          for (const e of [solo, stackedA, stackedB]) sim.rebucket(e);
+
+          // Ground hazards, staged directly on the readout getters the
+          // renderer consumes (IWorld combat facet), around the boss. Radius
+          // and duration mirror the real heroic constants (grave flame radius 3
+          // / duration 8s, Soulfire radius 4 / duration 12s) so this staged
+          // fixture cannot be misread as a balance change.
+          Object.defineProperty(sim, 'activeNythraxisGraveFlames', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:grave-flame',
+                sourceId: boss.id,
+                kind: 'grave',
+                x: bx - 6,
+                z: bz - 4,
+                radius: 3,
+                duration: 8,
+                remaining: 5,
+              },
+              {
+                id: 'shot:soul-flame',
+                sourceId: boss.id,
+                kind: 'soul',
+                x: bx + 6,
+                z: bz - 4,
+                radius: 4,
+                duration: 12,
+                remaining: 8,
+              },
+            ],
+          });
+          Object.defineProperty(sim, 'activeNythraxisGraveEruptions', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:eruption',
+                x: bx,
+                z: bz + 10,
+                radius: 3,
+                duration: 2.5,
+                remaining: 1.5,
+                warningLead: 0.75,
+              },
+            ],
+          });
+          Object.defineProperty(sim, 'activeNythraxisGravefires', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:gravefire',
+                sourceId: boss.id,
+                x: bx,
+                z: bz,
+                dirX: 0,
+                dirZ: 1,
+                tail: 0,
+                head: 11,
+                halfWidth: 1.5,
+                remaining: 4,
+              },
+            ],
+          });
+          Object.defineProperty(sim, 'activeNythraxisBindingSigils', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:sigil',
+                sourceId: boss.id,
+                x: bx,
+                z: bz,
+                radius: 6,
+                duration: 20,
+                remaining: 12,
+              },
+            ],
+          });
+
+          // In front of the boss, inside the hall: the arena room spans z
+          // 16..116 with the boss dais near z 96, so +22 here would put the
+          // player z 118, outside the back wall (the wall-blocked shot this
+          // replaces). -22 keeps the player and camera inside the room.
+          player.pos = { x: bx, y: player.pos.y, z: bz - 22 };
+          player.prevPos = { ...player.pos };
+          player.facing = Math.atan2(bx - player.pos.x, bz - player.pos.z);
+          sim.rebucket(player);
+          game.input.camYaw = player.facing;
+          // Wide and raised: the two side bots sit +/-12 to 14 yd off the
+          // boss, and a low angle hides the sigil's floor ring behind his
+          // own model.
+          game.input.camDist = 28;
+          game.input.camPitch = 0.42;
+          return { ok: true };
+        });
+        if (!staged.ok) await wait(300);
+      }
+      if (!staged.ok) throw new Error(staged.reason);
+      // Let the frozen fixture's meshes build and the loading veil clear
+      // before the shot (the arena door teleport re-raises it briefly).
+      await awaitWorldPainted(page);
+      await wait(1200);
+      // A second pass: becoming raid leader / the arena teleport can pop the
+      // tutorial banner, the greeting NPC, or Loot Settings back up after the
+      // staging above ran, and any of the three would obscure the hazards.
+      await page.evaluate(() => {
+        document.querySelector('.camera-prompt-confirm')?.click();
+        document.querySelector('.tut-card')?.remove();
+        document.getElementById('tutorial-greeting')?.remove();
+        const loot = document.querySelector('#loot-settings-window');
+        if (loot) loot.style.display = 'none';
+      });
+      await wait(300);
+      return {};
+    },
+  },
 ];
 
 // Grant one staged stack (a plain count, or a specific ItemInstancePayload) and
