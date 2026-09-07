@@ -324,8 +324,6 @@ export const it_IT: EnTranslations = {
     "warlock": {
       "doomLabel": "Condanna",
       "fateThreadsLabel": "Filamenti del Fato",
-      "doomMeterUnlock": "Sposta la barra della risorsa Afflizione",
-      "doomMeterLock": "Blocca la barra della risorsa Afflizione",
       "doomEmptyStatus": "{value} su {max} Condanna.",
       "doomStatus": "{value} su {max} Condanna; {remaining}.",
       "fateThreadsStatus": "{value} su {max} Filamenti del Fato.",
@@ -3016,7 +3014,17 @@ export const it_IT: EnTranslations = {
         "targetFrame": "Bersaglio",
         "partyFrames": "Gruppo",
         "swingBar": "Attacco automatico",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Impostazioni riquadri",
       "framesMenuTitle": "Mostra o nascondi i singoli riquadri. Un riquadro deselezionato resta nascosto finché non lo riselezioni o ripristini i valori predefiniti.",
@@ -7492,10 +7500,7 @@ export const it_IT: EnTranslations = {
     "playAria": "Gioca a World of ClaudeCraft",
     "serverLabel": "Scegli il tuo mondo",
     "serverAria": "Seleziona il mondo: Online o Offline",
-    "serverOfflineSub": "Mondo locale istantaneo",
-    "caLabel": "Indirizzo del contratto $WOC",
-    "caCopyAria": "Copia l'indirizzo del contratto",
-    "caNote": "WOC è il token della nostra community. Non serve per giocare. Entra nel Discord per discutere dell'utilità e del flywheel di WOC."
+    "serverOfflineSub": "Mondo locale istantaneo"
   },
   "auth": {
     "enterRealm": "Entra nel mondo",

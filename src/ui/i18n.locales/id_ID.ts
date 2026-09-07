@@ -9654,10 +9654,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Mainkan dalam layar penuh posisi lanskap untuk pengalaman seluler terbaik.',
   'mobilePreflight.rotateTitle': 'Putar ke Lanskap',
   'mobilePreflight.title': 'Mainkan dalam Layar Penuh Lanskap',
-  'mode.caCopyAria': 'Salin alamat kontrak',
-  'mode.caLabel': 'Alamat Kontrak $WOC',
-  'mode.caNote':
-    'WOC adalah token komunitas kami. Token ini tidak diperlukan untuk bermain. Gabung Discord untuk membahas utilitas dan flywheel WOC.',
   'mode.offlineAria': 'Main Luring: mulai sesi pemain-tunggal lokal seketika',
   'mode.offlineDesc':
     'Dunia pemain-tunggal seketika di peramban kamu. Tidak ada yang disimpan: sempurna untuk pertarungan singkat atau pengujian.',
@@ -13557,8 +13553,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Serpihan Jiwa',
   'hudChrome.warlock.doomEmptyStatus': '{value} dari {max} Kecaman.',
   'hudChrome.warlock.doomLabel': 'Kecaman',
-  'hudChrome.warlock.doomMeterLock': 'Kunci bilah sumber daya Penderitaan',
-  'hudChrome.warlock.doomMeterUnlock': 'Pindahkan bilah sumber daya Penderitaan',
   'hudChrome.warlock.doomStatus': '{value} dari {max} Kecaman; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tiga Benang Takdir: Melahap dapat menganyamnya menjadi Kecaman tambahan.',

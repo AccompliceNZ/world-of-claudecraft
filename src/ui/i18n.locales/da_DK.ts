@@ -8886,10 +8886,6 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Spil i liggende fuldskærm for den bedste mobiloplevelse.',
   'mobilePreflight.rotateTitle': 'Drej til liggende format',
   'mobilePreflight.title': 'Spil i liggende fuldskærm',
-  'mode.caCopyAria': 'Kopiér kontraktadresse',
-  'mode.caLabel': '$WOC Kontraktadresse',
-  'mode.caNote':
-    'WOC er vores fællesskabstoken. Det er ikke nødvendigt for at spille. Tilslut dig Discord for at diskutere WOC-nytten og svinghjulet.',
   'mode.offlineAria': 'Spil offline: start en øjeblikkelig lokal singleplayer-session',
   'mode.offlineDesc':
     'Øjeblikkelig singleplayer-verden i din browser. Intet gemmes: perfekt til en hurtig dyst eller test.',
@@ -13416,8 +13412,6 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Sjælesplinter',
   'hudChrome.warlock.doomEmptyStatus': '{value} af {max} Fordømmelse.',
   'hudChrome.warlock.doomLabel': 'Fordømmelse',
-  'hudChrome.warlock.doomMeterLock': 'Lås Lidelse-ressourcebjælken',
-  'hudChrome.warlock.doomMeterUnlock': 'Flyt Lidelse-ressourcebjælken',
   'hudChrome.warlock.doomStatus': '{value} af {max} Fordømmelse; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tre Skæbnetråde: Fortær kan flette dem ind i yderligere Fordømmelse.',

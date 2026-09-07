@@ -3572,10 +3572,6 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'auth.username': 'Uživatelské jméno',
   'auth.usernameError': 'Zadej uživatelské jméno.',
   'auth.usernamePlaceholder': 'Zadej uživatelské jméno',
-  'mode.caCopyAria': 'Kopírovat adresu kontraktu',
-  'mode.caLabel': 'Adresa kontraktu $WOC',
-  'mode.caNote':
-    'WOC je komunitní token. Ke hraní není potřeba. Připoj se na Discord a diskutuj o využití a ekonomickém modelu WOC.',
   'mode.offlineAria': 'Hrát offline: spustit okamžitou lokální hru pro jednoho hráče',
   'mode.offlineDesc':
     'Okamžitý svět pro jednoho hráče v prohlížeči. Nic se neukládá: ideální pro rychlou bitku nebo testování.',
@@ -13366,8 +13362,6 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Úlomky duše',
   'hudChrome.warlock.doomEmptyStatus': 'Odsouzení {value} z {max}.',
   'hudChrome.warlock.doomLabel': 'Odsouzení',
-  'hudChrome.warlock.doomMeterLock': 'Zamknout lištu zdroje Utrpení',
-  'hudChrome.warlock.doomMeterUnlock': 'Přesunout lištu zdroje Utrpení',
   'hudChrome.warlock.doomStatus': 'Odsouzení {value} z {max}; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tři Nitě osudu: Vysát je dokáže vetkat do dalšího Odsouzení.',

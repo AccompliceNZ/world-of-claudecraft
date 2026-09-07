@@ -7465,10 +7465,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hud.errors.silenced': 'Você está silenciado!',
   'hud.pet.noPetFood': 'Você não tem comida para alimentar seu mascote.',
   'hud.pet.petEatsFoodOnly': 'Seu mascote só pode comer comida.',
-  'mode.caCopyAria': 'Copiar endereço do contrato',
-  'mode.caLabel': 'Endereço do contrato $WOC',
-  'mode.caNote':
-    'WOC é o token da nossa comunidade. Não é necessário para jogar. Entre no Discord para discutir a utilidade e o flywheel do WOC.',
   'mode.play': 'Jogar',
   'mode.playAria': 'Jogar World of ClaudeCraft',
   'mode.serverAria': 'Escolher mundo: Online ou Offline',
@@ -13568,8 +13564,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Fragmentos de Alma',
   'hudChrome.warlock.doomEmptyStatus': 'Condenação {value} de {max}.',
   'hudChrome.warlock.doomLabel': 'Condenação',
-  'hudChrome.warlock.doomMeterLock': 'Travar barra de recurso de Aflição',
-  'hudChrome.warlock.doomMeterUnlock': 'Mover barra de recurso de Aflição',
   'hudChrome.warlock.doomStatus': 'Condenação {value} de {max}; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Três Fios do Destino: Consumir pode tecê-los em Condenação adicional.',

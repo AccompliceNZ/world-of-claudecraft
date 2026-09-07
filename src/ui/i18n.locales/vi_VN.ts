@@ -9565,10 +9565,6 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Hãy chơi ở chế độ ngang toàn màn hình để có trải nghiệm di động tốt nhất.',
   'mobilePreflight.rotateTitle': 'Xoay Sang Ngang',
   'mobilePreflight.title': 'Chơi Toàn Màn Hình Ngang',
-  'mode.caCopyAria': 'Sao chép địa chỉ hợp đồng',
-  'mode.caLabel': 'Địa Chỉ Hợp Đồng $WOC',
-  'mode.caNote':
-    'WOC là token cộng đồng của chúng tôi. Không cần nó để chơi. Hãy tham gia Discord để thảo luận về tiện ích và vòng xoáy tăng trưởng của WOC.',
   'mode.offlineAria': 'Chơi Ngoại Tuyến: bắt đầu phiên chơi đơn cục bộ tức thì',
   'mode.offlineDesc':
     'Thế giới chơi đơn tức thì ngay trong trình duyệt. Không lưu lại gì: hoàn hảo cho một trận đánh nhanh hoặc để thử nghiệm.',
@@ -13227,8 +13223,6 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Mảnh Linh Hồn',
   'hudChrome.warlock.doomEmptyStatus': '{value} trên {max} Kết Án.',
   'hudChrome.warlock.doomLabel': 'Kết Án',
-  'hudChrome.warlock.doomMeterLock': 'Khóa thanh tài nguyên Affliction',
-  'hudChrome.warlock.doomMeterUnlock': 'Di chuyển thanh tài nguyên Affliction',
   'hudChrome.warlock.doomStatus': '{value} trên {max} Kết Án; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady': 'Ba Sợi Định Mệnh: Nuốt Chửng có thể dệt chúng thành Kết Án bổ sung.',
   'hudChrome.warlock.fateThreadsLabel': 'Sợi Định Mệnh',

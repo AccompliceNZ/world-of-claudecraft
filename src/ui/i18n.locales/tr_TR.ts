@@ -9568,10 +9568,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'En iyi mobil deneyim için yatay tam ekranda oynayın.',
   'mobilePreflight.rotateTitle': 'Yatay Konuma Çevir',
   'mobilePreflight.title': 'Yatay Tam Ekranda Oyna',
-  'mode.caCopyAria': 'Sözleşme adresini kopyala',
-  'mode.caLabel': '$WOC Sözleşme Adresi',
-  'mode.caNote':
-    "WOC topluluk jetonumuzdur. Oynamak için gerekli değildir. WOC'un faydasını ve döngüsünü tartışmak için Discord'a katılın.",
   'mode.offlineAria': 'Çevrimdışı Oyna: anında yerel tek oyunculu oturum başlat',
   'mode.offlineDesc':
     'Tarayıcınızda anında tek oyunculu dünya. Hiçbir şey kaydedilmez: hızlı bir kapışma veya test için ideal.',
@@ -13328,8 +13324,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Ruh Parçaları',
   'hudChrome.warlock.doomEmptyStatus': '{value} / {max} Mahkûmiyet.',
   'hudChrome.warlock.doomLabel': 'Mahkûmiyet',
-  'hudChrome.warlock.doomMeterLock': 'Istırap kaynak çubuğunu kilitle',
-  'hudChrome.warlock.doomMeterUnlock': 'Istırap kaynak çubuğunu taşı',
   'hudChrome.warlock.doomStatus': '{value} / {max} Mahkûmiyet; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady': 'Üç Kader İpliği: Tüketme onları ek Mahkûmiyete dönüştürebilir.',
   'hudChrome.warlock.fateThreadsLabel': 'Kader İplikleri',

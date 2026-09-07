@@ -9992,7 +9992,7 @@
       "tick": 628,
       "time": 31.4,
       "nextId": 1012,
-      "state": "7bd5ba28",
+      "state": "0390d1dc",
       "events": "982fc0ab",
       "rng": {
         "draws": 5529,
@@ -10936,7 +10936,7 @@
           "aiState": "dead",
           "autoAttack": true,
           "comboUntil": -1,
-          "corpseTimer": 59.95,
+          "corpseTimer": 1799.95,
           "critChance": 0.05,
           "dead": true,
           "detonateTimer": "Infinity",
@@ -11373,7 +11373,7 @@
       "tick": 630,
       "time": 31.5,
       "nextId": 1012,
-      "state": "748aa532",
+      "state": "b6738c1e",
       "events": "741638a5",
       "rng": {
         "draws": 5551,
@@ -11384,7 +11384,7 @@
       "tick": 640,
       "time": 32,
       "nextId": 1012,
-      "state": "47d4f7a4",
+      "state": "5b02c0ac",
       "events": "741638a5",
       "rng": {
         "draws": 5631,
@@ -11395,7 +11395,7 @@
       "tick": 650,
       "time": 32.5,
       "nextId": 1012,
-      "state": "7a806772",
+      "state": "8bff535e",
       "events": "741638a5",
       "rng": {
         "draws": 5725,
@@ -11406,7 +11406,7 @@
       "tick": 660,
       "time": 33,
       "nextId": 1012,
-      "state": "33387674",
+      "state": "8ddaae74",
       "events": "741638a5",
       "rng": {
         "draws": 5808,
@@ -11417,7 +11417,7 @@
       "tick": 670,
       "time": 33.5,
       "nextId": 1012,
-      "state": "b9ccf49a",
+      "state": "00ac4f2a",
       "events": "741638a5",
       "rng": {
         "draws": 5880,
@@ -11428,7 +11428,7 @@
       "tick": 680,
       "time": 34,
       "nextId": 1012,
-      "state": "8f8f6b58",
+      "state": "10c50a44",
       "events": "741638a5",
       "rng": {
         "draws": 5990,
@@ -11439,7 +11439,7 @@
       "tick": 688,
       "time": 34.4,
       "nextId": 1012,
-      "state": "da798056",
+      "state": "be93b846",
       "events": "84a8fbfa",
       "rng": {
         "draws": 6080,
@@ -12383,7 +12383,7 @@
           "aiState": "dead",
           "autoAttack": true,
           "comboUntil": -1,
-          "corpseTimer": 56.95,
+          "corpseTimer": 1796.95,
           "critChance": 0.05,
           "dead": true,
           "detonateTimer": "Infinity",

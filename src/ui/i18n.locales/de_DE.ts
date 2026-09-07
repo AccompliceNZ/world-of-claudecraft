@@ -7549,10 +7549,6 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hud.errors.silenced': 'Ihr seid stummgeschaltet!',
   'hud.pet.noPetFood': 'Du hast keine Nahrung, um deinen Begleiter zu füttern.',
   'hud.pet.petEatsFoodOnly': 'Dein Begleiter frisst nur Nahrung.',
-  'mode.caCopyAria': 'Vertragsadresse kopieren',
-  'mode.caLabel': '$WOC-Vertragsadresse',
-  'mode.caNote':
-    'WOC ist unser Community-Token. Es wird zum Spielen nicht benötigt. Tritt dem Discord bei, um über den Nutzen und das Schwungrad von WOC zu sprechen.',
   'mode.play': 'Spielen',
   'mode.playAria': 'World of ClaudeCraft spielen',
   'mode.serverAria': 'Welt wählen: Online oder Offline',
@@ -13748,8 +13744,6 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Seelenfragmente',
   'hudChrome.warlock.doomEmptyStatus': '{value} von {max} Verdammnis.',
   'hudChrome.warlock.doomLabel': 'Verdammnis',
-  'hudChrome.warlock.doomMeterLock': 'Verdammnis-Leiste sperren',
-  'hudChrome.warlock.doomMeterUnlock': 'Verdammnis-Leiste verschieben',
   'hudChrome.warlock.doomStatus': '{value} von {max} Verdammnis; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Drei Schicksalsfäden: Verzehren kann sie zu zusätzlicher Verdammnis verweben.',

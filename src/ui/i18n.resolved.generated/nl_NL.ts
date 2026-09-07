@@ -324,8 +324,6 @@ export const nl_NL: EnTranslations = {
     "warlock": {
       "doomLabel": "Verdoemenis",
       "fateThreadsLabel": "Lotsdraden",
-      "doomMeterUnlock": "Verplaats de Kwelling-hulpbronbalk",
-      "doomMeterLock": "Vergrendel de Kwelling-hulpbronbalk",
       "doomEmptyStatus": "{value} van {max} Verdoemenis.",
       "doomStatus": "{value} van {max} Verdoemenis; {remaining}.",
       "fateThreadsStatus": "{value} van {max} Lotsdraden.",
@@ -3016,7 +3014,17 @@ export const nl_NL: EnTranslations = {
         "targetFrame": "Doelwit",
         "partyFrames": "Groep",
         "swingBar": "Automatische Aanval",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Frame-instellingen",
       "framesMenuTitle": "Toon of verberg afzonderlijke frames. Een uitgevinkt frame blijft verborgen tot je het weer aanvinkt of terugzet naar de standaardinstellingen.",
@@ -7492,10 +7500,7 @@ export const nl_NL: EnTranslations = {
     "playAria": "Speel World of ClaudeCraft",
     "serverLabel": "Kies je wereld",
     "serverAria": "Kies wereld: Online of Offline",
-    "serverOfflineSub": "Directe lokale wereld",
-    "caLabel": "$WOC Contractadres",
-    "caCopyAria": "Contractadres kopiëren",
-    "caNote": "WOC is onze communitytoken. Het is niet nodig om te spelen. Word lid van Discord om de WOC-toepassing en het vliegwiel te bespreken."
+    "serverOfflineSub": "Directe lokale wereld"
   },
   "auth": {
     "enterRealm": "Betreed de wereld",

@@ -324,8 +324,6 @@ export const cs_CZ: EnTranslations = {
     "warlock": {
       "doomLabel": "Odsouzení",
       "fateThreadsLabel": "Nitě osudu",
-      "doomMeterUnlock": "Přesunout lištu zdroje Utrpení",
-      "doomMeterLock": "Zamknout lištu zdroje Utrpení",
       "doomEmptyStatus": "Odsouzení {value} z {max}.",
       "doomStatus": "Odsouzení {value} z {max}; {remaining}.",
       "fateThreadsStatus": "Nitě osudu {value} z {max}.",
@@ -3016,7 +3014,17 @@ export const cs_CZ: EnTranslations = {
         "targetFrame": "Cíl",
         "partyFrames": "Skupina",
         "swingBar": "Automatický útok",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Nastavení rámečků",
       "framesMenuTitle": "Zobraz nebo skryj jednotlivé rámečky. Nezaškrtnutý rámeček zůstane skrytý, dokud ho znovu nezaškrtneš nebo neobnovíš výchozí nastavení.",
@@ -7492,10 +7500,7 @@ export const cs_CZ: EnTranslations = {
     "playAria": "Hrát World of ClaudeCraft",
     "serverLabel": "Vyber si svět",
     "serverAria": "Vybrat svět: online nebo offline",
-    "serverOfflineSub": "Okamžitý lokální svět",
-    "caLabel": "Adresa kontraktu $WOC",
-    "caCopyAria": "Kopírovat adresu kontraktu",
-    "caNote": "WOC je komunitní token. Ke hraní není potřeba. Připoj se na Discord a diskutuj o využití a ekonomickém modelu WOC."
+    "serverOfflineSub": "Okamžitý lokální svět"
   },
   "auth": {
     "enterRealm": "Vstoupit do světa",

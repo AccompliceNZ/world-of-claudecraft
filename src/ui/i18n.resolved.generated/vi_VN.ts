@@ -324,8 +324,6 @@ export const vi_VN: EnTranslations = {
     "warlock": {
       "doomLabel": "Kết Án",
       "fateThreadsLabel": "Sợi Định Mệnh",
-      "doomMeterUnlock": "Di chuyển thanh tài nguyên Affliction",
-      "doomMeterLock": "Khóa thanh tài nguyên Affliction",
       "doomEmptyStatus": "{value} trên {max} Kết Án.",
       "doomStatus": "{value} trên {max} Kết Án; {remaining}.",
       "fateThreadsStatus": "{value} trên {max} Sợi Định Mệnh.",
@@ -3016,7 +3014,17 @@ export const vi_VN: EnTranslations = {
         "targetFrame": "Mục Tiêu",
         "partyFrames": "Tổ Đội",
         "swingBar": "Tự Đánh",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Cài Đặt Khung",
       "framesMenuTitle": "Hiện hoặc ẩn từng khung riêng lẻ. Một khung chưa được đánh dấu sẽ vẫn ẩn cho đến khi bạn đánh dấu lại hoặc đặt lại về mặc định.",
@@ -7492,10 +7500,7 @@ export const vi_VN: EnTranslations = {
     "playAria": "Chơi World of ClaudeCraft",
     "serverLabel": "Chọn thế giới của bạn",
     "serverAria": "Chọn thế giới: Trực Tuyến hoặc Ngoại Tuyến",
-    "serverOfflineSub": "Thế giới cục bộ tức thì",
-    "caLabel": "Địa Chỉ Hợp Đồng $WOC",
-    "caCopyAria": "Sao chép địa chỉ hợp đồng",
-    "caNote": "WOC là token cộng đồng của chúng tôi. Không cần nó để chơi. Hãy tham gia Discord để thảo luận về tiện ích và vòng xoáy tăng trưởng của WOC."
+    "serverOfflineSub": "Thế giới cục bộ tức thì"
   },
   "auth": {
     "enterRealm": "Vào Thế Giới",

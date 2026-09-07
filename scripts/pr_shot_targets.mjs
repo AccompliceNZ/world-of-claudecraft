@@ -349,13 +349,14 @@ async function openMarketBrowse(page) {
   return pollForSize(page, '#market-window');
 }
 
-// Open Esc options -> Interface -> Combat by CLICKING the rendered controls rather
+// Open Esc options -> Interface -> Frames by CLICKING the rendered controls rather
 // than reaching past them, so the shot proves the row is reachable the way a player
 // reaches it. Interface is the 4th main-menu row (buildOptionsMenu; the optional Bug
-// Report row is appended AFTER it, so the index is stable) and Combat the 4th tab of
-// the Interface panel (INTERFACE_TAB_ORDER). The window is force-hidden first so the
+// Report row is appended AFTER it, so the index is stable) and Frames the 2nd tab of
+// the Interface panel (INTERFACE_TAB_ORDER; the Edit Frames entry row moved there
+// when the tab was minted). The window is force-hidden first so the
 // toggle is deterministic regardless of prior state, the same trick the bags target uses.
-async function openInterfaceCombatTab(page) {
+async function openInterfaceFramesTab(page) {
   await page.evaluate(() => {
     const el = document.querySelector('#options-menu');
     if (el) el.style.display = 'none';
@@ -367,16 +368,16 @@ async function openInterfaceCombatTab(page) {
   });
   await wait(400);
   await page.evaluate(() => {
-    document.querySelectorAll('#options-menu .opt-tab')[3]?.click();
+    document.querySelectorAll('#options-menu .opt-tab')[1]?.click();
   });
   return pollForSize(page, '#options-menu');
 }
 
-// Press the real "Unlock interface" button (the first row of the Combat tabpanel,
+// Press the real "Unlock interface" button (the first row of the Frames tabpanel,
 // which interfaceUnlockRow appends ahead of the declarative list), then close the
 // menu so the loosened HUD is what the camera sees.
 async function unlockInterfaceThroughTheOption(page) {
-  await openInterfaceCombatTab(page);
+  await openInterfaceFramesTab(page);
   await page.evaluate(() => {
     document.querySelector('#interface-tabpanel .set-row button')?.click();
   });
@@ -2392,13 +2393,14 @@ export const TARGETS = [
   },
   {
     key: 'interface-unlock-option',
-    label: 'Interface options, Combat tab: the Unlock interface row',
+    label: 'Interface options, Frames tab: the Edit Frames entry row',
     when: ['ui/interface_unlock', 'ui/options_window', 'ui/options_view'],
-    // Desktop and mobile: the row is an ordinary options control on both, and the
-    // template asks for the mobile arm of any options-panel change.
+    // Desktop and mobile: the tab is an ordinary options panel on both (the entry
+    // row itself is desktop-only), and the template asks for the mobile arm of any
+    // options-panel change.
     variants: [{ key: 'desktop' }, { key: 'mobile', mobile: true }],
     async capture(page) {
-      await openInterfaceCombatTab(page);
+      await openInterfaceFramesTab(page);
       return { clip: '#options-menu' };
     },
   },
@@ -10859,6 +10861,30 @@ export const TARGETS = [
       const sel = variant?.mobile ? '#mobile-combat-controls' : '#side-buttons';
       if (!(await pollForSize(page, sel))) throw new Error(`${sel} never laid out`);
       return { clip: sel };
+    },
+  },
+  {
+    key: 'landing-play-console',
+    label: 'Landing page play console (world picker, Play button, tip) on the web shell',
+    // The pre-game home page: any index.html or shell.css change can move what a
+    // first-time visitor sees before they log in, so shoot the console itself.
+    // Web only: the native and desktop shells hide parts of the console (see the
+    // body.native-app / desktop-app rules in hud.css); the phone variant shows the
+    // trimmed mode-select layout hud.mobile.css owns.
+    when: ['index.html', 'styles/shell.css'],
+    variants: [
+      { key: 'desktop-web', landing: true, beforeLoad: lowGraphicsSeed },
+      { key: 'mobile-web', landing: true, mobile: true, beforeLoad: lowGraphicsSeed },
+    ],
+    async capture(page) {
+      if (!(await pollForSize(page, '#mode-select'))) {
+        throw new Error('landing play console did not render');
+      }
+      await page.evaluate(() => {
+        document.querySelector('#mode-select')?.scrollIntoView({ block: 'center' });
+      });
+      await wait(300);
+      return { clip: '#mode-select' };
     },
   },
   {

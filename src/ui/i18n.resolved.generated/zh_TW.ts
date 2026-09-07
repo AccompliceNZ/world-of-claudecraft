@@ -324,8 +324,6 @@ export const zh_TW: EnTranslations = {
     "warlock": {
       "doomLabel": "譴罪",
       "fateThreadsLabel": "命運絲線",
-      "doomMeterUnlock": "移動痛苦資源條",
-      "doomMeterLock": "鎖定痛苦資源條",
       "doomEmptyStatus": "{value}/{max} 譴罪。",
       "doomStatus": "{value}/{max} 譴罪；剩餘 {remaining}。",
       "fateThreadsStatus": "{value}/{max} 命運絲線。",
@@ -3016,7 +3014,17 @@ export const zh_TW: EnTranslations = {
         "targetFrame": "目標",
         "partyFrames": "隊伍",
         "swingBar": "自動攻擊",
-        "targetDots": "目標減益"
+        "targetDots": "目標減益",
+        "questTracker": "任務追蹤器",
+        "reliquaryTracker": "聖物庫追蹤器",
+        "doomMeter": "痛苦資源條",
+        "petBar": "Pet Bar",
+        "procOverlay": "法術觸發",
+        "damageMeter": "傷害統計",
+        "deedTracker": "功績追蹤器",
+        "delveTracker": "秘探追蹤器",
+        "riftTracker": "裂隙追蹤器",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "框體設定",
       "framesMenuTitle": "顯示或隱藏各個框體。取消勾選的框體會一直隱藏，直到你重新勾選或還原預設值。",
@@ -7492,10 +7500,7 @@ export const zh_TW: EnTranslations = {
     "playAria": "遊玩 World of ClaudeCraft",
     "serverLabel": "選擇你的世界",
     "serverAria": "選擇世界：線上或離線",
-    "serverOfflineSub": "即時本地世界",
-    "caLabel": "$WOC 合約地址",
-    "caCopyAria": "複製合約地址",
-    "caNote": "WOC 是我們的社群代幣，並非遊玩所需。加入 Discord 一起討論 WOC 的用途與飛輪效應。"
+    "serverOfflineSub": "即時本地世界"
   },
   "auth": {
     "enterRealm": "進入世界",

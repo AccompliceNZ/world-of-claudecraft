@@ -324,8 +324,6 @@ export const ru_RU: EnTranslations = {
     "warlock": {
       "doomLabel": "Осуждение",
       "fateThreadsLabel": "Нити судьбы",
-      "doomMeterUnlock": "Переместить шкалу ресурсов Колдовства",
-      "doomMeterLock": "Закрепить шкалу ресурсов Колдовства",
       "doomEmptyStatus": "Осуждение: {value} из {max}.",
       "doomStatus": "Осуждение: {value} из {max}; осталось {remaining}.",
       "fateThreadsStatus": "Нити судьбы: {value} из {max}.",
@@ -3016,7 +3014,17 @@ export const ru_RU: EnTranslations = {
         "targetFrame": "Цель",
         "partyFrames": "Группа",
         "swingBar": "Автоатака",
-        "targetDots": "Эффекты на целях"
+        "targetDots": "Эффекты на целях",
+        "questTracker": "Трекер заданий",
+        "reliquaryTracker": "Список Реликвария",
+        "doomMeter": "Шкала ресурсов Колдовства",
+        "petBar": "Pet Bar",
+        "procOverlay": "Срабатывания заклинаний",
+        "damageMeter": "Счетчик урона",
+        "deedTracker": "Трекер деяний",
+        "delveTracker": "Трекер вылазки",
+        "riftTracker": "Трекер разлома",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Настройки фреймов",
       "framesMenuTitle": "Показать или скрыть отдельные фреймы. Снятый флажок скрывает фрейм, пока вы не включите его снова или не сбросите настройки.",
@@ -7492,10 +7500,7 @@ export const ru_RU: EnTranslations = {
     "playAria": "Играть в World of ClaudeCraft",
     "serverLabel": "Выберите свой мир",
     "serverAria": "Выберите мир: В сети или Не в сети",
-    "serverOfflineSub": "Мгновенный локальный мир",
-    "caLabel": "Адрес контракта $WOC",
-    "caCopyAria": "Скопировать адрес контракта",
-    "caNote": "WOC - токен нашего сообщества. Он не нужен для игры. Присоединяйтесь к Discord, чтобы обсудить применение и экосистему WOC."
+    "serverOfflineSub": "Мгновенный локальный мир"
   },
   "auth": {
     "enterRealm": "Войти в игровой мир",

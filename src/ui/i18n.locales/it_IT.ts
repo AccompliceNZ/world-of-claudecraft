@@ -7515,10 +7515,6 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'hud.errors.silenced': 'Sei ridotto al silenzio!',
   'hud.pet.noPetFood': 'Non hai cibo per nutrire la tua mascotte.',
   'hud.pet.petEatsFoodOnly': 'La tua mascotte può mangiare solo cibo.',
-  'mode.caCopyAria': "Copia l'indirizzo del contratto",
-  'mode.caLabel': 'Indirizzo del contratto $WOC',
-  'mode.caNote':
-    "WOC è il token della nostra community. Non serve per giocare. Entra nel Discord per discutere dell'utilità e del flywheel di WOC.",
   'mode.play': 'Gioca',
   'mode.playAria': 'Gioca a World of ClaudeCraft',
   'mode.serverAria': 'Seleziona il mondo: Online o Offline',
@@ -13636,8 +13632,6 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Frammenti d\'Anima',
   'hudChrome.warlock.doomEmptyStatus': '{value} su {max} Condanna.',
   'hudChrome.warlock.doomLabel': 'Condanna',
-  'hudChrome.warlock.doomMeterLock': 'Blocca la barra della risorsa Afflizione',
-  'hudChrome.warlock.doomMeterUnlock': 'Sposta la barra della risorsa Afflizione',
   'hudChrome.warlock.doomStatus': '{value} su {max} Condanna; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tre Filamenti del Fato: Divorare può intrecciarli in Condanna aggiuntiva.',

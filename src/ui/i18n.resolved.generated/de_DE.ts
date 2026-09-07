@@ -324,8 +324,6 @@ export const de_DE: EnTranslations = {
     "warlock": {
       "doomLabel": "Verdammnis",
       "fateThreadsLabel": "Schicksalsfäden",
-      "doomMeterUnlock": "Verdammnis-Leiste verschieben",
-      "doomMeterLock": "Verdammnis-Leiste sperren",
       "doomEmptyStatus": "{value} von {max} Verdammnis.",
       "doomStatus": "{value} von {max} Verdammnis; {remaining}.",
       "fateThreadsStatus": "{value} von {max} Schicksalsfäden.",
@@ -3016,7 +3014,17 @@ export const de_DE: EnTranslations = {
         "targetFrame": "Ziel",
         "partyFrames": "Gruppe",
         "swingBar": "Automatischer Angriff",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Rahmeneinstellungen",
       "framesMenuTitle": "Einzelne Rahmen ein- oder ausblenden. Ein deaktivierter Rahmen bleibt verborgen, bis du ihn wieder aktivierst oder auf die Standardeinstellungen zurücksetzt.",
@@ -7492,10 +7500,7 @@ export const de_DE: EnTranslations = {
     "playAria": "World of ClaudeCraft spielen",
     "serverLabel": "Wähle deine Welt",
     "serverAria": "Welt wählen: Online oder Offline",
-    "serverOfflineSub": "Sofortige lokale Welt",
-    "caLabel": "$WOC-Vertragsadresse",
-    "caCopyAria": "Vertragsadresse kopieren",
-    "caNote": "WOC ist unser Community-Token. Es wird zum Spielen nicht benötigt. Tritt dem Discord bei, um über den Nutzen und das Schwungrad von WOC zu sprechen."
+    "serverOfflineSub": "Sofortige lokale Welt"
   },
   "auth": {
     "enterRealm": "Welt betreten",

@@ -971,7 +971,7 @@
     margin-bottom: 3px;
     pointer-events: none;
   }
-  .warlock-doom-frame.doom-detached {
+  .warlock-doom-frame.hud-frame-detached {
     position: absolute;
     z-index: 21;
     width: 300px;
@@ -1334,8 +1334,12 @@
     margin: 0 auto;
     padding-left: var(--unit-frame-content-inset);
   }
+  /* relative, not static: the docked bar stays an ordinary flex item but is
+     a containing block for its movable-frame chrome (corner button, grip,
+     name chip; the frame is HUD_FRAME_SPECS row 'petBar'). A static bar hung
+     that chrome off #actionbar-stack instead. */
   #pet-cluster > #petbar {
-    position: static;
+    position: relative;
     margin-bottom: 4px;
   }
   /* The health half of the cluster. Hidden until the player actually has a pet; the
@@ -1548,9 +1552,7 @@
   body.target-frame-dragging,
   body.target-frame-dragging *,
   body.player-frame-dragging,
-  body.player-frame-dragging *,
-  body.warlock-doom-frame-dragging,
-  body.warlock-doom-frame-dragging * {
+  body.player-frame-dragging * {
     user-select: none;
   }
   body.mobile-touch .unitframe .tf-move-btn,
@@ -1575,20 +1577,44 @@
   #side-buttons.tf-unlocked,
   #minimap-wrap.tf-unlocked,
   #pet-frame.tf-unlocked,
+  #petbar.tf-unlocked,
   #stancebar.tf-unlocked,
   #xpbar.tf-unlocked,
   #buff-bar.tf-unlocked,
   #debuff-bar.tf-unlocked,
-  #target-dots.tf-unlocked {
+  #target-dots.tf-unlocked,
+  #quest-tracker.tf-unlocked,
+  #deed-tracker.tf-unlocked,
+  #reliquary-tracker.tf-unlocked,
+  #delve-tracker.tf-unlocked,
+  #rift-tracker.tf-unlocked,
+  #swingbar-offhand.tf-unlocked,
+  #paladin-devotion-frame.tf-unlocked,
+  #proc-overlay.tf-unlocked,
+  #meters-window.tf-unlocked {
     cursor: var(--cursor-move, move);
     outline: 1px dashed var(--gold);
     outline-offset: -1px;
     touch-action: none;
   }
-  /* The tracker is click-through in play (it sits over the world and must never
-     eat a click meant for a mob), so the unlock mode has to hand its pointer
-     events back or the frame could not be dragged. It is also hidden whenever no
-     dots are out, so editing forces the placeholder visible. */
+  /* The trackers, the devotion medallion and the proc overlay are
+     click-through while locked (their roots carry pointer-events: none so the
+     world stays clickable behind them), so arranging has to switch events
+     back on, the doom meter's own rule above. */
+  #quest-tracker.tf-unlocked,
+  #deed-tracker.tf-unlocked,
+  #reliquary-tracker.tf-unlocked,
+  #delve-tracker.tf-unlocked,
+  #rift-tracker.tf-unlocked,
+  #paladin-devotion-frame.tf-unlocked,
+  #proc-overlay.tf-unlocked {
+    pointer-events: auto;
+  }
+  /* The Target dots tracker is click-through in play too (it sits over the
+     world and must never eat a click meant for a mob), so the unlock mode has
+     to hand its pointer events back or the frame could not be dragged. It is
+     also hidden whenever no dots are out, so editing forces the placeholder
+     visible. */
   #target-dots.tf-unlocked {
     display: flex !important;
     min-height: 34px;
@@ -1617,13 +1643,29 @@
   #actionbar2.hud-frame-detached,
   #actionbar3.hud-frame-detached,
   #pet-frame.hud-frame-detached,
+  #petbar.hud-frame-detached,
   #stancebar.hud-frame-detached,
   #xpbar.hud-frame-detached,
   #buff-bar.hud-frame-detached,
-  #debuff-bar.hud-frame-detached {
+  #debuff-bar.hud-frame-detached,
+  #quest-tracker.hud-frame-detached,
+  #deed-tracker.hud-frame-detached,
+  #reliquary-tracker.hud-frame-detached,
+  #delve-tracker.hud-frame-detached,
+  #rift-tracker.hud-frame-detached {
     position: absolute;
     margin: 0;
     z-index: 20;
+  }
+  /* A tracker re-homed onto #ui keeps the stack's column width: its docked
+     width: 100% resolved against #right-tracker-stack's 240px, and against
+     #ui it would span the whole screen. */
+  #quest-tracker.hud-frame-detached,
+  #deed-tracker.hud-frame-detached,
+  #reliquary-tracker.hud-frame-detached,
+  #delve-tracker.hud-frame-detached,
+  #rift-tracker.hud-frame-detached {
+    width: 240px;
   }
   #actionbar .tf-move-btn,
   #actionbar2 .tf-move-btn,
@@ -1632,10 +1674,20 @@
   #side-buttons .tf-move-btn,
   #minimap-wrap .tf-move-btn,
   #pet-frame .tf-move-btn,
+  #petbar .tf-move-btn,
   #stancebar .tf-move-btn,
   #xpbar .tf-move-btn,
   #buff-bar .tf-move-btn,
   #debuff-bar .tf-move-btn,
+  #quest-tracker .tf-move-btn,
+  #deed-tracker .tf-move-btn,
+  #reliquary-tracker .tf-move-btn,
+  #delve-tracker .tf-move-btn,
+  #rift-tracker .tf-move-btn,
+  #swingbar-offhand .tf-move-btn,
+  #paladin-devotion-frame .tf-move-btn,
+  #proc-overlay .tf-move-btn,
+  #meters-window .tf-move-btn,
   #chatlog-wrap .chat-move-btn {
     position: absolute;
     top: -10px;
@@ -1661,6 +1713,16 @@
   #xpbar .tf-move-btn:focus-visible,
   #buff-bar .tf-move-btn:focus-visible,
   #debuff-bar .tf-move-btn:focus-visible,
+  #quest-tracker .tf-move-btn:focus-visible,
+  #deed-tracker .tf-move-btn:focus-visible,
+  #reliquary-tracker .tf-move-btn:focus-visible,
+  #delve-tracker .tf-move-btn:focus-visible,
+  #rift-tracker .tf-move-btn:focus-visible,
+  #swingbar-offhand .tf-move-btn:focus-visible,
+  #paladin-devotion-frame .tf-move-btn:focus-visible,
+  #petbar .tf-move-btn:focus-visible,
+  #proc-overlay .tf-move-btn:focus-visible,
+  #meters-window .tf-move-btn:focus-visible,
   #chatlog-wrap .chat-move-btn:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 1px;
@@ -1777,7 +1839,8 @@
      inline value beats an ordinary rule. A real cast repaints over the top of
      this, so it never suppresses live cast information. */
   body.interface-unlocked #castbar,
-  body.interface-unlocked #swingbar {
+  body.interface-unlocked #swingbar,
+  body.interface-unlocked #swingbar-offhand {
     display: block !important;
     opacity: 0.55;
   }
@@ -1794,9 +1857,24 @@
      points at the plus/minus buttons for turning more on. */
   body.interface-unlocked #target-frame.tf-unlocked,
   body.interface-unlocked #pet-frame.tf-unlocked,
-  body.interface-unlocked #stancebar.tf-unlocked {
+  body.interface-unlocked #petbar.tf-unlocked,
+  body.interface-unlocked #stancebar.tf-unlocked,
+  body.interface-unlocked #paladin-devotion-frame.tf-unlocked,
+  body.interface-unlocked .warlock-doom-frame.tf-unlocked {
     display: flex !important;
     opacity: 0.55;
+  }
+  /* The trackers are block flow (and an empty docked one is folded away by
+     the stack's :empty rule), so their placeholders force block display and
+     keep a graspable minimum box like the stance bar's. */
+  body.interface-unlocked #quest-tracker.tf-unlocked,
+  body.interface-unlocked #deed-tracker.tf-unlocked,
+  body.interface-unlocked #reliquary-tracker.tf-unlocked,
+  body.interface-unlocked #delve-tracker.tf-unlocked,
+  body.interface-unlocked #rift-tracker.tf-unlocked {
+    display: block !important;
+    opacity: 0.55;
+    min-height: 48px;
   }
   /* A resizable unit frame needs a positioned host for its grip; the three
      already carry one (.unitframe and #party-frames are absolute, #player-frame
@@ -1818,6 +1896,28 @@
   body.interface-unlocked #stancebar.tf-unlocked {
     min-width: 160px;
     min-height: 30px;
+  }
+  /* The pet ACTION bar's placeholder: with no pet out its button groups are
+     wiped, so the graspable minimum matches a two-group bar's footprint. */
+  body.interface-unlocked #petbar.tf-unlocked {
+    min-width: 200px;
+    min-height: 44px;
+  }
+  /* The tabbed damage window is usually CLOSED (inline display: none written
+     by its toggle), so its placeholder forces the framed column shape; its
+     title bar and tabs are the sample content. */
+  body.interface-unlocked #meters-window.tf-unlocked {
+    display: flex !important;
+    flex-direction: column;
+    opacity: 0.55;
+    min-height: 140px;
+  }
+  /* The proc overlay hides through OPACITY, not display (a 0.7s burn-out
+     fade), so its placeholder brightens rather than un-hiding: the warlock
+     states paint their art continuously and the mage side gets the preview
+     bird from the unlock hook in hud.ts. */
+  body.interface-unlocked #proc-overlay.tf-unlocked {
+    opacity: 0.55;
   }
   /* The arrange-mode name chip: which frame is which, sitting just ABOVE the
      frame so it never covers the frame's own contents. A frame parked against
@@ -1857,7 +1957,8 @@
      placeholders, so letting them spill costs nothing. */
   body.interface-unlocked #xpbar.tf-unlocked,
   body.interface-unlocked #castbar.tf-unlocked,
-  body.interface-unlocked #swingbar.tf-unlocked {
+  body.interface-unlocked #swingbar.tf-unlocked,
+  body.interface-unlocked #swingbar-offhand.tf-unlocked {
     overflow: visible;
   }
   /* While unlocked a frame's CONTENTS are a static picture: pointer-inert so a
@@ -1970,47 +2071,10 @@
   body.interface-unlocked #party-frames > .party-rows {
     display: none;
   }
-  .tf-preview-unit {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    width: 100%;
-  }
-  .tf-preview-portrait {
-    width: 26px;
-    height: 26px;
-    flex: none;
-    border: 1px solid var(--gold);
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #3a3a4c, #15151f);
-  }
-  .tf-preview-bars {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-  }
-  .tf-preview-name {
-    font-size: 10px;
-    line-height: 12px;
-    color: #fff0d0;
-    text-shadow: 1px 1px 1px #000;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-  .tf-preview-hp {
-    height: 8px;
-    width: 78%;
-    border-radius: 2px;
-    background: linear-gradient(#7ddb8a, #2e8f3e 60%, #1d5c28);
-  }
-  .tf-preview-mp {
-    height: 5px;
-    width: 62%;
-    border-radius: 2px;
-    background: linear-gradient(#8fb6e6, #3d6ea8 60%, #274a74);
-  }
+  /* The generic .tf-preview-unit portrait/hp/mp mock retired with the pet
+     frame's sample: like the target frame, its placeholder shows the REAL
+     unit-frame chrome, and the mock read as a second fake frame on top
+     (owner feedback). */
   /* The filled cast/swing samples: a fill under the frame's own label layer. */
   .tf-preview-bar {
     inset: 0;
@@ -2066,6 +2130,30 @@
         #c9a54528 0 1px,
         transparent 1px calc(16px / var(--ui-scale, 1))
       );
+  }
+  /* Screen centerlines while the grid is up: one vertical and one horizontal
+     bar through the middle, brighter than the grid lines, so centering a
+     frame on the screen is a sight line rather than a count of grid cells.
+     Children of the overlay, so they ride the same hidden gate; the 2px
+     thickness divides by the UI scale like the grid pitch above, and the
+     50% midpoint is scale-invariant. */
+  #interface-grid-overlay::before,
+  #interface-grid-overlay::after {
+    content: "";
+    position: absolute;
+    background: #c9a54573;
+  }
+  #interface-grid-overlay::before {
+    top: 0;
+    bottom: 0;
+    left: calc(50% - 1px / var(--ui-scale, 1));
+    width: calc(2px / var(--ui-scale, 1));
+  }
+  #interface-grid-overlay::after {
+    left: 0;
+    right: 0;
+    top: calc(50% - 1px / var(--ui-scale, 1));
+    height: calc(2px / var(--ui-scale, 1));
   }
   #interface-edit-controls {
     position: absolute;
@@ -2662,6 +2750,11 @@
     box-shadow: 0 0 calc(5px * var(--fx-shadow, 1)) #ff5533aa;
     border-color: #ffad99;
   }
+  /* The devotion medallion is a governed HUD frame (HUD_FRAME_SPECS row
+     'paladinDevotion'): pointer-inert while locked so it never eats a world
+     click, and the .tf-unlocked rules below re-enable it for arranging. The
+     centering translate is the stock seat only; a custom position writes
+     left/top from the top-left corner, so the detached state drops it. */
   .paladin-devotion-frame {
     position: fixed;
     left: 50%;
@@ -2673,11 +2766,11 @@
     align-items: center;
     justify-content: center;
     translate: -50% -50%;
-    cursor: grab;
-    touch-action: none;
+    pointer-events: none;
   }
-  .paladin-devotion-frame.dragging {
-    cursor: grabbing;
+  .paladin-devotion-frame.hud-frame-detached,
+  #proc-overlay.hud-frame-detached {
+    translate: none;
   }
   .paladin-devotion {
     --devotion-scale: 0;
@@ -3614,6 +3707,8 @@
     display: flex;
     align-items: flex-end;
     gap: 8px;
+    /* The containing block for #meters-window's absolute dock seat below. */
+    position: relative;
   }
   /* xp bar sits UNDER the action bar as the stack's last row, pinned to the
      bottom of the screen; the taller side-button column must not push the
@@ -5010,6 +5105,14 @@
   #right-tracker-stack > :empty {
     display: none;
   }
+  /* The quest tracker no longer matches :empty even with no quests: it hosts
+     its movable-frame chrome (corner button, grip, name chip) beside the
+     #qt-body the controller paints, so emptiness is judged on the body. The
+     edit mode's force-shown placeholder (display !important below) still
+     wins while arranging. */
+  #quest-tracker:has(> #qt-body:empty) {
+    display: none;
+  }
   /* ---------- quest tracker ---------- */
   #quest-tracker {
     width: 100%;
@@ -5349,12 +5452,18 @@
   }
 
   /* ---------- delve tracker ---------- */
+  /* Visibility is the body's: the controller paints #delve-body (the root is
+     a movable frame hosting the mover chrome beside it), and an empty body
+     folds the whole tracker out of the stack, replacing the old inline
+     root display toggle. The edit mode's force-show still wins. */
   #delve-tracker {
     width: 100%;
     font-size: 12px;
     color: var(--gold);
     text-shadow: 1px 1px 2px #000;
     pointer-events: none;
+  }
+  #delve-tracker:has(> #delve-body:empty) {
     display: none;
   }
   #delve-tracker .dt-header {
@@ -5417,12 +5526,15 @@
   /* Floor progress + the "closes in" event countdown (issue #2655). Same shape
      as the delve tracker above; actionable pacing info, so it stays visible on
      every graphics tier (docs/design/graphics-settings-fairness.md). */
+  /* Same body-owned visibility as #delve-tracker above. */
   #rift-tracker {
     width: 100%;
     font-size: 12px;
     color: var(--gold);
     text-shadow: 1px 1px 2px #000;
     pointer-events: none;
+  }
+  #rift-tracker:has(> #rift-body:empty) {
     display: none;
   }
   #rift-tracker .rt-header {
@@ -5442,9 +5554,11 @@
   /* ---------- combat meters ---------- */
   /* The damage window and the two detachable meters (Healing, Threat) share one
      panel shape. Undisturbed they sit in the bottom-right HUD stack exactly as
-     the meters window always has; once the player drags or resizes one,
-     meters_frame.ts switches it to absolute left/top/width/height and stamps
-     .mt-framed, which is what turns it into a fixed-height scrolling column. */
+     the meters window always has. Once moved, a DETACHED window's own
+     MeterFrame stamps .mt-framed; the TABBED window is the 'damageMeter'
+     Unlock Interface registry frame instead, whose detacher stamps
+     .hud-frame-detached. Either class turns the panel into the fixed-height
+     scrolling column below. */
   .mt-panel {
     width: 240px;
     padding: 8px 10px;
@@ -5452,6 +5566,31 @@
     align-self: flex-end;
     margin-bottom: 6px;
     text-align: left;
+  }
+  /* The tabbed damage window's DOCK is an absolute seat beside the action-bar
+     row, not a flex slot: #bottom-bar re-centers itself with translateX(-50%),
+     so a 240px flex item appearing on open slid the whole action-bar stack
+     sideways (the reported "opening the meters moves the UI around"). The
+     seat reproduces the old flex-end spot; the detached state below clears it
+     so the registry mover's inline left/top own the box. The two pop-out
+     meters keep their flex slots: they are transient windows a player has
+     usually already parked via their own title drag.
+     The left is CLAMPED to the #ui edge: the seat resolves against the
+     612px centered row, so on any #ui narrower than 1108 author px (a
+     1280px window at UI Scale 1.2) the flex-end spot would hang past the
+     overflow:hidden root and clip. Half the #ui author width plus 66px is
+     the largest left that keeps the 240px panel's right edge inside
+     ((uiW - 612) / 2 + left + 240 <= uiW); the #ui width derives from
+     --app-vw the same way the tracker rule below does. */
+  #meters-window {
+    position: absolute;
+    left: min(calc(100% + 8px), calc(var(--app-vw, 100vw) / var(--ui-scale, 1) / 2 + 66px));
+    bottom: 6px;
+    margin-bottom: 0;
+  }
+  #meters-window.hud-frame-detached {
+    left: auto;
+    bottom: auto;
   }
   .mt-panel .panel-title {
     margin-bottom: 4px;
@@ -5461,11 +5600,19 @@
   /* The framed column's `display: flex` is written inline alongside the box (the
      panel's open/closed state is an inline display too, so the class cannot win
      that tie); this carries the rest of the framed layout. */
-  .mt-panel.mt-framed {
+  .mt-panel.mt-framed,
+  #meters-window.hud-frame-detached {
     flex-direction: column;
     z-index: 21;
   }
-  .mt-panel.mt-framed .mt-rows {
+  /* A positioned tabbed window that has never been height-stretched still
+     needs a bound, or the row list grows the panel with the encounter and
+     the scrolling column never engages; a box-resize height (inline) wins. */
+  #meters-window.hud-frame-detached {
+    height: 320px;
+  }
+  .mt-panel.mt-framed .mt-rows,
+  #meters-window.hud-frame-detached .mt-rows {
     flex: 1 1 auto;
     min-height: 0;
     overflow-y: auto;
@@ -6674,7 +6821,6 @@
   body.native-app .community-link.donate,
   body.native-app .social-link.donate,
   body.native-app #mobile-donate,
-  body.native-app #token-ca,
   body.native-app #nav-btn-download,
   body.native-app:not(.seeker-wallet-enabled) .cs-wallet,
   body.native-app:not(.seeker-wallet-enabled) .cs-wallet-hidden-note,
@@ -6683,7 +6829,6 @@
   body.native-app .official-site-copy {
     display: none !important;
   }
-  body.desktop-app #token-ca,
   body.desktop-app .official-site-copy {
     display: none !important;
   }
@@ -10214,7 +10359,8 @@
 /* Spell-activation proc overlay: the Rising Phoenix (owner design, replacing
    the twin proc arcs). Heating Up lights the LEFT half; Hot Streak completes
    the RIGHT, whitens the core and beats both wings once; the proc fading or
-   being spent puts the fire out. Drag it (proc_overlay_drag) to park it. */
+   being spent puts the fire out. Parking it is the Unlock Interface mode's:
+   the overlay is the 'procOverlay' registry frame (interface_unlock_core). */
 /* This whole tail of the file (through EOF) had fallen OUTSIDE @layer
    components: nothing reopened the layer after the small #aura-overlays
    block closed it below, so every rule from here on (proc-overlay, the
@@ -10500,13 +10646,12 @@
     }
   }
   /* The login preview: for a few seconds after entering the world the whole
-   bird glows dimly, so the player can see where it lives and drag it BEFORE
-   any proc lights it for real. Placed before the proc rules so a real proc
-   arriving mid-preview wins the cascade. */
+   bird glows dimly, so the player can see where it lives (moving it is the
+   Unlock Interface mode's: the overlay is the 'procOverlay' registry frame,
+   and this same class doubles as its edit-mode sample art). Placed before
+   the proc rules so a real proc arriving mid-preview wins the cascade. */
   #proc-overlay.preview {
     opacity: 1;
-    pointer-events: auto;
-    cursor: grab;
   }
   #proc-overlay.preview .fire-embers {
     opacity: 0.38;
@@ -10515,16 +10660,12 @@
   #proc-overlay.hot,
   #proc-overlay.combustion {
     /* Lit but a touch translucent (owner: softer over the scene), shared with the
-     Chronomancy .c1 rule; fire is TWO procs (Heating Up, then Hot Streak). */
+     Chronomancy .c1 rule; fire is TWO procs (Heating Up, then Hot Streak).
+     Pointer-inert in every state: moving lives with the registry frame, so
+     the burning bird never eats a click meant for the world behind it. */
     opacity: 0.85;
-    /* Grabbable only while it burns; hidden it can never eat a click. */
-    pointer-events: auto;
-    cursor: grab;
     /* Quick to light (the ON transition); the slow OFF fade lives on the base. */
     transition: opacity 0.2s ease;
-  }
-  #proc-overlay.dragging {
-    cursor: grabbing;
   }
   #proc-overlay .fire-bird {
     position: absolute;
@@ -10783,12 +10924,10 @@
     filter: saturate(1.18) brightness(1.2) drop-shadow(0 0 10px rgba(139, 92, 246, 0.8))
       drop-shadow(0 0 24px rgba(103, 232, 249, 0.62));
   }
-  /* Visible and grabbable once any charge is held (a touch translucent, matching
-   the fire bird's .heating/.hot opacity). */
+  /* Visible once any charge is held (a touch translucent, matching the fire
+   bird's .heating/.hot opacity); pointer-inert like every overlay state. */
   #proc-overlay.chrono.c1 {
     opacity: 0.85;
-    pointer-events: auto;
-    cursor: grab;
   }
   /* Reveal order: left wing, right wing, central bird, final temporal flare. */
   #proc-overlay.chrono.c1 .chrono-left,
@@ -10912,15 +11051,8 @@
   #proc-overlay.destruction .ruin-ritual {
     display: block;
   }
-  #proc-overlay.destruction .ruin-ritual,
-  #proc-overlay.destruction .ruin-mark {
-    pointer-events: auto;
-    cursor: grab;
-  }
-  #proc-overlay.destruction.dragging .ruin-ritual,
-  #proc-overlay.destruction.dragging .ruin-mark {
-    cursor: grabbing;
-  }
+  /* The artwork stays pointer-inert: moving the always-on ritual lives with
+     the Unlock Interface registry frame, so it never eats a world click. */
   #proc-overlay.destruction .ruin-ritual::before,
   #proc-overlay.destruction .ruin-ritual::after {
     content: "";
@@ -10975,8 +11107,6 @@
       inset 0 3px var(--color-ruin-ritual-shadow),
       0 -1px var(--color-ruin-inner-shine);
     opacity: 0.76;
-    pointer-events: auto;
-    cursor: grab;
   }
   #proc-overlay.destruction.r5 .ruin-ring {
     border-top-color: var(--color-ruin-lit-border);
@@ -11212,15 +11342,9 @@
     opacity: 0.9;
     animation: soul-bank-full-flare 1.8s ease-in-out infinite;
   }
-  #proc-overlay.necromancy .soul-rail,
-  #proc-overlay.necromancy .soul-crystal {
-    pointer-events: auto;
-    cursor: grab;
-  }
-  #proc-overlay.necromancy.dragging .soul-rail,
-  #proc-overlay.necromancy.dragging .soul-crystal {
-    cursor: grabbing;
-  }
+  /* The soul bank's artwork stays pointer-inert: moving the always-on bank
+     lives with the Unlock Interface registry frame, so it never eats a world
+     click behind the crystals. */
   #proc-overlay.necromancy .soul-rail {
     position: absolute;
     left: 3px;
@@ -11509,8 +11633,6 @@
   }
   #proc-overlay.frost.f1 {
     opacity: 0.88;
-    pointer-events: auto;
-    cursor: grab;
   }
   #proc-overlay.frost .frost-part {
     position: absolute;

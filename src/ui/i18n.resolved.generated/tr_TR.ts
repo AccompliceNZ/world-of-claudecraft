@@ -324,8 +324,6 @@ export const tr_TR: EnTranslations = {
     "warlock": {
       "doomLabel": "Mahkûmiyet",
       "fateThreadsLabel": "Kader İplikleri",
-      "doomMeterUnlock": "Istırap kaynak çubuğunu taşı",
-      "doomMeterLock": "Istırap kaynak çubuğunu kilitle",
       "doomEmptyStatus": "{value} / {max} Mahkûmiyet.",
       "doomStatus": "{value} / {max} Mahkûmiyet; {remaining}.",
       "fateThreadsStatus": "{value} / {max} Kader İpliği.",
@@ -3016,7 +3014,17 @@ export const tr_TR: EnTranslations = {
         "targetFrame": "Hedef",
         "partyFrames": "Grup",
         "swingBar": "Otomatik Saldırı",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Çerçeve Ayarları",
       "framesMenuTitle": "Ayrı ayrı çerçeveleri göster ya da gizle. İşareti kaldırılmış bir çerçeve, tekrar işaretleyene ya da varsayılanlara sıfırlayana kadar gizli kalır.",
@@ -7492,10 +7500,7 @@ export const tr_TR: EnTranslations = {
     "playAria": "World of ClaudeCraft oyna",
     "serverLabel": "Dünyanı seç",
     "serverAria": "Dünya seç: Çevrimiçi veya Çevrimdışı",
-    "serverOfflineSub": "Anında yerel dünya",
-    "caLabel": "$WOC Sözleşme Adresi",
-    "caCopyAria": "Sözleşme adresini kopyala",
-    "caNote": "WOC topluluk jetonumuzdur. Oynamak için gerekli değildir. WOC'un faydasını ve döngüsünü tartışmak için Discord'a katılın."
+    "serverOfflineSub": "Anında yerel dünya"
   },
   "auth": {
     "enterRealm": "Dünyaya Gir",

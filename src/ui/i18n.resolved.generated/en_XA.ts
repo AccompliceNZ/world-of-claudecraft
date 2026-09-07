@@ -324,8 +324,6 @@ export const en_XA: EnTranslations = {
     "warlock": {
       "doomLabel": "[Çóñðéɱñáţíóñ]",
       "fateThreadsLabel": "[Ƒáţé Ţĥŕéáðš]",
-      "doomMeterUnlock": "[Ɱóʋé Áƒƒļíçţíóñ ŕéšóúŕçé ƀáŕ]",
-      "doomMeterLock": "[Ļóçķ Áƒƒļíçţíóñ ŕéšóúŕçé ƀáŕ]",
       "doomEmptyStatus": "[{value} óƒ {max} Çóñðéɱñáţíóñ.]",
       "doomStatus": "[{value} óƒ {max} Çóñðéɱñáţíóñ; {remaining}.]",
       "fateThreadsStatus": "[{value} óƒ {max} Ƒáţé Ţĥŕéáðš.]",
@@ -3016,7 +3014,17 @@ export const en_XA: EnTranslations = {
         "targetFrame": "[Ţáŕĝéţ]",
         "partyFrames": "[Þáŕţý]",
         "swingBar": "[Áúţó Áţţáçķ]",
-        "targetDots": "[Ţáŕĝéţ Ðóţš]"
+        "targetDots": "[Ţáŕĝéţ Ðóţš]",
+        "questTracker": "[Ɋúéšţ Ţŕáçķéŕ]",
+        "reliquaryTracker": "[Ŕéļíɋúáŕý Ţŕáçķéŕ]",
+        "doomMeter": "[Áƒƒļíçţíóñ Ɓáŕ]",
+        "petBar": "[Þéţ Ɓáŕ]",
+        "procOverlay": "[Šþéļļ Þŕóçš]",
+        "damageMeter": "[Ðáɱáĝé Ɱéţéŕ]",
+        "deedTracker": "[Ðééð Ţŕáçķéŕ]",
+        "delveTracker": "[Ðéļʋé Ţŕáçķéŕ]",
+        "riftTracker": "[Ŕíƒţ Ţŕáçķéŕ]",
+        "swingBarOffhand": "[Óƒƒ Ĥáñð]"
       },
       "framesMenu": "[Ƒŕáɱéš Šéţţíñĝš]",
       "framesMenuTitle": "[Šĥóŵ óŕ ĥíðé íñðíʋíðúáļ ƒŕáɱéš. Áñ úñţíçķéð ƒŕáɱé šţáýš ĥíððéñ úñţíļ ýóú ţíçķ íţ áĝáíñ óŕ ŕéšéţ ţó ðéƒáúļţš.]",
@@ -7492,10 +7500,7 @@ export const en_XA: EnTranslations = {
     "playAria": "[Þļáý Ŵóŕļð óƒ ÇļáúðéÇŕáƒţ]",
     "serverLabel": "[Çĥóóšé ýóúŕ ŵóŕļð]",
     "serverAria": "[Šéļéçţ ŵóŕļð: Óñļíñé óŕ Óƒƒļíñé]",
-    "serverOfflineSub": "[Íñšţáñţ ļóçáļ ŵóŕļð]",
-    "caLabel": "[$ŴÓÇ Çóñţŕáçţ Áððŕéšš]",
-    "caCopyAria": "[Çóþý çóñţŕáçţ áððŕéšš]",
-    "caNote": "[ŴÓÇ íš óúŕ çóɱɱúñíţý ţóķéñ. Íţ íš ñóţ ñééðéð ţó þļáý. Ĵóíñ Ðíšçóŕð ţó ðíšçúšš ţĥé ŴÓÇ úţíļíţý áñð ƒļýŵĥééļ.]"
+    "serverOfflineSub": "[Íñšţáñţ ļóçáļ ŵóŕļð]"
   },
   "auth": {
     "enterRealm": "[Éñţéŕ ţĥé Ŵóŕļð]",

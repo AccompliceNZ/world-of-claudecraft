@@ -8838,10 +8838,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Spela i liggande helskärm för bästa mobila upplevelse.',
   'mobilePreflight.rotateTitle': 'Rotera till liggande läge',
   'mobilePreflight.title': 'Spela i liggande helskärm',
-  'mode.caCopyAria': 'Kopiera kontraktsadress',
-  'mode.caLabel': '$WOC Kontraktsadress',
-  'mode.caNote':
-    'WOC är vår community-token. Den behövs inte för att spela. Gå med i Discord för att diskutera WOC:s nytta och svänghjul.',
   'mode.offlineAria': 'Spela offline: starta en omedelbar lokal enspelarsession',
   'mode.offlineDesc':
     'Omedelbar enspelarvärld i din webbläsare. Inget sparas: perfekt för en snabb drabbning eller testning.',
@@ -13435,8 +13431,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Själfragment',
   'hudChrome.warlock.doomEmptyStatus': '{value} av {max} Fördömelse.',
   'hudChrome.warlock.doomLabel': 'Fördömelse',
-  'hudChrome.warlock.doomMeterLock': 'Lås resurspanelen för Vånda',
-  'hudChrome.warlock.doomMeterUnlock': 'Flytta resurspanelen för Vånda',
   'hudChrome.warlock.doomStatus': '{value} av {max} Fördömelse; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tre Ödestrådar: Förtär kan väva in dem till ytterligare Fördömelse.',
