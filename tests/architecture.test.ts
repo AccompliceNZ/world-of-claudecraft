@@ -2375,6 +2375,10 @@ const UI_DOM_MODULES = [
   'src/ui/map_bg.ts',
   'src/ui/map_marker_icon_loader.ts',
   'src/ui/map_marker_palette_lifecycle.ts',
+  // The World Map atlas rail adapter: it owns the rail subtree (a click listener
+  // on the injected root plus an innerHTML swap) and reads document.activeElement
+  // so the focused chip or quest row survives that swap.
+  'src/ui/map_sidebar_controller.ts',
   'src/ui/market_window.ts',
   'src/ui/woc_market_window.ts',
   'src/ui/meters.ts',

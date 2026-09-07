@@ -6,7 +6,7 @@
 // tick, and the badge span is minted exactly once. The open-state reader is checked
 // against the `data-window-open` marker Hud's window observer maintains.
 
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   MICRO_MENU_BADGE_CLASS,
   MicroMenuStatePainter,
@@ -60,6 +60,10 @@ beforeEach(() => {
   mountRail();
 });
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe('microMenuWindowOpen: reads the shared open-window marker', () => {
   it('reports a window open only while data-window-open is set', () => {
     expect(microMenuWindowOpen('map-window')).toBe(false);
@@ -71,6 +75,52 @@ describe('microMenuWindowOpen: reads the shared open-window marker', () => {
 
   it('reports a window that is not in the document as closed', () => {
     expect(microMenuWindowOpen('no-such-window')).toBe(false);
+  });
+
+  it('resolves each window element once and reads the marker off the cache after that', () => {
+    const v = view();
+    const painter = new MicroMenuStatePainter(facet().writers);
+    const lookups = vi.spyOn(document, 'getElementById');
+    // Only the WINDOW ids: jsdom routes the painter's own `#mm-*` querySelector
+    // through getElementById too, and that cache is not what this pins.
+    const windowIds = new Set(MICRO_MENU_LAUNCHERS.map((spec) => spec.windowId));
+    const windowLookups = () =>
+      lookups.mock.calls.filter(([id]) => windowIds.has(String(id))).length;
+
+    painter.paint(v.tick(microMenuWindowOpen, { talentPoints: 0 }));
+    expect(windowLookups()).toBe(MICRO_MENU_LAUNCHERS.length);
+    lookups.mockClear();
+
+    painter.paint(v.tick(microMenuWindowOpen, { talentPoints: 0 }));
+    painter.paint(v.tick(microMenuWindowOpen, { talentPoints: 0 }));
+
+    expect(windowLookups()).toBe(0);
+  });
+
+  it('re-queries a window element that left the document, and still sees it reopen', () => {
+    expect(microMenuWindowOpen('map-window')).toBe(false);
+    document.getElementById('map-window')?.remove();
+
+    const replacement = document.createElement('div');
+    replacement.id = 'map-window';
+    replacement.className = 'window panel';
+    replacement.dataset.windowOpen = '1';
+    document.body.appendChild(replacement);
+
+    expect(microMenuWindowOpen('map-window')).toBe(true);
+  });
+
+  it('caches no miss, so a window minted after the first paint still lights its ring', () => {
+    document.getElementById('deeds-window')?.remove();
+    expect(microMenuWindowOpen('deeds-window')).toBe(false);
+
+    const late = document.createElement('div');
+    late.id = 'deeds-window';
+    late.className = 'window panel';
+    late.dataset.windowOpen = '1';
+    document.body.appendChild(late);
+
+    expect(microMenuWindowOpen('deeds-window')).toBe(true);
   });
 });
 
