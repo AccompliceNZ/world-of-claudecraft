@@ -4143,6 +4143,16 @@ export const hudChromeStrings = {
     assignHint: 'Choose an action to bind to {key}.',
     assignPlaceholder: 'Assign an action to {key}',
     layerGroup: 'Modifier layer',
+    // The keyboard size switch: a browser cannot detect the physical board, so
+    // the player picks. 75% and 60% are the usual names for those sizes and
+    // stay identical across locales.
+    formGroup: 'Keyboard size',
+    formFull: 'Full size',
+    formTkl: 'Tenkeyless',
+    form75: '75%',
+    form60: '60%',
+    // Bindings on keys the chosen size does not draw, listed under the board.
+    notOnLayout: 'Not on this keyboard: {bindings}',
     layerNone: 'No modifier',
     layerShift: 'Shift',
     layerCtrl: 'Ctrl',

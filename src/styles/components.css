@@ -13974,6 +13974,16 @@
     font-size: 11px;
     padding: 2px 8px;
   }
+  /* Bindings on keys the chosen keyboard size does not draw. */
+  .kbm-hidden {
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #b9ac82;
+  }
+  .kbm-hidden[hidden] {
+    display: none;
+  }
   .kbm-layer {
     font-size: 11px;
     padding: 2px 8px;

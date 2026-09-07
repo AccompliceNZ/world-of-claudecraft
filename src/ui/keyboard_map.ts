@@ -1,24 +1,32 @@
 // The Key Bindings panel's keyboard overview painter: a live keyboard drawn
 // from the player's current bindings, every key in use coloured by its
 // action's category and captioned with the action, a modifier-layer switch
-// (none / Shift / Ctrl / Alt), a category legend, and a detail line that spells
-// out everything bound to the hovered or focused key. The keys are buttons:
-// clicking a bound key arms the shared key capture for that action (press the
-// new key; a key another action holds asks first, exactly like the panel's
-// rows) with Unbind / Cancel beside the status, and clicking an empty key opens
-// an action picker that binds the action to that key in the current layer.
-// The same painter fills the pop-out window (keyboard_map_window.ts). The
-// geometry and per-key annotation come from the pure keyboard_map_core.ts;
+// (none / Shift / Ctrl / Alt), a keyboard size switch (full size, tenkeyless,
+// 75%, 60%, remembered in keyboard_layout_pref_core.ts), a category legend, a
+// list of any bindings on keys the chosen size does not draw, and a detail line
+// that spells out everything bound to the hovered or focused key. Key legends
+// come from the browser's keyboard layout map where it offers one (Chromium's
+// navigator.keyboard.getLayoutMap, so a QWERTZ or AZERTY player sees their own
+// printed letters) and fall back to the code labels elsewhere. The keys are
+// buttons: clicking a bound key arms the shared key capture for that action
+// (press the new key; a key another action holds asks first, exactly like the
+// panel's rows) with Unbind / Cancel beside the status, and clicking an empty
+// key opens an action picker that binds the action to that key in the current
+// layer. The same painter fills the pop-out window (keyboard_map_window.ts).
+// The geometry and per-key annotation come from the pure keyboard_map_core.ts;
 // this module owns only the DOM. Registered in tests/architecture.test.ts
 // UI_DOM_MODULES.
 
 import { audio } from '../game/audio';
 import { type Keybinds, keyLabel } from '../game/keybinds';
-import { t } from './i18n';
+import { type TranslationKey, t } from './i18n';
+import { loadKeyboardFormFactor, saveKeyboardFormFactor } from './keyboard_layout_pref_core';
 import {
   buildKeyboardMap,
   categoryClass,
+  KEYBOARD_FORM_FACTORS,
   KEYBOARD_LAYERS,
+  type KeyboardFormFactor,
   type KeyboardKeyBinding,
   type KeyboardKeyView,
   type KeyboardLayer,
@@ -79,6 +87,55 @@ export interface KeyboardMapHandle {
 /** Quarter-unit grid columns per key unit (keys are 1, 1.25, 1.5 ... wide). */
 const COLS_PER_UNIT = 4;
 
+// --- real key legends -------------------------------------------------------
+// navigator.keyboard.getLayoutMap() (Chromium) maps a KeyboardEvent.code to the
+// character the key prints under the active OS layout. It is fetched once per
+// session and applied only to the codes that carry a printed character; named
+// keys (Enter, Shift, arrows) keep their labels. Where the API is missing
+// (Firefox, Safari) the code labels stand, which read as QWERTY.
+interface KeyboardLayoutMapLike {
+  get(code: string): string | undefined;
+}
+interface NavigatorKeyboardLike {
+  keyboard?: { getLayoutMap?: () => Promise<KeyboardLayoutMapLike> };
+}
+const PRINTED_CODE_RE =
+  /^(Key[A-Z]|Digit\d|Backquote|Minus|Equal|BracketLeft|BracketRight|Backslash|Semicolon|Quote|Comma|Period|Slash|IntlBackslash)$/;
+let layoutMap: KeyboardLayoutMapLike | null = null;
+let layoutMapLoad: Promise<void> | null = null;
+
+/** Resolve the browser's layout map once; resolves (never rejects) when known. */
+function loadLayoutMap(): Promise<void> {
+  if (layoutMapLoad) return layoutMapLoad;
+  const keyboard = (navigator as NavigatorKeyboardLike).keyboard;
+  const getter = keyboard?.getLayoutMap;
+  layoutMapLoad = getter
+    ? getter
+        .call(keyboard)
+        .then((map) => {
+          layoutMap = map;
+        })
+        .catch(() => undefined)
+    : Promise.resolve();
+  return layoutMapLoad;
+}
+
+/** The keycap legend for a bare code: the printed character when the browser
+ *  knows it, else the code label ("KeyA" -> "A"). */
+export function keyLegend(code: string): string {
+  if (layoutMap && PRINTED_CODE_RE.test(code)) {
+    const printed = layoutMap.get(code);
+    if (printed && printed.trim().length > 0) return printed.toUpperCase();
+  }
+  return keyLabel(code);
+}
+
+/** A combo's label with real legends: "Shift+" + the printed key. */
+function comboLegend(combo: string): string {
+  const { head, code } = splitCombo(combo);
+  return head + keyLegend(code);
+}
+
 /** Paint the overview into `root` (appended) and return its handle. */
 export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps): KeyboardMapHandle {
   const wrap = document.createElement('section');
@@ -96,7 +153,11 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
   layers.className = 'kbm-layers';
   layers.setAttribute('role', 'group');
   layers.setAttribute('aria-label', t('hudChrome.keyboardMap.layerGroup'));
-  controls.appendChild(layers);
+  const forms = document.createElement('div');
+  forms.className = 'kbm-layers kbm-forms';
+  forms.setAttribute('role', 'group');
+  forms.setAttribute('aria-label', t('hudChrome.keyboardMap.formGroup'));
+  controls.append(layers, forms);
   if (deps.onPopOut) {
     const onPopOut = deps.onPopOut;
     const pop = document.createElement('button');
@@ -113,6 +174,9 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
 
   const board = document.createElement('div');
   board.className = 'kbm-board';
+  const hiddenLine = document.createElement('div');
+  hiddenLine.className = 'kbm-hidden';
+  hiddenLine.hidden = true;
   const detail = document.createElement('div');
   detail.className = 'kbm-detail';
   detail.setAttribute('role', 'status');
@@ -123,6 +187,7 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
   actions.hidden = true;
 
   let layer: KeyboardLayer = deps.layer;
+  let formFactor: KeyboardFormFactor = loadKeyboardFormFactor();
   // The capture armed from a key click, so a second click or a repaint can
   // clear it instead of leaving a stale one-shot callback behind.
   let armed: { binding: KeyboardKeyBinding } | null = null;
@@ -132,25 +197,52 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
     t(rebind ? 'hudChrome.keyboardMap.hintInteractive' : 'hudChrome.keyboardMap.hint');
   detail.textContent = hint();
 
-  const layerButtons = new Map<KeyboardLayer, HTMLButtonElement>();
-  for (const entry of KEYBOARD_LAYERS) {
-    const b = document.createElement('button');
-    b.type = 'button';
-    b.className = 'btn kbm-layer';
-    b.textContent = t(entry.labelKey);
-    b.setAttribute('aria-pressed', String(entry.id === layer));
-    b.addEventListener('click', () => {
-      if (layer === entry.id) return;
-      audio.click();
-      layer = entry.id;
-      for (const [id, btn] of layerButtons) btn.setAttribute('aria-pressed', String(id === layer));
+  /** A group of aria-pressed buttons, one of which is current. */
+  const segmented = <T extends string>(
+    group: HTMLElement,
+    entries: { id: T; labelKey: TranslationKey }[],
+    current: () => T,
+    onPick: (id: T) => void,
+  ): void => {
+    const buttons = new Map<T, HTMLButtonElement>();
+    for (const entry of entries) {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'btn kbm-layer';
+      b.textContent = t(entry.labelKey);
+      b.setAttribute('aria-pressed', String(entry.id === current()));
+      b.addEventListener('click', () => {
+        if (current() === entry.id) return;
+        audio.click();
+        onPick(entry.id);
+        for (const [id, btn] of buttons) btn.setAttribute('aria-pressed', String(id === current()));
+        resetInteraction();
+        paintBoard();
+      });
+      buttons.set(entry.id, b);
+      group.appendChild(b);
+    }
+  };
+  segmented(
+    layers,
+    KEYBOARD_LAYERS,
+    () => layer,
+    (id) => {
+      layer = id;
       deps.onLayerChange(layer);
-      resetInteraction();
-      paintBoard();
-    });
-    layerButtons.set(entry.id, b);
-    layers.appendChild(b);
-  }
+    },
+  );
+  segmented(
+    forms,
+    KEYBOARD_FORM_FACTORS,
+    () => formFactor,
+    (id) => {
+      formFactor = id;
+      saveKeyboardFormFactor(id);
+    },
+  );
+
+  const bindingLine = (b: KeyboardKeyBinding): string => `${comboLegend(b.combo)}: ${b.name}`;
 
   const describe = (key: KeyboardKeyView): string => {
     if (key.bindings.length === 0)
@@ -161,7 +253,7 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
     // A bare binding is already named by the {key} prefix; only a modifier
     // combo needs its own label ("3: Iron Bellow, Ctrl+3: Pet: Taunt").
     const parts = key.bindings.map((b) =>
-      splitCombo(b.combo).head === '' ? b.name : `${keyLabel(b.combo)}: ${b.name}`,
+      splitCombo(b.combo).head === '' ? b.name : bindingLine(b),
     );
     return t('hudChrome.keyboardMap.keyDetail', {
       key: key.legend,
@@ -212,7 +304,7 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
     io.confirmDialog(
       t('hudChrome.actionBar.conflictTitle'),
       t('hudChrome.actionBar.conflictBody', {
-        key: keyLabel(conflict.code),
+        key: comboLegend(conflict.code),
         other: deps.actionName(conflict.id),
         action: deps.actionName(actionId),
       }),
@@ -260,7 +352,7 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
       bindWithConfirm(io, binding.actionId, binding.index, code, () =>
         t('hudChrome.keyboardMap.boundTo', {
           action: binding.name,
-          key: keyLabel(io.keybinds().codeAt(binding.actionId, binding.index)),
+          key: comboLegend(io.keybinds().codeAt(binding.actionId, binding.index) ?? code),
         }),
       );
     });
@@ -270,7 +362,7 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
   const startAssign = (io: KeyboardMapRebindDeps, key: KeyboardKeyView): void => {
     resetInteraction();
     const combo = `${layer}${key.code}`;
-    const comboLabel = keyLabel(combo);
+    const comboLabel = comboLegend(combo);
     detail.textContent = t('hudChrome.keyboardMap.assignHint', { key: comboLabel });
     const picker = io.buildDropdown(
       io.assignable().map((a) => ({ value: a.id, label: a.label })),
@@ -311,11 +403,13 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
 
   const paintBoard = (): void => {
     board.replaceChildren();
-    for (const block of buildKeyboardMap(deps.bindings(), layer, {
-      legend: (code) => keyLabel(code),
-      name: deps.actionName,
-      category: deps.actionCategory,
-    })) {
+    const view = buildKeyboardMap(
+      deps.bindings(),
+      layer,
+      { legend: keyLegend, name: deps.actionName, category: deps.actionCategory },
+      formFactor,
+    );
+    for (const block of view.blocks) {
       const el = document.createElement('div');
       el.className = `kbm-block kbm-block-${block.id}`;
       el.style.setProperty('--kbm-cols', String(block.units * COLS_PER_UNIT));
@@ -372,8 +466,18 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
       }
       board.appendChild(el);
     }
+    // Bindings on keys this board does not draw stay listed, so shrinking the
+    // picture never hides a live binding.
+    hiddenLine.hidden = view.hidden.length === 0;
+    hiddenLine.textContent = hiddenLine.hidden
+      ? ''
+      : t('hudChrome.keyboardMap.notOnLayout', {
+          bindings: view.hidden.map(bindingLine).join(t('hudChrome.keyboardMap.separator')),
+        });
   };
   paintBoard();
+  // Real legends arrive asynchronously on first use; repaint once they do.
+  if (!layoutMap) loadLayoutMap().then(() => wrap.isConnected && paintBoard());
 
   const legend = document.createElement('div');
   legend.className = 'kbm-legend-row';
@@ -394,7 +498,7 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
   dotItem.append(dotSwatch, document.createTextNode(t('hudChrome.keyboardMap.otherLayers')));
   legend.appendChild(dotItem);
 
-  wrap.append(head, board, legend, detail, actions);
+  wrap.append(head, board, hiddenLine, legend, detail, actions);
   root.appendChild(wrap);
   return {
     el: wrap,

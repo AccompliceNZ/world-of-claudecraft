@@ -47,6 +47,7 @@ const FULL_ENTRIES = {
   'wocc.charSort': 'level',
   'woc.tutorial.v1': '1',
   woc_gpu_notice_dismissed: '1',
+  woc_keyboard_layout: 'tkl',
 };
 
 describe('settings_transfer_core', () => {

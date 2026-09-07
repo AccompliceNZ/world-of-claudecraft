@@ -268,6 +268,7 @@ const UI_PURE_CORES = [
   'src/ui/interface_unlock_menu_core.ts',
   'src/ui/keybind_transfer_core.ts',
   'src/ui/keyboard_map_core.ts',
+  'src/ui/keyboard_layout_pref_core.ts',
   'src/ui/settings_transfer_core.ts',
   'src/ui/meters_frame_core.ts',
   'src/ui/meters_menu_view.ts',
