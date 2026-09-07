@@ -38,13 +38,17 @@ describe('interaction prompt view', () => {
       (bindings, action, kind) =>
         `${kind}:${bindings.find((entry) => entry.action === action)?.button}`,
     );
+    // NOTE: holdProgress is a VIEW CONTRACT, not shipped behaviour. Nothing in
+    // production produces a non-null one today: resolveNearbyInteractionCandidate
+    // returns holdProgress: null on every path and there is no hold-to-interact
+    // timer anywhere, gamepad long-press included. The value below is fabricated
+    // to pin the clamp, so it must not be read as evidence that a hold exists.
     const candidate = { ...npcCandidate, holdProgress: 1.4 };
 
     expect(
       view.tick(candidate, true, 'KeyE', [{ button: 0, action: 'confirm' }], 'nintendo'),
     ).toMatchObject({
       padActive: true,
-      padTone: 'a',
       keycap: 'nintendo:0',
       holdProgress: 1,
       holding: true,
@@ -52,7 +56,41 @@ describe('interaction prompt view', () => {
 
     expect(
       view.tick(candidate, true, 'KeyE', [{ button: 2, action: 'interact' }], 'xbox'),
-    ).toMatchObject({ padTone: 'x', keycap: 'xbox:2' });
+    ).toMatchObject({ keycap: 'xbox:2' });
+  });
+
+  // Pin moved: the tone used to be a lookup by raw W3C button index, so index 0
+  // came out Xbox-A green whatever the pad printed. It now follows the glyph the
+  // player is actually reading, so a letter and its colour agree per brand.
+  it('colours the keycap by the brand glyph, not the raw button index', () => {
+    const view = createInteractPromptView((binding) => binding, labelForGamepadAction);
+    const confirm = [{ button: 0, action: 'confirm' }];
+
+    // Index 0 is A on an Xbox pad (green) but B on a Switch pad (red), and the
+    // colour follows the letter each of them prints.
+    expect(view.tick(npcCandidate, true, 'KeyE', confirm, 'xbox')).toMatchObject({
+      padTone: 'a',
+      keycap: 'A',
+    });
+    expect(view.tick(npcCandidate, true, 'KeyE', confirm, 'nintendo')).toMatchObject({
+      padTone: 'b',
+      keycap: 'B',
+    });
+    // A PlayStation pad prints shapes, whose colours are not the letter colours,
+    // so its face buttons take no tone at all instead of a wrong one.
+    expect(view.tick(npcCandidate, true, 'KeyE', confirm, 'playstation')).toMatchObject({
+      padTone: null,
+      keycap: 'Cross',
+    });
+    // The generic family prints both conventions; the tone follows the letter.
+    expect(view.tick(npcCandidate, true, 'KeyE', confirm, 'generic')).toMatchObject({
+      padTone: 'a',
+      keycap: 'A / Cross',
+    });
+    // A shoulder is never a face button on any brand.
+    expect(
+      view.tick(npcCandidate, true, 'KeyE', [{ button: 4, action: 'confirm' }], 'nintendo'),
+    ).toMatchObject({ padTone: null, keycap: 'L' });
   });
 
   it('shows the live default gamepad face glyph', () => {

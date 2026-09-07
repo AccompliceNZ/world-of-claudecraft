@@ -21,6 +21,7 @@ import {
   gamepadButtonLabel,
 } from '../game/gamepad_map';
 import { t } from './i18n';
+import { padFaceTone } from './pad_face_tone_core';
 import type { PadHintRowElements } from './pad_hint_strip_painter';
 import { PadHintStripPainter } from './pad_hint_strip_painter';
 import type { PadHintBinding, PadHintBindings, PadHintTone } from './pad_hint_strip_view';
@@ -32,10 +33,6 @@ const LEGEND_ID = 'pad-legend';
 const ROW_SELECTOR = '.pad-hint-row';
 const GLYPH_SELECTOR = '.pad-glyph, .pad-legend-glyph';
 const LABEL_SELECTOR = '.pad-hint-label';
-
-/** The four face buttons in W3C index order, so a resolved binding can say which
- *  colour the hardware prints it in. */
-const FACE_TONES: readonly PadHintTone[] = ['a', 'b', 'x', 'y'];
 
 /** What the strip needs off the live pad. Structurally the HUD's own
  *  GamepadBindingsHooks, narrowed to the five members this readout reads. */
@@ -50,17 +47,20 @@ export interface PadHintGamepadSource {
 const UNBOUND: PadHintBinding = { glyph: '', tone: null };
 
 /** The face-button colour for the FIRST of these actions the pad has a button
- *  for, or null when that button is not a face button (a shoulder, a stick
- *  click, a d-pad direction) or none of them is bound at all. The action order
- *  mirrors the resolver that picked the glyph, so the colour and the letter can
- *  never come from different buttons. */
+ *  for, or null when that button prints no A/B/X/Y letter on this brand (a
+ *  shoulder, a stick click, a d-pad direction, a PlayStation shape) or none of
+ *  them is bound at all. The colour follows the BRAND glyph rather than the raw
+ *  W3C index, so it can never contradict the letter beside it, and the action
+ *  order mirrors the resolver that picked the glyph, so the colour and the
+ *  letter can never come from different buttons either. */
 function toneFor(
   entries: readonly GamepadBindingEntry[],
+  kind: GamepadKind,
   ...actions: readonly GamepadActionId[]
 ): PadHintTone {
   for (const action of actions) {
     const entry = entries.find((candidate) => candidate.action === action);
-    if (entry) return FACE_TONES[entry.button] ?? null;
+    if (entry) return padFaceTone(gamepadButtonLabel(entry.button, kind));
   }
   return null;
 }
@@ -71,7 +71,7 @@ function bindingFor(
   kind: GamepadKind,
 ): PadHintBinding {
   const glyph = labelForGamepadAction(entries, action, kind);
-  return glyph ? { glyph, tone: toneFor(entries, action) } : UNBOUND;
+  return glyph ? { glyph, tone: toneFor(entries, kind, action) } : UNBOUND;
 }
 
 /** A hint that resolves to a SEQUENCE of presses reads as one line here: the
@@ -100,8 +100,8 @@ export function padHintBindings(source: PadHintGamepadSource): PadHintBindings {
   return {
     // The tone follows the button confirm actually sits on, which is what the
     // interact prompt's own keycap is coloured by, so one button is one colour.
-    interact: { glyph: interact.glyph, tone: toneFor(entries, GAMEPAD_CONFIRM, 'interact') },
-    targetMenu: { glyph: target.glyph, tone: toneFor(entries, 'target', 'targetPrev') },
+    interact: { glyph: interact.glyph, tone: toneFor(entries, kind, GAMEPAD_CONFIRM, 'interact') },
+    targetMenu: { glyph: target.glyph, tone: toneFor(entries, kind, 'target', 'targetPrev') },
     swapSet: bindingFor(entries, GAMEPAD_CYCLE_SET, kind),
     // The chord that opens arrange mode, named the way the bar's own hint names
     // it, so the two lines agree.

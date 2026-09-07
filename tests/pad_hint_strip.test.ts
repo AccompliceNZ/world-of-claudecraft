@@ -144,6 +144,40 @@ describe('padHintBindings', () => {
     expect(b.arrangeBar.tone).toBeNull();
   });
 
+  // Pin moved: the tone used to be a lookup by raw W3C index, so the SAME
+  // button came out Xbox-A green on every brand while the glyph beside it said
+  // Cross or B. It now follows the brand glyph, so the two always agree.
+  it('colours by the brand glyph, never by the raw button index', () => {
+    // Index 0 (confirm) prints A on Xbox and B on a Switch pad; the colour
+    // follows the letter, so the same button is green on one and red on the other.
+    expect(padHintBindings(source(DEFAULT_ENTRIES, 'nintendo')).interact).toMatchObject({
+      glyph: 'B',
+      tone: 'b',
+    });
+    // Index 2 (target) prints X on Xbox and Y on a Switch pad.
+    expect(padHintBindings(source(DEFAULT_ENTRIES, 'nintendo')).targetMenu).toMatchObject({
+      glyph: 'Y',
+      tone: 'y',
+    });
+    // PlayStation shapes carry their own colours, which are not the letter
+    // colours, so they take no tone instead of a wrong one.
+    expect(padHintBindings(source(DEFAULT_ENTRIES, 'playstation')).interact).toMatchObject({
+      glyph: 'Cross',
+      tone: null,
+    });
+    expect(padHintBindings(source(DEFAULT_ENTRIES, 'playstation')).targetMenu.tone).toBeNull();
+    // The generic family prints both conventions; the tone follows the letter.
+    expect(padHintBindings(source(DEFAULT_ENTRIES, 'generic')).interact).toMatchObject({
+      glyph: 'A / Cross',
+      tone: 'a',
+    });
+    // A Switch pad's shoulder is the bare letter L, which is still not a face button.
+    expect(padHintBindings(source(DEFAULT_ENTRIES, 'nintendo')).swapSet).toMatchObject({
+      glyph: 'R',
+      tone: null,
+    });
+  });
+
   it('answers empty for an action this pad cannot reach', () => {
     expect(padHintBindings(source([])).swapSet.glyph).toBe('');
     expect(padHintBindings(source([])).bags.glyph).toBe('');

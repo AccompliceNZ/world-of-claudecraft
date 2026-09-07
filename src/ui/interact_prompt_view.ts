@@ -1,5 +1,6 @@
 import { tEntity } from './entity_i18n';
 import { type TranslationKey, t } from './i18n';
+import { type PadFaceTone, padFaceTone } from './pad_face_tone_core';
 
 export type InteractionPromptVerb =
   | 'talk'
@@ -29,15 +30,13 @@ export interface InteractPromptCandidateInput {
 export interface InteractPromptState {
   visible: boolean;
   padActive: boolean;
-  padTone: 'a' | 'b' | 'x' | 'y' | null;
+  padTone: PadFaceTone | null;
   verb: string;
   targetName: string;
   keycap: string;
   holdProgress: number;
   holding: boolean;
 }
-
-const FACE_BUTTON_TONES = ['a', 'b', 'x', 'y'] as const;
 
 function gamepadAction(
   bindings: readonly InteractPromptGamepadBinding[],
@@ -115,7 +114,6 @@ export function createInteractPromptView(
         padActive && gamepadBindings !== null ? gamepadAction(gamepadBindings) : null;
       state.visible = candidate?.verb != null;
       state.padActive = padActive;
-      state.padTone = padBinding ? (FACE_BUTTON_TONES[padBinding.button] ?? null) : null;
       state.verb = candidate?.verb ? t(VERB_KEYS[candidate.verb]) : '';
       state.targetName = candidate ? targetName(candidate) : '';
       state.keycap =
@@ -124,6 +122,10 @@ export function createInteractPromptView(
           : padActive
             ? ''
             : formatKeyCap(keyboardBinding);
+      // The tone follows the BRAND-mapped glyph the player is reading, never the
+      // raw button index: index 0 prints Cross on a DualSense and B on a Switch
+      // pad, and painting either of those the Xbox A green is the colour lying.
+      state.padTone = padBinding ? padFaceTone(state.keycap) : null;
       state.holdProgress = Math.max(0, Math.min(1, candidate?.holdProgress ?? 0));
       state.holding = state.holdProgress > 0;
       return state;

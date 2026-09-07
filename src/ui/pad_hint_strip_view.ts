@@ -11,10 +11,12 @@
 // its row down rather than shifting the ones under it.
 
 import { type TranslationKey, t } from './i18n';
+import type { PadFaceTone } from './pad_face_tone_core';
 
-/** Which of the four face buttons a glyph names, so it can take the hardware
- *  colour. Null for a shoulder, a d-pad direction, or a chord. */
-export type PadHintTone = 'a' | 'b' | 'x' | 'y' | null;
+/** Which of the four LETTERED face buttons a glyph names, so it can take that
+ *  letter's colour. Null for a shoulder, a d-pad direction, a chord, or a brand
+ *  whose face buttons carry shapes instead of letters. */
+export type PadHintTone = PadFaceTone | null;
 
 /** One resolved binding: what this pad prints for it, and which face button it
  *  is (if any). An empty glyph means the action is not reachable on this pad. */

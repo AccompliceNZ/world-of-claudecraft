@@ -74,6 +74,11 @@ describe('InteractPromptPainter', () => {
       { root, keycap, verb: document.createElement('span'), name: document.createElement('span') },
     );
 
+    // NOTE: holdProgress / holding are a PAINTER CONTRACT, not shipped
+    // behaviour. resolveNearbyInteractionCandidate returns holdProgress: null on
+    // every path and no hold-to-interact timer exists anywhere (gamepad
+    // long-press included), so the values below are fabricated to pin the
+    // custom-property write, never evidence that a hold ring is reachable.
     painter.paint({
       visible: true,
       padActive: true,
