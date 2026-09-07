@@ -49,6 +49,7 @@ describe('HUD_FRAME_SPECS', () => {
       'deedTracker',
       'delveTracker',
       'riftTracker',
+      'gatheringGoalTracker',
       'swingBarOffhand',
     ]);
     expect(HUD_FRAME_SPECS.map((s) => s.elementId)).toEqual([
@@ -77,6 +78,7 @@ describe('HUD_FRAME_SPECS', () => {
       'deed-tracker',
       'delve-tracker',
       'rift-tracker',
+      'gathering-goal-tracker',
       'swingbar-offhand',
     ]);
     // A duplicated storage key would make two frames overwrite each other's
@@ -115,6 +117,7 @@ describe('HUD_FRAME_SPECS', () => {
       'woc_hud_frame_deed_tracker',
       'woc_hud_frame_delve_tracker',
       'woc_hud_frame_rift_tracker',
+      'woc_hud_frame_gathering_goal_tracker',
       'woc_hud_frame_swingbar_offhand',
     ]);
   });
@@ -149,6 +152,7 @@ describe('HUD_FRAME_SPECS', () => {
       'deedTracker',
       'delveTracker',
       'riftTracker',
+      'gatheringGoalTracker',
     ]);
   });
 

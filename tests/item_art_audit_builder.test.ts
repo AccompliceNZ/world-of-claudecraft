@@ -17,7 +17,6 @@ import {
   renderItemArtAuditPreview,
   updateItemArtAuditVerdict,
 } from '../scripts/lib/item_art_audit.mjs';
-import { ITEMS } from '../src/sim/data';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const temporaryRoots: string[] = [];
@@ -737,6 +736,80 @@ describe('item-art audit builder', () => {
     ).toThrow('Resolved audit item is absent from the current catalog: absent_blade');
   });
 
+  it('exempts declared pending-art ids from the missing-art sweep, policed in both directions', async () => {
+    // The farming branch ships procedural icons as declared debt
+    // (ITEM_ART_PENDING); the audit honors exactly that declaration and
+    // nothing else. Three arms: the undeclared def still reds, a phantom
+    // declaration reds, and a declared id that GAINS art reds until it is
+    // struck from the pending set (the self-clearing direction).
+    const root = mkdtempSync(path.join(tmpdir(), 'woc-item-art-pending-'));
+    temporaryRoots.push(root);
+    const itemDirectory = 'public/ui/items';
+    const outputDirectory = 'tmp/item-art-audit';
+    mkdirSync(path.join(root, itemDirectory), { recursive: true });
+    const red = await sharp({
+      create: { width: 128, height: 128, channels: 3, background: { r: 150, g: 24, b: 35 } },
+    })
+      .webp({ quality: 82 })
+      .toBuffer();
+    writeFileSync(path.join(root, itemDirectory, 'alpha_blade.webp'), red);
+    const items = {
+      alpha_blade: { name: 'Alpha Blade', kind: 'weapon', quality: 'common' },
+      gamma_root: { name: 'Gamma Root', kind: 'junk', quality: 'common' },
+    };
+    const mapping = { entries: [{ itemId: 'alpha_blade' }], generatedBatches: [] };
+    const base = {
+      repoRoot: root,
+      itemDirectory,
+      outputDirectory,
+      renderOutputs: false,
+      items,
+      mapping,
+    };
+    await expect(buildItemArtAudit(base)).rejects.toThrow(
+      'Live item definitions without dedicated art: gamma_root',
+    );
+    const build = await buildItemArtAudit({ ...base, pendingArtIds: ['gamma_root'] });
+    // liveItemCount is the ART-SUBJECT universe: two live defs minus the one
+    // declared debt id.
+    expect(build.catalog.liveItemCount).toBe(1);
+    expect(build.catalog.catalogCount).toBe(1);
+    // The debt term is its own expected literal: an audit run that pins BOTH
+    // halves reds when the pending set grows even though liveItemCount is
+    // structurally blind to a def that joins the catalog and the debt at
+    // once. Conforms arm, then the violates arm one off in each direction.
+    await buildItemArtAudit({
+      ...base,
+      pendingArtIds: ['gamma_root'],
+      expected: { pendingArtCount: 1 },
+    });
+    await expect(
+      buildItemArtAudit({
+        ...base,
+        pendingArtIds: ['gamma_root'],
+        expected: { pendingArtCount: 0 },
+      }),
+    ).rejects.toThrow('Unexpected pending procedural-art debt count');
+    await expect(
+      buildItemArtAudit({
+        ...base,
+        pendingArtIds: ['gamma_root'],
+        expected: { pendingArtCount: 2 },
+      }),
+    ).rejects.toThrow('Unexpected pending procedural-art debt count');
+    await expect(buildItemArtAudit({ ...base, pendingArtIds: ['ghost_id'] })).rejects.toThrow(
+      'pending-art id ghost_id is not a live item definition',
+    );
+    await expect(
+      buildItemArtAudit({ ...base, pendingArtIds: ['alpha_blade', 'gamma_root'] }),
+    ).rejects.toThrow('pending-art id alpha_blade has shipping art');
+  });
+
+  // Declared 60s allowance: this arm execs the real CLI twice (help plus a
+  // full --verify-only, which esbuild-bundles the sim and sharp-decodes 907
+  // committed files, itself budgeted 30s), and under full-suite worker
+  // contention the pair runs past the 20s repo default (21.4s observed at the
+  // farming Phase 6 QA gate) while taking ~7s in isolation.
   it('exposes the fresh-checkout rebuild and explicit verdict-refresh CLI', () => {
     const help = execFileSync(process.execPath, ['scripts/item_art_audit.mjs', '--help'], {
       cwd: repoRoot,
@@ -746,10 +819,12 @@ describe('item-art audit builder', () => {
     expect(help).toContain('--verify-only');
     expect(help).toContain('--refresh-verdict');
     expect(help).toContain('tmp/imagegen/item-art-consistency/final-audit');
+    expect(help).toContain(
+      'docs/achievements/masterwrought-art-completion-2026-09-02/final-item-art-audit-verdict.json',
+    );
 
-    // The current digest includes the Passing Stone addition and the seven reviewed painted bag
-    // replacements. `verdict: null` is the point: verify-only validates the live catalog without
-    // rewriting the committed visual verdict.
+    // `verdict: null` is the point: verify-only validates the live catalog
+    // without rewriting the committed visual verdict.
     const verified = JSON.parse(
       execFileSync(process.execPath, ['scripts/item_art_audit.mjs', '--verify-only'], {
         cwd: repoRoot,
@@ -757,29 +832,40 @@ describe('item-art audit builder', () => {
         timeout: 30_000,
       }),
     ) as Record<string, unknown>;
+    // Restored post-merge (release/v0.42.0 into professions): neither
+    // pre-merge parent's pin matches the merged tree (professions HEAD:
+    // catalogCount 1256; release: catalogCount 1069). These are the measured
+    // values from `node scripts/item_art_audit.mjs --verify-only` run
+    // directly on the merged tree (see the matching restore in
+    // scripts/item_art_audit.mjs's `expected` block), not invented or
+    // derived from either parent.
     expect(verified).toMatchObject({
       catalogPath: 'tmp/imagegen/item-art-consistency/final-audit/catalog.json',
-      // roots-bramblehide-icons-2026-09-07 and the three Nythraxis gap-fill weapon
-      // renders joined the shipping catalog: 1044 + 25 files, 28 more live
-      // definitions (14 heroic), 11 more heroic pieces with their own WebP.
-      // The three gap-fill one-handers were re-rendered on the violet-gem
-      // models after review (same ids, same batch, new bytes).
-      catalogSha256: 'a13dc520421837edf472b006baa762dd0eebbae02dd64ab646a88699180124b2',
-      catalogBytes: 583042,
-      rendererFingerprint: 'd80ff4868f979e1717e106c889b7d6505841caf8d4cf887776ecb60848b1b2b7',
-      catalogCount: 1069,
-      liveItemCount: 1087,
+      catalogSha256: 'a142b3eb8a5e2e4442987b5be3a2b773f1042a7297c241bea4eb23a3c2624e5e',
+      catalogBytes: 698071,
+      rendererFingerprint: '41f5404c4d6d9643c8f03b9d88a8546e44564cc03a1baabdd4a72cb9258a2da7',
+      catalogCount: 1281,
+      liveItemCount: 1299,
       generatedHeroicDefinitions: 78,
       heroicDefinitionsWithOwnWebp: 59,
       heroicWeaponArtAliases: 19,
-      groupCount: 22,
-      sheetPageCount: 27,
-      sheetCount: 216,
-      sheetModeCounts: Object.fromEntries(ITEM_ART_AUDIT_MODES.map((mode) => [mode, 27])),
+      groupCount: 25,
+      sheetPageCount: 31,
+      sheetCount: 248,
+      sheetModeCounts: {
+        '128-color': 31,
+        '40-color': 31,
+        '28-color': 31,
+        '22-color': 31,
+        '28-grayscale': 31,
+        '64-circle': 31,
+        'small-multiview': 31,
+        identity: 31,
+      },
       sheetSetSha256: null,
-      shippingCatalogSha256: '8efefbdb39729e9d08383c4ac5d954b9eed2381875bd9a7b9798f1b5862632db',
+      shippingCatalogSha256: '0e2f5e7cca8ed82b6a37ccbda5a56c4aeeeb7eaf43cda590face156b3093de78',
       machineChecksPassed: true,
       verdict: null,
     });
-  });
+  }, 60_000);
 });

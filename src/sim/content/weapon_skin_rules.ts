@@ -43,6 +43,7 @@ export const WEAPON_TYPE_BY_ITEM: Record<string, ItemWeaponType> = {
   bonewrought_greatsword: 'sword',
   direfang_greatblade: 'sword',
   hoarfrost_edge: 'sword',
+  duskforged_warblade: 'sword',
   wildheart_tuskblade: 'sword',
   greatfang_of_the_basin: 'sword',
   // Daggers
@@ -97,6 +98,7 @@ export const WEAPON_TYPE_BY_ITEM: Record<string, ItemWeaponType> = {
   gravewyrm_thornmaul: 'mace',
   maul_of_the_scourged_wilds: 'mace',
   wildsoul_maul: 'mace',
+  ridgebreaker: 'mace',
   varkhul_forgebreaker: 'mace',
   // Axes
   gravecourt_hewer: 'axe', // EPIC: Nythraxis gap-fill dual-wield one-hander

@@ -28,6 +28,7 @@ import type {
   LootEntry,
   MobTemplate,
 } from '../types';
+import { CRUCIBLE_PROFESSION_PATTERN_LOOT } from './crucible_collections';
 import { HEROIC_FINALE_COPPER, NYTHRAXIS_HEROIC_COPPER } from './dungeon_difficulty';
 import { CRUCIBLE_VENDOR_NPC_ID } from './ignivar_loot';
 import {
@@ -159,8 +160,8 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
       normalOnlyRow('varkhul_offset', 'orb_of_the_last_spring', 0.09375),
       normalOnlyRow('varkhul_offset', 'cinder_of_the_first_design', 0.09375),
       // Neither legendary drops on Normal. Emberward's 3 percent roll lives
-      // in Varkhul's heroic-only exclusive group; Forgebreaker remains reserved
-      // for the crafting professions until its recipe chain lands.
+      // in Varkhul's heroic-only exclusive group; Forgebreaker's one-time
+      // quest shaping belongs to Weaponcrafting, never a boss loot row.
       normalOnlyRow('varkhul_offset', 'seal_of_the_forgewall', 0.125),
       normalOnlyRow('varkhul_offset', 'band_of_marked_strikes', 0.125),
       normalOnlyRow('varkhul_offset', 'circle_of_cinders', 0.125),
@@ -172,6 +173,8 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
       // shape with the scroll roll group and the hammer chain starter).
       { itemId: 'lastflame_core', chance: 1 },
       { itemId: 'lastflame_core', chance: 0.5 },
+      ...CRUCIBLE_PROFESSION_PATTERN_LOOT,
+      { itemId: 'forgefathers_ember', chance: 1, questId: 'q_forgefathers_requiem' },
     ],
     scale: 3.2,
     color: 0x9f351c,
@@ -354,6 +357,7 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
       // shape with the scroll roll group and the hammer chain starter).
       { itemId: 'lastflame_core', chance: 1 },
       { itemId: 'lastflame_core', chance: 0.5 },
+      ...CRUCIBLE_PROFESSION_PATTERN_LOOT,
     ],
     scale: 3.4,
     color: 0xd64316,
@@ -1185,6 +1189,63 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
       { itemId: 'thornpeak_moonhide_cowl', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
       { itemId: 'stormhymn_chain_grips', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
       { itemId: 'stormhymn_chain_treads', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
+      // MERGE NOTE (release/v0.42.0 -> feature/masterwrought): the groups below
+      // were authored on masterwrought assuming they would sit immediately
+      // after group 5 (nythraxis_drop_5); release's drop_6/drop_7 groups above
+      // now sit between them and group 5 instead. The rollGroup draw order has
+      // therefore shifted for every group below relative to masterwrought's own
+      // prior parity recording; tests/parity's nythraxis scenarios need
+      // re-minting after this merge (see the merge report).
+      // Masterwrought apex GEAR patterns (Phase 11, R8 channel doctrine): the
+      // raid pillar carries the ten weaponcrafting/jewelcrafting/engineering/
+      // inscription patterns (content/apex_patterns.ts) as ONE new partitioned
+      // rollGroup, 0.04 each (0.40 total: at most one pattern per kill, 60% of
+      // kills shed none). APPENDED AT THE TAIL by contract: loot_roll.ts
+      // consumes rng draws in array order (one draw per rollGroup at its first
+      // member's index; a normalOnly group draws nothing on a heroic claim, and
+      // no row in this table is normalOnly), so a tail append leaves every
+      // existing draw's stream
+      // position byte-identical WITHIN THE BASE WALK (a heroic claim's
+      // HEROIC_BOSS_LOOT draws roll after the base table in the same rollLoot
+      // call, so they sit one draw later; benign, and PINNED since Phase 11f,
+      // which recorded the nythraxis_heroic_claim parity scenario for exactly
+      // that stream, so this is no longer covered only by the normal-difficulty
+      // kill the sibling scenario drives) while an insert or
+      // reorder forks the parity digest. Never insert or reorder any entry
+      // above this group. kind 'recipe' defs mint no heroic variants
+      // (heroic_variants.ts generator filter), so the heroic auto-upgrade
+      // path ignores them.
+      { itemId: 'pattern_duskforged_warblade', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_ridgebreaker', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_duskforged_bulwark', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_wyrmfall_pendant', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_warhewn_signet', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_prismglass_loop', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_gyrelens_array', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_masters_field_forge', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_makers_charm', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_voidbound_grimoire', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      // Farming's raid channel (Phase 11f, masterwrought R8): the farm ladder's PINNACLE
+      // rides the pinnacle encounter. ONE more partitioned rollGroup at the
+      // tail carrying pattern_harvest_feast (the party feast, now cooking 100)
+      // and every TIER-4 seed, so a raid night can hand a farmer the recipe for
+      // the feast the raid itself eats, or the seed for the crop it is made of.
+      //
+      // Appended BELOW 'nythraxis_patterns' under the same contract the block
+      // above states, and for the same reason: one more draw at the very end of
+      // the base walk, so every existing draw keeps its stream position. The
+      // heroic draws that roll after the base table in the same rollLoot call
+      // DO shift by one, which is no longer unpinned: the nythraxis_heroic_claim
+      // parity scenario records exactly that stream.
+      //
+      // RATE: 0.04 per entry, the SHIPPED per-pattern point the group above
+      // uses, reused rather than re-derived. Five entries, so 0.20 total: at
+      // most one item per kill and four kills in five shed nothing here.
+      { itemId: 'pattern_harvest_feast', chance: 0.04, rollGroup: 'nythraxis_farm' },
+      { itemId: 'gilded_sunmelon_seed', chance: 0.04, rollGroup: 'nythraxis_farm' },
+      { itemId: 'evergarden_greens_seed', chance: 0.04, rollGroup: 'nythraxis_farm' },
+      { itemId: 'gilded_yam_seed', chance: 0.04, rollGroup: 'nythraxis_farm' },
+      { itemId: 'evergarden_pumpkin_seed', chance: 0.04, rollGroup: 'nythraxis_farm' },
     ],
     scale: 3.1,
     color: 0x221b2d,
