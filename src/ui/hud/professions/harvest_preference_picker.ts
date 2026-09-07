@@ -43,6 +43,14 @@
 // across via the shared `captureFocusKey`/`findFocusKey`/`restoreFirstEnabled`
 // seam (src/ui/focus_restore.ts), not merely re-derive "the checked row":
 // a player can focus Apply or Cancel before the language changes.
+//
+// The GENERAL picker's source-info detail (Intentional Gathering PR5) is
+// associated with the currently drafted row via `aria-describedby`, never a
+// separate `aria-live` region: the detail content is rewritten FIRST, the
+// describing attribute is moved to the newly drafted row SECOND, and DOM
+// focus (an arrow/Home/End landing) moves LAST, so a screen reader announces
+// the row's name and then its up-to-date description in one landing, with no
+// extra live-region chatter on every keystroke.
 
 import { ITEMS } from '../../../sim/data';
 import type { HarvestPreference } from '../../../sim/professions/harvest_preference';
@@ -50,6 +58,7 @@ import { itemDisplayName } from '../../entity_i18n';
 import { t } from '../../i18n';
 import { knownItemDef } from '../../known_item';
 import { rovingTarget } from '../../roving_index';
+import { renderGatheringSourceDetail } from './gathering_source_painter';
 import { buildHarvestPreferencePickerView } from './harvest_preference_view';
 
 export interface HarvestPreferencePickerInput {
@@ -73,6 +82,18 @@ export interface HarvestPreferencePickerDeps {
 
 let instanceCounter = 0;
 
+/** null itemId (the All row, or nothing drafted yet) clears the detail: All
+ *  concentrates on no single material, so there is nothing to show a source
+ *  for. */
+function refreshSourceDetail(sourceDetail: HTMLElement | null, itemId: string | null): void {
+  if (!sourceDetail) return;
+  if (itemId === null) {
+    sourceDetail.textContent = '';
+    return;
+  }
+  renderGatheringSourceDetail(sourceDetail, itemId);
+}
+
 function rowLabelText(itemId: string | null): string {
   if (itemId === null) return t('hudChrome.harvestPreference.allLabel');
   const item = knownItemDef(ITEMS, itemId);
@@ -92,7 +113,18 @@ export function renderHarvestPreferencePicker(
 ): void {
   const view = buildHarvestPreferencePickerView(input.preference, input.componentTags);
   const document = container.ownerDocument;
-  const titleId = `harvest-preference-title-${instanceCounter++}`;
+  const instanceId = instanceCounter++;
+  const titleId = `harvest-preference-title-${instanceId}`;
+  // Source-info detail (Intentional Gathering PR5): the GENERAL catalog
+  // picker only (Field Kit use, Professions). The corpse Change picker
+  // already lists that one body's own supported choices, so it never shows
+  // this block.
+  const isGeneralPicker = input.componentTags === undefined;
+  const sourceDetail = isGeneralPicker ? document.createElement('div') : null;
+  if (sourceDetail) sourceDetail.id = `harvest-preference-source-detail-${instanceId}`;
+  // The one button currently described by sourceDetail, so a later selection
+  // can remove the attribute from it before moving it to the new row.
+  let describedButton: HTMLButtonElement | null = null;
 
   container.textContent = '';
   const root = document.createElement('div');
@@ -152,13 +184,28 @@ export function renderHarvestPreferencePicker(
     view.rows.findIndex((row) => row.token === view.selectedToken),
   );
 
+  /** Move `aria-describedby` (referencing the source detail) onto `button`,
+   *  clearing it off whichever row carried it before. A no-op when the
+   *  general picker's detail is absent (the corpse Change picker). */
+  const setDescribedRadio = (button: HTMLButtonElement | null): void => {
+    if (!sourceDetail) return;
+    if (describedButton && describedButton !== button) {
+      describedButton.removeAttribute('aria-describedby');
+    }
+    if (button) button.setAttribute('aria-describedby', sourceDetail.id);
+    describedButton = button;
+  };
+
   /** Land the draft on `index`: updates aria-checked, the roving tab stop,
    *  the hint, and Apply's disabled state, and reports the new token via
    *  onDraftChange. `focus` also moves DOM focus (an arrow/Home/End
    *  landing); a click leaves focus where the pointer put it. Never calls
    *  onCommit/onDismiss: Apply/Cancel are the only paths that do. Guarded by
    *  `canAct()` like Apply/Cancel, so a stale or superseded render's rows
-   *  cannot mutate a draft nobody is looking at or report it upstream. */
+   *  cannot mutate a draft nobody is looking at or report it upstream.
+   *  The source detail is rewritten and re-associated BEFORE `button.focus()`
+   *  moves DOM focus, so a screen reader landing on the row reads its
+   *  up-to-date description rather than the previous row's. */
   const selectRow = (index: number, focus: boolean): void => {
     if (!canAct()) return;
     const button = buttons[index];
@@ -171,9 +218,11 @@ export function renderHarvestPreferencePicker(
       b.setAttribute('aria-checked', checked ? 'true' : 'false');
       b.tabIndex = checked ? 0 : -1;
     }
-    if (focus) button.focus();
     hint.hidden = true;
     applyButton.disabled = false;
+    refreshSourceDetail(sourceDetail, view.rows[index].itemId);
+    setDescribedRadio(button);
+    if (focus) button.focus();
     deps.onDraftChange(token);
   };
 
@@ -202,6 +251,17 @@ export function renderHarvestPreferencePicker(
     buttons.push(button);
   });
   root.appendChild(list);
+
+  if (sourceDetail) {
+    sourceDetail.className = 'harvest-preference-source-container';
+    const initialRow = view.rows.find((row) => row.token === view.selectedToken);
+    refreshSourceDetail(sourceDetail, initialRow?.itemId ?? null);
+    root.appendChild(sourceDetail);
+    // Associate the already-checked row with the freshly painted detail, the
+    // same content-before-focus order selectRow keeps (no focus move happens
+    // here; this paint has not moved focus at all yet).
+    if (initialRow) setDescribedRadio(buttons[view.rows.indexOf(initialRow)] ?? null);
+  }
 
   const actions = document.createElement('div');
   actions.className = 'harvest-preference-actions';
