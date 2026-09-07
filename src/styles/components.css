@@ -8261,42 +8261,59 @@
     color: var(--color-text-muted);
     margin: 0 0 4px;
   }
-  .gbank-log-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  /* The history's filter chips (All / Items / Money): a labelled group of
+     toggle buttons; the pressed one is carried by aria-pressed and styled from
+     it, so state is never colour-only. Sized like the bank's small gold
+     buttons so the strip reads as one row of chrome above the list. */
+  .gbank-log-filters {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-  .gbank-log-row {
-    display: flex;
-    align-items: baseline;
-    gap: 8px;
-    padding: 4px 6px;
-    border-radius: 3px;
-    background: #17120e;
-  }
-  .gbank-log-row:nth-child(even) {
-    background: #1c1611;
-  }
-  .gbank-log-time {
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 2px 0 4px;
     flex: none;
-    font-size: 10px;
+  }
+  .gbank-log-filter {
+    font-family: var(--title-font);
+    font-size: 11px;
+    cursor: var(--cursor-point);
+    color: var(--gold-dim);
+    background: #1a1410;
+    border: 1px solid var(--color-border-showcase);
+    border-radius: 3px;
+    padding: 2px 8px;
+  }
+  .gbank-log-filter:hover,
+  .gbank-log-filter:focus-visible {
+    color: var(--gold);
+  }
+  .gbank-log-filter[aria-pressed="true"] {
+    color: var(--gold);
+    border-color: var(--color-border-focus);
+    background: #221c14;
+  }
+  /* The list's tail: the show-older button, its in-flight line, or the
+     start-of-history line. Inside the scroller, after the rows, so it is met
+     exactly where a reader runs out of history. */
+  .gbank-log-foot {
+    flex: none;
+    margin: 6px 0 2px;
+    font-size: 11px;
     color: var(--color-text-muted);
-    white-space: nowrap;
+    text-align: center;
   }
-  .gbank-log-text {
-    font-size: 12px;
-    /* Names and item names are player/content text of unbounded width: wrap
-       rather than clipping a sentence a player is meant to be able to read. */
-    overflow-wrap: anywhere;
+  .gbank-log-older {
+    font-family: var(--title-font);
+    font-size: 11px;
+    cursor: var(--cursor-point);
+    color: var(--gold-dim);
+    background: #1a1410;
+    border: 1px solid var(--color-border-showcase);
+    border-radius: 4px;
+    padding: 4px 12px;
   }
-  /* Loading / refused / empty all share the .bank-empty look; the refusal is
-     tinted because "you may not read this" is not the same news as "nothing has
-     happened", and the words say so too (never color alone). */
-  .gbank-log-refused {
-    color: var(--color-text-error);
+  .gbank-log-older:hover,
+  .gbank-log-older:focus-visible {
+    color: var(--gold);
   }
   /* Guild treasury header row: label + coin readout + the two gold actions. */
   .gbank-treasury {

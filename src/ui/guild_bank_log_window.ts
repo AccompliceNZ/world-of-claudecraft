@@ -1,14 +1,16 @@
-// The LOG view of the Bank window's Guild pane: a plain-language history of
-// what officers have done with the guild's shared property, painted from the
-// structured GuildBankLogPaneModel (guild_bank_log_view.ts). The pure core
-// decides the pane state and which SENTENCE each row is; this thin consumer
-// crosses the i18n boundary (wording, formatMoney, the date formatter) and
-// nothing else.
+// The HISTORY view of the Bank window's Guild pane: a plain-language
+// transaction history of what officers have done with the guild's shared
+// property, painted from the structured GuildBankLogPaneModel
+// (guild_bank_log_view.ts). The pure core decides the pane state, the pressed
+// filter chip, which SENTENCE each row is, and what the footer offers; this
+// thin consumer crosses the i18n boundary (wording, formatMoney, the date
+// formatter) and wires the two controls (the chip strip, the show-older
+// button) back to the pane through its deps, nothing else.
 //
-// Composed by GuildBankTab (guild_bank_window.ts), which owns the Contents/Log
-// sub-strip and the on-demand fetch trigger. Cold-pane contract (the
-// bank_window cold-bucket rules): no forced-reflow layout read, no repeating
-// driver of its own, and no raw hex.
+// Composed by GuildBankTab (guild_bank_window.ts), which owns the Contents/
+// History sub-strip, the selected filter, and the on-demand fetch trigger.
+// Cold-pane contract (the bank_window cold-bucket rules): no forced-reflow
+// layout read, no repeating driver of its own, and no raw hex.
 //
 // PLAYER-AUTHORED TEXT: a row's actor is a character name. It is spliced into a
 // TEXT sink (textContent on a fresh node, never innerHTML), so the DOM escapes
@@ -19,13 +21,17 @@
 //
 // THE THREE NON-ROW STATES ARE ALL RENDERED, and none of them is an empty list:
 // loading says it is loading, a refusal says the read was declined, and an
-// empty history says so in words. A drained guild bank must never be able to
-// look like an untouched one because a frame went missing.
+// empty history says so in words (and says "under this filter" when a filter
+// is on, because an empty Items slice is not an untouched bank). A drained
+// guild bank must never be able to look like an untouched one because a frame
+// went missing.
 
 import type { ItemDef } from '../sim/types';
-import { GUILD_BANK_LOG_LIMIT } from '../world_api';
+import type { GuildBankLogKind } from '../world_api';
 import { itemDisplayName } from './entity_i18n';
 import type {
+  GuildBankLogFilterModel,
+  GuildBankLogFooter,
   GuildBankLogPaneModel,
   GuildBankLogRowKind,
   GuildBankLogRowModel,
@@ -45,10 +51,23 @@ const ROW_KEY: Record<GuildBankLogRowKind, TranslationKey> = {
   adminPurge: 'hudChrome.bank.logAdminPurge',
 };
 
+/** The chip label per filter kind. Exhaustive over the seam's vocabulary. */
+const FILTER_KEY: Record<GuildBankLogKind, TranslationKey> = {
+  all: 'hudChrome.bank.logFilterAll',
+  items: 'hudChrome.bank.logFilterItems',
+  money: 'hudChrome.bank.logFilterMoney',
+};
+
 export interface GuildBankLogPaneDeps {
   /** Item table lookup (knownItemDef, never a raw index: a prototype key
    *  indexes to a truthy Function). Undefined means the def is gone. */
   itemDef(itemId: string): ItemDef | undefined;
+  /** A filter chip was pressed: the owner remembers the kind and repaints
+   *  (the next read under that kind is what requests it). */
+  selectFilter(kind: GuildBankLogKind): void;
+  /** The show-older button was pressed: the owner asks the world for the
+   *  next page and repaints (the footer flips to its loading line). */
+  loadOlder(): void;
 }
 
 export class GuildBankLogPane {
@@ -58,12 +77,16 @@ export class GuildBankLogPane {
 
   constructor(private readonly deps: GuildBankLogPaneDeps) {}
 
-  /** Append the log view's sections to the pane root. */
+  /** Append the history view's sections to the pane root. */
   renderInto(el: HTMLElement, model: GuildBankLogPaneModel): void {
     const wrap = document.createElement('div');
     wrap.className = 'gbank-log';
+    // The chip strip renders on EVERY state, so a viewer can leave an empty
+    // slice or a refusal by pressing another chip, and so the strip never
+    // jumps in and out between paints.
+    wrap.appendChild(this.buildFilters(model.filters));
     if (model.kind !== 'rows') {
-      const notice = this.buildNotice(model.kind);
+      const notice = this.buildNotice(model);
       wrap.appendChild(notice);
       el.appendChild(wrap);
       this.announce(notice, model.kind);
@@ -71,19 +94,18 @@ export class GuildBankLogPane {
     }
     this.lastAnnounced = model.kind;
     // The scope line is always-visible TEXT, not a tooltip: a player reading a
-    // trust surface has to know it is a recent WINDOW and not the whole history,
-    // or an absent row reads as proof that nothing happened.
+    // trust surface has to know how many rows are on screen and that they run
+    // newest first; the FOOTER says whether older rows exist, so an absent row
+    // never reads as proof that nothing happened.
     const note = document.createElement('div');
     note.className = 'gbank-log-note';
-    // The window size is interpolated from the ONE seam constant, never baked
-    // into the copy: a hardcoded "50" would have made the sentence lie in every
-    // language the moment the cap moved, and it would have skipped formatNumber
-    // (thousands separators are locale business even at this size).
-    note.textContent = t('hudChrome.bank.logNote', { count: this.count(GUILD_BANK_LOG_LIMIT) });
+    note.textContent = t('hudChrome.bank.logShowing', { count: this.count(model.rows.length) });
     wrap.appendChild(note);
     // .bank-scroll is the window's one scroll-region class; BankWindow captures
     // and restores its offset (and scopes that restore to one pane), so the log
-    // list must use it rather than inventing a second scroller.
+    // list must use it rather than inventing a second scroller. The footer
+    // rides INSIDE the scroller, after the rows: "show older" belongs at the
+    // bottom of the list a reader has just scrolled to the end of.
     const scroll = document.createElement('div');
     scroll.className = 'bank-scroll';
     const list = document.createElement('ul');
@@ -91,29 +113,87 @@ export class GuildBankLogPane {
     list.setAttribute('aria-label', t('hudChrome.bank.logAria'));
     for (const row of model.rows) list.appendChild(this.buildRow(row));
     scroll.appendChild(list);
+    scroll.appendChild(this.buildFooter(model.footer));
     wrap.appendChild(scroll);
     el.appendChild(wrap);
   }
 
+  // The filter chip strip: a labelled GROUP of toggle buttons (aria-pressed),
+  // the armory_inspect mode-toggle family, never a third nested tablist (the
+  // pane already sits inside two) and never colour alone for the pressed state
+  // (the attribute carries it; the class only styles it).
+  private buildFilters(filters: GuildBankLogFilterModel[]): HTMLElement {
+    const strip = document.createElement('div');
+    strip.className = 'gbank-log-filters';
+    strip.setAttribute('role', 'group');
+    strip.setAttribute('aria-label', t('hudChrome.bank.logFilterAria'));
+    for (const filter of filters) {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = `gbank-log-filter${filter.selected ? ' on' : ''}`;
+      chip.dataset.kind = filter.kind;
+      chip.setAttribute('aria-pressed', filter.selected ? 'true' : 'false');
+      chip.textContent = t(FILTER_KEY[filter.kind]);
+      chip.addEventListener('click', () => {
+        if (!filter.selected) this.deps.selectFilter(filter.kind);
+      });
+      strip.appendChild(chip);
+    }
+    return strip;
+  }
+
+  // The list's tail: the show-older control, its in-flight line, or the
+  // start-of-history line. All three are TEXT a reader meets at the end of
+  // the rows, so "the list stopped here" is never ambiguous.
+  private buildFooter(footer: GuildBankLogFooter): HTMLElement {
+    const foot = document.createElement('div');
+    foot.className = `gbank-log-foot gbank-log-foot-${footer}`;
+    if (footer === 'older') {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'gbank-log-older';
+      btn.textContent = t('hudChrome.bank.logOlder');
+      btn.addEventListener('click', () => this.deps.loadOlder());
+      foot.appendChild(btn);
+      return foot;
+    }
+    foot.textContent =
+      footer === 'loading' ? t('hudChrome.bank.logOlderLoading') : t('hudChrome.bank.logEnd');
+    if (footer === 'loading') {
+      foot.setAttribute('role', 'status');
+      foot.setAttribute('aria-live', 'polite');
+    }
+    return foot;
+  }
+
   // The loading / refused / empty line. One node shape for all three so the
   // pane's height and focus behaviour do not jump between them.
-  private buildNotice(kind: 'loading' | 'refused' | 'empty'): HTMLElement {
+  private buildNotice(model: Exclude<GuildBankLogPaneModel, { kind: 'rows' }>): HTMLElement {
     const line = document.createElement('div');
-    line.className = `bank-empty gbank-log-notice gbank-log-${kind}`;
-    line.textContent = this.noticeText(kind);
-    if (kind !== 'empty') {
+    line.className = `bank-empty gbank-log-notice gbank-log-${model.kind}`;
+    line.textContent = this.noticeText(model);
+    if (model.kind !== 'empty') {
       line.setAttribute('role', 'status');
       line.setAttribute('aria-live', 'polite');
     }
     return line;
   }
 
-  private noticeText(kind: 'loading' | 'refused' | 'empty'): string {
-    return kind === 'loading'
-      ? t('hudChrome.bank.logLoading')
-      : kind === 'refused'
-        ? t('hudChrome.bank.logUnavailable')
-        : t('hudChrome.bank.logEmpty');
+  private noticeText(model: Exclude<GuildBankLogPaneModel, { kind: 'rows' }>): string {
+    switch (model.kind) {
+      case 'loading':
+        return t('hudChrome.bank.logLoading');
+      case 'refused':
+        return t('hudChrome.bank.logUnavailable');
+      case 'empty':
+        // An empty FILTERED slice is worded as such: "nothing has been moved"
+        // would be false about a bank whose money moved while Items is pressed.
+        return model.filtered ? t('hudChrome.bank.logEmptyFiltered') : t('hudChrome.bank.logEmpty');
+      default: {
+        const unreachable: never = model;
+        return String(unreachable);
+      }
+    }
   }
 
   // Make the refusal ACTUALLY announce. A live region is announced when its
@@ -133,7 +213,7 @@ export class GuildBankLogPane {
     const changed = this.lastAnnounced !== kind;
     this.lastAnnounced = kind;
     if (!changed || kind !== 'refused') return;
-    const text = this.noticeText(kind);
+    const text = t('hudChrome.bank.logUnavailable');
     window.setTimeout(() => {
       node.textContent = '';
       node.appendChild(document.createTextNode(text));

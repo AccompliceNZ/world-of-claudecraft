@@ -10,19 +10,28 @@
 //      BUSTS it. Without the bust the guild would be shown a pre-op history for
 //      a whole TTL precisely while somebody was watching for the op.
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-
-import type { GuildBankLogDbRow } from '../../server/db';
 import {
   bustGuildBankLog,
   GUILD_BANK_LOG_HIDDEN_OPS,
   GUILD_BANK_LOG_LIMIT,
   GUILD_BANK_LOG_VISIBLE_OPS,
+  type GuildBankLogPage,
   guildBankLogCacheStats,
+  guildBankLogOpsFor,
+  parseGuildBankLogQuery,
   projectGuildBankLogRow,
   projectGuildBankLogRows,
   readGuildBankLog,
   resetGuildBankLogCacheForTests,
 } from '../../server/guild_bank_log';
+import type { GuildBankLogDbRow } from '../../server/guild_bank_log_db';
+import type { GuildBankLogEntry } from '../../src/world_api/guild_bank';
+
+/** One cached page as the injected reader answers it. */
+const page = (entries: GuildBankLogEntry[], more = false): GuildBankLogPage => ({
+  entries,
+  more,
+});
 
 const AT = 1_770_000_000_000;
 
@@ -154,7 +163,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
     resetGuildBankLogCacheForTests({
       reader: async (guildId) => {
         calls.push(guildId);
-        return [
+        return page([
           {
             id: guildId,
             at: AT,
@@ -164,7 +173,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
             count: 1,
             copper: null,
           },
-        ];
+        ]);
       },
     });
   });
@@ -178,9 +187,19 @@ describe('readGuildBankLog: the per-guild cached read', () => {
         new Promise((resolve) => {
           calls.push(guildId);
           gate.push(() =>
-            resolve([
-              { id: 1, at: AT, actor: 'Kara', op: 'deposit', itemId: 'x', count: 1, copper: null },
-            ]),
+            resolve(
+              page([
+                {
+                  id: 1,
+                  at: AT,
+                  actor: 'Kara',
+                  op: 'deposit',
+                  itemId: 'x',
+                  count: 1,
+                  copper: null,
+                },
+              ]),
+            ),
           );
         }),
     });
@@ -201,8 +220,8 @@ describe('readGuildBankLog: the per-guild cached read', () => {
 
   it('different guilds never share an answer', async () => {
     const [seven, nine] = await Promise.all([readGuildBankLog(7), readGuildBankLog(9)]);
-    expect(seven[0].id).toBe(7);
-    expect(nine[0].id).toBe(9);
+    expect(seven.entries[0].id).toBe(7);
+    expect(nine.entries[0].id).toBe(9);
     expect(calls.sort()).toEqual([7, 9]);
   });
 
@@ -213,7 +232,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       minRefreshMs: 2_000,
       reader: async (guildId) => {
         calls.push(guildId);
-        return [];
+        return page([]);
       },
     });
     await readGuildBankLog(7);
@@ -231,7 +250,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       minRefreshMs: 2_000,
       reader: async (guildId) => {
         calls.push(guildId);
-        return [];
+        return page([]);
       },
     });
     await readGuildBankLog(7);
@@ -256,7 +275,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       minRefreshMs: 2_000,
       reader: async (guildId) => {
         calls.push(guildId);
-        return [];
+        return page([]);
       },
     });
     await readGuildBankLog(7);
@@ -279,7 +298,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       minRefreshMs: 2_000,
       reader: async (guildId) => {
         calls.push(guildId);
-        return [];
+        return page([]);
       },
     });
     await readGuildBankLog(7);
@@ -309,7 +328,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       minRefreshMs: 2_000,
       reader: async (guildId) => {
         calls.push(guildId);
-        return [];
+        return page([]);
       },
     });
     await readGuildBankLog(7);
@@ -333,7 +352,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       reader: (guildId) =>
         new Promise((resolve) => {
           calls.push(guildId);
-          gates.push(() => resolve([]));
+          gates.push(() => resolve(page([])));
         }),
     });
     const first = readGuildBankLog(7);
@@ -352,7 +371,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       minRefreshMs: 2_000,
       reader: async (guildId) => {
         calls.push(guildId);
-        return [];
+        return page([]);
       },
     });
     bustGuildBankLog(7); // no entry yet
@@ -369,7 +388,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       minRefreshMs: 2_000,
       reader: async (guildId) => {
         calls.push(guildId);
-        return [];
+        return page([]);
       },
     });
     // A stats read on an untouched process must not mint a cache as a side
@@ -394,7 +413,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       now: () => now,
       reader: async (guildId) => {
         calls.push(guildId);
-        return [];
+        return page([]);
       },
     });
     await readGuildBankLog(7);
@@ -411,7 +430,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       maxEntries: 3,
       reader: async (guildId) => {
         calls.push(guildId);
-        return [];
+        return page([]);
       },
     });
     for (const guildId of [1, 2, 3, 4, 5]) await readGuildBankLog(guildId);
@@ -431,7 +450,7 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       maxEntries: 2,
       reader: async (guildId) => {
         calls.push(guildId);
-        return [];
+        return page([]);
       },
     });
     // Read and mark three guilds, evicting the earliest entries as we go.
@@ -446,21 +465,111 @@ describe('readGuildBankLog: the per-guild cached read', () => {
     expect(guildBankLogCacheStats().dirtyGuilds).toBeLessThanOrEqual(2);
   });
 
-  it('the cached array is frozen: one reader cannot rewrite history for the rest', async () => {
+  it('the cached page is frozen: one reader cannot rewrite history for the rest', async () => {
     resetGuildBankLogCacheForTests();
-    const spy = vi.spyOn(await import('../../server/db'), 'loadGuildBankLogRows');
-    spy.mockResolvedValue([dbRow({ id: 3 }), dbRow({ id: 2 })]);
-    const rows = await readGuildBankLog(7);
-    expect(Object.isFrozen(rows)).toBe(true);
+    const spy = vi.spyOn(await import('../../server/guild_bank_log_db'), 'loadGuildBankLogPage');
+    spy.mockResolvedValue({ rows: [dbRow({ id: 3 }), dbRow({ id: 2 })], more: true });
+    const result = await readGuildBankLog(7);
+    expect(Object.isFrozen(result)).toBe(true);
+    expect(Object.isFrozen(result.entries)).toBe(true);
+    expect(result.more).toBe(true);
     spy.mockRestore();
   });
 
-  it('passes the guild id, the limit, and the allowlist through to the statement', async () => {
+  it('passes the guild id, the limit, the allowlist and the cursor through to the statement', async () => {
     resetGuildBankLogCacheForTests();
-    const spy = vi.spyOn(await import('../../server/db'), 'loadGuildBankLogRows');
-    spy.mockResolvedValue([]);
+    const spy = vi.spyOn(await import('../../server/guild_bank_log_db'), 'loadGuildBankLogPage');
+    spy.mockResolvedValue({ rows: [], more: false });
     await readGuildBankLog(21);
-    expect(spy).toHaveBeenCalledWith(21, GUILD_BANK_LOG_LIMIT, GUILD_BANK_LOG_VISIBLE_OPS);
+    expect(spy).toHaveBeenCalledWith(21, GUILD_BANK_LOG_LIMIT, GUILD_BANK_LOG_VISIBLE_OPS, null);
+    await readGuildBankLog(21, { kind: 'money', before: 400 });
+    expect(spy).toHaveBeenLastCalledWith(
+      21,
+      GUILD_BANK_LOG_LIMIT,
+      guildBankLogOpsFor('money'),
+      400,
+    );
     spy.mockRestore();
+  });
+});
+
+describe('the transaction history query: kinds and cursors', () => {
+  it('guildBankLogOpsFor narrows the allowlist by the seam classification, and `all` is the allowlist', () => {
+    expect(guildBankLogOpsFor('all')).toBe(GUILD_BANK_LOG_VISIBLE_OPS);
+    expect([...guildBankLogOpsFor('items')].sort()).toEqual(['admin_purge', 'deposit', 'withdraw']);
+    expect([...guildBankLogOpsFor('money')].sort()).toEqual([
+      'buy_slots',
+      'create_fee',
+      'deposit_gold',
+      'open_bank',
+      'withdraw_gold',
+    ]);
+    // items + money is exactly the allowlist: no visible op falls through.
+    expect([...guildBankLogOpsFor('items'), ...guildBankLogOpsFor('money')].sort()).toEqual(
+      [...GUILD_BANK_LOG_VISIBLE_OPS].sort(),
+    );
+  });
+
+  it('parseGuildBankLogQuery re-validates both fields and never widens', () => {
+    expect(parseGuildBankLogQuery({ cmd: 'guild_bank_log' })).toEqual({
+      kind: 'all',
+      before: null,
+    });
+    expect(parseGuildBankLogQuery({ kind: 'money', before: 12 })).toEqual({
+      kind: 'money',
+      before: 12,
+    });
+    // An unknown kind is `all`, the widest slice a member may read anyway; a
+    // cursor that is not a positive safe integer is absent.
+    for (const kind of ['ops', 'escrow_deficit', 7, null, ['items']]) {
+      expect(parseGuildBankLogQuery({ kind }).kind, JSON.stringify(kind)).toBe('all');
+    }
+    for (const before of [0, -1, 1.5, '12', Number.MAX_SAFE_INTEGER + 1, null]) {
+      expect(parseGuildBankLogQuery({ before }).before, JSON.stringify(before)).toBeNull();
+    }
+    expect(parseGuildBankLogQuery(null)).toEqual({ kind: 'all', before: null });
+    expect(parseGuildBankLogQuery('guild_bank_log')).toEqual({ kind: 'all', before: null });
+  });
+
+  it('caches per (guild, kind, cursor): different slices and pages are different entries', async () => {
+    const seen: string[] = [];
+    resetGuildBankLogCacheForTests({
+      reader: async (guildId, query) => {
+        seen.push(`${guildId}:${query.kind}:${query.before ?? 0}`);
+        return page([]);
+      },
+    });
+    await readGuildBankLog(7);
+    await readGuildBankLog(7, { kind: 'all', before: null });
+    await readGuildBankLog(7, { kind: 'items', before: null });
+    await readGuildBankLog(7, { kind: 'items', before: 40 });
+    await readGuildBankLog(7, { kind: 'items', before: 40 });
+    expect(seen).toEqual(['7:all:0', '7:items:0', '7:items:40']);
+  });
+
+  it('a bust refreshes every newest-window slice of the guild and leaves older pages alone', async () => {
+    // An older page is a cursor into an append-only table: nothing a later
+    // write does can change what lies before that cursor, so re-reading it
+    // would be a query for nothing. The three head slices can all change.
+    let now = 0;
+    const seen: string[] = [];
+    resetGuildBankLogCacheForTests({
+      now: () => now,
+      minRefreshMs: 2_000,
+      reader: async (guildId, query) => {
+        seen.push(`${guildId}:${query.kind}:${query.before ?? 0}`);
+        return page([]);
+      },
+    });
+    await readGuildBankLog(7, { kind: 'all', before: null });
+    await readGuildBankLog(7, { kind: 'money', before: null });
+    await readGuildBankLog(7, { kind: 'all', before: 40 });
+    seen.length = 0;
+    bustGuildBankLog(7);
+    now = 2_000;
+    await readGuildBankLog(7, { kind: 'all', before: 40 });
+    await readGuildBankLog(7, { kind: 'all', before: null });
+    await readGuildBankLog(7, { kind: 'money', before: null });
+    expect(seen).toEqual(['7:all:0', '7:money:0']);
   });
 });

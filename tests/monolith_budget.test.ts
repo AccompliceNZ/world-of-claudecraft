@@ -743,7 +743,12 @@ const MONOLITHS: MonolithRow[] = [
     // Down 5898 -> 5873 for the per-surface action-bar profiles: the
     // debounced upload moved to src/net/action_bar_upload.ts
     // (ActionBarLayoutUploader). Exact count.
-    ceiling: 5873,
+    // Down 5873 -> 5856 for the guild bank transaction history: the log
+    // mirror's fields, the gbanklog install, and the request gate moved to
+    // src/net/guild_bank_log_mirror.ts (GuildBankLogMirror); what stays is
+    // the two one-line IWorld arms that put its requests on the wire. Exact
+    // count.
+    ceiling: 5856,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -813,7 +818,11 @@ const MONOLITHS: MonolithRow[] = [
     // branch: the release arm's realm_builder_db.ts schema residue (PR #3695)
     // lands beside this branch's client_perf_reports_schema.ts extraction, so the
     // merged file sits below both parent pins. Exact merged count, zero slack.
-    ceiling: 5101,
+    // Down 5101 -> 5003 for the guild bank transaction history: the activity
+    // log statement (loadGuildBankLogRows, its row shape and its lowered
+    // statement timeout) moved to server/guild_bank_log_db.ts when it grew a
+    // page cursor and a `more` probe. Exact count.
+    ceiling: 5003,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {

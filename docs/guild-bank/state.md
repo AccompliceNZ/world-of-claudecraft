@@ -313,6 +313,61 @@ gate green). Teardown of docs/guild-bank/ awaits the user's explicit confirmatio
     the reading surface cannot silently deposit. `lastRenderedGuildView` scopes the
     `.bank-scroll` restore per sub-view. The refresh signature's log arm is NULL unless
     the log view is open, which is what keeps "fetch on demand" from becoming a poll.
+- TRANSACTION HISTORY (2026-09-07, feature request: "a transaction history for guild
+  banks"). The activity log above answered "who took the ore?" for the last 50 actions
+  and then stopped; anything older than a busy week vanished from the one surface built
+  to show it. The Log sub-view became a History sub-view: the same rows, now PAGED and
+  FILTERABLE, with every guarantee of the log kept (the bank gate reused verbatim, the
+  stamp-sourced guild id, the post-await re-check, the closed op allowlist on both
+  sides, the anonymous operator purge, the three distinct non-row states).
+  - WIRE: the same `guild_bank_log` token grows two optional, re-validated fields,
+    `kind` (`all` | `items` | `money`; anything else reads as `all`, the widest slice a
+    member may see anyway) and `before` (a positive ledger id; the rows STRICTLY older
+    than it). The answer ECHOES both (`{ t: 'gbanklog', ok, kind, before, entries, more }`)
+    so the client can drop an answer for a filter it is no longer showing, and carries
+    `more`, the server's word on older rows (the statement fetches LIMIT+1 and drops the
+    probe), never inferred from a full page. An older client sends neither field and gets
+    exactly what it always got; a frame from an older server decodes as the newest window
+    of `all` with nothing older. Still the `consumeGuildBankOp` bucket, one request per
+    click or per TTL.
+  - KIND is a seam classification (`GUILD_BANK_LOG_OP_KIND` in
+    `src/world_api/guild_bank.ts`, exhaustive over the visible ops): the server narrows
+    the SQL predicate from it (`guildBankLogOpsFor`) and the client draws the chip strip
+    from it, so the client never names an op on the wire and a tampered request can widen
+    nothing (`tests/guild_bank_log_server.test.ts` pins the escrow_deficit / -5 case).
+  - STATEMENT: `server/guild_bank_log_db.ts` (extracted from db.ts, which shrank under its
+    ratchet). Two statement TEXTS rather than one `($5 IS NULL OR id < $5)` predicate: a
+    generic plan for the OR form can demote the cursor to a filter that walks every newer
+    row. The cursor is `bl.id < $5` on the index's trailing column, so an older page is
+    the same bounded backward scan starting further back, never an OFFSET. The real-pg
+    suite (`tests/guild_bank_pg_integration.test.ts`) walks a paged read end to end.
+  - CACHE: the same `KeyedCachedRead`, keyed by (guild, kind, cursor) as a string. A bust
+    marks the guild dirty and, past the floor, drops only its THREE newest-window keys:
+    an older page is a cursor into an append-only table, so nothing a later write does can
+    change what lies before it; those entries just age out on the TTL. maxEntries raised
+    256 -> 1024 because a guild reading back through its history holds one entry per page.
+  - CLIENT: `src/net/guild_bank_log_mirror.ts` (`GuildBankLogMirror`), a clock-injected,
+    socket-free state machine; `online.ts` became a thin consumer and LOWERED its ratchet
+    (5873 -> 5856). Rules: reading a different kind drops the pages and re-requests at
+    once; an older page is asked for once, only when loaded rows exist, `more` is true
+    and none is in flight; a refresh that OVERLAPS the loaded pages keeps them (contiguous)
+    and one that does not starts over from the window (a history with a silent hole is
+    exactly the shape a trust surface must never take); a refusal wipes every page.
+  - FACET: `guildBankLog(kind?)` plus ONE new member, `guildBankLogOlder()` (the older-page
+    request; a no-op when the view has nothing to ask for). Offline stays a frozen empty
+    ready view with `more` false.
+  - UI: the sub-strip's second tab reads "History" (a NEW key, `guildHistoryTab`;
+    `guildLogTab` and `logNote` keep their shipped locale rows for the retired surface).
+    The pane gains a chip strip (a `role=group` of `aria-pressed` toggle buttons, the
+    armory mode-toggle family, never a third nested tablist) that renders on EVERY state so
+    an empty slice or a refusal can be left, and a FOOTER inside the scroller after the
+    rows: a Show older button, its in-flight live line, or "That is the whole guild bank
+    history." said in words. An empty FILTERED slice is worded as such ("No guild bank
+    actions match this filter."), because "nothing has been moved" would be false about a
+    bank whose gold moved while Items is pressed. The pressed chip is the PANE's selection
+    (passed into the core), never the answer's echo, so a stale answer cannot un-press it;
+    closing the window resets it to All. Five non-Latin fills landed with the wordy keys
+    (M16).
 - Purse-paid rung 0 (2026-08-03, user-directed pricing redesign): the guild bank is no
   longer open by default. A new guild starts with a 0-slot bank; an officer OPENS it via
   the existing `guild_bank_buy_slots` token (no new wire surface: the sim decides which

@@ -5262,11 +5262,11 @@ export class GameServer {
     );
   }
 
-  /** Answer one activity-log request, re-checking live authority after the
-   *  cached database read before any entries cross the wire. */
-  private sendGuildBankLog(session: ClientSession, pid: number): void {
+  /** Answer one history request; authority is re-checked after the awaited read. */
+  private sendGuildBankLog(session: ClientSession, pid: number, request: unknown): void {
     deliverGuildBankLog({
       guildId: this.guildBankLogGuildFor(pid),
+      request,
       stillAuthorized: (guildId) =>
         !session.left && session.pid === pid && this.guildBankLogGuildFor(pid) === guildId,
       send: (frame) => this.send(session, frame),
@@ -8105,8 +8105,8 @@ export class GameServer {
       // client asks at most once per its own TTL, so a legitimate session never
       // notices while a flooder is stopped by machinery that already exists.
       case 'guild_bank_log':
-        if (!this.consumeGuildBankOp(session, receivedAtMs / 1000)) break;
-        this.sendGuildBankLog(session, pid);
+        if (this.consumeGuildBankOp(session, receivedAtMs / 1000))
+          this.sendGuildBankLog(session, pid, msg);
         break;
       // Book of Deeds: select/clear the displayed title. The sim validator
       // owns every rule (deed earned + title reward; null clears; invalid

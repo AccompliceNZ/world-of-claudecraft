@@ -76,6 +76,7 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
   let pool: PgPool;
   let db: typeof import('../server/db');
   let rawDb: typeof import('../server/db');
+  let logDb: typeof import('../server/guild_bank_log_db');
   let outbox: typeof import('../server/bank_ledger_outbox');
   let bankState: typeof import('../server/guild_bank_state');
   let social: typeof import('../server/social');
@@ -184,6 +185,7 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
 
     rawDb = await import('../server/db');
     db = rawDb;
+    logDb = await import('../server/guild_bank_log_db');
     outbox = await import('../server/bank_ledger_outbox');
     bankState = await import('../server/guild_bank_state');
     social = await import('../server/social');
@@ -972,7 +974,7 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
       await write('buy_slots', guildId);
       await write('deposit_gold', otherGuild); // another guild's row
 
-      const rows = await db.loadGuildBankLogRows(guildId, 2, [
+      const rows = await logDb.loadGuildBankLogRows(guildId, 2, [
         'deposit_gold',
         'withdraw_gold',
         'buy_slots',
@@ -980,7 +982,7 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
       expect(rows.map((r) => r.op)).toEqual(['buy_slots', 'withdraw_gold']);
       expect(rows[0].characterName).toBe(name);
 
-      const all = await db.loadGuildBankLogRows(guildId, 50, [
+      const all = await logDb.loadGuildBankLogRows(guildId, 50, [
         'deposit_gold',
         'withdraw_gold',
         'buy_slots',
@@ -990,6 +992,18 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
       expect(all.some((r) => r.op === 'escrow_deficit' || r.op === 'counterparty_orphan')).toBe(
         false,
       );
+
+      // PAGING: a window of 2 reports `more`; the cursor page starts strictly
+      // below the oldest id of the window and the last page reports the end.
+      const ops = ['deposit_gold', 'withdraw_gold', 'buy_slots'];
+      const first = await logDb.loadGuildBankLogPage(guildId, 2, ops, null);
+      expect(first.rows.map((r) => r.op)).toEqual(['buy_slots', 'withdraw_gold']);
+      expect(first.more).toBe(true);
+      const oldest = first.rows[first.rows.length - 1].id;
+      const second = await logDb.loadGuildBankLogPage(guildId, 2, ops, oldest);
+      expect(second.rows.map((r) => r.op)).toEqual(['deposit_gold']);
+      expect(second.rows.every((r) => r.id < oldest)).toBe(true);
+      expect(second.more).toBe(false);
     });
 
     it('uses the partial index and never a sequential scan', async () => {
