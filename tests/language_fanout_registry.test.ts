@@ -160,6 +160,10 @@ const FANOUT_ARMS: readonly string[] = [
   // locale and no flip would re-mint (Phase 14).
   'this.lootWindow.relocalize|',
   'this.harvestJournalWindow.relocalize|',
+  // The shared corpse-harvest preference picker's relocalize gates itself
+  // (isOpen inside) and carries the exact focused control across via the
+  // focus-key seam (Intentional Gathering PR3).
+  'this.harvestPreferenceController.relocalize|',
   // The plant sheet's relocalize gates itself (paint only while open), so the
   // arm carries no guard of its own.
   'this.plantSheetWindow.relocalize|',
@@ -285,9 +289,9 @@ interface AnsweredSurface extends GatedModule {
 const ANSWERED: readonly AnsweredSurface[] = [
   {
     file: 'hud/loot/loot_window_controller.ts',
-    memos: ['corpseSig'],
+    memos: ['corpseSig', 'harvestStatusSig'],
     answer: 'this.lootWindow.relocalize',
-    why: 'the corpse signature holds action availability and loot quantities; locale changes rebuild once while preserving explicit choices and focus',
+    why: 'the corpse signature holds action availability and loot quantities, and the harvest-status signature holds the deliberate timed-harvest cast/reservation state (Intentional Gathering PR3); locale changes rebuild once while preserving explicit choices and focus',
   },
   {
     file: 'hud/battleground/battleground_scoreboard_painter.ts',

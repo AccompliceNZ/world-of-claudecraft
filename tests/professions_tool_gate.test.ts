@@ -824,9 +824,16 @@ describe('the harvest boundary enforces the wield gate (the re-minted deny pins)
     // family is tier 1 and bare hands floor the scan there), so the seam is
     // pinned at the source: the corpse harvester must read the wield-aware
     // any-profession scan with the player's counters, not the ownership
-    // scan. Whitespace-normalized so a formatter wrap cannot dodge it;
-    // comments stripped so prose cannot satisfy it.
-    const source = readFileSync(path.resolve(process.cwd(), 'src/sim/interaction.ts'), 'utf8')
+    // scan. PR3 (Intentional Gathering) moved the whole corpse-harvest command
+    // body behind the timed session seam: the admission facts (including the
+    // field-kit gate) are snapshotted in corpse_harvest_grant.ts rather than
+    // interaction.ts, so the source pin follows that file. Whitespace-normalized
+    // so a formatter wrap cannot dodge it; comments stripped so prose cannot
+    // satisfy it.
+    const source = readFileSync(
+      path.resolve(process.cwd(), 'src/sim/professions/corpse_harvest_grant.ts'),
+      'utf8',
+    )
       .replace(/\/\*[\s\S]*?\*\//g, '')
       .replace(/(^|\s)\/\/.*$/gm, '$1')
       .replace(/\s+/g, '')

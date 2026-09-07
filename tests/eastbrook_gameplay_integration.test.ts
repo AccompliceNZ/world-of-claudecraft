@@ -465,6 +465,16 @@ describe('Eastbrook authored gameplay data integration', () => {
     // demolition retired Groundskeeper Bram with the Vale Cup module: his
     // whole record (the one dynamic payload) left the table, and no other def
     // or placement field moved. MEASURED on the merged tree.
+    // Re-minted for Intentional Gathering (PR3): field_kit, the
+    // corpse-harvest key, joined six vendorItems rows: trader_wilkes,
+    // forgemistress_darva, weaver_ottilie, and tinker_gizzel (each one row,
+    // ahead of that counter's existing final row), fisherman_brandt
+    // (appended last, after simple_fishing_pole, his only prior row), and
+    // farmer_jessica (appended last, after garden_hoe; see her own row
+    // assertion below). Nothing else in any def, and no placement field,
+    // changed. The counterfactual ahead of the digest strips exactly these
+    // six field_kit rows and reproduces the PRE-PR3 hash byte for byte,
+    // isolating the digest move to those six single-row insertions.
     expect(ZONE1_NPCS.trader_wilkes.vendorItems).toEqual([
       'baked_bread',
       'spring_water',
@@ -479,22 +489,27 @@ describe('Eastbrook authored gameplay data integration', () => {
       'gathering_sickle',
       'ironreel_fishing_rod',
       'silverstream_fishing_rod',
+      'field_kit',
       'burlap_reagent_pouch',
     ]);
+    expect(ZONE1_NPCS.fisherman_brandt.vendorItems).toEqual(['simple_fishing_pole', 'field_kit']);
     expect(ZONE1_NPCS.weaver_ottilie.vendorItems).toEqual([
       'linen_pouch',
       'travelers_knapsack',
       'gathering_sickle',
+      'field_kit',
       'spool_of_thread',
       'burlap_reagent_pouch',
     ]);
     expect(ZONE1_NPCS.forgemistress_darva.vendorItems).toEqual([
       'copper_mining_pick',
+      'field_kit',
       'smithing_flux',
     ]);
     expect(ZONE1_NPCS.tinker_gizzel.vendorItems).toEqual([
       'handaxe',
       'simple_fishing_pole',
+      'field_kit',
       'arcanite_bar',
     ]);
     // Re-minted a third time for the farming go-live: farmer_jessica joined
@@ -503,12 +518,15 @@ describe('Eastbrook authored gameplay data integration', () => {
     // untouched and ZONE1_TOWN_NPC_IDS keeps its length). Her payload is the
     // only new row; the sixteen prior payloads are byte-identical (zone1.ts
     // diff-checked). The row assertion that follows owns her stock.
+    // Re-minted a fifth time for Intentional Gathering (PR3): field_kit
+    // appended last, after garden_hoe (see the row-assertion group above).
     expect(ZONE1_NPCS.farmer_jessica.vendorItems).toEqual([
       'vale_wheat_seed',
       'brook_carrot_seed',
       'brook_carrot',
       'compost',
       'garden_hoe',
+      'field_kit',
     ]);
     // Re-minted a fourth time (2026-08-18) for the harbor move (commit
     // d19aa33f76, docs/design/eastbrook-revamp/site-plan.md; the reword
@@ -576,8 +594,46 @@ describe('Eastbrook authored gameplay data integration', () => {
     expect(ZONE1_NPCS.fisherman_brandt.greeting).toBe(
       'Blrb-glub... sorry, been listening to those fish-men too long.',
     );
+    // PRE-PR3 counterfactual: strip exactly the six field_kit rows the
+    // row-assertion group above just proved are real (trader_wilkes,
+    // fisherman_brandt, forgemistress_darva, weaver_ottilie, tinker_gizzel,
+    // farmer_jessica), one row each, and the remaining payload reproduces the
+    // digest that was pinned here before PR3 (Intentional Gathering) landed,
+    // byte for byte. That is the proof the whole hash move is these six
+    // insertions and nothing else: any other drift in any other field would
+    // still show up as a mismatch on THIS expectation.
+    const PR3_FIELD_KIT_VENDOR_ROWS = [
+      'trader_wilkes',
+      'fisherman_brandt',
+      'forgemistress_darva',
+      'weaver_ottilie',
+      'tinker_gizzel',
+      'farmer_jessica',
+    ] as const;
+    function withoutPr3FieldKitRows(): Record<string, Omit<NpcDef, 'pos' | 'facing'> | NpcDef> {
+      const payload = stableTownNpcPayload();
+      for (const id of PR3_FIELD_KIT_VENDOR_ROWS) {
+        const def = payload[id];
+        const items = def.vendorItems;
+        if (!items) throw new Error(`${id} has no vendorItems to strip field_kit from`);
+        const idx = items.indexOf('field_kit');
+        if (idx < 0) throw new Error(`${id} vendorItems carries no field_kit row to strip`);
+        payload[id] = {
+          ...def,
+          vendorItems: [...items.slice(0, idx), ...items.slice(idx + 1)],
+        };
+      }
+      return payload;
+    }
+    expect(
+      createHash('sha256').update(JSON.stringify(withoutPr3FieldKitRows())).digest('hex'),
+      'stripping exactly the six PR3 field_kit rows reproduces the pre-PR3 digest',
+    ).toBe('ef35b8640f9ed213e86dbac9b04ba7a8ec9cdde6179d3859e833519dcaabb6c2');
+    // CURRENT digest, WITH the six field_kit rows. Measured on the merged
+    // working tree; the counterfactual above already proves the only content
+    // difference from the pre-PR3 payload is those six rows.
     expect(createHash('sha256').update(JSON.stringify(stableTownNpcPayload())).digest('hex')).toBe(
-      'ef35b8640f9ed213e86dbac9b04ba7a8ec9cdde6179d3859e833519dcaabb6c2',
+      'ecc22e457d1f325155266ede8bd5306f73d9d5057854316b502f43c9e4dcd8a3',
     );
     expect(ZONE1_TOWN_NPC_IDS).toHaveLength(15);
     for (const id of ZONE1_TOWN_NPC_IDS) {

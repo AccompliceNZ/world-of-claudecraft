@@ -335,13 +335,21 @@ describe('hud event switch stays wired to the ids', () => {
     // Acceptance criterion 5: the gather line is rarity-colored and the
     // broadcast line rides the epic token; a regression to a fixed default
     // color (or an ad-hoc hex) keeps every wording pin green, so pin the
-    // color arguments at the source level.
-    const source = readFileSync(path.resolve(process.cwd(), 'src/ui/hud.ts'), 'utf8');
-    const gatherStart = source.indexOf("case 'gatherResult'");
-    const gatherBlock = source.slice(gatherStart, source.indexOf('break;', gatherStart));
+    // color arguments at the source level. The gather line's arm was
+    // extracted whole into gathering_result_feedback.ts (the monolith-ratchet
+    // heal); hud.ts's own switch keeps only the one-call thin arm, so this
+    // pin follows the logic to its real home.
+    const gatherSource = readFileSync(
+      path.resolve(process.cwd(), 'src/ui/hud/professions/gathering_result_feedback.ts'),
+      'utf8',
+    );
+    const handleStart = gatherSource.indexOf('export function handleGatherResult');
+    expect(handleStart).toBeGreaterThan(-1);
+    const gatherBlock = gatherSource.slice(handleStart, gatherSource.indexOf('\n}', handleStart));
     expect(gatherBlock.includes('QUALITY_COLOR[ev.rarity]')).toBe(true);
-    const rareStart = source.indexOf("case 'gatherRareEvent'");
-    const rareBlock = source.slice(rareStart, source.indexOf('break;', rareStart));
+    const rareSource = readFileSync(path.resolve(process.cwd(), 'src/ui/hud.ts'), 'utf8');
+    const rareStart = rareSource.indexOf("case 'gatherRareEvent'");
+    const rareBlock = rareSource.slice(rareStart, rareSource.indexOf('break;', rareStart));
     expect(rareBlock.includes('QUALITY_COLOR.epic')).toBe(true);
   });
 });
@@ -428,19 +436,23 @@ describe('hudChrome.gathering catch line (Professions 2.0)', () => {
     // The phase 14 QA: the HUD arm had no test at all. Same idiom as the
     // fishingEmptyHook pin above: comment-stripped, the note gated on the
     // additive flag, the key real, and no log line doubling the announce
-    // (the professions window's charge row is the durable record).
-    const source = readFileSync(path.resolve(process.cwd(), 'src/ui/hud.ts'), 'utf8').replace(
-      /^\s*\/\/.*$/gm,
-      '',
-    );
-    const caseStart = source.indexOf("case 'gatherResult': {");
+    // (the professions window's charge row is the durable record). The arm
+    // itself was extracted whole into gathering_result_feedback.ts; hud.ts's
+    // switch keeps only the one-call thin arm (handleGatherResult(ev, this)),
+    // so this pin follows it to its real home, host.showSelfNote/host.log
+    // being the extracted module's own naming for the same Hud methods.
+    const source = readFileSync(
+      path.resolve(process.cwd(), 'src/ui/hud/professions/gathering_result_feedback.ts'),
+      'utf8',
+    ).replace(/^\s*\/\/.*$/gm, '');
+    const caseStart = source.indexOf('export function handleGatherResult');
     expect(caseStart).toBeGreaterThan(-1);
-    const block = source.slice(caseStart, source.indexOf('break;', caseStart));
+    const block = source.slice(caseStart, source.indexOf('\n}', caseStart));
     const gateAt = block.indexOf('if (ev.effectDepleted) {');
     expect(gateAt).toBeGreaterThan(-1);
     const gated = block.slice(gateAt, block.indexOf('}', gateAt));
-    expect(gated).toContain("this.showSelfNote(t('hudChrome.professions.toolEffectDepleted'));");
-    expect(gated).not.toContain('this.log(');
+    expect(gated).toContain("host.showSelfNote(t('hudChrome.professions.toolEffectDepleted'));");
+    expect(gated).not.toContain('host.log(');
     expect(hasTranslation('hudChrome.professions.toolEffectDepleted')).toBe(true);
   });
 

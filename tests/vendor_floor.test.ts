@@ -797,24 +797,30 @@ describe('stock rows: the phase 11n pulls', () => {
     // release's Bank Storage adds one burlap_reagent_pouch row to each of
     // trader_wilkes (13 to 14) and weaver_ottilie (4 to 5); no vendor lost a
     // row (both deltas verified against the merged vendorItems lists by id).
+    // Re-measured again for Intentional Gathering (PR3): field_kit, the
+    // corpse-harvest key, joined every tool seller's and every farmer's
+    // counter, one row each (trader_wilkes 14 to 15, weaver_ottilie 5 to 6,
+    // tinker_gizzel 3 to 4, fisherman_brandt 1 to 2, forgemistress_darva 2 to
+    // 3, provisioner_hale 22 to 23, provisioner_fenna 6 to 7, quartermaster_bree
+    // 23 to 24, and all four farmers up one each); no vendor lost a row.
     expect(counts).toEqual({
-      trader_wilkes: 14,
+      trader_wilkes: 15,
       cook_marlow: 6,
       tanner_hesk: 4,
       alchemist_verane: 5,
-      weaver_ottilie: 5,
+      weaver_ottilie: 6,
       quartermaster_finch: 1,
-      forgemistress_darva: 2,
-      provisioner_hale: 22,
-      quartermaster_bree: 23,
-      tinker_gizzel: 3,
+      forgemistress_darva: 3,
+      provisioner_hale: 23,
+      quartermaster_bree: 24,
+      tinker_gizzel: 4,
       smith_haldren: 7,
-      fisherman_brandt: 1,
-      farmer_jessica: 5,
-      farmer_teasel: 3,
-      farmer_hollis: 5,
-      farmer_verbena: 5,
-      provisioner_fenna: 6,
+      fisherman_brandt: 2,
+      farmer_jessica: 6,
+      farmer_teasel: 4,
+      farmer_hollis: 6,
+      farmer_verbena: 6,
+      provisioner_fenna: 7,
       armorer_hode: 5,
       warmarshal_draven_kole: 47,
       fury: 47,
