@@ -391,7 +391,12 @@ export function classGatedFrameActive(id: string, playerClass: PlayerClass): boo
  */
 export function frameRowSettingKey(
   id: string,
-): 'showSecondaryActionBar' | 'showThirdActionBar' | 'showReliquaryTracker' | 'showTargetDots' | null {
+):
+  | 'showSecondaryActionBar'
+  | 'showThirdActionBar'
+  | 'showReliquaryTracker'
+  | 'showTargetDots'
+  | null {
   if (id === 'actionBar2') return 'showSecondaryActionBar';
   if (id === 'actionBar3') return 'showThirdActionBar';
   if (id === 'reliquaryTracker') return 'showReliquaryTracker';
