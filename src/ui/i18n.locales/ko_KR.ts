@@ -10032,6 +10032,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gatheringGoal.setPreferenceButtonAria': '{name}을(를) 채집 설정으로 지정',
   'hudChrome.gatheringGoal.currentPreferenceLabel': '현재 채집 설정',
   'hudChrome.gatheringGoal.currentPreferenceAria': '{name}이(가) 현재 채집 설정입니다',
+  'hudChrome.gatheringGoal.sourcesToggle': '출처',
+  'hudChrome.gatheringGoal.sourcesToggleAria': '{name}의 출처',
   'hudChrome.crafting.goalQtyRowAria': '목표 수량',
   'hudChrome.crafting.goalQtyDecreaseAria': '목표 수량 줄이기 (현재 {count})',
   'hudChrome.crafting.goalQtyIncreaseAria': '목표 수량 늘리기 (현재 {count})',

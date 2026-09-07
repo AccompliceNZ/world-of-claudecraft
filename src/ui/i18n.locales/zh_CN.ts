@@ -9582,6 +9582,8 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gatheringGoal.setPreferenceButtonAria': '将{name}设为你的采集偏好',
   'hudChrome.gatheringGoal.currentPreferenceLabel': '当前采集偏好',
   'hudChrome.gatheringGoal.currentPreferenceAria': '{name}是你当前的采集偏好',
+  'hudChrome.gatheringGoal.sourcesToggle': '来源',
+  'hudChrome.gatheringGoal.sourcesToggleAria': '{name}的来源',
   'hudChrome.crafting.goalQtyRowAria': '目标数量',
   'hudChrome.crafting.goalQtyDecreaseAria': '减少目标数量（当前 {count}）',
   'hudChrome.crafting.goalQtyIncreaseAria': '增加目标数量（当前 {count}）',

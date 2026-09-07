@@ -4634,8 +4634,6 @@ export const pending: Record<string, readonly string[]> = {
     "devCommand.fields.bed",
     "guide.profPages.oncePerDay",
     "hudChrome.crafting.oncePerDay",
-    "hudChrome.gatheringGoal.sourcesToggle",
-    "hudChrome.gatheringGoal.sourcesToggleAria",
     "hudChrome.masterwrought.slotsValue"
   ],
   "zh_TW": [
@@ -4644,8 +4642,6 @@ export const pending: Record<string, readonly string[]> = {
     "devCommand.fields.bed",
     "guide.profPages.oncePerDay",
     "hudChrome.crafting.oncePerDay",
-    "hudChrome.gatheringGoal.sourcesToggle",
-    "hudChrome.gatheringGoal.sourcesToggleAria",
     "hudChrome.masterwrought.slotsValue"
   ],
   "ko_KR": [
@@ -4654,8 +4650,6 @@ export const pending: Record<string, readonly string[]> = {
     "devCommand.fields.bed",
     "guide.profPages.oncePerDay",
     "hudChrome.crafting.oncePerDay",
-    "hudChrome.gatheringGoal.sourcesToggle",
-    "hudChrome.gatheringGoal.sourcesToggleAria",
     "hudChrome.masterwrought.slotsValue"
   ],
   "ja_JP": [
@@ -4664,8 +4658,6 @@ export const pending: Record<string, readonly string[]> = {
     "devCommand.fields.bed",
     "guide.profPages.oncePerDay",
     "hudChrome.crafting.oncePerDay",
-    "hudChrome.gatheringGoal.sourcesToggle",
-    "hudChrome.gatheringGoal.sourcesToggleAria",
     "hudChrome.masterwrought.slotsValue"
   ],
   "pt_BR": [
@@ -5448,8 +5440,6 @@ export const pending: Record<string, readonly string[]> = {
     "devCommand.fields.bed",
     "guide.profPages.oncePerDay",
     "hudChrome.crafting.oncePerDay",
-    "hudChrome.gatheringGoal.sourcesToggle",
-    "hudChrome.gatheringGoal.sourcesToggleAria",
     "hudChrome.masterwrought.slotsValue"
   ],
   "cs_CZ": [

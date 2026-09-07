@@ -10286,6 +10286,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gatheringGoal.setPreferenceButtonAria': 'Сделать {name} вашей настройкой сбора',
   'hudChrome.gatheringGoal.currentPreferenceLabel': 'Текущая настройка сбора',
   'hudChrome.gatheringGoal.currentPreferenceAria': '{name} — ваша текущая настройка сбора',
+  'hudChrome.gatheringGoal.sourcesToggle': 'Источники',
+  'hudChrome.gatheringGoal.sourcesToggleAria': 'Источники для {name}',
   'hudChrome.crafting.goalQtyRowAria': 'Количество для цели',
   'hudChrome.crafting.goalQtyDecreaseAria': 'Уменьшить количество для цели (сейчас {count})',
   'hudChrome.crafting.goalQtyIncreaseAria': 'Увеличить количество для цели (сейчас {count})',

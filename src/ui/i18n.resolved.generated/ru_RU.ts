@@ -2521,8 +2521,8 @@ export const ru_RU: EnTranslations = {
       "setPreferenceButtonAria": "Сделать {name} вашей настройкой сбора",
       "currentPreferenceLabel": "Текущая настройка сбора",
       "currentPreferenceAria": "{name} — ваша текущая настройка сбора",
-      "sourcesToggle": "Sources",
-      "sourcesToggleAria": "Sources for {name}"
+      "sourcesToggle": "Источники",
+      "sourcesToggleAria": "Источники для {name}"
     },
     "party": {
       "promoteLeader": "Назначить лидером",

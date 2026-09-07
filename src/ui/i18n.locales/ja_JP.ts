@@ -10051,6 +10051,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gatheringGoal.setPreferenceButtonAria': '{name}を採取設定にする',
   'hudChrome.gatheringGoal.currentPreferenceLabel': '現在の採取設定',
   'hudChrome.gatheringGoal.currentPreferenceAria': '{name}が現在の採取設定です',
+  'hudChrome.gatheringGoal.sourcesToggle': '入手先',
+  'hudChrome.gatheringGoal.sourcesToggleAria': '{name}の入手先',
   'hudChrome.crafting.goalQtyRowAria': '目標数',
   'hudChrome.crafting.goalQtyDecreaseAria': '目標数を減らす（現在 {count}）',
   'hudChrome.crafting.goalQtyIncreaseAria': '目標数を増やす（現在 {count}）',

@@ -2521,8 +2521,8 @@ export const ko_KR: EnTranslations = {
       "setPreferenceButtonAria": "{name}을(를) 채집 설정으로 지정",
       "currentPreferenceLabel": "현재 채집 설정",
       "currentPreferenceAria": "{name}이(가) 현재 채집 설정입니다",
-      "sourcesToggle": "Sources",
-      "sourcesToggleAria": "Sources for {name}"
+      "sourcesToggle": "출처",
+      "sourcesToggleAria": "{name}의 출처"
     },
     "party": {
       "promoteLeader": "파티장으로 지정",

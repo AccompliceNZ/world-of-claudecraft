@@ -76,9 +76,7 @@
       "elapsedSimSeconds": 0,
       "travelSimSeconds": 0,
       "castSimSeconds": 0,
-      "notes": [
-        "baseline-tree path: instant harvestCorpse with a components override"
-      ]
+      "notes": ["baseline-tree path: instant harvestCorpse with a components override"]
     },
     {
       "scenarioId": "corpse_intentional_focused",
@@ -101,9 +99,7 @@
       "elapsedSimSeconds": 0,
       "travelSimSeconds": 0,
       "castSimSeconds": 0,
-      "notes": [
-        "baseline-tree path: instant harvestCorpse with a components override"
-      ]
+      "notes": ["baseline-tree path: instant harvestCorpse with a components override"]
     },
     {
       "scenarioId": "corpse_full_bag_pressure",
@@ -330,10 +326,7 @@
       "elapsedSimSeconds": 4.25,
       "travelSimSeconds": 1.75,
       "castSimSeconds": 2.5,
-      "notes": [
-        "node ore_eastbrook_1",
-        "cast started and ran to completion"
-      ]
+      "notes": ["node ore_eastbrook_1", "cast started and ran to completion"]
     },
     {
       "scenarioId": "node_live_travel_and_cast_wood",
@@ -356,10 +349,7 @@
       "elapsedSimSeconds": 4.25,
       "travelSimSeconds": 1.75,
       "castSimSeconds": 2.5,
-      "notes": [
-        "node wood_eastbrook_1",
-        "cast started and ran to completion"
-      ]
+      "notes": ["node wood_eastbrook_1", "cast started and ran to completion"]
     },
     {
       "scenarioId": "node_live_travel_and_cast_herb",
@@ -382,10 +372,7 @@
       "elapsedSimSeconds": 5,
       "travelSimSeconds": 2.5,
       "castSimSeconds": 2.5,
-      "notes": [
-        "node herb_eastbrook_1",
-        "cast started and ran to completion"
-      ]
+      "notes": ["node herb_eastbrook_1", "cast started and ran to completion"]
     },
     {
       "scenarioId": "farming_plant_and_harvest",
@@ -542,9 +529,7 @@
       "elapsedSimSeconds": 1.5,
       "travelSimSeconds": 0,
       "castSimSeconds": 1.5,
-      "notes": [
-        "final-tree path: Field Kit + preference + timed cast"
-      ]
+      "notes": ["final-tree path: Field Kit + preference + timed cast"]
     },
     {
       "scenarioId": "corpse_intentional_focused",
@@ -567,9 +552,7 @@
       "elapsedSimSeconds": 1.5,
       "travelSimSeconds": 0,
       "castSimSeconds": 1.5,
-      "notes": [
-        "final-tree path: Field Kit + preference + timed cast"
-      ]
+      "notes": ["final-tree path: Field Kit + preference + timed cast"]
     },
     {
       "scenarioId": "corpse_full_bag_pressure",
@@ -796,10 +779,7 @@
       "elapsedSimSeconds": 4.25,
       "travelSimSeconds": 1.75,
       "castSimSeconds": 2.5,
-      "notes": [
-        "node ore_eastbrook_1",
-        "cast started and ran to completion"
-      ]
+      "notes": ["node ore_eastbrook_1", "cast started and ran to completion"]
     },
     {
       "scenarioId": "node_live_travel_and_cast_wood",
@@ -822,10 +802,7 @@
       "elapsedSimSeconds": 4.25,
       "travelSimSeconds": 1.75,
       "castSimSeconds": 2.5,
-      "notes": [
-        "node wood_eastbrook_1",
-        "cast started and ran to completion"
-      ]
+      "notes": ["node wood_eastbrook_1", "cast started and ran to completion"]
     },
     {
       "scenarioId": "node_live_travel_and_cast_herb",
@@ -848,10 +825,7 @@
       "elapsedSimSeconds": 5,
       "travelSimSeconds": 2.5,
       "castSimSeconds": 2.5,
-      "notes": [
-        "node herb_eastbrook_1",
-        "cast started and ran to completion"
-      ]
+      "notes": ["node herb_eastbrook_1", "cast started and ran to completion"]
     },
     {
       "scenarioId": "farming_plant_and_harvest",

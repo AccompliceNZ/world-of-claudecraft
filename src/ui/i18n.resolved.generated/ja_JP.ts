@@ -2521,8 +2521,8 @@ export const ja_JP: EnTranslations = {
       "setPreferenceButtonAria": "{name}を採取設定にする",
       "currentPreferenceLabel": "現在の採取設定",
       "currentPreferenceAria": "{name}が現在の採取設定です",
-      "sourcesToggle": "Sources",
-      "sourcesToggleAria": "Sources for {name}"
+      "sourcesToggle": "入手先",
+      "sourcesToggleAria": "{name}の入手先"
     },
     "party": {
       "promoteLeader": "パーティリーダーに指定",

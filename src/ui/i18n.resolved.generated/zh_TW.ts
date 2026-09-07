@@ -2521,8 +2521,8 @@ export const zh_TW: EnTranslations = {
       "setPreferenceButtonAria": "將{name}設為你的採集偏好",
       "currentPreferenceLabel": "目前採集偏好",
       "currentPreferenceAria": "{name}是你目前的採集偏好",
-      "sourcesToggle": "Sources",
-      "sourcesToggleAria": "Sources for {name}"
+      "sourcesToggle": "來源",
+      "sourcesToggleAria": "{name}的來源"
     },
     "party": {
       "promoteLeader": "提升為隊長",
