@@ -646,13 +646,13 @@ player channel tabs from `src/ui/hud/chat/chat_channels.ts`), movable and resiza
 
 ### 7.11 Utility row (bottom right)
 
-`#community-hud` becomes a separate four-button utility row directly below
-`#side-buttons`. It composes `.ui-icon-btn--micro` and has no persistent glow:
-
-- Sound: the mute toggle, composed with the existing sound-volume setting.
-- Music: the existing `#mm-music` behavior with its muted state.
-- Wiki: opens the shipped wiki destination.
-- Fullscreen: the existing path through `requestPreferredFullscreen` in `src/main.ts`.
+`#community-hud` stays the compact row directly below `#side-buttons` and keeps exactly
+what ships: the Steam wishlist chip (on the fixed preset-independent plate tokens, since it
+floats over the world) and the tray toggle, now a `.ui-disc` with the more-dots glyph. The
+board's four-button variant (sound, music, wiki, fullscreen) is withdrawn: the client has no
+sound or fullscreen control in the HUD, music and wiki remain micro menu launchers, and the
+GitHub, Donate and Discord links were removed by owner request (their absence is pinned by
+`tests/client_shell.test.ts`).
 
 ### 7.12 Interaction prompt (new component)
 
