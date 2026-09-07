@@ -43,6 +43,51 @@ function mirroredWorld(qlog: readonly QuestProgress[], available = new Set<strin
   return world(new Map(snapshot.map((entry) => [entry.questId, entry])), available);
 }
 
+type Zone = ReturnType<typeof zoneAt>;
+
+/** The NPCs standing inside `zone`, in the content order the rail reads them in. */
+function npcsInZone(zone: Zone) {
+  return Object.values(NPCS).filter(
+    (npc) =>
+      npc.pos.x >= (zone.xMin ?? Number.NEGATIVE_INFINITY) &&
+      npc.pos.x < (zone.xMax ?? Number.POSITIVE_INFINITY) &&
+      npc.pos.z >= zone.zMin &&
+      npc.pos.z < zone.zMax,
+  );
+}
+
+/** Every known quest the zone's own NPCs can offer. */
+function zoneOfferIds(zone: Zone): string[] {
+  const out = new Set<string>();
+  for (const npc of npcsInZone(zone)) {
+    for (const questId of npc.questIds) if (Object.hasOwn(QUESTS, questId)) out.add(questId);
+  }
+  return [...out];
+}
+
+/**
+ * The rail's nearby rule, derived here from the content tables rather than read
+ * back off the model: nearest four offers to `from`, one row per quest (the first
+ * NPC that offers it wins), ties broken by questId.
+ */
+function nearestOffers(
+  zone: Zone,
+  from: { x: number; z: number },
+  available: ReadonlySet<string>,
+): string[] {
+  const seen = new Set<string>();
+  const rows: Array<{ questId: string; distance: number }> = [];
+  for (const npc of npcsInZone(zone)) {
+    for (const questId of npc.questIds) {
+      if (seen.has(questId) || !available.has(questId) || !Object.hasOwn(QUESTS, questId)) continue;
+      seen.add(questId);
+      rows.push({ questId, distance: Math.hypot(npc.pos.x - from.x, npc.pos.z - from.z) });
+    }
+  }
+  rows.sort((a, b) => a.distance - b.distance || a.questId.localeCompare(b.questId));
+  return rows.slice(0, 4).map((row) => row.questId);
+}
+
 describe('map sidebar view', () => {
   it('keeps quest numbers in log order and selects the first incomplete objective', () => {
     const log = new Map([
@@ -149,8 +194,12 @@ describe.each([
   });
 
   it('lists the closest available offers in the current zone', () => {
-    const w = makeWorld([], new Set(['q_wolves']));
-    const zone = zoneAt(w.player.pos.x, w.player.pos.z);
+    // Every offer the zone can hand out, so the nearest-four cut and the questId
+    // tie-break both decide the answer instead of being assumed.
+    const anchor = makeWorld([]).player.pos;
+    const zone = zoneAt(anchor.x, anchor.z);
+    const available = new Set(zoneOfferIds(zone));
+    const w = makeWorld([], available);
 
     const model = buildMapSidebarView({
       world: w,
@@ -159,20 +208,23 @@ describe.each([
       selectedQuestId: null,
     });
 
-    const offer = model.nearby.find((quest) => quest.questId === 'q_wolves');
-    expect(offer).toBeDefined();
-    expect(offer?.zoneId).toBe(zone.id);
-    expect(model.nearby.length).toBeLessThanOrEqual(4);
-    expect([...model.nearby].sort((a, b) => a.distance - b.distance)).toEqual(model.nearby);
+    const expected = nearestOffers(zone, w.player.pos, available);
+    expect(available.size, 'the zone has more offers than the rail can show').toBeGreaterThan(4);
+    expect(expected).toHaveLength(4);
+    expect(model.nearby.map((quest) => quest.questId)).toEqual(expected);
+    expect(model.nearby.every((quest) => quest.zoneId === zone.id)).toBe(true);
     // An offer already in the log is an offer no longer: only `available` shows.
-    expect(
-      buildMapSidebarView({
-        world: makeWorld([progress('q_wolves', 'active', 1)]),
-        zone,
-        filters: DEFAULT_MAP_ATLAS_FILTERS,
-        selectedQuestId: null,
-      }).nearby.some((quest) => quest.questId === 'q_wolves'),
-    ).toBe(false);
+    const withoutWolves = new Set([...available].filter((id) => id !== 'q_wolves'));
+    const accepted = buildMapSidebarView({
+      world: makeWorld([progress('q_wolves', 'active', 1)], withoutWolves),
+      zone,
+      filters: DEFAULT_MAP_ATLAS_FILTERS,
+      selectedQuestId: null,
+    }).nearby;
+    expect(accepted.map((quest) => quest.questId)).toEqual(
+      nearestOffers(zone, w.player.pos, withoutWolves),
+    );
+    expect(accepted.some((quest) => quest.questId === 'q_wolves')).toBe(false);
   });
 
   it('drops a selection the log no longer carries', () => {
