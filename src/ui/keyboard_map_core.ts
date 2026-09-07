@@ -38,6 +38,38 @@ export const KEYBOARD_FORM_FACTORS: { id: KeyboardFormFactor; labelKey: Translat
   { id: '60', labelKey: 'hudChrome.keyboardMap.form60' },
 ];
 
+/** Which characters the caps print when the OS layout is not QWERTY: that
+ *  layout's (a Colemak player types F on the key QWERTY calls E) or QWERTY's,
+ *  which is what is physically printed on most boards. A key is its physical
+ *  code either way, so both labellings point at the same binding. */
+export type KeyboardLegendSource = 'layout' | 'qwerty';
+
+export const KEYBOARD_LEGEND_SOURCES: { id: KeyboardLegendSource; labelKey: TranslationKey }[] = [
+  { id: 'layout', labelKey: 'hudChrome.keyboardMap.legendLayout' },
+  { id: 'qwerty', labelKey: 'hudChrome.keyboardMap.legendQwerty' },
+];
+
+/** The codes whose printed character a layout can move: letters and digits.
+ *  Punctuation is left out on purpose, since ISO and ANSI boards already
+ *  disagree on those under plain QWERTY and would flag every non-US board. */
+const LAYOUT_SENSITIVE_CODES = [
+  ...Array.from({ length: 26 }, (_, i) => `Key${String.fromCharCode(65 + i)}`),
+  ...Array.from({ length: 10 }, (_, i) => `Digit${i}`),
+];
+
+/** Whether the reported layout prints a different character than QWERTY on
+ *  any letter or digit key. `printed` returns the layout's character for a
+ *  code (null when unknown); `qwerty` the code's QWERTY label. */
+export function legendsDifferFromQwerty(
+  printed: (code: string) => string | null,
+  qwerty: (code: string) => string,
+): boolean {
+  return LAYOUT_SENSITIVE_CODES.some((code) => {
+    const p = printed(code);
+    return p !== null && p.toUpperCase() !== qwerty(code).toUpperCase();
+  });
+}
+
 /** One physical key: its KeyboardEvent.code, width and height in key units
  *  (1 = a letter key), and an optional legend override for keys whose code
  *  label is too long for a keycap. A `spacer` is an empty cell that keeps the

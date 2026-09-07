@@ -872,6 +872,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keyboardMap.formFull': 'フルサイズ',
   'hudChrome.keyboardMap.formTkl': 'テンキーレス',
   'hudChrome.keyboardMap.notOnLayout': 'このキーボードにないキー: {bindings}',
+  'hudChrome.keyboardMap.legendGroup': 'キーの表記',
+  'hudChrome.keyboardMap.legendLayout': '使用中の配列',
   'hudChrome.keyboardMap.layerNone': '修飾キーなし',
   'hudChrome.keyboardMap.layerShift': 'Shift キー',
   'hudChrome.keyboardMap.unbound': '未割り当て',

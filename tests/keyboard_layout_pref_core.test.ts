@@ -4,8 +4,11 @@
 import { describe, expect, it } from 'vitest';
 import {
   KEYBOARD_LAYOUT_STORE_KEY,
+  KEYBOARD_LEGENDS_STORE_KEY,
   loadKeyboardFormFactor,
+  loadKeyboardLegendSource,
   saveKeyboardFormFactor,
+  saveKeyboardLegendSource,
 } from '../src/ui/keyboard_layout_pref_core';
 
 const memory = () => {
@@ -49,5 +52,17 @@ describe('keyboard_layout_pref_core', () => {
         },
       }),
     ).not.toThrow();
+  });
+
+  it('round-trips the legend source and defaults to the OS layout', () => {
+    const store = memory();
+    expect(loadKeyboardLegendSource(store)).toBe('layout');
+    saveKeyboardLegendSource('qwerty', store);
+    expect(store.map.get(KEYBOARD_LEGENDS_STORE_KEY)).toBe('qwerty');
+    expect(loadKeyboardLegendSource(store)).toBe('qwerty');
+    store.map.set(KEYBOARD_LEGENDS_STORE_KEY, 'dvorak');
+    expect(loadKeyboardLegendSource(store)).toBe('layout');
+    expect(loadKeyboardLegendSource(null)).toBe('layout');
+    expect(KEYBOARD_LEGENDS_STORE_KEY).toBe('woc_keyboard_legends');
   });
 });

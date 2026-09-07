@@ -870,6 +870,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keyboardMap.formFull': 'Полноразмерная',
   'hudChrome.keyboardMap.formTkl': 'Без цифрового блока',
   'hudChrome.keyboardMap.notOnLayout': 'Нет на этой клавиатуре: {bindings}',
+  'hudChrome.keyboardMap.legendGroup': 'Подписи клавиш',
+  'hudChrome.keyboardMap.legendLayout': 'Ваша раскладка',
   'hudChrome.keyboardMap.layerNone': 'Без модификатора',
   'hudChrome.keyboardMap.layerShift': 'Клавиша Shift',
   'hudChrome.keyboardMap.unbound': 'Не назначено',

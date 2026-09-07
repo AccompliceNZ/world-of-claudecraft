@@ -48,6 +48,7 @@ const FULL_ENTRIES = {
   'woc.tutorial.v1': '1',
   woc_gpu_notice_dismissed: '1',
   woc_keyboard_layout: 'tkl',
+  woc_keyboard_legends: 'qwerty',
 };
 
 describe('settings_transfer_core', () => {

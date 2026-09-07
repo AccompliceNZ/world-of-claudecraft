@@ -854,6 +854,8 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keyboardMap.formFull': '全尺寸',
   'hudChrome.keyboardMap.formTkl': '无数字键区',
   'hudChrome.keyboardMap.notOnLayout': '不在此键盘上：{bindings}',
+  'hudChrome.keyboardMap.legendGroup': '按键标签',
+  'hudChrome.keyboardMap.legendLayout': '您的布局',
   'hudChrome.keyboardMap.layerNone': '无修饰键',
   'hudChrome.keyboardMap.layerShift': 'Shift 键',
   'hudChrome.keyboardMap.unbound': '未绑定',

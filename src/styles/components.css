@@ -13960,14 +13960,28 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
-  .kbm-controls {
+  /* The option rows under the board: modifier layer, keyboard size and (when
+     the OS layout is not QWERTY) which legends to print. */
+  .kbm-opts {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 6px;
+  }
+  .kbm-opt-row {
     display: flex;
     align-items: center;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 4px 8px;
+  }
+  .kbm-opt-label {
+    min-width: 96px;
+    font-size: 11px;
+    color: #b9ac82;
   }
   .kbm-layers {
     display: flex;
+    flex-wrap: wrap;
     gap: 4px;
   }
   .kbm-popout {

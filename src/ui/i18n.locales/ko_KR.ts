@@ -873,6 +873,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keyboardMap.formFull': '풀 사이즈',
   'hudChrome.keyboardMap.formTkl': '텐키리스',
   'hudChrome.keyboardMap.notOnLayout': '이 키보드에 없는 키: {bindings}',
+  'hudChrome.keyboardMap.legendGroup': '키 표기',
+  'hudChrome.keyboardMap.legendLayout': '내 배열',
   'hudChrome.keyboardMap.layerNone': '보조키 없음',
   'hudChrome.keyboardMap.layerShift': 'Shift 키',
   'hudChrome.keyboardMap.unbound': '지정되지 않음',

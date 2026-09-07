@@ -111,6 +111,7 @@ const FULL_KEYS = [
   'woc_gpu_notice_hybrid_dismissed',
   'woc_perf_nudge_dismissed',
   'woc_keyboard_layout',
+  'woc_keyboard_legends',
 ] as const;
 
 /** Whether `key` belongs to `kind`'s allowlist (each kind is a superset of

@@ -1,35 +1,46 @@
 // The Key Bindings panel's keyboard overview painter: a live keyboard drawn
 // from the player's current bindings, every key in use coloured by its
-// action's category and captioned with the action, a modifier-layer switch
-// (none / Shift / Ctrl / Alt), a keyboard size switch (full size, tenkeyless,
-// 75%, 60%, remembered in keyboard_layout_pref_core.ts), a category legend, a
-// list of any bindings on keys the chosen size does not draw, and a detail line
-// that spells out everything bound to the hovered or focused key. Key legends
-// come from the browser's keyboard layout map where it offers one (Chromium's
-// navigator.keyboard.getLayoutMap, so a QWERTZ or AZERTY player sees their own
-// printed letters) and fall back to the code labels elsewhere. The keys are
-// buttons: clicking a bound key arms the shared key capture for that action
-// (press the new key; a key another action holds asks first, exactly like the
-// panel's rows) with Unbind / Cancel beside the status, and clicking an empty
-// key opens an action picker that binds the action to that key in the current
-// layer. The same painter fills the pop-out window (keyboard_map_window.ts).
-// The geometry and per-key annotation come from the pure keyboard_map_core.ts;
-// this module owns only the DOM. Registered in tests/architecture.test.ts
-// UI_DOM_MODULES.
+// action's category and captioned with the action. Under the board sit its
+// options as labelled rows: the modifier layer (none / Shift / Ctrl / Alt), the
+// keyboard size (full size, tenkeyless, 75%, 60%) and, when the browser
+// reports an OS layout other than QWERTY (Colemak, Dvorak, AZERTY, QWERTZ),
+// which legends to print: that layout's characters or the QWERTY caps that are
+// physically on most boards. Size and legend choices are remembered
+// (keyboard_layout_pref_core.ts). Legends come from Chromium's
+// navigator.keyboard.getLayoutMap and fall back to the code labels elsewhere.
+// Either way a key IS its physical code, so both labellings point at the same
+// binding. Also: a category legend, a list of any bindings on keys the chosen
+// size does not draw, and a detail line that spells out everything bound to
+// the hovered or focused key. The keys are buttons: clicking a bound key arms
+// the shared key capture for that action (press the new key; a key another
+// action holds asks first, exactly like the panel's rows) with Unbind / Cancel
+// beside the status, and clicking an empty key opens an action picker that
+// binds the action to that key in the current layer. The same painter fills
+// the pop-out window (keyboard_map_window.ts). The geometry and per-key
+// annotation come from the pure keyboard_map_core.ts; this module owns only
+// the DOM. Registered in tests/architecture.test.ts UI_DOM_MODULES.
 
 import { audio } from '../game/audio';
 import { type Keybinds, keyLabel } from '../game/keybinds';
 import { type TranslationKey, t } from './i18n';
-import { loadKeyboardFormFactor, saveKeyboardFormFactor } from './keyboard_layout_pref_core';
+import {
+  loadKeyboardFormFactor,
+  loadKeyboardLegendSource,
+  saveKeyboardFormFactor,
+  saveKeyboardLegendSource,
+} from './keyboard_layout_pref_core';
 import {
   buildKeyboardMap,
   categoryClass,
   KEYBOARD_FORM_FACTORS,
   KEYBOARD_LAYERS,
+  KEYBOARD_LEGEND_SOURCES,
   type KeyboardFormFactor,
   type KeyboardKeyBinding,
   type KeyboardKeyView,
   type KeyboardLayer,
+  type KeyboardLegendSource,
+  legendsDifferFromQwerty,
   splitCombo,
 } from './keyboard_map_core';
 
@@ -120,20 +131,24 @@ function loadLayoutMap(): Promise<void> {
   return layoutMapLoad;
 }
 
+/** The character the OS layout prints for a bare code, or null when unknown
+ *  (no layout map, or not a printing key). */
+function layoutCharacter(code: string): string | null {
+  if (!layoutMap || !PRINTED_CODE_RE.test(code)) return null;
+  const printed = layoutMap.get(code);
+  return printed && printed.trim().length > 0 ? printed.toUpperCase() : null;
+}
+
 /** The keycap legend for a bare code: the printed character when the browser
  *  knows it, else the code label ("KeyA" -> "A"). */
 export function keyLegend(code: string): string {
-  if (layoutMap && PRINTED_CODE_RE.test(code)) {
-    const printed = layoutMap.get(code);
-    if (printed && printed.trim().length > 0) return printed.toUpperCase();
-  }
-  return keyLabel(code);
+  return layoutCharacter(code) ?? keyLabel(code);
 }
 
-/** A combo's label with real legends: "Shift+" + the printed key. */
-function comboLegend(combo: string): string {
-  const { head, code } = splitCombo(combo);
-  return head + keyLegend(code);
+/** Whether the OS layout the browser reports prints something other than
+ *  QWERTY on the letter and digit keys (so a legend choice is worth offering). */
+function layoutIsNonQwerty(): boolean {
+  return layoutMap !== null && legendsDifferFromQwerty(layoutCharacter, keyLabel);
 }
 
 /** Paint the overview into `root` (appended) and return its handle. */
@@ -142,22 +157,14 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
   wrap.className = 'kbm';
   wrap.setAttribute('aria-label', t('hudChrome.keyboardMap.title'));
 
+  // Header: the title and, in the panel, the Pop Out button. The options live
+  // under the board (below) so the picture stays the first thing in the block.
   const head = document.createElement('div');
   head.className = 'kbm-head';
   const title = document.createElement('div');
   title.className = 'kbm-title';
   title.textContent = t('hudChrome.keyboardMap.title');
-  const controls = document.createElement('div');
-  controls.className = 'kbm-controls';
-  const layers = document.createElement('div');
-  layers.className = 'kbm-layers';
-  layers.setAttribute('role', 'group');
-  layers.setAttribute('aria-label', t('hudChrome.keyboardMap.layerGroup'));
-  const forms = document.createElement('div');
-  forms.className = 'kbm-layers kbm-forms';
-  forms.setAttribute('role', 'group');
-  forms.setAttribute('aria-label', t('hudChrome.keyboardMap.formGroup'));
-  controls.append(layers, forms);
+  head.appendChild(title);
   if (deps.onPopOut) {
     const onPopOut = deps.onPopOut;
     const pop = document.createElement('button');
@@ -168,15 +175,16 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
       audio.click();
       onPopOut();
     });
-    controls.appendChild(pop);
+    head.appendChild(pop);
   }
-  head.append(title, controls);
 
   const board = document.createElement('div');
   board.className = 'kbm-board';
   const hiddenLine = document.createElement('div');
   hiddenLine.className = 'kbm-hidden';
   hiddenLine.hidden = true;
+  const options = document.createElement('div');
+  options.className = 'kbm-opts';
   const detail = document.createElement('div');
   detail.className = 'kbm-detail';
   detail.setAttribute('role', 'status');
@@ -188,6 +196,7 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
 
   let layer: KeyboardLayer = deps.layer;
   let formFactor: KeyboardFormFactor = loadKeyboardFormFactor();
+  let legendSource: KeyboardLegendSource = loadKeyboardLegendSource();
   // The capture armed from a key click, so a second click or a repaint can
   // clear it instead of leaving a stale one-shot callback behind.
   let armed: { binding: KeyboardKeyBinding } | null = null;
@@ -197,13 +206,32 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
     t(rebind ? 'hudChrome.keyboardMap.hintInteractive' : 'hudChrome.keyboardMap.hint');
   detail.textContent = hint();
 
-  /** A group of aria-pressed buttons, one of which is current. */
-  const segmented = <T extends string>(
-    group: HTMLElement,
+  /** The legend this board prints for a bare code, per the player's choice. */
+  const legendFor = (code: string): string =>
+    legendSource === 'layout' ? keyLegend(code) : keyLabel(code);
+  /** A combo's label in the same legends: "Shift+" + the key. */
+  const comboLegend = (combo: string): string => {
+    const { head: mods, code } = splitCombo(combo);
+    return mods + legendFor(code);
+  };
+
+  /** One labelled option row: a caption and a group of aria-pressed buttons,
+   *  exactly one of which is current. */
+  const optionRow = <T extends string>(
+    labelKey: TranslationKey,
     entries: { id: T; labelKey: TranslationKey }[],
     current: () => T,
     onPick: (id: T) => void,
-  ): void => {
+  ): HTMLElement => {
+    const row = document.createElement('div');
+    row.className = 'kbm-opt-row';
+    const caption = document.createElement('span');
+    caption.className = 'kbm-opt-label';
+    caption.textContent = t(labelKey);
+    const group = document.createElement('div');
+    group.className = 'kbm-layers';
+    group.setAttribute('role', 'group');
+    group.setAttribute('aria-label', t(labelKey));
     const buttons = new Map<T, HTMLButtonElement>();
     for (const entry of entries) {
       const b = document.createElement('button');
@@ -222,25 +250,47 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
       buttons.set(entry.id, b);
       group.appendChild(b);
     }
+    row.append(caption, group);
+    return row;
   };
-  segmented(
-    layers,
-    KEYBOARD_LAYERS,
-    () => layer,
-    (id) => {
-      layer = id;
-      deps.onLayerChange(layer);
-    },
-  );
-  segmented(
-    forms,
-    KEYBOARD_FORM_FACTORS,
-    () => formFactor,
-    (id) => {
-      formFactor = id;
-      saveKeyboardFormFactor(id);
-    },
-  );
+
+  /** (Re)build the option rows; the legend row appears only once the browser
+   *  has reported a non-QWERTY layout. */
+  const paintOptions = (): void => {
+    options.replaceChildren(
+      optionRow(
+        'hudChrome.keyboardMap.layerGroup',
+        KEYBOARD_LAYERS,
+        () => layer,
+        (id) => {
+          layer = id;
+          deps.onLayerChange(layer);
+        },
+      ),
+      optionRow(
+        'hudChrome.keyboardMap.formGroup',
+        KEYBOARD_FORM_FACTORS,
+        () => formFactor,
+        (id) => {
+          formFactor = id;
+          saveKeyboardFormFactor(id);
+        },
+      ),
+    );
+    if (layoutIsNonQwerty()) {
+      options.appendChild(
+        optionRow(
+          'hudChrome.keyboardMap.legendGroup',
+          KEYBOARD_LEGEND_SOURCES,
+          () => legendSource,
+          (id) => {
+            legendSource = id;
+            saveKeyboardLegendSource(id);
+          },
+        ),
+      );
+    }
+  };
 
   const bindingLine = (b: KeyboardKeyBinding): string => `${comboLegend(b.combo)}: ${b.name}`;
 
@@ -406,7 +456,7 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
     const view = buildKeyboardMap(
       deps.bindings(),
       layer,
-      { legend: keyLegend, name: deps.actionName, category: deps.actionCategory },
+      { legend: legendFor, name: deps.actionName, category: deps.actionCategory },
       formFactor,
     );
     for (const block of view.blocks) {
@@ -475,9 +525,16 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
           bindings: view.hidden.map(bindingLine).join(t('hudChrome.keyboardMap.separator')),
         });
   };
+  paintOptions();
   paintBoard();
-  // Real legends arrive asynchronously on first use; repaint once they do.
-  if (!layoutMap) loadLayoutMap().then(() => wrap.isConnected && paintBoard());
+  // Real legends arrive asynchronously on first use; repaint (and offer the
+  // legend choice) once they do.
+  if (!layoutMap)
+    loadLayoutMap().then(() => {
+      if (!wrap.isConnected) return;
+      paintOptions();
+      paintBoard();
+    });
 
   const legend = document.createElement('div');
   legend.className = 'kbm-legend-row';
@@ -498,7 +555,7 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
   dotItem.append(dotSwatch, document.createTextNode(t('hudChrome.keyboardMap.otherLayers')));
   legend.appendChild(dotItem);
 
-  wrap.append(head, board, hiddenLine, legend, detail, actions);
+  wrap.append(head, board, hiddenLine, legend, options, detail, actions);
   root.appendChild(wrap);
   return {
     el: wrap,

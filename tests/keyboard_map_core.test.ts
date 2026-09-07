@@ -15,6 +15,7 @@ import {
   type KeyboardFormFactor,
   keyboardLayoutCodes,
   keyboardLayoutFor,
+  legendsDifferFromQwerty,
   splitCombo,
 } from '../src/ui/keyboard_map_core';
 
@@ -90,6 +91,30 @@ describe('keyboard layouts', () => {
 
   it('offers the bare layer first, then Shift, Ctrl and Alt', () => {
     expect(KEYBOARD_LAYERS.map((l) => l.id)).toEqual(['', 'Shift+', 'Ctrl+', 'Alt+']);
+  });
+});
+
+describe('legendsDifferFromQwerty', () => {
+  const qwerty = (code: string) => (code.startsWith('Key') ? code.slice(3) : code.slice(5));
+
+  it('is false for a QWERTY layout, an unknown layout, or one that only moves punctuation', () => {
+    expect(legendsDifferFromQwerty(qwerty, qwerty)).toBe(false);
+    expect(legendsDifferFromQwerty(() => null, qwerty)).toBe(false);
+    // Lower-case reports still count as the same letter.
+    expect(legendsDifferFromQwerty((c) => qwerty(c).toLowerCase(), qwerty)).toBe(false);
+    // ISO boards print different punctuation under plain QWERTY; that alone is
+    // not a layout change.
+    expect(legendsDifferFromQwerty((c) => (c === 'Backslash' ? '#' : qwerty(c)), qwerty)).toBe(
+      false,
+    );
+  });
+
+  it('is true when a letter or digit prints something else (Colemak, AZERTY)', () => {
+    // Colemak: the key QWERTY calls E prints F.
+    expect(legendsDifferFromQwerty((c) => (c === 'KeyE' ? 'f' : qwerty(c)), qwerty)).toBe(true);
+    // AZERTY: A and Q swap, and the digit row prints symbols unshifted.
+    expect(legendsDifferFromQwerty((c) => (c === 'KeyA' ? 'q' : qwerty(c)), qwerty)).toBe(true);
+    expect(legendsDifferFromQwerty((c) => (c === 'Digit1' ? '&' : qwerty(c)), qwerty)).toBe(true);
   });
 });
 

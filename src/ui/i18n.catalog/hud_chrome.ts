@@ -4153,6 +4153,13 @@ export const hudChromeStrings = {
     form60: '60%',
     // Bindings on keys the chosen size does not draw, listed under the board.
     notOnLayout: 'Not on this keyboard: {bindings}',
+    // The legend choice, offered only when the browser reports an OS layout
+    // other than QWERTY (Colemak, Dvorak, AZERTY...): that layout's characters
+    // or the QWERTY caps physically on most boards. QWERTY is a name and stays
+    // identical across locales.
+    legendGroup: 'Key labels',
+    legendLayout: 'Your layout',
+    legendQwerty: 'QWERTY',
     layerNone: 'No modifier',
     layerShift: 'Shift',
     layerCtrl: 'Ctrl',
