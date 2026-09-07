@@ -677,6 +677,15 @@
     --ui-socket-size: var(--socket-size-stance);
     border-radius: 50%;
   }
+  /* The stance disc is the one socket species that draws below the 40px touch
+     floor. Grow the box (not a hit extension) on a coarse pointer: the row's
+     4px gap is narrower than the reach a pseudo-element would need, so an
+     extension would overlap its neighbours instead of separating them. */
+  @media (pointer: coarse) {
+    .ui-socket--stance {
+      --ui-socket-size: var(--socket-size-stance-coarse);
+    }
+  }
   .ui-socket--stance > img,
   .ui-socket--stance > .ui-socket-art {
     border-radius: 50%;

@@ -112,6 +112,9 @@ describe('ui library: the sheet', () => {
       '--socket-size-bag',
       '--socket-size-bank',
       '--socket-size-stance',
+      // The coarse-pointer arm of the stance disc: the board's 30px on a
+      // mouse, the 40px touch floor under @media (pointer: coarse).
+      '--socket-size-stance-coarse',
       '--socket-gap',
       '--socket-row-gap',
       '--action-rail-w',
@@ -146,6 +149,19 @@ describe('ui library: the sheet', () => {
     ]) {
       expect(code, `${name} missing from tokens.css`).toContain(`${name}:`);
     }
+  });
+
+  it('lifts the stance disc to the touch floor on a coarse pointer', () => {
+    // The stance disc is the one socket species drawn under 40px. The shipped
+    // .stance-btn was 40x40, so a touch device must keep that box even though
+    // the board draws a 30px disc for a mouse. Playwright's context is always
+    // fine-pointer, so this media arm can only be pinned from the source.
+    const coarse = stripComments(library).match(
+      /@media \(pointer: coarse\) \{\s*\.ui-socket--stance \{([^}]*)\}/,
+    );
+    expect(coarse, 'library.css is missing the coarse-pointer stance arm').not.toBeNull();
+    expect(coarse?.[1]).toContain('--ui-socket-size: var(--socket-size-stance-coarse);');
+    expect(stripComments(tokens)).toContain('--socket-size-stance-coarse: 40px;');
   });
 
   it('keeps the action rail exactly twelve sockets wide', () => {
