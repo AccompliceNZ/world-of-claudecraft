@@ -2784,8 +2784,8 @@ export const ko_KR: EnTranslations = {
       "redline": "레드라인: {stacks}/{max} 단계. 헤이메이커가 각각 1단계를 쌓습니다. 소등은 단계마다 {pct}% 더 강해지며 레드라인을 끝냅니다. 시간이 먼저 다 되면 녹아웃 기회는 사라집니다",
       "veilstrikeWindow": "그림자에 휩싸임: 황혼장막 전용 선제 기술을 어느 각도에서든 사용할 수 있고, 주는 피해가 {pct}% 증가합니다",
       "veiledEdge": "다음 잠복자의 일격이 두 배의 피해를 입힙니다",
-      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
-      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
+      "veiledEdgeStrike": "다음 잠복자의 일격이 입히는 무기 피해가 {pct}% 증가합니다",
+      "coldsightRead": "다음 긴 시위가 입히는 피해가 {longDrawPct}% 증가하거나, 다음 사악한 사격이 입히는 피해가 {fellShotPct}% 증가합니다",
       "duskEconomy": "기술의 기력 소모가 {pct}% 감소합니다",
       "moontide": "달물결: {stacks}/{max}단계. 달날개 형상에서 야생 벼락, 창공 낙하, 달씨앗 시전이 각각 1단계를 쌓습니다. {max}단계에서 달씨앗이 달의 격동으로, 창공 낙하가 해돋움으로 변하며, 어느 쪽을 써도 3단계를 모두 소모합니다",
       "oldBlood": "오랜 피: {stacks}/{max}단계. 가르는 발톱, 저미기, 피의 균열, 유혈 물어뜯기, 휩쓰는 발톱, 뼈 분쇄의 적중한 공격이 각각 1단계를 쌓습니다. {max}단계에서 늑대 변신의 유혈 물어뜯기는 피의 수확으로, 큰곰 변신의 뼈 분쇄는 골수분쇄로 변합니다",
@@ -10727,7 +10727,7 @@ export const ko_KR: EnTranslations = {
       "arcane_shot": {
         "name": "사악한 사격",
         "description": "대상을 쏘아 {damage}의 비전 피해를 입힙니다. 피해량은 원거리 전투력에 따라 증가합니다.",
-        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
+        "specNote_marksmanship": "열광의 연사를 완료해 얻은 냉정한 시선의 간파는 다음 사악한 사격이 입히는 피해를 75% 증가시킵니다. 사격을 발사하면 간파를 소모합니다."
       },
       "concussive_shot": {
         "name": "뒤흔드는 사격",
@@ -11758,7 +11758,7 @@ export const ko_KR: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "정화의 자비",
-        "description": "적을 신성한 힘으로 정화하거나 아군 대상을 즉시 치유합니다. 교리 고유 능력입니다."
+        "description": "적에게 {damage}의 신성 피해를 입히거나 아군 대상을 {healing}만큼 치유합니다. 피해는 주문력에 비례해 증가하고, 치유는 치유력에 비례해 증가합니다. 교리는 이 피해를 유대를 통해 치유로 전환합니다. 30미터 이내에 유대가 맺어진 부상당한 파티원이 없으면, 30미터 이내에서 생명력이 가장 낮은 부상당한 파티원을 피해량의 15%만큼 치유합니다. 파티원을 치유하면 해당 대상으로부터 10미터 이내에 있고 시야가 확보된 다른 부상당한 파티원 최대 2명도 함께 치유하며, 각각 회복된 생명력의 50%만큼 치유합니다. 이 추가 치유는 치명타가 발생하지 않으며 교리 유대를 생성하지 않습니다. (교리 고유 능력)"
       },
       "seraphic_vigil": {
         "name": "치천사의 수호",

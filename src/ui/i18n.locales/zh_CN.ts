@@ -3247,6 +3247,8 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.serpent_sting.description': '在 15 秒内共造成 {damage} 点自然伤害，每 3 秒一次。伤害随远程攻击强度提升。',
   'entities.abilities.arcane_shot.name': '凶邪射击',
   'entities.abilities.arcane_shot.description': '射击目标，造成 {damage} 点奥术伤害。伤害随远程攻击强度提升。',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    '完成一次狂热引弓获得的冷目预判，会使你的下一次凶邪射击造成的伤害提高75%。发射该技能会消耗冷目预判。',
   'entities.abilities.concussive_shot.name': '震颤射击',
   'entities.abilities.concussive_shot.description': '射击目标，造成 {damage} 点物理伤害并使其减速 50%，持续 4 秒。伤害随远程攻击强度提升。',
   'entities.abilities.mongoose_bite.name': '裂创',
@@ -12472,7 +12474,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
     '移动速度提高35%，但每秒牺牲最大生命值的2%。再次施放可取消。生命值降至20%时会自动关闭。',
   'entities.abilities.sacrilegious_march.name': '亵渎行军',
   'entities.abilities.scouring_mercy.description':
-    '以神圣之力净化一名敌人，或立即救治一名友方目标。教义专属技能。',
+    '对敌人造成{damage}点神圣伤害，或为一名友方目标治疗{healing}点生命值。伤害随法术强度提高，治疗随治疗强度提高。教义会通过你的纽带将此伤害转化为治疗。若30米内没有已建立纽带且受伤的队伍成员，则治疗30米内生命值最低的受伤队伍成员，治疗量为伤害的15%。治疗一名队伍成员时，还会为该目标10米内、且处于你视野中的至多2名其他受伤队伍成员治疗，每人恢复量为已恢复生命值的50%。这些额外治疗不会触发暴击，也不会建立教义纽带。（教义专属技能）',
   'entities.abilities.scouring_mercy.name': '涤罪慈悲',
   'entities.abilities.sentence.description':
     '消耗全部谴罪与命运丝线裁决敌人。每条丝线使伤害提高6%，附加效果会在20、50、80和100点谴罪时提升。16级后伤害成长趋于平缓。',
@@ -13503,6 +13505,9 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.temporalEcho':
     '施法者的奥术伤害会治疗你，单体伤害转化 {singlePct}%，范围伤害转化 {areaPct}%',
   'hudChrome.auraEffect.veiledEdge': '你的下一次潜伏突袭造成双倍伤害',
+  'hudChrome.auraEffect.veiledEdgeStrike': '你的下一次潜伏突袭造成的武器伤害提高{pct}%',
+  'hudChrome.auraEffect.coldsightRead':
+    '你的下一次引弓长射造成的伤害提高{longDrawPct}%，或你的下一次凶邪射击造成的伤害提高{fellShotPct}%',
   'hudChrome.auraEffect.veilstrikeWindow':
     '暗影缠身：你的暮帷先制技可在明处以任意角度使用，造成的伤害提高{pct}%',
   'hudChrome.auraEffect.venomRitual':

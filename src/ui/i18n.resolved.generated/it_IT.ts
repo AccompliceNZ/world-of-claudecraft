@@ -11758,7 +11758,7 @@ export const it_IT: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Misericordia Purificatrice",
-        "description": "Infligge da 72 a 84 danni Sacri a un nemico oppure cura un bersaglio alleato da 130 a 155. Entrambi gli importi aumentano con la potenza magica. I danni curano inoltre del 30% ogni alleato legato dalla Dottrina, o del 15% il membro del gruppo con meno salute se nessun alleato è legato. (Distintivo di Dottrina)"
+        "description": "Infligge {damage} danni Sacri a un nemico oppure cura un bersaglio alleato di {healing}. I danni aumentano con la potenza magica; le cure aumentano con il potere di guarigione. La Dottrina converte questi danni in cure attraverso i tuoi legami. Se nessun alleato legato e ferito del gruppo si trova entro 30 metri, cura il membro del gruppo ferito con meno salute entro 30 metri per il 15% del danno. Curare un membro del gruppo cura anche fino a 2 altri membri del gruppo feriti entro 10 metri da quel bersaglio e nella tua linea di vista, ciascuno per il 50% della salute ripristinata. Queste cure aggiuntive non possono essere critiche né creare legami di Dottrina. (Distintivo di Dottrina)"
       },
       "seraphic_vigil": {
         "name": "Veglia Serafica",

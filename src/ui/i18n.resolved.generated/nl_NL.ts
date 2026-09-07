@@ -11758,7 +11758,7 @@ export const nl_NL: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Louterende Genade",
-        "description": "Richt 72 tot 84 Heilige schade aan bij een vijand of geneest een bevriend doelwit voor 130 tot 155. Beide bedragen stijgen met spreukkracht. De schade geneest ook elke via de Leer verbonden bondgenoot voor 30%, of het groepslid met de laagste gezondheid voor 15% als geen bondgenoot verbonden is. (Leer-kenmerk)"
+        "description": "Richt {damage} Heilige schade aan bij een vijand of geneest een bevriend doelwit voor {healing}. Schade stijgt met spreukkracht; genezing stijgt met genezingskracht. De Leer zet deze schade om in genezing via je verbindingen. Als er geen verbonden gewond groepslid binnen 30 meter is, geneest het gewonde groepslid met de laagste gezondheid binnen 30 meter voor 15% van de schade. Het genezen van een groepslid geneest ook tot 2 andere gewonde groepsleden binnen 10 meter van dat doelwit en binnen je gezichtslijn, elk voor 50% van de herstelde gezondheid. Deze extra genezingen kunnen niet kritiek zijn of Leer-verbindingen creëren. (Leer-kenmerk)"
       },
       "seraphic_vigil": {
         "name": "Serafijnse Wake",

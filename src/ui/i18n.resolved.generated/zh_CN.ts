@@ -2784,8 +2784,8 @@ export const zh_CN: EnTranslations = {
       "redline": "红线：第{stacks}/{max}格。每次大摆拳增加1格。眼前一黑每格伤害提高{pct}%，使用后结束红线。若计时先行结束，这记击倒就会作废",
       "veilstrikeWindow": "暗影缠身：你的暮帷先制技可在明处以任意角度使用，造成的伤害提高{pct}%",
       "veiledEdge": "你的下一次潜伏突袭造成双倍伤害",
-      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
-      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
+      "veiledEdgeStrike": "你的下一次潜伏突袭造成的武器伤害提高{pct}%",
+      "coldsightRead": "你的下一次引弓长射造成的伤害提高{longDrawPct}%，或你的下一次凶邪射击造成的伤害提高{fellShotPct}%",
       "duskEconomy": "技能的能量消耗降低{pct}%",
       "moontide": "月潮：第{stacks}/{max}层。月翼形态下，野性弹、天陨与月种的施法各累积1层。达到{max}层时：月种变为月涌，天陨变为日醒，使用任意一个都会消耗全部3层",
       "oldBlood": "古血：第{stacks}/{max}层。裂爪、剐削、血裂、血噬、横扫利爪与碎骨击的命中各累积1层。达到{max}层时：狼形态下血噬变为血收，巨熊形态下碎骨击变为碎髓",
@@ -10727,7 +10727,7 @@ export const zh_CN: EnTranslations = {
       "arcane_shot": {
         "name": "凶邪射击",
         "description": "射击目标，造成 {damage} 点奥术伤害。伤害随远程攻击强度提升。",
-        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
+        "specNote_marksmanship": "完成一次狂热引弓获得的冷目预判，会使你的下一次凶邪射击造成的伤害提高75%。发射该技能会消耗冷目预判。"
       },
       "concussive_shot": {
         "name": "震颤射击",
@@ -11758,7 +11758,7 @@ export const zh_CN: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "涤罪慈悲",
-        "description": "以神圣之力净化一名敌人，或立即救治一名友方目标。教义专属技能。"
+        "description": "对敌人造成{damage}点神圣伤害，或为一名友方目标治疗{healing}点生命值。伤害随法术强度提高，治疗随治疗强度提高。教义会通过你的纽带将此伤害转化为治疗。若30米内没有已建立纽带且受伤的队伍成员，则治疗30米内生命值最低的受伤队伍成员，治疗量为伤害的15%。治疗一名队伍成员时，还会为该目标10米内、且处于你视野中的至多2名其他受伤队伍成员治疗，每人恢复量为已恢复生命值的50%。这些额外治疗不会触发暴击，也不会建立教义纽带。（教义专属技能）"
       },
       "seraphic_vigil": {
         "name": "炽天使守望",

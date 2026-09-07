@@ -93,9 +93,13 @@ describe('talent buffPct resolver fixes', () => {
     mods.spec = 'elemental';
     accumulateTalentEffect(mods, { global: { spellDmgPct: 0.3 } }, 1);
 
+    // v0.42.0 re-pin: Faultwake is a real groundAoE damage effect for the
+    // elemental spec, so it also picks up the Thundercall offense-only spec
+    // bonus (+0.13 spell, spec_output_tuning.ts) on top of the injected 0.3
+    // global spellDmgPct: dmgMult 1.3 -> 1.43.
     const earthquake = resolvedEffect('shaman', 'earthquake', 'groundAoE', mods);
-    expect(earthquake.min).toBe(Math.round(13 * 1.3));
-    expect(earthquake.max).toBe(Math.round(17 * 1.3));
+    expect(earthquake.min).toBe(Math.round(13 * 1.43));
+    expect(earthquake.max).toBe(Math.round(17 * 1.43));
   });
 
   it('Blizzard groundAoE damage scales with the global spell damage modifier and keeps its snare/orb riders', () => {

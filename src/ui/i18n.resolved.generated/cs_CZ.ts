@@ -11758,7 +11758,7 @@ export const cs_CZ: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Očistné milosrdenství",
-        "description": "Způsobí 72 až 84 Svatého poškození nepříteli nebo vyléčí spřáteleného cíle za 130 až 155. Obě hodnoty rostou se silou kouzel. Poškození navíc vyléčí každého spojence spojeného Doktrínou za 30%, nebo člena skupiny s nejnižším zdravím za 15%, pokud není spojen nikdo. (Signatura Doktríny)"
+        "description": "Způsobí {damage} Svatého poškození nepříteli nebo vyléčí spřáteleného cíle za {healing}. Poškození roste se silou kouzel, léčení se silou léčení. Doktrína přemění toto poškození na léčení skrze vaše spojení. Pokud se v okruhu 30 metrů nenachází žádný spojený zraněný člen skupiny, vyléčí zraněného člena skupiny s nejnižším zdravím v okruhu 30 metrů za 15% poškození. Vyléčení člena skupiny také vyléčí až 2 další zraněné členy skupiny v okruhu 10 metrů od tohoto cíle a ve vaší přímé viditelnosti, každého za 50% obnoveného zdraví. Toto dodatečné léčení nemůže být kritické ani vytvářet spojení Doktríny. (Signatura Doktríny)"
       },
       "seraphic_vigil": {
         "name": "Serafínská stráž",

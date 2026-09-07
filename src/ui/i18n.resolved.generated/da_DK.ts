@@ -11758,7 +11758,7 @@ export const da_DK: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Rensende Nåde",
-        "description": "Gør 72 til 84 hellig skade på en fjende eller helbreder et venligt mål for 130 til 155. Begge beløb stiger med besværgelseskraft. Skaden helbreder også hver lærebundet allieret for 30%, eller gruppemedlemmet med lavest sundhed for 15%, hvis ingen allieret er bundet. (Læresignatur)"
+        "description": "Gør {damage} hellig skade på en fjende eller helbreder et venligt mål for {healing}. Skaden stiger med besværgelseskraft; helbredelsen stiger med helbredelseskraft. Læren omdanner denne skade til helbredelse gennem dine bånd. Hvis intet bundet såret gruppemedlem er inden for 30 meter, helbredes det sårede gruppemedlem med lavest sundhed inden for 30 meter for 15% af skaden. At helbrede et gruppemedlem helbreder også op til 2 andre sårede gruppemedlemmer inden for 10 meter af det mål og inden for din sigtelinje, hver for 50% af den gendannede sundhed. Denne ekstra helbredelse kan hverken være kritisk eller skabe Læren-bånd. (Læresignatur)"
       },
       "seraphic_vigil": {
         "name": "Serafisk Vagt",

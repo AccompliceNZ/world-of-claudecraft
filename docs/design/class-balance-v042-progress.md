@@ -51,6 +51,10 @@ The translation worklist is explicit in the results document. Sonnet fixed marke
 
 Implementation and focused review are complete for a draft handoff. Release QA is NOT READY until the documented Gate, browser, translation and PBE work is completed. Publication as a draft PR was explicitly authorized on 7 September 2026; merge and deployment remain separate.
 
+## CI repair pass
+
+The draft PR's checks then surfaced failures: stale combat-balance test bands/formulas against the shipped coefficients, seven parity goldens needing regeneration for the approved changes, and stale Scouring Mercy translation text plus missing M16 fills. Reuben explicitly requested these be fixed using Sonnet workers, scoped to the PR's actual failures. That repair is done; see [Measured results](class-balance-v042-results.md)'s "CI repair pass" section for the full list, evidence, and what still was not run. This is a separate, later pass from the implementation validation above and does not itself represent a green full Gate or a green GitHub Actions run.
+
 ## Delivery contract
 
-Feature defects are fixed before delivery. Reuben's recorded preference prioritizes a reviewable feature PR with focused validation; broad Gate/CI cleanup is deferred and known failures/unrun checks are disclosed. No merge or deployment is authorized.
+Feature defects are fixed before delivery. Reuben's recorded preference prioritizes a reviewable feature PR with focused validation. The scoped CI repair above addresses the draft PR's disclosed failures; see [PR #3917](https://github.com/levy-street/world-of-claudecraft/pull/3917) for current CI status, since the coordinator runs further checks after this repair. PBE, the browser/screenshot review and the remaining release translations stay pending either way; a green full Gate is not claimed here. No merge or deployment is authorized.

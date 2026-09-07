@@ -11758,7 +11758,7 @@ export const de_DE: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Läuternde Gnade",
-        "description": "Verursacht 72 bis 84 Heiligschaden an einem Gegner oder heilt ein freundliches Ziel um 130 bis 155. Beide Werte steigen mit der Zaubermacht. Der Schaden heilt außerdem jeden über die Doktrin verbundenen Verbündeten um 30% oder, wenn kein Verbündeter verbunden ist, das Gruppenmitglied mit der geringsten Gesundheit um 15%. (Doktrin-Signatur)"
+        "description": "Verursacht {damage} Heiligschaden an einem Gegner oder heilt ein freundliches Ziel um {healing}. Der Schaden steigt mit der Zaubermacht, die Heilung mit der Heilkraft. Die Doktrin wandelt diesen Schaden über deine Verbindungen in Heilung um. Befindet sich kein verbundenes verwundetes Gruppenmitglied innerhalb von 30 Metern, wird das verwundete Gruppenmitglied mit der geringsten Gesundheit innerhalb von 30 Metern um 15% des Schadens geheilt. Das Heilen eines Gruppenmitglieds heilt außerdem bis zu 2 weitere verwundete Gruppenmitglieder innerhalb von 10 Metern dieses Ziels und in deiner Sichtlinie, jeweils um 50% der wiederhergestellten Gesundheit. Diese zusätzlichen Heilungen können weder kritisch treffen noch Doktrin-Verbindungen erschaffen. (Doktrin-Signatur)"
       },
       "seraphic_vigil": {
         "name": "Seraphische Wacht",

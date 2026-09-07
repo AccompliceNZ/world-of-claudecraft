@@ -575,9 +575,6 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "zh_CN": [
-    "entities.abilities.arcane_shot.specNote_marksmanship",
-    "hudChrome.auraEffect.coldsightRead",
-    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.options.gpuBackendActiveNameOpenGL",
     "hudChrome.options.gpuBackendActiveNameVulkan",
     "hudChrome.riftForge.currency",
@@ -585,9 +582,6 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.targetDots.row"
   ],
   "zh_TW": [
-    "entities.abilities.arcane_shot.specNote_marksmanship",
-    "hudChrome.auraEffect.coldsightRead",
-    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.options.gpuBackendActiveNameOpenGL",
     "hudChrome.options.gpuBackendActiveNameVulkan",
     "hudChrome.riftForge.currency",
@@ -595,9 +589,6 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.targetDots.row"
   ],
   "ko_KR": [
-    "entities.abilities.arcane_shot.specNote_marksmanship",
-    "hudChrome.auraEffect.coldsightRead",
-    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.options.gpuBackendActiveNameOpenGL",
     "hudChrome.options.gpuBackendActiveNameVulkan",
     "hudChrome.riftForge.currency",
@@ -605,9 +596,6 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.targetDots.row"
   ],
   "ja_JP": [
-    "entities.abilities.arcane_shot.specNote_marksmanship",
-    "hudChrome.auraEffect.coldsightRead",
-    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.options.gpuBackendActiveNameOpenGL",
     "hudChrome.options.gpuBackendActiveNameVulkan",
     "hudChrome.riftForge.currency",
@@ -709,9 +697,6 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "ru_RU": [
-    "entities.abilities.arcane_shot.specNote_marksmanship",
-    "hudChrome.auraEffect.coldsightRead",
-    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.options.gpuBackendActiveNameOpenGL",
     "hudChrome.options.gpuBackendActiveNameVulkan",
     "hudChrome.riftForge.currency",

@@ -11758,7 +11758,7 @@ export const fr_FR: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Miséricorde purifiante",
-        "description": "Inflige 72 à 84 points de dégâts Sacrés à un ennemi ou soigne une cible alliée de 130 à 155. Les deux montants augmentent avec la puissance des sorts. Les dégâts soignent aussi chaque allié lié par la Doctrine de 30%, ou le membre du groupe le plus blessé de 15% si aucun allié n'est lié. (Signature de Doctrine)"
+        "description": "Inflige {damage} dégâts Sacrés à un ennemi ou soigne une cible alliée de {healing}. Les dégâts augmentent avec la puissance des sorts ; les soins augmentent avec la puissance de soin. La Doctrine convertit ces dégâts en soins à travers vos liens. Si aucun allié lié blessé du groupe ne se trouve à moins de 30 mètres, soigne le membre du groupe blessé ayant le moins de vie à moins de 30 mètres pour 15% des dégâts. Soigner un membre du groupe soigne aussi jusqu'à 2 autres membres du groupe blessés à moins de 10 mètres de cette cible et dans votre ligne de vue, chacun pour 50% des soins prodigués. Ces soins supplémentaires ne peuvent ni être critiques ni créer de liens de Doctrine. (Signature de Doctrine)"
       },
       "seraphic_vigil": {
         "name": "Veille séraphique",
