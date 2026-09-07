@@ -223,19 +223,23 @@ describe('the farmer NPCs: seated beside their beds in the real world', () => {
         'brook_carrot',
         'compost',
         'garden_hoe',
+        'field_kit',
       ],
-      farmer_teasel: ['marsh_rice_seed', 'bog_beet_seed', 'compost'],
+      farmer_teasel: ['marsh_rice_seed', 'bog_beet_seed', 'compost', 'field_kit'],
       // GATE 1 (Phase 11e) stocked the upper two counters. This arm is the
       // SPAWNED-entity twin of the def-level table in
       // tests/professions_zone_rollout.test.ts: that one proves the content
       // record, this one proves the entity a player actually walks up to
       // carries it, so both move together or the pair stops meaning anything.
+      // Intentional Gathering (PR3) appended field_kit to every farmer's
+      // counter (the corpse-harvest key, sold beside the seeds and compost).
       farmer_hollis: [
         'compost',
         'highland_barley_seed',
         'frost_gourd_seed',
         'thornpeak_cabbage_seed',
         'frost_lentils_seed',
+        'field_kit',
       ],
       farmer_verbena: [
         'compost',
@@ -243,6 +247,7 @@ describe('the farmer NPCs: seated beside their beds in the real world', () => {
         'evergarden_greens_seed',
         'gilded_yam_seed',
         'evergarden_pumpkin_seed',
+        'field_kit',
       ],
     };
     for (const { id } of FARMERS) {

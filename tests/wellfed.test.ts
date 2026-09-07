@@ -31,6 +31,14 @@ function playerWorld(seed = 42) {
   const sim = new Sim({ seed, playerClass: 'warrior', noPlayer: true });
   const pid = sim.addPlayer('warrior', 'Aleph');
   sim.tick();
+  // Drop the open-world mob population so the hundreds of real ticks every
+  // meal rides (eatToCompletion) stay cheap: well-fed completion is driven
+  // by the carried FoodConsuming payload on the eater alone (src/sim/wellfed.ts),
+  // independent of who else is on the map, matching the lockpick_timeout.test.ts
+  // idiom for the same reason.
+  for (const [id, e] of [...sim.entities]) {
+    if (e.kind === 'mob') sim.entities.delete(id);
+  }
   const p = sim.entities.get(pid)! as Entity;
   return { sim, pid, p };
 }
@@ -515,12 +523,23 @@ describe('well fed: the mint draws zero rng', () => {
   // one with a plain dish of the SAME foodHp (90). If the well-fed mint drew
   // even one rng value, the recorded draw streams would diverge in count or
   // value; identical streams prove the mint adds zero draws.
-  function recordEatSequence(itemId: string): { draws: number[]; p: Entity } {
+  function recordEatSequence(itemId: string): {
+    draws: number[];
+    p: Entity;
+    calibration: number;
+  } {
     const { sim, pid, p } = playerWorld(4242);
     const draws: number[] = [];
     sim.rng.setObserver((value: number) => {
       draws.push(value);
     });
+    // RIG CALIBRATION, not meal measurement: playerWorld drops the ambient
+    // mobs that used to supply incidental draws, so pull one real value
+    // straight off the live rng while the observer is attached and confirm
+    // it was recorded, then wipe it before the measured window below.
+    const calibration = sim.rng.next();
+    expect(draws, 'the observer recorded the real calibration draw').toEqual([calibration]);
+    draws.length = 0;
     try {
       consume(sim, pid, itemId);
       tickSeconds(sim, 22);
@@ -528,7 +547,7 @@ describe('well fed: the mint draws zero rng', () => {
       sim.rng.setObserver(null);
     }
     expect(p.eating).toBeNull();
-    return { draws, p };
+    return { draws, p, calibration };
   }
 
   it('the eat-plus-completion draw stream matches a plain meal exactly', () => {
@@ -538,13 +557,19 @@ describe('well fed: the mint draws zero rng', () => {
     // Non-vacuity: the buffed run really minted, the plain run really did not.
     expect(wellFedAuras(buffed.p).length).toBe(1);
     expect(wellFedAuras(plain.p)).toEqual([]);
-    // Non-vacuity of the RIG: the observer really recorded a stream (an
-    // unwired observer would leave both runs empty-equal and prove nothing),
-    // and the twin premise holds: same foodHp, so the two meals differ ONLY
-    // in the wellFed field.
-    expect(buffed.draws.length).toBeGreaterThan(0);
+    // Non-vacuity of the RIG (not the meal): each twin's calibration draw is
+    // a real Rng.next() value (range [0,1)) recorded from the live Sim while
+    // the observer was attached. Same seed, same post-mob-removal world, so
+    // both twins' calibration draws land at the same stream position.
+    expect(buffed.calibration).toBeGreaterThanOrEqual(0);
+    expect(buffed.calibration).toBeLessThan(1);
+    expect(plain.calibration).toBe(buffed.calibration);
     expect(ITEMS.vale_hearth_loaf.foodHp).toBe(ITEMS.eastbrook_glazed_carrots.foodHp);
 
+    // The MEASURED window (meal only, calibration draw excluded by the
+    // wipe above): the mint itself draws zero rng, so both meals leave an
+    // empty, and therefore equal, stream.
+    expect(buffed.draws.length).toBe(0);
     expect(buffed.draws.length).toBe(plain.draws.length);
     expect(buffed.draws).toEqual(plain.draws);
   });
@@ -648,7 +673,9 @@ describe('well fed: the retired namespace is gone (the unification landed)', () 
       }
     }
     expect(offenders, 'files still carrying a per-kind well-fed id').toEqual([]);
-  });
+    // Explicit budget: the synchronous seven-root walk plus comment-stripping
+    // over every file reproducibly exceeds the 20000ms default (isolated repro).
+  }, 60000);
 
   it('every carrier mints exactly the one id at RUNTIME, whatever the source spells', () => {
     // The sweep above reads TEXT, so a per-kind namespace ASSEMBLED at runtime

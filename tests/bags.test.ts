@@ -71,6 +71,17 @@ function fillBags(sim: Sim): void {
 }
 
 describe('stack sizes and stacking math', () => {
+  it('every fixture id in this block is a NON-material, so it exercises the legacy arm', () => {
+    // An honest material takes the packing-core arm instead (bags.ts "The
+    // material arm"; its contracts are tests/material_bags.test.ts). Without
+    // this pin a taxonomy change could silently reroute the whole block and
+    // quietly redefine what its identical-payload assertions below mean.
+    // Exactly the ids this block puts through countFit/addStacked/fitsAll.
+    for (const id of ['baked_bread', 'worn_sword', 'rusty_dagger', 'training_mace']) {
+      expect(materialItemIds().has(id), id).toBe(false);
+    }
+  });
+
   it('gear, bags, and tools never stack; consumables stack to 20', () => {
     expect(stackSizeOf(ITEMS.worn_sword)).toBe(1);
     expect(stackSizeOf(ITEMS.linen_pouch)).toBe(1);
@@ -845,21 +856,46 @@ describe('consumeOneScratch (#2350)', () => {
 
     const triple: InvSlot[] = [{ itemId: STACK, count: 3 }];
     consumeOneScratch(triple, STACK);
-    expect(triple).toEqual([{ itemId: STACK, count: 2 }]); // decremented, slot stays
+    // STACK is a material: an anonymous legacy stack now projects its
+    // composition as a `materialSources` bucket, source:{}.
+    expect(triple).toEqual([
+      { itemId: STACK, count: 2, materialSources: [{ source: {}, count: 2 }] },
+    ]); // decremented, slot stays
   });
 
   it('returns the victim payload by reference, and undefined for a plain or absent victim', () => {
+    // A material's returned payload is a freshly BUILT effective view (the
+    // material arm's own contract, material_inventory_units.ts), never the
+    // held object; the reference-identity guarantee below holds only for a
+    // non-material item, so GEAR carries this check. GEAR is unstackable
+    // (a weapon), so its fixtures hold count 1, not a multi-count stack.
     const inst = { signer: 'A' };
-    const instanced: InvSlot[] = [{ itemId: STACK, count: 2, instance: inst }];
-    expect(consumeOneScratch(instanced, STACK)).toBe(inst); // the SAME object, not a clone
+    const instanced: InvSlot[] = [{ itemId: GEAR, count: 1, instance: inst }];
+    expect(consumeOneScratch(instanced, GEAR)).toBe(inst); // the SAME object, not a clone
 
-    const plain: InvSlot[] = [{ itemId: STACK, count: 2 }];
-    expect(consumeOneScratch(plain, STACK)).toBeUndefined();
+    const plain: InvSlot[] = [{ itemId: GEAR, count: 1 }];
+    expect(consumeOneScratch(plain, GEAR)).toBeUndefined();
 
     const untouched: InvSlot[] = [{ itemId: GEAR, count: 1 }];
     const before = untouched.map((s) => ({ ...s }));
     expect(consumeOneScratch(untouched, STACK)).toBeUndefined(); // no slot matches STACK
     expect(untouched).toEqual(before); // and the scratch is left untouched
+  });
+
+  it('a legacy signed material returns a freshly built effective payload, never aliased to the remainder', () => {
+    // The material arm's own contract (material_inventory_units.ts,
+    // spentUnitPayload/materialSourceUnitPayload): the returned payload is
+    // built fresh from the spent unit's descriptor, sharing no object with
+    // the held slot or with what remains.
+    const scratch: InvSlot[] = [{ itemId: STACK, count: 3, instance: { signer: 'A' } }];
+    const payload = consumeOneScratch(scratch, STACK);
+    expect(payload).toEqual({ signer: 'A' });
+    expect(scratch).toEqual([
+      { itemId: STACK, count: 2, materialSources: [{ source: { signer: 'A' }, count: 2 }] },
+    ]);
+    // Mutating the returned payload must not reach the remainder's own source.
+    if (payload) (payload as { signer?: string }).signer = 'Tampered';
+    expect(scratch[0].materialSources?.[0]?.source.signer).toBe('A');
   });
 
   // Mirror-vs-real drift pins (the #2139 class): consumeOneScratch run on a deep

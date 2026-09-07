@@ -2997,6 +2997,9 @@ const ITEM_ENTITY_IDS = [
   'pattern_crucible_caster_cloth',
   'pattern_crucible_healer_cloth',
   'formula_lastflame_zeal',
+  // The Field Kit: appended at the END under the append-only contract,
+  // behind the prior masterwrought appends; resolves BY KEY.
+  'field_kit',
 ] as const;
 
 type ItemEntityId = (typeof ITEM_ENTITY_IDS)[number];
@@ -3647,6 +3650,7 @@ const APPENDED_ITEM_NAMES: Partial<Record<ItemEntityId, string>> = {
   pattern_crucible_caster_cloth: "Pattern: Crucible Spellcaster's Cloth",
   pattern_crucible_healer_cloth: "Pattern: Crucible Healer's Cloth",
   formula_lastflame_zeal: "Formula: Last Flame's Zeal",
+  field_kit: 'Field Kit',
 };
 
 function itemTranslations(names: readonly string[]): ItemEntityTranslations {

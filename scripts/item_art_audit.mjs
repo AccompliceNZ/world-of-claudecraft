@@ -107,15 +107,17 @@ const build = await buildItemArtAudit({
     // replaces 84 interim project-owned placeholders. The replacements do
     // not grow the catalog; the new identities take the shipping census from
     // 1,128 to 1,209 after the three v0.42 mount reins join the reviewed base.
+    // The gathering Field Kit adds one more painted identity (1,209 to 1,210).
     // Crucible professions adds 33 armor pieces, 11 patterns, and one formula,
-    // bringing the current shipping census to 1,254 without replacing old art.
-    catalogCount: 1254,
+    // bringing the current shipping census to 1,255 without replacing old art.
+    catalogCount: 1255,
     // The art-subject universe is every live definition minus the explicit
     // pending-art ledger. Masterwrought cleared that ledger at 1,224 live
-    // definitions; Crucible professions raises it to 1,269, all painted.
-    // Sixteen Heroic weapons intentionally alias base paintings; the implicit
-    // backpack is the one non-definition catalog id.
-    liveItemCount: 1269,
+    // definitions; the Field Kit raises it to 1,225; Crucible professions
+    // raises it to 1,270, all painted. Sixteen Heroic weapons intentionally
+    // alias base paintings; the implicit backpack is the one non-definition
+    // catalog id.
+    liveItemCount: 1270,
     pendingArtCount: 0,
     generatedHeroicDefinitions: 64,
     heroicDefinitionsWithOwnWebp: 48,

@@ -140,8 +140,19 @@ const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 // counts each move by one over the eighth composition; dispatch-only stays
 // 13. Set from a suite run on the merged tree, never by arithmetic in the
 // diff.
-const EXPECTED_SEND_COUNT = 214;
-const EXPECTED_DISPATCH_COUNT = 227;
+// Intentional Gathering PR3 adds the set_harvest_preference command (a
+// client-sent, dispatched pair, so both counts move together by one);
+// dispatch-only stays 13.
+// Intentional Gathering PR3 adds a second command, inspectCorpseHarvest (the
+// selected-corpse status query, also a client-sent + dispatched pair):
+// 217/230, dispatch-only stays 13.
+// Intentional Gathering PR4 adds three more client-sent + dispatched pairs
+// (track_gathering_recipe, track_gathering_commission, clear_gathering_goal):
+// 220/233, dispatch-only stays 13.
+// Masterwrought Perfecting rank exchange adds swap_perfecting_ranks (one more
+// client-sent + dispatched pair): 221/234, dispatch-only stays 13.
+const EXPECTED_SEND_COUNT = 221;
+const EXPECTED_DISPATCH_COUNT = 234;
 const EXPECTED_DISPATCH_ONLY_COUNT = 13;
 
 // The chat sub-channel routing switch (server/game.ts `switch

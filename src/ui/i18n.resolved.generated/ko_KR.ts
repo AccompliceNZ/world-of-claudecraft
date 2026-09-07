@@ -326,6 +326,7 @@ export const ko_KR: EnTranslations = {
     }
   },
   "hudChrome": {
+    "materialStackSelectionUnavailable": "해당 재료 선택을 더 이상 사용할 수 없습니다.",
     "warlock": {
       "doomLabel": "단죄",
       "fateThreadsLabel": "운명의 실타래",
@@ -2411,6 +2412,35 @@ export const ko_KR: EnTranslations = {
         "tusk": "엄니",
         "meat": "고기",
         "cloth": "천"
+      },
+      "preferenceLabel": "채집 선호: {preference}",
+      "changeButton": "변경",
+      "harvestActionTooltip": "현재 선호 설정으로 {seconds}초에 걸쳐 채집합니다. 야전 키트가 필요합니다. 각 시체는 한 번만 채집할 수 있습니다. 처치자와 그 파티는 {prioritySeconds}초 동안 우선권을 가집니다. 떨어진 전리품은 계속 획득할 수 있습니다.",
+      "checkingStatus": "채집 상태를 확인하는 중...",
+      "statusUnavailable": "지금은 채집 상태를 확인할 수 없습니다.",
+      "harvestStarting": "채집을 시작하는 중...",
+      "allBenefit": "이 시체에서 얻을 수 있는 모든 재료를 채집합니다.",
+      "focusBenefit": "채집을 {material}에 집중합니다.",
+      "tierBonusHint": "채집을 {material}에 집중합니다: 전체 재료 대비 등급 +{tierBonus}.",
+      "denial": {
+        "actorDead": "채집하려면 살아 있어야 합니다.",
+        "actorInCombat": "전투 중에는 채집할 수 없습니다.",
+        "actorBusy": "이미 다른 일을 하고 있습니다.",
+        "corpseInvalid": "이 시체는 더 이상 채집할 수 없습니다.",
+        "wrongWorld": "이 시체는 당신의 세계에 있지 않습니다.",
+        "outOfRange": "이 시체를 채집하려면 더 가까이 다가가세요.",
+        "noFieldKit": "채집하려면 야전 키트가 필요합니다.",
+        "reservedSelf": "이미 이 시체를 채집하고 있습니다.",
+        "reservedOther": "{name}님이 이 시체를 채집하고 있습니다.",
+        "reservedOtherUnknown": "다른 플레이어가 이 시체를 채집하고 있습니다.",
+        "priorityProtected": "지금은 다른 플레이어가 이 시체에 우선권을 가지고 있습니다.",
+        "corpseExpiring": "이 시체는 채집을 마칠 만큼 오래 유지되지 않습니다.",
+        "preferenceMalformed": "채집 선호 설정이 잘못되었습니다. 계속하려면 하나를 선택하세요.",
+        "nothingToHarvest": "당신의 야전 키트로는 이 시체에서 채집할 것이 없습니다.",
+        "materialUnavailable": "{material}은(는) 이 시체에 없습니다.",
+        "materialUnavailableWithList": "{material}은(는) 이 시체에 없습니다. 사용 가능: {materials}.",
+        "bagsFull": "가방이 가득 차서 채집할 수 없습니다.",
+        "malformedInput": "문제가 발생했습니다. 다시 시도하세요."
       }
     },
     "townFocus": {
@@ -2429,6 +2459,70 @@ export const ko_KR: EnTranslations = {
       "respecTierInstantOption": "즉시 (전액 비용)",
       "respecCostFree": "무료",
       "respecCostLine": "{coin} 및 {materials} 소모"
+    },
+    "harvestPreference": {
+      "title": "채집 설정",
+      "allLabel": "모든 재료",
+      "applyButton": "적용",
+      "cancelButton": "취소",
+      "pickHint": "적용하기 전에 채집할 재료를 선택하세요.",
+      "currentUnavailable": "현재 선택한 {material}은(는) 여기서 제공되지 않습니다.",
+      "unknownMaterial": "이용할 수 없는 재료",
+      "currentChoiceLabel": "현재: {choice}"
+    },
+    "gatheringSource": {
+      "title": "{material}을(를) 구할 수 있는 곳",
+      "corpseExample": "{creature} ({zone})",
+      "corpseExampleTagged": "{creature} ({zone}, {tag})",
+      "rareTag": "희귀",
+      "eliteTag": "정예",
+      "gatedTag": "퀘스트 필요",
+      "moreSources": "외 {count}개",
+      "moreZones": "외 {count}개 지역",
+      "premiumChance": "희귀 이상의 {material} 채집은 가방에 자리가 있으면 {specimen}도 함께 얻을 수 있습니다.",
+      "specimenOfBase": "{material}은(는) {base}의 희귀 이상 채집에서 얻는 추가 보너스로, 위와 같은 생물에게서 나오지만 별도로 확실히 얻을 수 있는 것은 아닙니다.",
+      "nodeZone": "{zone} (티어 {tier} 이상 도구)",
+      "nodeFineNote": "티어 {tier} 이상의 채집 도구를 사용하면 같은 종류의 채집 지점에서 상급 등급으로 격상됩니다.",
+      "farmNote": "씨앗을 심어 기르는 것으로, 약 {duration} 후에 수확할 수 있습니다. 농사 스킬 {skill} 이상과 티어 {tier} 이상의 괭이가 필요합니다.",
+      "fishingZoneProven": "{zone} 수역 (숙련도 {skill} 이상, 낚싯대 티어 {tier} 이상)",
+      "fishingZoneUnproven": "숙련도 {skill} 이상과 낚싯대 티어 {tier} 이상이 필요한 수역도 있지만, 구체적인 지점은 아직 확인되지 않았습니다."
+    },
+    "gatheringGoal": {
+      "title": "채집 목표",
+      "close": "채집 목표 지우기",
+      "clearButton": "지우기",
+      "empty": "설정된 채집 목표가 없습니다.",
+      "recipeGoalLabel": "{name} x{count}",
+      "commissionGoalLabel": "의뢰: {name} x{count}",
+      "craftCountLine": "제작 {count}회 추적 중",
+      "unknownRecipeLabel": "알 수 없는 제작법",
+      "invalidGoalLabel": "더 이상 추적되지 않음",
+      "statusCollecting": "수집 중",
+      "statusReady": "준비 완료",
+      "statusUnavailable": "이용 불가",
+      "statusDelivered": "전달 완료",
+      "statusCancelled": "취소됨",
+      "statusExpired": "만료됨",
+      "readyHint": "재료는 준비되었습니다. 제작하려면 여전히 골드, 제작대, 가방 공간이 필요합니다.",
+      "reasonInvalidGoal": "이 목표는 더 이상 유효하지 않습니다.",
+      "reasonUnknownRecipe": "해당 제작법은 더 이상 존재하지 않습니다.",
+      "reasonRecipeUnavailable": "해당 제작법은 더 이상 이용할 수 없습니다.",
+      "reasonCommissionUnavailable": "해당 의뢰는 더 이상 추적되지 않습니다. 아직 게시되어 있다면 게시판에서 다시 추적하세요.",
+      "reasonDailyLimit": "해당 제작법은 오늘 이미 제작했습니다.",
+      "reasonBatchLimit": "해당 배치 수량은 더 이상 유효하지 않습니다.",
+      "materialLine": "{name}: {reachable}/{required}",
+      "materialCarried": "소지 {count}개",
+      "materialStored": "보관함에 {count}개",
+      "materialMissing": "부족 {count}개",
+      "materialInaccessible": "제작에 사용할 수 없는 {count}개",
+      "storageRestrictedNote": "여기서 접근할 수 없는 보관함에 일부 재료가 있습니다.",
+      "payableCraftsLine": "{count}회 더 만들 수 있는 재료가 있습니다.",
+      "setPreferenceButton": "채집 설정으로 지정",
+      "setPreferenceButtonAria": "{name}을(를) 채집 설정으로 지정",
+      "currentPreferenceLabel": "현재 채집 설정",
+      "currentPreferenceAria": "{name}이(가) 현재 채집 설정입니다",
+      "sourcesToggle": "출처",
+      "sourcesToggleAria": "{name}의 출처"
     },
     "party": {
       "promoteLeader": "파티장으로 지정",
@@ -2919,7 +3013,7 @@ export const ko_KR: EnTranslations = {
       "chestTitle": "상자",
       "takeLootButton": "전리품 가져가기",
       "takeLootTooltip": "돈과 떨어진 아이템을 가져갑니다. 채집 기회는 소모되지 않습니다.",
-      "unifiedPressHint": "상호작용 키를 한 번 누르면 마을 집중에 따라 전리품 획득과 채집을 함께 수행합니다.",
+      "unifiedPressHint": "상호작용 키로는 전리품만 가져갑니다. 부위를 채집하려면 여기서 채집을 사용하십시오.",
       "bindConfirmTitle": "획득 시 귀속",
       "bindConfirmBody": "이 전리품에는 가져가면 자신에게 귀속되는 아이템이 있습니다. 귀속된 아이템은 같은 전리품을 함께 획득한 플레이어와만, 제한된 시간 동안만 거래할 수 있습니다."
     },
@@ -3049,7 +3143,33 @@ export const ko_KR: EnTranslations = {
       "enchantedFallback": "마법부여됨",
       "partyTradeWindow": "앞으로 {time} 동안 이 아이템을 같은 전리품을 함께 획득한 플레이어와 거래할 수 있습니다. 착용하면 거래 기간이 끝납니다.",
       "perfectedBadge": "완전해짐",
-      "perfectingRank": "완전화: {ranks}단계 중 {rank}단계"
+      "perfectingRank": "완전화: {ranks}단계 중 {rank}단계",
+      "materialSourceGatherer": "{count} × {name} 채집",
+      "materialSourceGathererSigned": "{count} × {name} 채집, {signer} 서명",
+      "materialSourceUnrecorded": "{count} × 채집자 기록 없음",
+      "materialSourceUnrecordedSigned": "{count} × 채집자 기록 없음, {name} 서명",
+      "materialSourceMore": "그 외 출처 {sources}개, 총 {units}개"
+    },
+    "materialSources": {
+      "detailsTitle": "{item} 출처",
+      "pickerTitle": "{item}에서 출처 선택",
+      "close": "재료 출처 닫기",
+      "view": "출처",
+      "choose": "출처",
+      "viewAria": "{item}의 모든 재료 출처 보기",
+      "chooseAria": "{item}에서 옮길 재료 출처 선택",
+      "cancel": "취소",
+      "confirm": "선택한 수량 옮기기",
+      "listAria": "재료 출처 목록",
+      "total": "이 묶음에 총 {units}개",
+      "row": "{count}개: {source}",
+      "gatherer": "{name} 채집",
+      "gathererSigned": "{name} 채집, {signer} 서명",
+      "unrecorded": "채집자 기록 없음",
+      "unrecordedSigned": "채집자 기록 없음, {name} 서명",
+      "quantityAria": "{source} 출처 수량, 최대 {count}개",
+      "decreaseAria": "{source} 출처 수량 줄이기",
+      "increaseAria": "{source} 출처 수량 늘리기"
     },
     "materialHint": {
       "fineGrade": "상급 등급입니다. 해당 재료보다 높은 등급의 도구로 만렙 채집지에서 캐낸 것이며, 일반 등급이 필요한 곳 어디에서나 대신 사용됩니다.",
@@ -3575,6 +3695,7 @@ export const ko_KR: EnTranslations = {
       "herbalism": "약초학",
       "fishing": "낚시",
       "farming": "농사",
+      "corpseHarvesting": "시체 채집",
       "notReady": "이 자원 채집지는 아직 당신을 위해 재생성되지 않았습니다.",
       "gatherLine": "{name}을(를) 채집했습니다.",
       "gatherLineQty": "{name}을(를) {qty}개 채집했습니다.",
@@ -3676,7 +3797,7 @@ export const ko_KR: EnTranslations = {
       "witheredLine": "작물이 시들었습니다. 밭을 정리했습니다: {name}.",
       "witheredLineQty": "작물이 시들었습니다. 밭을 정리했습니다: {name} x{qty}.",
       "pressTarget": {
-        "feastOverHarvest": "잔치와 작물이 모두 범위 안에 있습니다. 상호작용은 밭보다 잔치를 먼저 사용합니다. 수확하려면 잔치에서 물러나십시오.",
+        "feastOverHarvest": "잔치와 작물이 모두 범위 안에 있습니다. 상호작용은 밭보다 잔치를 먼저 사용합니다. 작물의 밭 창을 열려면 잔치에서 물러나십시오.",
         "feastOverPlant": "잔치와 빈 밭이 모두 범위 안에 있습니다. 상호작용은 밭보다 잔치를 먼저 사용합니다. 심으려면 잔치에서 물러나십시오."
       },
       "seedBackLine": "씨앗을 회수했습니다: {name}.",
@@ -3716,7 +3837,7 @@ export const ko_KR: EnTranslations = {
         "plant": "심기",
         "sowAria": "{name} 뿌리기",
         "empty": "이 밭에 뿌릴 수 있는 씨앗이 없습니다.",
-        "close": "심기 창 닫기"
+        "close": "밭 창 닫기"
       },
       "husksConvertedLine": "{husksName} x{husks}을(를) {name}(으)로 교환했습니다.",
       "husksConvertedLineQty": "{husksName} x{husks}을(를) {name} x{qty}(으)로 교환했습니다.",
@@ -3836,6 +3957,8 @@ export const ko_KR: EnTranslations = {
     "professions": {
       "title": "전문 기술",
       "close": "전문 기술 닫기",
+      "harvestBodyButton": "시체에서 채집",
+      "harvestBodyHint": "가까운 채집 가능한 시체의 선택 창을 엽니다. 선택을 확정해야 채집합니다.",
       "ringAria": "기술의 수레바퀴",
       "skillsHeader": "제작 기술",
       "gatheringHeader": "채집",
@@ -3937,6 +4060,11 @@ export const ko_KR: EnTranslations = {
       "qtyDecreaseAria": "제작 수량 줄이기 (현재 {count})",
       "qtyIncreaseAria": "제작 수량 늘리기 (현재 {count})",
       "qtyValueAria": "제작 수량, {count}",
+      "goalQtyRowAria": "목표 수량",
+      "goalQtyDecreaseAria": "목표 수량 줄이기 (현재 {count})",
+      "goalQtyIncreaseAria": "목표 수량 늘리기 (현재 {count})",
+      "trackGoalButton": "추적",
+      "trackGoalButtonAria": "{name} {count}회 제작을 채집 목표로 추적",
       "batchRemaining": "남은 수 {remaining}/{total}",
       "batchRemainingAria": "{total}개 중 {remaining}개 남음",
       "durationChip": "{seconds}초",
@@ -4062,7 +4190,11 @@ export const ko_KR: EnTranslations = {
       "applyEnchant": "마법부여 적용",
       "sunder": "가르기",
       "sell": "판매",
-      "sellAll": "모두 판매 ({count})"
+      "sellAll": "모두 판매 ({count})",
+      "viewSources": "출처 보기",
+      "separateByGatherer": "채집자별 분리",
+      "takeChosenQuantity": "지정 수량 꺼내기",
+      "combine": "재료 묶음 합치기"
     },
     "enchanting": {
       "recipeNotLearned": "이 마법부여를 적용하려면 먼저 공식을 배워야 합니다.",
@@ -4275,6 +4407,7 @@ export const ko_KR: EnTranslations = {
       "acceptButton": "수락",
       "deliverButton": "전달",
       "deliverHint": "주문 제작품으로 (주문 제작 토글을 켜고) 만든 뒤, 여기로 돌아와 전달하세요.",
+      "trackButton": "추적",
       "opened": "{item} 의뢰를 등록했습니다.",
       "cancelled": "{item} 의뢰를 취소했습니다.",
       "accepted": "{item} 의뢰를 수락했습니다.",
@@ -5518,6 +5651,7 @@ export const ko_KR: EnTranslations = {
       "mapTitle": "세계 지도와 추적기",
       "mapBody": "M을 누르면 세계 지도가 열립니다. 대륙 전체가 그려지고 그 위에 내 화살표가, 지역과 그 이름이, 주변의 명소가, 이동 차원문이, 그리고 지금까지 찾아낸 채집 노드가 표시됩니다. 파티원도 함께 나타납니다. 탐굴 안에서는 지도가 지금까지 탐험한 방들의 도면으로 바뀝니다.\n\n오른쪽 가장자리 미니맵 아래로는 추적기들이 쌓여, 창을 열지 않고도 지금 하는 일을 눈앞에 붙들어 둡니다. 추적 중인 퀘스트와 그 목표, 업적 진행도, 지금 들어와 있는 탐굴, 참여 중인 균열이 여기에 놓입니다. 화면을 되찾고 싶을 때는 퀘스트 추적기를 접을 수 있습니다.",
       "mapBodyZoneFirst": "M을 누르면 세계 지도가 지금 서 있는 지역에 맞춰 열립니다. 그 위에 내 화살표가, 주변의 명소가, 표식을 단 퀘스트 제공자와 퀘스트 목표가 놓인 구역이, 작업대와 우편함, 게시판, 텃밭이, 던전 입구가, 그리고 그 지역의 모든 채집 노드가 표시됩니다. 노드는 다시 자라는 동안에는 회색으로 흐려지고, 도구가 아직 감당하지 못하는 노드에는 표시가 붙습니다. 파티원도 함께 나타납니다. 지도를 오른쪽 클릭하거나 세계 지도 버튼을 누르면 대륙으로 물러나 모든 지역이 이름과 함께 그려지며, 거기서 지역을 클릭하면 그 지역의 지도가 열립니다. 탐굴이나 던전, 균열, 성채 안으로 들어서면 지도는 지금 서 있는 곳의 도면으로 바뀌고, 쏜할로우 평원 전장은 저만의 전장 지도를 가집니다.\n\n오른쪽 가장자리 미니맵 아래로는 추적기들이 쌓여, 창을 열지 않고도 지금 하는 일을 눈앞에 붙들어 둡니다. 추적 중인 퀘스트와 그 목표, 업적 진행도, 성물고 페이지, 지금 들어와 있는 탐굴, 참여 중인 균열이 여기에 놓입니다. 화면을 되찾고 싶을 때는 퀘스트 추적기를 접을 수 있습니다.",
+      "gatheringGoalTrackerBody": "제작 창에서 제작법을, 또는 의뢰 게시판에서 의뢰를 \"추적\"하면 채집 목표 트래커가 이 스택에 추가됩니다. 추적 중인 제작법이나 의뢰의 이름, 목표 수량, 그리고 소지 중이거나 보관 중인 재료로 얼마나 채울 수 있는지를 보여줍니다. \"추적\"은 현재 목표를 대체하고, \"지우기\"는 명시적으로 해제합니다. 둘 다 채집 설정을 바꾸지 않습니다.",
       "chatTitle": "채팅창",
       "chatBody": "왼쪽 아래에 있습니다. Enter를 눌러 입력을 시작하고 Enter를 다시 눌러 보냅니다.\n\n탭 두 개는 언제나 자리를 지킵니다. 주위에서 오간 말이 모두 모이는 대화 탭과, 전투가 글로 남는 전투 탭입니다. 더하기 버튼으로 채널마다 탭을 하나씩 더할 수 있습니다. 말하기, 외치기, 파티, 일반, 세계, 파티찾기, 길드, 장교, 그리고 주고받은 귓속말을 한자리에 모아 주는 귓속말 탭입니다. 채널 탭에서 입력하면 명령어를 다시 치지 않아도 그 채널로 전해집니다.\n\n채팅창 전체를 다른 자리로 끌어 옮기고 크기도 조절할 수 있으며, 마지막으로 둔 자리를 기억합니다.",
       "keyWindowsTitle": "키로 여는 창",
@@ -6634,7 +6768,7 @@ export const ko_KR: EnTranslations = {
       "colHub": "거점",
       "colMaster": "장인",
       "masterCellFmt": "{name}({title})",
-      "harvestBodyFamilies": "채집은 노드에서 끝나지 않는다. 쓰러뜨린 짐승 상당수는 시체에서 곧바로 한 번씩, 선착순으로 채집할 수 있어 가죽과 송곳니, 발톱, 엄니, 뿔, 아가미, 비단실, 독, 천, 고기가 평범한 전리품과 나란히 나온다. 한 번 누르면 둘이 함께 열린다. 짐승이 쓸 만한 부위를 둘 이상 지녔다면 선택은 당신 몫이다. 그 시체가 내줄 수 있는 것을 전부 가져가거나, 더 적은 부위에 집중해 실제로 얻는 것을 눈에 띄게 더 좋은 등급으로 가져가거나.\n\n표본이 나오는 계열에서 희귀 이상 판정이 뜨면 평범한 산출물 위에 서명된 완벽한 표본(Pristine Hide, Pristine Silk, Pristine Venom Gland, Pristine Claw, Prime Cut)이 하나 더 주어지고, 업적의 서에 A Perfect Specimen이 기록된다. 채집에는 훈련이 필요 없어 어떤 캐릭터든 할 수 있으며, 지니고 있는 채집 도구는 어느 전문직의 것이든 최상급 재료 판정에 반영된다.",
+      "harvestBodyFamilies": "채집은 노드에서 끝나지 않는다. 쓰러뜨린 짐승 상당수는 시체에서 곧바로 한 번씩, 선착순으로 채집할 수 있어 가죽과 송곳니, 발톱, 엄니, 뿔, 아가미, 비단실, 독, 천, 고기가 평범한 전리품과 나란히 나온다. 상호작용 키로는 전리품만 가져간다. 채집은 따로 하는 선택으로, 전리품 창의 채집 항목에서 한다. 짐승이 쓸 만한 부위를 둘 이상 지녔다면 선택은 당신 몫이다. 그 시체가 내줄 수 있는 것을 전부 가져가거나, 더 적은 부위에 집중해 실제로 얻는 것을 눈에 띄게 더 좋은 등급으로 가져가거나.\n\n표본이 나오는 계열에서 희귀 이상 판정이 뜨면 평범한 산출물 위에 서명된 완벽한 표본(Pristine Hide, Pristine Silk, Pristine Venom Gland, Pristine Claw, Prime Cut)이 하나 더 주어지고, 업적의 서에 A Perfect Specimen이 기록된다. 채집에는 훈련이 필요 없어 어떤 캐릭터든 할 수 있으며, 지니고 있는 채집 도구는 어느 전문직의 것이든 최상급 재료 판정에 반영된다.",
       "focusBodyTiers": "모든 거점 마을은 찾아오는 채집자를 위해 마을 집중 패널을 갖추고 있다. 마을에 선 채 미니맵 옆에서 이를 열고, 집중 포인트 10점을 관심 있는 부위 종류에 나누어 배분하라. 한 부위에 5점을 넣을 때마다 그 부위의 채집 등급이 한 단계 오르고(최대 두 단계), 1점마다 산출량이 10퍼센트씩 늘어난다. 집중하지 않은 부위가 나빠지는 일은 결코 없다.\n\n배분은 캐릭터를 따라 어디든 함께 다니며, 이후 마을에 들를 때마다 원하는 속도로 다시 겨눌 수 있다. 느긋하게 가면 무료다. 옮기는 1점마다 재조정이 1분씩 걸린다. 조금 치르면 빨라져서 1점당 15초에 1점마다 5동과 Chime Dust 1개가 들고, 전부 치르면 1점당 25동과 Chime Dust 5개로 즉시 끝난다. 실제로 옮긴 점수만 계산하므로 1점만 살짝 옮기는 것은 값이 싸고, 열었다가 그대로 닫은 패널은 어느 단계에서도 한 푼도 들지 않는다.",
       "toolEffectsHeading": "도구 효과",
       "toolEffectsBody": "채집 도구에는 홈이 하나 있고, 그 자리에 들어가는 것이 제작된 부적이다. Gatherer's Cache는 채집 산출물을 하나 늘리고, Artisan's Eye는 캐 올린 것의 등급을 올리며, Maker's Charm은 같은 방식으로 둘을 늘린다. 앞의 둘은 마법부여의 일감이라, Eastbrook 공작소의 주인 Tinker Gizzel이 마법부여 기술 25에 이른 마법부여사에게 그 둘을 가르친다. Maker's Charm은 기계공학의 일감으로, 드롭으로 얻는 도안을 기술 100에서 만든다. 셋 모두 그의 공작소에서 만든다.\n\n갓 끼운 부적은 일반 도구에서 충전 20회를 지니고, 일반 위로 등급이 한 칸 오를 때마다 10회씩 늘어난다. 그래서 같은 부적도 영웅 곡괭이에 끼우면 50회에서 시작한다. 충전은 부적이 실제로 결과를 바꾸었을 때만 소모되고, 나아지지 않은 채집에는 결코 쓰이지 않으며, 홈은 쓸 때마다 물어보도록 맞출 수 있어 당신이 충전 사용을 말할 때까지 부적이 기다린다. 새 부적을 끼우면 그 순간 지니고 있는 도구를 기준으로 홈이 다시 주조되므로, 예전의 높았던 기록이 아니라 그 도구가 담을 수 있는 만큼 채워진다. 아무것도 달라지지 않을 재장착은 부적을 삼키는 대신 그대로 거절된다.\n\n충전이 떨어져도 부적이 부서지지는 않는다. 도구의 주인이 홈을 되채우며, 비전 재료 하나마다 충전 10회가 들어간다. 어떤 재료를 요구하는지는 지금 지닌 도구와 그 홈이 지금까지 채워졌던 가장 좋은 도구 중 나은 쪽을 따른다. 일반이나 고급 도구는 Chime Dust, 희귀 도구는 Chime Essence, 영웅 도구는 Chime Shard다. 좋은 도구를 은행에 두고 온다고 재충전이 싸지지는 않는다. 값은 그대로인 채 양만 줄어들 뿐이다. 더 싼 칸으로 정직하게 내려가는 길은 낮은 도구를 지닌 채 새 부적을 끼워 그 자리에서 홈을 다시 주조하는 것이다. 홈의 상한이 지금 도구가 채울 수 있는 것보다 높다면 재충전은 그 도구가 멈추는 곳에서 멈추고, 더 나은 도구를 지니라고 알려 준다. 부적에 서명한 제작자 본인이 채우면 재료가 절반만 들고, 그 부적이 속한 기술(Gatherer's Cache와 Artisan's Eye는 마법부여, Maker's Charm은 기계공학)을 주 전공으로 삼았다면 더 줄어든다. 그 밖의 사람은 전액을 낸다. 재충전은 이 제작 계열의 다른 작업과 마찬가지로 짧은 시전이다."
@@ -6949,7 +7083,7 @@ export const ko_KR: EnTranslations = {
         "commissionsBody": "선택형 주문 제작에는 제작자의 서약이 걸린다. 완성품은 거래로 받는 이에게 귀속되고, 어느 작업대 장인이든 단계별 수수료로 풀어 줄 수 있다.",
         "provenanceHeading": "서명된 작품",
         "provenanceBody": "희귀 이상의 제작품과 발견물에는 제작자의 서명이 남고, 서명이 완전히 같은 물건은 여전히 겹쳐 쌓인다.",
-        "provenanceBodyUndiscounted": "어떤 물건은 이름을 지닌다. 마우스를 올리면 원재료에는 채집자, 완성품에는 제작자의 이름이 표시된다. 같은 표식을 물건이 생긴 방식에 따라 다르게 부르는 것이다. 서명은 물건 자체의 일부로서 거래, 은행, 우편, 세계 시장, 상인 재구매를 거쳐도 사라지지 않는다.\n\n채집은 최고의 수확에 자동으로 서명한다. 희귀 이상으로 나온 수확은 서명되며, 희귀 발견은 다섯 배로 늘어난 수확 전체에 서명이 붙는다. 시체 채집의 행운 판정은 해당 분류에 표본이 없으면 수확에 서명을 붙이고, 표본이 있으면 수확은 평범하게 두고 별도의 서명된 완벽한 표본을 만든다. 제작도 같은 원리다. 희귀 이상 완성품은 모든 개체에 서명이 붙고, 걸작은 품질에 관계없이 서명된다. 따라서 어떤 물건이든 가장 좋은 모습에는 만든 이의 이름이 남는다. 서명을 잃게 할 수 있는 것은 가득 찬 가방이다. 서명된 한 개를 받으려면 별도의 빈칸이나 서명이 일치하는 기존 묶음이 있어야 한다.\n\n한 묶음은 동일한 개체 정보를 공유하므로, 물건 종류와 서명자, 걸작 능력치, 마법부여, 귀속이 모두 정확히 같을 때만 합칠 수 있다. 서명된 통나무는 어느 방향으로도 평범한 통나무와 섞이지 않는다. 섞으면 누군가의 이름을 지우기 때문이다. 정보가 같으면 겹쳐 쌓을 수 있으므로 같은 채집자가 서명한 광석 스무 개는 한 묶음이 되고, 큰 수확도 가방을 잘게 나누지 않는다.\n\n서명은 제작자에게도 이익이다. 제작대에서 필요한 재료의 서명된 개체를 하나라도 지니면 누가 서명했든 걸작 확률이 2%포인트 오른다. 자신이 서명한 재료는 필요량도 1개 줄지만 최소 1개는 들어간다. 단, 할인 불가 재료는 예외이며 공격대 핵은 늘 전액을 유지한다. 자신이 서명한 희귀 이상 작품에서 숙련을 다시 얻는 효과도 있지만, 현재는 제작한 물약만 해당한다. 직접 만들고 서명한 희귀 물약을 마시면 그 전문직이 활성 주 전공인 동안 소량의 숙련을 얻는다. 비약, 두루마리, 최상위 영약은 아무리 정성스럽게 서명했어도 숙련을 돌려주지 않는다.",
+        "provenanceBodyUndiscounted": "어떤 물건은 이름을 지닌다. 소재의 출처 항목은 각 묶음의 단위를 채집한 사람을 밝히고, 프리미엄 서명자가 있으면 별도의 서명 표식이 그것을 나타낸다. 이 둘은 독립적인 사실이다. 평범한 채집 소재는 서명 없이 채집자만 기록할 수 있고, 오래된 서명된 재고는 채집자가 기록되지 않았다고 정직하게 밝히면서도 서명자만 이름을 남길 수 있다. 완성품은 대신 누가 제작했는지를 밝힌다. 이 기록들은 거래, 은행, 우편, 세계 시장, 심지어 상인 재구매를 거쳐도 물건에 남아 있으며 결코 흐려지지 않는다.\n\n채집은 최고의 결과물에 자동으로 서명한다. 희귀 이상으로 판정된 수확은 모두 서명되며, 희귀 발견은 다섯 배로 늘어난 추가 수확 전체에 서명한다. 시체 채집의 행운 판정은 해당 종류에 내줄 표본이 없으면 산출물 자체에 서명하고, 표본이 있으면 산출물은 서명 없이 그대로 두고 서명된 완벽한 표본을 별도로 만든다. 제작도 같은 원리를 따른다. 희귀 이상 산출물은 모든 개체가 서명되며, 걸작은 품질과 관계없이 항상 서명되므로 어떤 물건이든 최고의 개체에는 언제나 만든 이의 이름이 남는다. 평범한 소재의 서명은 단위 자체에 붙어 있으므로, 호환되는 묶음에 이미 다른 채집자나 서명자가 포함되어 있다는 이유만으로 사라지지 않는다. 별개의 완벽한 표본은 독립된 아이템이며 여전히 공간이 필요하다. 들어갈 자리가 없으면 평범한 시체 산출물은 남지만 표본은 사라진다.\n\n완성품은 하나의 엄격한 개체 정보를 유지하므로, 두 개체는 모든 표식이 완전히 일치할 때만 합쳐진다: 같은 물건, 같은 서명자, 같은 걸작 수치, 같은 마법부여, 같은 귀속. 호환되는 소재는 채집자와 서명자가 달라도 하나의 칸을 공유하며, 각 출처별 수량을 따로 유지한다. 마우스오버 툴팁은 출처를 요약해 보여 주며, 전체 목록을 보려면 \"출처\"를 연다. 채집자별 분리를 선택하면 가방 안에서 그 묶음들이 나뉜 채로 유지되며, 정렬도 그 선택을 따른다. 넘겨받은 소재는 받는 사람의 소재와 평소대로 합쳐질 수 있다.\n\n서명은 장인에게도 이득이 된다. 제작대 옆에서 필요한 재료의 서명된 개체를 하나라도 지니고 있으면, 누가 서명했든 걸작 확률이 2퍼센트포인트 오른다. 자신이 직접 서명한 재료를 지니고 있으면 그 재료의 필요량이 1개 줄지만 최소 1개는 여전히 필요하다. 다만 그 재료가 할인 불가로 지정된 경우는 예외이며, 공격대 핵은 항상 전체 비용을 유지한다. 자신이 서명한 희귀 이상의 작품은 지금은 오직 제작한 물약을 통해서만 여전히 숙련을 가르쳐 준다. 직접 빚고 서명한 희귀 음료를 마시면, 그 전문직이 활성화된 주 전공 중 하나로 남아 있는 한 그것을 만든 전문직으로 약간의 숙련이 되돌아간다. 이것은 정말로 물약에만 해당하는 효과이므로, 엘릭서나 두루마리, 최상급 플라스크는 아무리 훌륭하게 서명되었어도 숙련을 되돌려주지 않는다.",
         "collectorsHeading": "수집가, 전리품, 이야기의 값",
         "collectorsBody": "상인은 출처를 보지 못한다. 서명된 물건도 NPC에게는 일반품 값에 팔린다. 서명의 웃돈은 플레이어 사이에만 존재하고, 바로 그래서 흥미롭다. 이름난 채집가가 서명한 횡재 광석, Prime Cut 한 점, 은퇴한 장인의 이름이 새겨진 걸작 검. 값은 누군가의 기억이 정한다. 업적의 서도 같은 본능을 좇는다. Pristine Vein, Ancient Heartwood, Moonlit Bloom, A Perfect Specimen, Glimmer of Hope는 모두 그 순간이 당신에게 일어났음을 증명하기 위해서만 존재하는 명성 0의 수집 표식이다. 이것은 힘이 아니다. 출처는 능력치를 사지도, 싸움을 이기지도 않는다. 좋은 날들의 영수증일 뿐이다.",
         "castPaceHeading": "시전 시간과 골드 소모",
@@ -6996,7 +7130,7 @@ export const ko_KR: EnTranslations = {
         "q2": "공용 제조법으로 기술이 영원히 오르나요?",
         "a2": "아니다. 모든 제조법은 그 기술에서 당신의 현재 단계보다 얼마나 아래에 있는지로 매겨진다. 고전 그대로의 주황, 노랑, 초록, 회색 읽기다. 자기 단계 이상이면 온전한 성장, 한 단계 아래면 절반, 두 단계 아래면 4분의 1, 세 단계 이상 아래면 아무것도 없다. 단계는 기술 25점마다이니, 무료인 기술 0 제조법은 기술 75부터 아무것도 가르쳐 주지 않는다.\n\n상한도 예상할 법한 고전의 300보다 낮다. 기를 수 있는 열 제작 기술은 각각 125가 상한이고, 채광과 벌목과 약초학은 100, 낚시는 길게 200까지 간다. 오른다는 것은 가장 싼 제조법을 갈아 대는 것이 아니라 제 단계의 제조법으로 옮겨 가는 것이다.",
         "q3": "시체 전리품과 시체 채집은 무엇이 다른가요?",
-        "a3": "한 번 누르면 둘 다 열린다. 시체가 지닌 것은 전부, 동전과 떨어진 물건은 물론 채집할 수 있는 부위까지 같은 창에 함께 뜬다. 전리품은 평소의 전리품 규칙을 그대로 따르고, 채집은 전문직 쪽의 일로서 시체 그 자체에서 재료를 벗겨 낸다.\n\n채집은 선착순이고 한 번뿐이다. 시체 하나는 먼저 차지한 사람이 딱 한 번만 채집할 수 있으며, 온라인에서도 마찬가지다. 무엇을 얻을지는 마을 집중이 좌우한다. 거점 마을에 선 채로 관심 있는 부위 종류에 집중 포인트 10점을 나누어 겨눌 수 있고, 집중한 부위는 더 좋은 등급으로 굴려지며(5점마다 한 단계, 최대 두 단계) 산출량도 늘어난다(1점마다 10%). 집중하지 않은 부위가 나빠지는 일은 결코 없다.",
+        "a3": "같은 시체를 두고 벌이는 서로 다른 두 가지 행동이다. 시체가 지닌 것은 전부, 동전과 떨어진 물건은 물론 채집할 수 있는 부위까지 같은 창에 함께 뜨지만, 상호작용 키와 전리품 가져가기가 챙기는 것은 평범한 전리품뿐이며 그것은 평소의 전리품 규칙을 그대로 따른다. 채집은 전문직 쪽의 일로서 시체 그 자체에서 재료를 벗겨 내며, 그 창에서 채집을 골랐을 때에만 일어난다.\n\n채집은 선착순이고 한 번뿐이다. 시체 하나는 먼저 차지한 사람이 딱 한 번만 채집할 수 있으며, 온라인에서도 마찬가지다. 무엇을 얻을지는 마을 집중이 좌우한다. 거점 마을에 선 채로 관심 있는 부위 종류에 집중 포인트 10점을 나누어 겨눌 수 있고, 집중한 부위는 더 좋은 등급으로 굴려지며(5점마다 한 단계, 최대 두 단계) 산출량도 늘어난다(1점마다 10%). 집중하지 않은 부위가 나빠지는 일은 결코 없다.",
         "q4": "제 무쇠껍질나무 통나무는 왜 서명되어 있나요?",
         "a4": "횡재한 것이다. 채집 90번에 한 번쯤 희귀한 발견이 일어난다. 나무에서는 고대 심재, 광석에서는 완벽한 광맥, 약초에서는 달빛 꽃이다. 수확이 다섯 배가 되고, 나오는 것 하나하나에 당신의 이름이 서명되며, 그 발견이 지역 전체에 알려진다. 평범한 채집이라도 희귀 이상 판정이 뜨면 그 산출물에도 서명이 붙는다.\n\n서명된 재료는 쟁여 두거나 비싸게 팔 만하다. 필요한 재료의 서명된 사본을 하나라도 지닌 채 제작에 들어가면 걸작 확률이 2%포인트 오른다. 다만 서명이 완전히 같은 사본끼리만 겹쳐 쌓이므로 제 가방 칸을 따로 차지한다는 것은 기억해 두자.",
         "q5": "주문 제작품은 어떻게 귀속 해제하고, 비용은 얼마인가요?",
@@ -14903,6 +15037,9 @@ export const ko_KR: EnTranslations = {
       },
       "formula_lastflame_zeal": {
         "name": "공식: 마지막 불꽃의 열의"
+      },
+      "field_kit": {
+        "name": "야외 도구 키트"
       },
       "conjured_water4": {
         "name": "창조된 샘물"

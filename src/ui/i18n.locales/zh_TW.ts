@@ -29,7 +29,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'guide.profPages.ench.formulaRequired':
     '需要配方',
   'guide.profPages.econ.provenanceBodyUndiscounted':
-    '有些物品帶著名字。懸停查看時，原材料的說明會顯示「採集者」，成品會顯示「製作者」：同一種印記，依據物品來歷使用不同措辭。署名是物品本身的一部分，會隨物品經過交易、銀行、郵件、世界市場，甚至商人回購，永不褪去。\n\n採集會自動為最佳收穫署名：擲出精良及以上品質的收穫都會署名，稀有發現的整份五倍額外收穫也會署名。屍體採集觸發幸運結果時，若該類別沒有標本，則為產出署名；若有標本，則普通產出不署名，並額外生成一個署名的完美標本。製作遵循相同原則：每件精良及以上的成品都會署名，傑作無論品質如何也總會署名，因此每件物品的最佳版本都會記錄製作者。背包滿是可能失去署名的唯一原因：署名單件需要自己的空位，或一疊完全相符的署名物品來接收。\n\n一疊物品共用同一個身分，因此兩件物品只有全部印記完全一致才能合併：同種物品、同一署名者、相同傑作屬性、相同附魔、相同綁定。署名原木絕不能與普通原木混疊，否則會抹去某人的名字；但標記完全一致的物品可以合併，同一採集者署名的二十塊礦石只占一疊，額外收穫不會因此塞滿背包。\n\n署名也會回報工匠：在工作台旁持有任意一份所需材料的署名版本，無論由誰署名，都會讓傑作機率增加2個百分點。若材料由你親自署名，其所需數量還會減少1個，最低為1個；但標記為不可打折的材料除外，團隊副本核心始終維持全額用量。親手署名的精良及以上作品還會繼續教你，目前只有製作的藥水具有這種效果：喝下自己製作並署名的精良藥水，只要對應專業仍是啟用的主修專業，就會獲得少量技能進度。只有藥水生效，藥劑、卷軸或巔峰合劑無論署名多精美，都不會回饋技能。',
+    '有些物品帶著名字。素材的來源行會說明是誰採集了每一組單位，若存在高級署名者，則會有另一個署名標記指明其身分。這兩項事實彼此獨立：一般採集素材會記錄採集者，卻不一定獲得署名；舊有的已署名庫存可能只寫明署名者，同時如實說明未記錄採集者。成品則改為說明是誰製作了它。這些記錄會隨物品經過交易、銀行、郵件、世界市場，甚至商人回購而保留，永不褪去。\n\n採集會自動為最佳成果署名：擲出精良及以上品質的收穫都會帶有署名，稀有發現則為其整份五倍額外收穫全部署名。屍體採集觸發幸運結果時，若該分類沒有可給出的標本，則為產出署名；若有標本，則讓產出保持無署名，並在旁邊額外鑄造一個已署名的完美標本。製作遵循相同原則：每件精良及以上的產出都會鑄造為已署名，傑作無論品質如何都會署名，因此任何物品的最佳版本都會記錄製作者之名。一般素材的署名附著在單位本身上，不會僅因為相容的堆疊中已經包含另一位採集者或署名者而遺失。獨立的完美標本是單獨的物品，仍然需要空間；若放不下，一般的屍體產出會保留，但標本會遺失。\n\n成品保持單一的嚴格身分，因此兩件物品只有在所有標記完全一致時才會合併：同一物品、同一署名者、同一傑作屬性、同一附魔、同一綁定。相容的素材會在不同採集者與署名者之間共用同一個格子，同時為每個來源分別保留數量。懸停提示會概括來源；開啟「來源」可查看完整清單。選擇依採集者拆分會讓背包中的這些堆疊保持分開，排序也會遵循這項選擇。轉移得到的素材可以照常與接收者的素材堆疊在一起。\n\n署名也會回報工匠：在工作台旁持有任意一份所需材料的已署名個體，無論由誰署名，都會讓傑作機率增加2個百分點；若材料由你親自署名，其所需數量還會減少1個（最低為1個），但標記為不可打折的材料除外，團隊副本核心的用量始終維持全額。親手署名的精良及以上作品目前仍只透過製作的藥水繼續傳授技能：喝下自己釀造並署名的稀有飲品，只要對應專業仍是你啟用的主修專業之一，就會有少量技能回流到製作它的專業。這的確只是藥水的效果，別無其他：無論簽署得多麼精美，藥劑、卷軸或巔峰長頸瓶都不會回饋技能。',
   'guide.profPages.econ.introRaidCollections':
     '專業經濟中的金幣流向：確切費用與消耗、真正暢銷的物品、世界市場規則、工單、委託，以及由團隊副本材料支持的套裝在普通製作之外的定位。',
   'guide.profPages.econ.doctrineBodyRaidCollections':
@@ -827,7 +827,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.loot.chestTitle': '寶箱',
   'hudChrome.loot.takeLootButton': '拾取戰利品',
   'hudChrome.loot.takeLootTooltip': '收取金幣和掉落的物品。不會用掉採集機會。',
-  'hudChrome.loot.unifiedPressHint': '按一次互動鍵即可同時拾取戰利品並按城鎮專注進行採集。',
+  'hudChrome.loot.unifiedPressHint': '互動鍵只會拾取戰利品。要採集材料，請在此使用「採集」。',
   'hudChrome.loot.bindConfirmTitle': '拾取後綁定',
   'hudChrome.loot.bindConfirmBody':
     '這批戰利品中有一件物品在拾取後將與你綁定。綁定的物品只能在限定時間內交易給共同獲得該掉落的玩家。',
@@ -1206,6 +1206,37 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.corpseHarvest.components.horn': '角',
   'hudChrome.corpseHarvest.components.tusk': '獠牙',
   'hudChrome.corpseHarvest.components.cloth': '布',
+  'hudChrome.corpseHarvest.preferenceLabel': '採集偏好：{preference}',
+  'hudChrome.corpseHarvest.changeButton': '更改',
+  'hudChrome.corpseHarvest.harvestActionTooltip':
+    '依照你目前的偏好採集，耗時{seconds}秒。需要一個野外工具包。每具屍體只能被採集一次。擊殺者及其隊伍在{prioritySeconds}秒內擁有優先權。掉落的戰利品仍可拾取。',
+  'hudChrome.corpseHarvest.checkingStatus': '正在檢查採集狀態……',
+  'hudChrome.corpseHarvest.statusUnavailable': '目前無法取得採集狀態。',
+  'hudChrome.corpseHarvest.harvestStarting': '正在開始採集……',
+  'hudChrome.corpseHarvest.allBenefit': '從這具屍體上採集所有可用材料。',
+  'hudChrome.corpseHarvest.focusBenefit': '將採集集中於{material}。',
+  'hudChrome.corpseHarvest.tierBonusHint':
+    '將採集集中於{material}：相較於全部材料，品階+{tierBonus}。',
+  'hudChrome.corpseHarvest.denial.actorDead': '你必須存活才能採集。',
+  'hudChrome.corpseHarvest.denial.actorInCombat': '你在戰鬥中無法採集。',
+  'hudChrome.corpseHarvest.denial.actorBusy': '你正忙於其他事情。',
+  'hudChrome.corpseHarvest.denial.corpseInvalid': '這具屍體已無法採集。',
+  'hudChrome.corpseHarvest.denial.wrongWorld': '這具屍體不在你的世界中。',
+  'hudChrome.corpseHarvest.denial.outOfRange': '靠近一點才能採集這具屍體。',
+  'hudChrome.corpseHarvest.denial.noFieldKit': '你需要一個野外工具包才能採集。',
+  'hudChrome.corpseHarvest.denial.reservedSelf': '你已經在採集這具屍體了。',
+  'hudChrome.corpseHarvest.denial.reservedOther': '{name}正在採集這具屍體。',
+  'hudChrome.corpseHarvest.denial.reservedOtherUnknown': '另一名玩家正在採集這具屍體。',
+  'hudChrome.corpseHarvest.denial.priorityProtected': '目前另一名玩家對這具屍體擁有優先權。',
+  'hudChrome.corpseHarvest.denial.corpseExpiring': '這具屍體維持的時間不足以完成採集。',
+  'hudChrome.corpseHarvest.denial.preferenceMalformed': '你的採集偏好無效，請選擇一個以繼續。',
+  'hudChrome.corpseHarvest.denial.nothingToHarvest':
+    '你的野外工具包無法從這具屍體上採集到任何東西。',
+  'hudChrome.corpseHarvest.denial.materialUnavailable': '{material}不在這具屍體上。',
+  'hudChrome.corpseHarvest.denial.materialUnavailableWithList':
+    '{material}不在這具屍體上。可用：{materials}。',
+  'hudChrome.corpseHarvest.denial.bagsFull': '你的背包太滿，無法採集。',
+  'hudChrome.corpseHarvest.denial.malformedInput': '出了點問題，請再試一次。',
   'hudChrome.townFocus.title': '城鎮專注',
   'hudChrome.townFocus.hint':
     '專注點會在每種材料的基礎產出上疊加加成。未專注的材料保持基礎產出不變。',
@@ -9435,6 +9466,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gathering.herbalism': '藥草學',
   'hudChrome.gathering.fishing': '釣魚',
   'hudChrome.gathering.farming': '耕作',
+  'hudChrome.gathering.corpseHarvesting': '屍體採集',
   'hudChrome.gathering.notReady': '這個資源節點尚未為你重新生成。',
   'hudChrome.gathering.gatherLine': '你採集了：{name}。',
   'hudChrome.gathering.gatherLineQty': '你採集了：{name} x{qty}。',
@@ -9511,7 +9543,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.farming.witheredLine': '作物枯萎了。你清理了田畦：{name}。',
   'hudChrome.farming.witheredLineQty': '作物枯萎了。你清理了田畦：{name} x{qty}。',
   'hudChrome.farming.pressTarget.feastOverHarvest':
-    '盛宴和你的作物都在範圍內。互動會優先取用盛宴，而不是田畦；離開盛宴再去收穫。',
+    '盛宴和你的作物都在範圍內。互動會優先取用盛宴，而不是田畦；離開盛宴才能開啟你作物的田畦視窗。',
   'hudChrome.farming.pressTarget.feastOverPlant':
     '盛宴和空田畦都在範圍內。互動會優先取用盛宴，而不是田畦；離開盛宴再去播種。',
   'hudChrome.farming.seedBackLine': '你回收了種子：{name}。',
@@ -9527,7 +9559,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.farming.plantSheet.plant': '種植',
   'hudChrome.farming.plantSheet.sowAria': '播種{name}',
   'hudChrome.farming.plantSheet.empty': '你沒有可以在這塊田裡播種的種子。',
-  'hudChrome.farming.plantSheet.close': '關閉種植面板',
+  'hudChrome.farming.plantSheet.close': '關閉田畦視窗',
   'hudChrome.farming.denied.bed_taken': '你已經在那裡種下了作物。',
   'hudChrome.farming.denied.skill': '你的耕作技能不足以種植該作物。',
   'hudChrome.farming.denied.no_seed': '你沒有該作物的種子。',
@@ -9579,6 +9611,80 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.harvestJournal.emptyBody': '在任意田畦播下種子，這塊田就會帶著計時出現在這裡。',
   'hudChrome.harvestJournal.noviceTitle': '你還沒有打理過田畦',
   'hudChrome.harvestJournal.noviceBody': '每收成一次作物，耕作技能都會提升。在任意田畦播下種子即可開始。',
+  // Intentional Gathering PR3: the shared corpse-harvest preference picker
+  // (Field Kit use, Professions, corpse Change entrances). M16 fills.
+  'hudChrome.harvestPreference.title': '採集偏好',
+  'hudChrome.harvestPreference.allLabel': '全部材料',
+  'hudChrome.harvestPreference.applyButton': '套用',
+  'hudChrome.harvestPreference.cancelButton': '取消',
+  'hudChrome.harvestPreference.pickHint': '套用前請選擇要採集的材料。',
+  'hudChrome.harvestPreference.currentUnavailable': '你目前選擇的{material}在此處不可用。',
+  'hudChrome.harvestPreference.unknownMaterial': '不可用的材料',
+  'hudChrome.harvestPreference.currentChoiceLabel': '目前：{choice}',
+  // Intentional Gathering PR5: source-info detail under the harvest
+  // preference picker (Field Kit use, Professions).
+  'hudChrome.gatheringSource.title': '在哪裡取得{material}',
+  'hudChrome.gatheringSource.corpseExample': '{creature}（{zone}）',
+  'hudChrome.gatheringSource.corpseExampleTagged': '{creature}（{zone}，{tag}）',
+  'hudChrome.gatheringSource.rareTag': '稀有',
+  'hudChrome.gatheringSource.eliteTag': '精英',
+  'hudChrome.gatheringSource.gatedTag': '任務解鎖',
+  'hudChrome.gatheringSource.moreSources': '另有{count}處',
+  'hudChrome.gatheringSource.moreZones': '另有{count}個區域',
+  'hudChrome.gatheringSource.premiumChance':
+    '精良或更高品質的{material}採集，若背包有空間，還會額外獲得{specimen}。',
+  'hudChrome.gatheringSource.specimenOfBase':
+    '{material}是從{base}擲出精良或更高品質時獲得的額外獎勵，來自上方列出的同一批生物，但不是單獨保證獲得的戰利品。',
+  'hudChrome.gatheringSource.nodeZone': '{zone}（{tier}階以上工具）',
+  'hudChrome.gatheringSource.nodeFineNote':
+    '使用{tier}階以上的採集工具，在同類型的採集點會升級為上等品質。',
+  'hudChrome.gatheringSource.farmNote':
+    '由播種培育而成，約{duration}後可收穫。需要農耕技能{skill}以上和{tier}階以上的鋤頭。',
+  'hudChrome.gatheringSource.fishingZoneProven': '{zone}水域（熟練度{skill}以上，魚竿{tier}階以上）',
+  'hudChrome.gatheringSource.fishingZoneUnproven':
+    '有些水域需要熟練度{skill}以上和{tier}階以上的魚竿，但尚未確認具體地點。',
+  'hudChrome.gatheringGoal.title': '採集目標',
+  'hudChrome.gatheringGoal.close': '清除採集目標',
+  'hudChrome.gatheringGoal.clearButton': '清除',
+  'hudChrome.gatheringGoal.empty': '尚未設定採集目標。',
+  'hudChrome.gatheringGoal.recipeGoalLabel': '{name} x{count}',
+  'hudChrome.gatheringGoal.commissionGoalLabel': '委託：{name} x{count}',
+  'hudChrome.gatheringGoal.craftCountLine': '正在追蹤{count}次製作',
+  'hudChrome.gatheringGoal.unknownRecipeLabel': '未知配方',
+  'hudChrome.gatheringGoal.invalidGoalLabel': '已不再追蹤',
+  'hudChrome.gatheringGoal.statusCollecting': '收集中',
+  'hudChrome.gatheringGoal.statusReady': '已就緒',
+  'hudChrome.gatheringGoal.statusUnavailable': '不可用',
+  'hudChrome.gatheringGoal.statusDelivered': '已交付',
+  'hudChrome.gatheringGoal.statusCancelled': '已取消',
+  'hudChrome.gatheringGoal.statusExpired': '已過期',
+  'hudChrome.gatheringGoal.readyHint': '材料已備齊。製作仍需要金幣、工作台和背包空間。',
+  'hudChrome.gatheringGoal.reasonInvalidGoal': '該目標已不再有效。',
+  'hudChrome.gatheringGoal.reasonUnknownRecipe': '該配方已不存在。',
+  'hudChrome.gatheringGoal.reasonRecipeUnavailable': '該配方對你已不可用。',
+  'hudChrome.gatheringGoal.reasonCommissionUnavailable':
+    '該委託已不再追蹤。如果仍在公告欄中列出，請從公告欄重新追蹤。',
+  'hudChrome.gatheringGoal.reasonDailyLimit': '該配方今天已經製作過了。',
+  'hudChrome.gatheringGoal.reasonBatchLimit': '該批次數量已不再有效。',
+  'hudChrome.gatheringGoal.materialLine': '{name}：{reachable}/{required}',
+  'hudChrome.gatheringGoal.materialCarried': '隨身攜帶{count}個',
+  'hudChrome.gatheringGoal.materialStored': '倉庫中有{count}個',
+  'hudChrome.gatheringGoal.materialMissing': '缺少{count}個',
+  'hudChrome.gatheringGoal.materialInaccessible': '{count}個無法用於製作',
+  'hudChrome.gatheringGoal.storageRestrictedNote': '部分材料存放在此處無法取用的倉庫中。',
+  'hudChrome.gatheringGoal.payableCraftsLine': '現有材料還可製作{count}次。',
+  'hudChrome.gatheringGoal.setPreferenceButton': '設為採集偏好',
+  'hudChrome.gatheringGoal.setPreferenceButtonAria': '將{name}設為你的採集偏好',
+  'hudChrome.gatheringGoal.currentPreferenceLabel': '目前採集偏好',
+  'hudChrome.gatheringGoal.currentPreferenceAria': '{name}是你目前的採集偏好',
+  'hudChrome.gatheringGoal.sourcesToggle': '來源',
+  'hudChrome.gatheringGoal.sourcesToggleAria': '{name}的來源',
+  'hudChrome.crafting.goalQtyRowAria': '目標數量',
+  'hudChrome.crafting.goalQtyDecreaseAria': '減少目標數量（目前 {count}）',
+  'hudChrome.crafting.goalQtyIncreaseAria': '增加目標數量（目前 {count}）',
+  'hudChrome.crafting.trackGoalButton': '追蹤',
+  'hudChrome.crafting.trackGoalButtonAria': '將製作{count}個{name}追蹤為你的採集目標',
+  'hudChrome.commissionBoard.trackButton': '追蹤',
   'gatherEvent.pristineVein': '{finder}挖到了一條純淨的礦脈！',
   'gatherEvent.ancientHeartwood': '{finder}砍倒了一棵遠古心木！',
   'gatherEvent.moonlitBloom': '{finder}發現了一朵月光之花！',
@@ -10787,6 +10893,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.stickyTarget': '點擊地面時保留目標',
   'hudChrome.unitFrame.targetOfTargetLabel': '目標的目標',
   'hudChrome.mobile.professions': '專業',
+  'hudChrome.professions.harvestBodyButton': '從屍體採集',
+  'hudChrome.professions.harvestBodyHint': '開啟附近可採集屍體的選項。只有確認選擇後才會採集。',
   'hudChrome.professions.title': '專業',
   'hudChrome.professions.close': '關閉專業',
   'hudChrome.professions.ringAria': '技藝之輪',
@@ -13682,7 +13790,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'guide.professions.promotionBody':
     '最後一步是橙色晉升，而這正是造物契據的全部用途。帶上一件臻至完美的裝備和一份造物契據（銘文師的 125 技能文書），這份副本就會晉升為一件由你親自命名的傳說裝備。這裡沒有任何擲骰：晉升是確定性的，屬性完全不變，變的只是名字和顏色。契據本身可以交易，所以書寫者與佩戴者不必是同一個人；而家族上限多出的那一行依然生效：角色穿戴的兩件之中，傳說品質的大師鍛造裝備同時至多一件。',
   'guide.professions.harvestBodyFamilies':
-    '採集並不止於節點。許多被擊倒的野獸都可以各被採收一次，先到先得，取得獸皮、尖牙、利爪、獠牙、獸角、魚鰓、蛛絲、毒液、布料與獸肉，直接從屍體上與牠的普通戰利品一併取得；按下同一個鍵，兩者一同開啟。當一頭野獸身上帶有不只一種可用部件時，選擇便由你決定：把牠能給的一切盡數取走，或專注於較少的部件，換取你確實取得之物明顯更精細的品級。\n\n在會產出標本的野獸族類身上擲出精良或更高的採收品質，除了普通產出之外，還會額外給予一件署名的完美標本（完美的獸皮、完美的蜘蛛絲、完美的毒液腺、完美的爪或上等肉塊），並在你的功績之書中記下「完美標本」。任何角色都能採收，無需訓練，而你持有的任何採集工具都會計入最上等產出的判定，無論它屬於哪一門行業。',
+    '採集並不止於節點。許多被擊倒的野獸都可以各被採收一次，先到先得，取得獸皮、尖牙、利爪、獠牙、獸角、魚鰓、蛛絲、毒液、布料與獸肉，直接從屍體上與牠的普通戰利品一併取得。互動鍵只會拾取戰利品；採集是另一項選擇，需在戰利品視窗的「採集」一欄中進行。當一頭野獸身上帶有不只一種可用部件時，選擇便由你決定：把牠能給的一切盡數取走，或專注於較少的部件，換取你確實取得之物明顯更精細的品級。\n\n在會產出標本的野獸族類身上擲出精良或更高的採收品質，除了普通產出之外，還會額外給予一件署名的完美標本（完美的獸皮、完美的蜘蛛絲、完美的毒液腺、完美的爪或上等肉塊），並在你的功績之書中記下「完美標本」。任何角色都能採收，無需訓練，而你持有的任何採集工具都會計入最上等產出的判定，無論它屬於哪一門行業。',
   'guide.professions.toolEffectsBody':
     '採集工具上有一個插槽，而填進去的東西就是製作出來的符物。採集者儲囊會讓一次採收的產出多出一個單位；匠人之眼則會提升採上來之物的品級；匠人護符則以同樣的方式多出兩個單位。前兩者是附魔的活計：Eastbrook 工坊之主 Tinker Gizzel 會把它們教給附魔技能達到 25 的附魔師。匠人護符則是工程學的活計，圖樣由掉落取得，需 100 技能製作；三者都在他的工坊製作。\n\n剛插上的符物在普通品質的工具上帶有 20 次充能，工具每高一個稀有度階級就再多 10 次，所以同一枚符物插在史詩級的鎬上就從 50 次起跳。只有當符物確實改變了結果時才會消耗一次充能，對它沒能改善的採收絕不扣減；插槽也可以設定成每次使用前先問過你，讓符物等你說了「使用一次充能」再動。插上一枚新的符物，會以你當下攜帶的工具為準重鑄這個插槽，因此它會填到那把工具所能承載的量，而不是回到先前的某個高點；而一次完全不會造成任何改變的重插，會被擋下來，不會白白吃掉那枚符物。\n\n充能用盡並不會毀掉符物：由工具的持有者為插槽補充，每消耗一份秘法材料補 10 次充能，而它要求哪一種材料，取決於你身上攜帶的工具與這個插槽曾經被填充過的最好工具之間較好的那一個：普通或優秀工具用鈴音之塵，精良工具用鈴音精華，史詩工具用鈴音碎片。把好工具留在銀行裡並不會換來更便宜的補充，只會在同樣的價格下換來更少的次數；想誠實地降到便宜的階級，做法是帶著較差的工具插上一枚新的符物，如此便會就地重鑄插槽。如果插槽的上限高於你目前工具所能填滿的量，補充會停在那把工具的極限，並要你帶上更好的那一把。當你就是簽下這枚符物的製作者時，補充只需一半的材料；若你還專精該符物所屬的行業（採集者儲囊與匠人之眼屬附魔，匠人護符屬工程學），則更少；其他人一律付全額。補充是一次短暫的施法，和這個製作家族的其他動作一樣。',
   'guide.professions.toolEffectsHeading': '工具效果',
@@ -14698,7 +14806,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'guide.profPages.faq.q8':
     '離開城鎮還能製作嗎？',
   'guide.profPages.faq.a3':
-    '按一次鍵，兩者一同處理。屍體身上的一切，金幣與掉落物，加上任何可採收的部件，都在同一個視窗中開啟：戰利品照一般的拾取規則走，採收則是專業這一側，直接從屍身上剝下材料。\n\n採收先到先得，而且只有一次：每具屍體恰好只能被採收一次，由最先取得它的人採收，線上模式亦然。你的城鎮專注決定你拿到什麼：站在主據點城鎮裡，你可以把10點專注點數分配到你在意的部件類型上，每個受專注的部件都會擲出更好的品級（每5點提升一階，最多兩階），產量也更多（每1點10%）。未受專注的部件絕不會因此變差。',
+    '這是對同一具屍體的兩個獨立操作。屍體身上的一切，金幣與掉落物，加上任何可採收的部件，都在同一個視窗中開啟，但互動鍵與「拾取戰利品」只會取走普通戰利品，它照一般的拾取規則走。採收則是專業這一側，直接從屍身上剝下材料，只有當你在那個視窗中選擇「採集」時才會發生。\n\n採收先到先得，而且只有一次：每具屍體恰好只能被採收一次，由最先取得它的人採收，線上模式亦然。你的城鎮專注決定你拿到什麼：站在主據點城鎮裡，你可以把10點專注點數分配到你在意的部件類型上，每個受專注的部件都會擲出更好的品級（每5點提升一階，最多兩階），產量也更多（每1點10%）。未受專注的部件絕不會因此變差。',
   'guide.profPages.faq.a4':
     '你撞上了一次橫財。大約每90次採集會觸發一次稀有發現（樹上的遠古心材、礦上的純淨礦脈、草藥上的月光綻放）：它讓產量乘以五倍，為每一個單位署上你的名字，並向全區域播報這項發現。而在一次普通採集中擲出精良或更高的品質，同樣會為收穫署名。\n\n署名材料值得留著，或賣個好價錢：在工作檯上只要持有所需材料的任何一份署名副本，傑作機率就多2個百分點。只是別忘了，它們只能與署名完全相同的副本堆疊，因此會各自佔去一格背包欄位。',
   'guide.profPages.faq.a5':
@@ -14943,6 +15051,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   // masterwrought Phase 13, the orange promotion (M16 fills). The Deed of
   // Making noun matches the sim_i18n.ts error.legendaryDeed row.
   'entities.items.deed_of_making.name': '造物契據',
+  // Intentional Gathering PR3: the Field Kit's runtime item name. M16 fill.
+  'entities.items.field_kit.name': '野外工具包',
   'hudChrome.materialHint.deedOfMaking':
     '銘文契據。消耗後將一件已臻至完美的大師鍛造作品提升為傳說，並為其命名。',
   'hudChrome.crafting.legendaryLine': '{item}以{name}之名重生，成為傳說！',
@@ -15042,10 +15152,42 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '你自己的框架、目標框架與隊伍框架全都可以移動。每個框架的角落都帶著一顆小小的移動按鈕：解除鎖定，把框架拖到你要的位置，再重新鎖上，這樣一次失手的點擊就無法把它挪走。「介面」選項中「頭像框」分頁最上方的「編輯框體」，則會一口氣鬆開其餘的整個介面，連同這三個框架一起：動作列、施法條、揮擊條、經驗條、小地圖、按鈕列、寵物框架、姿態列、增益與減益列，以及「願望清單提醒」小標籤，每一個在鬆開期間都掛著一枚名稱標籤。萬一它們跑到你會後悔的地方，同一個「頭像框」分頁底部的「恢復預設」會把它們全部彈回原本的位置。',
   'guide.interfacePage.mapBodyZoneFirst':
     'M 會開啟世界地圖，直接落在你所站的區域上，上頭有你自己的箭頭、你周遭的興趣地點、帶著標記的任務發布者與你任務目標所在的範圍、製作站、郵箱、告示板與菜畦、地城入口，以及這個區域裡的每一個採集節點：重新長出之前它會呈灰色，你的工具還應付不了時則會加上標示。你的隊伍也會顯示在上面。在地圖上按右鍵，或按下它的「世界地圖」按鈕，地圖便會拉遠到整片大陸，每個區域都連同名稱一起畫出，點擊某個區域即可開啟那個區域的地圖。踏進秘探、地城、裂隙或城堡要塞，地圖會切換成你所在之處的平面圖；荊谷原野戰場則有一張自己專屬的戰場地圖。\n\n右側、小地圖下方，一疊追蹤面板讓你不必打開任何東西就能看見手邊的事務：你追蹤中的任務與它們的目標、你的功績進度、你的聖物庫頁面、你所在的秘探，以及你正參與的任何裂隙。想把畫面要回來時，任務追蹤面板可以收合。',
+  'guide.interfacePage.gatheringGoalTrackerBody':
+    '在製作視窗追蹤一個配方，或在委託公告欄追蹤一個委託後，採集目標追蹤器就會加入這個堆疊：它會顯示你正在追蹤的配方或委託、你要收集的數量，以及你隨身攜帶和倉庫中的材料能滿足多少。追蹤會取代你目前的目標，清除則會明確取消它；兩者都不會改變你的採集偏好。',
   'guide.interfacePage.mobileBodyTwoPages':
     '觸控操作會自己出現，版面也會依你的螢幕自行調整大小：小手機用緊湊的排法，大手機用標準的排法，平板則用寬鬆一些的排法。\n\n你的技能排成一圈，而不是一排數字鍵：攻擊按鈕旁邊有四顆動作按鈕，還有一顆換頁鈕，讓這一圈在它的 {pages} 頁之間切換，這幾頁合起來便能觸及你全部 {slots} 個技能格位，不論桌機版的額外動作列有沒有開啟。那一圈的第五個弧形位置是你的消耗品座位：點一下就使用座位上放著的東西，或者按住它、或把它向內滑，即可展開一排會自動從你身上帶的東西補上的消耗品。圈的周圍則是觸控玩家最常伸手去按的按鈕：切換目標、使用眼前的東西，以及跳躍。\n\n底部邊緣有一顆「快捷操作」控制鈕，取代了一整排按鈕。它通往其餘的一切：坐騎、聊天、地圖、背包、社交、任務、角色、法術書、遊戲選單，還有一個「更多」項目，收著你其餘的視窗，包括地城搜尋器、PvP、表情，以及這個 wiki。這裡的視窗會填滿整個畫面，而不是浮在畫面上。\n\n移動你的單位框架是桌機才有的事：在觸控裝置上，版面會替你安排好它們的位置。',
   'guide.interfacePage.winMoreBodyNoValeCup':
     '世界地圖（M）、PvP 視窗（G）、排行榜（K）與活動日曆（I），全都是同樣的用法。表情輪盤（X）是例外：按住它的按鍵，輪盤便會出現，接著在某個表情上放開按鍵即可播放它。排行榜值得你初次造訪時多看一眼：它有一個玩家分頁、一個公會分頁、一個依功績之書的名望為整個帳號排名的分頁、一個每日榜分頁，還有一個「開發者」分頁，列著打造這款遊戲的人，除非你關閉「顯示開發者徽章」，否則它一直都在。\n\n選取另一位玩家並在目標框架上按右鍵（觸控裝置上則是雙點或長按它），或是在聊天中對他的名字按右鍵，「玩家資訊」就會開啟一張關於對方的卡片：對方身上穿的裝備，附帶提示，以及其角色的公開資料。這只是看一眼，僅此而已。要看裝備，對方必須近到你看得見：當對方遠在他處時從聊天中查他的名字，你得到的會是這張卡片公開的那一半，也就是頭像、名字、等級、職業與公會。',
   'guide.interfacePage.worldWindowsBodyStationMaster':
     '有些視窗你從來不必為它按鍵：你和對的人交談、或點擊對的東西時，它們就會開啟。\n\n商人會開啟販賣視窗，裡頭有他們的存貨可以買，同一面板的底部還有一份買回清單，收著你最近賣掉的東西，以防你賣錯了。存貨旁邊有一排數量按鈕，所以一疊材料可以一次五個或十個、一按就好，而不必按上十次；兩者都不合用時，還可以自訂數量。你的職業技能不需要訓練師，它們會隨著你的等級到來；這裡的訓練師是各製作站的常駐大師，對其中一位選擇「訓練」，就會開啟他們現在能教你的配方、你已經學會的配方，以及仍鎖在更高技能之後的配方。\n\n銀行行員會開啟你的銀行，其中「個人」分頁是那個可以再花錢購買更多格位的保險箱，「倉庫」分頁則依種類存放你的製作材料。如果你的公會已經開設公會銀行，那裡的「公會」分頁就會顯示它：即使沒有取出東西的權限，每位成員也都能看見裡面，所以沒有人需要開口問公會存了什麼；階級決定誰可以存入、取出與動用公會的錢幣，而且每一筆異動都有紀錄。\n\n渡鴉郵驛的郵箱會開啟你的信件，一個分頁放著已經寄達的，另一個是寄信用的表單，連同附件一併處理。世界市場有自己的視窗，在東溪鎮的商人處，或是往上到高望的拍賣師沃斯處都能開啟：一個分頁瀏覽與購買，另一個上架你自己的貨物，第三個領取已經賣出的收益。與另一位玩家面對面交易，則會開啟一個雙方各佔一側的交易視窗。',
+  // Intentional gathering PR2: material provenance and source controls (M16 fills).
+  'hudChrome.materialStackSelectionUnavailable': '此素材選擇已失效。',
+  'hudChrome.itemTooltip.materialSourceGatherer': '{count} × 由{name}採集',
+  'hudChrome.itemTooltip.materialSourceGathererSigned': '{count} × 由{name}採集，由{signer}簽名',
+  'hudChrome.itemTooltip.materialSourceUnrecorded': '{count} × 未記錄採集者',
+  'hudChrome.itemTooltip.materialSourceUnrecordedSigned': '{count} × 未記錄採集者，由{name}簽名',
+  'hudChrome.itemTooltip.materialSourceMore': '另有{sources}個來源，共{units}個單位',
+  'hudChrome.materialSources.detailsTitle': '{item}的來源',
+  'hudChrome.materialSources.pickerTitle': '從{item}中選擇來源',
+  'hudChrome.materialSources.close': '關閉素材來源',
+  'hudChrome.materialSources.view': '來源',
+  'hudChrome.materialSources.choose': '來源',
+  'hudChrome.materialSources.viewAria': '查看{item}的所有素材來源',
+  'hudChrome.materialSources.chooseAria': '選擇要從{item}轉移的素材來源',
+  'hudChrome.materialSources.cancel': '取消',
+  'hudChrome.materialSources.confirm': '轉移所選單位',
+  'hudChrome.materialSources.listAria': '素材來源清單',
+  'hudChrome.materialSources.total': '此堆疊共{units}個單位',
+  'hudChrome.materialSources.row': '{count}個單位：{source}',
+  'hudChrome.materialSources.gatherer': '由{name}採集',
+  'hudChrome.materialSources.gathererSigned': '由{name}採集，由{signer}簽名',
+  'hudChrome.materialSources.unrecorded': '未記錄採集者',
+  'hudChrome.materialSources.unrecordedSigned': '未記錄採集者，由{name}簽名',
+  'hudChrome.materialSources.quantityAria': '來自{source}的單位，最多{count}個',
+  'hudChrome.materialSources.decreaseAria': '減少來自{source}的單位',
+  'hudChrome.materialSources.increaseAria': '增加來自{source}的單位',
+  'hudChrome.itemMenu.viewSources': '查看來源',
+  'hudChrome.itemMenu.separateByGatherer': '依採集者拆分',
+  'hudChrome.itemMenu.takeChosenQuantity': '取出指定數量',
+  'hudChrome.itemMenu.combine': '合併素材堆疊',
 };

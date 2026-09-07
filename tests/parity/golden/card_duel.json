@@ -29,7 +29,7 @@
       "tick": 5,
       "time": 0.25,
       "nextId": 1004,
-      "state": "c610c8bf",
+      "state": "0b17bcd9",
       "events": "9845a79c",
       "rng": {
         "draws": 0,
@@ -40,7 +40,7 @@
       "tick": 10,
       "time": 0.5,
       "nextId": 1004,
-      "state": "d893e06c",
+      "state": "721cd296",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -51,7 +51,7 @@
       "tick": 15,
       "time": 0.75,
       "nextId": 1004,
-      "state": "4abfff52",
+      "state": "9d2202f4",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -62,7 +62,7 @@
       "tick": 20,
       "time": 1,
       "nextId": 1004,
-      "state": "7a6afcf3",
+      "state": "2bb66d93",
       "events": "dc756d2e",
       "rng": {
         "draws": 0,
@@ -73,7 +73,7 @@
       "tick": 25,
       "time": 1.25,
       "nextId": 1004,
-      "state": "78a672c0",
+      "state": "b1b472d0",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -84,7 +84,7 @@
       "tick": 30,
       "time": 1.5,
       "nextId": 1004,
-      "state": "1e46420d",
+      "state": "c39c240d",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -95,7 +95,7 @@
       "tick": 35,
       "time": 1.75,
       "nextId": 1004,
-      "state": "84085c81",
+      "state": "0d4e4d01",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -106,7 +106,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 1004,
-      "state": "a414abb0",
+      "state": "d4ee8ac0",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -117,7 +117,7 @@
       "tick": 41,
       "time": 2.05,
       "nextId": 1004,
-      "state": "7317f25d",
+      "state": "772e0c5d",
       "events": "741638a5",
       "rng": {
         "draws": 6,
@@ -173,6 +173,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -243,6 +246,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {

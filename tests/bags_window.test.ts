@@ -408,7 +408,11 @@ describe('bags_window: bank-deposit mode wiring', () => {
       /\(key === 'hudChrome\.bank\.depositHint' \|\|\s*key === 'hudChrome\.bank\.guildDepositHint' \|\|\s*key === 'hudChrome\.bank\.vaultDepositHint'\) &&\s*bankDepositOpensPrompt\(s\)/,
     );
     expect(code).toContain("t('hudChrome.bank.depositPartialHint')");
-    expect(code).toContain('+ extra + partial + equipDrag + destroy + link');
+    // Whitespace-tolerant: the composition now carries materialSourcesForDisplay(s)
+    // as a third itemTooltip argument and is Biome-wrapped across several lines,
+    // so an exact single-line substring can no longer match; the CONJUNCTION of
+    // all five hint fragments in order is what is load-bearing here.
+    expect(code).toMatch(/\+\s*extra\s*\+\s*partial\s*\+\s*equipDrag\s*\+\s*destroy\s*\+\s*link/);
   });
 });
 
@@ -713,13 +717,19 @@ describe('bags_window: styles for the drag affordances', () => {
 });
 
 describe('bags_window: per-copy instance tooltip forwarding (Professions 2.0)', () => {
-  it("forwards the slot's instance payload into the widened itemTooltip dep", () => {
+  it("forwards the slot's instance payload AND its material composition into the widened itemTooltip dep", () => {
     // The bank arm has a model-level pin (bank_view.test.ts BankSlotModel
     // .instance passthrough); the bags arm is a direct painter call, so the
     // call site itself is the load-bearing surface: dropping `s.instance`
     // reverts every bag tooltip to def-only while all pure-core suites stay
     // green (the exact regression class the widened dep was added for).
-    expect(painter).toContain('this.deps.itemTooltip(item, s.instance)');
+    // The call now also carries materialSourcesForDisplay(s), the per-unit
+    // provenance a material stack's tooltip needs (the source-count algebra):
+    // dropping that third argument would silently blind every material
+    // tooltip to who gathered/signed the units it holds.
+    expect(painter).toContain(
+      'this.deps.itemTooltip(item, s.instance, materialSourcesForDisplay(s))',
+    );
   });
 });
 

@@ -33,7 +33,7 @@ import { QUALITY_COLOR } from '../../icons';
 import type { PainterHostPresentation } from '../../painter_host';
 import { qualityGlowShadow } from '../../quality_glow';
 import { svgIcon } from '../../ui_icons';
-import { type ApexPatternChannel, apexRecipePresentation } from './apex_recipe_view';
+import { apexChannelLabelKey, apexRecipePresentation } from './apex_recipe_view';
 import {
   type CraftButtonState,
   type CraftCastSessionView,
@@ -53,6 +53,7 @@ import {
   craftingTabs,
   resolveSelectedCraft,
 } from './crafting_view';
+import { renderGatheringGoalTrackRow, type TrackRowDeps } from './gathering_goal_track_row';
 import { professionImageUrl } from './profession_art';
 import { renderProfessionIdentityCard } from './profession_identity_card';
 import type { ProfessionIdentityModel } from './profession_identity_view';
@@ -93,18 +94,7 @@ export function stationNameText(type: StationType): string {
   return t(STATION_NAME_KEY[type]);
 }
 
-// The pattern-provenance lines (deliverable C): where a KNOWN apex recipe's
-// pattern came from, keyed by the content-derived channel (apex_recipe_view).
-// Text like every other actionable line here: never color-only, folded into
-// the aria name and the tooltip alike.
-const APEX_CHANNEL_KEY: Record<Exclude<ApexPatternChannel, null>, TranslationKey> = {
-  raid: 'hudChrome.crafting.apexPatternRaid',
-  rift: 'hudChrome.crafting.apexPatternRift',
-  vendor: 'hudChrome.crafting.apexPatternVendor',
-  drop: 'hudChrome.crafting.apexPatternDrop',
-};
-
-export interface CraftingWindowDeps extends PainterHostPresentation {
+export interface CraftingWindowDeps extends PainterHostPresentation, TrackRowDeps {
   hideTooltip(): void;
   /** Start a craft (or batch) for `recipeId` with the given count (clamped in sim). */
   onCraft(recipeId: string, count: number): void;
@@ -498,7 +488,8 @@ export function renderCraftingWindow(
       const apexChipHtml = apexLabel
         ? ` <span class="crafting-duration-chip crafting-apex-chip">${esc(apexLabel)}</span>`
         : '';
-      const apexProvenance = apex.channel !== null ? t(APEX_CHANNEL_KEY[apex.channel]) : '';
+      const apexLabelKey = apexChannelLabelKey(apex.channel);
+      const apexProvenance = apexLabelKey ? t(apexLabelKey) : '';
       const apexLineHtml = apexProvenance
         ? `<span class="vi-sub crafting-apex-line">${esc(apexProvenance)}</span>`
         : '';
@@ -652,6 +643,7 @@ export function renderCraftingWindow(
         batchRow.appendChild(perfectingLink);
       }
       item.appendChild(batchRow);
+      renderGatheringGoalTrackRow(item, row.recipeId, resultName, deps);
       // Commission opt-in (the Maker's Bond): a per-recipe pill toggle-chip
       // in the card's chip language, right-aligned in the card footer so it
       // stacks under the gold Craft chip as one action column. Rendered ONLY

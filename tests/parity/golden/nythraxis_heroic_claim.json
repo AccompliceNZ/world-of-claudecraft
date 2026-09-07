@@ -31,7 +31,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1012,
-      "state": "1622d5c4",
+      "state": "b91923a9",
       "events": "850bcdad",
       "rng": {
         "draws": 1,
@@ -87,6 +87,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -161,6 +164,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -235,6 +241,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -309,6 +318,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -383,6 +395,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -720,7 +735,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1012,
-      "state": "324fca9e",
+      "state": "8ec40519",
       "events": "22aef4df",
       "rng": {
         "draws": 16,
@@ -852,6 +867,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -869,7 +887,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -1019,6 +1043,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -1040,7 +1067,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -1186,6 +1219,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -1207,7 +1243,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -1353,6 +1395,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -1374,7 +1419,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -1520,6 +1571,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -1541,7 +1595,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -1837,6 +1897,17 @@
           "aiState": "dead",
           "ccImmune": true,
           "comboUntil": -1,
+          "corpseHarvestState": {
+            "priorityEndsAt": 10,
+            "priorityMemberKeys": [
+              "entity:1002",
+              "entity:1003",
+              "entity:1004",
+              "entity:1005",
+              "entity:1006"
+            ],
+            "token": {}
+          },
           "corpseTimer": 59.95,
           "critChance": 0.05,
           "dead": true,
@@ -1926,7 +1997,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1012,
-      "state": "324fca9e",
+      "state": "8ec40519",
       "events": "741638a5",
       "rng": {
         "draws": 16,
@@ -2058,6 +2129,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -2075,7 +2149,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -2225,6 +2305,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -2246,7 +2329,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -2392,6 +2481,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -2413,7 +2505,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -2559,6 +2657,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -2580,7 +2681,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -2726,6 +2833,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -2747,7 +2857,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -3043,6 +3159,17 @@
           "aiState": "dead",
           "ccImmune": true,
           "comboUntil": -1,
+          "corpseHarvestState": {
+            "priorityEndsAt": 10,
+            "priorityMemberKeys": [
+              "entity:1002",
+              "entity:1003",
+              "entity:1004",
+              "entity:1005",
+              "entity:1006"
+            ],
+            "token": {}
+          },
           "corpseTimer": 59.95,
           "critChance": 0.05,
           "dead": true,

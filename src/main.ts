@@ -161,6 +161,7 @@ import { music } from './game/music';
 import { tryNearbyInteraction } from './game/nearby_interaction';
 import { nextNpcTarget } from './game/npc_cycle';
 import { isOfflineModeAvailable } from './game/offline_mode_gate';
+import { offlineWorldConfig } from './game/offline_world_config';
 import { interpolatedOnlineSelfFacing } from './game/online_facing_mirror';
 import { sendOnlineMovementFrame } from './game/online_movement_frame';
 import { padCastPress, padCastRelease } from './game/pad_cast_routing';
@@ -383,13 +384,11 @@ import {
   DT,
   dist2d,
   MELEE_RANGE,
-  PLAYER_INTEREST_DROP_RADIUS,
   type PlayerClass,
   RUN_SPEED,
   type WorldContent,
 } from './sim/types';
 import { zoneBiomeAt } from './sim/world';
-import { WORLD_SEED } from './sim/world_seed';
 import { startSitePresence } from './site_presence';
 import {
   accountPortalModel,
@@ -3425,10 +3424,11 @@ async function startGame(
     if (world.bgInfo?.match) world.bgFlagAction();
   }
 
-  // The R40 per-use effect confirm gate, shared by every gather entry point
-  // (world click, interact key, gathering-tool use): the pure question from
-  // the view core, the ask through the HUD's confirm-dialog family. The
-  // harvest proceeds on either answer; only the charge follows it.
+  // The R40 per-use effect confirm gate, shared by the explicit gather entry
+  // points (world click, gathering-tool use): the pure question from the view
+  // core, the ask through the HUD's confirm-dialog family. The harvest
+  // proceeds on either answer; only the charge follows it. The generic
+  // interact key never gathers, so it takes no part in this.
   const gatherEffectConfirm = {
     needed: (nodeId: string) => gatherEffectPrompt(world, nodeId),
     ask: (prompt: { effectId: string; charges: number }, proceed: (confirmed: boolean) => void) =>
@@ -3443,14 +3443,9 @@ async function startGame(
       tryNearbyInteraction(
         world,
         hud,
-        GATHER_NODES,
-        (node) => gatherNodeToolGateFor(world, node),
-        t('questUi.errors.tooFar'),
-        t('hudChrome.gathering.notReady'),
         t('questUi.errors.escortAway'),
         t('errors.nothingInteract'),
         undefined,
-        gatherEffectConfirm,
         preferNpcId,
       ),
       input,
@@ -5264,21 +5259,15 @@ async function startOffline(
   const sim = loadSpan(
     'sim-build',
     () =>
-      new Sim({
-        seed: seedOverride ?? WORLD_SEED,
-        playerClass,
-        playerName: name,
-        devCommands: import.meta.env.DEV,
-        // Live-world features (custom editor play-test maps keep both off).
-        riftPortals: world === undefined,
-        compulsoryTutorial: world === undefined,
-        // Match the live server's proven-safe idle-AI interest throttle. Ordinary
-        // entity rigs are gone by 96 yd and mob aggro caps at 20 yd, so this removes
-        // full-world wilderness AI from the browser's 20 Hz tick without changing
-        // anything visible or interactable.
-        idleMobTickRadius: PLAYER_INTEREST_DROP_RADIUS,
-        world,
-      }),
+      new Sim(
+        offlineWorldConfig({
+          playerClass,
+          name,
+          world,
+          seedOverride,
+          devCommands: import.meta.env.DEV,
+        }),
+      ),
   );
   sim.setPlayerSkin(sim.playerId, skin);
   // Offline has no account and no character row, so the local draft IS this

@@ -6620,6 +6620,7 @@ describe('Guide wiki completeness corrections (Phase 20, 2026-09-03)', () => {
       'reliquary-tracker': 'your Reliquary pages',
       'delve-tracker': 'the delve you are in',
       'rift-tracker': 'any rift you are taking part in',
+      'gathering-goal-tracker': 'the recipe or commission you are tracking',
     };
     expect([...trackerIds].sort()).toEqual(Object.keys(trackerPhrase).sort());
     for (const id of trackerIds) {

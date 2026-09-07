@@ -687,6 +687,33 @@ const HOT_PAINTERS: ReadonlyArray<ScannedPainter> = [
     allow: { '.innerHTML': 1, '.setAttribute': 1 },
     reflowAllow: {},
   },
+  // The persistent gathering goal tracker (Intentional Gathering PR4): a
+  // cold full-rebuild, not a per-frame path. GatheringGoalController owns
+  // the invalidation signature (an unchanged goal never calls this at all),
+  // so the whole panel body rebuilds in ONE innerHTML write plus the ONE
+  // display-flip write that shows/hides the panel; every dynamic value and
+  // every focus key rides that same template string via esc()/focusKeyAttr(),
+  // so no other raw write exists anywhere in the file. PR5 added a per-row
+  // Sources <details> disclosure painted via renderGatheringSourceDetail
+  // (gathering_source_painter.ts): every DOM write that call performs is
+  // counted in THAT file's own budget, never this one's, so the allowance
+  // below is unchanged. The extra querySelector/querySelectorAll/getAttribute
+  // calls that capture and restore each disclosure's open state are outside
+  // this bucket's scan entirely (ELEMENT_QUERIES is only checked inside a
+  // registered driver callback, and this render path is not one).
+  {
+    file: 'hud/professions/gathering_goal_painter.ts',
+    allow: { '.style': 1, '.innerHTML': 1 },
+    reflowAllow: {},
+  },
+  // Source details rebuild only on a picker draft change or the goal
+  // controller's invalidation. These writes create that bounded subtree;
+  // the painter owns no clock or layout reads.
+  {
+    file: 'hud/professions/gathering_source_painter.ts',
+    allow: { '.textContent': 7, '.className': 7 },
+    reflowAllow: {},
+  },
 ];
 
 // BUCKET 2 of 3: the src/ui painters that are NOT facet-routed because they draw to a 2D

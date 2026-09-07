@@ -1,5 +1,5 @@
 import { audio } from '../game/audio';
-import { corpseLootAvailability, localPartyMemberIds } from '../game/corpse_loot_availability';
+import { corpseLootAvailabilityInWorld } from '../game/corpse_loot_availability';
 import { CROSS_HOTBAR_ATTACK_ID } from '../game/cross_hotbar';
 import { syncDeathControllerHints } from '../game/death_controller_hint';
 import { farmPressTarget } from '../game/farm_press_target_core';
@@ -91,6 +91,7 @@ import { canEquipItem, isUniqueEquipped, weaponHand } from '../sim/equipment_rul
 import { isItemLevelEligible, itemInstanceLevel, itemScore } from '../sim/item_level';
 import { requiredLevelFor } from '../sim/item_level_req';
 import type { Ante, PickAction } from '../sim/lockpick';
+import type { MaterialComposition } from '../sim/material_sources';
 import { petCanForceTaunt } from '../sim/pet/pet_taunt_gate';
 import {
   computeRespecCost,
@@ -106,6 +107,7 @@ import {
   type AuraKind,
   type CalendarResultCode,
   CONSUME_DURATION,
+  CORPSE_HARVEST_CAST_ID,
   CRAFT_CAST_ID,
   canPrestige,
   DISENCHANT_CAST_ID,
@@ -323,13 +325,7 @@ import {
 import { gatherRareEventFeedback } from './gather_rare_event_feedback';
 import { gatherToolTooltipLines } from './gather_tool_tooltip';
 import { generalChatQuotaView } from './general_chat_quota_view';
-import {
-  craftedLineKey,
-  gatherLineKey,
-  grantItemToken,
-  grantQtyText,
-  harvestLineKey,
-} from './grant_line_view';
+import { craftedLineKey, grantItemToken, grantQtyText } from './grant_line_view';
 import { decideGuildMotdLine } from './guild_motd_login';
 import {
   healLandingFloatTextKey,
@@ -477,6 +473,7 @@ import { MapMarkerInteractionController, MapMarkerTooltipContent } from './hud/m
 import { livingSecondaryPet } from './hud/pet_bar_core';
 import { CARD_POSES } from './hud/player_card/player_card';
 import { PlayerCardController } from './hud/player_card/player_card_controller';
+import { commissionOrderResultLine } from './hud/professions/commission_order_feedback';
 import { buildCommissionOrderBoardModel } from './hud/professions/commission_order_view';
 import { renderCommissionOrderWindow } from './hud/professions/commission_order_window';
 import { cookingCatchHintKey } from './hud/professions/cooking_catch_hint_view';
@@ -523,15 +520,20 @@ import { handleFarmEvent } from './hud/professions/farm_event_feedback';
 import { FarmPressAffordanceController } from './hud/professions/farm_press_affordance_controller';
 import { PlantSheetWindow } from './hud/professions/farming_plant_sheet_window';
 import { feastTooltipLines } from './hud/professions/feast_tooltip_view';
+import { GatheringGoalController } from './hud/professions/gathering_goal_controller';
 import { gatheringProfessionNameKey } from './hud/professions/gathering_profession_name';
+import {
+  handleGatherResult,
+  handleHarvestResult,
+} from './hud/professions/gathering_result_feedback';
 import {
   buildGatheringProficiencyRows,
   gatherDeniedLineKey,
   gatherDowngradeLineKey,
-  gatherRareTierFor,
   gatherToolNoNodeKey,
 } from './hud/professions/gathering_view';
 import { HarvestJournalWindow } from './hud/professions/harvest_journal_window';
+import { HarvestPreferenceController } from './hud/professions/harvest_preference_controller';
 import { learnedProfessionMessage } from './hud/professions/learned_profession_name';
 import { materialHintLine } from './hud/professions/material_hint_view';
 import { materialProfessionHintText } from './hud/professions/material_profession_hint_view';
@@ -630,12 +632,14 @@ import {
   instanceBindingLines,
   instanceBonusStatLines,
   instanceLockLine,
-  instanceMakersMarkLine,
   instancePartyTradeLine,
   instanceTitleHtml,
   itemNumber,
+  itemRequiredLevelLine,
   itemStatName,
+  materialMakersMarkLines,
   tooltipEffectiveQuality,
+  vendorSellTooltipLine,
 } from './item_instance_tooltip';
 import { itemKindLabel, itemQualityLabel } from './item_kind_label';
 import { itemNameColor } from './item_name_color';
@@ -676,6 +680,7 @@ import { MAP_OPEN_ZOOM, type MapWindowMode, mapWindowMode } from './map_window_v
 import { marketCollectIndicatorView } from './market_view';
 import { MarketWindow } from './market_window';
 import { masterwroughtTooltipLines } from './masterwrought_cap_view';
+import { closeMaterialSourcesDialog, openMaterialSourcesDialog } from './material_sources_dialog';
 import { Meters } from './meters';
 import { minimapMode } from './minimap_markers';
 import { MINIMAP_SIZE, MinimapPainter } from './minimap_painter';
@@ -1849,6 +1854,7 @@ export class Hud {
   private readonly delveBoard: DelveBoardController;
   private readonly delveTracker: DelveTrackerController;
   private readonly riftTracker: RiftFloorTrackerController;
+  private readonly gatheringGoalController: GatheringGoalController;
   private readonly lockpickController: LockpickController;
   private readonly riteController: RiteController;
   private readonly questTracker: QuestTrackerController;
@@ -2260,6 +2266,14 @@ export class Hud {
       element: $('#rift-tracker'),
       world: () => this.sim,
     });
+    // The gathering goal tracker (Intentional Gathering PR4): a persistent
+    // #right-tracker-stack member like the two above; `this.sim` (typed
+    // IWorld) structurally satisfies the controller's narrow GatheringGoalWorld
+    // shape (see that module's header for why it is not `Pick<IWorld, ...>`).
+    this.gatheringGoalController = new GatheringGoalController({
+      element: $('#gathering-goal-tracker'),
+      world: () => this.sim,
+    });
     this.delveBoard = new DelveBoardController({
       element: $('#delve-board'),
       world: () => this.sim,
@@ -2375,14 +2389,9 @@ export class Hud {
       element: $('#loot-window'),
       document,
       world: () => this.sim,
-      corpseAvailability: (mob) =>
-        corpseLootAvailability(
-          mob,
-          this.sim.playerId,
-          true,
-          localPartyMemberIds(this.sim.partyInfo),
-        ),
+      corpseAvailability: (mob) => corpseLootAvailabilityInWorld(this.sim, mob),
       closeTransient: () => this.closeOtherWindows('#loot-window'),
+      showError: (text) => this.showError(text),
       hideTooltip: () => this.hideTooltip(),
       entityName: entityDisplayName,
       money: (copper) => this.moneyHtml(copper),
@@ -2395,6 +2404,15 @@ export class Hud {
       centerPopup: (element) => this.centerPopupInViewport(element),
       placePopup: (element, x, y, reserveRight, reserveBottom, minLeft, minTop) =>
         this.placePopupAt(element, x, y, reserveRight, reserveBottom, minLeft, minTop),
+      ...this.windowFocus('#loot-window'),
+      onVisibilityChange: () => this.syncAnyWindowOpenState(),
+      // The corpse popup's Change control (Intentional Gathering PR3): opens
+      // the SAME shared picker the Field Kit's use and the Professions entry
+      // button open, scoped to this body's own materials. Never sends a
+      // preference itself.
+      openHarvestPreference: (componentTags) =>
+        this.harvestPreferenceController.open(componentTags),
+      now: () => performance.now(),
     });
     this.lootRolls = new LootRollController({
       document,
@@ -3584,6 +3602,11 @@ export class Hud {
       case 'professions-window':
         // Route through the painter so focus returns to the opener (WCAG 2.2 AA).
         this.professionsWindow.close();
+        break;
+      case 'harvest-preference-window':
+        // Route through the controller so focus returns to the opener
+        // (WCAG 2.2 AA) and the visit is invalidated (Intentional Gathering PR3).
+        this.harvestPreferenceController.close();
         break;
       case 'harvest-journal-window':
         // Route through the painter: focus returns (WCAG 2.2 AA), clock disposed.
@@ -5039,9 +5062,11 @@ export class Hud {
     this.mapMarkerProfile,
   );
   private readonly presentationBag: PainterHostPresentation = {
+    openMaterialSources: openMaterialSourcesDialog,
     itemIcon: (item, quality) => this.itemIcon(item, quality),
     moneyHtml: (copper) => this.moneyHtml(copper),
-    itemTooltip: (item, instance?: ItemInstancePayload) => this.itemTooltip(item, true, instance),
+    itemTooltip: (item, instance, materialSources) =>
+      this.itemTooltip(item, true, instance, materialSources),
     attachTooltip: (el, html) => this.attachTooltip(el, html),
   };
   // The interactive talents window. All allocation reads and mutations cross the
@@ -5174,6 +5199,7 @@ export class Hud {
   // bindContextMenuActions) and the one confirm-dialog family; the bags window
   // opens it via the openItemActionMenu dep above.
   private readonly bagItemActionMenu = new BagItemActionMenu({
+    openMaterialSources: openMaterialSourcesDialog,
     world: () => this.sim,
     ctxMenu: {
       element: () => $('#ctx-menu'),
@@ -5304,6 +5330,19 @@ export class Hud {
     consumePeek: () => this.peekGuard.consume(),
     ...this.windowFocus('#professions-window'),
     openHarvestJournal: () => this.harvestJournalWindow.open(),
+    harvestBody: () => this.lootWindow.openHarvestBodyChoice(),
+    openHarvestPreference: () => this.harvestPreferenceController.open(),
+  });
+  // The shared corpse-harvest preference picker (Intentional Gathering PR3):
+  // the SAME controller the Field Kit's use and this window's own entry
+  // button both open, always general (no body context; the corpse Change
+  // entrance is the popup's own future caller, out of scope here).
+  private readonly harvestPreferenceController = new HarvestPreferenceController({
+    root: () => $('#harvest-preference-window'),
+    world: () => this.sim,
+    closeOthers: () => this.closeOtherWindows('#harvest-preference-window'),
+    ...this.windowFocus('#harvest-preference-window'),
+    onVisibilityChange: () => this.syncAnyWindowOpenState(),
   });
   // The Harvest Journal painter (harvest_journal_view.ts core +
   // harvest_journal_window.ts painter): the read-only plot list over
@@ -5682,7 +5721,9 @@ export class Hud {
     log: (text, color) => this.log(text, color),
     itemIcon: (item, quality) => this.itemIcon(item, quality),
     attachTooltip: (el, html) => this.attachTooltip(el, html),
-    itemTooltip: (item, compare, instance) => this.itemTooltip(item, compare, instance),
+    itemTooltip: (item, compare, instance, materialSources) =>
+      this.itemTooltip(item, compare, instance, materialSources),
+    openMaterialSources: openMaterialSourcesDialog,
     renderBags: () => this.renderBags(),
   });
   private readonly wocMarketWindow = new WocMarketWindow({
@@ -6394,7 +6435,12 @@ export class Hud {
   // maker's mark, or baked bonus stats specific to THIS copy. Absent for
   // fungible stacks and def-only surfaces (the crafting window's result rows),
   // so those render exactly as before.
-  private itemTooltip(item: ItemDef, compare = true, instance?: ItemInstancePayload): string {
+  private itemTooltip(
+    item: ItemDef,
+    compare = true,
+    instance?: ItemInstancePayload,
+    materialSources?: MaterialComposition,
+  ): string {
     // Quest items are a purpose class, not a quality tier: title and kind use
     // quest gold, and the kind line is "Quest Item" alone (never "Common Quest
     // Item"). Story lines (related quest, progress, rules, orphaned) come from
@@ -6681,29 +6727,15 @@ export class Hud {
     if (requiredClasses) {
       html += `<div class="tt-sub">${esc(t('itemUi.tooltip.classes', { classes: requiredClasses.map(classDisplayName).join(', ') }))}</div>`;
     }
-    // Classic "Requires Level N" line for equippable gear gated above level 1.
-    // Red when the viewer is below the requirement (cannot equip yet), otherwise
-    // a normal sub line. Level math/data lives in the pure sim leaf.
-    const req = requiredLevelFor(item);
-    if ((item.kind === 'weapon' || item.kind === 'armor') && req > 1) {
-      const meets = this.sim.player.level >= req;
-      html += `<div class="${meets ? 'tt-sub' : 'tt-red'}">${esc(t('hudChrome.itemTooltip.requiresLevel', { level: itemNumber(req) }))}</div>`;
-    }
+    html += itemRequiredLevelLine(item, this.sim.player.level);
     html += this.itemProcBlock(item);
     html += this.itemSetBlock(item);
-    html += instanceMakersMarkLine(instance, item);
+    html += materialMakersMarkLines(item, instance, materialSources);
     // Stackables state their per-slot cap (sim/bags.ts stackSizeOf), so a
     // player holding a single potion learns more copies will share the slot;
     // 1-per-slot kinds, mounts, and charge-bearing payloads render nothing.
     html += stackSizeTooltipLine(item, instance);
-    // Gated on the SAME pair the vendor path refuses on (src/sim/items.ts
-    // sellItem), never on sellValue alone: a def can carry a sellValue it will
-    // never be paid, and advertising a price the server is about to deny is a
-    // lie the player only discovers from an error toast. The tier-1 gathering
-    // tools are the case that made this matter, being common staples a new
-    // player actively tries to sell back.
-    if (item.sellValue > 0 && !item.noVendorSell && !item.soulbound)
-      html += `<div class="tt-sub">${esc(t('itemUi.tooltip.sellPrice', { money: formatLocalizedMoney(item.sellValue) }))}</div>`;
+    html += vendorSellTooltipLine(item);
     if (compare) html += this.itemCompareBlock(item, instance);
     return html;
   }
@@ -6969,6 +7001,10 @@ export class Hud {
     this.relocalizeCoordinatorMemos();
     this.syncDailyRewardsSurfaceLabels();
     this.wocMarketWindow.relocalize();
+    // Self-gated on its own open check (root src/ui/CLAUDE.md); refreshes the
+    // root accessible name and row labels, preserving the uncommitted draft
+    // and exact focus (Intentional Gathering PR3).
+    this.harvestPreferenceController.relocalize();
     this.storePromoCard?.relocalize({
       open: t('hudChrome.wocStore.title'),
       close: t('hudChrome.wocStore.close'),
@@ -6989,6 +7025,10 @@ export class Hud {
     // Same reason as delveTracker above: the rift floor tracker's signature is
     // floor/timer numbers, none of which move with the locale.
     this.riftTracker.relocalize();
+    // Same shape again: the gathering goal panel's signature is the raw
+    // GatheringGoalView (ids/counts/enums), none of which moves with the
+    // locale, so relocalize() clears the latch for exactly one rebuild.
+    this.gatheringGoalController.relocalize();
     this.partyFramesPainter.relocalize();
     this.raidBossGuideWindow.relocalize();
     // The world map rasterizes its labels into sprites keyed on the RESOLVED
@@ -7020,6 +7060,7 @@ export class Hud {
     if (this.deedsWindow.isOpen) this.deedsWindow.render();
     if (this.reliquaryWindow.isOpen) this.reliquaryWindow.render();
     if (this.professionsWindow.isOpen) this.professionsWindow.render();
+    this.lootWindow.relocalize();
     this.harvestJournalWindow.relocalize();
     this.plantSheetWindow.relocalize();
     // The Perfecting window's repaint signature is ids/ranks/counts, all
@@ -9819,6 +9860,7 @@ export class Hud {
     if (slowHud) this.refreshOpenProfessionSurfacesIfChanged();
     if (slowHud) this.refreshCharSheetIfChanged();
     if (slowHud && this.professionsWindow.isOpen) this.professionsWindow.refreshIfChanged();
+    if (slowHud) this.plantSheetWindow.refreshIfChanged();
     // The gossip dialog's intro hint row watches the same online cprof edge:
     // attunement retires it, and no quest event fires for that flip.
     if (slowHud) this.questDialog.refreshIfChanged();
@@ -9828,6 +9870,11 @@ export class Hud {
     // The Reliquary tracker is always-on chrome for the same reason: pinned
     // pages fill from normal play, and an illuminated page drops off.
     if (slowHud) this.updateReliquaryTracker();
+    // The gathering goal tracker is always-on chrome too: a projection
+    // change (inventory/bank/vault moves the reachable/missing counts) has
+    // no dedicated event, so it rides the same slow poll; update() is
+    // signature-gated, so an unchanged goal costs nothing.
+    if (slowHud) this.gatheringGoalController.update();
     // Re-seat the tracker stack under the minimap column (bounded layout read).
     if (slowHud) this.trackerStackAnchor.apply();
     if (slowHud && this.calendarWindow.isOpen) this.calendarWindow.refreshIfChanged();
@@ -12087,66 +12134,12 @@ export class Hud {
           break;
         }
         case 'commissionOrderResult': {
-          // Commission order board (issue #1298). Text-free event: derive
-          // the item name from ev.itemId (resolved sim-side off the live
-          // board for every action, not just deliver) plus static content.
-          // ONE chat line either way (the trainResult/unbindResult
-          // single-surface rule: no toast, no extra sound cue).
-          const orderItem = ev.itemId ? ITEMS[ev.itemId] : undefined;
-          const orderItemName = orderItem ? itemDisplayName(orderItem) : (ev.itemId ?? '');
-          if (ev.ok) {
-            const successKey =
-              ev.action === 'open'
-                ? 'hudChrome.commissionBoard.opened'
-                : ev.action === 'cancel'
-                  ? 'hudChrome.commissionBoard.cancelled'
-                  : ev.action === 'accept'
-                    ? 'hudChrome.commissionBoard.accepted'
-                    : 'hudChrome.commissionBoard.delivered';
-            this.log(
-              t(successKey, {
-                item: orderItemName,
-                // Only 'deliver' interpolates {name}, and it names the
-                // REQUESTER (who receives the item), not ev.pid (the
-                // acting crafter): resolve off the event's own
-                // requesterName, never the crafter's own entity name.
-                name: ev.action === 'deliver' ? (ev.requesterName ?? '') : '',
-              }),
-              PROF_LOG_GRANT,
-            );
-          } else if (ev.reason) {
-            const denyKey =
-              ev.reason === 'unknown_recipe'
-                ? 'hudChrome.commissionBoard.denyUnknownRecipe'
-                : ev.reason === 'not_commission_eligible'
-                  ? 'hudChrome.commissionBoard.denyNotCommissionEligible'
-                  : ev.reason === 'unknown_crafter'
-                    ? 'hudChrome.commissionBoard.denyUnknownCrafter'
-                    : ev.reason === 'self_crafter'
-                      ? 'hudChrome.commissionBoard.denySelfCrafter'
-                      : ev.reason === 'too_many_open'
-                        ? 'hudChrome.commissionBoard.denyTooManyOpen'
-                        : ev.reason === 'unknown_order'
-                          ? 'hudChrome.commissionBoard.denyUnknownOrder'
-                          : ev.reason === 'order_not_open'
-                            ? 'hudChrome.commissionBoard.denyOrderNotOpen'
-                            : ev.reason === 'self_order'
-                              ? 'hudChrome.commissionBoard.denySelfOrder'
-                              : ev.reason === 'not_eligible_crafter'
-                                ? 'hudChrome.commissionBoard.denyNotEligibleCrafter'
-                                : ev.reason === 'not_your_order'
-                                  ? 'hudChrome.commissionBoard.denyNotYourOrder'
-                                  : ev.reason === 'order_not_accepted'
-                                    ? 'hudChrome.commissionBoard.denyOrderNotAccepted'
-                                    : ev.reason === 'not_your_acceptance'
-                                      ? 'hudChrome.commissionBoard.denyNotYourAcceptance'
-                                      : ev.reason === 'not_crafted'
-                                        ? 'hudChrome.commissionBoard.denyNotCrafted'
-                                        : ev.reason === 'deliver_out_of_range'
-                                          ? 'hudChrome.commissionBoard.denyOutOfRange'
-                                          : 'hudChrome.commissionBoard.denyNoSpace';
-            this.log(t(denyKey), PROF_LOG_DENY);
-          }
+          // Commission order board (issue #1298): the item name, chat key,
+          // params and tone are resolved by commission_order_feedback.ts;
+          // this arm only logs (a deny with no reason resolves to null, the
+          // historical no-op) and delegates the board/bag refresh.
+          const orderLine = commissionOrderResultLine(ev);
+          if (orderLine) this.log(t(orderLine.key, orderLine.params), orderLine.tone);
           // Refresh the board window if open (renderCommissionBoard no-ops
           // when it is not); deliver also touches bags on the crafter's own
           // arm (the requester's side rides the ordinary loot event's bag
@@ -12223,77 +12216,24 @@ export class Hud {
           // executes it.
           this.handleProfessionEvent(ev);
           break;
-        case 'gatherResult': {
-          // Harvest feedback line (Professions 2.0), colored by rolled
-          // material rarity. Identical on every graphics tier (player feedback
-          // is never profile-gated). This is the ONLY line for the harvest
-          // grant: the grant hub's own 'loot' event is emitted both silent and
-          // callerLogs for a gather grant (see gathering.ts harvestNode), so
-          // neither the generic ding nor the "You receive:" line stacks on top
-          // of this line and its dedicated node-type cue (#2430). The
-          // node-type impact always plays; a rare-or-better material roll (or
-          // any rare-event roll) layers one additional tiered stinger on top,
-          // never a replacement for the impact.
-          // The LINE color is the rolled rarity (the yield roll), while the
-          // item link inside it paints from the item's own def quality: the
-          // same Copper Ore is granted at every roll, only the qty scales, so
-          // the link must not claim the ore itself got rarer.
-          this.log(
-            t(gatherLineKey(ev.qty), {
-              name: grantItemToken(ev.itemId),
-              qty: grantQtyText(ev.qty),
-            }),
-            QUALITY_COLOR[ev.rarity],
-          );
-          audio.gather(ev.nodeType);
-          const gatherRareTier = gatherRareTierFor(ev.rarity, ev.rareEvent);
-          if (gatherRareTier) audio.gatherRareTier(gatherRareTier);
-          // The last-charge signal (the UX pass): the harvest that spent the
-          // slotted effect's final charge announces it as an FCT self-note
-          // (which also feeds the polite live region). ONE surface on
-          // purpose: the professions window's charge row is the durable
-          // record, so a log line here would be the double-feedback trap the
-          // arms above already avoid.
-          if (ev.effectDepleted) {
-            this.showSelfNote(t('hudChrome.professions.toolEffectDepleted'));
-          }
+        case 'gatherResult':
+          // Node-harvest feedback: line, cue, and rare-tier stinger (extracted
+          // to gathering_result_feedback.ts; Hud is the host seam).
+          handleGatherResult(ev, this);
           break;
-        }
-        case 'harvestResult': {
-          // Corpse-harvest feedback (#2457): ONE line per distinct granted
-          // item and exactly ONE cue for the whole command. Corpse harvest is
-          // the only profession flow whose single command grants several
-          // distinct items, so the sim sends a LIST and this arm walks it;
-          // before the event existed each of the six internal grants printed
-          // its own hub "You receive:" line and its own generic ding, so a
-          // two-component harvest burst two of each and a specimen proc four.
-          // Every grant behind this event is emitted silent + callerLogs
-          // (src/sim/interaction.ts harvestCorpse), so these lines and the one
-          // cue below are the whole of the harvest's feedback. The list is
-          // never empty (the sim skips the emit on a harvest that landed
-          // nothing), so the cue never fires for a no-op.
-          //
-          // Line color is the ROLLED material rarity, the gatherResult rule:
-          // the item link inside paints from the item's own def quality,
-          // because the same Rough Hide is granted at every roll and the link
-          // must not claim the hide itself got rarer.
-          for (const y of ev.yields) {
-            this.log(
-              t(harvestLineKey(y), {
-                name: grantItemToken(y.itemId),
-                qty: grantQtyText(y.qty),
-              }),
-              QUALITY_COLOR[y.rarity],
-            );
-          }
-          // The generic pickup ding, played ONCE for the command rather than
-          // once per component. A node harvest has a dedicated per-node-type
-          // recording (audio.gather above); a corpse harvest has never had one
-          // of its own, so it keeps the sound it has always made and the fix
-          // here is purely that it stops stacking.
-          audio.lootItem();
+        case 'harvestPreferenceOpen':
+          // A settings action, never a harvest. `!sim.spectating` because the
+          // server routes the SPECTATED anchor's own personal events to a
+          // moderator's session (and playerId mirrors the anchor's pid while
+          // spectating), so the generic pid gate alone would open this for a
+          // spectator who never asked for it.
+          if (!sim.spectating) this.harvestPreferenceController.open();
           break;
-        }
+        case 'harvestResult':
+          // Corpse-harvest feedback: one line per distinct yield, one cue for
+          // the whole command (extracted beside gatherResult above).
+          handleHarvestResult(ev, this);
+          break;
         case 'gatherDenied': {
           // Tool-tier denial (Professions 2.0): an error toast ONLY.
           // No loot line, no cue, no other state (the grant-hub double-log
@@ -13733,6 +13673,11 @@ export class Hud {
           // uses craftSuccess / disenchant / enchant / salvage.
           if (ev.entityId === sim.playerId) {
             if (ev.ability === GATHER_CAST_ID) audio.gatherCast(ev.gatherNodeType);
+            // Corpse harvest (Intentional Gathering PR3) deliberately reuses
+            // the flat gathering wind-up: it is a land-gather cast in
+            // everything but source (a body instead of a node), and no new
+            // cue was authored for it.
+            else if (ev.ability === CORPSE_HARVEST_CAST_ID) audio.gatherCast();
             else if (ev.ability === FISHING_CAST_ID) audio.fishCast();
             else if (
               ev.ability === CRAFT_CAST_ID ||
@@ -16036,6 +15981,20 @@ export class Hud {
           this.craftQtyByRecipe.set(recipeId, Math.max(1, Math.floor(qty)));
           this.renderCrafting();
         },
+        // The gathering goal Track control (Intentional Gathering PR4): its
+        // OWN qty map, held by the gathering goal controller rather than
+        // craftQtyByRecipe above (deliberately uncoupled from mats-fit).
+        goalQty: (recipeId) => this.gatheringGoalController.goalQty(recipeId),
+        onGoalQty: (recipeId, qty) => {
+          this.gatheringGoalController.onGoalQty(recipeId, qty);
+          this.renderCrafting();
+        },
+        // The crafting window itself renders no "tracked" indicator (there is
+        // nothing in its own row state that changes), so Track does not
+        // repaint it; the panel's own immediate update() is what shows the
+        // new goal, and focus stays on the Track button the player pressed.
+        onTrackRecipe: (recipeId, count) =>
+          this.gatheringGoalController.onTrackRecipe(recipeId, count),
         announce: (text) => this.announceCraftCast(text),
         selectedCraft: () => this.selectedCraftTab,
         onSelectCraft: (professionId) => {
@@ -16155,6 +16114,10 @@ export class Hud {
         onCancel: (orderId) => this.sim.cancelCommissionOrder(orderId),
         onAccept: (orderId) => this.sim.acceptCommissionOrder(orderId),
         onDeliver: (orderId) => this.sim.deliverCommissionOrder(orderId),
+        // The gathering goal Track control (Intentional Gathering PR4):
+        // renders only on a row this viewer accepted to craft (canDeliver),
+        // so no separate accepted-mine check is needed here.
+        onTrack: (orderId) => this.gatheringGoalController.onTrack(orderId),
         onClose: () => this.closeCommissionBoard(),
       },
     );
@@ -16319,7 +16282,7 @@ export class Hud {
     this.harvestJournalWindow.toggle();
   }
 
-  // The bed arm's free-bed route (NearbyInteractionHud): opens the plant sheet.
+  // The bed choice route: planting and deliberate crop harvesting.
   openPlantSheet(bedId: string): void {
     this.plantSheetWindow.open(bedId);
   }
@@ -18666,6 +18629,7 @@ export class Hud {
   // Closes the topmost UI. Returns true if something was closed.
   closeAll(): boolean {
     if (clearOpenStoreResult()) return true;
+    if (closeMaterialSourcesDialog()) return true;
     if (closeOpenTouchMenu()) return true;
     if (this.lootWindow.hasOpenChest) {
       this.closeLoot();

@@ -20,8 +20,14 @@
 // THE THRESHOLD, and where it comes from. The Crucible integration database
 // review re-measured the real Sim.serializeCharacter UTF-8 JSON on 2026-09-05:
 //   - professions subset: 18,807 bytes, with a 20-KiB structural ceiling;
-//   - storage-rich whole character: 209,261 bytes, stable across two further
-//     real load/serialize passes, with a narrow 208,881..209,262 tracking band.
+//   - storage-rich whole character (Crucible alone, pre-field-kit): 209,261
+//     bytes, stable across two further real load/serialize passes, with a
+//     narrow 208,881..209,262 tracking band (historical: the figure the
+//     threshold below was minted against).
+// After the actual professions-merge integration (Crucible plus the
+// intentional-gathering Field Kit discovery), the real combined settle
+// measures 209,273 bytes (the +12 Field Kit delta on top of 209,261), with a
+// narrow 208,893..209,274 tracking band.
 // tests/professions_blob_growth.test.ts is the live authority. Its fixture uses
 // legal equipped caps, 80 carried slots, 176 bank slots and 12 unbound buyback
 // rows. Stored Perfected/promoted copies carry their real bonus and permanent
@@ -39,13 +45,15 @@
 // every save of this modeled character despite no unexpected field growth.
 //
 // RE-MINTED to 229,376 (224 KiB) after database review: the smallest 32-KiB step
-// above 209,261, leaving 20,115 bytes of headroom and one 32-KiB step below the
-// 262,144-byte (256 KiB) guild-bank scale. This is still only a coarse warning,
-// never a save limit. The p99 window and high-water mark below remain the
-// fleet-growth watch even below this threshold. The independent literal and
-// boundary tests plus the whole-character relation require a reviewed
-// re-measurement if the threshold changes or content outgrows it. A crossing
-// may be an unbounded field, or simply a character who owns a great deal.
+// above 209,261 (historical, the pre-field-kit figure it was minted against),
+// one 32-KiB step below the 262,144-byte (256 KiB) guild-bank scale. Against
+// the actual combined 209,273-byte measurement above, that leaves 20,103 bytes
+// of headroom. This is still only a coarse warning, never a save limit. The
+// p99 window and high-water mark below remain the fleet-growth watch even
+// below this threshold. The independent literal and boundary tests plus the
+// whole-character relation require a reviewed re-measurement if the threshold
+// changes or content outgrows it. A crossing may be an unbounded field, or
+// simply a character who owns a great deal.
 export const CHARACTER_BLOB_WARN_BYTES = 229_376;
 
 // The decision, kept pure so it is unit-testable without a database: returns the

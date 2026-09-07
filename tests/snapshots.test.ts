@@ -1826,9 +1826,13 @@ describe('delta snapshots', () => {
 
   it('a counted identical-payload stack rides the inv snapshot as one slot', () => {
     // Three byte-equal signed grants merge server-side into a single count-3
-    // slot; the wire sends the inventory wholesale, so the client mirror must
-    // show the same one slot with the count AND the payload intact (a mirror
-    // that re-split or dropped either would red here).
+    // slot; wolf_fang is a material, so the legacy premium signer moves off
+    // the instance payload and into the exact per-unit composition
+    // (material_stack.ts normalizeMaterialStack) as source.signer; no
+    // gatherer is invented, signer and gatherer are distinct concepts
+    // (material_sources.ts). The wire and the client mirror must both carry
+    // the composition intact (a mirror that re-split or dropped either would
+    // red here).
     const signed = { signer: 'Testa' };
     for (let i = 0; i < 3; i++) server.sim.addItemInstance('wolf_fang', signed, session.pid);
 
@@ -1837,14 +1841,16 @@ describe('delta snapshots', () => {
     const wireSlots = snap.self.inv.filter((s: any) => s.itemId === 'wolf_fang');
     expect(wireSlots).toHaveLength(1);
     expect(wireSlots[0].count).toBe(3);
-    expect(wireSlots[0].instance).toEqual(signed);
+    expect(wireSlots[0].instance).toBeUndefined();
+    expect(wireSlots[0].materialSources).toEqual([{ count: 3, source: signed }]);
 
     const client = bareClient(session.pid);
     (client as any).applySnapshot(snap);
     const mirrored = client.inventory.filter((s) => s.itemId === 'wolf_fang');
     expect(mirrored).toHaveLength(1);
     expect(mirrored[0].count).toBe(3);
-    expect(mirrored[0].instance).toEqual(signed);
+    expect(mirrored[0].instance).toBeUndefined();
+    expect(mirrored[0].materialSources).toEqual([{ count: 3, source: signed }]);
   });
 
   it('mirrors vendor buyback deltas to the client', () => {
@@ -5071,11 +5077,13 @@ const ALL_DELTA_KEYS = [
   'ench',
   'equip',
   'fplot',
+  'ggoal',
   'gprof',
   'guildBank',
   'hbl',
   'hirat',
   'honor',
+  'hpref',
   'hpw',
   'hrat',
   'inv',
@@ -5188,9 +5196,11 @@ const TERSE_TO_IWORLD: Record<string, string> = {
   ench: 'lastEnchantResult',
   equip: 'equipment',
   fplot: 'myFarmPlots',
+  ggoal: 'gatheringGoal',
   gprof: 'gatheringProficiency',
   guildBank: 'guildBankInfo',
   hirat: 'hitRating',
+  hpref: 'harvestPreference',
   hrat: 'hasteRating',
   inv: 'inventory',
   lhonor: 'lifetimeHonor',
@@ -5353,6 +5363,10 @@ function dirtyEveryDeltaField(): {
   meta.delveClears = { 'collapsed_reliquary:heroic': 1 };
   meta.companionUpgrades = { companion_tessa: 2 };
   meta.gatheringProficiency = { mining: 6, logging: 0, herbalism: 0, fishing: 0, farming: 0 };
+  // hpref: a chosen material, not the default All (which would still pass
+  // the "carries every key" presence loop, since All encodes as the
+  // non-null explicit token, but would not prove a real choice decodes).
+  meta.harvestPreference = { kind: 'material', itemId: 'rough_hide' };
   // tslot: a REAL slotted effect, not the empty default. Without this the key
   // rides the first snapshot as `[]`, which is not null, so it passes the
   // "dirtied to a non-default value" loop below vacuously and nothing anywhere
@@ -5400,6 +5414,13 @@ function dirtyEveryDeltaField(): {
     amendsProgress: 4,
     isJackOfAllTrades: false,
   };
+  // `ggoal`: a real tracked recipe goal (Intentional Gathering PR4), seeded
+  // through the actual command body (trackGatheringRecipe) rather than a
+  // hand-mutation, so the wire shape under test matches what the command
+  // really produces. Needs the recipe known and combo-eligible, which the
+  // archetype/craftSkills dirtied just above already satisfy.
+  meta.knownRecipes.add('recipe_ironbound_warplate_helm');
+  sim.trackGatheringRecipe('recipe_ironbound_warplate_helm', 5, lp);
   // An ACTIVE own mobile crafting station (`mst`, the own-station arm of the
   // serving set): set directly on the meta slot (the placement command's
   // specialization gate is pinned in tests/professions_crafting_hub.test.ts;
@@ -5804,7 +5825,9 @@ describe('full self-state snapshot delta fixture', () => {
     // whole, canEdit included (the client renders read-only panes from it)
     expect(client.guildBankInfo).toEqual({
       treasury: 12345,
-      slots: [{ itemId: 'wolf_fang', count: 4 }],
+      // loadGuildBank sanitizes on load (normalizeLoadedMaterialSlot), so an
+      // unsigned legacy wolf_fang stack picks up its exact provenance.
+      slots: [{ itemId: 'wolf_fang', count: 4, materialSources: [{ count: 4, source: {} }] }],
       capacity: 30,
       purchasedSlots: 30,
       nextExpansionPrice: 50000, // rung-2 literal
@@ -5849,6 +5872,11 @@ describe('full self-state snapshot delta fixture', () => {
       fishing: 0,
       farming: 0,
     }); // gprof -> gatheringProficiency
+    // hpref -> harvestPreference: the wire carries a plain material item id
+    // string (never the tag/specimen it resolves against on a body), decoded
+    // through decodeHarvestPreferenceWire into the same shape the offline Sim
+    // exposes via harvestPreferenceFor.
+    expect(client.harvestPreference).toEqual({ kind: 'material', itemId: 'rough_hide' });
     // tslot -> toolEffectSlots: the projected row shape, so a decode onto the
     // wrong field or a renamed wire key reddens here rather than silently
     // leaving the HUD empty. craftedBy is deliberately not projected; what
@@ -5913,6 +5941,28 @@ describe('full self-state snapshot delta fixture', () => {
     // craft id, and it must reflect the cprof delta just applied.
     expect(client.archetypeTitle).toBe('weaponcrafting+armorcrafting');
     expect(client.craftSkills).toMatchObject({ armorcrafting: 31, weaponcrafting: 29 });
+    // ggoal -> gatheringGoal: the tracked recipe goal survives the wire whole,
+    // decoded through the strict leaf gathering_goal_wire.ts (its own key,
+    // never folded into cprof). A crossed identity/kind, a wrong count, or a
+    // status/reason mismatch reddens here.
+    expect(client.gatheringGoal?.goal).toEqual({
+      kind: 'recipe',
+      recipeId: 'recipe_ironbound_warplate_helm',
+      count: 5,
+    });
+    expect(client.gatheringGoal?.status).toBe('collecting');
+    expect(client.gatheringGoal?.reason).toBeNull();
+    // storageRestricted: this fixture's live delve run (drun) refuses the
+    // vault draw for craft reagents the same way it does for cvault above.
+    expect(client.gatheringGoal?.storageRestricted).toBe(true);
+    // No fixture inventory or bank slot carries arcanite_bar, so nothing is
+    // payable and that row arrives entirely missing.
+    expect(client.gatheringGoal?.payableCrafts).toBe(0);
+    expect(
+      client.gatheringGoal?.materials.some(
+        (m) => m.itemId === 'arcanite_bar' && m.carried === 0 && m.missing > 0,
+      ),
+    ).toBe(true);
     // mst -> activeMobileStationCrafts: the server-computed serving set as a
     // comma-joined scalar (expiry and party range resolved server-side
     // against the sim's own tickCount and positions), split on decode.
@@ -6011,7 +6061,9 @@ describe('full self-state snapshot delta fixture', () => {
     (client as any).applySnapshot(lastSnap(fc.sent));
     expect(client.guildBankInfo).not.toBeNull();
     expect(client.guildBankInfo?.canEdit).toBe(false);
-    expect(client.guildBankInfo?.slots).toEqual([{ itemId: 'wolf_fang', count: 4 }]);
+    expect(client.guildBankInfo?.slots).toEqual([
+      { itemId: 'wolf_fang', count: 4, materialSources: [{ count: 4, source: {} }] },
+    ]);
   });
 
   it('keeps the live ride distinct from the persisted mount pick on self snapshots', () => {
@@ -6265,7 +6317,7 @@ describe('gather node cooldown wire round trip (ncd)', () => {
 });
 
 describe('delta-key contract pins (anti-drift)', () => {
-  it('ALL_DELTA_KEYS contains exactly 91 unique keys in sorted order', () => {
+  it('ALL_DELTA_KEYS contains exactly 93 unique keys in sorted order', () => {
     // +1: guildBank (Guild Bank Phase 2), +1: the battleground bg key, +1: the
     // commission order board's corder key (issue #1298), +1: the character
     // sheet's lifetime played-time key ptime, for 67, then +16: the static
@@ -6303,8 +6355,13 @@ describe('delta-key contract pins (anti-drift)', () => {
     // a per-tick change; dualWielding rides no key of its own, it is always
     // exactly offhandWeapon !== null, so the client derives it), for 91,
     // counted from the merged registry above rather than from either side.
-    expect(ALL_DELTA_KEYS).toHaveLength(91);
-    expect(new Set(ALL_DELTA_KEYS).size).toBe(91);
+    // Intentional Gathering PR3 then adds the corpse-harvest preference key
+    // hpref (a gathering-adjacent self scalar, sibling of gprof/tfocus/tslot),
+    // for 92. Intentional Gathering PR4 adds the owner-only tracked-goal
+    // full-view key ggoal (its own leaf, gathering_goal_wire.ts, not folded
+    // into the gprof/tfocus/tslot/hpref cluster), for 93.
+    expect(ALL_DELTA_KEYS).toHaveLength(93);
+    expect(new Set(ALL_DELTA_KEYS).size).toBe(93);
     expect([...ALL_DELTA_KEYS]).toEqual([...ALL_DELTA_KEYS].sort());
   });
 
@@ -6460,8 +6517,12 @@ describe('delta-key contract pins (anti-drift)', () => {
     // maybeSerialized arm of the scrape then surfaces the two capability-gated
     // direct emits, auras and de, for 89. Farming's own-plot key fplot (the
     // Masterwrought branch) then makes 90, and the release's off-hand bar key
-    // offhandWeapon makes 91 on the merged tree.
-    expect(scraped.size).toBe(91);
+    // offhandWeapon makes 91 on the merged tree. Intentional Gathering PR3's
+    // hpref (emitted from the new gathering_self_wire.ts sibling, still
+    // inside the recursive server-tree scrape) makes 92. Intentional
+    // Gathering PR4's ggoal (emitted from the new gathering_goal_wire.ts
+    // sibling, likewise inside the recursive scrape) makes 93.
+    expect(scraped.size).toBe(93);
     expect([...scraped].sort()).toEqual([...ALL_DELTA_KEYS].sort());
   });
 
