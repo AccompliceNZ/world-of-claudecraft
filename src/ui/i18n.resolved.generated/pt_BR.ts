@@ -324,8 +324,6 @@ export const pt_BR: EnTranslations = {
     "warlock": {
       "doomLabel": "Condenação",
       "fateThreadsLabel": "Fios do Destino",
-      "doomMeterUnlock": "Mover barra de recurso de Aflição",
-      "doomMeterLock": "Travar barra de recurso de Aflição",
       "doomEmptyStatus": "Condenação {value} de {max}.",
       "doomStatus": "Condenação {value} de {max}; {remaining}.",
       "fateThreadsStatus": "Fios do Destino {value} de {max}.",
@@ -3014,7 +3012,17 @@ export const pt_BR: EnTranslations = {
         "targetFrame": "Alvo",
         "partyFrames": "Grupo",
         "swingBar": "Ataque Automático",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Configurações de Quadros",
       "framesMenuTitle": "Mostre ou oculte quadros individuais. Um quadro desmarcado permanece oculto até que você o marque novamente ou redefina para o padrão.",

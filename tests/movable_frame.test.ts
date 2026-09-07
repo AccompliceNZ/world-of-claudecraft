@@ -238,7 +238,7 @@ function makeFrame(opts: { mobile?: boolean; positioned?: Array<boolean> } = {})
 
 // A frame in the "Unlock interface" shape: no permanent chrome, and the SE grip
 // that carries BOTH resize gestures (pointer drag and arrow keys).
-function makeScalableFrame(opts: { mobile?: boolean } = {}) {
+function makeScalableFrame(opts: { mobile?: boolean; maxScale?: number } = {}) {
   const frame = new FakeEl();
   const mover = new MovableFrame({
     frame,
@@ -250,6 +250,7 @@ function makeScalableFrame(opts: { mobile?: boolean } = {}) {
     fallbackSize: { w: 260, h: 84 },
     isMobileLayout: () => opts.mobile ?? false,
     snapToGrid: () => snapOn,
+    maxScale: opts.maxScale,
     scalable: true,
     buttonOnlyWhenUnlocked: true,
   });
@@ -585,6 +586,49 @@ describe('MovableFrame resize grip', () => {
     expect(scaleOf(frame)).toBe(FRAME_SCALE_MAX);
     for (let i = 0; i < 60; i++) grip.dispatch('keydown', key('ArrowLeft'));
     expect(scaleOf(frame)).toBe(FRAME_SCALE_MIN);
+  });
+
+  it('a per-frame maxScale lifts the key-step ceiling past the shared band', () => {
+    // The wishlist chip's player-visible feature (grow without limit) at the
+    // MOVER layer, not just the pure helper: a call site that still passed
+    // the shared FRAME_SCALE_MAX would clamp the 60 steps back to 2x here.
+    const { frame, btn, grip } = makeScalableFrame({ maxScale: Number.POSITIVE_INFINITY });
+    btn.dispatch('click', pointer());
+    for (let i = 0; i < 60; i++) grip.dispatch('keydown', key('ArrowRight'));
+    const grown = 1 + 60 * FRAME_SCALE_KEY_STEP;
+    expect(grown).toBeGreaterThan(FRAME_SCALE_MAX);
+    expect(scaleOf(frame)).toBeCloseTo(grown, 9);
+    expect(JSON.parse(store.get(KEY) ?? '{}').scale).toBeCloseTo(grown, 9);
+    // The FLOOR stays shared (grabbability).
+    for (let i = 0; i < 200; i++) grip.dispatch('keydown', key('ArrowLeft'));
+    expect(scaleOf(frame)).toBe(FRAME_SCALE_MIN);
+  });
+
+  it('a saved above-band scale survives the load parse only under its own ceiling', () => {
+    // The parse-on-load call site: a box saved past 2x must come back for the
+    // uncapped frame, and the same saved box must clamp for an ordinary one.
+    const grown = 1 + 60 * FRAME_SCALE_KEY_STEP;
+    store.set(KEY, JSON.stringify({ left: 50, top: 500, vw: 1600, vh: 900, scale: grown }));
+    const uncapped = makeScalableFrame({ maxScale: Number.POSITIVE_INFINITY });
+    expect(scaleOf(uncapped.frame)).toBeCloseTo(grown, 9);
+
+    fakeDocument.body = new FakeEl();
+    for (const [type, fn] of docListeners) fakeDocument.body.addEventListener(type, fn);
+    const capped = makeScalableFrame();
+    expect(scaleOf(capped.frame)).toBe(FRAME_SCALE_MAX);
+  });
+
+  it('the snap-to-grid key branch honors the lifted ceiling too', () => {
+    // The snap branch steps the VISUAL width to grid lines (its own clamp
+    // call sites), so what matters here is only that 60 grows walk PAST the
+    // shared band instead of parking at 2x; the exact value depends on the
+    // frame's live rect, which this fake keeps static.
+    snapOn = true;
+    const { frame, btn, grip } = makeScalableFrame({ maxScale: Number.POSITIVE_INFINITY });
+    btn.dispatch('click', pointer());
+    for (let i = 0; i < 60; i++) grip.dispatch('keydown', key('ArrowRight'));
+    expect(scaleOf(frame)).toBeGreaterThan(FRAME_SCALE_MAX);
+    expect(JSON.parse(store.get(KEY) ?? '{}').scale).toBeGreaterThan(FRAME_SCALE_MAX);
   });
 
   it('relocalize() re-resolves the grip name, not only the move button', () => {

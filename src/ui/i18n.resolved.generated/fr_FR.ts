@@ -324,8 +324,6 @@ export const fr_FR: EnTranslations = {
     "warlock": {
       "doomLabel": "Condamnation",
       "fateThreadsLabel": "Fils du destin",
-      "doomMeterUnlock": "Déplacer la barre de ressource Affliction",
-      "doomMeterLock": "Verrouiller la barre de ressource Affliction",
       "doomEmptyStatus": "{value} sur {max} Condamnation.",
       "doomStatus": "{value} sur {max} Condamnation ; {remaining}.",
       "fateThreadsStatus": "{value} sur {max} Fils du destin.",
@@ -3014,7 +3012,17 @@ export const fr_FR: EnTranslations = {
         "targetFrame": "Cible",
         "partyFrames": "Groupe",
         "swingBar": "Attaque automatique",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Paramètres des cadres",
       "framesMenuTitle": "Affiche ou masque chaque cadre individuellement. Un cadre décoché reste masqué jusqu'à ce que vous le recochiez ou que vous rétablissiez les valeurs par défaut.",

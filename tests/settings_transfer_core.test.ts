@@ -72,18 +72,22 @@ describe('settings_transfer_core', () => {
       'woc_target_frame_pos',
       'woc_party_frame_pos',
       'woc_chat_geometry',
-      'woc_meters_frame',
       'woc_meters_frame_heal',
       'woc_meters_frame_threat',
       'woc_meters_detached',
       'woc_target_auras_frame',
       'woc_warlock_doom_frame_pos',
+      'woc_warlock_doom_frame_pos_hidden',
     ] as const;
     for (const key of frameKeys) {
       expect(transferKeyAllowed('frames', key), key).toBe(true);
     }
-    // And the boundary holds: a non-frame settings-family key stays refused.
+    // And the boundary holds: a non-frame settings-family key stays refused,
+    // and so does the RETIRED pre-frames tabbed-meter key (its box rides the
+    // damageMeter registry row's woc_hud_frame_meters key now, so admitting
+    // the dead key would resurrect stale boxes from old layout codes).
     expect(transferKeyAllowed('frames', 'woc_keybinds')).toBe(false);
+    expect(transferKeyAllowed('frames', 'woc_meters_frame')).toBe(false);
   });
 
   it('rejects garbage as format, the reverse kind as kind, and a hollow code as empty', () => {
