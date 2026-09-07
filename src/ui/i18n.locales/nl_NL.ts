@@ -2396,7 +2396,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Schroeit de vijand voor {damage} Vuurschade. Snel te bezweren.',
   'entities.abilities.scorch.name': 'Blakeren',
   'entities.abilities.scouring_mercy.description':
-    'Richt 72 tot 84 Heilige schade aan bij een vijand of geneest een bevriend doelwit voor 130 tot 155. Beide bedragen stijgen met spreukkracht. De schade geneest ook elke via de Leer verbonden bondgenoot voor 30%, of het groepslid met de laagste gezondheid voor 15% als geen bondgenoot verbonden is. (Leer-kenmerk)',
+    'Richt {damage} Heilige schade aan bij een vijand of geneest een bevriend doelwit voor {healing}. Schade stijgt met spreukkracht; genezing stijgt met genezingskracht. De Leer zet deze schade om in genezing via je verbindingen. Als er geen verbonden gewond groepslid binnen 30 meter is, geneest het gewonde groepslid met de laagste gezondheid binnen 30 meter voor 15% van de schade. Het genezen van een groepslid geneest ook tot 2 andere gewonde groepsleden binnen 10 meter van dat doelwit en binnen je gezichtslijn, elk voor 50% van de herstelde gezondheid. Deze extra genezingen kunnen niet kritiek zijn of Leer-verbindingen creëren. (Leer-kenmerk)',
   'entities.abilities.scouring_mercy.name': 'Louterende Genade',
   'entities.abilities.seal_of_righteousness.description':
     'Vult u 30 sec lang met Heilige kracht, zodat elk van uw slagen van dichtbij {damage} extra Heilige schade toebrengt.',

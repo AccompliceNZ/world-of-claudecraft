@@ -2368,7 +2368,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Düşmanı {damage} Ateş hasarıyla kavurur. Hızlı büyülenir.',
   'entities.abilities.scorch.name': 'Haşlama',
   'entities.abilities.scouring_mercy.description':
-    'Bir düşmana 72 ila 84 Kutsal hasar verir ya da dost bir hedefi 130 ila 155 iyileştirir. Her iki değer de büyü gücüyle artar. Hasar ayrıca Öğreti ile bağlı her müttefiki 30%, hiç bağlı müttefik yoksa en düşük canlı grup üyesini 15% iyileştirir. (Öğreti imzası)',
+    "Bir düşmana {damage} Kutsal hasar verir ya da dost bir hedefi {healing} iyileştirir. Hasar büyü gücüyle, iyileştirme ise iyileştirme gücüyle artar. Öğreti, bu hasarı bağlarınız aracılığıyla iyileştirmeye dönüştürür. 30 metre içinde bağlı yaralı bir grup üyesi yoksa, 30 metre içindeki en düşük canlı yaralı grup üyesini hasarın 15%'i kadar iyileştirir. Bir grup üyesini iyileştirmek, o hedefin 10 metre içindeki ve görüş hattındaki en fazla 2 yaralı grup üyesini daha, her birini iyileşen canın 50%'i kadar iyileştirir. Bu ekstra iyileştirmeler kritik vuramaz ya da Öğreti bağı oluşturamaz. (Öğreti imzası)",
   'entities.abilities.scouring_mercy.name': 'Arındıran Merhamet',
   'entities.abilities.seal_of_righteousness.description':
     'Seni 30 sn boyunca Kutsal güçle doldurur, böylece her yakın dövüş savurman {damage} ek Kutsal hasar verir.',

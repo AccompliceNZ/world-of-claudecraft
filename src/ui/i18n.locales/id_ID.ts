@@ -2389,7 +2389,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Menghanguskan musuh sebesar {damage} kerusakan Api. Cepat dirapal.',
   'entities.abilities.scorch.name': 'Lepuh',
   'entities.abilities.scouring_mercy.description':
-    'Memberi 72 sampai 84 kerusakan Suci kepada musuh atau menyembuhkan sasaran sekutu sebesar 130 sampai 155. Kedua nilai meningkat dengan kekuatan mantra. Kerusakan juga menyembuhkan setiap sekutu yang terikat Doktrin sebesar 30%, atau anggota kelompok bernyawa terendah sebesar 15% bila tidak ada yang terikat. (Ciri khas Doktrin)',
+    'Memberi {damage} kerusakan Suci kepada musuh atau menyembuhkan sasaran sekutu sebesar {healing}. Kerusakan meningkat dengan kekuatan mantra; penyembuhan meningkat dengan kekuatan penyembuhan. Doktrin mengubah kerusakan ini menjadi penyembuhan lewat ikatanmu. Jika tidak ada anggota kelompok terikat yang terluka dalam 30 meter, sembuhkan anggota kelompok terluka dengan nyawa terendah dalam 30 meter sebesar 15% dari kerusakan. Menyembuhkan anggota kelompok juga menyembuhkan hingga 2 anggota kelompok terluka lainnya dalam 10 meter dari sasaran tersebut dan dalam garis pandangmu, masing-masing sebesar 50% dari nyawa yang dipulihkan. Penyembuhan tambahan ini tidak bisa kritis atau membuat ikatan Doktrin. (Ciri khas Doktrin)',
   'entities.abilities.scouring_mercy.name': 'Belas Kasih Pembersih',
   'entities.abilities.seal_of_righteousness.description':
     'Memenuhimu dengan kekuatan Suci selama 30 dtk, sehingga setiap ayunan jarak dekatmu memberi {damage} kerusakan Suci tambahan.',

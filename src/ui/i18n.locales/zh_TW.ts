@@ -2215,7 +2215,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.scorch.description': '灼燒敵人，造成 {damage} 點火焰傷害。施法迅速。',
   'entities.abilities.scorch.name': '沸燙',
   'entities.abilities.scouring_mercy.description':
-    '以神聖之力淨化一名敵人，或立即救治一名友方目標。教義專屬技能。',
+    '對敵人造成{damage}點神聖傷害，或為一名友方目標治療{healing}點生命值。傷害隨法術強度提高，治療隨治療強度提高。教義會透過你的羈絆將此傷害轉化為治療。若30公尺內沒有已建立羈絆且受傷的隊伍成員，則治療30公尺內生命值最低的受傷隊伍成員，治療量為傷害的15%。治療一名隊伍成員時，還會為該目標10公尺內、且在你視野中的至多2名其他受傷隊伍成員治療，每人恢復量為已恢復生命值的50%。這些額外治療不會觸發暴擊，也不會建立教義羈絆。（教義專屬技能）',
   'entities.abilities.scouring_mercy.name': '滌罪慈悲',
   'entities.abilities.seal_of_righteousness.description':
     '以神聖之力充盈你 30 秒，使你的每一次近戰揮擊額外造成 {damage} 點神聖傷害。',
@@ -14909,4 +14909,9 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '將此裝置上儲存的全部偏好匯出為一段代碼，並在其他裝置或瀏覽器上貼上匯入：圖形、音訊、介面、主題、框體配置、每個角色的按鍵綁定、控制器與十字快捷列綁定、聊天、視窗篩選、語言以及已關閉的提示。',
   'hudChrome.fullTransfer.excluded':
     '絕不包含：您的登入、帳號、錢包或購買資料。動作列配置儲存在您的帳號中，會隨帳號同步。',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    '完成一次狂熱連射獲得的冷目預判，會使你的下一次凶厲射擊造成的傷害提高75%。發射該技能會消耗冷目預判。',
+  'hudChrome.auraEffect.veiledEdgeStrike': '你的下一次潛伏者一擊造成的武器傷害提高{pct}%',
+  'hudChrome.auraEffect.coldsightRead':
+    '你的下一次長弓引射造成的傷害提高{longDrawPct}%，或你的下一次凶厲射擊造成的傷害提高{fellShotPct}%',
 };

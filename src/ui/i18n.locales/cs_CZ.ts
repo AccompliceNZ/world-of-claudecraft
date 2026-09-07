@@ -2344,7 +2344,7 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
     'Opaří nepřítele za {damage} ohnivého poškození. Rychlé seslání.',
   'entities.abilities.scorch.name': 'Opaření',
   'entities.abilities.scouring_mercy.description':
-    'Způsobí 72 až 84 Svatého poškození nepříteli nebo vyléčí spřáteleného cíle za 130 až 155. Obě hodnoty rostou se silou kouzel. Poškození navíc vyléčí každého spojence spojeného Doktrínou za 30%, nebo člena skupiny s nejnižším zdravím za 15%, pokud není spojen nikdo. (Signatura Doktríny)',
+    'Způsobí {damage} Svatého poškození nepříteli nebo vyléčí spřáteleného cíle za {healing}. Poškození roste se silou kouzel, léčení se silou léčení. Doktrína přemění toto poškození na léčení skrze vaše spojení. Pokud se v okruhu 30 metrů nenachází žádný spojený zraněný člen skupiny, vyléčí zraněného člena skupiny s nejnižším zdravím v okruhu 30 metrů za 15% poškození. Vyléčení člena skupiny také vyléčí až 2 další zraněné členy skupiny v okruhu 10 metrů od tohoto cíle a ve vaší přímé viditelnosti, každého za 50% obnoveného zdraví. Toto dodatečné léčení nemůže být kritické ani vytvářet spojení Doktríny. (Signatura Doktríny)',
   'entities.abilities.scouring_mercy.name': 'Očistné milosrdenství',
   'entities.abilities.seal_of_righteousness.description':
     'Naplní tě svatou mocí na 30 s, takže každý tvůj úder zblízka způsobí {damage} dodatečného svatého poškození.',

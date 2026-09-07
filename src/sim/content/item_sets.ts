@@ -674,7 +674,7 @@ export const ITEM_SETS: Record<string, ItemSet> = {
       {
         pieces: 4,
         effect: {},
-        text: 'Your Veiled Edge strike hits for triple, up from double.',
+        text: "Veiled Edge adds 100% weapon damage to your next Lurker's Strike instead of 50%. It does not increase the flat bonus or stack with the stealth bonus.",
       },
     ],
   },

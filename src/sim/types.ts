@@ -552,6 +552,11 @@ export type AuraKind =
   | 'hunter_ferocity'
   | 'hunter_frenzy'
   | 'hunter_cold_focus'
+  // Coldsight shot-choice read (combat/hunter_coldsight_read.ts, v0.42): the
+  // visible 10 sec opportunity a fully completed Fevered Draw grants. The
+  // internal reserved-marker step of that state machine deliberately rides
+  // the existing 'internal_cd' kind instead of a second new kind here.
+  | 'hunter_coldsight_read'
   | 'hunter_momentum'
   | 'hunter_reentry'
   | 'hunter_bloodtrail'

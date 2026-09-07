@@ -109,6 +109,7 @@ export const IWORLD_MEMBERS = [
   { name: 'craftSkills', kind: 'data' },
   { name: 'gatheringProficiency', kind: 'data' },
   { name: 'known', kind: 'data' },
+  { name: 'resolvedAbility', kind: 'method' },
   { name: 'activeConsecrations', kind: 'data' },
   { name: 'activeFrostRings', kind: 'data' },
   { name: 'activeIgnivarMeteors', kind: 'data' },
@@ -659,6 +660,11 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // The PR 3676 arm's ground-aim landing preview adds groundAimPlacementPreview
     // (IWorldCombat, a method) on top of the bank-storage members at the sixth
     // v0.41.0 sync; the totals below are read off a run on the merged tree.
+    // The v0.42.0 class-balance display-parity fix adds resolvedAbility
+    // (IWorldCombat, a method): the local player's own known ability with every
+    // presentation-layer transform folded in, so the HUD/cross-hotbar/spellbook
+    // can show the same resolve Sim.resolvedAbility would produce instead of a
+    // raw known-array lookup.
     //
     // NOTE for the next merge, four syncs run now: BOTH sides of this pin move
     // it independently every cycle. Twice git merged identical numbers with no
@@ -668,14 +674,13 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // even when the total agrees. Only running the suite says what these
     // numbers really are; never reconcile them by arithmetic in the diff (the
     // numbers below were set from a suite run, not from this narrative).
-    // The Nythraxis redo's four ground-telegraph data members
-    // (activeNythraxisGraveEruptions/GraveFlames/Gravefires/BindingSigils, all
-    // IWorldCombat) merge against the release's guild-bank history mirror,
-    // which adds one method (guildBankLogOlder, IWorldGuildBank): 343 base +
-    // 4 data + 1 method = 348 total, 99 data, 249 method.
-    expect(IWORLD_MEMBERS.length).toBe(348);
+    //
+    // The merged interface retains resolvedAbility from class balance and
+    // four Nythraxis data readouts from release. Counts and both facet-union
+    // pins are verified against the complete merged contract.
+    expect(IWORLD_MEMBERS.length).toBe(349);
     expect(DATA_MEMBERS.length).toBe(99);
-    expect(METHOD_MEMBERS.length).toBe(249);
+    expect(METHOD_MEMBERS.length).toBe(250);
   });
   it('has no duplicate member names', () => {
     const names = IWORLD_MEMBERS.map((m) => m.name);
@@ -952,6 +957,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'renamePet',
       'renown',
       'reportTelemetry',
+      'resolvedAbility',
       'respec',
       'respondToResurrection',
       'restedXp',
@@ -1326,6 +1332,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'reliquaryRarity',
       'renamePet',
       'reportTelemetry',
+      'resolvedAbility',
       'respec',
       'respondToResurrection',
       'resurrectAtCorpse',
@@ -1489,6 +1496,7 @@ type _ExhaustEntityRoster = AssertNever<
 
 const FACET_COMBAT = [
   'known',
+  'resolvedAbility',
   'activeConsecrations',
   'activeFrostRings',
   'activeIgnivarMeteors',
@@ -2046,8 +2054,10 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
 
   it('the facet union equals the pinned IWORLD_MEMBERS set', () => {
     const union = Object.values(FACET_MEMBER_ARRAYS).flatMap((arr) => [...arr]);
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(348);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(348);
+    // Both union pins cover the complete merged contract, including the
+    // resolved ability method and four Nythraxis data readouts.
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(349);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(349);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);

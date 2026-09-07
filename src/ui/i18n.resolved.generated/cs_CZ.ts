@@ -2882,6 +2882,8 @@ export const cs_CZ: EnTranslations = {
       "redline": "Červená linie: zářez {stacks} z {max}. Rány do těla přidávají zářezy; Rána z milosti zasáhne o {pct}% tvrději za zářez a uzavře okno. Dřívější vypršení je ztratí",
       "veilstrikeWindow": "Stínový závoj: tvá zahájení Soumračného závoje lze použít na otevřeném prostranství z libovolného úhlu a způsobené poškození se zvyšuje o {pct}%",
       "veiledEdge": "Tvůj další Úder číhajícího zasáhne dvojnásobně",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Schopnosti stojí o {pct}% méně energie",
       "moontide": "Měsíční příliv: stupeň {stacks} z {max}. Sesílání Šípu divočiny, Pádu nebes a Měsíčního semene ho plní v Podobě měsíčního křídla; při {max} se Měsíční semeno mění v Měsíční vzedmutí a Pád nebes ve Sluneční brázdu a obojí ho čerpá",
       "oldBlood": "Stará krev: stupeň {stacks} z {max}. Zasažené vlčí a medvědí údery sdílejí tuto zásobu; při {max} se promění Krvavý skus nebo Drcení kostí",
@@ -10970,7 +10972,8 @@ export const cs_CZ: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Prokletý výstřel",
-        "description": "Střelí cíl za {damage} arkánového poškození. Poškození roste s útočnou silou na dálku."
+        "description": "Střelí cíl za {damage} arkánového poškození. Poškození roste s útočnou silou na dálku.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Otřásající výstřel",
@@ -12001,7 +12004,7 @@ export const cs_CZ: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Očistné milosrdenství",
-        "description": "Způsobí 72 až 84 Svatého poškození nepříteli nebo vyléčí spřáteleného cíle za 130 až 155. Obě hodnoty rostou se silou kouzel. Poškození navíc vyléčí každého spojence spojeného Doktrínou za 30%, nebo člena skupiny s nejnižším zdravím za 15%, pokud není spojen nikdo. (Signatura Doktríny)"
+        "description": "Způsobí {damage} Svatého poškození nepříteli nebo vyléčí spřáteleného cíle za {healing}. Poškození roste se silou kouzel, léčení se silou léčení. Doktrína přemění toto poškození na léčení skrze vaše spojení. Pokud se v okruhu 30 metrů nenachází žádný spojený zraněný člen skupiny, vyléčí zraněného člena skupiny s nejnižším zdravím v okruhu 30 metrů za 15% poškození. Vyléčení člena skupiny také vyléčí až 2 další zraněné členy skupiny v okruhu 10 metrů od tohoto cíle a ve vaší přímé viditelnosti, každého za 50% obnoveného zdraví. Toto dodatečné léčení nemůže být kritické ani vytvářet spojení Doktríny. (Signatura Doktríny)"
       },
       "seraphic_vigil": {
         "name": "Serafínská stráž",

@@ -2211,7 +2211,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.scorch.description': '灼烧敌人，造成 {damage} 点火焰伤害。施法迅速。',
   'entities.abilities.scorch.name': '灼烫',
   'entities.abilities.scouring_mercy.description':
-    '以神圣之力净化一名敌人，或立即救治一名友方目标。教义专属技能。',
+    '对敌人造成{damage}点神圣伤害，或为一名友方目标治疗{healing}点生命值。伤害随法术强度提高，治疗随治疗强度提高。教义会通过你的纽带将此伤害转化为治疗。若30米内没有已建立纽带且受伤的队伍成员，则治疗30米内生命值最低的受伤队伍成员，治疗量为伤害的15%。治疗一名队伍成员时，还会为该目标10米内、且处于你视野中的至多2名其他受伤队伍成员治疗，每人恢复量为已恢复生命值的50%。这些额外治疗不会触发暴击，也不会建立教义纽带。（教义专属技能）',
   'entities.abilities.scouring_mercy.name': '涤罪慈悲',
   'entities.abilities.seal_of_righteousness.description':
     '以神圣之力充盈你 30 秒，使你的每一次近战挥击额外造成 {damage} 点神圣伤害。',
@@ -14901,4 +14901,9 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
     '将此设备上保存的全部偏好导出为一段代码，并在其他设备或浏览器上粘贴导入：图形、音频、界面、主题、框体布局、每个角色的按键绑定、手柄与十字热键栏绑定、聊天、窗口筛选、语言以及已关闭的提示。',
   'hudChrome.fullTransfer.excluded':
     '绝不包含：您的登录、账号、钱包或购买数据。动作条布局保存在您的账号中，会随账号同步。',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    '完成一次狂热引弓获得的冷目预判，会使你的下一次凶邪射击造成的伤害提高75%。发射该技能会消耗冷目预判。',
+  'hudChrome.auraEffect.veiledEdgeStrike': '你的下一次潜伏突袭造成的武器伤害提高{pct}%',
+  'hudChrome.auraEffect.coldsightRead':
+    '你的下一次引弓长射造成的伤害提高{longDrawPct}%，或你的下一次凶邪射击造成的伤害提高{fellShotPct}%',
 };

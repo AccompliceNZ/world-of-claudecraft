@@ -2882,6 +2882,8 @@ export const fr_FR: EnTranslations = {
       "redline": "Ligne rouge : cran {stacks} sur {max}. Les Coups au corps ajoutent des crans ; le Coup de grâce frappe {pct}% plus fort par cran et clôt la fenêtre. Expirer avant la perd",
       "veilstrikeWindow": "Voile d'ombre : vos ouvertures du Voile crépusculaire sont utilisables à découvert sous tout angle, et les dégâts infligés augmentent de {pct}%",
       "veiledEdge": "Votre prochaine Frappe du rôdeur frappe deux fois plus fort",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Les capacités coûtent {pct}% d'énergie en moins",
       "moontide": "Marée lunaire : cran {stacks} sur {max}. Les incantations de Trait sauvage, Chute céleste et Graine lunaire la remplissent en Forme de sélénien ; à {max}, Graine lunaire devient Déferlante lunaire et Chute céleste devient Sillage solaire, et l'une ou l'autre la dépense",
       "oldBlood": "Sang ancien : cran {stacks} sur {max}. Les frappes portées en loup et en Bruin partagent cette réserve ; à {max}, Morsure sanglante ou Brise-os se transforme",
@@ -10970,7 +10972,8 @@ export const fr_FR: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Tir funeste",
-        "description": "Tire sur la cible pour {damage} points de dégâts des Arcanes. Les dégâts augmentent avec la puissance d'attaque à distance."
+        "description": "Tire sur la cible pour {damage} points de dégâts des Arcanes. Les dégâts augmentent avec la puissance d'attaque à distance.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Tir déstabilisant",
@@ -12001,7 +12004,7 @@ export const fr_FR: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Miséricorde purifiante",
-        "description": "Inflige 72 à 84 points de dégâts Sacrés à un ennemi ou soigne une cible alliée de 130 à 155. Les deux montants augmentent avec la puissance des sorts. Les dégâts soignent aussi chaque allié lié par la Doctrine de 30%, ou le membre du groupe le plus blessé de 15% si aucun allié n'est lié. (Signature de Doctrine)"
+        "description": "Inflige {damage} dégâts Sacrés à un ennemi ou soigne une cible alliée de {healing}. Les dégâts augmentent avec la puissance des sorts ; les soins augmentent avec la puissance de soin. La Doctrine convertit ces dégâts en soins à travers vos liens. Si aucun allié lié blessé du groupe ne se trouve à moins de 30 mètres, soigne le membre du groupe blessé ayant le moins de vie à moins de 30 mètres pour 15% des dégâts. Soigner un membre du groupe soigne aussi jusqu'à 2 autres membres du groupe blessés à moins de 10 mètres de cette cible et dans votre ligne de vue, chacun pour 50% des soins prodigués. Ces soins supplémentaires ne peuvent ni être critiques ni créer de liens de Doctrine. (Signature de Doctrine)"
       },
       "seraphic_vigil": {
         "name": "Veille séraphique",

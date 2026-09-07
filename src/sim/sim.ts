@@ -21,6 +21,7 @@ import type {
   ToolEffectSlotView,
 } from '../world_api';
 import type { GroundAimPointXZ } from '../world_api/combat';
+import type { AbilityOutputScaling } from './ability_output_scaling';
 import * as bagsMod from './bags';
 import {
   addStacked,
@@ -56,7 +57,7 @@ import {
   resolveMovement,
   resolvePosition,
 } from './colliders';
-import { resolveActionReplacement } from './combat/action_replacement';
+import { applyAbilityCostTail, resolveAbilityChain } from './combat/ability_resolution';
 import { clearAfflictionState } from './combat/affliction';
 import { auraAffectsStats, removeCancelableAura } from './combat/aura_cancel';
 import { auraReplacementConflicts } from './combat/aura_stacking';
@@ -93,7 +94,6 @@ import {
   isStunned,
   isUnbreakableControlAura,
 } from './combat/cc';
-import { aetherSurgeCostMult } from './combat/chronomancy';
 import {
   dealDamage as dealDamageImpl,
   grantXp as grantXpImpl,
@@ -116,17 +116,11 @@ import {
   hexOutputMult as hexOutputMultImpl,
 } from './combat/heal';
 import { advanceHeroicLeap, heroicLeapPlacementPreview } from './combat/heroic_leap';
-import { resolveColdsightAbility } from './combat/hunter_coldsight';
 import { clearFieldcraftState, finishBloodhook } from './combat/hunter_fieldcraft';
 import { clearPacklordState } from './combat/hunter_packlord';
-import {
-  clearHunterTalentState,
-  hunterPetDamageMultiplier,
-  resolveHunterSharedAbility,
-} from './combat/hunter_shared';
+import { clearHunterTalentState, hunterPetDamageMultiplier } from './combat/hunter_shared';
 import { tickNaturesFury } from './combat/natures_fury';
 import { clearOssuaryMarks, despawnTemporaryNecromancyUndead } from './combat/necromancy';
-import { radiantResonanceCastTime } from './combat/paladin_radiant_resonance';
 import { tryGrantSolarReprisal } from './combat/paladin_solar_reprisal';
 import {
   PALADIN_DEVOTION_ABILITY_IDS,
@@ -139,7 +133,6 @@ import {
   veilboundMarchBlocksAura,
 } from './combat/paladin_veilbound_march';
 import { cleanupPriestState } from './combat/priest/lifecycle';
-import { resolveVespersAbility } from './combat/priest/vespers';
 import * as resurrectionOfferMod from './combat/resurrection_offer';
 import { duskLingerOnStealthBreak } from './combat/rogue_talents';
 import { applySetProcs as applySetProcsImpl } from './combat/set_procs';
@@ -149,6 +142,7 @@ import { blockedMeleeDamage } from './combat/shield_block';
 import { spellCritBonusFromAuras, spellDamageMultFromAuras } from './combat/spell_combat';
 import { isMobSpellResisted } from './combat/spell_resist';
 import { isCritImmuneTank } from './combat/tank_crit_immunity';
+import { threatMod as threatModImpl } from './combat/threat_modifiers';
 import { warriorMeleeDefense } from './combat/warrior_hit_table';
 import { ensureWarriorStance } from './combat/warrior_stances';
 // A3: the augment/power-up content helpers used by the Fiesta match logic
@@ -156,7 +150,6 @@ import { ensureWarriorStance } from './combat/warrior_stances';
 // moved to social/fiesta.ts with that logic; sim.ts keeps only the type used by
 // the PlayerMeta interface + the power-up catalog the fiestaMatchInfo accessor reads.
 import { type AugmentSpecial, type AugmentTier, POWERUPS_BY_ID } from './content/augments';
-import { applyTalentMods } from './content/classes';
 import { DEFAULT_MOUNT, type MountKey } from './content/mounts';
 import { GATHERING_PROFESSION_IDS, type GatheringProfessionId } from './content/professions';
 import { PROVING_SHORE_ARRIVAL } from './content/proving_shore';
@@ -379,7 +372,6 @@ import {
   grantDevotionFromBlock,
   grantGroundAoEDevotionOnFirstHit,
   MAX_DEVOTION,
-  resolveAscensionAbility,
   updatePaladinDevotion,
 } from './paladin_devotion';
 import {
@@ -720,11 +712,9 @@ import { diminishedCrowdControlDuration as diminishedCrowdControlDurationImpl } 
 import { Targeting } from './targeting';
 import {
   addThreat,
-  RIGHTEOUS_FURY_THREAT_MULT,
   SUMMONED_ADD_THREAT_SEED,
   TAUNT_FORCE_SECONDS,
   threatEntries,
-  threatModifier,
   topThreatValue,
 } from './threat';
 import {
@@ -1202,6 +1192,7 @@ export interface InstanceSlot {
 
 export interface ResolvedAbility {
   def: AbilityDef;
+  outputScaling?: AbilityOutputScaling;
   rank: number;
   cost: number;
   castTime: number;
@@ -5792,21 +5783,8 @@ export class Sim {
     return this.markTalentDeeds(deleteTalentLoadout(this.ctx, index, pid), pid);
   }
 
-  // Threat modifier including the tank-role talent bonus (e.g. Protection's
-  // Vengeance Mastery). Reads the precomputed flat threatPct — no tree walk.
   private threatMod(source: Entity, school: string): number {
-    let m = threatModifier(source, school);
-    if (source.kind === 'player') {
-      const meta = this.players.get(source.id);
-      if (meta) {
-        m *= 1 + this.playerMods(meta).global.threatPct;
-        const hasBurningOath = meta.known.some(
-          (known) => known.def.id === 'righteous_fury' && known.def.passive === true,
-        );
-        if (hasBurningOath && school === 'holy') m *= RIGHTEOUS_FURY_THREAT_MULT;
-      }
-    }
-    return m;
+    return threatModImpl(this.ctx, source, school);
   }
 
   resolvedAbility(abilityId: string, pid?: number): ResolvedAbility | null {
@@ -5814,65 +5792,15 @@ export class Sim {
     if (!r) return null;
     const known = r.meta.known.find((k) => k.def.id === abilityId) ?? null;
     if (!known) return null;
-    // Action-slot replacement: the base id stays on the hotbar while the
-    // resolved definition follows aura state (rogue engine transforms and the
-    // hunter resolvers land here, the one choke point the cast path, cost
-    // checks, and the server all read).
-    let found = resolveActionReplacement(known, r.e);
-    // The worn-set flags ride playerMods.selected (set_bonus_mods): the
-    // Coldsight 2pc hook reads them after the Cold Focus absolute rewrite.
-    found = resolveColdsightAbility(found, r.e, r.meta, this.playerMods(r.meta).selected);
-    found = resolveHunterSharedAbility(found, r.e, r.meta);
-    found = resolveVespersAbility(found, r.meta);
-    // `known` already carries its own talent mods, baked in once when
-    // r.meta.known was built (abilitiesKnownAt -> applyTalentMods). A
-    // wholesale def swap (resolveActionReplacement's rogue engine transforms,
-    // or the hunter Pack Rally swap inside resolveHunterSharedAbility) lands
-    // on a raw ABILITIES def instead, which never went through that bake, so
-    // give it its own (possibly empty) mods pass here, exactly once, keyed by
-    // its FINAL id, after every resolver above has had a chance to swap it.
-    // Compare ids, not object identity: Coldsight/Vespers return a
-    // `{...resolved}` spread copy even when they leave the def untouched, and
-    // keying on `found !== known` would re-run the bake on that copy and
-    // double-apply the mods `known` already carries.
-    if (found.def.id !== known.def.id) applyTalentMods(found, this.playerMods(r.meta));
-    // A "draining curse" (cost_tax aura) inflates the resource cost of every
-    // ability the victim uses. Resolve it here, the single choke point all cost
-    // checks/spends read, so the affordability check and the spend stay in
-    // lockstep. Return a shallow copy so the cached known-list entry is never
-    // mutated.
-    let cost = found.cost;
-    if (
-      cost > 0 &&
-      this.playerMods(r.meta).spec === 'arms' &&
-      r.meta.known.some((known) => known.def.id === 'measured_fury' && known.def.passive)
-    ) {
-      cost = Math.max(0, Math.round(cost * 0.9));
-    }
-    const tax = this.costTaxMult(r.e);
-    if (tax > 1 && cost > 0) cost = Math.ceil(cost * tax);
-    // Aether Surge (Chronomancy Phase 3, combat/chronomancy.ts): each held Arcane
-    // Charge steeply multiplies the next cast's cost. Deterministic read of the
-    // caster's own charge aura; no rng. Folded here so the affordability gate and
-    // the spend both see the scaled cost. (docs/prd/mage-chronomancy.md 13.4 / 14)
-    if (abilityId === 'arcane_surge' && cost > 0) {
-      cost = Math.round(cost * aetherSurgeCostMult(r.e));
-    }
-    const costResolved = cost === found.cost ? found : { ...found, cost };
     const charMods = this.playerMods(r.meta);
-    const ascensionResolved = resolveAscensionAbility(r.e, charMods.spec, costResolved);
-    // charMods carries the worn-set flags (Dawnforged 4pc: instant empowered Dawn's Embrace).
-    const castTime = radiantResonanceCastTime(r.e, abilityId, ascensionResolved.castTime, charMods);
-    return castTime === ascensionResolved.castTime
-      ? ascensionResolved
-      : { ...ascensionResolved, castTime };
-  }
-
-  // Highest active cost_tax aura, expressed as a cost multiplier (1 = no tax).
-  private costTaxMult(e: Entity): number {
-    let pct = 0;
-    for (const a of e.auras) if (a.kind === 'cost_tax' && a.value > pct) pct = a.value;
-    return 1 + pct;
+    // The presentation/combat resolution chain (action-slot replacement, the
+    // spec-gated resolvers, the talent-mod bake, Ascension/Radiant Resonance,
+    // and the resource-cost tail: draining curse, Measured Fury, Aether
+    // Surge) is shared with every display caller; see
+    // combat/ability_resolution.ts. The server stays the sole spend
+    // authority regardless of who displays the resolved cost.
+    const found = resolveAbilityChain(known, r.e, r.meta, charMods);
+    return applyAbilityCostTail(found, abilityId, r.e, r.meta.known, charMods);
   }
 
   // -------------------------------------------------------------------------

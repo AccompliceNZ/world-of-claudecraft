@@ -2337,7 +2337,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '적을 불태워 {damage}의 화염 피해를 입힙니다. 빠르게 시전합니다.',
   'entities.abilities.scorch.name': '그을리기',
   'entities.abilities.scouring_mercy.description':
-    '적을 신성한 힘으로 정화하거나 아군 대상을 즉시 치유합니다. 교리 고유 능력입니다.',
+    '적에게 {damage}의 신성 피해를 입히거나 아군 대상을 {healing}만큼 치유합니다. 피해는 주문력에 비례해 증가하고, 치유는 치유력에 비례해 증가합니다. 교리는 이 피해를 유대를 통해 치유로 전환합니다. 30미터 이내에 유대가 맺어진 부상당한 파티원이 없으면, 30미터 이내에서 생명력이 가장 낮은 부상당한 파티원을 피해량의 15%만큼 치유합니다. 파티원을 치유하면 해당 대상으로부터 10미터 이내에 있고 시야가 확보된 다른 부상당한 파티원 최대 2명도 함께 치유하며, 각각 회복된 생명력의 50%만큼 치유합니다. 이 추가 치유는 치명타가 발생하지 않으며 교리 유대를 생성하지 않습니다. (교리 고유 능력)',
   'entities.abilities.scouring_mercy.name': '정화의 자비',
   'entities.abilities.seal_of_righteousness.description':
     '30초 동안 신성한 힘으로 채워, 근접 휘두르기마다 {damage}의 추가 신성 피해를 입힙니다.',
@@ -15660,4 +15660,9 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '이 기기에 저장된 모든 설정을 하나의 코드로 내보내고 다른 기기나 브라우저에 붙여넣어 가져올 수 있습니다: 그래픽, 오디오, 인터페이스, 테마, 프레임 배치, 모든 캐릭터의 단축키, 컨트롤러와 크로스 핫바 설정, 채팅, 창 필터, 언어, 닫은 안내.',
   'hudChrome.fullTransfer.excluded':
     '포함되지 않는 항목: 로그인, 계정, 지갑, 구매 데이터. 행동 단축바 배치는 계정에 저장되어 계정과 함께 이동합니다.',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    '열광의 연사를 완료해 얻은 냉정한 시선의 간파는 다음 사악한 사격이 입히는 피해를 75% 증가시킵니다. 사격을 발사하면 간파를 소모합니다.',
+  'hudChrome.auraEffect.veiledEdgeStrike': '다음 잠복자의 일격이 입히는 무기 피해가 {pct}% 증가합니다',
+  'hudChrome.auraEffect.coldsightRead':
+    '다음 긴 시위가 입히는 피해가 {longDrawPct}% 증가하거나, 다음 사악한 사격이 입히는 피해가 {fellShotPct}% 증가합니다',
 };

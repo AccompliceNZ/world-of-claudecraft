@@ -2882,6 +2882,8 @@ export const tr_TR: EnTranslations = {
       "redline": "Kırmızı Çizgi: çentik {stacks} / {max}. Gövde Vuruşları çentik ekler; Merhamet Darbesi çentik başına {pct}% daha sert vurur ve pencereyi kapatır. Önce sona ererse kaybedilir",
       "veilstrikeWindow": "Gölge Perdesi: Alacakaranlık Perdesi açılışların açık alanda her açıdan kullanılabilir ve verdiğin hasar {pct}% artar",
       "veiledEdge": "Sonraki Pusucu Vuruşun iki kat sert vurur",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Yetenekler {pct}% daha az enerji harcar",
       "moontide": "Ay Gelgiti: aşama {stacks} / {max}. Yaban Oku, Gök Düşüşü ve Ay Tohumu büyüleri Aykuşu Formunda onu doldurur; {max} olduğunda Ay Tohumu Ay Kabarışına, Gök Düşüşü Güneş İzine dönüşür ve ikisi de onu harcar",
       "oldBlood": "Kadim Kan: aşama {stacks} / {max}. İsabet eden Kurt ve Bruin vuruşları bu birikimi paylaşır; {max} olduğunda Kanlı Isırık veya Kemik Kıran dönüşür",
@@ -10970,7 +10972,8 @@ export const tr_TR: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Uğursuz Atış",
-        "description": "Hedefi {damage} Arkane hasar için vurur. Hasar menzilli saldırı gücüyle artar."
+        "description": "Hedefi {damage} Arkane hasar için vurur. Hasar menzilli saldırı gücüyle artar.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Sarsıcı Atış",
@@ -12001,7 +12004,7 @@ export const tr_TR: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Arındıran Merhamet",
-        "description": "Bir düşmana 72 ila 84 Kutsal hasar verir ya da dost bir hedefi 130 ila 155 iyileştirir. Her iki değer de büyü gücüyle artar. Hasar ayrıca Öğreti ile bağlı her müttefiki 30%, hiç bağlı müttefik yoksa en düşük canlı grup üyesini 15% iyileştirir. (Öğreti imzası)"
+        "description": "Bir düşmana {damage} Kutsal hasar verir ya da dost bir hedefi {healing} iyileştirir. Hasar büyü gücüyle, iyileştirme ise iyileştirme gücüyle artar. Öğreti, bu hasarı bağlarınız aracılığıyla iyileştirmeye dönüştürür. 30 metre içinde bağlı yaralı bir grup üyesi yoksa, 30 metre içindeki en düşük canlı yaralı grup üyesini hasarın 15%'i kadar iyileştirir. Bir grup üyesini iyileştirmek, o hedefin 10 metre içindeki ve görüş hattındaki en fazla 2 yaralı grup üyesini daha, her birini iyileşen canın 50%'i kadar iyileştirir. Bu ekstra iyileştirmeler kritik vuramaz ya da Öğreti bağı oluşturamaz. (Öğreti imzası)"
       },
       "seraphic_vigil": {
         "name": "Serafik Nöbet",

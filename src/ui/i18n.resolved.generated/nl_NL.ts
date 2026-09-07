@@ -2882,6 +2882,8 @@ export const nl_NL: EnTranslations = {
       "redline": "Rode Lijn: kerf {stacks} van {max}. Lichaamsstoten voegen kerven toe; de Genadeslag slaat {pct}% harder toe per kerf en sluit het venster. Eerder aflopen doet het vervallen",
       "veilstrikeWindow": "Schaduwsluier: je Schemersluier-openingen zijn in het open veld vanuit elke hoek bruikbaar, en de aangerichte schade stijgt met {pct}%",
       "veiledEdge": "Je volgende Sluipersslag slaat dubbel zo hard toe",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Vaardigheden kosten {pct}% minder energie",
       "moontide": "Maanvloed: stadium {stacks} van {max}. Wildbout-, Hemelval- en Maanzaad-spreuken vullen haar in Maanuilvorm; bij {max} wordt Maanzaad Maangolf en Hemelval Zonnespoor, en beide geven haar uit",
       "oldBlood": "Oud Bloed: stadium {stacks} van {max}. Gelande Wolfs- en Bruin-slagen delen deze bank; bij {max} transformeert Bloedbeet of Botverbrijzelen",
@@ -10970,7 +10972,8 @@ export const nl_NL: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Boosaardig Schot",
-        "description": "Schiet het doelwit voor {damage} Arcane schade. De schade stijgt met de aanvalskracht op afstand."
+        "description": "Schiet het doelwit voor {damage} Arcane schade. De schade stijgt met de aanvalskracht op afstand.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Ratelend Schot",
@@ -12001,7 +12004,7 @@ export const nl_NL: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Louterende Genade",
-        "description": "Richt 72 tot 84 Heilige schade aan bij een vijand of geneest een bevriend doelwit voor 130 tot 155. Beide bedragen stijgen met spreukkracht. De schade geneest ook elke via de Leer verbonden bondgenoot voor 30%, of het groepslid met de laagste gezondheid voor 15% als geen bondgenoot verbonden is. (Leer-kenmerk)"
+        "description": "Richt {damage} Heilige schade aan bij een vijand of geneest een bevriend doelwit voor {healing}. Schade stijgt met spreukkracht; genezing stijgt met genezingskracht. De Leer zet deze schade om in genezing via je verbindingen. Als er geen verbonden gewond groepslid binnen 30 meter is, geneest het gewonde groepslid met de laagste gezondheid binnen 30 meter voor 15% van de schade. Het genezen van een groepslid geneest ook tot 2 andere gewonde groepsleden binnen 10 meter van dat doelwit en binnen je gezichtslijn, elk voor 50% van de herstelde gezondheid. Deze extra genezingen kunnen niet kritiek zijn of Leer-verbindingen creëren. (Leer-kenmerk)"
       },
       "seraphic_vigil": {
         "name": "Serafijnse Wake",

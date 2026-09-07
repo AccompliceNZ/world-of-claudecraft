@@ -2424,7 +2424,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
     'Agosta al enemigo por {damage} de daño de Fuego. Lanzamiento rápido.',
   'entities.abilities.scorch.name': 'Escaldar',
   'entities.abilities.scouring_mercy.description':
-    'Inflige de 72 a 84 de daño Sagrado a un enemigo o sana a un objetivo amistoso de 130 a 155. Ambas cantidades aumentan con el poder con hechizos. El daño también sana un 30% a cada aliado vinculado por Doctrina, o un 15% al miembro del grupo con menos salud si no hay ninguno vinculado. (Distintivo de Doctrina)',
+    'Inflige {damage} de daño Sagrado a un enemigo o sana a un objetivo amistoso por {healing}. El daño aumenta con el poder con hechizos; la sanación aumenta con el poder de sanación. La Doctrina convierte este daño en sanación a través de tus vínculos. Si ningún miembro del grupo vinculado y herido está a 30 metros, sana al miembro del grupo herido con menos salud a 30 metros por el 15% del daño. Sanar a un miembro del grupo también sana hasta a otros 2 miembros del grupo heridos a 10 metros de ese objetivo y dentro de tu línea de visión, cada uno por el 50% de la salud restaurada. Estas sanaciones adicionales no pueden ser críticas ni crear vínculos de Doctrina. (Distintivo de Doctrina)',
   'entities.abilities.scouring_mercy.name': 'Misericordia Purgante',
   'entities.abilities.seal_of_righteousness.description':
     'Te llena de poder Sagrado durante 30 s, haciendo que cada uno de tus golpes cuerpo a cuerpo inflija {damage} de daño Sagrado adicional.',

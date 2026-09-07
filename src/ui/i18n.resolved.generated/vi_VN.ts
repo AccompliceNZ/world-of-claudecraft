@@ -2882,6 +2882,8 @@ export const vi_VN: EnTranslations = {
       "redline": "Vạch Đỏ: khấc {stacks} trên {max}. Đòn Thân thêm khấc; Đòn Kết Liễu đánh mạnh hơn {pct}% mỗi khấc và đóng cửa sổ. Hết hạn trước thì mất",
       "veilstrikeWindow": "Màn Bóng Tối: các đòn mở màn Màn Hoàng Hôn của bạn dùng được ngoài trống trải từ mọi góc, và sát thương gây ra tăng {pct}%",
       "veiledEdge": "Đòn Rình Rập kế tiếp của bạn đánh mạnh gấp đôi",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Kỹ năng tốn ít hơn {pct}% năng lượng",
       "moontide": "Triều Nguyệt: tầng {stacks} trên {max}. Các lần thi triển Tia Hoang Dã, Thiên Giáng và Nguyệt Chủng tích nó trong Dạng Cú Mặt Trăng; ở {max}, Nguyệt Chủng trở thành Nguyệt Trào và Thiên Giáng trở thành Vệt Dương, và đòn nào cũng tiêu nó",
       "oldBlood": "Huyết Cổ: tầng {stacks} trên {max}. Các đòn đánh trúng ở Hình Sói và Hình Bruin dùng chung bể này; ở {max}, Cắn Xé Máu hoặc Nghiền Xương biến đổi",
@@ -10970,7 +10972,8 @@ export const vi_VN: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Bắn Tà Ác",
-        "description": "Bắn mục tiêu, gây {damage} sát thương Bí Thuật. Sát thương tăng theo sức tấn công tầm xa."
+        "description": "Bắn mục tiêu, gây {damage} sát thương Bí Thuật. Sát thương tăng theo sức tấn công tầm xa.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Bắn Rúng Động",
@@ -12001,7 +12004,7 @@ export const vi_VN: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Từ Bi Thanh Tẩy",
-        "description": "Gây 72 đến 84 sát thương Thánh lên kẻ địch hoặc hồi 130 đến 155 máu cho mục tiêu đồng minh. Cả hai đều tăng theo sức mạnh phép thuật. Sát thương cũng hồi 30% cho mỗi đồng minh liên kết bằng Giáo Lý, hoặc 15% cho thành viên nhóm có ít máu nhất nếu không ai được liên kết. (Dấu ấn Giáo Lý)"
+        "description": "Gây {damage} sát thương Thánh lên kẻ địch hoặc hồi {healing} máu cho mục tiêu đồng minh. Sát thương tăng theo sức mạnh phép thuật; lượng hồi máu tăng theo sức mạnh trị liệu. Giáo Lý biến sát thương này thành hồi máu qua các liên kết của bạn. Nếu không có thành viên nhóm bị liên kết và bị thương trong phạm vi 30 mét, hồi máu cho thành viên nhóm bị thương có ít máu nhất trong phạm vi 30 mét bằng 15% sát thương. Hồi máu cho một thành viên nhóm cũng hồi máu cho tối đa 2 thành viên nhóm bị thương khác trong phạm vi 10 mét quanh mục tiêu đó và trong tầm nhìn thẳng của bạn, mỗi người bằng 50% lượng máu đã hồi. Những lượt hồi máu thêm này không thể chí mạng hay tạo liên kết Giáo Lý. (Dấu ấn Giáo Lý)"
       },
       "seraphic_vigil": {
         "name": "Canh Thức Thiên Sứ",

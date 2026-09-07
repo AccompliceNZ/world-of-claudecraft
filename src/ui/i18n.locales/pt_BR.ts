@@ -2398,7 +2398,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
     'Chamusca o inimigo com {damage} de dano de Fogo. Lançamento rápido.',
   'entities.abilities.scorch.name': 'Escaldar',
   'entities.abilities.scouring_mercy.description':
-    'Causa de 72 a 84 de dano Sagrado a um inimigo ou cura um alvo aliado de 130 a 155. Ambos os valores aumentam com o poder mágico. O dano também cura em 30% cada aliado vinculado pela Doutrina, ou em 15% o membro do grupo com menos vida se nenhum aliado estiver vinculado. (Distintivo de Doutrina)',
+    'Causa {damage} de dano Sagrado a um inimigo ou cura um alvo aliado em {healing}. O dano aumenta com o poder mágico; a cura aumenta com o poder de cura. A Doutrina converte esse dano em cura através dos seus vínculos. Se nenhum aliado vinculado e ferido do grupo estiver a até 30 metros, cura o membro do grupo ferido com menos vida a até 30 metros em 15% do dano. Curar um membro do grupo também cura até 2 outros membros do grupo feridos a até 10 metros desse alvo e na sua linha de visão, cada um em 50% da vida restaurada. Essas curas extras não podem ser críticas nem criar vínculos de Doutrina. (Distintivo de Doutrina)',
   'entities.abilities.scouring_mercy.name': 'Misericórdia Purificadora',
   'entities.abilities.seal_of_righteousness.description':
     'Enche-vos de poder Sagrado por 30 s, fazendo cada um de vossos golpes corpo a corpo causar {damage} de dano Sagrado adicional.',

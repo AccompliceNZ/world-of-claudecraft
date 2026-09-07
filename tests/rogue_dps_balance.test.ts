@@ -69,26 +69,20 @@ describe('Rogue fight-6498 deterministic DPS bands', () => {
     const repeat = measuredDps();
     expect(repeat).toEqual(first);
 
-    // Accepted three-seed measurements on this fixture are approximately
-    // 202 Combat, 165 Assassination, and 177 Subtlety. Re-anchored twice:
-    // first through the 2026-08-30 hit rebalance (the Crucible elective rings
-    // traded their crit lines for Hit under the full-coverage program, and this
-    // fixture fights SAME-LEVEL mobs where that hit is far past cap, so the
-    // crit-for-hit trade is a real small loss here while the heroic +2 profile
-    // gains it back and more), then through the poison-coating rework (issue
-    // #3774): the probe runs Festering Venom, which traded a flat 14 per swing
-    // for a stacking DoT worth about 10 dps at its 5-stack cap, so every spec
-    // loses roughly 3 to 5% on this fixture. Both are deliberate rulings that
-    // set a new power level; re-anchor to the measured values rather than
-    // restoring an old band, and keep the sibling ordering pinned so a real
-    // collapse still reds.
-    expect(first.combat).toBeGreaterThanOrEqual(194);
-    expect(first.combat).toBeLessThanOrEqual(210);
-    expect(first.assassination).toBeGreaterThanOrEqual(157);
-    expect(first.assassination).toBeLessThanOrEqual(173);
-    expect(first.subtlety).toBeGreaterThanOrEqual(169);
-    expect(first.subtlety).toBeLessThanOrEqual(185);
-    expect(first.combat).toBeGreaterThan(first.subtlety);
-    expect(first.subtlety).toBeGreaterThan(first.assassination);
+    // Accepted three-seed measurements are approximately 203 Combat, 182
+    // Assassination, and 153 Subtlety. They preserve both release rulings: the
+    // poison-coating rework lowers this same-level fixture from the old
+    // hit-rebalance anchor, while v0.42.0 class balance buffs Knifework /
+    // assassination and nerfs Skulduggery / subtlety's sustained output. Combat
+    // remains untuned. The two rogue-specific class-balance moves cross the
+    // sibling order, so the merged tree pins combat > assassination > subtlety.
+    expect(first.combat).toBeGreaterThanOrEqual(195);
+    expect(first.combat).toBeLessThanOrEqual(211);
+    expect(first.assassination).toBeGreaterThanOrEqual(174);
+    expect(first.assassination).toBeLessThanOrEqual(190);
+    expect(first.subtlety).toBeGreaterThanOrEqual(145);
+    expect(first.subtlety).toBeLessThanOrEqual(161);
+    expect(first.combat).toBeGreaterThan(first.assassination);
+    expect(first.assassination).toBeGreaterThan(first.subtlety);
   }, 30_000);
 });

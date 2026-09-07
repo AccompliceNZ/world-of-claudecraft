@@ -2882,6 +2882,8 @@ export const da_DK: EnTranslations = {
       "redline": "Rød Linje: hak {stacks} af {max}. Kropsslag tilføjer hak; Nådestødet rammer {pct}% hårdere per hak og lukker vinduet. Udløber det først, mistes det",
       "veilstrikeWindow": "Skyggeslør: dine Tusmørkesløråbninger kan bruges i det åbne fra enhver vinkel, og den gjorte skade øges med {pct}%",
       "veiledEdge": "Dit næste Lurerslag rammer dobbelt så hårdt",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Evner koster {pct}% mindre energi",
       "moontide": "Måneflod: trin {stacks} af {max}. Vildlyn-, Himmelfald- og Månefrø-besværgelser fylder den i Månekinform; ved {max} bliver Månefrø til Månebølge og Himmelfald til Solspor, og begge tærer på den",
       "oldBlood": "Gammelt Blod: trin {stacks} af {max}. Landede Ulve- og Bruin-slag deler dette forråd; ved {max} forvandles Blodbid eller Knogleknus",
@@ -10970,7 +10972,8 @@ export const da_DK: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Grumt Skud",
-        "description": "Skyder målet for {damage} Arkan skade. Skaden stiger med angrebsstyrke på afstand."
+        "description": "Skyder målet for {damage} Arkan skade. Skaden stiger med angrebsstyrke på afstand.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Rystende Skud",
@@ -12001,7 +12004,7 @@ export const da_DK: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Rensende Nåde",
-        "description": "Gør 72 til 84 hellig skade på en fjende eller helbreder et venligt mål for 130 til 155. Begge beløb stiger med besværgelseskraft. Skaden helbreder også hver lærebundet allieret for 30%, eller gruppemedlemmet med lavest sundhed for 15%, hvis ingen allieret er bundet. (Læresignatur)"
+        "description": "Gør {damage} hellig skade på en fjende eller helbreder et venligt mål for {healing}. Skaden stiger med besværgelseskraft; helbredelsen stiger med helbredelseskraft. Læren omdanner denne skade til helbredelse gennem dine bånd. Hvis intet bundet såret gruppemedlem er inden for 30 meter, helbredes det sårede gruppemedlem med lavest sundhed inden for 30 meter for 15% af skaden. At helbrede et gruppemedlem helbreder også op til 2 andre sårede gruppemedlemmer inden for 10 meter af det mål og inden for din sigtelinje, hver for 50% af den gendannede sundhed. Denne ekstra helbredelse kan hverken være kritisk eller skabe Læren-bånd. (Læresignatur)"
       },
       "seraphic_vigil": {
         "name": "Serafisk Vagt",

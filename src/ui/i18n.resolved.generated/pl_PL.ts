@@ -2882,6 +2882,8 @@ export const pl_PL: EnTranslations = {
       "redline": "Czerwona Linia: nacięcie {stacks} z {max}. Ciosy w Korpus dodają nacięcia; Cios Łaski trafia o {pct}% mocniej za nacięcie i zamyka okno. Wcześniejsze wygaśnięcie je przepada",
       "veilstrikeWindow": "Zasłona Cieni: twoje otwarcia Zmierzchowej Zasłony można stosować na otwartej przestrzeni pod każdym kątem, a zadawane obrażenia rosną o {pct}%",
       "veiledEdge": "Twoje następne Uderzenie Czyhającego trafia podwójnie",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Umiejętności kosztują o {pct}% mniej energii",
       "moontide": "Księżycowy przypływ: stopień {stacks} z {max}. Rzucenia Dzikiego pocisku, Spadającego nieba i Księżycowego nasienia napełniają go w Postaci księżycowej sowy; przy {max} Księżycowe nasienie staje się Księżycowym przyborem, a Spadające niebo Słonecznym śladem, i oba go zużywają",
       "oldBlood": "Stara Krew: stopień {stacks} z {max}. Trafione ciosy wilka i Bruina dzielą tę rezerwę; przy {max} przemienia się Krwawe ukąszenie lub Kruszenie kości",
@@ -10970,7 +10972,8 @@ export const pl_PL: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Plugawy strzał",
-        "description": "Strzela w cel za {damage} obrażeń arkanicznych. Obrażenia rosną z mocą ataku dystansowego."
+        "description": "Strzela w cel za {damage} obrażeń arkanicznych. Obrażenia rosną z mocą ataku dystansowego.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Wstrząsający strzał",
@@ -12001,7 +12004,7 @@ export const pl_PL: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Oczyszczające Miłosierdzie",
-        "description": "Zadaje od 72 do 84 obrażeń Świętych wrogowi albo leczy sojuszniczy cel za 130 do 155. Obie wartości rosną wraz z mocą zaklęć. Obrażenia leczą także każdego sojusznika związanego Doktryną za 30% albo członka drużyny o najniższym zdrowiu za 15%, jeśli nikt nie jest związany. (Sygnatura Doktryny)"
+        "description": "Zadaje {damage} obrażeń Świętych wrogowi albo leczy sojuszniczy cel o {healing}. Obrażenia rosną wraz z mocą zaklęć, a leczenie z mocą leczenia. Doktryna zamienia te obrażenia w leczenie poprzez twoje więzi. Jeśli żaden związany ranny członek drużyny nie znajduje się w promieniu 30 metrów, leczy rannego członka drużyny o najniższym zdrowiu w promieniu 30 metrów za 15% obrażeń. Wyleczenie członka drużyny leczy też do 2 innych rannych członków drużyny w promieniu 10 metrów od tego celu i w twojej linii wzroku, każdego za 50% przywróconego zdrowia. Te dodatkowe leczenia nie mogą być krytyczne ani tworzyć więzi Doktryny. (Sygnatura Doktryny)"
       },
       "seraphic_vigil": {
         "name": "Serafinowa Straż",

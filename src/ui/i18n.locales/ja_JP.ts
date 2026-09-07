@@ -2364,7 +2364,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '敵を焼き、{damage} の火炎ダメージを与えます。詠唱が速い呪文です。',
   'entities.abilities.scorch.name': '灼き',
   'entities.abilities.scouring_mercy.description':
-    '敵を聖なる力で浄化するか、味方1体を即座に癒す。ドクトリン固有能力。',
+    '敵に{damage}の聖なるダメージを与えるか、味方1体を{healing}回復する。ダメージは魔力で、回復量は治癒力で上昇する。ドクトリンは絆を通じてこのダメージを回復に変換する。30メートル以内に絆を結んだ負傷パーティメンバーがいない場合、30メートル以内で体力が最も低い負傷パーティメンバーをダメージの15%分回復する。パーティメンバーを回復すると、その対象から10メートル以内かつ視界内にいる負傷パーティメンバーを最大2人まで追加で回復し、それぞれ回復量の50%分を回復する。この追加回復はクリティカルにならず、ドクトリンの絆も生成しない。（ドクトリン固有能力）',
   'entities.abilities.scouring_mercy.name': '浄罪の慈悲',
   'entities.abilities.seal_of_righteousness.description':
     '30秒間、神聖なる力で満たし、近接の一振りごとに{damage}の追加神聖ダメージを与えます。',
@@ -15702,4 +15702,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'この端末に保存されたすべての設定を1つのコードとしてエクスポートし、別の端末やブラウザに貼り付けてインポートできます。対象: グラフィック、オーディオ、インターフェース、テーマ、フレーム配置、全キャラクターのキー設定、コントローラーとクロスホットバーの設定、チャット、ウィンドウのフィルター、言語、閉じたヒント。',
   'hudChrome.fullTransfer.excluded':
     '含まれないもの: ログイン、アカウント、ウォレット、購入データ。アクションバーの配置はアカウントに保存され、アカウントと共に引き継がれます。',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    '「熱狂の速射」を完了して得たコールドサイト・リードは、次に放つ「凶弾」のダメージを75%増加させる。ショットを放つとリードを消費する。',
+  'hudChrome.auraEffect.veiledEdgeStrike': '次に放つ「潜伏者の一撃」の武器ダメージが{pct}%増加する',
+  'hudChrome.auraEffect.coldsightRead':
+    '次に放つ「引き絞り」のダメージが{longDrawPct}%増加するか、次に放つ「凶弾」のダメージが{fellShotPct}%増加する',
 };

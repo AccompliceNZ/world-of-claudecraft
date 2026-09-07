@@ -50,6 +50,7 @@ import { regenerateRuinOutOfCombat, tickPyreGuardian } from './destruction';
 import { druidEngineOnBleedTick } from './druid_engines';
 import { applyGreaterInvisibilityAftereffect } from './greater_invisibility';
 import { consumeHealAbsorb } from './heal';
+import { isColdsightInternalMarkerAuraId } from './hunter_coldsight_read';
 import {
   detonateOssuaryMark,
   OSSUARY_MARK_ABILITY_ID,
@@ -448,7 +449,12 @@ export function updateAuras(ctx: SimContext, e: Entity): void {
       if (a.id === CHEATER_MARK_AURA_ID) e.cheaterMark = undefined;
       priestOnAuraEnded(ctx, e, a);
       ctx.applyNonPlayerStatAura(e, a, -1);
-      ctx.emit({ type: 'aura', targetId: e.id, name: a.name, gained: false });
+      // Coldsight Read's three internal bookkeeping markers never emit, even
+      // via this generic path (they carry an 86400s timeout that should never
+      // fire, but a marker forced to zero must still stay silent).
+      if (!isColdsightInternalMarkerAuraId(a.id)) {
+        ctx.emit({ type: 'aura', targetId: e.id, name: a.name, gained: false });
+      }
       applyGreaterInvisibilityAftereffect(ctx, e, a);
       // A HoT that ran its FULL duration (this natural-expiry path, never a
       // dispel/overwrite) reports to the caster's talent procs. No rng.

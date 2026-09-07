@@ -24,6 +24,11 @@ import {
 } from '../sim/combat/chronomancy';
 import { MOONTIDE_STAGES, OLD_BLOOD_STAGES, VERDANCE_STAGES } from '../sim/combat/druid_engines';
 import {
+  COLDSIGHT_READ_AURA_ID,
+  COLDSIGHT_READ_FELL_SHOT_MULT,
+  COLDSIGHT_READ_LONG_DRAW_MULT,
+} from '../sim/combat/hunter_coldsight_read';
+import {
   GLOAM_STAGES,
   KNOCKOUT_PER_PIP,
   REDLINE_MAX_DEPTH,
@@ -338,6 +343,20 @@ export function auraEffectDescriptor(a: AuraEffectInput): AuraEffectDescriptor |
       nums: { pct: pctFromFrac(a.value), mana: pctFromFrac(ELEMENTAL_TRANCE_MANA_PCT) },
     };
   }
+  // v0.42.0 Coldsight (docs/design/class-balance-v042.md): the banked
+  // opportunity a completed Fevered Draw grants. Shown on the buff itself
+  // (per the design's "show the charge on the existing aura surface") since
+  // whether it is armed is conditional state a static ability tooltip can't
+  // reflect.
+  if (a.id === COLDSIGHT_READ_AURA_ID && a.kind === 'hunter_coldsight_read') {
+    return {
+      key: `${KEY}.coldsightRead`,
+      nums: {
+        longDrawPct: pctFromMult(COLDSIGHT_READ_LONG_DRAW_MULT),
+        fellShotPct: pctFromMult(COLDSIGHT_READ_FELL_SHOT_MULT),
+      },
+    };
+  }
   if (a.kind === 'hunter_ferocity') {
     const stacks = Math.min(3, Math.max(0, Math.trunc(a.stacks ?? a.value)));
     return { key: `${KEY}.hunterFerocity`, nums: { stacks, pct: stacks * 10 } };
@@ -368,7 +387,14 @@ export function auraEffectDescriptor(a: AuraEffectInput): AuraEffectDescriptor |
     return { key: `${KEY}.veilstrikeWindow`, nums: { pct: pctFromFrac(a.value) } };
   }
   if (a.id === 'veiled_edge' && a.kind === 'veiled_edge') {
-    return { key: `${KEY}.veiledEdge`, nums: {} };
+    // v0.42 (docs/design/class-balance-v042.md, "Skulduggery"): the
+    // repeatable veil-window Edge bonus was halved (+100% -> +50%, Ashveil
+    // 4pc +200% -> +100%), so the number must read the aura's actual armed
+    // VALUE (`veiledEdgeArmValue`, base VEILED_EDGE_BONUS or the set bonus)
+    // rather than a hardcoded "double". `veiledEdgeStrike`, not the old
+    // `veiledEdge` key: see the hud_chrome.ts catalog comment for why this
+    // could not reuse the original key.
+    return { key: `${KEY}.veiledEdgeStrike`, nums: { pct: pctFromFrac(a.value) } };
   }
   if (a.kind === 'dusk_economy') {
     return { key: `${KEY}.duskEconomy`, nums: { pct: pctFromFrac(a.value) } };
