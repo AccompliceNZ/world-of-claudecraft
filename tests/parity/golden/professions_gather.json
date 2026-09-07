@@ -170,7 +170,7 @@
       "tick": 51,
       "time": 2.55,
       "nextId": 1003,
-      "state": "0a3cacb7",
+      "state": "12013589",
       "events": "28744d1f",
       "rng": {
         "draws": 2,
@@ -266,7 +266,13 @@
             },
             {
               "count": 1,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 21,
@@ -363,7 +369,7 @@
       "tick": 104,
       "time": 5.2,
       "nextId": 1003,
-      "state": "087aa12e",
+      "state": "360796e0",
       "events": "5a75e5b9",
       "rng": {
         "draws": 4,
@@ -471,14 +477,25 @@
             },
             {
               "count": 1,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "ironbark_log"
+              "itemId": "ironbark_log",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             }
           ],
           "lifetimeXp": 42,
@@ -576,7 +593,7 @@
       "tick": 500,
       "time": 25,
       "nextId": 1003,
-      "state": "bc96bf5b",
+      "state": "ade6d813",
       "events": "f75e9e3b",
       "rng": {
         "draws": 18,
@@ -587,7 +604,7 @@
       "tick": 1000,
       "time": 50,
       "nextId": 1003,
-      "state": "3725f3b7",
+      "state": "58e9ef97",
       "events": "ce40a661",
       "rng": {
         "draws": 38,
@@ -598,7 +615,7 @@
       "tick": 1500,
       "time": 75,
       "nextId": 1003,
-      "state": "d3a2659f",
+      "state": "8cfadff7",
       "events": "1805a506",
       "rng": {
         "draws": 58,
@@ -609,7 +626,7 @@
       "tick": 2000,
       "time": 100,
       "nextId": 1003,
-      "state": "68af0166",
+      "state": "20802cbe",
       "events": "c01c9ebd",
       "rng": {
         "draws": 78,
@@ -620,7 +637,7 @@
       "tick": 2500,
       "time": 125,
       "nextId": 1003,
-      "state": "81df3553",
+      "state": "d4690773",
       "events": "440f715d",
       "rng": {
         "draws": 96,
@@ -631,7 +648,7 @@
       "tick": 3000,
       "time": 150,
       "nextId": 1003,
-      "state": "d51312b3",
+      "state": "84a48773",
       "events": "c01c9ebd",
       "rng": {
         "draws": 116,
@@ -642,7 +659,7 @@
       "tick": 3500,
       "time": 175,
       "nextId": 1003,
-      "state": "4d9a4368",
+      "state": "135ce868",
       "events": "3c7cb4d4",
       "rng": {
         "draws": 136,
@@ -653,7 +670,7 @@
       "tick": 4000,
       "time": 200,
       "nextId": 1003,
-      "state": "471bdf31",
+      "state": "38b91ad1",
       "events": "2519cdbd",
       "rng": {
         "draws": 156,
@@ -664,7 +681,7 @@
       "tick": 4500,
       "time": 225,
       "nextId": 1003,
-      "state": "da8549c7",
+      "state": "17a3a926",
       "events": "1a2aecd6",
       "rng": {
         "draws": 176,
@@ -675,7 +692,7 @@
       "tick": 5000,
       "time": 250,
       "nextId": 1003,
-      "state": "3b963a98",
+      "state": "431b7b27",
       "events": "5d3c359d",
       "rng": {
         "draws": 194,
@@ -686,7 +703,7 @@
       "tick": 5206,
       "time": 260.3,
       "nextId": 1003,
-      "state": "88a4416c",
+      "state": "a870d014",
       "events": "d4cac1f5",
       "rng": {
         "draws": 204,
@@ -811,21 +828,41 @@
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "ironbark_log"
+              "itemId": "ironbark_log",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             },
             {
-              "count": 5,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "silverleaf_herb"
+              "count": 20,
+              "itemId": "silverleaf_herb",
+              "materialSources": [
+                {
+                  "count": 15,
+                  "source": {}
+                },
+                {
+                  "count": 5,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "silverleaf_herb"
+              "itemId": "silverleaf_herb",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 2022,
@@ -930,7 +967,7 @@
       "tick": 5208,
       "time": 260.4,
       "nextId": 1003,
-      "state": "23f55cdd",
+      "state": "a3fc97b5",
       "events": "741638a5",
       "rng": {
         "draws": 204,
@@ -1055,21 +1092,41 @@
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "ironbark_log"
+              "itemId": "ironbark_log",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             },
             {
-              "count": 5,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "silverleaf_herb"
+              "count": 20,
+              "itemId": "silverleaf_herb",
+              "materialSources": [
+                {
+                  "count": 15,
+                  "source": {}
+                },
+                {
+                  "count": 5,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "silverleaf_herb"
+              "itemId": "silverleaf_herb",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 2022,

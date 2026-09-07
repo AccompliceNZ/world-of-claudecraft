@@ -38,7 +38,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "b2ea81d3",
+      "state": "c8d6a13d",
       "events": "5a04b282",
       "rng": {
         "draws": 0,
@@ -101,7 +101,13 @@
             },
             {
               "count": 5,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 5,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -192,7 +198,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "2d882ee5",
+      "state": "b545df9a",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -215,7 +221,13 @@
             "inventory": [
               {
                 "count": 2,
-                "itemId": "wolf_fang"
+                "itemId": "wolf_fang",
+                "materialSources": [
+                  {
+                    "count": 2,
+                    "source": {}
+                  }
+                ]
               }
             ],
             "socketBags": [
@@ -264,7 +276,13 @@
             },
             {
               "count": 3,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 3,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -355,7 +373,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "9621b0f9",
+      "state": "9f79c5cb",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -378,7 +396,13 @@
             "inventory": [
               {
                 "count": 5,
-                "itemId": "wolf_fang"
+                "itemId": "wolf_fang",
+                "materialSources": [
+                  {
+                    "count": 5,
+                    "source": {}
+                  }
+                ]
               }
             ],
             "socketBags": [
@@ -514,7 +538,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "774cd925",
+      "state": "126bb7ea",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -537,7 +561,13 @@
             "inventory": [
               {
                 "count": 4,
-                "itemId": "wolf_fang"
+                "itemId": "wolf_fang",
+                "materialSources": [
+                  {
+                    "count": 4,
+                    "source": {}
+                  }
+                ]
               }
             ],
             "socketBags": [
@@ -586,7 +616,13 @@
             },
             {
               "count": 1,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -677,7 +713,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "e1ac918d",
+      "state": "841f6b4b",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -743,7 +779,13 @@
             },
             {
               "count": 5,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 5,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -834,7 +876,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "c4c5b527",
+      "state": "5dfb12a1",
       "events": "e652f6fb",
       "rng": {
         "draws": 0,
@@ -901,7 +943,13 @@
             },
             {
               "count": 5,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 5,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -992,7 +1040,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "d809d5ed",
+      "state": "5008da32",
       "events": "13b3e942",
       "rng": {
         "draws": 0,
@@ -1061,15 +1109,33 @@
             },
             {
               "count": 5,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 5,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 10,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 10,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 4,
-              "itemId": "ashwood_log"
+              "itemId": "ashwood_log",
+              "materialSources": [
+                {
+                  "count": 4,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1160,7 +1226,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "b26603a1",
+      "state": "a26f679c",
       "events": "3a114eb1",
       "rng": {
         "draws": 0,
@@ -1229,15 +1295,33 @@
             },
             {
               "count": 5,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 5,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 10,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 10,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 4,
-              "itemId": "ashwood_log"
+              "itemId": "ashwood_log",
+              "materialSources": [
+                {
+                  "count": 4,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1329,7 +1413,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "01a994b0",
+      "state": "4e6aed04",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1398,15 +1482,33 @@
             },
             {
               "count": 5,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 5,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 4,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 4,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 4,
-              "itemId": "ashwood_log"
+              "itemId": "ashwood_log",
+              "materialSources": [
+                {
+                  "count": 4,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1500,7 +1602,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "f8d1e0e9",
+      "state": "931c683e",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1569,11 +1671,23 @@
             },
             {
               "count": 5,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 5,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 4,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 4,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1668,7 +1782,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "8b365f45",
+      "state": "da545b20",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -1737,11 +1851,23 @@
             },
             {
               "count": 5,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 5,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 6,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
@@ -1836,7 +1962,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "c2386b87",
+      "state": "43996862",
       "events": "18400081",
       "rng": {
         "draws": 0,
@@ -1905,11 +2031,23 @@
             },
             {
               "count": 5,
-              "itemId": "wolf_fang"
+              "itemId": "wolf_fang",
+              "materialSources": [
+                {
+                  "count": 5,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 6,
-              "itemId": "copper_ore"
+              "itemId": "copper_ore",
+              "materialSources": [
+                {
+                  "count": 6,
+                  "source": {}
+                }
+              ]
             }
           ],
           "mailWelcomed": true,
