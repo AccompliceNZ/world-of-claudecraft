@@ -311,8 +311,9 @@ describe('frameRowLabelKey', () => {
     expect(frameRowLabelKey(proc, 'mage', 'frost')).toBe(
       'hudChrome.interfaceUnlock.frameNames.procOverlayFrost',
     );
-    // An unspecced mage's frame paints the fire rule, so Hot Streak names it.
-    expect(frameRowLabelKey(proc, 'mage', null)).toBe('entities.abilities.hot_streak.name');
+    // An unspecced mage keeps the generic name: Hot Streak is a fire talent,
+    // so it would name a mechanic they do not have yet (the affliction rule).
+    expect(frameRowLabelKey(proc, 'mage', null)).toBe(proc.labelKey);
   });
 
   it('falls back to the generic name where no mechanic lights the frame', () => {

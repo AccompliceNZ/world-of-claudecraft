@@ -435,9 +435,11 @@ export function frameRowLabelKey(
   if (playerClass === 'mage') {
     if (talentSpec === 'arcane') return 'entities.abilities.arcane_surge.name';
     if (talentSpec === 'frost') return 'hudChrome.interfaceUnlock.frameNames.procOverlayFrost';
-    // Fire, and an unspecced mage: the frame paints the Heating Up / Hot
-    // Streak rule either way (hud.ts's else arm), so Hot Streak names it.
-    return 'entities.abilities.hot_streak.name';
+    if (talentSpec === 'fire') return 'entities.abilities.hot_streak.name';
+    // An unspecced mage falls through: Hot Streak is a fire talent, so naming
+    // the frame after it before any points are spent would name a mechanic
+    // they do not have (the same rule as the affliction fallback above); the
+    // bird they see in edit mode is only the borrowed unlit preview.
   }
   return spec.labelKey;
 }
