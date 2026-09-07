@@ -5420,6 +5420,13 @@ function dirtyEveryDeltaField(): {
     amendsProgress: 4,
     isJackOfAllTrades: false,
   };
+  // `ggoal`: a real tracked recipe goal (Intentional Gathering PR4), seeded
+  // through the actual command body (trackGatheringRecipe) rather than a
+  // hand-mutation, so the wire shape under test matches what the command
+  // really produces. Needs the recipe known and combo-eligible, which the
+  // archetype/craftSkills dirtied just above already satisfy.
+  meta.knownRecipes.add('recipe_ironbound_warplate_helm');
+  sim.trackGatheringRecipe('recipe_ironbound_warplate_helm', 5, lp);
   // An ACTIVE own mobile crafting station (`mst`, the own-station arm of the
   // serving set): set directly on the meta slot (the placement command's
   // specialization gate is pinned in tests/professions_crafting_hub.test.ts;
@@ -5940,6 +5947,28 @@ describe('full self-state snapshot delta fixture', () => {
     // craft id, and it must reflect the cprof delta just applied.
     expect(client.archetypeTitle).toBe('weaponcrafting+armorcrafting');
     expect(client.craftSkills).toMatchObject({ armorcrafting: 31, weaponcrafting: 29 });
+    // ggoal -> gatheringGoal: the tracked recipe goal survives the wire whole,
+    // decoded through the strict leaf gathering_goal_wire.ts (its own key,
+    // never folded into cprof). A crossed identity/kind, a wrong count, or a
+    // status/reason mismatch reddens here.
+    expect(client.gatheringGoal?.goal).toEqual({
+      kind: 'recipe',
+      recipeId: 'recipe_ironbound_warplate_helm',
+      count: 5,
+    });
+    expect(client.gatheringGoal?.status).toBe('collecting');
+    expect(client.gatheringGoal?.reason).toBeNull();
+    // storageRestricted: this fixture's live delve run (drun) refuses the
+    // vault draw for craft reagents the same way it does for cvault above.
+    expect(client.gatheringGoal?.storageRestricted).toBe(true);
+    // No fixture inventory or bank slot carries arcanite_bar, so nothing is
+    // payable and that row arrives entirely missing.
+    expect(client.gatheringGoal?.payableCrafts).toBe(0);
+    expect(
+      client.gatheringGoal?.materials.some(
+        (m) => m.itemId === 'arcanite_bar' && m.carried === 0 && m.missing > 0,
+      ),
+    ).toBe(true);
     // mst -> activeMobileStationCrafts: the server-computed serving set as a
     // comma-joined scalar (expiry and party range resolved server-side
     // against the sim's own tickCount and positions), split on decode.
