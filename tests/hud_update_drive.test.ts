@@ -433,6 +433,16 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     why: 'write-elided Warlock Doom meter driven from the player-owned Fate Thread aura',
   },
   {
+    call: 'this.interfaceUnlock.relocalize',
+    band: 'frame',
+    gate: 'this.procChipSpec !== this.sim.talentSpec && this.interfaceUnlock.isUnlocked',
+    surface: 'chrome',
+    why:
+      'The proc frame chip names the ACTIVE spec mechanic; a respec while the ' +
+      'interface is unlocked re-resolves the frame labels in step with the art ' +
+      'swap below (change-gated: it fires once per spec change, never per frame)',
+  },
+  {
     call: 'this.procOverlayPainter.paintNecromancyCharges',
     band: 'frame',
     gate: "this.sim.talentSpec === 'demonology'",
@@ -1702,7 +1712,10 @@ describe('Hud.update() drives exactly the registered set, on the registered band
       // window 44 -> 46: the crucible vendor's out-of-range close (the third
       // #vendor-window tenant, on the heroic vendor's exact row shape).
       // Both deltas apply on the merged tree.
-    ).toEqual({ window: 47, chrome: 86, none: 17 });
+      // chrome 86 -> 87: the release took the proc-frame chip row (PR #3929)
+      // and this branch adds the aura tracks' one call; both land in the
+      // merged tree, so the census takes both increments.
+    ).toEqual({ window: 47, chrome: 87, none: 17 });
     const windows = HUD_UPDATE_DRIVES.filter((r) => r.surface === 'window');
     expect(windows.map((r) => r.call)).toContain('this.spellbookWindow.tickOpen');
     expect(windows.map((r) => r.call)).toContain('this.refreshOpenTownFocusIfChanged');

@@ -76,8 +76,11 @@ export interface MovableFrameConfig {
    *  frames leave this unset and keep their always-visible corner button. */
   buttonOnlyWhenUnlocked?: boolean;
   /** Name chip shown on the frame while unlocked, so a force-shown placeholder
-   *  (an empty cast bar, a disabled action bar) is never an anonymous box. */
-  frameLabelKey?: TranslationKey;
+   *  (an empty cast bar, a disabled action bar) is never an anonymous box. A
+   *  FUNCTION form resolves per refresh, for a chip whose name follows live
+   *  state (the proc overlay names the active spec's mechanic); it re-reads on
+   *  every unlock flip and relocalize, the same cadence as the static form. */
+  frameLabelKey?: TranslationKey | (() => TranslationKey);
   /**
    * What a SIDE-edge drag does. 'scale' (the default) stretches that axis of
    * the frame's transform (the horizontal-only / vertical-only adjustment),
@@ -424,10 +427,17 @@ export class MovableFrame {
     return this.cfg.maxScale ?? FRAME_SCALE_MAX;
   }
 
+  /** The chip's key, with the function form resolved now. */
+  private frameLabelKey(): TranslationKey | undefined {
+    const key = this.cfg.frameLabelKey;
+    return typeof key === 'function' ? key() : key;
+  }
+
   /** Localized display name for menus (the frames show/hide list); empty for a
    *  frame that carries no name chip. */
   labelText(): string {
-    return this.cfg.frameLabelKey ? t(this.cfg.frameLabelKey) : '';
+    const key = this.frameLabelKey();
+    return key ? t(key) : '';
   }
 
   /** Whether the player hid this frame via the frames menu. */
@@ -607,10 +617,12 @@ export class MovableFrame {
       this.grip.hidden = !this.unlocked;
     }
     // Re-resolved here so the chip rides the same relocalize() path as the
-    // button and grip; `hidden` keeps a locked frame's chip out of the
-    // accessibility tree even before the stylesheet hides it.
-    if (this.label && this.cfg.frameLabelKey) {
-      this.label.textContent = t(this.cfg.frameLabelKey);
+    // button and grip (and a function-form key re-reads its live state);
+    // `hidden` keeps a locked frame's chip out of the accessibility tree even
+    // before the stylesheet hides it.
+    const labelKey = this.frameLabelKey();
+    if (this.label && labelKey) {
+      this.label.textContent = t(labelKey);
       this.label.hidden = !this.unlocked;
       if (this.unlocked) this.placeLabel();
     }

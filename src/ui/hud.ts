@@ -538,6 +538,7 @@ import { InspectWindow } from './inspect_window';
 import { InterfaceUnlock, makeUiRootDetacher, restoreFrameHome } from './interface_unlock';
 import {
   classGatedFrameActive,
+  frameRowLabelKey,
   frameRowSettingKey,
   HUD_FRAME_SPECS,
 } from './interface_unlock_core';
@@ -2059,12 +2060,11 @@ export class Hud {
   // Mobile More-tray entry mirroring the desktop chest button's hidden/spin-ready
   // state (folded off the top-right rail so it never overlaps the buff/debuff bars).
   private mobileDailyRewardsButtonEl: HTMLButtonElement | null = null;
-  // Per-element tier cadence stamps (graphics-tier knobs). Each gates a non-self /
-  // canvas redraw to a slower interval on the LOW static preset; on every other tier the
-  // interval is 0 (cadenceDue is always true), so these are no-ops and the path is the
-  // unchanged per-frame path. The SELF/player frame has no stamp (it always paints), and
-  // party frames are deliberately not stamped (party-member HP is a healer's actionable
-  // signal, so it stays on the mediumHud band for every tier: see ui_tier_knobs).
+  // Per-element tier cadence stamps (graphics-tier knobs). Each gates a
+  // non-self / canvas redraw to a slower interval on the LOW static preset;
+  // every other tier's interval is 0, so these are no-ops there. The
+  // SELF/player frame has no stamp (always paints) and party frames stay
+  // unstamped on purpose (healer-actionable HP; see ui_tier_knobs).
   private lastMinimapDrawAt = 0;
   private lastTargetFramePaintAt = 0;
   private lastTargetFrameId: number | null = null;
@@ -2785,12 +2785,11 @@ export class Hud {
       const row = (e.target as HTMLElement).closest<HTMLElement>('.qt-title');
       if (row?.dataset.quest) this.questlogWindow.openWithQuest(row.dataset.quest);
     });
-    // Keyboard activation: handle Enter/Space here and stop the event before it
-    // bubbles to the window-level game keybinds (Enter is bound to Open Chat,
-    // Space is preventDefault'd for jump), which would otherwise hijack the
-    // focused header button's native activation. The tracker is a non-modal
-    // overlay, so canUseGameKeys() stays true and those binds fire while it has
-    // focus; stopping propagation here keeps the toggle reachable by keyboard.
+    // Keyboard activation: handle Enter/Space here and stop the event before
+    // it bubbles to the window-level game keybinds (Enter opens chat, Space
+    // is preventDefault'd for jump), which would hijack the focused header
+    // button's activation: the tracker is a non-modal overlay, so
+    // canUseGameKeys() stays true while it has focus.
     $('#quest-tracker').addEventListener('keydown', (e) => {
       const target = e.target as HTMLElement;
       if (e.key !== 'Enter' && e.key !== ' ' && e.code !== 'Space') return;
@@ -2838,11 +2837,10 @@ export class Hud {
       this.toggleDeedTrackerCollapsed();
     });
     // The Reliquary tracker header, the same delegation contract as the deed
-    // tracker above: click plus the Enter/Space keydown arm, stopped before the
-    // window-level chat-open/jump binds hijack the focused header button. On the
-    // compact touch tier the rows are folded away (hud.mobile.css) and the
-    // header is a count chip: activation opens The Reliquary instead of toggling
-    // a collapse the player cannot see.
+    // tracker above (click + Enter/Space, stopped before the game binds). On
+    // the compact touch tier the rows are folded away (hud.mobile.css) and
+    // the header is a count chip: activation opens The Reliquary instead of
+    // toggling a collapse the player cannot see.
     $('#reliquary-tracker').addEventListener('click', (e) => {
       if (!(e.target as HTMLElement).closest('.dt-header')) return;
       const body = document.body.classList;
@@ -3120,10 +3118,9 @@ export class Hud {
 
   // The two Hud-direct single-slot writers. The elision DECISION is
   // shouldWriteSingleSlot (painter_host.ts), shared verbatim with the painter
-  // facet over the SAME hotWriteCache: it compares (kind, value) components so
-  // an elided call composes no key string and allocates nothing (the old shape
-  // built a `display:` + value key BEFORE the skip check, allocating a discarded
-  // string on every elided write).
+  // facet over the SAME hotWriteCache: it compares (kind, value) components,
+  // so an elided call composes no key string and allocates nothing (the old
+  // shape allocated a discarded key string on every elided write).
   private setText(el: HTMLElement, text: string): void {
     if (!shouldWriteSingleSlot(this.hotWriteCache, el, 'text', text)) {
       this.hotDomSkippedWrites++;
@@ -3897,9 +3894,8 @@ export class Hud {
   // The frames the "Unlock interface" option governs. Each row of the pure table
   // becomes a MovableFrame with no permanent chrome (buttonOnlyWhenUnlocked) and
   // the shared SE grip, plus the `isActive` probe that decides whether unlocking
-  // may loosen it: a character with no pet out, or with the optional action bars
-  // switched off, has no frame there to move. The three unit frames keep their
-  // own corner buttons and simply join the same registry.
+  // may loosen it (no pet out, optional bars off: no frame there to move). The
+  // unit frames keep their own corner buttons and simply join the registry.
   private initInterfaceUnlock(isMobileLayout: () => boolean): void {
     for (const spec of HUD_FRAME_SPECS) {
       const frame = document.getElementById(spec.elementId);
@@ -3920,7 +3916,7 @@ export class Hud {
         unlockLabelKey: 'hudChrome.interfaceUnlock.unlockFrame',
         lockLabelKey: 'hudChrome.interfaceUnlock.lockFrame',
         resizeLabelKey: 'hudChrome.interfaceUnlock.resizeFrame',
-        frameLabelKey: spec.labelKey,
+        frameLabelKey: () => frameRowLabelKey(spec, this.sim.cfg.playerClass, this.sim.talentSpec),
         draggingBodyClass: 'hud-frame-dragging',
         fallbackSize: spec.fallbackSize,
         isMobileLayout,
@@ -4042,18 +4038,15 @@ export class Hud {
     return this.interfaceUnlock.isUnlocked;
   }
 
-  // Public: snap all movable unit frames back to their stock CSS spots and
-  // forget the saved drags. Wired to the "Reset Frame Positions" interface option.
-  // resetAll() locks the interface first and then resets every registered frame,
-  // which covers the three unit frames as well as the action bars, cast bar,
-  // menu, minimap, pet frame, trackers and class resource bars.
+  // Public: "put the interface back the way the base game ships". Wired to
+  // the "Reset Frame Positions" interface option: resetAll() locks first,
+  // then resets EVERY registered mover (unit frames, bars, trackers, class
+  // resource bars included).
   resetUnitFrames(): void {
-    // "Put the interface back the way the base game ships": lock everything,
-    // forget every saved frame box (every registered mover, trackers and
-    // class resource bars included), and re-dock the panels with their own
-    // geometry (chat, meters, target auras). Combined action bars split back
-    // apart through the settings seam; show/hide settings keep the player's
-    // choice. The buff row's reset can seat it in the aura column: re-anchor.
+    // Then re-dock the panels with their own geometry (chat, meters, target
+    // auras). Combined action bars split back apart through the settings
+    // seam; show/hide settings keep the player's choice. The buff row's
+    // reset can seat it in the aura column: re-anchor.
     this.interfaceUnlock.resetAll();
     this.applyAuraAnchor();
     this.chatGeometry.reset();
@@ -4599,6 +4592,8 @@ export class Hud {
   private readonly auraOverlayController: AuraOverlayController;
   // One-shot login preview gate for the phoenix (see update()).
   private procOverlayPreviewed = false;
+  // Last spec the proc frame's name chip resolved under (see update()).
+  private procChipSpec: string | null = null;
   private readonly playerFrameBuffer = newUnitFrameBuffer();
   private readonly targetFrameBuffer = newUnitFrameBuffer();
   private readonly totFrameBuffer = newUnitFrameBuffer();
@@ -9278,14 +9273,12 @@ export class Hud {
     // The phoenix: Heating Up lights its left half, Hot Streak completes it,
     // spending puts it out (pure rule in proc_overlay_view; an unchanged state
     // writes nothing). On the FIRST frame in-world, preview the unlit bird for
-    // a few seconds so the player can see where it lives (moving it is the
-    // Unlock Interface mode's; the same class is its edit-mode sample art).
-    // The login preview only makes sense where the bird is otherwise RARE: the
-    // fire mage (Hot Streak procs occasionally). It is gated to fire so it never
-    // flashes on a warrior/other class, and never on a Chronomancer (whose bird
-    // is on screen constantly, one quarter per Aether Surge charge, so a preview
-    // would just be noise). Gated inside the one-shot guard so a mage whose spec
-    // loads a frame late still previews once.
+    // a few seconds so the player sees where it lives (moving it belongs to
+    // the Unlock Interface mode; the same class is its edit-mode sample art).
+    // The preview is gated to FIRE, the one spec where the bird is otherwise
+    // rare: it never flashes on other classes, and a Chronomancer's bird is on
+    // screen constantly anyway (one quarter per Aether Surge charge). Inside
+    // the one-shot guard so a late-loading spec still previews once.
     if (!this.procOverlayPreviewed && this.sim.talentSpec === 'fire') {
       this.procOverlayPreviewed = true;
       this.procOverlayEl.classList.add('preview');
@@ -9294,6 +9287,13 @@ export class Hud {
         if (this.interfaceUnlock.isUnlocked && this.sim.cfg.playerClass === 'mage') return;
         this.procOverlayEl.classList.remove('preview');
       }, 8000);
+    }
+    // The proc chip names the ACTIVE spec's mechanic and the paint below
+    // swaps the art on a respec, so an unlocked edit session re-resolves its
+    // labels in step (talents stay reachable); locked, the next flip re-reads.
+    if (this.procChipSpec !== this.sim.talentSpec) {
+      this.procChipSpec = this.sim.talentSpec;
+      if (this.interfaceUnlock.isUnlocked) this.interfaceUnlock.relocalize();
     }
     // Chronomancy (arcane spec) drives the same bird from its Aether Surge
     // charges (one quarter per charge); every other spec/class keeps the fire
