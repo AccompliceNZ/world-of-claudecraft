@@ -4211,6 +4211,25 @@
     font-size: 8px;
     line-height: 10px;
   }
+  /* Micro-menu count badge (unspent talent points today). Geometry only: the look
+     is the .ui-badge / .ui-badge--corner primitive. The corner default overhangs a
+     34x30 launcher, so it is pulled in like the chest's own count, and it sits above
+     the hover flyout, which tucks itself behind the button at z-index -1. The
+     painter owns the display flip (hidden at zero). */
+  .micro-btn .mm-badge {
+    top: -3px;
+    right: -3px;
+    z-index: 2;
+    min-width: 14px;
+    height: 14px;
+    padding: 0 3px;
+    line-height: 10px;
+    pointer-events: none;
+  }
+  /* Zero is empty text, not a rendered 0: one elided write per badge hides it. */
+  .micro-btn .mm-badge:empty {
+    display: none;
+  }
   /* music button: a bigger note with a small diagonal slash when audio is off */
   #mm-music .ui-icon {
     width: 22px;

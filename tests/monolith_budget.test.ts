@@ -305,7 +305,11 @@ const MONOLITHS: MonolithRow[] = [
     // flair renderer moved to target_discord_controller.ts while the prompt,
     // party frame, mover and map sidebar call sites adopted the shared
     // primitives and controllers in place.
-    ceiling: 18835,
+    // Lowered 18835 -> 18759 by the right-rail handoff: the whole day/night dial
+    // draw moved to src/ui/day_night_dial_painter.ts (tokens instead of hex
+    // literals), against which the rail's open-window ring and badge wiring is a
+    // thin consumer of the new view core and painter.
+    ceiling: 18759,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

@@ -1032,6 +1032,17 @@
        (tests/browser/steam_wishlist.browser.test.ts). */
     --chrome-plate-fixed: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
     --color-chrome-plate-ink: #b8bcc8; /* Muted silver ink for that fixed plate. */
+
+    /* W16 additions (minimap day/night dial) */
+    /* Sun disc and rays at the dial's centre by day (resolved by
+       day_night_dial_painter.ts via getComputedStyle, the minimap-token idiom). */
+    --color-daynight-sun: #ffd45a;
+    /* Crescent moon at the dial's centre by night. */
+    --color-daynight-moon: #e2e8f6;
+    /* The "now" pip riding the dial ring, and its halo. */
+    --color-daynight-marker: #fff;
+    /* The pip's outline, so it reads against the bright day arc too. */
+    --color-daynight-marker-outline: #000;
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal

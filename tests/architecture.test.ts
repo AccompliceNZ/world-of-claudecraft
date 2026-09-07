@@ -207,6 +207,7 @@ describe('live graphics profile architecture', () => {
 // repo-relative for the failure messages.
 const UI_PURE_CORES = [
   'src/ui/interact_prompt_view.ts',
+  'src/ui/micro_menu_state_view.ts',
   'src/ui/map_entity_disclosure_core.ts',
   'src/ui/map_navigation_landmarks_core.ts',
   'src/ui/map_marker_profile_core.ts',

@@ -43,8 +43,6 @@ import {
   onPortraitsReady,
   onPortraitUpdate,
 } from '../render/characters/portrait';
-import { currentDayNightPhase } from '../render/day_night_clock';
-import { globalDayness, skyTintForDayness } from '../render/day_night_core';
 import { isFriendlyPet, mobTooltipConColor } from '../render/reaction';
 import type { Renderer } from '../render/renderer';
 import {
@@ -250,6 +248,7 @@ import { classCrestId } from './crest_icon_art';
 import { hydrateCrestImageFallbacks } from './crest_image_fallback';
 import { DailyRewardsLauncherPoll } from './daily_rewards_launcher_core';
 import { DailyRewardsWindow, type StoreSpendResult } from './daily_rewards_window';
+import { DayNightDialPainter } from './day_night_dial_painter';
 import { deathRecapFeedback } from './death_recap_feedback';
 import { decorativeArtImg } from './decorative_art';
 import { deedBorderSlug, deedTargetBorderSlug } from './deed_border_view';
@@ -621,6 +620,8 @@ import { MarketWindow } from './market_window';
 import { materialHintLine } from './material_hint_view';
 import { materialProfessionHintText } from './material_profession_hint_view';
 import { Meters } from './meters';
+import { MicroMenuStatePainter, microMenuWindowOpen } from './micro_menu_state_painter';
+import { createMicroMenuStateView } from './micro_menu_state_view';
 import { minimapMode } from './minimap_markers';
 import { MINIMAP_SIZE, MinimapPainter } from './minimap_painter';
 import {
@@ -1613,8 +1614,7 @@ export class Hud {
   private minimapCtx: CanvasRenderingContext2D;
   private minimapBg: HTMLCanvasElement;
   private clockEl: HTMLElement | null = null;
-  private dayNightCtx: CanvasRenderingContext2D | null = null;
-  private lastDayNightDrawAt = 0; // the dial redraws ~1Hz; ample for the 20-minute cycle
+  private readonly dayNightDial = new DayNightDialPainter();
   private raidLockoutEl: HTMLElement | null = null;
   private raidLockoutLocked = false;
   private clock24 = false; // 24-hour vs 12-hour AM/PM display
@@ -2685,8 +2685,9 @@ export class Hud {
     this.clockEl = $('#minimap-clock');
     // day/night dial on the minimap rim: a decorative canvas showing the
     // world day/night cycle. Same UI-only wall-clock allowance as the clock above.
-    const dayNightCanvas = document.getElementById('minimap-daynight') as HTMLCanvasElement | null;
-    this.dayNightCtx = dayNightCanvas?.getContext('2d') ?? null;
+    this.dayNightDial.attach(
+      document.getElementById('minimap-daynight') as HTMLCanvasElement | null,
+    );
     // raid-lockout badge on the minimap rim: a lock icon whose hover/tap panel
     // lists the player's raid lockouts (the unlock countdown). Always visible;
     // it lights up (.locked) while any raid is on cooldown. attachTooltip handles
@@ -4506,6 +4507,12 @@ export class Hud {
     verb: this.interactPromptVerbEl,
     name: this.interactPromptNameEl,
   });
+  // The micro-menu rail's open-window ring and count badges. The view core owns the
+  // launcher-to-window table; the painter writes only through the elided facet.
+  private readonly microMenuStateView = createMicroMenuStateView((value) =>
+    formatNumber(value, { maximumFractionDigits: 0 }),
+  );
+  private readonly microMenuStatePainter = new MicroMenuStatePainter(this.writerFacet);
   private readonly paladinDevotionView = createPaladinDevotionView(
     (value) => formatNumber(value, { maximumFractionDigits: 0 }),
     (value, max, charges, lastCharge) =>
@@ -8973,6 +8980,16 @@ export class Hud {
     const talGlow = talentsFor(sim.cfg.playerClass) !== null && tp.spent < tp.total;
     document.getElementById('mm-talents')?.classList.toggle('has-points', talGlow);
     document.getElementById('mobile-talents')?.classList.toggle('has-points', talGlow);
+    // The rail's own state: the gold ring on whichever launcher's window is open,
+    // plus the unspent-point badge. Medium band, elided writes, so a steady rail
+    // costs no DOM mutation.
+    if (mediumHud) {
+      this.microMenuStatePainter.paint(
+        this.microMenuStateView.tick(microMenuWindowOpen, {
+          talentPoints: talGlow ? tp.total - tp.spent : 0,
+        }),
+      );
+    }
 
     // Town Focus (#1143): the minimap button (and, if open, the panel's live
     // gate) only ever shows/works while standing in a town hub. Cheap zone
@@ -9744,7 +9761,7 @@ export class Hud {
         this.updateMinimap();
       }
       this.updateClock();
-      this.updateDayNightDial();
+      this.dayNightDial.paint(now);
       this.updateMinimapCoords();
       this.updateCompass();
     }
@@ -10465,100 +10482,7 @@ export class Hud {
   /** Force the minimap day/night dial to redraw on the next tick (the /daynight
    *  dev command calls this so an override shows without the ~1s throttle wait). */
   refreshDayNightDial(): void {
-    this.lastDayNightDrawAt = 0;
-  }
-
-  // Draw the minimap day/night dial: a ring painted with the world sky cycle
-  // (deep navy night, warm dawn/dusk glow, bright day blue), a "now" marker that
-  // sweeps it once per cycle, and a centre sun or moon. Purely visual (the canvas
-  // is aria-hidden) and reads the shared UTC-anchored cycle, so a glance shows the
-  // current time of day and how far the marker sits from the coming day or night.
-  private updateDayNightDial(): void {
-    const ctx = this.dayNightCtx;
-    if (!ctx) return;
-    const now = Date.now();
-    if (now - this.lastDayNightDrawAt < 1000) return; // the marker crawls; ~1Hz is ample
-    this.lastDayNightDrawAt = now;
-
-    const S = 88; // backing resolution (CSS shows it at 44px, so 2x for crispness)
-    const cx = S / 2;
-    const cy = S / 2;
-    const rMid = 34; // ring centreline radius
-    const ringW = 11;
-    const rInner = rMid - ringW / 2 - 2; // centre disc radius
-    // noon (brightest) sits at the top, midnight at the bottom; the marker sweeps
-    // clockwise once per cycle. angle = pi/2 + phase*2pi (canvas y is down).
-    const angleForPhase = (p: number): number => Math.PI / 2 + p * Math.PI * 2;
-    const rgb = (c: readonly [number, number, number]): string =>
-      `rgb(${Math.round(c[0] * 255)}, ${Math.round(c[1] * 255)}, ${Math.round(c[2] * 255)})`;
-
-    ctx.clearRect(0, 0, S, S);
-
-    // the ring: sample the cycle in segments, each an arc of its sky color. The
-    // small angular overlap hides seams between the butt-capped arc segments.
-    const SEG = 60;
-    ctx.lineWidth = ringW;
-    ctx.lineCap = 'butt';
-    for (let i = 0; i < SEG; i++) {
-      const p0 = i / SEG;
-      const p1 = (i + 1) / SEG;
-      ctx.strokeStyle = rgb(skyTintForDayness(globalDayness((p0 + p1) / 2)));
-      ctx.beginPath();
-      ctx.arc(cx, cy, rMid, angleForPhase(p0), angleForPhase(p1) + 0.02);
-      ctx.stroke();
-    }
-
-    const phaseNow = currentDayNightPhase();
-    const daynessNow = globalDayness(phaseNow);
-    const skyNow = skyTintForDayness(daynessNow);
-
-    // centre disc tinted to the current sky, with a sun by day or a moon by night
-    ctx.fillStyle = rgb(skyNow);
-    ctx.beginPath();
-    ctx.arc(cx, cy, rInner, 0, Math.PI * 2);
-    ctx.fill();
-    if (daynessNow >= 0.5) {
-      ctx.fillStyle = '#ffd45a';
-      ctx.beginPath();
-      ctx.arc(cx, cy, 8, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = '#ffd45a';
-      ctx.lineWidth = 2;
-      for (let i = 0; i < 8; i++) {
-        const a = (i / 8) * Math.PI * 2;
-        ctx.beginPath();
-        ctx.moveTo(cx + Math.cos(a) * 11.5, cy + Math.sin(a) * 11.5);
-        ctx.lineTo(cx + Math.cos(a) * 15.5, cy + Math.sin(a) * 15.5);
-        ctx.stroke();
-      }
-    } else {
-      // crescent: a pale disc minus an offset disc repainted in the sky color
-      ctx.fillStyle = '#e2e8f6';
-      ctx.beginPath();
-      ctx.arc(cx, cy, 8.8, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.fillStyle = rgb(skyNow);
-      ctx.beginPath();
-      ctx.arc(cx + 4.4, cy - 3.2, 8.8, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    // the "now" marker: a glowing pip riding the ring at the current phase,
-    // sized and haloed so the cycle position reads at a glance
-    const am = angleForPhase(phaseNow);
-    ctx.save();
-    ctx.shadowColor = '#fff';
-    ctx.shadowBlur = 8;
-    ctx.beginPath();
-    ctx.arc(cx + Math.cos(am) * rMid, cy + Math.sin(am) * rMid, 5.2, 0, Math.PI * 2);
-    ctx.fillStyle = '#fff';
-    ctx.fill();
-    ctx.restore();
-    ctx.beginPath();
-    ctx.arc(cx + Math.cos(am) * rMid, cy + Math.sin(am) * rMid, 5.2, 0, Math.PI * 2);
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#000';
-    ctx.stroke();
+    this.dayNightDial.invalidate();
   }
 
   // Classic-style coordinate readout pinned under the minimap. Reads only the
