@@ -895,6 +895,7 @@ export const id_ID: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Ciutkan pelacak misi",
       "expandHint": "Bentangkan pelacak misi"
     },

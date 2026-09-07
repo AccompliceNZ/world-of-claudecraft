@@ -895,6 +895,7 @@ export const vi_VN: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Thu gọn bảng theo dõi nhiệm vụ",
       "expandHint": "Mở rộng bảng theo dõi nhiệm vụ"
     },

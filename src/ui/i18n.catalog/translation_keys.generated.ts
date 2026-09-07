@@ -10554,6 +10554,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.questTracker.collapseHint'
   | 'hudChrome.questTracker.count'
   | 'hudChrome.questTracker.expandHint'
+  | 'hudChrome.questTracker.objectiveValue'
   | 'hudChrome.raidBossGuide.abilitiesHeading'
   | 'hudChrome.raidBossGuide.abilityControlLabel'
   | 'hudChrome.raidBossGuide.bossesLabel'

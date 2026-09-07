@@ -895,6 +895,7 @@ export const ko_KR: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "퀘스트 추적기 접기",
       "expandHint": "퀘스트 추적기 펼치기"
     },

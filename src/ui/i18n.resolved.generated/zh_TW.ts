@@ -895,6 +895,7 @@ export const zh_TW: EnTranslations = {
     },
     "questTracker": {
       "count": "（{count}）",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "收合任務追蹤器",
       "expandHint": "展開任務追蹤器"
     },

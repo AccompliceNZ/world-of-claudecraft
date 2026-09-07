@@ -895,6 +895,7 @@ export const nl_NL: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Queestevolger inklappen",
       "expandHint": "Queestevolger uitklappen"
     },

@@ -895,6 +895,7 @@ export const ja_JP: EnTranslations = {
     },
     "questTracker": {
       "count": "（{count}）",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "クエストトラッカーを折りたたむ",
       "expandHint": "クエストトラッカーを展開する"
     },

@@ -895,6 +895,7 @@ export const tr_TR: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Görev takipçisini daralt",
       "expandHint": "Görev takipçisini genişlet"
     },

@@ -895,6 +895,7 @@ export const ru_RU: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Свернуть трекер заданий",
       "expandHint": "Развернуть трекер заданий"
     },

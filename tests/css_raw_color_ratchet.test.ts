@@ -73,7 +73,7 @@ const TOKEN_HOME = 'tokens.css';
 const CEILINGS: Record<string, number> = {
   'base.css': 23,
   'components.css': 453,
-  'hud.css': 567,
+  'hud.css': 423,
   'hud.mobile.css': 262,
   'index.css': 0,
   'index.extra.css': 43,

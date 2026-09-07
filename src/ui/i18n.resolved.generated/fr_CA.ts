@@ -895,6 +895,7 @@ export const fr_CA: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Réduire le suivi des quêtes",
       "expandHint": "Développer le suivi des quêtes"
     },

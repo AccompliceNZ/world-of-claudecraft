@@ -895,6 +895,7 @@ export const cs_CZ: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Sbalit tracker úkolů",
       "expandHint": "Rozbalit tracker úkolů"
     },

@@ -895,6 +895,7 @@ export const da_DK: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Fold opgavesporing sammen",
       "expandHint": "Fold opgavesporing ud"
     },

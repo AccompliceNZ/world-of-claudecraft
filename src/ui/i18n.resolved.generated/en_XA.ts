@@ -895,6 +895,7 @@ export const en_XA: EnTranslations = {
     },
     "questTracker": {
       "count": "[({count})]",
+      "objectiveValue": "[{current} / {total}]",
       "collapseHint": "[Çóļļáþšé ɋúéšţ ţŕáçķéŕ]",
       "expandHint": "[Éẋþáñð ɋúéšţ ţŕáçķéŕ]"
     },

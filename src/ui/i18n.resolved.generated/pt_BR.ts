@@ -895,6 +895,7 @@ export const pt_BR: EnTranslations = {
     },
     "questTracker": {
       "count": "({count})",
+      "objectiveValue": "{current} / {total}",
       "collapseHint": "Recolher missões",
       "expandHint": "Expandir missões"
     },
