@@ -4310,11 +4310,11 @@ export class Hud {
     // language switch); the blocked-state Space guard (stale_chrome_focus.ts) spares it.
     markDialogRoot(el, { label: t('hudChrome.emoteWheel.label') });
     const slots = this.emoteWheelSlots.filter(isOverheadEmoteId).slice(0, EMOTE_WHEEL_LIMIT);
-    el.innerHTML = `<div class="emote-wheel-ring"></div><button class="emote-wheel-edit" data-edit>${esc(t('hudChrome.emoteWheel.edit'))}</button>`;
+    el.innerHTML = `<div class="emote-wheel-ring"></div><button class="emote-wheel-edit ui-btn" data-edit>${esc(t('hudChrome.emoteWheel.edit'))}</button>`;
     slots.forEach((id, i) => {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'emote-wheel-item';
+      btn.className = 'emote-wheel-item ui-btn';
       btn.dataset.emote = id;
       btn.title = this.emoteLabel(id);
       const icon = document.createElement('img');
@@ -4331,8 +4331,8 @@ export class Hud {
         this.selectEmoteWheelChoice(id);
       });
       const angle = -Math.PI / 2 + (i / Math.max(1, slots.length)) * Math.PI * 2;
-      btn.style.left = `${50 + Math.cos(angle) * 39}%`;
-      btn.style.top = `${50 + Math.sin(angle) * 39}%`;
+      btn.style.left = `calc(50% + ${Math.cos(angle) * 92}px)`;
+      btn.style.top = `calc(50% + ${Math.sin(angle) * 92}px)`;
       el.appendChild(btn);
     });
     el.querySelector<HTMLButtonElement>('.emote-wheel-edit')?.addEventListener('click', (ev) => {
@@ -4395,9 +4395,9 @@ export class Hud {
     // An isModalOpen() surface: a dialog root, so the blocked-state Space guard
     // (src/game/stale_chrome_focus.ts) spares the editor's own buttons.
     markDialogRoot(el, { label: t('hudChrome.emoteEditor.title') });
-    el.innerHTML = `<div class="panel-title"><span>${esc(t('hudChrome.emoteEditor.title'))}</span><button type="button" class="x-btn" data-close aria-label="${esc(t('hudChrome.emoteEditor.close'))}">${svgIcon('close')}</button></div>`;
+    el.innerHTML = `<div class="panel-title ui-win-head"><span class="ui-win-title">${esc(t('hudChrome.emoteEditor.title'))}</span><button type="button" class="x-btn ui-x-btn" data-close aria-label="${esc(t('hudChrome.emoteEditor.close'))}">${svgIcon('close')}</button></div>`;
     const count = document.createElement('div');
-    count.className = 'emote-editor-count';
+    count.className = 'emote-editor-count ui-h ui-num';
     const grid = document.createElement('div');
     grid.className = 'emote-editor-grid';
     const selected = new Set(this.emoteWheelSlots);
@@ -4416,7 +4416,7 @@ export class Hud {
     for (const def of OVERHEAD_EMOTES) {
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = 'emote-editor-item';
+      btn.className = 'emote-editor-item ui-btn';
       btn.dataset.emote = def.id;
       const icon = document.createElement('img');
       icon.className = 'emote-editor-icon';
@@ -4443,7 +4443,7 @@ export class Hud {
     const footer = document.createElement('div');
     footer.className = 'emote-editor-footer';
     const done = document.createElement('button');
-    done.className = 'btn';
+    done.className = 'btn ui-btn';
     done.textContent = t('hudChrome.emoteEditor.done');
     done.addEventListener('click', () => this.closeEmoteEditor());
     footer.append(count, done);

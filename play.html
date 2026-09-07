@@ -369,77 +369,77 @@
           </div>
           <div id="xpbar"><div class="fill"></div><div class="rested"></div><div class="ticks"></div><div class="label"></div></div>
         </div>
-        <div id="target-auras-window" class="panel mt-panel ta-panel" role="region" aria-labelledby="target-auras-title" style="display: none">
-          <div class="panel-title">
-            <span id="target-auras-title" class="mt-title-label ta-title" data-i18n="hudChrome.targetAuras.title">Target Auras</span>
+        <div id="target-auras-window" class="panel mt-panel ta-panel ui-window" role="region" aria-labelledby="target-auras-title" style="display: none">
+          <div class="panel-title ui-win-head">
+            <span id="target-auras-title" class="mt-title-label ta-title ui-win-title" data-i18n="hudChrome.targetAuras.title">Target Auras</span>
           </div>
-          <div class="ta-target"></div>
-          <div class="ta-filters">
-            <button type="button" class="mt-tab" data-aura-filter="all" data-i18n="hudChrome.targetAuras.all">All</button>
-            <button type="button" class="mt-tab" data-aura-filter="debuffs" data-i18n="hudChrome.targetAuras.debuffs">Debuffs</button>
-            <button type="button" class="mt-tab" data-aura-filter="buffs" data-i18n="hudChrome.targetAuras.buffs">Buffs</button>
+          <div class="ta-target ui-meta ui-muted"></div>
+          <div class="ta-filters ui-seg">
+            <button type="button" class="mt-tab ui-seg-tab" data-aura-filter="all" data-i18n="hudChrome.targetAuras.all">All</button>
+            <button type="button" class="mt-tab ui-seg-tab" data-aura-filter="debuffs" data-i18n="hudChrome.targetAuras.debuffs">Debuffs</button>
+            <button type="button" class="mt-tab ui-seg-tab" data-aura-filter="buffs" data-i18n="hudChrome.targetAuras.buffs">Buffs</button>
           </div>
           <div class="ta-sections">
             <section class="ta-section ta-debuff-section">
               <div class="ta-section-title">
                 <span class="ta-debuff-label" data-i18n="hudChrome.targetAuras.debuffs">Debuffs</span>
-                <span class="ta-debuff-count"></span>
+                <span class="ta-debuff-count ui-num"></span>
               </div>
               <div class="ta-rows ta-debuff-rows"></div>
             </section>
             <section class="ta-section ta-buff-section">
               <div class="ta-section-title">
                 <span class="ta-buff-label" data-i18n="hudChrome.targetAuras.buffs">Buffs</span>
-                <span class="ta-buff-count"></span>
+                <span class="ta-buff-count ui-num"></span>
               </div>
               <div class="ta-rows ta-buff-rows"></div>
             </section>
           </div>
         </div>
-        <div id="heal-window" class="panel mt-panel">
+        <div id="heal-window" class="panel mt-panel ui-panel-soft">
           <div class="panel-title">
-            <span class="mt-title-label" data-i18n="hud.meters.healing">Healing</span>
+            <span class="mt-title-label ui-cin" data-i18n="hud.meters.healing">Healing</span>
             <span>
-              <button type="button" class="x-btn mt-prev" data-i18n-title="hud.meters.olderSegment" title="Older segment" data-icon="prev"></button>
-              <button type="button" class="x-btn mt-next" data-i18n-title="hud.meters.newerSegment" title="Newer segment" data-icon="next"></button>
-              <button type="button" class="x-btn mt-close" data-i18n-title="hudChrome.meters.dock" data-i18n-aria="hudChrome.meters.dock" title="Dock back into the meters window" aria-label="Dock back into the meters window" data-icon="close"></button>
+              <button type="button" class="x-btn mt-prev ui-disc" data-i18n-title="hud.meters.olderSegment" title="Older segment" data-icon="prev"></button>
+              <button type="button" class="x-btn mt-next ui-disc" data-i18n-title="hud.meters.newerSegment" title="Newer segment" data-icon="next"></button>
+              <button type="button" class="x-btn mt-close ui-x-btn" data-i18n-title="hudChrome.meters.dock" data-i18n-aria="hudChrome.meters.dock" title="Dock back into the meters window" aria-label="Dock back into the meters window" data-icon="close"></button>
             </span>
           </div>
-          <div class="mt-view"></div>
-          <div class="mt-sub"></div>
-          <div class="mt-hint"></div>
+          <div class="mt-view ui-h"></div>
+          <div class="mt-sub ui-meta ui-muted"></div>
+          <div class="mt-hint ui-meta ui-muted"></div>
           <div class="mt-rows"></div>
         </div>
-        <div id="threat-window" class="panel mt-panel">
+        <div id="threat-window" class="panel mt-panel ui-panel-soft">
           <div class="panel-title">
-            <span class="mt-title-label" data-i18n="hud.meters.threat">Threat</span>
+            <span class="mt-title-label ui-cin" data-i18n="hud.meters.threat">Threat</span>
             <span>
-              <button type="button" class="x-btn mt-prev" data-i18n-title="hud.meters.olderSegment" title="Older segment" data-icon="prev"></button>
-              <button type="button" class="x-btn mt-next" data-i18n-title="hud.meters.newerSegment" title="Newer segment" data-icon="next"></button>
-              <button type="button" class="x-btn mt-close" data-i18n-title="hudChrome.meters.dock" data-i18n-aria="hudChrome.meters.dock" title="Dock back into the meters window" aria-label="Dock back into the meters window" data-icon="close"></button>
+              <button type="button" class="x-btn mt-prev ui-disc" data-i18n-title="hud.meters.olderSegment" title="Older segment" data-icon="prev"></button>
+              <button type="button" class="x-btn mt-next ui-disc" data-i18n-title="hud.meters.newerSegment" title="Newer segment" data-icon="next"></button>
+              <button type="button" class="x-btn mt-close ui-x-btn" data-i18n-title="hudChrome.meters.dock" data-i18n-aria="hudChrome.meters.dock" title="Dock back into the meters window" aria-label="Dock back into the meters window" data-icon="close"></button>
             </span>
           </div>
-          <div class="mt-view"></div>
-          <div class="mt-sub"></div>
-          <div class="mt-hint"></div>
+          <div class="mt-view ui-h"></div>
+          <div class="mt-sub ui-meta ui-muted"></div>
+          <div class="mt-hint ui-meta ui-muted"></div>
           <div class="mt-rows"></div>
         </div>
-        <div id="meters-window" class="panel mt-panel">
+        <div id="meters-window" class="panel mt-panel ui-panel-soft">
           <div class="panel-title">
-            <span class="mt-tabs">
-              <button type="button" class="mt-tab on" data-tab="dmg" data-i18n="hud.meters.damageShort">Dmg</button>
-              <button type="button" class="mt-tab" data-tab="heal" data-i18n="hud.meters.healingShort">Heal</button>
-              <button type="button" class="mt-tab" data-tab="threat" data-i18n="hud.meters.threat">Threat</button>
+            <span class="mt-tabs ui-seg">
+              <button type="button" class="mt-tab on ui-seg-tab is-on" data-tab="dmg" data-i18n="hud.meters.damageShort">Dmg</button>
+              <button type="button" class="mt-tab ui-seg-tab" data-tab="heal" data-i18n="hud.meters.healingShort">Heal</button>
+              <button type="button" class="mt-tab ui-seg-tab" data-tab="threat" data-i18n="hud.meters.threat">Threat</button>
             </span>
             <span>
-              <button type="button" class="x-btn mt-prev" data-i18n-title="hud.meters.olderSegment" title="Older segment" data-icon="prev"></button>
-              <button type="button" class="x-btn mt-next" data-i18n-title="hud.meters.newerSegment" title="Newer segment" data-icon="next"></button>
-              <button type="button" class="x-btn mt-close" data-i18n-title="hud.meters.close" data-i18n-aria="hud.meters.close" title="Close meters" aria-label="Close meters" data-icon="close"></button>
+              <button type="button" class="x-btn mt-prev ui-disc" data-i18n-title="hud.meters.olderSegment" title="Older segment" data-icon="prev"></button>
+              <button type="button" class="x-btn mt-next ui-disc" data-i18n-title="hud.meters.newerSegment" title="Newer segment" data-icon="next"></button>
+              <button type="button" class="x-btn mt-close ui-x-btn" data-i18n-title="hud.meters.close" data-i18n-aria="hud.meters.close" title="Close meters" aria-label="Close meters" data-icon="close"></button>
             </span>
           </div>
-          <div class="mt-view"></div>
-          <div class="mt-sub"></div>
-          <div class="mt-hint"></div>
+          <div class="mt-view ui-h"></div>
+          <div class="mt-sub ui-meta ui-muted"></div>
+          <div class="mt-hint ui-meta ui-muted"></div>
           <div class="mt-rows"></div>
         </div>
       </div>
@@ -474,7 +474,7 @@
     <div id="loot-window" class="window panel"></div>
     <div id="bags" class="window panel"></div>
     <div id="char-window" class="window panel"></div>
-    <div id="inspect-window" class="window panel"></div>
+    <div id="inspect-window" class="window panel ui-window"></div>
     <div id="loot-settings-window" class="window panel" role="dialog" aria-labelledby="loot-settings-title"></div>
     <div id="spellbook" class="window panel"></div>
     <div id="bar-editor" class="window panel"></div>
@@ -486,8 +486,8 @@
     <div id="train-window" class="window panel"></div>
     <div id="unbind-window" class="window panel"></div>
     <div id="commission-board-window" class="window panel"></div>
-    <div id="card-duel-window" class="window panel"></div>
-    <div id="town-focus-window" class="window panel"></div>
+    <div id="card-duel-window" class="window panel ui-window"></div>
+    <div id="town-focus-window" class="window panel ui-window"></div>
     <div id="map-window" class="window panel">
       <button class="x-btn" id="map-close" data-i18n-title="hud.core.closeMap" data-i18n-aria="hud.core.closeMap" title="Close map" aria-label="Close map" data-icon="close"></button>
       <button type="button" id="map-level-toggle" data-i18n="hudChrome.continentMap.toWorld" data-i18n-title="hudChrome.continentMap.toggleAria" data-i18n-aria="hudChrome.continentMap.toggleAria" title="Switch between the world map and the zone map" aria-label="Switch between the world map and the zone map">World map</button>
@@ -499,16 +499,16 @@
       <span id="map-summary" class="visually-hidden" role="status" aria-live="polite"></span>
       <span id="map-marker-summary" class="visually-hidden"></span>
     </div>
-    <div id="arena-window" class="window panel"></div>
-    <div id="dungeon-finder-window" class="window panel"></div>
+    <div id="arena-window" class="window panel ui-window"></div>
+    <div id="dungeon-finder-window" class="window panel ui-window"></div>
     <div id="raid-boss-guide-window" class="window panel"></div>
-    <div id="dfinder-proposal-popup" class="panel"></div>
-    <div id="bg-proposal-popup" class="panel"></div>
-    <div id="leaderboard-window" class="window panel"></div>
+    <div id="dfinder-proposal-popup" class="panel ui-panel"></div>
+    <div id="bg-proposal-popup" class="panel ui-panel"></div>
+    <div id="leaderboard-window" class="window panel ui-window"></div>
     <div id="guild-board-window" class="window panel"></div>
     <div id="rift-forge-window" class="window panel"></div>
-    <div id="daily-rewards-window" class="window panel"></div>
-    <div id="claudium-window" class="window panel"></div>
+    <div id="daily-rewards-window" class="window panel ui-window"></div>
+    <div id="claudium-window" class="window panel ui-window"></div>
     <div id="market-window" class="window panel"></div>
     <div id="woc-market-window" class="window panel"></div>
     <div id="mailbox-window" class="window panel"></div>
@@ -516,10 +516,10 @@
     <div id="deeds-window" class="window panel"></div>
     <div id="reliquary-window" class="window panel"></div>
     <div id="professions-window" class="window panel"></div>
-    <div id="calendar-window" class="window panel"></div>
+    <div id="calendar-window" class="window panel ui-window"></div>
     <div id="arena-status"></div>
     <div id="options-menu" class="window panel"></div>
-    <div id="emote-editor" class="window panel"></div>
+    <div id="emote-editor" class="window panel ui-window"></div>
     <div id="social-window" class="window panel"></div>
     <div id="report-window" class="window panel"></div>
     <div id="side-buttons">
