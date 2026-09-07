@@ -45,4 +45,11 @@ describe('Nythraxis raid boss guide prose: second playtest tuning', () => {
     expect(nythraxis.gravefireSummary).toMatch(/violet grave-fire/i);
     expect(nythraxis.gravefireHeroicSummary).toMatch(/violet grave-fire/i);
   });
+
+  it('directs the Soul Rend finder chip to stack, not spread, matching the live stack-damage-split mechanic', () => {
+    const soulRendChip = hudChromeStrings.finder.mech.soul_rend;
+    expect(soulRendChip).toMatch(/stack together/i);
+    expect(soulRendChip).toMatch(/leave the fire/i);
+    expect(soulRendChip).not.toMatch(/spread/i);
+  });
 });

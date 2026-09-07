@@ -8,12 +8,14 @@ import {
   activeNythraxisGraveEruptions,
   activeNythraxisGraveFlames,
   igniteNythraxisGraveFlames,
+  NYTHRAXIS_GRAVE_ERUPTION_IMPALED_CLEARANCE,
   NYTHRAXIS_GRAVE_ERUPTION_MIN_SEPARATION,
   NYTHRAXIS_GRAVE_ERUPTION_RADIUS,
   NYTHRAXIS_GRAVE_ERUPTION_REVEAL_DELAY_SECONDS,
   NYTHRAXIS_GRAVE_ERUPTION_TELEGRAPH_SECONDS,
   NYTHRAXIS_GRAVE_FLAME_CAP,
   type NythraxisGraveFlame,
+  type NythraxisGravePoint,
   nythraxisGraveEruptionCadence,
   nythraxisGraveEruptionCount,
   nythraxisGraveEruptionDamageMaxHp,
@@ -96,6 +98,42 @@ describe('Nythraxis Grave Eruption', () => {
     }
     // The first slot still lands on the anchor; only the collisions move.
     expect(points[0]).toEqual({ x: 0, z: 80 });
+  });
+
+  it('moves a circle off an avoided point without starving the slot, deterministically', () => {
+    const targets = [{ id: 7, x: 4, z: 80 }];
+    // Exactly the anchor: unsafe on attempt zero (the exact-underfoot case
+    // above), so the scatter search must find a safe neighbour instead.
+    const avoid: NythraxisGravePoint[] = [{ x: 4, z: 80 }];
+    const first = nythraxisGraveEruptionPattern(1234, ORIGIN, 1, targets, avoid);
+    const again = nythraxisGraveEruptionPattern(1234, ORIGIN, 1, targets, avoid);
+    expect(again).toEqual(first);
+    expect(first).toHaveLength(1);
+    expect(Math.hypot(first[0].x - avoid[0].x, first[0].z - avoid[0].z)).toBeGreaterThanOrEqual(
+      NYTHRAXIS_GRAVE_ERUPTION_IMPALED_CLEARANCE - 1e-9,
+    );
+    // An empty avoid list is a no-op: byte-identical to the pre-existing
+    // (no-impaled) behavior pinned above.
+    expect(nythraxisGraveEruptionPattern(1234, ORIGIN, 1, targets, [])).toEqual([{ x: 4, z: 80 }]);
+  });
+
+  it('skips a slot rather than ever placing fire in a densely avoided area', () => {
+    // A grid dense enough (spacing well under twice the clearance radius)
+    // that every reachable candidate -- the anchor itself, every scattered
+    // attempt, and the free-candidate retry across the whole MAX_RANGE disk
+    // -- lands within clearance of SOME avoid point: total exhaustion for
+    // the one slot, engineered black-box (no coupling to the internal hash
+    // formula) rather than reproducing it.
+    const origin = { x: 0, z: 0 };
+    const avoid: NythraxisGravePoint[] = [];
+    for (let x = -60; x <= 60; x += 8) {
+      for (let z = -60; z <= 60; z += 8) avoid.push({ x, z });
+    }
+    const targets = [{ id: 1, x: 10, z: 10 }];
+    const points = nythraxisGraveEruptionPattern(555, origin, 1, targets, avoid);
+    // Never a circle inside the avoided grid: the slot is skipped (fewer
+    // circles) rather than placing fire somewhere the caller marked unsafe.
+    expect(points).toHaveLength(0);
   });
 
   it('sorts the aggro holder last so the tank is only targeted when nobody else is left', () => {

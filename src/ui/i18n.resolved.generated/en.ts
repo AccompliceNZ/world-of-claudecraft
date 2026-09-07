@@ -4331,7 +4331,7 @@ export const en: EnTranslations = {
         "sealbreak_shockwave": "Sealbreak Shockwave (area burst)",
         "gravebreaker": "Gravebreaker (frontal cone, face it away from the raid)",
         "raise_fallen": "Raise Fallen (periodic waves of adds)",
-        "soul_rend": "Soul Rend (marked players must spread and be healed)",
+        "soul_rend": "Soul Rend (marked players stack together, then leave the fire)",
         "deathless_rage": "Deathless Rage (interrupted at the wardstones)",
         "wardstones": "Wardstone channels (phase transition)",
         "dread_curse": "Dread Curse (stacking tank-swap debuff, swap at 2 stacks)",

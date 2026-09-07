@@ -21,11 +21,12 @@ import {
   NYTHRAXIS_GRAVE_ERUPTION_IMPALED_CLEARANCE,
   NYTHRAXIS_GRAVE_ERUPTION_RADIUS,
   NYTHRAXIS_GRAVE_ERUPTION_TELEGRAPH_SECONDS,
+  nythraxisGraveEruptionCount,
   pointInNythraxisCircle,
 } from '../src/sim/nythraxis_grave_eruption';
 import { Sim } from '../src/sim/sim';
 import type { SimContext } from '../src/sim/sim_context';
-import { DT, type Entity, NYTHRAXIS_BOSS_ID } from '../src/sim/types';
+import { DT, type Entity, NYTHRAXIS_BOSS_ID, type SimEvent } from '../src/sim/types';
 import { groundHeight } from '../src/sim/world';
 import { EMPTY_TEST_WORLD } from './sim_shared';
 
@@ -44,7 +45,8 @@ function teleport(sim: AnySim, e: AnyEntity, x: number, z: number, y?: number): 
 
 // A ten-player attuned raid in the throne room: the tank in melee, the others
 // spread 20 yd in front of the dais, every cadence parked.
-function setup() {
+function setup(opts: { difficulty?: 'normal' | 'heroic' } = {}) {
+  const { difficulty = 'normal' } = opts;
   const sim = new Sim({
     seed: 42,
     playerClass: 'warrior',
@@ -61,6 +63,7 @@ function setup() {
     raiderPids.push(pid);
   }
   sim.convertPartyToRaid(tankPid);
+  if (difficulty === 'heroic') sim.setDungeonDifficulty('heroic', tankPid);
   sim.enterDungeon('nythraxis_boss_arena', tankPid);
   const tank = sim.entities.get(tankPid) as AnyEntity;
   const boss = [...sim.entities.values()].find(
@@ -222,6 +225,52 @@ describe('Grave Eruption keeps clear of spikes', () => {
       }
       ms.eruptionPoints = [];
       ms.eruptionImpactRemaining = 0;
+    }
+  });
+
+  it('never lands under the impaled even when every free raider stacks on their exact position', () => {
+    for (const difficulty of ['normal', 'heroic'] as const) {
+      const { sim, ctx, boss, st, tank, raiders, room } = setup({ difficulty });
+      const pinned = raiders[4];
+      ctx.applyAura(pinned, nythraxisImpaledAuraFor(boss.id, 0));
+      // Every OTHER living player -- the tank and the rest of the raid --
+      // stacks exactly on the pinned raider's coordinates: `clear` (free
+      // raiders outside the impaled-clearance band) is empty, so
+      // startNythraxisGraveEruption must fall back to the full free pool for
+      // its anchors, and the first anchor's own position IS the pinned
+      // raider's.
+      for (const p of [tank, ...raiders.filter((r) => r !== pinned)]) {
+        p.pos.x = pinned.pos.x;
+        p.pos.z = pinned.pos.z;
+        p.prevPos = { ...p.pos };
+      }
+      const before = sim.events.length;
+      nythraxis.startNythraxisGraveEruption(ctx, boss, st, room());
+      const ms = nythraxis.nythraxisMechanicState(st);
+      // Never starved without need: every slot still finds a safe circle a
+      // few yards off the pinned raider, since the whole stacked raid sits at
+      // one point and the minimum scatter distance already clears it.
+      expect(ms.eruptionPoints.length, difficulty).toBe(nythraxisGraveEruptionCount(difficulty));
+      for (const circle of ms.eruptionPoints) {
+        expect(
+          pointInNythraxisCircle(circle, NYTHRAXIS_GRAVE_ERUPTION_RADIUS, pinned.pos),
+          difficulty,
+        ).toBe(false);
+      }
+      const warnings = (sim.events as SimEvent[])
+        .slice(before)
+        .filter((e): e is Extract<SimEvent, { type: 'spellfxAt' }> => e.type === 'spellfxAt');
+      expect(warnings.length, difficulty).toBe(ms.eruptionPoints.length);
+      for (const warning of warnings) {
+        expect(
+          pointInNythraxisCircle(
+            { x: warning.x, z: warning.z },
+            NYTHRAXIS_GRAVE_ERUPTION_RADIUS,
+            pinned.pos,
+          ),
+          difficulty,
+        ).toBe(false);
+      }
     }
   });
 });

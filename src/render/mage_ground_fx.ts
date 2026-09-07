@@ -106,6 +106,29 @@ function meteorCueSpawn(spawn: MeteorFallSpawn): MeteorFallSpawn | undefined {
   return spawn.ability !== undefined || spawn.school !== undefined ? spawn : undefined;
 }
 
+/** The landing cue built straight from a raw impact event, for a
+ *  persistentId with no stored warning to carry one instead. `x`/`z` are the
+ *  impact's own; `duration` is a filler the landing burst never reads
+ *  (nothing falls on an impact that already happened). Undefined when there
+ *  is no event cue, or it names neither an ability nor a school, same rule
+ *  as a stored spawn. */
+function meteorImpactEventCueSpawn(
+  x: number,
+  z: number,
+  eventCue: MeteorImpactEventCue | undefined,
+): MeteorFallSpawn | undefined {
+  if (!eventCue) return undefined;
+  return meteorCueSpawn({
+    x,
+    z,
+    radius: eventCue.radius ?? 0,
+    duration: 0,
+    ability: eventCue.ability,
+    school: eventCue.school,
+    sourceId: eventCue.sourceId,
+  });
+}
+
 export interface MeteorFallSpawn {
   x: number;
   z: number;
@@ -122,6 +145,18 @@ export interface MeteorFallSpawn {
   warningLead?: number; // seconds where only the ground warning is visible
   persistentId?: string;
   initialElapsed?: number;
+}
+
+/** The cue identity carried by a raw impact event itself (ability/school/
+ *  radius/source), for `impactMeteor` to fall back on when this client has
+ *  no stored warning for the persistentId (a reconnect gap, a late join): no
+ *  meteor ever spawned here, so the live event is the only source of what
+ *  actually detonated. */
+export interface MeteorImpactEventCue {
+  radius?: number;
+  ability?: string;
+  school?: string;
+  sourceId?: number;
 }
 
 export interface MeteorWarningState extends MeteorFallSpawn {
@@ -658,21 +693,30 @@ export class MageGroundFx {
   /** Resolves a server-authored impact and consumes its pending warning exactly
    *  once. A known warning that carries a cue identity (an ability or a school:
    *  the live event's, or the snapshot source's for the grave rows) hands it to
-   *  the landing burst so the detonation keys on it; a bare warning, and an
-   *  impact whose warning this client never saw, land the legacy way. */
-  impactMeteor(persistentId: string, x: number, z: number): void {
+   *  the landing burst so the detonation keys on it; a bare warning lands the
+   *  legacy way. An impact whose warning this client never saw (a reconnect gap,
+   *  a late join) has no stored cue to fall back on, so `eventCue` (the raw
+   *  impact event's own ability/school/radius/source, when the caller has one)
+   *  takes over instead; a truly untyped impact, with no eventCue at all or one
+   *  naming neither an ability nor a school, still lands the legacy way. */
+  impactMeteor(persistentId: string, x: number, z: number, eventCue?: MeteorImpactEventCue): void {
     if (this.resolvedPersistentMeteorIds.has(persistentId)) return;
     this.resolvedPersistentMeteorIds.add(persistentId);
     const index = this.meteors.findIndex((meteor) => meteor.persistentId === persistentId);
     if (index < 0) {
-      this.onMeteorLand(x, z);
+      this.landWithCue(x, z, meteorImpactEventCueSpawn(x, z, eventCue));
       return;
     }
     const meteor = this.meteors[index];
     if (meteor.landed) return;
     meteor.elapsed = meteor.duration;
     this.landMeteor(meteor);
-    const cue = meteorCueSpawn(meteor.spawn);
+    this.landWithCue(x, z, meteorCueSpawn(meteor.spawn));
+  }
+
+  /** The one call to `onMeteorLand`, cued or bare: kept as a single branch so
+   *  both impactMeteor arms (a found meteor, an unseen one) land identically. */
+  private landWithCue(x: number, z: number, cue: MeteorFallSpawn | undefined): void {
     if (cue) this.onMeteorLand(x, z, cue);
     else this.onMeteorLand(x, z);
   }
@@ -1843,7 +1887,16 @@ export function handleMageGroundSpellfxEvent(
   ev: MageGroundSpellfxEvent,
 ): boolean {
   if (ev.fx === 'meteorImpact' && ev.persistentId) {
-    fx.impactMeteor(ev.persistentId, ev.x, ev.z);
+    // Handed through so an impact whose warning this client never saw (a
+    // reconnect gap, a late join) can still detonate in the event's own cue
+    // instead of the blind fire default (impactMeteor ignores it whenever a
+    // stored warning is found; that cue always takes precedence).
+    fx.impactMeteor(ev.persistentId, ev.x, ev.z, {
+      radius: ev.radius,
+      ability: ev.ability,
+      school: ev.school,
+      sourceId: ev.sourceId,
+    });
     return true;
   }
   if (ev.fx === 'meteorFall' || ev.fx === 'ambientMeteorFall') {

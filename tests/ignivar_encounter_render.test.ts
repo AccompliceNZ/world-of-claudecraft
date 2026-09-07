@@ -1488,7 +1488,15 @@ describe('Ignivar encounter renderer', () => {
         persistentId: 'm1',
       }),
     ).toBe(true);
-    expect(stub.impactMeteor).toHaveBeenCalledWith('m1', 7, 8);
+    // The event's own cue identity rides along so an impact whose warning
+    // this client never saw can still detonate in it (mage_ground_fx.ts
+    // impactMeteor uses this only when no stored warning is found).
+    expect(stub.impactMeteor).toHaveBeenCalledWith('m1', 7, 8, {
+      radius: undefined,
+      ability: undefined,
+      school: 'fire',
+      sourceId: undefined,
+    });
     // Without a persistent id the impact stays unclaimed so the renderer's
     // generic ground-impact burst still fires for it.
     expect(

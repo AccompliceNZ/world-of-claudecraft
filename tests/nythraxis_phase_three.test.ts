@@ -369,6 +369,48 @@ describe('Nythraxis Bone Storm', () => {
   });
 });
 
+describe('Nythraxis Bone Storm vs other majors (same-tick admission overlap)', () => {
+  it('blocks Deathless Rage, Soul Rend, and Gravefire admission the tick Bone Storm begins', () => {
+    for (const difficulty of ['normal', 'heroic'] as const) {
+      // Exact repro: Bone Storm and Deathless Rage simultaneously due, with
+      // none of Rage's own gates holding it back (no live Soul Rend marks, no
+      // lockout, no sigil, no major-gap cooldown). The storm's own admission
+      // check (`storming` above) only sees state from BEFORE this tick, so a
+      // storm that starts THIS tick must still hold every other major back for
+      // the rest of the tick, the same way an already-running storm does.
+      {
+        const { ctx, boss, st } = setup({ difficulty });
+        st.boneStormTimer = DT / 2;
+        st.deathlessTimer = DT / 2;
+        nythraxis.updateNythraxisEncounter(ctx, boss);
+        expect(st.boneStorm, `${difficulty} storm`).not.toBeNull();
+        expect(st.deathlessCastRemaining, `${difficulty} deathless`).toBe(0);
+        expect(boss.castingAbility, `${difficulty} deathless`).not.toBe('nythraxis_deathless_rage');
+      }
+      // Soul Rend simultaneously due: must not mark anyone alongside a
+      // newly-begun storm either.
+      {
+        const { ctx, boss, st } = setup({ difficulty });
+        st.boneStormTimer = DT / 2;
+        st.soulRendTimer = DT / 2;
+        nythraxis.updateNythraxisEncounter(ctx, boss);
+        expect(st.boneStorm, `${difficulty} storm`).not.toBeNull();
+        expect(st.soulRendMarks, `${difficulty} soul rend`).toHaveLength(0);
+      }
+      // Gravefire simultaneously due: must not light alongside a newly-begun
+      // storm either.
+      {
+        const { ctx, boss, st } = setup({ difficulty });
+        st.boneStormTimer = DT / 2;
+        st.gravefireTimer = DT / 2;
+        nythraxis.updateNythraxisEncounter(ctx, boss);
+        expect(st.boneStorm, `${difficulty} storm`).not.toBeNull();
+        expect(st.gravefires, `${difficulty} gravefire`).toHaveLength(0);
+      }
+    }
+  });
+});
+
 describe('Nythraxis The Crown Endures (the enrage clock)', () => {
   it('runs from the pull, pauses for the transition, and warns at 60, 30, and 10 s', () => {
     const { ctx, boss, st, callouts } = setup({ phase: 1 });

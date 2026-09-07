@@ -58,7 +58,10 @@ export function nythraxisEncounterWireJson(
     .filter((fire) => inRange(fire, anchor, eventRadius))
     .map(
       (fire) =>
-        `{"id":${JSON.stringify(fire.id)},"src":${fire.sourceId},"x":${round2(fire.x)},"z":${round2(fire.z)},"dx":${round2(fire.dirX)},"dz":${round2(fire.dirZ)},"tail":${round2(fire.tail)},"head":${round2(fire.head)},"hw":${round2(fire.halfWidth)},"rem":${round2(fire.remaining)}}`,
+        // Keep unit directions unrounded: a small angular error shifts the
+        // far edge of this 40-yard hazard away from its damage footprint.
+        // The authoritative readout supplies finite direction components.
+        `{"id":${JSON.stringify(fire.id)},"src":${fire.sourceId},"x":${round2(fire.x)},"z":${round2(fire.z)},"dx":${fire.dirX},"dz":${fire.dirZ},"tail":${round2(fire.tail)},"head":${round2(fire.head)},"hw":${round2(fire.halfWidth)},"rem":${round2(fire.remaining)}}`,
     );
   const sigils = world.activeNythraxisBindingSigils
     .filter((sigil) => inRange(sigil, anchor, eventRadius))

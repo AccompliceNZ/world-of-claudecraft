@@ -292,8 +292,12 @@ describe('Grave Eruption warning rings', () => {
     expect(spawn.school).toBe('shadow');
     expect(spawn.ability).toBe(NYTHRAXIS_GRAVE_ERUPTION_CAST_ID);
 
-    // An impact whose warning this client never saw lands the legacy way (no
-    // cue to hand over), exactly as every other meteor does.
+    // An impact whose warning this client never saw (a reconnect gap, a late
+    // join: nothing was ever spawned to carry a stored cue) still detonates
+    // in the LIVE EVENT's own cue, not the blind fire default: the sim
+    // always names ability/school/radius/sourceId on a meteorImpact emit
+    // (src/sim/encounters/nythraxis.ts), and that identity must not be
+    // dropped just because this client missed the warning.
     expect(
       handleMageGroundSpellfxEvent(fx, {
         fx: 'meteorImpact',
@@ -301,12 +305,78 @@ describe('Grave Eruption warning rings', () => {
         z: 8,
         school: 'shadow',
         ability: NYTHRAXIS_GRAVE_ERUPTION_CAST_ID,
+        radius: NYTHRAXIS_GRAVE_ERUPTION_RADIUS,
         persistentId: '42:ge:9:3',
         sourceId: 42,
       }),
     ).toBe(true);
     expect(landed).toHaveBeenCalledTimes(2);
-    expect(landed).toHaveBeenLastCalledWith(8, 8);
+    const unseenSpawn = landed.mock.calls[1][2] as MeteorFallSpawn;
+    expect(unseenSpawn.ability).toBe(NYTHRAXIS_GRAVE_ERUPTION_CAST_ID);
+    expect(unseenSpawn.school).toBe('shadow');
+    expect(unseenSpawn.radius).toBe(NYTHRAXIS_GRAVE_ERUPTION_RADIUS);
+    expect(unseenSpawn.sourceId).toBe(42);
+
+    // A second impact for the SAME unseen id is still consumed exactly once.
+    expect(
+      handleMageGroundSpellfxEvent(fx, {
+        fx: 'meteorImpact',
+        x: 8,
+        z: 8,
+        school: 'shadow',
+        ability: NYTHRAXIS_GRAVE_ERUPTION_CAST_ID,
+        radius: NYTHRAXIS_GRAVE_ERUPTION_RADIUS,
+        persistentId: '42:ge:9:3',
+        sourceId: 42,
+      }),
+    ).toBe(true);
+    expect(landed).toHaveBeenCalledTimes(2);
+
+    // A truly untyped impact, direct-called with no event cue at all (the
+    // shape nythraxis_grave_flame_visual.ts's prewarm builder and other
+    // bare callers use), still lands the exact legacy way for an id this
+    // client never saw either.
+    fx.impactMeteor('42:ge:9:4', 11, 11);
+    expect(landed).toHaveBeenCalledTimes(3);
+    expect(landed).toHaveBeenLastCalledWith(11, 11);
+  });
+
+  it('routes an unseen-warning impact through the real landing burst in its own school, not fire', () => {
+    // The end-to-end wiring renderer.ts uses: handleMageGroundSpellfxEvent's
+    // onMeteorLand callback IS meteorLandingBurst, not a mock, so this proves
+    // the fix through the real function a player's client actually runs.
+    const scene = new THREE.Scene();
+    const handleSpellfxAt = vi.fn(() => true);
+    const vfxBurst = vi.fn();
+    const fx = new MageGroundFx(
+      scene,
+      () => 0,
+      (x, z, spawn) => meteorLandingBurst({ handleSpellfxAt }, { burst: vfxBurst }, 1, x, z, spawn),
+    );
+    expect(
+      handleMageGroundSpellfxEvent(fx, {
+        fx: 'meteorImpact',
+        x: 8,
+        z: 8,
+        school: 'shadow',
+        ability: NYTHRAXIS_GRAVE_ERUPTION_CAST_ID,
+        radius: NYTHRAXIS_GRAVE_ERUPTION_RADIUS,
+        persistentId: '42:ge:9:5',
+        sourceId: 42,
+      }),
+    ).toBe(true);
+    // The spec painter claims it in the eruption's real cue, purple/shadow
+    // route intact; the fire-default pooled burst is never reached.
+    expect(handleSpellfxAt).toHaveBeenCalledWith({
+      x: 8,
+      z: 8,
+      school: 'shadow',
+      fx: 'nova',
+      radius: NYTHRAXIS_GRAVE_ERUPTION_RADIUS,
+      sourceId: 42,
+      ability: NYTHRAXIS_GRAVE_ERUPTION_CAST_ID,
+    });
+    expect(vfxBurst).not.toHaveBeenCalled();
   });
 
   it('lands a bare snapshot fire warning the legacy way and a cue-bearing one with its cue', () => {

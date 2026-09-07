@@ -684,6 +684,11 @@ export function updateNythraxisEncounter(ctx: SimContext, boss: Entity): void {
   // The guard waves ride the adds switch (owner playtest call, see types.ts).
   if (NYTHRAXIS_ADDS_ENABLED && st.phase === 1) updateNythraxisRaiseFallen(ctx, boss, st);
   if (st.phase === 3) updateNythraxisBoneStormCast(ctx, boss, st, room);
+  // A storm that just started THIS tick owns the boss's body immediately: the
+  // `storming` snapshot above predates this call, so without this check
+  // Gravefire/Soul Rend/Deathless Rage admission below could still fire the
+  // same tick Bone Storm begins.
+  if (nythraxisMechanicState(st).boneStorm !== null) return;
   if (st.phase === 2 || st.phase === 3) {
     updateNythraxisGravefireCast(ctx, boss, st, room);
     st.soulRendTimer -= DT;
@@ -1269,7 +1274,11 @@ export function startNythraxisGraveEruption(
       ),
   );
   // A raid stacked tight on its impaled can leave nobody clear; the eruption
-  // still fires under whoever can move rather than starving the mechanic.
+  // still fires under whoever can move rather than starving the mechanic, but
+  // nythraxisGraveEruptionPattern below still validates every FINAL circle
+  // (anchor, scatter, or fallback) against the impaled list, so a fallback
+  // anchor that happens to stand exactly on a pinned body never lands fire
+  // there when the raid stacks on its own impaled.
   const eligible = clear.length > 0 ? clear : free;
   const targets = nythraxisGraveEruptionTargetOrder(
     castKey,
@@ -1283,6 +1292,7 @@ export function startNythraxisGraveEruption(
     { x: boss.spawnPos.x, z: boss.spawnPos.z },
     count,
     targets,
+    impaled.map((p) => ({ x: p.pos.x, z: p.pos.z })),
   );
   ms.eruptionImpactRemaining = NYTHRAXIS_GRAVE_ERUPTION_TELEGRAPH_SECONDS;
   ms.eruptionTimer = nythraxisWrathCadence(

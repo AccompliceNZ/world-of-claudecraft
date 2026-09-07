@@ -267,29 +267,61 @@ function clearOfPlaced(
   );
 }
 
+/**
+ * True when a point is far enough from every point to avoid (an impaled
+ * raider's position): the same clearance a target anchor is pre-filtered by
+ * upstream, applied here to the FINAL point too, so a fallback anchor,
+ * a scatter attempt, or the ring fallback below can never land on one either.
+ */
+function clearOfAvoid(point: NythraxisGravePoint, avoid: readonly NythraxisGravePoint[]): boolean {
+  return avoid.every(
+    (victim) =>
+      Math.hypot(point.x - victim.x, point.z - victim.z) >=
+      NYTHRAXIS_GRAVE_ERUPTION_IMPALED_CLEARANCE,
+  );
+}
+
+function ringFallbackPoint(
+  castKey: number,
+  origin: NythraxisGravePoint,
+  count: number,
+  eruptionIndex: number,
+): NythraxisGravePoint {
+  const phase = hash2(castKey, count, 0xfa11ba) * Math.PI * 2;
+  const ring = NYTHRAXIS_GRAVE_ERUPTION_MAX_RANGE / 2;
+  const angle = phase + (eruptionIndex * Math.PI * 2) / count;
+  return { x: origin.x + Math.sin(angle) * ring, z: origin.z + Math.cos(angle) * ring };
+}
+
 function fallbackPattern(
   castKey: number,
   origin: NythraxisGravePoint,
   count: number,
 ): NythraxisGravePoint[] {
-  const phase = hash2(castKey, count, 0xfa11ba) * Math.PI * 2;
-  const ring = NYTHRAXIS_GRAVE_ERUPTION_MAX_RANGE / 2;
-  return Array.from({ length: count }, (_, eruptionIndex) => {
-    const angle = phase + (eruptionIndex * Math.PI * 2) / count;
-    return { x: origin.x + Math.sin(angle) * ring, z: origin.z + Math.cos(angle) * ring };
-  });
+  return Array.from({ length: count }, (_, eruptionIndex) =>
+    ringFallbackPoint(castKey, origin, count, eruptionIndex),
+  );
 }
 
 /**
  * One repeatable eruption pattern from the cast key: under each ordered target
  * when the circles fit, scattered nearby when they collide, and a ring of free
- * circles for any slot without a target.
+ * circles for any slot without a target. `avoid` (an impaled raider's exact
+ * position, typically) is validated against the FINAL point at every stage,
+ * so a caller whose eligible-target filtering still lets an anchor land on an
+ * avoided spot (e.g. every free raider stacked on the one impaled) never
+ * gets a circle there: with no `avoid` list this is a no-op and the pattern
+ * is byte-identical to before. When `avoid` is non-empty and truly no
+ * candidate anywhere clears it, that ONE slot is skipped (fewer circles)
+ * rather than ever placing fire on an avoided point; other slots are
+ * unaffected, so the mechanic is never starved without need.
  */
 export function nythraxisGraveEruptionPattern(
   castKey: number,
   origin: NythraxisGravePoint,
   count: number,
   targets: readonly NythraxisGraveTarget[],
+  avoid: readonly NythraxisGravePoint[] = [],
 ): NythraxisGravePoint[] {
   const placed: NythraxisGravePoint[] = [];
   for (let eruptionIndex = 0; eruptionIndex < count; eruptionIndex++) {
@@ -299,19 +331,27 @@ export function nythraxisGraveEruptionPattern(
       const candidate = anchor
         ? anchoredCandidate(castKey, eruptionIndex, attempt, anchor, origin)
         : freeCandidate(castKey, eruptionIndex, attempt, origin);
-      if (!clearOfPlaced(candidate, placed)) continue;
+      if (!clearOfPlaced(candidate, placed) || !clearOfAvoid(candidate, avoid)) continue;
       point = candidate;
       break;
     }
     if (!point && anchor) {
       for (let attempt = 0; attempt < ERUPTION_CANDIDATES; attempt++) {
         const candidate = freeCandidate(castKey, eruptionIndex, attempt, origin);
-        if (!clearOfPlaced(candidate, placed)) continue;
+        if (!clearOfPlaced(candidate, placed) || !clearOfAvoid(candidate, avoid)) continue;
         point = candidate;
         break;
       }
     }
-    if (!point) return fallbackPattern(castKey, origin, count);
+    if (!point) {
+      if (avoid.length === 0) return fallbackPattern(castKey, origin, count);
+      // Every candidate for this slot cleared placed circles but not the
+      // avoid list (or vice versa): try the deterministic ring fallback for
+      // just this slot, still avoid-checked, before giving up on it.
+      const fallback = ringFallbackPoint(castKey, origin, count, eruptionIndex);
+      if (clearOfPlaced(fallback, placed) && clearOfAvoid(fallback, avoid)) point = fallback;
+    }
+    if (!point) continue;
     placed.push(point);
   }
   return placed;

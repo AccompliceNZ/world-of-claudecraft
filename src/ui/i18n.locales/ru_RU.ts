@@ -10667,11 +10667,12 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.finder.mech.sealbreak_shockwave': 'Волна сорванной печати (взрыв по области)',
   'hudChrome.finder.mech.gravebreaker': 'Гробокрушитель (конус спереди, разверните от рейда)',
   'hudChrome.finder.mech.raise_fallen': 'Поднятие павших (периодические волны прислужников)',
-  'hudChrome.finder.mech.soul_rend': 'Разрыв души (отмеченным разойтись и получать лечение)',
+  'hudChrome.finder.mech.soul_rend':
+    'Разрыв души (отмеченным собраться вместе, затем покинуть огонь)',
   'hudChrome.finder.mech.deathless_rage': 'Бессмертная ярость (прерывается у охранных камней)',
   'hudChrome.finder.mech.wardstones': 'Охранные камни (смена фазы)',
   'hudChrome.finder.mech.dread_curse':
-    'Проклятие ужаса (только на героическом, накапливающийся дебафф смены танка)',
+    'Проклятие ужаса (накапливающийся дебафф смены танка, смена при 2 зарядах)',
   'hudChrome.finder.mech.bone_spike': 'Костяной шип (пронзённые рейдеры теряют здоровье, пока шип не уничтожен)',
   'hudChrome.finder.mech.grave_eruption': 'Могильное извержение (предупреждающие круги оставляют горящую землю)',
   'hudChrome.finder.mech.binding_sigil': 'Печать связывания (затащите босса на печать, или заплатит весь рейд)',

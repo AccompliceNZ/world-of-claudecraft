@@ -24,6 +24,7 @@ import {
   NYTHRAXIS_GRAVE_ERUPTION_RADIUS,
   NYTHRAXIS_GRAVE_ERUPTION_TELEGRAPH_SECONDS,
   NYTHRAXIS_GRAVE_FLAME_CAST_ID,
+  nythraxisGraveFlameSeconds,
 } from '../src/sim/nythraxis_grave_eruption';
 import { Sim } from '../src/sim/sim';
 import type { SimContext } from '../src/sim/sim_context';
@@ -414,18 +415,58 @@ describe('Nythraxis Grave Eruption and Grave Flame', () => {
       );
       expect(impacts.length, difficulty).toBe(points.length);
 
+      // The eruption resolve and the ignition share one tick, and that
+      // same tick's decrement loop already ran once against the freshly
+      // ignited flame, so its birth remaining is one DT short of the raw
+      // tuned duration (12s normal, 8s heroic), never the raw value.
+      const duration = nythraxisGraveFlameSeconds(difficulty);
+      for (const flame of st.graveFlames!) {
+        expect(flame.remaining, difficulty).toBeCloseTo(duration - DT, 5);
+      }
+      let ticksSinceIgnition = 1;
+
       // Standing in the flame: one tick a second at the flame fraction.
       const afterBurst = stayer.hp;
       tickDriver(ctx, boss, 1);
+      ticksSinceIgnition += Math.round(1 / DT);
       const tick = difficulty === 'heroic' ? 0.09 : 0.06;
       expect(afterBurst - stayer.hp, difficulty).toBe(Math.ceil(stayer.maxHp * tick));
-      const flameHits = (sim.events as SimEvent[]).filter(
-        (e) => e.type === 'damage' && e.ability === NYTHRAXIS_GRAVE_FLAME_CAST_ID,
-      );
-      expect(flameHits.length, difficulty).toBeGreaterThan(0);
-      // Flames burn out on the difficulty clock.
-      tickDriver(ctx, boss, difficulty === 'heroic' ? 18 : 12);
+      // Keep one damageable raider alive through expiry so damage cessation
+      // cannot pass merely because everyone standing in the fire has died.
+      stayer.hp = stayer.maxHp;
+      const flameHits = () =>
+        (sim.events as SimEvent[]).filter(
+          (e) => e.type === 'damage' && e.ability === NYTHRAXIS_GRAVE_FLAME_CAST_ID,
+        );
+      expect(flameHits().length, difficulty).toBeGreaterThan(0);
+
+      // Flames burn out on the exact tuned duration, never a looser
+      // overshoot: still present one tick before the boundary, then gone.
+      // Removal itself is checked with a two-tick grace window rather than
+      // exactly one: 150-240 ticks of DT-accumulated float error can leave a
+      // sub-tick (~1e-14s) positive residue right on the nominal expiry
+      // tick, and one further DT decrement always clears dust that many
+      // orders of magnitude below a single tick. No flame damage fires once
+      // the patch is actually gone.
+      const totalTicks = Math.round(duration / DT);
+      for (let i = ticksSinceIgnition; i < totalTicks - 1; i++) {
+        nythraxis.updateNythraxisEncounter(ctx, boss);
+      }
+      expect(st.graveFlames, difficulty).toHaveLength(points.length);
+      for (const flame of st.graveFlames!) {
+        expect(flame.remaining, difficulty).toBeGreaterThan(0);
+        expect(flame.remaining, difficulty).toBeCloseTo(DT, 5);
+      }
+      const EXPIRY_GRACE_TICKS = 2;
+      for (let i = 0; i < EXPIRY_GRACE_TICKS; i++) nythraxis.updateNythraxisEncounter(ctx, boss);
       expect(st.graveFlames, difficulty).toHaveLength(0);
+      expect(stayer.dead, difficulty).toBe(false);
+      const hpAfterExpiry = stayer.hp;
+      const hitsAfterExpiry = flameHits().length;
+      tickDriver(ctx, boss, 2);
+      expect(stayer.dead, difficulty).toBe(false);
+      expect(stayer.hp, difficulty).toBe(hpAfterExpiry);
+      expect(flameHits().length, difficulty).toBe(hitsAfterExpiry);
     }
   });
 
