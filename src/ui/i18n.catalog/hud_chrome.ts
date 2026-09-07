@@ -5129,6 +5129,16 @@ export const hudChromeStrings = {
       },
     },
   },
+  interactPrompt: {
+    talk: 'Speak with',
+    loot: 'Loot',
+    open: 'Open',
+    gather: 'Gather',
+    mail: 'Check mail',
+    bank: 'Use bank',
+    use: 'Use',
+    harvest: 'Harvest',
+  },
   // Gathering proficiency section on the character sheet (#1124). Profession
   // display names mirror src/sim/content/professions.ts (GatheringProfessionId).
   gathering: {

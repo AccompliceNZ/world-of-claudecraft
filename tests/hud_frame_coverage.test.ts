@@ -137,6 +137,7 @@ const FRAME_EXEMPT: Record<string, string> = {
   'crafting-live': 'off-screen aria-live region, never visible chrome',
   'perf-overlay': 'dev-only diagnostics readout with its own placing mode (perf_overlay.ts)',
   'click-move-marker': 'transient world-anchored click ping, positioned per click',
+  'interact-prompt': 'transient one-at-a-time action cue, fixed above the unit frames',
   'ctx-menu': 'transient right-click menu, positioned at the cursor per open',
   'prompt-stack': 'transient modal prompt host (prompt_dialog.ts), centered by design',
   'cross-hotbar': 'mobile cross-hotbar input cluster; frame editing is desktop-only',

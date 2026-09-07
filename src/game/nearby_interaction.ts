@@ -1,34 +1,18 @@
-import { isQuestGatedGroundObjectHidden } from '../sim/quest_gated_entity';
-import { isObjectOpenedByViewer } from '../sim/quests/opened_object_view';
-import {
-  dist2d,
-  type Entity,
-  type GatherNodeDef,
-  INTERACT_RANGE,
-  type QuestProgress,
-} from '../sim/types';
 import { corpseLootAvailability, localPartyMemberIds } from './corpse_loot_availability';
-import { decideEscortPress, handleEscortPress } from './escort_interact';
+import { handleEscortPress } from './escort_interact';
 import {
   type GatherEffectConfirmGate,
   type GatherNodeToolGate,
   handleGatherNodeInteract,
 } from './gather_node_interact';
 import type { InteractionOutcome } from './interaction_autorun';
-import { objectInteractionRange } from './interactions';
+import {
+  type NearbyGatherNode,
+  type NearbyInteractionScanWorld,
+  resolveNearbyInteractionCandidate,
+} from './nearby_interaction_core';
 
-export interface NearbyInteractionWorld {
-  player: Entity;
-  playerId?: number;
-  // Local party roster for the corpse rights check (IWorld.partyInfo satisfies
-  // this structurally); optional so party-less fixtures stay valid.
-  partyInfo?: { members: readonly { pid: number }[] } | null;
-  entities: ReadonlyMap<number, Entity>;
-  // The viewer's quest log, for the escort arm below (an escortee is only
-  // startable while its quest is active). Required, not optional: an escort
-  // quest has NO other client entry point, so a silently unwired arm would
-  // make the quest uncompletable again.
-  questLog: ReadonlyMap<string, QuestProgress>;
+export interface NearbyInteractionWorld extends NearbyInteractionScanWorld {
   targetEntity(id: number | null): void;
   interact(): void;
   lootCorpse(id: number): InteractionOutcome;
@@ -50,8 +34,6 @@ export interface NearbyInteractionHud {
   showError(text: string): void;
   requestSpiritHealerResurrect(): void;
 }
-
-type NearbyGatherNode = Pick<GatherNodeDef, 'id' | 'pos' | 'type' | 'tier'>;
 
 /** Find and dispatch one eligible nearby interaction in stable priority order.
  *  `nodeToolGateFor` (Professions 2.0) resolves the tool-tier access
@@ -79,109 +61,31 @@ export function tryNearbyInteraction(
   // promotes an npc the scan would already have accepted, so no rule is bypassed.
   preferNpcId?: number | null,
 ): InteractionOutcome {
-  const player = world.player;
-  const playerId = world.playerId ?? player.id;
-  const partyIds = localPartyMemberIds(world.partyInfo);
-  let bestCorpse: number | null = null;
-  let bestCorpseDistance = INTERACT_RANGE;
-  let bestObject: number | null = null;
-  let bestObjectDistance = INTERACT_RANGE;
-  let bestNpc: number | null = null;
-  let bestNpcDistance = INTERACT_RANGE + 1;
-  let bestDelve: number | null = null;
-  let bestDelveDistance = INTERACT_RANGE + 1;
-  let bestNode: NearbyGatherNode | null = null;
-  let bestNodeDistance = INTERACT_RANGE;
-
-  if (!player.dead) {
-    for (const node of gatherNodes) {
-      const distance = dist2d(player.pos, {
-        x: node.pos.x,
-        y: player.pos.y,
-        z: node.pos.z,
-      });
-      if (distance < bestNodeDistance) {
-        bestNode = node;
-        bestNodeDistance = distance;
-      }
-    }
-  }
-
-  for (const entity of world.entities.values()) {
-    const distance = dist2d(player.pos, entity.pos);
-    if (
-      !player.dead &&
-      entity.kind === 'mob' &&
-      entity.dead &&
-      entity.lootable &&
-      corpseLootAvailability(entity, playerId, harvestStateReliable, partyIds).canOpen &&
-      distance < bestCorpseDistance
-    ) {
-      bestCorpse = entity.id;
-      bestCorpseDistance = distance;
-    }
-    if (!player.dead && entity.kind === 'object' && entity.templateId?.startsWith('delve_')) {
-      if (distance < bestDelveDistance) {
-        bestDelve = entity.id;
-        bestDelveDistance = distance;
-      }
-    } else if (
-      !player.dead &&
-      entity.kind === 'object' &&
-      entity.lootable &&
-      // Nothing the viewer cannot see may win the press. An off-quest quest
-      // collectable is withheld from the scene entirely (the renderer's gate), so
-      // selecting it here would spend the interact on an invisible object and let
-      // it outrank a visible NPC or node standing further away. The same rule
-      // covers an interact-objective object this player already credited (an
-      // opened castaway crate): the renderer hides it for them, so the press
-      // must not target it either.
-      !isQuestGatedGroundObjectHidden(entity, world.questLog) &&
-      !isObjectOpenedByViewer(entity, world.questLog)
-    ) {
-      if (distance <= objectInteractionRange(entity) && distance < bestObjectDistance) {
-        bestObject = entity.id;
-        bestObjectDistance = distance;
-      }
-    }
-    // The promotion jumps the nearest-wins order, so it carries a strict reach check
-    // of its own; the scan keeps the reach its sentinel has always given it.
-    const promoted =
-      preferNpcId !== undefined &&
-      preferNpcId !== null &&
-      entity.id === preferNpcId &&
-      distance <= INTERACT_RANGE;
-    if (entity.kind === 'npc' && (promoted || distance < bestNpcDistance)) {
-      const isGhostHealer = entity.templateId === 'spirit_healer' && player.ghost;
-      const isLivingNpc = entity.templateId !== 'spirit_healer' && !player.dead;
-      if (isGhostHealer || isLivingNpc) {
-        bestNpc = entity.id;
-        // Out of reach of anything else, so a nearer npc later in the sweep cannot
-        // take the pick back off the one the player actually selected.
-        bestNpcDistance = promoted ? -1 : distance;
-      }
-    }
-  }
-
-  if (bestCorpse !== null) {
-    const corpse = world.entities.get(bestCorpse);
-    if (!corpse) return false;
+  const candidate = resolveNearbyInteractionCandidate(
+    world,
+    gatherNodes,
+    harvestStateReliable,
+    preferNpcId,
+  );
+  if (candidate?.kind === 'corpse') {
+    const corpse = candidate.entity;
+    const playerId = world.playerId ?? world.player.id;
+    const partyIds = localPartyMemberIds(world.partyInfo);
     // Unified press: harvest first, then loot, as two separate
     // commands (processed in receipt order in the same server tick batch).
     // Each half is gated on the availability predicate so a claimed or
     // emptied half is never dispatched (no denial-toast spam); the server
     // still revalidates both authoritatively.
     const availability = corpseLootAvailability(corpse, playerId, harvestStateReliable, partyIds);
-    if (availability.harvestable) world.harvestCorpse(bestCorpse);
-    if (availability.hasLoot) return world.lootCorpse(bestCorpse);
+    if (availability.harvestable) world.harvestCorpse(candidate.id);
+    if (availability.hasLoot) return world.lootCorpse(candidate.id);
     return availability.harvestable;
   }
-  if (bestDelve !== null) {
-    return world.delveInteract(bestDelve);
+  if (candidate?.kind === 'delve') {
+    return world.delveInteract(candidate.id);
   }
-  if (bestObject !== null) {
-    const object = world.entities.get(bestObject);
-    if (!object) return false;
+  if (candidate?.kind === 'object') {
+    const object = candidate.entity;
     if (object.templateId === 'dungeon_door' && object.dungeonId) {
       return world.enterDungeon(object.dungeonId);
     } else if (object.templateId === 'dungeon_exit') {
@@ -190,21 +94,20 @@ export function tryNearbyInteraction(
       hud.openMailbox();
       return true;
     } else {
-      return world.pickUpObject(bestObject);
+      return world.pickUpObject(candidate.id);
     }
   }
-  if (bestNpc !== null) {
-    const npc = world.entities.get(bestNpc);
-    if (npc?.kind !== 'npc') return false;
+  if (candidate?.kind === 'npc') {
+    const npc = candidate.entity;
     if (npc.templateId === 'spirit_healer') {
       // The scan only picks a spirit healer for a ghost; route the revive
       // through the HUD's confirm gate rather than sending the command
       // directly (it applies The Keeper's Toll).
       hud.requestSpiritHealerResurrect();
     } else if (npc.templateId === 'brother_halven' || npc.templateId === 'brother_halven_marsh') {
-      hud.openDelveBoard(bestNpc);
+      hud.openDelveBoard(candidate.id);
     } else {
-      hud.openQuestDialog(bestNpc);
+      hud.openQuestDialog(candidate.id);
     }
     return true;
   }
@@ -212,27 +115,28 @@ export function tryNearbyInteraction(
   // two can never compete) and above gather nodes: an escortee standing in
   // front of you beats the node you happen to be over. Corpses still win, so
   // looting the ambush wave is never swallowed.
-  const escort = player.dead
-    ? ({ kind: 'none' } as const)
-    : decideEscortPress(player.pos, world.entities, world.questLog);
-  if (escort.kind === 'start') return handleEscortPress(world, hud, escort, escortAwayText);
-  if (bestNode !== null) {
+  if (candidate?.kind === 'escort') {
+    return handleEscortPress(world, hud, { kind: 'start', entityId: candidate.id }, escortAwayText);
+  }
+  if (candidate?.kind === 'gather') {
     return handleGatherNodeInteract(
       world,
       hud,
-      player.pos,
-      bestNode.id,
-      bestNode.pos,
+      world.player.pos,
+      candidate.node.id,
+      candidate.node.pos,
       tooFarText,
       notReadyText,
-      nodeToolGateFor?.(bestNode),
+      nodeToolGateFor?.(candidate.node),
       effectConfirm,
     );
   }
   // The away line is a LAST resort that only replaces the generic
   // nothing-to-interact message: an absent escortee must never eat a press that
   // some other arm above could have used (a node underfoot at an empty post).
-  if (escort.kind === 'away') return handleEscortPress(world, hud, escort, escortAwayText);
+  if (candidate?.kind === 'escortAway') {
+    return handleEscortPress(world, hud, { kind: 'away' }, escortAwayText);
+  }
   hud.showError(nothingToInteractText);
   return false;
 }

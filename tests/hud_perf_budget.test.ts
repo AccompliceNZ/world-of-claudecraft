@@ -546,6 +546,7 @@ interface ScannedPainter {
 // pooled node, both at build; fct also forces ONE documented offsetWidth reflow to restart
 // the float animation on a recycled node.
 const HOT_PAINTERS: ReadonlyArray<ScannedPainter> = [
+  { file: 'interact_prompt_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'xp_bar_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'swing_timer_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'proc_overlay_painter.ts', allow: {}, reflowAllow: {} },

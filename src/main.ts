@@ -113,6 +113,7 @@ import { tryIgnivarPlacerCommand } from './game/ignivar_placer';
 import { Input } from './game/input';
 import { InputActivityMeter, installInputActivityTracking } from './game/input_activity';
 import { stopAutorunForInteraction } from './game/interaction_autorun';
+import { createBgFlagKey } from './game/interaction_input';
 import {
   activePvpOpponentIds,
   HoverPickGate,
@@ -3479,12 +3480,7 @@ async function startGame(
       }
     }
   }
-  // The deliberate Thornhollow Fields flag press: always attempted, the world
-  // owns every rule (radius, team, the return-beats-press race), so a stray
-  // press is a no-op.
-  function bgFlagKey(): void {
-    if (world.bgInfo?.match) world.bgFlagAction();
-  }
+  const bgFlagKey = createBgFlagKey(world);
 
   // The R40 per-use effect confirm gate, shared by every gather entry point
   // (world click, interact key, gathering-tool use): the pure question from
@@ -3519,8 +3515,6 @@ async function startGame(
     );
   }
 
-  // The pad's own selection rules (which npc a talk press addresses, which enemy
-  // a cast picks) live in src/game/pad_target_pick.ts; this carries the calls.
   const padTargetPick = createPadTargetPick({ world, interactKey });
 
   function attackNearest(): void {

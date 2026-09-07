@@ -266,6 +266,13 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     why: 'the tutorial hint overlay',
   },
   {
+    call: 'this.updateInteractPrompt',
+    band: 'medium',
+    gate: '',
+    surface: 'chrome',
+    why: 'the write-elided one-at-a-time nearby interaction prompt',
+  },
+  {
     call: 'this.bootcamp.update',
     band: 'frame',
     gate: '',
@@ -546,7 +553,7 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     why: 'the target name color (staff role, else hostile/friendly)',
   },
   {
-    call: 'this.updateTargetDiscordLine',
+    call: 'this.targetDiscord.update',
     band: 'frame',
     gate: "target && target.kind !== 'object'",
     surface: 'chrome',
@@ -1695,7 +1702,7 @@ describe('Hud.update() drives exactly the registered set, on the registered band
       // window 44 -> 46: the crucible vendor's out-of-range close (the third
       // #vendor-window tenant, on the heroic vendor's exact row shape).
       // Both deltas apply on the merged tree.
-    ).toEqual({ window: 47, chrome: 85, none: 17 });
+    ).toEqual({ window: 47, chrome: 86, none: 17 });
     const windows = HUD_UPDATE_DRIVES.filter((r) => r.surface === 'window');
     expect(windows.map((r) => r.call)).toContain('this.spellbookWindow.tickOpen');
     expect(windows.map((r) => r.call)).toContain('this.refreshOpenTownFocusIfChanged');
