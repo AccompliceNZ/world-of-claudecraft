@@ -387,6 +387,11 @@ gate green). Teardown of docs/guild-bank/ awaits the user's explicit confirmatio
     reuses `.bag-search` so BankWindow's existing focus + caret capture carries typing across
     the rebuild each keystroke causes (the guild arm now restores it like the personal arm).
     The query lives on GuildBankTab, joins the repaint key, and resets on close.
+  - SCREENSHOTS: `docs/screenshots/guild-bank-history/{before,after}-*.png` via
+    `scripts/guild_bank_history_shot.mjs`, the log shot's sibling that logs an EXISTING
+    member into a guild whose ledger already runs to pages (credentials from the
+    environment), because a freshly founded guild's dozen rows show neither paging nor a
+    search worth seeing. The before shots are the release's own log captures.
 - Purse-paid rung 0 (2026-08-03, user-directed pricing redesign): the guild bank is no
   longer open by default. A new guild starts with a 0-slot bank; an officer OPENS it via
   the existing `guild_bank_buy_slots` token (no new wire surface: the sim decides which
