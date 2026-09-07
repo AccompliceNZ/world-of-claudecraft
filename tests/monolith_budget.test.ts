@@ -301,7 +301,9 @@ const MONOLITHS: MonolithRow[] = [
     // captured home and the dead body class left applyAuraAnchor for
     // restoreFrameHome (src/ui/interface_unlock.ts), and Reset Frame Positions
     // re-applies the anchor in one line. Exact merged count.
-    ceiling: 18851,
+    // Lowered 18851 -> 18812 while adding the interaction prompt: the target
+    // Discord flair renderer moved to target_discord_controller.ts.
+    ceiling: 18812,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -584,7 +586,9 @@ const MONOLITHS: MonolithRow[] = [
     // Ratcheted 11516 -> 11462 when the landing page $WOC contract address box
     // and its click-to-copy wiring (wireContractAddressCopy) were removed.
     // Measured with wc -l. Exact count, zero headroom.
-    ceiling: 11462,
+    // Lowered 11462 -> 11456 while adding the interaction prompt: the dedicated
+    // battleground flag key closure moved to interaction_input.ts.
+    ceiling: 11456,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {

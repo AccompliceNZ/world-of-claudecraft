@@ -142,6 +142,7 @@ const INDEX_SECTIONS = [
   'buff bar',
   'cast bar',
   'bottom cluster',
+  'interaction prompt',
   'chat frame',
   'bug report (options sub-view)',
   'quest tracker',
@@ -224,12 +225,12 @@ const PLAY_SECTIONS = INDEX_SECTIONS.filter((name) => !PLAY_OMITS.includes(name)
 const MANIFEST = INDEX_SECTIONS;
 
 describe('css_corpus section manifest', () => {
-  it('pins a non-vacuous manifest: 70 index + 68 play sections, no duplicate names', () => {
-    expect(INDEX_SECTIONS.length).toBe(71);
-    expect(PLAY_SECTIONS.length).toBe(69);
-    expect(MANIFEST.length).toBe(71);
-    expect(new Set(INDEX_SECTIONS).size).toBe(71);
-    expect(new Set(PLAY_SECTIONS).size).toBe(69);
+  it('pins a non-vacuous manifest: 72 index + 70 play sections, no duplicate names', () => {
+    expect(INDEX_SECTIONS.length).toBe(72);
+    expect(PLAY_SECTIONS.length).toBe(70);
+    expect(MANIFEST.length).toBe(72);
+    expect(new Set(INDEX_SECTIONS).size).toBe(72);
+    expect(new Set(PLAY_SECTIONS).size).toBe(70);
   });
 
   it('captures the live corpus markers (the marker regex is non-vacuous, not a zero match)', () => {

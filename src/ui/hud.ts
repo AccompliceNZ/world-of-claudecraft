@@ -2,11 +2,14 @@ import { audio } from '../game/audio';
 import { corpseLootAvailability, localPartyMemberIds } from '../game/corpse_loot_availability';
 import { CROSS_HOTBAR_ATTACK_ID } from '../game/cross_hotbar';
 import { syncDeathControllerHints } from '../game/death_controller_hint';
+import { labelForGamepadAction } from '../game/gamepad_bindings';
 import type { GamepadKind } from '../game/gamepad_map';
 import type { GraphicsSettingsSnapshot } from '../game/graphics_rebuild_core';
+import { currentInputHintMode } from '../game/input_hint_mode';
 import { InstanceMusicController, type InstanceMusicDecision } from '../game/instance_music';
 import { type Keybinds, keyCapLabel, keyLabel } from '../game/keybinds';
 import { music } from '../game/music';
+import { resolveNearbyInteractionCandidate } from '../game/nearby_interaction_core';
 import {
   type GameSettings,
   type NumericSettingKey,
@@ -74,6 +77,7 @@ import {
   DUNGEON_LIST,
   DUNGEON_X_THRESHOLD,
   dungeonAt,
+  GATHER_NODES,
   ITEM_SETS,
   ITEMS,
   MOBS,
@@ -162,7 +166,6 @@ import { AuraOverlayController } from './aura_overlay_controller';
 import { renderAuraTooltipBodyHtml } from './aura_tooltip';
 import { AurasPainter, type AurasPainterDeps } from './auras_painter';
 import { type AurasDeps, auraCancelNeedsConfirm, createAurasView } from './auras_view';
-import { attachAvatarFallback } from './avatar_fallback';
 import { BagItemActionMenu, CTX_MENU_PICKER_CLASS } from './bag_item_action_menu';
 import { bagSlotsLineKey, bagsWindowShown } from './bags_view';
 import { BagsWindow, dismissBagPrompts } from './bags_window';
@@ -267,11 +270,8 @@ import {
 } from './deeds_view';
 import { DeedsWindow } from './deeds_window';
 import { DevCommandWindow } from './dev_command_window';
-import { devTierByIndex, devTierDisplayName } from './dev_tier';
 import { bindDialogKeyActivation } from './dialog_key_activation';
 import { markDialogRoot } from './dialog_root';
-import { discordRoleTagLabel } from './discord_role_tag';
-import { discordStatusDisplayName } from './discord_tier';
 import { dropdownKeyNav } from './dropdown_nav';
 import { DungeonFinderProposalPopup } from './dungeon_finder_proposal_popup';
 import { DungeonFinderWindow } from './dungeon_finder_window';
@@ -543,6 +543,8 @@ import {
 } from './i18n';
 import { iconDataUrl, QUALITY_COLOR, raidMarkerDataUrl } from './icons';
 import { InspectWindow } from './inspect_window';
+import { InteractPromptPainter } from './interact_prompt_painter';
+import { createInteractPromptView } from './interact_prompt_view';
 import { InterfaceUnlock, makeUiRootDetacher, restoreFrameHome } from './interface_unlock';
 import {
   classGatedFrameActive,
@@ -794,6 +796,7 @@ import { SwingTimerBars } from './swing_timer_bars';
 import { TalentsWindow } from './talents_window';
 import { targetAuraSourceName } from './target_auras_view';
 import { TargetAurasWindow } from './target_auras_window';
+import { TargetDiscordController } from './target_discord_controller';
 import { targetOfTargetId } from './target_of_target';
 import { targetPortraitSourceId, targetPortraitUrl } from './target_portrait_view';
 import { targetRankView, targetUsesEliteFrame } from './target_rank_view';
@@ -1477,9 +1480,14 @@ export class Hud {
   private targetTitlePostEl = appendChildSpan(this.targetNameEl, 'uf-title');
   private targetLevelEl = $('#tf-level');
   private targetDiscordEl = $('#tf-discord');
-  // Diff key for the target-frame Discord line, so its per-frame update only rebuilds
-  // innerHTML (and re-attaches the avatar fallback) when the Discord content changes.
-  private targetDiscordSig = '';
+  private targetDiscord = new TargetDiscordController(
+    this.targetDiscordEl,
+    () => this.optionsHooks?.settings.get('showDevBadges') ?? true,
+  );
+  private interactPromptEl = $('#interact-prompt');
+  private interactPromptKeycapEl = $('#interact-prompt-keycap');
+  private interactPromptVerbEl = $('#interact-prompt-verb');
+  private interactPromptNameEl = $('#interact-prompt-name');
   private targetHpEl = $('#tf-hp');
   private targetHpTextEl = $('#tf-hp-text');
   private targetPortraitEl = $('#tf-portrait') as unknown as HTMLCanvasElement;
@@ -2127,6 +2135,7 @@ export class Hud {
     private keybinds: Keybinds,
     private readonly features: HudFeatures = { dailyRewardsEnabled: true },
   ) {
+    this.interactPromptEl.removeAttribute('hidden');
     hydrateCrestImageFallbacks(document);
     this.mapMarkerTooltipContent = new MapMarkerTooltipContent(this.sim);
     this.mapMarkerInteraction = new MapMarkerInteractionController({
@@ -4478,6 +4487,16 @@ export class Hud {
       this.hotDomSkippedWrites++;
     },
   );
+  private readonly interactPromptView = createInteractPromptView(
+    keyCapLabel,
+    labelForGamepadAction,
+  );
+  private readonly interactPromptPainter = new InteractPromptPainter(this.writerFacet, {
+    root: this.interactPromptEl,
+    keycap: this.interactPromptKeycapEl,
+    verb: this.interactPromptVerbEl,
+    name: this.interactPromptNameEl,
+  });
   private readonly paladinDevotionView = createPaladinDevotionView(
     (value) => formatNumber(value, { maximumFractionDigits: 0 }),
     (value, max, charges, lastCharge) =>
@@ -8854,6 +8873,20 @@ export class Hud {
     now: () => performance.now(),
   });
 
+  private updateInteractPrompt(): void {
+    const gamepad = this.optionsHooks?.gamepad;
+    const padActive = currentInputHintMode() === 'pad';
+    this.interactPromptPainter.paint(
+      this.interactPromptView.tick(
+        resolveNearbyInteractionCandidate(this.sim, GATHER_NODES),
+        padActive,
+        this.keybinds.primaryLabel('interact'),
+        padActive ? (gamepad?.entries() ?? null) : null,
+        gamepad?.kind() ?? 'generic',
+      ),
+    );
+  }
+
   update(paint = true): void {
     const sim = this.sim;
     const p = sim.player;
@@ -8912,6 +8945,7 @@ export class Hud {
     // combat and chat live-region flushes, quest voice, the loot timers, and
     // the music state machine. Nothing below this line does anything but paint.
     if (!paint) return;
+    if (mediumHud) this.updateInteractPrompt();
     this.meters.update();
     this.mountRaceStrip.repaintIfChanged();
     this.mountRaceControls.update();
@@ -9177,7 +9211,7 @@ export class Hud {
         'color',
         tfRoleColor ?? (target.hostile ? 'var(--color-hostile)' : 'var(--color-friendly)'),
       );
-      this.updateTargetDiscordLine(target);
+      this.targetDiscord.update(target);
       // Redundant non-color cue for forced-colors (high-contrast) mode, where the OS
       // strips the inline color so a hostile and a friendly name would read identically.
       // The base.css forced-colors block underlines #tf-name.hostile; routed through the
@@ -18004,77 +18038,6 @@ export class Hud {
       else if (act === 'kick') this.sim.partyKick(pid);
       else if (act === 'loot-settings') this.openLootSettings();
     });
-  }
-
-  // Fill the target frame's social/badge line: a linked player's nickname (with
-  // PFP), their staff-role tag, Discord rank, and developer badge. Hidden for mobs
-  // and players with no linked flair at all.
-  private updateTargetDiscordLine(target: Entity): void {
-    const el = this.targetDiscordEl;
-    const tier = target.discordTier ?? 0;
-    const showDevBadges = this.optionsHooks?.settings.get('showDevBadges') ?? true;
-    const devIdx = showDevBadges ? (target.devTier ?? 0) : 0;
-    // The AI mark rides this line too, so it has to be in BOTH the early-out below
-    // and the signature: without it an AI account carrying no Discord/dev flair
-    // would never render the line at all, and a live flag flip would never repaint.
-    const isAi = target.aiAccount === true;
-    if (
-      target.kind !== 'player' ||
-      (!tier && !target.discordName && !target.discordRole && !devIdx && !isAi)
-    ) {
-      if (this.targetDiscordSig !== '') {
-        this.targetDiscordSig = '';
-        el.classList.remove('show');
-        el.replaceChildren();
-      }
-      return;
-    }
-    // This runs every frame the target frame updates; only rebuild when the Discord
-    // content actually changes (else a fresh <img> per frame would re-fetch the
-    // avatar and, on a failing CDN load, flicker between the broken glyph and hidden).
-    const sig = `${tier}|${target.discordName ?? ''}|${target.discordRole ?? ''}|${target.discordAvatar ?? ''}|${devIdx}|${isAi ? 1 : 0}`;
-    if (sig === this.targetDiscordSig) return;
-    this.targetDiscordSig = sig;
-    const parts: string[] = [];
-    const nameInner = target.discordAvatar
-      ? `<img src="${esc(target.discordAvatar)}" referrerpolicy="no-referrer" alt="" draggable="false">${esc(target.discordName ?? '')}`
-      : esc(target.discordName ?? '');
-    if (target.discordName || target.discordAvatar) {
-      parts.push(`<span class="uf-dc-name">${nameInner}</span>`);
-    }
-    const roleLabel = discordRoleTagLabel(target.discordRole);
-    if (roleLabel) {
-      parts.push(
-        `<span class="uf-dc-chip role" style="--role:${specialRoleColor(target.discordRole) ?? '#888'}">${esc(roleLabel)}</span>`,
-      );
-    }
-    if (tier > 0) {
-      parts.push(`<span class="uf-dc-chip rank">${esc(discordStatusDisplayName(tier))}</span>`);
-    }
-    const devDef = devTierByIndex(devIdx);
-    if (devDef) {
-      parts.push(`<span class="uf-dc-chip dev">${esc(devTierDisplayName(devDef))}</span>`);
-    }
-    if (isAi) {
-      // The shared .ai-tag mark, and deliberately NOT a .uf-dc-chip: the chip rules
-      // live UNLAYERED in index.extra.css, and unlayered CSS beats every @layer rule,
-      // so the chip's own color/background would override the gradient in
-      // @layer components and paint straight over it. The flair line is a flex row,
-      // so a bare span sits inline beside the chips anyway.
-      parts.push(
-        // role=img + aria-label, not just title: this is a DISCLOSURE, and assistive
-        // tech announces `title` inconsistently on a non-focusable span. Screen-reader
-        // users must hear "AI-operated account", not the bare "[AI]" literal (or, if
-        // the title is skipped entirely, nothing at all). Mirrors chatAiTagEl.
-        `<span class="ai-tag" role="img" aria-label="${esc(t('hudChrome.playerMenu.aiTagTitle'))}" title="${esc(t('hudChrome.playerMenu.aiTagTitle'))}">${esc(t('hudChrome.playerMenu.aiTag'))}</span>`,
-      );
-    }
-    el.innerHTML = parts.join('');
-    // Hide the external Discord avatar if its CDN image fails to load, so the line
-    // never shows the browser's broken-image placeholder (the nickname stays).
-    const dcAvatar = el.querySelector<HTMLImageElement>('.uf-dc-name img');
-    if (dcAvatar) attachAvatarFallback(dcAvatar);
-    el.classList.add('show');
   }
 
   /** Inspect another player: a profile window with their portrait, name, level
