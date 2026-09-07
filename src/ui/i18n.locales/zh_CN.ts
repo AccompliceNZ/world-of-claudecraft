@@ -9525,6 +9525,28 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.harvestPreference.currentUnavailable': '你当前选择的{material}在此处不可用。',
   'hudChrome.harvestPreference.unknownMaterial': '不可用的材料',
   'hudChrome.harvestPreference.currentChoiceLabel': '当前：{choice}',
+  // Intentional Gathering PR5: source-info detail under the harvest
+  // preference picker (Field Kit use, Professions).
+  'hudChrome.gatheringSource.title': '在哪里获取{material}',
+  'hudChrome.gatheringSource.corpseExample': '{creature}（{zone}）',
+  'hudChrome.gatheringSource.corpseExampleTagged': '{creature}（{zone}，{tag}）',
+  'hudChrome.gatheringSource.rareTag': '稀有',
+  'hudChrome.gatheringSource.eliteTag': '精英',
+  'hudChrome.gatheringSource.gatedTag': '任务解锁',
+  'hudChrome.gatheringSource.moreSources': '另有{count}处',
+  'hudChrome.gatheringSource.moreZones': '另有{count}个区域',
+  'hudChrome.gatheringSource.premiumChance':
+    '精良或更高品质的{material}采集，若背包有空间，还会额外获得{specimen}。',
+  'hudChrome.gatheringSource.specimenOfBase':
+    '{material}是从{base}掷出精良或更高品质时获得的额外奖励，来自上方列出的同一批生物，但不是单独保证获得的战利品。',
+  'hudChrome.gatheringSource.nodeZone': '{zone}（{tier}阶以上工具）',
+  'hudChrome.gatheringSource.nodeFineNote':
+    '使用{tier}阶以上的采集工具，在同类型的采集点会升级为上等品质。',
+  'hudChrome.gatheringSource.farmNote':
+    '由播种培育而成，约{duration}后可收获。需要农耕技能{skill}以上和{tier}阶以上的锄头。',
+  'hudChrome.gatheringSource.fishingZoneProven': '{zone}水域（熟练度{skill}以上，鱼竿{tier}阶以上）',
+  'hudChrome.gatheringSource.fishingZoneUnproven':
+    '有些水域需要熟练度{skill}以上和{tier}阶以上的鱼竿，但尚未确认具体地点。',
   'gatherEvent.pristineVein': '{finder}挖到了一条纯净的矿脉！',
   'gatherEvent.ancientHeartwood': '{finder}砍倒了一棵远古心木！',
   'gatherEvent.moonlitBloom': '{finder}发现了一朵月光之花！',

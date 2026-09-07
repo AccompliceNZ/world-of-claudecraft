@@ -28,6 +28,8 @@ export * from './gathering_goal_painter';
 export * from './gathering_goal_view';
 export * from './gathering_profession_name';
 export * from './gathering_result_feedback';
+export * from './gathering_source_painter';
+export * from './gathering_source_view';
 export * from './gathering_view';
 export * from './harvest_journal_view';
 export * from './harvest_journal_window';
