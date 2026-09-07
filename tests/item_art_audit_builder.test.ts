@@ -834,16 +834,18 @@ describe('item-art audit builder', () => {
     ) as Record<string, unknown>;
     expect(verified).toMatchObject({
       catalogPath: 'tmp/imagegen/item-art-consistency/final-audit/catalog.json',
-      // Measured by an actual `--verify-only` run over the combined catalog
-      // (Masterwrought base + the Field Kit + Crucible professions art);
-      // receipt: /tmp/professions-merge-pr3884-art-verify.json.
-      catalogSha256: '14d10aa4889b44248e2bbfa2fe71691f4ede9a14e6a5d6b089066f64a7f10484',
-      catalogBytes: 683806,
+      // Measured by an actual `--verify-only` run over the merged tree, including
+      // the Forgebreaker quest's forgefathers_ember art in the Crucible batch;
+      // receipt: /tmp/professions-merge-pr3885-art-verify.json.
+      catalogSha256: '6dfe10fcbc5806a4296760a362d6c36d1c8a5823b6795ec696fc47bb8aed366d',
+      catalogBytes: 684325,
       rendererFingerprint: '41f5404c4d6d9643c8f03b9d88a8546e44564cc03a1baabdd4a72cb9258a2da7',
-      // 1,209 (Masterwrought) + 1 (Field Kit) + 45 (Crucible professions) = 1,255.
-      catalogCount: 1255,
-      // 1,224 (Masterwrought) + 1 (Field Kit) + 45 (Crucible professions) = 1,270.
-      liveItemCount: 1270,
+      // 1,209 (Masterwrought) + 1 (Field Kit) + 45 (Crucible professions) + 1
+      // (the Forgebreaker quest's forgefathers_ember proof item) = 1,256.
+      catalogCount: 1256,
+      // 1,224 (Masterwrought) + 1 (Field Kit) + 45 (Crucible professions) + 1
+      // (forgefathers_ember) = 1,271.
+      liveItemCount: 1271,
       generatedHeroicDefinitions: 64,
       heroicDefinitionsWithOwnWebp: 48,
       heroicWeaponArtAliases: 16,
@@ -853,7 +855,7 @@ describe('item-art audit builder', () => {
       sheetModeCounts: Object.fromEntries(ITEM_ART_AUDIT_MODES.map((mode) => [mode, 31])),
       sheetSetSha256: null,
       // Same `--verify-only` receipt as the catalogSha256 note above.
-      shippingCatalogSha256: 'f425bc204cfb2d5619c7a1aed0764f7616183bf79e61ad968144d264bb6336e2',
+      shippingCatalogSha256: '56570a72b0538ce4b9632583f614baa07c4c962f2cf8c53364a9bf4b25f03fd7',
       machineChecksPassed: true,
       verdict: null,
     });

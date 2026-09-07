@@ -463,7 +463,7 @@ describe('Masterwrought art completion evidence', () => {
   it('byte-seals the root manifest so its target and evidence oracles cannot drift together', () => {
     const bytes = readFileSync(path.join(repoRoot, manifestPath));
     expect(bytes.length).toBe(459_411);
-    expect(hash(bytes)).toBe('5a82761cc7f9b233c0ee0535facfdd2f5b7fe756a556aa6d5e5530a69606dbd9');
+    expect(hash(bytes)).toBe('c2ec8bf6adedc3a4df2b0565fa65749c0049ae34b853779295774e74a81ca646');
   });
 
   it('pins the exact 176-target scope and the 81 added to 84 replaced item split', () => {
@@ -795,17 +795,19 @@ describe('Masterwrought art completion evidence', () => {
     );
     const datedIds = sorted(datedVerdict.visualVerdict.passIds);
     expect(duplicateValues(datedIds)).toEqual([]);
-    // This dated verdict file already carries the Crucible professions additions
-    // (1,209 Masterwrought base + 45 Crucible professions = 1,254).
-    expect(datedIds).toHaveLength(1254);
+    // This dated verdict file already carries the Crucible professions additions,
+    // recorded as two incremental reviews (1,209 Masterwrought base + 45 Crucible
+    // collection pieces + 1 forgefathers_ember Forgebreaker quest proof item = 1,255).
+    expect(datedIds).toHaveLength(1255);
 
     const currentOwnerIds = [
       ...mapping.entries.map(({ itemId }) => itemId),
       ...mapping.generatedBatches.flatMap(({ itemIds }) => itemIds),
     ];
     expect(duplicateValues(currentOwnerIds)).toEqual([]);
-    // 1,209 (Masterwrought completion) + 45 (Crucible professions) + 1 (Field Kit).
-    expect(currentOwnerIds).toHaveLength(1255);
+    // 1,209 (Masterwrought completion) + 46 (Crucible professions, including
+    // the Forgebreaker quest's forgefathers_ember proof item) + 1 (Field Kit).
+    expect(currentOwnerIds).toHaveLength(1256);
     for (const id of datedIds) {
       expect(currentOwnerIds.includes(id), `${id} still has a current mapping owner`).toBe(true);
     }
@@ -815,13 +817,14 @@ describe('Masterwrought art completion evidence', () => {
     );
     expect(crucibleBatches).toHaveLength(1);
     const crucibleIds = new Set(crucibleBatches[0].itemIds);
-    expect(crucibleIds.size).toBe(45);
+    expect(crucibleIds.size).toBe(46);
     expect(value.targetSets.items.filter((id) => crucibleIds.has(id))).toEqual([]);
     expect(value.targetSets.items.includes('field_kit')).toBe(false);
 
     // Derive the original 1,209-item completion set by excluding the exact ids of
-    // the one Crucible professions mapping batch from the dated file's full
-    // 1,254-item passIds set (never a bare count subtraction).
+    // the one Crucible professions mapping batch (46 ids, forgefathers_ember
+    // included) from the dated file's full 1,255-item passIds set (never a bare
+    // count subtraction).
     const completionDatedIds = datedIds.filter((id) => !crucibleIds.has(id));
     expect(completionDatedIds).toHaveLength(1209);
 

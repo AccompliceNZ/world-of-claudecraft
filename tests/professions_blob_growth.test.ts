@@ -7,7 +7,13 @@
 // cadence window live), settles it to a fixed point through the REAL
 // serialize-load-serialize path, and asserts a byte ceiling plus the per-field
 // entry caps that make the growth model linear-in-content rather than
-// unbounded-per-player.
+// unbounded-per-player. The fixture is a conservative PER-FIELD ceiling
+// envelope, not a claim that one character simultaneously reaches every one
+// of those states at once (knowing every recipe and having finished every
+// repeatable quest cadence, for instance, are not jointly reachable in
+// live play): each field is independently maxed so its own entry cap is
+// exercised, while the crafted gear payloads and worn cap-slot counts it
+// measures stay individually legal on their own.
 //
 // The gear-heavy bound protects the save path: at 1,000 online the server writes every
 // blob whole every 30 s (no dirty tracking), so professions bytes multiply
@@ -875,8 +881,8 @@ describe('the professions blob growth bound (phase 16)', () => {
     expect(s2.knownRecipes ?? []).toHaveLength(RETAINABLE_KNOWN_IDS.size);
     expect(new Set(s2.knownRecipes)).toEqual(RETAINABLE_KNOWN_IDS);
     expect(MAX_KNOWN_RECIPE_IDS).toBe(512);
-    expect(new Set(ALL_RECIPES.map((recipe) => recipe.id)).size).toBe(203);
-    expect(RETAINABLE_KNOWN_IDS.size).toBe(204);
+    expect(new Set(ALL_RECIPES.map((recipe) => recipe.id)).size).toBe(204);
+    expect(RETAINABLE_KNOWN_IDS.size).toBe(205);
     expect(RETAINABLE_KNOWN_IDS.size).toBeLessThan(MAX_KNOWN_RECIPE_IDS);
     expect(s2.knownRecipes).toContain('enchant_weapon_lastflame_zeal');
     // Derived from the refusal policy so a profession becoming slottable
@@ -1155,8 +1161,9 @@ describe('the professions blob growth bound (phase 16)', () => {
     // Crucible 2026-09-05: 18,807 = 17,596 + 1,189 (33 new recipe ids) + 32
     // (Zeal) - 10 (legal equipment payloads, including new binding/provenance,
     // replacing the invented three-stat rolls). Same narrow tracking band.
-    expect(bytes).toBeGreaterThan(18427);
-    expect(bytes).toBeLessThan(18808);
+    // One quest recipe adds exactly 30 UTF-8 bytes to retained knowledge.
+    expect(bytes).toBeGreaterThan(18457);
+    expect(bytes).toBeLessThan(18838);
     // Strictly dominated by the band's upper edge while the band holds:
     // kept as documentation that the structural ceiling also bounds this
     // state, never the live guard.
@@ -1941,8 +1948,8 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
     // professions arm pins, so the two measurements can never describe
     // different fixtures.
     const professions = professionsBytes(s2);
-    expect(professions).toBeGreaterThan(18427);
-    expect(professions).toBeLessThan(18808);
+    expect(professions).toBeGreaterThan(18457);
+    expect(professions).toBeLessThan(18838);
 
     // Every container really reached its ceiling through the load (the
     // `field in state` and non-empty pins above are the pattern): a load clamp
@@ -2141,7 +2148,9 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
     // above, never widened: the floor is measurement minus 380 and the edge is
     // measurement plus one, so the band remains exactly 381 bytes wide.
     // Crucible integration 2026-09-05: 209,261 bytes measured on the
-    // pre-field-kit tree. The current catalog with the OLD fixture measured
+    // pre-field-kit, pre-hammer tree (the anchor the field_kit and hammer
+    // blocks below both build their deltas from). The current catalog with
+    // the OLD fixture measured
     // 156,144; the six fixture-repair deltas below sum to 53,117 exactly.
     // Most growth is previously omitted stored progress and promotion, not a
     // per-swap ledger or solely the two new fields.
@@ -2165,12 +2174,17 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
       inventory: 16320,
       bank: 35904,
       vendorBuyback: 756,
-      knownRecipes: 32,
+      knownRecipes: 62,
     });
     // field_kit (below) is the ONE Field Kit deedStats entry inside this same
     // settled state; the fixture-repair deltas above are Crucible-only and
     // measured against the pre-field-kit baseline, so subtract it here rather
-    // than folding it into 156,144.
+    // than folding it into 156,144. Isolating it FIRST (rather than folding
+    // it into the hammer-recipe arithmetic below) keeps the two PRs' content
+    // deltas independently attributable: field_kit touches only
+    // deedStats.itemsDiscovered, the hammer recipe/proof content below is
+    // diffed against this SAME field-kit-excluded snapshot, so neither term
+    // contaminates the other regardless of merge order.
     const fieldKitDiscoveries = (s2.deedStats?.itemsDiscovered ?? []).filter(
       (id) => id === 'field_kit',
     );
@@ -2187,16 +2201,45 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
     };
     const counterfactualBytes = Buffer.byteLength(JSON.stringify(withoutFieldKit), 'utf8');
     expect(bytes - counterfactualBytes, 'field_kit contributes exactly one array entry').toBe(12);
+
+    // The one-time hammer recipe/proof content adds against the pre-hammer,
+    // field-kit-excluded fixture (156144): the Crucible fixture-repair deltas
+    // above, plus 183 bytes of existing quest/deed/Reliquary catalog entries
+    // the hammer recipe references. Diffed against `withoutFieldKit` (not
+    // `s2`) so field_kit's 12 bytes never leak into a hammer-attributed term.
+    // MEASURED after the real merge settle (hammer content plus field_kit
+    // together): the equation and every forgeBaseline delta below hold
+    // exactly as recorded on the pre-field-kit tree.
+    expect(counterfactualBytes - 156144).toBe(
+      Object.values(fixtureDelta).reduce((sum, value) => sum + value, 0) + 183,
+    );
+    const forgeBaseline = {
+      questsDone: 4606,
+      knownRecipes: 5953,
+      deeds: 10360,
+      deedStats: 31570,
+      reliquary: 18895,
+    } as const;
     expect(
-      counterfactualBytes - 156144,
-      'field_kit removed, the remaining delta is the Crucible fixture repair alone',
-    ).toBe(Object.values(fixtureDelta).reduce((sum, value) => sum + value, 0));
-    // Removing ONLY field_kit must reproduce the database review's recorded
-    // pre-field-kit Crucible baseline exactly.
+      Object.fromEntries(
+        Object.entries(forgeBaseline).map(([key, previous]) => [
+          key,
+          Buffer.byteLength(
+            JSON.stringify(withoutFieldKit[key as keyof typeof forgeBaseline]),
+            'utf8',
+          ) - previous,
+        ]),
+      ),
+    ).toEqual({ questsDone: 50, knownRecipes: 30, deeds: 32, deedStats: 21, reliquary: 80 });
+    // Removing ONLY field_kit reproduces the pre-field-kit baseline WITH the
+    // hammer content still applied: 3884 alone measured 209,261 here (hammer
+    // content absent); the hammer content adds its own +213 on top
+    // (composed, not inferred: 3885 alone recorded that same +213 against
+    // its pre-field-kit tree). MEASURED after the real merge settle: 209,474.
     expect(
       counterfactualBytes,
-      'field_kit removed, must reproduce the recorded pre-field-kit Crucible baseline',
-    ).toBe(209261);
+      'field_kit removed, must reproduce the recorded pre-field-kit Crucible+hammer baseline',
+    ).toBe(209474);
     const priorContent = withoutCrucibleContent(s2);
     const contentDelta = Object.fromEntries(
       (['knownRecipes', 'deedStats', 'reliquary'] as const).map((key) => [
@@ -2220,24 +2263,27 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
       }),
     );
     expect(metadataDelta).toEqual({ perfectingBonus: 11880, perfectingBound: 5934 });
-    // Combined fixture (Crucible baseline + field_kit), measured after the
-    // real merge settle: 209,273 bytes, exactly the predicted 209,261 + 12.
-    // The band below is the pre-field-kit band shifted by field_kit's own
-    // +12, never widened: 208,893..209,274.
-    expect(bytes, reMint).toBeGreaterThan(208893);
-    expect(bytes, reMint).toBeLessThan(209274);
+    // Combined fixture (Crucible baseline + hammer recipe/proof content +
+    // field_kit), measured after the real merge settle: 209,486 bytes.
+    // Composed from both parents' own bands (3885 alone, hammer without
+    // field_kit, held 209,094..209,475, width 381; field_kit adds exactly
+    // +12 wherever it lands, proven above via counterfactualBytes), shifted
+    // by that same +12 without widening: 209,106..209,487.
+    expect(bytes, reMint).toBeGreaterThan(209106);
+    expect(bytes, reMint).toBeLessThan(209487);
 
     // The Crucible database review approved 229,376 bytes (224 KiB), the first
     // 32-KiB step above the corrected 209,261-byte pre-field-kit fixture it was
     // minted against (historical: that is the figure the threshold's own 32-KiB
     // step was derived from, not this arm's measurement). The previous
     // 163,840-byte threshold warned on this legal modeled state. Measured here,
-    // after the real merge settle: this combined fixture is 209,273 bytes, still
-    // comfortably below the threshold. Pin the measured relation: a lower
-    // threshold or further content growth crossing it requires re-measuring and
-    // reviewing both sides together, never silently widening this test's narrow
-    // tracking band. This remains a warning only; the save-path tests prove
-    // oversized saves stay whole.
+    // after the real merge settle: this combined fixture (hammer content plus
+    // field_kit) is 209,486 bytes, 19,890 bytes of headroom below the
+    // threshold. Pin the measured relation: a lower threshold or further
+    // content growth crossing it requires re-measuring and reviewing both
+    // sides together, never silently widening this test's narrow tracking
+    // band or the warn threshold itself. This remains a warning only; the
+    // save-path tests prove oversized saves stay whole.
     expect(bytes).toBeLessThan(CHARACTER_BLOB_WARN_BYTES);
   });
 });

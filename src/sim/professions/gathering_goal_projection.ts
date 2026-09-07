@@ -135,7 +135,7 @@ export function gatheringGoalFor(ctx: SimContext, pid: number): GatheringGoalVie
     value = unavailable(goal, 'recipe_unavailable');
   } else if (daily) {
     value = unavailable(goal, 'daily_limit');
-  } else if (recipe.oncePerDay && goal.count !== 1) {
+  } else if ((recipe.oncePerDay || recipe.consumeOnCraft) && goal.count !== 1) {
     value = unavailable(goal, 'batch_limit');
   } else {
     const projection = projectMaterialGoalReagents({
