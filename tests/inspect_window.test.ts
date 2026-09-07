@@ -13,6 +13,15 @@ import { type InspectEntity, InspectWindow } from '../src/ui/inspect_window';
 import { qualityGlowShadow } from '../src/ui/quality_glow';
 import { knownItemIconHtml } from '../src/ui/unknown_item_icon';
 
+// This suite exercises the inspect DOM and injected preview boundary, not
+// WebGL portraits. Importing the real portrait module starts GLB fetches that
+// can outlive happy-dom teardown and throw ProgressEvent errors in Node.
+// Keep that renderer boundary inert, as the turntable mount already is below.
+vi.mock('../src/ui/portrait_chip', () => ({
+  hydratePortraits: () => undefined,
+  portraitChipHtml: () => '',
+}));
+
 // The inspect ("Profile") window painter is a DOM module. Most guards below are
 // source scans, the char_window suite's shape: they pin the WCAG focus-trap the
 // extraction ADDED (the old inline inspect path had none), the token/reuse
