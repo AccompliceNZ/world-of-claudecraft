@@ -3498,8 +3498,34 @@ export const zh_TW: EnTranslations = {
       "guildViewsAria": "公會銀行檢視",
       "guildContentsTab": "內容",
       "guildLogTab": "日誌",
+      "guildHistoryTab": "歷史",
       "logAria": "公會銀行活動日誌",
       "logNote": "最近 {count} 筆公會銀行操作。",
+      "logShowing": "正在顯示 {count} 筆公會銀行操作，最新的在前。",
+      "logFilterAria": "篩選公會銀行歷史",
+      "logFilterAll": "全部",
+      "logFilterItems": "物品",
+      "logFilterMoney": "金錢",
+      "logOlder": "顯示更早",
+      "logOlderLoading": "正在載入更早的操作...",
+      "logEnd": "這是公會銀行的全部歷史。",
+      "logEmptyFiltered": "沒有符合此篩選條件的公會銀行操作。",
+      "logColTime": "時間",
+      "logColMember": "成員",
+      "logColAction": "操作",
+      "logColDetail": "詳情",
+      "logActionDeposit": "存入",
+      "logActionWithdraw": "取出",
+      "logActionBuySlots": "購買了擴充",
+      "logActionOpenBank": "開設了銀行",
+      "logActionCharterFee": "支付了創建費",
+      "logActionAdminPurge": "移除",
+      "logActorAdmin": "管理員",
+      "logDetailItem": "{item} x{count}",
+      "logSearchPlaceholder": "搜尋此歷史",
+      "logSearchAria": "依成員、操作或物品搜尋已載入的公會銀行操作",
+      "logShowingMatched": "正在顯示已載入的 {count} 筆公會銀行操作中的 {matched} 筆。",
+      "logSearchNoMatch": "已載入的公會銀行操作中沒有符合搜尋的結果。顯示更早的紀錄以擴大範圍。",
       "logLoading": "正在載入公會銀行日誌...",
       "logEmpty": "公會銀行中尚未存入或取出任何物品。",
       "logUnavailable": "目前無法讀取公會銀行日誌。",
@@ -13998,6 +14024,48 @@ export const zh_TW: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "熄火花魔杖"
       },
+      "bramblehide_crown": {
+        "name": "魯茨的荊棘皮甲頭冠"
+      },
+      "bramblehide_mantle": {
+        "name": "魯茨的荊棘皮甲護肩"
+      },
+      "bramblehide_harness": {
+        "name": "魯茨的荊棘皮甲胸甲"
+      },
+      "bramblehide_cinch": {
+        "name": "魯茨的荊棘皮甲腰帶"
+      },
+      "bramblehide_legguards": {
+        "name": "魯茨的荊棘皮甲護腿"
+      },
+      "bramblehide_grips": {
+        "name": "魯茨的荊棘皮甲手套"
+      },
+      "bramblehide_treads": {
+        "name": "魯茨的荊棘皮甲之靴"
+      },
+      "courtiers_bonefang": {
+        "name": "廷臣骨牙"
+      },
+      "thornpeak_wardblade": {
+        "name": "荊峰守護之刃"
+      },
+      "gravecourt_hewer": {
+        "name": "墓庭劈斧"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "不死王庭的許願護盾"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "荊峰月皮兜帽"
+      },
+      "stormhymn_chain_grips": {
+        "name": "風暴頌歌鏈甲手套"
+      },
+      "stormhymn_chain_treads": {
+        "name": "風暴頌歌鏈甲之靴"
+      },
       "conjured_water4": {
         "name": "魔法泉水"
       },
@@ -19003,6 +19071,12 @@ export const zh_TW: EnTranslations = {
       "boundstone_vanguard": {
         "name": "縛石先鋒",
         "bonus3": "攻擊速度和施法速度提高 15%。"
+      },
+      "bramblehide": {
+        "name": "魯茨的荊棘皮甲",
+        "bonus2": "力量提高 10 點，耐力提高 10 點。",
+        "bonus4": "攻擊強度提高 25 點。你的武器致命一擊有 50% 的機率觸發「墓塚之力」，使攻擊強度提高 40 點，持續 10 秒。",
+        "bonus6": "攻擊與施法速度提高 4%，命中提高 3%。你的武器致命一擊會使目標產生「骨刺」，每 2 秒流血 5 點傷害，持續 12 秒。最多疊加 3 層。"
       },
       "chronoweave": {
         "name": "以太織法衣",

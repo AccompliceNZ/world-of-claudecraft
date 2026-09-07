@@ -3498,8 +3498,34 @@ export const fr_FR: EnTranslations = {
       "guildViewsAria": "Vues de la banque de guilde",
       "guildContentsTab": "Contenu",
       "guildLogTab": "Journal",
+      "guildHistoryTab": "History",
       "logAria": "Journal d'activité de la banque de guilde",
       "logNote": "Les {count} actions les plus récentes de la banque de guilde.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Chargement du journal de la banque de guilde...",
       "logEmpty": "Rien n'a encore été déposé ou retiré de la banque de guilde.",
       "logUnavailable": "Le journal de la banque de guilde ne peut pas être consulté pour le moment.",
@@ -13998,6 +14024,48 @@ export const fr_FR: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Baguette des Étincelles éteintes"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Eau de source invoquée"
       },
@@ -19003,6 +19071,12 @@ export const fr_FR: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Avant-garde de pierre-liée",
         "bonus3": "Augmente la vitesse d'attaque et d'incantation de 15%."
+      },
+      "bramblehide": {
+        "name": "Peau de Ronces de Roots",
+        "bonus2": "Augmente la puissance d'attaque de 40.",
+        "bonus4": "Vos coups critiques d'arme lacèrent la cible avec Éclat d'os, lui infligeant 8 points de dégâts de saignement toutes les 2 s pendant 12 s. Se cumule jusqu'à 3 fois.",
+        "bonus6": "Augmente la vitesse d’attaque et d’incantation de 4 % et le Toucher de 3 %. Vos coups critiques d’arme fendent la cible avec Fendos, lui infligeant 5 points de dégâts toutes les 2 s pendant 12 s. Cumulable jusqu’à 3 fois."
       },
       "chronoweave": {
         "name": "Vêtements tissés d’éther",

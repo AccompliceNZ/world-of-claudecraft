@@ -92,6 +92,7 @@ export const DEED_IMAGE_IDS: ReadonlySet<string> = new Set([
   'col_reliquary_rank_4',
   'col_reliquary_rank_5',
   'col_set_boundstone_vanguard',
+  'col_set_bramblehide',
   'col_set_crownforged',
   'col_set_deathlord',
   'col_set_greyjaw_stalker',

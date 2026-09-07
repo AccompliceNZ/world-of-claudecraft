@@ -8261,35 +8261,133 @@
     color: var(--color-text-muted);
     margin: 0 0 4px;
   }
-  .gbank-log-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  /* The history's search row: one `.bag-search` input (the bank's shared
+     search styling and focus-carry), full width above the scope line. */
+  .gbank-log-tools {
     display: flex;
-    flex-direction: column;
-    gap: 2px;
+    gap: 6px;
+    margin: 0 0 4px;
+    flex: none;
   }
-  .gbank-log-row {
+  .gbank-log-search {
+    width: 100%;
+  }
+  /* The history's filter chips (All / Items / Money): a labelled group of
+     toggle buttons; the pressed one is carried by aria-pressed and styled from
+     it, so state is never colour-only. Sized like the bank's small gold
+     buttons so the strip reads as one row of chrome above the list. */
+  .gbank-log-filters {
     display: flex;
-    align-items: baseline;
-    gap: 8px;
-    padding: 4px 6px;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 2px 0 4px;
+    flex: none;
+  }
+  .gbank-log-filter {
+    font-family: var(--title-font);
+    font-size: 11px;
+    cursor: var(--cursor-point);
+    color: var(--gold-dim);
+    background: #1a1410;
+    border: 1px solid var(--color-border-showcase);
     border-radius: 3px;
+    padding: 2px 8px;
+  }
+  .gbank-log-filter:hover,
+  .gbank-log-filter:focus-visible {
+    color: var(--gold);
+  }
+  .gbank-log-filter[aria-pressed="true"] {
+    color: var(--gold);
+    border-color: var(--color-border-focus);
+    background: #221c14;
+  }
+  /* The list's tail: the show-older button, its in-flight line, or the
+     start-of-history line. Inside the scroller, after the rows, so it is met
+     exactly where a reader runs out of history. */
+  .gbank-log-foot {
+    flex: none;
+    margin: 6px 0 2px;
+    font-size: 11px;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+  .gbank-log-older {
+    font-family: var(--title-font);
+    font-size: 11px;
+    cursor: var(--cursor-point);
+    color: var(--gold-dim);
+    background: #1a1410;
+    border: 1px solid var(--color-border-showcase);
+    border-radius: 4px;
+    padding: 4px 12px;
+  }
+  .gbank-log-older:hover,
+  .gbank-log-older:focus-visible {
+    color: var(--gold);
+  }
+  /* The history TABLE. Four columns under a header row that STAYS PINNED to
+     the top of the .bank-scroll scroller (position: sticky needs the header's
+     own opaque background, or the rows show through it as they pass under).
+     border-spacing 0 rather than border-collapse: a collapsed border on a
+     sticky header does not travel with it in every engine. Each row is
+     separated by its own rule and the zebra stripe, so a long list reads as
+     lines rather than as a slab of text. */
+  .gbank-log-list {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 12px;
+  }
+  .gbank-log-list th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    text-align: left;
+    font-family: var(--title-font);
+    font-weight: normal;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gold-dim);
+    background: #1a1410;
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--color-border-showcase);
+  }
+  .gbank-log-list td {
+    padding: 5px 8px;
+    vertical-align: top;
+    border-bottom: 1px solid #2a2118;
     background: #17120e;
   }
-  .gbank-log-row:nth-child(even) {
+  .gbank-log-row:nth-child(even) td {
     background: #1c1611;
   }
   .gbank-log-time {
-    flex: none;
     font-size: 10px;
     color: var(--color-text-muted);
     white-space: nowrap;
   }
+  /* Names are player text of unbounded width: wrap rather than clip. */
+  .gbank-log-member {
+    color: var(--gold-dim);
+    overflow-wrap: anywhere;
+  }
+  .gbank-log-action {
+    white-space: nowrap;
+  }
+  /* Direction is a TINT on top of the Action word, never the only signal:
+     something coming in reads a little brighter, something going out a
+     little redder. */
+  .gbank-log-in .gbank-log-action {
+    color: var(--color-text-success);
+  }
+  .gbank-log-out .gbank-log-action {
+    color: var(--color-text-error);
+  }
   .gbank-log-text {
-    font-size: 12px;
-    /* Names and item names are player/content text of unbounded width: wrap
-       rather than clipping a sentence a player is meant to be able to read. */
+    /* Item names are content text of unbounded width: wrap rather than
+       clipping a detail a player is meant to be able to read. */
     overflow-wrap: anywhere;
   }
   /* Loading / refused / empty all share the .bank-empty look; the refusal is

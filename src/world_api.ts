@@ -286,11 +286,15 @@ export type {
 } from './world_api/dungeon_finder';
 export type { RaidLockout, RiftFloorView } from './world_api/dungeons';
 export {
+  GUILD_BANK_LOG_KINDS,
   GUILD_BANK_LOG_LIMIT,
+  GUILD_BANK_LOG_OP_KIND,
   type GuildBankInfo,
   type GuildBankLogEntry,
+  type GuildBankLogKind,
   type GuildBankLogOp,
   type GuildBankLogView,
+  guildBankLogKindOf,
 } from './world_api/guild_bank';
 export type {
   CivicServiceKind,

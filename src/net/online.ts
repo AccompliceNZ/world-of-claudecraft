@@ -127,7 +127,7 @@ import {
   type DuelInfo,
   type FriendInfo,
   type GuildBankInfo,
-  type GuildBankLogEntry,
+  type GuildBankLogKind,
   type GuildBankLogView,
   type GuildLeaderboardPage,
   type GuildRosterInfo,
@@ -195,7 +195,7 @@ import {
   decodeTemporalHourglasses,
   decodeVarkhulForgestormWarnings,
 } from './ground_telegraph_wire';
-import { decodeGuildBankLogFrame, GUILD_BANK_LOG_TTL_MS } from './guild_bank_log_wire';
+import { GuildBankLogMirror } from './guild_bank_log_mirror';
 import { foldInputAck } from './input_ack';
 import { INPUT_SEND_TIMER_INTERVAL_MS, inputFlushGateOpen } from './input_send_cadence';
 import { inputSignature } from './input_signature';
@@ -1610,17 +1610,14 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // sees it and `canEdit` marks officer-plus), so it only rides the wire for
   // a guild member actually standing at a bursar. ---
   guildBankInfo: GuildBankInfo | null = null;
-  // The guild bank ACTIVITY LOG mirror. Deliberately NOT a snapshot key: it is
-  // cold, identical for every member of the guild, and 50 rows wide, so it
-  // rides its own on-demand request/response pair (`guild_bank_log` ->
-  // `gbanklog`) that the guildBankLog() read below issues while the log view is
-  // open. `guildBankLogAt` is the SEND time of the last request and is the ONE
-  // gate on re-requesting: it makes a per-frame repaint idempotent, ages a
-  // response that never arrived back into a retry (so a dropped frame cannot
-  // wedge the pane on 'loading'), and bounds this client to one request per TTL.
-  private guildBankLogEntries: readonly GuildBankLogEntry[] = [];
-  private guildBankLogState: 'idle' | 'ready' | 'refused' = 'idle';
-  private guildBankLogAt = 0;
+  // The guild bank TRANSACTION HISTORY mirror (guild_bank_log_mirror.ts).
+  // Deliberately NOT a snapshot key: it is cold, identical for every member of
+  // the guild, and pages wide, so it rides its own on-demand request/response
+  // pair (`guild_bank_log` -> `gbanklog`) that the guildBankLog() read below
+  // issues while the history view is open. The mirror owns the pages, the
+  // per-TTL request gate, and the merge rules; this class only puts the
+  // requests it hands back on the wire.
+  private guildBankLogMirror = new GuildBankLogMirror();
   // --- IWorldDeeds: the Book of Deeds self mirror, from the snapshot self
   // (`s.deeds`/`s.dstats` heavy-gated, `s.renown`/`s.atitle`/`s.aborder`
   // per-tick diffed).
@@ -2601,15 +2598,9 @@ export class ClientWorld extends ReconWireState implements IWorld {
       return;
     }
     if (msg.t === 'gbanklog') {
-      // The one-shot answer to a `guild_bank_log` request. A refusal keeps the
-      // pane honest ("you are not allowed to read this") instead of showing an
-      // empty history; a success installs the decoded rows wholesale, because
-      // the server always answers the full most-recent window and never a delta.
-      const frame = decodeGuildBankLogFrame(msg);
-      if (frame) {
-        this.guildBankLogState = frame.refused ? 'refused' : 'ready';
-        this.guildBankLogEntries = frame.entries;
-      }
+      // The one-shot answer to a `guild_bank_log` request. The mirror matches
+      // it against the query it is waiting on and merges or drops it.
+      this.guildBankLogMirror.receive(msg);
       return;
     }
     if (msg.t === 'censor') {
@@ -3686,7 +3677,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
         // the transition makes it self-correct in one frame.
         const hadGate = this.guildBankInfo !== null;
         this.guildBankInfo = s.guildBank;
-        if (hadGate !== (this.guildBankInfo !== null)) this.resetGuildBankLog();
+        if (hadGate !== (this.guildBankInfo !== null)) this.guildBankLogMirror.reset();
       }
       // --- IWorldDeeds self-decode: `deeds`/`dstats` are heavy-gated,
       // `renown`/`atitle`/`aborder` per-tick diffed (all five delta-omitted: a
@@ -5186,25 +5177,17 @@ export class ClientWorld extends ReconWireState implements IWorld {
    *  never had an answer shows the loading state, and a REFUSAL keeps saying so
    *  until a fresh answer replaces it, never silently degrading to an empty
    *  log (which would read as "no officer has ever done anything"). */
-  guildBankLog(): GuildBankLogView {
-    const now = Date.now();
-    if (now - this.guildBankLogAt >= GUILD_BANK_LOG_TTL_MS) {
-      this.guildBankLogAt = now;
-      this.cmd({ cmd: 'guild_bank_log' });
-    }
-    return {
-      state: this.guildBankLogState === 'idle' ? 'loading' : this.guildBankLogState,
-      entries: this.guildBankLogEntries,
-    };
+  guildBankLog(kind: GuildBankLogKind = 'all'): GuildBankLogView {
+    const { view, request } = this.guildBankLogMirror.read(kind, Date.now());
+    if (request !== null) this.cmd(request);
+    return view;
   }
-  /** Drop the installed log and re-arm the request gate. Called when the guild
-   *  bank mirror goes null (walked away, demoted, left or switched guild): the
-   *  rows belong to a guild and a rank this client may no longer have, so they
-   *  must never survive into the next pane that opens. */
-  private resetGuildBankLog(): void {
-    this.guildBankLogEntries = [];
-    this.guildBankLogState = 'idle';
-    this.guildBankLogAt = 0;
+  /** One older page of the slice last read; the mirror says whether there is
+   *  anything to ask for (nothing loaded, nothing older, or already in flight
+   *  all answer null and nothing is sent). */
+  guildBankLogOlder(): void {
+    const request = this.guildBankLogMirror.requestOlder(Date.now());
+    if (request !== null) this.cmd(request);
   }
   // --- IWorldDeeds: title selection. No optimistic local write (the bank
   // precedent): the mirror updates from the `atitle` snapshot echo once the

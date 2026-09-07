@@ -3498,8 +3498,34 @@ export const es_ES: EnTranslations = {
       "guildViewsAria": "Vistas del banco de la hermandad",
       "guildContentsTab": "Contenido",
       "guildLogTab": "Registro",
+      "guildHistoryTab": "History",
       "logAria": "Registro de actividad del banco de la hermandad",
       "logNote": "Las {count} acciones más recientes del banco de la hermandad.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Cargando el registro del banco de la hermandad...",
       "logEmpty": "Aún no se ha movido nada dentro o fuera del banco de la hermandad.",
       "logUnavailable": "El registro del banco de la hermandad no se puede leer en este momento.",
@@ -13998,6 +14024,48 @@ export const es_ES: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Varita de Chispas Apagadas"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Agua de Manantial Invocada"
       },
@@ -19003,6 +19071,12 @@ export const es_ES: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Vanguardia Piedravínculo",
         "bonus3": "Aumenta la velocidad de ataque y de lanzamiento en 15%."
+      },
+      "bramblehide": {
+        "name": "Piel de Zarza de Roots",
+        "bonus2": "Aumenta el poder de ataque en 40.",
+        "bonus4": "Tus golpes críticos con el arma astillan al objetivo con Astilla de Hueso, haciéndolo sangrar 8 de daño cada 2 s durante 12 s. Se acumula hasta 3 veces.",
+        "bonus6": "Aumenta la velocidad de ataque y lanzamiento un 4% y el Golpe un 3%. Los golpes críticos de tu arma astillan al objetivo con Astillahuesos, causándole 5 de daño cada 2 s durante 12 s. Se acumula hasta 3 veces."
       },
       "chronoweave": {
         "name": "Vestimentas de Trama Etérea",

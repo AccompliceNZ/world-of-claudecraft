@@ -3498,8 +3498,34 @@ export const tr_TR: EnTranslations = {
       "guildViewsAria": "Lonca bankası görünümleri",
       "guildContentsTab": "İçerik",
       "guildLogTab": "Günlük",
+      "guildHistoryTab": "History",
       "logAria": "Lonca bankası etkinlik günlüğü",
       "logNote": "En son {count} lonca bankası işlemi.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Lonca bankası günlüğü yükleniyor...",
       "logEmpty": "Lonca bankasına henüz bir şey girmedi ya da çıkmadı.",
       "logUnavailable": "Lonca bankası günlüğü şu anda okunamıyor.",
@@ -13998,6 +14024,48 @@ export const tr_TR: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Sönmüş Kıvılcımların Asası"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Sihirle Yaratılmış Kaynak Suyu"
       },
@@ -19003,6 +19071,12 @@ export const tr_TR: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Bağlıtaş Öncüsü",
         "bonus3": "Saldırı ve büyü hızını %15 artırır."
+      },
+      "bramblehide": {
+        "name": "Roots'un Dikenli Postu",
+        "bonus2": "Saldırı gücünü 40 artırır.",
+        "bonus4": "Silah kritik vuruşların hedefi Kemikkıymık ile parçalar, 12 sn boyunca her 2 sn'de 8 kanama hasarı verir. 3 kata kadar üst üste binebilir.",
+        "bonus6": "Saldırı ve büyü yapma hızını %4, İsabeti %3 artırır. Silahlarının kritik vuruşları hedefi Kemik Yarığı ile parçalar ve 12 saniye boyunca her 2 saniyede 5 hasar vererek kanatır. En fazla 3 kez birikir."
       },
       "chronoweave": {
         "name": "Aether Dokuması Giysileri",

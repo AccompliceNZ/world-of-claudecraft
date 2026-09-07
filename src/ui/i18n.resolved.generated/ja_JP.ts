@@ -3498,8 +3498,34 @@ export const ja_JP: EnTranslations = {
       "guildViewsAria": "ギルド銀行の表示",
       "guildContentsTab": "内容",
       "guildLogTab": "ログ",
+      "guildHistoryTab": "履歴",
       "logAria": "ギルド銀行の活動ログ",
       "logNote": "直近{count}件のギルド銀行の操作です。",
+      "logShowing": "ギルド銀行の操作 {count} 件を新しい順に表示しています。",
+      "logFilterAria": "ギルド銀行の履歴を絞り込む",
+      "logFilterAll": "すべて",
+      "logFilterItems": "アイテム",
+      "logFilterMoney": "お金",
+      "logOlder": "以前の履歴を表示",
+      "logOlderLoading": "以前の操作を読み込んでいます...",
+      "logEnd": "これがギルド銀行の全履歴です。",
+      "logEmptyFiltered": "この絞り込みに一致するギルド銀行の操作はありません。",
+      "logColTime": "日時",
+      "logColMember": "メンバー",
+      "logColAction": "操作",
+      "logColDetail": "詳細",
+      "logActionDeposit": "預けた",
+      "logActionWithdraw": "引き出した",
+      "logActionBuySlots": "拡張を購入した",
+      "logActionOpenBank": "銀行を開設した",
+      "logActionCharterFee": "設立費用を支払った",
+      "logActionAdminPurge": "削除した",
+      "logActorAdmin": "管理者",
+      "logDetailItem": "{item} x{count}",
+      "logSearchPlaceholder": "この履歴を検索",
+      "logSearchAria": "読み込み済みのギルド銀行の操作をメンバー、操作、アイテムで検索",
+      "logShowingMatched": "読み込み済みのギルド銀行の操作 {count} 件のうち {matched} 件を表示しています。",
+      "logSearchNoMatch": "検索に一致する読み込み済みの操作はありません。以前の履歴を表示して範囲を広げてください。",
       "logLoading": "ギルド銀行のログを読み込んでいます...",
       "logEmpty": "ギルド銀行にはまだ何も出し入れされていません。",
       "logUnavailable": "現在、ギルド銀行のログを閲覧できません。",
@@ -13998,6 +14024,48 @@ export const ja_JP: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "消えた火花のワンド"
       },
+      "bramblehide_crown": {
+        "name": "ルーツのブランブルハイドの冠"
+      },
+      "bramblehide_mantle": {
+        "name": "ルーツのブランブルハイドの肩当て"
+      },
+      "bramblehide_harness": {
+        "name": "ルーツのブランブルハイドの胴当て"
+      },
+      "bramblehide_cinch": {
+        "name": "ルーツのブランブルハイドの帯"
+      },
+      "bramblehide_legguards": {
+        "name": "ルーツのブランブルハイドの脚甲"
+      },
+      "bramblehide_grips": {
+        "name": "ルーツのブランブルハイドの握り"
+      },
+      "bramblehide_treads": {
+        "name": "ルーツのブランブルハイドの靴"
+      },
+      "courtiers_bonefang": {
+        "name": "廷臣の骨牙"
+      },
+      "thornpeak_wardblade": {
+        "name": "ソーンピークの守護刃"
+      },
+      "gravecourt_hewer": {
+        "name": "墓廷の斬斧"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "不死の宮廷の奉納の盾"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "ソーンピークの月皮のフード"
+      },
+      "stormhymn_chain_grips": {
+        "name": "嵐の賛歌の鎖の握り"
+      },
+      "stormhymn_chain_treads": {
+        "name": "嵐の賛歌の鎖の靴"
+      },
       "conjured_water4": {
         "name": "魔法の湧き水"
       },
@@ -19003,6 +19071,12 @@ export const ja_JP: EnTranslations = {
       "boundstone_vanguard": {
         "name": "束縛石の前衛",
         "bonus3": "攻撃速度と詠唱速度が15%上昇します。"
+      },
+      "bramblehide": {
+        "name": "ルーツのブランブルハイド",
+        "bonus2": "筋力が10、スタミナが10上昇します。",
+        "bonus4": "攻撃力が25上昇します。武器のクリティカルヒット時に50%の確率で「グレイブマイト」が発動し、攻撃力が10秒間40上昇します。",
+        "bonus6": "攻撃速度と詠唱速度が4%、命中が3%上昇します。武器のクリティカルヒットで対象に「ボーンスプリンター」を刻み、2秒ごとに5ダメージの出血を12秒間与えます。最大3回まで累積します。"
       },
       "chronoweave": {
         "name": "エーテルウィーブの祭服",

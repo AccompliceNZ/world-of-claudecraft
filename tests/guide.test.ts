@@ -114,6 +114,7 @@ import {
 } from '../src/sim/professions/wield_gate';
 import type { DeedDef } from '../src/sim/types';
 import { DEED_IMAGE_IDS } from '../src/ui/deed_image_ids';
+import { esc } from '../src/ui/esc';
 import { ensureLocaleLoaded, type SupportedLanguage, setLanguage, t } from '../src/ui/i18n';
 import { guideStrings } from '../src/ui/i18n.catalog/guide';
 
@@ -992,7 +993,9 @@ describe('Guide Reliquary spoiler-safe catalog', () => {
     expect(html).toContain(t('guide.reliquaryPage.shelf.professions' as never));
     expect(html).toContain(t('guide.reliquaryPage.shelf.horizons' as never));
     for (const page of GUIDE_RELIQUARY) {
-      expect(html).toContain(page.name);
+      // The renderer HTML-escapes every page name (Roots' Bramblehide carries
+      // an apostrophe), so compare against the escaped form it emits.
+      expect(html).toContain(esc(page.name));
     }
     // Pure catalog helper covers the same rows the page composes.
     const sections = reliquaryCatalogSections(GUIDE_RELIQUARY);

@@ -1061,6 +1061,7 @@ const ITEM_OFFHAND_MODELS: Readonly<Record<string, string>> = {
   // Crucible raid shields (content/ignivar_loot.ts): tank wall + healer barrier.
   bulwark_of_the_inner_crucible: 'shield_square',
   ember_wardens_barrier: 'shield_round',
+  votive_ward_of_the_deathless_court: 'shield_round', // Nythraxis gap-fill healer shield
   varkhul_emberward: 'varkhul_emberward', // Ignivar raid legendary (Varkhul drop)
 };
 

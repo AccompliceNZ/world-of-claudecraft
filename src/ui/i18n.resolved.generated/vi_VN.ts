@@ -3498,8 +3498,34 @@ export const vi_VN: EnTranslations = {
       "guildViewsAria": "Các chế độ xem ngân hàng bang hội",
       "guildContentsTab": "Nội Dung",
       "guildLogTab": "Nhật Ký",
+      "guildHistoryTab": "History",
       "logAria": "Nhật ký hoạt động ngân hàng bang hội",
       "logNote": "{count} hoạt động ngân hàng bang hội gần đây nhất.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Đang tải nhật ký ngân hàng bang hội...",
       "logEmpty": "Chưa có gì được chuyển vào hoặc ra khỏi ngân hàng bang hội.",
       "logUnavailable": "Không thể đọc nhật ký ngân hàng bang hội lúc này.",
@@ -13998,6 +14024,48 @@ export const vi_VN: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Đũa Tia Lửa Đã Dập Tắt"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Nước Suối Được Tạo Phép"
       },
@@ -19003,6 +19071,12 @@ export const vi_VN: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Bộ Tiên Phong Đá Trói",
         "bonus3": "Tăng tốc độ tấn công cùng thi triển thêm 15%."
+      },
+      "bramblehide": {
+        "name": "Da Gai Của Roots",
+        "bonus2": "Tăng sức mạnh tấn công thêm 40.",
+        "bonus4": "Các đòn chí mạng bằng vũ khí của bạn găm Dằm Xương vào mục tiêu, khiến nó chảy máu nhận 8 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần.",
+        "bonus6": "Tăng 4% tốc độ tấn công và thi triển, cùng 3% Hit. Đòn chí mạng bằng vũ khí của bạn khiến mục tiêu bị Bonesplinter, gây chảy máu 5 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần."
       },
       "chronoweave": {
         "name": "Lễ Phục Dệt Aether",
