@@ -2777,7 +2777,7 @@ export const tr_TR: EnTranslations = {
       "suddenDeath": "Bir sonraki Erken Mezar'ın hiç Öfkeye mal olmaz ve can şartını yok sayar",
       "aoeEcho": "{charges} yankı kaldı: tek hedefli yetenekler yakındaki en fazla {targets} düşmana {pct}% hasar verir",
       "sureCrit": "{charges} hasar veren yetenek kullanımı garanti kritik vuruş olur",
-      "temporalEcho": "Büyücünün Gizemli hasarı seni tek hedef hasarının %{singlePct}’i ya da alan hasarının %{areaPct}’i kadar iyileştirir. Eter Dalgası ve Eter Dartları bireysel Zamansal Yankı üzerinde x4 bonus kazanır. Grup Yankıları eşit bir iyileştirme rezervi oluşturur ve bu rezerv, canı %60’ın altındaki işaretli müttefikler arasında eksik canlarına göre paylaştırılır",
+      "temporalEcho": "Büyücünün Gizemli hasarı seni tek hedef hasarının {singlePct}%'i ya da alan hasarının {areaPct}%'i kadar iyileştirir",
       "arcaneCharge": "{stacks} Gizemli Yük: Aether Dalgası {damagePct}% daha fazla hasar verir, {castPct}% daha hızlı okunur ve {costMult}x mana harcar",
       "physicalReduction": "Alınan Fiziksel hasarı {pct}% azaltır",
       "temporalHourglass": "Bağışık ve eylem yapamaz; canı yeniler ve bekleme süresi iyileşmesini hızlandırır. İptal etmek için sağ tıkla.",
@@ -3517,8 +3517,34 @@ export const tr_TR: EnTranslations = {
       "guildViewsAria": "Lonca bankası görünümleri",
       "guildContentsTab": "İçerik",
       "guildLogTab": "Günlük",
+      "guildHistoryTab": "History",
       "logAria": "Lonca bankası etkinlik günlüğü",
       "logNote": "En son {count} lonca bankası işlemi.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Lonca bankası günlüğü yükleniyor...",
       "logEmpty": "Lonca bankasına henüz bir şey girmedi ya da çıkmadı.",
       "logUnavailable": "Lonca bankası günlüğü şu anda okunamıyor.",
@@ -5365,7 +5391,7 @@ export const tr_TR: EnTranslations = {
       "ifHideUnused": "Boş eylem yuvalarını gizler, böylece yalnızca gerçekten kullanılan düğmeler çizilir.",
       "ifLockBars": "Çubukları kilitler, böylece bir yetenek yanlışlıkla bir yuvadan sürüklenip çıkarılamaz.",
       "keybindsHeading": "Tuş Atamaları paneli",
-      "keybindsBody": "Anahtar listesi bu panelin yalnızca yarısıdır. Üstünde, farenizin oyunu nasıl yönlendireceğine karar veren anahtarlar bulunur: fare kamerası, dönerken imlecin kilitlenip kilitlenmeyeceği, taşımak için tıklama ve hangi fare düğmesinin onu tetiklediği, saldırı hareketi ve sol elle dokunma düzeni.",
+      "keybindsBody": "Tuş listesi o panelin yalnızca yarısıdır. Üstünde, farenizin oyunu nasıl yönettiğine karar veren anahtarlar bulunur: fare kamerası, döndürürken imlecin kilitlenip kilitlenmeyeceği, tıklayarak hareket ve bunu hangi fare düğmesinin tetiklediği, saldırı hareketi, solaklar için dokunmatik yerleşim ve sohbet için küfür filtresi.",
       "keybindsMouseBody": "Orada gözden kaçması kolay iki şey var. Fare düğmeleri tuşlar gibi atanır, bu yüzden tekerlek tıklaması ve baş parmak düğmeleri yetenek taşıyabilir; sol ve sağ tık ise kamera ve dünyaya tıklamak için ayrılmış kalır. Ayrıca doğrudan eylem çubuğundan da atama yapabilirsiniz: buradan çubuk üzerinden atama kipini açın, ardından bir yuvaya tıklayıp istediğiniz tuşa basın."
     },
     "combat": {
@@ -6164,7 +6190,7 @@ export const tr_TR: EnTranslations = {
       "heroicRewardsBody": "Kahramanca patronlar bildiğin ganimeti düşürür, yükseltilmiş ve ipucunda Kahramanca olarak işaretli, ve her seferin son patronu başka hiçbir yerde bulunmayan epikler ekler. O son öldürüş ayrıca her katılımcıya Kahramanca Nişan bırakır: Highwatch'ta levazımcı Vex'te harcanan bir para birimi; onun tezgâhı, kahramanca derinliklerin kanıtından başka hiçbir şeyin satın alamayacağı yüzükler ve kolye uçlarıyla dolu bir raftır.",
       "heroicLockoutBody": "Normal zindanlar gün boyu gezilebilir. Kahramanca sabır ister: son patronun ölümü seferdeki herkesi o zindanın günde tek bir kahramanca temizliğiyle sınırlar ve akın her zorluk için ayrı bir günlük kilit tutar. Canlı bir diyarda tüm günlük kilitler diyarın kendi gecelik sıfırlama saatinde birlikte düşer, dolayısıyla o saatten hemen önce alınan bir temizlik ile hemen sonra alınan biri iki ayrı güne düşer; bunun yerine tarayıcında çevrimdışı oyna, kilit basitçe kendi öldürüşünden bir gün sonra sona erer. Halihazırda temizlenmiş beş kişilik bir sefer, kendi grubuna ceset koşuları ve ganimet için açık kalır, böylece kimse orada kazandığından mahrum kalmaz. Akın daha katıdır: öldürüşü seni bir kez kilitledi mi kapı sıfırlamaya dek kapalı kalır ve içeri dönmenin tek yolu, tam da kendisini kilitleyen o seferde düşmüş birinin ceset koşusudur, dolayısıyla dışarı çıkan canlı bir akıncı o gün için dışarı çıkmıştır. Arenayı terk etmeden önce ganimetini topla. Bu kilitlerin her biri onu kazanan karaktere aittir, dolayısıyla ana karakterindeki bir temizlik diğer karakterlerini serbest bırakır.",
       "resetTitle": "Örneklerini sıfırlama",
-      "resetBody": "Grubunuz hala hak talebinde bulunulan koşuları tutarken ve eski hak talepleri kendi kendine temizlenmeden önce bir süre daha oyalanırken zorluğu değiştirin. Grup lideri bunun yerine onların hemen gitmesine izin verebilir: kendi portre menüsünde Tüm Örnekleri Sıfırla'yı seçin veya /dungeon reset yazın. Sıfırlama ancak zorluk gerçekten değiştirildikten sonra, içeride yaşayan veya düşmüş hiç kimse kalmadığında, yalnızca içerideki tüm cesetler temiz bir şekilde yağmalandıktan ve bir sıfırlamayı diğerinden ayıran kısa bir bekleme süresinden sonra işe yarar. Yanlış zorluk seviyesinde kapıya gelin ve oyun bunu koşu başlamadan önce söylüyor. Baskın aynı şekilde sıfırlanıyor; kendi kilitleme ve ceset iade kuralları hâlâ geçerli.",
+      "resetBody": "Grubun hâlâ üstlenilmiş seferler tutarken zorluğu değiştir, eski üstlenmeler kendiliğinden bırakılmadan önce bir süre asılı kalır. Grup lideri bunun yerine hepsini bir anda bırakabilir: kendi portre menüsünden Tüm Instance'ları Sıfırla'yı seçin ya da /dungeon reset yazın. Sıfırlama yalnızca zorluk gerçekten değiştirildikten sonra, yalnızca içeride canlı ya da düşmüş kimse kalmadığı sürece, yalnızca içerideki her ceset tertemiz yağmalandıktan sonra çalışır ve bir sıfırlamayı diğerinden kısa bir bekleme süresi ayırır. Kapıya yanlış zorlukla gelirseniz oyun bunu sefer başlamadan söyler. Akın bu şekilde asla sıfırlanmaz; kendi kilit kuralları geçerlidir.",
       "templeLoreTitle": "Boğulmuş Tapınak, biraz daha derinde",
       "templeLoreBody": "Tapınağın, başka yerlerde peşine düştüğünüz tarikattan daha eski, kendi efsanesi vardır. Ay ışığını içip boğulmuşları geri veren bir gölet olan Işıltıgöl'ün kıyısında, yalnız bir gözcü solgun ışıktan bir geçidi korur. Yüzeyin altında, soğuk taştan bir merdiven ona doğru iner. Oraya batan halk bir kazayla boğulmadı: ibadet ederek suya gömülen ve şarkı söylemeyi hiç bırakmayan Solgun Koro'ydu onlar. Eski muhafızlar, sular onları almadan önce kayalara tek bir uyarı kazıdılar, Boğulmuş Ay dedikleri bir şeye bir dua; daha sağlam bir el de altına iki kelime ekledi: yalnızca uyuyor.",
       "cryptLeadTitle": "Ölülerin kapalı tutması gereken bir kapı",
@@ -10563,11 +10589,11 @@ export const tr_TR: EnTranslations = {
       },
       "melting_acid": {
         "name": "Eriyen Asit",
-        "description": "Silahını 30 dakika boyunca kaplar. Her yakın dövüş vuruşun hedefe yakıcı asit sıçratır ve 12 saniye boyunca zırhını %5 azaltır."
+        "description": "Silahını 30 dakika boyunca kaplar. Her yakın dövüş savuruşun hedefe yakıcı asit sıçratır ve 12 saniye boyunca zırhını %5 azaltır."
       },
       "nightshade_coating": {
         "name": "Gece Gölgesi Kaplama",
-        "description": "Silahını 30 dakika boyunca kaplar. Her yakın dövüş vuruşun hedefi itüzümüyle kaplar ve aldığı iyileştirmeyi 12 saniye boyunca %25 azaltır."
+        "description": "Silahını 30 dakika boyunca kaplar. Her yakın dövüş savuruşun hedefi itüzümüyle kaplar ve aldığı iyileştirmeyi 12 saniye boyunca %25 azaltır."
       },
       "expose_armor": {
         "name": "Zırh Gediği",
@@ -14078,6 +14104,48 @@ export const tr_TR: EnTranslations = {
       },
       "wand_of_quenched_sparks": {
         "name": "Sönmüş Kıvılcımların Asası"
+      },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
       },
       "conjured_water4": {
         "name": "Sihirle Yaratılmış Kaynak Suyu"
@@ -19085,10 +19153,16 @@ export const tr_TR: EnTranslations = {
         "name": "Bağlıtaş Öncüsü",
         "bonus3": "Saldırı ve büyü hızını %15 artırır."
       },
+      "bramblehide": {
+        "name": "Roots'un Dikenli Postu",
+        "bonus2": "Saldırı gücünü 40 artırır.",
+        "bonus4": "Silah kritik vuruşların hedefi Kemikkıymık ile parçalar, 12 sn boyunca her 2 sn'de 8 kanama hasarı verir. 3 kata kadar üst üste binebilir.",
+        "bonus6": "Saldırı ve büyü yapma hızını %4, İsabeti %3 artırır. Silahlarının kritik vuruşları hedefi Kemik Yarığı ile parçalar ve 12 saniye boyunca her 2 saniyede 5 hasar vererek kanatır. En fazla 3 kez birikir."
+      },
       "chronoweave": {
         "name": "Aether Dokuması Giysileri",
-        "bonus2": "Zamansal Yankı, diğer tek hedefli Gizemli hasarının %50’sini iyileştirmeye dönüştürür. Eter Dalgası ve Eter Dartları bunun yerine verdikleri hasarın %200’ünü dönüştürür. Alınan hasar artık büyü yapmanı geciktirmez.",
-        "bonus4": "Zamansal Çağlayanın bekleme süresi 5 saniye, mana bedeli ise %30 azalır."
+        "bonus2": "Zamansal Yankı, tek hedefli Gizemli hasarının %50’sini iyileştirmeye dönüştürür. Alınan hasar artık büyü yapmanı geciktirmez.",
+        "bonus4": "Zamansal Çağlayanın bekleme süresi 5 saniye azalır."
       },
       "cinderbark": {
         "name": "Kül Kabuğu Muhafızı",

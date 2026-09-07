@@ -18,7 +18,7 @@
 //
 // CARDINALITY IS BOUNDED BY DESIGN, same contract as server/http/metrics.ts: the
 // only label values here are the ws-message direction (a fixed two), the
-// inbound drop cause (the fixed nine-value WS_DROP_CAUSES set), the guild-bank
+// inbound drop cause (the fixed ten-value WS_DROP_CAUSES set), the guild-bank
 // incident kind (the fixed nine-value GUILD_BANK_INCIDENTS set), the vault-ledger
 // incident kind (the fixed VAULT_LEDGER_INCIDENTS set), the copper-flow
 // source, the harvest band and node tier (the fixed sets in
@@ -65,8 +65,11 @@ export type GeneralChatQuotaDbOutcome = (typeof GENERAL_CHAT_QUOTA_DB_OUTCOMES)[
  * (server/guild_bank_op_guard.ts, each allowed op is a keep-forever ledger
  * write), and the cosmetic-set guard on the two Book of Deeds pickers
  * (server/cosmetic_op_guard.ts, each allowed set re-wires a full identity
- * record to every in-range viewer). This closed set IS the cause label's
- * whole vocabulary; it never grows per-player or per-message.
+ * record to every in-range viewer), and the guild bank HISTORY read guard
+ * (server/guild_bank_log_read_guard.ts, the paged, filtered history reads,
+ * metered apart from the ops so a click storm through the chips can never
+ * drain a member's deposits). This closed set IS the cause label's whole
+ * vocabulary; it never grows per-player or per-message.
  */
 export const WS_DROP_CAUSES = [
   'rate',
@@ -78,9 +81,10 @@ export const WS_DROP_CAUSES = [
   'bank_vault',
   'guild_bank',
   'cosmetic',
+  'guild_bank_log',
 ] as const;
 
-/** One of the fixed nine inbound drop causes. */
+/** One of the fixed ten inbound drop causes. */
 export type WsDropCause = (typeof WS_DROP_CAUSES)[number];
 
 /**

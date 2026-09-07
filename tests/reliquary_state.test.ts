@@ -2667,8 +2667,8 @@ describe('Reliquary catalog index memo', () => {
     expect(first).not.toBe(RELIQUARY_PAGES);
     expect(Object.isFrozen(first)).toBe(true);
     // A hand-carried literal, not the production filter restated (which would
-    // prove nothing): 39 pages minus the vault and riftbound flags.
-    expect(first?.length).toBe(37);
+    // prove nothing): 40 pages minus the vault and riftbound flags.
+    expect(first?.length).toBe(38);
     expect(first?.some((p) => p.excludeFromCompletion !== undefined)).toBe(false);
 
     // An UNFLAGGED synthetic table answers the caller's own array by identity:

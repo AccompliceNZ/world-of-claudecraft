@@ -1024,4 +1024,8 @@ export const table: DeedLocaleTable = {
     desc: 'Poraz Varkhula, kovotce posledního plamene, na hrdinské obtížnosti, aniž by jediný člen raidu zemřel.',
     title: 'Nespálený',
   },
+  col_set_bramblehide: {
+    name: 'Rootsova ostružinová kůže',
+    desc: 'Objev každý kus Rootsovy ostružinové kůže.',
+  },
 };

@@ -299,7 +299,15 @@ describe('v0.36 placeholder-art completion evidence', () => {
     ];
     // The Ignivar legendary maul postdates the campaign the same way (its art
     // batch is ignivar-varkhul-drop-renders-2026-08-28).
-    const POST_CAMPAIGN_WEAPON_IDS = [...INTEGRATION_WEAPON_IDS, 'varkhul_forgebreaker'];
+    // The three Nythraxis gap-fill one-handers postdate it too
+    // (nythraxis-gap-weapon-renders-2026-09-04).
+    const POST_CAMPAIGN_WEAPON_IDS = [
+      ...INTEGRATION_WEAPON_IDS,
+      'varkhul_forgebreaker',
+      'courtiers_bonefang',
+      'thornpeak_wardblade',
+      'gravecourt_hewer',
+    ];
     expect(targets.weaponItems).toEqual(
       sorted(
         Object.keys(ITEM_WEAPON_VARIANTS).filter(

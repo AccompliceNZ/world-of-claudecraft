@@ -3517,8 +3517,34 @@ export const pl_PL: EnTranslations = {
       "guildViewsAria": "Widoki banku gildii",
       "guildContentsTab": "Zawartość",
       "guildLogTab": "Dziennik",
+      "guildHistoryTab": "History",
       "logAria": "Dziennik aktywności banku gildii",
       "logNote": "{count} najnowszych działań w banku gildii.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Wczytywanie dziennika banku gildii...",
       "logEmpty": "Nic jeszcze nie zostało przeniesione do ani z banku gildii.",
       "logUnavailable": "Nie można teraz odczytać dziennika banku gildii.",
@@ -5365,7 +5391,7 @@ export const pl_PL: EnTranslations = {
       "ifHideUnused": "Ukrywa puste pola akcji, więc rysowane są tylko przyciski, których faktycznie używasz.",
       "ifLockBars": "Blokuje twoje paski, żebyś przypadkiem nie wyciągnął umiejętności z pola.",
       "keybindsHeading": "Panel Przypisań Klawiszy",
-      "keybindsBody": "Lista kluczy to tylko połowa tego panelu. Powyżej znajdują się przełączniki decydujące o sposobie sterowania myszą w grze: kamera myszy, czy kursor blokuje się podczas obracania, kliknij, aby się poruszyć i który przycisk myszy go uruchamia, ruch ataku i układ dotykowy dla leworęcznych.",
+      "keybindsBody": "Lista klawiszy to tylko połowa tego panelu. Nad nią siedzą przełączniki, które decydują, jak twoja mysz prowadzi grę: kamera myszy, czy kursor blokuje się podczas obracania, ruch kliknięciem i to, który przycisk myszy go wywołuje, ruch z atakiem, układ leworęczny dla sterowania dotykowego oraz filtr wulgaryzmów na czacie.",
       "keybindsMouseBody": "Dwie rzeczy łatwo tam przeoczyć. Przyciski myszy przypisuje się jak klawisze, więc kliknięcie kółkiem i boczne przyciski mogą nosić umiejętności, podczas gdy lewy i prawy przycisk pozostają zarezerwowane dla kamery i klikania w świecie. Możesz też przypisywać klawisze bezpośrednio z paska akcji: włącz tu tryb przypisywania na pasku, kliknij pole i naciśnij klawisz, który chcesz przypisać."
     },
     "combat": {
@@ -6164,7 +6190,7 @@ export const pl_PL: EnTranslations = {
       "heroicRewardsBody": "Heroiczni bossowie upuszczają łup, który znasz, ulepszony i oznaczony jako Heroiczny w opisie, a końcowy boss każdego przejścia dokłada epiki nie do znalezienia nigdzie indziej. To ostatnie zabicie zostawia też Heroiczne Znaki każdemu uczestnikowi: walutę, którą wydaje się u kwatermistrza Vexa w Highwatch, którego lada to półka pierścieni i wisiorów, jakich nie kupi nic poza dowodem z heroicznych głębin.",
       "heroicLockoutBody": "Zwykłe lochy można przemierzać cały dzień. Heroiczny wymaga cierpliwości: zabicie końcowego bossa ogranicza wszystkich w przejściu do jednego heroicznego ukończenia tego lochu na dzień, a rajd trzyma dzienną blokadę dla każdego poziomu trudności. Na żywym królestwie wszystkie dzienne blokady opadają razem o własnej nocnej godzinie resetu królestwa, więc ukończenie wzięte tuż przed tą godziną i inne tuż po niej wypadają w dwóch różnych dniach; zagraj zamiast tego offline w przeglądarce, a blokada po prostu wygasa dobę po twoim własnym zabiciu. Już ukończone pięcioosobowe przejście pozostaje otwarte dla własnej drużyny na biegi po zwłoki i łup, więc nikt nie zostaje odcięty od tego, na co tam zapracował. Rajd jest surowszy: gdy jego zabicie raz cię zablokuje, drzwi pozostają zamknięte do resetu, a jedyna droga z powrotem do środka to bieg po zwłoki kogoś, kto padł dokładnie w tym przejściu, które go zablokowało, więc żywy rajdowiec, który wychodzi, wyszedł na cały dzień. Zbierz swoje zdobycze, zanim opuścisz arenę. Każda z tych blokad należy do postaci, która na nią zapracowała, więc ukończenie na twojej głównej postaci zostawia pozostałe postacie wolne.",
       "resetTitle": "Resetowanie instancji",
-      "resetBody": "Zmień poziom trudności, podczas gdy twoja grupa nadal posiada zdobyte runy, a stare roszczenia pozostają przez chwilę, zanim same się usuną. Zamiast tego lider drużyny może pozwolić im odejść od razu: wybierz Resetuj wszystkie instancje w ich własnym menu portretowym lub wpisz /dungeon reset. Reset działa tylko po faktycznej zmianie poziomu trudności, tylko wtedy, gdy nikt, żywy ani poległy, nie pozostaje w środku, tylko wtedy, gdy wszystkie znajdujące się tam zwłoki zostaną całkowicie splądrowane, a krótki czas odnowienia oddziela jeden reset od drugiego. Dotrzyj do drzwi na złym poziomie trudności, a gra poinformuje Cię o tym przed rozpoczęciem biegu. Nalot resetuje się w ten sam sposób, z własnymi zasadami dotyczącymi blokady i powrotu zwłok, które nadal obowiązują.",
+      "resetBody": "Zmień poziom trudności, gdy twoja drużyna wciąż trzyma zajęte przejścia, a stare zajęcia pozostaną chwilę, zanim same puszczą. Przywódca drużyny może zamiast tego puścić je od razu: wybierzcie Zresetuj wszystkie instancje w menu własnego portretu albo wpiszcie /dungeon reset. Reset działa dopiero po faktycznej zmianie trudności, tylko dopóki nikt, żywy ani poległy, nie został w środku, tylko gdy każde zwłoki tam w środku zostały doszczętnie ograbione, a jeden reset od następnego dzieli krótki czas odnowienia. Przyjdziecie pod drzwi ze złą trudnością, a gra powie o tym, zanim przejście się zacznie. Rajd nigdy nie resetuje się w ten sposób; obowiązują jego własne reguły blokad.",
       "templeLoreTitle": "Zatopiona Świątynia, nieco głębiej",
       "templeLoreBody": "Świątynia ma własną legendę, starszą niż kult, którego tropisz gdzie indziej. Na brzegu Migotliwego Stawu, jeziorka, które pije światło księżyca i oddaje utopionych, samotny strażnik pilnuje bramy bladego światła. Pod powierzchnią schody z zimnego kamienia zbiegają w dół do niej. Lud, który tam zatonął, nie utonął przez nieszczęśliwy wypadek: byli to członkowie Bladego Chóru, którzy zeszli pod wodę w modlitwie i nigdy nie przestali śpiewać. Dawni strażnicy wydrapali jedno ostrzeżenie w skałach, zanim woda ich pochłonęła, modlitwę do czegoś, co nazwali Utopionym Księżycem, a pewniejsza ręka dopisała pod nią dwa słowa: ono tylko śpi.",
       "cryptLeadTitle": "Drzwi, które zmarli mieli trzymać zamknięte",
@@ -10563,11 +10589,11 @@ export const pl_PL: EnTranslations = {
       },
       "melting_acid": {
         "name": "Topniejący kwas",
-        "description": "Pokrywa twój oręż na 30 min. Każde uderzenie wręcz opryskuje cel żrącym kwasem i zmniejsza jego pancerz o 5% na 12 sek."
+        "description": "Pokrywa twoją broń na 30 min. Każdy atak wręcz opryskuje cel żrącym kwasem i zmniejsza jego pancerz o 5% na 12 sek."
       },
       "nightshade_coating": {
         "name": "Powłoka Nocnego Cienia",
-        "description": "Pokrywa twój oręż na 30 min. Każde uderzenie wręcz pokrywa cel psianką i redukuje otrzymywane przez niego leczenie o 25% na 12 sek."
+        "description": "Pokrywa twoją broń na 30 min. Każdy atak wręcz pokrywa cel psianką i redukuje otrzymywane leczenie o 25% na 12 sek."
       },
       "expose_armor": {
         "name": "Wyłom w pancerzu",
@@ -14078,6 +14104,48 @@ export const pl_PL: EnTranslations = {
       },
       "wand_of_quenched_sparks": {
         "name": "Różdżka Wygaszonych Iskier"
+      },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
       },
       "conjured_water4": {
         "name": "Wyczarowana woda źródlana"
@@ -19085,10 +19153,16 @@ export const pl_PL: EnTranslations = {
         "name": "Straż przednia spętanego kamienia",
         "bonus3": "Zwiększa szybkość ataku i rzucania zaklęć o 15%."
       },
+      "bramblehide": {
+        "name": "Cierniowa Skóra Rootsa",
+        "bonus2": "Zwiększa siłę ataku o 40.",
+        "bonus4": "Twoje krytyczne trafienia bronią rozłupują cel Kościaną Drzazgą, zadając 8 obrażeń od krwawienia co 2 s przez 12 s. Kumuluje się do 3 razy.",
+        "bonus6": "Zwiększa szybkość ataku i rzucania zaklęć o 4% oraz trafienie o 3%. Twoje krytyczne trafienia bronią rozłupują cel Kościaną Drzazgą, zadając 5 obrażeń od krwawienia co 2 sek. przez 12 sek. Kumuluje się do 3 razy."
+      },
       "chronoweave": {
         "name": "Szaty Eterowej Tkaniny",
-        "bonus2": "Echo Czasu zamienia 50% twoich pozostałych obrażeń Arkanów przeciw jednemu celowi w leczenie. Przypływ Eteru i Eteryczne Pociski zamieniają zamiast tego 200% zadanych obrażeń. Otrzymywane obrażenia nie opóźniają już rzucania zaklęć.",
-        "bonus4": "Czas odnowienia Czasowej Kaskady skraca się o 5 sek., a jej koszt many maleje o 30%."
+        "bonus2": "Echo Czasu zamienia 50 procent twoich obrażeń tajemnych przeciw jednemu celowi w leczenie. Otrzymywane obrażenia nie opóźniają już rzucania zaklęć.",
+        "bonus4": "Czas odnowienia Czasowej Kaskady skraca się o 5 sek."
       },
       "cinderbark": {
         "name": "Osłona Żarokory",

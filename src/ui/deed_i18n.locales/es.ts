@@ -1060,6 +1060,10 @@ export const table: DeedLocaleTable = {
     desc: 'Derrota a Varkhul, Padre de la Forja de la Última Llama, en dificultad heroica sin que muera un solo miembro de la banda.',
     title: 'el Incólume',
   },
+  col_set_bramblehide: {
+    name: 'Piel de Zarza de Roots',
+    desc: 'Descubre cada pieza de la Piel de Zarza de Roots.',
+  },
 };
 
 // es_ES rides this base table plus the delve-vocabulary override layer

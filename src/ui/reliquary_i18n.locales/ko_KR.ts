@@ -192,4 +192,8 @@ export const table: ReliquaryLocaleTable = {
     name: '영웅: 내부 용광로',
     desc: '마지막 불꽃의 대장장이 발쿨에게서 영웅 난이도에서만 나오는 방패와 무기.',
   },
+  conquerors_set_bramblehide: {
+    name: '루츠의 가시덤불가죽',
+    desc: '브램블하이드 가죽 세트 전체.',
+  },
 };

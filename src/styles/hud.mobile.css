@@ -5899,7 +5899,9 @@
      the treasury gold buttons are primary tap targets on the phone pairing. */
   body.mobile-touch #bank-window .bank-tab,
   body.mobile-touch #bank-window .gbank-view-tab,
-  body.mobile-touch #bank-window .gbank-gold-btn {
+  body.mobile-touch #bank-window .gbank-gold-btn,
+  body.mobile-touch #bank-window .gbank-log-filter,
+  body.mobile-touch #bank-window .gbank-log-older {
     min-height: 40px;
   }
   /* The gold prompt's three coin fields hold the same touch floor as the
@@ -5942,6 +5944,18 @@
     body.mobile-touch #bank-window .gbank-log-note {
       margin: 0 0 2px;
       font-size: 10px;
+    }
+    /* The history table on a phone: tighter cells, and the two prose columns
+       may wrap; the pinned header keeps the columns readable regardless. */
+    body.mobile-touch #bank-window .gbank-log-list {
+      font-size: 11px;
+    }
+    body.mobile-touch #bank-window .gbank-log-list th,
+    body.mobile-touch #bank-window .gbank-log-list td {
+      padding: 3px 5px;
+    }
+    body.mobile-touch #bank-window .gbank-log-action {
+      white-space: normal;
     }
   }
   /* Short landscape phones: the 50/50 pairing box (viewport minus the 10px top

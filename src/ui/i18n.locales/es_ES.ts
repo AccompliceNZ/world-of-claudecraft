@@ -11,77 +11,37 @@
 import type { TranslationKey } from '../i18n.catalog';
 
 export const es_ES: Partial<Record<TranslationKey, string>> = {
-  'hud.errors.tradeAlreadyTrading': 'Ese jugador ya está tradeando.',
-  'hudChrome.emotes.question': '¿Tío?',
-  'hudChrome.professions.ctaRaiseSpecialized':
-    'Sigue subiendo {craft}: {points} puntos más para Especializado, y los costes de materiales bajan.',
-  'guide.profPages.econ.feesNote':
-    'Una economía de jugadores sana necesita que las monedas salgan del mundo, y los oficios llevan varios de esos drenajes. Aprender una receta de un entrenador cuesta una tarifa única según su peldaño, cada creación exitosa paga una pequeña tarifa escalada al presupuesto de estadísticas de la pieza, y encima de esas están las tarifas de desvinculación y la comisión del Mercado.\n\nNinguna de estas monedas va a otro jugador: sale del juego por completo, que es lo que mantiene el valor de las monedas que el resto de vosotros ganáis.',
-  'nav.loginRegister': 'Iniciar sesión/Registrarse',
-  'stats.playersOnline': 'Jugadores en línea',
-  'stats.realmName': 'Nombre del mundo',
-  'footer.githubLabel': 'Proyecto de código abierto',
-  'footer.terms': 'Términos de servicio',
-  'footer.privacy': 'Política de privacidad',
-  'highscores.title': 'Tabla de clasificaciones',
-  'wiki.title': 'Wiki y guía del juego',
-  'news.title': 'Noticias y actualizaciones',
-  'download.title': 'Descargar lanzador de escritorio',
-  'download.macCta': 'Descargar version macOS',
-  'download.windowsPending': 'Compilacion de Windows pendiente.',
-  'mode.onlineTitle': 'Jugar en línea',
-  'mode.onlineAria': 'Jugar en línea: conéctate al mundo compartido persistente',
-  'mode.offlineTitle': 'Jugar en solitario',
-  'mode.offlineAria': 'Jugar en solitario: inicia una sesión local instantánea de un jugador',
-  'auth.enterRealm': 'Entrar al mundo',
-  'auth.logIn': 'Iniciar sesión',
-  'auth.createAccount': 'Crear cuenta',
-  'auth.realmList': 'Lista de mundos',
-  'auth.changeRealm': 'Cambiar de mundo',
-  'auth.createCharacter': 'Crear personaje',
-  'auth.characterName': 'Nombre del personaje',
-  'auth.enterWorld': 'Entrar al mundo',
-  'auth.offlineCharacter': 'Personaje en solitario',
-  'controls.title': 'Guía de controles',
-  'controls.moveTurn': 'Moverse/Girar',
-  'controls.autorun': 'Correr automáticamente',
-  'controls.combat': 'Combate e interacción',
-  'controls.target': 'Marcar enemigo',
-  'controls.spells': 'Lanzar hechizos',
-  'controls.interact': 'Interactuar/Despojar',
-  'controls.nameplates': 'Mostrar nombres',
-  'controls.camera': 'Cámara y ratón',
-  'controls.rightDrag': 'Arrastrar clic derecho',
-  'controls.leftDrag': 'Arrastrar clic izquierdo',
-  'controls.mouseWheel': 'Rueda del ratón',
-  'controls.mouselook': 'Mirar con ratón',
-  'controls.orbit': 'Rotar cámara',
-  'controls.charPane': 'Panel de personaje',
-  'controls.spellbook': 'Libro de hechizos',
-  'controls.questLog': 'Diario de misiones',
-  'controls.worldMap': 'Mapa del mundo',
-  'controls.bags': 'Inventario de bolsas',
-  'controls.friends': 'Amigos y hermandad',
-  'controls.chat': 'Abrir chat',
-  'seo.description':
-    'Emprende una aventura épica en World of ClaudeCraft, un micro-MMO de estilo clásico jugable directamente en tu navegador. Únete a un mundo compartido persistente, sube de nivel tus clases y derrota a tus enemigos.',
-  'a11y.goHome': 'Ir a la página de inicio',
   'a11y.characterActions': 'Acciones del personaje',
   'a11y.githubProject': 'Abrir el proyecto World of ClaudeCraft en GitHub',
-  'loading.enteringWorld': 'Entrando en el mundo...',
-  'loading.assetsFailed': 'Error al cargar recursos: prueba a recargar. {error}',
-  'loading.rendererFailed': 'No se pudo iniciar el renderizador: prueba a recargar. {error}',
-  'loading.enterTimeout':
-    'No se pudo entrar en el mundo. La conexión agotó el tiempo de espera. ¿Está funcionando el servidor del juego?',
-  'errors.nothingInteract': 'No hay nada con lo que interactuar.',
-  'errors.characterNameInvalid':
-    'El nombre debe tener 2-16 caracteres, empezar por una letra y contener solo letras, espacios, guiones o apóstrofes.',
-  'errors.api.tooManyAttempts': 'Demasiados intentos. Espera un minuto y vuelve a intentarlo.',
-  'errors.api.accountBanned': 'Esta cuenta ha sido vetada.',
-  'errors.api.renameBeforeEntering':
-    'Este personaje debe cambiar de nombre antes de entrar en el mundo.',
-  'classDetails.lore.warrior':
-    'Los guerreros son combatientes curtidos que generan ira al infligir o recibir daño. Absorben grandes golpes o aplastan enemigos con armas pesadas.',
+  'a11y.goHome': 'Ir a la página de inicio',
+  'abilityUi.tooltip.requiresStealthSkulduggery':
+    'Requiere sigilo (no hace falta con 3 de Penumbra ni durante el velo de sombras)',
+  'apiError.cheater_mark.admin_target': 'Las cuentas de operador no se pueden marcar.',
+  'apiError.cheater_mark.not_marked': 'Esa cuenta no está marcada.',
+  'auth.changeRealm': 'Cambiar de mundo',
+  'auth.characterName': 'Nombre del personaje',
+  'auth.createAccount': 'Crear cuenta',
+  'auth.createCharacter': 'Crear personaje',
+  'auth.designCode': 'Código de diseño',
+  'auth.designCodeCopied': 'Código de diseño copiado.',
+  'auth.designCodeErrEmpty': 'Pega primero un código de diseño.',
+  'auth.designCodeErrHeader': 'Eso no parece un código de diseño.',
+  'auth.designCodeErrMalformed':
+    'Ese código de diseño está dañado. Copia el código completo e inténtalo de nuevo.',
+  'auth.designCodeErrVersion':
+    'Ese código de diseño procede de una versión más reciente del juego.',
+  'auth.designCodeHint':
+    'Copia este código para guardar o compartir este aspecto. Pega aquí un código e impórtalo para cargarlo.',
+  'auth.designCodeImported': 'Diseño importado.',
+  'auth.designCodeImportedPartial':
+    'Diseño importado. Se han omitido los valores que esta versión no reconoce.',
+  'auth.enterRealm': 'Entrar al mundo',
+  'auth.enterWorld': 'Entrar al mundo',
+  'auth.logIn': 'Iniciar sesión',
+  'auth.offlineCharacter': 'Personaje en solitario',
+  'auth.realmList': 'Lista de mundos',
+  'classDetails.lore.druid':
+    'Los druidas canalizan la naturaleza, curan heridas, enredan enemigos y cambian a formas animales para defender o dañar.',
   'classDetails.lore.hunter':
     'Los cazadores son especialistas a distancia que combaten junto a una bestia domada, acribillan a los enemigos con disparos certeros y veloces, los ralentizan con picaduras y fuego conmocionante, y cambian de aspecto según lo exija el momento.',
   'classDetails.lore.rogue':
@@ -90,47 +50,29 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
     'Los chamanes dominan los elementos, imbuyen armas con poder, golpean con relámpagos y restauran a sus aliados.',
   'classDetails.lore.warlock':
     'Los brujos invocan demonios, lanzan maldiciones y magia de daño continuo, y sorben la vida de sus enemigos para aguantar.',
-  'classDetails.lore.druid':
-    'Los druidas canalizan la naturaleza, curan heridas, enredan enemigos y cambian a formas animales para defender o dañar.',
-  'mobilePreflight.baseLandscape': 'Gira el dispositivo a horizontal antes de entrar en el mundo.',
-  'mobilePreflight.basePerformance':
-    'El rendimiento móvil puede degradarse. Cierra pestañas extra y baja la calidad de renderizado si el juego va lento.',
-  'mobilePreflight.iosInstallDetail':
-    'Para pantalla completa real en iPhone o iPad, instala primero esta página en tu pantalla de inicio.',
-  'mobilePreflight.iosShareStep': 'En Safari, toca Compartir y luego Añadir a pantalla de inicio.',
-  'mobilePreflight.androidStandaloneDetail':
-    'Estás en modo de app a pantalla completa. Mantén el dispositivo en horizontal.',
-  'mobilePreflight.androidInstallDetail':
-    'Para pantalla completa en Android, instala esta página o añádela a la pantalla de inicio primero.',
-  'mobilePreflight.androidInstallStep':
-    'En Chrome, toca el menú y luego Instalar app o Añadir a pantalla de inicio.',
-  'mobilePreflight.otherInstallDetail':
-    'Instala o añade esta página a la pantalla de inicio para la mejor experiencia móvil a pantalla completa.',
-  // Quest-tracker header toggle hover hint (es_ES uses "seguimiento" vs es-LatAm
-  // "rastreador"); the count badge inherits es (identical "({count})").
-  'hudChrome.questTracker.collapseHint': 'Contraer el seguimiento de misiones',
-  'hudChrome.questTracker.expandHint': 'Expandir el seguimiento de misiones',
-  // v0.13.0 release i18n fill: bug report, chat window, character takeover, admin bug reports
-  'hudChrome.bugReport.failed': 'No se pudo enviar el informe de error. Inténtalo de nuevo.',
-  'hudChrome.bugReport.menuButton': 'Informar de un error',
-  'hudChrome.bugReport.rateLimited':
-    'Has enviado varios informes hace poco. Espera un momento antes de enviar otro.',
-  'hudChrome.bugReport.screenshotAlt':
-    'Captura de pantalla de la vista actual adjunta a este informe de error',
-  'hudChrome.bugReport.submit': 'Enviar informe',
-  'hudChrome.bugReport.submitted': 'Informe de error enviado. ¡Gracias!',
-  'hudChrome.bugReport.submittedNoShot':
-    'Informe de error enviado, pero la captura de pantalla era demasiado grande para incluirla.',
-  'hudChrome.bugReport.tooLarge':
-    'Ese informe es demasiado grande para enviarlo. Inténtalo de nuevo sin la captura de pantalla.',
-  // General chat rate limit HUD notices (es_ES prefers "vuelve a intentarlo" over
-  // es-LatAm "inténtalo de nuevo", matching this file's existing retry phrasing).
-  'hudChrome.chatQuota.limitReached':
-    'Has alcanzado el límite del chat General. Vuelve a intentarlo en {seconds}.',
-  'hudChrome.chatQuota.pending':
-    'Tu mensaje anterior del chat General todavía se está enviando. Vuelve a intentarlo en un momento.',
-  'hudChrome.chatQuota.unavailable':
-    'El chat General no está disponible temporalmente. Vuelve a intentarlo pronto.',
+  'classDetails.lore.warrior':
+    'Los guerreros son combatientes curtidos que generan ira al infligir o recibir daño. Absorben grandes golpes o aplastan enemigos con armas pesadas.',
+  'controls.autorun': 'Correr automáticamente',
+  'controls.bags': 'Inventario de bolsas',
+  'controls.camera': 'Cámara y ratón',
+  'controls.charPane': 'Panel de personaje',
+  'controls.chat': 'Abrir chat',
+  'controls.combat': 'Combate e interacción',
+  'controls.friends': 'Amigos y hermandad',
+  'controls.interact': 'Interactuar/Despojar',
+  'controls.leftDrag': 'Arrastrar clic izquierdo',
+  'controls.mouselook': 'Mirar con ratón',
+  'controls.mouseWheel': 'Rueda del ratón',
+  'controls.moveTurn': 'Moverse/Girar',
+  'controls.nameplates': 'Mostrar nombres',
+  'controls.orbit': 'Rotar cámara',
+  'controls.questLog': 'Diario de misiones',
+  'controls.rightDrag': 'Arrastrar clic derecho',
+  'controls.spellbook': 'Libro de hechizos',
+  'controls.spells': 'Lanzar hechizos',
+  'controls.target': 'Marcar enemigo',
+  'controls.title': 'Guía de controles',
+  'controls.worldMap': 'Mapa del mundo',
   'delveUi.affix.bad_air': 'Aire viciado',
   'delveUi.affix.candleblind': 'Cegavelas',
   'delveUi.affix.cult_remnants': 'Vestigios del culto',
@@ -193,191 +135,9 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
   'delveUi.tracker.complete': 'Completada',
   'delveUi.tracker.marks': 'Marcas de Profundidad: {count}',
   'delveUi.tracker.title': 'Profundidad',
-  'entities.abilities.blazing_barrier.name': 'Barrera ardiente',
-  'entities.abilities.blazing_barrier.description':
-    'Rodéate de fuego para absorber {damage} de daño durante 60 s. (Fuego)',
-  'entities.abilities.cold_snap.name': 'Llamada invernal',
-  'entities.abilities.cold_snap.description':
-    'Restablece el tiempo de reutilización de Paso centelleante, Velo de Escarcha e Invisibilidad mejorada. (Talento de mago)',
-  'entities.abilities.greater_invisibility.name': 'Invisibilidad mejorada',
-  'entities.abilities.hot_streak.name': 'Racha ardiente',
-  'entities.abilities.hot_streak.description':
-    'Pasivo: dos críticos consecutivos de tus hechizos de Fuego (Bola de Fuego, Explosión de Fuego, Agostar, Piroexplosión o Fogonazo) convierten tu siguiente Piroexplosión o Fogonazo en un lanzamiento instantáneo y sin coste. Los hechizos que gastan el efecto aportan a la racha SIGUIENTE, también si son gratuitos; Fogonazo aporta una sola vez, aunque alcance a varios enemigos, y únicamente puede aportar el primer impacto. (Fuego)',
-  'entities.abilities.ice_floes.name': 'Hielos flotantes',
-  'entities.abilities.ice_floes.description':
-    'Puedes lanzar en movimiento tus dos siguientes hechizos que tengan tiempo de lanzamiento. Permanece 15 s. (Talento de mago)',
-  'entities.abilities.ignition.name': 'Combustión',
-  'entities.abilities.ignition.description':
-    'Pasivo: los críticos de tus hechizos prenden al objetivo y le infligen un 40% del daño causado a lo largo de 6 s; el efecto se acumula. (Maestría de Fuego)',
-  'entities.abilities.mass_barrier.name': 'Barrera colectiva',
-  'entities.abilities.mass_barrier.description':
-    'Otorga un escudo a ti y a un máximo de 4 aliados cercanos en 30 m; cada uno absorbe 130 de daño durante 60 s. (Talento de mago)',
-  'entities.abilities.overload.name': 'Potenciación',
-  'entities.abilities.overload.description':
-    'Potencia tu siguiente hechizo un 40%, pero aumenta su coste de maná un 50%. Permanece 10 s. (Talento de mago)',
-  'entities.abilities.power_echo.name': 'Eco de potencia',
-  'entities.abilities.power_echo.description':
-    'Tu siguiente hechizo directo vuelve a actuar con un 50% de potencia sobre el mismo objetivo. Permanece 10 s. (Talento de mago)',
-  'entities.abilities.rings_of_frost.name': 'Círculo de Escarcha',
-  'entities.abilities.rings_of_frost.description':
-    'Crea un círculo durante 10 s. Los enemigos que atraviesan el borde quedan congelados durante 4 s. (Talento de mago)',
-  'entities.abilities.rune_of_power.name': 'Runa de potencia',
-  'entities.abilities.rune_of_power.description':
-    'Traza una runa de potencia bajo tus pies durante 15 s: los aliados situados a menos de 8 m infligen un 10% más de daño. (Talento de mago)',
-  'entities.abilities.summon_water_elemental.name': 'Invocar a un elemental de agua',
-  'entities.abilities.summon_water_elemental.description':
-    'Invoca a un elemental de agua que combate junto a ti, dispara Descargas de Agua contra tu objetivo y canaliza Chorro de Agua. (Escarcha)',
-  'entities.items.conjured_water4.name': 'Agua de Manantial Invocada',
-  'entities.items.direfang_quiver.name': 'Carcaj de Direfang',
-  'entities.items.conjured_bread4.name': 'Hogaza de Festín Invocada',
-  'entities.delves.collapsed_reliquary.leaveText':
-    'Trepas de vuelta hasta el Hermano Halven, en la ruina del relicario.',
-  'entities.mobs.reliquary_bonewalker.name': 'Caminahuesos alzado',
-  'entities.mobs.reliquary_gravecall_acolyte.name': 'Acólito invocasepulcros',
-  'entities.mobs.water_elemental.name': 'Elemental acuático',
-  'entities.npcs.brother_halven.greeting': 'El relicario de abajo ha vuelto a moverse.',
-  'sim.delve.alreadyInDelve': 'Ya estás en una Profundidad.',
-  'sim.delve.bossChest':
-    'El jefe cae. Un cofre de relicario protegido se alza en el estrado. Fuerza su cerradura para reclamar tu botín.',
-  'sim.delve.cannotAffordCompanionUpgrade': 'No puedes permitirte esta mejora.',
-  'sim.delve.cannotEnterNow': 'No puedes entrar en una Profundidad ahora mismo.',
-  'sim.delve.companionMarksRequired':
-    'Necesitas {marks} Marcas de Profundidad para mejorar a {name}.',
-  'sim.delve.complete': '{name} completada.',
-  'sim.delve.duringArena': 'No puedes entrar en una Profundidad durante un combate de arena.',
-  'sim.delve.duringDuel': 'No puedes entrar en una Profundidad durante un duelo.',
-  'sim.delve.graveFalters': 'El rito sepulcral vacila.',
-  'sim.delve.enemiesRemain': 'Acaba primero con los enemigos restantes.',
-  'sim.delve.levelRequired': 'Debes ser nivel {level} para entrar en {name}.',
-  'sim.delve.mechanismOpen':
-    'Un mecanismo se abre con un chasquido cerca. Se abre un pasaje hacia el norte. Busca el portal de salida más adelante.',
-  'sim.delve.moveCloserChest': 'Acércate más al cofre.',
-  'sim.delve.moveCloserPassage': 'Acércate más al pasaje.',
-  'sim.delve.moveCloserStairs': 'Acércate más a las escaleras.',
-  'sim.delve.notInDelve': 'No estás en una Profundidad.',
-  'sim.delve.nothingHappens': 'No pasa nada.',
-  'sim.delve.raiseDead': '{name} empieza a alzar a los muertos.',
-  'sim.delve.runFailed': 'La incursión a {name} ha fracasado.',
-  'sim.delve.strikeWall': 'Golpea el muro para abrirte paso.',
-  'sim.delve.tombstoneHint':
-    'Un pasaje de lápida se abre hacia el norte cuando la sala queda despejada.',
-  'sim.delve.tombstoneOpen':
-    'Un pasaje de lápida sellado se abre con un chirrido hacia el norte. Entra en él para continuar.',
-  'sim.delve.unknownTier': 'Nivel de Profundidad desconocido.',
-  'sim.delve.whileTrading': 'No puedes entrar en una Profundidad mientras comercias.',
-  'sim.lockpick.alreadyInProgress': 'Alguien ya está forzando la cerradura.',
-  'sim.lockpick.lastPickSnaps':
-    'La última ganzúa se parte. La cerradura se atasca: el cofre se pierde a menos que vuelvas a superar la Profundidad.',
-  'sim.lockpick.lockJammed':
-    'La cerradura está demasiado atascada para forzarla. Vuelve a superar la Profundidad para otro intento.',
-  'sim.lockpick.noAttempt': 'No hay ningún intento de forzar la cerradura en curso.',
-  'sim.lockpick.tierPremium': 'Premium',
-  'sim.lockpick.toolSlips': 'Esa herramienta resbala en esta cerradura.',
-  // Aura effect tooltip summaries.
-  'hudChrome.auraEffect.dot': 'Provoca {value} de daño de {school} cada {interval} s',
-  'hudChrome.auraEffect.hot': 'Recupera {value} de salud cada {interval} s',
-  'hudChrome.auraEffect.absorb': 'Bloquea {value} de daño',
-  'hudChrome.auraEffect.healAbsorb': 'Bloquea {value} de sanación recibida',
-  'hudChrome.auraEffect.thorns': 'Provoca {value} de daño de {school} a los atacantes',
-  'hudChrome.auraEffect.slow': 'Disminuye la velocidad de movimiento un {pct}%',
-  'hudChrome.auraEffect.speed': 'Incrementa la velocidad de movimiento un {pct}%',
-  'hudChrome.auraEffect.attackSpeedSlow': 'Disminuye la velocidad de ataque un {pct}%',
-  'hudChrome.auraEffect.attackSpeedFast': 'Incrementa la velocidad de ataque un {pct}%',
-  'hudChrome.auraEffect.haste': 'Incrementa la velocidad de ataque y lanzamiento un {pct}%',
-  'hudChrome.auraEffect.tongues': 'Incrementa el tiempo de lanzamiento un {pct}%',
-  'hudChrome.auraEffect.increase.ap': 'Incrementa el poder de ataque en {value}',
-  'hudChrome.auraEffect.increase.armor': 'Incrementa la armadura en {value}',
-  'hudChrome.auraEffect.increase.int': 'Incrementa el intelecto en {value}',
-  'hudChrome.auraEffect.increase.agi': 'Incrementa la agilidad en {value}',
-  'hudChrome.auraEffect.increase.sta': 'Incrementa el aguante en {value}',
-  'hudChrome.auraEffect.increase.spi': 'Incrementa el espíritu en {value}',
-  'hudChrome.auraEffect.increase.allStats': 'Incrementa todos los atributos en {value}',
-  'hudChrome.auraEffect.reduce.ap': 'Disminuye el poder de ataque en {value}',
-  'hudChrome.auraEffect.reduce.armor': 'Disminuye la armadura en {value}',
-  'hudChrome.auraEffect.reduce.int': 'Disminuye el intelecto en {value}',
-  'hudChrome.auraEffect.reduce.agi': 'Disminuye la agilidad en {value}',
-  'hudChrome.auraEffect.reduce.sta': 'Disminuye el aguante en {value}',
-  'hudChrome.auraEffect.reduce.spi': 'Disminuye el espíritu en {value}',
-  'hudChrome.auraEffect.reduce.allStats': 'Disminuye todos los atributos en {value}',
-  'hudChrome.auraEffect.dodge': 'Incrementa la probabilidad de esquivar un {pct}%',
-  'hudChrome.auraEffect.dodgeReduce': 'Disminuye la probabilidad de esquivar un {pct}%',
-  'hudChrome.auraEffect.armorFlat': 'Disminuye la armadura en {value}',
-  'hudChrome.auraEffect.armorFlatStacks':
-    'Disminuye la armadura en {value} ({stacks} acumulaciones)',
-  'hudChrome.auraEffect.mortalWound': 'Disminuye la sanación recibida un {pct}%',
-  'hudChrome.auraEffect.vulnerability': 'Incrementa el daño recibido un {pct}%',
-  'hudChrome.auraEffect.physVuln': 'Incrementa el daño físico recibido un {pct}%',
-  'hudChrome.auraEffect.spellVuln': 'Incrementa el daño mágico recibido un {pct}%',
-  'hudChrome.auraEffect.critVuln':
-    'Incrementa la probabilidad de recibir golpes críticos un {pct}%',
-  'hudChrome.auraEffect.costTax': 'Incrementa los costes de habilidades un {pct}%',
-  'hudChrome.auraEffect.stun': 'Aturdimiento: no puede actuar',
-  'hudChrome.auraEffect.root': 'Inmovilizado: no puede moverse',
-  'hudChrome.auraEffect.incapacitate': 'Incapacitación: no puede actuar',
-  'hudChrome.auraEffect.polymorph': 'Polimorfia: no puede actuar',
-  'hudChrome.auraEffect.hex': 'Disminuye el daño y la sanación realizados un {pct}%',
-  'hudChrome.auraEffect.blind': 'Ceguera: no puede actuar',
-  'hudChrome.auraEffect.silence': 'Silencio: no puede lanzar hechizos',
-  'hudChrome.auraEffect.disarm': 'Desarme: no puede usar ataques con arma',
-  'hudChrome.auraEffect.lockout': 'Escuela mágica bloqueada',
-  'hudChrome.auraEffect.imbue': 'Arma encantada con efectos adicionales',
-  'hudChrome.auraEffect.imbueRange': 'Arma imbuida: {min} a {max} de daño extra con Verdict',
-  'hudChrome.auraEffect.stealth': 'Encubierto; velocidad de movimiento reducida un {pct}%',
-  'hudChrome.auraEffect.formBear': 'Forma de Bruin: mayor salud y armadura',
-  'hudChrome.auraEffect.formCat': 'Forma felina, daño cuerpo a cuerpo y energía',
-  'hudChrome.auraEffect.formTravel': 'Forma Fleet: velocidad de desplazamiento aumentada un {pct}%',
-  'hudChrome.auraEffect.defensiveStance': 'Guarded Stance: menos daño recibido, más amenaza',
-  'hudChrome.auraEffect.righteousFury':
-    'Burning Oath: amenaza por daño Sagrado enormemente aumentada',
-  'hudChrome.auraEffect.scale': 'Talla aumentado un {pct}%',
-  'hudChrome.auraEffect.jump': 'Salto aumentada un {pct}%',
-  'hudChrome.auraEffect.school.physical': 'Daño físico',
-  'hudChrome.auraEffect.school.fire': 'Ígneo',
-  'hudChrome.auraEffect.school.frost': 'Hielo',
-  'hudChrome.auraEffect.school.arcane': 'Arcana',
-  'hudChrome.auraEffect.school.shadow': 'Sombra',
-  'hudChrome.auraEffect.school.holy': 'Sagrada',
-  'hudChrome.auraEffect.school.nature': 'Natural',
-  // Corpse-harvest window + mobile hotbar page toggle.
-  'hudChrome.corpseHarvest.title': 'Recolección',
-  'hudChrome.corpseHarvest.components.gills': 'Branquias',
-  'hudChrome.deeds.collapseHint': 'Contraer el seguimiento de gestas',
-  'hudChrome.deeds.expandHint': 'Expandir el seguimiento de gestas',
-  'hudChrome.deeds.watchAria': 'Seguir {name} en el seguimiento en pantalla',
-  'guide.deedsPage.cat.delve': 'Profundidades',
-  'hudChrome.deeds.catDelve': 'Profundidades',
-  'hudChrome.auraEffect.battleStance': 'Actitud de Combate: un 10% más de generación de ira',
-  'hudChrome.auraEffect.crit': 'Incrementa la probabilidad de golpe crítico un {pct}%',
-  'hudChrome.auraEffect.rageGen': 'Incrementa la generación de ira un {pct}%',
-  'hudChrome.auraEffect.reckless':
-    'Incrementa la probabilidad de golpe crítico un {pct}% y la generación de ira un {ragePct}%',
-  'hudChrome.auraEffect.avatar': 'Coloso: daño infligido incrementado un {pct}%',
-  'hudChrome.auraEffect.bloodbath':
-    'Incrementa la probabilidad de golpe crítico y el daño infligido un {pct}%',
-  'hudChrome.auraEffect.dieBySword': 'Disminuye el daño recibido un {pct}%',
-  'hudChrome.auraEffect.sanguine':
-    'Incrementa la velocidad de ataque un {hastePct}% y el daño infligido un {dmgPct}%',
-  'hudChrome.auraEffect.maxHpPct': 'Incrementa la salud máxima un {pct}%',
-  'hudChrome.statInfo.names.parry': 'Rechazo',
-  'hudChrome.statInfo.desc.parry':
-    'Tu probabilidad de rechazar por completo un ataque cuerpo a cuerpo frontal, sin recibir daño. Un golpe por la espalda no se puede rechazar.',
-  'hud.combat.floatingParry': 'Rechazo',
-  'hud.combat.parried': '{target} rechaza tu {ability}.',
-  'hud.combat.floatingEvade': 'Eludido',
-  'hud.combat.evaded': '{target} elude tu {ability}.',
-  'hudChrome.options.mouseoverCast': 'Lanzar al pasar el ratón sobre los marcos de grupo',
-  'hudChrome.options.showTargetOfTarget': 'Mostrar objetivo del objetivo',
-  'hud.errors.marketListBound': 'Este objeto está vinculado y no puede ponerse a la venta.',
-  'hudChrome.mailbox.result.noMailBound':
-    'Este objeto está vinculado y no puede enviarse por correo.',
-  // Guild rename moderation prompts (v0.34.0 release i18n fill)
-  'hud.prompts.guildInviteCancelled':
-    'Se ha anulado una invitación de hermandad pendiente porque la hermandad ha cambiado de nombre.',
-  'hud.prompts.guildRenamed':
-    'Tu hermandad ha sido renombrada a {name} por el equipo de moderación.',
-  'hudChrome.options.hideUnusedActionSlots': 'Ocultar casillas de acción sin usar',
-  'abilityUi.tooltip.requiresStealthSkulduggery':
-    'Requiere sigilo (no hace falta con 3 de Penumbra ni durante el velo de sombras)',
+  'download.macCta': 'Descargar version macOS',
+  'download.title': 'Descargar lanzador de escritorio',
+  'download.windowsPending': 'Compilacion de Windows pendiente.',
   'entities.abilities.abyssal_rift.description':
     'Abre una grieta en el lugar seleccionado, atrayendo hacia su centro a los enemigos en 8 m, infligiendo {damage} de daño de las Sombras y aturdiéndolos durante 2 s. Los jefes reciben el daño, pero resisten la atracción y el aturdimiento.',
   'entities.abilities.abyssal_rift.name': 'Abyssal Rift',
@@ -387,6 +147,9 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
     'Cada golpe añade 1 de Ritual de Veneno (máx. 6) y restaura 15 de energía. Con 6 de Ritual de Veneno, Descanso Eterno se convierte en Desgarraveneno (inflige al instante todo tu daño de sangrado restante).',
   'entities.abilities.blade_flurry.description':
     'Desata una ráfaga de hojas, aumentando la velocidad de ataque un 20% durante 12 s. (motor de Thuggery)',
+  'entities.abilities.blazing_barrier.description':
+    'Rodéate de fuego para absorber {damage} de daño durante 60 s. (Fuego)',
+  'entities.abilities.blazing_barrier.name': 'Barrera ardiente',
   'entities.abilities.cheap_shot.description':
     'Golpea al objetivo por {damage} de daño, aturdiéndolo durante 4 s. Debes estar en sigilo. Otorga 2 puntos de combo.',
   'entities.abilities.cheap_shot.specNote_subtlety':
@@ -397,6 +160,9 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
     'Cada golpe que conecta añade 1 de Sangre Antigua (máx. 3).',
   'entities.abilities.cold_blood.description':
     'Concentra tu instinto asesino para que tu próximo ataque sea un golpe crítico. (motor de Knifework)',
+  'entities.abilities.cold_snap.description':
+    'Restablece el tiempo de reutilización de Paso centelleante, Velo de Escarcha e Invisibilidad mejorada. (Talento de mago)',
+  'entities.abilities.cold_snap.name': 'Llamada invernal',
   'entities.abilities.dark_pact.description':
     'Sacrifica un 10% de tu salud actual para absorber una cantidad de daño equivalente al 30% de tu salud máxima durante 8 s.',
   'entities.abilities.dark_pact.name': 'Sanguine Covenant',
@@ -418,10 +184,23 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
     'Enrolla un alambre alrededor de la garganta del enemigo, infligiendo {damage} de daño al instante y {overTime} de sangrado a lo largo de 18 s. Debes estar en sigilo. Otorga 1 punto de combo.',
   'entities.abilities.garrote.specNote_subtlety':
     'Usado desde el Velo Crepuscular, esto añade 1 de Penumbra (máx. 3). Con 3 de Penumbra puedes usarlo SIN sigilo: ese uso no cuesta nada, gasta los 3 de Penumbra e inicia el velo de sombras de 6 s.',
+  'entities.abilities.greater_invisibility.name': 'Invisibilidad mejorada',
   'entities.abilities.hemorrhage.description':
     'Golpea al enemigo por daño de arma más {damage}, causa daño de sangrado durante 12 s y aumenta el daño de sangrado recibido un 40%. Otorga 1 punto de combo. Cada segundo uso añade 1 de Penumbra (máx. 3). (motor de Skulduggery)',
+  'entities.abilities.hot_streak.description':
+    'Pasivo: dos críticos consecutivos de tus hechizos de Fuego (Bola de Fuego, Explosión de Fuego, Agostar, Piroexplosión o Fogonazo) convierten tu siguiente Piroexplosión o Fogonazo en un lanzamiento instantáneo y sin coste. Los hechizos que gastan el efecto aportan a la racha SIGUIENTE, también si son gratuitos; Fogonazo aporta una sola vez, aunque alcance a varios enemigos, y únicamente puede aportar el primer impacto. (Fuego)',
+  'entities.abilities.hot_streak.name': 'Racha ardiente',
+  'entities.abilities.ice_floes.description':
+    'Puedes lanzar en movimiento tus dos siguientes hechizos que tengan tiempo de lanzamiento. Permanece 15 s. (Talento de mago)',
+  'entities.abilities.ice_floes.name': 'Hielos flotantes',
+  'entities.abilities.ignition.description':
+    'Pasivo: los críticos de tus hechizos prenden al objetivo y le infligen un 40% del daño causado a lo largo de 6 s; el efecto se acumula. (Maestría de Fuego)',
+  'entities.abilities.ignition.name': 'Combustión',
   'entities.abilities.kidney_shot.description':
     'Movimiento de remate que aturde al objetivo durante 1 s más 1 s por punto de combo (5 puntos de combo: 6 s).',
+  'entities.abilities.mass_barrier.description':
+    'Otorga un escudo a ti y a un máximo de 4 aliados cercanos en 30 m; cada uno absorbe 130 de daño durante 60 s. (Talento de mago)',
+  'entities.abilities.mass_barrier.name': 'Barrera colectiva',
   'entities.abilities.maul.description':
     'Un ataque brutal que aumenta el daño cuerpo a cuerpo en {damage} y causa una gran cantidad de amenaza. Se activa en tu siguiente golpe. Solo en forma de Bruin.',
   'entities.abilities.maul.specNote_feral':
@@ -429,6 +208,12 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.ossuary_mark.description':
     'Marca a un enemigo durante 15 s, almacenando el 20% del daño que tú y tus no muertos infligís. Vuelve a lanzarla para detonarla. Si el enemigo marcado muere, explota en un radio de 6 yardas y crea 1 Fragmento de alma.',
   'entities.abilities.ossuary_mark.name': 'Ossuary Mark',
+  'entities.abilities.overload.description':
+    'Potencia tu siguiente hechizo un 40%, pero aumenta su coste de maná un 50%. Permanece 10 s. (Talento de mago)',
+  'entities.abilities.overload.name': 'Potenciación',
+  'entities.abilities.power_echo.description':
+    'Tu siguiente hechizo directo vuelve a actuar con un 50% de potencia sobre el mismo objetivo. Permanece 10 s. (Talento de mago)',
+  'entities.abilities.power_echo.name': 'Eco de potencia',
   'entities.abilities.rake.specNote_feral':
     'Cada golpe que conecta añade 1 de Sangre Antigua (máx. 3).',
   'entities.abilities.regrowth.description':
@@ -438,11 +223,17 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.rejuvenation.description': 'Sana al objetivo por {damage} durante 12 s.',
   'entities.abilities.rejuvenation.specNote_restoration':
     'Plantar una NUEVA floración añade 1 de Verdor (máx. 5). Con 5 de Verdor, Alivio presto se convierte en Sobrefloración.',
+  'entities.abilities.rings_of_frost.description':
+    'Crea un círculo durante 10 s. Los enemigos que atraviesan el borde quedan congelados durante 4 s. (Talento de mago)',
+  'entities.abilities.rings_of_frost.name': 'Círculo de Escarcha',
   'entities.abilities.rip.description':
     'Movimiento de remate que hace sangrar al objetivo cada 2 s durante 24 s: 36 de daño más 24 por punto de combo gastado (5 puntos de combo: {damage} en total). Solo en Forma de lobo.',
   'entities.abilities.ruinous_brand.description':
     'Marca a un enemigo durante 15 s. Tus próximos 3 hechizos directos hacen eco por un 25% de daño contra el enemigo marcado, o copian un 50% de daño hacia él cuando se lanzan contra otro objetivo.',
   'entities.abilities.ruinous_brand.name': 'Ruinous Brand',
+  'entities.abilities.rune_of_power.description':
+    'Traza una runa de potencia bajo tus pies durante 15 s: los aliados situados a menos de 8 m infligen un 10% más de daño. (Talento de mago)',
+  'entities.abilities.rune_of_power.name': 'Runa de potencia',
   'entities.abilities.rupture.description':
     'Movimiento de remate que hiere al objetivo: sangra cada 2 s, durante 6 s más 2 s por punto de combo (5 puntos de combo: 16 s y {damage} de daño total).',
   'entities.abilities.sacrilegious_march.description':
@@ -464,6 +255,9 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
     'En Forma de lechúcico lunar, cada lanzamiento completado añade 1 de Marea Lunar (máx. 3). Con 3 de Marea Lunar, este botón se convierte en Estela Solar: un golpe instantáneo de 80 a 100 de daño de Naturaleza más una quemadura de 45 a lo largo de 9 s, que restaura 35 de maná y gasta los 3.',
   'entities.abilities.stealth.description':
     'Te oculta entre las sombras: los enemigos apenas te perciben, pero te mueves un 50% más lento. Atacar o recibir daño rompe el Velo Crepuscular. Vuelve a lanzarlo para salir de él.',
+  'entities.abilities.summon_water_elemental.description':
+    'Invoca a un elemental de agua que combate junto a ti, dispara Descargas de Agua contra tu objetivo y canaliza Chorro de Agua. (Escarcha)',
+  'entities.abilities.summon_water_elemental.name': 'Invocar a un elemental de agua',
   'entities.abilities.swiftmend.description':
     'Consume un efecto de sanación periódica en un objetivo amistoso para sanarlo por {damage}. Las plantaciones de Floración Silvestre y Segundo Florecer añaden Verdor; con 5 de Verdor este botón se convierte en Sobrefloración, que sana al instante a todos los aliados que lleven tus efectos de sanación periódica por el 60% de su sanación restante. (habilidad distintiva de Restauración)',
   'entities.abilities.swipe.description':
@@ -472,7 +266,36 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
     'Cada golpe que conecta añade 1 de Sangre Antigua (máx. 3).',
   'entities.abilities.venom_dart.specNote_assassination':
     'Añade 1 de Ritual de Veneno y prolonga tu herida de Desgarro venenoso 6 s (nunca supera los 20 s).',
+  'entities.delves.collapsed_reliquary.leaveText':
+    'Trepas de vuelta hasta el Hermano Halven, en la ruina del relicario.',
+  'entities.items.conjured_bread4.name': 'Hogaza de Festín Invocada',
+  'entities.items.conjured_water4.name': 'Agua de Manantial Invocada',
+  'entities.items.direfang_quiver.name': 'Carcaj de Direfang',
   'entities.items.soul_stone.name': 'Piedra de alma',
+  'entities.mobs.reliquary_bonewalker.name': 'Caminahuesos alzado',
+  'entities.mobs.reliquary_gravecall_acolyte.name': 'Acólito invocasepulcros',
+  'entities.mobs.water_elemental.name': 'Elemental acuático',
+  'entities.npcs.brother_halven.greeting': 'El relicario de abajo ha vuelto a moverse.',
+  'errors.api.accountBanned': 'Esta cuenta ha sido vetada.',
+  'errors.api.renameBeforeEntering':
+    'Este personaje debe cambiar de nombre antes de entrar en el mundo.',
+  'errors.api.tooManyAttempts': 'Demasiados intentos. Espera un minuto y vuelve a intentarlo.',
+  'errors.characterNameInvalid':
+    'El nombre debe tener 2-16 caracteres, empezar por una letra y contener solo letras, espacios, guiones o apóstrofes.',
+  'errors.nothingInteract': 'No hay nada con lo que interactuar.',
+  'footer.githubLabel': 'Proyecto de código abierto',
+  'footer.privacy': 'Política de privacidad',
+  'footer.terms': 'Términos de servicio',
+  'guide.deedsPage.cat.delve': 'Profundidades',
+  'guide.profPages.econ.feesNote':
+    'Una economía de jugadores sana necesita que las monedas salgan del mundo, y los oficios llevan varios de esos drenajes. Aprender una receta de un entrenador cuesta una tarifa única según su peldaño, cada creación exitosa paga una pequeña tarifa escalada al presupuesto de estadísticas de la pieza, y encima de esas están las tarifas de desvinculación y la comisión del Mercado.\n\nNinguna de estas monedas va a otro jugador: sale del juego por completo, que es lo que mantiene el valor de las monedas que el resto de vosotros ganáis.',
+  'highscores.title': 'Tabla de clasificaciones',
+  'hud.combat.evaded': '{target} elude tu {ability}.',
+  'hud.combat.floatingEvade': 'Eludido',
+  'hud.combat.floatingParry': 'Rechazo',
+  'hud.combat.parried': '{target} rechaza tu {ability}.',
+  'hud.errors.marketListBound': 'Este objeto está vinculado y no puede ponerse a la venta.',
+  'hud.errors.tradeAlreadyTrading': 'Ese jugador ya está tradeando.',
   'hud.pet.abyssalChainDesc':
     'Ordena a tu Gloomshade que arrastre a un enemigo normal de más de 8 m y hasta 20 m de vuelta hacia sí. Los jefes no pueden ser arrastrados. Tiempo de reutilización: 15 segundos. Haz clic con el botón derecho, mantén la pulsación táctil, o pulsa Mayús+Intro para alternar el lanzamiento automático.',
   'hud.pet.autocastOff':
@@ -483,22 +306,133 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
   'hud.pet.felboltDesc':
     'Ordena a tu Emberkin que lance un proyectil de ceniza extra a tu objetivo. Tiempo de reutilización: 8 segundos. Haz clic con el botón derecho, mantén la pulsación táctil, o pulsa Mayús+Intro para alternar el lanzamiento automático.',
   'hud.pet.felboltTitle': 'Descarga de Ceniza',
+  'hud.prompts.guildInviteCancelled':
+    'Se ha anulado una invitación de hermandad pendiente porque la hermandad ha cambiado de nombre.',
+  'hud.prompts.guildRenamed':
+    'Tu hermandad ha sido renombrada a {name} por el equipo de moderación.',
+  'hudChrome.auraEffect.absorb': 'Bloquea {value} de daño',
+  'hudChrome.auraEffect.armorFlat': 'Disminuye la armadura en {value}',
+  'hudChrome.auraEffect.armorFlatStacks':
+    'Disminuye la armadura en {value} ({stacks} acumulaciones)',
+  'hudChrome.auraEffect.attackSpeedFast': 'Incrementa la velocidad de ataque un {pct}%',
+  'hudChrome.auraEffect.attackSpeedSlow': 'Disminuye la velocidad de ataque un {pct}%',
+  'hudChrome.auraEffect.avatar': 'Coloso: daño infligido incrementado un {pct}%',
+  'hudChrome.auraEffect.battleStance': 'Actitud de Combate: un 10% más de generación de ira',
+  'hudChrome.auraEffect.blind': 'Ceguera: no puede actuar',
+  'hudChrome.auraEffect.bloodbath':
+    'Incrementa la probabilidad de golpe crítico y el daño infligido un {pct}%',
+  'hudChrome.auraEffect.costTax': 'Incrementa los costes de habilidades un {pct}%',
+  'hudChrome.auraEffect.crit': 'Incrementa la probabilidad de golpe crítico un {pct}%',
+  'hudChrome.auraEffect.critVuln':
+    'Incrementa la probabilidad de recibir golpes críticos un {pct}%',
+  'hudChrome.auraEffect.defensiveStance': 'Guarded Stance: menos daño recibido, más amenaza',
+  'hudChrome.auraEffect.dieBySword': 'Disminuye el daño recibido un {pct}%',
+  'hudChrome.auraEffect.disarm': 'Desarme: no puede usar ataques con arma',
+  'hudChrome.auraEffect.dodge': 'Incrementa la probabilidad de esquivar un {pct}%',
+  'hudChrome.auraEffect.dodgeReduce': 'Disminuye la probabilidad de esquivar un {pct}%',
+  'hudChrome.auraEffect.dot': 'Provoca {value} de daño de {school} cada {interval} s',
   'hudChrome.auraEffect.elementalTrance':
     'Reduce el daño recibido un {pct}%. El {mana}% de todo el daño que infliges se convierte en maná',
+  'hudChrome.auraEffect.formBear': 'Forma de Bruin: mayor salud y armadura',
+  'hudChrome.auraEffect.formCat': 'Forma felina, daño cuerpo a cuerpo y energía',
+  'hudChrome.auraEffect.formTravel': 'Forma Fleet: velocidad de desplazamiento aumentada un {pct}%',
   'hudChrome.auraEffect.galeheartWeapon':
     'Completar la cadencia del Espíritu Guerrero de {steps} golpes hace eco del golpe {count} veces, infligiendo un {pct}% de su daño como daño de Naturaleza',
-  'hudChrome.warlock.doomMeterLock': 'Bloquear la barra de recurso de Aflicción',
-  'hudChrome.warlock.doomMeterUnlock': 'Mover la barra de recurso de Aflicción',
-  'hudChrome.warlock.fateThreadsStatus': '{value} de {max} Hilos del destino.',
-  'hudChrome.bags.itemAriaLocked': '{item}, cantidad {count}, artículo bloqueado',
-  'hudChrome.bags.itemLockedLine': 'Artículo bloqueado',
+  'hudChrome.auraEffect.haste': 'Incrementa la velocidad de ataque y lanzamiento un {pct}%',
+  'hudChrome.auraEffect.healAbsorb': 'Bloquea {value} de sanación recibida',
+  'hudChrome.auraEffect.hex': 'Disminuye el daño y la sanación realizados un {pct}%',
+  'hudChrome.auraEffect.hot': 'Recupera {value} de salud cada {interval} s',
+  'hudChrome.auraEffect.imbue': 'Arma encantada con efectos adicionales',
+  'hudChrome.auraEffect.imbueRange': 'Arma imbuida: {min} a {max} de daño extra con Verdict',
+  'hudChrome.auraEffect.incapacitate': 'Incapacitación: no puede actuar',
+  'hudChrome.auraEffect.increase.agi': 'Incrementa la agilidad en {value}',
+  'hudChrome.auraEffect.increase.allStats': 'Incrementa todos los atributos en {value}',
+  'hudChrome.auraEffect.increase.ap': 'Incrementa el poder de ataque en {value}',
+  'hudChrome.auraEffect.increase.armor': 'Incrementa la armadura en {value}',
+  'hudChrome.auraEffect.increase.int': 'Incrementa el intelecto en {value}',
+  'hudChrome.auraEffect.increase.spi': 'Incrementa el espíritu en {value}',
+  'hudChrome.auraEffect.increase.sta': 'Incrementa el aguante en {value}',
+  'hudChrome.auraEffect.jump': 'Salto aumentada un {pct}%',
+  'hudChrome.auraEffect.lockout': 'Escuela mágica bloqueada',
+  'hudChrome.auraEffect.maxHpPct': 'Incrementa la salud máxima un {pct}%',
+  'hudChrome.auraEffect.mortalWound': 'Disminuye la sanación recibida un {pct}%',
+  'hudChrome.auraEffect.physVuln': 'Incrementa el daño físico recibido un {pct}%',
+  'hudChrome.auraEffect.polymorph': 'Polimorfia: no puede actuar',
+  'hudChrome.auraEffect.rageGen': 'Incrementa la generación de ira un {pct}%',
+  'hudChrome.auraEffect.reckless':
+    'Incrementa la probabilidad de golpe crítico un {pct}% y la generación de ira un {ragePct}%',
+  'hudChrome.auraEffect.reduce.agi': 'Disminuye la agilidad en {value}',
+  'hudChrome.auraEffect.reduce.allStats': 'Disminuye todos los atributos en {value}',
+  'hudChrome.auraEffect.reduce.ap': 'Disminuye el poder de ataque en {value}',
+  'hudChrome.auraEffect.reduce.armor': 'Disminuye la armadura en {value}',
+  'hudChrome.auraEffect.reduce.int': 'Disminuye el intelecto en {value}',
+  'hudChrome.auraEffect.reduce.spi': 'Disminuye el espíritu en {value}',
+  'hudChrome.auraEffect.reduce.sta': 'Disminuye el aguante en {value}',
+  'hudChrome.auraEffect.righteousFury':
+    'Burning Oath: amenaza por daño Sagrado enormemente aumentada',
+  'hudChrome.auraEffect.root': 'Inmovilizado: no puede moverse',
+  'hudChrome.auraEffect.sanguine':
+    'Incrementa la velocidad de ataque un {hastePct}% y el daño infligido un {dmgPct}%',
+  'hudChrome.auraEffect.scale': 'Talla aumentado un {pct}%',
+  'hudChrome.auraEffect.school.arcane': 'Arcana',
+  'hudChrome.auraEffect.school.fire': 'Ígneo',
+  'hudChrome.auraEffect.school.frost': 'Hielo',
+  'hudChrome.auraEffect.school.holy': 'Sagrada',
+  'hudChrome.auraEffect.school.nature': 'Natural',
+  'hudChrome.auraEffect.school.physical': 'Daño físico',
+  'hudChrome.auraEffect.school.shadow': 'Sombra',
+  'hudChrome.auraEffect.silence': 'Silencio: no puede lanzar hechizos',
+  'hudChrome.auraEffect.slow': 'Disminuye la velocidad de movimiento un {pct}%',
+  'hudChrome.auraEffect.speed': 'Incrementa la velocidad de movimiento un {pct}%',
+  'hudChrome.auraEffect.spellVuln': 'Incrementa el daño mágico recibido un {pct}%',
+  'hudChrome.auraEffect.stealth': 'Encubierto; velocidad de movimiento reducida un {pct}%',
+  'hudChrome.auraEffect.stun': 'Aturdimiento: no puede actuar',
+  'hudChrome.auraEffect.thorns': 'Provoca {value} de daño de {school} a los atacantes',
+  'hudChrome.auraEffect.tongues': 'Incrementa el tiempo de lanzamiento un {pct}%',
+  'hudChrome.auraEffect.vulnerability': 'Incrementa el daño recibido un {pct}%',
   'hudChrome.bags.capacityPools':
     'Artículos {generalUsed}/{generalTotal}, materiales {materialsUsed}/{materialsTotal}',
   'hudChrome.bags.emptyMaterialsOnly': 'Solo para materiales',
+  'hudChrome.bags.itemAriaLocked': '{item}, cantidad {count}, artículo bloqueado',
+  'hudChrome.bags.itemLockedLine': 'Artículo bloqueado',
   'hudChrome.bags.lockItem': 'Bloquear artículo',
   'hudChrome.bags.unlockItem': 'Desbloquear artículo',
+  'hudChrome.bank.rungInProgress':
+    'Todavía se está completando una compra para este personaje. Vuelve a intentarlo en un momento.',
+  'hudChrome.bank.rungOutage':
+    'No se pudo confirmar la compra. Vuelve a intentarlo con este botón y no se te cobrará dos veces. Si recargas el juego antes, puedes perder esa protección.',
+  'hudChrome.bugReport.failed': 'No se pudo enviar el informe de error. Inténtalo de nuevo.',
+  'hudChrome.bugReport.menuButton': 'Informar de un error',
+  'hudChrome.bugReport.rateLimited':
+    'Has enviado varios informes hace poco. Espera un momento antes de enviar otro.',
+  'hudChrome.bugReport.screenshotAlt':
+    'Captura de pantalla de la vista actual adjunta a este informe de error',
+  'hudChrome.bugReport.submit': 'Enviar informe',
+  'hudChrome.bugReport.submitted': 'Informe de error enviado. ¡Gracias!',
+  'hudChrome.bugReport.submittedNoShot':
+    'Informe de error enviado, pero la captura de pantalla era demasiado grande para incluirla.',
+  'hudChrome.bugReport.tooLarge':
+    'Ese informe es demasiado grande para enviarlo. Inténtalo de nuevo sin la captura de pantalla.',
+  'hudChrome.chatQuota.limitReached':
+    'Has alcanzado el límite del chat General. Vuelve a intentarlo en {seconds}.',
+  'hudChrome.chatQuota.pending':
+    'Tu mensaje anterior del chat General todavía se está enviando. Vuelve a intentarlo en un momento.',
+  'hudChrome.chatQuota.unavailable':
+    'El chat General no está disponible temporalmente. Vuelve a intentarlo pronto.',
+  'hudChrome.corpseHarvest.components.gills': 'Branquias',
+  'hudChrome.corpseHarvest.title': 'Recolección',
   'hudChrome.crafting.reagentLocked': 'Un reactivo para eso está bloqueado.',
+  'hudChrome.deeds.catDelve': 'Profundidades',
+  'hudChrome.deeds.collapseHint': 'Contraer el seguimiento de gestas',
+  'hudChrome.deeds.expandHint': 'Expandir el seguimiento de gestas',
+  'hudChrome.deeds.watchAria': 'Seguir {name} en el seguimiento en pantalla',
+  'hudChrome.emotes.question': '¿Tío?',
   'hudChrome.enchanting.salvageLocked': 'Ese artículo está bloqueado.',
+  'hudChrome.mailbox.result.noMailBound':
+    'Este objeto está vinculado y no puede enviarse por correo.',
+  'hudChrome.options.hideUnusedActionSlots': 'Ocultar casillas de acción sin usar',
+  'hudChrome.options.mouseoverCast': 'Lanzar al pasar el ratón sobre los marcos de grupo',
+  'hudChrome.options.showTargetOfTarget': 'Mostrar objetivo del objetivo',
   'hudChrome.otaUpdate.applying': 'Actualización descargada. Reiniciando el juego para instalarla.',
   'hudChrome.otaUpdate.continueAnyway': 'Seguir sin actualizar',
   'hudChrome.otaUpdate.downloading': 'Bajando actualización: {percent}',
@@ -506,30 +440,85 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
     'Hace falta actualizar para jugar. Se instalará en cuanto termine la descarga.',
   'hudChrome.otaUpdate.progressLabel': 'Avance de descarga de la actualización',
   'hudChrome.otaUpdate.title': 'Actualización del cliente',
-  'apiError.cheater_mark.admin_target': 'Las cuentas de operador no se pueden marcar.',
-  'apiError.cheater_mark.not_marked': 'Esa cuenta no está marcada.',
-  'auth.designCode': 'Código de diseño',
-  'auth.designCodeHint':
-    'Copia este código para guardar o compartir este aspecto. Pega aquí un código e impórtalo para cargarlo.',
-  'auth.designCodeCopied': 'Código de diseño copiado.',
-  'auth.designCodeImported': 'Diseño importado.',
-  'auth.designCodeImportedPartial':
-    'Diseño importado. Se han omitido los valores que esta versión no reconoce.',
-  'auth.designCodeErrEmpty': 'Pega primero un código de diseño.',
-  'auth.designCodeErrHeader': 'Eso no parece un código de diseño.',
-  'auth.designCodeErrVersion':
-    'Ese código de diseño procede de una versión más reciente del juego.',
-  'auth.designCodeErrMalformed':
-    'Ese código de diseño está dañado. Copia el código completo e inténtalo de nuevo.',
-  // Bank slot and Strongbox Charter purchase retry hints (es_ES prefers "vuelve a
-  // intentarlo" over es-LatAm "inténtalo de nuevo", matching this file's existing
-  // retry phrasing, see hudChrome.chatQuota above).
-  'hudChrome.bank.rungInProgress':
-    'Todavía se está completando una compra para este personaje. Vuelve a intentarlo en un momento.',
-  'hudChrome.bank.rungOutage':
-    'No se pudo confirmar la compra. Vuelve a intentarlo con este botón y no se te cobrará dos veces. Si recargas el juego antes, puedes perder esa protección.',
+  'hudChrome.professions.ctaRaiseSpecialized':
+    'Sigue subiendo {craft}: {points} puntos más para Especializado, y los costes de materiales bajan.',
+  'hudChrome.questTracker.collapseHint': 'Contraer el seguimiento de misiones',
+  'hudChrome.questTracker.expandHint': 'Expandir el seguimiento de misiones',
+  'hudChrome.statInfo.desc.parry':
+    'Tu probabilidad de rechazar por completo un ataque cuerpo a cuerpo frontal, sin recibir daño. Un golpe por la espalda no se puede rechazar.',
+  'hudChrome.statInfo.names.parry': 'Rechazo',
+  'hudChrome.warlock.doomMeterLock': 'Bloquear la barra de recurso de Aflicción',
+  'hudChrome.warlock.doomMeterUnlock': 'Mover la barra de recurso de Aflicción',
+  'hudChrome.warlock.fateThreadsStatus': '{value} de {max} Hilos del destino.',
   'hudChrome.wocStore.charter.inProgress':
     'Todavía se está completando una compra para este personaje. Vuelve a intentarlo en un momento.',
   'hudChrome.wocStore.charter.outage':
     'No se pudo confirmar la compra. Vuelve a intentarlo con este botón y no se te cobrará dos veces. Si recargas el juego antes, puedes perder esa protección.',
+  'loading.assetsFailed': 'Error al cargar recursos: prueba a recargar. {error}',
+  'loading.enteringWorld': 'Entrando en el mundo...',
+  'loading.enterTimeout':
+    'No se pudo entrar en el mundo. La conexión agotó el tiempo de espera. ¿Está funcionando el servidor del juego?',
+  'loading.rendererFailed': 'No se pudo iniciar el renderizador: prueba a recargar. {error}',
+  'mobilePreflight.androidInstallDetail':
+    'Para pantalla completa en Android, instala esta página o añádela a la pantalla de inicio primero.',
+  'mobilePreflight.androidInstallStep':
+    'En Chrome, toca el menú y luego Instalar app o Añadir a pantalla de inicio.',
+  'mobilePreflight.androidStandaloneDetail':
+    'Estás en modo de app a pantalla completa. Mantén el dispositivo en horizontal.',
+  'mobilePreflight.baseLandscape': 'Gira el dispositivo a horizontal antes de entrar en el mundo.',
+  'mobilePreflight.basePerformance':
+    'El rendimiento móvil puede degradarse. Cierra pestañas extra y baja la calidad de renderizado si el juego va lento.',
+  'mobilePreflight.iosInstallDetail':
+    'Para pantalla completa real en iPhone o iPad, instala primero esta página en tu pantalla de inicio.',
+  'mobilePreflight.iosShareStep': 'En Safari, toca Compartir y luego Añadir a pantalla de inicio.',
+  'mobilePreflight.otherInstallDetail':
+    'Instala o añade esta página a la pantalla de inicio para la mejor experiencia móvil a pantalla completa.',
+  'mode.offlineAria': 'Jugar en solitario: inicia una sesión local instantánea de un jugador',
+  'mode.offlineTitle': 'Jugar en solitario',
+  'mode.onlineAria': 'Jugar en línea: conéctate al mundo compartido persistente',
+  'mode.onlineTitle': 'Jugar en línea',
+  'nav.loginRegister': 'Iniciar sesión/Registrarse',
+  'news.title': 'Noticias y actualizaciones',
+  'seo.description':
+    'Emprende una aventura épica en World of ClaudeCraft, un micro-MMO de estilo clásico jugable directamente en tu navegador. Únete a un mundo compartido persistente, sube de nivel tus clases y derrota a tus enemigos.',
+  'sim.delve.alreadyInDelve': 'Ya estás en una Profundidad.',
+  'sim.delve.bossChest':
+    'El jefe cae. Un cofre de relicario protegido se alza en el estrado. Fuerza su cerradura para reclamar tu botín.',
+  'sim.delve.cannotAffordCompanionUpgrade': 'No puedes permitirte esta mejora.',
+  'sim.delve.cannotEnterNow': 'No puedes entrar en una Profundidad ahora mismo.',
+  'sim.delve.companionMarksRequired':
+    'Necesitas {marks} Marcas de Profundidad para mejorar a {name}.',
+  'sim.delve.complete': '{name} completada.',
+  'sim.delve.duringArena': 'No puedes entrar en una Profundidad durante un combate de arena.',
+  'sim.delve.duringDuel': 'No puedes entrar en una Profundidad durante un duelo.',
+  'sim.delve.enemiesRemain': 'Acaba primero con los enemigos restantes.',
+  'sim.delve.graveFalters': 'El rito sepulcral vacila.',
+  'sim.delve.levelRequired': 'Debes ser nivel {level} para entrar en {name}.',
+  'sim.delve.mechanismOpen':
+    'Un mecanismo se abre con un chasquido cerca. Se abre un pasaje hacia el norte. Busca el portal de salida más adelante.',
+  'sim.delve.moveCloserChest': 'Acércate más al cofre.',
+  'sim.delve.moveCloserPassage': 'Acércate más al pasaje.',
+  'sim.delve.moveCloserStairs': 'Acércate más a las escaleras.',
+  'sim.delve.nothingHappens': 'No pasa nada.',
+  'sim.delve.notInDelve': 'No estás en una Profundidad.',
+  'sim.delve.raiseDead': '{name} empieza a alzar a los muertos.',
+  'sim.delve.runFailed': 'La incursión a {name} ha fracasado.',
+  'sim.delve.strikeWall': 'Golpea el muro para abrirte paso.',
+  'sim.delve.tombstoneHint':
+    'Un pasaje de lápida se abre hacia el norte cuando la sala queda despejada.',
+  'sim.delve.tombstoneOpen':
+    'Un pasaje de lápida sellado se abre con un chirrido hacia el norte. Entra en él para continuar.',
+  'sim.delve.unknownTier': 'Nivel de Profundidad desconocido.',
+  'sim.delve.whileTrading': 'No puedes entrar en una Profundidad mientras comercias.',
+  'sim.lockpick.alreadyInProgress': 'Alguien ya está forzando la cerradura.',
+  'sim.lockpick.lastPickSnaps':
+    'La última ganzúa se parte. La cerradura se atasca: el cofre se pierde a menos que vuelvas a superar la Profundidad.',
+  'sim.lockpick.lockJammed':
+    'La cerradura está demasiado atascada para forzarla. Vuelve a superar la Profundidad para otro intento.',
+  'sim.lockpick.noAttempt': 'No hay ningún intento de forzar la cerradura en curso.',
+  'sim.lockpick.tierPremium': 'Premium',
+  'sim.lockpick.toolSlips': 'Esa herramienta resbala en esta cerradura.',
+  'stats.playersOnline': 'Jugadores en línea',
+  'stats.realmName': 'Nombre del mundo',
+  'wiki.title': 'Wiki y guía del juego',
 };

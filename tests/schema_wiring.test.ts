@@ -1171,6 +1171,7 @@ describe('ensureSchema wires every schema module at boot', () => {
       'woc_market_sales_seller',
       'woc_market_ops_closed_created',
       'bank_ledger_account_large_recent',
+      'bank_ledger_container_money_recent',
     ]);
     const guildPrefix = CONCURRENT_INDEX_MIGRATIONS.find(
       (m) => m.name === 'guilds_realm_lower_name_prefix',

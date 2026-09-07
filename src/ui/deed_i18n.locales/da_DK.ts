@@ -989,4 +989,8 @@ export const table: DeedLocaleTable = {
     desc: 'Besejr Varkhul, Sidste Flammes Smedefader, på heroisk sværhedsgrad, uden at en eneste raider dør.',
     title: 'den Uskadte',
   },
+  col_set_bramblehide: {
+    name: "Roots' Tornehud",
+    desc: "Opdag hver del af Roots' Tornehud.",
+  },
 };

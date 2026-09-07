@@ -3517,8 +3517,34 @@ export const cs_CZ: EnTranslations = {
       "guildViewsAria": "Zobrazení cechovní banky",
       "guildContentsTab": "Obsah",
       "guildLogTab": "Deník",
+      "guildHistoryTab": "History",
       "logAria": "Deník aktivity cechovní banky",
       "logNote": "{count} nejnovějších akcí cechovní banky.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Načítání deníku cechovní banky...",
       "logEmpty": "Do cechovní banky ani z ní se zatím nic nepřesunulo.",
       "logUnavailable": "Deník cechovní banky teď nelze načíst.",
@@ -5365,7 +5391,7 @@ export const cs_CZ: EnTranslations = {
       "ifHideUnused": "Skryje prázdné akční sloty, takže se vykreslí jen tlačítka, která doopravdy používáš.",
       "ifLockBars": "Uzamkne tvé lišty, abys omylem nevytáhl schopnost ze slotu.",
       "keybindsHeading": "Panel Klávesové zkratky",
-      "keybindsBody": "Seznam klíčů je pouze polovina tohoto panelu. Nad ním jsou umístěny přepínače, které rozhodují o tom, jak vaše myš řídí hru: kamera myši, zda se kurzor zamyká při otáčení, kliknutím se pohybujete a které tlačítko myši jej spouští, útočný pohyb a rozložení dotyku levou rukou.",
+      "keybindsBody": "Seznam kláves je jen polovina tohoto panelu. Nad ním sedí přepínače, které rozhodují, jak myš ovládá hru: kamera myší, jestli se kurzor při otáčení uzamkne, kliknutím k pohybu a které tlačítko myši ho spouští, útok pohybem, rozvržení pro leváky na dotyku a filtr vulgarit pro chat.",
       "keybindsMouseBody": "Dvě věci se tam snadno přehlédnou. Tlačítka myši se váží jako klávesy, takže kliknutí kolečkem i palcová tlačítka mohou nést schopnosti, zatímco levé a pravé tlačítko zůstávají vyhrazená kameře a klikání do světa. A vázat můžeš rovnou z akční lišty: zapni si tu režim vázání přímo na liště, pak klikni na slot a stiskni klávesu, kterou chceš."
     },
     "combat": {
@@ -6164,7 +6190,7 @@ export const cs_CZ: EnTranslations = {
       "heroicRewardsBody": "Hrdinští bossové upouštějí kořist, kterou znáš, vylepšenou a v popisku označenou jako Hrdinská, a koncový boss každého běhu přidává epiky, které jinde nenajdeš. To poslední zabití také zanechá Hrdinské známky každému účastníkovi: měnu, kterou utratíš u ubytovatele Vexe v Highwatch, jehož pult je regál prstenů a přívěsků, který nekoupí nic než důkaz z hrdinských hlubin.",
       "heroicLockoutBody": "Normální dungeony lze běhat celý den. Hrdinský žádá trpělivost: zabití koncového bosse omezí všechny v běhu na jedno hrdinské dokončení toho dungeonu za den a raid drží denní zámek pro každou obtížnost. Na živé říši všechny denní zámky padají společně v její vlastní noční hodině obnovy, takže dokončení vzaté těsně před tou hodinou a jiné těsně po ní spadnou do dvou různých dnů; hraj místo toho offline v prohlížeči a zámek prostě vyprší den po tvém vlastním zabití. Už dokončený pětičlenný běh zůstává otevřený vlastní skupině pro běhy k mrtvole a kořist, takže nikdo není odříznut od toho, co si tam vysloužil. Raid je přísnější: jakmile tě jeho zabití zamkne, dveře zůstanou zavřené až do obnovy, a jediná cesta zpět dovnitř je běh k mrtvole toho, kdo padl právě v tom běhu, který ho zamkl, takže živý raider, který vyjde ven, vyšel ven na celý den. Posbírej svou kořist, než opustíš arénu. Každý z těchto zámků patří postavě, která si ho vysloužila, takže dokončení na tvé hlavní postavě nechává ostatní postavy volné.",
       "resetTitle": "Resetování instancí",
-      "resetBody": "Přepínejte obtížnost, zatímco vaše skupina stále drží nárokované jízdy a staré nároky chvíli přetrvávají, než se samy vyčistí. Vůdce party je místo toho může nechat jít najednou: v nabídce jejich vlastního portrétu vyberte možnost Resetovat všechny instance nebo zadejte /dungeon reset. Reset funguje až poté, co byla obtížnost skutečně změněna, pouze pokud uvnitř nikdo, živý nebo padlý, nezůstane, pouze pokud je každá mrtvola uvnitř vydrancována a jeden reset od dalšího se oddělí krátkým cooldownem. Přijeďte ke dveřím na špatnou obtížnost a hra to řekne před začátkem běhu. Raid se resetuje stejným způsobem, jeho vlastní lockout a pravidla návratu mrtvol stále zůstávají na vrcholu.",
+      "resetBody": "Změň obtížnost, dokud vaše skupina ještě drží nárokované běhy, a staré nároky chvíli přetrvají, než se samy uvolní. Vůdce skupiny je může pustit naráz: vyberte Resetovat všechny instance v nabídce vlastního portrétu, nebo napište /dungeon reset. Reset funguje až po skutečné změně obtížnosti, jen dokud uvnitř nikdo nezůstal, živý ani padlý, jen když každá mrtvola uvnitř byla dočista vyloupena, a jeden reset od dalšího dělí krátká doba obnovy. Přijdete-li ke dveřím se špatnou obtížností, hra to řekne dřív, než běh začne. Raid se takto nikdy neresetuje; platí jeho vlastní pravidla zámků.",
       "templeLoreTitle": "Utopený chrám, o trochu hlouběji",
       "templeLoreBody": "Chrám má vlastní legendu, starší než kult, který pronásleduješ jinde. Na břehu Třpytivého plesa, horského jezera, které pije měsíční světlo a vrací utopené, drží osamělý hlídač bránu bledého světla. Pod hladinou k ní vede schodiště studeného kamene. Lidé, kteří tam klesli, se neutopili nešťastnou náhodou: byli Bledý sbor, který sestoupil pod vodu v uctívání a nikdy nepřestal zpívat. Staří strážci vyryli do skal jediné varování, než je voda vzala, modlitbu k něčemu, čemu říkali Utopený měsíc, a pevnější ruka pod ni přidala dvě slova: jen spí.",
       "cryptLeadTitle": "Dveře, které měli mrtví udržet zavřené",
@@ -10563,11 +10589,11 @@ export const cs_CZ: EnTranslations = {
       },
       "melting_acid": {
         "name": "Tavící kyselina",
-        "description": "Potře zbraň na 30 min. Každý tvůj úder na blízko postříká cíl žíravou kyselinou a sníží jeho brnění o 5 % na 12 sekund."
+        "description": "Na 30 minut potáhne vaši zbraň. Každý útok zblízka potřísní cíl žíravou kyselinou a sníží jeho brnění o 5 % na 12 sekund."
       },
       "nightshade_coating": {
         "name": "Nátěr Nightshade",
-        "description": "Potře zbraň na 30 min. Každý tvůj úder na blízko pokryje cíl nočním stínem a sníží léčení, které obdrží, o 25 % po dobu 12 sekund."
+        "description": "Na 30 minut potáhne vaši zbraň. Každý útok zblízka pokryje cíl rulíkem a sníží léčení, které obdrží, o 25 % po dobu 12 sekund."
       },
       "expose_armor": {
         "name": "Průraz zbroje",
@@ -14078,6 +14104,48 @@ export const cs_CZ: EnTranslations = {
       },
       "wand_of_quenched_sparks": {
         "name": "Hůlka Uhašených jisker"
+      },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
       },
       "conjured_water4": {
         "name": "Vyčarovaná pramenitá voda"
@@ -19085,10 +19153,16 @@ export const cs_CZ: EnTranslations = {
         "name": "Předvoj spoutaného kamene",
         "bonus3": "Zvyšuje rychlost útoku a sesílání o 15 %."
       },
+      "bramblehide": {
+        "name": "Rootsova ostružinová kůže",
+        "bonus2": "Zvyšuje sílu útoku o 40.",
+        "bonus4": "Kritické zásahy tvé zbraně roztříští cíl efektem Kostitříska a způsobí mu krvácení za 8 poškození každé 2 s po dobu 12 s. Nasčítá se až 3krát.",
+        "bonus6": "Zvyšuje rychlost útoků a sesílání o 4 % a zásah o 3 %. Kritické zásahy zbraní způsobí Krvavý střep, který cíl krvácí za 5 poškození každé 2 s po dobu 12 s. Sčítá se až 3krát."
+      },
       "chronoweave": {
         "name": "Roucha Éterové tkaniny",
-        "bonus2": "Časová ozvěna převádí 50% tvého ostatního arkánního poškození na jeden cíl na léčení. Éterová vlna a Éterové šipky místo toho převádějí 200% způsobeného poškození. Utržené poškození již nezpožďuje sesílání kouzel.",
-        "bonus4": "Doba obnovy Časové kaskády se zkracuje o 5 s a její cena many se snižuje o 30%."
+        "bonus2": "Časová ozvěna převádí 50 procent tvého arkánního poškození jediného cíle na léčení. Utržené poškození již nezpožďuje sesílání kouzel.",
+        "bonus4": "Doba obnovy Časové kaskády se zkracuje o 5 s."
       },
       "cinderbark": {
         "name": "Ochrana Popelavé kůry",

@@ -990,4 +990,8 @@ export const table: DeedLocaleTable = {
     desc: 'Besegra Varkhul, Forgefather of the Last Flame, på heroisk svårighetsgrad utan att en enda raidmedlem dör.',
     title: 'den Obrända',
   },
+  col_set_bramblehide: {
+    name: "Roots' Törnehud",
+    desc: "Upptäck varje del av Roots' Törnehud.",
+  },
 };

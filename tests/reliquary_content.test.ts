@@ -340,12 +340,13 @@ const CHEST_FN_BY_DELVE: Record<string, { chest: ChestFn; floor: number }> = {
 describe('Reliquary Conqueror catalog structure', () => {
   it('ships Conquerors + Professions + Horizons (full three-shelf product)', () => {
     // 27 + the four Crucible raid pages (per-boss N+H, the obligations
-    // closeout of docs/prd/ignivar-raid-loot.md).
-    expect(CONQUEROR_PAGES.length).toBe(31);
+    // closeout of docs/prd/ignivar-raid-loot.md) + the Roots' Bramblehide
+    // set page (the eighth epic armor family).
+    expect(CONQUEROR_PAGES.length).toBe(32);
     expect(PROFESSION_PAGES.length).toBe(3);
     expect(HORIZON_PAGES.length).toBe(5);
     // Literal: update when product adds a page.
-    expect(RELIQUARY_PAGES.length).toBe(39);
+    expect(RELIQUARY_PAGES.length).toBe(40);
     expect(
       RELIQUARY_PAGES.every(
         (p) => p.shelf === 'conquerors' || p.shelf === 'professions' || p.shelf === 'horizons',
@@ -398,9 +399,11 @@ describe('Reliquary Conqueror catalog structure', () => {
     // epics, 16 wing epics, 3 + 5 heroic-only weapons and shields), on top of
     // the batch's own page: 340 + 1 + 45, plus the two developer mount slots
     // (Lanternback Troll, Chimeglass Tortoise): 388, plus the Cluckwork Mech
-    // Bird store mount on Horizons: 389, plus the candidate Goblin Rocket Sled
-    // and Rallycart RXT slots: 391.
-    expect(full).toEqual({ owned: 391, total: 391 });
+    // Bird store mount on Horizons: 389.
+    // Roots' Bramblehide adds its seven FERAL-locked raid pieces (each on the
+    // Nythraxis page and its own set page, one relic apiece) and the seven
+    // Nythraxis gap-fill drops one relic apiece: 403.
+    expect(full).toEqual({ owned: 405, total: 405 });
     const character = catalogCharacterCompletion({
       itemsDiscovered: allOwned,
       marks: allOwned,
@@ -412,7 +415,7 @@ describe('Reliquary Conqueror catalog structure', () => {
     // Rickshaw's new mount slot and the 41 Crucible raid relics; marks are
     // character-scoped, so this trails the overview by the 29 account-scoped
     // weapon skins).
-    expect(character).toEqual({ owned: 362, total: 362 });
+    expect(character).toEqual({ owned: 376, total: 376 });
   });
 
   it('pins the final measured catalog shape: total slots and distinct marks', () => {
@@ -440,10 +443,14 @@ describe('Reliquary Conqueror catalog structure', () => {
     // Varkhul legendary slots reached 419; then 418 when the maintainer
     // pulled Forgebreaker to route it through crafting. Moving Emberward
     // from Varkhul's normal page to its heroic page keeps the total fixed.
+    // The release/v0.42.0 waves after that measured 424. Roots' Bramblehide
+    // adds 14 slots (seven on the Nythraxis page, seven on its own set page):
+    // 438. The seven Nythraxis gap-fill drops add seven slots on the Nythraxis
+    // page: 445.
     expect(
       slots,
       `slot total moved; per page: ${RELIQUARY_PAGES.map((p) => `${p.id}=${p.relics.length}`).join(', ')}`,
-    ).toBe(426);
+    ).toBe(447);
     // Distinct mark ids: the 10 shipped before Phase 21 plus the 19
     // rare-slain proofs of conquerors_rares_of_the_realm.
     expect(
@@ -661,7 +668,9 @@ describe('Reliquary relic item ids resolve in ITEMS', () => {
     // sixth figure of the ledger row's
     // "all pinned" claim; the other five are the page/overview/character/
     // slot/mark literals nearby).
-    expect(RELIQUARY_ITEM_TO_PAGES.size).toBe(284);
+    // Plus the seven Roots' Bramblehide pieces: 291, plus the seven Nythraxis
+    // gap-fill drops: 298.
+    expect(RELIQUARY_ITEM_TO_PAGES.size).toBe(298);
     for (const [id, pages] of RELIQUARY_ITEM_TO_PAGES) {
       expect(pages.length, `catalogued id ${id} maps to an empty page list`).toBeGreaterThan(0);
     }
@@ -2532,10 +2541,9 @@ const SOURCE_PENDING_RULING: Readonly<Record<string, readonly string[]>> = {
   // def comment in content/drakelands.ts. Owner call recorded 2026-08-04: the
   // slot stays listed and sourceless until the mount gets a route.
   // terrorspark_groundshaker, lanternback_troll, chimeglass_tortoise and
-  // rickshaw_mount, plus the candidate goblin_rocket_sled and rallycart_rxt:
-  // DEVELOPER_MOUNTS, dev-grant only, deliberately absent from vendors, quests,
-  // mob loot, heroic loot, and the rift reins pools (see the def comments in
-  // content/mounts.ts).
+  // rickshaw_mount: DEVELOPER_MOUNTS, dev-grant only, deliberately absent from
+  // vendors, quests, mob loot, heroic loot, and the rift reins pools (see the
+  // def comments in content/mounts.ts).
   horizons_mounts: [
     'chimeglass_tortoise',
     'drakemaw_raptor',
@@ -2643,6 +2651,8 @@ const EXPECTED_DISTINCT_SOURCES: Record<string, number> = {
   conquerors_set_nighttalon: 2,
   conquerors_set_soulflame: 2,
   conquerors_set_stormcallers: 2,
+  // Roots' Bramblehide: the whole family drops from the one raid boss.
+  conquerors_set_bramblehide: 1,
   // 5 = activity (masterworkFirst) + the four gear-capable craft professions;
   // masterwork:engineering is pended un-hinted (QA ruling 2026-08-07).
   professions_masterwork: 5,
@@ -3908,11 +3918,11 @@ describe('Reliquary source hint coverage', () => {
     expect(delveOnly.counts.vendor).toBeGreaterThanOrEqual(1);
   });
 
-  it('the pending mounts really have ZERO live award routes (the row is justified)', () => {
+  it('the two pending mounts really have ZERO live award routes (the row is justified)', () => {
     // The surviving SOURCE_PENDING_RULING row's whole claim is "no live table
-    // awards any pending mount", and the acknowledgment sweep can never check it
+    // awards either mount", and the acknowledgment sweep can never check it
     // (it short-circuits on un-hinted relics). This is the inverse sweep: the
-    // day content gives a pending mount ANY route, this reds and forces the hint
+    // day content gives either mount ANY route, this reds and forces the hint
     // plus the pending-row deletion in the same change, so the window can
     // never keep painting a blank silhouette content has learned to answer.
     for (const mountId of SOURCE_PENDING_RULING.horizons_mounts) {
@@ -3962,7 +3972,7 @@ describe('Reliquary source hint coverage', () => {
       if (reliquaryRelicSource(page, relic).length === 0) continue;
       watchedAwardIds.add(awardIdForSlot(relic, slotId));
     }
-    // The PENDING mounts' reins ride along: their whole pending claim is
+    // The two PENDING mounts' reins ride along: their whole pending claim is
     // "no route anywhere", and the nine-family inverse sweep above cannot see
     // these three excluded surfaces, so a pending reins entering one must red
     // HERE rather than leave the silhouette blank while content can answer.

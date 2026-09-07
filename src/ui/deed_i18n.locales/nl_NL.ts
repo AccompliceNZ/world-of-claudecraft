@@ -1060,4 +1060,8 @@ export const table: DeedLocaleTable = {
     desc: 'Versla Varkhul, Forgefather of the Last Flame, op Heroïsche moeilijkheidsgraad zonder dat één raider sterft.',
     title: 'de Ongeschondene',
   },
+  col_set_bramblehide: {
+    name: "Roots' Doornhuid",
+    desc: "Ontdek elk onderdeel van Roots' Doornhuid.",
+  },
 };

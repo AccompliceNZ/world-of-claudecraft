@@ -64,20 +64,15 @@ const PREFIX_CATEGORY: Record<string, DeedCategory> = {
 
 describe('audited launch totals (literals: update deliberately with the catalog)', () => {
   it('ships exactly 281 deeds worth 3125 total Renown', () => {
-    // MEASURED across the release/v0.42 candidate merge rather than
-    // reconciled by arithmetic, because each arm can only count its own
-    // additions. The candidate ships the bank socket pair, walk-in castle
-    // visit pair, Proving Shore graduation deed, and five Crucible raid deeds;
-    // this merge keeps every deed shipped, then turns the seven pvp_fiesta_*
-    // rows and eleven Vale Cup rows into Feats (renown 0, feat: true) as their
-    // activities retire. The combined conversion drops 215 Renown
-    // (65 Fiesta + 150 Vale Cup). Feats still ship, so the deed count stays at
-    // 281.
-    //
-    // The NAME carries the numbers too, deliberately: vitest prints it in the
-    // failure header, and a stale name there is the one part of this pin a
-    // reader can act on without seeing the diff. It went stale once already.
-    expect(DEED_ORDER.length).toBe(281);
+    // Release base (262 / 3145 after the WARFARE lifetime-honor ladder) plus
+    // four Reliquary Curator rank bridges and the five Phase 18 completion
+    // ladder deeds (all nine renown 0: catalog prestige never scores the
+    // board), the walk-in castle visit pair (exp_the_last_keep,
+    // exp_dawnhold_castle, renown 5 each), the Proving Shore graduation
+    // deed (prog_ready_for_an_adventure, renown 5), and the five Crucible
+    // raid deeds (four clears at 25 plus the flawless 50: +150), and the
+    // Roots' Bramblehide set collection (col_set_bramblehide, renown 0).
+    expect(DEED_ORDER.length).toBe(282);
     expect(ALL.reduce((sum, d) => sum + d.renown, 0)).toBe(3125);
   });
 
@@ -94,8 +89,9 @@ describe('audited launch totals (literals: update deliberately with the catalog)
       delve: 13,
       chronicle: 49,
       // +4 Reliquary Curator rank bridges and +5 Phase 18 completion ladder
-      // deeds on top of the release collection set.
-      collection: 37,
+      // deeds on top of the release collection set, +1 the Roots' Bramblehide
+      // set collection (col_set_bramblehide).
+      collection: 38,
       // Release's Thornhollow battlegrounds plus the WARFARE honor ladder.
       pvp: 35,
       // +2 bank socket ladder deeds (soc_strongbox_outfitter,
@@ -245,6 +241,9 @@ describe('audited launch totals (literals: update deliberately with the catalog)
       'dgn_varkhul',
       'dgn_varkhul_heroic',
       'dgn_varkhul_flawless',
+      // Roots' Bramblehide, the feral druid's Strength leather family off the
+      // Nythraxis raid: its set collection deed closes the tail.
+      'col_set_bramblehide',
     ]);
     expect(DEEDS.dgn_wildheart_basin.renown).toBe(10);
     expect(DEEDS.dgn_wildheart_basin_heroic.renown).toBe(10);
@@ -652,18 +651,20 @@ describe('frozen trigger + renown catalog (design rule 9: never retro-edit a tri
   // dead-end The Whole Book; see the reachability pin below). No other
   // trigger or renown changed (verified by reconstructing the pre-phase
   // catalog, which reproduces the previous literal exactly).
-  // Re-baselined at the release/v0.42 candidate merge, which interleaves the
-  // walk-in castle visit pair, the bank socket pair (Bank Storage phase 06,
-  // on the new bankSocketsUnlocked meter), the Proving Shore graduation deed
-  // (on the new tutorialGraduations stat), and the Crucible of the Last
-  // Spring raid deeds (the obligations closeout, docs/prd/ignivar-raid-loot.md)
-  // at the tail. MEASURED on the merged tree.
-  // Re-baselined for both Feat conversions: the seven pvp_fiesta_* deeds and
-  // the eleven Vale Cup deeds now have 0 Renown and feat: true because their
-  // activities retired. That deliberately shrinks derived completion triggers
-  // by excluding the newly feat-flagged rows from BOOK_COMPLETE_REQUIREMENTS;
-  // no other deed trigger changed.
-  const FROZEN_CATALOG_SHA256 = '00e8b88f1596729e5450183e8b8365db8c2d600a4f3cfc2bb4bc36c8d1e544ba';
+  // Re-baselined at the release/v0.39.0 sync merge, which interleaves the
+  // walk-in castle visit pair (exp_the_last_keep, exp_dawnhold_castle) and
+  // the Proving Shore graduation deed (prog_ready_for_an_adventure, on the
+  // new tutorialGraduations stat) at the tail; no shipped trigger or renown
+  // changed on either side.
+  // Re-baselined for the Crucible of the Last Spring raid deeds (the
+  // obligations closeout, docs/prd/ignivar-raid-loot.md): five appended
+  // deeds, the per-boss clear pairs (dgn_ignivar, dgn_ignivar_heroic,
+  // dgn_varkhul, dgn_varkhul_heroic) and the Varkhul flawless task
+  // (dgn_varkhul_flawless). No shipped trigger or renown changed.
+  // Re-baselined for Roots' Bramblehide (the feral druid's Strength leather
+  // family off the Nythraxis raid): one appended zero-Renown collection deed
+  // (col_set_bramblehide). No shipped trigger or renown changed.
+  const FROZEN_CATALOG_SHA256 = 'ea07b0b6c744081f9a77be5f2b6286374ee1820a7162b1692ff4d06fa1de6dd1';
 
   it('every shipped deed keeps its trigger and renown unchanged', () => {
     const canonical = JSON.stringify(
@@ -861,9 +862,9 @@ describe('table shape', () => {
     // (forbidden: the order is an append-only determinism contract; new
     // deeds append). hid_codfather's index is pinned in the refresh test.
     expect(DEED_ORDER[0]).toBe('prog_first_steps');
-    // The Crucible raid block closes the tail (appended behind the Proving
-    // Shore graduation deed; the flawless task is its final entry).
-    expect(DEED_ORDER[DEED_ORDER.length - 1]).toBe('dgn_varkhul_flawless');
+    // The Roots' Bramblehide set collection closes the tail (appended behind
+    // the Crucible raid block, whose flawless task was the previous final entry).
+    expect(DEED_ORDER[DEED_ORDER.length - 1]).toBe('col_set_bramblehide');
   });
 
   it('every entry key matches its id and its prefix matches its category', () => {
@@ -880,27 +881,11 @@ describe('table shape', () => {
   });
 
   it('every feat has renown 0 and the feat/hidden flags stay on their prefixes, disjoint', () => {
-    // The sanctioned off-prefix feats: the Reliquary completion capstone
-    // keeps its col_ id and Collection shelf beside its ladder, but carries
-    // feat: true because it is a dynamic meta over a growing catalog (the
-    // feat_book_complete class) and the flag is what keeps it out of
-    // BOOK_COMPLETE_REQUIREMENTS: three catalog slots are owner-pended today
-    // would dead-end The Whole Book for every player. The seven pvp_fiesta_*
-    // deeds, chr_vale_cup_debut, and the ten pvp_vcup_* deeds joined it when
-    // their activities retired (deeds.md rule 5, the feat_brightwood_relic
-    // class): renaming to a feat_ id would silently drop the deed from every
-    // veteran's earned set, since PlayerMeta.deedsEarned keys on the id
-    // verbatim. Growing this set is a deliberate design act; prefer the
-    // feat_ prefix for anything new.
+    // Legacy retired event deeds kept their authored chr_/pvp_ ids when they
+    // became feats. The Reliquary capstone likewise keeps its col_ ladder id so
+    // it stays beside the growing catalog it summarizes. Growing this set is a
+    // deliberate design act; prefer the feat_ prefix for anything new.
     const OFF_PREFIX_FEATS = new Set([
-      'col_reliquary_complete',
-      'pvp_fiesta_first_bout',
-      'pvp_fiesta_first_win',
-      'pvp_fiesta_double',
-      'pvp_fiesta_shutdown',
-      'pvp_fiesta_full_build',
-      'pvp_fiesta_powerups',
-      'pvp_fiesta_five_kills',
       'chr_vale_cup_debut',
       'pvp_vcup_first_match',
       'pvp_vcup_first_win',
@@ -912,6 +897,14 @@ describe('table shape', () => {
       'pvp_vcup_first_save',
       'pvp_vcup_clean_sheet',
       'pvp_vcup_guild_win',
+      'pvp_fiesta_first_bout',
+      'pvp_fiesta_first_win',
+      'pvp_fiesta_double',
+      'pvp_fiesta_shutdown',
+      'pvp_fiesta_full_build',
+      'pvp_fiesta_powerups',
+      'pvp_fiesta_five_kills',
+      'col_reliquary_complete',
     ]);
     for (const def of ALL) {
       const expectFeat = def.id.startsWith('feat_') || OFF_PREFIX_FEATS.has(def.id);
@@ -939,24 +932,6 @@ describe('table shape', () => {
     // items only ever dropped from retired Brightwood content); players who
     // read a stuck 0/1 without this caveat report it as a broken achievement.
     expect(DEEDS.feat_brightwood_relic.desc).toContain('no longer drop');
-  });
-
-  it('every retired Fiesta feat desc states the bracket is no longer offered', () => {
-    // The feat_brightwood_relic precedent again: a Fiesta deed sitting on the
-    // PvP and Sport shelf with no explanation is exactly what got reported as
-    // "the mode was removed" (a stuck 0/1 read as a broken achievement). A
-    // future copy edit that drops this sentence silently regresses the fix.
-    for (const id of [
-      'pvp_fiesta_first_bout',
-      'pvp_fiesta_first_win',
-      'pvp_fiesta_double',
-      'pvp_fiesta_shutdown',
-      'pvp_fiesta_full_build',
-      'pvp_fiesta_powerups',
-      'pvp_fiesta_five_kills',
-    ]) {
-      expect(DEEDS[id].desc, id).toContain('no longer offered in the Arena queue');
-    }
   });
 
   it('the Peaks chapter descs carry the renamed Thornpeak chronicler', () => {
@@ -1320,28 +1295,6 @@ describe('the completionist feat', () => {
       'col_reliquary_illum_gravewyrm_heroic',
     ]) {
       expect(t.deedIds, `${id} is earnable and belongs in the Book`).toContain(id);
-    }
-  });
-
-  it('un-strands the capstone for the seven retired Fiesta deeds, the same doctrine', () => {
-    // Before the Fiesta Feat conversion, the seven pvp_fiesta_* deeds sat
-    // inside BOOK_COMPLETE_REQUIREMENTS as ordinary non-feat deeds, which
-    // dead-ended The Whole Book for every player who had not earned them
-    // pre-retirement (the same failure the Reliquary capstone case above
-    // documents). The feat flag fixes this as a side effect; this arm reds
-    // if a future change drops it and re-strands the capstone.
-    const t = DEEDS.feat_book_complete.trigger;
-    if (t.kind !== 'meta') throw new Error('feat_book_complete lost its meta trigger');
-    for (const id of [
-      'pvp_fiesta_first_bout',
-      'pvp_fiesta_first_win',
-      'pvp_fiesta_double',
-      'pvp_fiesta_shutdown',
-      'pvp_fiesta_full_build',
-      'pvp_fiesta_powerups',
-      'pvp_fiesta_five_kills',
-    ]) {
-      expect(t.deedIds, `${id} is unearnable and must not block the capstone`).not.toContain(id);
     }
   });
 });

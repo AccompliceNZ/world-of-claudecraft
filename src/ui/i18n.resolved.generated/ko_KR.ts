@@ -3517,8 +3517,34 @@ export const ko_KR: EnTranslations = {
       "guildViewsAria": "길드 은행 보기",
       "guildContentsTab": "내용물",
       "guildLogTab": "기록",
+      "guildHistoryTab": "기록",
       "logAria": "길드 은행 활동 기록",
       "logNote": "최근 길드 은행 활동 {count}건입니다.",
+      "logShowing": "길드 은행 활동 {count}건을 최신순으로 표시합니다.",
+      "logFilterAria": "길드 은행 기록 필터",
+      "logFilterAll": "전체",
+      "logFilterItems": "아이템",
+      "logFilterMoney": "골드",
+      "logOlder": "이전 기록 보기",
+      "logOlderLoading": "이전 활동을 불러오는 중...",
+      "logEnd": "길드 은행의 전체 기록입니다.",
+      "logEmptyFiltered": "이 필터와 일치하는 길드 은행 활동이 없습니다.",
+      "logColTime": "시간",
+      "logColMember": "구성원",
+      "logColAction": "활동",
+      "logColDetail": "내용",
+      "logActionDeposit": "입금",
+      "logActionWithdraw": "출금",
+      "logActionBuySlots": "확장 구매",
+      "logActionOpenBank": "은행 개설",
+      "logActionCharterFee": "창설 수수료 지불",
+      "logActionAdminPurge": "삭제",
+      "logActorAdmin": "관리자",
+      "logDetailItem": "{item} {count}개",
+      "logSearchPlaceholder": "이 기록 검색",
+      "logSearchAria": "불러온 길드 은행 활동을 구성원, 활동, 아이템으로 검색",
+      "logShowingMatched": "불러온 길드 은행 활동 {count}건 중 {matched}건을 표시합니다.",
+      "logSearchNoMatch": "검색과 일치하는 활동이 없습니다. 이전 기록을 불러와 범위를 넓히세요.",
       "logLoading": "길드 은행 기록을 불러오는 중...",
       "logEmpty": "아직 길드 은행에 넣거나 뺀 것이 없습니다.",
       "logUnavailable": "지금은 길드 은행 기록을 볼 수 없습니다.",
@@ -5340,7 +5366,7 @@ export const ko_KR: EnTranslations = {
       "ifPartyStyle": "파티 배치 방식입니다. 자동은 파티 인원에 맞춰 따라가고, 클래식은 전통적인 세로 배치이며, 공격대는 모두를 촘촘한 격자에 담습니다.",
       "ifPlayerHealthText": "자신의 생명력 막대에 무엇을 적을지 정합니다. 표시하지 않음, 백분율, 현재 생명력, 현재와 최대치, 또는 그 둘과 함께 백분율 중에서 고릅니다.",
       "ifTargetHealthText": "대상과 대상의 대상 생명력 막대에 무엇을 적을지 정하며, 자신의 프레임과 같은 선택지입니다.",
-      "ifPartyHealthText": "파티 막대에 무엇을 적을지 정합니다. 표시하지 않음, 백분율, 현재 생명력, 현재와 최대치, 또는 그 둘과 함께 백분율 중에서 고릅니다.",
+      "ifPartyHealthText": "파티 막대에 무엇을 적을지 정합니다. 표시하지 않음, 백분율, 현재 생명력, 또는 현재와 최대치 중에서 고릅니다.",
       "ifPartySort": "파티원을 나열하는 순서입니다. 파티 순서, 역할, 또는 이름 중에서 고릅니다.",
       "ifPartyShowAuras": "파티 프레임에 강화 효과와 약화 효과를 표시할지 정합니다. 자원 막대, 보호막, 소환수, 그리고 내 파티 목록에 나 자신이 나타날지에 대해서도 같은 방식의 스위치가 마련되어 있습니다.",
       "ifAurasOnPlayerFrame": "내 강화 효과와 약화 효과를 오라 막대뿐 아니라 내 유닛 프레임에도 표시합니다.",
@@ -5365,7 +5391,7 @@ export const ko_KR: EnTranslations = {
       "ifHideUnused": "비어 있는 행동 슬롯을 숨겨 실제로 쓰는 버튼만 그립니다.",
       "ifLockBars": "단축바를 잠가 실수로 슬롯에서 능력을 끌어내지 않도록 합니다.",
       "keybindsHeading": "키 설정 패널",
-      "keybindsBody": "키 목록은 이 패널의 절반에 불과합니다. 그 위에는 마우스가 게임을 어떻게 조작할지 정하는 스위치가 있습니다. 마우스 카메라, 회전 중 커서 잠금 여부, 클릭 이동과 사용할 마우스 버튼, 공격 이동, 왼손잡이 터치 배치를 여기서 조정합니다.",
+      "keybindsBody": "그 패널에서 키 목록은 절반에 지나지 않습니다. 그 위에는 마우스가 게임을 어떻게 조종할지 정하는 스위치들이 놓여 있습니다. 마우스 카메라, 회전하는 동안 커서를 고정할지, 클릭 이동과 그것을 실행할 마우스 버튼, 공격 이동, 왼손잡이용 터치 배치, 그리고 채팅 비속어 필터까지 있습니다.",
       "keybindsMouseBody": "그중 놓치기 쉬운 것이 둘 있습니다. 마우스 버튼도 키처럼 지정할 수 있어 휠 클릭과 엄지 버튼에 능력을 올릴 수 있으며, 왼쪽과 오른쪽 클릭은 카메라와 세계 클릭용으로 남습니다. 그리고 행동 단축바에서 곧바로 지정할 수도 있습니다. 여기서 단축바 지정 모드를 켠 뒤, 슬롯을 클릭하고 원하는 키를 누르면 됩니다."
     },
     "combat": {
@@ -14079,6 +14105,48 @@ export const ko_KR: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "꺼진 불꽃의 마법봉"
       },
+      "bramblehide_crown": {
+        "name": "루츠의 가시덤불가죽 왕관"
+      },
+      "bramblehide_mantle": {
+        "name": "루츠의 가시덤불가죽 어깨보호구"
+      },
+      "bramblehide_harness": {
+        "name": "루츠의 가시덤불가죽 흉갑"
+      },
+      "bramblehide_cinch": {
+        "name": "루츠의 가시덤불가죽 허리띠"
+      },
+      "bramblehide_legguards": {
+        "name": "루츠의 가시덤불가죽 다리보호구"
+      },
+      "bramblehide_grips": {
+        "name": "루츠의 가시덤불가죽 장갑"
+      },
+      "bramblehide_treads": {
+        "name": "루츠의 가시덤불가죽 장화"
+      },
+      "courtiers_bonefang": {
+        "name": "조신의 뼈송곳니"
+      },
+      "thornpeak_wardblade": {
+        "name": "가시봉우리 수호검"
+      },
+      "gravecourt_hewer": {
+        "name": "무덤궁정 도끼"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "불사 궁정의 봉헌 방패"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "가시봉우리 달가죽 두건"
+      },
+      "stormhymn_chain_grips": {
+        "name": "폭풍찬가 사슬 장갑"
+      },
+      "stormhymn_chain_treads": {
+        "name": "폭풍찬가 사슬 장화"
+      },
       "conjured_water4": {
         "name": "창조된 샘물"
       },
@@ -19084,6 +19152,12 @@ export const ko_KR: EnTranslations = {
       "boundstone_vanguard": {
         "name": "속박석 선봉대",
         "bonus3": "공격 속도와 시전 속도가 15% 증가합니다."
+      },
+      "bramblehide": {
+        "name": "루츠의 가시덤불가죽",
+        "bonus2": "힘이 10, 체력이 10만큼 증가합니다.",
+        "bonus4": "전투력이 25만큼 증가합니다. 무기 치명타 적중 시 50% 확률로 \"무덤의 위력\"이 발동하여 전투력이 40만큼 증가합니다. 10초 동안 지속됩니다.",
+        "bonus6": "공격 및 시전 속도가 4%, 적중이 3% 증가합니다. 무기 치명타 적중 시 대상에게 \"뼈 파편\"을 남겨 12초 동안 2초마다 5의 출혈 피해를 입힙니다. 최대 3번 중첩됩니다."
       },
       "chronoweave": {
         "name": "에테르직조 예복",

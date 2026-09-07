@@ -1057,4 +1057,8 @@ export const table: DeedLocaleTable = {
     desc: 'Derrote Varkhul, Forgefather of the Last Flame, na dificuldade Heroica sem que um único membro da raide morra.',
     title: 'o Incólume',
   },
+  col_set_bramblehide: {
+    name: 'Couro de Sarça de Roots',
+    desc: 'Descubra cada peça do Couro de Sarça de Roots.',
+  },
 };

@@ -261,6 +261,11 @@ import { forEachGuarded, runGuarded } from './guarded_iter';
 import { createGuildBankLazyLoader, type GuildBankLazyLoader } from './guild_bank_lazy_loader';
 import { bustGuildBankLog, GUILD_BANK_LOG_VISIBLE_OPS } from './guild_bank_log';
 import { deliverGuildBankLog } from './guild_bank_log_delivery';
+import {
+  consumeGuildBankLogReadToken,
+  createGuildBankLogReadGuard,
+  type GuildBankLogReadGuardState,
+} from './guild_bank_log_read_guard';
 import { runGuildBankOp as coordinateGuildBankOp } from './guild_bank_op_coordinator';
 import {
   consumeGuildBankOpToken,
@@ -1054,16 +1059,14 @@ export interface ClientSession extends MovementInputSessionState, HotbarLayoutSt
   // bucket above, so one class can never starve another; lane drops tally
   // into msgRate's abuse window (R6).
   msgLanes: MsgLaneState;
-  // The ignore/block list-readout bucket (the phase 06 maintainer ruling):
-  // the readouts stay chat-token-free per R5 but are per-call DB reads, so
-  // refusals above the far-above-human budget drop and tally into the same
-  // abuse window.
+  // The ignore/block list-readout bucket (phase 06 ruling): chat-token-free
+  // per R5 but per-call DB reads, so refusals drop and tally into the window.
   listReadGuard: ListReadGuardState;
   // Token bucket for the five guild bank ops (Guild Bank Phase 3 QA): every
-  // allowed op is a keep-forever bank_ledger write plus an unflushed-delta
-  // log entry, so the rate is capped far above human banking cadence and
-  // refusals tally into the shared abuse window like every other shed frame.
+  // allowed op is a keep-forever ledger write, so refusals drop and tally.
   guildBankOpGuard: GuildBankOpGuardState;
+  // The guild bank HISTORY reads (paged, filtered): metered apart from the ops.
+  guildBankLogReadGuard: GuildBankLogReadGuardState;
   // Token bucket shared by the two Book of Deeds cosmetic sets (title and
   // border): both fields are identityFields members, so every accepted set
   // re-wires the FULL identity record to every in-range viewer, and the rate
@@ -3805,6 +3808,7 @@ export class GameServer {
       msgLanes: createMsgLanes(Date.now() / 1000),
       listReadGuard: createListReadGuard(Date.now() / 1000),
       guildBankOpGuard: createGuildBankOpGuard(Date.now() / 1000),
+      guildBankLogReadGuard: createGuildBankLogReadGuard(Date.now() / 1000),
       cosmeticOpGuard: createCosmeticOpGuard(Date.now() / 1000),
       chatMutedUntil: meta.mutedUntil ? new Date(meta.mutedUntil).getTime() : null,
       chatMuteReason: meta.reason ?? '',
@@ -5266,11 +5270,11 @@ export class GameServer {
     );
   }
 
-  /** Answer one activity-log request, re-checking live authority after the
-   *  cached database read before any entries cross the wire. */
-  private sendGuildBankLog(session: ClientSession, pid: number): void {
+  /** Answer one history request; authority is re-checked after the awaited read. */
+  private sendGuildBankLog(session: ClientSession, pid: number, request: unknown): void {
     deliverGuildBankLog({
       guildId: this.guildBankLogGuildFor(pid),
+      request,
       stillAuthorized: (guildId) =>
         !session.left && session.pid === pid && this.guildBankLogGuildFor(pid) === guildId,
       send: (frame) => this.send(session, frame),
@@ -6446,7 +6450,12 @@ export class GameServer {
    *  verdict through the identical path. Returns whether to keep processing. */
   private consumeLane(session: ClientSession, lane: MsgLane, nowSec: number): boolean {
     if (consumeLaneToken(session.msgLanes, lane, nowSec) === 'allow') return true;
-    gameMetricsCounters().wsMessageDropped(LANE_DROP_CAUSE[lane]);
+    return this.shed(session, LANE_DROP_CAUSE[lane], nowSec);
+  }
+
+  /** The one drop path every meter shares: count, tally, kick on the verdict. */
+  private shed(session: ClientSession, cause: WsDropCause, nowSec: number): false {
+    gameMetricsCounters().wsMessageDropped(cause);
     if (tallyDrop(session.msgRate, nowSec) === 'kick') {
       gameMetricsCounters().wsRateKick();
       void this.kickSession(session, MSG_RATE_KICK_REASON, 'message flood');
@@ -6462,12 +6471,7 @@ export class GameServer {
    *  the readout. */
   private consumeListRead(session: ClientSession, nowSec: number): boolean {
     if (consumeListReadToken(session.listReadGuard, nowSec)) return true;
-    gameMetricsCounters().wsMessageDropped('list_read');
-    if (tallyDrop(session.msgRate, nowSec) === 'kick') {
-      gameMetricsCounters().wsRateKick();
-      void this.kickSession(session, MSG_RATE_KICK_REASON, 'message flood');
-    }
-    return false;
+    return this.shed(session, 'list_read', nowSec);
   }
 
   /** Draw a guild-bank op guard token (Guild Bank Phase 3 QA): every allowed
@@ -6477,12 +6481,15 @@ export class GameServer {
    *  kickable. Returns whether to run the op. */
   private consumeGuildBankOp(session: ClientSession, nowSec: number): boolean {
     if (consumeGuildBankOpToken(session.guildBankOpGuard, nowSec)) return true;
-    gameMetricsCounters().wsMessageDropped('guild_bank');
-    if (tallyDrop(session.msgRate, nowSec) === 'kick') {
-      gameMetricsCounters().wsRateKick();
-      void this.kickSession(session, MSG_RATE_KICK_REASON, 'message flood');
-    }
-    return false;
+    return this.shed(session, 'guild_bank', nowSec);
+  }
+
+  /** Draw a guild-bank HISTORY read token: its own bucket, so a member paging
+   *  and filtering the history can never drain the op bucket their next
+   *  deposit draws from. Returns whether to answer the read. */
+  private consumeGuildBankLogRead(session: ClientSession, nowSec: number): boolean {
+    if (consumeGuildBankLogReadToken(session.guildBankLogReadGuard, nowSec)) return true;
+    return this.shed(session, 'guild_bank_log', nowSec);
   }
 
   /** Draw a cosmetic-set guard token (Reliquary border review): a title or
@@ -6493,12 +6500,7 @@ export class GameServer {
    *  run the set. */
   private consumeCosmeticOp(session: ClientSession, nowSec: number): boolean {
     if (consumeCosmeticOpToken(session.cosmeticOpGuard, nowSec)) return true;
-    gameMetricsCounters().wsMessageDropped('cosmetic');
-    if (tallyDrop(session.msgRate, nowSec) === 'kick') {
-      gameMetricsCounters().wsRateKick();
-      void this.kickSession(session, MSG_RATE_KICK_REASON, 'message flood');
-    }
-    return false;
+    return this.shed(session, 'cosmetic', nowSec);
   }
 
   private dispatchMessage(
@@ -8103,14 +8105,12 @@ export class GameServer {
         if (!this.consumeGuildBankOp(session, receivedAtMs / 1000)) break;
         this.runGuildBankOp(session, { pid }, 'buy_slots', () => sim.guildBankBuySlotsFor(pid));
         break;
-      // The activity log READ (no mutation, no sim call). It shares the guild
-      // bank op guard rather than getting a second bucket: it is the same
-      // window, the same officer, and the same abuse shape, and the honest
-      // client asks at most once per its own TTL, so a legitimate session never
-      // notices while a flooder is stopped by machinery that already exists.
+      // The history READ (no mutation, no sim call), on its OWN read bucket:
+      // a chip press or Show older is a request, and reads must never drain
+      // the op bucket a deposit draws from (guild_bank_log_read_guard.ts).
       case 'guild_bank_log':
-        if (!this.consumeGuildBankOp(session, receivedAtMs / 1000)) break;
-        this.sendGuildBankLog(session, pid);
+        if (this.consumeGuildBankLogRead(session, receivedAtMs / 1000))
+          this.sendGuildBankLog(session, pid, msg);
         break;
       // Book of Deeds: select/clear the displayed title. The sim validator
       // owns every rule (deed earned + title reward; null clears; invalid

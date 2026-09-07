@@ -1058,4 +1058,8 @@ export const table: DeedLocaleTable = {
     desc: 'Đánh bại Varkhul, Forgefather of the Last Flame, ở độ khó Anh Hùng mà không một thành viên raid nào tử trận.',
     title: 'Kẻ Bất Thiêu',
   },
+  col_set_bramblehide: {
+    name: 'Da Gai Của Roots',
+    desc: 'Khám phá đủ mọi món của bộ Da Gai Của Roots.',
+  },
 };

@@ -3517,8 +3517,34 @@ export const pt_BR: EnTranslations = {
       "guildViewsAria": "Visualizações do banco da guilda",
       "guildContentsTab": "Conteúdo",
       "guildLogTab": "Registro",
+      "guildHistoryTab": "History",
       "logAria": "Registro de atividades do banco da guilda",
       "logNote": "As {count} ações mais recentes do banco da guilda.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Carregando o registro do banco da guilda...",
       "logEmpty": "Nada ainda entrou ou saiu do banco da guilda.",
       "logUnavailable": "O registro do banco da guilda não pode ser lido no momento.",
@@ -5365,7 +5391,7 @@ export const pt_BR: EnTranslations = {
       "ifHideUnused": "Oculta espaços de ação vazios para que só os botões que você realmente usa sejam desenhados.",
       "ifLockBars": "Trava suas barras para que você não arraste uma habilidade para fora de um espaço sem querer.",
       "keybindsHeading": "O painel Teclas de Atalho",
-      "keybindsBody": "A lista de chaves é apenas metade desse painel. Acima dele estão os interruptores que decidem como o mouse conduz o jogo: câmera do mouse, se o cursor trava enquanto você gira, clica para mover e qual botão do mouse o aciona, movimento de ataque e layout de toque para canhotos.",
+      "keybindsBody": "A lista de teclas é só metade desse painel. Acima dela ficam os interruptores que decidem como o seu mouse comanda o jogo: Câmera pelo mouse, se o cursor trava enquanto você gira, Clique para mover e qual botão do mouse o aciona, Mover e atacar, o layout para canhotos no toque, e o filtro de palavrões do chat.",
       "keybindsMouseBody": "Duas coisas ali são fáceis de passar despercebidas. Botões do mouse se atribuem como teclas, então o clique da rodinha e os botões laterais podem carregar habilidades, enquanto o clique esquerdo e o direito ficam reservados para a câmera e para clicar no mundo. E você pode atribuir direto pela barra de ação: ative aqui o modo Editar teclas da barra de ação, depois clique em um espaço e pressione a tecla que você quiser."
     },
     "combat": {
@@ -6164,7 +6190,7 @@ export const pt_BR: EnTranslations = {
       "heroicRewardsBody": "Os chefes heroicos deixam cair o espólio que você conhece, aprimorado e marcado como Heroico na descrição, e o chefe final de cada sessão acrescenta épicos que não se acham em lugar nenhum. Essa última morte também deixa Selos Heroicos para cada participante: uma moeda gasta com o intendente Vex em Highwatch, cujo balcão é uma prateleira de anéis e pingentes que nada além da prova das profundezas heroicas consegue comprar.",
       "heroicLockoutBody": "As masmorras normais podem ser percorridas o dia inteiro. O heroico pede paciência: a morte do chefe final limita todos na sessão a uma única conclusão heroica daquela masmorra por dia, e a incursão mantém um bloqueio diário para cada dificuldade. Num reino ao vivo todos os bloqueios diários caem juntos na hora da reinicialização noturna do próprio reino, então uma conclusão obtida logo antes dessa hora e outra logo depois caem em dias diferentes; jogue offline no seu navegador e um bloqueio simplesmente expira um dia depois da sua própria morte do chefe. Uma sessão de cinco jogadores já concluída continua aberta ao próprio grupo para corridas de cadáver e espólio, então ninguém fica trancado longe do que conquistou ali. A incursão é mais rígida: uma vez que a morte dela bloqueia você, a porta fica fechada até a reinicialização, e o único caminho de volta é uma corrida de cadáver de alguém que tombou na mesma sessão que o bloqueou, então um incursor vivo que sai saiu pelo resto do dia. Recolha seus despojos antes de deixar a arena. Cada um desses bloqueios pertence ao personagem que o conquistou, então uma conclusão no seu personagem principal deixa os outros livres.",
       "resetTitle": "Redefinindo suas instâncias",
-      "resetBody": "Mude a dificuldade enquanto seu grupo ainda mantém corridas reivindicadas e as reivindicações antigas permanecem por um tempo antes de serem resolvidas por conta própria. O líder do grupo pode deixá-los ir imediatamente: escolha Redefinir todas as instâncias em seu próprio menu de retrato ou digite /dungeon reset. Uma reinicialização funciona somente depois que a dificuldade foi realmente alterada, apenas enquanto ninguém, vivo ou caído, permanecer dentro, apenas quando todos os cadáveres foram saqueados e um curto tempo de espera separa uma reinicialização da próxima. Chegue à porta na dificuldade errada e o jogo avisa antes de a corrida começar. A invasão é reiniciada da mesma maneira, com suas próprias regras de bloqueio e devolução de cadáveres ainda em vigor.",
+      "resetBody": "Se vocês trocarem de dificuldade enquanto o grupo ainda mantém sessões reivindicadas, as reivindicações antigas permanecem um tempo antes de se soltarem sozinhas. O líder do grupo pode soltá-las de uma vez: escolham Redefinir todas as instâncias no menu do próprio retrato, ou digitem /dungeon reset. Uma redefinição só funciona depois de a dificuldade ter sido de fato trocada, só enquanto ninguém, vivo ou tombado, permanecer lá dentro, só depois de todo cadáver lá dentro ter sido saqueado por completo, e um breve tempo de recarga separa uma redefinição da seguinte. Cheguem à porta com a dificuldade errada e o jogo avisa antes de a sessão começar. A incursão nunca é redefinida assim; valem as regras de bloqueio dela.",
       "templeLoreTitle": "O Templo Afogado, um pouco mais fundo",
       "templeLoreBody": "O templo tem sua própria lenda, mais antiga que o culto que você persegue em outros lugares. Na margem do Glimmermere, um tarn que bebe o luar e devolve os afogados, um vigia solitário guarda um portal de luz pálida. Sob a superfície, uma escadaria de pedra fria desce até ele. As pessoas que afundaram ali não se afogaram por desventura: eram o Coro Pálido, que mergulhou em adoração e nunca parou de cantar. Os antigos guardiões riscaram um único aviso nas rochas antes de a água levá-los, uma prece a algo que chamavam de Lua Afogada, com uma mão mais firme acrescentando duas palavras abaixo: ela apenas dorme.",
       "cryptLeadTitle": "Uma porta que os mortos deviam manter fechada",
@@ -10563,11 +10589,11 @@ export const pt_BR: EnTranslations = {
       },
       "melting_acid": {
         "name": "Ácido Derretido",
-        "description": "Reveste sua arma por 30 min. Cada um de seus golpes corpo a corpo salpica o alvo com ácido cáustico e reduz sua armadura em 5% por 12 s."
+        "description": "Reveste sua arma por 30 min. Cada golpe corpo a corpo salpica o alvo com ácido cáustico, reduzindo sua armadura em 5% por 12 s."
       },
       "nightshade_coating": {
         "name": "Revestimento de erva-moura",
-        "description": "Reveste sua arma por 30 min. Cada um de seus golpes corpo a corpo cobre o alvo com beladona e reduz em 25% a cura que ele recebe por 12 s."
+        "description": "Reveste sua arma por 30 min. Cada golpe corpo a corpo cobre o alvo com beladona, reduzindo em 25% a cura que ele recebe por 12 s."
       },
       "expose_armor": {
         "name": "Brecha na Armadura",
@@ -14078,6 +14104,48 @@ export const pt_BR: EnTranslations = {
       },
       "wand_of_quenched_sparks": {
         "name": "Varinha das Faíscas Extintas"
+      },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
       },
       "conjured_water4": {
         "name": "Água de Nascente Conjurada"
@@ -19085,10 +19153,16 @@ export const pt_BR: EnTranslations = {
         "name": "Vanguarda Pedra-vínculo",
         "bonus3": "Aumenta a velocidade de ataque e de lançamento em 15%."
       },
+      "bramblehide": {
+        "name": "Couro de Sarça de Roots",
+        "bonus2": "Aumenta o poder de ataque em 40.",
+        "bonus4": "Seus acertos críticos com armas estilhaçam o alvo com Estilhaço Ósseo, causando 8 de sangramento a cada 2 s por 12 s. Acumula até 3 vezes.",
+        "bonus6": "Aumenta em 4% as velocidades de ataque e conjuração e em 3% o Acerto. Acertos críticos da sua arma estilhaçam o alvo com Estilhaçaossos, causando 5 de dano a cada 2 s por 12 s. Acumula até 3 vezes."
+      },
       "chronoweave": {
         "name": "Vestes da Trama Etérea",
-        "bonus2": "Eco Temporal converte 50% do seu outro dano Arcano de alvo único em cura. Surto de Éter e Dardos de Éter convertem em vez disso 200% do dano que causam. Dano sofrido não atrasa mais suas conjurações.",
-        "bonus4": "O tempo de recarga da Cascata Temporal é reduzido em 5 s e seu custo de mana em 30%."
+        "bonus2": "Eco Temporal converte 50% do seu dano Arcano de alvo único em cura. Dano sofrido não atrasa mais suas conjurações.",
+        "bonus4": "O tempo de recarga da Cascata Temporal é reduzido em 5 s."
       },
       "cinderbark": {
         "name": "Proteção de Casca de Brasa",

@@ -81,11 +81,7 @@ const MONOLITHS: MonolithRow[] = [
     // Down 2487 -> 2475 at the desktop-signing round: the WocMarketHooks
     // contract moved to src/ui/woc_market_hooks.ts (wiring, window, and the
     // trade arm all consume it), paying for the signer-reference plumbing.
-    // Down 2475 -> 2451 at the wallet-card dismiss round: the payment-quote
-    // face moved verbatim to src/ui/woc_market_quote_html.ts (the activity
-    // tab's shape), paying for the dismiss click arm, the hidden-card render
-    // gate and the glyph's focus-restore rung. Exact count, zero headroom.
-    ceiling: 2451,
+    ceiling: 2475,
     seam: 'a pure view-core module beside it (src/ui/woc_market_view.ts) that this window renders from',
   },
   {
@@ -123,23 +119,6 @@ const MONOLITHS: MonolithRow[] = [
     // LastKeepMapPainter declarations and the two walk-in map branches on the
     // clearMapHitState pattern), riding on main's zero-slack pin. Exact merged
     // count: any further growth reds again.
-    // Re-pinned to the integration merge of the latest v0.40.0 (the touch UI
-    // rework); exact merged count.
-    // Re-pinned for the tutorial mobile-coach fixes that followed that merge
-    // (SCOPED_POPUP_IDS + the greeting-close window-state resync); exact count.
-    // Re-pinned to the exact merged count of the v0.40.0 sync merge that
-    // brings in the OSSBrain v0.40 batch: the merged file lands below both
-    // parent pins, so the ratchet follows it down. Exact count, zero slack.
-    // Plus 1 for the board-note soft mask: the ONE line is the leaderboard
-    // deps' maskPlayerText wiring onto the existing maskChat. Exact count.
-    // Re-pinned for the signpost guild board window: the construction bag,
-    // the openGuildBoard seam, the noticeboard-event arm, and the close and
-    // relocalize wiring (the window itself lives in
-    // src/ui/hud/guild_board/). Then down one at the controller-tutorial
-    // merge. Exact count, zero slack.
-    // Plus 1 for the Exchange's Solana wallet card: the ONE line is the
-    // onWalletUiChange fan-out onto wocMarketWindow.onWalletChanged(), the
-    // Claudium panel's existing arm. Exact count.
     // Raised for the controller cross hotbar, on top of the moved-base v0.39
     // re-pin. The additions are thin-consumer wiring to an extracted domain
     // (src/ui/hud/cross_hotbar/): the overlay's construction, its per-frame paint,
@@ -318,37 +297,13 @@ const MONOLITHS: MonolithRow[] = [
     // world-entry restore moved into ActionBarController.restoreLayout, so
     // the HUD keeps one poll, one refresh call, and the two-line per-frame
     // surface-flip follow beside the form sync. Exact merged count.
-    // Re-pinned at this release-line reconcile to keep the OSSBrain fixes that
-    // still live in Hud (freed Attack-slot rendering, fullscreen re-anchor,
-    // the Realm Builder event arm, and the Soulwell auto-attack pending-state
-    // wiring) together with release's target dots, guild roster, Riftbound
-    // tooltip and action-bar profile extractions. Measured on the merged tree.
-    // Exact count, zero slack.
-    // The on-bar key-binding banner DOM moved into
-    // src/ui/hud/action_bar/action_bar_bind_banner.ts; measured on the merged
-    // candidate after the selected loot, combat, and Loping Stride integrations.
-    // Exact count, zero slack.
-    // Raised 18905 -> 18926 (+21) for the Loot Explorer window: the field/ctor,
-    // the toggle method, the close-switch case, and the two minimap wiring
-    // lines are thin-consumer wiring to the fully extracted domain module
-    // (src/ui/hud/loot_explorer/); everything with substance (the index
-    // builder, filters, encounter grouping, the painter) lives there. Same
-    // shape as every prior window wiring (Reliquary, Deeds, Professions), and
-    // no clean branch-owned extraction exists for a brand-new window's own
-    // wiring. Maintainer decision, exact count: any further growth reds again.
-    // Re-pinned to the merged count after adding the player/target frame Health
-    // Text setting rows: the shared formatting/readout logic lives in
-    // hud_frames.ts and party_frames.ts, so Hud only carries the required
-    // settings/wiring. Re-pinned at this release reconcile after the map-level
-    // extraction and chat follow repair landed on the combined candidate.
-    // Exact count, zero slack.
     // Lowered 18857 -> 18851 by the aura-strip column: the buff row's lazily
     // captured home and the dead body class left applyAuraAnchor for
     // restoreFrameHome (src/ui/interface_unlock.ts), and Reset Frame Positions
     // re-applies the anchor in one line. Exact merged count.
-    // Re-pinned to the base-sync count after carrying this candidate's selected
-    // loot, combat, map, chat-follow, wallet, Temporal Echo, and render-gate
-    // wiring over that aura-strip extraction. Exact count, zero slack.
+    // Re-pinned at this release/v0.42.0 reconcile: the current release line's
+    // roster/history work composes with the candidate edits. Measured on the
+    // merged tree. Exact count, zero slack.
     ceiling: 18925,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
@@ -463,10 +418,13 @@ const MONOLITHS: MonolithRow[] = [
     // literal like the noticeboard arm beside it; tests/realm_builder_monument
     // pins the literal to the constant). They land exactly on the pin above,
     // so the ceiling does not move but the slack is now zero.
-    // Re-pinned at the 2026-09-07 release/v0.42.0 reconcile: the candidate's
-    // render governor and terrain-lighting changes land beside the release
-    // shader-warm worker extractions. Measured on the merged tree. Exact
-    // merged count, zero headroom.
+    // Re-pinned at the 2026-09-05 release/v0.42.0 sync into the shader-warm
+    // branch: the release arm's Realm Builder monument lines (PR #3695) land
+    // beside this branch's extractions, so the merged file sits below both
+    // parent pins. Measured on the merged tree. Exact merged count, zero headroom.
+    // Re-pinned at this release/v0.42.0 reconcile. Measured on the merged
+    // tree after the release-line and candidate render changes composed.
+    // Exact count, zero slack.
     ceiling: 13108,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
@@ -573,17 +531,7 @@ const MONOLITHS: MonolithRow[] = [
     // Plus 2 for the Phase B set-bonus seam: the set_bonus_mods import and
     // the setPlayerLevel writer routing through computeCharacterModifiers
     // (the resolver itself is the extracted module). Exact count, zero slack.
-    // Re-pinned at the release/v0.42.0 sync into the knockback-wall-pin branch:
-    // this branch's applyKnockback extraction (the shove loop, the
-    // SKIN_WIDTH-padded resolve, and the landing seat moved verbatim to
-    // src/sim/knockback.ts behind SimContext, leaving only a thin delegate
-    // plus the ctx binding and isIceBlocked wiring) lands under the release
-    // arm's own growth (the Crucible vendor delegate, the
-    // partyTradeMsRemaining facet wiring, the Phase B set-bonus seam), and
-    // the branch's own removal outweighs the release arm's additions.
-    // Measured on the merged tree, never reconciled by arithmetic. Exact
-    // count, zero slack.
-    ceiling: 12212,
+    ceiling: 12465,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -615,25 +563,33 @@ const MONOLITHS: MonolithRow[] = [
     // the interface-editor settings (frame dimensions, aura direction vars,
     // the player-frame bar lock) predate this ratchet; folding them behind a
     // src/game/ settings-application seam is flagged follow-up work.
-    // Re-pinned at the v0.42 candidate merge of the KTX2 restore-upload
-    // repair and auraBarBelowFrame setting: both branches changed main.ts
-    // independently, so the merged count is measured directly.
+    // The branch's spawn_intro_seen extraction still pays for its own line at
+    // the entry wait (3 under the release row), and the empower-hold sync
+    // merge lowered the release row by 1 (the pad cast routing lives in
+    // src/game/pad_cast_routing.ts), so the merged file lands at 11625.
     // Exact merged count, zero headroom.
-    // Down 11623 -> 11620 on PR #3763's follow-up round: the WebGL
-    // context-recovery callbacks (checkpoint plus console breadcrumbs plus the
-    // fatalOverlay call) moved out into src/game/context_loss_diagnostics.ts,
-    // which also pays for the new webgl-context-stuck checkpoint the round
-    // added.
-    // Re-pinned at the release/v0.42.0 sync merge: the release side's own
-    // /daynight dev-command extraction (to src/game/daynight_dev_command.ts)
-    // landed independently of PR #3763's context-recovery move, so the merged
-    // file is smaller than either parent pin. Exact merged count, zero
+    // Re-pinned at the PR 3676 sync: this branch's reticle-sync closure
+    // extraction pays 2 more under the entry-fade row above. Measured on the
+    // merged tree, never reconciled by arithmetic. Exact merged count, zero
     // headroom.
-    // Re-pinned at the 2026-09-07 release/v0.42.0 reconcile: the candidate's
-    // queue-pop, health-text, render/post and guide hooks land beside the
-    // release-side desktop shell and Realm Builder rows. Measured with wc -l
-    // on the merged tree, never reconciled by arithmetic. Exact merged count,
-    // zero headroom.
+    // LOWERED at the 2026-08-29 v0.41.0 sync: this branch's
+    // desktop_shell_settings.ts extraction lands with the release arm's own
+    // rows. Measured on the merged tree. Exact merged count, zero headroom.
+    // Re-pinned at the 2026-08-31 v0.41.0 sync: the release arm's /daynight
+    // dev-command extraction and Discord login-choice rows land alongside this
+    // branch's extractions; the merged count is the honest bound. Measured on
+    // the merged tree. Exact merged count, zero headroom.
+    // Re-pinned 11501 -> 11503 at the 2026-09-05 release/v0.42.0 sync (PR #3695,
+    // the Realm Builder monument): release-side growth only; the branch's own
+    // helpers are unchanged and the merged file stays under the release's own
+    // 11551 row. Exact merged count, zero headroom.
+    // Re-pinned 11503 -> 11516 at the 2026-09-06 release/v0.42.0 sync: both arms
+    // added and extracted independently, so neither parent pin fits the combined
+    // file. Measured with wc -l on the merged tree, never reconciled by
+    // arithmetic. Exact merged count, zero headroom.
+    // Re-pinned at this release/v0.42.0 reconcile. Measured on the merged
+    // tree after the release-line and candidate entry wiring composed.
+    // Exact count, zero slack.
     ceiling: 11543,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
@@ -707,10 +663,6 @@ const MONOLITHS: MonolithRow[] = [
     // Re-pinned to the exact merged count of the OSSBrain v0.41.0 base
     // merge: both parents had already ratcheted for their own work, so
     // the composite is the honest size. Exact count, zero slack.
-    // #3729 round 4 REVERTS the auto-attack auto-face lock toggle: the `afu`
-    // wire-encode line and the toggle_auto_face_lock dispatch case are
-    // removed, so the prior +4 no longer applies. Re-measured on the
-    // combined candidate. Exact count, zero slack.
     // chatChannelHint and chatSenderFlair moved to their own server/ modules
     // (the roster-expansion dispatch and transport spread landed in their
     // place): the ratchet lowers with them.
@@ -728,31 +680,11 @@ const MONOLITHS: MonolithRow[] = [
     // Down 10604 -> 10587 for the per-surface action-bar profiles: the
     // join read, the per-profile merge and the FIFO write moved to
     // server/hotbar_layout.ts (HotbarLayoutStore). Exact count.
-    // Re-pinned at this release-line reconcile: the OSSBrain auto-face-lock
-    // revert and release's server extractions both survive, and the merged
-    // file measures below either conflicted ceiling. Exact count, zero slack.
-    // Re-pinned while reconciling the queue-pop and self-scalar repairs with
-    // the release batch branch. Measured on the combined candidate. Exact
-    // count, zero slack.
-    ceiling: 10559,
+    ceiling: 10587,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
     file: 'src/net/online.ts',
-    // Re-pinned to the eastbrook-plus-tutorial integration merge output:
-    // both parents' additions combine, so keep the exact merged count.
-    // Re-pinned +29 for the guild pledge board: the four one-line command
-    // senders, the entity pg/gt decode, and the social-frame pledge-field
-    // normalization (wire mirror code that must live on ClientWorld). Exact
-    // count.
-    // Re-pinned to the exact merged count of the v0.40.0 sync merge: both
-    // arms added wire-mirror code, so the merged file lands above either
-    // parent pin. Exact count, zero slack.
-    // Plus 18 for the guildRoster REST mirror (the signpost guild board's
-    // roster drill-in; the cached read lives in server/guild_roster.ts),
-    // then re-pinned when the mirror gained the trust-boundary row
-    // validation and the 404-vs-transport-failure split, plus the roster
-    // class field. Exact count, zero slack.
     // Re-pinned at the SIXTH release/v0.40.0 sync (release tip 9a89e3483e).
     // Neither arm crossed 5950 on its own (branch 5942, release 5877 over a
     // base of 5858); only the merge does, because both arms' growth stacks.
@@ -810,17 +742,6 @@ const MONOLITHS: MonolithRow[] = [
     // Re-pinned to the exact merged count of the OSSBrain v0.41.0 base
     // merge: both parents had already ratcheted for their own work, so
     // the composite is the honest size. Exact count, zero slack.
-    // Lowered on the net-interp-jitter-resilience branch after extracting the
-    // remote-entity reanchor decision into src/net/entity_reanchor.ts (a pure
-    // sibling module with its own tests): the extraction is the whole point
-    // of the ratchet, so the ceiling followed the file down to its new exact
-    // count rather than keeping the old headroom.
-    // Re-pinned to the exact merged count of the release/v0.42.0 sync into
-    // that branch: the release arm's growth (Ignivar/Varkhul raid wire,
-    // bank/vault mirrors, movement frame v2, dungeon entry facing) outweighs
-    // this branch's entity_reanchor extraction, so the merged file lands
-    // above either parent's own pin. Measured on the merged tree, never
-    // reconciled by arithmetic. Exact count, zero slack.
     // wrapAngle and copyPos moved to src/net/interp_math.ts: the ratchet
     // lowers with them.
     // Lowered 5896 -> 5892 by the Riftbound band item-level ladder (the retired forge enchant sender).
@@ -831,11 +752,15 @@ const MONOLITHS: MonolithRow[] = [
     // Down 5898 -> 5873 for the per-surface action-bar profiles: the
     // debounced upload moved to src/net/action_bar_upload.ts
     // (ActionBarLayoutUploader). Exact count.
-    // Re-pinned at this release-line reconcile: the gap-aware reanchor
-    // extraction, interp_math extraction, Rift Forge senders, guild roster
-    // sync and action-bar upload extraction all survive in the merged online
-    // mirror. Measured on the merged tree. Exact count, zero slack.
-    ceiling: 5875,
+    // Down 5873 -> 5856 for the guild bank transaction history: the log
+    // mirror's fields, the gbanklog install, and the request gate moved to
+    // src/net/guild_bank_log_mirror.ts (GuildBankLogMirror); what stays is
+    // the two one-line IWorld arms that put its requests on the wire. Exact
+    // count.
+    // Re-pinned at this release/v0.42.0 reconcile. Measured on the merged
+    // tree after the release-line and candidate network mirrors composed.
+    // Exact count, zero slack.
+    ceiling: 5858,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -887,11 +812,32 @@ const MONOLITHS: MonolithRow[] = [
     // Re-pinned to the exact merged count of the OSSBrain v0.41.0 base
     // merge: both parents had already ratcheted for their own work, so
     // the composite is the honest size. Exact count, zero slack.
-    // Re-pinned at the 2026-09-07 release/v0.42.0 reconcile: the client perf
-    // schema extraction now carries both candidate GPU fields and release
-    // shader-warm fields beside the Realm Builder schema residue. Measured on
-    // the merged tree, not summed by arithmetic. Exact count, zero slack.
-    ceiling: 5111,
+    // Lowered 5145 -> 5095 when the two shader-warm perf-report columns needed
+    // room: rather than raise the ceiling for four unavoidable lines (an insert
+    // list, a row-type field), the whole client_perf_reports DDL moved to
+    // client_perf_reports_schema.ts, a dependency-free CLIENT_PERF_REPORTS_SCHEMA
+    // ensureSchema applies after SCHEMA (the admin_guilds_schema.ts shape, which
+    // is also what keeps a db.ts -> schema -> db.ts cycle impossible). Exact
+    // count, zero slack. The next candidate behind the same seam is the table's
+    // accessors (insert, prune, row type).
+    // Up 5145 -> 5151 for the Realm Builder of the Month roll (PR #3695, at
+    // its release/v0.42.0 base merge): the table and its SQL live in
+    // server/realm_builder_db.ts; the residue here is the schema import and
+    // the one ensureSchema() apply line with its ordering note, the same
+    // shape every other domain *_SCHEMA takes. Exact merged count, zero
+    // slack; maintainer-review item.
+    // Re-pinned at the 2026-09-05 release/v0.42.0 sync into the shader-warm
+    // branch: the release arm's realm_builder_db.ts schema residue (PR #3695)
+    // lands beside this branch's client_perf_reports_schema.ts extraction, so the
+    // merged file sits below both parent pins. Exact merged count, zero slack.
+    // Down 5101 -> 5003 for the guild bank transaction history: the activity
+    // log statement (loadGuildBankLogRows, its row shape and its lowered
+    // statement timeout) moved to server/guild_bank_log_db.ts when it grew a
+    // page cursor and a `more` probe. Exact count.
+    // Re-pinned at this release/v0.42.0 reconcile. Measured on the merged
+    // tree after the release-line and candidate database wiring composed.
+    // Exact count, zero slack.
+    ceiling: 5013,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {
@@ -959,18 +905,7 @@ const MONOLITHS: MonolithRow[] = [
     // Lowered after extracting the world trees' camera-occluder fade (the
     // hideable records, the trunk hit test, the gated instance/ghost swap)
     // into src/render/tree_hide_fade.ts.
-    // Lowered again after extracting the per-frame distance-window resolver
-    // (detail swap, rock/dress swaps, collapse uniforms) into
-    // src/render/foliage_frame_windows_core.ts.
-    // Lowered again after the grass tuft's card ladder (which quads a tuft
-    // carries, and where each one sits) moved to the pure
-    // src/render/grass_tuft_cards_core.ts, and once more when the cap-collapse
-    // band's two-input decision followed it into
-    // grass_cap_collapse_core.ts. Exact count, zero slack.
-    // Re-pinned to the exact conflicted merge output after the candidate's
-    // foliage_frame_windows_core extraction and PR #3835's foliage tier
-    // ladder extractions composed. Exact count, zero slack.
-    ceiling: 3969,
+    ceiling: 3996,
     seam: 'a new src/render/<thing>.ts module (src/render/CLAUDE.md)',
   },
   {
@@ -982,13 +917,9 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED for the nameplate dot row: the row's drawing moved to
     // nameplate_dot_row.ts and the image cache to nameplate_image_cache.ts,
     // which more than paid for the new draw step. Exact count, zero slack.
-    // Lowered 864 -> 842 after the badge/raid-marker/emote image cache moved to
-    // src/render/nameplate_image_cache.ts (the ratchet's own rule: an extraction
-    // lowers the ceiling), which paid for the layer hide/show and style-revision
-    // surface controls the repaint gate needs.
-    // Re-pinned to the exact PR #3844 merge output after the dot row, extracted
-    // image cache, and compositor repaint-skip surface controls composed in one
-    // file. Exact merged count, zero slack.
+    // Re-pinned at this release/v0.42.0 reconcile. Measured on the merged
+    // tree after the release-line and candidate nameplate rendering composed.
+    // Exact count, zero slack.
     ceiling: 901,
     seam: 'the pure src/render/nameplate_heraldry_core.ts geometry module',
   },
@@ -1173,7 +1104,15 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED 1941 -> 1928 after the socket prompt's consent/echo state and
     // DOM feedback moved behind bank_socket_purchase_core/controller, with the
     // family live-region mechanics shared through bank_status_line.ts.
-    ceiling: 1928,
+    // Down 1928 -> 1915 for the guild bank history search: the search-box
+    // focus + caret carry (capture before the wipe, restore after) moved to
+    // src/ui/bank_search_focus.ts so the personal and guild arms share one
+    // rule. Exact count, zero slack.
+    // Down 1915 -> 1879 at the history review: the guild and vault focus-key
+    // annotators moved to src/ui/bank_focus_keys.ts (a focus_restore importer,
+    // so the single-reader family holds) when the history's chips and Show
+    // older button gained keys. Exact count, zero slack.
+    ceiling: 1879,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/CLAUDE.md)',
   },
 ];

@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { auditIconAssets, validateAcceptedArtManifest } from '../scripts/lib/icon_asset_audit.mjs';
 import { ITEM_ART_AUDIT_RENDERER_FINGERPRINT } from '../scripts/lib/item_art_audit.mjs';
 import { ITEMS } from '../src/sim/data';
+import { ITEM_ART_PENDING } from '../src/ui/icons';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const evidenceDir = 'docs/achievements/item-art-consistency-2026-08-09';
@@ -342,8 +343,8 @@ describe('item-art consistency accepted-art provenance', () => {
       },
       {
         path: `${evidenceDir}/final-item-art-audit-verdict.json`,
-        acceptedSha256: '16abb4371c2868d8b46dd6f5ec2d94b884ab13ae48c6c77f8eb80212110d7c95',
-        acceptedBytes: 120_396,
+        acceptedSha256: '18da840da51e460e27a31314d13c33f008dd83061bef7afd65376486eb4d4206',
+        acceptedBytes: 121_201,
       },
     ]);
     for (const evidence of [...value.sourceEvidence, ...value.generationReports]) {
@@ -458,9 +459,9 @@ describe('item-art consistency accepted-art provenance', () => {
     expect(readme).toContain('node scripts/item_art_audit.mjs\n');
     expect(readme).toContain('node scripts/item_art_audit.mjs --refresh-verdict');
     const verdictBytes = readFileSync(path.join(repoRoot, verdictPath));
-    expect(verdictBytes.length).toBe(120_396);
+    expect(verdictBytes.length).toBe(121_201);
     expect(sha256(verdictBytes)).toBe(
-      '16abb4371c2868d8b46dd6f5ec2d94b884ab13ae48c6c77f8eb80212110d7c95',
+      '18da840da51e460e27a31314d13c33f008dd83061bef7afd65376486eb4d4206',
     );
     const verdict = JSON.parse(verdictBytes.toString('utf8')) as FinalAuditVerdict;
 
@@ -470,18 +471,22 @@ describe('item-art consistency accepted-art provenance', () => {
       baselineCommit: 'aee195551b5aef628eb7a72192117d7e3079818e',
       branch: 'feature/placeholder-art-completion-v036',
       shippingDirectory: 'public/ui/items',
-      itemArtFilesReviewed: 1046,
-      liveItemDefinitions: 1061,
-      generatedHeroicDefinitions: 64,
-      heroicDefinitionsWithOwnWebp: 48,
-      heroicWeaponArtAliases: 16,
+      // Hand-carried for the two Nythraxis waves, the way the Varkhul renders
+      // were: the three gap-fill weapon renders (three base files, three heroic
+      // aliases) and the roots-bramblehide-icons-2026-09-07 paintings (22
+      // files, 11 of them heroic variants): 1044 + 3 + 22 files.
+      itemArtFilesReviewed: 1071,
+      liveItemDefinitions: 1089,
+      generatedHeroicDefinitions: 78,
+      heroicDefinitionsWithOwnWebp: 59,
+      heroicWeaponArtAliases: 19,
       modifiedItemArtCount: 274,
     });
     expect(verdict.auditScope.modifiedItemArtPaths).toEqual(
       manifest().targetSets.items.map((id) => `public/ui/items/${id}.webp`),
     );
     expect(Object.values(verdict.auditScope.groups).reduce((sum, count) => sum + count, 0)).toBe(
-      1046,
+      1071,
     );
     expect(Object.keys(verdict.auditScope.groups)).toHaveLength(22);
     expect(verdict.auditScope.incrementalReviews.at(-1)).toEqual({
@@ -497,8 +502,12 @@ describe('item-art consistency accepted-art provenance', () => {
         .filter((name) => name.endsWith('.webp'))
         .map((name) => name.slice(0, -'.webp'.length)),
     );
+    // The art-pending ledger (ITEM_ART_PENDING) stages a wave's generated
+    // heroic variants outside the audited catalog until their paintings land,
+    // exactly as the audit CLI accounts them (scripts/lib/item_art_audit.mjs).
     const generatedHeroics = Object.entries(ITEMS).filter(
-      ([, item]) => 'heroicOf' in item && typeof item.heroicOf === 'string',
+      ([id, item]) =>
+        'heroicOf' in item && typeof item.heroicOf === 'string' && !ITEM_ART_PENDING.has(id),
     );
     const heroicWithOwnWebp = generatedHeroics.filter(([id]) => shippingIds.has(id));
     const heroicArtAliases = generatedHeroics.filter(([id]) => !shippingIds.has(id));
@@ -534,13 +543,15 @@ describe('item-art consistency accepted-art provenance', () => {
     ]);
     expect(verdict.visualVerdict).toMatchObject({
       status: 'pass',
-      passCount: 1046,
+      // + the three Nythraxis gap-fill weapon renders and the 22 Bramblehide
+      // wave paintings, hand-carried: 1044 + 25.
+      passCount: 1071,
       watchCount: 0,
       watch: [],
       rejectCount: 0,
       reject: [],
       summary:
-        'All 1046 shipping item-art files pass the visual contract: plus the Lanternback Troll, Chimeglass Tortoise, Cluckwork Mech Bird, Goblin Rocket Sled, and Rallycart RXT mount icons previously accepted in their parent records and joined in this v0.42 reconcile.',
+        'All 1071 shipping item-art files pass the visual contract: the current release-line record plus the Goblin Rocket Sled and Rallycart RXT mount icons already accepted in their parent records and joined in this v0.42 reconcile.',
     });
     expect(verdict.visualVerdict.passIds).toEqual(currentIds);
     expect(verdict.nonVisualContentWatch).toEqual([
@@ -580,8 +591,8 @@ describe('item-art consistency accepted-art provenance', () => {
 
     expect(verdict.evidence.catalog).toEqual({
       path: 'tmp/imagegen/item-art-consistency/final-audit/catalog.json',
-      sha256: '95bf5b52e340881c96c38b5cf71c67dd14bfc0bb62e6bd1957170472236427bb',
-      bytes: 570_369,
+      sha256: '79e8343564441de3ff78a2c7f773aa74ed59d35b98beffbd8d59cb3a28674c69',
+      bytes: 584_115,
     });
     expect(verdict.evidence.rendererFingerprint).toBe(
       'd80ff4868f979e1717e106c889b7d6505841caf8d4cf887776ecb60848b1b2b7',
@@ -634,7 +645,7 @@ describe('item-art consistency accepted-art provenance', () => {
       sheetSetDigest.update(`${sheet.path}\0${sheet.sha256}\0${sheet.bytes}\n`);
     }
     expect(verdict.evidence.sheetSetSha256).toBe(
-      '93129d0454267abeb518b23310fd56d25342a79b385325b31ecf5eda44c57193',
+      '43204708d061b18495b788b88d85d90a39560195ba799ca4dce89812172b0c3a',
     );
     expect(sheetSetDigest.digest('hex')).toBe(verdict.evidence.sheetSetSha256);
 
@@ -644,7 +655,7 @@ describe('item-art consistency accepted-art provenance', () => {
       shippingCatalogDigest.update(`${id}\0${sha256(bytes)}\0${bytes.length}\n`);
     }
     expect(verdict.evidence.shippingCatalogSha256).toBe(
-      '2195f18375e439dd4a0ebc05f0ce4e59bee0efc7dfb5de7ef8588cad775b28d6',
+      '570a5b9a22ce3903b729d05ecfeeedb1d56e1f1e6cd7138238c32331700b5642',
     );
     expect(shippingCatalogDigest.digest('hex')).toBe(verdict.evidence.shippingCatalogSha256);
   });
@@ -756,7 +767,8 @@ describe('item-art consistency accepted-art provenance', () => {
     ).toBeUndefined();
     expect(mapping.entries).toHaveLength(43);
     expect(mapping.entries.every(({ license }) => Boolean(license))).toBe(true);
-    expect(mapping.generatedBatches).toHaveLength(26);
+    // 24 + nythraxis-gap-weapon-renders-2026-09-04 + roots-bramblehide-icons-2026-09-07.
+    expect(mapping.generatedBatches).toHaveLength(28);
     const batch = mapping.generatedBatches.find(({ batchId }) => batchId === BATCH_ID);
     expect(batch).toBeDefined();
     expect(batch).toMatchObject({
@@ -773,13 +785,15 @@ describe('item-art consistency accepted-art provenance', () => {
     const oldGeneratedIds = mapping.generatedBatches
       .filter(({ batchId }) => batchId !== BATCH_ID)
       .flatMap(({ itemIds }) => itemIds);
-    expect(oldGeneratedIds).toHaveLength(729);
+    // 727 + the three Nythraxis gap-fill weapon renders + the 22 Bramblehide
+    // wave paintings.
+    expect(oldGeneratedIds).toHaveLength(754);
     const allCurrentOwnerIds = [
       ...mapping.entries.map(({ itemId }) => itemId),
       ...mapping.generatedBatches.flatMap(({ itemIds }) => itemIds),
     ];
-    expect(allCurrentOwnerIds).toHaveLength(1046);
-    expect(new Set(allCurrentOwnerIds).size).toBe(1046);
+    expect(allCurrentOwnerIds).toHaveLength(1071);
+    expect(new Set(allCurrentOwnerIds).size).toBe(1071);
     expect(batch?.provenanceRecords).toEqual([
       `${evidenceDir}/accepted-art.json`,
       `${evidenceDir}/supersession-audit.json`,
@@ -915,9 +929,12 @@ describe('item-art consistency accepted-art provenance', () => {
     for (const id of ownerIds) ownerCountById.set(id, (ownerCountById.get(id) ?? 0) + 1);
 
     const violations: string[] = [];
-    if (ownerIds.length !== 1046)
-      violations.push(`mapping owner count: ${ownerIds.length} != 1046`);
-    if (fileIds.length !== 1046) violations.push(`shipping WebP count: ${fileIds.length} != 1046`);
+    // 1044 + the three Nythraxis gap-fill weapon renders
+    // (nythraxis-gap-weapon-renders-2026-09-04) + the 22 Bramblehide wave
+    // paintings (roots-bramblehide-icons-2026-09-07).
+    if (ownerIds.length !== 1071)
+      violations.push(`mapping owner count: ${ownerIds.length} != 1071`);
+    if (fileIds.length !== 1071) violations.push(`shipping WebP count: ${fileIds.length} != 1071`);
     for (const id of ids) {
       const ownerCount = ownerCountById.get(id) ?? 0;
       if (ownerCount !== 1) violations.push(`${id}: current owner count ${ownerCount} != 1`);
