@@ -13,8 +13,8 @@
     "Final Stand enrage at 5% + grantNythraxisLockout (raidLockouts) + onBossDeath death dialogue",
     "class:warrior"
   ],
-  "draws": 6087,
-  "drawDigest": "1fae9376",
+  "draws": 6080,
+  "drawDigest": "d3701422",
   "frames": [
     {
       "tick": 0,
@@ -9992,11 +9992,11 @@
       "tick": 628,
       "time": 31.4,
       "nextId": 1012,
-      "state": "43ffe147",
+      "state": "7bd5ba28",
       "events": "982fc0ab",
       "rng": {
-        "draws": 5527,
-        "digest": "9100e8e9"
+        "draws": 5529,
+        "digest": "0a8d5f3d"
       },
       "label": "death",
       "players": [
@@ -10975,6 +10975,14 @@
               {
                 "count": 1,
                 "itemId": "maul_of_the_scourged_wilds"
+              },
+              {
+                "count": 1,
+                "itemId": "bramblehide_harness"
+              },
+              {
+                "count": 1,
+                "itemId": "courtiers_bonefang"
               }
             ]
           },
@@ -11365,40 +11373,40 @@
       "tick": 630,
       "time": 31.5,
       "nextId": 1012,
-      "state": "b577abf9",
+      "state": "748aa532",
       "events": "741638a5",
       "rng": {
-        "draws": 5549,
-        "digest": "be465247"
+        "draws": 5551,
+        "digest": "ac120f01"
       }
     },
     {
       "tick": 640,
       "time": 32,
       "nextId": 1012,
-      "state": "3af6931b",
+      "state": "47d4f7a4",
       "events": "741638a5",
       "rng": {
-        "draws": 5627,
-        "digest": "3f7e6a42"
+        "draws": 5631,
+        "digest": "7edb9315"
       }
     },
     {
       "tick": 650,
       "time": 32.5,
       "nextId": 1012,
-      "state": "947fadb9",
+      "state": "7a806772",
       "events": "741638a5",
       "rng": {
-        "draws": 5721,
-        "digest": "96ca8399"
+        "draws": 5725,
+        "digest": "c6ea7e59"
       }
     },
     {
       "tick": 660,
       "time": 33,
       "nextId": 1012,
-      "state": "449f347b",
+      "state": "33387674",
       "events": "741638a5",
       "rng": {
         "draws": 5808,
@@ -11409,33 +11417,33 @@
       "tick": 670,
       "time": 33.5,
       "nextId": 1012,
-      "state": "f6fe1839",
+      "state": "b9ccf49a",
       "events": "741638a5",
       "rng": {
-        "draws": 5884,
-        "digest": "b34e2617"
+        "draws": 5880,
+        "digest": "8a982bdb"
       }
     },
     {
       "tick": 680,
       "time": 34,
       "nextId": 1012,
-      "state": "a0398bc7",
+      "state": "8f8f6b58",
       "events": "741638a5",
       "rng": {
-        "draws": 5997,
-        "digest": "810c8017"
+        "draws": 5990,
+        "digest": "bc42c835"
       }
     },
     {
       "tick": 688,
       "time": 34.4,
       "nextId": 1012,
-      "state": "88ca734d",
+      "state": "da798056",
       "events": "84a8fbfa",
       "rng": {
-        "draws": 6087,
-        "digest": "1fae9376"
+        "draws": 6080,
+        "digest": "d3701422"
       },
       "label": "final",
       "players": [
@@ -12414,6 +12422,14 @@
               {
                 "count": 1,
                 "itemId": "maul_of_the_scourged_wilds"
+              },
+              {
+                "count": 1,
+                "itemId": "bramblehide_harness"
+              },
+              {
+                "count": 1,
+                "itemId": "courtiers_bonefang"
               }
             ]
           },
