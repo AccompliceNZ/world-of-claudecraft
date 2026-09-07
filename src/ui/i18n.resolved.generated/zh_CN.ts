@@ -4637,6 +4637,32 @@ export const zh_CN: EnTranslations = {
       "toggleAria": "在世界地图和地区地图之间切换",
       "levels": "等级 {min} 到 {max}"
     },
+    "mapAtlas": {
+      "level": "等级 {level}",
+      "landmarkCount": "{count} 个地标",
+      "filtersAria": "地图图层",
+      "filters": {
+        "quests": "任务",
+        "gather": "采集",
+        "dungeons": "地下城",
+        "services": "服务",
+        "players": "玩家"
+      },
+      "trackedQuests": "追踪中的任务",
+      "noTrackedQuests": "没有追踪中的任务",
+      "availableNearby": "附近可接任务",
+      "noNearbyQuests": "附近没有可接任务",
+      "distance": "{distance} 码",
+      "showRoute": "显示路线",
+      "untrack": "取消追踪",
+      "legend": {
+        "dungeon": "地下城",
+        "ore": "矿石",
+        "herb": "草药",
+        "mail": "邮箱",
+        "passage": "通道"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "需要等级 {level}"
     },

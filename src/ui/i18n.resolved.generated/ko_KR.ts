@@ -4637,6 +4637,32 @@ export const ko_KR: EnTranslations = {
       "toggleAria": "세계 지도와 지역 지도 전환",
       "levels": "레벨 {min}부터 {max}까지"
     },
+    "mapAtlas": {
+      "level": "레벨 {level}",
+      "landmarkCount": "랜드마크 {count}개",
+      "filtersAria": "지도 레이어",
+      "filters": {
+        "quests": "퀘스트",
+        "gather": "채집",
+        "dungeons": "던전",
+        "services": "시설",
+        "players": "플레이어"
+      },
+      "trackedQuests": "추적 중인 퀘스트",
+      "noTrackedQuests": "추적 중인 퀘스트 없음",
+      "availableNearby": "근처에서 받을 수 있음",
+      "noNearbyQuests": "근처에 받을 수 있는 퀘스트 없음",
+      "distance": "{distance}야드",
+      "showRoute": "경로 표시",
+      "untrack": "추적 해제",
+      "legend": {
+        "dungeon": "던전",
+        "ore": "광석",
+        "herb": "약초",
+        "mail": "우편",
+        "passage": "통로"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "레벨 {level} 필요"
     },

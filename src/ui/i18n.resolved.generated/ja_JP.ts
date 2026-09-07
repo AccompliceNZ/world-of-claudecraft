@@ -4637,6 +4637,32 @@ export const ja_JP: EnTranslations = {
       "toggleAria": "ワールドマップとゾーンマップを切り替える",
       "levels": "レベル {min} から {max}"
     },
+    "mapAtlas": {
+      "level": "レベル {level}",
+      "landmarkCount": "ランドマーク {count} 個",
+      "filtersAria": "マップレイヤー",
+      "filters": {
+        "quests": "クエスト",
+        "gather": "採集",
+        "dungeons": "ダンジョン",
+        "services": "施設",
+        "players": "プレイヤー"
+      },
+      "trackedQuests": "追跡中のクエスト",
+      "noTrackedQuests": "追跡中のクエストはありません",
+      "availableNearby": "近くの受注可能クエスト",
+      "noNearbyQuests": "近くに受注可能なクエストはありません",
+      "distance": "{distance}ヤード",
+      "showRoute": "ルートを表示",
+      "untrack": "追跡を解除",
+      "legend": {
+        "dungeon": "ダンジョン",
+        "ore": "鉱石",
+        "herb": "薬草",
+        "mail": "郵便",
+        "passage": "通路"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "レベル {level} が必要です"
     },

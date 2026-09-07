@@ -4637,6 +4637,32 @@ export const ru_RU: EnTranslations = {
       "toggleAria": "Переключение между картой мира и картой региона",
       "levels": "Уровни {min} до {max}"
     },
+    "mapAtlas": {
+      "level": "Уровень {level}",
+      "landmarkCount": "Ориентиров: {count}",
+      "filtersAria": "Слои карты",
+      "filters": {
+        "quests": "Задания",
+        "gather": "Сбор",
+        "dungeons": "Подземелья",
+        "services": "Службы",
+        "players": "Игроки"
+      },
+      "trackedQuests": "Отслеживаемые задания",
+      "noTrackedQuests": "Нет отслеживаемых заданий",
+      "availableNearby": "Доступно поблизости",
+      "noNearbyQuests": "Поблизости нет доступных заданий",
+      "distance": "{distance} ярдов",
+      "showRoute": "Показать маршрут",
+      "untrack": "Не отслеживать",
+      "legend": {
+        "dungeon": "Подземелье",
+        "ore": "Руда",
+        "herb": "Трава",
+        "mail": "Почта",
+        "passage": "Проход"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "Требуется уровень {level}"
     },

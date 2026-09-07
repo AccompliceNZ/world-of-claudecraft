@@ -606,6 +606,7 @@ import {
   zoomOutExitsZoneLevel,
 } from './map_pinch_zoom_core';
 import { shouldResetMapPanOnZoneCross, showOnMapPanState } from './map_show_on_map_core';
+import { MapSidebarController } from './map_sidebar_controller';
 import {
   type MapRegion,
   mapCanvasHeight,
@@ -1480,6 +1481,7 @@ export class Hud {
   private targetTitlePostEl = appendChildSpan(this.targetNameEl, 'uf-title');
   private targetLevelEl = $('#tf-level');
   private targetDiscordEl = $('#tf-discord');
+  private mapSidebar: MapSidebarController;
   private targetDiscord = new TargetDiscordController(
     this.targetDiscordEl,
     () => this.optionsHooks?.settings.get('showDevBadges') ?? true,
@@ -2281,6 +2283,13 @@ export class Hud {
       showBanner: (text) => this.showBanner(text),
       log: (text, color) => this.log(text, color),
       hideTooltip: () => this.hideTooltip(),
+    });
+    this.mapSidebar = new MapSidebarController({
+      root: () => $('#map-sidebar'),
+      click: () => audio.click(),
+      onFiltersChanged: () => this.repaintOpenMap(),
+      onShowRoute: (route) => this.showFinderOnMap(route.x, route.z),
+      onUntrackQuest: () => this.repaintOpenMap(),
     });
     this.fiesta = new FiestaController({
       document,
@@ -10922,6 +10931,10 @@ export class Hud {
     this.hideTooltip();
   }
 
+  private repaintOpenMap(): void {
+    if ($('#map-window').style.display === 'block') this.updateMapWindow();
+  }
+
   private updateMapWindow(): void {
     const canvas = $('#map-canvas') as unknown as HTMLCanvasElement;
     const ctx = require2dContext(canvas);
@@ -11028,6 +11041,7 @@ export class Hud {
       : dungeon
         ? zoneAt(dungeon.doorPos.x, dungeon.doorPos.z)
         : (ZONES.find((z) => z.id === this.lastZoneId) ?? zoneAt(p.pos.x, p.pos.z));
+    this.mapSidebar.update(this.sim, zone);
     // Crossing a zone while the map is open starts that zone at its full frame;
     // a pan target from the previous zone must never leak into the new one.
     // shouldResetMapPanOnZoneCross (map_show_on_map_core.ts) is what keeps a
@@ -11051,6 +11065,8 @@ export class Hud {
       zoom: this.mapZoom,
       center: this.mapCenter,
       ping: this.mapPing,
+      filters: this.mapSidebar.filterState(),
+      route: this.mapSidebar.shownRoute(),
     });
     this.mapView = result.view;
     this.mapMarkerInteraction.setOverworld(result);

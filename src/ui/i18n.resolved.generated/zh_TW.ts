@@ -4637,6 +4637,32 @@ export const zh_TW: EnTranslations = {
       "toggleAria": "在世界地圖與地區地圖之間切換",
       "levels": "等級 {min} 至 {max}"
     },
+    "mapAtlas": {
+      "level": "等級 {level}",
+      "landmarkCount": "{count} 個地標",
+      "filtersAria": "地圖圖層",
+      "filters": {
+        "quests": "任務",
+        "gather": "採集",
+        "dungeons": "地城",
+        "services": "服務",
+        "players": "玩家"
+      },
+      "trackedQuests": "追蹤中的任務",
+      "noTrackedQuests": "沒有追蹤中的任務",
+      "availableNearby": "附近可接任務",
+      "noNearbyQuests": "附近沒有可接任務",
+      "distance": "{distance} 碼",
+      "showRoute": "顯示路線",
+      "untrack": "取消追蹤",
+      "legend": {
+        "dungeon": "地城",
+        "ore": "礦石",
+        "herb": "草藥",
+        "mail": "信箱",
+        "passage": "通道"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "需要等級 {level}"
     },

@@ -72,7 +72,7 @@ const TOKEN_HOME = 'tokens.css';
 // sheet with no row fails until it gets one.
 const CEILINGS: Record<string, number> = {
   'base.css': 23,
-  'components.css': 593,
+  'components.css': 453,
   'hud.css': 567,
   'hud.mobile.css': 262,
   'index.css': 0,

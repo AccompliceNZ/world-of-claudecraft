@@ -4637,6 +4637,32 @@ export const en_XA: EnTranslations = {
       "toggleAria": "[Šŵíţçĥ ƀéţŵééñ ţĥé ŵóŕļð ɱáþ áñð ţĥé žóñé ɱáþ]",
       "levels": "[Ļéʋéļš {min} ţó {max}]"
     },
+    "mapAtlas": {
+      "level": "[Ļéʋéļ {level}]",
+      "landmarkCount": "[{count} ļáñðɱáŕķš]",
+      "filtersAria": "[Ɱáþ ļáýéŕš]",
+      "filters": {
+        "quests": "[Ɋúéšţš]",
+        "gather": "[Ĝáţĥéŕ]",
+        "dungeons": "[Ðúñĝéóñš]",
+        "services": "[Šéŕʋíçéš]",
+        "players": "[Þļáýéŕš]"
+      },
+      "trackedQuests": "[Ţŕáçķéð ɋúéšţš]",
+      "noTrackedQuests": "[Ñó ţŕáçķéð ɋúéšţš]",
+      "availableNearby": "[Áʋáíļáƀļé ñéáŕƀý]",
+      "noNearbyQuests": "[Ñó ñéáŕƀý ɋúéšţš]",
+      "distance": "[{distance} ýáŕðš]",
+      "showRoute": "[Šĥóŵ Ŕóúţé]",
+      "untrack": "[Úñţŕáçķ]",
+      "legend": {
+        "dungeon": "[Ðúñĝéóñ]",
+        "ore": "[Óŕé]",
+        "herb": "[Ĥéŕƀ]",
+        "mail": "[Ɱáíļ]",
+        "passage": "[Þáššáĝé]"
+      }
+    },
     "arenaGate": {
       "minLevelNote": "[Ŕéɋúíŕéš ļéʋéļ {level}]"
     },
