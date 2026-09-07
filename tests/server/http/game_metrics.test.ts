@@ -866,6 +866,7 @@ describe('registerGameStateMetrics: throughput counters via the returned sink', 
       'bank_vault',
       'guild_bank',
       'cosmetic',
+      'guild_bank_log',
     ]);
     for (const cause of WS_DROP_CAUSES) {
       expect(
@@ -917,7 +918,7 @@ describe('registerGameStateMetrics: throughput counters via the returned sink', 
     expect(sampleValue(text, /^woc_input_frames_missed_total (\d+)$/m)).toBe('9');
   });
 
-  it('keeps the cause label bounded to the fixed nine values', async () => {
+  it('keeps the cause label bounded to the fixed ten values', async () => {
     const registry = new Registry();
     const counters = registerGameStateMetrics(registry, stubSource());
     counters.wsMessageDropped('rate');
