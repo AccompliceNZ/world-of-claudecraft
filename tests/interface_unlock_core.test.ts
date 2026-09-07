@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
   classGatedFrameActive,
+  frameRowSettingKey,
   framesToLock,
   HUD_FRAME_SPECS,
   HUD_FRAME_STORAGE_KEYS,
@@ -260,6 +261,22 @@ describe('classGatedFrameActive', () => {
   it('declines the rows whose activity is live state, not class', () => {
     for (const id of ['actionBar1', 'actionBarGroup', 'questTracker', 'damageMeter', 'minimap']) {
       expect(classGatedFrameActive(id, 'warrior')).toBeNull();
+    }
+  });
+});
+
+describe('frameRowSettingKey', () => {
+  it('routes exactly the frames with a real master switch to that switch', () => {
+    // One state per surface: a frame whose visibility already has an options
+    // setting must drive that setting from its frames-menu row too, or the
+    // two checkboxes desync (the reliquary precedent, and the 0.42 release's
+    // Target dots tracker joined with its own showTargetDots switch).
+    expect(frameRowSettingKey('actionBar2')).toBe('showSecondaryActionBar');
+    expect(frameRowSettingKey('actionBar3')).toBe('showThirdActionBar');
+    expect(frameRowSettingKey('reliquaryTracker')).toBe('showReliquaryTracker');
+    expect(frameRowSettingKey('targetDots')).toBe('showTargetDots');
+    for (const id of ['actionBar1', 'questTracker', 'damageMeter', 'petFrame', 'minimap']) {
+      expect(frameRowSettingKey(id), `${id} has no master switch`).toBeNull();
     }
   });
 });

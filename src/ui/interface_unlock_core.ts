@@ -391,10 +391,15 @@ export function classGatedFrameActive(id: string, playerClass: PlayerClass): boo
  */
 export function frameRowSettingKey(
   id: string,
-): 'showSecondaryActionBar' | 'showThirdActionBar' | 'showReliquaryTracker' | null {
+): 'showSecondaryActionBar' | 'showThirdActionBar' | 'showReliquaryTracker' | 'showTargetDots' | null {
   if (id === 'actionBar2') return 'showSecondaryActionBar';
   if (id === 'actionBar3') return 'showThirdActionBar';
   if (id === 'reliquaryTracker') return 'showReliquaryTracker';
+  // The Target dots tracker has its own master switch too (the Interface
+  // option the 0.42 release shipped it with), so its menu row drives that
+  // switch for the same reason: two checkboxes over one tracker must be one
+  // state.
+  if (id === 'targetDots') return 'showTargetDots';
   return null;
 }
 
