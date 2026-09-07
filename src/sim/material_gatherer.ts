@@ -178,6 +178,16 @@ export function persistedLocalIdentity(
   return { kind: identity.kind, id: identity.id };
 }
 
+/** The sparse CharacterState fragment for one save (the sim.ts
+ *  serializeCharacter shape every optional field follows): absent when
+ *  persistedLocalIdentity has nothing local to write. */
+export function materialGathererIdentitySaveFragment(identity: GathererIdentity | undefined): {
+  materialGathererIdentity?: LocalGathererIdentity;
+} {
+  const local = persistedLocalIdentity(identity);
+  return local ? { materialGathererIdentity: local } : {};
+}
+
 /**
  * The full descriptor for a mint: the durable identity plus a LIVE name
  * snapshot. Undefined when the player has no identity, or when the current name

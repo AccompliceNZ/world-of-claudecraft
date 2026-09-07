@@ -51,6 +51,7 @@ import {
   ZONES,
 } from '../src/sim/data';
 import {
+  deedStatsSaveFragment,
   FARM_CHRONICLE_ZONES,
   GROUND_PICKUP_PROVING_QUESTS,
   MAX_CREDITABLE_MOB_LEVEL,
@@ -1522,6 +1523,10 @@ describe('trigger references resolve against the real content tables', () => {
     expect(
       restoreDeedStats(serializeDeedStats(bogus)).visited.has('farm_crop_typo:vale_wheat'),
     ).toBe(false);
+    // deedStatsSaveFragment wraps serializeDeedStats into the sim.ts save
+    // shape: absent for a fresh character, present once anything is earned.
+    expect(deedStatsSaveFragment(restoreDeedStats(undefined))).toEqual({});
+    expect(deedStatsSaveFragment(stats)).toEqual({ deedStats: saved });
     // ...and the deed's own trigger really names these marks, so the round trip
     // above is over the set the evaluator reads.
     const trigger = DEEDS.col_farm_roster.trigger;

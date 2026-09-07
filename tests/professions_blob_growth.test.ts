@@ -76,6 +76,11 @@ import {
   MAX_LEVEL,
 } from '../src/sim/types';
 import { WORLD_BOSSES, worldBossLockoutId } from '../src/sim/world_boss';
+import {
+  resolveNamedImportSpecifier,
+  saveFragmentReturnKeys,
+  stateLiteralSpreadKeys,
+} from './helpers/save_fragment_keys';
 import { stripComments } from './helpers/strip_comments';
 import { EMPTY_TEST_WORLD } from './sim_shared';
 
@@ -240,6 +245,20 @@ const NON_PROFESSIONS_BLOB_FIELDS = [
   'renown',
   // The Reliquary trophy hall, written through an IIFE spread like deedStats.
   'reliquary',
+  // The corpse-harvest concentration preference (professions/harvest_preference.ts
+  // serializeHarvestPreference): absent while it holds the default "all" pick, so a
+  // character who has never narrowed a harvest serializes byte-identically to a
+  // pre-feature save. Classified here rather than in the professions field list because
+  // it is a per-CORPSE display/consume pick, not a professions skill/craft/gathering
+  // record the byte ceiling above ever meant to bound.
+  'harvestPreference',
+  // Intentional Gathering PR4: the compact tracked-goal selection (goal id plus target),
+  // absent while no goal is tracked (see saveGatheringGoal). Classified here rather than in
+  // the professions field list DELIBERATELY: the byte ceiling above measures the
+  // material-capacity payload (skills, recipes, cooldowns, focus, archetype, farm plots),
+  // and this is a single small selection record with no content-scaled growth of its own,
+  // so it stays out of that measurement rather than moving the ceiling for it.
+  'gatheringGoal',
 ] as const;
 
 // The settled ceiling measured 8,469 bytes when this bound was re-minted
@@ -1097,32 +1116,63 @@ describe('the professions blob growth bound (phase 16)', () => {
     // The one key written OUTSIDE serializeCharacter is the server's jail
     // stamp (server/game.ts assigns state.jail after serialization), which
     // the allowlist carries explicitly for that reason.
-    const simSrc = readFileSync(new URL('../src/sim/sim.ts', import.meta.url), 'utf8');
-    const serializeStart = simSrc.indexOf('serializeCharacter(');
-    expect(serializeStart).toBeGreaterThan(-1);
-    const body = simSrc.slice(serializeStart, simSrc.indexOf('\n  }', serializeStart));
-    const written = new Set<string>();
-    // Both conditional spread forms the serializer writes: the `cond && { k }`
-    // guard and the `cond ? { k } : {}` ternary. The ternary arm was missing,
-    // so every key written that way (the whole worn-cosmetics group included)
-    // silently escaped this classification sweep.
-    for (const m of body.matchAll(
-      /^\s{6}(?:\.\.\.\((?:[^)]*(?:&&|\?)\s*)?\{\s*)?([A-Za-z][A-Za-z0-9]*):/gm,
-    )) {
-      written.add(m[1]);
-    }
-    // The THIRD form: an IIFE spread whose key is written by a `return cond ?
-    // { k } : {}` inside the closure (nodeHarvestCooldowns, questCadence,
-    // deedStats, reliquary). Neither pattern above reaches inside a closure,
-    // so those keys were invisible to this sweep as well.
-    for (const m of body.matchAll(/^\s+return [^;\n]*\?\s*\{\s*([A-Za-z][A-Za-z0-9]*)\s*[,:}]/gm)) {
-      written.add(m[1]);
+    const simFileUrl = new URL('../src/sim/sim.ts', import.meta.url);
+    const simSrc = readFileSync(simFileUrl, 'utf8');
+    // AST-based, over a regex patchwork on purpose (fix-round review): a same-file regex
+    // can describe a plain key or a `cond && {k}`/`cond ? {a} : {b}` guard, but it cannot
+    // describe "resolve this call's import and read the OTHER module's return shape" at
+    // all, and every attempt to bolt that on by widening the regex either missed a wrapped
+    // call (parenthesized, a namespace/property callee) or silently matched nothing rather
+    // than refusing. `stateLiteralSpreadKeys` walks the REAL state literal in
+    // Sim.serializeCharacter with the TypeScript parser already used elsewhere in this
+    // tree (see `tests/helpers/method_call_sites.ts`) and throws on any spread shape it
+    // does not have a resolution rule for, rather than skipping it.
+    const { literalKeys, helperCallNames } = stateLiteralSpreadKeys(
+      simSrc,
+      'src/sim/sim.ts',
+      'Sim',
+      'serializeCharacter',
+    );
+    const written = new Set<string>(literalKeys);
+    // Every bare `...someSaveFragment(...)` call the literal spreads names a helper
+    // DECLARED IN ANOTHER MODULE (nodeReadinessSaveFragment, wyrmfallDailySaveFragment,
+    // craftDailySaveFragment, questCadenceSaveFragment, farmPlotsSaveFragment,
+    // serializeHarvestPreference, deedStatsSaveFragment, reliquarySaveFragment,
+    // materialGathererIdentitySaveFragment, as of this writing): the call site carries no
+    // key literal at all, only an identifier, so the AST walk above can find the CALL but
+    // never the KEYS it produces. Follow the call's own named import (alias-aware: an
+    // `import { foo as bar }` call site must look up `foo` in the target module, never the
+    // local `bar`) to its declaring module and read the keys OFF THAT DECLARATION, so a
+    // save-fragment helper that grows a new key is caught the moment it does, with no list
+    // to update by hand here. Unresolvable is a hard failure, never a silent skip: a helper
+    // this cannot resolve to a real declaration is exactly the shape this arm must catch.
+    for (const helperName of helperCallNames) {
+      const resolved = resolveNamedImportSpecifier(simSrc, 'src/sim/sim.ts', helperName);
+      if (!resolved) {
+        throw new Error(
+          `serializeCharacter spreads "${helperName}(...)" but no named import for it was ` +
+            'found in src/sim/sim.ts; a save-fragment helper must resolve to its own module ' +
+            'so this guard can scrape the keys it writes',
+        );
+      }
+      const helperUrl = new URL(`${resolved.modulePath}.ts`, simFileUrl);
+      const helperSrc = readFileSync(helperUrl, 'utf8');
+      for (const key of saveFragmentReturnKeys(
+        resolved.exportedName,
+        helperSrc,
+        helperUrl.pathname,
+      )) {
+        written.add(key);
+      }
     }
     expect(written.size).toBeGreaterThan(20); // the scrape genuinely parsed the literal
-    // The three forms are load-bearing: name one key from each, so a regex
-    // narrowed back to the plain form reddens here instead of silently
-    // sweeping less.
-    for (const key of ['level', 'activeBorder', 'reliquary']) {
+    // Named so a resolver regression reddens here by name instead of silently sweeping
+    // less: "reliquary" is reachable ONLY through a bare helper call (reliquarySaveFragment
+    // carries no key literal at its own call site), and "gatheringGoal" is reachable ONLY
+    // through the REVERSED ternary `saved === undefined ? {} : { gatheringGoal: saved }`
+    // (the key sits in the FALSE branch, the one a "read after `?`" scrape misses; this PR's
+    // own regression, since gatheringGoal is new here).
+    for (const key of ['level', 'activeBorder', 'reliquary', 'gatheringGoal']) {
       expect(written.has(key), `the scrape must reach "${key}"`).toBe(true);
     }
     for (const key of written) {

@@ -57,7 +57,6 @@ import {
 import { cleanPetName } from '../src/sim/pet/pet_commands';
 import { livePlaytimeSeconds } from '../src/sim/playtime';
 import { effectiveFishingBand } from '../src/sim/professions/fishing';
-import { RESPEC_TIER_CONFIG, type RespecPaymentTier } from '../src/sim/professions/focus';
 import { cancelProfessionSessionOnDisplacement } from '../src/sim/professions/session_teardown';
 import { restoreToolEffectSlotAction } from '../src/sim/professions/tool_effect_actions';
 import type { ToolEffectConfirmMode } from '../src/sim/professions/tools';
@@ -251,11 +250,7 @@ import { assembleEventsFrame, filterRoutableEvents, serializeEventFragments } fr
 import { buildEventPidIndex, forEachSelectedEventIndex } from './event_pid_index';
 import { appendFarmPlotsWire, dispatchFarmingCommand } from './farming_commands';
 import { fishingBandLabel, isKoi, isRodFeeRecipe } from './fishing_telemetry';
-import {
-  clearGatheringGoalCommandOutcome,
-  trackGatheringCommissionCommandOutcome,
-  trackGatheringRecipeCommandOutcome,
-} from './gathering_goal_commands';
+import { dispatchGatheringGoalCommand } from './gathering_goal_commands';
 import { appendGatheringGoalSelfWire } from './gathering_goal_wire';
 import { appendGatheringSelfWire } from './gathering_self_wire';
 import {
@@ -424,6 +419,7 @@ import {
 } from './tick_perf_log';
 import { createTickSaveObserver, TickProfiler, type TickProfilerSample } from './tick_profiler';
 import { hrtimeToMs, TickRateMeter } from './tick_rate_meter';
+import { applyTownFocusCommand } from './town_focus_command';
 import { maybeTrackDay7Retained, trackLevelMilestoneCapi } from './ua_capi';
 import { recordUnstuckEvent } from './unstuck_records';
 import { buildVarkhulPortalReplayBatch, varkhulPortalReplayFrame } from './varkhul_portal_replay';
@@ -6609,22 +6605,7 @@ export class GameServer {
         dispatchCorpseHarvestInspection(sim, session, msg, pid, (f) => this.send(session, f));
         break;
       case 'set_town_focus':
-        if (msg.allocation && typeof msg.allocation === 'object') {
-          const allocation: Record<string, number> = {};
-          for (const [k, v] of Object.entries(msg.allocation as Record<string, unknown>)) {
-            if (typeof v === 'number') allocation[k] = v;
-          }
-          // #1144: the payment tier picks which RESPEC_TIER_CONFIG row prices
-          // the re-spec. Untrusted input, so it is checked against the real
-          // config keys rather than cast; a missing/malformed tier (an older
-          // client, or a hand-crafted frame) falls back to 'time', the free
-          // tier, so it never charges a client that never chose a tier.
-          const tier: RespecPaymentTier =
-            typeof msg.tier === 'string' && Object.hasOwn(RESPEC_TIER_CONFIG, msg.tier)
-              ? (msg.tier as RespecPaymentTier)
-              : 'time';
-          sim.setTownFocus(allocation, tier, pid);
-        }
+        applyTownFocusCommand(sim, msg, pid);
         break;
       // The authenticated player's preference is a setting; the sim validates it.
       case 'set_harvest_preference':
@@ -6632,14 +6613,12 @@ export class GameServer {
         break;
       // Intentional Gathering PR4: track/clear the viewer's single explicit
       // gathering goal (see gathering_goal_commands.ts for the validation).
+      // command bodies live whole in gathering_goal_commands.ts; the labels
+      // stay HERE since the command-schema suite scans this switch.
       case 'track_gathering_recipe':
-        trackGatheringRecipeCommandOutcome(sim, msg, pid);
-        break;
       case 'track_gathering_commission':
-        trackGatheringCommissionCommandOutcome(sim, msg, pid);
-        break;
       case 'clear_gathering_goal':
-        clearGatheringGoalCommandOutcome(sim, msg, pid);
+        dispatchGatheringGoalCommand(sim, command, msg, pid);
         break;
       case 'lootRoll':
         if (

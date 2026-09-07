@@ -232,9 +232,9 @@ import * as deedsMod from './deeds';
 import {
   createDeedRuntime,
   type DeedRuntime,
+  deedStatsSaveFragment,
   freshDeedStats,
   restoreDeedStats,
-  serializeDeedStats,
 } from './deeds';
 import * as companionMod from './delves/companion';
 import * as lockpickMod from './delves/lockpick_controller';
@@ -328,7 +328,7 @@ import { defaultMarketQuery, type MarketQuery } from './market_query';
 import {
   type GathererIdentity,
   type LocalGathererIdentity,
-  persistedLocalIdentity,
+  materialGathererIdentitySaveFragment,
   readLocalGathererIdentity,
   readPersistedLocalIdentity,
   resolveGathererIdentity,
@@ -440,7 +440,7 @@ import {
 import {
   type CadenceMap,
   clampCadenceOnLoad,
-  serializeCadence,
+  questCadenceSaveFragment,
   WORK_ORDER_CADENCE_TICKS,
 } from './professions/cadence';
 import { unbindItem as unbindItemImpl } from './professions/commission';
@@ -469,7 +469,11 @@ import {
   storedCraftResult,
 } from './professions/crafting';
 import { craftingIdentityFor as craftingIdentityForImpl } from './professions/crafting_identity';
-import { sanitizeDailyGateLoad } from './professions/daily_gate_load';
+import {
+  craftDailySaveFragment,
+  sanitizeDailyGateLoad,
+  wyrmfallDailySaveFragment,
+} from './professions/daily_gate_load';
 import {
   type ApplyEnchantResult,
   applyEnchant as applyEnchantImpl,
@@ -479,7 +483,7 @@ import {
   disenchantItem as disenchantItemImpl,
 } from './professions/enchanting';
 import { warnDroppedFarmPlotRows } from './professions/farm_load_report';
-import { normalizeFarmPlots, serializeFarmPlots } from './professions/farm_persist';
+import { farmPlotsSaveFragment, normalizeFarmPlots } from './professions/farm_persist';
 import {
   EMPTY_FARM_PLOT_VIEWS,
   type FarmPlantKnobs,
@@ -526,10 +530,10 @@ import {
 import type { GatheringGoalView } from './professions/gathering_goal_types';
 import { updateGuildTrendLetters } from './professions/guild_letter';
 import {
+  applyHarvestPreferenceOnLoad,
   HARVEST_PREFERENCE_ALL,
   type HarvestPreference,
-  loadHarvestPreference,
-  savedHarvestPreference,
+  serializeHarvestPreference,
 } from './professions/harvest_preference';
 import {
   harvestPreferenceFor as harvestPreferenceForImpl,
@@ -550,7 +554,7 @@ import {
 import {
   applyNodeReadiness,
   isLiveGatherNodeId,
-  serializeNodeReadiness,
+  nodeReadinessSaveFragment,
 } from './professions/node_persist';
 import {
   type PerfectItemRef,
@@ -633,8 +637,8 @@ import {
   RELIQUARY_PAGES_BY_ID,
   type ReliquaryState,
   reliquaryOwnershipOpts,
+  reliquarySaveFragment,
   restoreReliquaryState,
-  serializeReliquaryState,
 } from './reliquary';
 import { sanitizeRemovedZone1Content } from './removed_zone1_content';
 import { freshCounters, type RewardCounters } from './reward_counters';
@@ -3440,15 +3444,9 @@ export class Sim {
       // than riding back out through the panel into a request the command
       // boundary now rejects.
       meta.townFocus = professionsFocus.normalizeTownFocusOnLoad(s.townFocus);
-      // Corpse-harvest preference (Intentional Gathering PR3): absent/explicit
-      // All load to All (the legacy default), a bounded-but-retired material id
-      // is kept verbatim, and a malformed value refuses to null rather than
-      // reviving All (see PlayerMeta.harvestPreference / harvest_preference.ts
-      // loadHarvestPreference for why null must never become an active choice).
-      const loadedHarvestPreference = loadHarvestPreference(s.harvestPreference);
-      meta.harvestPreference = loadedHarvestPreference.ok
-        ? loadedHarvestPreference.preference
-        : null;
+      // Corpse-harvest preference (Intentional Gathering PR3); see
+      // PlayerMeta.harvestPreference / harvest_preference.ts applyHarvestPreferenceOnLoad.
+      meta.harvestPreference = applyHarvestPreferenceOnLoad(s.harvestPreference);
       // Intentional Gathering PR4: absent/undefined stays absent (no goal); a
       // valid saved goal is restored verbatim; a malformed one loads the
       // 'invalid' sentinel rather than silently becoming no goal. Never
@@ -4217,10 +4215,7 @@ export class Sim {
       ),
       // Node respawn timers as remaining deltas (D6), absent when every node
       // is ready (zero-default omission; see the CharacterState field doc).
-      ...(() => {
-        const nodeCooldowns = serializeNodeReadiness(meta.nodeHarvestReadyAt, this.time);
-        return nodeCooldowns ? { nodeHarvestCooldowns: nodeCooldowns } : {};
-      })(),
+      ...nodeReadinessSaveFragment(meta.nodeHarvestReadyAt, this.time),
       skin: meta.skin,
       skinCatalog: meta.skinCatalog,
       pendingSkinRank: meta.pendingSkinRank,
@@ -4260,40 +4255,18 @@ export class Sim {
       // Masterwrought materials: zero-default omission (the honor idiom), so
       // a character the faucets never paid serializes byte-identically to a
       // pre-materials save.
-      ...(meta.wyrmfallDaily.date !== '' || meta.wyrmfallDaily.sources.size > 0
-        ? {
-            wyrmfallDaily: {
-              date: meta.wyrmfallDaily.date,
-              sources: [...meta.wyrmfallDaily.sources],
-            },
-          }
-        : {}),
+      ...wyrmfallDailySaveFragment(meta.wyrmfallDaily),
       ...(meta.emberWeekAnchor !== '' ? { emberWeekAnchor: meta.emberWeekAnchor } : {}),
       // The oncePerDay craft stamp: zero-default omission like wyrmfallDaily
       // above, so a character that never crafted a daily-gated recipe
       // serializes byte-identically to a pre-phase-07 save.
-      ...(meta.craftDaily.date !== '' || meta.craftDaily.crafted.size > 0
-        ? {
-            craftDaily: {
-              date: meta.craftDaily.date,
-              crafted: [...meta.craftDaily.crafted],
-            },
-          }
-        : {}),
+      ...craftDailySaveFragment(meta.craftDaily),
       mailWelcomed: meta.mailWelcomed,
       guildLetterSent: meta.guildLetterSent,
       // All three written only when non-empty/true (zero-default
       // omission), so a character with no work orders, no attunement, and no
       // tutorial serializes byte-identically to an older save.
-      ...(() => {
-        // Load hygiene: prune windows that have
-        // already elapsed at serialize time too, not only at load, so a
-        // long-running session's autosave stops carrying past-due keys
-        // forward. Live windows serialize byte-identically, the field still
-        // omits when nothing live remains, and the live map is untouched.
-        const cadence = serializeCadence(meta.questCadence, this.tickCount);
-        return cadence ? { questCadence: cadence } : {};
-      })(),
+      ...questCadenceSaveFragment(meta.questCadence, this.tickCount),
       ...(meta.tierMailSent.size > 0
         ? { tierMailSent: Object.fromEntries(meta.tierMailSent) }
         : {}),
@@ -4307,24 +4280,15 @@ export class Sim {
           }
         : {}),
       ...(meta.profTierTutorialSent ? { profTierTutorialSent: true } : {}),
-      ...(() => {
-        // Zero-default omission plus key-sorted rows; the write side neither
-        // clamps nor filters, since both anti-tamper arms live on the load
-        // side (professions/farm_persist.ts).
-        const fp = serializeFarmPlots(meta.farmPlots);
-        return fp ? { farmPlots: fp } : {};
-      })(),
+      // Zero-default omission plus key-sorted rows; the write side neither
+      // clamps nor filters, since both anti-tamper arms live on the load
+      // side (professions/farm_persist.ts).
+      ...farmPlotsSaveFragment(meta.farmPlots),
       ...(meta.tutorialGreetingSent ? { tutorialGreetingSent: true } : {}),
       townFocus: { ...meta.townFocus },
-      // Corpse-harvest preference: omit only the sparse-default All case
-      // (undefined); an explicit malformed refusal writes JSON `null`
-      // verbatim, never the omitted key, so it stays refused across a
-      // reload instead of quietly reviving into All (savedHarvestPreference
-      // owns the encoding; see PlayerMeta.harvestPreference).
-      ...(() => {
-        const saved = savedHarvestPreference(meta.harvestPreference);
-        return saved === undefined ? {} : { harvestPreference: saved };
-      })(),
+      // Corpse-harvest preference; see PlayerMeta.harvestPreference /
+      // harvest_preference.ts serializeHarvestPreference for the encoding.
+      ...serializeHarvestPreference(meta.harvestPreference),
       // Intentional Gathering PR4: sparse (absent while no goal is tracked).
       // Never serializes the derived projection/cache or the live order
       // binding (gatheringGoalOrder), only the compact selection.
@@ -4337,28 +4301,19 @@ export class Sim {
       // so pre-deed saves stay byte-equal until the system engages. The
       // legacy unlockedMilestones above stays dual-written for one release.
       ...(meta.deedsEarned.size > 0 ? { deeds: Object.fromEntries(meta.deedsEarned) } : {}),
-      ...(() => {
-        const deedStats = serializeDeedStats(meta.deedStats);
-        return deedStats ? { deedStats } : {};
-      })(),
+      ...deedStatsSaveFragment(meta.deedStats),
       ...(meta.activeTitle !== null ? { activeTitle: meta.activeTitle } : {}),
       ...(meta.activeBorder !== null ? { activeBorder: meta.activeBorder } : {}),
       ...(meta.renown > 0 ? { renown: meta.renown } : {}),
       // Reliquary: absent while empty (zero-default omission), same contract as
       // deedStats so pre-system saves stay byte-equal until a catalogued find.
-      ...(() => {
-        const reliquary = serializeReliquaryState(meta.reliquary);
-        return reliquary ? { reliquary } : {};
-      })(),
+      ...reliquarySaveFragment(meta.reliquary),
       // The LOCAL gatherer identity only, so it survives save/reload and
       // supersedes the next session's fresh host default. An online character
       // writes nothing here (its id comes from the row at every join, and a save
       // must never carry an identity claim back in), so its blob and every
       // pre-feature save stay byte-equal.
-      ...(() => {
-        const materialGathererIdentity = persistedLocalIdentity(meta.gathererIdentity);
-        return materialGathererIdentity ? { materialGathererIdentity } : {};
-      })(),
+      ...materialGathererIdentitySaveFragment(meta.gathererIdentity),
     };
     return sanitizeRemovedZone1Content(state).state;
   }

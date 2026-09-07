@@ -157,6 +157,10 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   // null until the first `hpref` snapshot decodes, matching the class field
   // default (src/net/online.ts).
   c.harvestPreference = null;
+  // The tracked recipe/commission gathering goal (Intentional Gathering PR4):
+  // null until the first `ggoal` snapshot decodes, matching the class field
+  // default (src/net/online.ts).
+  c.gatheringGoal = null;
   // The tslot/fplot self-delta mirrors and the static patch table, matching
   // the class's own static defaults (src/net/online.ts): a consumer test
   // reading IWorldFarming or the tool slots through this fixture must see

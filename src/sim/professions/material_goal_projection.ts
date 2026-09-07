@@ -125,7 +125,12 @@ export interface ProjectMaterialGoalReagentsInput {
    *  (holdsSelfSignedInstance/requiredReagentCountFor). */
   readonly crafterName: string;
   readonly craftSkills: CraftSkillState;
-  readonly isJackOfAllTrades: boolean;
+  /** Internal DTO field name (never persisted/wire): the caller's live
+   *  `meta.archetype.isJackOfAllTrades` reserved flag, passed through
+   *  unchanged to `requiredReagentCountFor`. Renamed here so this projection
+   *  never mints its own `isJackOfAllTrades` object member, which
+   *  `tests/recipe_economy.test.ts` reserves for the one true mint. */
+  readonly jackAttuned: boolean;
   /** The character's live bag contents. Never mutated: every simulation below
    *  runs on a cloned scratch copy. */
   readonly carriedInventory: readonly InvSlot[];
@@ -211,7 +216,7 @@ function scratchDrawableVault(
  *  CRAFT_BATCH_MAX. A reagent shortfall on any craft stops the count there;
  *  nothing from that craft is applied to the scratch (plan-then-apply). */
 function projectPayableCraftCount(input: ProjectMaterialGoalReagentsInput): number {
-  const { recipe, quantity, crafterName, craftSkills, isJackOfAllTrades, carriedInventory } = input;
+  const { recipe, quantity, crafterName, craftSkills, jackAttuned, carriedInventory } = input;
   if (recipe.reagents.length === 0) return quantity;
   const scratchCarried: InvSlot[] = carriedInventory.map((slot) => ({ ...slot }));
   const scratchVault = scratchDrawableVault(input.drawableVaultStock);
@@ -225,7 +230,7 @@ function projectPayableCraftCount(input: ProjectMaterialGoalReagentsInput): numb
           reagent,
           craftSkills,
           recipe.professionId,
-          isJackOfAllTrades,
+          jackAttuned,
         ).count,
       (id) => countUnlockedInSlots(scratchCarried, id),
       scratchVault?.stock ?? null,
@@ -279,7 +284,7 @@ interface ReagentBillResult {
  * already spent the copy that held it.
  */
 function projectReagentBill(input: ProjectMaterialGoalReagentsInput): ReagentBillResult {
-  const { recipe, quantity, crafterName, craftSkills, isJackOfAllTrades, carriedInventory } = input;
+  const { recipe, quantity, crafterName, craftSkills, jackAttuned, carriedInventory } = input;
   const required = recipe.reagents.map(() => 0);
   const reachable = recipe.reagents.map(() => 0);
   const reachableCarriedByRow = recipe.reagents.map(() => 0);
@@ -314,7 +319,7 @@ function projectReagentBill(input: ProjectMaterialGoalReagentsInput): ReagentBil
         reagent,
         craftSkills,
         recipe.professionId,
-        isJackOfAllTrades,
+        jackAttuned,
       ).count;
       const plan = planReagentSourceDraw(reagent.itemId, need, carriedCounter, vaultCounter);
       tallyPlannedTakes(carriedPlanned, plan.carried);

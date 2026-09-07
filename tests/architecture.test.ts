@@ -2432,6 +2432,7 @@ const UI_DOM_MODULES = [
   'src/ui/portrait_chip.ts',
   'src/ui/proc_overlay_dom.ts',
   'src/ui/proc_overlay_drag.ts',
+  'src/ui/hud/professions/gathering_goal_track_row.ts',
   'src/ui/hud/professions/profession_identity_card.ts',
   'src/ui/hud/professions/profession_tutorial_window.ts',
   'src/ui/preview_stand_in.ts',

@@ -7,6 +7,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import {
   clearGatheringGoalCommandOutcome,
+  dispatchGatheringGoalCommand,
   trackGatheringCommissionCommandOutcome,
   trackGatheringRecipeCommandOutcome,
   validClearGatheringGoalCommand,
@@ -200,6 +201,96 @@ describe('clearGatheringGoalCommandOutcome', () => {
     const outcome = clearGatheringGoalCommandOutcome({ clearGatheringGoal }, forged, 9);
     expect(outcome).toBe(false);
     expect(clearGatheringGoal).not.toHaveBeenCalled();
+  });
+});
+
+describe('dispatchGatheringGoalCommand', () => {
+  // Each case must invoke ONLY its own matching validator/action pair: a fake
+  // sim exposing all three methods proves the other two never fire, so the
+  // fold in game.ts cannot cross-wire a label to the wrong command body.
+  it('routes track_gathering_recipe to trackGatheringRecipe alone', () => {
+    const trackGatheringRecipe = vi.fn(() => true);
+    const trackGatheringCommission = vi.fn(() => true);
+    const clearGatheringGoal = vi.fn();
+    const outcome = dispatchGatheringGoalCommand(
+      { trackGatheringRecipe, trackGatheringCommission, clearGatheringGoal },
+      'track_gathering_recipe',
+      { recipe: 'recipe_forge_1', count: 5 },
+      9,
+    );
+    expect(outcome).toBe(true);
+    expect(trackGatheringRecipe).toHaveBeenCalledTimes(1);
+    expect(trackGatheringRecipe).toHaveBeenCalledWith('recipe_forge_1', 5, 9);
+    expect(trackGatheringCommission).not.toHaveBeenCalled();
+    expect(clearGatheringGoal).not.toHaveBeenCalled();
+  });
+
+  it('routes track_gathering_commission to trackGatheringCommission alone', () => {
+    const trackGatheringRecipe = vi.fn(() => true);
+    const trackGatheringCommission = vi.fn(() => true);
+    const clearGatheringGoal = vi.fn();
+    const outcome = dispatchGatheringGoalCommand(
+      { trackGatheringRecipe, trackGatheringCommission, clearGatheringGoal },
+      'track_gathering_commission',
+      { order: 42 },
+      9,
+    );
+    expect(outcome).toBe(true);
+    expect(trackGatheringCommission).toHaveBeenCalledTimes(1);
+    expect(trackGatheringCommission).toHaveBeenCalledWith(42, 9);
+    expect(trackGatheringRecipe).not.toHaveBeenCalled();
+    expect(clearGatheringGoal).not.toHaveBeenCalled();
+  });
+
+  it('routes clear_gathering_goal to clearGatheringGoal alone', () => {
+    const trackGatheringRecipe = vi.fn(() => true);
+    const trackGatheringCommission = vi.fn(() => true);
+    const clearGatheringGoal = vi.fn();
+    const outcome = dispatchGatheringGoalCommand(
+      { trackGatheringRecipe, trackGatheringCommission, clearGatheringGoal },
+      'clear_gathering_goal',
+      {},
+      9,
+    );
+    expect(outcome).toBe(true);
+    expect(clearGatheringGoal).toHaveBeenCalledTimes(1);
+    expect(clearGatheringGoal).toHaveBeenCalledWith(9);
+    expect(trackGatheringRecipe).not.toHaveBeenCalled();
+    expect(trackGatheringCommission).not.toHaveBeenCalled();
+  });
+
+  it('refuses (and calls no sim method) when the routed label carries a malformed passenger frame', () => {
+    const trackGatheringRecipe = vi.fn(() => true);
+    const trackGatheringCommission = vi.fn(() => true);
+    const clearGatheringGoal = vi.fn();
+    const forged: Record<string, unknown> = { recipe: 'recipe_forge_1', count: 5, pid: 999999 };
+    const outcome = dispatchGatheringGoalCommand(
+      { trackGatheringRecipe, trackGatheringCommission, clearGatheringGoal },
+      'track_gathering_recipe',
+      forged,
+      9,
+    );
+    expect(outcome).toBe(false);
+    expect(trackGatheringRecipe).not.toHaveBeenCalled();
+    expect(trackGatheringCommission).not.toHaveBeenCalled();
+    expect(clearGatheringGoal).not.toHaveBeenCalled();
+  });
+
+  it('refuses clear_gathering_goal when an unexpected payload field rides the bare envelope', () => {
+    const trackGatheringRecipe = vi.fn(() => true);
+    const trackGatheringCommission = vi.fn(() => true);
+    const clearGatheringGoal = vi.fn();
+    const forged: Record<string, unknown> = { pid: 999999 };
+    const outcome = dispatchGatheringGoalCommand(
+      { trackGatheringRecipe, trackGatheringCommission, clearGatheringGoal },
+      'clear_gathering_goal',
+      forged,
+      9,
+    );
+    expect(outcome).toBe(false);
+    expect(clearGatheringGoal).not.toHaveBeenCalled();
+    expect(trackGatheringRecipe).not.toHaveBeenCalled();
+    expect(trackGatheringCommission).not.toHaveBeenCalled();
   });
 });
 

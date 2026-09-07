@@ -143,7 +143,7 @@ export function gatheringGoalFor(ctx: SimContext, pid: number): GatheringGoalVie
       quantity: goal.count,
       crafterName: meta.name,
       craftSkills: meta.craftSkills,
-      isJackOfAllTrades: !!meta.archetype.isJackOfAllTrades,
+      jackAttuned: !!meta.archetype.isJackOfAllTrades,
       carriedInventory: meta.inventory,
       bankInventory: meta.bank.inventory,
       vault: meta.vault,

@@ -71,7 +71,11 @@ export const interfacePage: GuidePage = {
         ${section('guide.interfacePage.actionBarsTitle', paras('guide.interfacePage.actionBarsBody'))}
         ${section('guide.interfacePage.minimapTitle', paras('guide.interfacePage.minimapBody'))}
         ${section('guide.interfacePage.railTitle', paras('guide.interfacePage.railBody'))}
-        ${section('guide.interfacePage.mapTitle', paras('guide.interfacePage.mapBodyZoneFirst'))}
+        ${section(
+          'guide.interfacePage.mapTitle',
+          paras('guide.interfacePage.mapBodyZoneFirst') +
+            paras('guide.interfacePage.gatheringGoalTrackerBody'),
+        )}
         ${section('guide.interfacePage.chatTitle', paras('guide.interfacePage.chatBody'))}
 
         ${section(
