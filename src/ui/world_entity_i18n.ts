@@ -281,6 +281,7 @@ const NPC_IDS = [
   'brother_aldric_raid', // dynamically-spawned raid turn-in NPC (Crypt of Nythraxis)
   'archivist_maelin_emberward', // dev-only Ignivar raid historian
   'archivist_maelin_ember_projection', // Maelin's instanced raid checkpoint projection
+  'crucible_quartermaster', // Ignivar raid sigil-redemption vendor (Halls of the First Tempering)
   'brother_halven', // Collapsed Reliquary delve board NPC
   'brother_halven_marsh', // Drowned Litany delve board NPC (same character, marsh camp)
   'spirit_healer', // the graveyard angel (spawned at every graveyard + dungeon entry)
@@ -346,6 +347,7 @@ const NPC_IDS = [
   'mender_saul',
   'bellkeeper_tam',
   'fisher_nell',
+  'riftwright_maelis', // the Rift Forge (Gullhaven, Farshore)
   'forgemistress_darva', // crafting-station master: forge (Eastbrook, zone 1)
   'cook_marlow', // crafting-station master: kitchens (Eastbrook, zone 1)
   'weaver_ottilie', // crafting-station master: loom (Eastbrook, zone 1)
@@ -616,6 +618,7 @@ const DUNGEON_IDS = [
   'ignivar_forge_lift',
   'ignivar_forge_approach',
   'ignivar_raid_arena',
+  'ignivar_molten_assembly',
   'ignivar_inner_crucible',
   'wildheart_basin',
   'the_last_keep',
@@ -718,6 +721,7 @@ type WorldEntityTranslations = {
     delveRiteShrineSkullInteract: string;
     mailboxName: string;
     noticeboardName: string;
+    realmBuilderMonumentName: string;
   };
   entities: {
     mobs: MobTranslations;
@@ -843,6 +847,7 @@ function makeEnglishWorldEntities(): WorldEntityTranslations {
       delveRiteShrineSkullInteract: 'Skull Shrine: Press F to touch it',
       mailboxName: 'Mailbox',
       noticeboardName: 'Notice Board',
+      realmBuilderMonumentName: 'Realm Builder Monument',
     },
     entities: { mobs, npcs, quests, zones, dungeons, delves, letters },
   };

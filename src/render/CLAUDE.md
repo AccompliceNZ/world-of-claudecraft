@@ -233,9 +233,12 @@ NEW subsystem's warm-up must land as a manifest entry, in the right lane:
   the old ADMISSION only (every unit admitted at once, the ledger still
   learning); the reveal-gate policy has no legacy arm and keeps revealing
   piecewise under its soft deadline whatever that flag says. The touch tail runs as one budgeted queue
-  unit PER PROGRAM (`linked_program_touch_lane.ts`) on the live gates AND on the
-  reveal host, which previously ended at the shadow arm and left streamed decor
-  paying the uniform-table round trip on its reveal draw. Its readiness comes
+  unit PER PROGRAM (`linked_program_touch_lane.ts`) on the live gates, on the
+  reveal host, and on the world-entry compile lane. Each of those three once
+  ended at the shadow arm and left its programs paying the uniform-table round
+  trip on their first live draw; the boot lane opts in through the `tail` of
+  `initial_scene_compile_units.ts`, whose `entryCompileTail` binds the same
+  settle and touch arms the gates use. Its readiness comes
   from the SETTLE and never from a driver query: a settled gate records its
   target's current programs in `linked_program_readiness.ts` and the walk reads
   that record, because three latches `programReady` false after one missed poll,
@@ -334,7 +337,9 @@ NEW subsystem's warm-up must land as a manifest entry, in the right lane:
   escaping bands are consulted in distance order (`prop_cull_core.ts`
   `updatePropCullables` over a reused `PropCullPass`; the sort runs only on a
   frame with two or more of them). `gpu_prep_events.ts` counts the marked keys
-  as `imminentHolds`.
+  as `imminentHolds` (under the entry cover's establishing shot, below, EVERY
+  consulted key is marked, so a first-spawn entry's count is the whole
+  opening view, not the keys the camera stood among).
   TWO REACH FLOORS, and they are the only reveals that may draw a root
   unlinked: colliders are never invisible at arm's length. Bands keep
   `PROP_CULL_REVEAL_REACH` (40 yd, instant, gate or not). Towns get
@@ -347,11 +352,42 @@ NEW subsystem's warm-up must land as a manifest entry, in the right lane:
   view): every town-spanning static batch anchors at the town centre, so a
   camera standing there is at arm's length of all of them at once, and reach is
   a collider argument a batch cannot make.
+  THE ENTRY HORIZON BOUNDS WHAT IS CONSULTED. The reveal-gated painters (the
+  props view, both town views, foliage) cull against
+  `EntryDetailHorizonAdmission.sceneryCullFar` (`entry_detail_horizon_core.ts`
+  `entrySceneryCullFar`): the frame's cull far capped at the horizon's open
+  ring while the entry horizon is active, at BOTH frame sites (the prewarm
+  frame and the live frame). Before the far-terrain stand-in is complete the
+  renderer culls at scene fog rather than the horizon, and one such frame
+  under the entry cover requested every scenery key out to that fog (measured
+  on the Proving Shore spawn: 81 keys at once, 46 of them beyond the first
+  ring, both mainland towns included), so the spawn's own decor waited behind
+  keys the horizon then hid, whose watchdogs later revealed them cold. A key
+  beyond the ring is not consulted, so nothing is requested for it until the
+  ring reaches it or the camera does (real-geometry keys: foliage SPRITE rows
+  cull against the atmospheric far, which the cap leaves alone, so an impostor
+  bucket beyond the ring still consults its gate). The cap holds on the frames
+  the horizon cannot tick (before `vistaLive()`, `advanceFromFrame` is not
+  fed): that window is the one it exists for, and nothing beyond the ring
+  could draw there anyway, since every such key is gate-held until its link.
+  `snapshot().sceneryCap` reports the ring scenery culled at, distinct from
+  `cap`, which reads the target on those frames. Terrain keeps the wide cull
+  far: nothing it draws rides the reveal lane.
   The ARRIVAL COVER (`arrival_cover.ts`, raised by `src/game/arrival_warmup.ts`
   for the whole blocking teleport chain, and at world entry) does two things and
   neither of them reveals anything. It makes the curtain WAIT on the gates
-  (`awaitArrivalReveals`, at most `ARRIVAL_REVEAL_SETTLE_MAX_MS`, zero online)
-  so an arrival lifts with its decor linked the way boot does. Its first check
+  (`awaitArrivalReveals`, at most `ARRIVAL_REVEAL_SETTLE_MAX_MS`, zero online
+  with ONE exception: the world entry that opens on the first-spawn cinematic's
+  ESTABLISHING SHOT, `settleWorldEntryCover` `establishingShot`, waits the same
+  bound online, and while that cover is up EVERY reveal consult is imminent,
+  `arrival_cover.ts` `arrivalEstablishingShotActive` read by `reveal_gate.ts`,
+  because the wide opening view of the village is what a new player sees
+  first and the chase camera's imminence radius does not describe it)
+  so an arrival lifts with its decor linked the way boot does. The wait's outcome
+  is an `arrival` event keyed `entry-wait` or `entry-wait:establishing-shot`
+  (waited ms, the bound, the imminent keys still held at the lift), which the
+  perf beacon summarizes with the reveal counters as `rawSummary.entryReveal`
+  (`src/game/perf_entry_reveal_core.ts`): the fleet-side watch for the bound. Its first check
   happens after ONE poll interval, never synchronously: the wait starts before
   any cull has consulted a gate at the new position, so a synchronous check read
   "nothing held" because nothing had been asked yet. At world entry that wait
@@ -394,6 +430,67 @@ NEW subsystem's warm-up must land as a manifest entry, in the right lane:
   presentation: `startAfterInitialPaint` starts the reveal compile and both
   clocks together after the first painted world frame. Later arrivals read the
   already-settled page boundary and retain the normal immediate clock.
+- **The camera-occluder fade is a GATED flip (`occluder_fade_gate.ts`).** A
+  structure that blocks the eye-to-camera segment fades by flipping
+  `transparent` on its per-structure clones (`occluder_fade.ts`) or by drawing
+  a pooled transparent stand-in (`instanced_occluder_ghosts.ts`), and three
+  keys a SECOND program on that flip. The boot manifest stages one hidden twin
+  per fade program (`props.ghost-fade-variants`, `foliage.materials`), but both
+  entries are droppable and resume in the lowest lane, while the player's
+  first camera turn after the curtain is exactly when a house or a tree
+  crosses the segment: on a boot that dropped them the flip linked inside that
+  live frame. So the flip consults a reveal gate whose key is the program
+  identity (`occluder_ghost_variant_key.ts`, or `instancedGhostKey`) and whose
+  root is a hidden twin on that program (`buildOccluderFadeTwin`, the ONE
+  recipe the prewarm and the gate share; `instancedGhostTwin` for the pools,
+  built with the live stand-in's own `createInstancedGhostMaterial`). A cold
+  key fires the twin's compile through the reveal compile host and holds: an
+  EDGE consult (the camera is inside the structure now) names the actionable
+  floor, `compile(root, imminent, namedPriority)`, and escalates a key a
+  prefetch already queued at the ordinary priority (one more compile of the
+  same twin, the key settling on either result); the painter's per-frame path is
+  `advanceOccluderFade`, which keeps the structure OPAQUE while its alpha keeps
+  stepping and writes the flip the frame the link settles; the tree hides ask
+  `InstancedOccluderGhosts.allReady` for every part before the first acquire.
+  Restoring to the authored state never consults, and a structure that
+  clears the camera while still held never flips at all. WHAT THE PLAYER SEES
+  during a hold is the structure itself, opaque, exactly as before it crossed
+  the segment: the hold delays a cosmetic see-through, never a representation
+  (every entity behind the wall keeps drawing; the camera cannot see through
+  the wall yet, as it could not before the fade existed), the same trade the
+  character-effect swap makes, and the hold ends on the twin's settle or the
+  reveal watchdog, never on a clock. Structures within
+  `OCCLUDER_FADE_PREFETCH_YD` of the camera (geometry: the cinematic's opening
+  pull-back, past the wheel range) ask ahead of their first occlusion,
+  `prefetchOccluderFadeWithin` / `prefetchAll`, at the ordinary reveal
+  priority, or imminent under an arrival cover so the covered wait links them
+  too. No installed gate (no async compile, tests, the editor) means the
+  historical immediate flip; `renderer_resource_lifecycle.ts` uninstalls it
+  with the renderer, and the twins (one per program, retained for the gate's
+  life, never disposed while installed) go with it. A new fade painter uses
+  `advanceOccluderFade` and mints its records with `occluderFadeRecordFor`
+  (one record per material AND mesh variant: a plain and an instanced mesh
+  of one material are two programs); every instanced-ghost consumer (trees,
+  the Yumi maze walls, the battleground placements) decides through
+  `occluderKeepsInstances` before `acquire`. Pinned by
+  `tests/occluder_fade_gate.test.ts` and `tests/occluder_fade_core.test.ts`.
+- **The Proving Shore coach's guidance is prewarmed AND gated.** The golden
+  ribbon, target ring, body aura, objective beam and camp ring
+  (`coach_trail.ts`) used to mint their materials and canvas textures on the
+  frame the coach's route or target first changed, by bare `scene.add`, and
+  to dispose the ribbon material on every station change: the island's first
+  accepted quest linked three programs inside a live frame. The materials are
+  now the page-wide set in `coach_trail_materials.ts`, staged by the boot
+  manifest on the ability-material lane (`ABILITY_MATERIAL_SOURCES`, the
+  lazy-cache sweep enforces the registration), and every guidance object is
+  built at construction under one root the trail attaches through
+  `attachSceneGroupGated` with the renderer's compile gate, so the root stays
+  hidden until the programs link whatever the boot kept; rebuilds only swap
+  geometry. The zone archetype prewarm also takes the kill targets of the
+  zone's quests (`zone_prewarm_templates_core.ts`), so a summon-only quest
+  mob (the island's Mister Crabs) is staged with the camps. Pinned by
+  `tests/coach_trail_materials.test.ts` and
+  `tests/zone_prewarm_templates_core.test.ts`.
 - **Every gate names its stand-in: NEVER LEAVE AN ENTITY WITH NO REPRESENTATION.**
   A gate hides a still-linking object so its reveal draw cannot stall the frame;
   the link is not cancellable and the gate timeout is diagnostic only, so the
@@ -459,7 +556,13 @@ GPU work signs. Each rule names its seam and its guard.
   `tests/ability_material_prewarm_sweep.test.ts`, the `buildInterior` gating pin in
   `tests/renderer_compile_gate.test.ts`, and the `live-program` events in
   `perfStats().gpuPrep`, whose count on an offline tour of the touched content is
-  the acceptance bar of a render PR.
+  the acceptance bar of a render PR. The fleet-side count of the same first seconds
+  is `post_reveal_links_core.ts`: `live_program_watch.ts` hosts one window per page,
+  armed at the first `markGpuHitchReveal` (the world entry; later arrivals only
+  count), sampled from the same present-host calls, closed 20 s later on the last
+  in-window count; `PerfMonitor` snapshots it as `postRevealLinks` and the beacon
+  ships it beside `entryReveal` (`tests/post_reveal_links_core.test.ts`, the host
+  block in `tests/live_program_watch.test.ts`).
 - **Every program-key change on a VISIBLE material rides a gated swap with a
   stand-in.** The key inputs: texture-slot presence, `transparent` / `blending` /
   `alphaToCoverage` / `alphaHash`, `defines`, `onBeforeCompile` /
@@ -483,6 +586,16 @@ GPU work signs. Each rule names its seam and its guard.
   `debug.checkShaderErrors = shaderDebugRequested()` on the renderer it just built,
   ahead of that renderer's first `render()`.** Guard: the secondary-context pins in
   `tests/shader_debug_flag.test.ts`.
+- **Every `THREE.ShaderChunk` patch installs at module scope, from its own module
+  (`final_color_nan_guard.ts` is the template), unless it is scoped to exactly one
+  renderer on purpose** (`installPbrPointLightShaderPruning`, `pbr_fragment_shader.ts`,
+  called only from `initGfxTier`, since only the world renderer needs it today). This
+  repo builds more than one `WebGLRenderer` outside `initGfxTier`
+  (`characters/preview.ts`, `characters/portrait.ts`, `armory_preview.ts`,
+  `src/editor/asset_thumbs.ts`, `src/guide/viewer/scene.ts`,
+  `src/dev/outfit_audit.ts`): a call sited inside `initGfxTier` alone reaches only the
+  world renderer, and a per-site call is easy to miss on one of the others. Guard:
+  `tests/final_color_nan_guard.test.ts`.
 - **No new queue, no new lane, no fourth gate.** New work rides
   `background_gpu_queue.ts` at an existing `GPU_WORK_PRIORITY`, carries a
   `kind:instance` label whose kind the budget can learn (`gpuPrepKindOfLabel`),
@@ -519,6 +632,122 @@ GPU work signs. Each rule names its seam and its guard.
   `perfStats().lookPieces`) and `AssembleOptions.deferDecals`, guarded by
   `tests/look_pieces.test.ts`, `tests/deferred_face_decals.test.ts` and
   `tests/renderer_look_pieces_hold.test.ts`.
+- **No material buys a second scene pass: transmission is forbidden.** A material with
+  `transmission > 0` (a `MeshPhysicalMaterial`; GLTFLoader mints one for a glTF material
+  carrying `KHR_materials_transmission`) makes three draw the whole opaque scene a second
+  time per frame into a viewport-sized HalfFloat target with mipmaps
+  (`WebGLRenderer.renderTransmissionPass`), for as long as the object is on screen: a 4 s
+  first frame and a doubled draw cost on an integrated GPU, which no prewarm can remove
+  (measured 2026-08-28 on the water elemental's `living_water`). Translucency here is
+  alpha blending (`transparent`, `opacity`, `depthWrite: false`, the alphaMode BLEND
+  state). The loader neutralizes every transmissive material on a parsed GLB
+  (`assets/transmission_neutralize.ts`), and `tests/transmission_neutralize.test.ts` names
+  the shipped models that carry the extension so a new one is listed on purpose; a
+  procedural `new THREE.MeshPhysicalMaterial(` that sets `transmission`, `thickness` or
+  `attenuationColor` is a defect. Guard: `render-performance-reviewer` (its second-pass
+  check).
+- **The shader warm-up worker rides the gates, never beside them.** A Web Worker
+  owns a second WebGL2 context (`shader_warm_worker.ts`) that links the same GLSL the
+  game context is about to link, so the game's link is a driver program-cache hit
+  (the cache key is the translated source plus the context's enabled extension set,
+  which is why `renderer_extensions.ts` enables one pinned set on every context
+  before its first link). The client (`shader_warm_client.ts`, pure policy in
+  `shader_warm_client_core.ts`) resolves a MODE from the player's option and the
+  backend class (`gpu_backend_class_core.ts`, read off the renderer string): `auto`
+  is `all` where the compile runs off the presenting thread AND there is something to
+  warm AND that was measured (D3D11 only: `WORKER_WORTH_BACKENDS`; Metal reads like
+  Vulkan on its one datapoint and has no in-game measurement, so it stays out until the
+  explicit setting produces one), `off` on every OpenGL and GLES class,
+  where the worker only relocates the stall into the GPU process (measured 2026-08-28
+  on Linux NVIDIA, Linux Intel and Android Mali), and `off` on Vulkan, where a cold
+  link is already as cheap as a hit and the first draw is free while the worker's own
+  links cost three to six times more (measured 2026-08-30 on an RTX 3060, an RTX 3090
+  and an Intel iGPU); iOS is `off` whatever the setting (a second context is a
+  per-process ceiling risk there); `?shaderwarm=auto|off|reveal|all` overrides
+  (`0` and `1` are aliases of `off` and `all`, one grammar for both arms below), and
+  `?shaderwarmready=<ms>` lengthens the worker's ready deadline for a probe on a
+  backend whose GPU process is busy at boot (Windows OpenGL).
+  THE CHARACTER-SELECT CORPUS (`src/game/shader_cache_warmup.ts`, decisions in
+  `shader_warmup_core.ts`) is the other arm of the same cache, and the ONE producer
+  that is not a client of the scheduler, by construction rather than by exemption:
+  it replays the previous session's recorded program set on a hidden context while
+  the character-select screen is idle, before any `Renderer` (and so any
+  `background_gpu_queue`) exists, one program per animation frame, and every world
+  entry stops it as its first statement (`enterWorld` and `startOffline`, pinned by
+  the wiring block of `tests/shader_cache_warmup.test.ts`), so no live frame ever
+  shares the main thread with a submission; what the GPU process still resolves
+  after the click is the entry's own program set landing in the shared cache. It
+  reads the same stored option and the same pin as the worker (`readWarmupQuery`):
+  Off silences it, `auto` and On keep it (the backend rule is the worker's: a
+  second context linking DURING play; this arm was measured on the OpenGL desktops
+  where `auto` turns the worker off), iOS never mints its context, and a stored
+  record is bounded before, during and after inflation
+  (`SHADER_CORPUS_MAX_BYTES`, `SHADER_CORPUS_PROGRAM_LIMIT`).
+  The worker is a client of the EXISTING gates: `shader_warm_gate.ts` assembles a
+  root's program sources through the three patch's dry-compile hook
+  (`program_sources.ts`; the hook calls each live material's `onBeforeCompile`
+  once more against a throwaway shader object, so a hook must stay idempotent and
+  must never keep the shader object it was handed), posts them to the worker, and
+  holds the gate's link piece until the worker answers or `SHADER_WARM_LANE_HOLD_CAP_MS`
+  passes (`shader_warm_lane.ts`; a hold that expires abandons its request so the worker
+  drops what nobody else waits for; three breaker rules retire it for the session:
+  `SHADER_WARM_TIMEOUT_BREAKER` expiries in a row during which the worker settled NOTHING
+  (wedged), or `SHADER_WARM_EXPIRED_SHARE_BREAKER` of the last `SHADER_WARM_HOLD_WINDOW`
+  holds expired whatever it answered meanwhile (too slow for the demand); a slow worker
+  that keeps most holds served is kept). The third rule fires FIRST, on the worker's own
+  evidence and before any hold has paid: once it has settled `SHADER_WARM_EVIDENCE_LINKS`
+  links AND its first stats message has landed (the window is the divisor, and the
+  verdict is final), the queue ahead of the OLDEST outstanding hold, at the mean wall
+  this worker's links have actually cost, spread over the window that message reported,
+  is measured against what is left of the cap that hold's caller passed in
+  (`shaderWarmCannotServe`, refusal `cannot-serve:hold-cap`). Ahead is the worker's own
+  order, PRIORITY first and arrival only within one priority, so a live view held behind
+  a catalog's backlog is not charged for what the worker serves after it; the caller
+  also stamps when its cap clock started (`holdShaderPrograms`' `startedAtMs`), since a
+  lane asks inside a queue unit whose promise settles later. It is relative by
+  construction and carries no machine constant, the caller owning the cap and the worker
+  supplying the wall: on the laptop whose links cost about half a second it retires
+  seconds early with nothing expired, and where links are ten times shorter it never
+  fires at all. The worker paces its links with the AIMD budget
+  under a RELATIVE judge (`shader_warm_settle_judge_core.ts`): a settle is read against
+  what this driver costs for a link of COMPARABLE size it has to itself, per thousand
+  GLSL characters, never against a millisecond bound (the absolute 150/400 ms bounds
+  pinned a cold Windows D3D11 at one link for a whole session, on the one backend that
+  overlaps links, 2026-08-30); solo evidence opens the window to two and no further,
+  a cache hit teaches nothing, and a halving is followed by a cooldown. The boot lane
+  (`link_rate_budget.ts`) still runs the absolute bounds; the seam
+  (`AdaptiveLinkBudgetConfig.judgeSettlement`) is how it adopts the same rule later,
+  and a unit that linked nothing reaches the judge flagged `cheap` and teaches it
+  nothing (the boot sweep's already-linked views would otherwise set the etalon).
+  No new queue, no new lane: the hold is one more piece on
+  the caller's queue at the caller's priority, and the actionable floor and
+  imminent consults bypass it (`shaderWarmDecision`). The worker never draws, so it
+  is the one secondary context exempt from the `checkShaderErrors` rule, and it
+  goes with the renderer through `renderer_resource_lifecycle.ts` (`disposeShaderWarm`)
+  and on `pagehide`. The audit (`shader_warm_audit.ts`) names every program the game
+  context linked without a warm request (`unexpected`), so a new producer that
+  bypasses the gates shows up by key; `perfStats().shaderWarm` and
+  `perfStats().shaderWarmAudit` are the local readout, and of the worker's half only the
+  bounded projection `shaderWarmBeaconSummary` builds (`src/game/perf_shader_warm_core.ts`:
+  worker state, refusal, mode, setting, backend and three counts) rides the perf beacon,
+  as `rawSummary.shaderWarm` plus the typed `shaderWarmWorkerActive` and
+  `shaderWarmRefusal` fields; the audit and the adapter string ride none of it.
+  A capture taken under `?diagnostics` also runs the scene census, whose
+  bucket-visibility diffs link programs no live frame asks for: those are charged to
+  `outOfBand` at the same host hooks that discard the burst's draws
+  (`renderer.captureSceneCensus`, which BRACKETS the burst: the census runs in its own
+  task, so without a begin the prologue of a gate that minted between the last present
+  and the census is charged to it), so read `unexpected` as the gates' own escapes.
+  The cast-VFX gate (`cast_vfx_readiness_core.ts`,
+  `cast_vfx_prewarm.ts`) is the same idea one level up: the ability-VFX painter
+  draws no cast until every cast program is linked (linked means the settle
+  record of `linked_program_readiness.ts`, which each cast unit writes once its
+  compile settled; never the presence of `currentProgram`, assigned before the
+  link resolves, and never a driver query from a live frame), and the reads a
+  player ACTS on never wait behind it: the
+  terrain-draped area ring and a mob's windup clip on the cast path, and on the
+  per-frame path the hard-CC band (stun, fear, root), re-held right after the
+  sleep that releases the held entity's cosmetic pools (`tests/ability_vfx_cast_gate.test.ts`).
 - **Verify, do not assert.** `?perf`, then `__game.renderer.perfStats().gpuPrep`: the
   budget snapshot, the event ring (`live-program`, `gate-timeout`, `reveal-watchdog`,
   `reveal-soft-deadline`, `submit-stop`, `attach-watchdog`, `touch-unproven` (programs a

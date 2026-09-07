@@ -22,10 +22,11 @@
 // `src/sim`-pure: no DOM/Three/render-ui-game-net imports, no Math.random/Date.now
 // (enforced by tests/architecture.test.ts).
 
-import { bagCapacity, canGrantItemInstance, fitsAll } from './bags';
+import { bagPools, canGrantItemInstance, fitsAll } from './bags';
 import { NOTICEBOARD_LISTINGS } from './content/noticeboard_listings';
 import { type NoticeboardDef, noticeboardDefByEntityId } from './content/noticeboards';
 import { HARVEST_COMPONENT_SPECIMENS, monsterMaterialTierFor } from './content/professions';
+import { currentRealmBuilder, pastRealmBuilders } from './content/realm_builders';
 import { corpseCanInteract, corpseInteractionAvailability } from './corpse_interaction';
 import { ITEMS, MOBS, QUESTS, SPIRIT_HEALER_NPC_ID } from './data';
 import * as deedsMod from './deeds';
@@ -44,7 +45,9 @@ import {
   awardSharedLootItem,
   CORPSE_INTERACT_GRACE_SECONDS,
   distributeLootCopper,
+  grantAwardedLootItem,
   hasPendingLootRollForMob,
+  killSnapshotEligibility,
   lootSlotVisibleTo,
   pruneCorpseLoot,
 } from './loot/loot_roll';
@@ -71,6 +74,7 @@ import {
 import { isQuestGatedGroundObjectHidden } from './quest_gated_entity';
 import { noteReliquaryMark } from './reliquary';
 import { corpseHasDecayed } from './respawn_policy';
+import { isRiftForgeNpc } from './rift/forge_gate';
 import type { SimContext } from './sim_context';
 import { interactSoulwell } from './soulwell';
 import { creditSignpostRead } from './tutorial/signpost_read';
@@ -81,6 +85,8 @@ import {
   INTERACT_RANGE,
   type InvSlot,
   OBJECT_RESPAWN,
+  REALM_BUILDER_MONUMENT_INTERACT_RADIUS,
+  REALM_BUILDER_MONUMENT_TEMPLATE_ID,
 } from './types';
 import { markWorldBossLooted } from './world_boss';
 
@@ -133,7 +139,9 @@ export function lootCorpse(
   }
   const mob = ctx.entities.get(mobId);
   if (!mob?.lootable || !mob.loot || corpseHasDecayed(mob.dead, mob.corpseTimer)) return false;
-  // owner-lock lapses LOOT_FFA_DELAY after the corpse became lootable: then anyone may loot.
+  // owner-lock lapses LOOT_FFA_DELAY after the corpse became lootable: then anyone may
+  // loot. The flag is threaded into distribution too, so an outside looter keeps what
+  // they take instead of it being split by the absent tapping party's strategies.
   const ffaUnlocked = honorFfa && lootHasGoneFfa(mob.lootFfaTimer);
   const rights = corpseLootRights(ctx, mob, meta.entityId, ffaUnlocked);
   if (!rights.shared && !rights.personal && !rights.open) {
@@ -146,7 +154,7 @@ export function lootCorpse(
   }
   let didLoot = false;
   if (rights.shared && mob.loot.copper > 0) {
-    distributeLootCopper(ctx, mob, meta);
+    distributeLootCopper(ctx, mob, meta, ffaUnlocked);
     didLoot = true;
   }
   // Capacity gate: an item that doesn't fit the looter's bags STAYS on the
@@ -160,7 +168,13 @@ export function lootCorpse(
         if (s.instance) {
           ctx.addItemInstance(s.itemId, cloneItemInstancePayload(s.instance), meta.entityId);
         } else {
-          ctx.addItem(s.itemId, 1, meta.entityId);
+          // Through the shared award grant, NOT a bare addItem: an openToAll
+          // slot is how an everyone-passed (or winner-offline) roll returns a
+          // drop to the corpse, and a soulbound item picked up from it must
+          // carry the same bind-on-pickup party trade window a roll win
+          // would; a bare add minted a permanently untradeable copy from the
+          // most common raid outcome (everyone passes to sort it out later).
+          grantAwardedLootItem(ctx, s.itemId, meta.entityId, killSnapshotEligibility(ctx, mob));
         }
         s.count--;
         didLoot = true;
@@ -189,7 +203,7 @@ export function lootCorpse(
         if (!ctx.canAddItem(s.itemId, 1, meta.entityId)) break;
         ctx.addItemInstance(s.itemId, cloneItemInstancePayload(s.instance), meta.entityId);
         s.count--;
-      } else if (awardSharedLootItem(ctx, s.itemId, mob, meta)) {
+      } else if (awardSharedLootItem(ctx, s.itemId, mob, meta, ffaUnlocked)) {
         s.count--;
       } else {
         break;
@@ -417,7 +431,7 @@ export function harvestCorpse(
   // both gates upstream guarantee yieldingFocusComponents is non-empty, so
   // `wanted` always holds at least one row and the short-circuit's false arm is
   // unreachable. Dead since #2513, kept for the same reason the others are.
-  if (wanted.length > 0 && !fitsAll(meta.inventory, bagCapacity(meta.bags), wanted)) {
+  if (wanted.length > 0 && !fitsAll(meta.inventory, bagPools(meta.bags), wanted)) {
     ctx.error(meta.entityId, 'Your bags are full.');
     return;
   }
@@ -606,7 +620,7 @@ export function harvestCorpse(
     if (
       canGrantItemInstance(
         meta.inventory,
-        bagCapacity(meta.bags),
+        bagPools(meta.bags),
         grant.itemId,
         payload,
         grant.plainQty,
@@ -661,7 +675,7 @@ export function harvestCorpse(
   for (const grant of signedGrants) {
     if (!grant.specimen) continue;
     const payload = { signer: meta.name };
-    if (canGrantItemInstance(meta.inventory, bagCapacity(meta.bags), grant.itemId, payload)) {
+    if (canGrantItemInstance(meta.inventory, bagPools(meta.bags), grant.itemId, payload)) {
       // Exactly one unit, deliberately: the specimen is a jackpot, not a
       // quantity, so it never carries the component's rolled count the way the
       // signed grant above does. The guard's count defaults to that same 1.
@@ -765,13 +779,31 @@ export function pickUpObject(
   const obj = ctx.entities.get(objId);
   if (obj?.kind !== 'object' || !obj.lootable) return false;
   const noticeboardDef = noticeboardDefByEntityId(noticeboardDefinitions, obj.id);
+  const isRealmBuilderMonument = obj.templateId === REALM_BUILDER_MONUMENT_TEMPLATE_ID;
   // Preserve the historical no-op for malformed/non-pickup objects. The board
-  // is the one intentional lootable object without an item payload.
-  if (!noticeboardDef && !obj.objectItemId) return false;
+  // and the monument are the intentional lootable objects without an item
+  // payload: both are read, never taken.
+  if (!noticeboardDef && !isRealmBuilderMonument && !obj.objectItemId) return false;
   const interactionRange = noticeboardDef?.interactionRadius ?? INTERACT_RANGE;
+  if (isRealmBuilderMonument && dist2d(p.pos, obj.pos) > REALM_BUILDER_MONUMENT_INTERACT_RADIUS) {
+    ctx.error(meta.entityId, 'Too far away.');
+    return false;
+  }
   if (dist2d(p.pos, obj.pos) > interactionRange) {
     ctx.error(meta.entityId, 'Too far away.');
     return false;
+  }
+  if (isRealmBuilderMonument) {
+    // The whole roll travels with the event so the card reads identically
+    // offline and online, and so pointing content/realm_builders.ts at a live
+    // source later needs no change on either side of the wire.
+    ctx.emit({
+      type: 'realmBuilder',
+      current: currentRealmBuilder(),
+      past: pastRealmBuilders(),
+      pid: meta.entityId,
+    });
+    return true;
   }
   if (noticeboardDef) {
     // The tutorial island's signpost lesson rides the same click as the
@@ -964,6 +996,12 @@ export function interact(
         ctx.emit({ type: 'bank', pid: p.id });
         return;
       }
+      if (target.kind === 'npc' && isRiftForgeNpc(target)) {
+        // Still an NPC conversation for the deeds ledger (Saul's streak resets).
+        deedsMod.onNpcTalkedForDeeds(ctx, r.meta, target.templateId);
+        ctx.emit({ type: 'riftForge', pid: p.id });
+        return;
+      }
       if (ctx.isQuestInteractionEntity(target)) {
         ctx.talkToNpc(target.id, p.id);
         return;
@@ -997,7 +1035,15 @@ export function interact(
       // world (the client withholds its view entirely), so the interact key must
       // not select it either: picking it would refuse below, and worse, a shiny
       // nobody can see would outrank a visible NPC or node standing further away.
-      !isQuestGatedGroundObjectHidden(e, r.meta.questLog)
+      !isQuestGatedGroundObjectHidden(e, r.meta.questLog) &&
+      // The monument is a permanent lootable object in the middle of the
+      // square, so it competes in this slot with the mailbox 6.21 yd away:
+      // its own catchment keeps it out of the race unless the player is at
+      // the plinth.
+      !(
+        e.templateId === REALM_BUILDER_MONUMENT_TEMPLATE_ID &&
+        d2 > REALM_BUILDER_MONUMENT_INTERACT_RADIUS ** 2
+      )
     ) {
       const noticeboardDef = noticeboardDefByEntityId(noticeboardDefinitions, e.id);
       if (!noticeboardDef || d2 <= noticeboardDef.interactionRadius ** 2) {
@@ -1065,6 +1111,12 @@ export function interact(
     // Opening the bank window counts as banker business for the NPC ledger.
     deedsMod.onBankerBusinessForDeeds(ctx, r.meta, questEntity.templateId);
     ctx.emit({ type: 'bank', pid: p.id });
+    return;
+  }
+  if (questEntity && isRiftForgeNpc(questEntity)) {
+    // Still an NPC conversation for the deeds ledger (Saul's streak resets).
+    deedsMod.onNpcTalkedForDeeds(ctx, r.meta, questEntity.templateId);
+    ctx.emit({ type: 'riftForge', pid: p.id });
     return;
   }
   if (questEntity) ctx.talkToNpc(questEntity.id, p.id);

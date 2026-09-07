@@ -19,6 +19,7 @@ const VARKHUL_CALLOUT_CUES = {
   rightPillar: 'impact_fire',
   bothPillars: 'impact_fire',
   portalsOpening: 'rift_portal_spawn',
+  artificerApproaches: 'rift_portal_spawn',
   heat75: 'impact_metal',
   heat90: 'meteor',
   addsDefeated: 'ui_achievement',
@@ -323,7 +324,17 @@ const SUBFAMILY_ALIAS: Record<string, string> = {
   ridge_stalker: 'wolf',
   mire_prowler: 'wolf',
   old_greyjaw: 'wolf',
+  ignivar_herald_of_the_last_flame: 'ignivar',
+  varkhul_forgefather_of_the_last_flame: 'varkhul',
 };
+
+// These bosses own aggro and death with full semantic dialogue clips. Keep the
+// shorter recorded pack for idle, attack, and hurt texture, but never stack two
+// independent vocal performances on the same encounter beat.
+const SEMANTIC_BOSS_VOICE_TEMPLATES = new Set([
+  'ignivar_herald_of_the_last_flame',
+  'varkhul_forgefather_of_the_last_flame',
+]);
 
 function magicSchool(value: string | null | undefined): MagicSchool | null {
   return value && value in SCHOOL_CUES ? (value as MagicSchool) : null;
@@ -514,7 +525,15 @@ export function mobVoiceCue(
   templateId: string,
   action: MobVoiceAction,
   hasCue: (key: string) => boolean = NO_CUE,
+  semanticVoiceEnabled = false,
 ): string | null {
+  if (
+    semanticVoiceEnabled &&
+    (action === 'aggro' || action === 'death') &&
+    SEMANTIC_BOSS_VOICE_TEMPLATES.has(templateId)
+  ) {
+    return null;
+  }
   const family = mobVoiceFamily(templateId);
   if (!family) return null;
   if (family === 'water_elemental') {
@@ -527,6 +546,45 @@ export function mobVoiceCue(
   const subfamily = SUBFAMILY_ALIAS[templateId] ?? templateId;
   const specific = `mob_${family}_${subfamily}_${action}`;
   return hasCue(specific) ? specific : MOB_VOICE_CUES[family][action];
+}
+
+export type PlayerVoiceAction = 'hurt' | 'death';
+
+/** Resolves a player's pain/death vocalization against their authored gender.
+ *
+ *  Same shape as mobVoiceCue above, and for the same reason: the female takes
+ *  are a SUPERSET layered over the shipped male ones, so the specific key is
+ *  tried first and the base key is the fallback. `hasCue` is injected rather
+ *  than read from the manifest here so this stays host-agnostic and directly
+ *  testable, exactly as the mob resolver does.
+ *
+ *  Only an explicit `gender: 'female'` diverts. A male look, an absent look
+ *  (every character authored before the modular creator shipped in v0.35.0),
+ *  and an unreadable one all keep the base cue, so no existing character's
+ *  voice changes unless its owner deliberately made a female character.
+ *
+ *  Gender is read off the entity's `modularAppearance` (the `app` identity
+ *  wire field), which is deliberately opaque `Record<string, unknown>` in the
+ *  sim, hence the narrow here rather than a typed field access. */
+export function playerVoiceCue(
+  appearance: Record<string, unknown> | null | undefined,
+  action: 'hurt',
+  hasCue?: (key: string) => boolean,
+): 'player_hurt' | 'player_hurt_female';
+export function playerVoiceCue(
+  appearance: Record<string, unknown> | null | undefined,
+  action: 'death',
+  hasCue?: (key: string) => boolean,
+): 'player_death' | 'player_death_female';
+export function playerVoiceCue(
+  appearance: Record<string, unknown> | null | undefined,
+  action: PlayerVoiceAction,
+  hasCue: (key: string) => boolean = NO_CUE,
+): 'player_hurt' | 'player_hurt_female' | 'player_death' | 'player_death_female' {
+  const base = action === 'hurt' ? 'player_hurt' : 'player_death';
+  if (appearance?.gender !== 'female') return base;
+  const female = `${base}_female` as 'player_hurt_female' | 'player_death_female';
+  return hasCue(female) ? female : base;
 }
 
 /** Resolves the cue for `action`, but falls back to the `attack` cue when the

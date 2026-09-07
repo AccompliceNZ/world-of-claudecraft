@@ -1,5 +1,5 @@
 import { DUNGEONS } from './data';
-import { IGNIVAR_FORGE_APPROACH_ID } from './ignivar_raid_ids';
+import { IGNIVAR_FORGE_APPROACH_ID, isIgnivarRaidRoom } from './ignivar_raid_ids';
 import { resetRaidDevBot } from './raid_dev_bot';
 import type { SimContext } from './sim_context';
 
@@ -8,7 +8,14 @@ const IGNIVAR_DEV_BOT_COUNT = 9;
 const IGNIVAR_DEV_POD_SIZE = 3;
 const IGNIVAR_DEV_POD_CENTER_RADIUS = 25;
 const IGNIVAR_DEV_POD_MEMBER_RADIUS = 2.8;
-const IGNIVAR_DEV_POD_ANGLES = [(7 * Math.PI) / 6, (11 * Math.PI) / 6, Math.PI / 2] as const;
+// Two bands of the ring are off limits: due north the boss waits on the
+// central dais at IGNIVAR_BOSS_SPAWN_Z and every pod member must stay outside
+// its automatic aggro radius (MAX_AGGRO_RADIUS) so forming the practice raid
+// never pulls, and due south the pod would crowd the arena entry inside Brand
+// range of an arriving tester. Math.PI / 6 is the widest remaining slot for
+// the third pod: every pod pair stays 60+ degrees apart as seen from the
+// boss, so no single frontal or skyfire cone can clip two pods at once.
+const IGNIVAR_DEV_POD_ANGLES = [(7 * Math.PI) / 6, (11 * Math.PI) / 6, Math.PI / 6] as const;
 
 export type IgnivarDevRaidResult =
   | { ok: true; allies: number; reused: boolean }
@@ -130,6 +137,7 @@ export function setupIgnivarDevRaid(ctx: SimContext, pid: number): IgnivarDevRai
   if (instance.partyKey !== ctx.instanceKeyFor(pid)) {
     return { ok: false, message: 'This live Ignivar claim belongs to another group.' };
   }
+  const priorPartyKey = instance.partyKey;
 
   const expectedNames = expectedBotNames();
   const expectedLowerNames = new Set(expectedNames.map((name) => name.toLowerCase()));
@@ -194,10 +202,15 @@ export function setupIgnivarDevRaid(ctx: SimContext, pid: number): IgnivarDevRai
     if (!party) return { ok: false, message: 'Could not form the Ignivar test raid.' };
   }
 
-  // The tester claimed the room while solo. Once the dev raid exists, transfer
-  // that same live claim to its authoritative party key so re-entry and cleanup
-  // continue to resolve to the room already on screen.
-  instance.partyKey = `party:${party.id}`;
+  // The tester may have walked through earlier floors while solo. Once the dev
+  // raid exists, transfer that whole live claim family to its authoritative
+  // party key so backward portals can still find every previous floor.
+  const partyKey = `party:${party.id}`;
+  for (const claim of ctx.instances) {
+    if (claim.partyKey === priorPartyKey && isIgnivarRaidRoom(claim.dungeonId)) {
+      claim.partyKey = partyKey;
+    }
+  }
   instance.enteredBy.add(pid);
   const origin = ctx.instanceOriginOf(instance);
 

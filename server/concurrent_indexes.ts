@@ -8,6 +8,8 @@
 // deploy-watchdog restart, a crash): checkSql finds the carcass, dropSql
 // removes it (CONCURRENTLY, so peer realms' writes never stall behind the
 // drop), and createSql rebuilds it.
+// A replacement may also carry retireSql: it runs strictly after createSql
+// succeeds, so an interrupted build never removes the older serving index.
 
 import {
   ADMIN_OVERVIEW_ACTIVE_SESSIONS_INDEX_SQL,
@@ -26,9 +28,15 @@ import {
   BANK_LEDGER_ACCOUNT_INDEX_SQL,
   BANK_LEDGER_ACCOUNT_INVALID_INDEX_CHECK_SQL,
   BANK_LEDGER_ACCOUNT_INVALID_INDEX_DROP_SQL,
+  BANK_LEDGER_ACCOUNT_LARGE_INDEX_SQL,
+  BANK_LEDGER_ACCOUNT_LARGE_INVALID_INDEX_CHECK_SQL,
+  BANK_LEDGER_ACCOUNT_LARGE_INVALID_INDEX_DROP_SQL,
   BANK_LEDGER_CONTAINER_INDEX_SQL,
   BANK_LEDGER_CONTAINER_INVALID_INDEX_CHECK_SQL,
   BANK_LEDGER_CONTAINER_INVALID_INDEX_DROP_SQL,
+  BANK_LEDGER_GUILD_MONEY_INDEX_SQL,
+  BANK_LEDGER_GUILD_MONEY_INVALID_INDEX_CHECK_SQL,
+  BANK_LEDGER_GUILD_MONEY_INVALID_INDEX_DROP_SQL,
 } from './bank_ledger_indexes';
 import {
   CHAT_VIOLATIONS_RETENTION_INDEX_SQL,
@@ -59,6 +67,11 @@ import {
   PLAYER_REPORTS_RETENTION_INVALID_INDEX_DROP_SQL,
 } from './player_reports_retention_index';
 import {
+  WOC_MARKET_OPS_CLOSED_INDEX_SQL,
+  WOC_MARKET_OPS_CLOSED_INVALID_INDEX_CHECK_SQL,
+  WOC_MARKET_OPS_CLOSED_INVALID_INDEX_DROP_SQL,
+} from './woc_market_ops_listings_index';
+import {
   WOC_MARKET_SALES_SELLER_INDEX_SQL,
   WOC_MARKET_SALES_SELLER_INVALID_INDEX_CHECK_SQL,
   WOC_MARKET_SALES_SELLER_INVALID_INDEX_DROP_SQL,
@@ -69,6 +82,10 @@ export interface ConcurrentIndexMigration {
   createSql: string;
   checkSql: string;
   dropSql: string;
+  /** Optional superseded index drop. The runner issues this only after the
+   *  replacement create succeeds, preserving service through every restart
+   *  or interrupted-build boundary. */
+  retireSql?: string;
 }
 
 export const CONCURRENT_INDEX_MIGRATIONS: readonly ConcurrentIndexMigration[] = [
@@ -140,8 +157,9 @@ export const CONCURRENT_INDEX_MIGRATIONS: readonly ConcurrentIndexMigration[] = 
     dropSql: CHAT_VIOLATIONS_RETENTION_INVALID_INDEX_DROP_SQL,
   },
   // The admin economy-oversight per-account bank_ledger reader
-  // (account_wealth_db.ts largeGoldMovementsForAccount). Appended, never
-  // inserted: the order is load-bearing and pinned.
+  // (account_wealth_db.ts largeGoldMovementsForAccount). This shipped entry
+  // stays in its original position: fresh databases need it for FK support,
+  // and mixed-release peers still use its broad ordered shape.
   {
     name: 'bank_ledger_account_recent',
     createSql: BANK_LEDGER_ACCOUNT_INDEX_SQL,
@@ -155,5 +173,34 @@ export const CONCURRENT_INDEX_MIGRATIONS: readonly ConcurrentIndexMigration[] = 
     createSql: WOC_MARKET_SALES_SELLER_INDEX_SQL,
     checkSql: WOC_MARKET_SALES_SELLER_INVALID_INDEX_CHECK_SQL,
     dropSql: WOC_MARKET_SALES_SELLER_INVALID_INDEX_DROP_SQL,
+  },
+  // The internal dashboard's Sold and Cancelled listing filters. Appended,
+  // never inserted: the migration order is load-bearing and pinned.
+  {
+    name: 'woc_market_ops_closed_created',
+    createSql: WOC_MARKET_OPS_CLOSED_INDEX_SQL,
+    checkSql: WOC_MARKET_OPS_CLOSED_INVALID_INDEX_CHECK_SQL,
+    dropSql: WOC_MARKET_OPS_CLOSED_INVALID_INDEX_DROP_SQL,
+  },
+  // The partial ordered reader for large per-account movements. New entries
+  // append after every previously shipped migration, never replace or move an
+  // old entry (the release's ops-closed entry above shipped first, so this
+  // branch's entry follows it). See bank_ledger_indexes.ts for the staged
+  // retirement plan.
+  {
+    name: 'bank_ledger_account_large_recent',
+    createSql: BANK_LEDGER_ACCOUNT_LARGE_INDEX_SQL,
+    checkSql: BANK_LEDGER_ACCOUNT_LARGE_INVALID_INDEX_CHECK_SQL,
+    dropSql: BANK_LEDGER_ACCOUNT_LARGE_INVALID_INDEX_DROP_SQL,
+  },
+  // The guild bank history's sparse MONEY slice (guild_bank_log_db.ts): a
+  // partial index over the money ops of the guild container so a Money page
+  // is a bounded scan rather than a heap walk past every item row. See
+  // bank_ledger_indexes.ts.
+  {
+    name: 'bank_ledger_container_money_recent',
+    createSql: BANK_LEDGER_GUILD_MONEY_INDEX_SQL,
+    checkSql: BANK_LEDGER_GUILD_MONEY_INVALID_INDEX_CHECK_SQL,
+    dropSql: BANK_LEDGER_GUILD_MONEY_INVALID_INDEX_DROP_SQL,
   },
 ];

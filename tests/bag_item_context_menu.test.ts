@@ -15,6 +15,7 @@ import {
   destroyConsumesSpecialCopy,
   isEnchantReagentItem,
   isSpecialCopy,
+  vendorSellContextActions,
 } from '../src/ui/bag_item_context_menu';
 
 function def(kind: string, quality?: string): ItemDef {
@@ -118,6 +119,23 @@ describe('bag_item_context_menu: special-copy classification', () => {
     expect(isSpecialCopy({ rolled: { stats: { str: 5 } } } as ItemInstancePayload)).toBe(true);
     // A legacy rolled.quality-only copy is NOT special (never signed/mw/enchanted).
     expect(isSpecialCopy({ rolled: { quality: 'rare' } } as ItemInstancePayload)).toBe(false);
+    // A Riftbound band: its rolled line is the ladder's, not an enchant
+    // (isEnchantedInstance is false for it), but the copy is a personal
+    // first-clear reward, so it stays special.
+    expect(
+      isSpecialCopy({
+        rolled: { quality: 'epic', stats: { str: 8, sta: 6 } },
+        rift: {
+          sourceEventId: 'e',
+          tier: 'S',
+          power: 4,
+          upgradeLevel: 0,
+          maxUpgradeLevel: 5,
+          gemSlots: 2,
+          gems: [],
+        },
+      } as ItemInstancePayload),
+    ).toBe(true);
   });
 });
 
@@ -190,5 +208,29 @@ describe('bag_item_context_menu: confirm escalation predicate', () => {
   it('never warns when no copies are held at all', () => {
     expect(destroyConsumesSpecialCopy('disenchant', [])).toBe(false);
     expect(destroyConsumesSpecialCopy('salvage', [])).toBe(false);
+  });
+});
+
+describe('bag_item_context_menu: vendor Sell all row', () => {
+  it('offers only the classic Sell row when a single copy is held', () => {
+    expect(vendorSellContextActions(1)).toEqual([
+      { id: 'default', labelKey: 'hudChrome.itemMenu.sell' },
+    ]);
+  });
+
+  it('adds a Sell all row carrying the held total once more than one copy is held', () => {
+    expect(vendorSellContextActions(23)).toEqual([
+      { id: 'default', labelKey: 'hudChrome.itemMenu.sell' },
+      { id: 'sellAll', labelKey: 'hudChrome.itemMenu.sellAll', count: 23 },
+    ]);
+  });
+
+  it('never offers the enchanting-profession rows (a vendor never grants them)', () => {
+    const ids = vendorSellContextActions(5).map((row) => row.id);
+    expect(ids).not.toContain('disenchant');
+    expect(ids).not.toContain('salvage');
+    expect(ids).not.toContain('applyEnchant');
+    expect(ids).not.toContain('lock');
+    expect(ids).not.toContain('unlock');
   });
 });

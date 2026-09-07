@@ -60,18 +60,39 @@ describe('publicInstanceView: the display trim', () => {
     expect(live.rolled!.stats!.str).toBe(2);
   });
 
+  it('projects a Riftbound band record by value (rank, upgrades, gems) and nothing bound', () => {
+    const live: ItemInstancePayload = {
+      boundTo: 7,
+      rolled: { quality: 'epic', stats: { str: 8, sta: 6 } },
+      rift: {
+        sourceEventId: 'e',
+        tier: 'S',
+        power: 4,
+        upgradeLevel: 5,
+        maxUpgradeLevel: 5,
+        gemSlots: 2,
+        gems: ['rift_gem_verdant'],
+      },
+    };
+    const pub = publicInstanceView(live);
+    expect(pub).toEqual({ rolled: live.rolled, rift: live.rift });
+    expect(pub).not.toHaveProperty('boundTo');
+    pub.rift!.gems.push('rift_gem_azure');
+    expect(live.rift!.gems).toEqual(['rift_gem_verdant']);
+  });
+
   it('matches the eqi wire allowlist in server/game.ts: widen both or neither', () => {
     // Source-scrape the eqi projection loop (the enchant_apply_view.test.ts
     // pin) and assert this module projects the identical key set.
     const game = readFileSync(new URL('../server/game.ts', import.meta.url), 'utf8');
     const projected = [...game.matchAll(/pub\.(\w+) = inst\.(\w+);/g)].map((m) => m[1]);
-    expect(projected.sort()).toEqual(['enchant', 'rolled', 'signer']);
+    expect(projected.sort()).toEqual(['enchant', 'rift', 'rolled', 'signer']);
     const transfer = readFileSync(
       new URL('../src/sim/item_instance_transfer.ts', import.meta.url),
       'utf8',
     );
     const trimmed = [...transfer.matchAll(/pub\.(\w+) = /g)].map((m) => m[1]);
-    expect([...new Set(trimmed)].sort()).toEqual(['enchant', 'rolled', 'signer']);
+    expect([...new Set(trimmed)].sort()).toEqual(['enchant', 'rift', 'rolled', 'signer']);
     for (const banned of ['boundTo', 'bindOnTrade', 'charges']) {
       expect(transfer.includes(`pub.${banned}`), `${banned} must never project`).toBe(false);
     }
@@ -161,13 +182,19 @@ describe('canGrantCopies / grantCopies: the shared exchange-pipe pair', () => {
     const inventory: InvSlot[] = [{ itemId: 'pristine_hide', count: 1 }];
     // One free slot short: the plain stack tops up, the instanced copy needs
     // its own slot.
-    expect(canGrantCopies(inventory, 1, 'pristine_hide', 1)).toBe(true);
-    expect(canGrantCopies(inventory, 1, 'pristine_hide', 1, SIGNED)).toBe(false);
+    expect(canGrantCopies(inventory, { general: 1, materials: 0 }, 'pristine_hide', 1)).toBe(true);
+    expect(
+      canGrantCopies(inventory, { general: 1, materials: 0 }, 'pristine_hide', 1, SIGNED),
+    ).toBe(false);
     const signedStack: InvSlot[] = [
       { itemId: 'pristine_hide', count: 1, instance: { signer: 'Ayla' } },
     ];
-    expect(canGrantCopies(signedStack, 1, 'pristine_hide', 1, SIGNED)).toBe(true);
-    expect(canGrantCopies(signedStack, 1, 'pristine_hide', 1)).toBe(false);
+    expect(
+      canGrantCopies(signedStack, { general: 1, materials: 0 }, 'pristine_hide', 1, SIGNED),
+    ).toBe(true);
+    expect(canGrantCopies(signedStack, { general: 1, materials: 0 }, 'pristine_hide', 1)).toBe(
+      false,
+    );
   });
 
   // #2605 review (Rubsey/OSSBrain): canGrantCopies must model the same
@@ -180,13 +207,33 @@ describe('canGrantCopies / grantCopies: the shared exchange-pipe pair', () => {
     // One free slot short: the plain stack tops up for a marker-free grant,
     // but a crafted-marker grant of the same itemId cannot merge into it and
     // needs its own fresh slot.
-    expect(canGrantCopies(plainStack, 1, 'pristine_hide', 1)).toBe(true);
-    expect(canGrantCopies(plainStack, 1, 'pristine_hide', 1, undefined, 'recipe_x')).toBe(false);
+    expect(canGrantCopies(plainStack, { general: 1, materials: 0 }, 'pristine_hide', 1)).toBe(true);
+    expect(
+      canGrantCopies(
+        plainStack,
+        { general: 1, materials: 0 },
+        'pristine_hide',
+        1,
+        undefined,
+        'recipe_x',
+      ),
+    ).toBe(false);
     const craftedStack: InvSlot[] = [
       { itemId: 'pristine_hide', count: 1, craftedRecipeId: 'recipe_x' },
     ];
-    expect(canGrantCopies(craftedStack, 1, 'pristine_hide', 1, undefined, 'recipe_x')).toBe(true);
-    expect(canGrantCopies(craftedStack, 1, 'pristine_hide', 1)).toBe(false);
+    expect(
+      canGrantCopies(
+        craftedStack,
+        { general: 1, materials: 0 },
+        'pristine_hide',
+        1,
+        undefined,
+        'recipe_x',
+      ),
+    ).toBe(true);
+    expect(canGrantCopies(craftedStack, { general: 1, materials: 0 }, 'pristine_hide', 1)).toBe(
+      false,
+    );
   });
 
   it('grant forwards craftedRecipeId on BOTH arms, not just the plain one', () => {

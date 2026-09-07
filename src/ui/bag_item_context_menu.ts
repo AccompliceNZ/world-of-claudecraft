@@ -36,11 +36,14 @@ export function isEnchantReagentItem(itemId: string): boolean {
 }
 
 export type BagItemNewActionId = 'disenchant' | 'salvage' | 'applyEnchant' | 'lock' | 'unlock';
-export type BagItemContextActionId = 'default' | BagItemNewActionId;
+export type BagItemContextActionId = 'default' | 'sellAll' | BagItemNewActionId;
 
 export interface BagItemContextAction {
   id: BagItemContextActionId;
   labelKey: TranslationKey;
+  /** The row's interpolation count (Sell all's {count}), so the DOM consumer
+   *  knows to pass params to t() instead of rendering the bare template. */
+  count?: number;
 }
 
 const NEW_ACTION_LABEL_KEY: Record<BagItemNewActionId, TranslationKey> = {
@@ -110,6 +113,21 @@ export function bagItemContextActions(
   return rows;
 }
 
+/** The right-click / tap menu at a vendor: the classic default row (relabeled
+ *  Sell, since that is what it runs there, not Use/Equip), plus Sell all (N)
+ *  when more than one copy is held across the bags (one copy is exactly what
+ *  the default row already sells, so the extra row would be redundant).
+ *  Deliberately distinct from bagItemContextActions: a vendor never offers the
+ *  enchanting-profession rows (mirrors itemMenuAvailable's default-mode-only
+ *  gate in bags_window.ts, which already excludes every other special mode). */
+export function vendorSellContextActions(heldCount: number): BagItemContextAction[] {
+  const rows: BagItemContextAction[] = [{ id: 'default', labelKey: 'hudChrome.itemMenu.sell' }];
+  if (heldCount > 1) {
+    rows.push({ id: 'sellAll', labelKey: 'hudChrome.itemMenu.sellAll', count: heldCount });
+  }
+  return rows;
+}
+
 /** One held copy of an item, as the confirm predicate needs it: the count and
  *  the optional per-copy instance payload (absent for a plain fungible stack). */
 export interface BagCopy {
@@ -118,12 +136,18 @@ export interface BagCopy {
 }
 
 /** Whether destroying this specific copy loses something irreplaceable: it was
- *  signed/crafted, is a masterwork proc, or is enchanted (isEnchantedInstance:
- *  the explicit marker or a legacy bare rolled.stats without masterwork). A
- *  plain fungible copy is never special. */
+ *  signed/crafted, is a masterwork proc, is enchanted (isEnchantedInstance:
+ *  the explicit marker or a legacy bare rolled.stats without masterwork), or
+ *  is a Riftbound band (a personal first-clear reward priced by its copy,
+ *  rift/band_ladder.ts). A plain fungible copy is never special. */
 export function isSpecialCopy(instance: ItemInstancePayload | undefined): boolean {
   if (!instance) return false;
-  return !!instance.signer || !!instance.rolled?.masterwork || isEnchantedInstance(instance);
+  return (
+    !!instance.signer ||
+    !!instance.rolled?.masterwork ||
+    !!instance.rift ||
+    isEnchantedInstance(instance)
+  );
 }
 
 /** Whether the copy the destructive action WOULD consume is special, so the

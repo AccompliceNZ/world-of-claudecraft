@@ -601,7 +601,7 @@ describe('ClientWorld reconnect error-frame tolerance (auth timeout)', () => {
     });
   });
 
-  it('fails closed when a current-epoch client reaches an auth-world-9 server', () => {
+  it('fails closed when a current-epoch client reaches an auth-world-11 server', () => {
     withDomStubs((_doc, harness) => {
       const world = new ClientWorld('t', 1, PROBE_CLASS, 'http://localhost');
       const w = world as unknown as WorldProbe;
@@ -621,7 +621,7 @@ describe('ClientWorld reconnect error-frame tolerance (auth timeout)', () => {
         }),
       );
 
-      // An auth-world-9 server rejects this unknown future epoch before admission.
+      // An auth-world-11 server rejects this unknown future epoch before admission.
       w.onMessage(
         JSON.stringify({
           t: 'error',

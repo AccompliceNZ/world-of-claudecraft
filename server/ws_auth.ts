@@ -17,6 +17,7 @@ import type * as http from 'node:http';
 import type { WebSocket, WebSocketServer } from 'ws';
 import {
   type BankBonusSource,
+  DUNGEON_ENTRY_FACING_WIRE_VERSION,
   ONLINE_WORLD_AUTH_TYPE,
   ONLINE_WORLD_INCOMPATIBLE_MESSAGE,
   PET_SPECIAL_WIRE_VERSION,
@@ -31,6 +32,8 @@ import type {
   TokenScope,
 } from './db';
 import type { GameServer } from './game';
+import { negotiateMovementWireVersion } from './movement_wire_version';
+import { kickStoragePurchaseRecovery } from './storage_purchases';
 import type { HandshakeFlushMode } from './ws_buffer';
 
 // The {t:'error', error} rejection strings, by the exact value the client reads
@@ -282,6 +285,11 @@ export function createWsAuth(deps: WsAuthDeps): WsAuthHandlers {
       msg.timerWire === STABLE_TIMER_WIRE_VERSION ? STABLE_TIMER_WIRE_VERSION : 1;
     const petSpecialWireVersion: 0 | typeof PET_SPECIAL_WIRE_VERSION =
       msg.petSpecialWire === PET_SPECIAL_WIRE_VERSION ? PET_SPECIAL_WIRE_VERSION : 0;
+    const movementWireVersion = negotiateMovementWireVersion(msg.movementWire);
+    const dungeonEntryFacingWireVersion: 0 | typeof DUNGEON_ENTRY_FACING_WIRE_VERSION =
+      msg.dungeonEntryFacingWire === DUNGEON_ENTRY_FACING_WIRE_VERSION
+        ? DUNGEON_ENTRY_FACING_WIRE_VERSION
+        : 0;
     const account = await accountAndScopeForToken(token);
     if (account === null || account.scope !== 'full' || !Number.isFinite(characterId)) {
       rejectHandshake(ws, WS_AUTH_ERROR.notAuthenticated);
@@ -353,8 +361,10 @@ export function createWsAuth(deps: WsAuthDeps): WsAuthHandlers {
         isAdmin,
         adminPermissions,
         clientSeed,
+        dungeonEntryFacingWireVersion,
         timerWireVersion,
         petSpecialWireVersion,
+        movementWireVersion,
         // The character's stored action-bar layout, sent once to the owning client
         // so it restores at login on any device (game.join re-validates it).
         hotbarLayout: character.hotbar_layout ?? null,
@@ -471,6 +481,16 @@ export function createWsAuth(deps: WsAuthDeps): WsAuthHandlers {
             // when this lease lands first, the migration sees it and refuses apply.
             // If the reload fails, release the lease before propagating/rejecting so
             // an unavailable row cannot strand the character until lease expiry.
+            //
+            // The previous session's last action-bar save may still be on its way
+            // to the row (HotbarLayoutStore holds it as pending until the write
+            // settles). Capture it BEFORE the reload below, so the join seeds from
+            // the newer of the two whichever side of that read the commit lands
+            // on: a document captured here is at least as new as any row this
+            // handshake can read, and once it settles the reload returns the same
+            // layout. Read after the reload it would race the settle and hand
+            // game.join the stale copy from the ownership read.
+            const queuedHotbarLayout = game.hotbarLayouts.pending(character.id);
             try {
               const refreshedCharacter = await getCharacter(accountId, character.id);
               if (!refreshedCharacter) {
@@ -508,6 +528,10 @@ export function createWsAuth(deps: WsAuthDeps): WsAuthHandlers {
               admittedCharacter.is_gm,
               {
                 ...joinMeta,
+                // The fresh arm re-read the row after the lease: that copy, or
+                // the still-queued document captured before it, supersedes the
+                // ownership-read copy joinMeta carries (game.join re-validates).
+                hotbarLayout: queuedHotbarLayout ?? admittedCharacter.hotbar_layout ?? null,
                 leaseNonce,
                 bankBonus,
                 firstCharacter,
@@ -545,6 +569,12 @@ export function createWsAuth(deps: WsAuthDeps): WsAuthHandlers {
         console.log(
           `+ ${admittedCharacter.name} (${admittedCharacter.class}) joined, ${game.clients.size} online`,
         );
+        // Bank Storage phase 11: settle any pending Claudium storage purchase
+        // against the freshly loaded state (fire-and-forget; never gates the
+        // join). A join that internally resumed a linkdead session is safe
+        // here too: an in-flight purchase still holds the per-character mutex
+        // and the recovery yields to it immediately.
+        kickStoragePurchaseRecovery(session.characterId);
         ws.on('message', (data) => {
           game.handleMessage(session, String(data));
         });

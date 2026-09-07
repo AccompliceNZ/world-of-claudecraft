@@ -1,6 +1,8 @@
 // The Ignivar prop dressing plan: gameplay clearances hold on the REAL room
-// layouts, the beam outline stays flush against the collider wall line, and
-// the shipped prop GLBs stay inside their byte budget.
+// layouts, the beam outline stays flush against the collider wall line, the
+// shipped prop GLBs stay inside their byte budget, and every wired prop is
+// actually placed in a room (the loader downloads the whole URL map for
+// every player at world entry, so an unplaced prop is pure dead weight).
 import { existsSync, statSync } from 'node:fs';
 import path from 'node:path';
 import { getBounds, NodeIO } from '@gltf-transform/core';
@@ -23,7 +25,6 @@ import {
   IGNIVAR_SECOND_WING_LAYOUT,
 } from '../src/sim/dungeon_layout';
 import { VARKHUL_FORGE_LOCAL_POS } from '../src/sim/encounters/varkhul';
-import { IGNIVAR_CONDUITS } from '../src/sim/ignivar_arena';
 
 const publicDir = path.join(__dirname, '..', 'public');
 
@@ -52,21 +53,18 @@ describe('ignivar dressing plan', () => {
     }
   });
 
-  it('keeps the arena fighting circle and water conduits clear', () => {
+  it('keeps the arena fighting circle clear (dressing rings the outer walls)', () => {
+    // The water pumps (the reworked conduits) and their pipes sit on the
+    // corner anchors near +/-18, and the rest of the pass hugs the walls, so
+    // the central fighting circle stays open for the Ignivar encounter.
     const plan = ignivarArenaPropPlan(IGNIVAR_LAYOUT);
-    expect(plan.length).toBeGreaterThanOrEqual(4);
+    expect(plan.length).toBeGreaterThanOrEqual(30);
     for (const placement of plan) {
       if (!floorLevel(placement)) continue;
       expect(
         Math.hypot(placement.x, placement.z),
         `${placement.key} at ${placement.x},${placement.z} enters the fighting circle`,
       ).toBeGreaterThan(18);
-      for (const conduit of IGNIVAR_CONDUITS) {
-        expect(
-          Math.hypot(placement.x - conduit.x, placement.z - conduit.z),
-          `${placement.key} at ${placement.x},${placement.z} crowds conduit ${conduit.id}`,
-        ).toBeGreaterThan(4.5);
-      }
     }
   });
 
@@ -130,13 +128,19 @@ describe('ignivar dressing plan', () => {
     // KTX2 total (9_645_164), then raised for the owner-directed fortress
     // night glow: the whole exterior kit carries a half-resolution floored
     // emissive texture (the soft red sheen, floor scaled per piece so
-    // floor times strength stays even; measured total 10_560_556), again
-    // for the owner's dungeon_entrance facade (10_802_120), and again for
-    // the eight-piece forge-lift car kit (measured total 12_554_128), the
-    // winch remake's mount and spool pair, minus the retired one-piece
-    // winch and sliding door (measured total 12_731_480) plus a sliver of
-    // rebake headroom.
-    expect(total, 'prop set exceeds the total budget').toBeLessThanOrEqual(12_800_000);
+    // floor times strength stays even; measured total 10_560_556), raised
+    // for the owner's dungeon_entrance facade (10_802_120), again for the
+    // eight-piece forge-lift car kit and the winch remake's mount and
+    // spool pair minus the retired one-piece winch and sliding door
+    // (12_731_480), then TIGHTENED twice: the entrance arm stripped the
+    // unplaced lava_furnace_2 and lava_ramp, and the raid arm's 2026-08
+    // unplaced-prop trim dropped the unplaced interior placer stock while
+    // adding water_pump; the merge restored gear_machine, which the
+    // approach room's forge-lift shaft dressing places (merged measured
+    // total 10_139_544) plus a sliver of rebake headroom. The
+    // no-unplaced-props rule itself is pinned by
+    // tests/ignivar_asset_hygiene.test.ts over the real sim tables.
+    expect(total, 'prop set exceeds the total budget').toBeLessThanOrEqual(10_200_000);
   });
 
   it('pins the native dims table to the shipped GLBs (canonical long-axis-on-X)', async () => {

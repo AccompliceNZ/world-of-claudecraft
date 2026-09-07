@@ -165,10 +165,15 @@ function requiredClipNames(clips: ClipMap): string[] {
     clips.flourish,
     clips.stow,
     ...clips.attack,
+    ...(clips.idleVariants ?? []),
+    clips.idleBeat?.clip,
     ...(clips.hit ?? []),
     ...Object.values(clips.attackByAbility ?? {}),
     ...Object.values(clips.castByAbility ?? {}),
     ...Object.values(clips.attackByHand ?? {}),
+    // cast-exit play-out entries name clips: a typo would silently disable
+    // the recovery and bring the snap-to-idle back
+    ...(clips.castPlayOut ?? []),
   ].filter((name): name is string => !!name);
 }
 
@@ -205,8 +210,12 @@ const COVERED_CLIP_FIELDS = new Set<keyof ClipMap>([
   'attackTimeScaleByAbility',
   'castByAbility',
   'castTimeScaleByAbility',
+  'castHoldPointSeconds',
+  'castPlayOut',
   'attackByHand',
   'emote',
+  'idleVariants',
+  'idleBeat',
 ]);
 
 /**
@@ -220,6 +229,7 @@ const COVERED_CLIP_FIELDS = new Set<keyof ClipMap>([
 const CLIPLESS_RIGS = new Set([
   'mount_stalkglider_snail',
   'mount_aether_hover_cycle',
+  'mount_rickshaw_mount',
   'mob_glimmerwisp',
   'mob_duskwisp',
   'mob_spider_egg_sac',

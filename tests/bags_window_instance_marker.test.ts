@@ -59,6 +59,7 @@ function windowFor(
     isBankOpen: () => false,
     isPersonalBankTab: () => false,
     isGuildBankTab: () => false,
+    isVaultBankTab: () => false,
     pendingPetFeed: () => false,
     closeVendor: noop,
     closeBank: noop,
@@ -77,6 +78,7 @@ function windowFor(
     clearActionDropTargets: noop,
     dragState: new ItemDragState(),
     isTouchHud: () => false,
+    confirmVendorSell: () => true,
     markEquipDropTargets: noop,
     dropOnEquipSlot: noop,
     dropOnActionSlot: noop,
@@ -94,6 +96,23 @@ describe('bag_instance_glyph_view: kind priority', () => {
     );
     expect(bagInstanceGlyphKind({ enchant: 'enchant_chest_stamina' })).toBe('enchanted');
     expect(bagInstanceGlyphKind({ signer: 'Anna' })).toBe('signed');
+    // A Riftbound band: its rolled line is the ladder's (rift/band_ladder.ts),
+    // not a legacy enchant, so the glyph reads the copy's bind, never 'enchanted'.
+    expect(
+      bagInstanceGlyphKind({
+        boundTo: 3,
+        rolled: { quality: 'epic', stats: { str: 8, sta: 6 } },
+        rift: {
+          sourceEventId: 'e',
+          tier: 'S',
+          power: 4,
+          upgradeLevel: 0,
+          maxUpgradeLevel: 5,
+          gemSlots: 2,
+          gems: [],
+        },
+      }),
+    ).toBe('bound');
     expect(bagInstanceGlyphKind({ bindOnTrade: true })).toBe('bound');
     expect(bagInstanceGlyphKind({ boundTo: 7 })).toBe('bound');
   });

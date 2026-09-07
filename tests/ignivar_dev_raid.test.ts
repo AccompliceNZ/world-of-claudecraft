@@ -4,7 +4,6 @@ import {
   IGNIVAR_BRAND_AURA_ID,
   IGNIVAR_BRAND_RADIUS,
   IGNIVAR_SOAK_RADIUS,
-  IGNIVAR_SOAK_SHARED_MAX_HP,
   updateIgnivarEncounter,
 } from '../src/sim/encounters/ignivar';
 import {
@@ -12,7 +11,13 @@ import {
   IGNIVAR_FORGE_CHAINS_BREAK_DISTANCE,
   IGNIVAR_FORGE_CHAINS_STRAIN_SECONDS,
 } from '../src/sim/ignivar_forge_chains';
-import { IGNIVAR_FORGE_APPROACH_ID, IGNIVAR_RAID_ARENA_ID } from '../src/sim/ignivar_raid_ids';
+import {
+  IGNIVAR_FORGE_APPROACH_ID,
+  IGNIVAR_LIFT_ROOM_ID,
+  IGNIVAR_RAID_ARENA_ID,
+} from '../src/sim/ignivar_raid_ids';
+import { enterDungeon, leaveDungeon } from '../src/sim/instances/dungeons';
+import { MAX_AGGRO_RADIUS } from '../src/sim/mob/aggro_ranges';
 import { Sim } from '../src/sim/sim';
 import { DT, dist2d, IGNIVAR_BOSS_ID } from '../src/sim/types';
 
@@ -29,6 +34,27 @@ function ignivarBots(sim: Sim) {
 }
 
 describe('/dev ignivarraid', () => {
+  it('keeps the earlier floor claims attached when the practice raid forms in the arena', () => {
+    const sim = devSim();
+    for (const roomId of [IGNIVAR_LIFT_ROOM_ID, IGNIVAR_FORGE_APPROACH_ID, IGNIVAR_RAID_ARENA_ID]) {
+      expect(enterDungeon(sim.ctx, roomId, sim.player.id, true), roomId).toBe(true);
+    }
+
+    sim.chat('/dev ignivarraid');
+
+    const partyKey = sim.ctx.instanceKeyFor(sim.player.id);
+    for (const roomId of [IGNIVAR_LIFT_ROOM_ID, IGNIVAR_FORGE_APPROACH_ID, IGNIVAR_RAID_ARENA_ID]) {
+      expect(
+        sim.instances.find((claim) => claim.dungeonId === roomId && claim.partyKey === partyKey),
+        `${roomId} stays in the practice raid family`,
+      ).toBeDefined();
+    }
+    expect(leaveDungeon(sim.ctx, sim.player.id)).toBe(true);
+    expect(sim.instanceInfoAt(sim.player.pos)?.dungeonId).toBe(IGNIVAR_FORGE_APPROACH_ID);
+    expect(leaveDungeon(sim.ctx, sim.player.id)).toBe(true);
+    expect(sim.instanceInfoAt(sim.player.pos)).toBeNull();
+  });
+
   it('replaces a live Normal dev claim when entering the same arena on Heroic', () => {
     const sim = devSim();
     sim.chat('/dev dungeon ignivar_raid_arena normal');
@@ -236,6 +262,12 @@ describe('/dev ignivarraid', () => {
 
     const boss = [...sim.entities.values()].find((entity) => entity.templateId === IGNIVAR_BOSS_ID);
     expect(boss).toBeDefined();
+    // Forming the practice raid must never pull: every pod member spawns
+    // outside the dais boss's automatic aggro radius.
+    for (const bot of botEntities) {
+      if (!bot || !boss) continue;
+      expect(dist2d(bot.pos, boss.pos)).toBeGreaterThan(MAX_AGGRO_RADIUS);
+    }
     sim.tick();
     expect(boss?.inCombat).toBe(false);
   });
@@ -260,7 +292,7 @@ describe('/dev ignivarraid', () => {
     expect(dist2d(sim.player.pos, first.pos)).toBeGreaterThan(IGNIVAR_BRAND_RADIUS);
   });
 
-  it('lets the tester complete the four-player Shared Pyre by joining the marked pod', () => {
+  it('keeps legacy Shared Pyre inert on Ignivar even with the dev pod present', () => {
     const sim = devSim();
     sim.chat('/dev dungeon ignivar_raid_arena normal');
     sim.chat('/dev ignivarraid');
@@ -279,22 +311,16 @@ describe('/dev ignivarraid', () => {
     boss.ignivar.rotatingRaysTimer = 999;
     boss.ignivar.forgeWaveTimer = 999;
     boss.ignivar.meteorTimer = 999;
-    boss.ignivar.soakTimer = 0;
-
-    updateIgnivarEncounter(sim.ctx, boss);
-    const marked = sim.entities.get(boss.ignivar.soakTargetId ?? -1);
-    expect(sim.players.get(marked?.id ?? -1)?.isDevBot).toBe(true);
-    if (!marked) throw new Error('Shared Pyre did not mark a test bot');
-    sim.player.pos = { ...marked.pos };
-    sim.player.prevPos = { ...sim.player.pos };
     sim.player.hp = sim.player.maxHp;
+    boss.ignivar.soakTimer = 0;
+    boss.ignivar.soakTargetId = sim.player.id;
     boss.ignivar.soakRemaining = DT;
 
     updateIgnivarEncounter(sim.ctx, boss);
 
-    expect(sim.player.hp).toBe(
-      sim.player.maxHp - Math.ceil(sim.player.maxHp * (IGNIVAR_SOAK_SHARED_MAX_HP / 4)),
-    );
+    expect(boss.ignivar.soakTargetId).toBeNull();
+    expect(boss.ignivar.soakRemaining).toBe(0);
+    expect(sim.player.hp).toBe(sim.player.maxHp);
   });
 
   it('keeps its invulnerable mechanic bots alive through an Apocalypse wipe', () => {
@@ -373,6 +399,11 @@ describe('/dev ignivarraid', () => {
   it('enters the Normal forge approach with a full practice raid from the open world', () => {
     const sim = devSim();
     sim.chat('/dev ignivarraid');
+    expect(
+      sim
+        .drainEvents()
+        .some((event) => event.type === 'log' && event.text.includes('all five automaton packs')),
+    ).toBe(true);
     const bots = ignivarBots(sim);
     expect(bots).toHaveLength(9);
     expect(sim.partyOf(sim.playerId)).toMatchObject({ raid: true, leader: sim.playerId });

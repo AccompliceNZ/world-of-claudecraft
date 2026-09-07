@@ -31,12 +31,14 @@ import { DAMAGE_IDLE_DESPAWN_MOB_IDS, DAMAGE_IDLE_DESPAWN_SECONDS } from '../ent
 import { weaponHand } from '../equipment_rules';
 import { emitIgnivarRaidNarrativeOnDeath } from '../ignivar_raid_lore';
 import { lockNormalDungeonResetOnBossKill, spawnBossExitPortal } from '../instances/dungeons';
+import { applyBossCorpseHold } from '../mob/boss_corpse_hold';
 import { spawnWidowHatchlingOnEggDeath } from '../mob/egg_hatchling';
 import { grantAbilityDevotion } from '../paladin_devotion';
 import { snapshotPetOnOwnerDeath } from '../pet/pet_owner_revive';
 import { pvpDamageMultiplier } from '../pvp';
 import { resolveRespawnSeconds } from '../respawn_policy';
 import { aurasSurvivingDeath } from '../resurrection';
+import { computeCharacterModifiers } from '../set_bonus_mods';
 import type { PlayerMeta } from '../sim';
 import type { DamageResolution, SimContext } from '../sim_context';
 import { addThreat, clearThreat, petCanSeeStealthedTarget } from '../threat';
@@ -108,6 +110,7 @@ import { stripPaladinDevotionsFromSource } from './paladin_support';
 import { masteredPaladinAuraValue } from './paladin_talents';
 import { isValkyrsCallingAirborne } from './paladin_valkyrs_calling_state';
 import { veilboundMarkDamageMultiplier } from './paladin_veilbound_march';
+import { benisonMendOnVigilTriggered } from './priest/benison';
 import { doctrineConvertDamage } from './priest/doctrine';
 import { cleanupPriestState } from './priest/lifecycle';
 import {
@@ -1005,6 +1008,9 @@ export function dealDamage(
         const healed = ctx.applyHeal(healer, target, aura.value, aura.name);
         if (aura.id === 'seraphic_vigil') {
           priestOnVigilTriggered(ctx, healer, target, healed);
+          // Benison Dawnweave 4pc rides the same trigger POINT (never that
+          // talent-gated function): the set arm is wearer-flag-gated inside.
+          benisonMendOnVigilTriggered(ctx, healer, target);
         }
         ctx.emit({
           type: 'spellfx',
@@ -1571,6 +1577,14 @@ export function handleDeath(
       e.respawnTimer = Infinity;
       ctx.despawnSummonedAdds(e);
     }
+    // Instance bosses hold their lootable corpse for BOSS_CORPSE_HOLD_SECONDS:
+    // corpseTimer is the loot window, and an instance boss that never respawns
+    // in place went unlootable and invisible on the 60s trash decay while its
+    // loot still sat on the entity. Only ever raises the timer; a fixed
+    // respawnSeconds caps it like the decay above, and an open-world boss, a
+    // world boss, or a per-player summon is left on the classic window
+    // (mob/boss_corpse_hold.ts). Draws no rng.
+    applyBossCorpseHold(e, template);
     e.aggroTargetId = null;
     clearThreat(e);
     if (e.ownerId !== null) {
@@ -1810,7 +1824,7 @@ export function grantXp(
     // Re-bake the flat talent mods at the new level BEFORE the stat pass: spec mastery
     // magnitudes scale with level (min(1, level/20) in accumulate), so a ding must
     // strengthen the mastery without waiting for a respec/spec-pick/relog re-bake.
-    meta.talentMods = computeTalentModifiers(meta.cls, meta.talents, p.level);
+    meta.talentMods = computeCharacterModifiers(meta.cls, meta.talents, p.level, meta.equipment);
     recalcPlayerStats(p, meta.cls, meta.equipment, ctx.playerMods(meta), meta.equipmentInstance);
     p.hp = p.maxHp;
     if (p.resourceType === 'mana') p.resource = p.maxResource;

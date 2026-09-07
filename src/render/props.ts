@@ -50,8 +50,13 @@ import {
   splitKitSurfacesByUv,
 } from './kit_uv_surface_core';
 import { cloneMaterialWithHooks } from './material_clone_hooks';
-import { applyOccluderFade, type OccluderFadeMat, occluderFadeMat } from './occluder_fade';
-import { occluderFadeSettled, stepOccluderFade } from './occluder_fade_core';
+import {
+  advanceOccluderFade,
+  applyOccluderFade,
+  type OccluderFadeMat,
+  occluderFadeRecordFor,
+  prefetchOccluderFadeWithin,
+} from './occluder_fade';
 import { type PropCellBounds, propCellKey, updatePropCell } from './prop_cell_core';
 import {
   newPropCullPass,
@@ -748,12 +753,21 @@ function convertMaterial(
       emissiveIntensity: hollowEmissive ? 0.2 : (ov?.emissiveIntensity ?? 1) * 0.6,
     });
   }
+  // Distant-zone air (biome_haze_field.ts): every converted kit material
+  // hazes with the ground under it. Attached FIRST, before the worn detail,
+  // because that is the order surfaceMat, foliage.ts and
+  // reattachClonedMaterialHooks compose the two hooks: a kit material
+  // attached the other way round composed a different key text, so every
+  // hook-preserving clone of it linked a second program for the same GLSL
+  // (12 links per login at Eastbrook in the 2026-08-27 program-key ledger).
+  attachBiomeHaze(mat);
   // Triplanar surface-detail layer, applied before caching so every consumer
   // of the shared per-key material carries it (the helper self-gates to
   // standard materials, so the Lambert branch is a no-op). Routing matches on
   // the SOURCE material name (s.name), which keys the cache; the context
   // flags keep emissive/transparent surfaces clean and let Tripo props that
-  // ship their own PBR maps skip the bare-coverage fallback.
+  // ship their own PBR maps skip the bare-coverage fallback. Chains over the
+  // haze hook above.
   const worn =
     familyOverride !== undefined
       ? familyOverride
@@ -767,9 +781,6 @@ function convertMaterial(
       strength: worn.strength,
     });
   }
-  // Distant-zone air (biome_haze_field.ts): every converted kit material
-  // hazes with the ground under it, chained over the worn-detail hook.
-  attachBiomeHaze(mat);
   mat.name = `${kit}:${s.name}`;
   matConvCache.set(key, mat);
   return mat;
@@ -1336,6 +1347,7 @@ export function buildProps(seed: number, delveLabel?: (delveId: string) => strin
    */
   function registerHideable(g: THREE.Group, fp: Footprint): void {
     const matMap = new Map<THREE.Material, OccluderFadeMat>();
+    const mats: OccluderFadeMat[] = [];
     const bakeMeshes: HideableBakeMesh[] = [];
     g.traverse((o) => {
       const mesh = o as THREE.Mesh;
@@ -1359,14 +1371,19 @@ export function buildProps(seed: number, delveLabel?: (delveId: string) => strin
         // ghost's OPAQUE program is the source's own; only the transparent
         // fade variant remains a distinct (prewarmable) key.
         const ghostSrc = cloneMaterialWithHooks(src);
-        tm = occluderFadeMat(ghostSrc);
+        tm = occluderFadeRecordFor(mats, ghostSrc, mesh);
         matMap.set(src, tm);
+      } else {
+        // A second mesh of the same kit material on another program (an
+        // instanced part, another attribute set) gets its own record, so the
+        // fade gate links that program too before the shared clone flips.
+        occluderFadeRecordFor(mats, tm.mat, mesh);
       }
       mesh.material = tm.mat;
     });
     hideables.push({
       group: g,
-      mats: [...matMap.values()],
+      mats,
       hidden: false,
       alpha: 1,
       cellKey: propCellKey(fp.x, fp.z),
@@ -2557,11 +2574,10 @@ export function buildProps(seed: number, delveLabel?: (delveId: string) => strin
         }
         // Ghost on every tier with the same timing while keeping the obstacle's
         // silhouette and shadow. Per-structure clones keep the change local.
+        prefetchOccluderFadeWithin(h.mats, h.x, h.z, camX, camZ);
         const hide = cameraSegmentHitsFootprint(h, eyeX, eyeY, eyeZ, camX, camY, camZ);
         h.hidden = hide;
-        if (occluderFadeSettled(h.alpha, hide)) continue;
-        h.alpha = stepOccluderFade(h.alpha, hide, dt, reducedMotion);
-        applyOccluderFade(h.mats, h.alpha);
+        h.alpha = advanceOccluderFade(h.mats, h.alpha, hide, dt, reducedMotion);
       }
     },
   };

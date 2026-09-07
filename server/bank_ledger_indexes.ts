@@ -22,16 +22,27 @@
 // the primary key is the tiebreak-free monotonic order the reader actually
 // pages by (two rows can share a created_at; a BIGSERIAL id cannot collide).
 //
-// WHY IT IS PARTIAL. `container` is a two-value discriminator and this reader
+// WHY IT IS PARTIAL. `container` is a closed discriminator and this reader
 // only ever passes the literal 'guild', so a full index would carry an entry
-// for every PERSONAL bank row as well: on a shipped game that is the large
-// majority of a table nothing prunes, and it buys nothing, because personal
-// reads are served by bank_ledger_character and no other statement in server/
-// or scripts/ filters on `container` at all. Those entries would be pure index
-// size, pure extra WAL, and pure buffer-cache pressure on EVERY personal bank
-// insert, forever. `WHERE container = 'guild'` is provably matched by the
-// reader (the value is a literal in the SQL, never a parameter), and it leaves
-// the index roughly the size of the guild subset the reader actually walks.
+// for every PERSONAL bank row and every 'vault' row (the Materials Vault, Bank
+// Storage Phase 2) as well: on a shipped game that is the large majority of a
+// table nothing prunes, and the vault rows only enlarge the excluded majority,
+// strengthening the case rather than weakening it. It buys nothing, because
+// personal and vault reads are served by bank_ledger_character and no other
+// statement in server/ or scripts/ filters on `container` at all. Those
+// entries would be pure index size, pure extra WAL, and pure buffer-cache
+// pressure on EVERY personal bank insert, forever. `WHERE container = 'guild'`
+// is provably matched by the reader (the value is a literal in the SQL, never
+// a parameter), and it leaves the index roughly the size of the guild subset
+// the reader actually walks.
+//
+// THE NEXT INDEX TRIGGER, recorded the way the guild reader's deferral was. A
+// future per-character vault HISTORY reader
+// (`WHERE character_id = $1 AND container = 'vault' ORDER BY id DESC LIMIT n`)
+// is NOT served by bank_ledger_character: that index's trailing column is
+// created_at, not id, so the reader would still sort a character's whole
+// history to find its newest n. It earns an index of its own when such a
+// reader lands, and not before.
 //
 // WHY `op` STAYS OUT of it, even though the reader filters on it. The op
 // predicate is `= ANY($2::text[])`, and a ScalarArrayOpExpr on a MIDDLE column
@@ -47,6 +58,10 @@
 // (server/concurrent_indexes.ts) evaluates its list at import time and
 // server/db.ts already imports the registry (the client_perf_indexes.ts
 // precedent).
+
+// The one import is the pure world_api seam (no db, no registry), the op
+// classification the money predicate below is derived from.
+import { GUILD_BANK_LOG_OP_KIND } from '../src/world_api/guild_bank';
 
 export const BANK_LEDGER_CONTAINER_INDEX_SQL = `
 CREATE INDEX CONCURRENTLY IF NOT EXISTS bank_ledger_container_recent
@@ -72,24 +87,44 @@ export const BANK_LEDGER_CONTAINER_INVALID_INDEX_DROP_SQL =
 // ---------------------------------------------------------------------------
 // The admin economy-oversight per-account reader
 // (server/account_wealth_db.ts largeGoldMovementsForAccount):
-// `WHERE account_id = $1 AND abs(copper_delta) >= $2 ORDER BY id DESC LIMIT N`.
-// Same shape and reasoning as the guild reader above: an equality column paired
-// with `id DESC` turns "the newest large movements of one account" into a
-// bounded backwards index scan instead of a walk of the account's whole
-// keep-forever history. Without it the read has no index leading with
-// account_id at all, so an account with few or no large movements scans to the
-// end of one of the largest live tables, on every account-detail open.
+// `WHERE account_id = $1 AND abs(copper_delta) >= 100000 ORDER BY id DESC
+// LIMIT $2`. The fixed threshold is part of the product contract (10 gold),
+// not caller input. Keeping it literal lets PostgreSQL prove that the query
+// implies this partial-index predicate even under a generic prepared plan. A
+// bind parameter cannot prove that implication at plan time and silently
+// strands the partial index.
 //
-// abs(copper_delta) stays OUT of the index: the threshold is applied as a
-// trailing Filter on rows already arriving in id order, so its cost is only
-// the suppressed small-movement rows of that one account. A partial index on
-// the fixed threshold constant remains available if that filter ever proves
-// heavy in production; it costs a redeploy of this module, not a schema
-// migration.
+// The equality column plus `id DESC` turns "the newest large movements of one
+// account" into a bounded backwards index scan. The partial predicate keeps
+// ordinary small bank movements out of that ordered read index, avoiding
+// their permanent second key, WAL, and cache cost. A full account index remains
+// mandatory: account_id is an ON DELETE CASCADE foreign key, and PostgreSQL
+// cannot use a partial index to find every child row when an account is deleted.
+// Phase one keeps the broad predecessor in that role; phase two replaces it
+// with compact `(account_id)`. The query and partial index interpolate this ONE
+// predicate constant so their SQL text cannot drift apart.
 //
 // CONCURRENTLY, never boot DDL, same as the guild reader: bank_ledger is too
-// large to lock for a transactional build.
+// large to lock for a transactional build. This partial index takes over the
+// ordered-read role of bank_ledger_account_recent. Phase one (this release)
+// keeps the predecessor migration in its original registry position, then
+// appends the partial ordered index after every previously shipped entry. The
+// predecessor continues supporting both the account FK and a peer whose prior
+// binary still sends a parameterized threshold that cannot use the partial
+// index under a generic plan. Phase two, after the fleet and rollback window
+// converge, APPENDS the compact full migration below and attaches
+// BANK_LEDGER_ACCOUNT_BROAD_RETIRE_SQL to that new migration. Appending keeps
+// the registry's shipped order stable; it also means a failed repair of the
+// earlier partial entry aborts the loop before compact-build or broad-drop.
+// The runner then guarantees the compact replacement succeeds before the drop.
+// Staging the compact build avoids four heap scans in this release.
 
+export const BANK_LEDGER_LARGE_MOVEMENT_PREDICATE_SQL = 'abs(copper_delta) >= 100000';
+
+// This shipped predecessor must remain in the append-only concurrent-index
+// registry until a later migration has built its full `(account_id)`
+// replacement. Existing databases already have it, while a fresh database
+// depends on this entry for the account FK and rollback-compatible readers.
 export const BANK_LEDGER_ACCOUNT_INDEX_SQL = `
 CREATE INDEX CONCURRENTLY IF NOT EXISTS bank_ledger_account_recent
   ON bank_ledger(account_id, id DESC);
@@ -104,3 +139,91 @@ SELECT 1
 
 export const BANK_LEDGER_ACCOUNT_INVALID_INDEX_DROP_SQL =
   'DROP INDEX CONCURRENTLY IF EXISTS bank_ledger_account_recent';
+
+export const BANK_LEDGER_ACCOUNT_FK_INDEX_SQL = `
+CREATE INDEX CONCURRENTLY IF NOT EXISTS bank_ledger_account_fk
+  ON bank_ledger(account_id);
+`;
+
+export const BANK_LEDGER_ACCOUNT_FK_INVALID_INDEX_CHECK_SQL = `
+SELECT 1
+  FROM pg_index i
+ WHERE i.indexrelid = to_regclass('bank_ledger_account_fk')
+   AND NOT i.indisvalid
+`;
+
+export const BANK_LEDGER_ACCOUNT_FK_INVALID_INDEX_DROP_SQL =
+  'DROP INDEX CONCURRENTLY IF EXISTS bank_ledger_account_fk';
+
+// Plan shape verified empirically (PG16, 1M seeded rows, plan_cache_mode =
+// force_generic_plan, the reused-prepared-statement case): Limit over an Index
+// Scan on this partial index, Index Cond (account_id = $1), 0.02ms. No seq scan.
+export const BANK_LEDGER_ACCOUNT_LARGE_INDEX_SQL = `
+CREATE INDEX CONCURRENTLY IF NOT EXISTS bank_ledger_account_large_recent
+  ON bank_ledger(account_id, id DESC)
+  WHERE ${BANK_LEDGER_LARGE_MOVEMENT_PREDICATE_SQL};
+`;
+
+export const BANK_LEDGER_ACCOUNT_LARGE_INVALID_INDEX_CHECK_SQL = `
+SELECT 1
+  FROM pg_index i
+ WHERE i.indexrelid = to_regclass('bank_ledger_account_large_recent')
+   AND NOT i.indisvalid
+`;
+
+export const BANK_LEDGER_ACCOUNT_LARGE_INVALID_INDEX_DROP_SQL =
+  'DROP INDEX CONCURRENTLY IF EXISTS bank_ledger_account_large_recent';
+
+export const BANK_LEDGER_ACCOUNT_BROAD_RETIRE_SQL =
+  'DROP INDEX CONCURRENTLY IF EXISTS bank_ledger_account_recent';
+
+// ---------------------------------------------------------------------------
+// The guild bank history's MONEY slice (server/guild_bank_log_db.ts, the
+// `money` kind of the paged reader, transaction-history review).
+//
+// The container index above bounds the `all` slice by its LIMIT because the
+// op filter rejects only the two rare diagnostic rows. The money slice is the
+// SPARSE one: item rows are the bulk of any guild's ledger (a vault
+// deposit-all writes one row per material), so under the container index a
+// Money page heap-fetches every item row between money rows, and proving
+// `more = false` walks the guild's whole history. bank_ledger is keep-forever,
+// so that only gets worse with age. This partial index carries exactly the
+// money rows of the guild container in id order, which turns a Money page
+// back into a bounded backward index scan.
+//
+// The predicate names the money ops as a LITERAL, derived from the seam's
+// classification (GUILD_BANK_LOG_OP_KIND) so the index and the statement can
+// never disagree about which ops are money, and interpolated verbatim into the
+// statement so the planner can prove the partial-index implication even under
+// a generic prepared plan (the account_wealth_db.ts large-movement precedent:
+// a bind parameter cannot prove it and silently strands the index). Sorted so
+// the SQL text is stable across builds.
+//
+// CONCURRENTLY, never boot DDL, same as every sibling: bank_ledger is too
+// large to lock for a transactional build. Appended to the registry after
+// every previously shipped entry (the order is load-bearing and pinned).
+
+const GUILD_MONEY_OPS = Object.entries(GUILD_BANK_LOG_OP_KIND)
+  .filter(([, kind]) => kind === 'money')
+  .map(([op]) => op)
+  .sort();
+
+export const BANK_LEDGER_GUILD_MONEY_OPS_PREDICATE_SQL = `op IN (${GUILD_MONEY_OPS.map(
+  (op) => `'${op}'`,
+).join(', ')})`;
+
+export const BANK_LEDGER_GUILD_MONEY_INDEX_SQL = `
+CREATE INDEX CONCURRENTLY IF NOT EXISTS bank_ledger_container_money_recent
+  ON bank_ledger(container_id, id DESC)
+  WHERE container = 'guild' AND ${BANK_LEDGER_GUILD_MONEY_OPS_PREDICATE_SQL};
+`;
+
+export const BANK_LEDGER_GUILD_MONEY_INVALID_INDEX_CHECK_SQL = `
+SELECT 1
+  FROM pg_index i
+ WHERE i.indexrelid = to_regclass('bank_ledger_container_money_recent')
+   AND NOT i.indisvalid
+`;
+
+export const BANK_LEDGER_GUILD_MONEY_INVALID_INDEX_DROP_SQL =
+  'DROP INDEX CONCURRENTLY IF EXISTS bank_ledger_container_money_recent';

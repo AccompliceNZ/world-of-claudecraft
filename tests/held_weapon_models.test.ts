@@ -62,17 +62,20 @@ describe('held weapon models', () => {
 
     expect(heroicWeapons.map((item) => item.id)).toEqual([
       'heroic_bonewrought_greatsword',
+      'heroic_courtiers_bonefang',
       'heroic_deathless_heartwood',
       'heroic_direfang_greatblade',
       'heroic_duskwhisper',
       'heroic_fang_of_korzul',
       'heroic_fanglords_beastspear',
+      'heroic_gravecourt_hewer',
       'heroic_gravewyrm_thornmaul',
       'heroic_kingsbane_last_oath',
       'heroic_maul_of_the_scourged_wilds',
       'heroic_nightfangs_greatstaff',
       'heroic_staff_of_the_gravewyrm',
       'heroic_staff_of_velkhar',
+      'heroic_thornpeak_wardblade',
       'heroic_wildheart_fangknife',
       'heroic_wildheart_hexwood_staff',
       'heroic_wildheart_tuskblade',
@@ -213,6 +216,9 @@ describe('held weapon models', () => {
       .map((item) => item.id)
       .sort();
     expect(unmapped).toEqual([
+      // The two Crucible held offhands follow the wraithfire_orb precedent
+      // (a held orb/censer with no dedicated GLB yet).
+      'cinder_of_the_first_design',
       'cragmaw_huntquiver',
       'direfang_quiver',
       'gravewyrm_bone_quiver',
@@ -220,6 +226,7 @@ describe('held weapon models', () => {
       'heroic_gravewyrm_bone_quiver',
       'heroic_wraithfire_orb',
       'moggers_hide_quiver',
+      'orb_of_the_last_spring',
       'valefire_lantern',
       'wraithfire_orb',
     ]);

@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
@@ -7,8 +7,9 @@ import { COMMAND_NAMES, type CommandName, DISPATCH_ONLY_COMMANDS } from '../src/
 
 // W0b boundary gate: the command-schema lockstep invariant (00-SHARED-CONVENTIONS
 // #2). Every command ClientWorld sends (`cmd:'X'` through the private cmd()
-// helper in src/net/online.ts) MUST have a matching `case 'X':` in the
-// server/game.ts dispatchMessage switch. This test pins the CURRENT contract by
+// helper, from src/net/online.ts or from a src/net sibling module that composes
+// that sender, the online.ts extraction seam) MUST have a matching `case 'X':`
+// in the server/game.ts dispatchMessage switch. This test pins the CURRENT contract by
 // re-deriving both sets directly from source (not from the brief's numbers) and
 // proving:
 //   - the send-set is a SUBSET of the dispatch-set: zero send-only,
@@ -51,13 +52,23 @@ const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 // arrangement deterministically), and bg_respond as a send + dispatch pair
 // (the release's battleground queue-pop confirmation).
 // The Reliquary packet's nameplate border adds deed_set_border as a send +
-// dispatch pair, the exact sibling of deed_set_title. The v0.37.0 release adds
-// tabPrev as a send + dispatch pair (the backward half of the Tab target cycle,
-// Shift+Tab by default; no payload, the sim walks the same ordered list in
-// reverse), and this branch's neutral trade close adds trade_close as a send +
-// dispatch pair, the sibling of trade_cancel. The release's player item lock
-// (issue 3042) adds lock_item as a send + dispatch pair. NOTE (merge trap): both
-// sides of every v0.36.0 sync bump these counts independently, and git has
+// dispatch pair, the exact sibling of deed_set_title, and the release adds
+// tabPrev as a send + dispatch pair (the backward half of the Tab target
+// cycle, Shift+Tab by default; no payload, the sim walks the same ordered
+// list in reverse) plus, at the v0.40.0 syncs, trade_close (the sibling of
+// trade_cancel) and lock_item (the player item lock, issue 3042). Bank Storage
+// adds the Materials Vault trio (vault_deposit, vault_withdraw,
+// vault_buy_upgrade: the per-material material store beside the personal slot
+// bank, appended at the end of COMMAND_NAMES because wire tokens are never
+// reordered) plus vault_deposit_all, the batched server-side sweep (one
+// command, one batched ledger write), each a send + dispatch pair.
+// Bank Storage phase 07 adds the bag-socket trio (bank_unlock_socket,
+// bank_socket_bag, bank_unsocket_bag), each a send + dispatch pair appended at
+// the END of COMMAND_NAMES; the dispatch bodies live in server/bank_wire.ts
+// behind the six-label bank case group, and bank_socket_bag reuses the
+// equip_bag wire shape (`item` + optional `socket` + optional `slot`).
+// NOTE (merge trap): both
+// sides of every release sync bump these counts independently, and git has
 // auto-merged identical numbers before while the real total was higher; the
 // merged tree carries BOTH sides' pairs. Only the suite says what they really
 // are, and the numbers below were set from a run, not from this narrative.
@@ -65,9 +76,9 @@ const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 // six vcup_* send + dispatch pairs (docs/design/eastbrook-revamp/master-plan.md);
 // the Proving Shore tutorial adds its one start_tutorial pair back on top, and
 // the v0.40.0 sync merge brings the release side's one new pair with it.
-const EXPECTED_SEND_COUNT = 199;
-const EXPECTED_DISPATCH_COUNT = 212;
-const EXPECTED_DISPATCH_ONLY_COUNT = 13;
+const EXPECTED_SEND_COUNT = 207;
+const EXPECTED_DISPATCH_COUNT = 221;
+const EXPECTED_DISPATCH_ONLY_COUNT = 14;
 
 // The chat sub-channel routing switch (server/game.ts `switch
 // (session.rememberedChat.channel)`) is NOT a msg.cmd dispatch; its labels must
@@ -107,6 +118,30 @@ function scanSendSet(src: string): Set<string> {
   return tokens;
 }
 
+// Every module under src/net (recursively): online.ts plus the sibling modules
+// extracted from it that build a command payload for ClientWorld's cmd() seam
+// (src/net/action_bar_upload.ts is the first). Scanning the directory rather
+// than the one file keeps the gate honest across future extractions: a send
+// moved into a sibling still needs its server handler, and a sibling that
+// invents a token with no handler still reddens the subset check.
+function listNetSources(dir = 'src/net'): string[] {
+  const out: string[] = [];
+  for (const entry of readdirSync(join(repoRoot, dir), { withFileTypes: true })) {
+    const rel = `${dir}/${entry.name}`;
+    if (entry.isDirectory()) out.push(...listNetSources(rel));
+    else if (entry.name.endsWith('.ts')) out.push(rel);
+  }
+  return out.sort();
+}
+
+function scanNetSendSet(): Set<string> {
+  const tokens = new Set<string>();
+  for (const rel of listNetSources()) {
+    for (const token of scanSendSet(readSource(rel))) tokens.add(token);
+  }
+  return tokens;
+}
+
 // Distinct `case 'X':` labels in the dispatchMessage `switch (msg.cmd)` block.
 // Bound the scan between the `private dispatchMessage(` method (its body opens
 // with the msg.cmd switch and carries no other case labels) and the later
@@ -131,14 +166,14 @@ function difference<T>(a: Set<T>, b: Set<T>): Set<T> {
   return out;
 }
 
-const sendSet = scanSendSet(readSource('src/net/online.ts'));
+const sendSet = scanNetSendSet();
 const dispatchSet = scanDispatchSet(readSource('server/game.ts'));
 const tableSet = new Set<CommandName>(COMMAND_NAMES);
 const allowlistSet = new Set<CommandName>(DISPATCH_ONLY_COMMANDS);
 
 describe('command schema parity (W0b)', () => {
   it('re-derives the verified set sizes from source', () => {
-    expect(sendSet.size, 'distinct cmd:X sends in online.ts').toBe(EXPECTED_SEND_COUNT);
+    expect(sendSet.size, 'distinct cmd:X sends across src/net').toBe(EXPECTED_SEND_COUNT);
     expect(dispatchSet.size, 'distinct case labels in dispatchMessage').toBe(
       EXPECTED_DISPATCH_COUNT,
     );

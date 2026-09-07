@@ -17,6 +17,7 @@ export type ItemWeaponType = WeaponSkinType | 'polearm';
 
 export const WEAPON_TYPE_BY_ITEM: Record<string, ItemWeaponType> = {
   // Swords
+  thornpeak_wardblade: 'sword', // EPIC: Nythraxis gap-fill tank one-hander
   worn_sword: 'sword',
   ironedge_longsword: 'sword',
   thorium_warblade: 'sword',
@@ -45,6 +46,7 @@ export const WEAPON_TYPE_BY_ITEM: Record<string, ItemWeaponType> = {
   wildheart_tuskblade: 'sword',
   greatfang_of_the_basin: 'sword',
   // Daggers
+  courtiers_bonefang: 'dagger', // EPIC: Nythraxis gap-fill rogue dagger
   rusty_dagger: 'dagger',
   whetted_iron_dirk: 'dagger',
   keen_dirk: 'dagger',
@@ -95,7 +97,9 @@ export const WEAPON_TYPE_BY_ITEM: Record<string, ItemWeaponType> = {
   gravewyrm_thornmaul: 'mace',
   maul_of_the_scourged_wilds: 'mace',
   wildsoul_maul: 'mace',
+  varkhul_forgebreaker: 'mace',
   // Axes
+  gravecourt_hewer: 'axe', // EPIC: Nythraxis gap-fill dual-wield one-hander
   rusty_hatchet: 'axe',
   copper_bearded_axe: 'axe',
   arcanite_war_axe: 'axe',
@@ -146,6 +150,16 @@ export const WEAPON_TYPE_BY_ITEM: Record<string, ItemWeaponType> = {
   ironbark_boar_spear: 'polearm',
   fen_reaver_glaive: 'polearm',
   fanglords_beastspear: 'polearm',
+  // Crucible of the Last Spring raid weapons (content/ignivar_loot.ts).
+  forgefathers_warhammer: 'mace',
+  springtouched_crozier: 'mace',
+  cinderfang_kris: 'dagger',
+  slagrender_cleaver: 'axe',
+  anvilguard_blade: 'sword',
+  heart_of_the_end_greatblade: 'sword',
+  staff_of_the_last_spring: 'staff',
+  forgefire_spire: 'staff',
+  wand_of_quenched_sparks: 'wand',
 };
 
 /**

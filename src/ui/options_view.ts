@@ -127,6 +127,20 @@ export interface ChoiceControl {
   options: ChoiceOption[];
   /** True when selecting an option re-renders the panel (preset + interfaceMode). */
   rerender: boolean;
+  /** A live reading rendered INSIDE this row, under its buttons: what the
+   *  setting is actually doing right now, as opposed to what it asks for.
+   *
+   *  A row of its own rather than a NoteControl beside the row, because the
+   *  wide graphics cards flow their children two-up (control, note, control,
+   *  note) and a third child for one control shifts every row after it by a
+   *  cell. Placeholders are KEYS the painter resolves, like NoteControl's. */
+  statusKey?: TranslationKey;
+  statusValueKeys?: Record<string, TranslationKey>;
+  /** Render that line as an ASSERTIVE live region (role="alert") rather than a
+   *  polite one: the reading is a verdict a player has to act on (their choice
+   *  did not take), and it arrives long after the panel was built, so assistive
+   *  technology has to be told rather than left to notice. */
+  statusAlert?: boolean;
   /** Interface-panel tab this control lives in (unset on other panels). */
   category?: InterfaceTab;
 }
@@ -135,6 +149,11 @@ export interface ChoiceControl {
 export interface NoteControl {
   control: 'note';
   textKey: TranslationKey;
+  /** Placeholders for a note whose text carries a live reading, given as KEYS
+   *  the painter resolves: this module stays string-free, and a translator
+   *  keeps the whole sentence including where the value sits (never a
+   *  concatenation). */
+  valueKeys?: Record<string, TranslationKey>;
   /** Interface-panel tab this control lives in (unset on other panels). */
   category?: InterfaceTab;
 }
@@ -202,6 +221,33 @@ export interface OptionsEnv {
    *  shells, and is true for a desktop shell too old to have the preference).
    *  Absent (the web/offline callers) means the row never renders. */
   desktopGpuPref?: boolean;
+  /** desktopGpuBackendSupported() AND the shell's platform answer: reveals
+   *  the Linux graphics backend row (Auto / Vulkan / OpenGL) in the Graphics
+   *  panel's System card, under the shader warm-up worker it feeds. A bridge
+   *  capability plus a platform gate: Windows and macOS shells expose the
+   *  methods but have no choice to make, so they show no row. */
+  desktopGpuBackend?: boolean;
+  /** What the shell answered about THIS launch: the rung it actually bound and
+   *  whether that fell short of the setting. Absent until the shell has judged
+   *  it (and on every non-desktop caller), which is why the status line is
+   *  conditional rather than showing an empty reading. */
+  desktopGpuBackendActive?: {
+    active: string;
+    requestedUnavailable: boolean;
+    /** Auto held at OpenGL by the shell's GPU policy (an excluded card). */
+    autoCapped?: boolean;
+  } | null;
+  /** desktopGpuBackendWriteFailed(): the shell refused the last write of the
+   *  backend choice, so its STORED value is still the old one and the next
+   *  launch keeps it. Outranks the reading above: a player must not leave the
+   *  panel believing a pick took when the shell never stored it. */
+  desktopGpuBackendWriteFailed?: boolean;
+  /** Whether the shader warm-up worker is a real choice on this host. False on
+   *  iOS, where shaderWarmModeFor() forces the worker off whatever the setting
+   *  (a second WebGL2 context is a per-process memory ceiling risk on
+   *  phone-class WebKit), so the row and its note would both be lies. Absent
+   *  means yes, which is what every non-iOS caller wants. */
+  shaderWarmChoice?: boolean;
   /** desktopDisplayModeSupported(): the shell owns the window, so the Display
    *  card shows a windowed/borderless picker INSTEAD of the browser Fullscreen
    *  toggle (asking the browser for fullscreen inside an already-fullscreen
@@ -273,7 +319,55 @@ const choice = (
   rerender,
 });
 
-const note = (textKey: TranslationKey): NoteControl => ({ control: 'note', textKey });
+const note = (
+  textKey: TranslationKey,
+  valueKeys?: Record<string, TranslationKey>,
+): NoteControl => ({
+  control: 'note',
+  textKey,
+  ...(valueKeys ? { valueKeys } : {}),
+});
+
+/** What the player calls the rung the shell reports. Both Vulkan rungs read as
+ *  "Vulkan": the parallel-compile feature is an internal distinction, and a
+ *  picker that offered "Vulkan" must not answer with a name it never offered. */
+function gpuBackendActiveNameKey(active: string): TranslationKey {
+  return active.startsWith('vulkan')
+    ? 'hudChrome.options.gpuBackendActiveNameVulkan'
+    : 'hudChrome.options.gpuBackendActiveNameOpenGL';
+}
+
+// The shader warm-up worker: auto follows the GPU backend (on where the
+// compile runs off the presenting thread, off on OpenGL); the stored numbers
+// are src/game/shader_warm_setting.ts SHADER_WARM_SETTING_VALUES.
+const shaderWarmOptions: ChoiceOption[] = [
+  { value: 0, labelKey: 'hudChrome.options.shaderWarmAuto' },
+  { value: 1, labelKey: 'hudChrome.options.shaderWarmOff' },
+  { value: 2, labelKey: 'hudChrome.options.shaderWarmOn' },
+];
+
+// The desktop shell's graphics backend on Linux; the stored numbers are
+// src/game/desktop_gpu_backend_sync.ts GPU_BACKEND_SETTING_VALUES.
+const gpuBackendOptions: ChoiceOption[] = [
+  { value: 0, labelKey: 'hudChrome.options.gpuBackendAuto' },
+  { value: 1, labelKey: 'hudChrome.options.gpuBackendVulkan' },
+  { value: 2, labelKey: 'hudChrome.options.gpuBackendOpenGL' },
+];
+
+// What the player calls the choice the shell has STORED, for the sentence that
+// says a write did not take, keyed by the same stored numbers. Auto keeps the
+// picker's own label (it is a stored choice, not a rung); the two backends
+// borrow the active-reading names, so the sentence says "OpenGL" rather than
+// the picker's "OpenGL (slow)".
+const gpuBackendStoredNameKeys: Record<number, TranslationKey> = {
+  0: 'hudChrome.options.gpuBackendAuto',
+  1: 'hudChrome.options.gpuBackendActiveNameVulkan',
+  2: 'hudChrome.options.gpuBackendActiveNameOpenGL',
+};
+
+function gpuBackendStoredNameKey(value: number): TranslationKey {
+  return gpuBackendStoredNameKeys[value] ?? 'hudChrome.options.gpuBackendAuto';
+}
 
 // The desktop shell's window modes, in the order a player reads them: the
 // smaller window first, the default (borderless fullscreen) second, matching
@@ -512,6 +606,59 @@ export function buildGraphicsSections(
     ]),
     note('hudChrome.options.browserEffectsNote'),
   ];
+  // iOS forces the worker off whatever the setting says, so the row would be a
+  // control that changes nothing under a note promising On is forced
+  // everywhere. Absent means yes: every other host keeps the pair byte for byte.
+  if (env.shaderWarmChoice !== false) {
+    system.push(
+      choice(s, 'shaderWarm', 'hudChrome.options.shaderWarm', shaderWarmOptions),
+      note('hudChrome.options.shaderWarmNote'),
+    );
+  }
+  // The Linux graphics backend (the Vulkan trial) sits right under the shader
+  // warm-up worker it feeds, where a player looking for it expects it. Behind
+  // its own bridge capability AND the shell's platform answer; its note carries
+  // the next-launch caveat. Not a rebuild key: it writes live, and the shell
+  // reads the stored choice at its next launch.
+  if (env.desktopGpuBackend) {
+    // The rung this launch is ACTUALLY running rides INSIDE the row, under its
+    // buttons: it is the point of the row on a machine where the choice did not
+    // take, since a player who picked Vulkan would otherwise read "Vulkan"
+    // while playing on OpenGL. Absent until the shell has judged the launch.
+    const active = env.desktopGpuBackendActive;
+    // Re-renders on a pick: the restart strip at the panel's foot reads the
+    // live value against the launch snapshot, so the panel must rebuild for
+    // the offer to appear (or withdraw) under the click.
+    const backendRow = choice(
+      s,
+      'gpuBackend',
+      'hudChrome.options.gpuBackend',
+      gpuBackendOptions,
+      true,
+    );
+    if (env.desktopGpuBackendWriteFailed) {
+      // A refused write outranks the rung this launch is on: the player's pick
+      // never reached the store, so what the row owes them is what the NEXT
+      // start will do, named off the value the shell actually holds (the apply
+      // arm has already put the local setting back on it).
+      backendRow.statusKey = 'hudChrome.options.gpuBackendSaveFailed';
+      backendRow.statusValueKeys = { backend: gpuBackendStoredNameKey(backendRow.current) };
+      backendRow.statusAlert = true;
+    } else if (active) {
+      // A choice that fell short wins over a capped Auto: the two cannot both
+      // hold (a cap only ever applies to Auto), and the order is a pin.
+      backendRow.statusKey = active.requestedUnavailable
+        ? 'hudChrome.options.gpuBackendActiveUnavailable'
+        : active.autoCapped
+          ? 'hudChrome.options.gpuBackendActiveAutoCapped'
+          : 'hudChrome.options.gpuBackendActive';
+      backendRow.statusValueKeys = { backend: gpuBackendActiveNameKey(active.active) };
+      // Only the verdict that says the choice did not take is an alert; the
+      // plain reading and the policy cap are information, not a failure.
+      if (active.requestedUnavailable) backendRow.statusAlert = true;
+    }
+    system.push(backendRow, note('hudChrome.options.gpuBackendNote'));
+  }
   // Desktop vs on-screen touch controls. Hidden in the native shell (forces touch).
   if (!env.nativeShell) {
     system.push(
@@ -565,6 +712,8 @@ export function buildGraphicsSections(
         // concern for touch players.
         boolToggle(s, 'mobileCameraJoystick', 'hudChrome.options.mobileCameraJoystick'),
         boolToggle(s, 'leftHandedTouch', 'hudChrome.options.mobileLeftHanded'),
+        boolToggle(s, 'touchPreciseGroundAim', 'hudChrome.options.touchPreciseAim'),
+        note('hudChrome.options.touchPreciseAimNote'),
         boolToggle(s, 'touchTapMenus', 'hudChrome.options.touchTapMenus'),
         note('hudChrome.options.touchTapMenusNote'),
       ],
@@ -607,7 +756,7 @@ export function buildAudioControls(s: OptionsSettingsSource): OptionsControl[] {
 }
 
 // ---------------------------------------------------------------------------
-// Controller panel (cluster 5) -- the enable/invert toggles + the three sliders.
+// Controller panel (cluster 5), with toggles and analog sensitivity sliders.
 // The per-button remap rows are bespoke (a dropdown per pad button) and live in
 // the painter.
 // ---------------------------------------------------------------------------
@@ -626,6 +775,7 @@ export function buildControllerControls(s: OptionsSettingsSource): OptionsContro
     boolToggle(s, 'gamepadInvertY', 'hudChrome.controller.invertY'),
     slider(s, 'gamepadStickDeadzone', 'hudChrome.controller.deadzone'),
     slider(s, 'gamepadCameraSpeed', 'hudChrome.controller.cameraSpeed', 'oneDecimal'),
+    slider(s, 'gamepadReticleSpeed', 'hudChrome.controller.reticleSpeed', 'oneDecimal'),
     slider(s, 'gamepadVibration', 'hudChrome.controller.vibration'),
   ];
 }
@@ -663,10 +813,9 @@ export function buildInterfaceControls(
   env?: OptionsEnv,
 ): OptionsControl[] {
   const general: OptionsControl[] = [
-    // uiScale commits on release: applying it live rescales the whole UI (the
-    // options window included), which shoves the slider under the cursor and
-    // makes the value hard to land (issue 1558).
-    { ...slider(s, 'uiScale', 'hudChrome.options.uiScale'), commitOnChange: true },
+    // The UI Scale slider deliberately has NO menu row (owner request): the
+    // stored uiScale setting stays applied and the General tab's Reset to
+    // Defaults still clears a saved value (renderInterface's footer).
     slider(s, 'hudOpacity', 'hud.options.hudOpacity'),
     slider(s, 'tooltipScale', 'hud.options.tooltipScale'),
     boolToggle(s, 'frostedPanels', 'hud.options.frostedPanels'),
@@ -685,6 +834,8 @@ export function buildInterfaceControls(
     boolToggle(s, 'showReliquaryTracker', 'hudChrome.options.showReliquaryTracker'),
     boolToggle(s, 'showOwnNameplate', 'hudChrome.options.showOwnNameplate'),
     boolToggle(s, 'showPlayerNameplates', 'hudChrome.options.showPlayerNameplates'),
+    boolToggle(s, 'confirmVendorSell', 'hudChrome.options.confirmVendorSell'),
+    note('hudChrome.options.confirmVendorSellNote'),
   ];
   // The desktop shell's GPU preference, last in the tab so the web arm's row
   // order is untouched. Gated on the bridge CAPABILITY, so it renders only in a
@@ -692,7 +843,9 @@ export function buildInterfaceControls(
   // next-launch caveat (the shell applies the choice at startup, not live).
   if (env?.desktopGpuPref) {
     general.push(
-      boolToggle(s, 'forceHighPerfGpu', 'hudChrome.options.forceHighPerfGpu'),
+      // Re-renders on a flip: the restart strip at the tab's foot reads the
+      // live value against the launch snapshot (same reason as the backend row).
+      boolToggle(s, 'forceHighPerfGpu', 'hudChrome.options.forceHighPerfGpu', { rerender: true }),
       note('hudChrome.options.forceHighPerfGpuNote'),
     );
   }
@@ -709,18 +862,21 @@ export function buildInterfaceControls(
   return [
     ...tag('general', general),
     ...tag('frames', [
-      slider(s, 'playerFrameScale', 'hudChrome.options.playerFrameScale'),
-      slider(s, 'targetFrameScale', 'hudChrome.options.targetFrameScale'),
+      // The player/target/party frame scale sliders deliberately have NO menu
+      // rows: Edit Frames (the unlock mode) resizes each frame directly, and a
+      // slider row beside it would fight that gesture. The settings keys stay
+      // (saved values still apply; the Frames tab's Reset to Defaults clears
+      // them, see renderInterface's footer).
       choice(s, 'partyFrameStyle', 'hudChrome.partyFrames.style', [
         { value: 0, labelKey: 'hudChrome.partyFrames.styleAutomatic' },
         { value: 1, labelKey: 'hudChrome.partyFrames.styleClassic' },
         { value: 2, labelKey: 'hudChrome.partyFrames.styleRaid' },
       ]),
-      slider(s, 'partyFrameScale', 'hudChrome.partyFrames.scale'),
-      slider(s, 'partyFrameWidth', 'hudChrome.partyFrames.width', 'oneDecimal', 5),
-      slider(s, 'partyFrameHeight', 'hudChrome.partyFrames.height', 'oneDecimal', 2),
-      slider(s, 'partyFrameSpacing', 'hudChrome.partyFrames.spacing', 'oneDecimal', 1),
-      slider(s, 'partyFrameColumns', 'hudChrome.partyFrames.columns', 'oneDecimal', 1),
+      // partyFrameWidth/partyFrameHeight likewise have NO rows here (Edit
+      // Frames drags them directly), and partyFrameColumns +
+      // partyFrameSpacing moved into the in-editor Frames Settings dropdown
+      // beside the other frame knobs; the keys stay live and this tab's
+      // Reset to Defaults still clears them.
       choice(s, 'partyFrameHealthText', 'hudChrome.partyFrames.healthText', [
         { value: 0, labelKey: 'hudChrome.partyFrames.healthNone' },
         { value: 1, labelKey: 'hudChrome.partyFrames.healthPercent' },
@@ -738,7 +894,9 @@ export function buildInterfaceControls(
       boolToggle(s, 'partyFrameShowPets', 'hudChrome.partyFrames.showPets'),
       boolToggle(s, 'partyFrameShowSelf', 'hudChrome.partyFrames.showSelf'),
       boolToggle(s, 'aurasOnPlayerFrame', 'hudChrome.options.aurasOnPlayerFrame'),
+      boolToggle(s, 'alwaysShowAllBuffs', 'hudChrome.options.alwaysShowAllBuffs'),
       boolToggle(s, 'showTargetOfTarget', 'hudChrome.options.showTargetOfTarget'),
+      boolToggle(s, 'showTargetSwingTimer', 'hudChrome.options.showTargetSwingTimer'),
       boolToggle(s, 'showPetFrame', 'hudChrome.options.showPetFrame'),
     ]),
     ...tag('chat', [
@@ -756,17 +914,25 @@ export function buildInterfaceControls(
       boolToggle(s, 'showAttackButton', 'hudChrome.options.showAttackButton'),
       boolToggle(s, 'walkByAutoloot', 'hudChrome.options.walkByAutoloot'),
       boolToggle(s, 'groundReticle', 'hudChrome.options.groundReticle'),
-      boolToggle(s, 'mouseoverCast', 'hudChrome.options.mouseoverCast'),
       boolToggle(s, 'stickyTarget', 'hudChrome.options.stickyTarget'),
+      // The two dot-tracking surfaces, both showing only the LOCAL player's own
+      // debuffs: the icon row on an enemy's nameplate, and the standalone Target
+      // dots frame that tracks them across every enemy at once.
+      boolToggle(s, 'showNameplateDots', 'hudChrome.options.showNameplateDots'),
+      // Directly under its toggle, because it sizes exactly that row: 100% is
+      // the plate-native size and the slider only grows it, to 300%. Percent is
+      // the default slider format, so the readout says "150%".
+      slider(s, 'nameplateDotScale', 'hudChrome.options.nameplateDotScale'),
+      boolToggle(s, 'showTargetDots', 'hudChrome.options.showTargetDots'),
       slider(s, 'fctScale', 'hud.options.fctScale'),
-      boolToggle(s, 'showSecondaryActionBar', 'hudChrome.options.showSecondaryActionBar', {
-        rerender: true,
-      }),
-      boolToggle(s, 'showThirdActionBar', 'hudChrome.options.showThirdActionBar', {
-        disabled: !s.bool('showSecondaryActionBar'),
-      }),
-      boolToggle(s, 'hideUnusedActionSlots', 'hudChrome.options.hideUnusedActionSlots'),
-      boolToggle(s, 'lockActionBars', 'hudChrome.options.lockActionBars'),
+      // The secondary/third bar toggles deliberately have NO menu rows: the
+      // plus/minus buttons on the primary action bar are the one control for
+      // adding and removing the optional rows (the settings and the central
+      // resolver in main.ts are unchanged; only the duplicate UI is gone).
+      // Likewise combineActionBars / hideUnusedActionSlots / mouseoverCast /
+      // lockActionBars: the edit mode's Frames Settings dropdown owns their
+      // rows now (interface_unlock.ts settingToggles), so a duplicate here
+      // would drift out of sync with it.
     ]),
   ];
 }

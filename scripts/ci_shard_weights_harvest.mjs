@@ -22,8 +22,9 @@
 // is kept: the partition should plan for the expensive occurrence.
 
 import { execFileSync } from 'node:child_process';
-import { writeFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { shardHarvestVerdict } from './lib/ci_shard_weight_harvest_guard.mjs';
 import { parseWeightLines } from './lib/ci_shard_weight_parse.mjs';
 
 const runId = process.argv[2];
@@ -50,19 +51,41 @@ if (jobs.length < 10) {
 /** @type {Record<string, number>} */
 const weights = {};
 for (const job of jobs) {
-  const log = execFileSync('gh', ['run', 'view', runId, '--log', '--job', String(job.id)], {
+  let log = execFileSync('gh', ['run', 'view', runId, '--log', '--job', String(job.id)], {
     encoding: 'utf8',
     maxBuffer: 256 * 1024 * 1024,
   });
+  // `gh run view --log --job` came back EMPTY on gh 2.8x (2026-08-28, a green
+  // merge-queue run): the raw job-log endpoint still serves the full text,
+  // with the same per-file reporter lines. Without this arm the harvest
+  // parsed nothing and WROTE an empty table.
+  if (log.trim() === '') {
+    log = execFileSync('gh', ['api', `repos/{owner}/{repo}/actions/jobs/${job.id}/logs`], {
+      encoding: 'utf8',
+      maxBuffer: 256 * 1024 * 1024,
+    });
+  }
   // A selective-mode log would harvest only the selected slice; the mode
   // line the shard entry prints is the proof this run measured everything.
   if (/changes-job decision: mode=/.test(log) && !/changes-job decision: mode=full/.test(log)) {
     console.error(`[harvest] ${job.name} did not run mode=full; use a full-mode run`);
     process.exit(1);
   }
+  // Parsed on its own first: the refusal judges what THIS log proved, not
+  // how many keys it added to a set the other jobs already filled (a log
+  // truncated to a few files would otherwise pass as "+5").
+  const own = parseWeightLines(log);
+  const verdict = shardHarvestVerdict(job.name, Object.keys(own).length);
+  if (!verdict.ok) {
+    console.error(`[harvest] ${verdict.reason}`);
+    process.exit(1);
+  }
   const before = Object.keys(weights).length;
-  parseWeightLines(log, weights);
-  console.log(`[harvest] ${job.name}: +${Object.keys(weights).length - before} files`);
+  for (const [file, ms] of Object.entries(own)) {
+    weights[file] = Math.max(weights[file] ?? 0, ms);
+  }
+  const added = Object.keys(weights).length - before;
+  console.log(`[harvest] ${job.name}: ${Object.keys(own).length} files parsed, +${added} new`);
 }
 
 const sorted = Object.fromEntries(Object.entries(weights).sort(([a], [b]) => (a < b ? -1 : 1)));
@@ -75,5 +98,34 @@ const out = {
   ...sorted,
 };
 const target = resolve(import.meta.dirname, 'ci_shard_weights.generated.json');
+// A wholesale re-harvest replaces any locally measured rows a release sync
+// merged in. The checked-in provenance uses sibling mergedLocal/mergedFiles;
+// accept the older nested localMerge shape too so either table warns.
+try {
+  const provenance = JSON.parse(readFileSync(target, 'utf8')).__provenance;
+  const measured = provenance?.mergedLocal ?? provenance?.localMerge?.measured;
+  const files = provenance?.mergedFiles ?? provenance?.localMerge?.files;
+  if (typeof measured === 'string' && measured && Number.isInteger(files) && files > 0) {
+    console.log(
+      `[harvest] replacing ${files} locally measured rows from ${measured} with CI-harvested weights`,
+    );
+  } else if (
+    provenance &&
+    typeof provenance === 'object' &&
+    Object.keys(provenance).some((k) => !['run', 'harvested', 'files'].includes(k))
+  ) {
+    // The provenance carries keys beyond this script's own plain-harvest
+    // output, but neither known local-merge shape parsed: a THIRD shape the
+    // advisory above cannot see. Say so instead of silently overwriting
+    // whatever locally measured rows that shape recorded.
+    console.warn(
+      `[harvest] unrecognized __provenance shape (keys: ${Object.keys(provenance).join(', ')}); ` +
+        'the prior table may carry locally measured rows this rewrite DISCARDS. Inspect the ' +
+        'old provenance before trusting the new table.',
+    );
+  }
+} catch {
+  // No prior table (or unreadable): nothing to report.
+}
 writeFileSync(target, `${JSON.stringify(out, null, 2)}\n`);
 console.log(`[harvest] wrote ${Object.keys(sorted).length} weights to ${target}`);

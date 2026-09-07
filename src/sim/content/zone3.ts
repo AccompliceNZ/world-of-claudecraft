@@ -207,6 +207,10 @@ export const ZONE3_MOBS: Record<string, MobTemplate> = {
       // the druid line.
       { itemId: 'peaksong_helm', chance: 0.002 },
       { itemId: 'moonbark_vestments', chance: 0.002 },
+      // The rare world-drop bag, the lowest of its three ordinary-mob rows: the
+      // tunnelers are the densest pull of the three, so the per-kill rate is
+      // trimmed to keep the effective farm rate in line with the troll's.
+      { itemId: 'wayfarers_backpack', chance: 0.001 },
     ],
     scale: 0.85,
     color: 0x9c7a3c,
@@ -298,6 +302,9 @@ export const ZONE3_MOBS: Record<string, MobTemplate> = {
       { copper: 75, chance: 1 },
       { itemId: 'ogre_toe_ring', chance: 0.35 },
       { itemId: 'cragprowl_belt', chance: 0.02 },
+      // The rare world-drop bag, the highest-level of its three ordinary-mob
+      // rows and so the slightly better one to farm.
+      { itemId: 'wayfarers_backpack', chance: 0.002 },
     ],
     scale: 1.3,
     color: 0x9e7b53,
@@ -450,6 +457,12 @@ export const ZONE3_MOBS: Record<string, MobTemplate> = {
       { itemId: 'crag_warden_cudgel', chance: 0.25, rollGroup: 'brutok_chase' },
       { itemId: 'skullsplitter_dirk', chance: 0.25, rollGroup: 'brutok_chase' },
       { itemId: 'stormroot_cowl', chance: 0.2 },
+      // The rare mob's elevated row for the world-drop bag, the same shape Old
+      // Greyjaw carries for the Wolfhide Satchel (0.35). Held a notch under it:
+      // the Wayfarer's Backpack is two quality tiers better, and the ogre's
+      // three-hour cadence is already most of the gate. Ungrouped, like
+      // Greyjaw's, so it never competes with the brutok_chase weapon slot.
+      { itemId: 'wayfarers_backpack', chance: 0.25 },
     ],
     scale: 1.45,
     color: 0x6e5235,
@@ -2324,6 +2337,9 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
   // proc so a leveling rogue gets a taste of an interesting dagger before cap.
   boneglass_shiv: {
     id: 'boneglass_shiv',
+    // Gate frozen at the pre-ilvl-honesty derived value: the 2026-08-30
+    // source bump (ilvl 17 to 21) must not raise a leveling item's equip bar.
+    requiredLevel: 14,
     name: 'Boneglass Shiv',
     kind: 'weapon',
     slot: 'mainhand',
@@ -3215,13 +3231,17 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     kind: 'weapon',
     slot: 'mainhand',
     quality: 'legendary',
-    weapon: { min: 42, max: 68, speed: 3.2 },
+    // Buffed to the legendary band of the 2026-08-30 ilvl-honesty round
+    // (maintainer direction: every legendary lives at the Thronebane tier,
+    // budget-true at its labeled level; sources in item_level.ts).
+    weapon: { min: 52, max: 85, speed: 3.2 },
     // A druid caster/healer staff by deliberate choice: its 17 points sit in
     // spirit (druid mana/healing) rather than agility, accepting that feral
     // wearers lose real value from the swap (bear-form AP scales on agility).
     // Hunters/rogues cannot equip it. Still exactly on the 44-pt legendary
     // mainhand budget.
-    stats: { spi: 17, sta: 13, int: 14 },
+    stats: { spi: 25, sta: 19, int: 21 },
+    spellPower: 25,
     sellValue: 25000,
     requiredClass: ['mage', 'priest', 'warlock', 'shaman', 'paladin', 'druid'],
     // Life and decay: a damaging spell may fester a nature DoT (Deathbloom); a heal
@@ -3258,6 +3278,11 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     kind: 'weapon',
     slot: 'mainhand',
     quality: 'legendary',
+    // The line ships exactly as players own it. The 2026-08-30 ilvl-honesty
+    // round moved the LABEL instead: 21.4 dps occupies the ilvl-49 point of
+    // the one-hand curve, so the source registration in item_level.ts prices
+    // it there (heroic mint 50). Future items budget against the honest
+    // number instead of inheriting the pre-budget chase line as a lie.
     weapon: { min: 46, max: 74, speed: 2.8 },
     // Rebalanced into a str/agi/sta hybrid within the fixed 44-pt legendary
     // mainhand budget: 15 agi makes it a viable hunter ranged weapon (ranged AP +
@@ -3328,7 +3353,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     stats: { armor: 310, str: 8, sta: 9 },
     // ilvl-29 raid seed rating (20 -> 2.0%); the Heroic raid variant scales this up
     // and adds a complementary secondary (heroic_variants.ts). Off the stat budget.
-    hitRating: 20,
+    critRating: 20,
     sellValue: 12000,
     requiredClass: ['warrior', 'paladin', 'shaman'],
   },
@@ -3341,7 +3366,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     slot: 'shoulder',
     quality: 'epic',
     stats: { armor: 260, str: 7, sta: 8 },
-    hitRating: 20,
+    critRating: 20,
     sellValue: 12000,
     requiredClass: ['warrior', 'paladin', 'shaman'],
   },
@@ -3354,7 +3379,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     slot: 'helmet',
     quality: 'epic',
     stats: { armor: 190, agi: 10, sta: 7 },
-    hitRating: 20,
+    critRating: 20,
     sellValue: 12000,
     requiredClass: ['rogue', 'hunter', 'druid'],
   },
@@ -3367,7 +3392,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     slot: 'shoulder',
     quality: 'epic',
     stats: { armor: 165, agi: 9, sta: 6 },
-    hitRating: 20,
+    critRating: 20,
     sellValue: 12000,
     requiredClass: ['rogue', 'hunter', 'druid'],
   },
@@ -3380,7 +3405,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     slot: 'helmet',
     quality: 'epic',
     stats: { armor: 105, int: 11, sta: 6 },
-    hitRating: 20,
+    hasteRating: 20,
     sellValue: 12000,
     requiredClass: ['mage', 'priest', 'warlock', 'druid'],
   },
@@ -3393,7 +3418,7 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     slot: 'shoulder',
     quality: 'epic',
     stats: { armor: 92, int: 9, sta: 6 },
-    hitRating: 20,
+    hasteRating: 20,
     sellValue: 12000,
     requiredClass: ['mage', 'priest', 'warlock', 'druid'],
   },
@@ -3987,6 +4012,246 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
     sellValue: 14000,
     requiredClass: FERAL,
   },
+  // --- Roots' Bramblehide: the Strength leather family on the Nythraxis raid
+  // table, the feral druid's tier-2 armor beside the Maul above. Named for
+  // Roots, the druid. Feral swings pay 2 attack power per Strength
+  // (entity.ts apFromStats), so the family is str/sta rather than the
+  // Direfang agi line. It carries the FERAL tag the bear-form weapon ladder
+  // uses, but on ARMOR that tag is advisory: canEquipItem (equipment_rules.ts)
+  // gates armor by weight alone, so every leather-or-better wearer can equip a
+  // piece (only dev_kit and pbe_boost re-check the list), and the str/sta
+  // shape is what keeps it off the rogue/hunter agility wish lists. Every piece is item level 29 (level-20 raid boss + epic 6
+  // + raid 3) on the exact primaryStatBudget(29, epic, slot) sum, and carries
+  // exactly ONE rating at 20 like every ilvl-29 raid epic (the ladder pin in
+  // tests/combat_rating.test.ts): Hit on the big pieces (the Heroic +3 answer),
+  // crit on the small ones. The heroic-claim swap mints heroic_<id> raid-tier
+  // variants (item level 33, dual rating) from these bases automatically
+  // because they sit on the raid boss's normal loot table. Seven wearable
+  // slots, so the family alone reaches the Strength lineage's 6-piece
+  // capstone (content/item_sets.ts). Armor scales the Direfang crown/
+  // shoulder line (190/165) through the ilvl-26 Nightfang chest/legs/feet
+  // by the raid tier's 1.265 helm ratio.
+  bramblehide_crown: {
+    id: 'bramblehide_crown',
+    set: 'bramblehide',
+    name: "Roots' Bramblehide Crown",
+    kind: 'armor',
+    armorType: 'leather',
+    slot: 'helmet',
+    quality: 'epic',
+    // helmet budget round(29 x 0.7 x 0.85) = 17
+    stats: { armor: 190, str: 10, sta: 7 },
+    hitRating: 20,
+    sellValue: 12000,
+    requiredClass: FERAL,
+  },
+  bramblehide_mantle: {
+    id: 'bramblehide_mantle',
+    set: 'bramblehide',
+    name: "Roots' Bramblehide Mantle",
+    kind: 'armor',
+    armorType: 'leather',
+    slot: 'shoulder',
+    quality: 'epic',
+    // shoulder budget round(29 x 0.7 x 0.75) = 15
+    stats: { armor: 165, str: 9, sta: 6 },
+    critRating: 20,
+    sellValue: 12000,
+    requiredClass: FERAL,
+  },
+  bramblehide_harness: {
+    id: 'bramblehide_harness',
+    set: 'bramblehide',
+    name: "Roots' Bramblehide Harness",
+    kind: 'armor',
+    armorType: 'leather',
+    slot: 'chest',
+    quality: 'epic',
+    // chest budget round(29 x 0.7 x 1.0) = 20
+    stats: { armor: 215, str: 12, sta: 8 },
+    hitRating: 20,
+    sellValue: 12000,
+    requiredClass: FERAL,
+  },
+  bramblehide_cinch: {
+    id: 'bramblehide_cinch',
+    set: 'bramblehide',
+    name: "Roots' Bramblehide Cinch",
+    kind: 'armor',
+    armorType: 'leather',
+    slot: 'waist',
+    quality: 'epic',
+    // waist budget round(29 x 0.7 x 0.7) = 14
+    stats: { armor: 120, str: 8, sta: 6 },
+    critRating: 20,
+    sellValue: 12000,
+    requiredClass: FERAL,
+  },
+  bramblehide_legguards: {
+    id: 'bramblehide_legguards',
+    set: 'bramblehide',
+    name: "Roots' Bramblehide Legguards",
+    kind: 'armor',
+    armorType: 'leather',
+    slot: 'legs',
+    quality: 'epic',
+    // legs budget round(29 x 0.7 x 0.9) = 18
+    stats: { armor: 195, str: 11, sta: 7 },
+    hitRating: 20,
+    sellValue: 12000,
+    requiredClass: FERAL,
+  },
+  bramblehide_grips: {
+    id: 'bramblehide_grips',
+    set: 'bramblehide',
+    name: "Roots' Bramblehide Grips",
+    kind: 'armor',
+    armorType: 'leather',
+    slot: 'gloves',
+    quality: 'epic',
+    // gloves budget round(29 x 0.7 x 0.7) = 14
+    stats: { armor: 140, str: 8, sta: 6 },
+    hitRating: 20,
+    sellValue: 12000,
+    requiredClass: FERAL,
+  },
+  bramblehide_treads: {
+    id: 'bramblehide_treads',
+    set: 'bramblehide',
+    name: "Roots' Bramblehide Treads",
+    kind: 'armor',
+    armorType: 'leather',
+    slot: 'feet',
+    quality: 'epic',
+    // feet budget round(29 x 0.7 x 0.65) = 13
+    stats: { armor: 175, str: 8, sta: 5 },
+    critRating: 20,
+    sellValue: 12000,
+    requiredClass: FERAL,
+  },
+  // --- Nythraxis gap-fill drops (owner request, 2026-09-04): the seven lanes the
+  // top-parse gear review found empty at the raid tier. Every piece is item
+  // level 29 on the exact primaryStatBudget(29, epic, slot) sum with exactly one
+  // rating at 20 (the ilvl-29 ladder pin in tests/combat_rating.test.ts); the
+  // heroic-claim swap mints their item level 33 dual-rating variants because
+  // they sit on the raid boss's normal loot table. One-handers ride
+  // weaponDpsBudget(29) = 15.4 with the plus-or-minus 20 percent spread.
+  // Rogue one-hander: the raid's first dagger (rogues run two Heroic
+  // Duskwhispers from a five-man mid-boss today). Rogue-archetype lock, and
+  // the dagger flag the positional rogue strikes gate on.
+  courtiers_bonefang: {
+    id: 'courtiers_bonefang',
+    name: "Courtier's Bonefang",
+    kind: 'weapon',
+    slot: 'mainhand',
+    hand: 'onehand',
+    quality: 'epic',
+    // 15.4 dps at a fast 1.8 swing: (22 + 34) / 2 / 1.8 = 15.6.
+    weapon: { min: 22, max: 34, speed: 1.8, dagger: true },
+    stats: { agi: 13, sta: 7 },
+    hitRating: 20,
+    sellValue: 14000,
+    requiredClass: ['rogue', 'hunter'],
+  },
+  // Tank one-hander: the sta-led threat blade prot warriors and paladins lacked
+  // (they ran the Kingsbane legendary or a five-man cleaver). Hit for threat,
+  // like the Bonewrought Bulwark beside it.
+  thornpeak_wardblade: {
+    id: 'thornpeak_wardblade',
+    name: 'Thornpeak Wardblade',
+    kind: 'weapon',
+    slot: 'mainhand',
+    hand: 'onehand',
+    quality: 'epic',
+    // (32 + 49) / 2 / 2.6 = 15.6 dps.
+    weapon: { min: 32, max: 49, speed: 2.6 },
+    stats: { sta: 12, str: 8 },
+    hitRating: 20,
+    sellValue: 14000,
+    requiredClass: ['warrior', 'paladin', 'shaman'],
+  },
+  // Dual-wield Strength one-hander: fury and enhancement paired two five-man
+  // Gravewyrm Cleavers because the raid offered only two-handers. Crit, so the
+  // pair with a Hit weapon covers both ratings.
+  gravecourt_hewer: {
+    id: 'gravecourt_hewer',
+    name: 'Gravecourt Hewer',
+    kind: 'weapon',
+    slot: 'mainhand',
+    hand: 'onehand',
+    quality: 'epic',
+    // (30 + 45) / 2 / 2.4 = 15.6 dps.
+    weapon: { min: 30, max: 45, speed: 2.4 },
+    stats: { str: 13, sta: 7 },
+    critRating: 20,
+    sellValue: 14000,
+    requiredClass: ['warrior', 'paladin', 'shaman'],
+  },
+  // Healer shield: holy paladins and restoration shamans held the caster orb
+  // because the Bulwark is Strength-shaped. Same 680 armor / 30 block frame as
+  // the Bulwark, an int/spi line on the offhand budget (15), haste (healer
+  // pieces never take Hit).
+  votive_ward_of_the_deathless_court: {
+    id: 'votive_ward_of_the_deathless_court',
+    name: 'Votive Ward of the Deathless Court',
+    kind: 'armor',
+    armorType: 'mail',
+    slot: 'offhand',
+    shield: true,
+    quality: 'epic',
+    blockValue: 30,
+    stats: { armor: 680, int: 8, spi: 7 },
+    hasteRating: 20,
+    sellValue: 12000,
+    requiredClass: ['paladin', 'shaman'],
+  },
+  // Leather caster helm: no leather int/spi helmet existed above the level 20
+  // band, so balance and restoration druids wore the cloth Wraithfire Cowl.
+  // Armor matches the Direfang Crown; the leather armorType is the only equip
+  // gate (every non-cloth class can wear it), no class list is claimed.
+  thornpeak_moonhide_cowl: {
+    id: 'thornpeak_moonhide_cowl',
+    name: 'Thornpeak Moonhide Cowl',
+    kind: 'armor',
+    armorType: 'leather',
+    slot: 'helmet',
+    quality: 'epic',
+    // helmet budget round(29 x 0.7 x 0.85) = 17
+    stats: { armor: 190, int: 10, spi: 7 },
+    hasteRating: 20,
+    sellValue: 12000,
+  },
+  // Mail caster gloves and feet: the mail int/spi line had no gloves between
+  // the Galecall Handguards (26) and the heroic Wyrmchoir pair (31), and no
+  // feet at all above the level 11 band. Armor scales the Galecall gloves by
+  // the raid tier's 1.265 ratio; feet sit between the Barrowlord Sabatons and
+  // the heroic Tideworn Warboots.
+  stormhymn_chain_grips: {
+    id: 'stormhymn_chain_grips',
+    name: 'Stormhymn Chain Grips',
+    kind: 'armor',
+    armorType: 'mail',
+    slot: 'gloves',
+    quality: 'epic',
+    // gloves budget round(29 x 0.7 x 0.7) = 14
+    stats: { armor: 165, int: 8, spi: 6 },
+    hasteRating: 20,
+    sellValue: 12000,
+    requiredClass: ['paladin', 'shaman'],
+  },
+  stormhymn_chain_treads: {
+    id: 'stormhymn_chain_treads',
+    name: 'Stormhymn Chain Treads',
+    kind: 'armor',
+    armorType: 'mail',
+    slot: 'feet',
+    quality: 'epic',
+    // feet budget round(29 x 0.7 x 0.65) = 13
+    stats: { armor: 190, int: 8, spi: 5 },
+    critRating: 20,
+    sellValue: 12000,
+    requiredClass: ['paladin', 'shaman'],
+  },
   // --- Endgame leather caster line (int/spi, druid-only via armorType). These
   // fill the ilvl-26 dungeon tier on Korzul the Gravewyrm's table so balance
   // druids have on-weight options in every slot above the level-22 band. The
@@ -4033,6 +4298,51 @@ export const ZONE3_ITEMS: Record<string, ItemDef> = {
 // Static props (rendering + collision share this placement data). Highwatch
 // sits on a high plateau (~9 elevation); the lake at (-70,760) stays clear.
 // ---------------------------------------------------------------------------
+
+// Roots' Bramblehide, the Strength leather family (see the ZONE3_ITEMS block
+// above). Base ids in slot order; the item-set, Reliquary, and Book of Deeds
+// tables each pin their own copy against ITEMS, so this list is a convenience
+// for the art ledger below rather than a fourth source of truth.
+export const BRAMBLEHIDE_SET_ITEM_IDS: readonly string[] = [
+  'bramblehide_crown',
+  'bramblehide_mantle',
+  'bramblehide_harness',
+  'bramblehide_cinch',
+  'bramblehide_legguards',
+  'bramblehide_grips',
+  'bramblehide_treads',
+];
+
+// The art-pending ledger for the family: the seven bases plus their generated
+// heroic-claim variants (heroicVariantId prefixes `heroic_`; spelled out here
+// rather than imported so this content module stays a leaf). ITEM_ART_PENDING
+// (src/ui/icons.ts) serves the procedural icon for every id listed here and
+// the item-art audit CLI excludes them from the every-live-item-has-art
+// sweep, exactly as the Crucible wave staged before its paintings landed.
+// Commission per docs/design/item-icon-art-style.md, then EMPTY this list
+// (tests/item_icons.test.ts A2 reds on a stale entry once art is committed).
+// EMPTY since the roots-bramblehide-icons-2026-09-07 wave painted all fourteen (seven bases and their
+// heroic variants); see docs/achievements/roots-bramblehide-icons-2026-09-07/generation-report.json.
+export const BRAMBLEHIDE_ART_PENDING_ITEM_IDS: readonly string[] = [];
+
+// The Nythraxis gap-fill drops (see the ZONE3_ITEMS block above), in loot
+// table order. The three weapons ship in-engine rendered icons
+// (scripts/render_weapon_still_icons.mjs, jobs table under
+// docs/achievements/nythraxis-gap-weapon-renders-2026-09-04/); the shield and
+// the three armor pieces were painted in the roots-bramblehide-icons-2026-09-07
+// wave with their generated heroic variants (heroicVariantId prefixes `heroic_`).
+export const NYTHRAXIS_GAP_ITEM_IDS: readonly string[] = [
+  'courtiers_bonefang',
+  'thornpeak_wardblade',
+  'gravecourt_hewer',
+  'votive_ward_of_the_deathless_court',
+  'thornpeak_moonhide_cowl',
+  'stormhymn_chain_grips',
+  'stormhymn_chain_treads',
+];
+// EMPTY since the roots-bramblehide-icons-2026-09-07 wave painted the shield and the three armor pieces
+// with their heroic variants; the three weapons ship in-engine renders.
+export const NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS: readonly string[] = [];
 
 export const ZONE3_PROPS: ZonePropsDef = {
   buildings: [

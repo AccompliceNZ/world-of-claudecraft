@@ -12,11 +12,13 @@ import {
 import { ALL_RECIPES } from '../src/sim/content/recipes';
 import { ITEMS } from '../src/sim/data';
 import { NODE_MATERIAL_TABLE } from '../src/sim/professions/gathering';
+import { t } from '../src/ui/i18n';
 import {
   instanceBadgeLines,
   instanceBindingLines,
   instanceBonusStatLines,
   instanceMakersMarkLine,
+  instancePartyTradeLine,
   isGatheredProvenanceKind,
   itemNumber,
   itemStatName,
@@ -67,6 +69,39 @@ describe('item_instance_tooltip', () => {
     expect((html.match(/tt-instance-bonus/g) ?? []).length).toBe(2);
     expect(html).toContain(itemStatName('str'));
     expect(html).toContain(itemStatName('sta'));
+  });
+
+  it('rating keys on a rolled line label through the character-sheet names', () => {
+    // A Riftbound band's gem lines (rift/band_ladder.ts) live in rolled.stats
+    // under rating keys; before this they fell to the capitalised raw key.
+    expect(itemStatName('critRating')).not.toBe('CritRating');
+    expect(itemStatName('critRating')).toBe(t('hudChrome.statInfo.names.critRating'));
+    expect(itemStatName('hitRating')).toBe(t('hudChrome.statInfo.names.hitRating'));
+    expect(itemStatName('hasteRating')).toBe(t('hudChrome.statInfo.names.hasteRating'));
+    expect(itemStatName('str')).toBe(t('itemUi.stats.str'));
+    expect(itemStatName('healPower')).toBe(t('hudChrome.statInfo.names.healPower'));
+    expect(itemStatName('mystery')).toBe('Mystery');
+  });
+
+  it('a Riftbound band copy renders its rolled line plain, never as an enchant', () => {
+    // Bare rolled.stats used to read as a legacy enchant; a band's rolled line
+    // is the ladder's, explained by the rift record, so it is neither suffixed
+    // "(Enchanted)" nor given the enchanted fallback.
+    const html = instanceBonusStatLines({
+      rolled: { quality: 'epic', stats: { str: 8, sta: 6, hitRating: 12 } },
+      rift: {
+        sourceEventId: 'e',
+        tier: 'S',
+        power: 4,
+        upgradeLevel: 2,
+        maxUpgradeLevel: 5,
+        gemSlots: 2,
+        gems: ['rift_gem_verdant'],
+      },
+    });
+    expect((html.match(/tt-instance-bonus/g) ?? []).length).toBe(3);
+    expect(html).not.toContain('Enchanted');
+    expect(html).toContain(t('hudChrome.statInfo.names.hitRating'));
   });
 
   it('zero-valued baked stats render no stat line', () => {
@@ -281,12 +316,22 @@ describe('instanceBindingLines (commission lines)', () => {
 // full payload can never show the bond lines on worn gear that the online
 // eqi-trimmed mirror lacks. char_window.ts is pinned to route through it.
 describe('wornTooltipInstance (the eqi-mirror worn projection)', () => {
-  it('keeps exactly signer/enchant/rolled and drops the bond and charges fields', () => {
+  it('keeps exactly signer/enchant/rolled/rift and drops the bond and charges fields', () => {
+    const rift = {
+      sourceEventId: 'e',
+      tier: 'S' as const,
+      power: 4,
+      upgradeLevel: 1,
+      maxUpgradeLevel: 5,
+      gemSlots: 2,
+      gems: [],
+    };
     expect(
       wornTooltipInstance({
         signer: 'Aldric',
         enchant: 'ench_x',
         rolled: { masterwork: true, stats: { str: 2 } },
+        rift,
         bindOnTrade: true,
         boundTo: 7,
         charges: { fireball: 2 },
@@ -295,7 +340,11 @@ describe('wornTooltipInstance (the eqi-mirror worn projection)', () => {
       signer: 'Aldric',
       enchant: 'ench_x',
       rolled: { masterwork: true, stats: { str: 2 } },
+      rift,
     });
+    // A bound band renders no commission bond line, worn or bagged: its bind
+    // is stated by the band's own Soulbound line (rift_band_tooltip.ts).
+    expect(instanceBindingLines({ boundTo: 7, rift }, 'armor')).toBe('');
     expect(wornTooltipInstance(undefined)).toBeUndefined();
     // A bond-only payload projects to an EMPTY worn payload: no line renders.
     expect(
@@ -394,5 +443,41 @@ describe('hud.itemTooltip composition order (source pins)', () => {
     expect(hudCss).toMatch(
       /#tooltip \.tt-makers-mark-icon[\s\S]*?width: calc\(16px \* var\(--tooltip-scale, 1\)\)/,
     );
+  });
+});
+
+describe('instancePartyTradeLine (the BoP party trade window line)', () => {
+  const windowed = { partyTrade: { untilMs: 7_200_000, eligible: ['Alice', 'Bob'] } };
+
+  it('renders the gold window line with the remaining span while the window is live', () => {
+    const html = instancePartyTradeLine(windowed, (untilMs) => untilMs - 3_600_000);
+    expect(html).toContain('color:var(--gold)');
+    expect(html).toContain('1 hour');
+    expect(html).toContain('trade this item to players who shared its drop');
+    expect(html).toContain('Equipping it ends the trade window');
+  });
+
+  it('renders nothing for an expired window (the world clamps remaining to zero)', () => {
+    expect(instancePartyTradeLine(windowed, () => 0)).toBe('');
+  });
+
+  it('renders nothing for an absent or malformed window', () => {
+    expect(instancePartyTradeLine(undefined, () => 1)).toBe('');
+    expect(instancePartyTradeLine({}, () => 1)).toBe('');
+    expect(
+      instancePartyTradeLine({ partyTrade: { untilMs: Number.NaN, eligible: [] } }, () => 1),
+    ).toBe('');
+  });
+
+  it('composes in hud.itemTooltip right after the Soulbound line, before the bond lines', () => {
+    const hud = readFileSync(new URL('../src/ui/hud.ts', import.meta.url), 'utf8');
+    const soulbound = hud.indexOf("t('hudChrome.itemSoulbound')");
+    const partyTrade = hud.indexOf('instancePartyTradeLine(instance,');
+    const binding = hud.indexOf('instanceBindingLines(instance, item.kind)');
+    expect(partyTrade).toBeGreaterThan(soulbound);
+    expect(binding).toBeGreaterThan(partyTrade);
+    expect(hud.indexOf('instancePartyTradeLine(', partyTrade + 1)).toBe(-1);
+    // The remaining span resolves through the IWorld clock, never Date.now().
+    expect(hud).toContain('this.sim.partyTradeMsRemaining(untilMs)');
   });
 });

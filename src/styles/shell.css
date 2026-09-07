@@ -418,6 +418,68 @@
     display: block;
   }
 
+  /* Steam wishlist reminder, the header companion to the Donate CTA above.
+     Deliberately the quieter of the pair: at most one gold action per surface
+     (DESIGN.md 10.1), and Donate already holds it, so the wishlist takes the
+     ink-and-silver ghost variant at the same 40px height and reads as a second
+     option rather than a second shout. Steam's #66c0f4 arrives on hover and
+     keyboard focus only. hud.css owns the in-game chip and the one rule that
+     suppresses every wishlist surface at once. */
+  .steam-wishlist-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 40px;
+    box-sizing: border-box;
+    padding: 7px 14px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border-default);
+    background: linear-gradient(180deg, #1b1b26 0%, #0d0d14 100%);
+    /* This control keeps a fixed dark plate under every theme, so its resting
+       ink must stay fixed too. Theme gold becomes dark brown on Parchment and
+       falls below AA against this plate; this silver holds above 7:1. */
+    color: #b8bcc8;
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.45),
+      inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    transition:
+      color var(--transition-speed) var(--transition-ease),
+      border-color var(--transition-speed) var(--transition-ease),
+      box-shadow var(--transition-speed) var(--transition-ease);
+  }
+  .steam-wishlist-cta:hover,
+  .steam-wishlist-cta:focus-visible {
+    color: #eaf4ff;
+    border-color: #66c0f4;
+    box-shadow:
+      0 2px 12px rgba(102, 192, 244, 0.22),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  .steam-wishlist-cta .ui-icon {
+    width: 17px;
+    height: 17px;
+  }
+  /* The footer twin keeps every .social-link behaviour, including the gold hover
+     the row shares and the icon-only collapse on narrow viewports; it only needs
+     the hydrated glyph sized like the inline marks beside it. Left at the base
+     .social-link svg specificity on purpose, so the narrow-viewport 18px rule
+     later in this sheet still wins over it. */
+  .social-link.steam-wishlist-social {
+    /* .social-link uses themed gold, but this sibling retains the fixed dark
+       plate above; keep the small label AA-safe on Parchment too. */
+    color: #b8bcc8;
+  }
+  .steam-wishlist-social svg {
+    width: 16px;
+    height: 16px;
+  }
+
   /* Wallet verification CTA. It is a gold action until the account has a
      server-verified wallet, then settles into a green verified state. */
   .wallet-cta {
@@ -2455,127 +2517,6 @@
     font-family: var(--font-heading);
     letter-spacing: 0.8px;
     margin-right: var(--spacing-xs);
-  }
-  /* $WOC contract address, click-to-copy pill, sits under the performance tip. */
-  #token-ca {
-    margin: var(--spacing-lg) auto 0;
-    padding-top: var(--spacing-md);
-    border-top: 1px solid rgba(255, 209, 0, 0.14);
-    width: 100%;
-    max-width: 600px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--spacing-sm);
-  }
-  .token-ca-label {
-    font-family: var(--font-heading);
-    color: var(--color-primary);
-    text-transform: uppercase;
-    letter-spacing: 1.2px;
-    font-size: 12px;
-    text-shadow:
-      0 0 8px var(--color-primary-glow),
-      1px 1px 2px #000;
-  }
-  .token-ca-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    max-width: 100%;
-    margin: 0;
-    padding: 9px var(--spacing-md);
-    background: rgba(11, 11, 18, 0.6);
-    border: 1px solid rgba(199, 148, 26, 0.45);
-    border-radius: var(--radius-md);
-    color: var(--color-text-light);
-    cursor: var(--cursor-point);
-    font: inherit;
-    text-align: left;
-    transition:
-      border-color var(--transition-speed) var(--transition-ease),
-      box-shadow var(--transition-speed) var(--transition-ease),
-      background var(--transition-speed) var(--transition-ease);
-  }
-  .token-ca-pill:hover,
-  .token-ca-pill:focus-visible {
-    border-color: var(--color-primary);
-    background: rgba(11, 11, 18, 0.85);
-    box-shadow: 0 0 12px var(--color-primary-glow);
-    outline: none;
-  }
-  .token-ca-addr {
-    font-family: "SFMono-Regular", ui-monospace, "Cascadia Code", "Courier New", monospace;
-    font-size: 13px;
-    letter-spacing: 0.4px;
-    color: var(--color-text-light);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-shadow: 1px 1px 2px #000;
-  }
-  .token-ca-copy {
-    flex: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    color: var(--color-primary-dim);
-    transition: color var(--transition-speed) var(--transition-ease);
-  }
-  .token-ca-pill:hover .token-ca-copy {
-    color: var(--color-primary);
-  }
-  .token-ca-copy svg {
-    width: 16px;
-    height: 16px;
-    display: block;
-  }
-  .token-ca-copy .icon-check {
-    display: none;
-  }
-  .token-ca-feedback {
-    display: none;
-    font-family: var(--font-sans);
-    font-size: 12px;
-    color: var(--color-text-success);
-  }
-  /* Small print under the pill: token disclaimer + community call-to-action. */
-  .token-ca-note {
-    margin: 0;
-    max-width: 520px;
-    font-family: var(--font-sans);
-    font-size: 12px;
-    line-height: 1.55;
-    color: var(--color-text-muted);
-    text-align: center;
-    text-shadow: 1px 1px 2px #000;
-  }
-  /* Copied state, swap clipboard glyph for a check, reveal the confirmation. */
-  #token-ca.is-copied .token-ca-pill {
-    border-color: var(--color-text-success);
-  }
-  #token-ca.is-copied .token-ca-copy {
-    color: var(--color-text-success);
-  }
-  #token-ca.is-copied .token-ca-copy .icon-clipboard {
-    display: none;
-  }
-  #token-ca.is-copied .token-ca-copy .icon-check {
-    display: block;
-  }
-  #token-ca.is-copied .token-ca-feedback {
-    display: block;
-  }
-  @media (max-width: 520px) {
-    .token-ca-addr {
-      font-size: 11px;
-      letter-spacing: 0.2px;
-    }
-    .token-ca-pill {
-      padding: 8px var(--spacing-sm);
-    }
   }
   .auth-panel {
     width: 100%;
@@ -7267,7 +7208,10 @@
     width: 100%;
   }
 
-  @media (max-width: 860px) {
+  /* The added wishlist action makes the full localized desktop header too wide
+     below 1121px. Collapse the menu before any action is clipped by
+     #start-screen's intentional horizontal overflow guard. */
+  @media (max-width: 1120px) {
     /* Mobile First Homepage Header and Hamburger Menu */
     .mobile-menu-toggle {
       display: flex;
@@ -7378,6 +7322,36 @@
     .social-link svg {
       width: 18px;
       height: 18px;
+    }
+  }
+
+  /* Between the collapsed-menu breakpoint and a comfortably wide desktop,
+     retain the wishlist action as an icon-labelled-by-aria. This keeps long
+     locale nav labels (notably German) inside the viewport at 1200px. */
+  @media (min-width: 1121px) and (max-width: 1280px) {
+    .steam-wishlist-cta {
+      width: 40px;
+      padding-inline: 0;
+      justify-content: center;
+    }
+    .steam-wishlist-cta span {
+      display: none;
+    }
+  }
+
+  /* Borderless desktop builds add Exit Game to the action group. Keep that
+     desktop-only combination on its own centered row until the full German
+     header has reliable one-row clearance; web and windowed shells retain the
+     ordinary layout because their exit control remains hidden. */
+  @media (min-width: 1121px) and (max-width: 1440px) {
+    body.desktop-app:has(.desktop-login-exit:not([hidden])) .homepage-header {
+      grid-template-rows: auto auto;
+      row-gap: var(--spacing-xs);
+    }
+    body.desktop-app:has(.desktop-login-exit:not([hidden])) .header-actions {
+      grid-column: 1 / -1;
+      grid-row: 2;
+      justify-self: center;
     }
   }
 

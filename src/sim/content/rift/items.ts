@@ -9,6 +9,9 @@ export const RIFT_GEAR_ITEM_IDS = [
   'riftbound_band_of_insight',
   'riftbound_band_of_guile',
 ] as const;
+/** The same three ids as a set, for the by-id refusals (trade, enchanting,
+ *  the dev kit) that would otherwise each build their own. */
+export const RIFT_GEAR_ITEM_ID_SET: ReadonlySet<string> = new Set(RIFT_GEAR_ITEM_IDS);
 
 /** The clear-time gear ladder above the rares: epics that only a B+ final-boss
  * kill can shed (B already GUARANTEES one, so A does not raise the floor; S
@@ -66,8 +69,12 @@ const CASTER = ['mage', 'priest', 'warlock', 'druid'] as ItemDef['requiredClass'
 const RIFT_ARMOR_RATING = 40; // 40 rating = 4.0%, mirrors the heroic ilvl-31 armor floor
 const RIFT_JEWELRY_RATING = 25; // 25 rating, matches heroic quartermaster jewelry precedent
 
-/** Static shells. The non-fungible payload carries each drop's source, power,
- * upgrades, enchantment, sockets, gems, and rolled bonus stats. */
+/** Static shells. The three Riftbound bands below carry NO stats of their
+ * own: the non-fungible payload (ItemInstancePayload.rift) records the clear's
+ * rank, the essence upgrades, and the socketed gems, and rift/band_ladder.ts
+ * prices the whole ring from those (item level, primary stats, gem ratings)
+ * into the copy's rolled aggregate. A bare shell (a copy that somehow lost its
+ * payload) is therefore an empty ring, never a stat stick. */
 export const RIFT_ITEMS: Record<string, ItemDef> = {
   // Rogue dagger (Rift epic, B+ clear). A frost-bolt on-hit gives the fast
   // dagger a proc that actually helps a DPS rogue: an attack-speed chill would
@@ -101,6 +108,18 @@ export const RIFT_ITEMS: Record<string, ItemDef> = {
       },
     ],
   },
+  // Forge currency (rift/progression.ts spends these on rift gear upgrades),
+  // NOT the personal reward gear below (the three riftbound_band_of_* rings,
+  // RIFT_GEAR_ITEM_IDS): deliberately NOT noMarketList. noMarketList in this
+  // codebase fences exactly two cases (see the copper_mining_pick comment
+  // block above in items.ts): a re-grantable faucet's value route (accept,
+  // sell, abandon, repeat mints copper from nothing) or a store SKU kept off
+  // the gold market. Neither applies here: essence and gems are boss loot
+  // from a natural first clear, gated by the ranked portal spawn cadence
+  // (docs/design/rift-portals.md), never re-granted by a repeatable quest.
+  // Trade-legal-but-pipe-refused IS a real, intentional pattern here (R10),
+  // so being tradeable via trade.ts alone would not by itself justify this;
+  // it is the faucet/SKU test above that does.
   rift_essence: {
     id: 'rift_essence',
     name: 'Rift Essence',
@@ -108,8 +127,11 @@ export const RIFT_ITEMS: Record<string, ItemDef> = {
     quality: 'rare',
     stackSize: 20,
     sellValue: 0,
-    noMarketList: true,
   },
+  // Rift gems: one combat rating line each when socketed into a Riftbound
+  // band (rift/band_ladder.ts RIFT_GEM_RATING_STAT: crimson is crit, azure is
+  // haste, verdant is hit; RIFT_GEM_RATING per gem). The tooltip states the
+  // colour's rating (src/ui/rift_band_tooltip.ts) so the def needs no prose.
   rift_gem_crimson: {
     id: 'rift_gem_crimson',
     name: 'Crimson Rift Gem',
@@ -117,7 +139,6 @@ export const RIFT_ITEMS: Record<string, ItemDef> = {
     quality: 'epic',
     stackSize: 20,
     sellValue: 0,
-    noMarketList: true,
   },
   rift_gem_azure: {
     id: 'rift_gem_azure',
@@ -126,7 +147,6 @@ export const RIFT_ITEMS: Record<string, ItemDef> = {
     quality: 'epic',
     stackSize: 20,
     sellValue: 0,
-    noMarketList: true,
   },
   rift_gem_verdant: {
     id: 'rift_gem_verdant',
@@ -135,7 +155,6 @@ export const RIFT_ITEMS: Record<string, ItemDef> = {
     quality: 'epic',
     stackSize: 20,
     sellValue: 0,
-    noMarketList: true,
   },
   riftbound_band_of_might: {
     id: 'riftbound_band_of_might',
@@ -144,7 +163,6 @@ export const RIFT_ITEMS: Record<string, ItemDef> = {
     slot: 'ring',
     quality: 'epic',
     requiredLevel: 20,
-    stats: { str: 6, sta: 5 },
     sellValue: 5000,
     noMarketList: true,
   },
@@ -155,7 +173,6 @@ export const RIFT_ITEMS: Record<string, ItemDef> = {
     slot: 'ring',
     quality: 'epic',
     requiredLevel: 20,
-    stats: { int: 6, spi: 5 },
     sellValue: 5000,
     noMarketList: true,
   },
@@ -166,7 +183,6 @@ export const RIFT_ITEMS: Record<string, ItemDef> = {
     slot: 'ring',
     quality: 'epic',
     requiredLevel: 20,
-    stats: { agi: 6, sta: 5 },
     sellValue: 5000,
     noMarketList: true,
   },
@@ -379,8 +395,11 @@ export const RIFT_ITEMS: Record<string, ItemDef> = {
     kind: 'armor',
     slot: 'neck',
     quality: 'legendary',
+    // Buffed to the legendary band of the 2026-08-30 ilvl-honesty round
+    // (maintainer direction: every legendary lives at the Thronebane tier,
+    // budget-true at its labeled level; sources in item_level.ts).
     requiredLevel: 20,
-    stats: { sta: 14, str: 6, agi: 6, int: 6 },
+    stats: { sta: 18, str: 8, agi: 8, int: 8 },
     sellValue: 50000,
   },
   // The caster half of the S-rank chase. Deliberately a DAGGER: the only other
@@ -411,13 +430,21 @@ export const RIFT_ITEMS: Record<string, ItemDef> = {
     kind: 'weapon',
     slot: 'mainhand',
     quality: 'legendary',
+    // Buffed to the legendary band of the 2026-08-30 ilvl-honesty round
+    // (maintainer direction: every legendary lives at the Thronebane tier,
+    // budget-true at its labeled level; sources in item_level.ts).
     requiredLevel: 20,
     // dagger: true keeps the skin and the gameplay notion of "dagger" in step
     // (tests/weapon_skins.test.ts). With no class lock a rogue MAY equip this and
     // it does count for Craven Thrust / Ambush (weaponStrike + requiresBehind);
     // the weak damage line is what makes that a downgrade rather than a lure.
+    // The swing stays deliberately WEAK (a caster's white line is dead
+    // weight, and rift_loot_pools pins it under the epic melee dagger floor
+    // so no rogue is tempted); the ilvl-49 band power lives in the caster
+    // axes: the 65-point stat line and the lane-share Spell Power.
     weapon: { min: 15, max: 25, speed: 1.8, dagger: true },
-    stats: { int: 19, spi: 17, sta: 13 },
+    stats: { int: 25, spi: 23, sta: 17 },
+    spellPower: 25,
     // NO requiredClass, deliberately: a class lock is a nerf, and the stat line
     // already decides who wants this (19 int / 17 spi / 0 agi / 0 str). A paladin
     // or shaman healer has a real case for it, which the cloth-armor CASTER group

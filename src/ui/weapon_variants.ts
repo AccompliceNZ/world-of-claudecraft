@@ -128,6 +128,7 @@ export const ITEM_WEAPON_VARIANTS: Record<string, string> = {
   gravewyrm_thornmaul: 'hammer_d', // feral ladder maul
   maul_of_the_scourged_wilds: 'hammer_d', // feral ladder, Nythraxis raid rung
   wildsoul_maul: 'hammer_d', // feral ladder, heroic-only ilvl 31 rung
+  varkhul_forgebreaker: 'hammer_varkhul', // LEGENDARY: Ignivar raid (animated engine maul)
 
   // ---- axes (axe_a..d + adv axes) --------------------------------------------
   rusty_hatchet: 'axe_a',
@@ -139,6 +140,15 @@ export const ITEM_WEAPON_VARIANTS: Record<string, string> = {
   gorraks_cleaver: 'adv_axe_1handed',
   tradesman_hatchet: 'adv_axe_1handed',
   gravewyrm_cleaver: 'adv_axe_1handed', // EPIC: Heroic Korzul axe
+  // Nythraxis gap-fill one-handers (content/zone3.ts): the violet-gem KayKit
+  // set, the Deathless Court's bone-and-violet palette in hand (purple_dagger
+  // is shared with Duskwhisper; the sword and axe were unused). Their
+  // inventory icons are in-engine stills of these models
+  // (scripts/render_weapon_still_icons.mjs over the jobs table in
+  // docs/achievements/nythraxis-gap-weapon-renders-2026-09-04/).
+  courtiers_bonefang: 'purple_dagger',
+  thornpeak_wardblade: 'purple_sword',
+  gravecourt_hewer: 'purple_axe',
   pitlords_cleaver: 'adv_axe_1handed', // rift rare cleaver (heroic clone rides heroicOf)
   tunnelkings_spade: 'adv_axe_2handed',
 
@@ -147,4 +157,16 @@ export const ITEM_WEAPON_VARIANTS: Record<string, string> = {
   tidereaver_gaff: 'spear_a', // a gaff is a hooked spear
   ironbark_boar_spear: 'spear_a', // crafted 2H spear
   fanglords_beastspear: 'spear_a', // RARE: the basin Beastmaster's boar spear
+
+  // ---- Crucible of the Last Spring raid weapons (ignivar_loot.ts) -------------
+  // Held models reuse shipped GLBs.
+  forgefathers_warhammer: 'hammer_c',
+  springtouched_crozier: 'hammer_c',
+  cinderfang_kris: 'adv_dagger',
+  slagrender_cleaver: 'adv_axe_1handed',
+  anvilguard_blade: 'adv_sword_1handed',
+  heart_of_the_end_greatblade: 'adv_sword_2handed_color',
+  staff_of_the_last_spring: 'adv_staff',
+  forgefire_spire: 'adv_staff',
+  wand_of_quenched_sparks: 'adv_wand',
 };

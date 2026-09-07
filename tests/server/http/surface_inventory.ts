@@ -755,7 +755,10 @@ export const SURFACE_INVENTORY: readonly SurfaceRoute[] = [
     handler: 'handleApi arm: /api/wallet/link (DELETE)',
     contentType: PROBLEM_JSON,
     authScope: AUTH_SCOPE.full,
-    limiter: null,
+    // The R11 rate-limit rider: the ladder arm gates with walletLinkRateLimited
+    // before handleWalletUnlink (the challenge/link POST rows keep limiter null
+    // because those two self-limit INSIDE their handlers, not in the ladder).
+    limiter: 'walletLinkRateLimited',
     requireOwnedExpected: null,
   },
   {
@@ -1156,6 +1159,20 @@ export const SURFACE_INVENTORY: readonly SurfaceRoute[] = [
     method: 'GET',
     path: '/api/deeds/rarity',
     handler: 'server/deeds.ts rarityHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.public,
+    limiter: 'publicReadRateLimited',
+    requireOwnedExpected: null,
+  },
+  // Realm Builder of the Month: the public roll the Eastbrook Vale monument
+  // reads while a client loads the world. Registry-only RouteDef born after the
+  // migration (server/http/CLAUDE.md), so no legacy ladder arm. Anonymous and
+  // db-backed, so it takes the shared per-IP public-read budget in-handler.
+  {
+    dispatcher: DISPATCH.mainApi,
+    method: 'GET',
+    path: '/api/realm-builder',
+    handler: 'server/realm_builder.ts publicRollHandler (registry-only RouteDef)',
     contentType: PROBLEM_JSON,
     authScope: AUTH_SCOPE.public,
     limiter: 'publicReadRateLimited',
@@ -2170,6 +2187,40 @@ export const SURFACE_INVENTORY: readonly SurfaceRoute[] = [
     limiter: null,
     requireOwnedExpected: null,
   },
+  // Realm Builder of the Month roll: registry-only RouteDefs born AFTER the
+  // migration (the new-route rule, server/http/CLAUDE.md), so no legacy ladder
+  // arm and the legacy rollback answers 404 for them by design. Both arms carry
+  // content.moderate (server/admin_routes.ts).
+  {
+    dispatcher: DISPATCH.admin,
+    method: 'GET',
+    path: '/admin/api/realm-builders',
+    handler: 'server/realm_builder.ts adminListHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.admin,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.admin,
+    method: 'POST',
+    path: '/admin/api/realm-builders',
+    handler: 'server/realm_builder.ts adminUpsertHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.admin,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    dispatcher: DISPATCH.admin,
+    method: 'POST',
+    path: '/admin/api/realm-builders/delete',
+    handler: 'server/realm_builder.ts adminDeleteHandler (registry-only RouteDef)',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.admin,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
   {
     dispatcher: DISPATCH.admin,
     method: 'GET',
@@ -2763,6 +2814,18 @@ export const SURFACE_INVENTORY: readonly SurfaceRoute[] = [
     method: 'GET',
     path: '/internal/woc-market/stuck',
     handler: 'internal.ts RouteDef: /internal/woc-market/stuck',
+    contentType: PROBLEM_JSON,
+    authScope: AUTH_SCOPE.secretDashboard,
+    limiter: null,
+    requireOwnedExpected: null,
+  },
+  {
+    // The parked-review operator arm: the one WRITE on the dashboard-secret
+    // surface, ruling a review-parked settlement through the transition CAS.
+    dispatcher: DISPATCH.internal,
+    method: 'POST',
+    path: '/internal/woc-market/settlements/:id/resolve',
+    handler: 'internal.ts RouteDef: /internal/woc-market/settlements/:id/resolve',
     contentType: PROBLEM_JSON,
     authScope: AUTH_SCOPE.secretDashboard,
     limiter: null,

@@ -23,7 +23,12 @@
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import { afterEach, describe, expect, it } from 'vitest';
-import { captureFocusKey, focusedWithin, restoreFirstEnabled } from '../src/ui/focus_restore';
+import {
+  captureFocusKey,
+  findFocusKey,
+  focusedWithin,
+  restoreFirstEnabled,
+} from '../src/ui/focus_restore';
 import { tsFilesUnder } from './helpers/ts_files_under';
 
 afterEach(() => {
@@ -212,6 +217,20 @@ describe('focusedWithin', () => {
     expect(focusedWithin(root)).toBeNull();
     other.btn.blur();
     expect(focusedWithin(root)).toBeNull();
+  });
+});
+
+describe('findFocusKey', () => {
+  it('resolves by exact dataset equality without selector interpolation', () => {
+    const hostile = 'vault:row:pooled:a"b]';
+    const { root, btn } = windowWithKeyedButton(hostile);
+    const neighbor = document.createElement('button');
+    neighbor.dataset.focusKey = 'vault:row:pooled:copper_ore';
+    root.appendChild(neighbor);
+
+    expect(() => findFocusKey(root, hostile)).not.toThrow();
+    expect(findFocusKey(root, hostile)).toBe(btn);
+    expect(findFocusKey(root, `${hostile}:missing`)).toBeNull();
   });
 });
 
@@ -471,6 +490,12 @@ describe('the data-focus-key namespace has exactly one reader', () => {
     ...f,
     code: stripComments(readFileSync(f.full, 'utf8')),
   }));
+  // The three spellings a module can touch the namespace by: the DOM's camelCase
+  // mapping, the attribute written out, and the shared constant (which is how an
+  // emit-only builder spells it: restart_strip_painter.ts, woc_market_chrome.ts).
+  // A module that reaches the namespace through the constant alone is still a
+  // module reaching the namespace, so the sweep has to see it.
+  const TOUCHES_NAMESPACE = /dataset\.focusKey|data-focus-key|FOCUS_KEY_ATTR/;
 
   it('sweeps a real, non-empty slice of src/ui (anti-vacuity)', () => {
     expect(uiFiles.length).toBeGreaterThan(200);
@@ -479,16 +504,18 @@ describe('the data-focus-key namespace has exactly one reader', () => {
   });
 
   it('finds the readers it is supposed to find (anti-vacuity)', () => {
-    const readers = uiFiles.filter((f) => /dataset\.focusKey|data-focus-key/.test(f.code));
+    const readers = uiFiles.filter((f) => TOUCHES_NAMESPACE.test(f.code));
     // Named literals rather than a count, so migrating a third window is not a test edit.
     expect(readers.map((f) => f.file)).toContain('mailbox_window.ts');
     expect(readers.map((f) => f.file)).toContain('town_focus_window.ts');
+    // And the constant's own spelling, which the two above do not use.
+    expect(readers.map((f) => f.file)).toContain('restart_strip_painter.ts');
   });
 
   it('every module that touches the attribute goes through the helper', () => {
     const offenders = uiFiles
       .filter((f) => f.file !== 'focus_restore.ts')
-      .filter((f) => /dataset\.focusKey|data-focus-key/.test(f.code))
+      .filter((f) => TOUCHES_NAMESPACE.test(f.code))
       .filter((f) => !/from '\.{1,2}(?:\/\.\.)*\/?focus_restore'/.test(f.code))
       .map((f) => f.file);
     expect(

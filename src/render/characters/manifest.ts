@@ -18,6 +18,7 @@ import {
   IGNIVAR_CRUCIBLE_WARDEN_ID,
   IGNIVAR_EMBER_SENTINEL_ID,
 } from '../../sim/ignivar_raid_ids';
+import { DUNGEON_MINIBOSS_STOMP_ABILITY_ID } from '../../sim/mob/dungeon_miniboss_stomp';
 import { VARKHUL_CRUCIBLE_QUAKE_CAST_ID } from '../../sim/mob/healer_channel';
 import {
   ALL_CLASSES,
@@ -32,6 +33,7 @@ import {
 } from '../../sim/varkhul_cinder_artificer';
 import { ITEM_WEAPON_VARIANTS } from '../../ui/weapon_variants';
 import type { OverheadEmoteId } from '../../world_api';
+import { VARKHUL_FORGING_STRIKE_TIMESCALE } from '../varkhul_forge_hammer';
 import { NPC_PROP_SET_IDS, type NpcPropSet } from './npc_looks';
 
 export interface EmoteClipSpec {
@@ -42,6 +44,22 @@ export interface EmoteClipSpec {
 
 export interface ClipMap {
   idle: string;
+  /** Extra standing-still clips, played one at a time in place of `idle` and
+   *  then handed back to it over the standard one-shot crossfade. Purely
+   *  cosmetic idle-breakers ("fidgets"): author each to END on the idle pose,
+   *  because leaving idle CANCELS one mid-clip and the rig cuts straight back
+   *  over a 0.18s fade. Empty/absent for every rig that just breathes.
+   *
+   *  These fire from ONE shared, jittered timer and are picked at random, so a
+   *  given clip's own cadence falls as the pool grows. A clip that has to show
+   *  up on a schedule belongs in `idleBeat` instead. */
+  idleVariants?: string[];
+  /** A signature idle on a FIXED cadence, scheduled independently of the
+   *  `idleVariants` pool. Same contract as a fidget (one-shot, must end on the
+   *  idle pose, cancelled the moment the rig stops standing still); the
+   *  difference is only that it keeps its own clock, so "every N seconds"
+   *  actually means it. */
+  idleBeat?: { clip: string; everySec: number; jitterSec?: number };
   /** The braced battle stance: the idle a body holds while it is actually
    *  fighting someone, played instead of `idle` whenever the rig is engaged and
    *  standing still (see anim_state.desiredBaseState). Absent = the rig relaxes
@@ -64,6 +82,18 @@ export interface ClipMap {
   hit?: string[];
   /** looping cast channel */
   cast?: string;
+  /** Hold instead of replaying: the generic `cast` clip plays ONCE up to this
+   *  many seconds in (the held gesture at the top of the raise: arm up,
+   *  pointing) and FREEZES on that frame while the cast channels; the
+   *  remainder (the recovery back to stance) plays on cast end via
+   *  castPlayOut. Only the generic clip: castByAbility overrides keep their
+   *  authored behavior. */
+  castHoldPointSeconds?: number;
+  /** Cast clips that FINISH as a one-shot when their cast ends mid-clip (the
+   *  crash recovery, the pointing arm coming back down) instead of being cut
+   *  by the base-pose crossfade. Opt-in per clip so a seamless cadence loop
+   *  (the Forgefather's decree Forging) keeps its instant handoff. */
+  castPlayOut?: readonly string[];
   /** Per-ability override for the looping cast clip (the windup LOOK of one
    *  cast differing from the rig's generic channel; the one-shot route in
    *  attackByAbility cannot cover held cast states). */
@@ -135,6 +165,12 @@ export interface VisualDef {
   selfIllumination?: number;
   /** Optional per-visual multiplier for scene environment reflections. */
   envMapIntensity?: number;
+  /** Force a fully diffuse surface response on the body materials: zero
+   *  metalness, full roughness, and the metallic/roughness maps dropped, so
+   *  the key/hemisphere/torch lights cannot lay a specular sheen over the
+   *  albedo. For rigs whose authored PBR response reads as gloss under an
+   *  interior light rig (the Ignivar raid roster). */
+  matte?: boolean;
   /** KayKit chars ship every accessory visible: non-skinned mesh nodes to KEEP.
    *  undefined = keep everything (creature GLBs have no accessories). */
   show?: string[];
@@ -158,6 +194,10 @@ export interface VisualDef {
   runRef?: number;
   attackTimeScale?: number;
   deathTimeScale?: number;
+  /** Final model-local sink for an authored death pose that ends above the
+   *  normalized feet anchor. CharacterVisual eases it in only over the final
+   *  quarter of the Death clip and restores the base offset on revive. */
+  deathGroundOffset?: number;
   /** Hold the idle base state frozen on the FIRST frame of its clip instead of
    *  looping it: a downed/dormant look (the forge mech lies still on the ground
    *  on crawl frame 0 until it moves). Walk/run still play the clip normally, so
@@ -255,6 +295,35 @@ const skeletonClips = (attack: string[], flourish = 'Skeletons_Awaken_Standing')
   flourish,
 });
 
+// The Bonebound Rickshaw's puller ONLY (skel_rickshaw_puller). Not shared
+// with any other skeleton key on purpose.
+//
+// skeleton_minion.glb is one of the rigs corrupted by build_assets.mjs's
+// meshopt() step (it breaks this exact multi-primitive-skinned KayKit shape),
+// which the mount cannot ship around: its puller renders as a scattered pile of
+// bones. It is rebuilt by scripts/assets/rebuild_kaykit_skeletons_free.mjs from
+// the KayKit_Skeletons_1.1_FREE pack and shipped as a SEPARATE file
+// (skeleton_minion_free.glb) rather than overwriting the original, because the
+// FREE pack bundles only 2 of the 7 Rig_Medium animation sources: no combat
+// swing, no emotes. Overwriting the shared file would have handed that
+// regression to delve_skel_wraith, a real Reliquary delve mob that currently
+// has real attack clips and nothing to do with this mount. A cart puller never
+// swings at anything, so the reduced set costs the mount nothing.
+//
+// Fixing the other rigs on that shared file, and deciding whether losing their
+// attack swings is worth the geometry fix, is a separate change with its own
+// argument to make.
+const RICKSHAW_PULLER_CLIPS: ClipMap = {
+  idle: 'Idle',
+  walk: 'Walking_A',
+  run: 'Running_A',
+  // Empty rather than naming a clip this GLB does not contain, which
+  // tests/character_clipmaps.test.ts correctly refuses to let through.
+  attack: [],
+  hit: ['Hit_A'],
+  death: 'Death_A',
+};
+
 const skeletonLargeClips = (attack: string[]): ClipMap => ({
   idle: 'Idle',
   walk: 'Walking_A',
@@ -289,6 +358,44 @@ const MOUNT_RIGGED: ClipMap = {
   run: 'Run',
   attack: [],
   death: 'Death',
+};
+
+// The Mech Bird's own map: it ships exactly Idle / Run / Jump (authored in
+// Blender against its 28-bone rig). Walk aliases the run cycle (the servo
+// sprint reads as a stately strut at walk timeScales), death holds Idle (a
+// ridden mount never plays a death; the summon strips on death first), and
+// jump is the one mount clip in the game that actually uses the airborne
+// channel: the renderer already feeds the real airborne flag to mount
+// visuals, so the single authored wing-flap plays on every hop.
+const MOUNT_MECH_BIRD: ClipMap = {
+  idle: 'Idle',
+  walk: 'Run',
+  run: 'Run',
+  attack: [],
+  death: 'Idle',
+  jump: 'Jump',
+};
+
+// The Chimeglass Tortoise ships three authored idle-breakers on top of the
+// breathing Idle: he looks about him, rears up to paw the air, and stamps his
+// front feet one at a time. Each ends back on the idle pose so the hand-off is
+// seamless.
+const MOUNT_TORTOISE: ClipMap = {
+  ...MOUNT_RIGGED,
+  idleVariants: ['Idle_Look', 'Idle_Rear', 'Idle_Stamp', 'Idle_Groove'],
+  // The wet-dog head shake is his signature, so it keeps its own clock rather
+  // than taking a one-in-five share of the pool's 20-45s draw (which would have
+  // put it 100-225s apart). Small jitter only, so a paddock of them does not
+  // shake in lockstep.
+  idleBeat: { clip: 'Idle_Shake', everySec: 20, jitterSec: 4 },
+  // Naming `land` opts this rig into the HELD-jump treatment (visual.ts
+  // isOnce): `Jump` stops looping and clamps on its last frame, the airborne
+  // tuck, for as long as the body is off the ground, and `Land` fires as a
+  // one-shot on the touchdown edge. So `Jump` is only the spring and the tuck;
+  // the arc itself is the game's, and the clip must not carry a rise or the
+  // mount would still be held above the ground when it touches down.
+  jump: 'Jump',
+  land: 'Land',
 };
 
 // The Drakelands dragonkin brood (tmp/dragonkin_build.mjs bakes): artist
@@ -769,16 +876,15 @@ const IGNIVAR: ClipMap = {
   flourish: 'FistSpin360',
 };
 
-// Heart of the End is stationary in the encounter. Its generated Hit clip stays
-// unmapped so raid damage cannot interrupt the sustained Apocalypse cast pose.
+// Ignivar Ashcaller is stationary in the encounter. Its clips keep Apocalypse
+// in a sustained channel pose while retaining its authored cast and death motion.
 const IGNIVAR_HEART: ClipMap = {
   idle: 'Idle',
-  walk: 'Walk',
-  run: 'Run',
-  attack: ['Attack'],
+  walk: 'Move',
+  run: 'Move',
+  attack: ['Cast'],
   death: 'Death',
-  cast: 'Cast',
-  jump: 'Jump',
+  cast: 'Channel',
 };
 
 const IGNIVAR_CRUCIBLE_WARDEN: ClipMap = {
@@ -786,8 +892,14 @@ const IGNIVAR_CRUCIBLE_WARDEN: ClipMap = {
   walk: 'Walk',
   run: 'Run',
   attack: ['Attack'],
-  attackByAbility: { [VARKHUL_CRUCIBLE_QUAKE_CAST_ID]: 'JumpSlam' },
-  attackTimeScaleByAbility: { [VARKHUL_CRUCIBLE_QUAKE_CAST_ID]: 0.8 },
+  attackByAbility: {
+    [VARKHUL_CRUCIBLE_QUAKE_CAST_ID]: 'JumpSlam',
+    [DUNGEON_MINIBOSS_STOMP_ABILITY_ID]: 'JumpSlam',
+  },
+  attackTimeScaleByAbility: {
+    [VARKHUL_CRUCIBLE_QUAKE_CAST_ID]: 0.8,
+    [DUNGEON_MINIBOSS_STOMP_ABILITY_ID]: 1.35,
+  },
   hit: ['Hit'],
   death: 'Death',
 };
@@ -830,23 +942,35 @@ const VARKHUL_FORGEFATHER: ClipMap = {
   idle: 'Idle',
   walk: 'Walk',
   run: 'Run',
-  // plain swings only; Slam is reserved for the meteor windups below
+  // plain swings only; Slam is reserved for the frontal windup below
   attack: ['Slash'],
   attackByAbility: {
     [VARKHUL_FORGE_HAMMER_ABILITY_ID]: 'Forging',
     [VARKHUL_ANVILS_DECREE_CAST_ID]: 'Forging',
+    // each Forgestorm wave's windup cue: he powers up and the meteors answer
+    [VARKHUL_FORGESTORM_CAST_ID]: 'PowerUp',
   },
   attackTimeScaleByAbility: {
-    [VARKHUL_FORGE_HAMMER_ABILITY_ID]: 0.815,
-    [VARKHUL_ANVILS_DECREE_CAST_ID]: 0.815,
+    [VARKHUL_FORGE_HAMMER_ABILITY_ID]: VARKHUL_FORGING_STRIKE_TIMESCALE,
+    [VARKHUL_ANVILS_DECREE_CAST_ID]: VARKHUL_FORGING_STRIKE_TIMESCALE,
+    // authored 2.367s fills the 2.5s wave warning; 1 overrides the 1.3
+    // one-shot default so the pump is not rushed
+    [VARKHUL_FORGESTORM_CAST_ID]: 1,
   },
-  // generic channel: the contained hand gesture, never the roar
+  // generic channel: the contained hand gesture, never the roar. Plays up to
+  // the pointing gesture's peak (0.72s in, measured off the shipped clip) and
+  // HOLDS that frame while the cast channels; the arm-down recovery plays on
+  // release via castPlayOut instead of replaying the raise.
   cast: 'Casting',
+  castHoldPointSeconds: 0.72,
+  // Casting's arm-down and Slam's stand-back-up recoveries must not be cut
+  // when the cast ends mid-clip: both finish before the rig returns to base.
+  // Forging stays OFF this list: the decree cadence loop hands off instantly.
+  castPlayOut: ['Casting', 'Slam'],
   castByAbility: {
-    // the meteor windups are full Slam swings: he crashes the hammer down and
-    // the cone or the storm answers it
+    // the frontal windup is a full Slam swing: he crashes the hammer down and
+    // the cone answers it
     [VARKHUL_FRONTAL_CAST_ID]: 'Slam',
-    [VARKHUL_FORGESTORM_CAST_ID]: 'Slam',
     // at the anvil the decree cast IS the forging loop; the 2s strike
     // one-shots land on the same clip so the cadence stays seamless
     [VARKHUL_ANVILS_DECREE_CAST_ID]: 'Forging',
@@ -854,8 +978,7 @@ const VARKHUL_FORGEFATHER: ClipMap = {
   castTimeScaleByAbility: {
     // Slam's crash sits ~1.5s in; 0.65 lands it just before the 2.5s release
     [VARKHUL_FRONTAL_CAST_ID]: 0.65,
-    [VARKHUL_FORGESTORM_CAST_ID]: 0.65,
-    [VARKHUL_ANVILS_DECREE_CAST_ID]: 0.815,
+    [VARKHUL_ANVILS_DECREE_CAST_ID]: VARKHUL_FORGING_STRIKE_TIMESCALE,
   },
   jump: 'Jump',
   // the roar is the ENGAGE cue only (and respawn), never a cast loop
@@ -935,6 +1058,11 @@ const ITEM_OFFHAND_MODELS: Readonly<Record<string, string>> = {
   highwatch_wallshield: 'shield_square',
   bonewrought_bulwark: 'shield_square',
   pearlward_aegis: 'shield_round', // the first caster (int/spi) shield
+  // Crucible raid shields (content/ignivar_loot.ts): tank wall + healer barrier.
+  bulwark_of_the_inner_crucible: 'shield_square',
+  ember_wardens_barrier: 'shield_round',
+  votive_ward_of_the_deathless_court: 'shield_round', // Nythraxis gap-fill healer shield
+  varkhul_emberward: 'varkhul_emberward', // Ignivar raid legendary (Varkhul drop)
 };
 
 function itemModelKey(
@@ -1869,6 +1997,50 @@ export const VISUALS: Record<string, VisualDef> = {
     runRef: 4.5,
     lazyPreload: true,
   },
+  // The Lanternback Troll: a hand-authored rig (troll body skinned, the iron
+  // throne and both lanterns each welded rigid to a single bone) with authored
+  // Idle/Walk/Run/Death clips. runRef is deliberately the RIDDEN speed
+  // (RUN_SPEED 7 x +80% = 12.6), the same call the Drakemaw Raptor makes above:
+  // his stride is a long loose lope, and foot-matching a 3.4yd stride to 12.6
+  // yd/s would play the cycle at 3.7 strides/sec, which reads as a wind-up toy
+  // on a mount this heavy. At 12.6 the timeScale lands on 1.0 and he lopes at
+  // the authored 2.5 steps/sec.
+  mount_lanternback_troll: {
+    url: `${MOUNTS_DIR}/lanternback_troll.glb`,
+    // 7.0 makes him the tallest thing in the stable by a distance (the griffin
+    // is 4.1), which is the point: he is a hill troll wearing a throne, and at
+    // 5.0 he read as merely large rather than as something you would strap a
+    // chair to. walkRef scales with him, since a bigger creature covers more
+    // ground per stride and would otherwise scurry.
+    height: 7.0,
+    clips: MOUNT_RIGGED,
+    walkRef: 5.6,
+    runRef: 12.6,
+    lazyPreload: true,
+  },
+  // The Chimeglass Tortoise. Low and broad: 3.6 puts the crown of his shell
+  // near a horse's saddle without pretending he is horse-shaped.
+  //
+  // walkRef/runRef are a CADENCE choice, not a foot match, and the gap is not
+  // small: say so plainly rather than calling it a slide. His legs rest 99.6%
+  // extended, so the reach envelope caps his stride at 0.092 model units, about
+  // 0.33yd here. At a mounted 12.6 yd/s (RUN_SPEED 7 x +80%) a true foot match
+  // would need ~38 strides/sec. Nothing recovers that, so his feet carry only
+  // ~5% of the ground he covers and the refs buy a readable gait instead.
+  //
+  // The numbers are picked to land INSIDE locomotionTimeScale's clamp rather
+  // than against it: run clamps to [0.6, 1.6] and walk to [0.6, 1.8], so any
+  // runRef at or under 7.9 would saturate at 1.6 and every value in that range
+  // would render identically. 10 gives 1.26 (about 1.7 strides/sec), brisk for
+  // a tortoise without reading as a wind-up toy.
+  mount_chimeglass_tortoise: {
+    url: `${MOUNTS_DIR}/chimeglass_tortoise.glb`,
+    height: 3.6,
+    clips: MOUNT_TORTOISE,
+    walkRef: 3.6,
+    runRef: 10,
+    lazyPreload: true,
+  },
   // Compact fantasy tank. One wheel revolution per locomotion clip matches
   // its authored tread cadence at the reference ground speeds below.
   mount_terrorspark_groundshaker: {
@@ -1903,6 +2075,51 @@ export const VISUALS: Record<string, VisualDef> = {
     // inside what the other baked mounts already ship (grag_bear's 3.58 yd/s
     // natural against the same 12.6 leaves it sliding over half its travel).
     runRef: 12.6,
+    lazyPreload: true,
+  },
+  // The Cluckwork Mech Bird (the store mount): authored Blender clips on its
+  // own 28-bone rig (no bake_mount_gaits entry, never bake over it). walkRef
+  // is the Run cycle's measured natural speed (stride 0.332 raw p2p, 0.433s
+  // cycle, height 3.4 over rawHeight 1.0 = 5.2 yd/s), so walking plays near
+  // the authored look. runRef follows the drakemaw precedent above: the
+  // RIDDEN speed (RUN_SPEED 7 x +75% = 12.25) so timeScale lands on 1.0 and
+  // the servo sprint keeps its authored cadence; the slide this trades away
+  // sits between the drakemaw's 28% and grag_bear's half-travel, and the
+  // 1-2-1 mount_run gait beat carries the footfall read.
+  mount_mech_bird: {
+    url: `${MOUNTS_DIR}/mech_bird.glb`,
+    height: 3.4,
+    clips: MOUNT_MECH_BIRD,
+    walkRef: 5.2,
+    runRef: 12.25,
+    lazyPreload: true,
+  },
+  // Developer-only Halloween cart (image-to-glb static prop, no clips of its
+  // own): height is the measured shipped bbox (npx gltf-transform inspect).
+  // The puller is a SEPARATE visual (skel_rickshaw_puller) composed at
+  // runtime by src/render/rickshaw_mount.ts, not baked into this GLB.
+  mount_rickshaw_mount: {
+    url: `${MOUNTS_DIR}/rickshaw_mount.glb`,
+    // MUST match the shipped GLB's measured bbox height exactly (npx
+    // gltf-transform inspect): prepareVisual's normScale = height /
+    // measuredHeight, so a stale value here silently RESCALES the whole
+    // model to compensate. A canopy-raise once landed with almost no visible
+    // effect in-game because this field was left stale through two geometry
+    // changes, quietly shrinking the whole mount to compensate; the canopy
+    // was later cut entirely (floating/unmounted, unconnected wheel spokes),
+    // dropping the real height back down. Re-measure after any geometry
+    // change to this GLB.
+    // Re-measured off the shipped GLB after this pass's geometry work (arched
+    // seat back, trimmed throne wings, harness collar, lantern rebuild): 2.8 was
+    // stale and was silently rescaling the whole cart.
+    height: 4.779,
+    // This GLB ships NO clips: the wheels are spun procedurally by
+    // rickshaw_mount.ts's spinMountWheels, because crossfading a spin clip out drags the wheel back
+    // toward its bind rotation and reads as backwards spin on every stop (full
+    // history in scripts/assets/rickshaw_mount/model.js, above WHEEL_NODES).
+    // MOUNT_RIGGED's names therefore resolve to nothing, which is already a
+    // no-op: visual.ts registers actions only for clips that exist.
+    clips: MOUNT_RIGGED,
     lazyPreload: true,
   },
 
@@ -2385,18 +2602,26 @@ export const VISUALS: Record<string, VisualDef> = {
     // under the sunset forge rig the boost read as a milky IBL sheen, so the
     // boss keeps a lower ember glow and the stock envMapIntensity of 1.
     selfIllumination: 0.14,
+    // The contributor atlas ships metallicFactor 1 with a metallic-roughness
+    // texture, which lays a specular sheen over the whole body under the
+    // forge key light; matte keeps the albedo readable instead.
+    matte: true,
     clips: IGNIVAR,
     walkRef: 1.6,
     runRef: 3.2,
     attackTimeScale: 1,
   },
   mob_ignivar_heart_of_the_end: {
-    url: `${CREATURES}/ignivar_heart_of_the_end.glb`,
+    url: `${CREATURES}/ignivar_ashcaller.glb`,
     height: 1.8,
-    // Tripo authored the rig facing +X; character visuals face +Z at world facing 0.
-    yaw: -Math.PI / 2,
-    // Toned down with the sunset forge rig, same story as mob_ignivar above.
-    selfIllumination: 0.1,
+    yaw: 0,
+    selfIllumination: 0.16,
+    // One of its two materials ships metallicFactor 1 plus a metallic-
+    // roughness texture; matte kills that metallic response so the ash robes
+    // stay diffuse under the raid rooms' key light. The old 1.3 boost here
+    // was dead config: three overwrites per-material envMapIntensity with
+    // scene.environmentIntensity for materials lit by scene.environment.
+    matte: true,
     clips: IGNIVAR_HEART,
     attackTimeScale: 6,
     deathTimeScale: 3,
@@ -2407,10 +2632,13 @@ export const VISUALS: Record<string, VisualDef> = {
     yaw: 0,
     // The three automata (this def and the two below) carried 0.18 plus an
     // envMapIntensity of 1.35 as a readability crutch for the near-black
-    // rooms; against the daylight environment map that boost was most of the
-    // white sheen on their gunmetal. The sunset forge rig lights them now, so
-    // they keep only a whisper of glow and the stock envMapIntensity of 1.
+    // rooms (a knob three ignores under scene.environment, see the boss defs
+    // above). The sunset forge rig lights them now, so they keep only a
+    // whisper of glow. Their GLBs already ship metalness 0 with no MR maps,
+    // so matte here lifts the authored 0.85 roughness to 1, flattening the
+    // key light's remaining dielectric highlight so the gunmetal paint reads.
     selfIllumination: 0.08,
+    matte: true,
     clips: IGNIVAR_CRUCIBLE_WARDEN,
   },
   mob_ignivar_ember_sentinel: {
@@ -2418,6 +2646,7 @@ export const VISUALS: Record<string, VisualDef> = {
     height: 2.3,
     yaw: 0,
     selfIllumination: 0.08,
+    matte: true,
     clips: IGNIVAR_EMBER_SENTINEL,
   },
   mob_ignivar_cinder_artificer: {
@@ -2425,6 +2654,7 @@ export const VISUALS: Record<string, VisualDef> = {
     height: 2.1,
     yaw: 0,
     selfIllumination: 0.08,
+    matte: true,
     clips: IGNIVAR_CINDER_ARTIFICER,
   },
   mob_varkhul_forgefather: {
@@ -2433,11 +2663,21 @@ export const VISUALS: Record<string, VisualDef> = {
     // own arena presence.
     height: 3,
     yaw: 0,
+    // The authored Death lies flat with its lowest skinned vertex 16.62 raw
+    // units above the feet anchor. At this 3u normalization that is 0.565u.
+    deathGroundOffset: 0.565,
     // The smith atlas is near-black leather and iron; the add-tier grade
     // (0.18/1.35) reads as a silhouette in the Crucible. Match the Ignivar
     // colossus furnace grade instead so the bronze and beard stay legible.
+    // The smith atlas ships metalness 0 with no MR maps at authored
+    // roughness 1, which the body clamp used to pull DOWN to 0.9 gloss;
+    // matte holds it at 1, and that roughness step is the visible de-sheen.
+    // The old 1.6 boost was dead config (three overwrites per-material
+    // envMapIntensity with scene.environmentIntensity under scene env), so
+    // deleting it changes nothing on screen; the brightened room rig
+    // carries legibility.
     selfIllumination: 0.22,
-    envMapIntensity: 1.6,
+    matte: true,
     clips: VARKHUL_FORGEFATHER,
     // planted-foot naturals measured off the shipped clips (63.4 and 166.2
     // raw units/s at rawHeight 88.48, scaled by height 3 x mob scale 3.2)
@@ -2877,6 +3117,34 @@ export const VISUALS: Record<string, VisualDef> = {
     animUrls: [`${ENEMIES}/skeleton_minion_hit_variety_anims.glb`],
     height: 2.5,
     clips: skeletonClips(['1H_Melee_Attack_Chop', '1H_Melee_Attack_Slice_Diagonal']),
+    tint: 'entity',
+    tintStrength: 0.25,
+  },
+  // The Bonebound Rickshaw's puller ONLY: a separate key on its own rebuilt
+  // rig (see RICKSHAW_PULLER_CLIPS above for why it is a separate GLB from
+  // skeleton_minion.glb, which skel_minion above still uses unchanged, no
+  // regression to any of its own consumers).
+  //
+  // 2.166 is a DELIBERATE ART CHOICE, not a measurement, and it is the one
+  // value in this entry that is not free to change. `height` is a TARGET:
+  // prepareVisual poses a throwaway clone mid-idle, measures that, and
+  // derives normScale = height / posedHeight, so whatever goes here IS the
+  // puller's rendered size. The rest of this skeleton family stands at the
+  // 2.5 convention (skel_minion, skel_warrior), so this puller is
+  // deliberately about 13% shorter than the identical rig walking around as
+  // a mob: it reads as a hunched grunt harnessed to a cart rather than a
+  // soldier, and it keeps the crown clear of the cart's own canopy line.
+  //
+  // Changing it is a geometry change, not a number change. The shaft
+  // cross-brace (model.js SHAFT_TIP_Y/Z/SIDE_X) is positioned against this
+  // rig's measured handslot bones AT THIS SIZE, and RICKSHAW_PULLER_OFFSET_Z
+  // /_Y (src/render/rickshaw_mount.ts) were tuned live against it. Scaling
+  // to 2.5 moves the hand bones and breaks the grip alignment; re-tune all
+  // three together and retake the screenshots if you ever do.
+  skel_rickshaw_puller: {
+    url: `${ENEMIES}/skeleton_minion_free.glb`,
+    height: 2.166,
+    clips: RICKSHAW_PULLER_CLIPS,
     tint: 'entity',
     tintStrength: 0.25,
   },

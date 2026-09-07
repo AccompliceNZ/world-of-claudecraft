@@ -16,6 +16,7 @@ import {
   mobVoiceCueWithFallback,
   mobVoiceFamily,
   playerSwingCueForDamage,
+  playerVoiceCue,
   shouldPlayCombatImpactForTarget,
   shouldPlayCritSfxForTarget,
   shouldPlayMobVoiceSfxForEntity,
@@ -732,6 +733,40 @@ describe('combat SFX policy', () => {
     }
   });
 
+  it('keeps boss texture cues but defers semantic aggro and death to voiced dialogue', () => {
+    // Bound to the real generated manifest on purpose: the failure mode for a
+    // subfamily pack is silent fallback to the family voice, so a missing
+    // alias, a dropped file, or a stale manifest each have to fail here.
+    const shipped = (key: string) => key in SFX_CLIPS;
+    for (const action of ['idle', 'attack', 'hurt'] as const) {
+      expect(mobVoiceCue('ignivar_herald_of_the_last_flame', action, shipped), action).toBe(
+        `mob_elemental_ignivar_${action}`,
+      );
+      expect(mobVoiceCue('varkhul_forgefather_of_the_last_flame', action, shipped), action).toBe(
+        `mob_elemental_varkhul_${action}`,
+      );
+    }
+    for (const action of ['aggro', 'death'] as const) {
+      expect(
+        mobVoiceCue('ignivar_herald_of_the_last_flame', action, shipped, true),
+        action,
+      ).toBeNull();
+      expect(
+        mobVoiceCue('varkhul_forgefather_of_the_last_flame', action, shipped, true),
+        action,
+      ).toBeNull();
+      expect(mobVoiceCue('ignivar_herald_of_the_last_flame', action, shipped), action).toBe(
+        `mob_elemental_ignivar_${action}`,
+      );
+      expect(mobVoiceCue('varkhul_forgefather_of_the_last_flame', action, shipped), action).toBe(
+        `mob_elemental_varkhul_${action}`,
+      );
+    }
+    // A non-aliased elemental still keys off its own id and falls back to the
+    // family voice, exactly like an unaliased wolf would.
+    expect(mobVoiceCue('stormcrag_elemental', 'attack', shipped)).toBe('mob_elemental_attack');
+  });
+
   it('resolves the reptile family for its first real mob', () => {
     expect(mobVoiceFamily('deepfen_spearjaw')).toBe('reptile');
     expect(mobVoiceCue('deepfen_spearjaw', 'aggro')).toBe('mob_reptile_aggro');
@@ -915,6 +950,7 @@ describe('combat SFX policy', () => {
     expect(varkhulCalloutCue('rightPillar')).toBe('impact_fire');
     expect(varkhulCalloutCue('bothPillars')).toBe('impact_fire');
     expect(varkhulCalloutCue('portalsOpening')).toBe('rift_portal_spawn');
+    expect(varkhulCalloutCue('artificerApproaches')).toBe('rift_portal_spawn');
     expect(varkhulCalloutCue('heat75')).toBe('impact_metal');
     expect(varkhulCalloutCue('heat90')).toBe('meteor');
     expect(varkhulCalloutCue('addsDefeated')).toBe('ui_achievement');
@@ -960,5 +996,53 @@ describe('combat SFX policy', () => {
     const hud = readFileSync(new URL('../src/ui/hud.ts', import.meta.url), 'utf8');
     expect(hud).toContain("case 'varkhulCallout'");
     expect(hud).toContain('dispatchVarkhulCalloutSfx(');
+  });
+});
+
+describe('playerVoiceCue', () => {
+  // The 8 female takes shipped in PR #2320 but stayed unwired until the
+  // modular creator (v0.35.0) gave characters a real gender axis. These pin
+  // the rule that decides which voice a given character gets.
+  const female = { gender: 'female' };
+  const male = { gender: 'male' };
+  const hasAll = (): boolean => true;
+
+  it('diverts to the female take for an explicitly female look', () => {
+    expect(playerVoiceCue(female, 'hurt', hasAll)).toBe('player_hurt_female');
+    expect(playerVoiceCue(female, 'death', hasAll)).toBe('player_death_female');
+  });
+
+  it('keeps the shipped male take for every other look', () => {
+    // A male look, a character authored before the creator shipped (null),
+    // an absent field, and a garbage value all resolve the same way: no
+    // existing character's voice changes unless its owner chose female.
+    for (const appearance of [male, null, undefined, {}, { gender: 'other' }]) {
+      expect(playerVoiceCue(appearance, 'hurt', hasAll)).toBe('player_hurt');
+      expect(playerVoiceCue(appearance, 'death', hasAll)).toBe('player_death');
+    }
+  });
+
+  it('falls back to the male take when the female clip is not buffered', () => {
+    // Same hasCue-fallback contract mobVoiceCue uses: a cue that cannot play
+    // yet must resolve to one that can, never to silence.
+    const hasNone = (): boolean => false;
+    expect(playerVoiceCue(female, 'hurt', hasNone)).toBe('player_hurt');
+    expect(playerVoiceCue(female, 'death', hasNone)).toBe('player_death');
+  });
+
+  it('defaults to no-cue-available, so an unprobed call never returns an unplayable key', () => {
+    expect(playerVoiceCue(female, 'hurt')).toBe('player_hurt');
+    expect(playerVoiceCue(female, 'death')).toBe('player_death');
+  });
+
+  it('resolves every key it can return to a real catalog entry', () => {
+    for (const key of [
+      'player_hurt',
+      'player_death',
+      'player_hurt_female',
+      'player_death_female',
+    ]) {
+      expect(SFX_CLIPS, key).toHaveProperty(key);
+    }
   });
 });

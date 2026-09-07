@@ -570,6 +570,9 @@ export const da_DK: EnTranslations = {
       "tabsLabel": "Sektioner i WOC-butikken",
       "storeTab": "Butik",
       "rewardsTab": "Daglige belønninger",
+      "mountsEyebrow": "Account Mounts",
+      "mountsTitle": "Machine Stable",
+      "mountBuyAria": "Purchase {item}",
       "loading": "Indlæser WOC-butikken...",
       "error": "WOC-butikken er ikke tilgængelig lige nu. Prøv igen om lidt.",
       "balance": "Claudium-saldo",
@@ -789,7 +792,37 @@ export const da_DK: EnTranslations = {
       "applied": "I brug",
       "apply": "Anvend skin",
       "detach": "Fjern skin",
-      "equipHint": "Udstyr et våben af typen {type} for at anvende dette skin."
+      "equipHint": "Udstyr et våben af typen {type} for at anvende dette skin.",
+      "charter": {
+        "eyebrow": "Skatkiste",
+        "title": "Skatkistecharter",
+        "scope": "Et charter udvider kun denne karakters bank. Skatmesteren sælger de samme pladser for guld.",
+        "grant": "Tilføjer {slots} bankpladser",
+        "buy": "Køb charter",
+        "buyAria": "Køb {item}",
+        "confirmTitle": "Bekræft køb af charter",
+        "confirmBody": "Køb {item} for {cost} Claudium?",
+        "resultContext": "{item} ({sku}): {message}",
+        "granted": "Charteret blev anvendt. Denne karakters bank er nu større.",
+        "alreadyGranted": "Dette charter er allerede på denne karakter. Du blev ikke opkrævet igen.",
+        "applyDeferred": "Betaling gennemført. Pladserne tilføjes automatisk, næste gang denne karakter logger ind.",
+        "grantUnresolved": "Betaling gennemført, men pladserne kunne ikke tilføjes endnu. Købet er registreret, og support kan færdiggøre det for dig.",
+        "inProgress": "Et køb til denne karakter er stadig ved at blive gennemført. Prøv igen om et øjeblik.",
+        "doesNotFit": "Denne karakters bank har ikke plads til hele dette charters tildeling.",
+        "notPurchasable": "Dette charter kan ikke købes lige nu.",
+        "noRoom": "Denne karakters bank har ikke plads tilbage til et charter.",
+        "noCharterFits": "Intet charter passer til den plads, der er tilbage i denne karakters bank.",
+        "someHiddenByFit": "Charter, der er for store til den plads, der er tilbage i denne karakters bank, vises ikke.",
+        "outage": "Købet kunne ikke bekræftes. Prøv igen med denne knap, så bliver du ikke opkrævet to gange. Genindlæser du spillet først, kan den beskyttelse gå tabt.",
+        "outageStale": "Vend tilbage til butikken, og brug den samme Køb charter-handling igen. Du bliver ikke opkrævet to gange. Genindlæser du spillet først, kan den beskyttelse gå tabt.",
+        "failed": "Købet kunne ikke gennemføres.",
+        "names": {
+          "strongbox_charter_1": "Mindre Skatkistecharter",
+          "strongbox_charter_2": "Større Skatkistecharter",
+          "strongbox_charter_3": "Stort Skatkistecharter",
+          "strongbox_charter_complete": "Komplet Skatkistecharter"
+        }
+      }
     },
     "claudium": {
       "title": "Claudium",
@@ -845,6 +878,7 @@ export const da_DK: EnTranslations = {
       "reset": "Nulstil",
       "presets": {
         "classic": "Klassisk guld",
+        "fancyGold": "Flot guld (under udvikling)",
         "midnight": "Midnat",
         "parchment": "Pergament",
         "highContrast": "Høj kontrast"
@@ -925,7 +959,8 @@ export const da_DK: EnTranslations = {
       "durationUnitSeconds": "s",
       "durationUnitMinutes": "m",
       "durationUnitHours": "t",
-      "durationUnitDays": "d"
+      "durationUnitDays": "d",
+      "buffOverflowLabel": "+{n}"
     },
     "character": {
       "modelPreview": "Forhåndsvisning af karaktermodel"
@@ -1272,6 +1307,11 @@ export const da_DK: EnTranslations = {
       "separate": "Adskil {meter}",
       "regroup": "Saml {meter} igen"
     },
+    "targetDots": {
+      "title": "Target Dots",
+      "row": "{aura} on {target}",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Målets auraer",
       "keybindLabel": "Målets forstærkninger og svækkelser",
@@ -1321,6 +1361,11 @@ export const da_DK: EnTranslations = {
       "reset": "Nulstil",
       "done": "Færdig",
       "cancel": "Annuller",
+      "showExtraBar": "Vis endnu en handlingslinje",
+      "hideExtraBar": "Skjul en handlingslinje",
+      "conflictTitle": "Tasten er allerede bundet",
+      "conflictBody": "{key} er allerede bundet til {other}. Binder du den til {action}, fjernes bindingen fra {other}.",
+      "conflictAccept": "Bind om alligevel",
       "resetConfirmTitle": "Nulstil handlingslinjens taster?",
       "resetConfirmBody": "Den første linje vender tilbage til sine standardtaster. Den anden og tredje linje bliver ubundne. Dette kan ikke fortrydes."
     },
@@ -1350,6 +1395,10 @@ export const da_DK: EnTranslations = {
       "name_thunderstrut_gobbler": "Tordenspanker den Store Kalkun",
       "name_terrorspark_groundshaker": "Skrækgnist, jordrysteren",
       "name_drakemaw_raptor": "Dragegabets Raptor",
+      "name_mech_bird": "Cluckwork Mech Bird",
+      "name_lanternback_troll": "Grumbol the Lanternback",
+      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
+      "name_rickshaw_mount": "Knogebundet Rickshaw",
       "desc_valorsteed": "En hårdfør, sikker ganger, der giver øget rejsehastighed.",
       "desc_grag_bear": "En hårdfør, sikker bjørn, der giver øget rejsehastighed.",
       "desc_stalkglider_snail": "En robust, langsomt forbrændende snegl, der giver øget rejsehastighed.",
@@ -1358,7 +1407,11 @@ export const da_DK: EnTranslations = {
       "desc_stormfeather_griffin": "En kongelig stormgrif, der bevæger sig hen over jorden på runebeslåede kløer, med sammenfoldede vinger.",
       "desc_thunderstrut_gobbler": "En kolossal, stormudklækket kalkun, der spankulerer ned fra Den Opvågnende Tinde, med halen udfoldet som en tordensky.",
       "desc_terrorspark_groundshaker": "En kompakt panseret maskine med tunge larvebånd, en grovkalibret kanon og en saddel bygget til frygtløse førere.",
-      "desc_drakemaw_raptor": "En saddelvant yngelraptor fra Dragegabets Caldera, kun sener og spurt, som stadig lugter svagt af aske."
+      "desc_drakemaw_raptor": "En saddelvant yngelraptor fra Dragegabets Caldera, kun sener og spurt, som stadig lugter svagt af aske.",
+      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
+      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
+      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
+      "desc_rickshaw_mount": "En raslende knoglekærre med en knoklet håndlanger spændt for skafterne, der trækker dig af sted i fuldt firspring."
     },
     "mountTraining": {
       "mountPrompt": "Tryk på {key} for at stige op på trænings-Modgangeren.",
@@ -1519,6 +1572,26 @@ export const da_DK: EnTranslations = {
       "showPlaytime": "Vis spilletid på karakterskærm",
       "forceHighPerfGpu": "Brug den dedikerede gaming-GPU",
       "forceHighPerfGpuNote": "Slået til som standard: skrivebordsappen beder denne computer om dens dedikerede gaming-GPU. Slå dette fra, hvis spillet ikke vil starte, åbner til en sort skærm, eller den bærbares skærm går i sort. Træder i kraft, næste gang spillet starter.",
+      "shaderWarm": "Shader Warm-up Worker",
+      "shaderWarmAuto": "Auto",
+      "shaderWarmOff": "Off",
+      "shaderWarmOn": "On",
+      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
+      "gpuBackend": "Graphics Backend",
+      "gpuBackendAuto": "Auto",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL (slow)",
+      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
+      "gpuBackendActive": "Currently using {backend}.",
+      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
+      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
+      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "Some changes take effect after a restart.",
+      "restartGame": "Restart Game",
+      "restartInProgress": "Restarting the game...",
+      "restartFailed": "The game could not restart itself. Quit and start it again.",
       "discordPresence": "Detaljeret Discord-tilstedeværelse",
       "discordPresenceNote": "Viser den zone, du er i, og hvor længe du har spillet i denne session, som din Discord-aktivitet, og alle, der kan se din Discord-profil, kan se begge dele. Kun zonens navn, din sessionstid og spillet deles, aldrig din karakter, din konto eller hvem du spiller med. Kræver, at Discord-appen kører på denne computer.",
       "showDevBadges": "Vis udviklermærker",
@@ -1528,6 +1601,7 @@ export const da_DK: EnTranslations = {
       "playerFrameScale": "Spillerrammens skala",
       "targetFrameScale": "Målrammens skala",
       "aurasOnPlayerFrame": "Buffs på spillerrammen",
+      "alwaysShowAllBuffs": "Vis altid alle forstærkninger",
       "highContrastBackground": "Baggrund med høj kontrast",
       "startAttackOnAbility": "Autoangreb ved brug af evne",
       "stopAutoAttackOnTargetSwitch": "Stop autoangreb ved målskift",
@@ -1537,19 +1611,28 @@ export const da_DK: EnTranslations = {
       "stickyTarget": "Bevar mål ved jordklik",
       "showItemLevel": "Vis genstandsniveau",
       "showReliquaryTracker": "Vis Relikviesporer",
+      "confirmVendorSell": "Bekræft før salg",
+      "confirmVendorSellNote": "Slår du dette fra, sælges genstande med ét klik uden bekræftelse, så en flyttet taskeplads kan sælge den forkerte genstand til den handlende.",
       "itemLevelLine": "Genstandsniveau {level}",
       "itemScoreLine": "Score {score}",
       "showSecondaryActionBar": "Vis sekundær handlingslinje",
       "showThirdActionBar": "Vis tredje handlingslinje",
+      "combineActionBars": "Kombiner handlingsbjælker",
       "hideUnusedActionSlots": "Skjul ubrugte handlingsfelter",
       "lockActionBars": "Lås handlingsbjælker",
       "showTargetOfTarget": "Vis målets mål",
+      "showTargetSwingTimer": "Vis målets svingtimer",
       "showPetFrame": "Vis dit kæledyr",
+      "showNameplateDots": "Show My Dots on Nameplates",
+      "nameplateDotScale": "Nameplate Dot Size",
+      "showTargetDots": "Show Target Dots",
       "waterRipples": "Vandkrusninger (kølvand)",
       "showAttackButton": "Vis angrebsknap",
       "showDailyRewardsChest": "Vis kisten med daglige belønninger",
       "mobileCameraJoystick": "Kamera joystick",
       "mobileLeftHanded": "Venstrehånds layout",
+      "touchPreciseAim": "Præcis jordsigtning",
+      "touchPreciseAimNote": "Sigt, før du kaster jordbesværgelser. Slå fra for at kaste øjeblikkeligt på det foreslåede punkt.",
       "touchTapMenus": "Tryk-menuer",
       "touchTapMenusNote": "Åbn kontrollerne for kamphandlinger, forbrugsvarer og menu med et tryk i stedet for et strøg. Tryk på en genstand for at bruge den, tryk på kontrollen igen for dens sædvanlige handling, eller tryk udenfor for at lukke."
     },
@@ -1585,6 +1668,7 @@ export const da_DK: EnTranslations = {
       "invertY": "Vend kamera om (Y)",
       "deadzone": "Stikkets dødzone",
       "cameraSpeed": "Kamerahastighed",
+      "reticleSpeed": "Sigtehastighed",
       "vibration": "Vibration",
       "buttons": "Knaplayout",
       "resetButtons": "Nulstil knaplayout",
@@ -1965,6 +2049,7 @@ export const da_DK: EnTranslations = {
       "fromYour": "Fra din {value} {stat}:",
       "names": {
         "spellPower": "Besværgelseskraft",
+        "healPower": "Helbredelseskraft",
         "critRating": "Kritvurdering",
         "hasteRating": "Hastevurdering",
         "parry": "Parade",
@@ -2099,6 +2184,12 @@ export const da_DK: EnTranslations = {
         "few": "{count} sekunder tilbage",
         "many": "{count} sekunder tilbage",
         "other": "{count} sekunder tilbage"
+      },
+      "buffsHidden": {
+        "one": "Yderligere {count} styrkelse er aktiv, men skjult i denne grafikforudindstilling",
+        "few": "Yderligere {count} styrkelser er aktive, men skjulte i denne grafikforudindstilling",
+        "many": "Yderligere {count} styrkelser er aktive, men skjulte i denne grafikforudindstilling",
+        "other": "Yderligere {count} styrkelser er aktive, men skjulte i denne grafikforudindstilling"
       },
       "playtimeDays": {
         "one": "{count} dag",
@@ -2433,7 +2524,10 @@ export const da_DK: EnTranslations = {
       "backpack": "Rygsæk",
       "bagSocketAria": "{name}: {slots}",
       "socketEmpty": "Tom taskeplads",
-      "unequipHint": "Klik for at fjerne denne taske"
+      "unequipHint": "Klik for at fjerne denne taske",
+      "poolGeneral": "Generelt: {used} af {total}",
+      "poolMaterials": "Materialer: {used} af {total}",
+      "capacityPoolsAria": "Taskepladser brugt: {used} af {total}. Generelt: {generalUsed} af {generalTotal}. Materialer: {materialsUsed} af {materialsTotal}."
     },
     "raidConvert": {
       "toPartyDone": "Dit raid er konverteret tilbage til en gruppe.",
@@ -2447,27 +2541,179 @@ export const da_DK: EnTranslations = {
       "mail": "Ringbrynje"
     },
     "varkhulCallout": {
-      "leftPillarCharging": "The left forge pillar is charging. It will ignite in 3 sec!",
-      "rightPillarCharging": "The right forge pillar is charging. It will ignite in 3 sec!",
-      "bothPillarsCharging": "The forge pillars are charging. They will ignite in 3 sec!",
-      "leftPillar": "The left forge pillar ignites!",
-      "rightPillar": "The right forge pillar ignites!",
-      "bothPillars": "The forge pillars ignite!",
-      "portalsOpening": "The forge portals are opening!",
-      "heat75": "The forge is at 75% heat!",
-      "heat90": "Forge Meltdown is imminent!",
-      "addsDefeated": "The forge legion is defeated: Varkhul is exposed!",
-      "worldfireBegins": "Worldfire ignites at the edge of the room. The crucible will be consumed in 42 sec!",
-      "worldfireClosing": "Worldfire closes in. Move toward the center!",
-      "worldfireConsumed": "The entire crucible is burning!"
+      "leftPillarCharging": "Den venstre essesøjle oplader. Den antændes om 3 sek.!",
+      "rightPillarCharging": "Den højre essesøjle oplader. Den antændes om 3 sek.!",
+      "bothPillarsCharging": "Essesøjlerne oplader. De antændes om 3 sek.!",
+      "artificerApproaches": "En Glødesmed nærmer sig essen!",
+      "leftPillar": "Den venstre essesøjle antændes!",
+      "rightPillar": "Den højre essesøjle antændes!",
+      "bothPillars": "Essesøjlerne antændes!",
+      "portalsOpening": "Esseportalerne åbner!",
+      "heat75": "Essen er ved 75% varme!",
+      "heat90": "Esse-nedsmeltning er nært forestående!",
+      "addsDefeated": "Esselegionen er besejret: Varkhul er blottet!",
+      "worldfireBegins": "Verdensild antændes ved rummets kant. Arenaen fortæres om 42 sek.!",
+      "worldfireClosing": "Verdensild trækker sig ind. Bevæg jer mod midten!",
+      "worldfireConsumed": "Hele arenaen brænder!"
+    },
+    "varkhulWaveStatus": "Bølge {wave}/{waves} | Fjender: {remaining}",
+    "raidBossGuide": {
+      "title": "Bossguide",
+      "button": "Bossguide: {boss}",
+      "subtitle": "{boss} | {difficulty}",
+      "close": "Luk bossguiden",
+      "bossesLabel": "Raidbosser",
+      "difficultyLabel": "Sværhedsgrad",
+      "normal": "Normal",
+      "heroic": "Heroic",
+      "portraitAlt": "Portræt af kampen mod {boss}",
+      "overviewHeading": "Overblik",
+      "abilitiesHeading": "Evner",
+      "whatToDo": "Hvad du skal gøre",
+      "whatToDoResponse": "Hvad du skal gøre: {response}",
+      "rolesLabel": "Rolleansvar",
+      "flagsLabel": "Mekanikadvarsler",
+      "roleTank": "Tank",
+      "roleHealer": "Helbreder",
+      "roleDamage": "Skade",
+      "roleAll": "Alle roller",
+      "flagDeadly": "Dødbringende",
+      "flagInterruptible": "Kan afbrydes",
+      "flagImportant": "Vigtigt",
+      "flagCleansable": "Kan renses",
+      "browseBoss": "Se {boss}",
+      "chooseDifficulty": "Se mekanikker for {difficulty}",
+      "expandAbility": "Fold {ability} ud",
+      "collapseAbility": "Fold {ability} sammen",
+      "abilityControlLabel": "{action}. {details}",
+      "tooltipMeta": "{phase} | {difficulty}",
+      "ignivar": {
+        "overview": "Varkhul smedede Ignivar som en budbringer, et levende segl og nøglen til Inner Crucible. Kampen tester kontrol over vandkanaler, præcis bevægelse og hurtig prioriteret skade.",
+        "phaseOpeningName": "Budbringeren Vågner",
+        "phaseOpeningSummary": "Kontroller Bålmærke med vandkanalerne, mens I håndterer Ignivars gentagne frontalangreb, himmelild, roterende stråler og voksende Essebølge.",
+        "phaseApocalypseName": "Mellemspil: Apokalypse",
+        "phaseApocalypseSummary": "Ved {health} helbred tilkalder Ignivar en Ashcaller, der forsøger at afslutte kampen.",
+        "phaseJudgmentName": "Essens Dom",
+        "phaseJudgmentSummary": "Ved {health} helbred antænder Ignivar arenaen og afslører ét sikkert tilflugtssted blandt tre skjul.",
+        "phaseJudgmentHeroicSummary": "Ved {health} helbred antænder Ignivar arenaen, mens aktive Bålmærker fortsætter med at true nærtstående spillere inde i tilflugtsstedet.",
+        "phaseFinaleName": "Finale: Sidste Inferno",
+        "phaseFinaleSummary": "Ved {health} helbred indleder Ignivar en sidste brændingsfase med en hård tidsfrist og hurtigere gentagne mekanikker.",
+        "forgeStrikeName": "Esseslag",
+        "forgeStrikeSummary": "Ignivar slår sin nuværende tank og pålægger Smeltet Rustning, som øger skaden, der tages fra Ignivar.",
+        "forgeStrikeResponse": "Tanks skifter ved {stacks} stakke. Helbredere forbereder sig på slaget og den nye tanks første nærkampssving.",
+        "brandName": "Bålmærke",
+        "brandSummary": "Ignivar mærker ikke-tanks med vedvarende ildskade. Mærkede spillere brænder også nærtstående allierede.",
+        "brandResponse": "Spred jer ud. Sigt Brændende Styrtflod ind i en klar vandkanal, og lad derefter hver markeret spiller krydse det aktiverede vand alene for at rense sig.",
+        "brandHeroicResponse": "Spred jer ud. Åbn en kanal med Brændende Styrtflod, og rens én markeret spiller ad gangen. Hver rensning udløser Renselsens Tilbageslag mod hele raidet.",
+        "searingTorrentName": "Brændende Styrtflod",
+        "searingTorrentSummary": "Ignivar sporer en spiller og udløser derefter et bredt frontalt udbrud. En klar vandkanal, der rammes af udbruddet, aktiveres i kort tid.",
+        "searingTorrentHeroicSummary": "Ignivar sporer en spiller og udløser derefter et næsten dødeligt frontalt udbrud. En klar vandkanal, der rammes af udbruddet, aktiveres i kort tid.",
+        "searingTorrentResponse": "Sigt advarslen gennem præcis én klar kanal. Alle andre forlader frontalangrebet, før kastet fuldføres.",
+        "rainName": "Regn af Gløder",
+        "rainSummary": "Tre ildsektorer og markerede meteornedslag straffer spillere, der bliver inde i deres advarsler.",
+        "rainHeroicSummary": "Tre ildsektorer og markerede meteornedslag giver ekstrem skade til spillere, der bliver inde i deres advarsler.",
+        "rainResponse": "Bevæg jer ind i en umarkeret åbning, og forlad hver meteorcirkel før nedslag.",
+        "raysName": "Roterende Inferno",
+        "raysSummary": "Roterende ildstråler fejer rundt om Ignivar og skader gentagne gange spillere, der rører dem.",
+        "raysHeroicSummary": "Roterende ildstråler fejer rundt om Ignivar og påfører alvorlig, gentagen skade ved kontakt.",
+        "raysResponse": "Bevæg jer med det åbne rum mellem stråler. Skær aldrig gennem en stråle, selv med en hurtig bevægelsesevne.",
+        "forgeWaveName": "Essebølge",
+        "forgeWaveSummary": "En voksende ildmur krydser arenaen, efterlader to modstående åbninger og slår ramte spillere tilbage.",
+        "forgeWaveHeroicSummary": "En voksende ildmur krydser arenaen, efterlader to modstående åbninger og slår ramte spillere meget længere væk.",
+        "forgeWaveResponse": "Find en af åbningerne under opladningen, stil dig ud for den, og undgå at blive slået mod arenaens kant.",
+        "apocalypseName": "Apokalypse",
+        "apocalypseSummary": "Ignivar tilkalder en Ashcaller. Fuldfører forstærkningen Apokalypse, besejres raidet øjeblikkeligt.",
+        "apocalypseResponse": "Skift al tilgængelig skade over på Ignivar Ashcaller, og besejr den, før kastet fuldføres.",
+        "judgmentName": "Essens Dom",
+        "judgmentSummary": "Ignivar markerer tre skjul, udpeger ét sikkert tilflugtssted og brænder derefter gentagne gange resten af arenaen.",
+        "judgmentHeroicSummary": "Ignivar markerer ét sikkert tilflugtssted, mens arenaen brænder. Bålmærke forbliver aktivt og skader stadig nærtstående allierede.",
+        "judgmentResponse": "Find det unikt markerede tilflugtssted under advarslen, og saml jer fuldt ud inden for dets grænse, før gulvet antændes.",
+        "chainsName": "Essens Lænker",
+        "chainsSummary": "Ignivar sammenkæder nærtstående par. Adskiller I jer for langt, eller krydser I et andet pars lænke, giver det dødelig skade.",
+        "chainsResponse": "Bliv tæt på din sammenkædede partner, bevæg jer sammen, og hold alle andre spillere fra at passere gennem jeres lænke.",
+        "lastInfernoName": "Sidste Inferno",
+        "lastInfernoSummary": "Ignivar raserer og forbereder en hård udslettelse, mens Regn af Gløder, Brændende Styrtflod og Roterende Inferno accelererer.",
+        "lastInfernoResponse": "Brug resterende skade- og helbredelsesnedkølinger, bliv ved med at udføre bevægelsesmekanikkerne, og besejr Ignivar, før nedtællingen slutter.",
+        "brand": "Bålmærke: spred jer ud. Sigt Brændende Styrtflod ind i en klar vandkanal, og kryds derefter vandet alene for at rense dig.",
+        "movement": "Bevægelse: undgå kegler fra Regn af Gløder og meteorer, bevæg jer med Roterende Inferno, og brug Essebølges to åbninger.",
+        "apocalypse": "Apokalypse: dræb Ignivar Ashcaller, før dens kast fuldføres.",
+        "judgment": "Essens Dom: find det unikke tilflugtssted under advarslen, og saml jer derefter inden for dets markerede grænse, når gulvet antændes.",
+        "finale": "Sidste Inferno: fuldfør Ignivar, før den hårde udslettelse indtræffer, mens hurtigere meteorer, frontalangreb og Roterende Inferno fortsætter.",
+        "heroic": "Heroic: sammenkædede spillere holder sig tæt sammen under Essens Lænker, Bålmærke forbliver aktivt under Essens Dom, og Essebølge skubber længere væk."
+      },
+      "varkhul": {
+        "overview": "Varkhul fængslede den døende Sidste Kilde for at smede levende metal og skabte derefter Ignivar til at vogte forbrydelsen. Hans kamp kombinerer personlig positionering med raidbred kontrol over den store esse.",
+        "phaseOpeningName": "Essefaderen",
+        "phaseOpeningSummary": "Varkhul skifter mellem tankpres, brede frontalangreb, bevægende projektiler, gruppeabsorbering, meteorbølger og angreb fra den store ambolt.",
+        "phaseAssemblyName": "Mellemspil: Mesterens Samling",
+        "phaseAssemblySummary": "Ved {health} helbred bliver Varkhul beskyttet, mens hans esselegion kommer ind gennem portaler, og søjlestrålerne truer med en Esse-nedsmeltning.",
+        "phaseFinaleName": "Finale: Løsladt Mesterværk",
+        "phaseFinaleSummary": "Ved {health} helbred angriber Varkhul hurtigere, giver mere skade og sender ildstød gennem raidet indtil den endelige tidsfrist.",
+        "phaseFinaleHeroicSummary": "Ved {health} helbred opgiver Varkhul de fleste tidligere mekanikker, mens Verdensild trækker sig indad og fortærer arenaen.",
+        "makersBrandName": "Skaberens Mærke",
+        "makersBrandSummary": "Varkhul slår sin nuværende tank og pålægger en stakbar effekt, der øger al skade, der tages fra ham.",
+        "makersBrandResponse": "Tanks skifter ved {stacks} stakke. Helbredere forbereder den kommende tank, før Varkhul skifter mål.",
+        "frontalName": "Essefaderens Sving",
+        "frontalSummary": "Varkhul udløser et meget bredt frontalt sving, som giver tung ildskade til alle foran ham.",
+        "frontalHeroicSummary": "Varkhul udløser et meget bredt frontalt sving, som giver næsten dødelig ildskade til alle foran ham.",
+        "frontalResponse": "Hold Varkhul vendt væk fra gruppen, og bevæg jer bag ham, så snart advarslen viser sig.",
+        "orbsName": "Glødekugler",
+        "orbsSummary": "Markerede ikke-tanks efterlader vedvarende gløde-pøle og udløser ildkugler i alle retninger. Glødende Metal absorberer desuden indkommende helbredelse.",
+        "orbsHeroicSummary": "Markerede ikke-tanks efterlader stærkt skadende, vedvarende gløde-pøle og udløser farlige ildkugler i alle retninger. Glødende Metal absorberer desuden indkommende helbredelse.",
+        "orbsResponse": "Bær hvert mærke til rummets kant, adskil pølene, og undvig derefter kuglerne, mens de krydser arenaen. Helbredere fjerner hurtigt absorberingen.",
+        "pyreName": "Delt Bål",
+        "pyreSummary": "En bevægende cirkel følger én spiller uden Glødende Metal. Dens skade deles mellem spillerne inde i den, og hver manglende spiller giver {missingPenalty} skade i maksimalt helbred til hele raidet.",
+        "pyreHeroicSummary": "En bevægende cirkel følger én spiller uden Glødende Metal og deler et større hit. Hver manglende spiller giver desuden {missingPenalty} skade i maksimalt helbred til hele raidet.",
+        "pyreResponse": "Saml mindst {players} spillere inde i cirklen, og bevæg jer med dens mål, indtil kastet udløses.",
+        "forgestormName": "Essestorm",
+        "forgestormSummary": "Varkhul kalder {waves} på hinanden følgende bølger af markerede meteornedslag ned over arenaen.",
+        "forgestormHeroicSummary": "Varkhul kalder {waves} på hinanden følgende bølger af markerede meteornedslag ned, som giver ekstrem skade.",
+        "forgestormResponse": "Hold øje med hvert nyt sæt jordadvarsler, og bevæg jer væk, før den bølge rammer. Vend ikke tilbage til en tidligere position uden at tjekke den næste bølge.",
+        "rayName": "Hærdningsstråle",
+        "raySummary": "En stråle sporer en markeret spiller gennem en lang opladning. Den første anden spiller mellem Varkhul og målet opfanger hittet og får Hærdet Sår.",
+        "rayResponse": "Udpeg en sund spiller, som regel offtanken, til at træde ind i linjen. Hold andre spillere væk, og rotér opfangere, mens Hærdet Sår er aktivt.",
+        "anvilName": "Amboltens Dekret",
+        "anvilSummary": "Varkhul går til den store esse og slår den {strikes} gange, hvilket giver stigende skade til hele raidet.",
+        "anvilHeroicSummary": "Varkhul slår den store esse {strikes} gange for stigende raidskade, mens markerede meteorer falder over spillerne.",
+        "anvilResponse": "Saml jer for raidhelbredelse, og brug defensive nedkølinger til det sidste slag.",
+        "anvilHeroicResponse": "Spred de markerede meteorer væk fra gruppen, mens helbredere og defensive nedkølinger dækker alle {strikes} slag.",
+        "assemblyName": "Mesterens Samling",
+        "assemblySummary": "Varkhul bliver beskyttet og indleder en tidsbegrænset samling. Raidet skal besejre hver portalbølge, før essen fuldfører hans mesterværk.",
+        "assemblyResponse": "Del opmærksomheden mellem strålekontrol og prioriterede forstærkninger. Besejr hele esselegionen, før samlingens tidsfrist udløber.",
+        "beamName": "Crucible-stråle",
+        "beamSummary": "Aktive søjlestråler opvarmer essen, medmindre en spiller blokerer dem. Blokerere tager stigende skade fra Crucible-eksponering, mens blokerede og inaktive stråler lader varmen falde.",
+        "beamHeroicSummary": "Aktive søjlestråler opvarmer essen, medmindre en spiller blokerer dem. Blokerere tager stigende skade fra Crucible-eksponering, og essens varme falder aldrig.",
+        "beamResponse": "Stå mellem hver aktiv søjle og essen, og rotér derefter blokerere, før eksponeringen bliver farlig. Når varmen når sit maksimum, udløses en dødelig Esse-nedsmeltning.",
+        "legionName": "Esselegion",
+        "legionSummary": "Crucible-vogtere kaster Crucible-rystelse for at tilføje essevarme, mens Glødesmede bruger Reparationsprotokol til at helbrede Varkhul.",
+        "legionResponse": "Afbryd Crucible-rystelse, stop Reparationsprotokol, og fokuser hver farlig kaster, før I rydder de resterende forstærkninger.",
+        "masterpieceName": "Løsladt Mesterværk",
+        "masterpieceSummary": "Varkhul angriber hurtigere, giver mere skade og brænder gentagne gange raidet indtil den endelige udslettelse.",
+        "masterpieceHeroicSummary": "Varkhul angriber hurtigere og giver mere skade, mens Verdensild erstatter de fleste tidligere mekanikker i den sidste brænding.",
+        "masterpieceResponse": "Brug resterende offensive og defensive nedkølinger, og besejr Varkhul, før den sidste nedtælling slutter.",
+        "worldfireName": "Verdensild",
+        "worldfireSummary": "I Heroic rykker ilden frem fra arenaens kant mod midten i etaper, indtil hele arenaen brænder.",
+        "worldfireResponse": "Bevæg jer indad foran hvert fremrykkende ildbånd, bevar det svindende sikre rum, og fuldfør Varkhul, før midten antændes.",
+        "tanks": "Tanks: skift ved to stakke af Skaberens Mærke, og hold Varkhul inden for nærkampsafstand.",
+        "orbs": "Glødekugler: markerede spillere spreder sig til rummets kant. Deres ildpøle bliver liggende, og de udløste kugler krydser rummet.",
+        "pyre": "Delt Bål: kun en spiller uden Glødende Metal kan vælges. Saml fire spillere inde i den bevægende cirkel i begge sværhedsgrader. Hver manglende spiller giver 15% af maksimalt helbred til hele raidet.",
+        "forgestorm": "Essestorm: hold øje med de faldende meteorer, og forlad hvert markeret nedslag, før hver af de tre bølger rammer.",
+        "anvil": "Amboltens Dekret: Varkhul går til den store esse og slår den tre gange, hvilket giver raidskade. I Heroic falder der desuden markerede meteorer.",
+        "ray": "Hærdningsstråle: en anden spiller, som regel en tank, opfanger den bevægende linje, før den lange opladning slutter. Spilleren, der rammes, får Hærdet Sår.",
+        "forge": "Essesøjler: blokér aktive stråler, før de når essen, og rotér blokerere, efterhånden som Crucible-eksponering vokser. Et fuldt varmemeter udløser Esse-nedsmeltning.",
+        "assembly": "Mesterens Samling: blokér begge essestråler, dræb hver portalbølge, afbryd Crucible-rystelse, og forhindr Glødesmede i at helbrede Varkhul.",
+        "worldfire": "Verdensild: i Heroic trækker den brændende kant sig ind mod midten i den sidste fase. Besejr Varkhul, før hele arenaen brænder.",
+        "heroic": "Heroic: essens varme afkøles aldrig, Amboltens Dekret tilføjer meteorer, og den sidste fase fjerner de fleste mekanikker for at fokusere på Verdensild."
+      }
     },
     "auraEffect": {
-      "sharedPyre": "Deals {total}% of each player's maximum health, divided by the number of players inside the circle ({perPlayer}% each with {players} players).",
-      "makersBrand": "For {duration} sec, each stack increases damage taken from Varkhul by {pct}%. Stacks up to {max} times. Tanks should swap at {swap} stacks.",
-      "varkhulSentinelsGaze": "The Ember Sentinel pursues you. Keep it away from the raid until it is destroyed.",
-      "varkhulMoltenCore": "Carry this core to the forge. Molten Burden deals increasing damage every {interval} sec, from {min}% to {max}% of maximum health.",
-      "varkhulForgeLink": "Intercept an active pillar beam before it reaches the forge. Open beams add 6% heat per second. In Normal, blocked beams and inactive pillars cool the forge; in Heroic, heat never falls. At 100%, the forge suffers a lethal Meltdown.",
-      "varkhulCrucibleExposure": "Blocking a Crucible Beam deals increasing maximum-health damage every second. The stacks reset 10 seconds after leaving a beam in Normal and after 60 seconds in Heroic.",
+      "sharedPyre": "Giver {total}% af hver spillers maksimale helbred, delt med antallet af spillere inde i cirklen ({perPlayer}% hver med {players} spillere).",
+      "varkhulSharedPyre": "Giver {total}% af hver spillers maksimale helbred, delt mellem spillerne inde i cirklen ({perPlayer}% hver med {players} spillere). Hver manglende spiller giver desuden {missingPenalty}% af maksimalt helbred til hele raidet, inklusive spillerne inde i cirklen.",
+      "makersBrand": "I {duration} sek. øger hver stak den skade, du tager fra Varkhul, med {pct}%. Stakker op til {max} gange. Tanks bør skifte ved {swap} stakke.",
+      "varkhulSentinelsGaze": "Glødvogteren forfølger dig. Hold den væk fra raidet, indtil den er tilintetgjort.",
+      "varkhulMoltenCore": "Bær denne kerne til essen. Smeltet Byrde giver stigende skade hvert {interval}. sek., fra {min}% til {max}% af maksimalt helbred.",
+      "varkhulForgeLink": "Opfang en aktiv søjlestråle, før den når essen. Åbne stråler tilføjer 6% varme pr. sekund. I Normal afkøler blokerede stråler og inaktive søjler essen; i Heroic falder varmen aldrig. Ved 100% rammes essen af en dødelig Nedsmeltning.",
+      "varkhulCrucibleExposure": "At blokere en Crucible-stråle giver stigende skade i procent af maksimalt helbred hvert sekund. Stakkene nulstilles 10 sekunder efter, du forlader en stråle i Normal, og efter 60 sekunder i Heroic.",
       "dot": "Giver {value} {school}-skade hvert {interval}. sek",
       "hot": "Gendanner {value} helbred hvert {interval}. sek",
       "mendingCurrent": "Opbevarer {value} helbredelse, frigivet over tid eller forbrugt af Kaskadelapning",
@@ -2678,7 +2924,9 @@ export const da_DK: EnTranslations = {
       "chestTitle": "Kiste",
       "takeLootButton": "Tag bytte",
       "takeLootTooltip": "Tager mønterne og droppede genstande. Bruger ikke høsten op.",
-      "unifiedPressHint": "Interaktionstast plyndrer og høster i ét tryk ved hjælp af dit byfokus."
+      "unifiedPressHint": "Interaktionstast plyndrer og høster i ét tryk ved hjælp af dit byfokus.",
+      "bindConfirmTitle": "Bindes ved afhentning",
+      "bindConfirmBody": "Dette bytte indeholder en genstand, der bindes til dig, når den tages. En bundet genstand kan kun handles til spillere, der delte dens bytte, og kun i en begrænset tid."
     },
     "spellbook": {
       "addToBarAria": "Tilføj {name} til handlingslinjen",
@@ -2710,6 +2958,7 @@ export const da_DK: EnTranslations = {
     },
     "partyFrames": {
       "section": "Gruppe- og raidrammer",
+      "optionsSection": "Indstillinger for gruppens rammer",
       "unlock": "Flyt gruppe- og raidrammer",
       "lock": "Lås gruppe- og raidrammer",
       "style": "Rammestil",
@@ -2740,13 +2989,102 @@ export const da_DK: EnTranslations = {
     "frameReset": {
       "label": "Nulstil rammepositioner"
     },
+    "interfaceUnlock": {
+      "label": "Rediger rammer",
+      "unlock": "Lås grænsefladen op",
+      "lock": "Lås grænsefladen",
+      "lockAll": "Lås grænsefladen",
+      "barsNote": "Kun de handlingsbjælker, du har slået til, vises under redigering. For at placere flere bjælker skal du først tilføje dem med plus- og minusknapperne på den primære handlingsbjælke.",
+      "frozenNote": "Under redigering er grænsefladen og kameraet frosset: knapper og rammer er blot billeder, du kan arrangere, og klik når ikke ud til spilverdenen.",
+      "unlockFrame": "Lås denne ramme op",
+      "lockFrame": "Lås denne ramme",
+      "resizeFrame": "Ændr størrelsen på denne ramme",
+      "frameNames": {
+        "actionBar1": "Handlingsbjælke",
+        "actionBar2": "Handlingsbjælke 2",
+        "actionBar3": "Handlingsbjælke 3",
+        "steamWishlist": "Ønskeliste-påmindelse",
+        "menu": "Menu",
+        "minimap": "Minikort",
+        "stanceBar": "Stillingsbjælke",
+        "xpBar": "Erfaringsbjælke",
+        "chat": "Chat",
+        "actionBarGroup": "Handlingsbjælker",
+        "playerFrame": "Spiller",
+        "targetFrame": "Mål",
+        "partyFrames": "Gruppe",
+        "swingBar": "Autoangreb",
+        "targetDots": "Target Dots"
+      },
+      "framesMenu": "Rammeindstillinger",
+      "framesMenuTitle": "Vis eller skjul enkelte rammer. En fravalgt ramme forbliver skjult, indtil du vælger den igen eller nulstiller til standard.",
+      "showHideFrames": "Vis eller skjul rammer",
+      "buffsLeftToRight": "Forstærkninger fra venstre mod højre",
+      "debuffsLeftToRight": "Svækkelser fra venstre mod højre",
+      "lockPlayerFrameToBar": "Fastgør spillerrammen til handlingsbjælken",
+      "actionBarsVertical": "Lodrette handlingsbjælker",
+      "actionBar1Vertical": "Lodret handlingsbjælke",
+      "actionBar2Vertical": "Lodret handlingsbjælke 2",
+      "actionBar3Vertical": "Lodret handlingsbjælke 3",
+      "menuRailHorizontal": "Vandret menu",
+      "snapToGrid": "Fastgør til gitter",
+      "previewMemberName": "{className} {number}",
+      "resetFrameSize": "Nulstil størrelse",
+      "resetFrameSizeFor": "Nulstil størrelse for {name}",
+      "previewSpell": "Eksempelbesværgelse"
+    },
+    "transfer": {
+      "frameLayout": "Rammelayout",
+      "allSettings": "Alle indstillinger",
+      "exportAction": "Eksportér",
+      "importAction": "Importér",
+      "copy": "Kopiér",
+      "copied": "Kopieret til udklipsholderen.",
+      "copyFailed": "Kopiering mislykkedes. Marker koden, og kopiér den selv.",
+      "applyReload": "Anvend og genindlæs",
+      "pastePlaceholder": "Indsæt en eksporteret kode her.",
+      "invalid": "Det er ikke en gyldig eksportkode.",
+      "wrongKind": "Den kode er en anden eksporttype."
+    },
+    "riftForge": {
+      "title": "Rift Forge",
+      "subtitle": "Riftbound bands",
+      "currency": "{name}: {count}",
+      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
+      "wornHint": "Worn. Unequip it to forge.",
+      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
+      "upgradeMax": "Fully upgraded",
+      "gemPickAria": "Gem to socket",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
+      "socketBtn": "Socket",
+      "socketsNone": "no gems",
+      "noGems": "No Rift gems in your bags",
+      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "reason": {
+        "notFound": "That band is not in your bags.",
+        "notRiftGear": "Only a Riftbound band can be forged.",
+        "maxUpgrade": "That band is fully upgraded.",
+        "insufficientEssence": "Not enough Rift Essence.",
+        "invalidGem": "You have no such Rift gem.",
+        "dead": "You can't do that while dead.",
+        "tooFar": "You are too far from the Rift Forge."
+      },
+      "done": {
+        "upgrade": "Upgraded {name}.",
+        "socket": "Socketed a gem into {name}.",
+        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "Kræver niveau {level}",
       "riftTier": "{tier}-rangs Rift-genstand",
       "riftUpgrade": "Rift-opgradering {level}/{max}",
       "riftSockets": "Rift-juveler {used}/{total}",
+      "riftGemSocket": "Socket bonus for a Riftbound band",
       "statEnchanted": "+{value} {stat} (Fortryllet)",
-      "enchantedFallback": "Fortryllet"
+      "enchantedFallback": "Fortryllet",
+      "partyTradeWindow": "Du kan handle denne genstand til spillere, der delte dens bytte, i de næste {time}. Udstyrer du den, afsluttes handelsvinduet."
     },
     "materialHint": {
       "fineGrade": "Fin kvalitet. Indsamlet fra en åre på fuldt niveau med et værktøj, der rangerer over materialet, og tæller som den ordinære version, hvor end en sådan kræves.",
@@ -2947,7 +3285,10 @@ export const da_DK: EnTranslations = {
       "unlink": "Fjern Steam-tilknytning",
       "linked": "Tilknyttet Steam-kontoen {id}",
       "benefits": "Tilknyt din Steam-konto fra skrivebordsappen for at spejle de bedrifter, du opnår, som Steam-præstationer.",
-      "noTicket": "Steam udstedte ingen tilknytningsbillet. Start Steam, og prøv så igen."
+      "noTicket": "Steam udstedte ingen tilknytningsbillet. Start Steam, og prøv så igen.",
+      "wishlist": "Føj til ønskelisten på Steam",
+      "wishlistAria": "Føj til ønskelisten på Steam: åbn World of ClaudeCrafts butiksside",
+      "wishlistShort": "Ønskeliste"
     },
     "epic": {
       "title": "Epic",
@@ -3021,6 +3362,15 @@ export const da_DK: EnTranslations = {
       "popupTitle": "Laugsskilt",
       "close": "Luk"
     },
+    "realmBuilder": {
+      "title": "Realm Builder of the Month",
+      "currentLabel": "Honoured this month",
+      "placeholderName": "Your Name Here",
+      "placeholderHint": "This plate is waiting for its first name.",
+      "pastTitle": "Past honourees",
+      "pastEmpty": "No names on the roll yet.",
+      "close": "Close"
+    },
     "bank": {
       "title": "Bank",
       "subtitle": "Det Forgyldte Pengeskrin",
@@ -3033,6 +3383,26 @@ export const da_DK: EnTranslations = {
       "buySlotsMaxed": "Fuldt udvidet",
       "buyConfirm": "Køb {count} ekstra bankpladser for {price}?",
       "buyConfirmAccept": "Køb",
+      "meterLabel": "{used} af {total} pladser",
+      "meterPoolGeneral": "Generelt: {used} af {total}",
+      "meterPoolMaterials": "Materialer: {used} af {total}",
+      "meterPoolsAria": "Bankpladser brugt: {used} af {total}. Generelt: {generalUsed} af {generalTotal}. Materialer: {materialsUsed} af {materialsTotal}.",
+      "meterMaterialsNote": "Plads udelukkende til materialer fra isatte punge. Andre genstande kan ikke bruge den.",
+      "priceDisclaimer": "Priser kan ændre sig med spillets økonomi.",
+      "rungItemName": "{count} bankpladser",
+      "buySlotsDualAria": "Køb {count} pladser for {price} eller {cost} Claudium",
+      "buyConfirmDual": "Køb {count} ekstra bankpladser?",
+      "buyConfirmGold": "Køb for {price}",
+      "buyConfirmClaudium": "Køb for {cost} Claudium",
+      "rungGranted": "Bankpladserne blev tilføjet. Denne karakters bank er nu større.",
+      "rungAlreadyGranted": "Disse pladser er allerede på denne karakter. Du blev ikke opkrævet igen.",
+      "rungApplyDeferred": "Betaling gennemført. Pladserne tilføjes automatisk, næste gang denne karakter logger ind.",
+      "rungGrantUnresolved": "Betaling gennemført, men pladserne kunne ikke tilføjes endnu. Købet er registreret, og support kan færdiggøre det for dig.",
+      "rungInProgress": "Et køb til denne karakter er stadig ved at blive gennemført. Prøv igen om et øjeblik.",
+      "rungDoesNotFit": "Denne karakters bank har ikke plads til endnu en udvidelse.",
+      "rungNotPurchasable": "Disse bankpladser kan ikke købes lige nu.",
+      "rungFailed": "Købet kunne ikke gennemføres.",
+      "rungOutage": "Købet kunne ikke bekræftes. Prøv igen med denne knap, så bliver du ikke opkrævet to gange. Genindlæser du spillet først, kan den beskyttelse gå tabt.",
       "withdrawHint": "Klik for at tage ud",
       "withdrawPartialHint": "Shift-klik for at tage et mindre antal ud",
       "depositHint": "Klik for at indsætte",
@@ -3045,6 +3415,9 @@ export const da_DK: EnTranslations = {
       "withdrawQuantityTitle": "Tag {item} ud",
       "withdrawQuantityInput": "Antal at tage ud",
       "withdrawQuantityConfirm": "Tag ud",
+      "vaultRowWithdrawName": "Tag {item} ud",
+      "priceChanged": "Prisen ændrede sig, før købet blev gennemført. Gennemgå den opdaterede pris, og bekræft igen.",
+      "withdrawQuantityAction": "Antal at tage ud: {item}",
       "filterGroupAria": "Filtrér banken efter kategori",
       "sortAria": "Sortér bankens genstande",
       "searchAria": "Søg i bankens genstande efter navn",
@@ -3066,6 +3439,34 @@ export const da_DK: EnTranslations = {
       "bonusReferralProgress": "{count}/{cap}",
       "bonusReferralExplainer": "Invitér en ven: når din ven når niveau 10, optjener I hver især 2 pladser, op til 5 venner.",
       "bonusSectionAria": "Bonuspladser i banken, og hvordan du optjener flere",
+      "socketRowAria": "Taskepladser i banken",
+      "socketEmpty": "Tom taskeplads i banken",
+      "socketEmptyHint": "Klik på en taske i dine tasker for at gemme den i banken",
+      "socketLocked": "Låst taskeplads",
+      "socketLockedLater": "Taskepladser låses op i rækkefølge, billigst først",
+      "socketUnlockAria": "Lås en taskeplads i banken op for {price}",
+      "socketUnlockHint": "Klik for at låse denne taskeplads op",
+      "socketUnlockConfirm": "Lås en taskeplads i banken op for {price}?",
+      "socketUnlockAccept": "Lås op",
+      "unsocketHint": "Klik for at lægge denne taske tilbage i dine tasker",
+      "socketHint": "Klik for at sætte denne taske i din bank",
+      "vaultTab": "Hvælv",
+      "vaultCapacityNote": "Hvert materiale rummer op til {cap}.",
+      "vaultEmpty": "Dit hvælv er tomt. Klik på et materiale i dine tasker for at indsætte det.",
+      "vaultRowAria": "{item}: {count} af {cap} opbevaret",
+      "vaultLockedIntro": "Lås Materialehvælvet op for at oplagre håndværksmaterialer ved siden af din bank. Hvert materiale får sit eget rum, op til {cap} stykker hver.",
+      "vaultUnlockButton": "Lås Materialehvælvet op",
+      "vaultUnlockConfirm": "Lås Materialehvælvet op for {price}?",
+      "vaultUpgrade": "Udvid alle lofter til {cap}",
+      "vaultUpgradeConfirm": "Udvid alle materialelofter til {cap} for {price}?",
+      "vaultDepositAll": "Indsæt alle materialer",
+      "vaultDepositAllTooltip": "Sender hvert materiale fra dine tasker til dit hvælv i én omgang og fylder hvert materiale op til dets loft. Udstyr, værktøjer, questgenstande og forbrugsvarer røres aldrig.",
+      "vaultDepositAllDone": "Materialer indsat: {count}.",
+      "vaultDepositAllFull": "Materialer indsat: {count}. Nogle lofter er fulde.",
+      "vaultDepositAllNone": "Hvælvets lofter er fulde: intet blev indsat.",
+      "vaultWithdrawShort": "Kun {fit} af {count} er der plads til i dine tasker.",
+      "vaultDepositHint": "Klik for at indsætte i dit hvælv",
+      "vaultCannotDeposit": "Kan ikke lægges i hvælvet",
       "tabsAria": "Bankfaneblade",
       "personalTab": "Personlig",
       "guildTab": "Laug",
@@ -3097,8 +3498,34 @@ export const da_DK: EnTranslations = {
       "guildViewsAria": "Laugsbankens visninger",
       "guildContentsTab": "Indhold",
       "guildLogTab": "Log",
+      "guildHistoryTab": "History",
       "logAria": "Laugsbankens aktivitetslog",
       "logNote": "De {count} seneste handlinger i laugsbanken.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Indlæser laugsbankens log...",
       "logEmpty": "Der er endnu ikke flyttet noget ind i eller ud af laugsbanken.",
       "logUnavailable": "Laugsbankens log kan ikke læses lige nu.",
@@ -3196,6 +3623,20 @@ export const da_DK: EnTranslations = {
         "result": {
           "set": "Laugsopslagstavlen blev opdateret.",
           "notOfficer": "Kun officerer og lavsmesteren kan redigere opslagstavlen."
+        }
+      },
+      "roster": {
+        "seats": "{count} of {cap} seats",
+        "expand": "Expand roster (+{seats} seats for {price})",
+        "maxed": "The roster is at its largest size",
+        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
+        "confirmAction": "Expand",
+        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "result": {
+          "notLeader": "Only the Guild Master may expand the guild roster.",
+          "maxed": "The guild roster cannot grow any larger.",
+          "cannotAfford": "You need {price} to expand the guild roster.",
+          "retry": "The guild roster changed while you were buying. Try again."
         }
       }
     },
@@ -3465,6 +3906,8 @@ export const da_DK: EnTranslations = {
       "reagentsNeeded": "Kræver:",
       "reagentLine": "{name}: {have}/{required}",
       "reagentFineSub": "(bruger {count} af fin kvalitet)",
+      "reagentVaultDraw": "(henter {count} fra dit hvælv)",
+      "vaultUnreachable": "Materialehvælvet er uden for rækkevidde her.",
       "craftFeeLine": "Gebyr: {fee} pr. stk.",
       "empty": "Ingen opskrifter kendt endnu.",
       "resultAria": "Håndværk {name}",
@@ -3563,7 +4006,9 @@ export const da_DK: EnTranslations = {
       "equip": "Udrust",
       "disenchant": "Affortrylle",
       "salvage": "Bjærg",
-      "applyEnchant": "Anvend fortryllelse"
+      "applyEnchant": "Anvend fortryllelse",
+      "sell": "Sælg",
+      "sellAll": "Sælg alle ({count})"
     },
     "enchanting": {
       "disenchantedLine": "Du affortrylles {item}.",
@@ -3610,6 +4055,7 @@ export const da_DK: EnTranslations = {
       "yieldLineRange": "{min} til {max} {item}",
       "alreadyEnchanted": "Den genstand er allerede fortryllet.",
       "sameEnchant": "Den genstand har allerede den fortryllelse.",
+      "riftGear": "Riftbound bands take Rift gems, not enchants.",
       "replaceTag": "Erstatter {enchant}",
       "sameEnchantTag": "Allerede anvendt",
       "plainTag": "Ikke fortryllet",
@@ -4065,9 +4511,15 @@ export const da_DK: EnTranslations = {
       "loading": "Indlæser Børsen...",
       "loadFailed": "Børsen kunne ikke nås. Prøv igen om lidt.",
       "disabledRealm": "$WOC-Børsen er ikke tilgængelig på dette rige.",
+      "browserOnlyConfirmTitle": "Åbn $WOC-børsen i browseren?",
+      "browserOnlyConfirmBody": "$WOC-børsen kører kun i browserversionen af World of ClaudeCraft. Dette åbner World of ClaudeCraft i din browser, hvor du kan logge ind og åbne børsen; spillet fortsætter her.",
+      "browserOnlyConfirmOpen": "Åbn i browser",
+      "browserOnlyConfirmCancel": "Annuller",
       "pausedBanner": "Handel er sat på pause. Auktioner tæller stadig ned; nye noteringer, bud, tilbud og betalinger venter, til handlen genoptages, og en betaling, der allerede er sendt, afregnes stadig.",
-      "walletBanner": "Tilknyt og verificer en pung for at byde, købe eller sælge på Børsen.",
-      "walletBannerCta": "Tilslut pung",
+      "walletLinkedDisconnected": "Din offentlige adresse er tilknyttet. Genopret forbindelsen til den wallet-app, når du vil betale med $WOC.",
+      "walletLinkedConnected": "Din tilknyttede wallet-app er forbundet og klar til $WOC-køb.",
+      "walletUsdBalance": "{amount} USD",
+      "walletUsdUnknown": "Ukendt",
       "rateNote": "Kurs: omkring {tokens} $WOC for 1,00 USD, pr. {time}.",
       "rateNotePaused": "Sidst kendte kurs: omkring {tokens} $WOC for 1,00 USD, pr. {time}.",
       "estimateNote": "Omkring {tokens} $WOC for {usd} til den aktuelle kurs.",
@@ -4321,6 +4773,8 @@ export const da_DK: EnTranslations = {
       "online": "Karakteren er i øjeblikket online.",
       "rename_not_permitted": "Det er ikke tilladt at omdøbe denne karakter.",
       "delete_confirm": "Skriv karakterens navn for at bekræfte sletning.",
+      "storage_purchase_open": "Et lagerkøb skal afsluttes eller løses, før figuren kan slettes.",
+      "delete_busy": "Riget er optaget. Prøv at slette denne figur igen om et øjeblik.",
       "already_in_world": "Karakteren er allerede i verdenen.",
       "taken_over": "Din karakter blev overtaget af en anden session.",
       "rename_required": "Denne karakter skal omdøbes, før den kan komme ind i verdenen.",
@@ -4381,7 +4835,13 @@ export const da_DK: EnTranslations = {
       "upstream": "Epic svarede ikke. Prøv igen om et øjeblik."
     },
     "wallet": {
-      "handoff_invalid": "Den pung-godkendelse udløb eller kunne ikke bekræftes. Prøv igen."
+      "handoff_invalid": "Den pung-godkendelse udløb eller kunne ikke bekræftes. Prøv igen.",
+      "reauth_required": "Bekræft denne ændring af pungen med din adgangskode til kontoen.",
+      "reauth_two_factor": "Din konto har to-faktor-godkendelse slået til. Indtast din kode for at bekræfte.",
+      "reauth_no_password": "Opret først en adgangskode i kontoindstillingerne, og prøv igen.",
+      "reauth_bad_signature": "Pungens signatur kunne ikke verificeres. Prøv igen.",
+      "reauth_bad_password": "Din adgangskode er forkert.",
+      "reauth_bad_two_factor": "Den kode er ikke gyldig, prøv igen."
     },
     "ota_updates": {
       "invalid_input": "Ugyldig indtastning."
@@ -4839,6 +5299,7 @@ export const da_DK: EnTranslations = {
       "ifPartySort": "Rækkefølgen, gruppemedlemmer vises i: gruppeorden, rolle, eller navn.",
       "ifPartyShowAuras": "Hvorvidt styrkelser og svækkelser vises på gruppens rammer. Tilsvarende kontakter dækker ressourcebjælker, absorberinger, kæledyr, og hvorvidt du selv optræder på din egen gruppeliste.",
       "ifAurasOnPlayerFrame": "Sætter dine styrkelser og svækkelser på din egen spillerramme, ud over aurabjælken.",
+      "ifAlwaysShowAllBuffs": "Viser alle aktive forstærkninger, selv med grafikindstillingen Lav, og omgår den normale grænse for forstærkningsikoner.",
       "ifTargetOfTarget": "Viser, hvem dit måls mål er, den klassiske måde at se, om tanken stadig har fat i det.",
       "ifPetFrame": "Viser en ramme til dit kæledyr.",
       "ifChatFontScale": "Chattekststørrelse.",
@@ -5689,6 +6150,8 @@ export const da_DK: EnTranslations = {
       "raceBody": "Enhver gruppe i riget kan angribe den samme rift på samme tid, hver i sin egen kopi, og kun den første til at fælde tingen på bunden forsegler den. Når en gruppe vinder, hører riget deres navne og deres tid, og vejen ind lukker bag dem. At tabe løbet afslutter ikke jeres tur: jeres kopi forbliver åben, tingen på bunden falder stadig for jer, og I går stadig ud for egen kraft. Det, det koster jer, er alt det, en oprydning ville have betalt. Bossen efterlader intet til den gruppe, der kom nummer to, så det, I bærer hjem, er det, der droppede fra mobs på vejen ned, og intet mere. Bedrifternes Bog tæller stadig oprydningen, for I fik faktisk fældet tingen. Det er det eneste løb i spillet, du kan tabe uden nogensinde at se de folk, der slog dig.",
       "rewardsHeading": "Det du bærer ud",
       "rewardsBody": "At forsegle en rift, ikke blot at overleve den, er det, der betaler sig. Fæld riften først, og den betaler som det instansindhold, dens rang står ved siden af, så de hårdere rangeringer er den hårdere tur værd. At forsegle lægger også et Riftbundet Bånd i hænderne på alle, der var der, skåret til din klasses rolle og personligt til dig, og efterlader Rift-Essens i dine tasker oven i det, med Rift-Juveler oven i det igen ved de hårdere rangeringer. Ved siden af vejen hjem efterlader tingen på bunden en forseglet kiste, som din gruppe kan dirke op for ekstra bytte, med den samme Tappens vej-dirkning, du kender fra delve-kister, så et rent, tålmodigt arbejde betaler bedre end et forhastet et. Intet af det når frem til en gruppe, der kom nummer to: et tabt løb efterlader jer kun det, der droppede fra mobs på vejen ned. Bedrifternes Bog er undtagelsen, og den tæller jeres oprydning under alle omstændigheder, med en bedrift for at lukke jeres første rift og endnu en for at fælde en S-rangs rift.",
+      "forgeHeading": "The Rift Forge",
+      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
       "trackerHeading": "Sporingen på din skærm",
       "trackerBody": "Mens du er indenfor, holder en lille strimmel på din skærm dig orienteret: hvilken etage du er på ud af hvor mange, og en live nedtælling. Læs den nedtælling omhyggeligt, for det er ikke din tur, der løber ud. Det er indgangen tilbage i verden, der lukker. Når du først er igennem, spiller din gruppe riften færdig i sit eget tempo, hvor lang tid det end tager, men når det ur når nul, er vejen ind væk for alle, så tænk dig om, før du træder udenfor tæt på slutningen af den."
     },
@@ -6325,6 +6788,7 @@ export const da_DK: EnTranslations = {
       "bankBody": "Hver hjemmebase har en filial af Det Forgyldte Pengeskrin, rigets bankhus. Tal med skatmesteren der for at åbne din boks, en privat opbevaringsplads ud over dine tasker, som din karakter beholder livet ud. Hvad end du efterlader hos dem, venter i sikkerhed, uanset hvilken filial du besøger næste gang.",
       "bankHow": "Med boksen åben klikker du på en genstand i dine tasker for at indsætte den, og klikker på den i boksen for at tage den tilbage. Boksen rummer kun varer, aldrig mønter, og opgavegenstande bliver hos dig. Når dine tasker fyldes op undervejs, fejer én knap alle dine håndværksmaterialer ind på én gang.",
       "bankSlots": "En ny boks starter i det små og vokser med dig. Skatmesteren sælger flere pladser for mønter til stadigt stejlere priser, og at spille online giver bonusplads oveni, for ting som en bekræftet e-mail, forbundne konti og venner, du bringer ind i spillet.",
+      "bankSockets": "Efter pladsernes trin sælger kassereren også op til fire taskesokler, som låses op i rækkefølge til stadig højere priser. Sæt en ekstra taske fra dit bæresæt i en af dem, så føjes dens pladser til dit bankrum: en almindelig taske udvider hele lageret, mens en reagenttaske kun giver plads til materialer, der kan bruges til håndværk. Klik på en taske i dine tasker for at sætte den i, og klik på soklen for at tage den ud igen. Det koster dig aldrig noget, du har lagt i den: hvis banken ender med at være mere fyldt end dens mindre plads, bliver alt liggende, og nye indbetalinger venter blot på ledig plads.",
       "buyingTitle": "Køb og salg",
       "buyingBody": "Tal med en købmand og vælg at gennemse deres varer, så åbner butikken med tre faneblade: Gennemse, Sælg og Tilbagekøb. Gennemse rummer alt, de har på lager, dit hvis du har råd. Sælg viser, hvad i dine tasker de vil betale for, og at sælge et stykke, der bærer sin egen rullede kvalitet, beder dig bekræfte først, så en værdsat kopi aldrig glider væk ved en fejl. Skiller du dig af med noget, du fortryder, holder Tilbagekøb-fanebladet på dine seneste salg, så du kan købe dem tilbage for de mønter, du fik.",
       "junkTitle": "Rydde ud i skrammel",
@@ -7026,10 +7490,7 @@ export const da_DK: EnTranslations = {
     "playAria": "Spil World of ClaudeCraft",
     "serverLabel": "Vælg din verden",
     "serverAria": "Vælg verden: Online eller Offline",
-    "serverOfflineSub": "Øjeblikkelig lokal verden",
-    "caLabel": "$WOC Kontraktadresse",
-    "caCopyAria": "Kopiér kontraktadresse",
-    "caNote": "WOC er vores fællesskabstoken. Det er ikke nødvendigt for at spille. Tilslut dig Discord for at diskutere WOC-nytten og svinghjulet."
+    "serverOfflineSub": "Øjeblikkelig lokal verden"
   },
   "auth": {
     "enterRealm": "Træd ind i Verdenen",
@@ -7306,6 +7767,13 @@ export const da_DK: EnTranslations = {
     "unlink": "Frakobl",
     "unlinkTitle": "Fjern pung-verificeringen fra denne konto",
     "unlinkAria": "Fjern pung-verificeringen fra denne konto",
+    "reauthTitle": "Bekræft ændring af pung",
+    "reauthUnlinkTitle": "Bekræft fjernelse af pung",
+    "reauthHelp": "Af sikkerhedshensyn skal du indtaste din adgangskode til kontoen for at godkende denne ændring.",
+    "reauthNoPassword": "Denne konto logger ind uden adgangskode. Opret først en adgangskode i kontoindstillingerne, og prøv igen.",
+    "reauthConfirm": "Bekræft",
+    "reauthCancel": "Annuller",
+    "reauthClose": "Luk",
     "signOut": "Afbryd forbindelse",
     "signOutTitle": "Afbryd forbindelsen til pung-appen i denne browser",
     "signOutAria": "Afbryd forbindelsen til pung-appen i denne browser",
@@ -7361,6 +7829,7 @@ export const da_DK: EnTranslations = {
       "title": "Tilslut en Solana-pung",
       "linkBody": "Vælg en pung-udvidelse i denne browser. Du underskriver en bekræftelsesbesked og vender derefter tilbage til skrivebordsappen.",
       "paymentBody": "Vælg den pung, der er tilknyttet din konto, og godkend transaktionen i denne browser.",
+      "stepUpBody": "Vælg den pung, der er knyttet til din konto, og underskriv godkendelsesbeskeden til $WOC-børsen. Det er gratis at underskrive, og ingen midler flyttes.",
       "extensionHelp": "Ingen kompatibel pung-udvidelse blev fundet. Installer eller lås Phantom, Solflare eller en anden Solana-browserpung op og prøv derefter igen.",
       "safety": "World of ClaudeCraft beder aldrig om din genoprettelsesfrase eller private nøgle.",
       "continueWith": "Fortsæt med {wallet}",
@@ -7571,6 +8040,7 @@ export const da_DK: EnTranslations = {
       "forgeUpgraded": "Rift-opgradering fuldført for {name}.",
       "forgeEnchanted": "Rift-fortryllelse fuldført for {name}.",
       "forgeSocketed": "Rift-juvel indsat for {name}.",
+      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
       "detonateGlacialGrave": "Iskold Grav detonerer!",
       "detonateAbsoluteZero": "Absolut Nulpunkt bryder ud!",
       "detonateMagmaWell": "Magmakilde bryder ud!",
@@ -7748,6 +8218,20 @@ export const da_DK: EnTranslations = {
     "buyConfirmTitle": "Bekræft køb",
     "buyConfirmBody": "Køb {item} for {marks} Heroiske Mærker? Køb med mærker kan ikke refunderes.",
     "buyConfirmAccept": "Køb",
+    "buyConfirmCancel": "Annuller"
+  },
+  "crucibleShop": {
+    "browse": "Indløs segl",
+    "browseAria": "Indløs Crucible-segl med {name}",
+    "empty": "Ingen sætdele kan indløses til din klasse.",
+    "balance": "Dine segl: {list}",
+    "balanceEntry": "{name} x{count}",
+    "noSigils": "Du har ingen Crucible-segl.",
+    "price": "1 {sigil}",
+    "buyAria": "Indløs {sigil} for {item}",
+    "buyConfirmTitle": "Bekræft indløsning",
+    "buyConfirmBody": "Indløs dit {sigil} for {item}? Et forbrugt segl kan ikke refunderes.",
+    "buyConfirmAccept": "Indløs",
     "buyConfirmCancel": "Annuller"
   },
   "cardDuel": {
@@ -8301,6 +8785,7 @@ export const da_DK: EnTranslations = {
     "bodyWeb": "Spillet kører uden GPU-acceleration og vil være langsomt. Aktiver hardwareacceleration i din browsers indstillinger, opdater dine grafikdrivere og genstart derefter din browser.",
     "hybridBodyWindows": "Denne session kører på den integrerede (strømbesparende) GPU. Hvis denne computer også har en gaming-GPU, skal du indstille din browser til Høj ydeevne under Indstillinger, System, Skærm, Grafik, og derefter genstarte den. Skrivebordsappen vælger selv gaming-GPU'en.",
     "hybridBodyLinux": "Denne session kører på den integrerede (strømbesparende) GPU. Hvis denne computer også har en gaming-GPU, tilbyder din browser eller grafikdriver måske sin egen GPU-valgindstilling, eller din distribution tilbyder måske et GPU-skifteværktøj (såsom PRIME eller optimus-manager). Skrivebordsappen vælger selv gaming-GPU'en.",
+    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
     "hybridBodyOther": "Denne session kører på den integrerede (strømbesparende) GPU. Hvis denne computer også har en gaming-GPU, så tjek din browsers og dit styresystems grafikindstillinger for at aktivere den. Skrivebordsappen vælger selv gaming-GPU'en.",
     "dismiss": "Afvis"
   },
@@ -8578,6 +9063,8 @@ export const da_DK: EnTranslations = {
         "riftEntrance": "Rift-indgang: {name}",
         "hostileEnemy": "Fjendtligt mål",
         "aggressiveEnemy": "Fjende angriber dig",
+        "bossEnemy": "Boss: {name}",
+        "bossAggressiveEnemy": "Boss angriber dig: {name}",
         "lootableEnemy": "Fjende med bytte",
         "corpse": "Dit lig",
         "deathZone": "Farezone",
@@ -8966,6 +9453,7 @@ export const da_DK: EnTranslations = {
       "tradeExpired": "Handelsanmodningen er udløbet.",
       "tradeFailed": "Handel mislykkedes: genstande eller penge er ikke længere tilgængelige.",
       "tradeBound": "Den genstand er bundet og kan ikke handles.",
+      "tradeWindowIneligible": "Den kan kun handles til spillere, der delte dens bytte.",
       "marketListBound": "Den genstand er bundet og kan ikke sættes til salg."
     },
     "logs": {
@@ -9446,7 +9934,8 @@ export const da_DK: EnTranslations = {
       "clickUseInstant": "Klik for at bruge øjeblikkeligt i kamp",
       "clickUse": "Klik for at bruge",
       "clickBuyback": "Klik for at købe tilbage",
-      "bagSlots": "Taske med {slots} pladser"
+      "bagSlots": "Taske med {slots} pladser",
+      "bagSlotsMaterials": "Materialetaske med {slots} pladser"
     },
     "bags": {
       "title": "Tasker",
@@ -9628,7 +10117,8 @@ export const da_DK: EnTranslations = {
       "greedAria": "Grådighed efter {item}",
       "passAria": "Stå over {item}",
       "everyonePassed": "Alle stod over {item}.",
-      "rolled": "{answered}/{total} har slået"
+      "rolled": "{answered}/{total} har slået",
+      "bindsOnPickup": "Bindes ved afhentning"
     }
   },
   "entities": {
@@ -10409,7 +10899,7 @@ export const da_DK: EnTranslations = {
       },
       "needle_of_fate": {
         "name": "Needle of Fate",
-        "description": "Gennemborer fjenden for {damage} Skyggeskade og genererer 5 Fordømmelse, hvis den bærer dit Evil Eye. Hvert træf på dit primære Evil Eye tilføjer en Skæbnetråd i 12 sek., op til 3. Findes intet Evil Eye, mærker Needle of Fate først sit mål."
+        "description": "Gennemborer fjenden for {damage} Skyggeskade og genererer {needleDoom} Fordømmelse, hvis den bærer dit Evil Eye. Hvert træf på dit primære Evil Eye tilføjer en Skæbnetråd i 12 sek., op til 3. Findes intet Evil Eye, mærker Needle of Fate først sit mål."
       },
       "sentence": {
         "name": "Sentence",
@@ -10507,7 +10997,7 @@ export const da_DK: EnTranslations = {
       },
       "moonseed": {
         "name": "Månefrø",
-        "description": "Kun i Månekinform. Rammer for {damage} arkan skade, tilføjer et Måneflod-trin og forlænger din Månestorm med 6 sek., op til 6 sek. pr. anvendelse. Ved fuld Måneflod bliver Månefrø til Månebølge."
+        "description": "Kun i Månekinform. Rammer for {damage} arkan skade, tilføjer et Måneflod-trin og forlænger din Månestorm med 6 sek., op til {duration} sek. pr. anvendelse. Ved fuld Måneflod bliver Månefrø til Månebølge."
       },
       "rejuvenation": {
         "name": "Vildblomst",
@@ -10811,7 +11301,7 @@ export const da_DK: EnTranslations = {
       },
       "conflagrate": {
         "name": "Antændelse",
-        "description": "Fremrykker et kommende tik af jeres Brændende Pagt og antænder derefter målet for {damage} Ildskade. Skaber 1 Forødelse og 1 Tilintetgørelse. Rummer 2 ladninger. (Kendetegn for Ødelæggelse)"
+        "description": "Fremrykker et kommende tik af jeres Brændende Pagt og antænder derefter målet for {damage} Ildskade. Skaber 1 Forødelse og 1 Tilintetgørelse. Rummer {charges} ladninger. (Kendetegn for Ødelæggelse)"
       },
       "moonkin_form": {
         "name": "Månekinform",
@@ -10843,7 +11333,7 @@ export const da_DK: EnTranslations = {
       },
       "overbloom": {
         "name": "Overblomstring",
-        "description": "Forbruger 5 Grønske. Høster hver af dine helbredelser over tid på alle allierede for 60% af den resterende helbredelse, fjerner de virkninger og planter en frisk Vildblomst på målet."
+        "description": "Forbruger 5 Grønske. Høster hver af dine helbredelser over tid på alle allierede for {buff}% af den resterende helbredelse, fjerner de virkninger og planter en frisk Vildblomst på målet."
       },
       "summon_imp": {
         "name": "Tilkald Emberkin",
@@ -10915,7 +11405,7 @@ export const da_DK: EnTranslations = {
       },
       "iron_resolve": {
         "name": "Jernvilje",
-        "description": "Bid tænderne sammen og ignorér smerten: bruger op til 40 raseri (mindst 20) for at absorbere 4 skade pr. brugt raseripoint i op til 10 sek. (Beskyttelse)"
+        "description": "Bid tænderne sammen og ignorér smerten: bruger op til 40 raseri (mindst 20) for at absorbere {absorbPerRage} skade pr. brugt raseripoint i op til 10 sek. (Beskyttelse)"
       },
       "faultline": {
         "name": "Jordspalte",
@@ -11292,7 +11782,7 @@ export const da_DK: EnTranslations = {
       },
       "seraphic_vigil": {
         "name": "Serafisk Vagt",
-        "description": "Beskytter en allieret i 30 sek. Det første slag, der bringer vedkommende under 35% sundhed, forbruger Vagten og helbreder vedkommende for 180. (Velsignelsessignatur)"
+        "description": "Beskytter en allieret i 30 sek. Det første slag, der bringer vedkommende under 35% sundhed, forbruger Vagten og helbreder vedkommende for {buff}. (Velsignelsessignatur)"
       },
       "summon_tithefiend": {
         "name": "Tilkald Tiendedæmon",
@@ -12835,8 +13325,20 @@ export const da_DK: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Tændingsnøgle: Skrækgnist, jordrysteren"
       },
+      "reins_lanternback_troll": {
+        "name": "Lygtetænderens åg: Grumbol"
+      },
+      "reins_chimeglass_tortoise": {
+        "name": "Roadwarden's Bellstrap: Tolliver"
+      },
+      "reins_rickshaw_mount": {
+        "name": "Bundne tøjler: Knogebundet Rickshaw"
+      },
       "reins_drakemaw_raptor": {
         "name": "Tøjler til Dragegabets Raptor"
+      },
+      "reins_mech_bird": {
+        "name": "Ignition Key: Cluckwork Mech Bird"
       },
       "rimefang": {
         "name": "Rimhugtand"
@@ -12880,6 +13382,27 @@ export const da_DK: EnTranslations = {
       "dawnhold_posy": {
         "name": "Buket fra Dawnholds have"
       },
+      "wayfarers_backpack": {
+        "name": "Vandrerens rygsæk"
+      },
+      "burlap_reagent_pouch": {
+        "name": "Jutesæk til reagenser"
+      },
+      "necromancers_reagent_satchel": {
+        "name": "Nekromantikerens reagenttaske"
+      },
+      "duskweave_bag": {
+        "name": "Skumringsvævet taske"
+      },
+      "resonant_weave_bag": {
+        "name": "Resonansvævet taske"
+      },
+      "foragers_haversack": {
+        "name": "Fouragererens rygsæk"
+      },
+      "loombound_reagent_satchel": {
+        "name": "Vævebundet reagenttaske"
+      },
       "ps_briny_lure": {
         "name": "Saltlokkemad"
       },
@@ -12891,6 +13414,654 @@ export const da_DK: EnTranslations = {
       },
       "ps_passing_stone": {
         "name": "Hvilesten"
+      },
+      "lastflame_core": {
+        "name": "Den sidste flammes kerne"
+      },
+      "slagbreaker_helmet": {
+        "name": "Slagbreakers hjelm"
+      },
+      "slagbreaker_shoulder": {
+        "name": "Slagbreakers skulderstykker"
+      },
+      "slagbreaker_chest": {
+        "name": "Slagbreakers brystværn"
+      },
+      "slagbreaker_gloves": {
+        "name": "Slagbreakers handsker"
+      },
+      "slagbreaker_legs": {
+        "name": "Slagbreakers benklæder"
+      },
+      "emberfury_helmet": {
+        "name": "Gløderaseri-hjelm"
+      },
+      "emberfury_shoulder": {
+        "name": "Gløderaseri-skulderplader"
+      },
+      "emberfury_chest": {
+        "name": "Gløderaseri-brynje"
+      },
+      "emberfury_gloves": {
+        "name": "Gløderaseri-handsker"
+      },
+      "emberfury_legs": {
+        "name": "Gløderaseri-benbeskyttere"
+      },
+      "forgewall_helmet": {
+        "name": "Smedevold-hjelm"
+      },
+      "forgewall_shoulder": {
+        "name": "Smedevold-skulderplader"
+      },
+      "forgewall_chest": {
+        "name": "Smedevold-brynje"
+      },
+      "forgewall_gloves": {
+        "name": "Smedevold-handsker"
+      },
+      "forgewall_legs": {
+        "name": "Smedevold-benbeskyttere"
+      },
+      "dawnforged_helmet": {
+        "name": "Daggryssmedet hjelm"
+      },
+      "dawnforged_shoulder": {
+        "name": "Daggryssmedede skulderplader"
+      },
+      "dawnforged_chest": {
+        "name": "Daggryssmedet brynje"
+      },
+      "dawnforged_gloves": {
+        "name": "Daggryssmedede handsker"
+      },
+      "dawnforged_legs": {
+        "name": "Daggryssmedede benbeskyttere"
+      },
+      "oathpyre_helmet": {
+        "name": "Oathpyres hjelm"
+      },
+      "oathpyre_shoulder": {
+        "name": "Oathpyres skulderplader"
+      },
+      "oathpyre_chest": {
+        "name": "Oathpyres brynje"
+      },
+      "oathpyre_gloves": {
+        "name": "Oathpyres panserhandsker"
+      },
+      "oathpyre_legs": {
+        "name": "Oathpyres benskinner"
+      },
+      "zealfire_helmet": {
+        "name": "Zealflammehjelm"
+      },
+      "zealfire_shoulder": {
+        "name": "Zealflammes skulderplader"
+      },
+      "zealfire_chest": {
+        "name": "Zealflammebrynje"
+      },
+      "zealfire_gloves": {
+        "name": "Zealflammehandsker"
+      },
+      "zealfire_legs": {
+        "name": "Zealflammebenskinner"
+      },
+      "packlord_emberhide_helmet": {
+        "name": "Packlordens hætte af glødeskind"
+      },
+      "packlord_emberhide_shoulder": {
+        "name": "Packlordens skulderplader af glødeskind"
+      },
+      "packlord_emberhide_chest": {
+        "name": "Packlordens tunika af glødeskind"
+      },
+      "packlord_emberhide_gloves": {
+        "name": "Packlordens greb af glødeskind"
+      },
+      "packlord_emberhide_legs": {
+        "name": "Packlordens knæbukser af glødeskind"
+      },
+      "coldsight_trackers_helmet": {
+        "name": "Kuldesyn-hætte"
+      },
+      "coldsight_trackers_shoulder": {
+        "name": "Kuldesyn-skulderplader"
+      },
+      "coldsight_trackers_chest": {
+        "name": "Kuldesyn-tunika"
+      },
+      "coldsight_trackers_gloves": {
+        "name": "Kuldesyn-greb"
+      },
+      "coldsight_trackers_legs": {
+        "name": "Kuldesyn-knæbukser"
+      },
+      "slagsnare_helmet": {
+        "name": "Slagsnares hjelm"
+      },
+      "slagsnare_shoulder": {
+        "name": "Slagsnares skulderstykker"
+      },
+      "slagsnare_chest": {
+        "name": "Slagsnares brystværn"
+      },
+      "slagsnare_gloves": {
+        "name": "Slagsnares handsker"
+      },
+      "slagsnare_legs": {
+        "name": "Slagsnares benklæder"
+      },
+      "cinderfang_helmet": {
+        "name": "Cinderfang-hætte"
+      },
+      "cinderfang_shoulder": {
+        "name": "Cinderfang-skulderstykker"
+      },
+      "cinderfang_chest": {
+        "name": "Cinderfang-tunika"
+      },
+      "cinderfang_gloves": {
+        "name": "Cinderfang-handsker"
+      },
+      "cinderfang_legs": {
+        "name": "Cinderfang-benklæder"
+      },
+      "smolderstrike_helmet": {
+        "name": "Smolderstrikes hjelm"
+      },
+      "smolderstrike_shoulder": {
+        "name": "Smolderstrikes skulderstykker"
+      },
+      "smolderstrike_chest": {
+        "name": "Smolderstrikes brystværn"
+      },
+      "smolderstrike_gloves": {
+        "name": "Smolderstrikes handsker"
+      },
+      "smolderstrike_legs": {
+        "name": "Smolderstrikes benklæder"
+      },
+      "ashveil_helmet": {
+        "name": "Ashveil-hætte"
+      },
+      "ashveil_shoulder": {
+        "name": "Ashveil-skulderstykker"
+      },
+      "ashveil_chest": {
+        "name": "Ashveil-tunika"
+      },
+      "ashveil_gloves": {
+        "name": "Ashveil-handsker"
+      },
+      "ashveil_legs": {
+        "name": "Ashveil-bukser"
+      },
+      "emberscreed_helmet": {
+        "name": "Glødernes trosbekendelses hætte"
+      },
+      "emberscreed_shoulder": {
+        "name": "Glødernes trosbekendelses skulderkappe"
+      },
+      "emberscreed_chest": {
+        "name": "Glødernes trosbekendelses kåbe"
+      },
+      "emberscreed_gloves": {
+        "name": "Glødernes trosbekendelses håndbind"
+      },
+      "emberscreed_legs": {
+        "name": "Glødernes trosbekendelses benklæder"
+      },
+      "benison_dawnweave_helmet": {
+        "name": "Dawnweave-hætte"
+      },
+      "benison_dawnweave_shoulder": {
+        "name": "Dawnweave-mantel"
+      },
+      "benison_dawnweave_chest": {
+        "name": "Dawnweave-kåbe"
+      },
+      "benison_dawnweave_gloves": {
+        "name": "Dawnweave-håndbind"
+      },
+      "benison_dawnweave_legs": {
+        "name": "Dawnweave-benklæder"
+      },
+      "vesperash_helmet": {
+        "name": "Vesperashs hætte"
+      },
+      "vesperash_shoulder": {
+        "name": "Vesperashs kappe"
+      },
+      "vesperash_chest": {
+        "name": "Vesperashs kåbe"
+      },
+      "vesperash_gloves": {
+        "name": "Vesperashs håndbind"
+      },
+      "vesperash_legs": {
+        "name": "Vesperashs benklæder"
+      },
+      "stormkindled_helmet": {
+        "name": "Stormkindleds hjelm"
+      },
+      "stormkindled_shoulder": {
+        "name": "Stormkindleds skulderplader"
+      },
+      "stormkindled_chest": {
+        "name": "Stormkindleds brynje"
+      },
+      "stormkindled_gloves": {
+        "name": "Stormkindleds handsker"
+      },
+      "stormkindled_legs": {
+        "name": "Stormkindleds benskinner"
+      },
+      "warspirit_emberscale_helmet": {
+        "name": "Emberskælshjelm"
+      },
+      "warspirit_emberscale_shoulder": {
+        "name": "Emberskæls skulderplader"
+      },
+      "warspirit_emberscale_chest": {
+        "name": "Emberskæls brynje"
+      },
+      "warspirit_emberscale_gloves": {
+        "name": "Emberskæls handsker"
+      },
+      "warspirit_emberscale_legs": {
+        "name": "Emberskæls benskinner"
+      },
+      "stonehearth_helmet": {
+        "name": "Stonehearths hjelm"
+      },
+      "stonehearth_shoulder": {
+        "name": "Stonehearths skulderplader"
+      },
+      "stonehearth_chest": {
+        "name": "Stonehearths brynje"
+      },
+      "stonehearth_gloves": {
+        "name": "Stonehearths panserhandsker"
+      },
+      "stonehearth_legs": {
+        "name": "Stonehearths benskinner"
+      },
+      "springmender_helmet": {
+        "name": "Springmenders hjelm"
+      },
+      "springmender_shoulder": {
+        "name": "Springmenders skulderstykker"
+      },
+      "springmender_chest": {
+        "name": "Springmenders brystværn"
+      },
+      "springmender_gloves": {
+        "name": "Springmenders handsker"
+      },
+      "springmender_legs": {
+        "name": "Springmenders benklæder"
+      },
+      "chronoweave_helmet": {
+        "name": "Aetherweave-hætte"
+      },
+      "chronoweave_shoulder": {
+        "name": "Aetherweave-mantel"
+      },
+      "chronoweave_chest": {
+        "name": "Aetherweave-kåbe"
+      },
+      "chronoweave_gloves": {
+        "name": "Aetherweave-håndbind"
+      },
+      "chronoweave_legs": {
+        "name": "Aetherweave-benklæder"
+      },
+      "pyroclast_helmet": {
+        "name": "Pyroclast-hætte"
+      },
+      "pyroclast_shoulder": {
+        "name": "Pyroclast-skulderkappe"
+      },
+      "pyroclast_chest": {
+        "name": "Pyroclast-kåbe"
+      },
+      "pyroclast_gloves": {
+        "name": "Pyroclast-håndbind"
+      },
+      "pyroclast_legs": {
+        "name": "Pyroclast-benklæder"
+      },
+      "frostquench_helmet": {
+        "name": "Frostslukkende hætte"
+      },
+      "frostquench_shoulder": {
+        "name": "Frostslukkende skulderkappe"
+      },
+      "frostquench_chest": {
+        "name": "Frostslukkende kåbe"
+      },
+      "frostquench_gloves": {
+        "name": "Frostslukkende håndbind"
+      },
+      "frostquench_legs": {
+        "name": "Frostslukkende benklæder"
+      },
+      "hexthread_helmet": {
+        "name": "Hexthreads hætte"
+      },
+      "hexthread_shoulder": {
+        "name": "Hexthreads kappe"
+      },
+      "hexthread_chest": {
+        "name": "Hexthreads kåbe"
+      },
+      "hexthread_gloves": {
+        "name": "Hexthreads håndbind"
+      },
+      "hexthread_legs": {
+        "name": "Hexthreads benklæder"
+      },
+      "gravebrand_helmet": {
+        "name": "Gravebrands hætte"
+      },
+      "gravebrand_shoulder": {
+        "name": "Gravebrands kappe"
+      },
+      "gravebrand_chest": {
+        "name": "Gravemærket kåbe"
+      },
+      "gravebrand_gloves": {
+        "name": "Gravebrands håndbind"
+      },
+      "gravebrand_legs": {
+        "name": "Gravebrands benklæder"
+      },
+      "ruincaller_helmet": {
+        "name": "Ruincaller-hætte"
+      },
+      "ruincaller_shoulder": {
+        "name": "Ruincaller-skulderkappe"
+      },
+      "ruincaller_chest": {
+        "name": "Ruincaller-kåbe"
+      },
+      "ruincaller_gloves": {
+        "name": "Ruincaller-håndbind"
+      },
+      "ruincaller_legs": {
+        "name": "Ruincaller-benklæder"
+      },
+      "moonscorch_helmet": {
+        "name": "Moonscorchs hætte"
+      },
+      "moonscorch_shoulder": {
+        "name": "Moonscorchs skulderplader"
+      },
+      "moonscorch_chest": {
+        "name": "Moonscorchs tunika"
+      },
+      "moonscorch_gloves": {
+        "name": "Moonscorchs greb"
+      },
+      "moonscorch_legs": {
+        "name": "Moonscorchs knæbukser"
+      },
+      "wildfang_emberhide_helmet": {
+        "name": "Vildfangs hætte"
+      },
+      "wildfang_emberhide_shoulder": {
+        "name": "Vildfangs skulderplader"
+      },
+      "wildfang_emberhide_chest": {
+        "name": "Vildfangs tunika"
+      },
+      "wildfang_emberhide_gloves": {
+        "name": "Vildfangs greb"
+      },
+      "wildfang_emberhide_legs": {
+        "name": "Vildfangs benklæder"
+      },
+      "cinderbark_helmet": {
+        "name": "Cinderbark-hætte"
+      },
+      "cinderbark_shoulder": {
+        "name": "Cinderbark-skulderstykker"
+      },
+      "cinderbark_chest": {
+        "name": "Cinderbark-tunika"
+      },
+      "cinderbark_gloves": {
+        "name": "Cinderbark-handsker"
+      },
+      "cinderbark_legs": {
+        "name": "Cinderbark-benklæder"
+      },
+      "grovespring_helmet": {
+        "name": "Grovesprings hætte"
+      },
+      "grovespring_shoulder": {
+        "name": "Grovesprings skulderplader"
+      },
+      "grovespring_chest": {
+        "name": "Grovesprings tunika"
+      },
+      "grovespring_gloves": {
+        "name": "Grovesprings greb"
+      },
+      "grovespring_legs": {
+        "name": "Grovesprings knæbukser"
+      },
+      "sigil_anvil_helmet": {
+        "name": "Anvilens hættesigil"
+      },
+      "sigil_ember_helmet": {
+        "name": "Glødens hættesigil"
+      },
+      "sigil_tempest_helmet": {
+        "name": "Stormens hættesigil"
+      },
+      "sigil_anvil_shoulder": {
+        "name": "Anvilens skuldersigil"
+      },
+      "sigil_ember_shoulder": {
+        "name": "Glødens skuldersigil"
+      },
+      "sigil_tempest_shoulder": {
+        "name": "Stormens skuldersigil"
+      },
+      "sigil_anvil_chest": {
+        "name": "Anvilens kåbesigil"
+      },
+      "sigil_ember_chest": {
+        "name": "Glødens kåbesigil"
+      },
+      "sigil_tempest_chest": {
+        "name": "Stormens kåbesigil"
+      },
+      "sigil_anvil_gloves": {
+        "name": "Anvilens grebsigil"
+      },
+      "sigil_ember_gloves": {
+        "name": "Glødens grebsigil"
+      },
+      "sigil_tempest_gloves": {
+        "name": "Stormens grebsigil"
+      },
+      "sigil_anvil_legs": {
+        "name": "Anvilens bensigil"
+      },
+      "sigil_ember_legs": {
+        "name": "Glødens bensigil"
+      },
+      "sigil_tempest_legs": {
+        "name": "Stormens bensigil"
+      },
+      "cord_of_the_last_flame": {
+        "name": "Den sidste flammes snor"
+      },
+      "cindersoaked_slippers": {
+        "name": "Askevåde tøfler"
+      },
+      "springbinder_sash": {
+        "name": "Springbinders skærf"
+      },
+      "steps_of_quiet_water": {
+        "name": "Den stille vands trin"
+      },
+      "cinderbark_cinch": {
+        "name": "Cinderbark-mavebælte"
+      },
+      "ashenbark_treads": {
+        "name": "Ashenbark-støvler"
+      },
+      "slagstalker_belt": {
+        "name": "Slagstalkers bælte"
+      },
+      "ashrunner_boots": {
+        "name": "Ashrunner-støvler"
+      },
+      "moonscorch_waistwrap": {
+        "name": "Moonscorchs taljebind"
+      },
+      "scorchgrove_striders": {
+        "name": "Scorchgrove-vandrestøvler"
+      },
+      "grovetender_belt": {
+        "name": "Grovetenders bælte"
+      },
+      "dewfall_moccasins": {
+        "name": "Dugfaldsmokkasiner"
+      },
+      "forgewall_girdle": {
+        "name": "Smedevold-bælte"
+      },
+      "anvilstance_sabatons": {
+        "name": "Anvilstance-sabatons"
+      },
+      "warforged_waistguard": {
+        "name": "Krigssmedet taljeværn"
+      },
+      "furnace_march_greaves": {
+        "name": "Digelmarchens benskinner"
+      },
+      "stormkindled_chain": {
+        "name": "Stormkindleds kæde"
+      },
+      "thundershock_treads": {
+        "name": "Tordenstødets støvler"
+      },
+      "tidebinder_links": {
+        "name": "Tidebinderens led"
+      },
+      "springwarden_sabatons": {
+        "name": "Springwardens sabatons"
+      },
+      "pendant_of_the_first_tempering": {
+        "name": "Vedhænget fra den første hærdning"
+      },
+      "ignivars_ember_choker": {
+        "name": "Ignivars glødehalskæde"
+      },
+      "locket_of_the_last_flame": {
+        "name": "Den sidste flammes medaljon"
+      },
+      "heartspring_amulet": {
+        "name": "Hjertekildens amulet"
+      },
+      "seal_of_the_forgewall": {
+        "name": "Forgewalls segl"
+      },
+      "band_of_marked_strikes": {
+        "name": "Ring af mærkede slag"
+      },
+      "circle_of_cinders": {
+        "name": "Askevalernes cirkel"
+      },
+      "loop_of_quiet_springs": {
+        "name": "De stille kilders ring"
+      },
+      "bulwark_of_the_inner_crucible": {
+        "name": "Det indre Crucibles bolværk"
+      },
+      "ember_wardens_barrier": {
+        "name": "Glødevogterens barriere"
+      },
+      "orb_of_the_last_spring": {
+        "name": "Den sidste kildes kugle"
+      },
+      "cinder_of_the_first_design": {
+        "name": "Den første designs glød"
+      },
+      "forgefathers_warhammer": {
+        "name": "Smedefaderens krigshammer"
+      },
+      "cinderfang_kris": {
+        "name": "Cinderfang-kris"
+      },
+      "slagrender_cleaver": {
+        "name": "Slagrenders kødøkse"
+      },
+      "anvilguard_blade": {
+        "name": "Anvilguard-klinge"
+      },
+      "heart_of_the_end_greatblade": {
+        "name": "Endens hjerte, storsværd"
+      },
+      "staff_of_the_last_spring": {
+        "name": "Den sidste kildes stav"
+      },
+      "forgefire_spire": {
+        "name": "Smedjeildens spir"
+      },
+      "springtouched_crozier": {
+        "name": "Springtouched-krosier"
+      },
+      "wand_of_quenched_sparks": {
+        "name": "Staven med slukkede gnister"
+      },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
       },
       "conjured_water4": {
         "name": "Fremmanet kildevand"
@@ -13668,6 +14839,12 @@ export const da_DK: EnTranslations = {
       },
       "reins_thunderstrut_gobbler": {
         "name": "Tøjler til Tordenspankeren, den store kalkun"
+      },
+      "varkhul_forgebreaker": {
+        "name": "Smedjebryderen, Varkhuls maskine"
+      },
+      "varkhul_emberward": {
+        "name": "Glødeværn, Varkhuls bolværk"
       }
     },
     "mobs": {
@@ -13864,25 +15041,25 @@ export const da_DK: EnTranslations = {
         "name": "Nythraxis, Tornetops Svøbe"
       },
       "ignivar_herald_of_the_last_flame": {
-        "name": "Ignivar, Herald of the Last Flame"
+        "name": "Ignivar, den Sidste Flammes Herold"
       },
       "ignivar_heart_of_the_end": {
-        "name": "Heart of the End"
+        "name": "Ignivar Askekalder"
       },
       "ignivar_ember_sentinel": {
-        "name": "Ember Sentinel"
+        "name": "Glødevagt"
       },
       "ignivar_crucible_warden": {
-        "name": "Crucible Warden"
+        "name": "Digelvogter"
       },
       "ignivar_cinder_artificer": {
-        "name": "Cinder Artificer"
+        "name": "Askesmed"
       },
       "varkhul_forgefather_of_the_last_flame": {
-        "name": "Varkhul, Forgefather of the Last Flame"
+        "name": "Varkhul, den Sidste Flammes Smedefader"
       },
       "derelict_mech": {
-        "name": "Derelict Mech"
+        "name": "Forladt mech"
       },
       "reliquary_ledger_wraith": {
         "name": "Regnskabsgenfærd"
@@ -14545,14 +15722,19 @@ export const da_DK: EnTranslations = {
         "greeting": "Fra en kapelgård i Dalen til verdens tag... sporet vi har fulgt ender her. Jeg kan mærke bjerget lytte."
       },
       "archivist_maelin_emberward": {
-        "name": "Archivist Maelin Emberward",
-        "title": "Crucible Archivist",
-        "greeting": "Every hammer mark in this place is a sentence. Help me read what Varkhul tried to hide."
+        "name": "Arkivar Maelin Glødeværn",
+        "title": "Digelarkivar",
+        "greeting": "Hvert hammerslag her er en sætning. Hjælp mig med at læse, hvad Varkhul prøvede at skjule."
       },
       "archivist_maelin_ember_projection": {
-        "name": "Maelin's Ember Projection",
-        "title": "Ember Projection",
-        "greeting": "The embers carry Maelin's voice forward through the forge."
+        "name": "Maelins glødeprojektion",
+        "title": "Glødeprojektion",
+        "greeting": "Gløderne bærer Maelins stemme videre gennem smedjen."
+      },
+      "crucible_quartermaster": {
+        "name": "Kvartermester Bronn Glødeværn",
+        "title": "Diglens kvartermester",
+        "greeting": "Smedjen kender sine egne. Bring mig et segl fra Diglen, så gør jeg dig klar til krig."
       },
       "brother_halven": {
         "name": "Broder Halven",
@@ -14823,6 +16005,11 @@ export const da_DK: EnTranslations = {
         "name": "Skrækslagne Nell",
         "title": "Fisker fra Mågehavn",
         "greeting": "Den åbnede sig lige der, hvor nettene tørrer. Lige der, hvor jeg stod hver morgen hele mit liv. Jeg går ikke ned til kysten mere. Jeg går egentlig ikke mange steder mere."
+      },
+      "riftwright_maelis": {
+        "name": "Riftwright Maelis",
+        "title": "Rift Forgemaster",
+        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
       },
       "forgemistress_darva": {
         "name": "Smedemester Darva",
@@ -15703,38 +16890,35 @@ export const da_DK: EnTranslations = {
         }
       },
       "q_ignivar_echoes_in_iron": {
-        "title": "Echoes in Iron",
-        "text": "These automata are not soldiers. They are drafts. Break each assembly line and listen when the final shell falls. The forge remembers what Varkhul tried to erase.",
-        "completion": "The echoes agree. Varkhul bound water from the dying Last Spring into living metal. These automatons were failed temperings. Only Ignivar endured.",
+        "title": "Ekkoer i jern",
+        "text": "Disse automater er ikke soldater. De er udkast. Bryd hver samlebåndslinje, og lyt, når den sidste skal falder. Smedjen husker, hvad Varkhul prøvede at udslette.",
+        "completion": "Ekkoerne stemmer. Varkhul bandt vand fra den døende Sidste Kilde ind i levende metal. Disse automater var mislykkede hærdninger. Kun Ignivar overlevede.",
         "objectives": {
           "0": {
-            "label": "Ember Sentinels destroyed"
+            "label": "Glødevagter ødelagt"
           },
           "1": {
-            "label": "Crucible Wardens destroyed"
-          },
-          "2": {
-            "label": "Cinder Artificers destroyed"
+            "label": "Digelvogtere ødelagt"
           }
         }
       },
       "q_ignivar_heralds_heart": {
-        "title": "The Herald's Heart",
-        "text": "The survivor named in every echo is Ignivar. Varkhul called him herald, seal, and key. Defeat him. If the records are true, his death will reveal what he was forged to guard.",
-        "completion": "Ignivar was never merely a guardian. His heart was the key, and its final plates opened the sealed crucible below.",
+        "title": "Heroldens hjerte",
+        "text": "Den overlevende, der nævnes i hvert ekko, er Ignivar. Varkhul kaldte ham herold, segl og nøgle. Besejr ham. Hvis optegnelserne taler sandt, vil hans død afsløre, hvad han blev smedet til at vogte.",
+        "completion": "Ignivar var aldrig blot en vogter. Hans hjerte var nøglen, og dets sidste plader åbnede den forseglede digel nedenunder.",
         "objectives": {
           "0": {
-            "label": "Ignivar defeated"
+            "label": "Ignivar besejret"
           }
         }
       },
       "q_ignivar_the_forgefather": {
-        "title": "The Forgefather",
-        "text": "The path below leads to Varkhul, Forgefather of the Last Flame. He imprisoned the Last Spring to make metal live, then forged Ignivar to keep the crime sealed. Enter the Inner Crucible and end his work.",
-        "completion": "The forge is silent at last. The spring may never recover, but Varkhul will shape no more lives into chains.",
+        "title": "Smedefaderen",
+        "text": "Stien nedenfor fører til Varkhul, den Sidste Flammes Smedefader. Han fængslede den Sidste Kilde for at give metal liv og smedede derefter Ignivar for at holde forbrydelsen forseglet. Gå ind i den Indre Digel, og gør en ende på hans værk.",
+        "completion": "Smedjen er endelig stille. Kilden kommer måske aldrig tilbage, men Varkhul vil ikke længere forme liv til lænker.",
         "objectives": {
           "0": {
-            "label": "Varkhul defeated"
+            "label": "Varkhul besejret"
           }
         }
       },
@@ -17616,24 +18800,29 @@ export const da_DK: EnTranslations = {
         "leaveText": "Du vender tilbage til Tornetops kolde luft."
       },
       "ignivar_forge_lift": {
-        "name": "The Forge-Lift",
-        "enterText": "The forge-lift shudders and sinks; hammerfall rises to meet you.",
-        "leaveText": "The lift hauls you back into the open air of the keep."
+        "name": "Smedje-elevatoren",
+        "enterText": "Smedjeelevatoren ryster og sænker sig, mens hammerfaldet stiger dig i møde.",
+        "leaveText": "Elevatoren bringer dig tilbage til borgens frie luft."
       },
       "ignivar_forge_approach": {
-        "name": "Halls of the First Tempering",
-        "enterText": "Hammerfall echoes through the Halls of the First Tempering.",
-        "leaveText": "You step away from the first forge and breathe freely again."
+        "name": "Den Første Temprings Haller",
+        "enterText": "Hammerfald giver genlyd gennem Den Første Temprings Haller.",
+        "leaveText": "Du træder væk fra den første esse og kan igen trække vejret frit."
       },
       "ignivar_raid_arena": {
-        "name": "Crucible of the Last Spring",
-        "enterText": "Heat shimmers above the sealed waters of the Crucible.",
-        "leaveText": "You step away from the Crucible and breathe freely again."
+        "name": "Den sidste kildes Crucible",
+        "enterText": "Varmen flimrer over Crucibles forseglede vande.",
+        "leaveText": "Du træder væk fra Crucible og kan igen trække vejret frit."
+      },
+      "ignivar_molten_assembly": {
+        "name": "Den smeltede samling",
+        "enterText": "Den åbnede port fører ind i en glødende samlingshal.",
+        "leaveText": "Du forlader samlebåndet og vender tilbage til Crucible."
       },
       "ignivar_inner_crucible": {
-        "name": "The Inner Crucible",
-        "enterText": "The opened gate leads deeper into the Crucible.",
-        "leaveText": "You leave the silent depths of the Crucible."
+        "name": "Det indre Crucible",
+        "enterText": "Den åbnede port fører dybere ind i Crucible.",
+        "leaveText": "Du forlader Crucibles stille dybder."
       },
       "wildheart_basin": {
         "name": "Vildhjertebassinet",
@@ -17866,53 +19055,189 @@ export const da_DK: EnTranslations = {
       }
     },
     "itemSets": {
+      "ashveil": {
+        "name": "Ashveil-dragt",
+        "bonus2": "Lurker's Strike rammer 25 procent hårdere.",
+        "bonus4": "Dit Veiled Edge-angreb rammer tredobbelt så hårdt i stedet for dobbelt."
+      },
+      "benison_dawnweave": {
+        "name": "Benison-daggryvæv",
+        "bonus2": "Seraphic Vigils redning heler 270 i stedet for 180. Modtaget skade forsinker ikke længere din besværgelse.",
+        "bonus4": "Når Seraphic Vigil udløses, helbredes dens allierede også for 15 procent af deres maksimale helbred over 10 sek."
+      },
       "boundstone_vanguard": {
         "name": "Bundstens-fortrop",
         "bonus3": "Øger angrebs- og magihastighed med 15%."
       },
+      "bramblehide": {
+        "name": "Roots' Tornehud",
+        "bonus2": "Øger angrebskraft med 40.",
+        "bonus4": "Dine kritiske våbenslag splintrer målet med Bensplint og påfører 8 blødningsskade hvert 2. sek. i 12 sek. Stakker op til 3 gange.",
+        "bonus6": "Øger angrebs- og besværgelseshastigheden med 4% og træfsikkerheden med 3%. Kritiske våbentræffere splintrer målet med Bonesplinter, så det bløder for 5 skade hvert 2. sek. i 12 sek. Stables op til 3 gange."
+      },
+      "chronoweave": {
+        "name": "Aethervævede gevandter",
+        "bonus2": "Temporal Echo omdanner 50 procent af din Arcane-skade mod ét mål til heling. Modtaget skade forsinker ikke længere din besværgelse.",
+        "bonus4": "Temporal Cascades nedkøling reduceres med 5 sek."
+      },
+      "cinderbark": {
+        "name": "Cinderbark-værn",
+        "bonus2": "Sweeping Claws har 30 procents chance for at oplagre et ekstra Old Blood.",
+        "bonus4": "Marrowbreak rammer 30 procent hårdere, og dens nødbeskyttelse erstatter ikke længere angrebet."
+      },
+      "cinderfang": {
+        "name": "Cinderfang-svøb",
+        "bonus2": "Venom Rituals energirefusion stiger til 20 pr. opbygger.",
+        "bonus4": "Venom Darts nedkøling reduceres til 4 sek."
+      },
+      "coldsight_trackers": {
+        "name": "Koldesynsspejdere",
+        "bonus2": "Measured Shot genopretter 5 ekstra Focus.",
+        "bonus4": "Kritiske træffere fra Long Draw forlænger Cold Focus med 2 sek., op til 6 sek. pr. aktivering."
+      },
       "crownforged": {
         "name": "Bonewrought regalier",
         "bonus2": "Øger angrebskraft med 40.",
-        "bonus3": "Øger styrke med 15, udholdenhed med 15 og angrebs- og magihastighed med 15%.",
-        "bonus4": "Dine kritiske våbenslag splintrer målet med Bensplint og påfører 8 blødningsskade hvert 2. sek. i 12 sek. Stakker op til 3 gange."
+        "bonus4": "Dine kritiske våbenslag splintrer målet med Bensplint og påfører 8 blødningsskade hvert 2. sek. i 12 sek. Stakker op til 3 gange.",
+        "bonus6": "Øger angrebs- og besværgelseshastigheden med 4% og træfsikkerheden med 3%. Kritiske våbentræffere splintrer målet med Bonesplinter, så det bløder for 5 skade hvert 2. sek. i 12 sek. Stables op til 3 gange."
+      },
+      "dawnforged": {
+        "name": "Daggryssmedede gevandter",
+        "bonus2": "Beacon of Light kopierer 55 procent af dine direkte helinger. Modtaget skade forsinker ikke længere dine besværgelser.",
+        "bonus4": "Radiant Resonances styrkede Dawn's Embrace er øjeblikkelig."
       },
       "deathlord": {
         "name": "Barrowlord kampudstyr",
         "bonus2": "Øger angrebskraft med 40.",
-        "bonus3": "Øger styrke med 15 og udholdenhed med 15.",
-        "bonus4": "Dine kritiske våbenslag har 50% chance for at give Gravmagt og øge angrebskraft med 60 i 10 sek."
+        "bonus4": "Dine kritiske våbenslag har 50% chance for at give Gravmagt og øge angrebskraft med 60 i 10 sek.",
+        "bonus6": "Øger angrebs- og besværgelseshastigheden med 4% og træfsikkerheden med 3%. Kritiske våbentræffere splintrer målet med Bonesplinter, så det bløder for 5 skade hvert 2. sek. i 12 sek. Stables op til 3 gange."
+      },
+      "emberfury": {
+        "name": "Glødefurieharnisk",
+        "bonus2": "Din Enrage varer 6 sek. i stedet for 4.",
+        "bonus4": "Bloodletting udløser altid Enrage hos dig, og dens heling stiger til 8 procent af dit maksimale helbred."
+      },
+      "emberscreed": {
+        "name": "Glødernes trosgevandter",
+        "bonus2": "Din Doctrine-forbindelse omdanner 10 procent mere af din Holy-skade til heling. Modtaget skade forsinker ikke længere dine besværgelser.",
+        "bonus4": "Når din Psalm of Warding er fuldt opbrugt, er din næste Scouring Hymn inden for 10 sek. øjeblikkelig. Kan ikke ske mere end én gang hvert 15. sek."
+      },
+      "forgewall": {
+        "name": "Forgewall-aegis",
+        "bonus2": "Iron Resolve omdanner raseri til 5 absorption pr. point i stedet for 4.",
+        "bonus4": "At kaste Shieldcrack reducerer Iron Resolves resterende nedkøling med 2 sek."
+      },
+      "frostquench": {
+        "name": "Frostquench-vævning",
+        "bonus2": "Kritiske træffere fra Rimelance oplagrer en ekstra Icicle, op til højst 5. Modtaget skade forsinker ikke længere dine besværgelser.",
+        "bonus4": "Winterlash påfører 3 Winter's Chill-ladninger i stedet for 2."
+      },
+      "gravebrand": {
+        "name": "Gravebrand-regalier",
+        "bonus2": "Reaping Commands nedkøling reduceres med 2 sek. Modtaget skade forsinker ikke længere dine besværgelser.",
+        "bonus4": "Reaping Commands unisone angreb giver 25 procent mere skade."
       },
       "greyjaw_stalker": {
         "name": "Gråkæbe-jægerens udstyr",
         "bonus3": "Øger angrebs- og magihastighed med 15%."
       },
+      "grovespring": {
+        "name": "Grovespring-dragt",
+        "bonus2": "Swiftmend forbruger først din egen Wildbloom eller Second Bloom og heler 25 procent mere. Modtaget skade forsinker ikke længere dine besværgelser.",
+        "bonus4": "Overbloom høster 75 procent af dine resterende effekter og oplagrer derefter 1 Verdance."
+      },
+      "hexthread": {
+        "name": "Hexthread-svøb",
+        "bonus2": "Needle of Fate giver 2 ekstra Condemnation. Modtaget skade forsinker ikke længere dine besværgelser.",
+        "bonus4": "Passing Sentence refunderer 10 Condemnation."
+      },
+      "moonscorch": {
+        "name": "Moonscorch-dragt",
+        "bonus2": "Moonseed kan forlænge Lunar Tempest to gange pr. påføring, op til højst 12 sek. Modtaget skade forsinker ikke længere dine besværgelser.",
+        "bonus4": "Moonsurge og Sunwake rammer 25 procent hårdere."
+      },
       "necromancers": {
         "name": "Mournweave klæder",
         "bonus2": "Øger magikraft med 20. Skade, du tager, forsinker ikke længere dine besværgelser (100% modstand mod fordrøjelse af besværgelser).",
-        "bonus3": "Øger intellekt med 10 og udholdenhed med 10.",
-        "bonus4": "Dine besværgelser har 10% chance for at give Klartrylleri, som gør din næste besværgelse gratis."
+        "bonus4": "Dine besværgelser har 10% chance for at give Klartrylleri, som gør din næste besværgelse gratis.",
+        "bonus6": "Øger angrebs- og besværgelseshastigheden med 4%. Dine besværgelser har 10% chance for at give Soulblaze, som øger besværgelseskraften med 25 i 10 sek."
       },
       "nighttalon": {
         "name": "Direfang pels",
         "bonus2": "Øger angrebskraft med 40.",
-        "bonus3": "Øger smidighed med 15, kritisk chance med 2% og angrebs- og magihastighed med 15%.",
-        "bonus4": "Dine kritiske våbenslag river en Laset Flænge og påfører 6 blødningsskade hvert 2. sek. i 12 sek. Stakker op til 3 gange."
+        "bonus4": "Dine kritiske våbenslag river en Laset Flænge og påfører 6 blødningsskade hvert 2. sek. i 12 sek. Stakker op til 3 gange.",
+        "bonus6": "Øger angrebs- og besværgelseshastigheden med 4% og træfsikkerheden med 3%. Kritiske våbentræffere flænser et Ragged Gash i målet, så det bløder for 4 skade hvert 2. sek. i 12 sek. Stables op til 3 gange."
+      },
+      "oathpyre": {
+        "name": "Oathpyre-bastion",
+        "bonus2": "Vowkeeper Strikes chance for at aktivere Solar Reprisal stiger til 30%, og blokering af et angreb aktiverer den 40% af gangene.",
+        "bonus4": "Når du forbruger Solar Reprisal, får du et skjold svarende til 6% af dit maksimale helbred i 10 sek."
+      },
+      "packlord_emberhide": {
+        "name": "Packlords Emberhide",
+        "bonus2": "Pack Commands nedkøling reduceres til 3 sek.",
+        "bonus4": "Pack Commands chance for at nulstille Stampedes nedkøling stiger til 30%."
+      },
+      "pyroclast": {
+        "name": "Pyroclast-regalier",
+        "bonus2": "Scald giver altid kritiske træffere mod mål med 35% helbred eller mindre. Skade, du tager, forsinker ikke længere dine besværgelser.",
+        "bonus4": "Kritiske træffere med dine Ild-besværgelser uden for Phoenix Trance reducerer dens resterende nedkøling med 1,5 sek."
+      },
+      "ruincaller": {
+        "name": "Ruincallers klæder",
+        "bonus2": "Conflagrate har 3 opladninger. Skade, du tager, forsinker ikke længere dine besværgelser.",
+        "bonus4": "Ruinbolt rammer 20% hårdere."
+      },
+      "slagbreaker": {
+        "name": "Slagbreakers kampudstyr",
+        "bonus2": "Redhand styrker dit næste Maiming Strike med 30% pr. stak i stedet for 20%.",
+        "bonus4": "Hver anden kastning af Redhand reducerer Breachmakers resterende nedkøling med 3 sek."
+      },
+      "slagsnare": {
+        "name": "Slagsnares udstyr",
+        "bonus2": "Gutting Strike genererer 20 fokus.",
+        "bonus4": "Woundrend, der forbruger 3 Hunting Momentum, bevarer dem. Kan højst udløses én gang hver 8. sek."
+      },
+      "smolderstrike": {
+        "name": "Smolderstrikes læderudstyr",
+        "bonus2": "Haymaker rammer 20% hårdere.",
+        "bonus4": "Lights Out giver 6 sek. af Mirrored Blades resterende nedkøling tilbage."
       },
       "soulflame": {
         "name": "Wraithfire regalier",
         "bonus2": "Øger magikraft med 20. Skade, du tager, forsinker ikke længere dine besværgelser (100% modstand mod fordrøjelse af besværgelser).",
-        "bonus3": "Øger intellekt med 15, ånd med 15 og angrebs- og magihastighed med 15%.",
-        "bonus4": "Dine besværgelser har 10% chance for at give Sjælebrand og øge besværgelseskraft med 40 i 10 sek."
+        "bonus4": "Dine besværgelser har 10% chance for at give Sjælebrand og øge besværgelseskraft med 40 i 10 sek.",
+        "bonus6": "Øger angrebs- og magihastighed med 4%. Dine besværgelser har 10% chance for at give Soulblaze, som øger magikraften med 25 i 10 sek."
+      },
+      "springmender": {
+        "name": "Springmenders skæl",
+        "bonus2": "Tidecalls nedkøling reduceres med 4 sek. Skade, du tager, forsinker ikke længere dine besværgelser.",
+        "bonus4": "Cascading Mend når en fjerde allieret og høster Mending Currents ved 150%."
+      },
+      "stonehearth": {
+        "name": "Stonehearth-bastion",
+        "bonus2": "Mens du er Stonebound, koster Stormcast Mending Waters ingen mana og heler 25% mere.",
+        "bonus4": "Mens du er Stonebound, heler en fuldført kadence dig for 3% af dit maksimale helbred."
       },
       "stormcallers": {
         "name": "Galecall klæder",
         "bonus2": "Øger magikraft med 20. Skade, du tager, forsinker ikke længere dine besværgelser (100% modstand mod fordrøjelse af besværgelser).",
-        "bonus3": "Øger intellekt med 15, ånd med 15 og angrebs- og magihastighed med 15%.",
-        "bonus4": "Dine besværgelser har 10% chance for at give Sjælebrand og øge besværgelseskraft med 40 i 10 sek."
+        "bonus4": "Dine besværgelser har 10% chance for at give Sjælebrand og øge besværgelseskraft med 40 i 10 sek.",
+        "bonus6": "Øger angrebs- og magihastighed med 4%. Dine besværgelser har 10% chance for at give Soulblaze, som øger magikraften med 25 i 10 sek."
+      },
+      "stormkindled": {
+        "name": "Stormkindled-regalier",
+        "bonus2": "Unleash Weapon på Pyrebrand giver 3 Thunder. Skade, du tager, forsinker ikke længere dine besværgelser.",
+        "bonus4": "Earthen Jolts bonus pr. Thunder stiger til 30%."
       },
       "vale_arcanist": {
         "name": "Dalarkanistens klæder",
         "bonus3": "Øger angrebs- og magihastighed med 15%."
+      },
+      "vesperash": {
+        "name": "Vesperash-svøb",
+        "bonus2": "Call Tithefiends nedkøling reduceres med 6 sek. Skade, du tager, forsinker ikke længere dine besværgelser.",
+        "bonus4": "Når du tilkalder din Tithefiend, nulstilles Mindfractures nedkøling, og djævelen giver dobbelt så meget mana tilbage pr. træffer."
       },
       "warfare_ashstalker": {
         "name": "Askejæger-udstyr",
@@ -17944,11 +19269,26 @@ export const da_DK: EnTranslations = {
         "bonus4": "Øger Krigsførelsesangreb med 40, og kontrol, som fjendtlige spillere lægger på jer, varer 15% kortere.",
         "bonus7": "Øger Krigsførelsesangreb og Krigsførelsesforsvar med 80. Jeres besværgelser har 15% chance for at give Torneværn, hvilket øger undvigelse med 15% i 6 sek."
       },
+      "warspirit_emberscale": {
+        "name": "Warspirit-emberskæl",
+        "bonus2": "Ancestral Strike fører din kadence 3 trin frem.",
+        "bonus4": "Ancestral Strike rammer 30% hårdere."
+      },
+      "wildfang_emberhide": {
+        "name": "Wildfang Emberhide",
+        "bonus2": "Redharvest gendanner 45 energi i stedet for 30.",
+        "bonus4": "Redharvest påfører målet en ny Flense."
+      },
       "wyrmshadow": {
         "name": "Nightfang klæder",
         "bonus2": "Øger angrebskraft med 40.",
-        "bonus3": "Øger smidighed med 15 og kritisk chance med 2%.",
-        "bonus4": "Dine kritiske våbenslag har 50% chance for at give Hugtandsfart og øge angrebshastighed med 25% i 8 sek."
+        "bonus4": "Dine kritiske våbenslag har 50% chance for at give Hugtandsfart og øge angrebshastighed med 25% i 8 sek.",
+        "bonus6": "Øger angrebs- og magihastighed med 4% og træfsikkerhed med 3%. Kritiske træffere med dit våben flår et Ragged Gash op, som får målet til at bløde for 4 skade hvert 2. sek. i 12 sek. Stabler op til 3 gange."
+      },
+      "zealfire": {
+        "name": "Zealfires krigsplade",
+        "bonus2": "Final Edict og Dawnfall reducerer hinandens resterende nedkøling med 3 sek. i stedet for 2.",
+        "bonus4": "Hammer of Wrath, der kastes under Dawn's Wrath, rammer 40% hårdere i stedet for 20%."
       }
     }
   },
@@ -17966,6 +19306,7 @@ export const da_DK: EnTranslations = {
     "delveRiteShrineReedInteract": "Sivskrin: Tryk på F for at røre det",
     "delveRiteShrineSkullInteract": "Kranieskrin: Tryk på F for at røre det",
     "mailboxName": "Postkasse",
-    "noticeboardName": "Opslagstavle"
+    "noticeboardName": "Opslagstavle",
+    "realmBuilderMonumentName": "Realm Builder Monument"
   }
 };

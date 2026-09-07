@@ -9,6 +9,12 @@ import { safeStartupGraphicsPreset } from '../game/startup_graphics_safety';
 import { EFFECTS_QUALITY_LOW_CUTOFF } from '../game/ui_effects_profile';
 import { attachBiomeHaze } from './biome_haze_field';
 import { FAR_ANIM_RANGE_SCALE_MAX } from './crowd_lod';
+// Side-effect import only: installs the final-color NaN guard (see the
+// point-light pruning comment in initGfxTier below for why this is a bare
+// import here, not a direct invocation). This import is also what
+// gives characters/preview.ts, characters/portrait.ts and armory_preview.ts
+// the guard, transitively: they reach it via gfx.ts, never call it directly.
+import './final_color_nan_guard';
 import { gfxAaPolicy } from './gfx_aa_policy_core';
 import { applyGfxOverridesFromSearch } from './gfx_override_core';
 import {
@@ -1402,14 +1408,20 @@ function storedNumericSetting(key: string): number | undefined {
 let gpuRendererProbed = false;
 let probedGpuRenderer: string | undefined;
 
+let probedGpuParallelCompile: boolean | undefined;
+
 function probeGpuRenderer(): string | undefined {
   if (gpuRendererProbed) return probedGpuRenderer;
   gpuRendererProbed = true;
-  probedGpuRenderer = readGpuRendererString();
+  const probe = readGpuRendererString();
+  probedGpuRenderer = probe?.renderer;
+  probedGpuParallelCompile = probe?.parallelCompile;
   return probedGpuRenderer;
 }
 
-function readGpuRendererString(): string | undefined {
+function readGpuRendererString():
+  | { renderer: string; parallelCompile: boolean | undefined }
+  | undefined {
   if (typeof document === 'undefined') return undefined;
   let gl: WebGLRenderingContext | WebGL2RenderingContext | null = null;
   try {
@@ -1417,13 +1429,29 @@ function readGpuRendererString(): string | undefined {
     gl = canvas.getContext('webgl2') ?? canvas.getContext('webgl');
     if (!gl) return undefined;
     const dbg = gl.getExtension('WEBGL_debug_renderer_info');
-    return String(
+    const renderer = String(
       dbg ? gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER),
     );
+    return { renderer, parallelCompile: listsParallelShaderCompile(gl) };
   } catch {
     return undefined;
   } finally {
     gl?.getExtension('WEBGL_lose_context')?.loseContext();
+  }
+}
+
+/** The extension-list read on its own: a context that cannot list its
+ *  extensions leaves the answer UNKNOWN (the shell keeps its trial rung on
+ *  undefined) and never costs the renderer string read beside it. */
+function listsParallelShaderCompile(
+  gl: WebGLRenderingContext | WebGL2RenderingContext,
+): boolean | undefined {
+  if (typeof gl.getSupportedExtensions !== 'function') return undefined;
+  try {
+    const listed = gl.getSupportedExtensions();
+    return listed ? listed.includes('KHR_parallel_shader_compile') : undefined;
+  } catch {
+    return undefined;
   }
 }
 
@@ -1437,6 +1465,16 @@ function readGpuRendererString(): string | undefined {
  */
 export function activeGpuRendererName(): string | undefined {
   return probeGpuRenderer();
+}
+
+/** Whether the same boot probe's context listed KHR_parallel_shader_compile:
+ *  the desktop shell's Vulkan trial reads it beside the renderer string (ANGLE's
+ *  Vulkan backend exposes the extension only under an opt-in feature the shell
+ *  switches on, and judges from this whether the switch took). Undefined when
+ *  no context could be probed. */
+export function activeGpuParallelCompile(): boolean | undefined {
+  probeGpuRenderer();
+  return probedGpuParallelCompile;
 }
 
 /** Tier explicitly requested via URL, or null when it should be auto-detected. */
@@ -1488,7 +1526,7 @@ function runtimeHints(): GfxRuntimeHints {
   };
 }
 
-function mobilePlatformFromNavigator(
+export function mobilePlatformFromNavigator(
   nav: Pick<Navigator, 'userAgent' | 'platform' | 'maxTouchPoints'> | null,
 ): 'ios' | 'android' | 'other' {
   if (!nav) return 'other';
@@ -1894,11 +1932,21 @@ export function initGfxTier(webgl: THREE.WebGLRenderer): GfxTier {
   // Install before any scene material compiles. The fixed point-light budget
   // keeps program counts stable with zero-intensity slots; the shader guard
   // makes those stable slots cheap without changing their permutation.
+  //
+  // The final-color NaN guard (final_color_nan_guard.ts) is NOT installed
+  // here: unlike this pruning, it needs to run before renderers this repo
+  // builds outside initGfxTier too (characters/preview.ts,
+  // characters/portrait.ts, armory_preview.ts), so it installs itself at
+  // module scope instead, as an import side effect. It is not moved here
+  // because a per-site call was tried first and provably missed two of
+  // those three; see final_color_nan_guard.ts for the reasoning. The two
+  // guards use different seams on purpose, not by oversight.
   installPbrPointLightShaderPruning();
   const gpuRenderer = rendererName(webgl);
   const softwareRendering = isSoftwareRendererName(gpuRenderer);
   const hints = { ...runtimeHints(), gpuRenderer };
-  return activateGfxProfile(profileFromHints(hints, softwareRendering, 0)).settings.tier;
+  const activated = activateGfxProfile(profileFromHints(hints, softwareRendering, 0));
+  return activated.settings.tier;
 }
 
 export const gfxInternalsForTest = {

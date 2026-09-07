@@ -570,6 +570,9 @@ export const vi_VN: EnTranslations = {
       "tabsLabel": "Các phần của Cửa hàng WOC",
       "storeTab": "Cửa hàng",
       "rewardsTab": "Phần thưởng hàng ngày",
+      "mountsEyebrow": "Account Mounts",
+      "mountsTitle": "Machine Stable",
+      "mountBuyAria": "Purchase {item}",
       "loading": "Đang tải Cửa hàng WOC...",
       "error": "Cửa hàng WOC hiện không khả dụng. Vui lòng thử lại trong thời gian ngắn.",
       "balance": "Số dư Claudium",
@@ -789,7 +792,37 @@ export const vi_VN: EnTranslations = {
       "applied": "Đã áp dụng",
       "apply": "Áp dụng ngoại hình",
       "detach": "Gỡ ngoại hình",
-      "equipHint": "Hãy trang bị {type} để áp dụng ngoại hình này."
+      "equipHint": "Hãy trang bị {type} để áp dụng ngoại hình này.",
+      "charter": {
+        "eyebrow": "Két Sắt",
+        "title": "Khế Ước Két Sắt",
+        "scope": "Một khế ước chỉ mở rộng ngân hàng của nhân vật này. Thủ quỹ bán cùng số ô đó bằng tiền vàng.",
+        "grant": "Thêm {slots} ô ngân hàng",
+        "buy": "Mua Khế Ước",
+        "buyAria": "Mua {item}",
+        "confirmTitle": "Xác Nhận Mua Khế Ước",
+        "confirmBody": "Mua {item} với giá {cost} Claudium?",
+        "resultContext": "{item} ({sku}): {message}",
+        "granted": "Khế ước đã được áp dụng. Ngân hàng của nhân vật này giờ đã lớn hơn.",
+        "alreadyGranted": "Khế ước này đã có sẵn trên nhân vật này. Bạn không bị tính phí lần nữa.",
+        "applyDeferred": "Thanh toán hoàn tất. Các ô sẽ tự động được áp dụng vào lần đăng nhập tiếp theo của nhân vật này.",
+        "grantUnresolved": "Thanh toán hoàn tất, nhưng các ô chưa thể được áp dụng. Giao dịch mua đã được ghi nhận và đội hỗ trợ có thể hoàn tất nó giúp bạn.",
+        "inProgress": "Một giao dịch mua cho nhân vật này vẫn đang được hoàn tất. Hãy thử lại sau một lát.",
+        "doesNotFit": "Ngân hàng của nhân vật này không thể chứa hết phần cấp phát đầy đủ của khế ước này.",
+        "notPurchasable": "Khế ước này hiện không thể mua được.",
+        "noRoom": "Ngân hàng của nhân vật này không còn chỗ trống cho một khế ước.",
+        "noCharterFits": "Không có khế ước nào vừa với khoảng trống còn lại trong ngân hàng của nhân vật này.",
+        "someHiddenByFit": "Các khế ước quá lớn so với khoảng trống còn lại trong ngân hàng của nhân vật này sẽ không được hiển thị.",
+        "outage": "Không thể xác nhận giao dịch mua. Hãy thử lại bằng nút này và bạn sẽ không bị tính phí hai lần. Tải lại trò chơi trước khi thử lại có thể làm mất sự bảo vệ đó.",
+        "outageStale": "Hãy quay lại Cửa Hàng và dùng lại đúng thao tác Mua Khế Ước đó. Bạn sẽ không bị tính phí hai lần. Tải lại trò chơi trước khi thử lại có thể làm mất sự bảo vệ đó.",
+        "failed": "Không thể hoàn tất giao dịch mua.",
+        "names": {
+          "strongbox_charter_1": "Khế Ước Két Sắt Sơ Cấp",
+          "strongbox_charter_2": "Khế Ước Két Sắt Trung Cấp",
+          "strongbox_charter_3": "Khế Ước Két Sắt Cao Cấp",
+          "strongbox_charter_complete": "Khế Ước Két Sắt Toàn Phần"
+        }
+      }
     },
     "claudium": {
       "title": "Claudium",
@@ -845,6 +878,7 @@ export const vi_VN: EnTranslations = {
       "reset": "Đặt Lại",
       "presets": {
         "classic": "Vàng Cổ Điển",
+        "fancyGold": "Vàng Sang Trọng (Đang Phát Triển)",
         "midnight": "Nửa Đêm",
         "parchment": "Giấy Da",
         "highContrast": "Tương Phản Cao"
@@ -925,7 +959,8 @@ export const vi_VN: EnTranslations = {
       "durationUnitSeconds": "s",
       "durationUnitMinutes": "ph",
       "durationUnitHours": "g",
-      "durationUnitDays": "ng"
+      "durationUnitDays": "ng",
+      "buffOverflowLabel": "+{n}"
     },
     "character": {
       "modelPreview": "Xem Trước Mô Hình Nhân Vật"
@@ -1272,6 +1307,11 @@ export const vi_VN: EnTranslations = {
       "separate": "Tách {meter}",
       "regroup": "Ghép lại {meter}"
     },
+    "targetDots": {
+      "title": "Target Dots",
+      "row": "{aura} on {target}",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Hào Quang Mục Tiêu",
       "keybindLabel": "Buff và Debuff Mục Tiêu",
@@ -1321,6 +1361,11 @@ export const vi_VN: EnTranslations = {
       "reset": "Đặt Lại",
       "done": "Xong",
       "cancel": "Hủy",
+      "showExtraBar": "Hiện Thêm Một Thanh Hành Động",
+      "hideExtraBar": "Ẩn Một Thanh Hành Động",
+      "conflictTitle": "Phím Đã Được Gán",
+      "conflictBody": "{key} đã được gán cho {other}. Gán nó cho {action} sẽ hủy gán {other}.",
+      "conflictAccept": "Vẫn Gán Lại",
       "resetConfirmTitle": "Đặt lại phím thanh hành động?",
       "resetConfirmBody": "Thanh thứ nhất trở về phím mặc định. Thanh thứ hai và thứ ba sẽ không còn phím gán. Không thể hoàn tác."
     },
@@ -1350,6 +1395,10 @@ export const vi_VN: EnTranslations = {
       "name_thunderstrut_gobbler": "Thunderstrut, Gà Tây Vĩ Đại",
       "name_terrorspark_groundshaker": "Tia Kinh Hoàng, Kẻ Rung Chuyển Mặt Đất",
       "name_drakemaw_raptor": "Cuồng Long Drakemaw",
+      "name_mech_bird": "Cluckwork Mech Bird",
+      "name_lanternback_troll": "Grumbol the Lanternback",
+      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
+      "name_rickshaw_mount": "Xe kéo Buộc Xương",
       "desc_valorsteed": "Một con chiến mã khỏe mạnh, bước chân vững chãi, giúp tăng tốc độ di chuyển.",
       "desc_grag_bear": "Một chú gấu khỏe mạnh, bước chân vững chãi, giúp tăng tốc độ di chuyển.",
       "desc_stalkglider_snail": "Một chú ốc sên bền bỉ, dẻo dai, giúp tăng tốc độ di chuyển.",
@@ -1358,7 +1407,11 @@ export const vi_VN: EnTranslations = {
       "desc_stormfeather_griffin": "Một con sư tử đầu chim bão uy nghi, rảo bước trên mặt đất bằng những móng vuốt được bọc rune, đôi cánh xếp gọn.",
       "desc_thunderstrut_gobbler": "Một con gà tây khổng lồ nở ra từ giông bão, sải bước xuống từ Đỉnh Tỉnh Thức, đuôi xòe rộng như đám mây giông.",
       "desc_terrorspark_groundshaker": "Một cỗ máy bọc giáp nhỏ gọn với bánh xích nặng, pháo nòng lớn và yên ngồi dành cho những người lái gan dạ.",
-      "desc_drakemaw_raptor": "Một con Cuồng Long thuộc bầy đàn đã được thuần yên cương từ Miệng Núi Lửa Drakemaw, toàn thân gân cốt và tốc lực, vẫn còn phảng phất mùi tro tàn."
+      "desc_drakemaw_raptor": "Một con Cuồng Long thuộc bầy đàn đã được thuần yên cương từ Miệng Núi Lửa Drakemaw, toàn thân gân cốt và tốc lực, vẫn còn phảng phất mùi tro tàn.",
+      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
+      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
+      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
+      "desc_rickshaw_mount": "Một cỗ xe xương lọc cọc, với một tên lính xương xẩu bị buộc vào càng xe, kéo bạn lao đi hết tốc lực."
     },
     "mountTraining": {
       "mountPrompt": "Nhấn {key} để cưỡi Valorsteed huấn luyện.",
@@ -1519,6 +1572,26 @@ export const vi_VN: EnTranslations = {
       "showPlaytime": "Hiện Thời Gian Chơi Ở Màn Hình Nhân Vật",
       "forceHighPerfGpu": "Dùng Card Đồ Họa Chơi Game",
       "forceHighPerfGpuNote": "Mặc định bật: ứng dụng máy tính yêu cầu máy này dùng card đồ họa chơi game của nó. Hãy tắt tùy chọn này nếu trò chơi không khởi động được, mở ra màn hình đen, hoặc màn hình laptop bị tối đen. Có hiệu lực vào lần khởi động trò chơi tiếp theo.",
+      "shaderWarm": "Shader Warm-up Worker",
+      "shaderWarmAuto": "Auto",
+      "shaderWarmOff": "Off",
+      "shaderWarmOn": "On",
+      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
+      "gpuBackend": "Graphics Backend",
+      "gpuBackendAuto": "Auto",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL (slow)",
+      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
+      "gpuBackendActive": "Currently using {backend}.",
+      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
+      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
+      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "Some changes take effect after a restart.",
+      "restartGame": "Restart Game",
+      "restartInProgress": "Restarting the game...",
+      "restartFailed": "The game could not restart itself. Quit and start it again.",
       "discordPresence": "Hoạt Động Discord",
       "discordPresenceNote": "Hiển thị vùng bạn đang ở và thời gian bạn đã chơi trong phiên chơi này dưới dạng hoạt động Discord của bạn, và bất kỳ ai xem được hồ sơ Discord của bạn đều thấy được cả hai. Chỉ tên vùng, thời gian phiên chơi của bạn, và tên trò chơi được chia sẻ, không bao giờ là nhân vật, tài khoản, hay những ai bạn đang chơi cùng. Cần ứng dụng Discord đang chạy trên máy tính này.",
       "showDevBadges": "Hiện Huy Hiệu Nhà Phát Triển",
@@ -1528,6 +1601,7 @@ export const vi_VN: EnTranslations = {
       "playerFrameScale": "Tỷ Lệ Khung Người Chơi",
       "targetFrameScale": "Tỷ Lệ Khung Mục Tiêu",
       "aurasOnPlayerFrame": "Hiệu Ứng Có Lợi Trên Khung Người Chơi",
+      "alwaysShowAllBuffs": "Luôn Hiện Mọi Buff",
       "highContrastBackground": "Nền Tương Phản Cao",
       "startAttackOnAbility": "Tự Đánh Khi Dùng Kỹ Năng",
       "stopAutoAttackOnTargetSwitch": "Dừng Tự Đánh Khi Đổi Mục Tiêu",
@@ -1537,19 +1611,28 @@ export const vi_VN: EnTranslations = {
       "stickyTarget": "Giữ Mục Tiêu Khi Nhấp Đất",
       "showItemLevel": "Hiển Thị Cấp Vật Phẩm",
       "showReliquaryTracker": "Hiển thị Trình theo dõi Thánh tích",
+      "confirmVendorSell": "Xác Nhận Trước Khi Bán",
+      "confirmVendorSellNote": "Tắt tùy chọn này sẽ bán vật phẩm chỉ với một cú nhấp và không cần xác nhận, nên một ô túi bị xê dịch có thể khiến bạn bán nhầm vật phẩm.",
       "itemLevelLine": "Cấp Vật Phẩm {level}",
       "itemScoreLine": "Điểm {score}",
       "showSecondaryActionBar": "Hiện Thanh Hành Động Phụ",
       "showThirdActionBar": "Hiển thị thanh hành động thứ ba",
+      "combineActionBars": "Gộp Các Thanh Hành Động",
       "hideUnusedActionSlots": "Ẩn Ô Hành Động Chưa Sử Dụng",
       "lockActionBars": "Khóa Thanh Hành Động",
       "showTargetOfTarget": "Hiện Mục Tiêu Của Mục Tiêu",
+      "showTargetSwingTimer": "Hiển thị bộ đếm vung đòn của mục tiêu",
       "showPetFrame": "Hiện Thú Cưng Của Bạn",
+      "showNameplateDots": "Show My Dots on Nameplates",
+      "nameplateDotScale": "Nameplate Dot Size",
+      "showTargetDots": "Show Target Dots",
       "waterRipples": "Gợn nước (sóng rẽ nước)",
       "showAttackButton": "Hiển Thị Nút Tấn Công",
       "showDailyRewardsChest": "Hiện Rương Phần Thưởng Hằng Ngày",
       "mobileCameraJoystick": "Cần điều khiển máy ảnh",
       "mobileLeftHanded": "Bố cục thuận tay trái",
+      "touchPreciseAim": "Ngắm Mặt Đất Chính Xác",
+      "touchPreciseAimNote": "Ngắm trước khi thi triển các phép nhắm xuống đất. Tắt để thi triển ngay lập tức tại điểm được gợi ý.",
       "touchTapMenus": "Chạm để mở menu",
       "touchTapMenusNote": "Mở các nút điều khiển hành động, vật phẩm tiêu hao và menu bằng một cú chạm thay vì vuốt. Chạm vào một mục để dùng nó, chạm lại vào nút điều khiển để thực hiện hành động thông thường của nó, hoặc chạm ra ngoài để đóng lại."
     },
@@ -1585,6 +1668,7 @@ export const vi_VN: EnTranslations = {
       "invertY": "Đảo Ngược Camera (Y)",
       "deadzone": "Vùng Chết Cần Điều Khiển",
       "cameraSpeed": "Tốc Độ Camera",
+      "reticleSpeed": "Tốc Độ Tâm Ngắm",
       "vibration": "Rung",
       "buttons": "Bố Cục Nút",
       "resetButtons": "Đặt Lại Bố Cục Nút",
@@ -1965,6 +2049,7 @@ export const vi_VN: EnTranslations = {
       "fromYour": "Từ {value} {stat} của bạn:",
       "names": {
         "spellPower": "Sức Mạnh Phép Thuật",
+        "healPower": "Sức Mạnh Trị Liệu",
         "critRating": "Chỉ Số Chí Mạng",
         "hasteRating": "Chỉ Số Thần Tốc",
         "parry": "Gạt Đòn",
@@ -2099,6 +2184,12 @@ export const vi_VN: EnTranslations = {
         "few": "còn lại {count} giây",
         "many": "còn lại {count} giây",
         "other": "còn lại {count} giây"
+      },
+      "buffsHidden": {
+        "one": "Còn {count} hiệu ứng tăng cường đang hoạt động nhưng bị ẩn trên thiết lập đồ họa này",
+        "few": "Còn {count} hiệu ứng tăng cường đang hoạt động nhưng bị ẩn trên thiết lập đồ họa này",
+        "many": "Còn {count} hiệu ứng tăng cường đang hoạt động nhưng bị ẩn trên thiết lập đồ họa này",
+        "other": "Còn {count} hiệu ứng tăng cường đang hoạt động nhưng bị ẩn trên thiết lập đồ họa này"
       },
       "playtimeDays": {
         "one": "{count} ngày",
@@ -2433,7 +2524,10 @@ export const vi_VN: EnTranslations = {
       "backpack": "Ba Lô",
       "bagSocketAria": "{name}: {slots}",
       "socketEmpty": "Ô túi trống",
-      "unequipHint": "Nhấp để tháo chiếc túi này"
+      "unequipHint": "Nhấp để tháo chiếc túi này",
+      "poolGeneral": "Chung: {used} trên {total}",
+      "poolMaterials": "Nguyên liệu: {used} trên {total}",
+      "capacityPoolsAria": "Ô túi đã dùng: {used} trên {total}. Vật phẩm chung: {generalUsed} trên {generalTotal}. Nguyên liệu: {materialsUsed} trên {materialsTotal}."
     },
     "raidConvert": {
       "toPartyDone": "Raid của bạn đã chuyển trở lại thành tổ đội.",
@@ -2447,27 +2541,179 @@ export const vi_VN: EnTranslations = {
       "mail": "Giáp lưới"
     },
     "varkhulCallout": {
-      "leftPillarCharging": "The left forge pillar is charging. It will ignite in 3 sec!",
-      "rightPillarCharging": "The right forge pillar is charging. It will ignite in 3 sec!",
-      "bothPillarsCharging": "The forge pillars are charging. They will ignite in 3 sec!",
-      "leftPillar": "The left forge pillar ignites!",
-      "rightPillar": "The right forge pillar ignites!",
-      "bothPillars": "The forge pillars ignite!",
-      "portalsOpening": "The forge portals are opening!",
-      "heat75": "The forge is at 75% heat!",
-      "heat90": "Forge Meltdown is imminent!",
-      "addsDefeated": "The forge legion is defeated: Varkhul is exposed!",
-      "worldfireBegins": "Worldfire ignites at the edge of the room. The crucible will be consumed in 42 sec!",
-      "worldfireClosing": "Worldfire closes in. Move toward the center!",
-      "worldfireConsumed": "The entire crucible is burning!"
+      "leftPillarCharging": "Trụ cột lò rèn bên trái đang tích lực. Nó sẽ bùng cháy sau 3 giây!",
+      "rightPillarCharging": "Trụ cột lò rèn bên phải đang tích lực. Nó sẽ bùng cháy sau 3 giây!",
+      "bothPillarsCharging": "Các trụ cột lò rèn đang tích lực. Chúng sẽ bùng cháy sau 3 giây!",
+      "artificerApproaches": "Một Nghệ Nhân Than Hồng đang tiến đến lò rèn!",
+      "leftPillar": "Trụ cột lò rèn bên trái bùng cháy!",
+      "rightPillar": "Trụ cột lò rèn bên phải bùng cháy!",
+      "bothPillars": "Các trụ cột lò rèn bùng cháy!",
+      "portalsOpening": "Các cổng lò rèn đang mở ra!",
+      "heat75": "Lò rèn đã đạt 75% nhiệt!",
+      "heat90": "Sụp Lò sắp xảy ra!",
+      "addsDefeated": "Quân đoàn lò rèn đã bị đánh bại: Varkhul đã bị phơi bày!",
+      "worldfireBegins": "Lửa Diệt Thế bùng cháy ở rìa căn phòng. Vạc luyện sẽ bị nuốt chửng sau 42 giây!",
+      "worldfireClosing": "Lửa Diệt Thế đang thu hẹp lại. Hãy di chuyển về phía trung tâm!",
+      "worldfireConsumed": "Toàn bộ vạc luyện đang bốc cháy!"
+    },
+    "varkhulWaveStatus": "Đợt {wave}/{waves} | Kẻ địch: {remaining}",
+    "raidBossGuide": {
+      "title": "Hướng Dẫn Trùm",
+      "button": "Hướng Dẫn Trùm: {boss}",
+      "subtitle": "{boss} | {difficulty}",
+      "close": "Đóng hướng dẫn trùm",
+      "bossesLabel": "Trùm Raid",
+      "difficultyLabel": "Độ Khó",
+      "normal": "Thường",
+      "heroic": "Anh Hùng",
+      "portraitAlt": "Ảnh chân dung trận đấu {boss}",
+      "overviewHeading": "Tổng Quan",
+      "abilitiesHeading": "Kỹ Năng",
+      "whatToDo": "Cần Làm Gì",
+      "whatToDoResponse": "Cần làm gì: {response}",
+      "rolesLabel": "Trách Nhiệm Vai Trò",
+      "flagsLabel": "Cảnh Báo Cơ Chế",
+      "roleTank": "Đỡ Đòn",
+      "roleHealer": "Chữa Lành",
+      "roleDamage": "Gây Sát Thương",
+      "roleAll": "Mọi Vai Trò",
+      "flagDeadly": "Chết Người",
+      "flagInterruptible": "Có Thể Ngắt Quãng",
+      "flagImportant": "Quan Trọng",
+      "flagCleansable": "Có Thể Thanh Tẩy",
+      "browseBoss": "Xem {boss}",
+      "chooseDifficulty": "Xem cơ chế ở độ {difficulty}",
+      "expandAbility": "Mở rộng {ability}",
+      "collapseAbility": "Thu gọn {ability}",
+      "abilityControlLabel": "{action}. {details}",
+      "tooltipMeta": "{phase} | {difficulty}",
+      "ignivar": {
+        "overview": "Varkhul đã rèn ra Ignivar để làm một sứ giả, một con dấu sống, và chiếc chìa khóa đến Inner Crucible. Trận chiến này thử thách khả năng kiểm soát ống dẫn nước, di chuyển chính xác, và ưu tiên sát thương nhanh.",
+        "phaseOpeningName": "Sứ Giả Thức Tỉnh",
+        "phaseOpeningSummary": "Kiểm soát Dấu Ấn Giàn Thiêu bằng các ống dẫn nước trong khi đối phó với đòn quét phía trước lặp lại, lửa trời, các tia xoay vòng, và Sóng Lò Rèn đang mở rộng của Ignivar.",
+        "phaseApocalypseName": "Giai Đoạn Chuyển Tiếp: Tận Thế",
+        "phaseApocalypseSummary": "Ở {health} máu, Ignivar triệu hồi một kẻ Triệu Hồi Tro nhằm cố gắng kết thúc trận chiến.",
+        "phaseJudgmentName": "Phán Xét Của Lò Rèn",
+        "phaseJudgmentSummary": "Ở {health} máu, Ignivar đốt cháy đấu trường và tiết lộ một nơi trú ẩn an toàn trong số ba nơi trú ẩn.",
+        "phaseJudgmentHeroicSummary": "Ở {health} máu, Ignivar đốt cháy đấu trường trong khi các Dấu Ấn đang hoạt động vẫn tiếp tục đe dọa những người chơi đứng gần bên trong nơi trú ẩn.",
+        "phaseFinaleName": "Màn Cuối: Hỏa Ngục Cuối Cùng",
+        "phaseFinaleSummary": "Ở {health} máu, Ignivar bắt đầu giai đoạn thiêu đốt cuối cùng với một thời hạn chót nghiêm ngặt và các cơ chế lặp lại nhanh hơn.",
+        "forgeStrikeName": "Đòn Lò Rèn",
+        "forgeStrikeSummary": "Ignivar giáng đòn vào tank hiện tại và áp đặt Giáp Nóng Chảy, làm tăng sát thương nhận từ Ignivar.",
+        "forgeStrikeResponse": "Tank nên đổi người ở {stacks} tầng. Healer cần chuẩn bị cho đòn đánh và những đòn cận chiến đầu tiên của tank mới.",
+        "brandName": "Dấu Ấn Giàn Thiêu",
+        "brandSummary": "Ignivar đánh dấu những người chơi không phải tank bằng sát thương lửa kéo dài. Người chơi bị đánh dấu cũng thiêu đốt đồng minh đứng gần.",
+        "brandResponse": "Tản ra. Nhắm Cơn Lũ Nung Đốt vào một ống dẫn nước đã sẵn sàng, rồi để từng người chơi bị đánh dấu một mình băng qua dòng nước đã kích hoạt để thanh tẩy.",
+        "brandHeroicResponse": "Tản ra. Mở một ống dẫn bằng Cơn Lũ Nung Đốt và thanh tẩy từng người chơi bị đánh dấu một lúc. Mỗi lần thanh tẩy sẽ kích hoạt Phản Chấn Thanh Tẩy trên toàn raid.",
+        "searingTorrentName": "Cơn Lũ Nung Đốt",
+        "searingTorrentSummary": "Ignivar bám theo một người chơi, rồi giải phóng một đợt bùng nổ rộng phía trước. Một ống dẫn nước đã sẵn sàng bị đợt bùng nổ đó đánh trúng sẽ được kích hoạt trong một khoảng thời gian ngắn.",
+        "searingTorrentHeroicSummary": "Ignivar bám theo một người chơi, rồi giải phóng một đợt bùng nổ phía trước gần như chí mạng. Một ống dẫn nước đã sẵn sàng bị đợt bùng nổ đó đánh trúng sẽ được kích hoạt trong một khoảng thời gian ngắn.",
+        "searingTorrentResponse": "Nhắm vùng cảnh báo đi qua đúng một ống dẫn đã sẵn sàng. Tất cả những người còn lại rời khỏi khu vực phía trước trước khi đòn niệm hoàn tất.",
+        "rainName": "Mưa Than Hồng",
+        "rainSummary": "Ba khu vực lửa và các điểm rơi thiên thạch được đánh dấu sẽ trừng phạt người chơi còn ở lại bên trong vùng cảnh báo của chúng.",
+        "rainHeroicSummary": "Ba khu vực lửa và các điểm rơi thiên thạch được đánh dấu gây sát thương cực lớn cho người chơi còn ở lại bên trong vùng cảnh báo của chúng.",
+        "rainResponse": "Di chuyển vào một khoảng trống không bị đánh dấu và rời khỏi mọi vòng tròn thiên thạch trước khi nó rơi xuống.",
+        "raysName": "Hỏa Ngục Xoay Vòng",
+        "raysSummary": "Các tia lửa xoay vòng quét quanh Ignivar và liên tục gây sát thương cho người chơi chạm phải chúng.",
+        "raysHeroicSummary": "Các tia lửa xoay vòng quét quanh Ignivar và gây sát thương nặng lặp lại khi chạm phải.",
+        "raysResponse": "Di chuyển theo khoảng trống giữa các tia lửa. Đừng băng qua một tia lửa, kể cả bằng một kỹ năng di chuyển nhanh.",
+        "forgeWaveName": "Sóng Lò Rèn",
+        "forgeWaveSummary": "Một bức tường lửa đang mở rộng quét qua đấu trường, chừa lại hai khoảng hở đối diện nhau và hất lùi những người chơi bị trúng.",
+        "forgeWaveHeroicSummary": "Một bức tường lửa đang mở rộng quét qua đấu trường, chừa lại hai khoảng hở đối diện nhau và hất văng người chơi bị trúng xa hơn nhiều.",
+        "forgeWaveResponse": "Tìm một trong hai khoảng hở trong lúc chiêu thức đang tích lực, canh thẳng hàng với nó, và tránh bị hất văng về phía rìa đấu trường.",
+        "apocalypseName": "Tận Thế",
+        "apocalypseSummary": "Ignivar triệu hồi một kẻ Triệu Hồi Tro. Nếu quân tiếp viện này hoàn tất Tận Thế, cả raid sẽ bị đánh bại ngay lập tức.",
+        "apocalypseResponse": "Dồn toàn bộ sát thương khả dụng vào Ignivar Triệu Hồi Tro và hạ gục nó trước khi đòn niệm hoàn tất.",
+        "judgmentName": "Phán Xét Của Lò Rèn",
+        "judgmentSummary": "Ignivar đánh dấu ba nơi trú ẩn, chỉ ra một nơi an toàn duy nhất, rồi liên tục thiêu đốt phần còn lại của đấu trường.",
+        "judgmentHeroicSummary": "Ignivar đánh dấu một nơi trú ẩn an toàn trong khi đấu trường bốc cháy. Dấu Ấn Giàn Thiêu vẫn còn hoạt động và tiếp tục gây sát thương cho đồng minh đứng gần.",
+        "judgmentResponse": "Xác định nơi trú ẩn được đánh dấu riêng biệt trong lúc cảnh báo và tụ lại đầy đủ bên trong ranh giới của nó trước khi mặt sàn bốc cháy.",
+        "chainsName": "Xiềng Xích Lò Rèn",
+        "chainsSummary": "Ignivar liên kết các cặp người chơi đứng gần nhau. Tách xa nhau quá mức hoặc đi xuyên qua sợi xích của một cặp khác sẽ gây sát thương chí mạng.",
+        "chainsResponse": "Đứng gần người được liên kết với bạn, di chuyển cùng nhau, và ngăn mọi người chơi khác đi xuyên qua sợi xích của bạn.",
+        "lastInfernoName": "Hỏa Ngục Cuối Cùng",
+        "lastInfernoSummary": "Ignivar nổi cơn cuồng nộ và chuẩn bị một đòn diệt toàn đội trong khi Mưa Than Hồng, Cơn Lũ Nung Đốt, và Hỏa Ngục Xoay Vòng đều tăng tốc.",
+        "lastInfernoResponse": "Dùng hết các hồi chiêu sát thương và hồi máu còn lại, tiếp tục thực hiện đúng các cơ chế di chuyển, và hạ gục Ignivar trước khi bộ đếm ngược kết thúc.",
+        "brand": "Dấu Ấn Giàn Thiêu: hãy tản ra. Nhắm Cơn Lũ Nung Đốt vào một ống dẫn nước đã sẵn sàng, rồi một mình băng qua dòng nước đó để thanh tẩy.",
+        "movement": "Di chuyển: tránh các hình nón của Mưa Than Hồng và thiên thạch, di chuyển theo Hỏa Ngục Xoay Vòng, và tận dụng hai khoảng hở của Sóng Lò Rèn.",
+        "apocalypse": "Tận Thế: hạ gục Ignivar Triệu Hồi Tro trước khi đòn niệm của nó hoàn tất.",
+        "judgment": "Phán Xét Của Lò Rèn: xác định nơi trú ẩn duy nhất trong lúc cảnh báo, rồi tụ lại bên trong ranh giới được đánh dấu của nó khi mặt sàn bốc cháy.",
+        "finale": "Hỏa Ngục Cuối Cùng: hạ gục Ignivar trước khi toàn đội bị diệt, trong khi thiên thạch, đòn quét phía trước nhanh hơn, và Hỏa Ngục Xoay Vòng vẫn tiếp diễn.",
+        "heroic": "Anh Hùng: các cặp người chơi phải đứng gần nhau trong Xiềng Xích Lò Rèn, Dấu Ấn vẫn còn hoạt động bên trong Phán Xét, và Sóng Lò Rèn đẩy xa hơn."
+      },
+      "varkhul": {
+        "overview": "Varkhul đã giam cầm Last Spring đang hấp hối để rèn ra kim loại sống, rồi tạo ra Ignivar để canh giữ tội ác đó. Trận chiến của hắn kết hợp việc định vị cá nhân với việc kiểm soát đại lò rèn trên toàn raid.",
+        "phaseOpeningName": "Tổ Sư Lò Rèn",
+        "phaseOpeningSummary": "Varkhul luân phiên giữa áp lực lên tank, đòn quét phía trước diện rộng, đạn di chuyển, đòn hứng chung của nhóm, các đợt thiên thạch, và những đòn tấn công từ đại đe.",
+        "phaseAssemblyName": "Giai Đoạn Chuyển Tiếp: Cuộc Tập Hợp Của Bậc Thầy",
+        "phaseAssemblySummary": "Ở {health} máu, Varkhul trở nên được bảo vệ trong khi quân đoàn lò rèn của hắn tiến vào qua các cổng và các tia trụ cột đe dọa gây ra Sụp Lò.",
+        "phaseFinaleName": "Màn Cuối: Kiệt Tác Giải Phóng",
+        "phaseFinaleSummary": "Ở {health} máu, Varkhul tấn công nhanh hơn, gây nhiều sát thương hơn, và liên tục phát ra các đợt lửa khắp raid cho đến thời hạn chót cuối cùng.",
+        "phaseFinaleHeroicSummary": "Ở {health} máu, Varkhul từ bỏ phần lớn các cơ chế trước đó khi Lửa Diệt Thế thu hẹp dần vào trong và nuốt chửng vạc luyện.",
+        "makersBrandName": "Dấu Ấn Tạo Tác",
+        "makersBrandSummary": "Varkhul giáng đòn vào tank hiện tại và áp đặt một hiệu ứng cộng dồn làm tăng mọi sát thương nhận từ hắn.",
+        "makersBrandResponse": "Tank nên đổi người ở {stacks} tầng. Healer cần chuẩn bị cho tank sắp lên trước khi Varkhul đổi mục tiêu.",
+        "frontalName": "Đòn Quét Của Tổ Sư Lò Rèn",
+        "frontalSummary": "Varkhul giải phóng một đòn quét phía trước cực rộng, gây sát thương lửa nặng lên tất cả những ai đứng trước mặt hắn.",
+        "frontalHeroicSummary": "Varkhul giải phóng một đòn quét phía trước cực rộng, gây sát thương lửa gần như chí mạng lên tất cả những ai đứng trước mặt hắn.",
+        "frontalResponse": "Giữ cho Varkhul quay mặt ra xa khỏi nhóm và di chuyển ra sau lưng hắn ngay khi cảnh báo xuất hiện.",
+        "orbsName": "Cầu Than Hồng",
+        "orbsSummary": "Những người không phải tank bị đánh dấu để lại các vũng than hồng tồn tại lâu dài và giải phóng các quả cầu lửa theo mọi hướng. Kim Loại Nung Đỏ cũng hấp thụ lượng hồi máu nhận vào.",
+        "orbsHeroicSummary": "Những người không phải tank bị đánh dấu để lại các vũng than hồng gây sát thương cao và tồn tại lâu dài, đồng thời giải phóng các quả cầu lửa nguy hiểm theo mọi hướng. Kim Loại Nung Đỏ cũng hấp thụ lượng hồi máu nhận vào.",
+        "orbsResponse": "Mang mỗi dấu hiệu ra rìa phòng, tách các vũng lửa ra xa nhau, rồi né các quả cầu khi chúng băng qua đấu trường. Healer cần giải trừ hiệu ứng hấp thụ nhanh chóng.",
+        "pyreName": "Giàn Thiêu Chung",
+        "pyreSummary": "Một vòng tròn di chuyển theo một người chơi không mang Kim Loại Nung Đỏ. Sát thương của nó được chia đều cho những người chơi đứng bên trong, và mỗi người chơi còn thiếu sẽ gây {missingPenalty} sát thương theo máu tối đa lên toàn bộ raid.",
+        "pyreHeroicSummary": "Một vòng tròn di chuyển theo một người chơi không mang Kim Loại Nung Đỏ và chia nhỏ một đòn đánh lớn hơn. Mỗi người chơi còn thiếu cũng gây {missingPenalty} sát thương theo máu tối đa lên toàn bộ raid.",
+        "pyreResponse": "Tụ ít nhất {players} người chơi vào bên trong vòng tròn và di chuyển theo mục tiêu của nó cho đến khi đòn niệm kết thúc.",
+        "forgestormName": "Bão Lò Rèn",
+        "forgestormSummary": "Varkhul gọi xuống {waves} đợt liên tiếp các điểm rơi thiên thạch được đánh dấu khắp đấu trường.",
+        "forgestormHeroicSummary": "Varkhul gọi xuống {waves} đợt liên tiếp các điểm rơi thiên thạch được đánh dấu gây sát thương cực lớn.",
+        "forgestormResponse": "Quan sát mỗi loạt cảnh báo mặt đất mới và di chuyển ra ngoài trước khi đợt đó đáp xuống. Đừng quay lại vị trí trước đó mà không kiểm tra đợt tiếp theo.",
+        "rayName": "Tia Tôi Luyện",
+        "raySummary": "Một tia bám theo một người chơi bị đánh dấu trong một khoảng tích lực dài. Người chơi khác đầu tiên đứng giữa Varkhul và mục tiêu sẽ chặn đòn đánh và nhận Vết Thương Tôi Luyện.",
+        "rayResponse": "Chỉ định một người chơi đầy máu, thường là tank phụ, bước vào đường tia đó. Giữ những người chơi khác tránh ra và luân phiên người chặn trong khi Vết Thương Tôi Luyện còn hoạt động.",
+        "anvilName": "Sắc Lệnh Từ Đe",
+        "anvilSummary": "Varkhul đi đến đại lò rèn và giáng xuống {strikes} lần, gây sát thương tăng dần lên toàn raid.",
+        "anvilHeroicSummary": "Varkhul giáng xuống đại lò rèn {strikes} lần gây sát thương tăng dần cho cả raid trong khi thiên thạch được đánh dấu rơi xuống người chơi.",
+        "anvilResponse": "Tụ nhóm để nhận hồi máu diện rộng và dùng các hồi chiêu phòng thủ cho đòn giáng cuối cùng.",
+        "anvilHeroicResponse": "Dàn các thiên thạch được đánh dấu ra xa khỏi nhóm trong khi healer và các hồi chiêu phòng thủ bao trọn cả {strikes} đòn giáng.",
+        "assemblyName": "Cuộc Tập Hợp Của Bậc Thầy",
+        "assemblySummary": "Varkhul trở nên được bảo vệ và bắt đầu một cuộc tập hợp có giới hạn thời gian. Raid phải hạ gục mọi đợt quái từ cổng trước khi lò rèn hoàn tất kiệt tác của hắn.",
+        "assemblyResponse": "Chia sự chú ý giữa việc kiểm soát tia và các mục tiêu quân tiếp viện ưu tiên. Hạ gục toàn bộ quân đoàn lò rèn trước khi bộ đếm giờ tập hợp hết hạn.",
+        "beamName": "Tia Vạc Luyện",
+        "beamSummary": "Các tia trụ cột đang hoạt động sẽ làm nóng lò rèn trừ khi có người chơi chặn chúng. Người chặn nhận sát thương tăng dần từ Phơi Nhiễm Vạc Luyện, trong khi các tia bị chặn và trụ cột không hoạt động sẽ khiến nhiệt độ giảm.",
+        "beamHeroicSummary": "Các tia trụ cột đang hoạt động sẽ làm nóng lò rèn trừ khi có người chơi chặn chúng. Người chặn nhận sát thương tăng dần từ Phơi Nhiễm Vạc Luyện, và nhiệt độ lò rèn không bao giờ giảm.",
+        "beamResponse": "Đứng giữa mỗi trụ cột đang hoạt động và lò rèn, rồi luân phiên người chặn trước khi mức phơi nhiễm trở nên nguy hiểm. Đạt mức nhiệt tối đa sẽ gây ra một cơn Sụp Lò chí mạng.",
+        "legionName": "Quân Đoàn Lò Rèn",
+        "legionSummary": "Vệ Binh Vạc Luyện niệm Địa Chấn Vạc Luyện để tăng thêm nhiệt cho lò rèn, trong khi Nghệ Nhân Than Hồng dùng Quy Trình Sửa Chữa để hồi máu cho Varkhul.",
+        "legionResponse": "Ngắt Địa Chấn Vạc Luyện, chặn Quy Trình Sửa Chữa, và tập trung hạ từng kẻ niệm chú nguy hiểm trước khi dọn sạch quân tiếp viện còn lại.",
+        "masterpieceName": "Kiệt Tác Giải Phóng",
+        "masterpieceSummary": "Varkhul tấn công nhanh hơn, gây nhiều sát thương hơn, và liên tục thiêu đốt cả raid cho đến khi toàn đội bị diệt.",
+        "masterpieceHeroicSummary": "Varkhul tấn công nhanh hơn và gây nhiều sát thương hơn trong khi Lửa Diệt Thế thay thế phần lớn các cơ chế trước đó cho đợt thiêu đốt cuối cùng.",
+        "masterpieceResponse": "Dùng hết các hồi chiêu tấn công và phòng thủ còn lại, và hạ gục Varkhul trước khi bộ đếm ngược cuối cùng kết thúc.",
+        "worldfireName": "Lửa Diệt Thế",
+        "worldfireSummary": "Ở độ Anh Hùng, lửa tiến dần từ rìa đấu trường vào trung tâm theo từng giai đoạn cho đến khi toàn bộ vạc luyện bị thiêu rụi.",
+        "worldfireResponse": "Di chuyển vào trong trước mỗi dải lửa đang tiến tới, giữ vững khoảng không gian an toàn đang thu hẹp, và hạ gục Varkhul trước khi trung tâm bốc cháy.",
+        "tanks": "Tank: đổi người ở hai tầng Dấu Ấn Tạo Tác và giữ Varkhul trong tầm cận chiến.",
+        "orbs": "Cầu Than Hồng: những người chơi bị đánh dấu hãy tản ra rìa phòng. Các vũng lửa của họ tồn tại lâu dài và những quả cầu được giải phóng sẽ băng qua căn phòng.",
+        "pyre": "Giàn Thiêu Chung: chỉ một người chơi không mang Kim Loại Nung Đỏ mới bị chọn. Hãy tụ bốn người chơi vào bên trong vòng tròn di chuyển ở cả hai độ khó. Mỗi người chơi còn thiếu sẽ gây 15% máu tối đa lên toàn bộ raid.",
+        "forgestorm": "Bão Lò Rèn: quan sát thiên thạch rơi xuống và rời khỏi mọi điểm đánh dấu trước khi mỗi đợt trong ba đợt đáp xuống.",
+        "anvil": "Sắc Lệnh Từ Đe: Varkhul di chuyển đến đại lò rèn và giáng xuống ba lần gây sát thương cho cả raid. Ở độ Anh Hùng còn có thêm thiên thạch được đánh dấu rơi xuống.",
+        "ray": "Tia Tôi Luyện: một người chơi khác, thường là tank, chặn đường tia di chuyển trước khi thời gian tích lực dài kết thúc. Người chơi bị trúng sẽ nhận Vết Thương Tôi Luyện.",
+        "forge": "Trụ cột lò rèn: chặn các tia đang hoạt động trước khi chúng chạm tới lò rèn và luân phiên người chặn khi Phơi Nhiễm Vạc Luyện tăng lên. Thanh nhiệt đầy sẽ gây ra Sụp Lò.",
+        "assembly": "Cuộc Tập Hợp Của Bậc Thầy: chặn cả hai tia lò rèn, tiêu diệt mọi đợt quái từ cổng, ngắt Địa Chấn Vạc Luyện, và ngăn các Nghệ Nhân Than Hồng hồi máu cho Varkhul.",
+        "worldfire": "Lửa Diệt Thế: ở độ Anh Hùng, rìa lửa thu hẹp dần vào trung tâm trong giai đoạn cuối. Hãy hạ gục Varkhul trước khi toàn bộ vạc luyện bị thiêu rụi.",
+        "heroic": "Anh Hùng: nhiệt độ lò rèn không bao giờ nguội, Sắc Lệnh Từ Đe có thêm thiên thạch, và giai đoạn cuối loại bỏ phần lớn các cơ chế để tập trung vào Lửa Diệt Thế."
+      }
     },
     "auraEffect": {
-      "sharedPyre": "Deals {total}% of each player's maximum health, divided by the number of players inside the circle ({perPlayer}% each with {players} players).",
-      "makersBrand": "For {duration} sec, each stack increases damage taken from Varkhul by {pct}%. Stacks up to {max} times. Tanks should swap at {swap} stacks.",
-      "varkhulSentinelsGaze": "The Ember Sentinel pursues you. Keep it away from the raid until it is destroyed.",
-      "varkhulMoltenCore": "Carry this core to the forge. Molten Burden deals increasing damage every {interval} sec, from {min}% to {max}% of maximum health.",
-      "varkhulForgeLink": "Intercept an active pillar beam before it reaches the forge. Open beams add 6% heat per second. In Normal, blocked beams and inactive pillars cool the forge; in Heroic, heat never falls. At 100%, the forge suffers a lethal Meltdown.",
-      "varkhulCrucibleExposure": "Blocking a Crucible Beam deals increasing maximum-health damage every second. The stacks reset 10 seconds after leaving a beam in Normal and after 60 seconds in Heroic.",
+      "sharedPyre": "Gây {total}% máu tối đa của mỗi người chơi, chia đều cho số người chơi đứng trong vòng tròn ({perPlayer}% mỗi người khi có {players} người).",
+      "varkhulSharedPyre": "Gây {total}% máu tối đa của mỗi người chơi, chia đều cho những người chơi đứng trong vòng tròn ({perPlayer}% mỗi người khi có {players} người). Mỗi người chơi còn thiếu cũng gây thêm {missingPenalty}% máu tối đa lên toàn bộ raid, kể cả những người đang đứng trong vòng tròn.",
+      "makersBrand": "Trong {duration} giây, mỗi tầng cộng dồn tăng thêm {pct}% sát thương nhận từ Varkhul. Cộng dồn tối đa {max} tầng. Tank nên đổi người ở {swap} tầng.",
+      "varkhulSentinelsGaze": "Vệ Binh Than Hồng đang truy đuổi bạn. Hãy giữ nó tránh xa raid cho đến khi nó bị tiêu diệt.",
+      "varkhulMoltenCore": "Mang lõi này đến lò rèn. Gánh Nặng Nóng Chảy gây sát thương tăng dần mỗi {interval} giây, từ {min}% đến {max}% máu tối đa.",
+      "varkhulForgeLink": "Chặn một tia trụ cột đang hoạt động trước khi nó chạm tới lò rèn. Tia còn mở cộng thêm 6% nhiệt mỗi giây. Ở độ Thường, tia bị chặn và trụ cột không hoạt động sẽ làm nguội lò rèn; ở độ Anh Hùng, nhiệt không bao giờ giảm. Ở mức 100%, lò rèn hứng chịu một cơn Sụp Lò chí mạng.",
+      "varkhulCrucibleExposure": "Chặn một Tia Vạc Luyện gây sát thương theo máu tối đa tăng dần mỗi giây. Số tầng cộng dồn được đặt lại 10 giây sau khi rời khỏi tia ở độ Thường và 60 giây ở độ Anh Hùng.",
       "dot": "Gây {value} sát thương {school} mỗi {interval} giây",
       "hot": "Hồi {value} máu mỗi {interval} giây",
       "mendingCurrent": "Tích {value} hồi máu, giải phóng dần theo thời gian hoặc bị Vá Tầng Tầng tiêu thụ",
@@ -2678,7 +2924,9 @@ export const vi_VN: EnTranslations = {
       "chestTitle": "Rương",
       "takeLootButton": "Nhặt Chiến Lợi Phẩm",
       "takeLootTooltip": "Nhặt tiền vàng và vật phẩm rơi ra. Không dùng hết lần thu hoạch.",
-      "unifiedPressHint": "Phím tương tác nhặt đồ và thu hoạch trong một lần nhấn, sử dụng trọng tâm thị trấn của bạn."
+      "unifiedPressHint": "Phím tương tác nhặt đồ và thu hoạch trong một lần nhấn, sử dụng trọng tâm thị trấn của bạn.",
+      "bindConfirmTitle": "Ràng buộc khi nhặt lên",
+      "bindConfirmBody": "Chiến lợi phẩm này chứa một vật phẩm sẽ ràng buộc với bạn khi được nhặt lên. Một vật phẩm đã ràng buộc chỉ có thể giao dịch cho những người chơi đã cùng nhận nó rơi ra, và chỉ trong một khoảng thời gian giới hạn."
     },
     "spellbook": {
       "addToBarAria": "Thêm {name} vào thanh kỹ năng",
@@ -2710,6 +2958,7 @@ export const vi_VN: EnTranslations = {
     },
     "partyFrames": {
       "section": "Khung Tổ Đội và Raid",
+      "optionsSection": "Tùy Chọn Khung Tổ Đội",
       "unlock": "Di chuyển khung tổ đội và raid",
       "lock": "Khóa khung tổ đội và raid",
       "style": "Kiểu Khung",
@@ -2740,13 +2989,102 @@ export const vi_VN: EnTranslations = {
     "frameReset": {
       "label": "Đặt Lại Vị Trí Các Khung"
     },
+    "interfaceUnlock": {
+      "label": "Chỉnh Sửa Khung",
+      "unlock": "Mở khóa giao diện",
+      "lock": "Khóa giao diện",
+      "lockAll": "Khóa Giao Diện",
+      "barsNote": "Chỉ những thanh hành động bạn đã bật mới hiện ra khi chỉnh sửa. Để đặt thêm thanh, hãy thêm chúng bằng nút cộng và trừ trên thanh hành động chính trước.",
+      "frozenNote": "Trong lúc chỉnh sửa, giao diện và camera đều đứng yên: các nút và khung chỉ là hình ảnh để bạn sắp xếp, và các cú nhấp sẽ không chạm tới thế giới trò chơi.",
+      "unlockFrame": "Mở khóa khung này",
+      "lockFrame": "Khóa khung này",
+      "resizeFrame": "Đổi kích thước khung này",
+      "frameNames": {
+        "actionBar1": "Thanh Hành Động",
+        "actionBar2": "Thanh Hành Động 2",
+        "actionBar3": "Thanh Hành Động 3",
+        "steamWishlist": "Nhắc Nhở Danh Sách Ước",
+        "menu": "Menu",
+        "minimap": "Bản Đồ Nhỏ",
+        "stanceBar": "Thanh Thế Đứng",
+        "xpBar": "Thanh Kinh Nghiệm",
+        "chat": "Trò Chuyện",
+        "actionBarGroup": "Các Thanh Hành Động",
+        "playerFrame": "Người Chơi",
+        "targetFrame": "Mục Tiêu",
+        "partyFrames": "Tổ Đội",
+        "swingBar": "Tự Đánh",
+        "targetDots": "Target Dots"
+      },
+      "framesMenu": "Cài Đặt Khung",
+      "framesMenuTitle": "Hiện hoặc ẩn từng khung riêng lẻ. Một khung chưa được đánh dấu sẽ vẫn ẩn cho đến khi bạn đánh dấu lại hoặc đặt lại về mặc định.",
+      "showHideFrames": "Hiện Hoặc Ẩn Khung",
+      "buffsLeftToRight": "Buff xếp từ trái sang phải",
+      "debuffsLeftToRight": "Debuff xếp từ trái sang phải",
+      "lockPlayerFrameToBar": "Khóa Khung Người Chơi Vào Thanh Hành Động",
+      "actionBarsVertical": "Các Thanh Hành Động Dọc",
+      "actionBar1Vertical": "Thanh Hành Động Dọc",
+      "actionBar2Vertical": "Thanh Hành Động Dọc 2",
+      "actionBar3Vertical": "Thanh Hành Động Dọc 3",
+      "menuRailHorizontal": "Menu Ngang",
+      "snapToGrid": "Bám Theo Lưới",
+      "previewMemberName": "{className} {number}",
+      "resetFrameSize": "Đặt lại kích thước",
+      "resetFrameSizeFor": "Đặt lại kích thước cho {name}",
+      "previewSpell": "Phép Ví Dụ"
+    },
+    "transfer": {
+      "frameLayout": "Bố Cục Khung",
+      "allSettings": "Mọi Cài Đặt",
+      "exportAction": "Xuất",
+      "importAction": "Nhập",
+      "copy": "Sao Chép",
+      "copied": "Đã sao chép vào bảng nhớ tạm.",
+      "copyFailed": "Sao chép thất bại. Hãy chọn mã và tự sao chép nó.",
+      "applyReload": "Áp Dụng Và Tải Lại",
+      "pastePlaceholder": "Dán mã đã xuất vào đây.",
+      "invalid": "Đó không phải là một mã xuất hợp lệ.",
+      "wrongKind": "Mã đó thuộc một loại xuất khác."
+    },
+    "riftForge": {
+      "title": "Rift Forge",
+      "subtitle": "Riftbound bands",
+      "currency": "{name}: {count}",
+      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
+      "wornHint": "Worn. Unequip it to forge.",
+      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
+      "upgradeMax": "Fully upgraded",
+      "gemPickAria": "Gem to socket",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
+      "socketBtn": "Socket",
+      "socketsNone": "no gems",
+      "noGems": "No Rift gems in your bags",
+      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "reason": {
+        "notFound": "That band is not in your bags.",
+        "notRiftGear": "Only a Riftbound band can be forged.",
+        "maxUpgrade": "That band is fully upgraded.",
+        "insufficientEssence": "Not enough Rift Essence.",
+        "invalidGem": "You have no such Rift gem.",
+        "dead": "You can't do that while dead.",
+        "tooFar": "You are too far from the Rift Forge."
+      },
+      "done": {
+        "upgrade": "Upgraded {name}.",
+        "socket": "Socketed a gem into {name}.",
+        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "Yêu cầu Cấp {level}",
       "riftTier": "Vật phẩm Rạn Nứt hạng {tier}",
       "riftUpgrade": "Nâng cấp Rạn Nứt {level}/{max}",
       "riftSockets": "Ngọc Rạn Nứt {used}/{total}",
+      "riftGemSocket": "Socket bonus for a Riftbound band",
       "statEnchanted": "+{value} {stat} (Đã Pháp Khắc)",
-      "enchantedFallback": "Đã Pháp Khắc"
+      "enchantedFallback": "Đã Pháp Khắc",
+      "partyTradeWindow": "Bạn có thể giao dịch vật phẩm này cho những người chơi đã cùng nhận nó rơi ra, trong {time} tới. Trang bị nó sẽ kết thúc khoảng thời gian giao dịch này."
     },
     "materialHint": {
       "fineGrade": "Phẩm cấp hảo hạng. Thu được từ mạch đủ bậc bằng công cụ xếp trên nguyên liệu, và được tính như bản thường ở bất cứ đâu cần đến.",
@@ -2947,7 +3285,10 @@ export const vi_VN: EnTranslations = {
       "unlink": "Hủy Liên Kết Steam",
       "linked": "Đã liên kết với tài khoản Steam {id}",
       "benefits": "Hãy liên kết tài khoản Steam từ ứng dụng máy tính để các kỳ công bạn lập được đồng bộ thành thành tựu Steam.",
-      "noTicket": "Steam không cung cấp vé liên kết. Hãy khởi động Steam rồi thử lại."
+      "noTicket": "Steam không cung cấp vé liên kết. Hãy khởi động Steam rồi thử lại.",
+      "wishlist": "Thêm vào danh sách ước trên Steam",
+      "wishlistAria": "Thêm vào danh sách ước trên Steam: mở trang cửa hàng World of ClaudeCraft",
+      "wishlistShort": "Danh sách ước"
     },
     "epic": {
       "title": "Epic",
@@ -3021,6 +3362,15 @@ export const vi_VN: EnTranslations = {
       "popupTitle": "Bảng Thông Báo Bang Hội",
       "close": "Đóng"
     },
+    "realmBuilder": {
+      "title": "Realm Builder of the Month",
+      "currentLabel": "Honoured this month",
+      "placeholderName": "Your Name Here",
+      "placeholderHint": "This plate is waiting for its first name.",
+      "pastTitle": "Past honourees",
+      "pastEmpty": "No names on the roll yet.",
+      "close": "Close"
+    },
     "bank": {
       "title": "Ngân Hàng",
       "subtitle": "Két Sắt Mạ Vàng",
@@ -3033,6 +3383,26 @@ export const vi_VN: EnTranslations = {
       "buySlotsMaxed": "Đã mở rộng tối đa",
       "buyConfirm": "Mua thêm {count} ô ngân hàng với giá {price}?",
       "buyConfirmAccept": "Mua",
+      "meterLabel": "{used} trên {total} ô",
+      "meterPoolGeneral": "Chung: {used} trên {total}",
+      "meterPoolMaterials": "Nguyên liệu: {used} trên {total}",
+      "meterPoolsAria": "Ô ngân hàng đã dùng: {used} trên {total}. Vật phẩm chung: {generalUsed} trên {generalTotal}. Nguyên liệu: {materialsUsed} trên {materialsTotal}.",
+      "meterMaterialsNote": "Không gian chỉ dành cho nguyên liệu, đến từ các túi đã socket. Vật phẩm khác không thể dùng không gian này.",
+      "priceDisclaimer": "Giá có thể thay đổi theo nền kinh tế trò chơi.",
+      "rungItemName": "{count} ô ngân hàng",
+      "buySlotsDualAria": "Mua {count} ô với giá {price} hoặc {cost} Claudium",
+      "buyConfirmDual": "Mua thêm {count} ô ngân hàng?",
+      "buyConfirmGold": "Mua với giá {price}",
+      "buyConfirmClaudium": "Mua với giá {cost} Claudium",
+      "rungGranted": "Các ô ngân hàng đã được thêm vào. Ngân hàng của nhân vật này giờ đã lớn hơn.",
+      "rungAlreadyGranted": "Các ô này đã có sẵn trên nhân vật này. Bạn không bị tính phí lần nữa.",
+      "rungApplyDeferred": "Thanh toán hoàn tất. Các ô sẽ tự động được áp dụng vào lần đăng nhập tiếp theo của nhân vật này.",
+      "rungGrantUnresolved": "Thanh toán hoàn tất, nhưng các ô chưa thể được áp dụng. Giao dịch mua đã được ghi nhận và đội hỗ trợ có thể hoàn tất nó giúp bạn.",
+      "rungInProgress": "Một giao dịch mua cho nhân vật này vẫn đang được hoàn tất. Hãy thử lại sau một lát.",
+      "rungDoesNotFit": "Ngân hàng của nhân vật này không thể chứa thêm một lần mở rộng nữa.",
+      "rungNotPurchasable": "Các ô ngân hàng này hiện không thể mua được.",
+      "rungFailed": "Không thể hoàn tất giao dịch mua.",
+      "rungOutage": "Không thể xác nhận giao dịch mua. Hãy thử lại bằng nút này và bạn sẽ không bị tính phí hai lần. Tải lại trò chơi trước khi thử lại có thể làm mất sự bảo vệ đó.",
       "withdrawHint": "Nhấp để rút ra",
       "withdrawPartialHint": "Shift-click để rút ra một phần",
       "depositHint": "Nhấp để gửi vào",
@@ -3045,6 +3415,9 @@ export const vi_VN: EnTranslations = {
       "withdrawQuantityTitle": "Rút {item}",
       "withdrawQuantityInput": "Số lượng cần rút",
       "withdrawQuantityConfirm": "Rút Ra",
+      "vaultRowWithdrawName": "Rút {item}",
+      "priceChanged": "Giá đã thay đổi trước khi giao dịch mua hoàn tất. Hãy xem lại giá mới và xác nhận lại.",
+      "withdrawQuantityAction": "Số lượng cần rút: {item}",
       "filterGroupAria": "Lọc ngân hàng theo danh mục",
       "sortAria": "Sắp xếp vật phẩm ngân hàng",
       "searchAria": "Tìm vật phẩm ngân hàng theo tên",
@@ -3066,6 +3439,34 @@ export const vi_VN: EnTranslations = {
       "bonusReferralProgress": "{count}/{cap}",
       "bonusReferralExplainer": "Mời một người bạn: khi họ đạt cấp 10, cả bạn lẫn họ mỗi người nhận 2 ô, tối đa 5 người bạn.",
       "bonusSectionAria": "Ô ngân hàng thưởng và cách kiếm thêm",
+      "socketRowAria": "Các vòng túi ngân hàng",
+      "socketEmpty": "Vòng túi ngân hàng trống",
+      "socketEmptyHint": "Nhấp vào một chiếc túi trong túi đồ của bạn để cất nó vào ngân hàng",
+      "socketLocked": "Vòng túi bị khóa",
+      "socketLockedLater": "Các vòng túi mở khóa theo thứ tự, rẻ nhất trước",
+      "socketUnlockAria": "Mở khóa một vòng túi ngân hàng với giá {price}",
+      "socketUnlockHint": "Nhấp để mở khóa vòng túi này",
+      "socketUnlockConfirm": "Mở khóa một vòng túi ngân hàng với giá {price}?",
+      "socketUnlockAccept": "Mở Khóa",
+      "unsocketHint": "Nhấp để đưa chiếc túi này trở lại túi đồ của bạn",
+      "socketHint": "Nhấp để gắn chiếc túi này vào ngân hàng của bạn",
+      "vaultTab": "Kho",
+      "vaultCapacityNote": "Mỗi loại nguyên liệu chứa tối đa {cap}.",
+      "vaultEmpty": "Kho của bạn đang trống. Nhấp vào một nguyên liệu trong túi đồ để gửi nó vào.",
+      "vaultRowAria": "{item}: {count} trên {cap} đã lưu trữ",
+      "vaultLockedIntro": "Mở khóa Kho Nguyên Liệu để tích trữ nguyên liệu chế tác bên cạnh ngân hàng của bạn. Mỗi loại nguyên liệu có không gian riêng, tối đa {cap} mỗi loại.",
+      "vaultUnlockButton": "Mở Khóa Kho Nguyên Liệu",
+      "vaultUnlockConfirm": "Mở khóa Kho Nguyên Liệu với giá {price}?",
+      "vaultUpgrade": "Mở rộng mọi mức trần lên {cap}",
+      "vaultUpgradeConfirm": "Mở rộng mọi mức trần nguyên liệu lên {cap} với giá {price}?",
+      "vaultDepositAll": "Gửi tất cả nguyên liệu",
+      "vaultDepositAllTooltip": "Gửi toàn bộ nguyên liệu từ túi đồ của bạn vào kho chỉ trong một lần, lấp đầy mỗi loại nguyên liệu đến mức trần của nó. Trang bị, dụng cụ, vật phẩm nhiệm vụ, và đồ tiêu hao sẽ không bao giờ bị động đến.",
+      "vaultDepositAllDone": "Nguyên liệu đã gửi: {count}.",
+      "vaultDepositAllFull": "Nguyên liệu đã gửi: {count}. Một số mức trần đã đầy.",
+      "vaultDepositAllNone": "Trần kho đã đầy: không gửi được gì.",
+      "vaultWithdrawShort": "Chỉ {fit} trên {count} vừa trong túi đồ của bạn.",
+      "vaultDepositHint": "Nhấp để gửi vào kho của bạn",
+      "vaultCannotDeposit": "Không thể cất vào kho",
       "tabsAria": "Các thẻ ngân hàng",
       "personalTab": "Cá Nhân",
       "guildTab": "Bang Hội",
@@ -3097,8 +3498,34 @@ export const vi_VN: EnTranslations = {
       "guildViewsAria": "Các chế độ xem ngân hàng bang hội",
       "guildContentsTab": "Nội Dung",
       "guildLogTab": "Nhật Ký",
+      "guildHistoryTab": "History",
       "logAria": "Nhật ký hoạt động ngân hàng bang hội",
       "logNote": "{count} hoạt động ngân hàng bang hội gần đây nhất.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Đang tải nhật ký ngân hàng bang hội...",
       "logEmpty": "Chưa có gì được chuyển vào hoặc ra khỏi ngân hàng bang hội.",
       "logUnavailable": "Không thể đọc nhật ký ngân hàng bang hội lúc này.",
@@ -3196,6 +3623,20 @@ export const vi_VN: EnTranslations = {
         "result": {
           "set": "Bảng tin bang hội đã được cập nhật.",
           "notOfficer": "Chỉ sĩ quan và Hội Chủ mới có thể chỉnh sửa bảng tin."
+        }
+      },
+      "roster": {
+        "seats": "{count} of {cap} seats",
+        "expand": "Expand roster (+{seats} seats for {price})",
+        "maxed": "The roster is at its largest size",
+        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
+        "confirmAction": "Expand",
+        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "result": {
+          "notLeader": "Only the Guild Master may expand the guild roster.",
+          "maxed": "The guild roster cannot grow any larger.",
+          "cannotAfford": "You need {price} to expand the guild roster.",
+          "retry": "The guild roster changed while you were buying. Try again."
         }
       }
     },
@@ -3465,6 +3906,8 @@ export const vi_VN: EnTranslations = {
       "reagentsNeeded": "Yêu cầu:",
       "reagentLine": "{name}: {have}/{required}",
       "reagentFineSub": "(tiêu tốn {count} hảo hạng)",
+      "reagentVaultDraw": "(lấy {count} từ kho của bạn)",
+      "vaultUnreachable": "Kho Nguyên Liệu không thể tiếp cận được ở đây.",
       "craftFeeLine": "Phí chế tạo: {fee} mỗi món",
       "empty": "Chưa có công thức nấu ăn nào được biết đến.",
       "resultAria": "Thủ công {name}",
@@ -3563,7 +4006,9 @@ export const vi_VN: EnTranslations = {
       "equip": "Trang Bị",
       "disenchant": "Hủy Pháp Khắc",
       "salvage": "Tháo Dỡ",
-      "applyEnchant": "Áp Dụng Pháp Khắc"
+      "applyEnchant": "Áp Dụng Pháp Khắc",
+      "sell": "Bán",
+      "sellAll": "Bán tất cả ({count})"
     },
     "enchanting": {
       "disenchantedLine": "Bạn hủy pháp khắc {item}.",
@@ -3610,6 +4055,7 @@ export const vi_VN: EnTranslations = {
       "yieldLineRange": "{min} đến {max} {item}",
       "alreadyEnchanted": "Vật phẩm đó đã được pháp khắc rồi.",
       "sameEnchant": "Vật phẩm đó đã có phép khắc đó rồi.",
+      "riftGear": "Riftbound bands take Rift gems, not enchants.",
       "replaceTag": "Thay Thế {enchant}",
       "sameEnchantTag": "Đã Áp Dụng",
       "plainTag": "Chưa pháp khắc",
@@ -4065,9 +4511,15 @@ export const vi_VN: EnTranslations = {
       "loading": "Đang tải Sàn Giao Dịch...",
       "loadFailed": "Không thể kết nối tới Sàn Giao Dịch. Hãy thử lại sau ít phút.",
       "disabledRealm": "Sàn Giao Dịch $WOC không khả dụng trên thế giới này.",
+      "browserOnlyConfirmTitle": "Mở Sàn giao dịch $WOC trong trình duyệt?",
+      "browserOnlyConfirmBody": "Sàn giao dịch $WOC chỉ chạy trên phiên bản trình duyệt của World of ClaudeCraft. Thao tác này mở World of ClaudeCraft trong trình duyệt, nơi bạn có thể đăng nhập và mở Sàn giao dịch; trò chơi vẫn tiếp tục chạy ở đây.",
+      "browserOnlyConfirmOpen": "Mở trong trình duyệt",
+      "browserOnlyConfirmCancel": "Hủy",
       "pausedBanner": "Giao dịch đang tạm dừng. Các phiên đấu giá vẫn tiếp tục đếm ngược, tin rao mới, giá thầu, đề nghị mua và thanh toán sẽ chờ đến khi giao dịch được nối lại, còn khoản thanh toán đã gửi thì vẫn được xử lý xong.",
-      "walletBanner": "Liên kết và xác minh một ví để đặt giá thầu, mua hoặc bán trên Sàn Giao Dịch.",
-      "walletBannerCta": "Kết nối ví",
+      "walletLinkedDisconnected": "Địa chỉ công khai của bạn đã được liên kết. Hãy kết nối lại ứng dụng ví đó khi bạn muốn thanh toán bằng $WOC.",
+      "walletLinkedConnected": "Ứng dụng ví đã liên kết của bạn đang được kết nối và sẵn sàng cho các giao dịch mua $WOC.",
+      "walletUsdBalance": "{amount} USD",
+      "walletUsdUnknown": "Không xác định",
       "rateNote": "Tỷ giá: khoảng {tokens} $WOC cho 1,00 USD, tính đến {time}.",
       "rateNotePaused": "Tỷ giá được biết lần cuối: khoảng {tokens} $WOC cho 1,00 USD, tính đến {time}.",
       "estimateNote": "Khoảng {tokens} $WOC cho {usd} theo tỷ giá hiện tại.",
@@ -4321,6 +4773,8 @@ export const vi_VN: EnTranslations = {
       "online": "Nhân vật hiện đang trực tuyến.",
       "rename_not_permitted": "Không được phép đổi tên nhân vật này.",
       "delete_confirm": "Nhập tên nhân vật để xác nhận xóa.",
+      "storage_purchase_open": "Phải hoàn tất hoặc xử lý giao dịch mua kho trước khi xóa nhân vật này.",
+      "delete_busy": "Vương quốc đang bận. Hãy thử xóa nhân vật này lại sau một lát.",
       "already_in_world": "Nhân vật đã ở trong thế giới.",
       "taken_over": "Nhân vật của bạn đã bị một phiên khác chiếm quyền.",
       "rename_required": "Nhân vật này phải được đổi tên trước khi vào thế giới.",
@@ -4381,7 +4835,13 @@ export const vi_VN: EnTranslations = {
       "upstream": "Epic không phản hồi. Hãy thử lại sau giây lát."
     },
     "wallet": {
-      "handoff_invalid": "Quyền ủy quyền ví đó đã hết hạn hoặc không thể xác minh. Hãy thử lại."
+      "handoff_invalid": "Quyền ủy quyền ví đó đã hết hạn hoặc không thể xác minh. Hãy thử lại.",
+      "reauth_required": "Xác nhận thay đổi ví này bằng mật khẩu tài khoản của bạn.",
+      "reauth_two_factor": "Tài khoản của bạn đã bật xác thực hai lớp. Nhập mã của bạn để xác nhận.",
+      "reauth_no_password": "Hãy đặt mật khẩu trong cài đặt tài khoản trước, rồi thử lại.",
+      "reauth_bad_signature": "Không thể xác minh chữ ký ví. Hãy thử lại.",
+      "reauth_bad_password": "Mật khẩu của bạn không đúng.",
+      "reauth_bad_two_factor": "Mã đó không hợp lệ, hãy thử lại."
     },
     "ota_updates": {
       "invalid_input": "Dữ liệu nhập không hợp lệ."
@@ -4839,6 +5299,7 @@ export const vi_VN: EnTranslations = {
       "ifPartySort": "Thứ tự liệt kê thành viên tổ đội: theo thứ tự nhóm, vai trò, hoặc tên.",
       "ifPartyShowAuras": "Buff và debuff có hiển thị trên khung tổ đội hay không. Các công tắc tương ứng còn bao gồm thanh tài nguyên, khiên hấp thụ, thú cưng, và việc bạn có xuất hiện trong danh sách tổ đội của chính mình hay không.",
       "ifAurasOnPlayerFrame": "Hiện buff và debuff của bạn trên khung nhân vật của chính bạn, bên cạnh thanh hiệu ứng.",
+      "ifAlwaysShowAllBuffs": "Hiển thị mọi buff đang hoạt động ngay cả ở cấu hình đồ họa Thấp, bỏ qua giới hạn biểu tượng buff thông thường.",
       "ifTargetOfTarget": "Hiện mục tiêu của mục tiêu bạn đang nhắm, cách cổ điển để biết liệu tank có còn giữ được nó hay không.",
       "ifPetFrame": "Hiện một khung cho thú cưng của bạn.",
       "ifChatFontScale": "Cỡ chữ trò chuyện.",
@@ -5689,6 +6150,8 @@ export const vi_VN: EnTranslations = {
       "raceBody": "Mọi nhóm trong vương quốc đều có thể tấn công cùng một Rạn Nứt cùng lúc, mỗi nhóm trong bản sao riêng của mình, và chỉ nhóm đầu tiên hạ được thứ dưới đáy mới niêm phong nó. Khi một nhóm chiến thắng, cả vương quốc nghe được tên và thời gian của họ, và lối vào khép lại sau lưng họ. Thua cuộc đua không có nghĩa lượt chạy của bạn kết thúc: bản sao của bạn vẫn mở, thứ dưới đáy vẫn sẽ gục ngã dưới tay bạn, và bạn vẫn bước ra bằng chính sức mình. Cái giá phải trả là toàn bộ những gì lẽ ra việc dọn sạch nó sẽ chi trả. Trùm không để lại gì cho nhóm về nhì, nên những gì bạn mang về nhà chỉ là những gì rơi ra từ lũ quái trên đường xuống, không hơn không kém. Sách Kỳ Công vẫn tính lượt dọn sạch đó, bởi bạn đã thực sự hạ được nó. Đây là cuộc đua duy nhất trong trò chơi mà bạn có thể thua mà chẳng bao giờ thấy mặt những người đã đánh bại mình.",
       "rewardsHeading": "Những gì bạn mang ra",
       "rewardsBody": "Niêm phong một Rạn Nứt, chứ không chỉ sống sót qua nó, mới là thứ trả công. Hạ Rạn Nứt trước tiên và nó trả công như nội dung instance cùng hạng với nó, nên các hạng khó hơn xứng đáng với lượt chạy khó hơn. Niêm phong cũng đặt một chiếc nhẫn Rạn Nứt vào tay mọi người có mặt ở đó, cắt riêng theo vai trò lớp nhân vật của bạn và là của riêng bạn, đồng thời để lại Tinh Chất Rạn Nứt trong túi đồ, cùng với Đá Quý Rạn Nứt ở các hạng khó hơn. Bên cạnh lối về, thứ dưới đáy còn để lại một chiếc rương niêm phong mà nhóm bạn có thể cạy mở để lấy thêm chiến lợi phẩm, bằng đúng trò cạy khóa Lối Của Ổ Khóa mà bạn đã quen thuộc từ những chiếc rương hang sâu, nên một lần cạy khóa gọn gàng, kiên nhẫn sẽ trả công hậu hĩnh hơn một lần vội vàng. Không điều nào trong số đó đến được với nhóm về nhì: thua cuộc đua chỉ để lại cho bạn những gì rơi ra từ lũ quái trên đường xuống. Sách Kỳ Công là ngoại lệ, nó vẫn tính lượt dọn sạch của bạn dù thắng hay thua cuộc đua, với một kỳ công cho lần niêm phong Rạn Nứt đầu tiên và một kỳ công khác cho việc hạ gục một Rạn Nứt hạng S.",
+      "forgeHeading": "The Rift Forge",
+      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
       "trackerHeading": "Bảng theo dõi trên màn hình",
       "trackerBody": "Trong khi bạn ở bên trong, một dải nhỏ trên màn hình giúp bạn định hướng: bạn đang ở tầng nào trên tổng số bao nhiêu tầng, cùng một bộ đếm ngược đang chạy. Hãy đọc kỹ bộ đếm ngược đó, vì nó không phải là thời gian lượt chạy của bạn sắp hết. Đó là lối vào trở lại thế giới đang đóng lại. Một khi đã vào trong, nhóm bạn chơi hết Rạn Nứt theo tốc độ của riêng mình, dù mất bao lâu cũng được, nhưng khi đồng hồ đó về không thì lối vào biến mất với tất cả mọi người, nên hãy suy nghĩ kỹ trước khi bước ra ngoài gần lúc đó."
     },
@@ -6325,6 +6788,7 @@ export const vi_VN: EnTranslations = {
       "bankBody": "Mỗi thị trấn trung tâm đều có một chi nhánh của Két Sắt Mạ Vàng, ngân hiệu của cả vương quốc. Hãy nói chuyện với thủ quỹ ở đó để mở kho két của bạn, một khoang chứa riêng ngoài túi đồ mà nhân vật của bạn giữ trọn đời. Bất cứ thứ gì bạn gửi lại đều chờ bạn an toàn, dù lần sau bạn ghé chi nhánh nào.",
       "bankHow": "Khi kho két đang mở, nhấp một vật phẩm trong túi để gửi vào và nhấp nó trong kho két để lấy lại. Kho két chỉ giữ hàng hóa, không bao giờ giữ tiền, và vật phẩm nhiệm vụ luôn ở lại bên bạn. Khi túi đầy giữa chuyến đi, một nút bấm sẽ quét toàn bộ nguyên liệu chế tác của bạn vào cùng một lúc.",
       "bankSlots": "Một kho két mới mở khởi đầu nhỏ bé và lớn dần cùng bạn. Thủ quỹ bán thêm ô với giá tiền vàng ngày một đắt hơn, và chơi trực tuyến còn mang lại chỗ chứa thưởng thêm, cho những việc như xác minh email, liên kết tài khoản, và những người bạn mà bạn đưa vào trò chơi.",
+      "bankSockets": "Sau bậc thang mở rộng ngăn, quản ngân khố còn bán tối đa bốn ô gắn túi, được mở khóa lần lượt với mức giá ngày càng cao. Đặt một túi dự phòng trong bộ túi mang theo vào ô, các ngăn của túi sẽ nhập vào kho của bạn: túi thông thường mở rộng toàn bộ kho, còn túi vật liệu chỉ thêm chỗ cho nguyên liệu chế tạo. Nhấp vào một chiếc túi trong hành trang để đặt vào, rồi nhấp vào ô để lấy ra. Khi lấy túi ra, những vật bạn đã cất không bao giờ bị mất: nếu kho trở nên đầy hơn sức chứa mới bị thu hẹp, mọi thứ vẫn nguyên chỗ và đồ gửi mới chỉ chờ đến khi có chỗ trống.",
       "buyingTitle": "Mua và bán",
       "buyingBody": "Hãy nói chuyện với một thương nhân và chọn xem hàng của họ, cửa hàng của họ mở ra với ba thẻ: Xem Hàng, Bán, và Mua Lại. Xem Hàng chứa mọi thứ họ có trong kho, là của bạn nếu bạn đủ tiền. Bán liệt kê những gì trong túi bạn mà họ chịu trả tiền, và bán một món mang phẩm chất tự tung riêng của nó sẽ yêu cầu bạn xác nhận trước, để một bản quý giá không bao giờ lỡ tay tuột mất. Nếu bạn trót chia tay thứ gì đó rồi tiếc, thẻ Mua Lại giữ những món bạn vừa bán để bạn mua lại chúng bằng đúng số tiền bạn được trả.",
       "junkTitle": "Dọn dẹp đồ tạp",
@@ -7026,10 +7490,7 @@ export const vi_VN: EnTranslations = {
     "playAria": "Chơi World of ClaudeCraft",
     "serverLabel": "Chọn thế giới của bạn",
     "serverAria": "Chọn thế giới: Trực Tuyến hoặc Ngoại Tuyến",
-    "serverOfflineSub": "Thế giới cục bộ tức thì",
-    "caLabel": "Địa Chỉ Hợp Đồng $WOC",
-    "caCopyAria": "Sao chép địa chỉ hợp đồng",
-    "caNote": "WOC là token cộng đồng của chúng tôi. Không cần nó để chơi. Hãy tham gia Discord để thảo luận về tiện ích và vòng xoáy tăng trưởng của WOC."
+    "serverOfflineSub": "Thế giới cục bộ tức thì"
   },
   "auth": {
     "enterRealm": "Vào Thế Giới",
@@ -7306,6 +7767,13 @@ export const vi_VN: EnTranslations = {
     "unlink": "Hủy liên kết",
     "unlinkTitle": "Gỡ xác minh ví khỏi tài khoản này",
     "unlinkAria": "Gỡ xác minh ví khỏi tài khoản này",
+    "reauthTitle": "Xác nhận thay đổi ví",
+    "reauthUnlinkTitle": "Xác nhận gỡ ví",
+    "reauthHelp": "Vì an toàn của bạn, hãy nhập mật khẩu tài khoản để cho phép thay đổi này.",
+    "reauthNoPassword": "Tài khoản này đăng nhập không dùng mật khẩu. Hãy đặt mật khẩu trong cài đặt tài khoản trước, rồi thử lại.",
+    "reauthConfirm": "Xác nhận",
+    "reauthCancel": "Hủy",
+    "reauthClose": "Đóng",
     "signOut": "Ngắt kết nối",
     "signOutTitle": "Ngắt kết nối ứng dụng ví trên trình duyệt này",
     "signOutAria": "Ngắt kết nối ứng dụng ví trên trình duyệt này",
@@ -7361,6 +7829,7 @@ export const vi_VN: EnTranslations = {
       "title": "Kết Nối Ví Solana",
       "linkBody": "Hãy chọn một tiện ích mở rộng ví trong trình duyệt này. Bạn sẽ ký một tin nhắn xác minh, sau đó quay lại ứng dụng máy tính.",
       "paymentBody": "Hãy chọn ví đã liên kết với tài khoản của bạn và phê duyệt giao dịch trong trình duyệt này.",
+      "stepUpBody": "Chọn ví đã liên kết với tài khoản của bạn và ký thông báo ủy quyền $WOC Exchange. Việc ký là miễn phí và không chuyển khoản tiền nào.",
       "extensionHelp": "Không tìm thấy tiện ích mở rộng ví tương thích nào. Hãy cài đặt hoặc mở khóa Phantom, Solflare hoặc ví trình duyệt Solana khác, rồi thử lại.",
       "safety": "World of ClaudeCraft không bao giờ yêu cầu cụm từ khôi phục hoặc khóa riêng tư của bạn.",
       "continueWith": "Tiếp tục với {wallet}",
@@ -7571,6 +8040,7 @@ export const vi_VN: EnTranslations = {
       "forgeUpgraded": "Đã hoàn tất nâng cấp Rạn Nứt cho {name}.",
       "forgeEnchanted": "Đã hoàn tất phù phép Rạn Nứt cho {name}.",
       "forgeSocketed": "Đã gắn ngọc Rạn Nứt cho {name}.",
+      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
       "detonateGlacialGrave": "Nấm Mồ Băng Hà phát nổ!",
       "detonateAbsoluteZero": "Độ Không Tuyệt Đối bùng nổ!",
       "detonateMagmaWell": "Giếng Dung Nham bùng nổ!",
@@ -7749,6 +8219,20 @@ export const vi_VN: EnTranslations = {
     "buyConfirmBody": "Mua {item} để lấy Dấu ấn Anh hùng {marks}? Việc mua điểm không thể được hoàn lại.",
     "buyConfirmAccept": "Mua",
     "buyConfirmCancel": "Hủy bỏ"
+  },
+  "crucibleShop": {
+    "browse": "Đổi Ấn hiệu",
+    "browseAria": "Đổi Ấn hiệu Lò Luyện bằng {name}",
+    "empty": "Không có mảnh bộ trang bị nào có thể đổi cho lớp của bạn.",
+    "balance": "Ấn hiệu của bạn: {list}",
+    "balanceEntry": "{name} x{count}",
+    "noSigils": "Bạn không có Ấn hiệu Crucible nào.",
+    "price": "1 {sigil}",
+    "buyAria": "Đổi {sigil} lấy {item}",
+    "buyConfirmTitle": "Xác nhận đổi",
+    "buyConfirmBody": "Đổi {sigil} của bạn lấy {item}? Ấn hiệu đã sử dụng không thể hoàn lại.",
+    "buyConfirmAccept": "Đổi",
+    "buyConfirmCancel": "Hủy"
   },
   "cardDuel": {
     "title": "Đấu Bài",
@@ -8301,6 +8785,7 @@ export const vi_VN: EnTranslations = {
     "bodyWeb": "Trò chơi đang chạy mà không có tăng tốc GPU và sẽ chậm. Hãy bật tăng tốc phần cứng trong cài đặt trình duyệt, cập nhật trình điều khiển đồ họa, sau đó khởi động lại trình duyệt.",
     "hybridBodyWindows": "Phiên chơi này đang hiển thị trên GPU tích hợp (tiết kiệm điện). Nếu máy tính này còn có card đồ họa chơi game, hãy đặt trình duyệt thành Hiệu năng cao trong Cài đặt > Hệ thống > Màn hình > Đồ họa, rồi khởi động lại trình duyệt. Ứng dụng máy tính tự động chọn card đồ họa chơi game.",
     "hybridBodyLinux": "Phiên chơi này đang hiển thị trên GPU tích hợp (tiết kiệm điện). Nếu máy tính này còn có card đồ họa chơi game, trình duyệt hoặc trình điều khiển đồ họa của bạn có thể có tùy chọn chọn GPU riêng, hoặc bản phân phối Linux của bạn có thể cung cấp công cụ chuyển GPU (như PRIME hoặc optimus-manager). Ứng dụng máy tính tự động chọn card đồ họa chơi game.",
+    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
     "hybridBodyOther": "Phiên chơi này đang hiển thị trên GPU tích hợp (tiết kiệm điện). Nếu máy tính này còn có card đồ họa chơi game, hãy kiểm tra cài đặt đồ họa của trình duyệt và hệ điều hành để bật nó lên. Ứng dụng máy tính tự động chọn card đồ họa chơi game.",
     "dismiss": "Bỏ Qua"
   },
@@ -8578,6 +9063,8 @@ export const vi_VN: EnTranslations = {
         "riftEntrance": "Lối vào Rạn Nứt: {name}",
         "hostileEnemy": "Kẻ địch",
         "aggressiveEnemy": "Kẻ địch đang tấn công bạn",
+        "bossEnemy": "Trùm: {name}",
+        "bossAggressiveEnemy": "Trùm đang tấn công bạn: {name}",
         "lootableEnemy": "Kẻ địch có chiến lợi phẩm",
         "corpse": "Thi thể của bạn",
         "deathZone": "Vùng nguy hiểm",
@@ -8966,6 +9453,7 @@ export const vi_VN: EnTranslations = {
       "tradeExpired": "Yêu cầu giao dịch đã hết hạn.",
       "tradeFailed": "Giao dịch thất bại: vật phẩm hoặc tiền không còn khả dụng.",
       "tradeBound": "Vật phẩm đó đã bị ràng buộc và không thể giao dịch.",
+      "tradeWindowIneligible": "Vật phẩm đó chỉ có thể giao dịch cho những người chơi đã cùng nhận vật phẩm rơi ra này.",
       "marketListBound": "Vật phẩm đó đã bị ràng buộc và không thể rao bán."
     },
     "logs": {
@@ -9446,7 +9934,8 @@ export const vi_VN: EnTranslations = {
       "clickUseInstant": "Nhấp để dùng tức thời trong chiến đấu",
       "clickUse": "Nhấp để sử dụng",
       "clickBuyback": "Nhấp để mua lại",
-      "bagSlots": "Túi {slots} Ô"
+      "bagSlots": "Túi {slots} Ô",
+      "bagSlotsMaterials": "Túi Nguyên Liệu {slots} Ô"
     },
     "bags": {
       "title": "Túi Đồ",
@@ -9628,7 +10117,8 @@ export const vi_VN: EnTranslations = {
       "greedAria": "Tham Lam giành {item}",
       "passAria": "Bỏ qua {item}",
       "everyonePassed": "Mọi người đều bỏ qua {item}.",
-      "rolled": "Đã tung {answered}/{total}"
+      "rolled": "Đã tung {answered}/{total}",
+      "bindsOnPickup": "Ràng buộc khi nhặt lên"
     }
   },
   "entities": {
@@ -10409,7 +10899,7 @@ export const vi_VN: EnTranslations = {
       },
       "needle_of_fate": {
         "name": "Kim Định Mệnh",
-        "description": "Xuyên qua kẻ địch gây {damage} sát thương Bóng Tối và tạo ra 5 Kết Án nếu nó mang Ác Nhãn của bạn. Mỗi đòn trúng vào Ác Nhãn chính của bạn thêm 1 Sợi Định Mệnh trong 12 giây, tối đa 3. Nếu không có Ác Nhãn nào tồn tại, Kim sẽ đánh dấu mục tiêu của nó trước."
+        "description": "Xuyên qua kẻ địch gây {damage} sát thương Bóng Tối và tạo ra {needleDoom} Kết Án nếu nó mang Ác Nhãn của bạn. Mỗi đòn trúng vào Ác Nhãn chính của bạn thêm 1 Sợi Định Mệnh trong 12 giây, tối đa 3. Nếu không có Ác Nhãn nào tồn tại, Kim sẽ đánh dấu mục tiêu của nó trước."
       },
       "sentence": {
         "name": "Phán Quyết",
@@ -10507,7 +10997,7 @@ export const vi_VN: EnTranslations = {
       },
       "moonseed": {
         "name": "Nguyệt Chủng",
-        "description": "Chỉ trong Dạng Cú Mặt Trăng. Đánh gây {damage} sát thương Bí Thuật, thêm một tầng Triều Nguyệt và kéo dài Bão Tố Nguyệt của bạn 6 giây, tối đa 6 giây mỗi lần. Khi Triều Nguyệt đầy, Nguyệt Chủng trở thành Nguyệt Trào."
+        "description": "Chỉ trong Dạng Cú Mặt Trăng. Đánh gây {damage} sát thương Bí Thuật, thêm một tầng Triều Nguyệt và kéo dài Bão Tố Nguyệt của bạn 6 giây, tối đa {duration} giây mỗi lần. Khi Triều Nguyệt đầy, Nguyệt Chủng trở thành Nguyệt Trào."
       },
       "rejuvenation": {
         "name": "Hoa Nở Hoang Dã",
@@ -10811,7 +11301,7 @@ export const vi_VN: EnTranslations = {
       },
       "conflagrate": {
         "name": "Bùng Cháy",
-        "description": "Kéo sớm một nhịp sắp tới của Khế Ước Rực Cháy, rồi thiêu mục tiêu với {damage} sát thương Hỏa. Tạo ra 1 Tàn Phá và 1 Hủy Hoại. Giữ được 2 lượt tích. (Đặc trưng Hủy Diệt)"
+        "description": "Kéo sớm một nhịp sắp tới của Khế Ước Rực Cháy, rồi thiêu mục tiêu với {damage} sát thương Hỏa. Tạo ra 1 Tàn Phá và 1 Hủy Hoại. Giữ được {charges} lượt tích. (Đặc trưng Hủy Diệt)"
       },
       "moonkin_form": {
         "name": "Dạng Cú Mặt Trăng",
@@ -10843,7 +11333,7 @@ export const vi_VN: EnTranslations = {
       },
       "overbloom": {
         "name": "Mãn Khai",
-        "description": "Tiêu 5 Sắc Xanh. Thu hoạch mọi hồi máu theo thời gian của bạn trên tất cả đồng minh với 60% lượng hồi còn lại, gỡ bỏ các hiệu ứng đó và trồng một Hoa Nở Hoang Dã mới lên mục tiêu."
+        "description": "Tiêu 5 Sắc Xanh. Thu hoạch mọi hồi máu theo thời gian của bạn trên tất cả đồng minh với {buff}% lượng hồi còn lại, gỡ bỏ các hiệu ứng đó và trồng một Hoa Nở Hoang Dã mới lên mục tiêu."
       },
       "summon_imp": {
         "name": "Triệu Hồi Emberkin",
@@ -10915,7 +11405,7 @@ export const vi_VN: EnTranslations = {
       },
       "iron_resolve": {
         "name": "Ý Chí Sắt Đá",
-        "description": "Nghiến răng chịu đau: tiêu hao tối đa 40 nộ khí (tối thiểu 20) để hấp thụ 4 sát thương cho mỗi điểm nộ khí đã dùng, kéo dài tối đa 10 giây. (Hộ Vệ)"
+        "description": "Nghiến răng chịu đau: tiêu hao tối đa 40 nộ khí (tối thiểu 20) để hấp thụ {absorbPerRage} sát thương cho mỗi điểm nộ khí đã dùng, kéo dài tối đa 10 giây. (Hộ Vệ)"
       },
       "faultline": {
         "name": "Vết Nứt Địa Tầng",
@@ -11292,7 +11782,7 @@ export const vi_VN: EnTranslations = {
       },
       "seraphic_vigil": {
         "name": "Canh Thức Thiên Sứ",
-        "description": "Bảo vệ một đồng minh trong 30 giây. Đòn đánh đầu tiên khiến họ xuống dưới 35% máu sẽ tiêu Canh Thức và hồi cho họ 180. (Dấu ấn Phúc Lành)"
+        "description": "Bảo vệ một đồng minh trong 30 giây. Đòn đánh đầu tiên khiến họ xuống dưới 35% máu sẽ tiêu Canh Thức và hồi cho họ {buff}. (Dấu ấn Phúc Lành)"
       },
       "summon_tithefiend": {
         "name": "Triệu Quỷ Thập Phân",
@@ -12835,8 +13325,20 @@ export const vi_VN: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Chìa Khóa Khởi Động: Tia Kinh Hoàng, Kẻ Rung Chuyển Mặt Đất"
       },
+      "reins_lanternback_troll": {
+        "name": "Ách của Người Thắp Đèn: Grumbol"
+      },
+      "reins_chimeglass_tortoise": {
+        "name": "Roadwarden's Bellstrap: Tolliver"
+      },
+      "reins_rickshaw_mount": {
+        "name": "Dây cương ràng buộc: Xe kéo Buộc Xương"
+      },
       "reins_drakemaw_raptor": {
         "name": "Dây Cương Cuồng Long Drakemaw"
+      },
+      "reins_mech_bird": {
+        "name": "Ignition Key: Cluckwork Mech Bird"
       },
       "rimefang": {
         "name": "Nanh Băng Giá"
@@ -12880,6 +13382,27 @@ export const vi_VN: EnTranslations = {
       "dawnhold_posy": {
         "name": "Bó Hoa Vườn Dawnhold"
       },
+      "wayfarers_backpack": {
+        "name": "Ba Lô Lữ Khách"
+      },
+      "burlap_reagent_pouch": {
+        "name": "Túi Thuốc Vải Thô"
+      },
+      "necromancers_reagent_satchel": {
+        "name": "Túi Thuốc Thử Của Kẻ Gọi Hồn"
+      },
+      "duskweave_bag": {
+        "name": "Túi Vải Dệt Hoàng Hôn"
+      },
+      "resonant_weave_bag": {
+        "name": "Túi Vải Dệt Cộng Hưởng"
+      },
+      "foragers_haversack": {
+        "name": "Túi Đeo Vai Người Hái Lượm"
+      },
+      "loombound_reagent_satchel": {
+        "name": "Túi Thuốc Thử Gắn Với Khung Dệt"
+      },
       "ps_briny_lure": {
         "name": "Mồi Câu Mặn"
       },
@@ -12891,6 +13414,654 @@ export const vi_VN: EnTranslations = {
       },
       "ps_passing_stone": {
         "name": "Đá Từ Trần"
+      },
+      "lastflame_core": {
+        "name": "Lõi Ngọn Lửa Cuối Cùng"
+      },
+      "slagbreaker_helmet": {
+        "name": "Mũ Kẻ Phá Xỉ"
+      },
+      "slagbreaker_shoulder": {
+        "name": "Giáp Vai Kẻ Phá Xỉ"
+      },
+      "slagbreaker_chest": {
+        "name": "Giáp Bọc Kẻ Phá Xỉ"
+      },
+      "slagbreaker_gloves": {
+        "name": "Găng Tay Kẻ Phá Xỉ"
+      },
+      "slagbreaker_legs": {
+        "name": "Giáp Chân Kẻ Phá Xỉ"
+      },
+      "emberfury_helmet": {
+        "name": "Mũ Cuồng Nộ Tàn Than"
+      },
+      "emberfury_shoulder": {
+        "name": "Giáp Vai Cuồng Nộ Tàn Than"
+      },
+      "emberfury_chest": {
+        "name": "Giáp Ngực Cuồng Nộ Tàn Than"
+      },
+      "emberfury_gloves": {
+        "name": "Găng Tay Cuồng Nộ Tàn Than"
+      },
+      "emberfury_legs": {
+        "name": "Giáp Chân Cuồng Nộ Tàn Than"
+      },
+      "forgewall_helmet": {
+        "name": "Mũ Thành Lũy Lò Rèn"
+      },
+      "forgewall_shoulder": {
+        "name": "Giáp Vai Thành Lũy Lò Rèn"
+      },
+      "forgewall_chest": {
+        "name": "Giáp Ngực Thành Lũy Lò Rèn"
+      },
+      "forgewall_gloves": {
+        "name": "Găng Tay Thành Lũy Lò Rèn"
+      },
+      "forgewall_legs": {
+        "name": "Giáp Chân Thành Lũy Lò Rèn"
+      },
+      "dawnforged_helmet": {
+        "name": "Mũ Rèn Bình Minh"
+      },
+      "dawnforged_shoulder": {
+        "name": "Giáp Vai Rèn Bình Minh"
+      },
+      "dawnforged_chest": {
+        "name": "Giáp Ngực Rèn Bình Minh"
+      },
+      "dawnforged_gloves": {
+        "name": "Găng Tay Rèn Bình Minh"
+      },
+      "dawnforged_legs": {
+        "name": "Giáp Chân Rèn Bình Minh"
+      },
+      "oathpyre_helmet": {
+        "name": "Mũ Sắt Hỏa Thề"
+      },
+      "oathpyre_shoulder": {
+        "name": "Giáp Vai Hỏa Thề"
+      },
+      "oathpyre_chest": {
+        "name": "Giáp Hauberk Hỏa Thề"
+      },
+      "oathpyre_gloves": {
+        "name": "Găng Sắt Hỏa Thề"
+      },
+      "oathpyre_legs": {
+        "name": "Giáp Chân Hỏa Thề"
+      },
+      "zealfire_helmet": {
+        "name": "Mũ Sắt Zealfire"
+      },
+      "zealfire_shoulder": {
+        "name": "Giáp Vai Zealfire"
+      },
+      "zealfire_chest": {
+        "name": "Áo Giáp Zealfire"
+      },
+      "zealfire_gloves": {
+        "name": "Găng Sắt Zealfire"
+      },
+      "zealfire_legs": {
+        "name": "Giáp Chân Zealfire"
+      },
+      "packlord_emberhide_helmet": {
+        "name": "Mũ Trùm Của Chúa Đàn"
+      },
+      "packlord_emberhide_shoulder": {
+        "name": "Giáp Vai Của Chúa Đàn"
+      },
+      "packlord_emberhide_chest": {
+        "name": "Áo Chẽn Của Chúa Đàn"
+      },
+      "packlord_emberhide_gloves": {
+        "name": "Găng Tay Của Chúa Đàn"
+      },
+      "packlord_emberhide_legs": {
+        "name": "Quần Ống Túm Của Chúa Đàn"
+      },
+      "coldsight_trackers_helmet": {
+        "name": "Mũ Trùm Thợ Săn Coldsight"
+      },
+      "coldsight_trackers_shoulder": {
+        "name": "Giáp Vai Thợ Săn Coldsight"
+      },
+      "coldsight_trackers_chest": {
+        "name": "Áo Giáp Thợ Săn Coldsight"
+      },
+      "coldsight_trackers_gloves": {
+        "name": "Găng Tay Thợ Săn Coldsight"
+      },
+      "coldsight_trackers_legs": {
+        "name": "Quần Bảo Hộ Thợ Săn Coldsight"
+      },
+      "slagsnare_helmet": {
+        "name": "Mũ Trùm Bẫy Xỉ"
+      },
+      "slagsnare_shoulder": {
+        "name": "Giáp Vai Bẫy Xỉ"
+      },
+      "slagsnare_chest": {
+        "name": "Áo Thun Bẫy Xỉ"
+      },
+      "slagsnare_gloves": {
+        "name": "Găng Tay Bẫy Xỉ"
+      },
+      "slagsnare_legs": {
+        "name": "Quần Ống Bẫy Xỉ"
+      },
+      "cinderfang_helmet": {
+        "name": "Mũ Trùm Cinderfang"
+      },
+      "cinderfang_shoulder": {
+        "name": "Giáp Vai Cinderfang"
+      },
+      "cinderfang_chest": {
+        "name": "Áo Giáp Cinderfang"
+      },
+      "cinderfang_gloves": {
+        "name": "Găng Tay Cinderfang"
+      },
+      "cinderfang_legs": {
+        "name": "Quần Ống Cinderfang"
+      },
+      "smolderstrike_helmet": {
+        "name": "Mũ Trùm Đòn Đánh Âm Ỉ"
+      },
+      "smolderstrike_shoulder": {
+        "name": "Giáp Vai Đòn Đánh Âm Ỉ"
+      },
+      "smolderstrike_chest": {
+        "name": "Áo Chẽn Đòn Đánh Âm Ỉ"
+      },
+      "smolderstrike_gloves": {
+        "name": "Găng Tay Đòn Đánh Âm Ỉ"
+      },
+      "smolderstrike_legs": {
+        "name": "Quần Ống Túm Đòn Đánh Âm Ỉ"
+      },
+      "ashveil_helmet": {
+        "name": "Mũ Trùm Ashveil"
+      },
+      "ashveil_shoulder": {
+        "name": "Giáp Vai Ashveil"
+      },
+      "ashveil_chest": {
+        "name": "Áo Giáp Ashveil"
+      },
+      "ashveil_gloves": {
+        "name": "Găng Tay Ashveil"
+      },
+      "ashveil_legs": {
+        "name": "Quần Ống Ashveil"
+      },
+      "emberscreed_helmet": {
+        "name": "Mũ Trùm Tín Điều Tàn Than"
+      },
+      "emberscreed_shoulder": {
+        "name": "Áo Choàng Vai Tín Điều Tàn Than"
+      },
+      "emberscreed_chest": {
+        "name": "Áo Choàng Tín Điều Tàn Than"
+      },
+      "emberscreed_gloves": {
+        "name": "Băng Tay Tín Điều Tàn Than"
+      },
+      "emberscreed_legs": {
+        "name": "Quần Legging Tín Điều Tàn Than"
+      },
+      "benison_dawnweave_helmet": {
+        "name": "Mũ Trùm Dawnweave"
+      },
+      "benison_dawnweave_shoulder": {
+        "name": "Áo Choàng Vai Dawnweave"
+      },
+      "benison_dawnweave_chest": {
+        "name": "Pháp Bào Dawnweave"
+      },
+      "benison_dawnweave_gloves": {
+        "name": "Băng Tay Dawnweave"
+      },
+      "benison_dawnweave_legs": {
+        "name": "Quần Legging Dawnweave"
+      },
+      "vesperash_helmet": {
+        "name": "Mũ Trùm Tro Chạng Vạng"
+      },
+      "vesperash_shoulder": {
+        "name": "Áo Choàng Vai Tro Chạng Vạng"
+      },
+      "vesperash_chest": {
+        "name": "Áo Choàng Tro Chạng Vạng"
+      },
+      "vesperash_gloves": {
+        "name": "Băng Tay Tro Chạng Vạng"
+      },
+      "vesperash_legs": {
+        "name": "Quần Legging Tro Chạng Vạng"
+      },
+      "stormkindled_helmet": {
+        "name": "Mũ Sắt Gọi Bão"
+      },
+      "stormkindled_shoulder": {
+        "name": "Giáp Vai Gọi Bão"
+      },
+      "stormkindled_chest": {
+        "name": "Giáp Hauberk Gọi Bão"
+      },
+      "stormkindled_gloves": {
+        "name": "Găng Sắt Gọi Bão"
+      },
+      "stormkindled_legs": {
+        "name": "Giáp Chân Gọi Bão"
+      },
+      "warspirit_emberscale_helmet": {
+        "name": "Mũ Sắt Vảy Tàn Hỏa"
+      },
+      "warspirit_emberscale_shoulder": {
+        "name": "Giáp Vai Vảy Tàn Hỏa"
+      },
+      "warspirit_emberscale_chest": {
+        "name": "Giáp Hauberk Vảy Tàn Hỏa"
+      },
+      "warspirit_emberscale_gloves": {
+        "name": "Găng Sắt Vảy Tàn Hỏa"
+      },
+      "warspirit_emberscale_legs": {
+        "name": "Giáp Chân Vảy Tàn Hỏa"
+      },
+      "stonehearth_helmet": {
+        "name": "Mũ Sắt Tâm Đá"
+      },
+      "stonehearth_shoulder": {
+        "name": "Giáp Vai Tâm Đá"
+      },
+      "stonehearth_chest": {
+        "name": "Giáp Hauberk Tâm Đá"
+      },
+      "stonehearth_gloves": {
+        "name": "Găng Sắt Tâm Đá"
+      },
+      "stonehearth_legs": {
+        "name": "Giáp Chân Tâm Đá"
+      },
+      "springmender_helmet": {
+        "name": "Mũ Sắt Người Chữa Suối"
+      },
+      "springmender_shoulder": {
+        "name": "Giáp Vai Người Chữa Suối"
+      },
+      "springmender_chest": {
+        "name": "Giáp Hauberk Người Chữa Suối"
+      },
+      "springmender_gloves": {
+        "name": "Găng Sắt Người Chữa Suối"
+      },
+      "springmender_legs": {
+        "name": "Giáp Chân Người Chữa Suối"
+      },
+      "chronoweave_helmet": {
+        "name": "Mũ Trùm Aetherweave"
+      },
+      "chronoweave_shoulder": {
+        "name": "Áo Choàng Vai Aetherweave"
+      },
+      "chronoweave_chest": {
+        "name": "Pháp Bào Aetherweave"
+      },
+      "chronoweave_gloves": {
+        "name": "Băng Tay Aetherweave"
+      },
+      "chronoweave_legs": {
+        "name": "Quần Legging Aetherweave"
+      },
+      "pyroclast_helmet": {
+        "name": "Mũ Trùm Pyroclast"
+      },
+      "pyroclast_shoulder": {
+        "name": "Áo Choàng Vai Pyroclast"
+      },
+      "pyroclast_chest": {
+        "name": "Áo Choàng Pyroclast"
+      },
+      "pyroclast_gloves": {
+        "name": "Băng Tay Pyroclast"
+      },
+      "pyroclast_legs": {
+        "name": "Quần Ống Pyroclast"
+      },
+      "frostquench_helmet": {
+        "name": "Mũ Trùm Dập Băng"
+      },
+      "frostquench_shoulder": {
+        "name": "Áo Choàng Vai Dập Băng"
+      },
+      "frostquench_chest": {
+        "name": "Áo Choàng Dập Băng"
+      },
+      "frostquench_gloves": {
+        "name": "Băng Tay Dập Băng"
+      },
+      "frostquench_legs": {
+        "name": "Quần Legging Dập Băng"
+      },
+      "hexthread_helmet": {
+        "name": "Mũ Trùm Sợi Chỉ Nguyền"
+      },
+      "hexthread_shoulder": {
+        "name": "Áo Choàng Vai Sợi Chỉ Nguyền"
+      },
+      "hexthread_chest": {
+        "name": "Áo Choàng Sợi Chỉ Nguyền"
+      },
+      "hexthread_gloves": {
+        "name": "Băng Tay Sợi Chỉ Nguyền"
+      },
+      "hexthread_legs": {
+        "name": "Quần Legging Sợi Chỉ Nguyền"
+      },
+      "gravebrand_helmet": {
+        "name": "Mũ Trùm Dấu Ấn Mộ Phần"
+      },
+      "gravebrand_shoulder": {
+        "name": "Áo Choàng Vai Dấu Ấn Mộ Phần"
+      },
+      "gravebrand_chest": {
+        "name": "Áo Choàng Dấu Ấn Mộ Phần"
+      },
+      "gravebrand_gloves": {
+        "name": "Băng Tay Dấu Ấn Mộ Phần"
+      },
+      "gravebrand_legs": {
+        "name": "Quần Legging Dấu Ấn Mộ Phần"
+      },
+      "ruincaller_helmet": {
+        "name": "Mũ Trùm Kẻ Gọi Tàn Phá"
+      },
+      "ruincaller_shoulder": {
+        "name": "Áo Choàng Vai Kẻ Gọi Tàn Phá"
+      },
+      "ruincaller_chest": {
+        "name": "Áo Choàng Kẻ Gọi Tàn Phá"
+      },
+      "ruincaller_gloves": {
+        "name": "Băng Tay Kẻ Gọi Tàn Phá"
+      },
+      "ruincaller_legs": {
+        "name": "Quần Ống Kẻ Gọi Tàn Phá"
+      },
+      "moonscorch_helmet": {
+        "name": "Mũ Trùm Cháy Xém Trăng"
+      },
+      "moonscorch_shoulder": {
+        "name": "Giáp Vai Cháy Xém Trăng"
+      },
+      "moonscorch_chest": {
+        "name": "Áo Chẽn Cháy Xém Trăng"
+      },
+      "moonscorch_gloves": {
+        "name": "Găng Tay Cháy Xém Trăng"
+      },
+      "moonscorch_legs": {
+        "name": "Quần Ống Túm Cháy Xém Trăng"
+      },
+      "wildfang_emberhide_helmet": {
+        "name": "Mũ Trùm Nanh Hoang"
+      },
+      "wildfang_emberhide_shoulder": {
+        "name": "Giáp Vai Nanh Hoang"
+      },
+      "wildfang_emberhide_chest": {
+        "name": "Áo Dài Da Tàn Hỏa Nanh Hoang"
+      },
+      "wildfang_emberhide_gloves": {
+        "name": "Găng Tay Nanh Hoang"
+      },
+      "wildfang_emberhide_legs": {
+        "name": "Quần Nanh Hoang"
+      },
+      "cinderbark_helmet": {
+        "name": "Mũ Trùm Cinderbark"
+      },
+      "cinderbark_shoulder": {
+        "name": "Giáp Vai Cinderbark"
+      },
+      "cinderbark_chest": {
+        "name": "Áo Giáp Cinderbark"
+      },
+      "cinderbark_gloves": {
+        "name": "Găng Tay Cinderbark"
+      },
+      "cinderbark_legs": {
+        "name": "Quần Ống Cinderbark"
+      },
+      "grovespring_helmet": {
+        "name": "Mũ Trùm Suối Rừng"
+      },
+      "grovespring_shoulder": {
+        "name": "Giáp Vai Suối Rừng"
+      },
+      "grovespring_chest": {
+        "name": "Áo Chẽn Suối Rừng"
+      },
+      "grovespring_gloves": {
+        "name": "Găng Tay Suối Rừng"
+      },
+      "grovespring_legs": {
+        "name": "Quần Ống Túm Suối Rừng"
+      },
+      "sigil_anvil_helmet": {
+        "name": "Ấn Mũ Đe Rèn"
+      },
+      "sigil_ember_helmet": {
+        "name": "Ấn Mũ Tàn Hỏa"
+      },
+      "sigil_tempest_helmet": {
+        "name": "Ấn Mũ Bão Tố"
+      },
+      "sigil_anvil_shoulder": {
+        "name": "Ấn Áo Choàng Vai Đe Rèn"
+      },
+      "sigil_ember_shoulder": {
+        "name": "Ấn Áo Choàng Vai Tàn Hỏa"
+      },
+      "sigil_tempest_shoulder": {
+        "name": "Ấn Áo Choàng Vai Bão Tố"
+      },
+      "sigil_anvil_chest": {
+        "name": "Ấn Áo Choàng Đe Rèn"
+      },
+      "sigil_ember_chest": {
+        "name": "Ấn Áo Choàng Tàn Hỏa"
+      },
+      "sigil_tempest_chest": {
+        "name": "Ấn Áo Choàng Bão Tố"
+      },
+      "sigil_anvil_gloves": {
+        "name": "Ấn Găng Tay Đe Rèn"
+      },
+      "sigil_ember_gloves": {
+        "name": "Ấn Găng Tay Tàn Hỏa"
+      },
+      "sigil_tempest_gloves": {
+        "name": "Ấn Găng Tay Bão Tố"
+      },
+      "sigil_anvil_legs": {
+        "name": "Ấn Quần Ống Đe Rèn"
+      },
+      "sigil_ember_legs": {
+        "name": "Ấn Quần Ống Tàn Hỏa"
+      },
+      "sigil_tempest_legs": {
+        "name": "Ấn Quần Ống Bão Tố"
+      },
+      "cord_of_the_last_flame": {
+        "name": "Dây Thừng Ngọn Lửa Cuối Cùng"
+      },
+      "cindersoaked_slippers": {
+        "name": "Hài Ngấm Tro"
+      },
+      "springbinder_sash": {
+        "name": "Đai Buộc Suối Nguồn"
+      },
+      "steps_of_quiet_water": {
+        "name": "Bước Chân Nước Tĩnh Lặng"
+      },
+      "cinderbark_cinch": {
+        "name": "Đai Cinderbark"
+      },
+      "ashenbark_treads": {
+        "name": "Giày Vỏ Tro"
+      },
+      "slagstalker_belt": {
+        "name": "Đai Kẻ Săn Xỉ"
+      },
+      "ashrunner_boots": {
+        "name": "Ủng Kẻ Chạy Tro"
+      },
+      "moonscorch_waistwrap": {
+        "name": "Khăn Quấn Eo Cháy Xém Trăng"
+      },
+      "scorchgrove_striders": {
+        "name": "Giày Sải Bước Rừng Cháy"
+      },
+      "grovetender_belt": {
+        "name": "Đai Người Chăm Rừng"
+      },
+      "dewfall_moccasins": {
+        "name": "Giày Da Sương Rơi"
+      },
+      "forgewall_girdle": {
+        "name": "Đai Thành Lũy Lò Rèn"
+      },
+      "anvilstance_sabatons": {
+        "name": "Giày Sabaton Thế Đe"
+      },
+      "warforged_waistguard": {
+        "name": "Giáp Eo Rèn Cho Chiến Tranh"
+      },
+      "furnace_march_greaves": {
+        "name": "Giáp Ống Chân Hành Quân Lò Luyện"
+      },
+      "stormkindled_chain": {
+        "name": "Xích Gọi Bão"
+      },
+      "thundershock_treads": {
+        "name": "Giày Sấm Sét"
+      },
+      "tidebinder_links": {
+        "name": "Mắt Xích Buộc Thủy Triều"
+      },
+      "springwarden_sabatons": {
+        "name": "Giày Sắt Hộ Vệ Suối"
+      },
+      "pendant_of_the_first_tempering": {
+        "name": "Mặt Dây Chuyền Tôi Luyện Đầu Tiên"
+      },
+      "ignivars_ember_choker": {
+        "name": "Vòng Cổ Tàn Than Của Ignivar"
+      },
+      "locket_of_the_last_flame": {
+        "name": "Mặt Dây Chuyền Ngọn Lửa Cuối Cùng"
+      },
+      "heartspring_amulet": {
+        "name": "Bùa Hộ Mệnh Suối Tâm"
+      },
+      "seal_of_the_forgewall": {
+        "name": "Ấn Ký Tường Lò Rèn"
+      },
+      "band_of_marked_strikes": {
+        "name": "Nhẫn Đòn Đánh Định Dấu"
+      },
+      "circle_of_cinders": {
+        "name": "Vòng Tro Tàn"
+      },
+      "loop_of_quiet_springs": {
+        "name": "Vòng Suối Tĩnh Lặng"
+      },
+      "bulwark_of_the_inner_crucible": {
+        "name": "Thành Trì Lò Luyện Nội Tâm"
+      },
+      "ember_wardens_barrier": {
+        "name": "Khiên Hộ Vệ Tàn Than"
+      },
+      "orb_of_the_last_spring": {
+        "name": "Quả Cầu Suối Nguồn Cuối Cùng"
+      },
+      "cinder_of_the_first_design": {
+        "name": "Than Hồng Thiết Kế Đầu Tiên"
+      },
+      "forgefathers_warhammer": {
+        "name": "Búa Chiến Của Bậc Thầy Lò Rèn"
+      },
+      "cinderfang_kris": {
+        "name": "Dao Găm Kris Cinderfang"
+      },
+      "slagrender_cleaver": {
+        "name": "Dao Phay Xé Xỉ"
+      },
+      "anvilguard_blade": {
+        "name": "Kiếm Hộ Vệ Anvil"
+      },
+      "heart_of_the_end_greatblade": {
+        "name": "Đại Kiếm Trái Tim Tận Cùng"
+      },
+      "staff_of_the_last_spring": {
+        "name": "Trượng Suối Nguồn Cuối Cùng"
+      },
+      "forgefire_spire": {
+        "name": "Tháp Lửa Lò Rèn"
+      },
+      "springtouched_crozier": {
+        "name": "Gậy Quyền Trượng Chạm Suối"
+      },
+      "wand_of_quenched_sparks": {
+        "name": "Đũa Tia Lửa Đã Dập Tắt"
+      },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
       },
       "conjured_water4": {
         "name": "Nước Suối Được Tạo Phép"
@@ -13668,6 +14839,12 @@ export const vi_VN: EnTranslations = {
       },
       "reins_thunderstrut_gobbler": {
         "name": "Dây cương Gà Tây Chúa Sải Bước Sấm"
+      },
+      "varkhul_forgebreaker": {
+        "name": "Kẻ Phá Lò, Cỗ Máy Của Varkhul"
+      },
+      "varkhul_emberward": {
+        "name": "Hộ Vệ Tàn Than, Thành Lũy Của Varkhul"
       }
     },
     "mobs": {
@@ -13864,25 +15041,25 @@ export const vi_VN: EnTranslations = {
         "name": "Nythraxis, Tai Họa Đỉnh Gai"
       },
       "ignivar_herald_of_the_last_flame": {
-        "name": "Ignivar, Herald of the Last Flame"
+        "name": "Ignivar, Sứ Giả Ngọn Lửa Cuối Cùng"
       },
       "ignivar_heart_of_the_end": {
-        "name": "Heart of the End"
+        "name": "Ignivar, Kẻ Gọi Tro"
       },
       "ignivar_ember_sentinel": {
-        "name": "Ember Sentinel"
+        "name": "Vệ Binh Tàn Hỏa"
       },
       "ignivar_crucible_warden": {
-        "name": "Crucible Warden"
+        "name": "Kẻ Canh Lò Luyện"
       },
       "ignivar_cinder_artificer": {
-        "name": "Cinder Artificer"
+        "name": "Thợ Chế Tác Tro Tàn"
       },
       "varkhul_forgefather_of_the_last_flame": {
-        "name": "Varkhul, Forgefather of the Last Flame"
+        "name": "Varkhul, Tổ Phụ Lò Rèn của Ngọn Lửa Cuối Cùng"
       },
       "derelict_mech": {
-        "name": "Derelict Mech"
+        "name": "Cỗ Máy Bị Bỏ Hoang"
       },
       "reliquary_ledger_wraith": {
         "name": "Oan Hồn Sổ Sách"
@@ -14545,14 +15722,19 @@ export const vi_VN: EnTranslations = {
         "greeting": "Từ sân nhà nguyện ở Thung Lũng đến nóc nhà của thế giới... con đường ta lần theo kết thúc tại đây. Ta cảm nhận được ngọn núi đang lắng nghe."
       },
       "archivist_maelin_emberward": {
-        "name": "Archivist Maelin Emberward",
-        "title": "Crucible Archivist",
-        "greeting": "Every hammer mark in this place is a sentence. Help me read what Varkhul tried to hide."
+        "name": "Thủ Thư Maelin Emberward",
+        "title": "Thủ Thư Lò Luyện",
+        "greeting": "Mỗi dấu búa nơi đây là một câu văn. Hãy giúp ta đọc điều Varkhul cố che giấu."
       },
       "archivist_maelin_ember_projection": {
-        "name": "Maelin's Ember Projection",
-        "title": "Ember Projection",
-        "greeting": "The embers carry Maelin's voice forward through the forge."
+        "name": "Ảo Ảnh Tàn Lửa của Maelin",
+        "title": "Ảo Ảnh Tàn Lửa",
+        "greeting": "Những tàn lửa truyền giọng nói của Maelin qua lò rèn đến nơi này."
+      },
+      "crucible_quartermaster": {
+        "name": "Quản Kho Bronn Emberward",
+        "title": "Quản Kho Lò Luyện",
+        "greeting": "Lò rèn nhận ra người của mình. Mang cho ta một ấn hiệu từ Lò Luyện, ta sẽ trang bị cho ngươi bước vào chiến tranh."
       },
       "brother_halven": {
         "name": "Tu Huynh Halven",
@@ -14823,6 +16005,11 @@ export const vi_VN: EnTranslations = {
         "name": "Nell Hoảng Sợ",
         "title": "Ngư Dân Gullhaven",
         "greeting": "Nó mở ra ngay chỗ phơi lưới. Ngay tại đó, nơi tôi từng đứng mỗi sáng suốt cả cuộc đời mình. Tôi không còn xuống bờ biển nữa. Tôi cũng chẳng còn đi đâu nhiều nữa."
+      },
+      "riftwright_maelis": {
+        "name": "Riftwright Maelis",
+        "title": "Rift Forgemaster",
+        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
       },
       "forgemistress_darva": {
         "name": "Nữ thợ rèn Darva",
@@ -15703,38 +16890,35 @@ export const vi_VN: EnTranslations = {
         }
       },
       "q_ignivar_echoes_in_iron": {
-        "title": "Echoes in Iron",
-        "text": "These automata are not soldiers. They are drafts. Break each assembly line and listen when the final shell falls. The forge remembers what Varkhul tried to erase.",
-        "completion": "The echoes agree. Varkhul bound water from the dying Last Spring into living metal. These automatons were failed temperings. Only Ignivar endured.",
+        "title": "Tiếng Vọng Trong Sắt",
+        "text": "Những cỗ máy này không phải binh lính. Chúng chỉ là bản nháp. Hãy phá từng dây chuyền lắp ráp và lắng nghe khi lớp vỏ cuối cùng rơi xuống. Lò rèn vẫn nhớ điều Varkhul cố xóa bỏ.",
+        "completion": "Những tiếng vọng đã đồng thuận. Varkhul đã giam nước từ Suối Cuối Cùng đang hấp hối vào kim loại sống. Những cỗ máy này là những lần tôi luyện thất bại. Chỉ Ignivar sống sót.",
         "objectives": {
           "0": {
-            "label": "Ember Sentinels destroyed"
+            "label": "Đã tiêu diệt Vệ Binh Tàn Hỏa"
           },
           "1": {
-            "label": "Crucible Wardens destroyed"
-          },
-          "2": {
-            "label": "Cinder Artificers destroyed"
+            "label": "Đã tiêu diệt Kẻ Canh Lò Luyện"
           }
         }
       },
       "q_ignivar_heralds_heart": {
-        "title": "The Herald's Heart",
-        "text": "The survivor named in every echo is Ignivar. Varkhul called him herald, seal, and key. Defeat him. If the records are true, his death will reveal what he was forged to guard.",
-        "completion": "Ignivar was never merely a guardian. His heart was the key, and its final plates opened the sealed crucible below.",
+        "title": "Trái Tim của Sứ Giả",
+        "text": "Kẻ sống sót được nhắc đến trong mọi tiếng vọng là Ignivar. Varkhul gọi hắn là sứ giả, phong ấn và chìa khóa. Hãy đánh bại hắn. Nếu ghi chép là thật, cái chết của hắn sẽ hé lộ điều hắn được rèn ra để canh giữ.",
+        "completion": "Ignivar chưa bao giờ chỉ là một người canh giữ. Trái tim hắn là chìa khóa, và những phiến giáp cuối cùng đã mở lò luyện bị phong ấn bên dưới.",
         "objectives": {
           "0": {
-            "label": "Ignivar defeated"
+            "label": "Đã đánh bại Ignivar"
           }
         }
       },
       "q_ignivar_the_forgefather": {
-        "title": "The Forgefather",
-        "text": "The path below leads to Varkhul, Forgefather of the Last Flame. He imprisoned the Last Spring to make metal live, then forged Ignivar to keep the crime sealed. Enter the Inner Crucible and end his work.",
-        "completion": "The forge is silent at last. The spring may never recover, but Varkhul will shape no more lives into chains.",
+        "title": "Tổ Phụ Lò Rèn",
+        "text": "Con đường phía dưới dẫn đến Varkhul, Tổ Phụ Lò Rèn của Ngọn Lửa Cuối Cùng. Hắn đã giam giữ Suối Cuối Cùng để khiến kim loại sống dậy, rồi rèn Ignivar để che giấu tội ác đó. Hãy bước vào Lò Luyện Nội Tâm và chấm dứt công việc của hắn.",
+        "completion": "Cuối cùng lò rèn cũng im tiếng. Có lẽ Suối sẽ không bao giờ hồi phục, nhưng Varkhul sẽ không thể nhào nặn thêm sinh mạng nào thành xiềng xích nữa.",
         "objectives": {
           "0": {
-            "label": "Varkhul defeated"
+            "label": "Đã đánh bại Varkhul"
           }
         }
       },
@@ -17616,24 +18800,29 @@ export const vi_VN: EnTranslations = {
         "leaveText": "Bạn trở lại không khí lạnh giá của Đỉnh Gai."
       },
       "ignivar_forge_lift": {
-        "name": "The Forge-Lift",
-        "enterText": "The forge-lift shudders and sinks; hammerfall rises to meet you.",
-        "leaveText": "The lift hauls you back into the open air of the keep."
+        "name": "Thang máy lò rèn",
+        "enterText": "Thang máy lò rèn rung chuyển rồi hạ xuống, tiếng búa dội lên đón bạn.",
+        "leaveText": "Thang máy đưa bạn trở lại không gian thoáng đãng của thành trì."
       },
       "ignivar_forge_approach": {
-        "name": "Halls of the First Tempering",
-        "enterText": "Hammerfall echoes through the Halls of the First Tempering.",
-        "leaveText": "You step away from the first forge and breathe freely again."
+        "name": "Đại Sảnh Tôi Luyện Đầu Tiên",
+        "enterText": "Tiếng búa vọng qua Đại Sảnh Tôi Luyện Đầu Tiên.",
+        "leaveText": "Bạn rời lò rèn đầu tiên và lại hít thở tự do."
       },
       "ignivar_raid_arena": {
-        "name": "Crucible of the Last Spring",
-        "enterText": "Heat shimmers above the sealed waters of the Crucible.",
-        "leaveText": "You step away from the Crucible and breathe freely again."
+        "name": "Crucible của Suối Nguồn Cuối Cùng",
+        "enterText": "Hơi nóng lung linh phía trên dòng nước bị phong ấn của Lò Luyện.",
+        "leaveText": "Bạn rời khỏi Lò Luyện và lại hít thở tự do."
+      },
+      "ignivar_molten_assembly": {
+        "name": "Xưởng lắp ráp nóng chảy",
+        "enterText": "Cánh cổng mở ra dẫn vào một đại sảnh lắp ráp nóng chảy.",
+        "leaveText": "Bạn rời dây chuyền lắp ráp và trở lại Lò Luyện."
       },
       "ignivar_inner_crucible": {
-        "name": "The Inner Crucible",
-        "enterText": "The opened gate leads deeper into the Crucible.",
-        "leaveText": "You leave the silent depths of the Crucible."
+        "name": "Crucible bên trong",
+        "enterText": "Cánh cổng mở ra dẫn sâu hơn vào Lò Luyện.",
+        "leaveText": "Bạn rời khỏi những tầng sâu im lặng của Lò Luyện."
       },
       "wildheart_basin": {
         "name": "Lòng Chảo Trái Tim Hoang Dã",
@@ -17866,53 +19055,189 @@ export const vi_VN: EnTranslations = {
       }
     },
     "itemSets": {
+      "ashveil": {
+        "name": "Trang Phục Tro Mờ",
+        "bonus2": "Đòn Đánh Kẻ Ẩn Nấp gây thêm 25% sát thương.",
+        "bonus4": "Đòn đánh Lưỡi Kiếm Che Mạng gây sát thương gấp ba thay vì gấp đôi."
+      },
+      "benison_dawnweave": {
+        "name": "Phúc Lành Dệt Bình Minh",
+        "bonus2": "Lần cứu viện của Cảnh Giác Seraph hồi 270 thay vì 180. Sát thương nhận vào không còn trì hoãn việc niệm phép.",
+        "bonus4": "Khi Cảnh Giác Seraph kích hoạt, đồng minh của bạn cũng được hồi 15% máu tối đa trong 10 giây."
+      },
       "boundstone_vanguard": {
         "name": "Bộ Tiên Phong Đá Trói",
         "bonus3": "Tăng tốc độ tấn công cùng thi triển thêm 15%."
       },
+      "bramblehide": {
+        "name": "Da Gai Của Roots",
+        "bonus2": "Tăng sức mạnh tấn công thêm 40.",
+        "bonus4": "Các đòn chí mạng bằng vũ khí của bạn găm Dằm Xương vào mục tiêu, khiến nó chảy máu nhận 8 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần.",
+        "bonus6": "Tăng 4% tốc độ tấn công và thi triển, cùng 3% Hit. Đòn chí mạng bằng vũ khí của bạn khiến mục tiêu bị Bonesplinter, gây chảy máu 5 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần."
+      },
+      "chronoweave": {
+        "name": "Lễ Phục Dệt Aether",
+        "bonus2": "Vọng Âm Thời Gian chuyển 50% sát thương Arcane đơn mục tiêu của bạn thành hồi máu. Sát thương nhận vào không còn trì hoãn việc niệm phép.",
+        "bonus4": "Thời gian hồi của Dòng Thác Thời Gian giảm 5 giây."
+      },
+      "cinderbark": {
+        "name": "Hộ Vệ Vỏ Tro",
+        "bonus2": "Sweeping Claws có 30% cơ hội tích trữ thêm một Old Blood.",
+        "bonus4": "Marrowbreak gây thêm 30% sát thương, và hiệu ứng bảo hộ khẩn cấp không còn thay thế đòn đánh."
+      },
+      "cinderfang": {
+        "name": "Áo Choàng Nanh Tro",
+        "bonus2": "Lượng năng lượng hoàn lại của Venom Ritual tăng lên 20 cho mỗi kỹ năng tạo năng lượng.",
+        "bonus4": "Thời gian hồi của Venom Dart giảm còn 4 giây."
+      },
+      "coldsight_trackers": {
+        "name": "Thợ Săn Coldsight",
+        "bonus2": "Measured Shot hồi thêm 5 Focus.",
+        "bonus4": "Đòn chí mạng của Long Draw kéo dài Cold Focus thêm 2 giây, tối đa 6 giây mỗi lần kích hoạt."
+      },
       "crownforged": {
         "name": "Bộ Lễ Phục Bonewrought",
         "bonus2": "Tăng sức mạnh tấn công thêm 40.",
-        "bonus3": "Tăng sức mạnh thêm 15, thể lực thêm 15 và tốc độ tấn công cùng thi triển thêm 15%.",
-        "bonus4": "Các đòn chí mạng bằng vũ khí của bạn găm Dằm Xương vào mục tiêu, khiến nó chảy máu nhận 8 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần."
+        "bonus4": "Các đòn chí mạng bằng vũ khí của bạn găm Dằm Xương vào mục tiêu, khiến nó chảy máu nhận 8 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần.",
+        "bonus6": "Tăng 4% tốc độ tấn công và thi triển, cùng 3% Hit. Đòn chí mạng bằng vũ khí của bạn khiến mục tiêu bị Bonesplinter, gây chảy máu 5 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần."
+      },
+      "dawnforged": {
+        "name": "Lễ Phục Rèn Bình Minh",
+        "bonus2": "Beacon of Light sao chép 55% lượng hồi máu trực tiếp của bạn. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Dawn's Embrace được Radiant Resonance cường hóa sẽ được thi triển ngay lập tức."
       },
       "deathlord": {
         "name": "Bộ Chiến Barrowlord",
         "bonus2": "Tăng sức mạnh tấn công thêm 40.",
-        "bonus3": "Tăng sức mạnh thêm 15 và thể lực thêm 15.",
-        "bonus4": "Các đòn chí mạng bằng vũ khí của bạn có 50% cơ hội ban Uy Lực Mộ Phần, tăng sức mạnh tấn công thêm 60 trong 10 giây."
+        "bonus4": "Các đòn chí mạng bằng vũ khí của bạn có 50% cơ hội ban Uy Lực Mộ Phần, tăng sức mạnh tấn công thêm 60 trong 10 giây.",
+        "bonus6": "Tăng 4% tốc độ tấn công và thi triển, cùng 3% Hit. Đòn chí mạng bằng vũ khí của bạn khiến mục tiêu bị Bonesplinter, gây chảy máu 5 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần."
+      },
+      "emberfury": {
+        "name": "Giáp Cơn Cuồng Nộ Tàn Than",
+        "bonus2": "Enrage của bạn kéo dài 6 giây thay vì 4 giây.",
+        "bonus4": "Bloodletting luôn khiến bạn Enrage, và lượng hồi máu tăng lên 8% máu tối đa."
+      },
+      "emberscreed": {
+        "name": "Lễ Phục Tín Điều Tàn Than",
+        "bonus2": "Liên kết Doctrine chuyển thêm 10% sát thương Holy của bạn thành hồi máu. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Khi Psalm of Warding được tiêu thụ hoàn toàn, Scouring Hymn tiếp theo trong 10 giây sẽ được thi triển ngay lập tức. Không thể xảy ra thường xuyên hơn một lần mỗi 15 giây."
+      },
+      "forgewall": {
+        "name": "Khiên Aegis Thành Rèn",
+        "bonus2": "Iron Resolve chuyển hóa cơn giận với 5 điểm hấp thụ mỗi điểm thay vì 4.",
+        "bonus4": "Thi triển Shieldcrack giảm 2 giây thời gian hồi còn lại của Iron Resolve."
+      },
+      "frostquench": {
+        "name": "Dệt Băng Giải Nhiệt",
+        "bonus2": "Đòn chí mạng của Rimelance tích trữ thêm một Icicle, tối đa 5. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Winterlash đặt 3 cộng dồn Winter's Chill thay vì 2."
+      },
+      "gravebrand": {
+        "name": "Lễ Phục Dấu Mộ",
+        "bonus2": "Thời gian hồi của Reaping Command giảm 2 giây. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Các đòn hợp xướng của Reaping Command gây thêm 25% sát thương."
       },
       "greyjaw_stalker": {
         "name": "Bộ Kẻ Rình Rập Greyjaw",
         "bonus3": "Tăng tốc độ tấn công cùng thi triển thêm 15%."
       },
+      "grovespring": {
+        "name": "Phục Trang Suối Rừng",
+        "bonus2": "Swiftmend ưu tiên tiêu thụ Wildbloom hoặc Second Bloom của bạn trước và hồi thêm 25% máu. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Overbloom thu hoạch 75% các hiệu ứng còn lại của bạn và tích trữ 1 Verdance sau đó."
+      },
+      "hexthread": {
+        "name": "Áo Choàng Sợi Yểm",
+        "bonus2": "Needle of Fate cho thêm 2 Condemnation. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Passing Sentence hoàn lại 10 Condemnation."
+      },
+      "moonscorch": {
+        "name": "Phục Trang Thiêu Đốt Trăng",
+        "bonus2": "Moonseed có thể kéo dài Lunar Tempest hai lần mỗi lần áp dụng, tối đa 12 giây. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Moonsurge và Sunwake gây thêm 25% sát thương."
+      },
       "necromancers": {
         "name": "Y Phục Mournweave",
         "bonus2": "Tăng sức mạnh phép thuật thêm 20. Sát thương phải chịu không còn làm chậm việc thi triển phép của bạn (kháng trì hoãn thi triển 100%).",
-        "bonus3": "Tăng trí tuệ thêm 10 và thể lực thêm 10.",
-        "bonus4": "Các phép của bạn có 10% cơ hội ban Tâm Trí Thông Suốt, khiến phép kế tiếp của bạn được thi triển miễn phí."
+        "bonus4": "Các phép của bạn có 10% cơ hội ban Tâm Trí Thông Suốt, khiến phép kế tiếp của bạn được thi triển miễn phí.",
+        "bonus6": "Tăng 4% tốc độ tấn công và thi triển. Phép thuật của bạn có 10% cơ hội ban Soulblaze, tăng sức mạnh phép thuật thêm 25 trong 10 giây."
       },
       "nighttalon": {
         "name": "Bộ Da Direfang",
         "bonus2": "Tăng sức mạnh tấn công thêm 40.",
-        "bonus3": "Tăng nhanh nhẹn thêm 15, tỉ lệ chí mạng thêm 2% và tốc độ tấn công cùng thi triển thêm 15%.",
-        "bonus4": "Các đòn chí mạng bằng vũ khí của bạn xé ra một Vết Rách Toạc, khiến mục tiêu chảy máu nhận 6 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần."
+        "bonus4": "Các đòn chí mạng bằng vũ khí của bạn xé ra một Vết Rách Toạc, khiến mục tiêu chảy máu nhận 6 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần.",
+        "bonus6": "Tăng 4% tốc độ tấn công và thi triển, cùng 3% Hit. Đòn chí mạng bằng vũ khí của bạn xé một Ragged Gash, khiến mục tiêu chảy máu 4 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần."
+      },
+      "oathpyre": {
+        "name": "Thành Trì Lửa Thề",
+        "bonus2": "Cơ hội Vowkeeper Strike kích hoạt Solar Reprisal tăng lên 30%, và đỡ một đòn tấn công sẽ kích hoạt nó với 40% cơ hội.",
+        "bonus4": "Tiêu thụ Solar Reprisal tạo khiên cho bạn bằng 6% máu tối đa trong 10 giây."
+      },
+      "packlord_emberhide": {
+        "name": "Da Ẩn Của Chúa Bầy",
+        "bonus2": "Thời gian hồi của Pack Command giảm xuống còn 3 giây.",
+        "bonus4": "Cơ hội đặt lại thời gian hồi của Stampede từ Pack Command tăng lên 30%."
+      },
+      "pyroclast": {
+        "name": "Lễ Phục Hỏa Sơn",
+        "bonus2": "Scald luôn chí mạng mục tiêu còn từ 35% máu trở xuống. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Các đòn chí mạng bằng phép Lửa ngoài Trance Phượng Hoàng giảm thời gian hồi còn lại của bạn đi 1,5 giây."
+      },
+      "ruincaller": {
+        "name": "Phục Trang Kẻ Gọi Tàn Phá",
+        "bonus2": "Conflagrate tích trữ 3 lần. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Ruinbolt gây thêm 20% sát thương."
+      },
+      "slagbreaker": {
+        "name": "Chiến Giáp Kẻ Phá Xỉ",
+        "bonus2": "Redhand cường hóa Maiming Strike tiếp theo của bạn thêm 30% mỗi cộng dồn thay vì 20%.",
+        "bonus4": "Mỗi lần thi triển Redhand thứ hai giảm thời gian hồi còn lại của Breachmaker đi 3 giây."
+      },
+      "slagsnare": {
+        "name": "Trang Phục Bẫy Xỉ",
+        "bonus2": "Gutting Strike tạo 20 Tập Trung.",
+        "bonus4": "Woundrend tiêu thụ 3 Hunting Momentum sẽ giữ lại chúng. Không thể xảy ra thường xuyên hơn một lần mỗi 8 giây."
+      },
+      "smolderstrike": {
+        "name": "Da Đánh Âm Ỉ",
+        "bonus2": "Haymaker gây thêm 20% sát thương.",
+        "bonus4": "Lights Out hoàn lại 6 giây thời gian hồi còn lại của Mirrored Blades."
       },
       "soulflame": {
         "name": "Lễ Phục Wraithfire",
         "bonus2": "Tăng sức mạnh phép thuật thêm 20. Sát thương phải chịu không còn làm chậm việc thi triển phép của bạn (kháng trì hoãn thi triển 100%).",
-        "bonus3": "Tăng trí tuệ thêm 15, tinh thần thêm 15 và tốc độ tấn công cùng thi triển thêm 15%.",
-        "bonus4": "Các phép của bạn có 10% cơ hội ban Hồn Hỏa, tăng sức mạnh phép thuật thêm 40 trong 10 giây."
+        "bonus4": "Các phép của bạn có 10% cơ hội ban Hồn Hỏa, tăng sức mạnh phép thuật thêm 40 trong 10 giây.",
+        "bonus6": "Tăng 4% tốc độ tấn công và thi triển. Phép của bạn có 10% cơ hội ban Soulblaze, tăng sức mạnh phép thuật thêm 25 trong 10 giây."
+      },
+      "springmender": {
+        "name": "Vảy Kẻ Chữa Suối",
+        "bonus2": "Thời gian hồi của Tidecall giảm 4 giây. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Cascading Mend chạm tới đồng minh thứ tư và thu hoạch Mending Currents ở mức 150%."
+      },
+      "stonehearth": {
+        "name": "Thành Trì Tâm Thạch",
+        "bonus2": "Khi đang Stonebound, Stormcast Mending Waters không tốn mana và hồi thêm 25% máu.",
+        "bonus4": "Khi đang Stonebound, hoàn tất một nhịp hồi cho bạn 3% máu tối đa."
       },
       "stormcallers": {
         "name": "Áo Lễ Galecall",
         "bonus2": "Tăng sức mạnh phép thuật thêm 20. Sát thương phải chịu không còn làm chậm việc thi triển phép của bạn (kháng trì hoãn thi triển 100%).",
-        "bonus3": "Tăng trí tuệ thêm 15, tinh thần thêm 15 và tốc độ tấn công cùng thi triển thêm 15%.",
-        "bonus4": "Các phép của bạn có 10% cơ hội ban Hồn Hỏa, tăng sức mạnh phép thuật thêm 40 trong 10 giây."
+        "bonus4": "Các phép của bạn có 10% cơ hội ban Hồn Hỏa, tăng sức mạnh phép thuật thêm 40 trong 10 giây.",
+        "bonus6": "Tăng 4% tốc độ tấn công và thi triển. Phép của bạn có 10% cơ hội ban Soulblaze, tăng sức mạnh phép thuật thêm 25 trong 10 giây."
+      },
+      "stormkindled": {
+        "name": "Lễ Phục Gọi Bão",
+        "bonus2": "Unleash Weapon khi có Pyrebrand ban 3 Thunder. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Phần thưởng mỗi Thunder của Earthen Jolt tăng lên 30%."
       },
       "vale_arcanist": {
         "name": "Bộ Arcanist Thung Khê",
         "bonus3": "Tăng tốc độ tấn công cùng thi triển thêm 15%."
+      },
+      "vesperash": {
+        "name": "Khăn Choàng Tro Hoàng Hôn",
+        "bonus2": "Thời gian hồi của Call Tithefiend giảm 6 giây. Sát thương phải chịu không còn làm chậm việc thi triển phép.",
+        "bonus4": "Gọi Tithefiend đặt lại thời gian hồi của Mindfracture, và con quỷ trả lại lượng mana gấp đôi mỗi lần đánh trúng."
       },
       "warfare_ashstalker": {
         "name": "Bộ Ashstalker",
@@ -17944,11 +19269,26 @@ export const vi_VN: EnTranslations = {
         "bonus4": "Tăng Điểm Tấn Công Chiến Tranh thêm 40, và khống chế do người chơi thù địch giáng lên bạn kéo dài ngắn hơn 15%.",
         "bonus7": "Tăng Điểm Tấn Công và Phòng Thủ Chiến Tranh thêm 80. Phép của bạn có 15% cơ hội ban Hộ Vệ Gai, tăng né thêm 15% trong 6 giây."
       },
+      "warspirit_emberscale": {
+        "name": "Vảy Linh Chiến",
+        "bonus2": "Ancestral Strike đưa nhịp của bạn tiến 3 bước.",
+        "bonus4": "Ancestral Strike gây thêm 30% sát thương."
+      },
+      "wildfang_emberhide": {
+        "name": "Da Ẩn Nanh Hoang",
+        "bonus2": "Redharvest hồi 45 năng lượng, tăng từ 30.",
+        "bonus4": "Redharvest đặt một Flense mới lên mục tiêu."
+      },
       "wyrmshadow": {
         "name": "Áo Lễ Nightfang",
         "bonus2": "Tăng sức mạnh tấn công thêm 40.",
-        "bonus3": "Tăng nhanh nhẹn thêm 15 và tỉ lệ chí mạng thêm 2%.",
-        "bonus4": "Các đòn chí mạng bằng vũ khí của bạn có 50% cơ hội ban Cuồng Nanh, tăng tốc độ tấn công thêm 25% trong 8 giây."
+        "bonus4": "Các đòn chí mạng bằng vũ khí của bạn có 50% cơ hội ban Cuồng Nanh, tăng tốc độ tấn công thêm 25% trong 8 giây.",
+        "bonus6": "Tăng 4% tốc độ tấn công và thi triển, cùng 3% Hit. Đòn chí mạng bằng vũ khí của bạn xé một Ragged Gash, khiến mục tiêu chảy máu 4 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần."
+      },
+      "zealfire": {
+        "name": "Chiến Giáp Zealfire",
+        "bonus2": "Final Edict và Dawnfall cắt thời gian hồi còn lại của nhau 3 giây thay vì 2.",
+        "bonus4": "Hammer of Wrath được thi triển dưới Dawn's Wrath gây sát thương mạnh hơn 40%, tăng từ 20%."
       }
     }
   },
@@ -17966,6 +19306,7 @@ export const vi_VN: EnTranslations = {
     "delveRiteShrineReedInteract": "Miếu Lau Sậy: Nhấn F để chạm vào",
     "delveRiteShrineSkullInteract": "Miếu Đầu Lâu: Nhấn F để chạm vào",
     "mailboxName": "Hòm Thư",
-    "noticeboardName": "Bảng Thông Báo"
+    "noticeboardName": "Bảng Thông Báo",
+    "realmBuilderMonumentName": "Realm Builder Monument"
   }
 };
