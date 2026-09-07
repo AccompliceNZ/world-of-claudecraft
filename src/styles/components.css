@@ -11947,7 +11947,7 @@
   /* ---------- Ashen Coliseum (arena) ---------- */
   #arena-window {
     width: min(760px, calc(100vw - 40px));
-    height: min(480px, calc(85vh - 24px));
+    height: min(480px, calc(var(--app-vh, 100vh) * 0.85 - 24px));
     --window-pad: 14px;
     flex-direction: column;
     overflow: hidden;
