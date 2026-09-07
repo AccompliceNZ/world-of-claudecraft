@@ -823,6 +823,80 @@
     --dur-press: 60ms;
     --dur-panel: 160ms;
     --dur-frame: 120ms;
+
+    /* W1 additions (action bars) */
+    /* Compact pet commands keep their own socket species without shrinking combat actions. */
+    --socket-size-pet: 36px;
+    /* Desktop XP fill paint stays separate from the driven mobile progress fraction. */
+    --xp-rail-fill: linear-gradient(180deg, var(--color-xp), var(--color-xp-deep));
+    /* Rested XP keeps a blue halo while its actionable segment stays fully saturated. */
+    --glow-xp-rested: 0 0 calc(6px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--color-xp-rested) 33%, transparent);
+    /* Post-cap XP keeps a gold halo while the overflow fill remains the primary cue. */
+    --glow-xp-overflow: 0 0 calc(6px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--gold) 33%, transparent);
+    /* Pet autocast uses a tier-scaled halo around an invariant gold rim. */
+    --glow-pet-autocast:
+      inset 0 0 0 1px color-mix(in srgb, var(--gold) 67%, transparent),
+      0 0 calc(10px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 40%, transparent),
+      0 0 calc(18px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 20%, transparent);
+    /* Queued actions use a tier-scaled halo around an invariant white rim. */
+    --glow-action-queued:
+      0 0 calc(9px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 80%, transparent),
+      var(--edge-glint);
+    /* The lower proc pulse frame preserves the proc hue at reduced intensity. */
+    --glow-action-proc-soft:
+      0 0 0 1px var(--color-keyline),
+      0 0 calc(7px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--color-proc-glow) 69%, transparent),
+      inset 0 0 calc(4px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--color-proc-glow) 27%, transparent);
+    /* The upper proc pulse frame keeps its invariant rim at peak emphasis. */
+    --glow-action-proc-strong:
+      0 0 0 1px var(--color-keyline),
+      0 0 calc(15px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--color-proc-glow) 94%, transparent),
+      inset 0 0 calc(7px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--color-proc-glow) 53%, transparent);
+    /* Empowered actions keep a steady gold halo when their pulse is paused. */
+    --glow-action-empowered:
+      0 0 calc(12px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 87%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, var(--color-glint) 67%, transparent), var(--edge-glint);
+    /* The lower empowered pulse frame eases the halo without changing its rim. */
+    --glow-action-empowered-soft:
+      0 0 calc(9px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 73%, transparent),
+      inset 0 0 0 1px color-mix(in srgb, var(--color-glint) 53%, transparent), var(--edge-glint);
+    /* The upper empowered pulse frame strengthens only decorative blur. */
+    --glow-action-empowered-strong:
+      0 0 calc(18px * var(--fx-shadow, 1)) var(--gold),
+      inset 0 0 0 1px color-mix(in srgb, var(--color-glint) 80%, transparent), var(--edge-glint);
+    /* Fate consume readiness keeps its teal rim distinct from the violet outline. */
+    --color-fate-consume-rim: #76e1cf;
+    /* Fate consume readiness uses violet as its secondary invariant edge. */
+    --color-fate-consume-outline: #a77cff;
+    /* Fate consume readiness layers tier-scaled teal and violet halos. */
+    --glow-action-fate-consume:
+      0 0 calc(10px * var(--fx-shadow, 1)) color-mix(in srgb, #5de5d0 90%, transparent),
+      0 0 calc(20px * var(--fx-shadow, 1)) color-mix(in srgb, #8149da 72%, transparent),
+      inset 0 0 calc(7px * var(--fx-shadow, 1)) color-mix(in srgb, #71eedb 48%, transparent);
+    /* Fate sentence readiness keeps its rose rim distinct from the violet outline. */
+    --color-fate-sentence-rim: #ff789d;
+    /* Fate sentence readiness uses a lighter violet secondary invariant edge. */
+    --color-fate-sentence-outline: #d99cff;
+    /* Fate sentence readiness layers tier-scaled rose and violet halos. */
+    --glow-action-fate-sentence:
+      0 0 calc(10px * var(--fx-shadow, 1)) color-mix(in srgb, #ff5489 92%, transparent),
+      0 0 calc(20px * var(--fx-shadow, 1)) color-mix(in srgb, #9f40dc 76%, transparent),
+      inset 0 0 calc(7px * var(--fx-shadow, 1)) color-mix(in srgb, #ff6699 52%, transparent);
+    /* Drag targets keep a cyan rim that cannot disappear with shadow quality. */
+    --color-action-drop-target: #7fd1ff;
+    /* Drag targets add a tier-scaled halo around the invariant cyan rim. */
+    --glow-action-drop-target: 0 0 calc(8px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--color-action-drop-target) 53%, transparent);
+    /* Keybind selection keeps its inset gold ring while decorative blur scales. */
+    --glow-action-bind-selected:
+      0 0 calc(10px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 80%, transparent),
+      inset 0 0 0 2px var(--gold);
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal

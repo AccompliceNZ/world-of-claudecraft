@@ -1635,11 +1635,35 @@ describe('client HTML shell', () => {
       expect(secondary).toBeLessThan(primary);
     }
     expect(hudCss).toContain('body.show-actionbar3 #actionbar3 {\n    display: flex;\n  }');
-    expect(hudCss).toContain('body.show-actionbar3 #castbar {\n    bottom: 318px;\n  }');
-    expect(hudCss).toContain('body.show-actionbar3 #swingbar {\n    bottom: 292px;\n  }');
+    // The plateless 46px rows use a 52px pitch, six pixels tighter than the old tray rows.
+    expect(hudCss).toContain('body.show-actionbar3 #castbar {\n    bottom: 312px;\n  }');
+    expect(hudCss).toContain('body.show-actionbar3 #swingbar {\n    bottom: 286px;\n  }');
+    expect(hudCss).toContain('body.show-actionbar3 #swingbar-offhand {\n    bottom: 272px;\n  }');
+    // The page control hangs beside the action row above the XP rail.
+    expect(hudCss).toContain('right: -28px;');
+    expect(hudCss).toContain(
+      'bottom: calc(var(--xp-rail-h) + var(--socket-row-gap) + var(--spacing-2xs));',
+    );
+    // Primitive class pins prevent later host rules from silently replacing shared socket chrome.
+    for (const className of [
+      'action-btn ui-socket empty',
+      'icon-label ui-socket-art',
+      'item-count ui-socket-count',
+      'keybind ui-socket-key',
+      'cd-overlay ui-socket-cd',
+      'cdtext ui-socket-cd-text',
+    ]) {
+      expect(hudTs).toContain(`className = '${className}';`);
+    }
+    expect(hudTs).toContain("el.className = 'ui-panel-strong';");
+    expect(hudTs.match(/className = 'btn ui-btn';/g)).toHaveLength(2);
     expect(hudTs).toContain("const bar3 = $('#actionbar3');");
     expect(hudTs).toContain('const container = bars[actionBarRowForSlot(i) - 1];');
     expect(hudTs).toContain('keyCapLabel(this.keybinds.primaryLabel(slotKey))');
+    const xpRail =
+      'id="xpbar" class="ui-rail"><div class="fill ui-rail-fill"></div><div class="rested ui-rail-rested"></div><div class="ticks ui-rail-ticks"></div><div class="label ui-rail-label"></div>';
+    expect(html).toContain(xpRail);
+    expect(playHtml).toContain(xpRail);
   });
 
   it('applies the pure visibility dependency to both optional desktop rows', () => {

@@ -227,7 +227,7 @@ describe('StanceBarController chooses the shape', () => {
     return { controller, bar, casts, anchor: document.getElementById('mobile-stance-anchor') };
   }
 
-  it('builds the desktop row and leaves it byte-identical', () => {
+  it('builds the desktop row from stance socket primitives', () => {
     const rig = makeBar(false);
     rig.controller.render();
     expect(rig.bar.style.display).toBe('flex');
@@ -235,6 +235,11 @@ describe('StanceBarController chooses the shape', () => {
       ...rig.bar.querySelectorAll<HTMLButtonElement>('.stancebar-group .stance-btn'),
     ];
     expect(buttons).toHaveLength(STANCES.length);
+    // Desktop stances are round shared sockets, with is-on mirroring aria-pressed.
+    expect(buttons[0].classList.contains('ui-socket')).toBe(true);
+    expect(buttons[0].classList.contains('ui-socket--stance')).toBe(true);
+    expect(buttons[0].classList.contains('is-on')).toBe(true);
+    expect(buttons[0].querySelector('.ui-socket-art')).not.toBeNull();
     expect(buttons[0].getAttribute('aria-pressed')).toBe('true');
     expect(buttons[0].title).toBe(`name:${STANCES[0]}`);
     buttons[1].click();
