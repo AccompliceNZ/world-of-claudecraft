@@ -1657,6 +1657,9 @@ export const vi_VN: EnTranslations = {
     },
     "controller": {
       "title": "Tay Cầm",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Nhãn Nút",
       "glyphStyleAuto": "Tự Động",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2046,21 @@ export const vi_VN: EnTranslations = {
       "showPlaytimeAria": "Hiện thời gian chơi",
       "hidePlaytimeAria": "Ẩn thời gian chơi"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "Từ {value} {stat} của bạn:",
       "names": {
@@ -2264,6 +2282,7 @@ export const vi_VN: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Báo Cáo Lỗi",
+      "online": "Online",
       "realm": "Thế Giới",
       "character": "Nhân vật",
       "position": "Vị Trí",
@@ -3975,7 +3994,9 @@ export const vi_VN: EnTranslations = {
       "hobbyLabel": "Sở thích: {craft}",
       "majorsLabel": "Chuyên ngành: {a} và {b}",
       "pairsHeld": "Các cặp được tổ chức: {count}",
-      "returnsLabel": "Trả về: {count}"
+      "returnsLabel": "Trả về: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Chế tạo",
@@ -4005,6 +4026,7 @@ export const vi_VN: EnTranslations = {
       "vaultUnreachable": "Kho Nguyên Liệu không thể tiếp cận được ở đây.",
       "craftFeeLine": "Phí chế tạo: {fee} mỗi món",
       "empty": "Chưa có công thức nấu ăn nào được biết đến.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Thủ công {name}",
       "craftedToast": "Đã chế tác: {name}",
       "craftedToastQty": "Đã chế tác: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const vi_VN: EnTranslations = {
       "commissionToggleHint": "Ràng buộc với nhân vật đầu tiên nhận nó qua giao dịch.",
       "commissionUnbound": "Đồ ủy thác: ràng buộc với người nhận đầu tiên",
       "commissionBound": "Đồ ủy thác: đã ràng buộc với người nhận"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Sử Dụng",

@@ -1657,6 +1657,9 @@ export const nl_NL: EnTranslations = {
     },
     "controller": {
       "title": "Controller",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Knoplabels",
       "glyphStyleAuto": "Automatisch",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2046,21 @@ export const nl_NL: EnTranslations = {
       "showPlaytimeAria": "Speeltijd tonen",
       "hidePlaytimeAria": "Speeltijd verbergen"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "Van je {value} {stat}:",
       "names": {
@@ -2264,6 +2282,7 @@ export const nl_NL: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Bug melden",
+      "online": "Online",
       "realm": "Wereld",
       "character": "Personage",
       "position": "Positie",
@@ -3975,7 +3994,9 @@ export const nl_NL: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Hoofdvakken: {a} en {b}",
       "pairsHeld": "Behouden paren: {count}",
-      "returnsLabel": "Teruggaven: {count}"
+      "returnsLabel": "Teruggaven: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Knutselen",
@@ -4005,6 +4026,7 @@ export const nl_NL: EnTranslations = {
       "vaultUnreachable": "De Materialenkluis is hier niet bereikbaar.",
       "craftFeeLine": "Ambachtskosten: {fee} per stuk",
       "empty": "Nog geen recepten bekend.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Ambacht {name}",
       "craftedToast": "Gemaakt: {name}",
       "craftedToastQty": "Gemaakt: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const nl_NL: EnTranslations = {
       "commissionToggleHint": "Bindt aan het eerste personage dat het via een ruil ontvangt.",
       "commissionUnbound": "Opdrachtsstuk: bindt aan de eerste ontvanger",
       "commissionBound": "Opdrachtstuk: gebonden aan de ontvanger"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Gebruiken",

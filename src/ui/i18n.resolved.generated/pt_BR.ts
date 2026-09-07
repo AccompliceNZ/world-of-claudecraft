@@ -1657,6 +1657,9 @@ export const pt_BR: EnTranslations = {
     },
     "controller": {
       "title": "Controle",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Ícones dos Botões",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2046,21 @@ export const pt_BR: EnTranslations = {
       "showPlaytimeAria": "Mostrar tempo jogado",
       "hidePlaytimeAria": "Ocultar tempo jogado"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "Do seu {value} de {stat}:",
       "names": {
@@ -2264,6 +2282,7 @@ export const pt_BR: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Relatar um erro",
+      "online": "Online",
       "realm": "Mundo",
       "character": "Personagem",
       "position": "Posição",
@@ -3975,7 +3994,9 @@ export const pt_BR: EnTranslations = {
       "hobbyLabel": "Passatempo: {craft}",
       "majorsLabel": "Majores: {a} e {b}",
       "pairsHeld": "Pares mantidos: {count}",
-      "returnsLabel": "Retorna: {count}"
+      "returnsLabel": "Retorna: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Artesanato",
@@ -4005,6 +4026,7 @@ export const pt_BR: EnTranslations = {
       "vaultUnreachable": "O Depósito de Materiais está fora de alcance aqui.",
       "craftFeeLine": "Taxa de criação: {fee} cada",
       "empty": "Nenhuma receita conhecida ainda.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Artesanato {name}",
       "craftedToast": "Feito: {name}",
       "craftedToastQty": "Feito: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const pt_BR: EnTranslations = {
       "commissionToggleHint": "Vincula ao primeiro personagem que a receber em uma negociação.",
       "commissionUnbound": "Peça por encomenda: vincula ao primeiro destinatário",
       "commissionBound": "Peça por encomenda: vinculada ao seu destinatário"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Usar",

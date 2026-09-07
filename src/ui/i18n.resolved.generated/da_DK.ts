@@ -1657,6 +1657,9 @@ export const da_DK: EnTranslations = {
     },
     "controller": {
       "title": "Controller",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Knapikoner",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2046,21 @@ export const da_DK: EnTranslations = {
       "showPlaytimeAria": "Vis spilletid",
       "hidePlaytimeAria": "Skjul spilletid"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "Fra din {value} {stat}:",
       "names": {
@@ -2264,6 +2282,7 @@ export const da_DK: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Rapportér en fejl",
+      "online": "Online",
       "realm": "Verden",
       "character": "Figur",
       "position": "Position",
@@ -3975,7 +3994,9 @@ export const da_DK: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Hovedfag: {a} og {b}",
       "pairsHeld": "Afholdte par: {count}",
-      "returnsLabel": "Returnerer: {count}"
+      "returnsLabel": "Returnerer: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Håndværk",
@@ -4005,6 +4026,7 @@ export const da_DK: EnTranslations = {
       "vaultUnreachable": "Materialehvælvet er uden for rækkevidde her.",
       "craftFeeLine": "Gebyr: {fee} pr. stk.",
       "empty": "Ingen opskrifter kendt endnu.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Håndværk {name}",
       "craftedToast": "Udformet: {name}",
       "craftedToastQty": "Udformet: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const da_DK: EnTranslations = {
       "commissionToggleHint": "Bindes til den første karakter, der modtager det i en handel.",
       "commissionUnbound": "Kommissionsstykke: bindes til den første modtager",
       "commissionBound": "Kommissionsstykke: bundet til modtageren"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Brug",

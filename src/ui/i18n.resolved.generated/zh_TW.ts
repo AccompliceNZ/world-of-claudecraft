@@ -1657,6 +1657,9 @@ export const zh_TW: EnTranslations = {
     },
     "controller": {
       "title": "手把",
+      "device": "已連接裝置",
+      "deviceConnected": "已連接",
+      "deviceDisconnected": "未偵測到手把",
       "glyphStyle": "按鍵標籤",
       "glyphStyleAuto": "自動",
       "glyphStyleXbox": "Xbox",
@@ -1681,7 +1684,7 @@ export const zh_TW: EnTranslations = {
       "crossHotbarHelp": "按住扳機鍵即可點亮方向鍵和面板按鍵上的八個動作條格位。輕按另一個扳機鍵可切換到第二組。",
       "crossHotbarResetLayout": "重置十字熱鍵欄",
       "crossHotbarPosition": "{trigger} + {button}",
-      "crossHotbarOwnsButtons": "十字熱鍵欄啟用時，扳機鍵和方向鍵歸它所有，請在下方設定，而非此處。",
+      "crossHotbarOwnsButtons": "十字熱鍵欄啟用時，扳機鍵會作為修飾鍵。方向鍵仍可在此編輯，用於選單和移動。",
       "cancelAction": "取消 / 返回",
       "subcommandsAction": "子命令 / 地圖",
       "cycleHudAction": "切換介面",
@@ -2043,6 +2046,21 @@ export const zh_TW: EnTranslations = {
       "showPlaytimeAria": "顯示遊戲時長",
       "hidePlaytimeAria": "隱藏遊戲時長"
     },
+    "charSidebar": {
+      "label": "角色詳情",
+      "subtitle": "{level}級 {className} . {archetype} . 興趣：{hobby}",
+      "stats": "屬性",
+      "progression": "進度",
+      "skills": "技能",
+      "gathering": "採集",
+      "crafting": "製作",
+      "openProfessions": "開啟專業"
+    },
+    "questLog": {
+      "completed": "已完成",
+      "zoneSummary": "{count}個（{ready}個可交付）",
+      "shiftHint": "按住 Shift 點擊任務可將其連結到聊天中。"
+    },
     "statInfo": {
       "fromYour": "來自你的 {value} 點{stat}：",
       "names": {
@@ -2264,6 +2282,7 @@ export const zh_TW: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "回報錯誤",
+      "online": "線上",
       "realm": "世界",
       "character": "角色",
       "position": "座標",
@@ -3975,7 +3994,9 @@ export const zh_TW: EnTranslations = {
       "hobbyLabel": "嗜好：{craft}",
       "majorsLabel": "主修：{a}和{b}",
       "pairsHeld": "已持有組合：{count}",
-      "returnsLabel": "回歸：{count}"
+      "returnsLabel": "回歸：{count}",
+      "retentionFooter": "重置專業後保留60%的技能。",
+      "tutorialLink": "專業教學"
     },
     "crafting": {
       "title": "製作",
@@ -4005,6 +4026,7 @@ export const zh_TW: EnTranslations = {
       "vaultUnreachable": "此處無法使用材料倉庫。",
       "craftFeeLine": "製作費：每件 {fee}",
       "empty": "尚無已知配方。",
+      "materialsFooter": "保管庫中的材料會自動取用。可在製作站學習更多配方。",
       "resultAria": "製作{name}",
       "craftedToast": "已製作:{name}",
       "craftedToastQty": "已製作:{name} x{qty}",
@@ -4095,6 +4117,9 @@ export const zh_TW: EnTranslations = {
       "commissionToggleHint": "將綁定給交易中第一個收到它的角色。",
       "commissionUnbound": "委託製品：將綁定給第一位收貨人",
       "commissionBound": "委託製品：已綁定給收貨人"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "商人會補充普通商品；玩家上架的物品會以其要價並列顯示。"
     },
     "itemMenu": {
       "use": "使用",

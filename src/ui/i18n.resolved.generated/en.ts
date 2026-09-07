@@ -1657,6 +1657,9 @@ export const en: EnTranslations = {
     },
     "controller": {
       "title": "Controller",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Button Labels",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -1681,7 +1684,7 @@ export const en: EnTranslations = {
       "crossHotbarHelp": "Hold a trigger to light eight action-bar slots on the d-pad and face buttons. Tap the other trigger to swap to the second set.",
       "crossHotbarResetLayout": "Reset Cross Hotbar",
       "crossHotbarPosition": "{trigger} + {button}",
-      "crossHotbarOwnsButtons": "The triggers and the d-pad belong to the cross hotbar while it is on, so they are set up below rather than here.",
+      "crossHotbarOwnsButtons": "The triggers modify the cross hotbar while it is on. D-pad directions remain editable here for menus and movement.",
       "cancelAction": "Cancel / Back",
       "subcommandsAction": "Subcommands / Map",
       "cycleHudAction": "Cycle Interface",
@@ -2043,6 +2046,21 @@ export const en: EnTranslations = {
       "showPlaytimeAria": "Show time played",
       "hidePlaytimeAria": "Hide time played"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "From your {value} {stat}:",
       "names": {
@@ -2264,6 +2282,7 @@ export const en: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Report a Bug",
+      "online": "Online",
       "realm": "World",
       "character": "Character",
       "position": "Position",
@@ -3975,7 +3994,9 @@ export const en: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Majors: {a} and {b}",
       "pairsHeld": "Pairs held: {count}",
-      "returnsLabel": "Returns: {count}"
+      "returnsLabel": "Returns: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Crafting",
@@ -4005,6 +4026,7 @@ export const en: EnTranslations = {
       "vaultUnreachable": "The Materials Vault is out of reach here.",
       "craftFeeLine": "Craft fee: {fee} each",
       "empty": "No recipes known yet.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Craft {name}",
       "craftedToast": "Crafted: {name}",
       "craftedToastQty": "Crafted: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const en: EnTranslations = {
       "commissionToggleHint": "Binds to the first character to receive it in a trade.",
       "commissionUnbound": "Commission piece: binds to the first recipient",
       "commissionBound": "Commission piece: bound to its recipient"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Use",

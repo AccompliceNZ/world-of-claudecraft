@@ -1657,6 +1657,9 @@ export const cs_CZ: EnTranslations = {
     },
     "controller": {
       "title": "Ovladač",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Popisky tlačítek",
       "glyphStyleAuto": "Automaticky",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2046,21 @@ export const cs_CZ: EnTranslations = {
       "showPlaytimeAria": "Zobrazit odehraný čas",
       "hidePlaytimeAria": "Skrýt odehraný čas"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "Z tvojí hodnoty {value} {stat}:",
       "names": {
@@ -2264,6 +2282,7 @@ export const cs_CZ: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Nahlásit chybu",
+      "online": "Online",
       "realm": "Svět",
       "character": "Postava",
       "position": "Pozice",
@@ -3975,7 +3994,9 @@ export const cs_CZ: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Hlavní: {a} a {b}",
       "pairsHeld": "Držené páry: {count}",
-      "returnsLabel": "Vrácení: {count}"
+      "returnsLabel": "Vrácení: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Výroba",
@@ -4005,6 +4026,7 @@ export const cs_CZ: EnTranslations = {
       "vaultUnreachable": "Trezor materiálů je tady mimo dosah.",
       "craftFeeLine": "Poplatek za výrobu: {fee} za kus",
       "empty": "Zatím nejsou známy žádné recepty.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Vyrobit {name}",
       "craftedToast": "Vyrobeno: {name}",
       "craftedToastQty": "Vyrobeno: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const cs_CZ: EnTranslations = {
       "commissionToggleHint": "Váže se na první postavu, která ho přijme v obchodu.",
       "commissionUnbound": "Zakázkový předmět: váže se na prvního příjemce",
       "commissionBound": "Zakázkový předmět: vázán na příjemce"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Použít",

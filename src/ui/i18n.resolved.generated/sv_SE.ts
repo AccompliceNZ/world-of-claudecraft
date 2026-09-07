@@ -1657,6 +1657,9 @@ export const sv_SE: EnTranslations = {
     },
     "controller": {
       "title": "Handkontroll",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Knappsymboler",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2046,21 @@ export const sv_SE: EnTranslations = {
       "showPlaytimeAria": "Visa tid spelad",
       "hidePlaytimeAria": "Dölj tid spelad"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "Från dina {value} {stat}:",
       "names": {
@@ -2264,6 +2282,7 @@ export const sv_SE: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Rapportera ett fel",
+      "online": "Online",
       "realm": "Värld",
       "character": "Rollfigur",
       "position": "Position",
@@ -3975,7 +3994,9 @@ export const sv_SE: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Huvudämnen: {a} och {b}",
       "pairsHeld": "Par som hålls: {count}",
-      "returnsLabel": "Returnerar: {count}"
+      "returnsLabel": "Returnerar: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Hantverk",
@@ -4005,6 +4026,7 @@ export const sv_SE: EnTranslations = {
       "vaultUnreachable": "Materialvalvet är utom räckhåll här.",
       "craftFeeLine": "Hantverksavgift: {fee} styck",
       "empty": "Inga recept kända än.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Hantverk {name}",
       "craftedToast": "Tillverkad: {name}",
       "craftedToastQty": "Tillverkad: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const sv_SE: EnTranslations = {
       "commissionToggleHint": "Binds till den första karaktären som tar emot det i en handel.",
       "commissionUnbound": "Beställningsstycke: binds till den första mottagaren",
       "commissionBound": "Beställningsstycke: bundet till sin mottagare"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Använd",

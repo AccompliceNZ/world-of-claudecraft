@@ -1657,6 +1657,9 @@ export const de_DE: EnTranslations = {
     },
     "controller": {
       "title": "Controller",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Tastenbeschriftung",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2046,21 @@ export const de_DE: EnTranslations = {
       "showPlaytimeAria": "Spielzeit anzeigen",
       "hidePlaytimeAria": "Spielzeit ausblenden"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "Von deinen {value} Punkten {stat}:",
       "names": {
@@ -2264,6 +2282,7 @@ export const de_DE: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Fehler melden",
+      "online": "Online",
       "realm": "Welt",
       "character": "Charakter",
       "position": "Position",
@@ -3975,7 +3994,9 @@ export const de_DE: EnTranslations = {
       "hobbyLabel": "Hobby: {craft}",
       "majorsLabel": "Hauptfächer: {a} und {b}",
       "pairsHeld": "Gehaltene Paare: {count}",
-      "returnsLabel": "Rückgabe: {count}"
+      "returnsLabel": "Rückgabe: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Basteln",
@@ -4005,6 +4026,7 @@ export const de_DE: EnTranslations = {
       "vaultUnreachable": "Der Materialtresor ist hier außer Reichweite.",
       "craftFeeLine": "Herstellungsgebühr: {fee} je Stück",
       "empty": "Noch keine Rezepte bekannt.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Basteln {name}",
       "craftedToast": "Hergestellt: {name}",
       "craftedToastQty": "Hergestellt: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const de_DE: EnTranslations = {
       "commissionToggleHint": "Bindet sich an den ersten Charakter, der es im Handel erhält.",
       "commissionUnbound": "Auftragsarbeit: bindet sich an den ersten Empfänger",
       "commissionBound": "Auftragsarbeit: gebunden an den Empfänger"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Verwenden",

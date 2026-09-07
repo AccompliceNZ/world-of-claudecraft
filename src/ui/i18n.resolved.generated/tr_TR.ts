@@ -1657,6 +1657,9 @@ export const tr_TR: EnTranslations = {
     },
     "controller": {
       "title": "Oyun Kolu",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Düğme Etiketleri",
       "glyphStyleAuto": "Otomatik",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2046,21 @@ export const tr_TR: EnTranslations = {
       "showPlaytimeAria": "Oynama süresini göster",
       "hidePlaytimeAria": "Oynama süresini gizle"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "{value} {stat} değerinden:",
       "names": {
@@ -2264,6 +2282,7 @@ export const tr_TR: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Hata Bildir",
+      "online": "Online",
       "realm": "Dünya",
       "character": "Karakter",
       "position": "Konum",
@@ -3975,7 +3994,9 @@ export const tr_TR: EnTranslations = {
       "hobbyLabel": "Hobi: {craft}",
       "majorsLabel": "Ana dallar: {a} ve {b}",
       "pairsHeld": "Düzenlenen çiftler: {count}",
-      "returnsLabel": "İade: {count}"
+      "returnsLabel": "İade: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "işçiliği",
@@ -4005,6 +4026,7 @@ export const tr_TR: EnTranslations = {
       "vaultUnreachable": "Malzeme Kasası burada erişilemez durumda.",
       "craftFeeLine": "Üretim ücreti: her biri {fee}",
       "empty": "Henüz bilinen bir tarif yok.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "{name} zanaatı",
       "craftedToast": "Hazırlanma Tarihi: {name}",
       "craftedToastQty": "Hazırlandı: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const tr_TR: EnTranslations = {
       "commissionToggleHint": "Ticaret yoluyla alan ilk karaktere bağlanır.",
       "commissionUnbound": "Sipariş parçası: ilk alıcıya bağlanır",
       "commissionBound": "Sipariş parçası: alıcısına bağlı"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Kullan",

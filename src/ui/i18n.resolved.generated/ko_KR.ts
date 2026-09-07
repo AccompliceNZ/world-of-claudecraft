@@ -1657,6 +1657,9 @@ export const ko_KR: EnTranslations = {
     },
     "controller": {
       "title": "컨트롤러",
+      "device": "연결된 장치",
+      "deviceConnected": "연결됨",
+      "deviceDisconnected": "컨트롤러가 감지되지 않음",
       "glyphStyle": "버튼 표시",
       "glyphStyleAuto": "자동",
       "glyphStyleXbox": "Xbox",
@@ -1681,7 +1684,7 @@ export const ko_KR: EnTranslations = {
       "crossHotbarHelp": "트리거를 누르고 있으면 방향키와 페이스 버튼에 여덟 개의 액션 바 슬롯이 표시됩니다. 다른 트리거를 짧게 누르면 두 번째 세트로 전환됩니다.",
       "crossHotbarResetLayout": "크로스 핫바 초기화",
       "crossHotbarPosition": "{trigger} + {button}",
-      "crossHotbarOwnsButtons": "크로스 핫바가 켜져 있는 동안에는 트리거와 방향키를 크로스 핫바가 사용합니다. 여기가 아니라 아래에서 설정하세요.",
+      "crossHotbarOwnsButtons": "크로스 핫바가 켜져 있는 동안 트리거는 보조 키로 작동합니다. 방향키는 메뉴와 이동용으로 여기에서 계속 편집할 수 있습니다.",
       "cancelAction": "취소 / 뒤로",
       "subcommandsAction": "하위 명령 / 지도",
       "cycleHudAction": "인터페이스 전환",
@@ -2043,6 +2046,21 @@ export const ko_KR: EnTranslations = {
       "showPlaytimeAria": "플레이 시간 표시",
       "hidePlaytimeAria": "플레이 시간 숨기기"
     },
+    "charSidebar": {
+      "label": "캐릭터 세부 정보",
+      "subtitle": "레벨 {level} {className} . {archetype} . 취미: {hobby}",
+      "stats": "능력치",
+      "progression": "진행도",
+      "skills": "기술",
+      "gathering": "채집",
+      "crafting": "제작",
+      "openProfessions": "전문 기술 열기"
+    },
+    "questLog": {
+      "completed": "완료됨",
+      "zoneSummary": "{count}개（완료 {ready}개）",
+      "shiftHint": "Shift를 누른 채 퀘스트를 클릭하면 채팅에 링크됩니다."
+    },
     "statInfo": {
       "fromYour": "당신의 {value} {stat}에서:",
       "names": {
@@ -2264,6 +2282,7 @@ export const ko_KR: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "버그 신고",
+      "online": "온라인",
       "realm": "월드",
       "character": "캐릭터",
       "position": "좌표",
@@ -3975,7 +3994,9 @@ export const ko_KR: EnTranslations = {
       "hobbyLabel": "취미: {craft}",
       "majorsLabel": "주 전공: {a}, {b}",
       "pairsHeld": "보유한 조합: {count}",
-      "returnsLabel": "복귀: {count}"
+      "returnsLabel": "복귀: {count}",
+      "retentionFooter": "전문 기술 재설정 시 숙련도의 60%가 유지됩니다.",
+      "tutorialLink": "전문 기술 튜토리얼"
     },
     "crafting": {
       "title": "제작",
@@ -4005,6 +4026,7 @@ export const ko_KR: EnTranslations = {
       "vaultUnreachable": "여기에서는 재료 보관소를 사용할 수 없습니다.",
       "craftFeeLine": "제작 수수료: 개당 {fee}",
       "empty": "알려진 제작법이 없습니다.",
+      "materialsFooter": "보관함의 재료는 자동으로 사용됩니다. 작업대에서 더 많은 제작법을 배우세요.",
       "resultAria": "{name} 제작",
       "craftedToast": "제작 완료:{name}",
       "craftedToastQty": "제작 완료:{name} x{qty}",
@@ -4095,6 +4117,9 @@ export const ko_KR: EnTranslations = {
       "commissionToggleHint": "거래로 처음 받는 캐릭터에게 귀속됩니다.",
       "commissionUnbound": "주문 제작품: 첫 수령인에게 귀속됩니다",
       "commissionBound": "주문 제작품: 수령인에게 귀속되어 있습니다"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "상인은 일반 상품을 보충하며, 플레이어 매물은 판매자가 정한 가격으로 함께 표시됩니다."
     },
     "itemMenu": {
       "use": "사용",

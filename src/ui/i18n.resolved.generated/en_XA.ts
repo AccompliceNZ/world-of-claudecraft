@@ -1657,6 +1657,9 @@ export const en_XA: EnTranslations = {
     },
     "controller": {
       "title": "[Çóñţŕóļļéŕ]",
+      "device": "[Çóññéçţéð Ðéʋíçé]",
+      "deviceConnected": "[Çóññéçţéð]",
+      "deviceDisconnected": "[Ñó çóñţŕóļļéŕ ðéţéçţéð]",
       "glyphStyle": "[Ɓúţţóñ Ļáƀéļš]",
       "glyphStyleAuto": "[Áúţó]",
       "glyphStyleXbox": "[Ẋƀóẋ]",
@@ -1681,7 +1684,7 @@ export const en_XA: EnTranslations = {
       "crossHotbarHelp": "[Ĥóļð á ţŕíĝĝéŕ ţó ļíĝĥţ éíĝĥţ áçţíóñ-ƀáŕ šļóţš óñ ţĥé ð-þáð áñð ƒáçé ƀúţţóñš. Ţáþ ţĥé óţĥéŕ ţŕíĝĝéŕ ţó šŵáþ ţó ţĥé šéçóñð šéţ.]",
       "crossHotbarResetLayout": "[Ŕéšéţ Çŕóšš Ĥóţƀáŕ]",
       "crossHotbarPosition": "[{trigger} + {button}]",
-      "crossHotbarOwnsButtons": "[Ţĥé ţŕíĝĝéŕš áñð ţĥé ð-þáð ƀéļóñĝ ţó ţĥé çŕóšš ĥóţƀáŕ ŵĥíļé íţ íš óñ, šó ţĥéý áŕé šéţ úþ ƀéļóŵ ŕáţĥéŕ ţĥáñ ĥéŕé.]",
+      "crossHotbarOwnsButtons": "[Ţĥé ţŕíĝĝéŕš ɱóðíƒý ţĥé çŕóšš ĥóţƀáŕ ŵĥíļé íţ íš óñ. Ð-þáð ðíŕéçţíóñš ŕéɱáíñ éðíţáƀļé ĥéŕé ƒóŕ ɱéñúš áñð ɱóʋéɱéñţ.]",
       "cancelAction": "[Çáñçéļ / Ɓáçķ]",
       "subcommandsAction": "[Šúƀçóɱɱáñðš / Ɱáþ]",
       "cycleHudAction": "[Çýçļé Íñţéŕƒáçé]",
@@ -2043,6 +2046,21 @@ export const en_XA: EnTranslations = {
       "showPlaytimeAria": "[Šĥóŵ ţíɱé þļáýéð]",
       "hidePlaytimeAria": "[Ĥíðé ţíɱé þļáýéð]"
     },
+    "charSidebar": {
+      "label": "[Çĥáŕáçţéŕ ðéţáíļš]",
+      "subtitle": "[Ļéʋéļ {level} {className} . {archetype} . Ĥóƀƀý: {hobby}]",
+      "stats": "[Šţáţš]",
+      "progression": "[Þŕóĝŕéššíóñ]",
+      "skills": "[Šķíļļš]",
+      "gathering": "[Ĝáţĥéŕíñĝ]",
+      "crafting": "[Çŕáƒţíñĝ]",
+      "openProfessions": "[Óþéñ Þŕóƒéššíóñš]"
+    },
+    "questLog": {
+      "completed": "[Çóɱþļéţéð]",
+      "zoneSummary": "[{count} ({ready} ŕéáðý)]",
+      "shiftHint": "[Šĥíƒţ-çļíçķ á ɋúéšţ ţó ļíñķ íţ íñ çĥáţ.]"
+    },
     "statInfo": {
       "fromYour": "[Ƒŕóɱ ýóúŕ {value} {stat}:]",
       "names": {
@@ -2264,6 +2282,7 @@ export const en_XA: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "[Ŕéþóŕţ á Ɓúĝ]",
+      "online": "[Óñļíñé]",
       "realm": "[Ŵóŕļð]",
       "character": "[Çĥáŕáçţéŕ]",
       "position": "[Þóšíţíóñ]",
@@ -3975,7 +3994,9 @@ export const en_XA: EnTranslations = {
       "hobbyLabel": "[Ĥóƀƀý: {craft}]",
       "majorsLabel": "[Ɱáĵóŕš: {a} áñð {b}]",
       "pairsHeld": "[Þáíŕš ĥéļð: {count}]",
-      "returnsLabel": "[Ŕéţúŕñš: {count}]"
+      "returnsLabel": "[Ŕéţúŕñš: {count}]",
+      "retentionFooter": "[Ŕéţúŕñš óñ ŕéšþéç: 60% óƒ šķíļļ ķéþţ.]",
+      "tutorialLink": "[Þŕóƒéššíóñ ţúţóŕíáļ]"
     },
     "crafting": {
       "title": "[Çŕáƒţíñĝ]",
@@ -4005,6 +4026,7 @@ export const en_XA: EnTranslations = {
       "vaultUnreachable": "[Ţĥé Ɱáţéŕíáļš Ʋáúļţ íš óúţ óƒ ŕéáçĥ ĥéŕé.]",
       "craftFeeLine": "[Çŕáƒţ ƒéé: {fee} éáçĥ]",
       "empty": "[Ñó ŕéçíþéš ķñóŵñ ýéţ.]",
+      "materialsFooter": "[Ɱáţéŕíáļš íñ ýóúŕ ʋáúļţ áŕé ðŕáŵñ áúţóɱáţíçáļļý. Ļéáŕñ ɱóŕé ŕéçíþéš áţ ţĥé šţáţíóñ.]",
       "resultAria": "[Çŕáƒţ {name}]",
       "craftedToast": "[Çŕáƒţéð: {name}]",
       "craftedToastQty": "[Çŕáƒţéð: {name} ẋ{qty}]",
@@ -4095,6 +4117,9 @@ export const en_XA: EnTranslations = {
       "commissionToggleHint": "[Ɓíñðš ţó ţĥé ƒíŕšţ çĥáŕáçţéŕ ţó ŕéçéíʋé íţ íñ á ţŕáðé.]",
       "commissionUnbound": "[Çóɱɱíššíóñ þíéçé: ƀíñðš ţó ţĥé ƒíŕšţ ŕéçíþíéñţ]",
       "commissionBound": "[Çóɱɱíššíóñ þíéçé: ƀóúñð ţó íţš ŕéçíþíéñţ]"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "[Ţĥé Ɱéŕçĥáñţ ŕéšţóçķš çóɱɱóñ ĝóóðš; þļáýéŕ ļíšţíñĝš šíţ ƀéšíðé ţĥéɱ áţ ţĥéíŕ ášķíñĝ þŕíçé.]"
     },
     "itemMenu": {
       "use": "[Úšé]",

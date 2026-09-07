@@ -1657,6 +1657,9 @@ export const id_ID: EnTranslations = {
     },
     "controller": {
       "title": "Kontroler",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Label Tombol",
       "glyphStyleAuto": "Otomatis",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2046,21 @@ export const id_ID: EnTranslations = {
       "showPlaytimeAria": "Tampilkan waktu bermain",
       "hidePlaytimeAria": "Sembunyikan waktu bermain"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "Dari {value} {stat} Anda:",
       "names": {
@@ -2264,6 +2282,7 @@ export const id_ID: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Laporkan Bug",
+      "online": "Online",
       "realm": "Dunia",
       "character": "Karakter",
       "position": "Posisi",
@@ -3975,7 +3994,9 @@ export const id_ID: EnTranslations = {
       "hobbyLabel": "Hobi: {craft}",
       "majorsLabel": "Jurusan: {a} dan {b}",
       "pairsHeld": "Pasangan yang dimiliki: {count}",
-      "returnsLabel": "Pengembalian: {count}"
+      "returnsLabel": "Pengembalian: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "kerajinan",
@@ -4005,6 +4026,7 @@ export const id_ID: EnTranslations = {
       "vaultUnreachable": "Brankas Material tidak terjangkau di sini.",
       "craftFeeLine": "Biaya kerajinan: {fee} per buah",
       "empty": "Belum ada resep yang diketahui.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Kerajinan {name}",
       "craftedToast": "Dibuat: {name}",
       "craftedToastQty": "Dibuat: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const id_ID: EnTranslations = {
       "commissionToggleHint": "Terikat pada karakter pertama yang menerimanya dalam perdagangan.",
       "commissionUnbound": "Karya pesanan: terikat pada penerima pertama",
       "commissionBound": "Karya pesanan: terikat pada penerimanya"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Gunakan",

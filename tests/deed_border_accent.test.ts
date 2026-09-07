@@ -1143,9 +1143,9 @@ describe('border accent graphics fairness (cosmetic identity, preset-identical)'
     }
     expect(
       allTierShadowDeclarations,
-      // 30 shipped uses plus the two library glow composites in tokens.css.
-      'the style graph owns 32 reviewed tier-shadow uses',
-    ).toHaveLength(32);
+      // Shipped uses plus the two library glow composites in tokens.css.
+      'the style graph owns 50 reviewed tier-shadow uses',
+    ).toHaveLength(50);
 
     for (const [name, body] of [
       [

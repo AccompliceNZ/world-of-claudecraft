@@ -1657,6 +1657,9 @@ export const ru_RU: EnTranslations = {
     },
     "controller": {
       "title": "Геймпад",
+      "device": "Подключенное устройство",
+      "deviceConnected": "Подключено",
+      "deviceDisconnected": "Геймпад не обнаружен",
       "glyphStyle": "Обозначения кнопок",
       "glyphStyleAuto": "Авто",
       "glyphStyleXbox": "Xbox",
@@ -1681,7 +1684,7 @@ export const ru_RU: EnTranslations = {
       "crossHotbarHelp": "Удерживайте курок, чтобы подсветить восемь ячеек панели действий на крестовине и лицевых кнопках. Нажмите второй курок, чтобы переключиться на второй набор.",
       "crossHotbarResetLayout": "Сбросить крестовую панель",
       "crossHotbarPosition": "{trigger} + {button}",
-      "crossHotbarOwnsButtons": "Пока крестовая панель включена, курки и крестовина принадлежат ей: настройте их ниже, а не здесь.",
+      "crossHotbarOwnsButtons": "Пока крестовая панель включена, курки служат модификаторами. Направления крестовины по-прежнему можно настроить здесь для меню и движения.",
       "cancelAction": "Отмена / Назад",
       "subcommandsAction": "Подкоманды / Карта",
       "cycleHudAction": "Переключить интерфейс",
@@ -2043,6 +2046,21 @@ export const ru_RU: EnTranslations = {
       "showPlaytimeAria": "Показать время в игре",
       "hidePlaytimeAria": "Скрыть время в игре"
     },
+    "charSidebar": {
+      "label": "Сведения о персонаже",
+      "subtitle": "Уровень {level} {className} . {archetype} . Увлечение: {hobby}",
+      "stats": "Характеристики",
+      "progression": "Прогресс",
+      "skills": "Навыки",
+      "gathering": "Сбор",
+      "crafting": "Ремесло",
+      "openProfessions": "Открыть профессии"
+    },
+    "questLog": {
+      "completed": "Завершённые",
+      "zoneSummary": "{count} (готово: {ready})",
+      "shiftHint": "Щёлкните задание с Shift, чтобы отправить ссылку в чат."
+    },
     "statInfo": {
       "fromYour": "От вашей характеристики ({value} {stat}):",
       "names": {
@@ -2264,6 +2282,7 @@ export const ru_RU: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Сообщить об ошибке",
+      "online": "В сети",
       "realm": "Мир",
       "character": "Персонаж",
       "position": "Позиция",
@@ -3975,7 +3994,9 @@ export const ru_RU: EnTranslations = {
       "hobbyLabel": "Увлечение: {craft}",
       "majorsLabel": "Главные ремёсла: {a} и {b}",
       "pairsHeld": "Открыто пар: {count}",
-      "returnsLabel": "Возвращений: {count}"
+      "returnsLabel": "Возвращений: {count}",
+      "retentionFooter": "При смене специализации сохраняется 60% навыка.",
+      "tutorialLink": "Обучение профессиям"
     },
     "crafting": {
       "title": "Крафт",
@@ -4005,6 +4026,7 @@ export const ru_RU: EnTranslations = {
       "vaultUnreachable": "Хранилище материалов здесь недоступно.",
       "craftFeeLine": "Плата за изготовление: {fee} за штуку",
       "empty": "Известных рецептов пока нет.",
+      "materialsFooter": "Материалы из хранилища используются автоматически. Новые рецепты можно изучить у станка.",
       "resultAria": "Создать {name}",
       "craftedToast": "Создано: {name}",
       "craftedToastQty": "Создано: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const ru_RU: EnTranslations = {
       "commissionToggleHint": "Привязывается к первому персонажу, получившему его при обмене.",
       "commissionUnbound": "Изделие на заказ: привяжется к первому получателю",
       "commissionBound": "Изделие на заказ: привязано к получателю"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "Торговец пополняет обычные товары; лоты игроков размещаются рядом по назначенной ими цене."
     },
     "itemMenu": {
       "use": "Использовать",

@@ -71,16 +71,16 @@ const TOKEN_HOME = 'tokens.css';
 // A sheet may only go DOWN from here (lower the number in the same change); a
 // sheet with no row fails until it gets one.
 const CEILINGS: Record<string, number> = {
-  'base.css': 51,
-  'components.css': 1386,
-  'hud.css': 1031,
+  'base.css': 23,
+  'components.css': 630,
+  'hud.css': 907,
   'hud.mobile.css': 262,
   'index.css': 0,
   'index.extra.css': 43,
   'layout.css': 0,
   'library.css': 0,
   'play.extra.css': 1,
-  'shell.css': 737,
+  'shell.css': 719,
 };
 
 // How far under its ceiling a sheet may sit before the ceiling has to be lowered,

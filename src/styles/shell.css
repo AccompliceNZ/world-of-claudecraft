@@ -6359,6 +6359,12 @@
     min-width: 0;
     margin: 0;
     padding: 6px 10px 6px 7px;
+    border: 1px solid var(--color-border-default);
+    border-radius: 2px;
+    background: color-mix(in srgb, var(--panel-base) 28%, #08080d);
+    box-shadow:
+      inset 0 1px rgba(255, 255, 255, 0.04),
+      inset 3px 0 var(--color-border-showcase);
     text-align: left;
   }
   .inspect-holder-badge {
@@ -6414,6 +6420,9 @@
     color: var(--color-text-light);
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+  .inspect-honor-rail .inspect-holder-sub {
+    color: color-mix(in srgb, var(--color-text-overlay) 72%, transparent);
   }
   /* Worn-gear paperdoll in the inspect/profile window (read-only). It reuses the
      shared .paperdoll / .equip-col / .equip-slot showcase family (44px sockets,

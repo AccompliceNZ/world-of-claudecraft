@@ -1657,6 +1657,9 @@ export const ja_JP: EnTranslations = {
     },
     "controller": {
       "title": "コントローラー",
+      "device": "接続中のデバイス",
+      "deviceConnected": "接続済み",
+      "deviceDisconnected": "コントローラーが見つかりません",
       "glyphStyle": "ボタン表示",
       "glyphStyleAuto": "自動",
       "glyphStyleXbox": "Xbox",
@@ -1681,7 +1684,7 @@ export const ja_JP: EnTranslations = {
       "crossHotbarHelp": "トリガーを押している間、方向キーとフェイスボタンに8つのアクションバースロットが表示されます。もう一方のトリガーを軽く押すと、2つ目のセットに切り替わります。",
       "crossHotbarResetLayout": "クロスホットバーをリセット",
       "crossHotbarPosition": "{trigger} + {button}",
-      "crossHotbarOwnsButtons": "クロスホットバーが有効な間、トリガーと方向キーはクロスホットバーが使用します。ここではなく下の項目で設定してください。",
+      "crossHotbarOwnsButtons": "クロスホットバーが有効な間、トリガーは修飾キーとして機能します。方向キーはメニュー操作や移動用としてここで編集できます。",
       "cancelAction": "キャンセル / 戻る",
       "subcommandsAction": "サブコマンド / マップ",
       "cycleHudAction": "インターフェース切替",
@@ -2043,6 +2046,21 @@ export const ja_JP: EnTranslations = {
       "showPlaytimeAria": "プレイ時間を表示",
       "hidePlaytimeAria": "プレイ時間を非表示"
     },
+    "charSidebar": {
+      "label": "キャラクター詳細",
+      "subtitle": "レベル{level} {className} . {archetype} . 趣味：{hobby}",
+      "stats": "能力値",
+      "progression": "進行状況",
+      "skills": "スキル",
+      "gathering": "採集",
+      "crafting": "製作",
+      "openProfessions": "職業を開く"
+    },
+    "questLog": {
+      "completed": "完了済み",
+      "zoneSummary": "{count}件（{ready}件完了）",
+      "shiftHint": "Shiftキーを押しながらクエストをクリックするとチャットにリンクできます。"
+    },
     "statInfo": {
       "fromYour": "あなたの{stat}{value}による効果:",
       "names": {
@@ -2264,6 +2282,7 @@ export const ja_JP: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "バグを報告",
+      "online": "オンライン",
       "realm": "ワールド",
       "character": "キャラクター",
       "position": "座標",
@@ -3975,7 +3994,9 @@ export const ja_JP: EnTranslations = {
       "hobbyLabel": "趣味：{craft}",
       "majorsLabel": "主専攻：{a}と{b}",
       "pairsHeld": "保持している組み合わせ：{count}",
-      "returnsLabel": "復帰：{count}"
+      "returnsLabel": "復帰：{count}",
+      "retentionFooter": "リスペック時はスキルの60%を保持します。",
+      "tutorialLink": "専門技能チュートリアル"
     },
     "crafting": {
       "title": "製作",
@@ -4005,6 +4026,7 @@ export const ja_JP: EnTranslations = {
       "vaultUnreachable": "ここでは素材保管庫を利用できません。",
       "craftFeeLine": "製作手数料：1個あたり {fee}",
       "empty": "既知のレシピはありません。",
+      "materialsFooter": "保管庫の素材は自動的に使用されます。ステーションでさらにレシピを習得できます。",
       "resultAria": "{name}を製作",
       "craftedToast": "製作しました:{name}",
       "craftedToastQty": "製作しました:{name} x{qty}",
@@ -4095,6 +4117,9 @@ export const ja_JP: EnTranslations = {
       "commissionToggleHint": "取引で最初に受け取ったキャラクターにバインドされます。",
       "commissionUnbound": "受注品：最初の受取人にバインドされる",
       "commissionBound": "受注品：受取人にバインド済み"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "商人はコモンの商品を補充し、プレイヤーの出品は希望価格でその隣に並びます。"
     },
     "itemMenu": {
       "use": "使用する",

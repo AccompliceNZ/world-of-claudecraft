@@ -1657,6 +1657,9 @@ export const es: EnTranslations = {
     },
     "controller": {
       "title": "Mando",
+      "device": "Connected Device",
+      "deviceConnected": "Connected",
+      "deviceDisconnected": "No controller detected",
       "glyphStyle": "Etiquetas de botones",
       "glyphStyleAuto": "Auto",
       "glyphStyleXbox": "Xbox",
@@ -2043,6 +2046,21 @@ export const es: EnTranslations = {
       "showPlaytimeAria": "Mostrar tiempo jugado",
       "hidePlaytimeAria": "Ocultar tiempo jugado"
     },
+    "charSidebar": {
+      "label": "Character details",
+      "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "stats": "Stats",
+      "progression": "Progression",
+      "skills": "Skills",
+      "gathering": "Gathering",
+      "crafting": "Crafting",
+      "openProfessions": "Open Professions"
+    },
+    "questLog": {
+      "completed": "Completed",
+      "zoneSummary": "{count} ({ready} ready)",
+      "shiftHint": "Shift-click a quest to link it in chat."
+    },
     "statInfo": {
       "fromYour": "De tu {value} de {stat}:",
       "names": {
@@ -2264,6 +2282,7 @@ export const es: EnTranslations = {
     },
     "bugReport": {
       "menuButton": "Reportar un error",
+      "online": "Online",
       "realm": "Mundo",
       "character": "Personaje",
       "position": "Posición",
@@ -3975,7 +3994,9 @@ export const es: EnTranslations = {
       "hobbyLabel": "Pasatiempo: {craft}",
       "majorsLabel": "Mayores: {a} y {b}",
       "pairsHeld": "Pares mantenidos: {count}",
-      "returnsLabel": "Devuelve: {count}"
+      "returnsLabel": "Devuelve: {count}",
+      "retentionFooter": "Returns on respec: 60% of skill kept.",
+      "tutorialLink": "Profession tutorial"
     },
     "crafting": {
       "title": "Elaboración",
@@ -4005,6 +4026,7 @@ export const es: EnTranslations = {
       "vaultUnreachable": "La Bóveda de Materiales está fuera de alcance aquí.",
       "craftFeeLine": "Tarifa de elaboración: {fee} cada uno",
       "empty": "Aún no se conocen recetas.",
+      "materialsFooter": "Materials in your vault are drawn automatically. Learn more recipes at the station.",
       "resultAria": "Elaboración {name}",
       "craftedToast": "Elaborado: {name}",
       "craftedToastQty": "Elaborado: {name} x{qty}",
@@ -4095,6 +4117,9 @@ export const es: EnTranslations = {
       "commissionToggleHint": "Se vincula al primer personaje que lo reciba en un intercambio.",
       "commissionUnbound": "Encargo: se vincula al primer destinatario",
       "commissionBound": "Encargo: vinculado a su destinatario"
+    },
+    "marketWindow": {
+      "mixedListingsFooter": "The Merchant restocks common goods; player listings sit beside them at their asking price."
     },
     "itemMenu": {
       "use": "Usar",
