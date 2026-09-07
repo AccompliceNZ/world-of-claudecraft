@@ -12,10 +12,11 @@
 // body.mobile-touch in headless, dismissing the mobile preflight, opening a window, the
 // screenshot itself) stay in each script.
 //
-// Before returning, this also dismisses the three overlays that must never appear in a
+// Before returning, this also dismisses the overlays that must never appear in a
 // captured screenshot (repo-wide rule): the first-spawn intro cinematic/logo, the
-// new-adventurer tutorial overlay, and the camera-mode-choice prompt. Every screenshot
-// script that calls enterOfflineGame gets this for free.
+// new-adventurer tutorial overlay, the camera-mode-choice prompt, and the spawn
+// greeting one-shot (#tutorial-greeting). Every screenshot script that calls
+// enterOfflineGame gets this for free.
 //
 // opts:
 //   charClass  data-class of the class card to pick (default 'warrior')
@@ -134,6 +135,17 @@ export async function dismissEntryOverlays(page) {
     if (state.introUp) await page.keyboard.press('Escape').catch(() => {});
     if (state.tutorialUp) {
       await page.evaluate(() => document.querySelector('button.tut-skip')?.click()).catch(() => {});
+    }
+    // The spawn greeting one-shot (#tutorial-greeting): close the note variant,
+    // else decline the play/skip variant, so no capture carries the modal.
+    if (state.greetingUp) {
+      await page
+        .evaluate(() => {
+          const root = document.getElementById('tutorial-greeting');
+          const btn = root?.querySelector('[data-close]') ?? root?.querySelector('[data-skip]');
+          if (btn) btn.click();
+        })
+        .catch(() => {});
     }
     if (state.cameraPromptUp) {
       await page

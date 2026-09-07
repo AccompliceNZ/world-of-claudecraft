@@ -13,20 +13,28 @@
 // invalidated would fail, and it is the one that would strand a player at the
 // old scale after moving the UI Scale slider.
 //
-// THE STORAGE SPY GOES ON THE INSTANCE, NEVER ON Storage.prototype. Every arm
-// below that watches the persisted host spies `window.localStorage` directly,
-// because a prototype spy here installs successfully and intercepts nothing:
-// Node predefines a `localStorage` global descriptor that resolves to
-// undefined, vitest's happy-dom environment skips installing its own Storage
-// over a global that already exists, and tests/jsdom_local_storage_setup.ts
-// therefore substitutes a plain OBJECT LITERAL whose prototype is
-// Object.prototype. Both `not.toHaveBeenCalled()` arms below were VACUOUS under
-// a prototype spy (measured: an unconditional `localStorage.getItem(STORE_KEY)`
-// added at the top of getUiScale left all ten cases green), which is the same
-// trap tests/reliquary_window_behavior.test.ts records and fixes the same way.
-// Each arm that asserts a spy was NOT called therefore carries its own POSITIVE
-// CONTROL first: an uncached read the spy must be seen intercepting, so the
-// negative half can never go quiet again.
+// THE STORAGE SPY GOES ON THE ACTUAL INSTANCE getUiScale READS THROUGH, NEVER
+// ON AN ASSUMED Storage.prototype. Every arm below that watches the persisted
+// host spies `window.localStorage` directly, because that is the one thing a
+// spy can prove with a positive control on the actual persisted read. A spy
+// placed on `Storage.prototype` instead is NOT guaranteed to see that same
+// call. History, kept here because it is the reason this suite pins the
+// instance rule at all: Node predefines a `localStorage` global descriptor
+// that resolves to undefined, which stops vitest's happy-dom environment from
+// installing its own Storage over an already-present global, so
+// tests/jsdom_local_storage_setup.ts substitutes a polyfill; under an earlier
+// shape of that polyfill (a plain OBJECT LITERAL whose prototype is
+// Object.prototype) a `Storage.prototype` spy intercepted nothing at all
+// (measured: an unconditional `localStorage.getItem(STORE_KEY)` added at the
+// top of getUiScale left every `not.toHaveBeenCalled()` arm below green
+// regardless), the same trap tests/reliquary_window_behavior.test.ts records.
+// That object-literal shape was an artifact of the polyfill at the time, not
+// a contract this suite can assert about every host; the durable rule is
+// "spy the instance the read actually goes through, never assume
+// Storage.prototype is on its chain". Each arm that asserts a spy was NOT
+// called therefore carries its own POSITIVE CONTROL first: an uncached read
+// the instance spy must be seen intercepting, so the negative half can never
+// go quiet by accident.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { SETTINGS_CHANGE_EVENT } from '../src/game/settings';
@@ -77,22 +85,18 @@ describe('getUiScale caches the host read', () => {
     expect(getUiScale()).toBe(1.25);
   });
 
-  it('a Storage.prototype spy intercepts NOTHING here; the instance spy does', () => {
-    // The trap this suite shipped with, pinned so a later edit cannot quietly
-    // reintroduce it: both spies are armed over the SAME read, and only the
-    // instance one sees it. (The claim also holds in an environment where
-    // localStorage is a real Storage: vi.spyOn installs an OWN property on the
-    // instance, which shadows the prototype either way. So this pins the rule
-    // "spy the instance", not a quirk of the current polyfill.)
-    const viaPrototype = vi.spyOn(Storage.prototype, 'getItem');
-    const viaInstance = vi.spyOn(window.localStorage, 'getItem');
+  it('spies the actual localStorage instance getUiScale reads through', () => {
+    // THE POSITIVE CONTROL every negative ("not called") arm below relies on:
+    // arm only the instance spy, over an uncached read, and require it to see
+    // the exact key getUiScale reads. This deliberately makes no claim about
+    // Storage.prototype (see the header): a prototype spy is not guaranteed to
+    // intercept the same call this module makes, so asserting on it would pin
+    // an artifact of whatever tests/jsdom_local_storage_setup.ts happens to
+    // build today, not a rule of the production code.
+    const stored = vi.spyOn(window.localStorage, 'getItem');
     setCssScale(null);
     expect(getUiScale()).toBe(UI_SCALE_DEFAULT);
-    expect(viaInstance, 'the instance spy saw no read at all').toHaveBeenCalledWith(STORE_KEY);
-    expect(
-      viaPrototype,
-      'a Storage.prototype spy is what made the not-called arms below vacuous',
-    ).not.toHaveBeenCalled();
+    expect(stored, 'the instance spy saw no read at all').toHaveBeenCalledWith(STORE_KEY);
   });
 
   it('touches neither host again on a repeat read', () => {

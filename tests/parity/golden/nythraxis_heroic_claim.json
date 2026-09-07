@@ -31,7 +31,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1013,
-      "state": "7ed1ba0d",
+      "state": "58b729f0",
       "events": "10b24851",
       "rng": {
         "draws": 1,
@@ -703,7 +703,7 @@
           "level": 22,
           "lootFfaTimer": "Infinity",
           "maxHp": 192000,
-          "mechanicDamageMult": 7.25,
+          "mechanicDamageMult": 1.488,
           "mechanicHealMult": 3.2,
           "moveSpeed": 10.5,
           "onGround": true,
@@ -724,8 +724,8 @@
           },
           "templateId": "nythraxis_scourge_of_thornpeak",
           "weapon": {
-            "max": 3988,
-            "min": 2553,
+            "max": 573,
+            "min": 367,
             "speed": 2.6
           }
         }
@@ -735,7 +735,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1013,
-      "state": "1e4e35a7",
+      "state": "5a784632",
       "events": "aee728cf",
       "rng": {
         "draws": 18,
@@ -1967,7 +1967,7 @@
           ],
           "lootable": true,
           "maxHp": 192000,
-          "mechanicDamageMult": 7.25,
+          "mechanicDamageMult": 1.488,
           "mechanicHealMult": 3.2,
           "moveSpeed": 10.5,
           "onGround": true,
@@ -1990,8 +1990,8 @@
           "tappedById": 1003,
           "templateId": "nythraxis_scourge_of_thornpeak",
           "weapon": {
-            "max": 3988,
-            "min": 2553,
+            "max": 573,
+            "min": 367,
             "speed": 2.6
           }
         }
@@ -2001,7 +2001,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1013,
-      "state": "1e4e35a7",
+      "state": "5a784632",
       "events": "741638a5",
       "rng": {
         "draws": 18,
@@ -3233,7 +3233,7 @@
           ],
           "lootable": true,
           "maxHp": 192000,
-          "mechanicDamageMult": 7.25,
+          "mechanicDamageMult": 1.488,
           "mechanicHealMult": 3.2,
           "moveSpeed": 10.5,
           "onGround": true,
@@ -3256,8 +3256,8 @@
           "tappedById": 1003,
           "templateId": "nythraxis_scourge_of_thornpeak",
           "weapon": {
-            "max": 3988,
-            "min": 2553,
+            "max": 573,
+            "min": 367,
             "speed": 2.6
           }
         }

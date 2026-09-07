@@ -42,6 +42,20 @@
     pointer-events: auto;
   }
 
+  /* The parent composition wraps this panel's live content in
+     `#gathering-goal-body` (the `#qt-body` / `#delve-body` mover-chrome
+     pattern, src/ui/CLAUDE.md: the painter rebuilds this inner body so the
+     movable-frame corner button/grip siblings on the root survive every
+     repaint). That wrapper is a plain block box, so the header/materials/
+     status vertical rhythm the root's own `flex` + `gap: 4px` used to give
+     its direct children needs the same layout re-declared here, or it
+     collapses back to block-margin spacing. */
+  #gathering-goal-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
   .gathering-goal-header {
     display: flex;
     flex-direction: column;

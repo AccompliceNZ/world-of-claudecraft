@@ -114,9 +114,14 @@ export const IWORLD_MEMBERS = [
   { name: 'craftSkills', kind: 'data' },
   { name: 'gatheringProficiency', kind: 'data' },
   { name: 'known', kind: 'data' },
+  { name: 'resolvedAbility', kind: 'method' },
   { name: 'activeConsecrations', kind: 'data' },
   { name: 'activeFrostRings', kind: 'data' },
   { name: 'activeIgnivarMeteors', kind: 'data' },
+  { name: 'activeNythraxisGraveEruptions', kind: 'data' },
+  { name: 'activeNythraxisGraveFlames', kind: 'data' },
+  { name: 'activeNythraxisGravefires', kind: 'data' },
+  { name: 'activeNythraxisBindingSigils', kind: 'data' },
   { name: 'activeVarkhulCinderFires', kind: 'data' },
   { name: 'activeVarkhulCinderOrbProjectiles', kind: 'data' },
   { name: 'activeVarkhulForgestormWarnings', kind: 'data' },
@@ -754,6 +759,11 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // The PR 3676 arm's ground-aim landing preview adds groundAimPlacementPreview
     // (IWorldCombat, a method) on top of the bank-storage members at the sixth
     // v0.41.0 sync; the totals below are read off a run on the merged tree.
+    // The v0.42.0 class-balance display-parity fix adds resolvedAbility
+    // (IWorldCombat, a method): the local player's own known ability with every
+    // presentation-layer transform folded in, so the HUD/cross-hotbar/spellbook
+    // can show the same resolve Sim.resolvedAbility would produce instead of a
+    // raw known-array lookup.
     //
     // NOTE for the next merge, four syncs run now: BOTH sides of this pin move
     // it independently every cycle. Twice git merged identical numbers with no
@@ -827,9 +837,26 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // tests/world_api_parity.test.ts` before merge lands to confirm the
     // facet-file exhaustiveness checks (AssertNever) also pass on the fully
     // resolved production tree; this suite was not executed here.
-    expect(IWORLD_MEMBERS.length).toBe(365);
-    expect(DATA_MEMBERS.length).toBe(99);
-    expect(METHOD_MEMBERS.length).toBe(266);
+    //
+    // The v0.42.0 QA release sync composes a TENTH time and CONFLICTED again:
+    // the release parent (base 344/95/249) independently added the
+    // class-balance resolvedAbility method plus four new Nythraxis data
+    // readouts (activeNythraxisBindingSigils, activeNythraxisGraveEruptions,
+    // activeNythraxisGraveFlames, activeNythraxisGravefires), reading
+    // 349/99/250 on its own. resolvedAbility does not exist anywhere under
+    // src/world_api/ on this side, so it is a release-only add here, not a
+    // member common to both parents. The merged tree carries ours
+    // (365/99/266) plus all five of the release's new members: the
+    // resolvedAbility method and the four Nythraxis data readouts. Counted
+    // directly off the resolved IWORLD_MEMBERS literal above (103
+    // `kind: 'data'` + 267 `kind: 'method'` = 370, no duplicate names), never
+    // reconciled by arithmetic in the diff. Run `npx vitest run
+    // tests/world_api_parity.test.ts` before merge lands to confirm the
+    // facet-file exhaustiveness checks (AssertNever) also pass on the fully
+    // resolved production tree.
+    expect(IWORLD_MEMBERS.length).toBe(370);
+    expect(DATA_MEMBERS.length).toBe(103);
+    expect(METHOD_MEMBERS.length).toBe(267);
   });
   it('has no duplicate member names', () => {
     const names = IWORLD_MEMBERS.map((m) => m.name);
@@ -856,6 +883,10 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'activeLootRolls',
       'activeMasterLootRolls',
       'activeMobileStationCrafts',
+      'activeNythraxisBindingSigils',
+      'activeNythraxisGraveEruptions',
+      'activeNythraxisGraveFlames',
+      'activeNythraxisGravefires',
       'activeTemporalHourglasses',
       'activeTitle',
       'activeVarkhulAnvilMeteors',
@@ -1119,6 +1150,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'renamePet',
       'renown',
       'reportTelemetry',
+      'resolvedAbility',
       'respec',
       'respondToResurrection',
       'restedXp',
@@ -1218,6 +1250,10 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'activeIgnivarMeteors',
       'activeLoadout',
       'activeMobileStationCrafts',
+      'activeNythraxisBindingSigils',
+      'activeNythraxisGraveEruptions',
+      'activeNythraxisGraveFlames',
+      'activeNythraxisGravefires',
       'activeTemporalHourglasses',
       'activeTitle',
       'activeVarkhulAnvilMeteors',
@@ -1510,6 +1546,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'reliquaryRarity',
       'renamePet',
       'reportTelemetry',
+      'resolvedAbility',
       'respec',
       'respondToResurrection',
       'resurrectAtCorpse',
@@ -1677,9 +1714,14 @@ type _ExhaustEntityRoster = AssertNever<
 
 const FACET_COMBAT = [
   'known',
+  'resolvedAbility',
   'activeConsecrations',
   'activeFrostRings',
   'activeIgnivarMeteors',
+  'activeNythraxisGraveEruptions',
+  'activeNythraxisGraveFlames',
+  'activeNythraxisGravefires',
+  'activeNythraxisBindingSigils',
   'activeTemporalHourglasses',
   'activeVarkhulForgestormWarnings',
   'activeVarkhulCinderFires',
@@ -2312,14 +2354,17 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
 
   it('the facet union equals the pinned IWORLD_MEMBERS set', () => {
     const union = Object.values(FACET_MEMBER_ARRAYS).flatMap((arr) => [...arr]);
-    // Mirrors the IWORLD_MEMBERS.length pin above (365), counted directly off
-    // the resolved literal now that src/world_api/inventory.ts and
-    // src/world_api/professions.ts are resolved. Not suite-verified here: run
-    // `npx vitest run tests/world_api_parity.test.ts` before merge lands to
-    // confirm the facet arrays actually reconstruct IWORLD_MEMBERS with no
-    // gaps or collisions; this pin and the one above must always agree.
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(365);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(365);
+    // Mirrors the IWORLD_MEMBERS.length pin above (370), counted directly off
+    // the resolved literal now that src/world_api/inventory.ts,
+    // src/world_api/professions.ts, and src/world_api/combat.ts are resolved:
+    // the merge carries the professions activeMobileStationCrafts rename plus
+    // the release's four Nythraxis data readouts and the resolvedAbility
+    // method common to both parents. Run `npx vitest run
+    // tests/world_api_parity.test.ts` before merge lands to confirm the
+    // facet arrays actually reconstruct IWORLD_MEMBERS with no gaps or
+    // collisions; this pin and the one above must always agree.
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(370);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(370);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);

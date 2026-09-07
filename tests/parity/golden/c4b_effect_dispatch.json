@@ -13,8 +13,8 @@
     "summonDemon -> summonPet (warlock summon_imp) + selfBuff form switch (druid)",
     "weaponStrike awardCombo latch + finisher combo-spend reset"
   ],
-  "draws": 892,
-  "drawDigest": "01768a70",
+  "draws": 894,
+  "drawDigest": "56ec9ce1",
   "frames": [
     {
       "tick": 0,
@@ -1323,8 +1323,8 @@
       "state": "e8428bd0",
       "events": "741638a5",
       "rng": {
-        "draws": 660,
-        "digest": "d1089e0c"
+        "draws": 661,
+        "digest": "c7647637"
       }
     },
     {
@@ -1334,8 +1334,8 @@
       "state": "fdaf9e55",
       "events": "741638a5",
       "rng": {
-        "draws": 716,
-        "digest": "a149632b"
+        "draws": 717,
+        "digest": "077e5c3b"
       }
     },
     {
@@ -1345,8 +1345,8 @@
       "state": "42efd95e",
       "events": "741638a5",
       "rng": {
-        "draws": 776,
-        "digest": "c3b1128b"
+        "draws": 777,
+        "digest": "5116092e"
       }
     },
     {
@@ -1356,8 +1356,8 @@
       "state": "d775f8db",
       "events": "741638a5",
       "rng": {
-        "draws": 826,
-        "digest": "121a9d15"
+        "draws": 828,
+        "digest": "dabbf9e7"
       }
     },
     {
@@ -1367,8 +1367,8 @@
       "state": "43f692e6",
       "events": "0f9437ba",
       "rng": {
-        "draws": 883,
-        "digest": "09d8a88a"
+        "draws": 885,
+        "digest": "b4dee2d7"
       }
     },
     {
@@ -1378,8 +1378,8 @@
       "state": "43f692e6",
       "events": "741638a5",
       "rng": {
-        "draws": 883,
-        "digest": "09d8a88a"
+        "draws": 885,
+        "digest": "b4dee2d7"
       },
       "label": "warlock-summon",
       "players": [
@@ -2408,8 +2408,8 @@
       "state": "93175f25",
       "events": "ab0ec220",
       "rng": {
-        "draws": 884,
-        "digest": "dea013c7"
+        "draws": 886,
+        "digest": "1466b186"
       },
       "label": "warrior-sunder",
       "players": [
@@ -3504,11 +3504,11 @@
       "tick": 135,
       "time": 6.75,
       "nextId": 1014,
-      "state": "24eb72ef",
-      "events": "13a50e33",
+      "state": "aeb40db9",
+      "events": "eef4a1b4",
       "rng": {
-        "draws": 886,
-        "digest": "1466b186"
+        "draws": 888,
+        "digest": "254149e7"
       },
       "label": "mage-arcane-explosion",
       "players": [
@@ -3639,13 +3639,13 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 70
+            "damageDealt": 71
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 70
+              "damageDealt": 71
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -4612,7 +4612,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499963,
+          "hp": 499964,
           "id": 1012,
           "inCombat": true,
           "kind": "mob",
@@ -4647,7 +4647,7 @@
           "threat": [
             [
               1004,
-              38
+              37
             ]
           ],
           "weapon": {
@@ -4666,7 +4666,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499967,
+          "hp": 499965,
           "id": 1013,
           "inCombat": true,
           "kind": "mob",
@@ -4701,7 +4701,7 @@
           "threat": [
             [
               1004,
-              34
+              36
             ]
           ],
           "weapon": {
@@ -4716,11 +4716,11 @@
       "tick": 135,
       "time": 6.75,
       "nextId": 1015,
-      "state": "08619837",
-      "events": "0a9dcf11",
+      "state": "c0e581f4",
+      "events": "9b7439fb",
       "rng": {
-        "draws": 891,
-        "digest": "94db842a"
+        "draws": 893,
+        "digest": "74a6d489"
       },
       "label": "rogue-combo-finishers",
       "players": [
@@ -4851,13 +4851,13 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 70
+            "damageDealt": 71
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 70
+              "damageDealt": 71
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -4958,13 +4958,13 @@
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 110
+            "damageDealt": 108
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 110
+              "damageDealt": 108
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -5836,7 +5836,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499963,
+          "hp": 499964,
           "id": 1012,
           "inCombat": true,
           "kind": "mob",
@@ -5871,7 +5871,7 @@
           "threat": [
             [
               1004,
-              38
+              37
             ]
           ],
           "weapon": {
@@ -5890,7 +5890,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499967,
+          "hp": 499965,
           "id": 1013,
           "inCombat": true,
           "kind": "mob",
@@ -5925,7 +5925,7 @@
           "threat": [
             [
               1004,
-              34
+              36
             ]
           ],
           "weapon": {
@@ -5955,7 +5955,7 @@
           "fallStartY": -2.811965,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499890,
+          "hp": 499892,
           "id": 1014,
           "inCombat": true,
           "kind": "mob",
@@ -5990,7 +5990,7 @@
           "threat": [
             [
               1005,
-              111
+              109
             ]
           ],
           "weapon": {
@@ -6005,11 +6005,11 @@
       "tick": 135,
       "time": 6.75,
       "nextId": 1016,
-      "state": "0db61deb",
-      "events": "898e8b1e",
+      "state": "43c64af7",
+      "events": "b772b623",
       "rng": {
-        "draws": 892,
-        "digest": "01768a70"
+        "draws": 894,
+        "digest": "56ec9ce1"
       },
       "label": "paladin-bastion-consecrate",
       "players": [
@@ -6140,13 +6140,13 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 70
+            "damageDealt": 71
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 70
+              "damageDealt": 71
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -6247,13 +6247,13 @@
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 110
+            "damageDealt": 108
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 110
+              "damageDealt": 108
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -6349,13 +6349,13 @@
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 24
+            "damageDealt": 30
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 24
+              "damageDealt": 30
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -7162,7 +7162,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499963,
+          "hp": 499964,
           "id": 1012,
           "inCombat": true,
           "kind": "mob",
@@ -7197,7 +7197,7 @@
           "threat": [
             [
               1004,
-              38
+              37
             ]
           ],
           "weapon": {
@@ -7216,7 +7216,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499967,
+          "hp": 499965,
           "id": 1013,
           "inCombat": true,
           "kind": "mob",
@@ -7251,7 +7251,7 @@
           "threat": [
             [
               1004,
-              34
+              36
             ]
           ],
           "weapon": {
@@ -7281,7 +7281,7 @@
           "fallStartY": -2.811965,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499890,
+          "hp": 499892,
           "id": 1014,
           "inCombat": true,
           "kind": "mob",
@@ -7316,7 +7316,7 @@
           "threat": [
             [
               1005,
-              111
+              109
             ]
           ],
           "weapon": {
@@ -7335,7 +7335,7 @@
           "fallStartY": -1.348249,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499976,
+          "hp": 499970,
           "id": 1015,
           "inCombat": true,
           "kind": "mob",
@@ -7367,7 +7367,7 @@
           "threat": [
             [
               1006,
-              77.44
+              96.55
             ]
           ],
           "weapon": {
@@ -7382,11 +7382,11 @@
       "tick": 135,
       "time": 6.75,
       "nextId": 1017,
-      "state": "fcf14049",
+      "state": "08af35fd",
       "events": "0740b822",
       "rng": {
-        "draws": 892,
-        "digest": "01768a70"
+        "draws": 894,
+        "digest": "56ec9ce1"
       },
       "label": "druid-form-switch",
       "players": [
@@ -7517,13 +7517,13 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 70
+            "damageDealt": 71
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 70
+              "damageDealt": 71
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -7624,13 +7624,13 @@
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 110
+            "damageDealt": 108
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 110
+              "damageDealt": 108
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -7726,13 +7726,13 @@
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 24
+            "damageDealt": 30
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 24
+              "damageDealt": 30
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -8553,7 +8553,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499963,
+          "hp": 499964,
           "id": 1012,
           "inCombat": true,
           "kind": "mob",
@@ -8588,7 +8588,7 @@
           "threat": [
             [
               1004,
-              38
+              37
             ]
           ],
           "weapon": {
@@ -8607,7 +8607,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499967,
+          "hp": 499965,
           "id": 1013,
           "inCombat": true,
           "kind": "mob",
@@ -8642,7 +8642,7 @@
           "threat": [
             [
               1004,
-              34
+              36
             ]
           ],
           "weapon": {
@@ -8672,7 +8672,7 @@
           "fallStartY": -2.811965,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499890,
+          "hp": 499892,
           "id": 1014,
           "inCombat": true,
           "kind": "mob",
@@ -8707,7 +8707,7 @@
           "threat": [
             [
               1005,
-              111
+              109
             ]
           ],
           "weapon": {
@@ -8726,7 +8726,7 @@
           "fallStartY": -1.348249,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499976,
+          "hp": 499970,
           "id": 1015,
           "inCombat": true,
           "kind": "mob",
@@ -8758,7 +8758,7 @@
           "threat": [
             [
               1006,
-              77.44
+              96.55
             ]
           ],
           "weapon": {
@@ -8814,11 +8814,11 @@
       "tick": 135,
       "time": 6.75,
       "nextId": 1017,
-      "state": "bc282e8e",
+      "state": "eaa1be92",
       "events": "d4bf9d70",
       "rng": {
-        "draws": 892,
-        "digest": "01768a70"
+        "draws": 894,
+        "digest": "56ec9ce1"
       },
       "label": "druid-moonfire-forms",
       "players": [
@@ -8949,13 +8949,13 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 70
+            "damageDealt": 71
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 70
+              "damageDealt": 71
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -9056,13 +9056,13 @@
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 110
+            "damageDealt": 108
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 110
+              "damageDealt": 108
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -9158,13 +9158,13 @@
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 24
+            "damageDealt": 30
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 24
+              "damageDealt": 30
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -9987,7 +9987,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499963,
+          "hp": 499964,
           "id": 1012,
           "inCombat": true,
           "kind": "mob",
@@ -10022,7 +10022,7 @@
           "threat": [
             [
               1004,
-              38
+              37
             ]
           ],
           "weapon": {
@@ -10041,7 +10041,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499967,
+          "hp": 499965,
           "id": 1013,
           "inCombat": true,
           "kind": "mob",
@@ -10076,7 +10076,7 @@
           "threat": [
             [
               1004,
-              34
+              36
             ]
           ],
           "weapon": {
@@ -10106,7 +10106,7 @@
           "fallStartY": -2.811965,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499890,
+          "hp": 499892,
           "id": 1014,
           "inCombat": true,
           "kind": "mob",
@@ -10141,7 +10141,7 @@
           "threat": [
             [
               1005,
-              111
+              109
             ]
           ],
           "weapon": {
@@ -10160,7 +10160,7 @@
           "fallStartY": -1.348249,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499976,
+          "hp": 499970,
           "id": 1015,
           "inCombat": true,
           "kind": "mob",
@@ -10192,7 +10192,7 @@
           "threat": [
             [
               1006,
-              77.44
+              96.55
             ]
           ],
           "weapon": {
@@ -10248,11 +10248,11 @@
       "tick": 135,
       "time": 6.75,
       "nextId": 1017,
-      "state": "bc282e8e",
+      "state": "eaa1be92",
       "events": "741638a5",
       "rng": {
-        "draws": 892,
-        "digest": "01768a70"
+        "draws": 894,
+        "digest": "56ec9ce1"
       },
       "label": "final",
       "players": [
@@ -10383,13 +10383,13 @@
           "cls": "mage",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 70
+            "damageDealt": 71
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 70
+              "damageDealt": 71
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -10490,13 +10490,13 @@
           "cls": "rogue",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 110
+            "damageDealt": 108
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 110
+              "damageDealt": 108
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -10592,13 +10592,13 @@
           "cls": "paladin",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 24
+            "damageDealt": 30
           },
           "craftDaily": {},
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 24
+              "damageDealt": 30
             },
             "dungeonClears": {},
             "itemsDiscovered": [
@@ -11421,7 +11421,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499963,
+          "hp": 499964,
           "id": 1012,
           "inCombat": true,
           "kind": "mob",
@@ -11456,7 +11456,7 @@
           "threat": [
             [
               1004,
-              38
+              37
             ]
           ],
           "weapon": {
@@ -11475,7 +11475,7 @@
           "fallStartY": -2.994172,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499967,
+          "hp": 499965,
           "id": 1013,
           "inCombat": true,
           "kind": "mob",
@@ -11510,7 +11510,7 @@
           "threat": [
             [
               1004,
-              34
+              36
             ]
           ],
           "weapon": {
@@ -11540,7 +11540,7 @@
           "fallStartY": -2.811965,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499890,
+          "hp": 499892,
           "id": 1014,
           "inCombat": true,
           "kind": "mob",
@@ -11575,7 +11575,7 @@
           "threat": [
             [
               1005,
-              111
+              109
             ]
           ],
           "weapon": {
@@ -11594,7 +11594,7 @@
           "fallStartY": -1.348249,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 499976,
+          "hp": 499970,
           "id": 1015,
           "inCombat": true,
           "kind": "mob",
@@ -11626,7 +11626,7 @@
           "threat": [
             [
               1006,
-              77.44
+              96.55
             ]
           ],
           "weapon": {

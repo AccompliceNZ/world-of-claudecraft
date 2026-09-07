@@ -63,7 +63,8 @@ export const interfacePage: GuidePage = {
           'guide.interfacePage.framesTitle',
           paras('guide.interfacePage.framesBody') +
             `<div class="guide-beat-grid">${frames}</div>` +
-            paras('guide.interfacePage.framesMoveBodyEditFrames'),
+            paras('guide.interfacePage.framesMoveBodyEditFrames') +
+            paras('guide.interfacePage.framesGovernedExtra'),
         )}
 
         ${section('guide.interfacePage.barsTitle', paras('guide.interfacePage.barsBody'))}

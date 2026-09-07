@@ -22,6 +22,7 @@ import type {
   ToolEffectSlotView,
 } from '../world_api';
 import type { GroundAimPointXZ } from '../world_api/combat';
+import type { AbilityOutputScaling } from './ability_output_scaling';
 import { autoEquipFamilyConflict } from './auto_equip_gate';
 import * as bagsMod from './bags';
 import {
@@ -59,7 +60,7 @@ import {
   resolvePosition,
   seatGroundedAt,
 } from './colliders';
-import { resolveActionReplacement } from './combat/action_replacement';
+import { applyAbilityCostTail, resolveAbilityChain } from './combat/ability_resolution';
 import { clearAfflictionState } from './combat/affliction';
 import { auraAffectsStats, removeCancelableAura } from './combat/aura_cancel';
 import { auraReplacementConflicts } from './combat/aura_stacking';
@@ -93,7 +94,6 @@ import {
   isStunned,
   isUnbreakableControlAura,
 } from './combat/cc';
-import { aetherSurgeCostMult } from './combat/chronomancy';
 import {
   dealDamage as dealDamageImpl,
   grantXp as grantXpImpl,
@@ -116,17 +116,11 @@ import {
   hexOutputMult as hexOutputMultImpl,
 } from './combat/heal';
 import { advanceHeroicLeap, heroicLeapPlacementPreview } from './combat/heroic_leap';
-import { resolveColdsightAbility } from './combat/hunter_coldsight';
 import { clearFieldcraftState, finishBloodhook } from './combat/hunter_fieldcraft';
 import { clearPacklordState } from './combat/hunter_packlord';
-import {
-  clearHunterTalentState,
-  hunterPetDamageMultiplier,
-  resolveHunterSharedAbility,
-} from './combat/hunter_shared';
+import { clearHunterTalentState, hunterPetDamageMultiplier } from './combat/hunter_shared';
 import { tickNaturesFury } from './combat/natures_fury';
 import { clearOssuaryMarks, despawnTemporaryNecromancyUndead } from './combat/necromancy';
-import { radiantResonanceCastTime } from './combat/paladin_radiant_resonance';
 import { tryGrantSolarReprisal } from './combat/paladin_solar_reprisal';
 import {
   PALADIN_DEVOTION_ABILITY_IDS,
@@ -140,7 +134,6 @@ import {
 } from './combat/paladin_veilbound_march';
 import { isVeilboundMarchActive } from './combat/paladin_veilbound_state';
 import { cleanupPriestState } from './combat/priest/lifecycle';
-import { resolveVespersAbility } from './combat/priest/vespers';
 import * as resurrectionOfferMod from './combat/resurrection_offer';
 import { duskLingerOnStealthBreak } from './combat/rogue_talents';
 import { applySetProcs as applySetProcsImpl } from './combat/set_procs';
@@ -150,6 +143,7 @@ import { blockedMeleeDamage } from './combat/shield_block';
 import { spellCritBonusFromAuras, spellDamageMultFromAuras } from './combat/spell_combat';
 import { isMobSpellResisted } from './combat/spell_resist';
 import { isCritImmuneTank } from './combat/tank_crit_immunity';
+import { threatMod as threatModImpl } from './combat/threat_modifiers';
 import { warriorMeleeDefense } from './combat/warrior_hit_table';
 import { ensureWarriorStance } from './combat/warrior_stances';
 // A3: the augment/power-up content helpers used by the Fiesta match logic
@@ -157,7 +151,6 @@ import { ensureWarriorStance } from './combat/warrior_stances';
 // moved to social/fiesta.ts with that logic; sim.ts keeps only the type used by
 // the PlayerMeta interface + the power-up catalog the fiestaMatchInfo accessor reads.
 import { type AugmentSpecial, type AugmentTier, POWERUPS_BY_ID } from './content/augments';
-import { applyTalentMods } from './content/classes';
 import { farmCropTier } from './content/farm_crops';
 import {
   FARM_BED_IDS,
@@ -241,6 +234,7 @@ import * as companionMod from './delves/companion';
 import * as lockpickMod from './delves/lockpick_controller';
 import * as runsMod from './delves/runs';
 import { CASCADE_SCENARIO } from './dev/cascade_playtest';
+import { DEV_SANDBOX_CFG, DEV_SANDBOX_CLASSES } from './dev/dev_sandbox_config';
 import { despawnMobsForDev } from './dev_commands';
 import { projectOutsideDungeonDoors } from './dungeon_door_clearance';
 import { arenaMapForSlot } from './dungeon_layout';
@@ -398,11 +392,11 @@ import {
   mountTrainBegin as mountTrainBeginImpl,
   tickMountTraining as tickMountTrainingImpl,
 } from './mounts_training';
+import * as nythraxisReadouts from './nythraxis_raid_readouts';
 import {
   grantDevotionFromBlock,
   grantGroundAoEDevotionOnFirstHit,
   MAX_DEVOTION,
-  resolveAscensionAbility,
   updatePaladinDevotion,
 } from './paladin_devotion';
 import {
@@ -802,13 +796,7 @@ import * as readyCheckMod from './social/ready_check';
 import { SpatialGrid } from './spatial';
 import { diminishedCrowdControlDuration as diminishedCrowdControlDurationImpl } from './stun_dr';
 import { Targeting } from './targeting';
-import {
-  addThreat,
-  RIGHTEOUS_FURY_THREAT_MULT,
-  TAUNT_FORCE_SECONDS,
-  threatModifier,
-  topThreatValue,
-} from './threat';
+import { addThreat, TAUNT_FORCE_SECONDS, topThreatValue } from './threat';
 import {
   type AbilityDef,
   type AbilityEffect,
@@ -1286,6 +1274,7 @@ export interface InstanceSlot {
 
 export interface ResolvedAbility {
   def: AbilityDef;
+  outputScaling?: AbilityOutputScaling;
   rank: number;
   cost: number;
   castTime: number;
@@ -2124,6 +2113,10 @@ export class Sim {
   // DB) and exposed as a live SimContext view. Always empty offline: guilds are
   // a server social system, so the offline sim never creates a book.
   guildBanks: Map<number, GuildBankState> = new Map();
+  /** [dev] /dev freezemobs: while true, every mob skips its AI update and
+   *  acquires no aggro, so the placer works among live packs without
+   *  scattering them. Set via setDevMobsFrozen; never persisted. */
+  devMobsFrozen = false;
   /** When true, /dev level|tp|give chat commands are accepted (local dev only). */
   readonly devCommands: boolean;
   // Entities spawned by the last /dev sandbox (dummy + practice bots), so re-running
@@ -2136,6 +2129,18 @@ export class Sim {
   }
   get activeIgnivarMeteors(): raidReadouts.ActiveIgnivarMeteorWarning[] {
     return raidReadouts.collectActiveIgnivarMeteors(this.ctx);
+  }
+  get activeNythraxisGraveEruptions(): nythraxisReadouts.ActiveNythraxisGraveEruption[] {
+    return nythraxisReadouts.collectActiveNythraxisGraveEruptions(this.ctx);
+  }
+  get activeNythraxisGraveFlames(): nythraxisReadouts.ActiveNythraxisGraveFlame[] {
+    return nythraxisReadouts.collectActiveNythraxisGraveFlames(this.ctx);
+  }
+  get activeNythraxisGravefires(): nythraxisReadouts.ActiveNythraxisGravefire[] {
+    return nythraxisReadouts.collectActiveNythraxisGravefires(this.ctx);
+  }
+  get activeNythraxisBindingSigils(): nythraxisReadouts.ActiveNythraxisBindingSigil[] {
+    return nythraxisReadouts.collectActiveNythraxisBindingSigils(this.ctx);
   }
   get activeVarkhulForgestormWarnings(): raidReadouts.ActiveVarkhulForgestormWarning[] {
     return raidReadouts.collectActiveVarkhulForgestormWarnings(this.ctx);
@@ -3773,6 +3778,13 @@ export class Sim {
   // abilities moving it. Re-running RESETS it (clears the previous dummy + bots).
   // Returns the number of allies spawned. (The Cascada-specific readout stays in
   // startCascadePlaytest; this one is class-agnostic.)
+  // [dev] /dev freezemobs: flip (or set) the sim-wide mob freeze; returns
+  // the resulting state so the caller can word its readout.
+  setDevMobsFrozen(on?: boolean): boolean {
+    this.devMobsFrozen = on ?? !this.devMobsFrozen;
+    return this.devMobsFrozen;
+  }
+
   startDevSandbox(pid?: number): number {
     const casterId = pid ?? this.primaryId;
     const me = this.entities.get(casterId);
@@ -3782,16 +3794,7 @@ export class Sim {
       else this.dropEntity(id);
     }
     this.devSandboxIds = [];
-    const cfg = {
-      dummyX: -3,
-      dummyZ: 4,
-      bots: 5,
-      botZ: 2,
-      botX0: 2,
-      botGap: 1.5,
-      maxHp: 10_000,
-      hp: 0.15,
-    };
+    const cfg = DEV_SANDBOX_CFG;
     const dummy = createMob(
       this.nextId++,
       MOBS.training_dummy,
@@ -3800,20 +3803,7 @@ export class Sim {
     );
     dummy.hostile = true;
     this.addEntity(dummy);
-    // A mixed party rather than all-mages (owner 2026-07-13): a rotating spread of
-    // classes so the practice allies read like a real group (tank/healer/melee/etc.),
-    // each with its own class HP pool and armor.
-    const sandboxClasses: PlayerClass[] = [
-      'warrior',
-      'priest',
-      'rogue',
-      'hunter',
-      'shaman',
-      'warlock',
-      'druid',
-      'paladin',
-      'mage',
-    ];
+    const sandboxClasses = DEV_SANDBOX_CLASSES;
     const botIds: number[] = [];
     for (let i = 0; i < cfg.bots; i++) {
       const cls = sandboxClasses[i % sandboxClasses.length];
@@ -5749,6 +5739,7 @@ export class Sim {
       spawnDevVendor: sim.spawnDevVendor.bind(sim),
       startCascadePlaytest: sim.startCascadePlaytest.bind(sim),
       startDevSandbox: sim.startDevSandbox.bind(sim),
+      setDevMobsFrozen: sim.setDevMobsFrozen.bind(sim),
       seedDungeonFinderDev: sim.seedDungeonFinderDev.bind(sim),
       // L2 inventory/vendor (W2): the helpers the moved items.useItem dispatches to.
       // Late-bound arrows (looked up at call time, not `.bind`d at ctor) so they preserve
@@ -6035,21 +6026,8 @@ export class Sim {
     return this.markTalentDeeds(deleteTalentLoadout(this.ctx, index, pid), pid);
   }
 
-  // Threat modifier including the tank-role talent bonus (e.g. Protection's
-  // Vengeance Mastery). Reads the precomputed flat threatPct — no tree walk.
   private threatMod(source: Entity, school: string): number {
-    let m = threatModifier(source, school);
-    if (source.kind === 'player') {
-      const meta = this.players.get(source.id);
-      if (meta) {
-        m *= 1 + this.playerMods(meta).global.threatPct;
-        const hasBurningOath = meta.known.some(
-          (known) => known.def.id === 'righteous_fury' && known.def.passive === true,
-        );
-        if (hasBurningOath && school === 'holy') m *= RIGHTEOUS_FURY_THREAT_MULT;
-      }
-    }
-    return m;
+    return threatModImpl(this.ctx, source, school);
   }
 
   resolvedAbility(abilityId: string, pid?: number): ResolvedAbility | null {
@@ -6057,65 +6035,15 @@ export class Sim {
     if (!r) return null;
     const known = r.meta.known.find((k) => k.def.id === abilityId) ?? null;
     if (!known) return null;
-    // Action-slot replacement: the base id stays on the hotbar while the
-    // resolved definition follows aura state (rogue engine transforms and the
-    // hunter resolvers land here, the one choke point the cast path, cost
-    // checks, and the server all read).
-    let found = resolveActionReplacement(known, r.e);
-    // The worn-set flags ride playerMods.selected (set_bonus_mods): the
-    // Coldsight 2pc hook reads them after the Cold Focus absolute rewrite.
-    found = resolveColdsightAbility(found, r.e, r.meta, this.playerMods(r.meta).selected);
-    found = resolveHunterSharedAbility(found, r.e, r.meta);
-    found = resolveVespersAbility(found, r.meta);
-    // `known` already carries its own talent mods, baked in once when
-    // r.meta.known was built (abilitiesKnownAt -> applyTalentMods). A
-    // wholesale def swap (resolveActionReplacement's rogue engine transforms,
-    // or the hunter Pack Rally swap inside resolveHunterSharedAbility) lands
-    // on a raw ABILITIES def instead, which never went through that bake, so
-    // give it its own (possibly empty) mods pass here, exactly once, keyed by
-    // its FINAL id, after every resolver above has had a chance to swap it.
-    // Compare ids, not object identity: Coldsight/Vespers return a
-    // `{...resolved}` spread copy even when they leave the def untouched, and
-    // keying on `found !== known` would re-run the bake on that copy and
-    // double-apply the mods `known` already carries.
-    if (found.def.id !== known.def.id) applyTalentMods(found, this.playerMods(r.meta));
-    // A "draining curse" (cost_tax aura) inflates the resource cost of every
-    // ability the victim uses. Resolve it here, the single choke point all cost
-    // checks/spends read, so the affordability check and the spend stay in
-    // lockstep. Return a shallow copy so the cached known-list entry is never
-    // mutated.
-    let cost = found.cost;
-    if (
-      cost > 0 &&
-      this.playerMods(r.meta).spec === 'arms' &&
-      r.meta.known.some((known) => known.def.id === 'measured_fury' && known.def.passive)
-    ) {
-      cost = Math.max(0, Math.round(cost * 0.9));
-    }
-    const tax = this.costTaxMult(r.e);
-    if (tax > 1 && cost > 0) cost = Math.ceil(cost * tax);
-    // Aether Surge (Chronomancy Phase 3, combat/chronomancy.ts): each held Arcane
-    // Charge steeply multiplies the next cast's cost. Deterministic read of the
-    // caster's own charge aura; no rng. Folded here so the affordability gate and
-    // the spend both see the scaled cost. (docs/prd/mage-chronomancy.md 13.4 / 14)
-    if (abilityId === 'arcane_surge' && cost > 0) {
-      cost = Math.round(cost * aetherSurgeCostMult(r.e));
-    }
-    const costResolved = cost === found.cost ? found : { ...found, cost };
     const charMods = this.playerMods(r.meta);
-    const ascensionResolved = resolveAscensionAbility(r.e, charMods.spec, costResolved);
-    // charMods carries the worn-set flags (Dawnforged 4pc: instant empowered Dawn's Embrace).
-    const castTime = radiantResonanceCastTime(r.e, abilityId, ascensionResolved.castTime, charMods);
-    return castTime === ascensionResolved.castTime
-      ? ascensionResolved
-      : { ...ascensionResolved, castTime };
-  }
-
-  // Highest active cost_tax aura, expressed as a cost multiplier (1 = no tax).
-  private costTaxMult(e: Entity): number {
-    let pct = 0;
-    for (const a of e.auras) if (a.kind === 'cost_tax' && a.value > pct) pct = a.value;
-    return 1 + pct;
+    // The presentation/combat resolution chain (action-slot replacement, the
+    // spec-gated resolvers, the talent-mod bake, Ascension/Radiant Resonance,
+    // and the resource-cost tail: draining curse, Measured Fury, Aether
+    // Surge) is shared with every display caller; see
+    // combat/ability_resolution.ts. The server stays the sole spend
+    // authority regardless of who displays the resolved cost.
+    const found = resolveAbilityChain(known, r.e, r.meta, charMods);
+    return applyAbilityCostTail(found, abilityId, r.e, r.meta.known, charMods);
   }
 
   // -------------------------------------------------------------------------
@@ -6234,7 +6162,13 @@ export class Sim {
 
     for (const e of this.entities.values()) {
       if (e.kind === 'mob') {
-        if (e.guardianState) {
+        // [dev] /dev freezemobs: skip every mob's AI update outright
+        // (guardians included): no wander, no chase, no swings while props
+        // are placed; auras below still tick. Never true in shipped play,
+        // so the skipped wander draws shift no production stream.
+        if (this.devMobsFrozen) {
+          // frozen in place
+        } else if (e.guardianState) {
           if (!updateGuardian(this.ctx, e)) continue;
         } else {
           if (this.shouldSkipIdleMobTick(e)) continue;
@@ -7882,6 +7816,9 @@ export class Sim {
     // pulls, so the pack stays exactly where it spawned. The single aggro choke
     // point, so this covers proximity, social, and retaliation pulls alike.
     if (target.kind === 'player' && target.devNoAggro) return false;
+    // [dev] /dev freezemobs: a frozen world acquires no aggro either (the AI
+    // update skip alone would still let a proximity sweep seed a hate table).
+    if (this.devMobsFrozen) return false;
     // A quest-gated destructible (e.g. a Broodmother egg) never autonomously pulls a
     // player its own damage gate would refuse: see mob/quest_gated_aggro.ts.
     if (questGateBlocksAggro(this.players, mob, target)) return false;

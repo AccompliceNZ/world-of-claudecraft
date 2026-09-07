@@ -13,56 +13,69 @@ import { Sim } from '../src/sim/sim';
 
 // The fixture loadout the live-mob and Bruin probes equip (scripts/
 // druid_balance_probe.ts runDruidLiveMobProbe / bruinFixture:
-// equipReferenceEpicKitForDev over a level-20 feral druid). The bands below are
-// conditioned on EXACTLY this loadout (the identity-pin-plus-band precedent of
-// tests/rogue_dps_balance.test.ts), so a picker or catalog change that swaps a
-// piece reds HERE with a gear message, never in a band with a damage message.
-// RE-DERIVED 2026-08-31 on the merged post-eighth/ninth-sync catalog (the
-// Phase 18 druid-balance-harness-drift item): the fixture wears the Crucible
-// raid leather (ashveil) plus the heroic Nythraxis crown, the raid jewelry,
-// and, because the reference picker scores a feral druid's mainhand on the
-// caster stat bag, the wand_of_quenched_sparks. No Masterwrought piece.
+// equipReferenceEpicKitForDev over a level-20 druid, balance and feral both).
+// The bands below are conditioned on EXACTLY this loadout (the
+// identity-pin-plus-band precedent of tests/rogue_dps_balance.test.ts), so a
+// picker or catalog change that swaps a piece reds HERE with a gear message,
+// never in a band with a damage message.
+// RE-DERIVED 2026-09-08 after the v0.42.0 release merge (release integration
+// dca7476) landed on the historical harness: a virtual replay of the
+// pre-merge catalog at commit f73615a511 reproduces the old pin exactly
+// (moongrove 3429/214/3430/5, wildfang 4911/205/5755.24/12, bruin
+// 2589/148/8461.88/4, tank 229/147/0.358/214.5/896.61), confirming those
+// anchors belong to the older tree, not this one. Against that confirmed
+// baseline the merged catalog's reference picker changed exactly two slots:
+// helmet heroic_nighttalon_crown -> heroic_bramblehide_crown and feet
+// ashenbark_treads -> heroic_bramblehide_treads (Bramblehide is not
+// spec-restricted at the equip gate). The other nine slots are unchanged.
 const FIXTURE_LOADOUT = {
   mainhand: 'wand_of_quenched_sparks',
-  helmet: 'heroic_nighttalon_crown',
+  helmet: 'heroic_bramblehide_crown',
   neck: 'heartspring_amulet',
   shoulder: 'ashveil_shoulder',
   chest: 'ashveil_chest',
   waist: 'cinderbark_cinch',
   legs: 'ashveil_legs',
   gloves: 'ashveil_gloves',
-  feet: 'ashenbark_treads',
+  feet: 'heroic_bramblehide_treads',
   ring1: 'band_of_marked_strikes',
   ring2: 'circle_of_cinders',
 } as const;
 
-// MEASURED 2026-08-31 on the merged catalog at the fixed seeds (the harness
-// records no numbers of its own; the Phase 15 audit read only that the bear
-// arm took 12 percent more incoming damage after the packet's defs landed,
-// against `> 0` assertions that could not say so). The recorded drift was 12
-// percent, so the bands sit at 8 percent either side of the measurement: a
-// repeat of that drift reds, deterministic noise cannot. Payoff counts are
-// small integers and pinned exactly (a moved count is a rotation change).
+// MEASURED 2026-09-08 on the merged release catalog (integration dca7476) at
+// the fixed seeds. This is a full-world probe (shared RNG plus live mobs), so
+// a release world change can move sampling on its own; not every delta below
+// is a tuning change. It is also not gear alone: an old-gear-only virtual
+// restriction against the historical catalog did NOT reproduce the old
+// numbers. The merge does carry documented feral tuning in the same
+// integration (src/sim/content/spec_baselines.ts stats.apPct +0.1;
+// src/sim/spec_output_tuning.ts physical offensive +0.15). Bands stay at
+// BAND=0.08 either side of the new measurement; payoff counts are small
+// integers and stay pinned exactly (a moved count is a rotation change).
 const LIVE_MOB_MEASURED = {
-  moongrove: { damage: 3429, incomingDamage: 214, threat: 3430, payoffs: 5 },
-  wildfang: { damage: 4911, incomingDamage: 205, threat: 5755.24, payoffs: 12 },
-  bruin: { damage: 2589, incomingDamage: 148, threat: 8461.88, payoffs: 4 },
+  moongrove: { damage: 3655, incomingDamage: 234, threat: 3656, payoffs: 5 },
+  wildfang: { damage: 5896, incomingDamage: 211, threat: 6909.164, payoffs: 10 },
+  bruin: { damage: 2803, incomingDamage: 129, threat: 9357.4175, payoffs: 3 },
 } as const;
 const BRUIN_TANK_MEASURED = {
-  wolfIncomingDamage: 229,
-  bruinIncomingDamage: 147,
-  bruinMitigationPct: 0.358,
+  wolfIncomingDamage: 220,
+  bruinIncomingDamage: 143,
+  bruinMitigationPct: 0.35,
   bruinThreatFrom100Damage: 214.5,
-  marrowbreakSnapThreat: 896.61,
+  marrowbreakSnapThreat: 990.99,
 } as const;
 const BAND = 0.08;
 const within = (measured: number) =>
   [measured * (1 - BAND), measured * (1 + BAND)] as [number, number];
 
-function fixtureEquipment(seed: number): Record<string, string> {
+function fixtureEquipment(
+  seed: number,
+  spec: 'balance' | 'feral',
+  rows: Record<number, string>,
+): Record<string, string> {
   const sim = new Sim({ seed, playerClass: 'druid', autoEquip: true });
   sim.setPlayerLevel(20);
-  if (!sim.applyTalents({ spec: 'feral', rows: {} })) throw new Error('failed to apply feral');
+  if (!sim.applyTalents({ spec, rows })) throw new Error(`failed to apply ${spec}`);
   equipReferenceEpicKitForDev(sim.ctx, sim.player.id);
   const meta = sim.meta(sim.player.id);
   if (!meta) throw new Error('fixture druid has no PlayerMeta');
@@ -105,13 +118,26 @@ describe('Druid v0.29 balance and live-mob harness', () => {
   }, 420_000);
 
   it('the live-mob and Bruin fixtures wear the pinned reference loadout', () => {
-    // Identity first: every band below is conditioned on this gear. Both
-    // probes build the fixture the same way (a feral druid at 20 wearing
-    // equipReferenceEpicKitForDev), so one construction pins both.
-    for (const seed of [42_420, 42_920]) {
-      const worn = fixtureEquipment(seed);
-      expect(worn, `seed ${seed} loadout`).toEqual(FIXTURE_LOADOUT);
-    }
+    // Identity first: every band below is conditioned on this gear, and the
+    // three probes do NOT build the fixture the same way, so each
+    // construction is pinned on its own rather than assuming one covers all
+    // (mirrors scripts/druid_balance_probe.ts exactly):
+    // runDruidLiveMobProbe builds moongrove on balance (row14
+    // dru_r14_moonfury) and wildfang/bruin on feral (row14
+    // dru_r14_savage_fury), both with row20 dru_r20_improved_hurricane; the
+    // Bruin tank probe (bruinFixture) builds feral with no talent rows.
+    const balanceLive = fixtureEquipment(42_420, 'balance', {
+      14: 'dru_r14_moonfury',
+      20: 'dru_r20_improved_hurricane',
+    });
+    expect(balanceLive, 'balance live loadout').toEqual(FIXTURE_LOADOUT);
+    const feralLive = fixtureEquipment(42_420, 'feral', {
+      14: 'dru_r14_savage_fury',
+      20: 'dru_r20_improved_hurricane',
+    });
+    expect(feralLive, 'feral live loadout').toEqual(FIXTURE_LOADOUT);
+    const tank = fixtureEquipment(42_920, 'feral', {});
+    expect(tank, 'Bruin tank loadout').toEqual(FIXTURE_LOADOUT);
   });
 
   it.each(['moongrove', 'wildfang', 'bruin'] as const)(
@@ -138,7 +164,7 @@ describe('Druid v0.29 balance and live-mob harness', () => {
     expect(result.head).toBe('test-head');
     expect(result.bruinIncomingDamage).toBeLessThan(result.wolfIncomingDamage);
     // The two incoming figures and the mitigation they imply are banded on
-    // the 2026-08-31 measurement (wolf 229, bear 147, 35.8 percent less):
+    // the 2026-09-08 measurement (wolf 220, bear 143, 35 percent less):
     // the drift the audit read (bear +12 percent) reds on the bear figure.
     const [wolfLo, wolfHi] = within(BRUIN_TANK_MEASURED.wolfIncomingDamage);
     expect(result.wolfIncomingDamage).toBeGreaterThanOrEqual(wolfLo);

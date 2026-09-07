@@ -111,42 +111,39 @@ describe('Rogue fight-6498 deterministic DPS bands', () => {
     // FIXTURE's throughput (the suite's actual subject), not a played
     // rogue's.
     //
-    // The release side meanwhile re-anchored its own bands through the
-    // 2026-08-30 hit rebalance (its measurements: 212 Combat, 175
-    // Assassination, 190 Subtlety): the Crucible elective rings traded their
-    // crit lines for Hit (full-coverage program), and this fixture fights
-    // SAME-LEVEL mobs where that hit is far past cap, so the crit-for-hit
-    // trade is a real small loss here (the classic farm-content shape) while
-    // the heroic +2 profile gains it back and more. A new itemization ruling
-    // sets a new power level; re-anchor to the measured values rather than
-    // restoring an old band, and keep the sibling ordering pinned so a real
-    // collapse still reds.
-    //
     // MERGED TREE (2026-08-30 sync merge): the release's Crucible raid
     // catalog out-scores the apex crafted jewelry in the picker, so the apex
     // pair LEAVES the fixture loadout (the identity pin above records the
     // displacement) and the merged measurement lands exactly on the release's
-    // figures: 211.8 Combat, 174.4 Assassination, 189.7 Subtlety. The bands
-    // below are therefore the release's, re-derived on the merged tree
-    // rather than copied; the pre-merge apex-loadout figures above stay as
-    // the record of what this branch measured alone. The measurement is
-    // deterministic, so a band edge is a tripwire, never a flake.
+    // figures of that day: 211.8 Combat, 174.4 Assassination, 189.7
+    // Subtlety. The measurement is deterministic, so a band edge is a
+    // tripwire, never a flake.
+    //
+    // v0.42.0 CLASS REBALANCE (docs/design/class-balance-v042.md), layered
+    // on top of the same Crucible loadout: Knifework/assassination buffs
+    // (+9.89%) and Skulduggery/subtlety's sustained-output nerf (-12.50%,
+    // this fixture's "generic rogue policy" row); combat is untuned.
+    // Applied to the merged-tree baseline above (211.8 / 174.4 / 189.7), the
+    // two moves cross: assassination now measures ABOVE subtlety, so the
+    // ordering assertion re-anchors to combat > assassination > subtlety.
+    // The bands below are the release's v0.42.0 figures; they still hold
+    // against this branch's Crucible-loadout baseline since the two
+    // pre-rebalance starting points (211.8/174.4/189.7 here vs 212/175/190
+    // on the release) differ by under 1%.
     expect(first.combat).toBeGreaterThanOrEqual(204);
     expect(first.combat).toBeLessThanOrEqual(220);
-    expect(first.assassination).toBeGreaterThanOrEqual(167);
-    expect(first.assassination).toBeLessThanOrEqual(183);
-    expect(first.subtlety).toBeGreaterThanOrEqual(182);
-    expect(first.subtlety).toBeLessThanOrEqual(198);
-    // The ordering, restated to the merged-tree truth: Combat leads both
-    // siblings, and Subtlety stays above Assassination (both parents pinned
-    // the same three-way order; this branch's pre-merge near-tie band on the
-    // sibling pair is retired by the release rebalance, which spreads them).
-    // The strict pairs are a SENTINEL over a deterministic measurement (a
-    // flip is a real sim change worth a red). The two combat arms are
-    // entailed by the bands above and stand as documentation of the lead,
-    // not as independent pins.
-    expect(first.combat).toBeGreaterThan(first.subtlety);
+    expect(first.assassination).toBeGreaterThanOrEqual(183);
+    expect(first.assassination).toBeLessThanOrEqual(199);
+    expect(first.subtlety).toBeGreaterThanOrEqual(158);
+    expect(first.subtlety).toBeLessThanOrEqual(174);
+    // The ordering, restated to the v0.42.0 merged-tree truth: Combat leads
+    // both siblings, and Assassination now stays above Subtlety (the
+    // Knifework buff and Skulduggery nerf cross the pair; this branch's
+    // earlier Combat > Subtlety > Assassination order, from the 2026-08-30
+    // gear-only sync, is retired by the v0.42.0 rebalance). The strict pairs
+    // are a SENTINEL over a deterministic measurement (a flip is a real sim
+    // change worth a red).
     expect(first.combat).toBeGreaterThan(first.assassination);
-    expect(first.subtlety).toBeGreaterThan(first.assassination);
+    expect(first.assassination).toBeGreaterThan(first.subtlety);
   }, 30_000);
 });

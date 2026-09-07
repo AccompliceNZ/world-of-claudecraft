@@ -2502,7 +2502,11 @@ describe('a pick of nothing but unmapped families is refused, claim intact (#250
     }
     const tagged = Object.values(MOBS).filter((m) => (m.componentTags?.length ?? 0) > 0);
     expect(tagged).toHaveLength(54);
-    expect(Object.keys(MOBS).length - tagged.length).toBe(188);
+    // 189, not 188: the Nythraxis Bone Spike (src/sim/content/dungeons.ts) the mechanics
+    // redo added ships untagged (a stationary pillar, not a butcherable corpse), so it
+    // grows MOBS without touching `tagged`. Full documented chain: tests/gathering.test.ts,
+    // 'answers for every shipped template, and none is excluded any more'.
+    expect(Object.keys(MOBS).length - tagged.length).toBe(189);
     withMixedTemplates(() => {
       const mixed = mixedTemplates();
       expect(mixed.map(([id]) => id).sort()).toEqual(

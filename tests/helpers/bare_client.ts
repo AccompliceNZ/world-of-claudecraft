@@ -12,7 +12,7 @@ import { EMPTY_MST_CRAFTS } from '../../src/net/crafting_wire';
 import { GuildBankLogMirror } from '../../src/net/guild_bank_log_mirror';
 import { ClientWorld } from '../../src/net/online';
 import { FARM_PATCHES } from '../../src/sim/content/farm_patches';
-import { emptyAllocation } from '../../src/sim/content/talents';
+import { emptyAllocation, emptyModifiers } from '../../src/sim/content/talents';
 import { ALL_RECIPES } from '../../src/sim/data';
 import { freshDeedStats } from '../../src/sim/deeds';
 import { emptyCraftSkills } from '../../src/sim/professions/wheel';
@@ -91,6 +91,7 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   c.playtimeSeconds = 0;
   c.unlockedMilestones = [];
   c.talents = emptyAllocation();
+  c.talentMods = emptyModifiers();
   c.talentSpec = null;
   c.talentRole = null;
   c.loadouts = [];
@@ -200,6 +201,10 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   c.eventQueue = [];
   c.activeFrostRings = [];
   c.activeIgnivarMeteors = [];
+  c.activeNythraxisGraveEruptions = [];
+  c.activeNythraxisGraveFlames = [];
+  c.activeNythraxisGravefires = [];
+  c.activeNythraxisBindingSigils = [];
   c.activeVarkhulForgestormWarnings = [];
   c.activeVarkhulCinderFires = [];
   c.activeVarkhulCinderOrbProjectiles = [];

@@ -1288,10 +1288,36 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // fully resolved merged tree via:
 //   node scripts/assets/eastbrook_grand_armoury/remint_polish_provenance.mjs
 // No capture was retaken.
+// Re-minted for the release/v0.42.0 merge into the Nythraxis playtest-tuning
+// branch (PR #3903's Varkhul heroic add-health lands beside this branch's
+// Nythraxis hazard-color renderer change): the composite first, then this
+// seal. No capture was retaken.
+// RE-MINTED again for this worktree's own base merge of the professions
+// branch into release/v0.42.0 (both the Crucible-professions history above
+// and the Nythraxis-playtest history above land on the same merged tree): a
+// source-only historical capture reseal, run over the fully resolved merge
+// via node scripts/assets/eastbrook_grand_armoury/remint_polish_provenance.mjs.
+// No capture was retaken and no new owner acceptance is implied.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  '64f3f1a3b056bb861609fbc9e5eac8a4ba95ec2a28a4ecb6f681ab894cd8ff11';
+  '921d47e5d29f308c0613aca4f105cc4233a61aa8e046611f619a211bc61e8b73';
+// Re-minted at the release/v0.42.0 sync of PR #3439: renderer.ts moved for the
+// mount lifecycle seam (mount_lifecycle.ts) and the rickshaw hooks it absorbed.
+// Re-minted again for the PR #3695 review fixes (the impostor fragment tail).
+// Re-minted for the release/v0.42.0 merge into the Nythraxis playtest-tuning
+// branch (PR #3903's Varkhul heroic add-health lands beside this branch's
+// Nythraxis hazard-color renderer change): both arms had re-minted, so the
+// merged renderer.ts bytes replace either side's value. No capture was
+// retaken.
+// RE-MINTED for this worktree's own base merge of the professions branch
+// into release/v0.42.0: a source-only historical capture reseal over the
+// fully merged renderer and release tree. No capture was retaken and no new
+// owner acceptance is implied.
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  'c0048af8119c8292092fca3e07759338fe2d4eeb0a4493a56ccc57501f914f6e';
+  'a4907e5896c8b206841202db7a9c5ed93325e6d770592b5b096da5cfa5262722';
+// RE-MINTED for this worktree's own base merge of the professions branch
+// into release/v0.42.0: a source-only historical capture reseal over the
+// fully merged renderer and release tree. No capture was retaken and no new
+// owner acceptance is implied.
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2607,7 +2633,16 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // 7691517f). Run over the fully resolved merged tree via:
       //   node scripts/assets/eastbrook_grand_armoury/remint_polish_provenance.mjs
       // No capture was retaken.
-    ).toBe('cd040a04860532ff9462c2e425df84e58b76c6483aeb3d8f0ffba650c309a819');
+      // Re-minted for the release/v0.42.0 merge into the Nythraxis
+      // playtest-tuning branch (PR #3903's Varkhul heroic add-health lands
+      // beside this branch's Nythraxis hazard-color renderer change): the
+      // composite first, then this seal. No capture was retaken.
+      // RE-MINTED again for this worktree's own base merge of the
+      // professions branch into release/v0.42.0 (both histories above land
+      // on the same merged tree): a source-only historical capture reseal,
+      // second-order over the swept evidence bytes. No capture was retaken
+      // and no new owner acceptance is implied.
+    ).toBe('395bcfb2cb3c484ff8042f9e818e6e7b35a462fcc49265dbf1a7ad7c17f7c484');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

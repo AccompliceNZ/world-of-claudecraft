@@ -57,6 +57,12 @@ export const HUD_LOG = {
   MUTED: '#cfc6a8',
   /** Another player's broadcast unlock (a deed, a relic, an Illumination). */
   BROADCAST: '#40d264',
+  /** A guild's own success news: guild formed, a member joined, a rank
+   *  changed. The server spells this same green independently
+   *  (server/social.ts) for its own wire-sent log lines; this is the one
+   *  place hud.ts logs the matching line itself (guildRosterExpanded), kept
+   *  in sync with that family on purpose, not coincidence. */
+  GUILD_SUCCESS: '#40ff7f',
   /** An aura gained or faded. */
   AURA: '#d8a0d8',
   /** A local chat-filter notice (ignoring, no longer ignoring). */

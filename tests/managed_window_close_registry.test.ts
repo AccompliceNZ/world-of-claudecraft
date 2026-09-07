@@ -46,6 +46,7 @@ const CODE_BUILT: Record<string, string> = {
   'tutorial-greeting': 'src/ui/tutorial_greeting_window.ts',
   'dev-command-window': 'src/ui/dev_command_window.ts',
   'perfecting-window': 'src/ui/hud/professions/perfecting_window.ts',
+  'keyboard-map-window': 'src/ui/keyboard_map_window.ts',
 };
 
 /**
@@ -347,6 +348,7 @@ describe('closeManagedWindow case registry', () => {
     // EXACT, not a floor: a floor cannot notice a new module joining.
     expect(sites).toEqual({
       'ui/dev_command_window.ts': 1,
+      'ui/keyboard_map_window.ts': 1,
       // The live ferry-note renderer mints the managed #tutorial-greeting shell.
       'ui/tutorial_greeting_window.ts': 1,
       'ui/hud.ts': 1, // confirmDialog's half of the shared #confirm-dialog id

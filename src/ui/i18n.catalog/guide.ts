@@ -712,6 +712,15 @@ export const guideStrings = {
     // the unit frames, and that the tab's Reset to Defaults footer restores them.
     framesMoveBodyEditFrames:
       'Your frame, your target frame, and your party frames can all be moved. Each carries a small move button in its corner: unlock it, drag the frame where you want it, and lock it again so a stray click cannot shift it. Edit Frames, at the top of the Frames tab in the Interface options, loosens the rest of the interface at once, those three frames with it: the action bars, the cast bar, the swing bar, the experience bar, the minimap, the button rail, the pet frame, the stance bar, the buff and debuff rows, and the Wishlist Reminder chip, each wearing a name chip while it is loose. If they end up somewhere you regret, Reset to Defaults at the foot of that same Frames tab snaps them all back to where they started.',
+    // HUD_FRAME_SPECS carries rows framesMoveBodyEditFrames does not name: the
+    // right-stack trackers, the pet action bar, the Target dots frame, the
+    // paladin's Devotion medallion, the warlock's Affliction Bar, the
+    // spell-proc overlay, the off-hand swing timer, and the damage meter
+    // window. This key names exactly those, reusing the tracker phrases
+    // mapBodyZoneFirst and gatheringGoalTrackerBody already speak further
+    // down this page so each is checked against one literal.
+    framesGovernedExtra:
+      "Edit Frames also loosens the tracker stack below (your tracked quests and their objectives, your deed progress, your Reliquary pages, the delve you are in, any rift you are taking part in, and the recipe or commission you are tracking), the pet action bar beside your pet frame, the Target dots frame for your debuffs across nearby enemies, the paladin's Devotion medallion, the warlock's Affliction Bar, the spell-proc overlay, the off-hand swing timer for dual-wielders, and the tabbed damage meter window, each wearing its own name chip while it is loose.",
 
     barsTitle: 'Bars, timers, and combat text',
     barsBody:

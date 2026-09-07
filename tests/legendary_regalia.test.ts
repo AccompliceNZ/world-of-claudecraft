@@ -380,10 +380,13 @@ describe('legendary regalia graphics fairness (sheddable prestige cosmetic)', ()
     // no cross-wire: every projected field copies from ITS OWN source field
     for (const m of assigns) expect(m[2], `cross-wired eqi projection: ${m[0]}`).toBe(m[1]);
     const projected = assigns.map((m) => m[1]).sort();
-    expect(projected).toEqual(['enchant', 'name', 'perfected', 'rolled', 'signer']);
+    expect(projected).toEqual(['enchant', 'name', 'perfected', 'rift', 'rolled', 'signer']);
     // Perfected is public for accurate equipped-copy tooltip comparisons; the
     // cosmetic predicate above must still ignore it after a rank exchange.
-    // The pub block itself carries exactly the five assignment-shaped writes
+    // rift (Rift gear progression: tier/power/upgradeLevel/gemSlots/...) is
+    // public for the same equipped-copy inspect comparison, and the cosmetic
+    // predicate above never reads it either.
+    // The pub block itself carries exactly the six assignment-shaped writes
     // and no spread, so a widened wire SHAPE (a spread, a conditional copy in
     // another form) reds this alarm instead of slipping past the scrape above.
     const pubAt = game.indexOf('let eqi: Record<string, unknown> | undefined;');
@@ -391,8 +394,8 @@ describe('legendary regalia graphics fairness (sheddable prestige cosmetic)', ()
     const pubEnd = game.indexOf('if (eqi) out.eqi = eqi;', pubAt);
     expect(pubEnd).toBeGreaterThan(pubAt);
     const pubBlock = game.slice(pubAt, pubEnd);
-    expect([...pubBlock.matchAll(/pub\.(\w+) = inst\.(\w+);/g)]).toHaveLength(5);
-    expect(pubBlock.match(/\bpub\.\w+\s*=/g) ?? []).toHaveLength(5);
+    expect([...pubBlock.matchAll(/pub\.(\w+) = inst\.(\w+);/g)]).toHaveLength(6);
+    expect(pubBlock.match(/\bpub\.\w+\s*=/g) ?? []).toHaveLength(6);
     expect(pubBlock).not.toContain('...');
     // ... and none of the KNOWN non-dotted write shapes either (the Phase 16
     // QA): Object.assign, Reflect writes, defineProperty, a cast that opens

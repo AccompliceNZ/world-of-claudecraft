@@ -806,8 +806,14 @@ describe('Masterwrought art completion evidence', () => {
     ];
     expect(duplicateValues(currentOwnerIds)).toEqual([]);
     // 1,209 (Masterwrought completion) + 46 (Crucible professions, including
-    // the Forgebreaker quest's forgefathers_ember proof item) + 1 (Field Kit).
-    expect(currentOwnerIds).toHaveLength(1256);
+    // the Forgebreaker quest's forgefathers_ember proof item) + 1 (Field Kit)
+    // + 3 (Nythraxis gap-fill one-hander weapon renders, batch
+    // nythraxis-gap-weapon-renders-2026-09-04) + 22 (Roots' Bramblehide and
+    // Nythraxis gap-fill paintings, batch roots-bramblehide-icons-2026-09-07):
+    // both later release-merge waves, already machine-checked and owner-review
+    // pending per item_art_consistency.test.ts / item_icons.test.ts /
+    // weapon_icons.test.ts, so their mapping owners are genuine, not fabricated.
+    expect(currentOwnerIds).toHaveLength(1281);
     for (const id of datedIds) {
       expect(currentOwnerIds.includes(id), `${id} still has a current mapping owner`).toBe(true);
     }
@@ -821,6 +827,35 @@ describe('Masterwrought art completion evidence', () => {
     expect(value.targetSets.items.filter((id) => crucibleIds.has(id))).toEqual([]);
     expect(value.targetSets.items.includes('field_kit')).toBe(false);
 
+    // The two later release-merge art waves (Nythraxis gap-fill weapon renders, then
+    // Roots' Bramblehide plus further Nythraxis gap-fill paintings) each land as exactly
+    // one generated-batch entry; pin their batch identity and size here rather than
+    // trusting the comment above, so a future rename, split, or merge of either batch
+    // fails loudly instead of silently changing what gets stripped below.
+    const nythraxisGapBatches = mapping.generatedBatches.filter(
+      ({ batchId: id }) => id === 'nythraxis-gap-weapon-renders-2026-09-04',
+    );
+    expect(nythraxisGapBatches).toHaveLength(1);
+    const nythraxisGapIds = nythraxisGapBatches[0].itemIds;
+    expect(nythraxisGapIds).toHaveLength(3);
+    expect(duplicateValues(nythraxisGapIds)).toEqual([]);
+
+    const bramblehideBatches = mapping.generatedBatches.filter(
+      ({ batchId: id }) => id === 'roots-bramblehide-icons-2026-09-07',
+    );
+    expect(bramblehideBatches).toHaveLength(1);
+    const bramblehideIds = bramblehideBatches[0].itemIds;
+    expect(bramblehideIds).toHaveLength(22);
+    expect(duplicateValues(bramblehideIds)).toEqual([]);
+
+    // These 25 ids are a later additive wave that never appears in the dated file's own
+    // 1,255-item passIds union at all: confirm that up front (no overlap with datedIds)
+    // before stripping them back out below, so a future id collision between a new batch
+    // and the frozen dated set fails loudly instead of silently shrinking completionDatedIds.
+    const laterGapFillIds = new Set([...nythraxisGapIds, ...bramblehideIds]);
+    expect(laterGapFillIds.size).toBe(25);
+    expect(datedIds.filter((id) => laterGapFillIds.has(id))).toEqual([]);
+
     // Derive the original 1,209-item completion set by excluding the exact ids of
     // the one Crucible professions mapping batch (46 ids, forgefathers_ember
     // included) from the dated file's full 1,255-item passIds set (never a bare
@@ -828,11 +863,15 @@ describe('Masterwrought art completion evidence', () => {
     const completionDatedIds = datedIds.filter((id) => !crucibleIds.has(id));
     expect(completionDatedIds).toHaveLength(1209);
 
-    // Strip both later additive waves (Crucible professions, the Field Kit) back out
-    // of the live mapping so the underlying 1,209-item completion union equation
-    // below stays isolated to exactly the same set as completionDatedIds above.
+    // Strip all four later additive waves (Crucible professions, the Field Kit, the
+    // Nythraxis gap-fill weapon renders, and the Roots' Bramblehide/gap-fill paintings)
+    // back out of the live mapping by their EXACT ids, so the underlying 1,209-item
+    // completion union equation below stays isolated to exactly the same set as
+    // completionDatedIds above. This filters by the exact ids of those four batches only,
+    // never by broad membership of datedIds: a filter keyed on datedIds membership would
+    // silently discard future, unrecognized additions to the current owner registry.
     const completionOwnerIds = currentOwnerIds.filter(
-      (id) => !crucibleIds.has(id) && id !== 'field_kit',
+      (id) => !crucibleIds.has(id) && id !== 'field_kit' && !laterGapFillIds.has(id),
     );
     expect(completionOwnerIds).toHaveLength(1209);
     expect(sorted(completionOwnerIds)).toEqual(completionDatedIds);

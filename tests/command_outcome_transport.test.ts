@@ -21,6 +21,7 @@
 // never silently resolves it to `false`) so it cannot regress again silently.
 
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { ActionBarLayoutUploader } from '../src/net/action_bar_upload';
 import { ClientWorld } from '../src/net/online';
 
 // Kept bespoke on purpose (issue #2088), mirroring tests/net_interaction_outcome.test.ts's
@@ -38,14 +39,19 @@ function rig(sendImpl: (payload: string) => void) {
     close: () => {},
   };
   world.sessionEnded = false;
-  // endSession() (run by close(), below) unconditionally reads these two via
-  // a `!== null` check, unlike its other bypassed-initializer fields (which
-  // it reads with a truthy check `undefined` already satisfies): seed them to
-  // their real class defaults or close() itself calls flushActionBarLayoutSave
-  // and sends an unrelated 'save_hotbar_layout' frame through the SAME `send`
-  // this suite is deliberately making throw.
-  world.actionBarSaveTimer = null;
-  world.actionBarSavePending = null;
+  // endSession() (run by close(), below) unconditionally calls
+  // flushActionBarLayoutSave(), which reads `this.actionBarUploader`: a real
+  // class field initializer (`= new ActionBarLayoutUploader(...)`) that
+  // Object.create's constructor bypass never runs, unlike this rig's other
+  // bypassed fields (read with a truthy check `undefined` already
+  // satisfies). Seed the real class default rather than stub out
+  // close()/endSession() or the uploader's own send: an uploader nothing
+  // ever called save() on is guaranteed empty-pending, so flush() is a
+  // genuine no-op that never reaches its `send` callback, leaving the SAME
+  // `send` this suite is deliberately making throw untouched by teardown.
+  world.actionBarUploader = new ActionBarLayoutUploader(() => {
+    throw new Error('unexpected action-bar upload: rig never calls save()');
+  });
   return world;
 }
 

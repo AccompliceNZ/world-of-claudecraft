@@ -321,9 +321,15 @@ describe('scripted playthrough (one sim, live sites only)', () => {
     // so the shared stream forks again. Re-hunted once more for owner round 6b
     // (Gorrak's camp and its dressing rejoined the main bandit band, the
     // duplicate Vale Chapel graveyard retired with its spirit healer, and the
-    // market stalls and four town NPCs moved), all world-gen inputs again: the
-    // koi now lands on session index 7.
-    expect(koiSession).toBe(7);
+    // market stalls and four town NPCs moved), all world-gen inputs again.
+    // Re-hunted once more for the Drakelands site swap
+    // (docs/design/drakelands-improvements/plan.md: the Last Keep's castle
+    // removed to flat land on the old Trollmoot rise, the trolls and their
+    // henge onto the old keep grounds, Wyrmwatch's dressing stripped, roads
+    // re-aimed): terrain pads, props, camps, and roads are all world-gen
+    // inputs, so the shared stream forks again; the koi now lands on
+    // session index 37.
+    expect(koiSession).toBe(37);
     expect(sawBiteOnKoiSession).toBe(true); // the celebration follows the bite moment
     expect(meta.deedsEarned.has('col_glimmerfin')).toBe(false); // grant sweeps at the tick tail
     const evs = sim.tick();
@@ -372,20 +378,22 @@ describe('scripted playthrough (one sim, live sites only)', () => {
     // world), and the market stalls plus four town NPCs moved. All world-gen
     // inputs, so the shared stream forks again and all three indices below
     // were re-recorded ONE AT A TIME, in order, each after the one above it
-    // was already green.
+    // was already green. Re-recorded the same way for the Drakelands site
+    // swap (the keep castle out, the sites traded, Wyrmwatch stripped): the
+    // reshaped world moves every shared-stream index downstream.
     const hunts: { nodeId: string; deedId: string; itemId: string; hitAt: number }[] = [
-      { nodeId: 'ore_eastbrook_1', deedId: 'col_pristine_vein', itemId: 'copper_ore', hitAt: 148 },
+      { nodeId: 'ore_eastbrook_1', deedId: 'col_pristine_vein', itemId: 'copper_ore', hitAt: 151 },
       {
         nodeId: 'wood_eastbrook_1',
         deedId: 'col_ancient_heartwood',
         itemId: 'ironbark_log',
-        hitAt: 226,
+        hitAt: 0,
       },
       {
         nodeId: 'herb_eastbrook_1',
         deedId: 'col_moonlit_bloom',
         itemId: 'silverleaf_herb',
-        hitAt: 95,
+        hitAt: 160,
       },
     ];
     for (const hunt of hunts) {
@@ -451,10 +459,10 @@ describe('scripted playthrough (one sim, live sites only)', () => {
       if (!result.started) throw new Error('corpse harvest cast refused');
       if (sim.countItem('pristine_hide', pid) > 0) hitAt = i;
     }
-    // Hunted literal (seed 4242, after every beat above): the specimen lands
-    // on attempt index 2. Re-measured after Intentional Gathering PR3 turned
-    // this into a real HARVEST_CAST_SECONDS cast (30 ticks per attempt),
-    // which moved the index from the pre-PR3 instant-grant value of 5.
+    // Hunted literal (seed 4242, after every beat above), measured directly
+    // against the merged tree: combining the real HARVEST_CAST_SECONDS cast
+    // (Intentional Gathering PR3) with the release's Eastbrook/Drakelands
+    // world-layout re-hunt yields 2.
     expect(hitAt).toBe(2);
     const specimen = meta.inventory.find((s) => s.itemId === 'pristine_hide');
     // The signature rides materialSources, not instance.signer (the two are

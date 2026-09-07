@@ -84,6 +84,25 @@ function mount(): HTMLElement {
   return el;
 }
 
+/** Mounts the tracker root exactly as the live HUD entries do
+ *  (index.html/play.html): a `#gathering-goal-body` child the painter must
+ *  repaint into, plus a sibling frame-chrome node (the interface-unlock
+ *  corner move button `movable_frame.ts` appends once a frame joins
+ *  HUD_FRAME_SPECS: `.tf-move-btn`) that a repaint must never destroy. */
+function mountLive(): { root: HTMLElement; body: HTMLElement; chrome: HTMLElement } {
+  const root = document.createElement('div');
+  root.id = 'gathering-goal-tracker';
+  const chrome = document.createElement('button');
+  chrome.type = 'button';
+  chrome.className = 'tf-move-btn';
+  root.appendChild(chrome);
+  const body = document.createElement('div');
+  body.id = 'gathering-goal-body';
+  root.appendChild(body);
+  document.body.appendChild(root);
+  return { root, body, chrome };
+}
+
 describe('GatheringGoalController: signature-gated repaint', () => {
   it('a null goal hides the panel and touches the DOM only once for repeated no-op updates', () => {
     const element = mount();
@@ -376,5 +395,69 @@ describe('GatheringGoalController: the crafting-window goal quantity map', () =>
     controller.update();
     controller.update();
     expect(controller.goalQty('recipe_iron_pick')).toBe(27);
+  });
+});
+
+// The live HUD passes the tracker root, not its body. Pin that exact
+// mounting shape and the same chrome node across every repaint.
+describe('GatheringGoalController: frame chrome sibling survives every repaint', () => {
+  it('a real (non-empty) render paints into #gathering-goal-body and never wipes the frame-chrome sibling', () => {
+    const { root, body, chrome } = mountLive();
+    const world = fakeWorld(RECIPE_GOAL);
+    const controller = new GatheringGoalController({ element: root, world: () => world });
+    controller.update();
+
+    expect(root.style.display).toBe('flex');
+    expect(body.querySelector('.gathering-goal-header')).not.toBeNull();
+    // The chrome sibling is the SAME node `movable_frame.ts` appended before
+    // this controller ever ran: a repaint that wipes it (by writing
+    // `.innerHTML` on the ROOT instead of the body) fails this line.
+    expect(root.querySelector('.tf-move-btn')).toBe(chrome);
+    expect(root.contains(chrome)).toBe(true);
+  });
+
+  it('a real goal change repaints the body but leaves the SAME chrome node in place', () => {
+    const { root, body, chrome } = mountLive();
+    const world = fakeWorld(RECIPE_GOAL);
+    const controller = new GatheringGoalController({ element: root, world: () => world });
+    controller.update();
+
+    world.gatheringGoal = {
+      ...RECIPE_GOAL,
+      status: 'ready',
+      materials: [{ ...RECIPE_GOAL.materials[0], reachable: 5, missing: 0 }],
+    };
+    controller.update();
+
+    expect(body.querySelector('.gathering-goal-status')?.textContent).toBe('Ready');
+    expect(root.querySelector('.tf-move-btn')).toBe(chrome);
+  });
+
+  it('relocalize() forces a body rebuild but leaves the SAME chrome node in place', () => {
+    const { root, body, chrome } = mountLive();
+    const world = fakeWorld(RECIPE_GOAL);
+    const controller = new GatheringGoalController({ element: root, world: () => world });
+    controller.update();
+    const headerBefore = body.querySelector('.gathering-goal-header');
+
+    controller.relocalize();
+
+    expect(body.querySelector('.gathering-goal-header')).not.toBe(headerBefore);
+    expect(root.querySelector('.tf-move-btn')).toBe(chrome);
+  });
+
+  it('clearing the goal hides the ROOT and empties the BODY, but never touches the chrome sibling', () => {
+    const { root, body, chrome } = mountLive();
+    const world = fakeWorld(RECIPE_GOAL);
+    const controller = new GatheringGoalController({ element: root, world: () => world });
+    controller.update();
+
+    world.gatheringGoal = null;
+    controller.onClearGoal();
+
+    expect(root.style.display).toBe('none');
+    expect(body.innerHTML).toBe('');
+    expect(root.querySelector('.tf-move-btn')).toBe(chrome);
+    expect(root.contains(chrome)).toBe(true);
   });
 });

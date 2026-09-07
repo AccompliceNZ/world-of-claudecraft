@@ -252,6 +252,23 @@ describe('createWsAuth: authenticateWebSocket reject paths', () => {
     expectNoAdmissionWork(fixture);
   });
 
+  it('2c-25. rejects an auth-world-25 client before all admission work', async () => {
+    const fixture = setup();
+    const { ws, deps, req } = fixture;
+
+    await createWsAuth(deps).authenticateWebSocket(
+      asWs(ws),
+      JSON.stringify({ t: 'auth-world-25', token: 'tok', character: 7 }),
+      req,
+    );
+
+    expectSendThenClose(
+      ws,
+      errorFrame('Game and server versions are incompatible. Reload or update, then try again.'),
+    );
+    expectNoAdmissionWork(fixture);
+  });
+
   it('2c. rejects a source-unaware auth-world-26 client before all admission work', async () => {
     const fixture = setup();
     const { ws, deps, req } = fixture;
@@ -286,10 +303,29 @@ describe('createWsAuth: authenticateWebSocket reject paths', () => {
     expectNoAdmissionWork(fixture);
   });
 
+  it('2c-28. rejects a prior-release auth-world-28 client (profession client without current hazards/layout) before all admission work', async () => {
+    const fixture = setup();
+    const { ws, deps, req } = fixture;
+
+    await createWsAuth(deps).authenticateWebSocket(
+      asWs(ws),
+      JSON.stringify({ t: 'auth-world-28', token: 'tok', character: 7 }),
+      req,
+    );
+
+    expectSendThenClose(
+      ws,
+      errorFrame('Game and server versions are incompatible. Reload or update, then try again.'),
+    );
+    expectNoAdmissionWork(fixture);
+  });
+
   it.each([
     'auth-world',
-    'auth-world-24',
-    'auth-world-29',
+    // one epoch AHEAD of the live discriminator, derived so a layout-version
+    // bump can never turn this row into the current epoch by accident (the
+    // hardcoded 'auth-world-21' row did exactly that when 20 became 21)
+    ONLINE_WORLD_AUTH_TYPE.replace(/\d+$/, (n) => String(Number(n) + 1)),
     'auth-world-next',
     'auth-world-01',
     'auth-world-1.0',

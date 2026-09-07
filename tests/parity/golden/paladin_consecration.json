@@ -254,8 +254,8 @@
       "state": "e6feadc3",
       "events": "1426e389",
       "rng": {
-        "draws": 1432,
-        "digest": "e5b42b99"
+        "draws": 1431,
+        "digest": "9fb6d4ce"
       }
     },
     {
@@ -265,8 +265,8 @@
       "state": "3fdfc8dc",
       "events": "741638a5",
       "rng": {
-        "draws": 1703,
-        "digest": "45f66ae7"
+        "draws": 1705,
+        "digest": "e071f5d8"
       }
     },
     {

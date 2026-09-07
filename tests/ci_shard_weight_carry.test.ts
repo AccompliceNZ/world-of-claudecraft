@@ -29,6 +29,7 @@ import {
   serializeWeightTable,
   tableRows,
 } from '../scripts/lib/ci_shard_weight_carry.mjs';
+import { SHARD_LOG_FILE_FLOOR } from '../scripts/lib/ci_shard_weight_harvest_guard.mjs';
 
 // The injected spawner (and the rest of the entry's world). vi.mock is hoisted,
 // so these bind before the entry is imported inside runEntry below.
@@ -563,6 +564,16 @@ describe('the harvest entry: full harvest and local-carry modes (injected I/O)',
   const CARRIED = 'tests/measured.test.ts';
   const NEW_A = 'tests/new_a.test.ts';
   const NEW_B = 'tests/new_b.test.ts';
+  // A real `PR tests (n)` shard log carries hundreds of per-file lines;
+  // shardHarvestVerdict refuses one parsing under SHARD_LOG_FILE_FLOOR (a
+  // reporter/fetch regression), so the green-path fixture below must clear
+  // that floor too, not just assert the refusal exists elsewhere. The same
+  // filenames are reused across all 8 synthetic shard jobs so the harvest's
+  // own cross-job union dedupes them back down to one set.
+  const SHARD_FILLER_FILES = Array.from(
+    { length: SHARD_LOG_FILE_FLOOR },
+    (_, i) => `tests/shard_filler_${i}.test.ts`,
+  );
 
   const baseTable = () => ({
     __provenance: {
@@ -663,8 +674,16 @@ describe('the harvest entry: full harvest and local-carry modes (injected I/O)',
     entryIo.execFileSync.mockImplementation((_cmd: string, args: string[]) => {
       if (args.includes('--json')) return JSON.stringify(jobs);
       const job = Number(args[args.indexOf('--job') + 1]);
+      // Only the 8 `PR tests (n)` shard jobs (job <= 8) need to clear the
+      // shard floor; the long-sim and gate jobs (9, 10) keep their original
+      // two-line log, which the guard already treats as a valid non-shard job.
+      const shardFiller =
+        job <= 8
+          ? `${SHARD_FILLER_FILES.map((f, i) => `\u2713 ${f} (1 test) ${100 + i}ms`).join('\n')}\n`
+          : '';
       return (
         '[ci-shard-test] changes-job decision: mode=full\n' +
+        shardFiller +
         `\u2713 ${CARRIED} (1 test) ${200 + job}ms\n` +
         `\u2713 tests/full_${job}.test.ts (1 test) ${30 + job}ms`
       );
@@ -679,8 +698,8 @@ describe('the harvest entry: full harvest and local-carry modes (injected I/O)',
     expect(refreshed.__provenance).toEqual({
       run: '456',
       harvested: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/),
-      files: 11,
-      harvestedFiles: 11,
+      files: SHARD_LOG_FILE_FLOOR + 11,
+      harvestedFiles: SHARD_LOG_FILE_FLOOR + 11,
       carried: {},
     });
     expect(carriedDefects(refreshed, { fallbackMs: 41, requireMap: true })).toEqual([]);

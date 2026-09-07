@@ -337,7 +337,7 @@ describe('isHarvestableCorpse', () => {
     // untagged forge constructs, so they move the `untagged` count below and
     // this one not at all.
     expect(included).toHaveLength(54);
-    // ...and the untagged templates are counted rather than assumed: 188 of
+    // ...and the untagged templates are counted rather than assumed: 189 of
     // them ship, every one excluded, and none of them ever passed through
     // `excluded` (fen_troll was already tagged with claw and tusk when #2905
     // mapped both, so it moved from `excluded` into `included` above, never
@@ -356,9 +356,14 @@ describe('isHarvestableCorpse', () => {
     // mech, Varkhul, the three crucible automatons, the herald and the Heart
     // of the End): all elemental-family forge constructs, and a construct
     // corpse carries no skinnable or butcherable components (the release's
-    // own chain read 194 = 187 + 7): 188.
+    // own chain read 194 = 187 + 7, since it predates the Phase 11m spread
+    // that lands only on this branch): 188. Plus the Nythraxis Bone Spike
+    // from the mechanics redo (the release's other addition, verified in
+    // dungeons.ts): a stationary pillar of bone the raid shatters to free an
+    // impaled raider, not a corpse anyone butchers, so it carries no
+    // `componentTags` either: 189.
     const untagged = Object.values(MOBS).filter((m) => !m.componentTags?.length);
-    expect(untagged).toHaveLength(188);
+    expect(untagged).toHaveLength(189);
     for (const m of untagged) expect(isHarvestableCorpse(m.componentTags)).toBe(false);
     // The three literals above are the load-bearing ones; this sum states that
     // they partition MOBS, so a template that fell out of all three would read

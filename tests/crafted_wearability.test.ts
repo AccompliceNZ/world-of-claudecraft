@@ -173,9 +173,14 @@ describe('crafted wearability: the level-20 shelf is unmoved (masterwrought R5 s
     // past the cap (the Crucible set roster, the raid drop tables, the
     // Thronebane-band legendaries), every one deriving the same level-20
     // gate the sweep below asserts; no packet row moved.
+    // Re-pinned 487 -> 515 by commit 0ca3d01a60 (Roots' Bramblehide, a
+    // seven-piece set at normal+heroic, plus the seven-piece Nythraxis
+    // gap-fill drops at normal+heroic): 28 new gated equippables sourced at
+    // the level-29/33 raid rungs, every one deriving the same level-20 gate;
+    // no existing shelf row moved.
     // The Crucible crafting tier adds 33 items without moving any old shelf gate.
     expect(Object.keys(CRUCIBLE_COLLECTION_ITEMS)).toHaveLength(33);
-    expect(shelf.length).toBe(487);
+    expect(shelf.length).toBe(515);
     for (const def of shelf) {
       expect(requiredLevelFor(def), `${def.id} shelf gate`).toBe(20);
     }

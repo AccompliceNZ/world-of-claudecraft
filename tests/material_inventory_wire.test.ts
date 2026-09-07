@@ -6,9 +6,9 @@ import { ONLINE_WORLD_AUTH_TYPE, ONLINE_WORLD_LAYOUT_VERSION } from '../src/worl
 const source = { gatherer: { kind: 'character' as const, id: 11, name: 'Ana' } };
 const row: InvSlot = { itemId: 'copper_ore', count: 2, materialSources: [{ source, count: 2 }] };
 describe('mixed material inventory wire', () => {
-  it('requires the first source-aware client and server epoch', () => {
-    expect(ONLINE_WORLD_LAYOUT_VERSION).toBe(28);
-    expect(ONLINE_WORLD_AUTH_TYPE).toBe('auth-world-28');
+  it('requires the combined material-source and expanded-ability client and server epoch', () => {
+    expect(ONLINE_WORLD_LAYOUT_VERSION).toBe(29);
+    expect(ONLINE_WORLD_AUTH_TYPE).toBe('auth-world-29');
   });
   it('retains both mirrors for omitted and malformed source frames', () => {
     const mirror = { inventory: [row], vendorBuyback: [row] };

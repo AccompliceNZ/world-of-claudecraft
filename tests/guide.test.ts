@@ -3,6 +3,8 @@ import { existsSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import type { Element, HTMLTemplateElement } from 'happy-dom';
+import { Window } from 'happy-dom';
 import sharp from 'sharp';
 import { describe, expect, it, vi } from 'vitest';
 import { RETIRED_KEYS } from '../scripts/i18n_retired_keys.mjs';
@@ -6514,10 +6516,28 @@ describe('Guide wiki completeness corrections (Phase 20, 2026-09-03)', () => {
       xpBar: 'the experience bar',
       buffBar: 'the buff and debuff rows',
       debuffBar: 'the buff and debuff rows',
+      // The right-stack trackers: phrases already spoken for by the map section's
+      // own prose (mapBodyZoneFirst / gatheringGoalTrackerBody), reused here so a
+      // registry row and its live copy are checked against ONE literal each.
+      questTracker: 'your tracked quests and their objectives',
+      reliquaryTracker: 'your Reliquary pages',
+      deedTracker: 'your deed progress',
+      delveTracker: 'the delve you are in',
+      riftTracker: 'any rift you are taking part in',
+      gatheringGoalTracker: 'the recipe or commission you are tracking',
+      // The frames the 0.42 round added to the registry with no prior prose,
+      // named by guide.interfacePage.framesGovernedExtra.
+      petBar: 'the pet action bar beside your pet frame',
+      targetDots: 'the Target dots frame for your debuffs across nearby enemies',
+      paladinDevotion: "the paladin's Devotion medallion",
+      doomMeter: "the warlock's Affliction Bar",
+      procOverlay: 'the spell-proc overlay',
+      swingBarOffhand: 'the off-hand swing timer for dual-wielders',
+      damageMeter: 'the tabbed damage meter window',
     };
     expect(Object.keys(phraseFor).sort()).toEqual(HUD_FRAME_SPECS.map((s) => s.id).sort());
     for (const spec of HUD_FRAME_SPECS) {
-      expect(html, `the prose names ${spec.id}`).toContain(phraseFor[spec.id] as string);
+      expect(html, `the prose names ${spec.id}`).toContain(esc(phraseFor[spec.id] as string));
     }
     // The unchanged clauses: the three unit frames and their corner button.
     expect(html).toContain('Your frame, your target frame, and your party frames can all be moved');
@@ -6608,14 +6628,33 @@ describe('Guide wiki completeness corrections (Phase 20, 2026-09-03)', () => {
     expect(html).toContain(
       'Step into a delve, a dungeon, a rift or a castle keep and the map switches to a floor plan of where you stand',
     );
-    // The tracker stack, read from the live markup: every child of
-    // #right-tracker-stack has a phrase, so a sixth tracker reds here.
+    // The tracker stack, read from the live markup via a real DOM parse: only
+    // DIRECT children of #right-tracker-stack inside the real
+    // <template id="game-ui-template"> count as trackers, so a seventh
+    // tracker (or a dropped one) reds here. Parsing through happy-dom rather than
+    // a regex means a tracker's own inner paint target (#qt-body,
+    // #delve-body, #rift-body, #gathering-goal-body;
+    // tests/hud_frame_coverage.test.ts) is excluded by construction: it lives
+    // inside a tracker's own subtree, never as a direct child of the stack.
+    // A detached template container, never index.html connected as a live document:
+    // index.html pulls in remote CSS and Cloudflare scripts a connected happy-dom
+    // window would try to fetch. innerHTML on a bare <template> uses the real HTML
+    // parser without connecting or executing any of that.
     const indexHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
-    const stack = /id="right-tracker-stack">([\s\S]*?)\n\s*<\/div>\n/.exec(indexHtml);
-    expect(stack).not.toBeNull();
-    const trackerIds = [...(stack as RegExpExecArray)[1].matchAll(/id="([a-z-]+)"/g)].map(
-      (m) => m[1] ?? '',
-    );
+    const domWindow = new Window();
+    let trackerIds: string[];
+    try {
+      const entry = domWindow.document.createElement('template') as HTMLTemplateElement;
+      entry.innerHTML = indexHtml;
+      const template = entry.content.querySelector(
+        'template#game-ui-template',
+      ) as HTMLTemplateElement;
+      const stack = template.content.querySelector('#right-tracker-stack');
+      expect(stack, 'right-tracker-stack found in game-ui-template').not.toBeNull();
+      trackerIds = [...(stack as Element).children].map((el) => el.id);
+    } finally {
+      domWindow.close();
+    }
     const trackerPhrase: Record<string, string> = {
       'quest-tracker': 'your tracked quests and their objectives',
       'deed-tracker': 'your deed progress',

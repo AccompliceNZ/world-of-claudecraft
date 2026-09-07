@@ -2205,13 +2205,76 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
     // The one-time hammer recipe/proof content adds against the pre-hammer,
     // field-kit-excluded fixture (156144): the Crucible fixture-repair deltas
     // above, plus 183 bytes of existing quest/deed/Reliquary catalog entries
-    // the hammer recipe references. Diffed against `withoutFieldKit` (not
-    // `s2`) so field_kit's 12 bytes never leak into a hammer-attributed term.
-    // MEASURED after the real merge settle (hammer content plus field_kit
-    // together): the equation and every forgeBaseline delta below hold
-    // exactly as recorded on the pre-field-kit tree.
+    // the hammer recipe references, plus the 1,548-byte Bramblehide/Nythgap
+    // release content delta measured directly below (commit 0ca3d01a60:
+    // one new deed, 28 deedStats.itemsDiscovered ids across the normal and
+    // heroic forms, 14 reliquary.firstFind rows, and one new
+    // reliquary.illuminatedPages entry, all still present in
+    // `withoutFieldKit`). Diffed against `withoutFieldKit` (not `s2`) so
+    // field_kit's 12 bytes never leak into either attributed term. MEASURED
+    // after this release merge's settle (hammer content, field_kit, and the
+    // Bramblehide content together): the equation and every forgeBaseline
+    // delta below hold exactly as recorded on the pre-field-kit,
+    // pre-Bramblehide tree once the Bramblehide rows are counterfactually
+    // removed below.
+    const BRAMBLEHIDE_NORMAL_ITEM_IDS = [
+      'bramblehide_cinch',
+      'bramblehide_crown',
+      'bramblehide_grips',
+      'bramblehide_harness',
+      'bramblehide_legguards',
+      'bramblehide_mantle',
+      'bramblehide_treads',
+      'courtiers_bonefang',
+      'gravecourt_hewer',
+      'stormhymn_chain_grips',
+      'stormhymn_chain_treads',
+      'thornpeak_moonhide_cowl',
+      'thornpeak_wardblade',
+      'votive_ward_of_the_deathless_court',
+    ] as const;
+    /** Byte attribution only: remove the Bramblehide/Nythgap release content
+     * (the one deed, its itemsDiscovered ids, its reliquary firstFind rows,
+     * and its Reliquary page) without changing any other payload. Mirrors
+     * `withoutCrucibleContent` above; the two never overlap in item id. */
+    function withoutBramblehideContent(state: CharacterState): CharacterState {
+      const copy = JSON.parse(JSON.stringify(state)) as CharacterState;
+      const discoveredIds = new Set([
+        ...BRAMBLEHIDE_NORMAL_ITEM_IDS,
+        ...BRAMBLEHIDE_NORMAL_ITEM_IDS.map((id) => `heroic_${id}`),
+      ]);
+      if (copy.deeds) delete copy.deeds['col_set_bramblehide'];
+      if (copy.deedStats?.itemsDiscovered)
+        copy.deedStats.itemsDiscovered = copy.deedStats.itemsDiscovered.filter(
+          (id) => !discoveredIds.has(id),
+        );
+      if (copy.reliquary) {
+        for (const id of BRAMBLEHIDE_NORMAL_ITEM_IDS) delete copy.reliquary.firstFind?.[id];
+        copy.reliquary.illuminatedPages = copy.reliquary.illuminatedPages?.filter(
+          (id) => id !== 'conquerors_set_bramblehide',
+        );
+      }
+      return copy;
+    }
+    const preReleaseCounterfactual = withoutBramblehideContent(withoutFieldKit);
+    // The Bramblehide/Nythgap release content, attributed exactly against
+    // f73615a511 (the last test-ledger commit, where the settled ceiling
+    // measured 209,486): one deed (35 bytes), 28 deedStats.itemsDiscovered
+    // ids across the normal and heroic forms (742 bytes), and 14 reliquary
+    // firstFind rows plus one illuminated page (771 bytes), summing to the
+    // 1,548-byte total this merge's content brought in (current staged
+    // measures 211,034, exactly 209,486 + 1,548). Every other professions
+    // and non-professions field is byte-identical across the merge.
+    const bramblehideDelta = Object.fromEntries(
+      (['deeds', 'deedStats', 'reliquary'] as const).map((key) => [
+        key,
+        fieldBytes(withoutFieldKit, key) - fieldBytes(preReleaseCounterfactual, key),
+      ]),
+    );
+    expect(bramblehideDelta).toEqual({ deeds: 35, deedStats: 742, reliquary: 771 });
+    expect(Object.values(bramblehideDelta).reduce((sum, value) => sum + value, 0)).toBe(1548);
     expect(counterfactualBytes - 156144).toBe(
-      Object.values(fixtureDelta).reduce((sum, value) => sum + value, 0) + 183,
+      Object.values(fixtureDelta).reduce((sum, value) => sum + value, 0) + 183 + 1548,
     );
     const forgeBaseline = {
       questsDone: 4606,
@@ -2225,21 +2288,29 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
         Object.entries(forgeBaseline).map(([key, previous]) => [
           key,
           Buffer.byteLength(
-            JSON.stringify(withoutFieldKit[key as keyof typeof forgeBaseline]),
+            JSON.stringify(preReleaseCounterfactual[key as keyof typeof forgeBaseline]),
             'utf8',
           ) - previous,
         ]),
       ),
     ).toEqual({ questsDone: 50, knownRecipes: 30, deeds: 32, deedStats: 21, reliquary: 80 });
-    // Removing ONLY field_kit reproduces the pre-field-kit baseline WITH the
-    // hammer content still applied: 3884 alone measured 209,261 here (hammer
-    // content absent); the hammer content adds its own +213 on top
-    // (composed, not inferred: 3885 alone recorded that same +213 against
-    // its pre-field-kit tree). MEASURED after the real merge settle: 209,474.
+    // Removing field_kit AND the Bramblehide release content reproduces the
+    // pre-field-kit, pre-Bramblehide baseline WITH the hammer content still
+    // applied: 3884 alone measured 209,261 here (hammer content absent); the
+    // hammer content adds its own +213 on top (composed, not inferred: 3885
+    // alone recorded that same +213 against its pre-field-kit tree). MEASURED
+    // after the real merge settle: 209,474.
+    expect(
+      Buffer.byteLength(JSON.stringify(preReleaseCounterfactual), 'utf8'),
+      'field_kit and the Bramblehide release content removed, must reproduce the recorded pre-field-kit Crucible+hammer baseline',
+    ).toBe(209474);
+    // Removing ONLY field_kit (the Bramblehide release content still
+    // present, current staged tree) reproduces 209,474 plus the 1,548-byte
+    // Bramblehide delta attributed above: 211,022.
     expect(
       counterfactualBytes,
-      'field_kit removed, must reproduce the recorded pre-field-kit Crucible+hammer baseline',
-    ).toBe(209474);
+      'field_kit removed, must reproduce the current staged Crucible+hammer+Bramblehide baseline',
+    ).toBe(211022);
     const priorContent = withoutCrucibleContent(s2);
     const contentDelta = Object.fromEntries(
       (['knownRecipes', 'deedStats', 'reliquary'] as const).map((key) => [
@@ -2264,26 +2335,29 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
     );
     expect(metadataDelta).toEqual({ perfectingBonus: 11880, perfectingBound: 5934 });
     // Combined fixture (Crucible baseline + hammer recipe/proof content +
-    // field_kit), measured after the real merge settle: 209,486 bytes.
-    // Composed from both parents' own bands (3885 alone, hammer without
-    // field_kit, held 209,094..209,475, width 381; field_kit adds exactly
-    // +12 wherever it lands, proven above via counterfactualBytes), shifted
-    // by that same +12 without widening: 209,106..209,487.
-    expect(bytes, reMint).toBeGreaterThan(209106);
-    expect(bytes, reMint).toBeLessThan(209487);
+    // field_kit + the Bramblehide/Nythgap release content, commit
+    // 0ca3d01a60), measured after this release merge's settle: 211,034
+    // bytes (f73615a511, the last test-ledger commit, measured 209,486; the
+    // Bramblehide content attributed above accounts for the full +1,548
+    // difference). Re-based per the standing rule (floor measurement minus
+    // 380, edge measurement plus one, band width unchanged at 381):
+    // 210,654..211,035.
+    expect(bytes, reMint).toBeGreaterThan(210654);
+    expect(bytes, reMint).toBeLessThan(211035);
 
     // The Crucible database review approved 229,376 bytes (224 KiB), the first
     // 32-KiB step above the corrected 209,261-byte pre-field-kit fixture it was
     // minted against (historical: that is the figure the threshold's own 32-KiB
     // step was derived from, not this arm's measurement). The previous
     // 163,840-byte threshold warned on this legal modeled state. Measured here,
-    // after the real merge settle: this combined fixture (hammer content plus
-    // field_kit) is 209,486 bytes, 19,890 bytes of headroom below the
-    // threshold. Pin the measured relation: a lower threshold or further
-    // content growth crossing it requires re-measuring and reviewing both
-    // sides together, never silently widening this test's narrow tracking
-    // band or the warn threshold itself. This remains a warning only; the
-    // save-path tests prove oversized saves stay whole.
+    // after this release merge's settle: this combined fixture (hammer
+    // content, field_kit, and the Bramblehide release content) is 211,034
+    // bytes, 18,342 bytes of headroom below the threshold. Pin the measured
+    // relation: a lower threshold or further content growth crossing it
+    // requires re-measuring and reviewing both sides together, never silently
+    // widening this test's narrow tracking band or the warn threshold itself.
+    // This remains a warning only; the save-path tests prove oversized saves
+    // stay whole.
     expect(bytes).toBeLessThan(CHARACTER_BLOB_WARN_BYTES);
   });
 });

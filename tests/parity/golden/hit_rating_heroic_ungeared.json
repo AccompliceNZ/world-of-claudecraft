@@ -7,8 +7,8 @@
     "Hit rating from authored gear vs a +3 target",
     "same shared-RNG draw count/order as the ungeared spell-resist path"
   ],
-  "draws": 687,
-  "drawDigest": "4fc15226",
+  "draws": 688,
+  "drawDigest": "e80bb56c",
   "frames": [
     {
       "tick": 0,
@@ -243,8 +243,8 @@
       "tick": 90,
       "time": 4.5,
       "nextId": 1005,
-      "state": "ea36c5ac",
-      "events": "7565e1e3",
+      "state": "e765e494",
+      "events": "6c6fe40f",
       "rng": {
         "draws": 414,
         "digest": "00a5eee7"
@@ -254,44 +254,44 @@
       "tick": 100,
       "time": 5,
       "nextId": 1005,
-      "state": "0821b01f",
+      "state": "40227fff",
       "events": "741638a5",
       "rng": {
-        "draws": 509,
-        "digest": "43d67fa2"
+        "draws": 507,
+        "digest": "ac9ccdc8"
       }
     },
     {
       "tick": 110,
       "time": 5.5,
       "nextId": 1005,
-      "state": "2fc479b8",
+      "state": "45c3c368",
       "events": "741638a5",
       "rng": {
-        "draws": 609,
-        "digest": "62165865"
+        "draws": 605,
+        "digest": "9ae02376"
       }
     },
     {
       "tick": 120,
       "time": 6,
       "nextId": 1005,
-      "state": "bbe25abe",
+      "state": "8a106206",
       "events": "741638a5",
       "rng": {
-        "draws": 687,
-        "digest": "4fc15226"
+        "draws": 688,
+        "digest": "e80bb56c"
       }
     },
     {
       "tick": 120,
       "time": 6,
       "nextId": 1005,
-      "state": "bbe25abe",
+      "state": "8a106206",
       "events": "741638a5",
       "rng": {
-        "draws": 687,
-        "digest": "4fc15226"
+        "draws": 688,
+        "digest": "e80bb56c"
       },
       "label": "fireball-landed",
       "players": [
@@ -319,7 +319,7 @@
           "companionUpgrades": {},
           "counters": {
             "damageDealt": 111,
-            "damageTaken": 168
+            "damageTaken": 164
           },
           "craftDaily": {},
           "craftSkills": {},
@@ -419,7 +419,7 @@
           "fallStartY": -2,
           "fiveSecondRule": 2.05,
           "healPower": 41,
-          "hp": 49832,
+          "hp": 49836,
           "id": 999,
           "inCombat": true,
           "kind": "player",
@@ -539,11 +539,11 @@
       "tick": 120,
       "time": 6,
       "nextId": 1005,
-      "state": "bbe25abe",
+      "state": "8a106206",
       "events": "741638a5",
       "rng": {
-        "draws": 687,
-        "digest": "4fc15226"
+        "draws": 688,
+        "digest": "e80bb56c"
       },
       "label": "final",
       "players": [
@@ -571,7 +571,7 @@
           "companionUpgrades": {},
           "counters": {
             "damageDealt": 111,
-            "damageTaken": 168
+            "damageTaken": 164
           },
           "craftDaily": {},
           "craftSkills": {},
@@ -671,7 +671,7 @@
           "fallStartY": -2,
           "fiveSecondRule": 2.05,
           "healPower": 41,
-          "hp": 49832,
+          "hp": 49836,
           "id": 999,
           "inCombat": true,
           "kind": "player",

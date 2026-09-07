@@ -105,7 +105,18 @@ describe('the Perfecting rail tile and keybind (the seven-piece exemplar)', () =
   });
 
   it('maps the keybind action through t() in Options (never the raw English label)', () => {
-    expect(optionsWindow).toContain("perfecting: 'hudChrome.perfecting.title',");
+    // The label map lives in keybind_action_names_core.ts (the shared pure
+    // core BIND_ACTION_LABEL_KEYS), not inline in options_window.ts; assert
+    // the literal at its real owner and that Options delegates to it via
+    // bindActionDisplayName, so the i18n guarantee still holds end to end.
+    const keybindActionNamesCore = read('../src/ui/keybind_action_names_core.ts');
+    expect(keybindActionNamesCore).toContain("perfecting: 'hudChrome.perfecting.title',");
+    expect(optionsWindow).toContain(
+      "import { BIND_CATEGORY_LABEL_KEYS, bindActionDisplayName } from './keybind_action_names_core';",
+    );
+    expect(optionsWindow).toMatch(
+      /bindActionDisplayName\(actionId, fallback, this\.deps\.slotActionName\)/,
+    );
   });
 
   it('data-icon="perfecting" is a registered glyph distinct from its neighbours', () => {

@@ -42,6 +42,7 @@ describe('the HUD tone vocabulary is named once', () => {
       PROGRESS: '#dcd29f',
       MUTED: '#cfc6a8',
       BROADCAST: '#40d264',
+      GUILD_SUCCESS: '#40ff7f',
       AURA: '#d8a0d8',
       FILTER: '#aaf',
       XP: '#a980d8',

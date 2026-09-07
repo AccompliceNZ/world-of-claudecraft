@@ -53,10 +53,11 @@ describe('painted weapon inventory icons', () => {
     // pair), the release 136 (the three Nythraxis gap-fill one-handers
     // courtiers_bonefang, thornpeak_wardblade, gravecourt_hewer, rendered in
     // nythraxis-gap-weapon-renders-2026-09-04 and confirmed present in the
-    // resolved src/sim/content/zone3.ts). Arithmetic reconciliation (base
-    // 133 + ours' delta +2 + theirs' delta +3 = 138), not a suite run:
-    // confirm with `npx vitest run tests/weapon_icons.test.ts` before merge
-    // lands.
+    // resolved src/sim/content/zone3.ts). Arithmetic (base 133 + ours' delta
+    // +2 + theirs' delta +3 = 138), CONFIRMED by an actual
+    // `npx vitest run tests/weapon_icons.test.ts` run on the merged tree:
+    // this assertion, and the 19-heroic-copy count in the next test, both
+    // pass as-is.
     expect(baseWeapons).toHaveLength(138);
     expect([...WEAPON_IMAGE_IDS].sort()).toEqual(baseWeapons);
     expect(Object.keys(ITEM_WEAPON_VARIANTS).sort()).toEqual(baseWeapons);
@@ -87,7 +88,18 @@ describe('painted weapon inventory icons', () => {
     const weaponBatches = batches.filter((batch) =>
       batch.itemIds.some((id) => Object.hasOwn(ITEM_WEAPON_VARIANTS, id)),
     );
-    expect(weaponBatches).toHaveLength(6);
+    // Seven batches currently own at least one weapon id (confirmed against
+    // public/ui/items/mapping.json's generatedBatches): the historical
+    // campaign (placeholder-art-completion-weapons-2026-08-09), its
+    // replacement (item-art-consistency-2026-08-09), the integration
+    // daggers (integration-dagger-icons-2026-08-10), the Masterwrought
+    // completion wave (masterwrought-art-completion-2026-09-02), the
+    // Crucible raid weapons (crucible-raid-weapons-2026-08-28), the Ignivar
+    // legendary (ignivar-varkhul-drop-renders-2026-08-28), and, landed by
+    // this release-branch merge, the Nythraxis gap-fill one-handers
+    // (nythraxis-gap-weapon-renders-2026-09-04, asserted below as
+    // `gapBatch`).
+    expect(weaponBatches).toHaveLength(7);
     const historicalBatch = weaponBatches.find(
       ({ batchId }) => batchId === 'placeholder-art-completion-weapons-2026-08-09',
     );

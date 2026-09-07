@@ -24,6 +24,7 @@ import { t } from '../../src/admin/i18n';
 import Accounts from '../../src/admin/pages/Accounts.svelte';
 import MarketMetrics from '../../src/admin/pages/MarketMetrics.svelte';
 import Overview from '../../src/admin/pages/Overview.svelte';
+import RealmBuilders from '../../src/admin/pages/RealmBuilders.svelte';
 import TopHolders from '../../src/admin/pages/TopHolders.svelte';
 
 const apiGetMock = apiGet as unknown as Mock<(path: string) => Promise<unknown>>;
@@ -90,6 +91,7 @@ const SURFACES: Array<{
     props: { accountId: 1 },
     genericKey: 'wealth.loadFailed',
   },
+  { name: 'RealmBuilders', component: RealmBuilders, genericKey: 'realmBuilders.loadFailed' },
 ];
 
 describe('the family-wide 403 treatment', () => {

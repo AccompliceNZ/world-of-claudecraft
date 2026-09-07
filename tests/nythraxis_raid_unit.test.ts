@@ -8,8 +8,10 @@ import { FARM_RECIPES } from '../src/sim/content/recipes';
 import { BUILTIN_WORLD, DUNGEONS, ITEMS, instanceOrigin, MOBS } from '../src/sim/data';
 import { NYTHRAXIS_LAYOUT } from '../src/sim/dungeon_layout';
 import {
+  initNythraxisEncounter,
   nythraxisGravebreakerOnMobSwing,
   resetNythraxisEncounter,
+  spawnNythraxisAdds,
 } from '../src/sim/encounters/nythraxis';
 import { isShieldItem } from '../src/sim/equipment_rules';
 import { expectedStatBudget, itemLevel, primaryStatSum } from '../src/sim/item_level';
@@ -19,6 +21,7 @@ import {
   armorReduction,
   dist2d,
   type Entity,
+  NYTHRAXIS_ADDS_ENABLED,
   type WorldContent,
 } from '../src/sim/types';
 import { groundHeight } from '../src/sim/world';
@@ -136,6 +139,22 @@ function engage(boss: Entity, tank: Entity) {
   boss.threat.set(tank.id, 1000);
 }
 
+// The mechanics redo added Dread Curse on both difficulties, Bone Spike, and
+// Grave Eruption (src/sim/encounters/nythraxis.ts). These legacy scenarios run
+// a lone tank whom the percentage mechanics would impale or burn down mid
+// measurement, so every test that is not about them parks their cadences.
+// Their own coverage lives in tests/nythraxis_bone_spike.test.ts,
+// tests/nythraxis_grave_eruption.test.ts, and tests/nythraxis_encounter.test.ts.
+const QUIET_REDO_MECHANICS = {
+  dreadCurseTimer: 999,
+  boneSpikeTimer: 999,
+  eruptionTimer: 999,
+} as const;
+
+function quietRedoMechanics(boss: Entity): void {
+  Object.assign(initNythraxisEncounter(boss), QUIET_REDO_MECHANICS);
+}
+
 function tickSeconds(sim: Sim, seconds: number) {
   for (let i = 0; i < seconds * 20; i++) sim.tick();
 }
@@ -212,12 +231,14 @@ describe('Nythraxis raid encounter', () => {
     expect(dungeon.interior).toBe('nythraxis');
     expect(dungeon.suggestedPlayers).toBe(10);
     expect(dungeon.spawns).toEqual([{ mobId: 'nythraxis_scourge_of_thornpeak', x: 0, z: 96 }]);
-    expect(NYTHRAXIS_LAYOUT.wallX).toBeGreaterThanOrEqual(230);
+    // One hall, about 100 yd wide by 100 deep, the boss dais at z 96 with 20 yd behind it.
+    expect(NYTHRAXIS_LAYOUT).toMatchObject({ zMin: 16, zMax: 116, wallX: 51, floorHalfX: 50 });
     expect(MOBS.nythraxis_scourge_of_thornpeak.boss).toBe(true);
     expect(MOBS.nythraxis_scourge_of_thornpeak.ccImmune).toBe(true);
     expect(MOBS.nythraxis_scourge_of_thornpeak.moveSpeed).toBe(10.5);
-    expect(MOBS.nythraxis_scourge_of_thornpeak.dmgBase).toBeCloseTo(54);
-    expect(MOBS.nythraxis_scourge_of_thornpeak.dmgPerLevel).toBeCloseTo(11.4);
+    // 70% of the pre-redo 54 / 11.4 swing (first playtest, 2026-09-04).
+    expect(MOBS.nythraxis_scourge_of_thornpeak.dmgBase).toBeCloseTo(37.8);
+    expect(MOBS.nythraxis_scourge_of_thornpeak.dmgPerLevel).toBeCloseTo(7.98);
     expect(MOBS.nythraxis_skeleton_warrior.dmgBase).toBeCloseTo(26);
     expect(MOBS.nythraxis_skeleton_warrior.dmgPerLevel).toBeCloseTo(5.6);
     expect(MOBS.nythraxis_heroic_warrior_add).toMatchObject({
@@ -261,11 +282,12 @@ describe('Nythraxis raid encounter', () => {
     const origin = enterRaid(sim, pid);
     expect(sim.entities.get(pid)!.pos.x).toBeGreaterThan(3000);
     const boss = mob(sim, 'nythraxis_scourge_of_thornpeak');
-    // Normal-raid retune (NORMAL_DUNGEON_TUNING): doubled health (was 60000)
-    // and the 5x per-mob damage multiplier (weapon was 325-507).
+    // Normal-raid retune (NORMAL_DUNGEON_TUNING): doubled health (was 60000).
+    // Boss-only melee retune (2026-09-07): raw swing ~90% of normal Ignivar's
+    // own boss (286..446, unmultiplied).
     expect(boss.maxHp).toBe(120000);
-    expect(boss.weapon.min).toBe(1624);
-    expect(boss.weapon.max).toBe(2537);
+    expect(boss.weapon.min).toBe(257);
+    expect(boss.weapon.max).toBe(402);
     expect(visualKeyFor(boss)).toBe('skel_golem');
     expect(
       visualKeyFor({ kind: 'mob', templateId: 'nythraxis_heroic_warrior_add' } as Entity),
@@ -286,14 +308,14 @@ describe('Nythraxis raid encounter', () => {
         .map((w) => ({ x: Math.round(w.pos.x - origin.x), z: Math.round(w.pos.z - origin.z) }))
         .sort((a, b) => a.x - b.x),
     ).toEqual([
-      { x: -40, z: 79 },
-      { x: 0, z: 63 },
-      { x: 40, z: 79 },
+      { x: -30, z: 74 },
+      { x: 0, z: 62 },
+      { x: 30, z: 74 },
     ]);
     expect(pillars).toHaveLength(0);
     expect(isBlocked(sim.cfg.seed, origin.x + 0, origin.z + 96)).toBe(false);
-    expect(isBlocked(sim.cfg.seed, origin.x + 18, origin.z + 82)).toBe(false);
-    expect(isBlocked(sim.cfg.seed, origin.x + 230, origin.z + 82)).toBe(true);
+    expect(isBlocked(sim.cfg.seed, origin.x + 10, origin.z + 82)).toBe(false);
+    expect(isBlocked(sim.cfg.seed, origin.x + 51, origin.z + 82)).toBe(true);
     expect(dungeonDaisHasRaisedPlatform('nythraxis')).toBe(false);
     expect(dungeonDaisHasRaisedPlatform('crypt')).toBe(true);
   });
@@ -692,6 +714,7 @@ describe('Nythraxis raid encounter', () => {
     // swing while the opening dialogue is still in scope.
     teleport(sim, tankPid, boss.pos.x, boss.pos.z + 2);
     engage(boss, tank);
+    quietRedoMechanics(boss);
 
     const events = collectEventsForSeconds(sim, 18);
     const bossYells = events
@@ -756,8 +779,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     const events = collectEventsForSeconds(sim, 66);
@@ -832,8 +855,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     sim.drainEvents();
@@ -899,8 +922,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     sim.drainEvents();
@@ -971,8 +994,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     sim.drainEvents();
@@ -1021,8 +1044,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     sim.drainEvents();
@@ -1074,8 +1097,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     const events = sim.tick();
@@ -1113,8 +1136,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     const events = sim.tick();
@@ -1181,6 +1204,7 @@ describe('Nythraxis raid encounter', () => {
     boss.swingTimer = 0;
     teleport(sim, tankPid, boss.pos.x, boss.pos.z - 6);
     engage(boss, tank);
+    quietRedoMechanics(boss);
     boss.aiState = 'attack';
 
     const hitTimes: number[] = [];
@@ -1245,8 +1269,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     const hitTimes: number[] = [];
@@ -1304,10 +1328,13 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
+    // The redo fields no waves (NYTHRAXIS_ADDS_ENABLED); raise the guards
+    // directly, this test is about the add's own AI.
+    spawnNythraxisAdds(sim.ctx, boss);
     sim.tick();
     const add = mob(sim, 'nythraxis_skeleton_warrior');
     add.pos = { x: tank.pos.x, y: tank.pos.y, z: tank.pos.z - 6.0 };
@@ -1356,9 +1383,12 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
+    // The redo fields no waves (NYTHRAXIS_ADDS_ENABLED); raise the guards
+    // directly, this test is about the add's own AI.
+    spawnNythraxisAdds(sim.ctx, boss);
     sim.tick();
     const add = mob(sim, 'nythraxis_skeleton_warrior');
     add.pos = { x: tank.pos.x, y: tank.pos.y, z: tank.pos.z - 8 };
@@ -1405,9 +1435,12 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
+    // The redo fields no waves (NYTHRAXIS_ADDS_ENABLED); raise the guards
+    // directly, this test is about the add's own AI.
+    spawnNythraxisAdds(sim.ctx, boss);
     sim.tick();
     const add = mob(sim, 'nythraxis_skeleton_warrior');
     add.swingTimer = 0;
@@ -1471,9 +1504,12 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
+    // The redo fields no waves (NYTHRAXIS_ADDS_ENABLED); raise the guards
+    // directly, this test is about the add's own AI.
+    spawnNythraxisAdds(sim.ctx, boss);
     sim.tick();
     const add = mob(sim, 'nythraxis_skeleton_warrior');
     add.swingTimer = 0;
@@ -1539,9 +1575,12 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
+    // The redo fields no waves (NYTHRAXIS_ADDS_ENABLED); raise the guards
+    // directly, this test is about the add's own AI.
+    spawnNythraxisAdds(sim.ctx, boss);
     sim.tick();
     const add = mob(sim, 'nythraxis_skeleton_warrior');
     add.aggroTargetId = tank.id;
@@ -1590,9 +1629,12 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
+    // The redo fields no waves (NYTHRAXIS_ADDS_ENABLED); raise the guards
+    // directly, this test is about the add's own AI.
+    spawnNythraxisAdds(sim.ctx, boss);
     sim.tick();
     const add = mob(sim, 'nythraxis_skeleton_warrior');
     add.aggroTargetId = tank.id;
@@ -1638,9 +1680,12 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
+    // The redo fields no waves (NYTHRAXIS_ADDS_ENABLED); raise the guards
+    // directly, this test is about the add's own AI.
+    spawnNythraxisAdds(sim.ctx, boss);
     sim.tick();
     const add = mob(sim, 'nythraxis_skeleton_warrior');
     add.aggroTargetId = tank.id;
@@ -1749,9 +1794,12 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
+    // The redo fields no waves (NYTHRAXIS_ADDS_ENABLED); raise the guards
+    // directly, this test is about the add's own AI.
+    spawnNythraxisAdds(sim.ctx, boss);
     sim.tick();
     const add = mob(sim, 'nythraxis_skeleton_warrior');
     const controls: Omit<Aura, 'sourceId'>[] = [
@@ -1816,7 +1864,7 @@ describe('Nythraxis raid encounter', () => {
     tank.hp = tank.maxHp;
     const boss = mob(sim, 'nythraxis_scourge_of_thornpeak');
     engage(boss, tank);
-    teleport(sim, tankPid, origin.x, origin.z + 36);
+    teleport(sim, tankPid, origin.x, origin.z + 70);
     boss.aiState = 'chase';
     boss.swingTimer = 0;
 
@@ -1836,7 +1884,7 @@ describe('Nythraxis raid encounter', () => {
     tank.maxHp = 1e7;
     tank.hp = tank.maxHp;
     const boss = mob(sim, 'nythraxis_scourge_of_thornpeak');
-    teleport(sim, tankPid, origin.x, origin.z + 36);
+    teleport(sim, tankPid, origin.x, origin.z + 70);
     boss.inCombat = true;
     boss.aiState = 'idle';
     boss.aggroTargetId = tank.id;
@@ -1879,12 +1927,15 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
+    // The redo fields no waves (NYTHRAXIS_ADDS_ENABLED); raise the guards
+    // directly, this test is about the add's own AI.
+    spawnNythraxisAdds(sim.ctx, boss);
     sim.tick();
     const add = mob(sim, 'nythraxis_skeleton_warrior');
-    teleport(sim, tankPid, origin.x + 34, origin.z + 82);
+    teleport(sim, tankPid, origin.x + 20, origin.z + 82);
     add.aiState = 'chase';
     add.swingTimer = 0;
 
@@ -1972,9 +2023,10 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
+    spawnNythraxisAdds(sim.ctx, boss);
     sim.tick();
     const adds = [...sim.entities.values()].filter(
       (e) => e.kind === 'mob' && e.templateId === 'nythraxis_skeleton_warrior',
@@ -2066,7 +2118,13 @@ describe('Nythraxis raid encounter', () => {
     expect(boss.hp).toBe(transitionBossHp);
   });
 
-  it('spawns Nythraxis add waves every 30 seconds in phase one', () => {
+  it('raises no guard waves in phase one while the redo fields no adds', () => {
+    // Owner playtest call 2026-09-04 (NYTHRAXIS_ADDS_ENABLED in types.ts): the
+    // 30 s Raise Fallen cadence is switched off. Flip the switch back and this
+    // pin is the one to restore to the two-guard wave at 30 s (weapon 794 to
+    // 1241 after the 5x normal-raid retune; tests/dungeons.test.ts still pins
+    // the add stats through the direct spawn).
+    expect(NYTHRAXIS_ADDS_ENABLED).toBe(false);
     const sim = makeWorld();
     const tankPid = sim.addPlayer('warrior', 'Tank');
     const origin = enterRaid(sim, tankPid);
@@ -2076,22 +2134,16 @@ describe('Nythraxis raid encounter', () => {
     boss.swingTimer = 999;
     teleport(sim, tankPid, origin.x, origin.z + 36);
     engage(boss, tank);
+    quietRedoMechanics(boss);
 
-    tickSeconds(sim, 28);
+    tickSeconds(sim, 64);
     expect(
       [...sim.entities.values()].filter(
         (e) => e.kind === 'mob' && e.templateId === 'nythraxis_skeleton_warrior' && !e.dead,
       ),
     ).toHaveLength(0);
-
-    tickSeconds(sim, 4);
-    const adds = [...sim.entities.values()].filter(
-      (e) => e.kind === 'mob' && e.templateId === 'nythraxis_skeleton_warrior' && !e.dead,
-    );
-    expect(adds).toHaveLength(2);
-    // 5x normal-raid retune (weapon was 159-248 before the economy pass).
-    expect(adds[0].weapon.min).toBe(794);
-    expect(adds[0].weapon.max).toBe(1241);
+    // The wave timer never even counts down: the raise tick is not reached.
+    expect(boss.nythraxis?.raiseFallenTimer).toBe(30);
   });
 
   it('stages Aldric transition dialogue without interrupting itself before Soul Rend opens phase two after a settle delay', () => {
@@ -2228,8 +2280,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     sim.tick();
@@ -2271,8 +2323,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
     sim.tick();
     for (const pid of pids) {
@@ -2327,8 +2379,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     sim.tick();
@@ -2379,8 +2431,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     sim.tick();
@@ -2433,8 +2485,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
 
     const events = sim.tick();
@@ -2476,8 +2528,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
     sim.tick();
     expect(boss.castingAbility).toBe('nythraxis_deathless_rage');
@@ -2526,8 +2578,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
     sim.tick();
 
@@ -2571,8 +2623,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
     sim.tick();
 
@@ -2622,8 +2674,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
     sim.tick();
 
@@ -2664,8 +2716,8 @@ describe('Nythraxis raid encounter', () => {
       deathlessCastRemaining: 0,
       deathlessStunRemaining: 0,
       wardChannels: [],
-      finalStand: false,
       deathSpoken: false,
+      ...QUIET_REDO_MECHANICS,
     };
     sim.tick();
 

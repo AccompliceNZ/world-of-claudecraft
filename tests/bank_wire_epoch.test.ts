@@ -89,7 +89,7 @@ type _PerfectingKeysAreNew = AssertNever<
 >;
 
 describe('wire compatibility epoch', () => {
-  it('fences older item formats out at the epoch-28 handshake', () => {
+  it('fences older item formats out at the epoch-29 handshake', () => {
     // The runtime epoch pin: the world handshake version that fences older
     // snapshot shapes out before any snapshot is admitted. The three frozen
     // fixtures above carry the per-epoch rationale: bank storage (10) added
@@ -103,9 +103,19 @@ describe('wire compatibility epoch', () => {
     // harvest preference plus a correlated status query, so an epoch-27
     // client (which still sends the old components-array harvest command and
     // cannot render the new preference/query state) must also be fenced out.
-    expect(ONLINE_WORLD_LAYOUT_VERSION).toBe(28);
+    // Epoch 29 landed the Nythraxis mechanics redo (Grave Eruption warning
+    // rings, Grave Flame patches, Binding Sigil and Gravefire snapshot
+    // families, the `nythraxisCallout` event, the Bone Spike mob) together
+    // with the Drakelands site swap (the Last Keep castle replaced by open
+    // build land, the trolls moved onto the old keep grounds, Wyrmwatch and
+    // its roads rebuilt), so an epoch-28 client would stand in rings and
+    // fire it cannot see and would render geography the server no longer
+    // stands anywhere near; it must be fenced out alongside every earlier
+    // incompatible epoch.
+    expect(ONLINE_WORLD_LAYOUT_VERSION).toBe(29);
     expect(ONLINE_WORLD_AUTH_TYPE).toBe(`auth-world-${ONLINE_WORLD_LAYOUT_VERSION}`);
-    expect(ONLINE_WORLD_AUTH_TYPE).toBe('auth-world-28');
+    expect(ONLINE_WORLD_AUTH_TYPE).toBe('auth-world-29');
+    expect(ONLINE_WORLD_AUTH_TYPE).not.toBe('auth-world-28');
     expect(ONLINE_WORLD_AUTH_TYPE).not.toBe('auth-world-27');
     expect(ONLINE_WORLD_AUTH_TYPE).not.toBe('auth-world-26');
     expect(ONLINE_WORLD_AUTH_TYPE).not.toBe('auth-world-25');

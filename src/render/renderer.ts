@@ -90,7 +90,6 @@ import { BlobShadows } from './blob_shadows';
 import { createBuildLedger } from './build_ledger_core';
 import { BuildRetryGate } from './build_retry_gate';
 import { setBuildSpanSink } from './build_spans';
-import { type BulwarkFeaturesView, buildBulwarkFeatures } from './bulwark_features';
 import { BurningPactMarkers } from './burning_pact_markers';
 import { createCameraBoom, stepCameraBoom } from './camera_boom_core';
 import {
@@ -112,7 +111,6 @@ import { canopyDetailPrewarmTextures } from './canopy_detail';
 import { canvasDataUrlAsync } from './canvas_data_url';
 import { castVfxProgramUnits, createSceneCastVfxReadiness } from './cast_vfx_prewarm';
 import type { CastVfxReadiness } from './cast_vfx_readiness_core';
-import { buildCastleFeatures, type CastleFeaturesView } from './castle_features';
 import { buildCelestialSprites, type CelestialSprites } from './celestial_sprites';
 import { buildCharacterEffectPrewarmGroup } from './character_effect_prewarm';
 import {
@@ -419,6 +417,7 @@ import {
 import { handleMageGroundSpellfxEvent, MageGroundFx } from './mage_ground_fx';
 import { buildMailboxPillar } from './mailbox';
 import { collectObjectTextures } from './material_texture_slots';
+import { meteorLandingBurst } from './meteor_landing_burst';
 import { buildMobNightGlow, type MobNightGlowView } from './mob_night_glow';
 import { buildMotes, type MotesView } from './motes';
 import { MountBeacon } from './mount_beacon';
@@ -465,6 +464,7 @@ import {
   wildGlowAmount,
 } from './night_lighting_core';
 import { buildEastbrookNoticeboard } from './noticeboard';
+import { NythraxisMechanicVisuals } from './nythraxis_mechanic_visuals';
 import { installOccluderFadeGate } from './occluder_fade_gate';
 import { buildGhostVariantPrewarmGroup } from './occluder_ghost_prewarm';
 import {
@@ -1570,8 +1570,6 @@ export class Renderer {
   private impactSite: ImpactSiteView;
   private realmFlora: RealmFloraView | null = null;
   private emberFeatures: EmberFeaturesView | null = null;
-  private bulwarkFeatures: BulwarkFeaturesView | null = null;
-  private castleFeatures: CastleFeaturesView | null = null;
   private dawnholdFeatures: DawnholdFeaturesView | null = null;
   private frostSky: FrostSkyView | null = null;
   private fenFeatures: FenFeaturesView | null = null;
@@ -1833,6 +1831,7 @@ export class Renderer {
   private frozenOrbFx!: FrozenOrbFx;
   private mageGroundFx!: MageGroundFx;
   private varkhulForgestormVisuals?: VarkhulForgestormVisuals;
+  private nythraxisMechanicVisuals?: NythraxisMechanicVisuals;
   private warlockMeteorFx!: WarlockMeteorFx;
   private necromancyGroundFx!: NecromancyGroundFx;
   private necromancyArmyPortalFx!: NecromancyArmyPortalFx;
@@ -2858,30 +2857,18 @@ export class Renderer {
       }
     });
     // Meteor falls + Rune of Power circles (see src/render/mage_ground_fx.ts);
-    // a landing meteor detonates with the same burst an aimed blast uses.
+    // a landing meteor detonates with the same burst an aimed blast uses
+    // (meteor_landing_burst.ts: the spec painter in the cue's school, else fire).
     this.mageGroundFx = new MageGroundFx(
       this.scene,
       (x, z) => groundHeight(x, z, this.sim.cfg.seed),
-      (x, z, meteor) => {
-        if (
-          meteor?.ability &&
-          this.abilityVfx.handleSpellfxAt({
-            x,
-            z,
-            school: 'fire',
-            fx: 'nova',
-            radius: meteor.radius,
-            sourceId: meteor.sourceId,
-            ability: meteor.ability,
-          })
-        ) {
-          return;
-        }
-        const gy = groundHeight(x, z, this.sim.cfg.seed);
-        this.vfx.burst(new THREE.Vector3(x, gy + 0.4, z), 'fire', 34, 1.4);
-      },
+      (x, z, meteor) =>
+        meteorLandingBurst(this.abilityVfx, this.vfx, this.sim.cfg.seed, x, z, meteor),
     );
     this.varkhulForgestormVisuals = new VarkhulForgestormVisuals(this.scene, (x, z) =>
+      groundHeight(x, z, this.sim.cfg.seed),
+    );
+    this.nythraxisMechanicVisuals = new NythraxisMechanicVisuals(this.scene, (x, z) =>
       groundHeight(x, z, this.sim.cfg.seed),
     );
     this.warlockMeteorFx = new WarlockMeteorFx(
@@ -3281,6 +3268,8 @@ export class Renderer {
     bestEffort(() => this.travelSpeedFx?.dispose());
     bestEffort(() => this.varkhulForgestormVisuals?.dispose());
     this.varkhulForgestormVisuals = undefined;
+    bestEffort(() => this.nythraxisMechanicVisuals?.dispose());
+    this.nythraxisMechanicVisuals = undefined;
     // Renderer-owned (not a module singleton): the graphics-rebuild teardown
     // comes through HERE (shutdown -> disposeRendererResources), so the blob
     // pool, texture and material release with the rest of the GPU state.
@@ -4146,14 +4135,6 @@ export class Renderer {
           this.emberFeatures = this.timedBuild('buildEmberFeatures', buildEmberFeatures);
           this.attachZoneFeature(this.emberFeatures);
         }
-        if (!this.castleFeatures) {
-          this.castleFeatures = this.timedBuild('buildCastleFeatures', buildCastleFeatures);
-          this.attachZoneFeature(this.castleFeatures);
-        }
-        if (!this.bulwarkFeatures) {
-          this.bulwarkFeatures = this.timedBuild('buildBulwarkFeatures', buildBulwarkFeatures);
-          this.attachZoneFeature(this.bulwarkFeatures);
-        }
         break;
       case 'frost':
         if (!this.frostSky) {
@@ -4982,6 +4963,8 @@ export class Renderer {
     this.mageGroundFx.update(dt);
     this.varkhulForgestormVisuals?.syncWorld(this.sim);
     this.varkhulForgestormVisuals?.update(dt, this.reducedMotion());
+    this.nythraxisMechanicVisuals?.syncWorld(this.sim);
+    this.nythraxisMechanicVisuals?.update(dt, this.reducedMotion());
     this.warlockMeteorFx.update(dt, this.reducedMotion());
     // The meteor fx registers and releases budget lights AFTER the pass (a
     // landing frees the visible fall light), which would dip the pinned
@@ -10983,7 +10966,7 @@ export class Renderer {
         (e.sitting || e.eating !== null || e.drinking !== null || riderMounted);
       // Facts about the ENTITY that override what its displayed motion implies
       // (battle-stance engagement, ice-slide suppression): anim_state_entity_core.
-      applyEntityAnimOverrides(st, e, visuallyDead);
+      applyEntityAnimOverrides(st, e, visuallyDead, characterEffects);
       // Reset and prewarm mount audio BEFORE this frame can dispatch movement
       // cues. A completed summon or live swap must not start the new idle/run
       // voice only to have the transition edge immediately tear it down below.
@@ -11703,6 +11686,8 @@ export class Renderer {
     this.mageGroundFx.update(dt);
     this.varkhulForgestormVisuals?.syncWorld(this.sim);
     this.varkhulForgestormVisuals?.update(dt, this.reducedMotion());
+    this.nythraxisMechanicVisuals?.syncWorld(this.sim);
+    this.nythraxisMechanicVisuals?.update(dt, this.reducedMotion());
     this.warlockMeteorFx.update(dt, this.reducedMotion());
     // Same post-fx budget recovery as the prewarm frame path: a landing or
     // expiry must not dip the pinned visible count for the frame it lands on.
@@ -12253,6 +12238,7 @@ export class Renderer {
     this.nameplatePainter.dispose();
     this.travelSpeedFx.dispose();
     this.varkhulForgestormVisuals?.dispose();
+    this.nythraxisMechanicVisuals?.dispose();
     this.blobShadows?.dispose();
   }
 

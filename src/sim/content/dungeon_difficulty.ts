@@ -72,8 +72,9 @@ export type HeroicMobTuning = Omit<HeroicDungeonTuning, 'finalBossId' | 'marksPe
 // dungeon-wide multiplier and land their natural premium above trash.
 // Exceptions via damageMultiplierByMob: the three Sanctum bosses are lifted
 // so heroic Sanctum out-hits its retuned NORMAL mode (which floors bosses at
-// 600), and the Nythraxis raid boss floors at 1200 with its add waves held to
-// the 500 line per mob. Mechanic damage lands RAW (no armor step; see
+// 600), and the Nythraxis raid boss instead rides its own calibration (see
+// the per-mob comment on nythraxis_boss_arena below) with its add waves held
+// to the 500 line per mob. Mechanic damage lands RAW (no armor step; see
 // aoePulse/stomp in ../mob/locomotion.ts) and scales with the mob's own
 // multiplier via mechanicDamageMult; support heals scale with
 // mechanicHealMult (= healthMultiplier); both wired in
@@ -100,6 +101,10 @@ export interface NormalDungeonTuning {
   id: string;
   difficulty: Extract<DungeonDifficulty, 'normal'>;
   healthMultiplier: number;
+  // Optional per-mob health override (the heroic table has the same field): a
+  // boss whose health pool is set on its own while the adds keep the shared
+  // multiplier (Nythraxis, 2026-09-04).
+  healthMultiplierByMob?: Record<string, number>;
   damageMultiplierByMob: Record<string, number>;
   // Optional per-mob override for mechanicDamageMult only (aoePulse, stomp,
   // infernoChannel); a mob absent here falls back to its damageMultiplierByMob
@@ -210,8 +215,17 @@ export const NORMAL_DUNGEON_TUNING: Record<string, NormalDungeonTuning> = {
     id: 'nythraxis_boss_arena',
     difficulty: 'normal',
     healthMultiplier: 2.0,
+    // The boss alone: 160,000 on the 60,000 template (owner call for the
+    // mechanics redo, 2026-09-04; was the shared 2.0 for 120,000). Adds and
+    // the Bone Spikes keep the shared multiplier.
+    healthMultiplierByMob: {
+      // 120,000 after the first playtest (2026-09-04; the redo tried 160,000).
+      nythraxis_scourge_of_thornpeak: 120_000 / 60_000,
+    },
+    // Boss-only melee retune (2026-09-07): raw swing 257..402, ~90% of
+    // normal Ignivar's own boss (286..446, unmultiplied). Skeletons untouched.
     damageMultiplierByMob: {
-      nythraxis_scourge_of_thornpeak: 5,
+      nythraxis_scourge_of_thornpeak: 1.132,
       nythraxis_skeleton_warrior: 5,
     },
   },
@@ -416,33 +430,28 @@ export const HEROIC_DUNGEON_TUNING: Record<string, HeroicDungeonTuning> = {
     finalBossId: 'wildheart_high_priest',
     marksPerParticipant: 1,
   },
-  // The 10-player raid arena. The boss floors at 1200 post-mitigation on the
-  // reference warrior (roughly 43% of his hp per 2.6s swing; a raid brings
-  // two or three healers). Measured on the PINNED 2861, like every
-  // post-mitigation figure in this file: on the live 4085 kit the same raw
-  // swing lands about 969, roughly 35% of pool (see the provenance block at
-  // the head of the heroic tuning model).
-  // The floor is applied via the dungeon-wide multiplier; the encounter-
-  // script add waves are held to the five-man 500 line through the per-mob
-  // map, because their base weapon damage spans a 2x spread (the priest add
-  // swings less than half as hard as a Royal Guard). The percentage
-  // mechanics scale on heroic in the encounter script (Soul Rend 1.5x,
-  // Deathless Rage lethal on a failed wardstone channel; see
-  // encounters/nythraxis.ts), and Gravebreaker derives from boss.weapon, so
-  // both track this table without extra wiring. The attunement dungeon
-  // nythraxis_crypt is story content and deliberately has NO heroic record.
-  // The daily raid lockout is difficulty-scoped (the :heroic key beside the
-  // plain dungeon id): one normal AND one heroic Nythraxis kill per day.
+  // The 10-player raid arena. The encounter-script add waves are held to the
+  // five-man 500 line through the per-mob map, because their base weapon
+  // damage spans a 2x spread (the priest add swings less than half as hard as
+  // a Royal Guard). The percentage mechanics scale on heroic in the
+  // encounter script (Soul Rend 1.5x, Deathless Rage lethal on a failed
+  // wardstone channel; see encounters/nythraxis.ts), and Gravebreaker derives
+  // from boss.weapon, so both track this table without extra wiring. The
+  // attunement dungeon nythraxis_crypt is story content and deliberately has
+  // NO heroic record. The daily raid lockout is difficulty-scoped (the
+  // :heroic key beside the plain dungeon id): one normal AND one heroic
+  // Nythraxis kill per day.
+  //
+  // Boss-only melee retune (2026-09-07): raw swing 367..573 via its own
+  // damageMultiplierByMob entry below, ~90% of heroic Varkhul's own boss
+  // (407..637). damageMultiplier (7.25) is no longer read by the boss;
+  // percentage mechanics (Dread Curse, Soul Rend, fire patches) stay
+  // unchanged. Gravebreaker's splash follows the reduced swing.
   nythraxis_boss_arena: {
     id: 'nythraxis_boss_arena',
     difficulty: 'heroic',
     level: 22,
     healthMultiplier: 3.2,
-    // 2026-07-24 nerf: 7.25 lands the boss floor at ~1016 (was 8.75 / 1227).
-    // The launch calibration one-shot tanks through the whole progression;
-    // at 1000 the bench raid reaches phase 2 at 46-60% boss with worst-case
-    // scripted play. Further nerfs, if live raids still cannot clear, come
-    // as a morning hotfix from HERE, not from 1200.
     damageMultiplier: 7.25,
     // The raid's add waves spawn through the encounter script
     // (encounters/nythraxis.ts), never spawnBossAdds, so this field is inert
@@ -452,6 +461,7 @@ export const HEROIC_DUNGEON_TUNING: Record<string, HeroicDungeonTuning> = {
     // the summoned 250 floor; their mechanics (Malric's ramping boss heal,
     // Aldren's cleave, Voss's taunt immunity) stay the real threat.
     damageMultiplierByMob: {
+      nythraxis_scourge_of_thornpeak: 1.488,
       nythraxis_skeleton_warrior: 3.75,
       nythraxis_heroic_warrior_add: 3.75,
       nythraxis_heroic_priest_add: 8,
@@ -464,6 +474,13 @@ export const HEROIC_DUNGEON_TUNING: Record<string, HeroicDungeonTuning> = {
     // and its respawn gate (only after the previous court dies) self-limits.
     healthMultiplierByMob: {
       nythraxis_skeleton_warrior: 2.22,
+      // Bone Spikes are a DPS target-switch check, not a health sponge: 1.5x
+      // their normal pool (1,500 vs 1,000) so three spikes still shatter inside
+      // the impale drain window when the raid splits onto them.
+      nythraxis_bone_spike: 3.0,
+      // The boss alone: 192,000 on the 60,000 template (owner call after the
+      // first playtest, 2026-09-04; the redo tried 230,000).
+      nythraxis_scourge_of_thornpeak: 192_000 / 60_000,
     },
     armorMultiplier: 1.2,
     finalBossId: 'nythraxis_scourge_of_thornpeak',

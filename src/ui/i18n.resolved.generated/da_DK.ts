@@ -330,8 +330,6 @@ export const da_DK: EnTranslations = {
     "warlock": {
       "doomLabel": "Fordømmelse",
       "fateThreadsLabel": "Skæbnetråde",
-      "doomMeterUnlock": "Flyt Lidelse-ressourcebjælken",
-      "doomMeterLock": "Lås Lidelse-ressourcebjælken",
       "doomEmptyStatus": "{value} af {max} Fordømmelse.",
       "doomStatus": "{value} af {max} Fordømmelse; {remaining}.",
       "fateThreadsStatus": "{value} af {max} Skæbnetråde.",
@@ -2671,6 +2669,24 @@ export const da_DK: EnTranslations = {
       "worldfireClosing": "Verdensild trækker sig ind. Bevæg jer mod midten!",
       "worldfireConsumed": "Hele arenaen brænder!"
     },
+    "nythraxisCallout": {
+      "impaled": "Bone Spikes! Free the impaled!",
+      "youAreImpaled": "You are impaled! Hold on!",
+      "spikeBroken": "Spike shattered!",
+      "dreadCurseSwap": "Dread Curse: swap tanks!",
+      "sigilAppears": "A Binding Sigil flares! Drag Nythraxis onto it!",
+      "sigilBound": "Nythraxis is bound! Burn him!",
+      "sigilUnbound": "The sigil fades unbound! Nythraxis grows stronger!",
+      "gravefireTarget": "Gravefire races toward you! Sidestep!",
+      "kingsWrath": "The King rises in wrath! Everything hits harder now!",
+      "boneStormBegins": "Bone Storm! Spread out and run!",
+      "boneStormCharge": "Nythraxis is charging YOU! Run!",
+      "boneStormEnds": "Bone Storm over. Tanks, pick him up!",
+      "crownEndures60": "One minute until The Crown Endures!",
+      "crownEndures30": "Thirty seconds until The Crown Endures!",
+      "crownEndures10": "Ten seconds! Burn him!",
+      "crownEndures": "The Crown Endures! Nythraxis is enraged!"
+    },
     "varkhulWaveStatus": "Bølge {wave}/{waves} | Fjender: {remaining}",
     "raidBossGuide": {
       "title": "Bossguide",
@@ -2819,6 +2835,67 @@ export const da_DK: EnTranslations = {
         "assembly": "Mesterens Samling: blokér begge essestråler, dræb hver portalbølge, afbryd Crucible-rystelse, og forhindr Glødesmede i at helbrede Varkhul.",
         "worldfire": "Verdensild: i Heroic trækker den brændende kant sig ind mod midten i den sidste fase. Besejr Varkhul, før hele arenaen brænder.",
         "heroic": "Heroic: essens varme afkøles aldrig, Amboltens Dekret tilføjer meteorer, og den sidste fase fjerner de fleste mekanikker for at fokusere på Verdensild."
+      },
+      "nythraxis": {
+        "overview": "High Priest Malric refused to let his king die, and the rite that raised Nythraxis bound the whole court to the crypt. The encounter tests a disciplined tank swap, fast switches onto Bone Spikes, movement off burning ground, and a coordinated wardstone channel once the Throne falls.",
+        "phaseThroneName": "The Throne",
+        "phaseThroneSummary": "Nythraxis holds his throne room with a charged frontal cleave, the Dread Curse tank swap, Bone Spikes that impale raiders, and Grave Eruptions that leave burning ground.",
+        "phaseWardstonesName": "The Wardstones",
+        "phaseWardstonesSummary": "At {health} health, Shuddering Stomp holds the raid still while Brother Aldric arrives and lights the wardstones. Every spike shatters and the floor stops burning, then Soul Rend and Deathless Rage join the Throne mechanics.",
+        "phaseKingsWrathName": "The King's Wrath",
+        "phaseKingsWrathSummary": "At {health} health, Nythraxis roars in The King's Wrath and gains {bonusNormal} damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption tightens to every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire to every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic). Every other mechanic keeps its cadence.",
+        "gravebreakerName": "Gravebreaker",
+        "gravebreakerSummary": "Every {seconds} sec, Nythraxis charges his next landed swing. His target takes only the swing itself, but everyone else within {range} yd inside the {arc} degree cone in front of him takes {splash} of that swing as Physical damage, reduced by their own armor.",
+        "gravebreakerResponse": "Tanks keep Nythraxis facing away from the raid. Everyone else stays behind or beside him and never crosses the cone.",
+        "dreadCurseName": "Dread Curse",
+        "dreadCurseSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitNormal} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackNormal}, up to {max} stacks.",
+        "dreadCurseHeroicSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitHeroic} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackHeroic}, up to {max} stacks.",
+        "dreadCurseResponse": "Tanks swap at {stacks} stacks: the other tank taunts and the cursed tank stays out of the Gravebreaker cone while the stacks fade. Healers prepare the incoming tank before the swap.",
+        "boneSpikeName": "Bone Spike",
+        "boneSpikeSummary": "Every {everyNormal} sec, Nythraxis impales {victimsNormal} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainNormal} of maximum health every second until their spike is destroyed.",
+        "boneSpikeHeroicSummary": "Every {everyHeroic} sec, Nythraxis impales {victimsHeroic} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainHeroic} of maximum health every second until their spike is destroyed.",
+        "boneSpikeResponse": "Damage dealers switch to the Bone Spikes at once and destroy them to free the impaled raiders. Healers keep the impaled alive while the spikes fall.",
+        "graveEruptionName": "Grave Eruption",
+        "graveEruptionSummary": "Every {everyNormal} sec, skeletal hands mark {countNormal} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstNormal} of maximum health as Shadow damage, then burns as Grave Flame for {flameNormal} sec, dealing {tickNormal} of maximum health every second to anyone standing in it.",
+        "graveEruptionHeroicSummary": "Every {everyHeroic} sec, skeletal hands mark {countHeroic} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstHeroic} of maximum health as Shadow damage, then burns as Grave Flame for {flameHeroic} sec, dealing {tickHeroic} of maximum health every second to anyone standing in it.",
+        "graveEruptionResponse": "Step out of every warning circle before it erupts and stay off the burning ground. Tanks pull Nythraxis clear of the flames so melee keeps room to work.",
+        "bindingSigilName": "Binding Sigil",
+        "bindingSigilSummary": "Every {everyNormal} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionNormal} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindNormal} sec he is Bound: the Ascension is purged, he is stunned for {stunNormal} sec, and he takes {vulnerability} more damage for {boundNormal} sec. Otherwise every raider takes {unboundHitNormal} of maximum health as Shadow damage and he keeps {unboundBonusNormal} more damage until the next binding.",
+        "bindingSigilHeroicSummary": "Every {everyHeroic} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionHeroic} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindHeroic} sec he is Bound: the Ascension is purged, he is stunned for {stunHeroic} sec, and he takes {vulnerability} more damage for {boundHeroic} sec. Otherwise every raider takes {unboundHitHeroic} of maximum health as Shadow damage and he keeps {unboundBonusHeroic} more damage until the next binding.",
+        "bindingSigilResponse": "The tank drags Nythraxis onto the sigil at once, through whatever fire the raid left behind. Melee follow the drag and ranged stay out of the new Gravebreaker cone. Everyone burns him while he is Bound.",
+        "raiseFallenName": "Raise Fallen",
+        "raiseFallenSummary": "Every {every} sec during The Throne, Nythraxis raises Risen Royal Guards behind him. They rush his current target and fight until they are destroyed.",
+        "raiseFallenResponse": "The off-tank picks up each wave as it rises. Damage dealers clear the guards between Bone Spikes so the waves never pile up before the Throne falls.",
+        "soulRendName": "Soul Rend",
+        "soulRendSummary": "Nythraxis marks {marksNormal} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals its bearer's full maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them.",
+        "soulRendHeroicSummary": "Nythraxis marks {marksHeroic} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals {damageHeroic} of its bearer's maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them. A mark that resolves alone is lethal.",
+        "soulRendResponse": "Every marked raider runs to one stack point and stands within {range} yd of the other marks before the {fuse} sec fuse ends. Healers top the group off as the marks resolve.",
+        "soulfireName": "Soulfire",
+        "soulfireSummary": "Every Soul Rend detonation leaves a pool of purple fire with a {radius} yd radius where each mark stood, burning for {seconds} sec at {tickNormal} of maximum health every second. Standing where pools overlap takes a tick from each one. Pools never form within {clearance} yd of a wardstone.",
+        "soulfireHeroicSummary": "Every Soul Rend detonation leaves one pool of purple fire with a {radius} yd radius per stacked group of marks, burning for {secondsHeroic} sec at {tickHeroic} of maximum health every second. Standing where pools overlap takes only one tick, never stacked copies. Pools never form within {clearance} yd of a wardstone.",
+        "soulfireResponse": "Move out of the purple pool as soon as the marks detonate. Keep the next stack point clear of active fire.",
+        "gravefireName": "Gravefire",
+        "gravefireSummary": "Every {everyNormal} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnNormal} sec and deals {tickNormal} of maximum health every second to anyone standing in it.",
+        "gravefireHeroicSummary": "Every {everyHeroic} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnHeroic} sec and deals {tickHeroic} of maximum health every second to anyone standing in it.",
+        "gravefireResponse": "Sidestep the line as it comes: it is narrow and never turns. Ranged raiders keep moving instead of standing in one spot.",
+        "deathlessRageName": "Deathless Rage",
+        "deathlessRageSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageNormal} of maximum health as Shadow damage.",
+        "deathlessRageHeroicSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageHeroic} of maximum health as Shadow damage, which no health pool survives.",
+        "deathlessRageResponse": "Assign one raider to each wardstone before the pull. When the cast begins, each runs to their stone and channels it until it completes. Stuns, stepping away, and death break the channel, so keep the channelers safe and never assign an impaled raider.",
+        "courtName": "The Deathless Court",
+        "courtSummary": "On Heroic, Nythraxis raises his court after each Deathless Rage, interrupted or not, once the previous court has fallen. The Spirit of Aldren cleaves everything near his target with Royal Cleave. The Spirit of Malric channels Malric's Mending, healing Nythraxis for more with every cast. The Spirit of Voss ignores taunts and hunts the raid.",
+        "courtResponse": "Tanks pick up Aldren and turn his cleave away from the raid. Stun or silence Malric the moment Malric's Mending begins and kill him first, then root or stun Voss off the healers, since he cannot be taunted, and finish him next.",
+        "kingsWrathName": "King's Wrath",
+        "kingsWrathSummary": "Nythraxis deals {bonusNormal} more damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption occurs every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic).",
+        "kingsWrathResponse": "Use remaining defensive cooldowns for unavoidable damage. Keep every earlier mechanic clean while the raid finishes the fight.",
+        "boneStormName": "Bone Storm",
+        "boneStormSummary": "Starting {first} sec into The King's Wrath and every {everyNormal} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlNormal} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamNormal} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
+        "boneStormHeroicSummary": "Starting {first} sec into The King's Wrath and every {everyHeroic} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlHeroic} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamHeroic} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
+        "boneStormResponse": "Spread out and keep running from Nythraxis. The charged raider runs away while everyone else leaves room around the charge path, then tanks pick him up when the storm ends.",
+        "crownEnduresName": "The Crown Endures",
+        "crownEnduresSummary": "At {enrageNormal} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryNormal} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
+        "crownEnduresHeroicSummary": "At {enrageHeroic} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryHeroic} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
+        "crownEnduresResponse": "Treat the first warning as the final burn. Save movement and defensive cooldowns for the remaining mechanics, then defeat Nythraxis before the enrage."
       }
     },
     "auraEffect": {
@@ -2829,6 +2906,14 @@ export const da_DK: EnTranslations = {
       "varkhulMoltenCore": "Bær denne kerne til essen. Smeltet Byrde giver stigende skade hvert {interval}. sek., fra {min}% til {max}% af maksimalt helbred.",
       "varkhulForgeLink": "Opfang en aktiv søjlestråle, før den når essen. Åbne stråler tilføjer 6% varme pr. sekund. I Normal afkøler blokerede stråler og inaktive søjler essen; i Heroic falder varmen aldrig. Ved 100% rammes essen af en dødelig Nedsmeltning.",
       "varkhulCrucibleExposure": "At blokere en Crucible-stråle giver stigende skade i procent af maksimalt helbred hvert sekund. Stakkene nulstilles 10 sekunder efter, du forlader en stråle i Normal, og efter 60 sekunder i Heroic.",
+      "nythraxisDreadCurse": "Each stack increases damage taken from Nythraxis by {perStack}% for {duration} sec: {stacks} of {max} stacks now, {pct}% more damage. Every {every} sec his next hit on his target deals {hit}% of maximum health and adds a stack. Tanks should swap at {swap} stacks.",
+      "nythraxisImpaled": "Impaled on a Bone Spike: you cannot act and lose {normal}% of your maximum health every {interval} sec ({heroic}% on Heroic) until the raid destroys the spike.",
+      "nythraxisAscension": "Deathless Ascension: {stacks} stacks, {pct}% more damage and attack speed. Drag Nythraxis onto the Binding Sigil to purge it.",
+      "nythraxisBound": "Bound by the old wards: Nythraxis takes {pct}% more damage for {duration} sec.",
+      "nythraxisUnbound": "Unbound: Nythraxis deals {pct}% more damage until a Binding Sigil holds him.",
+      "nythraxisKingsWrath": "King's Wrath: Nythraxis deals {pct}% more damage for the rest of the fight.",
+      "nythraxisBoneStorm": "Bone Storm: Nythraxis ignores threat, whirls for {tick}% of maximum health every second within {radius} yd, and charges raiders. Spread out and run.",
+      "nythraxisCrownEndures": "The Crown Endures: {stacks} stacks, {pct}% more damage and {haste}% faster attacks. The raid is out of time.",
       "dot": "Giver {value} {school}-skade hvert {interval}. sek",
       "hot": "Gendanner {value} helbred hvert {interval}. sek",
       "mendingCurrent": "Opbevarer {value} helbredelse, frigivet over tid eller forbrugt af Kaskadelapning",
@@ -2899,6 +2984,8 @@ export const da_DK: EnTranslations = {
       "redline": "Rød Linje: hak {stacks} af {max}. Kropsslag tilføjer hak; Nådestødet rammer {pct}% hårdere per hak og lukker vinduet. Udløber det først, mistes det",
       "veilstrikeWindow": "Skyggeslør: dine Tusmørkesløråbninger kan bruges i det åbne fra enhver vinkel, og den gjorte skade øges med {pct}%",
       "veiledEdge": "Dit næste Lurerslag rammer dobbelt så hårdt",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Evner koster {pct}% mindre energi",
       "moontide": "Måneflod: trin {stacks} af {max}. Vildlyn-, Himmelfald- og Månefrø-besværgelser fylder den i Månekinform; ved {max} bliver Månefrø til Månebølge og Himmelfald til Solspor, og begge tærer på den",
       "oldBlood": "Gammelt Blod: trin {stacks} af {max}. Landede Ulve- og Bruin-slag deler dette forråd; ved {max} forvandles Blodbid eller Knogleknus",
@@ -3131,7 +3218,17 @@ export const da_DK: EnTranslations = {
         "targetFrame": "Mål",
         "partyFrames": "Gruppe",
         "swingBar": "Autoangreb",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Rammeindstillinger",
       "framesMenuTitle": "Vis eller skjul enkelte rammer. En fravalgt ramme forbliver skjult, indtil du vælger den igen eller nulstiller til standard.",
@@ -3162,6 +3259,50 @@ export const da_DK: EnTranslations = {
       "pastePlaceholder": "Indsæt en eksporteret kode her.",
       "invalid": "Det er ikke en gyldig eksportkode.",
       "wrongKind": "Den kode er en anden eksporttype."
+    },
+    "keybindTransfer": {
+      "setup": "Hotkey Setup",
+      "apply": "Apply",
+      "imported": "Hotkey setup imported.",
+      "wrongKind": "That code is a settings export, not a hotkey setup."
+    },
+    "keyboardMap": {
+      "title": "Keyboard Overview",
+      "hint": "Keys in use are coloured by category. Hover or focus a key to see everything bound to it.",
+      "hintInteractive": "Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.",
+      "popOut": "Pop Out",
+      "close": "Close keyboard overview",
+      "pressKey": "Press a key for {action}. Esc cancels.",
+      "boundTo": "Bound {action} to {key}.",
+      "notBindable": "That key cannot be bound.",
+      "assignHint": "Choose an action to bind to {key}.",
+      "assignPlaceholder": "Assign an action to {key}",
+      "layerGroup": "Modifier layer",
+      "formGroup": "Keyboard size",
+      "formFull": "Full size",
+      "formTkl": "Tenkeyless",
+      "form75": "75%",
+      "form60": "60%",
+      "notOnLayout": "Not on this keyboard: {bindings}",
+      "legendGroup": "Key labels",
+      "legendLayout": "Your layout",
+      "legendQwerty": "QWERTY",
+      "layerNone": "No modifier",
+      "layerShift": "Shift",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
+      "otherLayers": "Also bound with a modifier"
+    },
+    "fullTransfer": {
+      "menu": "Import / Export",
+      "title": "Import / Export Settings",
+      "fullSettings": "Full Settings",
+      "intro": "Export every saved preference on this device as one code, and paste it on another device or browser to import it: graphics, audio, interface, theme, frame layout, key bindings for every character, controller and cross hotbar bindings, chat, window filters, language, and dismissed hints.",
+      "excluded": "Never included: your login, account, wallet, or purchase data. Action bar layouts are saved to your account and travel with it."
     },
     "riftForge": {
       "title": "Rift Forge",
@@ -4647,7 +4788,16 @@ export const da_DK: EnTranslations = {
         "soul_rend": "Sjælerivning (markerede spillere skal sprede sig og heles)",
         "deathless_rage": "Udødelig Raseri (afbrydes ved vardstene)",
         "wardstones": "Vardstenskanaler (faseovergang)",
-        "dread_curse": "Rædselsforbandelse (kun heroisk, stablende svækkelse til tankskifte)"
+        "dread_curse": "Rædselsforbandelse (kun heroisk, stablende svækkelse til tankskifte)",
+        "bone_spike": "Bone Spike (impaled raiders drain until the spike is destroyed)",
+        "grave_eruption": "Grave Eruption (warning circles that leave burning ground)",
+        "binding_sigil": "Binding Sigil (drag the boss onto the sigil or the raid pays)",
+        "gravefire": "Gravefire (a traveling line of fire to sidestep)",
+        "soulfire": "Soulfire (Soul Rend detonations leave burning pools)",
+        "kings_wrath": "King's Wrath (30%: permanent damage bonus, faster floor hazards)",
+        "bone_storm": "Bone Storm (he ignores threat, whirls, and charges the raid)",
+        "crown_endures": "The Crown Endures (hard enrage at 6:00, heroic 5:00)",
+        "deathless_court": "The Deathless Court (heroic only, the royal court rises after Deathless Rage)"
       }
     },
     "reliquary": {
@@ -5750,6 +5900,7 @@ export const da_DK: EnTranslations = {
       "framePetBody": "Jægere, heksemestre og alle andre med et kæledyr fremme får en lille ramme til det ved siden af deres egen, med dets navn, niveau og helbred. Klik på den ramme for at vælge dit kæledyr, og Ctrl+6 gør det samme fra tastaturet.",
       "framesMoveBody": "Din ramme, din målramme og dine grupperammer kan alle flyttes. Hver bærer en lille flytteknap i sit hjørne: lås den op, træk rammen derhen, du vil have den, og lås den igen, så et vildfarent klik ikke kan flytte den. Hvis de ender et sted, du fortryder, sætter Nulstil rammepositioner i indstillingerne dem alle tilbage til, hvor de startede.",
       "framesMoveBodyEditFrames": "Your frame, your target frame, and your party frames can all be moved. Each carries a small move button in its corner: unlock it, drag the frame where you want it, and lock it again so a stray click cannot shift it. Edit Frames, at the top of the Frames tab in the Interface options, loosens the rest of the interface at once, those three frames with it: the action bars, the cast bar, the swing bar, the experience bar, the minimap, the button rail, the pet frame, the stance bar, the buff and debuff rows, and the Wishlist Reminder chip, each wearing a name chip while it is loose. If they end up somewhere you regret, Reset to Defaults at the foot of that same Frames tab snaps them all back to where they started.",
+      "framesGovernedExtra": "Edit Frames also loosens the tracker stack below (your tracked quests and their objectives, your deed progress, your Reliquary pages, the delve you are in, any rift you are taking part in, and the recipe or commission you are tracking), the pet action bar beside your pet frame, the Target dots frame for your debuffs across nearby enemies, the paladin's Devotion medallion, the warlock's Affliction Bar, the spell-proc overlay, the off-hand swing timer for dual-wielders, and the tabbed damage meter window, each wearing its own name chip while it is loose.",
       "barsTitle": "Bjælker, timere og kamptekst",
       "barsBody": "Din castbjælke dukker op midt på skærmen, lige over dine handlingsbjælker, når du kaster eller kanaliserer, og viser besværgelsens navn og den resterende tid. Dit mål får sin egen castbjælke på sin ramme, så du kan se, hvad der er på vej, og svare på det.\n\nEn tynd svingbjælke sidder under din castbjælke og fyldes op mellem dine våbensving, så en nærkamps- eller afstandsangriber kan se, hvornår det næste automatiske slag lander.\n\nDin erfaringsbjælke løber i fuld bredde under dine handlingsbjælker, inddelt i segmenter, med en lysere strækning, der viser den udhvilede erfaring, du har opsparet.\n\nSvøm under vandet, og en blå åndedrætsbjælke dukker op øverst på skærmen. Den tømmes, mens dit hoved er under, blinker rødt, når den løber ud, og du begynder at drukne, og fyldes hurtigt op igen, i det øjeblik du dukker op. Mellemrum svømmer dig op, og tasten Svøm ned, Ctrl som standard, tager dig dybere.\n\nSkade og helbredelse svæver op over det, de rammer, som små tal, så du kan læse en kamp uden at læse tekst. Fanen Kamp i dit chatvindue holder den fulde skriftlige log.",
       "aurasTitle": "Forstærkninger og svækkelser",
@@ -11254,7 +11405,8 @@ export const da_DK: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Grumt Skud",
-        "description": "Skyder målet for {damage} Arkan skade. Skaden stiger med angrebsstyrke på afstand."
+        "description": "Skyder målet for {damage} Arkan skade. Skaden stiger med angrebsstyrke på afstand.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Rystende Skud",
@@ -12285,7 +12437,7 @@ export const da_DK: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Rensende Nåde",
-        "description": "Gør 72 til 84 hellig skade på en fjende eller helbreder et venligt mål for 130 til 155. Begge beløb stiger med besværgelseskraft. Skaden helbreder også hver lærebundet allieret for 30%, eller gruppemedlemmet med lavest sundhed for 15%, hvis ingen allieret er bundet. (Læresignatur)"
+        "description": "Gør {damage} hellig skade på en fjende eller helbreder et venligt mål for {healing}. Skaden stiger med besværgelseskraft; helbredelsen stiger med helbredelseskraft. Læren omdanner denne skade til helbredelse gennem dine bånd. Hvis intet bundet såret gruppemedlem er inden for 30 meter, helbredes det sårede gruppemedlem med lavest sundhed inden for 30 meter for 15% af skaden. At helbrede et gruppemedlem helbreder også op til 2 andre sårede gruppemedlemmer inden for 10 meter af det mål og inden for din sigtelinje, hver for 50% af den gendannede sundhed. Denne ekstra helbredelse kan hverken være kritisk eller skabe Læren-bånd. (Læresignatur)"
       },
       "seraphic_vigil": {
         "name": "Serafisk Vagt",
@@ -16182,6 +16334,9 @@ export const da_DK: EnTranslations = {
       },
       "nythraxis_scourge_of_thornpeak": {
         "name": "Nythraxis, Tornetops Svøbe"
+      },
+      "nythraxis_bone_spike": {
+        "name": "Bone Spike"
       },
       "ignivar_herald_of_the_last_flame": {
         "name": "Ignivar, den Sidste Flammes Herold"

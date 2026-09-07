@@ -603,11 +603,21 @@ interface AttributionTargetFixture {
 // renderer.ts changed on both sides again (ours: farm/shadow compile-gate
 // churn; theirs: the shader-warm branch's own renderer moves above), so this
 // composite mints a value matching neither parent's pin (ours d137e84a,
-// theirs 3a5b183e). Run over the fully resolved merged tree via:
+// theirs 3a5b183e). Resealed the existing historical captures for the merged
+// runtime tree, not a new capture or owner acceptance, via:
 //   node scripts/assets/eastbrook_grand_armoury/remint_polish_provenance.mjs
 // No capture was retaken.
+//
+// UPSTREAM'S OWN RE-MINT HISTORY over the same later release/v0.42.0 span,
+// kept rather than dropped (the block that follows is the release's record
+// verbatim).
+// Re-minted for the release/v0.42.0 merge into the Nythraxis playtest-tuning
+// branch (PR #3903's Varkhul heroic add-health lands beside this branch's
+// Nythraxis hazard-color renderer change): both arms had re-minted, so the
+// merged renderer.ts bytes replace either side's value. No capture was
+// retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'c0048af8119c8292092fca3e07759338fe2d4eeb0a4493a56ccc57501f914f6e';
+  'a4907e5896c8b206841202db7a9c5ed93325e6d770592b5b096da5cfa5262722';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

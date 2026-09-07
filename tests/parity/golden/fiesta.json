@@ -9,8 +9,8 @@
     "augment wave: fiestaPickOffers + arenaAugmentPick (fiestaAugments on meta + augmentOffer/Chosen events)",
     "multi-player meta"
   ],
-  "draws": 1175,
-  "drawDigest": "a357421c",
+  "draws": 1178,
+  "drawDigest": "c7cc1a3a",
   "frames": [
     {
       "tick": 0,
@@ -30,7 +30,7 @@
       "tick": 25,
       "time": 1.25,
       "nextId": 1007,
-      "state": "349c7720",
+      "state": "5b00374b",
       "events": "8434c803",
       "rng": {
         "draws": 0,
@@ -41,7 +41,7 @@
       "tick": 50,
       "time": 2.5,
       "nextId": 1007,
-      "state": "824dad49",
+      "state": "b058b3fe",
       "events": "0c8974d9",
       "rng": {
         "draws": 66,
@@ -52,7 +52,7 @@
       "tick": 75,
       "time": 3.75,
       "nextId": 1007,
-      "state": "722b2e6b",
+      "state": "5d81b3fc",
       "events": "55cbea69",
       "rng": {
         "draws": 247,
@@ -63,7 +63,7 @@
       "tick": 100,
       "time": 5,
       "nextId": 1007,
-      "state": "b5fb5a38",
+      "state": "c123cc33",
       "events": "7a0dd28d",
       "rng": {
         "draws": 485,
@@ -74,33 +74,33 @@
       "tick": 125,
       "time": 6.25,
       "nextId": 1007,
-      "state": "4bfbb9b9",
+      "state": "c6a934e2",
       "events": "60b189eb",
       "rng": {
-        "draws": 755,
-        "digest": "c2a9f447"
+        "draws": 756,
+        "digest": "b0eecf8d"
       }
     },
     {
       "tick": 150,
       "time": 7.5,
       "nextId": 1007,
-      "state": "727af242",
+      "state": "064820cd",
       "events": "741638a5",
       "rng": {
-        "draws": 1040,
-        "digest": "07193096"
+        "draws": 1041,
+        "digest": "4a68f71a"
       }
     },
     {
       "tick": 163,
       "time": 8.15,
       "nextId": 1007,
-      "state": "7bba2ab5",
+      "state": "06cd9198",
       "events": "d0f262d0",
       "rng": {
-        "draws": 1175,
-        "digest": "a357421c"
+        "draws": 1178,
+        "digest": "c7cc1a3a"
       },
       "label": "final",
       "players": [
@@ -570,7 +570,7 @@
         },
         {
           "aiState": "idle",
-          "attackPower": 160,
+          "attackPower": 185,
           "combatTimer": 99.05,
           "comboUntil": -1,
           "critChance": 0.211,

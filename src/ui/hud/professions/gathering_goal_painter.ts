@@ -312,24 +312,44 @@ function capturedExpandedSourceItemIds(el: HTMLElement): ReadonlySet<string> {
   return expanded;
 }
 
-/** Paint the panel from a prepared model into `el`, the parent-owned root.
- *  Hides the panel ONLY on true no-selection (see isTrulyEmpty); an invalid
- *  persisted selection (goal null, reason set) still renders its
- *  explanation and Clear. */
+/** Resolves the panel's actual content root: the `#gathering-goal-body`
+ *  child every live HUD mount carries (index.html/play.html), never `el`
+ *  itself. `el` is the frame `Hud` hands every tracker (the
+ *  `gatheringGoalTracker` HUD_FRAME_SPECS row lets `movable_frame.ts`
+ *  append its own corner-button chrome as a SIBLING of that child), so
+ *  writing `.innerHTML` on `el` would destroy that chrome on every repaint.
+ *  Falls back to `el` itself for a standalone caller (this module's own
+ *  painter test) that mounts no such child, so the module works either
+ *  way. */
+function panelBodyElement(el: HTMLElement): HTMLElement {
+  for (const child of el.children) {
+    if (child instanceof HTMLElement && child.id === 'gathering-goal-body') return child;
+  }
+  return el;
+}
+
+/** Paint the panel from a prepared model into `el`, the parent-owned
+ *  tracker root: `el.style.display` still governs the WHOLE frame (hiding
+ *  it outside unlock/no-goal exactly as before), but every markup write
+ *  lands in `panelBodyElement(el)` instead, so a sibling frame-chrome node
+ *  on `el` survives every repaint. Hides the panel ONLY on true
+ *  no-selection (see isTrulyEmpty); an invalid persisted selection (goal
+ *  null, reason set) still renders its explanation and Clear. */
 export function renderGatheringGoalPanel(
   el: HTMLElement,
   model: GatheringGoalPanelModel,
   deps: GatheringGoalPanelDeps,
 ): void {
-  const focusKey = captureFocusKey(el);
-  const expandedSourceItemIds = capturedExpandedSourceItemIds(el);
+  const panelBody = panelBodyElement(el);
+  const focusKey = captureFocusKey(panelBody);
+  const expandedSourceItemIds = capturedExpandedSourceItemIds(panelBody);
   const empty = isTrulyEmpty(model);
   el.style.display = empty ? 'none' : 'flex';
-  el.innerHTML = empty ? '' : panelBodyHtml(model, expandedSourceItemIds);
+  panelBody.innerHTML = empty ? '' : panelBodyHtml(model, expandedSourceItemIds);
   if (empty) return;
 
-  el.querySelector('[data-clear]')?.addEventListener('click', () => deps.onClearGoal());
-  const prefButtons = [...el.querySelectorAll<HTMLButtonElement>('[data-set-pref]')];
+  panelBody.querySelector('[data-clear]')?.addEventListener('click', () => deps.onClearGoal());
+  const prefButtons = [...panelBody.querySelectorAll<HTMLButtonElement>('[data-set-pref]')];
   const prefRows = model.materials.filter((row) => row.corpsePreferenceItemId !== null);
   prefRows.forEach((row, i) => {
     const btn = prefButtons[i];
@@ -351,13 +371,13 @@ export function renderGatheringGoalPanel(
   // is the SAME renderer the general harvest-preference picker uses, called here
   // with the container this module minted; every DOM write it performs is counted
   // in gathering_source_painter.ts's own file, not this one's raw-write budget.
-  for (const details of el.querySelectorAll('.gathering-goal-source')) {
+  for (const details of panelBody.querySelectorAll('.gathering-goal-source')) {
     const itemId = details.getAttribute('data-source-item');
-    const body = details.querySelector('.gathering-goal-source-body');
-    if (itemId !== null && body instanceof HTMLElement) {
-      renderGatheringSourceDetail(body, itemId);
+    const sourceBody = details.querySelector('.gathering-goal-source-body');
+    if (itemId !== null && sourceBody instanceof HTMLElement) {
+      renderGatheringSourceDetail(sourceBody, itemId);
     }
   }
 
-  if (focusKey !== null) restoreFirstEnabled([findFocusKey(el, focusKey)]);
+  if (focusKey !== null) restoreFirstEnabled([findFocusKey(panelBody, focusKey)]);
 }

@@ -359,6 +359,14 @@ describe('crafted signatures through the real shared combat hubs', () => {
       sim.setPlayerLevel(20, allyId);
       const ally = sim.entities.get(allyId)!;
       ally.inCombat = true;
+      // The v0.42 class rebalance scoped Doctrine's conversion recipients to
+      // the priest's current party (isCurrentGroupMember /
+      // isValidDoctrineRecipient in src/sim/combat/priest/doctrine.ts): an
+      // un-partied ally is no longer an eligible link or fallback target.
+      // Party the ally so the priest row still exercises live conversion
+      // healing; harmless for the mage row, which has no group gate.
+      sim.partyInvite(allyId, source.id);
+      sim.partyAccept(allyId);
       ally.auras.push({
         id: kind === 'doctrine' ? DOCTRINE_AURA_ID : kind,
         name: kind,
@@ -369,11 +377,20 @@ describe('crafted signatures through the real shared combat hubs', () => {
         sourceId: source.id,
         school: 'holy',
       });
+      // Start the ally injured (not full HP) so conversion healing has real
+      // room to land as HP before any excess spills into a ward; confirm no
+      // ward exists yet so the assertions below prove conversion CREATES it.
+      ally.hp = ally.maxHp - 20;
+      expect(ally.auras.find((aura) => aura.id.endsWith('_heal_ward'))).toBeUndefined();
+      const beforeHp = ally.hp;
       dealDamage(
         ctx,
         source,
         target,
-        100,
+        // Both conversion paths above use a 0.4 rate: 150 damage converts 60
+        // healing. 20 of that restores the ally to full HP; the remaining 40
+        // excess overheals into a ward at floor(40 * 0.2) = 8.
+        150,
         false,
         school,
         'Spell',
@@ -385,6 +402,8 @@ describe('crafted signatures through the real shared combat hubs', () => {
         false,
         abilityId,
       );
+      expect(ally.hp - beforeHp).toBe(20);
+      expect(ally.hp).toBe(ally.maxHp);
       expect(ally.auras.find((aura) => aura.id.endsWith('_heal_ward'))?.value).toBe(8);
     },
   );

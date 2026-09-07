@@ -72,6 +72,7 @@ plausibly covers means the table needs a new row in the same change.
 |--------|------|
 | `combat/damage.ts` | `dealDamage`, `handleDeath`, `grantXp` (+ lifetime-XP; milestone unlocks absorbed into `deeds.ts`) |
 | `combat/heal.ts` | `applyHeal`, healing threat/taken-mult, hex/crit-vuln mults, heal-absorb |
+| `combat/threat_modifiers.ts` | aura, talent, and known-passive threat multipliers through `SimContext` |
 | `combat/auras.ts` + `combat/cc.ts` | per-tick auras/regen/timers, NPC aura cleanse; CC predicates (stun/root/silence/disarm/lockout/blind/tongues) |
 | `combat/casting_lifecycle.ts` | `updateCasting`, `castAbility(BySlot)`, `cancelCast`, `pushbackCast`, GCD/cost/cooldown |
 | `combat/effect_dispatch.ts` | `runEffects` (the per-effect switch) |

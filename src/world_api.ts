@@ -194,7 +194,23 @@ export type {
 // Epoch 27 clients still send the old components-array harvest command, which
 // the server now rejects outright, and cannot render the new preference or
 // query state, so mixed binaries must fail closed.
-export const ONLINE_WORLD_LAYOUT_VERSION = 28 as const;
+// 29 = The latest release branch landed two compiled changes together: the
+// Nythraxis mechanics redo added Grave Eruption warning rings and Grave Flame
+// patches as two server-authored snapshot families, `nythraxisEruptions` (the
+// meteor row shape) and `nythraxisFlames`, encoded by server/nythraxis_wire.ts
+// and decoded by src/net/ground_telegraph_wire.ts, plus Binding Sigil and
+// Gravefire snapshot families, the Grave Flame kind field, the
+// `nythraxisCallout` event, and the Bone Spike mob; and the Drakelands site
+// swap (docs/design/drakelands-improvements) removed the Last Keep's castle
+// to flat build land on the old Trollmoot rise, moots the trolls on the old
+// keep grounds by the restored ruin ring, strips Wyrmwatch's dressing for the
+// placer rebuild, and re-aims roads. An epoch-28 client would stand in rings
+// and fire it cannot see, and would render a castle, a town, and camps the
+// server no longer stands anywhere near, colliding with walls that are not
+// there. A bump moves this constant, scripts/lib/world_auth.mjs and its
+// .d.mts, tests/bank_wire_epoch.test.ts, and tests/world_auth_scripts.test.ts
+// together.
+export const ONLINE_WORLD_LAYOUT_VERSION = 29 as const;
 export const ONLINE_WORLD_AUTH_TYPE = `auth-world-${ONLINE_WORLD_LAYOUT_VERSION}` as const;
 // The one wire literal both sides emit for a layout-epoch mismatch. The server
 // rejects with it, the client synthesizes it for pre-epoch servers, and the UI
@@ -253,6 +269,10 @@ export type {
   ActiveConsecration,
   ActiveFrostRing,
   ActiveIgnivarMeteorWarning,
+  ActiveNythraxisBindingSigil,
+  ActiveNythraxisGraveEruption,
+  ActiveNythraxisGraveFlame,
+  ActiveNythraxisGravefire,
   ActiveTemporalHourglass,
   ActiveVarkhulAnvilMeteorWarning,
   ActiveVarkhulAssembly,
