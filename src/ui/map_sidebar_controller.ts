@@ -1,13 +1,29 @@
 // Cold DOM adapter for the World Map atlas rail. Hud supplies the current
 // world/zone whenever its existing map redraw path runs and may consume the
 // filter and route callbacks without this module reaching into Hud.
+//
+// WHOLE-RAIL innerHTML, the documented exception: this adapter builds the whole
+// rail as one string and swaps it in, rather than driving a keyed row pool
+// through the PainterHost writers the way every per-frame painter does. The
+// cadence is what makes that acceptable, and it is the whole argument: the rail
+// repaints only when the map redraw path runs or the player clicks a chip, a
+// quest row, Show Route or Untrack. It is never on the frame band, so there is
+// no per-frame write budget to blow and no skip-rate to hold. `lastHtml` below
+// is the write elision that keeps an unchanged rail free (it is registered in
+// tests/language_fanout_registry.test.ts as a write-elision memo, not a data
+// signature, because the compared string is the freshly BUILT html with every
+// t() value already resolved). What the swap DOES cost is the focused node, so
+// the render path captures the active control's data-map-* identity and
+// re-focuses the matching node after the swap; a keyboard or controller user
+// keeps their place. If the rail ever moves onto the frame band, that is the
+// signal to replace the string with a keyed row pool.
 
 import { QUESTS, type ZoneDef } from '../sim/data';
 import type { IWorld } from '../world_api';
 import { questObjectiveLabel, questTitle } from './entity_display_labels';
 import { zoneDisplayName } from './entity_i18n';
 import { esc } from './esc';
-import { formatNumber, t } from './i18n';
+import { formatNumber, type TranslationKey, t } from './i18n';
 import { ownEntry } from './known_item';
 import {
   buildMapSidebarView,
@@ -25,6 +41,35 @@ const FILTERS: readonly MapAtlasFilterId[] = [
   'services',
   'players',
 ];
+
+/** One explicit key per layer chip (the VERB_KEYS idiom in interact_prompt_view).
+ *  A computed `filters.${id}` key hides a typo from both tsc and the i18n
+ *  completeness sweep; spelling every key out puts it back in front of them. */
+const FILTER_KEYS: Record<MapAtlasFilterId, TranslationKey> = {
+  quests: 'hudChrome.mapAtlas.filters.quests',
+  gather: 'hudChrome.mapAtlas.filters.gather',
+  dungeons: 'hudChrome.mapAtlas.filters.dungeons',
+  services: 'hudChrome.mapAtlas.filters.services',
+  players: 'hudChrome.mapAtlas.filters.players',
+};
+
+/** The data-* attributes that identify an interactive rail control. Order is the
+ *  match order, and every one of them is a literal from this list, so the
+ *  attribute selector the focus restore builds can never carry player data. */
+const FOCUS_ATTRS = [
+  'data-map-filter',
+  'data-map-quest',
+  'data-map-route',
+  'data-map-untrack',
+] as const;
+
+/** Which control held focus, as an attribute plus its value (null for the two
+ *  valueless controls). Compared by getAttribute after the swap, so a quest id
+ *  never has to be escaped into a selector. */
+interface RailFocus {
+  attr: (typeof FOCUS_ATTRS)[number];
+  value: string | null;
+}
 
 function mapQuestTitle(questId: string): string {
   return ownEntry(QUESTS, questId)
@@ -73,6 +118,28 @@ export class MapSidebarController {
     this.render();
   }
 
+  /** The data-map-* identity of the focused control, or null when focus is
+   *  outside the rail (in which case the swap steals nothing and restoring
+   *  would be the theft). */
+  private capturedFocus(root: HTMLElement): RailFocus | null {
+    const active = document.activeElement as HTMLElement | null;
+    if (!active || active === root || !root.contains(active)) return null;
+    for (const attr of FOCUS_ATTRS) {
+      const control = active.closest<HTMLElement>(`[${attr}]`);
+      if (control) return { attr, value: control.getAttribute(attr) };
+    }
+    return null;
+  }
+
+  private restoreFocus(root: HTMLElement, focus: RailFocus): void {
+    for (const candidate of root.querySelectorAll<HTMLElement>(`[${focus.attr}]`)) {
+      if (candidate.getAttribute(focus.attr) === focus.value) {
+        candidate.focus();
+        return;
+      }
+    }
+  }
+
   private mount(): HTMLElement {
     const root = this.deps.root();
     if (this.mountedRoot === root) return root;
@@ -102,7 +169,7 @@ export class MapSidebarController {
     });
     const filters = FILTERS.map((id) => {
       const on = model.filters[id];
-      return `<button type="button" class="map-atlas-filter ui-seg-tab${on ? ' is-on' : ''}" data-map-filter="${id}" aria-pressed="${on}">${esc(t(`hudChrome.mapAtlas.filters.${id}`))}</button>`;
+      return `<button type="button" class="map-atlas-filter ui-seg-tab${on ? ' is-on' : ''}" data-map-filter="${id}" aria-pressed="${on}">${esc(t(FILTER_KEYS[id]))}</button>`;
     }).join('');
     const quests = model.quests
       .map((quest) => {
@@ -139,7 +206,9 @@ export class MapSidebarController {
       `<footer class="map-atlas-legend"><span><i class="map-atlas-legend-mark is-dungeon" aria-hidden="true"></i>${esc(t('hudChrome.mapAtlas.legend.dungeon'))}</span><span><i class="map-atlas-legend-mark is-ore" aria-hidden="true"></i>${esc(t('hudChrome.mapAtlas.legend.ore'))}</span><span><i class="map-atlas-legend-mark is-herb" aria-hidden="true"></i>${esc(t('hudChrome.mapAtlas.legend.herb'))}</span><span><i class="map-atlas-legend-mark is-mail" aria-hidden="true"></i>${esc(t('hudChrome.mapAtlas.legend.mail'))}</span><span><i class="map-atlas-legend-mark is-passage" aria-hidden="true"></i>${esc(t('hudChrome.mapAtlas.legend.passage'))}</span></footer>`;
     if (html === this.lastHtml) return;
     this.lastHtml = html;
+    const focus = this.capturedFocus(root);
     root.innerHTML = html;
+    if (focus) this.restoreFocus(root, focus);
   }
 
   private readonly onClick = (event: Event): void => {

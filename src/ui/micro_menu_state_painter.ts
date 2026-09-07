@@ -10,16 +10,32 @@ import type { PainterHostWriters } from './painter_host';
  *  rail's own geometry rule reaches (the corner default overhangs a 34x30 button). */
 export const MICRO_MENU_BADGE_CLASS = 'mm-badge ui-badge ui-badge--corner';
 
+/** Window elements resolved by id, kept across paints. Same `isConnected`
+ *  re-query contract as the launcher cache below, and for the same reason: a
+ *  detached element is dropped and a miss is never cached, so a window minted
+ *  late still lights its ring. Module scope rather than painter state because
+ *  the predicate is a free function the pure view calls. */
+const windowElements = new Map<string, HTMLElement>();
+
 /**
  * Is the window with this element id currently open?
  *
  * Reads `data-window-open`, the marker Hud's window MutationObserver already keeps
  * on every `.window.panel` (it is set from the same isWindowVisible() decision that
  * drives every other open-state consumer, including the social window's class-driven
- * arm). An attribute read, so the rail's ring never forces a style recalc of its own.
+ * arm). An attribute read, so the rail's ring never forces a style recalc of its own,
+ * and a cached element means a settled rail costs no id lookup either.
  */
 export function microMenuWindowOpen(windowId: string): boolean {
-  return document.getElementById(windowId)?.getAttribute('data-window-open') === '1';
+  const cached = windowElements.get(windowId);
+  if (cached?.isConnected) return cached.getAttribute('data-window-open') === '1';
+  const el = document.getElementById(windowId);
+  if (!el) {
+    windowElements.delete(windowId);
+    return false;
+  }
+  windowElements.set(windowId, el);
+  return el.getAttribute('data-window-open') === '1';
 }
 
 export class MicroMenuStatePainter {
