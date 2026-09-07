@@ -448,8 +448,8 @@
     <div id="chatlog-wrap">
       <!-- Tabs (built-in Chat/Combat + player-added channel tabs + "add") are
            rendered by the HUD (hud.ts initChatTabs); this stays empty. -->
-      <div id="chatlog-tabs" role="tablist"></div>
-      <div id="chatlog-frame" class="panel">
+      <div id="chatlog-tabs" class="ui-tabs" role="tablist"></div>
+      <div id="chatlog-frame" class="panel ui-panel-soft">
         <!-- aria-live="off" overrides role="log"'s IMPLICIT polite so this pane (which
              goes display:none on the combat tab) does not double-announce alongside the
              tab-independent #chat-live region. role="log" + tabindex="-1" stay: it is still
@@ -571,7 +571,7 @@
     </div>
   </div>
 
-  <textarea id="chat-input" rows="1" maxlength="255" data-i18n-placeholder="hud.core.chatPlaceholder" placeholder="Say something... (/w name, /r, /p, /gu, /o, /general, /join world|lfg, /afk, /dnd)" autocomplete="off" autocapitalize="sentences" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other"></textarea>
+  <textarea id="chat-input" class="ui-input" rows="1" maxlength="255" data-i18n-placeholder="hud.core.chatPlaceholder" placeholder="Say something... (/w name, /r, /p, /gu, /o, /general, /join world|lfg, /afk, /dnd)" autocomplete="off" autocapitalize="sentences" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other"></textarea>
     <!-- Mobile-only keyboard-dismiss chevron: blurs #chat-input so the on-screen
          keyboard drops WITHOUT closing chat (the log + composer stay visible). Shown
          only under body.mobile-touch while chat is open (CSS). The down chevron reuses

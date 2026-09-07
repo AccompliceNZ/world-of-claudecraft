@@ -400,9 +400,9 @@
     top: 0;
     max-width: 220px;
     pointer-events: none;
-    background: rgba(252, 250, 240, 0.93);
-    color: #1d1610;
-    border: 1px solid #8a7a55;
+    background: color-mix(in srgb, var(--color-white) 93%, transparent);
+    color: var(--color-chrome-ground);
+    border: 1px solid var(--color-text-faint);
     border-radius: 10px;
     padding: 4px 9px;
     font-size: 12px;
@@ -414,8 +414,8 @@
   }
   .chat-bubble.yell {
     font-weight: bold;
-    color: #7a1408;
-    border-color: #c43a2a;
+    color: var(--color-hostile-rim);
+    border-color: var(--color-hostile);
   }
 
   /* ---------- new-adventurer tutorial ---------- */
@@ -1687,8 +1687,7 @@
   #swingbar-offhand .tf-move-btn,
   #paladin-devotion-frame .tf-move-btn,
   #proc-overlay .tf-move-btn,
-  #meters-window .tf-move-btn,
-  #chatlog-wrap .chat-move-btn {
+  #meters-window .tf-move-btn {
     position: absolute;
     top: -10px;
     right: -10px;
@@ -1722,10 +1721,18 @@
   #paladin-devotion-frame .tf-move-btn:focus-visible,
   #petbar .tf-move-btn:focus-visible,
   #proc-overlay .tf-move-btn:focus-visible,
-  #meters-window .tf-move-btn:focus-visible,
-  #chatlog-wrap .chat-move-btn:focus-visible {
+  #meters-window .tf-move-btn:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 1px;
+  }
+  #chatlog-wrap .chat-move-btn {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    z-index: 21;
   }
   /* The button is built once and hidden until unlocked (the controller also sets
      the `hidden` attribute, which takes it out of the tab order). */
@@ -1737,7 +1744,7 @@
     display: none;
   }
   body.interface-unlocked .chat-move-btn {
-    display: block;
+    display: inline-flex;
   }
   .tf-move-btn-hidden {
     display: none;
@@ -4629,7 +4636,6 @@
     width: min(370px, calc(50vw - 330px));
   }
   #chatlog-tabs {
-    display: flex;
     /* Stay a single clean row as tabs are added: never wrap the "+" to its own
        line. When the tabs outgrow the strip they scroll horizontally instead
        (the scrollbar is hidden for the classic look; wheel-to-horizontal is
@@ -4642,7 +4648,6 @@
        box), so suppress the browser's own touch gesture here. Mobile has no move
        gesture and overrides this to pan-x so overflowed tabs stay swipeable. */
     touch-action: none;
-    gap: 2px;
     margin-left: 6px;
     margin-bottom: -1px;
     position: relative;
@@ -4655,21 +4660,10 @@
     /* keep each tab its natural width and let the strip scroll, never squish */
     flex: 0 0 auto;
     height: 22px;
-    padding: 0 12px;
-    border: 1px solid #3a321d;
-    border-bottom: none;
-    border-radius: 6px 6px 0 0;
-    background: linear-gradient(#1c1824, #0d0b13);
-    color: #95886a;
-    cursor: var(--cursor-point);
-    font-family: var(--title-font);
-    font-size: 12px;
-    text-shadow: 1px 1px 1px #000;
   }
-  .chat-tab.active {
-    color: var(--gold);
-    border-color: #6f5a2a;
-    background: linear-gradient(#2a2436, #161220);
+  .chat-tab:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
   /* Drag-to-reorder affordance, matching the bags' grab/drop-target language
      (components.css `.bag-item[draggable="true"]` / `.bag-item.drop-target`)
@@ -4683,9 +4677,9 @@
     opacity: 0.45;
   }
   .chat-tab.drop-target {
-    outline: 2px dashed rgba(255, 218, 160, 0.85);
+    outline: 2px dashed var(--color-glint);
     outline-offset: -2px;
-    box-shadow: 0 0 10px rgba(202, 164, 114, 0.45);
+    box-shadow: var(--glow-gold-soft);
   }
   /* "add channel" (+) tab: square, icon-only, slightly de-emphasised. Sticks to
      the right edge so it stays inline and reachable even when the tabs scroll. */
@@ -4693,14 +4687,8 @@
     flex: 0 0 auto;
     position: sticky;
     right: 0;
-    padding: 0;
     width: 26px;
-    font-size: 15px;
     line-height: 1;
-    color: #b6a472;
-  }
-  .chat-tab-add:hover {
-    color: var(--gold);
   }
   /* a channel tab filters the shared chat pane to its own messages */
   .chat-pane .chat-hidden {
@@ -4737,6 +4725,7 @@
   }
   /* corner resize grip, classic diagonal hatch in the frame's bottom-right */
   .chat-resize-grip {
+    appearance: none;
     position: absolute;
     right: 0;
     bottom: 0;
@@ -4745,17 +4734,23 @@
     cursor: nwse-resize;
     z-index: 3;
     opacity: 0.45;
+    padding: 0;
+    border: 0;
     background: linear-gradient(
       135deg,
       transparent 0 45%,
-      #95886a 45% 55%,
+      var(--color-text-muted) 45% 55%,
       transparent 55% 70%,
-      #95886a 70% 80%,
+      var(--color-text-muted) 70% 80%,
       transparent 80%
     );
   }
   .chat-resize-grip:hover {
     opacity: 0.9;
+  }
+  .chat-resize-grip:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
   body.mobile-touch .chat-resize-grip {
     display: none;
@@ -4896,9 +4891,10 @@
     display: block;
   }
   .chat-pane div {
-    text-shadow: 1px 1px 1px #000;
+    text-shadow: 1px 1px 1px var(--color-keyline);
     overflow-wrap: break-word;
     user-select: text;
+    font-variant-numeric: tabular-nums;
   }
   .chat-player-name {
     /* A live player sender stamps --class-color (see hud.ts); everyone else (and any
@@ -4919,14 +4915,14 @@
     outline-offset: 2px;
   }
   .chat-quest-link {
-    color: #ffd100;
+    color: var(--color-accent);
     cursor: var(--cursor-point);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 2px;
   }
   .chat-quest-link:hover {
-    color: #fff176;
+    color: var(--color-glint);
   }
   .chat-quest-link:focus-visible {
     outline: 2px solid var(--color-border-focus);
@@ -4967,11 +4963,14 @@
     width: 8px;
   }
   .chat-pane::-webkit-scrollbar-track {
-    background: #0b0b10;
+    background: var(--color-ink-deep);
   }
   .chat-pane::-webkit-scrollbar-thumb {
-    background: #4a3d1d;
+    background: var(--color-socket-rim);
     border-radius: 4px;
+  }
+  #chatlog-frame .chat-ts {
+    color: var(--color-text-faint);
   }
   #report-window {
     width: 320px;
@@ -7314,9 +7313,25 @@
   #chatlog-frame {
     background: linear-gradient(
       170deg,
-      color-mix(in srgb, var(--panel-base) calc(var(--chat-opacity, 0.95) * 100%), transparent) 0%,
-      color-mix(in srgb, var(--panel-edge) calc(var(--chat-opacity, 0.95) * 100%), transparent) 100%
+      color-mix(
+          in srgb,
+          var(--panel-base) calc(var(--chat-opacity, 1) * var(--chat-soft, 0.74) * 100%),
+          transparent
+        )
+        0%,
+      color-mix(
+          in srgb,
+          var(--panel-edge) calc(var(--chat-opacity, 1) * var(--chat-soft, 0.74) * 100%),
+          transparent
+        )
+        100%
     );
+  }
+  #chatlog-wrap:hover #chatlog-frame,
+  #chatlog-wrap:focus-within #chatlog-frame,
+  body:has(#chat-input:hover) #chatlog-frame,
+  body:has(#chat-input:focus) #chatlog-frame {
+    --chat-soft: 1;
   }
   /* HUD Opacity (--hud-opacity), fades frames/windows as a whole. */
   .panel,
@@ -8418,15 +8433,7 @@
     width: 370px;
     display: none;
     z-index: 25;
-    background: #0d0d14ee;
-    color: #e8e8e8;
-    border: 2px solid var(--border);
-    outline: 1px solid #000;
-    border-radius: 4px;
-    padding: 7px 10px;
-    font-size: 13px;
     line-height: 1.35;
-    font-family: inherit;
     user-select: text;
     box-sizing: border-box;
     resize: none;
@@ -8434,6 +8441,11 @@
     max-height: 110px;
     white-space: pre-wrap;
     word-break: break-word;
+  }
+  #chat-input:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+    background: var(--panel-bg-strong);
   }
   /* The mobile keyboard-dismiss chevron is hidden by default (desktop AND mobile-when-
      chat-closed); only body.mobile-touch.mobile-chat-open reveals it (hud.mobile.css,
@@ -9615,7 +9627,7 @@
   #chatlog .chat-role-tag {
     font-weight: 700;
     margin-right: 3px;
-    text-shadow: 1px 1px 2px #000;
+    text-shadow: var(--title-shadow);
   }
   /* Player-menu header. The tag is nested INSIDE .ctx-title-name (the header is a
      flex row with a 9px gap, so a sibling would drift away from the name it

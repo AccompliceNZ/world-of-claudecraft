@@ -14398,7 +14398,7 @@ export class Hud {
   private prependTimestamp(div: HTMLElement): void {
     if (!this.chatTimestamps) return;
     const ts = document.createElement('span');
-    ts.className = 'chat-ts';
+    ts.className = 'chat-ts ui-faint ui-num';
     ts.textContent = `${formatChatTimestamp(new Date(), this.chatClock)} `;
     div.appendChild(ts);
   }

@@ -823,6 +823,10 @@
     --dur-press: 60ms;
     --dur-panel: 160ms;
     --dur-frame: 120ms;
+
+    /* W5 additions (chat) */
+    /* Multiplies the player's chat opacity while the dock is idle. */
+    --chat-soft: 0.74;
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal
