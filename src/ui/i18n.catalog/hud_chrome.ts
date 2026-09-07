@@ -3207,6 +3207,76 @@ export const hudChromeStrings = {
     fishingZoneUnproven:
       'Some waters need proficiency {skill}+ and rod tier {tier}+; no specific spot is confirmed yet.',
   },
+  // The persistent gathering goal panel (Intentional Gathering PR4): a
+  // compact "what am I collecting for" readout, tracked from the crafting
+  // window's own Track control or the commission board's Track control, and
+  // cleared explicitly. It never selects or applies a harvest preference on
+  // its own; setPreferenceButton is the one explicit shortcut to that other
+  // setting.
+  gatheringGoal: {
+    title: 'Gathering Goal',
+    // The Clear button's full accessible name (aria-label). The visible
+    // label is the short clearButton below: the panel is rail-width, and a
+    // header row wide enough for the whole sentence pushed the title down to
+    // a few illegible characters.
+    close: 'Clear gathering goal',
+    clearButton: 'Clear',
+    empty: 'No gathering goal set.',
+    // {name} the localized result item name, {count} the TOTAL OUTPUT units
+    // (craftCount * recipe.resultCount), never the raw craft count alone.
+    recipeGoalLabel: '{name} x{count}',
+    commissionGoalLabel: 'Commission: {name} x{count}',
+    // Shown beside the label ONLY when the recipe's own resultCount makes the
+    // craft count and the total output diverge (a stack recipe), so the
+    // output figure above is never mistaken for how many crafts are queued.
+    craftCountLine: '{count} crafts tracked',
+    unknownRecipeLabel: 'Unknown recipe',
+    // The header title when a PERSISTED goal selection is invalid (goal null,
+    // but a reason is present): distinct from true no-selection, which hides
+    // the panel entirely (see renderGatheringGoalPanel's own contract).
+    invalidGoalLabel: 'No longer tracked',
+    statusCollecting: 'Collecting',
+    statusReady: 'Ready',
+    statusUnavailable: 'Unavailable',
+    statusDelivered: 'Delivered',
+    statusCancelled: 'Cancelled',
+    statusExpired: 'Expired',
+    // Ready means the listed materials are on hand; it promises nothing about
+    // gold, a station, or bag space (root CLAUDE.md's gameplay-neutral
+    // wording rule applies to this text too: state the fact, not the promise
+    // the fact does not make).
+    readyHint: 'Materials on hand. Crafting still needs gold, a station, and bag space.',
+    reasonInvalidGoal: 'This goal is no longer valid.',
+    reasonUnknownRecipe: 'That recipe no longer exists.',
+    reasonRecipeUnavailable: 'That recipe is no longer available to you.',
+    // A full reload always drops the client's tracking link even when the
+    // accepted commission order itself still exists server-side, so this
+    // must not claim the order is gone: it tells the player where to look.
+    reasonCommissionUnavailable:
+      'That commission is no longer tracked. Track it again from the board if it is still listed.',
+    reasonDailyLimit: 'That recipe has already been crafted today.',
+    reasonBatchLimit: 'That batch size is no longer valid.',
+    materialLine: '{name}: {reachable} of {required}',
+    // Carried and in-storage are ALWAYS rendered (they are the row's own
+    // allocation breakdown, not a warning that only appears on shortfall,
+    // which is what missing/inaccessible below are).
+    materialCarried: '{count} carried',
+    materialStored: '{count} in storage',
+    materialMissing: '{count} missing',
+    // Covers BOTH a stored unit outside this container's reach AND a locked
+    // carried slot: never claim every unit counted here is in storage.
+    materialInaccessible: '{count} unavailable for crafting',
+    storageRestrictedNote: 'Some materials are in storage you cannot reach from here.',
+    payableCraftsLine: 'Enough on hand for {count} more.',
+    setPreferenceButton: 'Set as harvest preference',
+    setPreferenceButtonAria: 'Set {name} as your harvest preference',
+    // Shown INSTEAD of setPreferenceButton/setPreferenceButtonAria when the
+    // row's target is already the active preference (row.isCurrentHarvestPreference,
+    // read from the authoritative world mirror): a disabled, read-only state,
+    // never a second Set action for the same target.
+    currentPreferenceLabel: 'Current harvest preference',
+    currentPreferenceAria: '{name} is your current harvest preference',
+  },
   // Party leadership: the right-click "Promote to Leader" handoff action shown on a
   // party member's context menu to the current leader. Lives in the English-only
   // hud_chrome domain so an English-only PR compiles; the new-leader announcement
@@ -5063,6 +5133,12 @@ export const hudChromeStrings = {
     herbalism: 'Herbalism',
     fishing: 'Fishing',
     farming: 'Farming',
+    // The sixth family (masterwrought decision C): a gathering FAMILY
+    // without being a gathering PROFESSION (src/sim/professions/
+    // gathering_supply.ts CORPSE_HARVEST_FAMILY). Sits beside its five
+    // siblings above rather than in a second registry: the gathering goal
+    // panel's per-material source label is the one reader today.
+    corpseHarvesting: 'Corpse Harvesting',
     // #1866: click/tap/interact-key error when a targeted node's per-viewer
     // respawn timer has not elapsed yet (IWorldProfessions#nodeHarvestableByMe).
     notReady: 'This resource node has not respawned for you yet.',
@@ -5815,6 +5891,15 @@ export const hudChromeStrings = {
     qtyDecreaseAria: 'Decrease craft quantity, currently {count}',
     qtyIncreaseAria: 'Increase craft quantity, currently {count}',
     qtyValueAria: 'Craft quantity, {count}',
+    // The gathering-goal Track control (Intentional Gathering PR4): its OWN
+    // quantity stepper, deliberately separate from the craft-batch qty group
+    // above (which clamps to the current mats-fit and so cannot express a
+    // shortage to plan a goal around). Track REPLACES the current goal.
+    goalQtyRowAria: 'Goal quantity',
+    goalQtyDecreaseAria: 'Decrease goal quantity, currently {count}',
+    goalQtyIncreaseAria: 'Increase goal quantity, currently {count}',
+    trackGoalButton: 'Track',
+    trackGoalButtonAria: 'Track {count} crafts of {name} as your gathering goal',
     // Batch progress on the in-window strip ({remaining} / {total} localized).
     batchRemaining: '{remaining} of {total} remaining',
     batchRemainingAria: '{remaining} of {total} crafts remaining',
@@ -6464,6 +6549,9 @@ export const hudChromeStrings = {
     deliverButton: 'Deliver',
     deliverHint:
       'Craft the commissioned piece (with the commission toggle on), then come back here to deliver it.',
+    // The gathering goal Track control (Intentional Gathering PR4): shown
+    // beside Deliver on an order this viewer has accepted to craft.
+    trackButton: 'Track',
     // commissionOrderResult chat lines, one success line per action (the
     // trainResult single-surface rule) plus the shared deny-reason set.
     opened: 'You post a commission order for {item}.',

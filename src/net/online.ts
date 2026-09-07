@@ -181,6 +181,7 @@ import type {
   CommissionOrderScope,
   CommissionOrderView,
   DisenchantResultView,
+  GatheringGoalView,
   MasterworkView,
   PerfectItemRef,
   PerfectingInfoView,
@@ -207,6 +208,7 @@ import {
   parseDesktopWalletHandoffStatus,
 } from './desktop_wallet_handoff';
 import { dungeonEntrySnapshotFacing } from './dungeon_entry_facing';
+import { decodeGatheringGoalWire } from './gathering_goal_wire';
 import {
   decodeConsecrations,
   decodeFrostRings,
@@ -1763,6 +1765,11 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // `hpref` below. null until the mirror syncs; reset null on reconnect
   // hello (the marketInfo precedent) so a resume never shows a stale choice.
   harvestPreference: HarvestPreference | null = null;
+  // Intentional Gathering PR4: the viewer's single explicit gathering goal,
+  // mirrored from the `ggoal` self-delta below. null until the mirror syncs,
+  // and reset null on reconnect hello (the harvestPreference/marketInfo
+  // precedent) so a resume never shows a stale goal.
+  gatheringGoal: GatheringGoalView | null = null;
   // Static content read (the recipeList precedent below): the garden-bed
   // geography ships with the client bundle like every other content table, so
   // this needs no wire round-trip. See src/world_api/farming.ts.
@@ -2602,6 +2609,9 @@ export class ClientWorld extends ReconWireState implements IWorld {
         // Same reasoning as marketInfo above: hpref is delta-omitted, so this
         // resets it to the unsynced state rather than showing a stale choice.
         this.harvestPreference = null;
+        // Same reasoning again: ggoal is delta-omitted, so this resets it to
+        // the unsynced state rather than showing a stale tracked goal.
+        this.gatheringGoal = null;
         // Same idea for a corpse-harvest-info query issued just before the drop.
         this.worldInteractionRequests?.resetQuery();
         this.onReconnected?.();
@@ -3691,6 +3701,10 @@ export class ClientWorld extends ReconWireState implements IWorld {
       // hpref: delta-omitted; present decodes via the shared wire leaf, which
       // refuses a malformed value to null rather than reviving All.
       if (s.hpref !== undefined) this.harvestPreference = decodeHarvestPreferenceWire(s.hpref);
+      // ggoal (Intentional Gathering PR4): delta-omitted; present decodes via
+      // the shared strict wire leaf, which refuses a malformed frame to null
+      // rather than rendering a partial or stale projection.
+      if (s.ggoal !== undefined) this.gatheringGoal = decodeGatheringGoalWire(s.ggoal);
       if (s.fplot !== undefined) this.myFarmPlots = s.fplot ?? [];
       if (s.prof !== undefined) this.professionsState = s.prof ?? { skills: [] };
       if (s.cprof !== undefined && s.cprof) {
@@ -4190,6 +4204,19 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // from the authenticated session, never from this payload.
   setHarvestPreference(raw: string): void {
     this.cmd({ cmd: 'set_harvest_preference', raw });
+  }
+  // Intentional Gathering PR4: command only, no optimistic write (the
+  // setHarvestPreference precedent). The server re-validates the recipe id
+  // and count and derives pid from the authenticated session; the goal itself
+  // mirrors back via the ggoal self-delta.
+  trackGatheringRecipe(recipeId: string, count: number): void {
+    this.cmd({ cmd: 'track_gathering_recipe', recipe: recipeId, count });
+  }
+  trackGatheringCommission(orderId: number): void {
+    this.cmd({ cmd: 'track_gathering_commission', order: orderId });
+  }
+  clearGatheringGoal(): void {
+    this.cmd({ cmd: 'clear_gathering_goal' });
   }
   // `commission` (Professions 2.0): the boolean Maker's Bond
   // opt-in, sent ONLY when true so a non-commission craft's wire message

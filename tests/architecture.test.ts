@@ -533,6 +533,7 @@ const UI_PURE_CORES = [
   'src/ui/target_auras_view.ts',
   'src/ui/minimap_markers.ts',
   'src/ui/hud/professions/gathering_view.ts',
+  'src/ui/hud/professions/gathering_goal_view.ts',
   'src/ui/gather_rare_event_feedback.ts',
   'src/ui/gather_tool_tooltip.ts',
   'src/ui/tool_effect_tooltip.ts',

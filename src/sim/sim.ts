@@ -439,7 +439,6 @@ import {
 } from './professions/archetype';
 import {
   type CadenceMap,
-  cadenceBlockedKeys,
   clampCadenceOnLoad,
   serializeCadence,
   WORK_ORDER_CADENCE_TICKS,
@@ -469,6 +468,7 @@ import {
   emitCraftResult,
   storedCraftResult,
 } from './professions/crafting';
+import { craftingIdentityFor as craftingIdentityForImpl } from './professions/crafting_identity';
 import { sanitizeDailyGateLoad } from './professions/daily_gate_load';
 import {
   type ApplyEnchantResult,
@@ -509,6 +509,21 @@ import {
   nodeRespawnRemainingSec,
   normalizeGatheringProficiency,
 } from './professions/gathering';
+import {
+  clearGatheringGoal as clearGatheringGoalImpl,
+  trackGatheringCommission as trackGatheringCommissionImpl,
+  trackGatheringRecipe as trackGatheringRecipeImpl,
+} from './professions/gathering_goal_actions';
+import {
+  loadGatheringGoal,
+  type SavedGatheringGoal,
+  saveGatheringGoal,
+} from './professions/gathering_goal_persist';
+import {
+  forgetGatheringGoalProjection,
+  gatheringGoalFor as gatheringGoalForImpl,
+} from './professions/gathering_goal_projection';
+import type { GatheringGoalView } from './professions/gathering_goal_types';
 import { updateGuildTrendLetters } from './professions/guild_letter';
 import {
   HARVEST_PREFERENCE_ALL,
@@ -1673,6 +1688,19 @@ export interface PlayerMeta {
   // Active-archetype state and quest-gated switching (#1129, superseded scope: see
   // professions/archetype.ts). Never touches craftSkills. Persisted in CharacterState.
   archetype: ArchetypeState;
+  // Intentional Gathering PR4: the one explicit tracked gathering goal (a
+  // recipe quantity or an accepted commission). Optional and absent for a
+  // fresh character/pre-feature save. Persisted sparsely in
+  // CharacterState.gatheringGoal via professions/gathering_goal_persist.ts
+  // (loadGatheringGoal/saveGatheringGoal); see that module for the
+  // compact/invalid encoding.
+  gatheringGoal?: SavedGatheringGoal;
+  // The EXACT live CommissionOrder object a commission goal is bound to
+  // (professions/gathering_goal_actions.ts trackGatheringCommission). Never
+  // persisted and never restored from a saved numeric orderId: a reload
+  // always leaves a commission goal unavailable until an explicit re-Track.
+  // Cleared on replace/clear and on removePlayer.
+  gatheringGoalOrder?: CommissionOrder;
   // One-time Ravenpost welcome letter sent (persisted in CharacterState, so
   // existing characters get the service announcement exactly once).
   mailWelcomed: boolean;
@@ -3421,6 +3449,13 @@ export class Sim {
       meta.harvestPreference = loadedHarvestPreference.ok
         ? loadedHarvestPreference.preference
         : null;
+      // Intentional Gathering PR4: absent/undefined stays absent (no goal); a
+      // valid saved goal is restored verbatim; a malformed one loads the
+      // 'invalid' sentinel rather than silently becoming no goal. Never
+      // restores gatheringGoalOrder: a commission binding requires an
+      // explicit re-Track every load (see PlayerMeta.gatheringGoalOrder).
+      const loadedGatheringGoal = loadGatheringGoal(s.gatheringGoal);
+      if (loadedGatheringGoal !== undefined) meta.gatheringGoal = loadedGatheringGoal;
       if (s.delveLoreUnlocked) for (const id of s.delveLoreUnlocked) meta.delveLoreUnlocked.add(id);
       // Load hardening (migration review) for the daily/weekly gate state,
       // the delve and heroic daily fragments included since Phase 18 (their
@@ -3902,6 +3937,10 @@ export class Sim {
     this.delvePetStash.delete(pid);
     // Same session hygiene for the deed runtime's per-pid maps.
     deedsMod.dropDeedSessionState(this.ctx, pid);
+    // Intentional Gathering PR4: drop the derived projection cache and the
+    // live commission-order binding with the leaving player's meta.
+    forgetGatheringGoalProjection(meta);
+    delete meta.gatheringGoalOrder;
     if (this.primaryId === pid)
       this.primaryId = this.players.size > 0 ? [...this.players.keys()][0] : -1;
   }
@@ -4285,6 +4324,13 @@ export class Sim {
       ...(() => {
         const saved = savedHarvestPreference(meta.harvestPreference);
         return saved === undefined ? {} : { harvestPreference: saved };
+      })(),
+      // Intentional Gathering PR4: sparse (absent while no goal is tracked).
+      // Never serializes the derived projection/cache or the live order
+      // binding (gatheringGoalOrder), only the compact selection.
+      ...(() => {
+        const saved = saveGatheringGoal(meta.gatheringGoal);
+        return saved === undefined ? {} : { gatheringGoal: saved };
       })(),
       // World-boss lockouts serialize via raidLockouts (above), not a separate field.
       // Book of Deeds: every field conditional (absent while empty/null/zero)
@@ -11653,46 +11699,43 @@ export class Sim {
   }
 
   craftingIdentityFor(pid: number): CraftingIdentityView {
-    const state = archetypeStateFor(this.ctx, pid);
-    return {
-      version: 1,
-      synced: true,
-      craftSkills: this.craftSkillsFor(pid),
-      activeArchetype: state.activeArchetype,
-      pairedMajor: state.pairedMajor,
-      hobbyCraft: state.hobbyCraft,
-      attunedPairs: [...state.attunedPairs],
-      switchCount: state.switchCount,
-      amendsProgress: state.amendsProgress,
-      amendsRequired: requiredAmendsProgress(state.switchCount),
-      // SORTED so the view's JSON form is a stable signature: the server's
-      // cprof delta diff (server/game.ts maybe()) re-emits exactly when the
-      // set actually changes, never on Set iteration order.
-      knownRecipes: [...(this.players.get(pid)?.knownRecipes ?? [])].sort(),
-      // Work orders on cooldown, resolved against THIS host's tickCount.
-      // Sorted, so the cprof diff re-emits only on arm/expiry, and the
-      // online client feeds it into its local computeQuestState.
-      cadenceBlockedQuests: cadenceBlockedKeys(
-        this.players.get(pid)?.questCadence ?? new Map(),
-        this.tickCount,
-      ),
-      // Quested-hobby record (professions/hobby_memory.ts), KEY-SORTED for a
-      // stable cprof signature and omitted while empty, so the delta diff
-      // never fires for characters without the feature.
-      ...(() => {
-        const quested = this.players.get(pid)?.questedHobbies;
-        if (!quested || quested.size === 0) return {};
-        return {
-          questedHobbies: Object.fromEntries(
-            [...quested.entries()].sort(([a], [b]) => (a < b ? -1 : 1)),
-          ),
-        };
-      })(),
-    };
+    return craftingIdentityForImpl(this.ctx, pid);
   }
 
   get craftingIdentity(): CraftingIdentityView {
     return this.craftingIdentityFor(this.primaryId);
+  }
+
+  // --- Intentional Gathering PR4: the one explicit tracked gathering goal ---
+
+  /** The derived read model for pid's tracked goal, or null when none is
+   *  tracked. Cached per player/goal (professions/gathering_goal_projection.ts). */
+  gatheringGoalFor(pid: number): GatheringGoalView | null {
+    return gatheringGoalForImpl(this.ctx, pid);
+  }
+
+  get gatheringGoal(): GatheringGoalView | null {
+    return this.gatheringGoalFor(this.primaryId);
+  }
+
+  /** Track a recipe goal for `count` crafts (1..CRAFT_BATCH_MAX). Replacing a
+   *  goal never changes harvest preference. Returns false and leaves the
+   *  previous goal untouched on any invalid request. */
+  trackGatheringRecipe(recipeId: string, count: number, pid = this.primaryId): boolean {
+    return trackGatheringRecipeImpl(this.ctx, recipeId, count, pid);
+  }
+
+  /** Track the caller's own currently-accepted commission order. Binds the
+   *  exact live order object; a saved numeric orderId never resolves a
+   *  current order after a reload. Returns false and leaves the previous
+   *  goal untouched when the order is not this player's open acceptance. */
+  trackGatheringCommission(orderId: number, pid = this.primaryId): boolean {
+    return trackGatheringCommissionImpl(this.ctx, orderId, pid);
+  }
+
+  /** Clear pid's tracked goal, if any. Never touches harvest preference. */
+  clearGatheringGoal(pid = this.primaryId): void {
+    clearGatheringGoalImpl(this.ctx, pid);
   }
 
   /** The active-archetype craft id, or null before the zone-1 acceptance quest has

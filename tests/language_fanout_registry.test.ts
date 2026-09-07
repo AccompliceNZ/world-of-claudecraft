@@ -127,6 +127,16 @@ const FANOUT_ARMS: readonly string[] = [
   'this.questTracker.relocalize|',
   'this.delveTracker.relocalize|',
   'this.riftTracker.relocalize|',
+  // The gathering goal tracker (Intentional Gathering PR4): its repaint
+  // signature is the raw GatheringGoalView (ids/counts/enums), all
+  // text-independent, so a locale switch alone never moves it and the arm
+  // forces one rebuild. NOT in half 2's ANSWERED list: the controller module
+  // itself calls no t()/tPlural()/tEntity() (every string is emitted by the
+  // separate gathering_goal_painter.ts it delegates to), so the discovery
+  // sweep's own EMITS_TEXT half never finds gathering_goal_controller.ts's
+  // lastSignature memo, and a registry row naming an undiscovered module
+  // would fail as stale rather than as unclassified.
+  'this.gatheringGoalController.relocalize|',
   'this.partyFramesPainter.relocalize|',
   'this.raidBossGuideWindow.relocalize|',
   'this.mapPainter.relocalize|',
