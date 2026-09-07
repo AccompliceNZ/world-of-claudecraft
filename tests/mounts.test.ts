@@ -914,7 +914,7 @@ describe('mount purchase (Marla sells reins for 10g after ridingTrained)', () =>
   });
 
   it('gates the horse behind q_riding_lessons: level 20, given/turned in at Marla', () => {
-    const quest = QUESTS['q_riding_lessons'];
+    const quest = QUESTS.q_riding_lessons;
     expect(quest).toBeDefined();
     expect(quest.giverNpcId).toBe('stablemaster_marla');
     expect(quest.turnInNpcId).toBe('stablemaster_marla');
@@ -922,7 +922,7 @@ describe('mount purchase (Marla sells reins for 10g after ridingTrained)', () =>
   });
 
   it('the quest itemRewards are empty; it gives gold and XP only', () => {
-    const quest = QUESTS['q_riding_lessons'];
+    const quest = QUESTS.q_riding_lessons;
     expect(quest.itemRewards).toEqual({});
     expect(quest.copperReward).toBe(5000);
     expect(quest.xpReward).toBe(3000);
@@ -1780,7 +1780,7 @@ describe('pre-armed auto-attack while mounted (Fix #3)', () => {
     expect(e.mountKey).toBe('grag_bear');
 
     // Spawn a hostile mob right next to the player in melee range.
-    const tpl = MOBS['wild_boar'];
+    const tpl = MOBS.wild_boar;
     const mobId = (sim as any).nextId++;
     const mob = createMob(mobId, tpl, 3, { x: e.pos.x + 1, y: e.pos.y, z: e.pos.z });
     mob.maxHp = 100_000;

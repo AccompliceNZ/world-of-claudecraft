@@ -105,8 +105,9 @@ describe('the renderer actually supplies it', () => {
   it('renderer.ts hands its own context to three, keeping the recycled one first', () => {
     const source = readSource('../src/render/renderer.ts');
     expect(source).toContain(
-      'context: options.context ?? createRendererGlContext(canvas) ?? undefined,',
+      'const createdContext = options.context ?? createRendererGlContext(canvas) ?? undefined;',
     );
+    expect(source).toContain('const created = createRendererWebGL(canvas, createdContext);');
   });
 
   it('nothing in the world draw path depends on a transparent clear', () => {

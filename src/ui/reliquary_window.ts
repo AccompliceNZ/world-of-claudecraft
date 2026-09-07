@@ -878,34 +878,32 @@ export class ReliquaryWindow {
       firstFindCount,
       pageOwned,
     });
-    return (
-      reliquaryRefreshSig({
-        owned: catalog.owned,
-        total: catalog.total,
-        curatorRank: world.reliquaryCuratorRank(),
-        recentSig: reliquaryRecentSig(input.recent),
-        marksSize: world.reliquaryMarks.size,
-        nav: input.nav,
-        pageId: input.pageId,
-        clearsDigest,
-        ownershipDigest,
-        // A repeat obtain of a relic already on the wall moves nothing else in
-        // this signature: no set grows, no first-find key is minted, no total
-        // changes. Without this dimension an open window would keep painting the
-        // previous tally until something unrelated happened to repaint it.
-        countsDigest: reliquaryObtainCountsDigest(world.reliquaryObtainCounts),
-        search: input.search,
-        ownedFilter: input.ownedFilter,
-        // Painter-side dimension: the rarity aggregate is window state (fetched
-        // per open), not world state, so the generation rides here rather than
-        // in the pure sig fold. The tracker-visibility switch rides beside it
-        // for the same reason: the summary's eye renders from
-        // deps.trackerShown(), and without this dimension a flip landing while
-        // the window is open (today unreachable, the options window closes
-        // others, but that is a coincidence not a contract) would strand the
-        // eye's pressed state until an unrelated repaint.
-      }) + `|r${this.rarityGen}|t${this.deps.trackerShown() ? 1 : 0}`
-    );
+    return `${reliquaryRefreshSig({
+      owned: catalog.owned,
+      total: catalog.total,
+      curatorRank: world.reliquaryCuratorRank(),
+      recentSig: reliquaryRecentSig(input.recent),
+      marksSize: world.reliquaryMarks.size,
+      nav: input.nav,
+      pageId: input.pageId,
+      clearsDigest,
+      ownershipDigest,
+      // A repeat obtain of a relic already on the wall moves nothing else in
+      // this signature: no set grows, no first-find key is minted, no total
+      // changes. Without this dimension an open window would keep painting the
+      // previous tally until something unrelated happened to repaint it.
+      countsDigest: reliquaryObtainCountsDigest(world.reliquaryObtainCounts),
+      search: input.search,
+      ownedFilter: input.ownedFilter,
+      // Painter-side dimension: the rarity aggregate is window state (fetched
+      // per open), not world state, so the generation rides here rather than
+      // in the pure sig fold. The tracker-visibility switch rides beside it
+      // for the same reason: the summary's eye renders from
+      // deps.trackerShown(), and without this dimension a flip landing while
+      // the window is open (today unreachable, the options window closes
+      // others, but that is a coincidence not a contract) would strand the
+      // eye's pressed state until an unrelated repaint.
+    })}|r${this.rarityGen}|t${this.deps.trackerShown() ? 1 : 0}`;
   }
 
   /**

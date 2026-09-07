@@ -175,8 +175,11 @@ API, while `@typescript/native` provides the `tsc` binary. Things to know:
   colour attachment is still cleared, deliberately, but never written;
   re-verify that `colorWrite` is still absent from the program cache key, or
   the prewarm depth twins in `src/render/prewarm_depth_material.ts` have to
-  follow) alike (`tests/three_compile_async_patch.test.ts` pins them all),
-  before dropping or re-rolling it.
+  follow), and the GLSL assembly seam (the lifted `assembleProgramGlsl`,
+  `WebGLPrograms.hasProgram` and `renderer.collectProgramSources`, which hand
+  an off-thread warm-up the exact sources three would link) alike
+  (`tests/three_compile_async_patch.test.ts` pins them all), before dropping or
+  re-rolling it.
   One scope limit worth stating for every hunk, not just this one: the patch covers
   `build/three.module.js` ONLY. `build/three.cjs`, the `.min.js` bundles, `three.core*`
   and `three.webgpu*`/`three.tsl*` carry the UNPATCHED code, so a CommonJS

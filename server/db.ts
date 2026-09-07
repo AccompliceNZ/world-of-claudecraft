@@ -57,7 +57,7 @@ import {
 } from './character_save_transaction';
 import { seedChatFilterDefaults } from './chat_filter_db';
 import type { ChatLogRow } from './chat_log';
-import { CLIENT_PERF_SCHEMA } from './client_perf_schema';
+import { CLIENT_PERF_REPORTS_SCHEMA } from './client_perf_reports_schema';
 import {
   buildCommunityTestCharacters,
   communityTestAccountsEnabled,
@@ -1273,9 +1273,6 @@ export async function ensureSchema(): Promise<void> {
     // totals + the account-to-IP association ledger). FK-references
     // accounts(id), so it runs after SCHEMA.
     await client.query(PLAY_SESSION_RETENTION_SCHEMA);
-    // Client perf report storage. FK-references accounts(id) and
-    // characters(id), so it runs after SCHEMA.
-    await client.query(CLIENT_PERF_SCHEMA);
     // The daily-reward exclusion view joins account_ip_associations in its
     // association arm, so it is created after the retention schema above; on a
     // fresh database SCHEMA alone could not create it.
@@ -1400,7 +1397,7 @@ export async function ensureSchema(): Promise<void> {
     // Client perf telemetry: after SCHEMA (its FKs reference accounts and
     // characters), late for the storage-purchase reason below (ADD COLUMN locks
     // the highest-insert-rate table until COMMIT). Ordering pinned in tests.
-    await client.query(CLIENT_PERF_SCHEMA);
+    await client.query(CLIENT_PERF_REPORTS_SCHEMA);
     // Storage purchase parent triggers land late so their first-rollout table
     // locks are held only briefly before COMMIT.
     await client.query(STORAGE_PURCHASE_SCHEMA);
@@ -4308,6 +4305,8 @@ export interface ClientPerfReportInsert {
   graphicsPreset: string;
   gfxTier: string;
   autoGovernor: boolean;
+  shaderWarmWorkerActive: boolean;
+  shaderWarmRefusal: string;
   targetFps: number;
   renderScale: number;
   effectiveRenderScale: number;
@@ -4361,7 +4360,8 @@ export async function insertClientPerfReport(row: ClientPerfReportInsert): Promi
        browser_family, os_family, gl_vendor, gl_renderer_bucket, gl_backend, zone_or_scenario, source,
        crowd_bucket, sim_entities, active_views, visible_views, worst_10s_frame_p95_ms,
        suggestion_ids, raw_summary,
-       gl_renderer_raw, gl_model, gl_laptop, gpu_hp_adapter
+       gl_renderer_raw, gl_model, gl_laptop, gpu_hp_adapter,
+       shader_warm_worker_active, shader_warm_refusal
      ) VALUES (
        $1, $2, $3, $4, $5, $6, $7,
        $8, $9, $10, $11, $12, $13,
@@ -4370,7 +4370,7 @@ export async function insertClientPerfReport(row: ClientPerfReportInsert): Promi
        $23, $24, $25, $26,
        $27, $28, $29, $30, $31, $32, $33, $34, $35, $36, $37, $38,
        $39, $40, $41, $42, $43,
-       $44, $45, $46, $47, $48, $49
+       $44, $45, $46, $47, $48, $49, $50, $51
      )`,
     [
       row.schemaVersion,
@@ -4422,6 +4422,8 @@ export async function insertClientPerfReport(row: ClientPerfReportInsert): Promi
       row.glModel,
       row.glLaptop,
       row.gpuHpAdapter,
+      row.shaderWarmWorkerActive,
+      row.shaderWarmRefusal,
     ],
   );
 }

@@ -55,13 +55,12 @@ import { setDisplayChangeTarget } from './game/desktop_display_change';
 import {
   desktopDisplayModeSupported,
   pushDesktopDisplayMode,
-  syncDesktopDisplayModeSetting,
 } from './game/desktop_display_mode_sync';
 import { initDesktopDownload } from './game/desktop_download';
-import { pushDesktopGpuPref, syncDesktopGpuPrefSetting } from './game/desktop_gpu_pref_sync';
 import { desktopNotifyOnSimEvents } from './game/desktop_notifications';
 import { desktopPresentationHidden } from './game/desktop_presentation';
 import { initDesktopShellIntegration } from './game/desktop_shell_integration';
+import { applyDesktopShellSetting, syncDesktopShellSettings } from './game/desktop_shell_settings';
 import { installDevTeleports } from './game/dev_shortcuts';
 import {
   clearDiscordChoice,
@@ -69,7 +68,7 @@ import {
   type ExternalAuthLoginChoice,
   readDiscordChoice,
 } from './game/discord_login_choice';
-import { desktopPresenceOnFrame, pushDiscordPresenceEnabled } from './game/discord_presence';
+import { desktopPresenceOnFrame } from './game/discord_presence';
 import { cycleHudFocus } from './game/dpad_focus_nav';
 import { takeEditorPlaytestRequest } from './game/editor_playtest';
 import {
@@ -189,6 +188,12 @@ import {
   Settings,
 } from './game/settings';
 import { sfx } from './game/sfx';
+import {
+  finishShaderWarmup,
+  startShaderWarmup,
+  stopShaderWarmup,
+} from './game/shader_cache_warmup';
+import { registerShaderWarmSetting } from './game/shader_warm_setting';
 import { initSoftwareRenderNotice } from './game/software_render_notice';
 import {
   decideSpawnCinematic,
@@ -583,8 +588,8 @@ if (DESKTOP_APP) initDesktopShellIntegration();
 // whole-blob rewrite) would silently revert it.
 let liveSettings: Settings | null = null;
 const settingsForShellReflection = (): Settings => liveSettings ?? new Settings();
-if (DESKTOP_APP) void syncDesktopGpuPrefSetting(desktopBridge(), settingsForShellReflection);
-if (DESKTOP_APP) void syncDesktopDisplayModeSetting(desktopBridge(), settingsForShellReflection);
+if (DESKTOP_APP) syncDesktopShellSettings(desktopBridge(), settingsForShellReflection);
+registerShaderWarmSetting(() => settingsForShellReflection().get('shaderWarm'));
 // Free every WebGL context (game renderer, character preview, portrait rig) when
 // the page is torn down, so logout/login reload cycles don't exhaust the GPU
 // context pool and break the next renderer with "Error creating WebGL context".
@@ -2648,18 +2653,7 @@ async function startGame(
       hud.renderCharIfOpen();
       return;
     }
-    if (key === 'forceHighPerfGpu') {
-      // The push owns the inversion (the shell stores the opt-out) and swallows
-      // a failed write; the shell applies it at its next launch, so nothing in
-      // the running session changes.
-      pushDesktopGpuPref(desktopBridge(), settings.set('forceHighPerfGpu', !!value));
-      return;
-    }
-    if (key === 'discordPresence') {
-      // Same polarity on both sides: the shell drops its RPC connection on false.
-      pushDiscordPresenceEnabled(desktopBridge(), settings.set('discordPresence', !!value));
-      return;
-    }
+    if (applyDesktopShellSetting(key, value, settings, desktopBridge())) return;
     if (key === 'showDevBadges') {
       renderer.showDevBadges = settings.set('showDevBadges', !!value);
       return;
@@ -5194,6 +5188,7 @@ async function startGame(
         loadPhaseEnd('settle-cover');
         loadPhaseStart('curtain-fade');
         renderer.markGpuHitchReveal();
+        finishShaderWarmup(renderer.webgl);
         hideLoadingScreen();
         // Start the intro clock as the loading screen begins to fade: the camera
         // holds the opening pose until now, so the fade doubles as the cut in.
@@ -5342,6 +5337,7 @@ async function startOffline(
   world?: WorldContent,
   seedOverride?: number,
 ): Promise<void> {
+  stopShaderWarmup();
   if (!(await prepareWorldEntry())) return;
   resetLoadProfile();
   loadPhaseStart('entry');
@@ -5979,12 +5975,10 @@ function show(el: string): void {
     authModeApply?.('login');
   }
 
+  const isPlayPanel =
+    el === '#charselect-panel' || el === '#charcreate-panel' || el === '#offline-select';
   const logoImg = $('#title-logo');
-  if (logoImg) {
-    const shouldHideLogo =
-      el === '#charselect-panel' || el === '#charcreate-panel' || el === '#offline-select';
-    logoImg.toggleAttribute('hidden', shouldHideLogo);
-  }
+  if (logoImg) logoImg.toggleAttribute('hidden', isPlayPanel);
 
   if (
     document.activeElement instanceof HTMLInputElement ||
@@ -5997,6 +5991,7 @@ function show(el: string): void {
   // moment the player can actually read it, and the NEW-badge marker should
   // advance only then.
   if (el === '#charselect-panel') {
+    startShaderWarmup();
     void loadCharselectNews($('#charselect-news-feed'), () => api.releases(20));
   }
 
@@ -6041,9 +6036,7 @@ function show(el: string): void {
     for (const id of panels) {
       document.querySelector(id)?.toggleAttribute('hidden', id !== el);
     }
-    if (el === '#charselect-panel' || el === '#charcreate-panel' || el === '#offline-select') {
-      updatePreviewContainer(el);
-    }
+    if (isPlayPanel) updatePreviewContainer(el);
     return;
   }
 
@@ -6064,9 +6057,7 @@ function show(el: string): void {
   if (isReducedMotion) {
     fromPanel.toggleAttribute('hidden', true);
     toPanel.toggleAttribute('hidden', false);
-    if (el === '#charselect-panel' || el === '#charcreate-panel' || el === '#offline-select') {
-      updatePreviewContainer(el);
-    }
+    if (isPlayPanel) updatePreviewContainer(el);
     return;
   }
 
@@ -6088,9 +6079,7 @@ function show(el: string): void {
     // Set initial state for fade-in
     toPanel.classList.add('panel-transition', 'panel-fade-in-start');
     toPanel.toggleAttribute('hidden', false);
-    if (el === '#charselect-panel' || el === '#charcreate-panel' || el === '#offline-select') {
-      updatePreviewContainer(el);
-    }
+    if (isPlayPanel) updatePreviewContainer(el);
 
     // Force layout reflow
     void toPanel.offsetHeight;
@@ -7120,6 +7109,7 @@ function syncCharselectEnterButton(): void {
 }
 
 async function enterWorld(c: CharacterSummary, button?: HTMLButtonElement): Promise<void> {
+  stopShaderWarmup();
   try {
     if (button) {
       button.disabled = true;

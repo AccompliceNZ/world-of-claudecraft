@@ -88,7 +88,12 @@ describe('Renderer lifecycle wiring', () => {
       '\n  private beginRendererShutdown(): void',
     );
     expect(constructorSource).toContain('options: RendererCreateOptions = {}');
-    expect(constructorSource).toContain('context: options.context');
+    // The context is created by the game and handed to three
+    // (src/render/webgl_context_fallback.ts); a supplied one skips the fallback.
+    expect(constructorSource).toContain(
+      'const createdContext = options.context ?? createRendererGlContext(canvas) ?? undefined',
+    );
+    expect(constructorSource).toContain('createRendererWebGL(canvas, createdContext)');
     expect(constructorSource).toContain('this.webgl.getContext() !== options.context');
     expect(constructorSource).toContain('if (options.initializeGfx !== false)');
     expect(constructorSource).toContain('initGfxTier(this.webgl)');
