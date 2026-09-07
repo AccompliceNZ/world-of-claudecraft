@@ -618,6 +618,211 @@
     --bank-meter-gilt-fill: var(--color-gold-400);
     --bank-meter-gilt-text: var(--color-gold-300);
     --bank-meter-gilt-glow: color-mix(in srgb, var(--color-gold-600) 55%, transparent);
+
+    /* Interface library tokens (src/styles/library.css, src/ui/library/CLAUDE.md).
+       The approved redesign boards keep the shipped classic palette above; these
+       name the values the boards repeat so component CSS composes them instead of
+       spelling a literal. Static entries are dark chrome that stays dark on every
+       preset (socket interiors, wells, keylines, medals); the text and panel
+       entries are the classic outputs of src/ui/theme.ts derivations, which
+       re-emit them per preset. */
+    --color-keyline: #000000;
+    --color-white: #ffffff;
+    --color-ink: #0d0d13;
+    --color-ink-deep: #0b0b10;
+    --color-socket-rim: #4a3d1d;
+    --color-socket-hi: #2c2c3a;
+    --color-panel-hi: #1c1c29;
+    --color-chrome-ground: #1a1410;
+    --color-chrome-glyph: #c9b27a;
+    --color-glint: #ffea8c;
+    --color-control-border: #4e3f1d;
+    --color-medal-hi: #4a3a14;
+    --color-medal-lo: #241c08;
+    --color-medal-ink: #3a2b00;
+    --color-window-ring: color-mix(in srgb, var(--border) 40%, var(--color-keyline));
+    --color-bronze-light: #b08a3a;
+    --color-bronze-dark: #3c2f14;
+    --color-hostile-rim: #8b2a22;
+    --color-portrait-hi: #3a3a4e;
+    --color-portrait-lo: #14141c;
+    --color-proc-rim: #ffd97a;
+    --color-proc-glow: #ffcf40;
+    --color-bar-track: #1a1a1a;
+    --color-bar-well-lo: #0a0a0e;
+    --color-bar-well-hi: #17171d;
+    --color-cast-track: #0c0906;
+    --color-swing-track: #0c0a07;
+    --color-combat-badge-ground: #100606;
+    --color-tab-on-hi: #2a2436;
+    --color-tab-on-lo: #161220;
+    --color-tab-off-hi: #1c1824;
+    --color-tab-off-lo: #0d0b13;
+    --color-tab-off-border: #3a321d;
+    --color-card-hi: #17130c;
+    --color-card-lo: #0c0a07;
+    --color-btn-gold-hi: #7a5a1c;
+    --color-btn-gold-lo: #2e2208;
+    --color-btn-red-hi: #7a2a20;
+    --color-btn-red-lo: #4a1a12;
+    --color-btn-red-border: #5a2a1a;
+    --color-info: #45c9ff;
+    --color-warning: #ff9d32;
+    /* --color-info and --color-warning are chat text on the boards: theme.ts
+       re-emits them contrast-repaired per preset (the --color-material-use path). */
+    --color-danger: #e74c3c;
+    --color-xp: #b85eff;
+    --color-xp-deep: #6a1bb0;
+    --color-xp-rested: #5fb0ff;
+    --color-xp-rested-deep: #2b6fd0;
+    --color-bg-deep: var(--color-ink-deep);
+    /* Item quality, mirroring QUALITY_COLOR in src/ui/icons.ts (pinned equal by
+       tests/ui_library.test.ts); the .q-* classes and icons.ts stay the anchors. */
+    --color-quality-poor: #9d9d9d;
+    --color-quality-common: #ffffff;
+    --color-quality-uncommon: #1eff00;
+    --color-quality-rare: #0070dd;
+    --color-quality-epic: #a335ee;
+    --color-quality-legendary: #ff8000;
+    /* Controller face-button glyph tints (the cross hotbar and pad prompts). */
+    --color-pad-a: #5fbf5a;
+    --color-pad-b: #e04b4b;
+    --color-pad-x: #4f8fe0;
+    --color-pad-y: #e6c23a;
+    /* Themed text and surface derivations (classic outputs; theme.ts re-emits
+       --color-socket-hi, --color-panel-hi, --color-glint, --color-control-border,
+       --color-info, --color-warning and the four below per preset). */
+    --color-text-secondary: #e0dac4;
+    --color-text-faint: #897f61;
+    --panel-bg-soft: linear-gradient(
+      170deg,
+      rgba(21, 21, 31, 0.74) 0%,
+      rgba(12, 12, 17, 0.74) 60%,
+      rgba(12, 12, 17, 0.74) 100%
+    );
+    --panel-bg-strong: linear-gradient(
+      170deg,
+      rgba(16, 16, 24, 0.97) 0%,
+      rgba(9, 9, 13, 0.97) 100%
+    );
+    /* Composites: fills and edges the primitives share. */
+    --socket-fill: radial-gradient(circle at 35% 30%, var(--color-socket-hi), var(--panel-base));
+    --socket-fill-empty: color-mix(in srgb, var(--color-ink) 55%, transparent);
+    --medal-fill: radial-gradient(circle at 40% 35%, var(--color-medal-hi), var(--color-medal-lo));
+    --btn-fill-selected: var(--medal-fill);
+    --btn-fill-gold: linear-gradient(
+      180deg,
+      var(--color-btn-gold-hi),
+      var(--color-medal-hi) 60%,
+      var(--color-btn-gold-lo)
+    );
+    --btn-fill-red: linear-gradient(180deg, var(--color-btn-red-hi), var(--color-btn-red-lo));
+    --ribbon-bg: linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-panel-hi) 92%, transparent),
+      color-mix(in srgb, var(--color-bg-input) 92%, transparent)
+    );
+    --bar-well-fill: linear-gradient(var(--color-bar-well-lo), var(--color-bar-well-hi));
+    --bar-gloss: linear-gradient(
+      color-mix(in srgb, var(--color-white) 25%, transparent),
+      color-mix(in srgb, var(--color-white) 2%, transparent) 45%,
+      color-mix(in srgb, var(--color-keyline) 15%, transparent)
+    );
+    --xp-fill: linear-gradient(180deg, var(--color-xp), var(--color-xp-deep));
+    --xp-rested-fill: linear-gradient(180deg, var(--color-xp-rested), var(--color-xp-rested-deep));
+    --xp-overflow-fill: linear-gradient(#ffe27a, #d99a1c);
+    --castbar-fill: linear-gradient(#ffe48a, #c9941a 60%, #9a6f12);
+    --castbar-fill-hostile: linear-gradient(#ff9a8f, #c93024 60%, #73110d);
+    --castbar-fill-channel: linear-gradient(#8ad4ff, #1a74c9 60%, #125a9a);
+    --castbar-fill-consume: linear-gradient(#a8e08a, #4f8c3a 60%, #2f5a22);
+    --swing-fill-main: linear-gradient(#ffcf7a, #d97b1e 60%, #8a4a10);
+    --swing-fill-offhand: linear-gradient(#8fe6d6, #1e9d97 60%, #0f5a58);
+    --swing-fill-ready: linear-gradient(#d8e8ff, #8fb6e6 60%, #5b86b8);
+    --swing-fill-target: linear-gradient(#c9a3ff, #7c3fd9 60%, #481f8a);
+    --swing-fill-tot: linear-gradient(#ffb3c6, #d9427c 60%, #8a1f4e);
+    --edge-glint: inset 0 1px 0 color-mix(in srgb, var(--color-glint) 16%, transparent);
+    --edge-hairline: inset 0 0 0 1px color-mix(in srgb, var(--color-glint) 12%, transparent);
+    --shadow-lift: 0 2px 4px color-mix(in srgb, var(--color-keyline) 56%, transparent);
+    --shadow-socket:
+      0 0 0 1px var(--color-keyline),
+      inset 0 1px 0 color-mix(in srgb, var(--color-white) 10%, transparent), var(--edge-hairline),
+      0 3px 6px color-mix(in srgb, var(--color-keyline) 60%, transparent);
+    --shadow-panel:
+      0 2px 16px color-mix(in srgb, var(--color-keyline) 75%, transparent),
+      inset 0 0 24px color-mix(in srgb, var(--color-keyline) 38%, transparent), var(--edge-glint);
+    --shadow-window:
+      0 0 0 2px var(--color-window-ring), 0 0 0 3px var(--color-keyline),
+      0 14px 40px color-mix(in srgb, var(--color-keyline) 70%, transparent),
+      inset 0 0 28px color-mix(in srgb, var(--color-keyline) 40%, transparent), var(--edge-glint);
+    --shadow-well:
+      inset 0 1px 0 color-mix(in srgb, var(--color-white) 5%, transparent),
+      inset 0 0 14px color-mix(in srgb, var(--color-keyline) 70%, transparent);
+    --glow-gold: 0 0 calc(12px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--gold) 70%, transparent);
+    --glow-gold-soft: 0 0 calc(8px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--gold) 50%, transparent);
+    --title-shadow: 1px 1px 2px var(--color-keyline);
+    --outline-shadow:
+      -1px 0 var(--color-keyline), 1px 0 var(--color-keyline), 0 -1px var(--color-keyline),
+      0 1px var(--color-keyline), 0 0 3px var(--color-keyline);
+    /* Sizes the boards repeat. Sockets are a parametric family: the action size
+       is the default and each species (bag 40, bank socket 32, stance disc 30)
+       sets --ui-socket-size on its own class. */
+    --socket-size: 46px;
+    --socket-gap: 4px;
+    --socket-row-gap: 6px;
+    --socket-art-inset: 1px;
+    --socket-size-bag: 40px;
+    --socket-size-bank: 32px;
+    --socket-size-stance: 30px;
+    --action-rail-w: calc(12 * var(--socket-size) + 11 * var(--socket-gap));
+    --aura-size: 28px;
+    --aura-size-own: 30px;
+    --portrait-size: 60px;
+    --level-chip-size: 24px;
+    --bar-h: 15px;
+    --bar-h-hp: 16px;
+    --bar-h-res: 11px;
+    --bar-h-res-empty: 7px;
+    --bar-notch: 5px;
+    --castbar-w: 300px;
+    --castbar-h: 20px;
+    --castbar-point: 6px;
+    --xp-rail-h: 10px;
+    --win-head-h: 44px;
+    --btn-h: 32px;
+    --btn-h-lg: 38px;
+    --icon-btn-w: 36px;
+    --icon-btn-h: 34px;
+    --micro-btn-w: 34px;
+    --micro-btn-h: 30px;
+    --disc-size: 28px;
+    --keycap-h: 18px;
+    --keycap-min-w: 18px;
+    --badge-size: 16px;
+    --tab-h: 30px;
+    --input-h: 34px;
+    --toggle-w: 44px;
+    --toggle-h: 24px;
+    --range-h: 4px;
+    --range-thumb: 16px;
+    --stat-row-h: 21px;
+    --party-row-w: 170px;
+    --tracker-w: 240px;
+    --chat-w: 370px;
+    --spacing-2xs: 2px;
+    --radius-2xs: 2px;
+    --radius-xs: 3px;
+    --radius-card: 5px;
+    --radius-panel: 6px;
+    --radius-socket: 6px;
+    --radius-cell: 7px;
+    --radius-window: 8px;
+    --radius-pill: 999px;
+    --dur-fast: 90ms;
+    --dur-press: 60ms;
+    --dur-panel: 160ms;
+    --dur-frame: 120ms;
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal
