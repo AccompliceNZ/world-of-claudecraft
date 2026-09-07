@@ -10,6 +10,7 @@
 // getComputedStyle and are covered by the no-magic-values source guard instead.
 
 import { describe, expect, it } from 'vitest';
+import { buildingContainsPoint, buildingLocalToWorld } from '../src/sim/building_layout';
 import {
   BUILTIN_WORLD,
   CAMPS,
@@ -40,6 +41,7 @@ import type { Decoration } from '../src/sim/world';
 import { isNodeToolLockedFor } from '../src/ui/gathering_view';
 import { STABLE_MAP_NAVIGATION_LANDMARKS } from '../src/ui/map_navigation_landmarks_core';
 import {
+  buildingFootprintCorners,
   buildOverworldMapModel,
   gatherNodeMarkerAt,
   MAP_GATHER_NODE_HIT_RADIUS,
@@ -1964,5 +1966,36 @@ describe('placed-kit silhouettes', () => {
       zone: drakelands,
     }).detail;
     expect(keep?.buildings.some((b) => b.kind === 'chapel' && b.id === chapel.id)).toBe(true);
+  });
+});
+
+describe('building footprint corners', () => {
+  it('strokes the rectangle that blocks a body: the collider transform, not its mirror', () => {
+    // A rotated kit building (the Wyrmwatch tavern hall at 105 degrees): the
+    // four corners must be buildingLocalToWorld's corners, and every corner
+    // nudged inward must sit inside buildingContainsPoint's rectangle while
+    // nudged outward it must not. A mirrored transform passes neither.
+    const inn = KIT_BUILDINGS.find((b) => b.kind === 'inn');
+    expect(inn).toBeDefined();
+    if (!inn) return;
+    expect(Math.abs(Math.sin(2 * inn.rot))).toBeGreaterThan(0.3); // not axis-aligned
+    const corners = buildingFootprintCorners(inn);
+    const expected = [
+      buildingLocalToWorld(inn, -inn.w / 2, -inn.d / 2),
+      buildingLocalToWorld(inn, inn.w / 2, -inn.d / 2),
+      buildingLocalToWorld(inn, inn.w / 2, inn.d / 2),
+      buildingLocalToWorld(inn, -inn.w / 2, inn.d / 2),
+    ];
+    corners.forEach((corner, i) => {
+      expect(corner.x).toBeCloseTo(expected[i].x, 9);
+      expect(corner.z).toBeCloseTo(expected[i].z, 9);
+      const inward = { x: (corner.x - inn.x) * 0.9 + inn.x, z: (corner.z - inn.z) * 0.9 + inn.z };
+      const outward = {
+        x: (corner.x - inn.x) * 1.15 + inn.x,
+        z: (corner.z - inn.z) * 1.15 + inn.z,
+      };
+      expect(buildingContainsPoint(inn, inward.x, inward.z)).toBe(true);
+      expect(buildingContainsPoint(inn, outward.x, outward.z)).toBe(false);
+    });
   });
 });
