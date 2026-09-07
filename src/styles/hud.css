@@ -9765,6 +9765,24 @@
     box-sizing: border-box;
     overflow-x: hidden;
   }
+  #trade-window .btn {
+    background: revert-layer;
+    color: revert-layer;
+    border: revert-layer;
+    outline: revert-layer;
+    border-radius: revert-layer;
+    font-family: revert-layer;
+    letter-spacing: revert-layer;
+    text-shadow: revert-layer;
+    box-shadow: revert-layer;
+    filter: revert-layer;
+    transition: revert-layer;
+  }
+  #trade-window .btn:focus-visible {
+    outline: 2px solid var(--color-border-focus) !important;
+    outline-offset: 2px !important;
+    box-shadow: revert-layer !important;
+  }
   .trade-cols {
     display: flex;
     gap: var(--window-pad);
@@ -9784,11 +9802,11 @@
     color: var(--color-text-success);
   }
   .trade-items {
-    min-height: 120px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: var(--radius-sm);
+    display: flex;
+    min-height: 190px;
+    flex-direction: column;
+    gap: var(--spacing-xs);
     padding: var(--spacing-xs);
-    background: var(--color-bg-input);
   }
   .trade-item {
     display: flex;
@@ -9797,18 +9815,16 @@
     width: 100%;
     font-size: 12px;
     padding: 3px;
-    border: 0;
-    border-radius: var(--radius-sm);
-    background: transparent;
-    color: inherit;
-    font-family: var(--ui-font);
     text-align: left;
+  }
+  .trade-item-empty {
+    min-height: 40px;
   }
   .trade-item.mine {
     cursor: var(--cursor-point);
   }
   .trade-item.mine:hover {
-    background: color-mix(in srgb, var(--color-text-light) 8%, transparent);
+    filter: brightness(1.08);
   }
   .trade-empty {
     color: var(--color-text-muted);
@@ -9845,11 +9861,6 @@
   .trade-money input,
   .trade-woc-price {
     width: 80px;
-    background: var(--color-bg-input);
-    color: var(--gold);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    padding: 3px 6px;
     user-select: text;
     font-variant-numeric: tabular-nums;
   }
@@ -9985,37 +9996,19 @@
       animation: none;
     }
   }
+  body.reduce-motion .woc-spinner {
+    animation: none;
+  }
   /* The currency switch: a group of two pressed-state toggles under a hairline,
      the pressed one in the accent with a 2px underline (shape as well as tone,
      so it survives forced colours), not the maroon action-button gradient. */
   .trade-woc-modes {
     display: flex;
     gap: var(--spacing-sm);
-    border-bottom: 1px solid var(--color-border-default);
   }
   .trade-woc-arm .btn.trade-woc-mode {
-    margin: 0 0 -1px;
-    padding: 6px 12px;
-    background: transparent;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    border-radius: 0;
-    box-shadow: none;
-    text-shadow: none;
-    color: var(--color-text-muted);
-    font-family: var(--font-ui);
+    margin: 0;
     font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0;
-  }
-  .trade-woc-arm .btn.trade-woc-mode:hover:enabled {
-    color: var(--color-text-light);
-    filter: none;
-    box-shadow: none;
-  }
-  .trade-woc-arm .btn.trade-woc-mode[aria-pressed="true"] {
-    color: var(--color-accent);
-    border-bottom-color: var(--color-accent);
   }
   .trade-woc-arm .btn.trade-woc-mode:disabled {
     filter: none;
@@ -10135,26 +10128,11 @@
     gap: var(--spacing-sm);
   }
   .trade-woc-arm .btn.trade-woc-primary {
-    background: color-mix(in srgb, var(--color-accent) 22%, var(--panel-base));
-    border-color: var(--color-accent);
-    color: var(--color-text-light);
-    text-shadow: none;
-  }
-  .trade-woc-arm .btn.trade-woc-primary:hover:enabled {
-    background: color-mix(in srgb, var(--color-accent) 32%, var(--panel-base));
-  }
-  .trade-woc-arm .btn.trade-woc-quiet {
-    background: transparent;
-    box-shadow: none;
-    text-shadow: none;
-    border-color: var(--color-border-default);
-    color: var(--color-text-muted);
+    align-self: flex-start;
   }
   .trade-woc-arm .btn.trade-woc-quiet:hover:enabled {
     color: var(--color-text-error);
     border-color: var(--color-border-invalid);
-    filter: none;
-    box-shadow: none;
   }
 
   /* ---------- elite target frame ---------- */
