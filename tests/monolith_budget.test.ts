@@ -301,12 +301,13 @@ const MONOLITHS: MonolithRow[] = [
     // captured home and the dead body class left applyAuraAnchor for
     // restoreFrameHome (src/ui/interface_unlock.ts), and Reset Frame Positions
     // re-applies the anchor in one line. Exact merged count.
-    // Lowered 18851 -> 18830 across the interface redesign: the target Discord
-    // flair renderer moved to target_discord_controller.ts and the cross-hotbar
-    // seed moved behind the cross_hotbar seam as crossHotbarSeedActions, which
-    // paid for the prompt, party frame, mover, map sidebar and pad hint wiring
-    // that adopted the shared primitives and controllers in place.
-    ceiling: 18830,
+    // Lowered 18851 -> 18759 across the interface redesign: the target Discord
+    // flair renderer moved to target_discord_controller.ts, the cross-hotbar seed
+    // moved behind the cross_hotbar seam as crossHotbarSeedActions and the whole
+    // day/night dial draw moved to day_night_dial_painter.ts, which paid for the
+    // prompt, party frame, mover, map sidebar, pad hint and micro-menu wiring that
+    // adopted the shared primitives and controllers in place.
+    ceiling: 18759,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

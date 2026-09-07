@@ -548,6 +548,7 @@ interface ScannedPainter {
 const HOT_PAINTERS: ReadonlyArray<ScannedPainter> = [
   { file: 'interact_prompt_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'pad_hint_strip_painter.ts', allow: {}, reflowAllow: {} },
+  { file: 'micro_menu_state_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'xp_bar_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'swing_timer_painter.ts', allow: {}, reflowAllow: {} },
   { file: 'proc_overlay_painter.ts', allow: {}, reflowAllow: {} },
@@ -726,6 +727,9 @@ const CANVAS_PAINTERS: ReadonlyArray<ScannedPainter> = [
     allow: {},
     reflowAllow: { getComputedStyle: 1 },
   },
+  // the minimap rim day/night dial: canvas-only, self-throttled to ~1Hz off the
+  // caller's clock; like minimap it caches its one --color-daynight-* resolve
+  { file: 'day_night_dial_painter.ts', allow: {}, reflowAllow: { getComputedStyle: 1 } },
   { file: 'dungeon_map_painter.ts', allow: {}, reflowAllow: { getComputedStyle: 1 } },
   { file: 'lastkeep_map_painter.ts', allow: {}, reflowAllow: { getComputedStyle: 1 } },
   { file: 'map_window_painter.ts', allow: {}, reflowAllow: { getComputedStyle: 1 } },

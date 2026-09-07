@@ -341,6 +341,13 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     why: 'the unspent-talent-points glow on the desktop and mobile talent buttons',
   },
   {
+    call: 'this.microMenuStatePainter.paint',
+    band: 'medium',
+    gate: '',
+    surface: 'chrome',
+    why: "the micro-menu rail's open-window ring and unspent-point badge; every write goes through the elided facet, so a steady rail costs no DOM mutation",
+  },
+  {
     call: 'this.isInTown',
     band: 'slow',
     gate: '',
@@ -1159,11 +1166,11 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     why: 'the minimap clock text, value-diffed',
   },
   {
-    call: 'this.updateDayNightDial',
+    call: 'this.dayNightDial.paint',
     band: 'fast',
     gate: '',
     surface: 'chrome',
-    why: 'the decorative day/night ring beside the minimap, repainted from the same world clock',
+    why: 'the decorative day/night ring beside the minimap; the canvas painter self-throttles to ~1Hz off the passed clock',
   },
   {
     call: 'this.updateMinimapCoords',
@@ -1702,7 +1709,10 @@ describe('Hud.update() drives exactly the registered set, on the registered band
       // window 44 -> 46: the crucible vendor's out-of-range close (the third
       // #vendor-window tenant, on the heroic vendor's exact row shape).
       // Both deltas apply on the merged tree.
-    ).toEqual({ window: 47, chrome: 86, none: 17 });
+      // chrome 86 -> 87: the micro-menu rail's own state paint (the open-window
+      // ring plus the unspent-point badge), a facet-routed painter beside the
+      // talent-glow toggles it sits with.
+    ).toEqual({ window: 47, chrome: 87, none: 17 });
     const windows = HUD_UPDATE_DRIVES.filter((r) => r.surface === 'window');
     expect(windows.map((r) => r.call)).toContain('this.spellbookWindow.tickOpen');
     expect(windows.map((r) => r.call)).toContain('this.refreshOpenTownFocusIfChanged');
