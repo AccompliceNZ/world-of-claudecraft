@@ -21,6 +21,7 @@ import type {
   ToolEffectSlotView,
 } from '../world_api';
 import type { GroundAimPointXZ } from '../world_api/combat';
+import type { AbilityOutputScaling } from './ability_output_scaling';
 import * as bagsMod from './bags';
 import {
   addStacked,
@@ -57,7 +58,7 @@ import {
   resolvePosition,
   seatGroundedAt,
 } from './colliders';
-import { resolveAbilityChain } from './combat/ability_resolution';
+import { applyAbilityCostTail, resolveAbilityChain } from './combat/ability_resolution';
 import { clearAfflictionState } from './combat/affliction';
 import { auraAffectsStats, removeCancelableAura } from './combat/aura_cancel';
 import { auraReplacementConflicts } from './combat/aura_stacking';
@@ -93,7 +94,6 @@ import {
   isStunned,
   isUnbreakableControlAura,
 } from './combat/cc';
-import { aetherSurgeCostMult } from './combat/chronomancy';
 import {
   dealDamage as dealDamageImpl,
   grantXp as grantXpImpl,
@@ -1191,7 +1191,7 @@ export interface InstanceSlot {
 
 export interface ResolvedAbility {
   def: AbilityDef;
-  outputScaling?: import('./ability_output_scaling').AbilityOutputScaling;
+  outputScaling?: AbilityOutputScaling;
   rank: number;
   cost: number;
   castTime: number;
@@ -5800,41 +5800,13 @@ export class Sim {
     if (!known) return null;
     const charMods = this.playerMods(r.meta);
     // The presentation/combat resolution chain (action-slot replacement, the
-    // spec-gated resolvers, one post-transform talent-mod bake keyed by the
-    // final id, then the Ascension/Radiant Resonance presentation transforms)
-    // is shared with every display caller; see combat/ability_resolution.ts.
-    // Only the server-authoritative resource-cost tail below stays Sim-only.
+    // spec-gated resolvers, the talent-mod bake, Ascension/Radiant Resonance,
+    // and the resource-cost tail: draining curse, Measured Fury, Aether
+    // Surge) is shared with every display caller; see
+    // combat/ability_resolution.ts. The server stays the sole spend
+    // authority regardless of who displays the resolved cost.
     const found = resolveAbilityChain(known, r.e, r.meta, charMods);
-    // A "draining curse" (cost_tax aura) inflates the resource cost of every
-    // ability the victim uses. Resolve it here, the single choke point all cost
-    // checks/spends read, so the affordability check and the spend stay in
-    // lockstep. Return a shallow copy so the cached known-list entry is never
-    // mutated.
-    let cost = found.cost;
-    if (
-      cost > 0 &&
-      charMods.spec === 'arms' &&
-      r.meta.known.some((known) => known.def.id === 'measured_fury' && known.def.passive)
-    ) {
-      cost = Math.max(0, Math.round(cost * 0.9));
-    }
-    const tax = this.costTaxMult(r.e);
-    if (tax > 1 && cost > 0) cost = Math.ceil(cost * tax);
-    // Aether Surge (Chronomancy Phase 3, combat/chronomancy.ts): each held Arcane
-    // Charge steeply multiplies the next cast's cost. Deterministic read of the
-    // caster's own charge aura; no rng. Folded here so the affordability gate and
-    // the spend both see the scaled cost. (docs/prd/mage-chronomancy.md 13.4 / 14)
-    if (abilityId === 'arcane_surge' && cost > 0) {
-      cost = Math.round(cost * aetherSurgeCostMult(r.e));
-    }
-    return cost === found.cost ? found : { ...found, cost };
-  }
-
-  // Highest active cost_tax aura, expressed as a cost multiplier (1 = no tax).
-  private costTaxMult(e: Entity): number {
-    let pct = 0;
-    for (const a of e.auras) if (a.kind === 'cost_tax' && a.value > pct) pct = a.value;
-    return 1 + pct;
+    return applyAbilityCostTail(found, abilityId, r.e, r.meta.known, charMods);
   }
 
   // -------------------------------------------------------------------------

@@ -207,19 +207,16 @@ import {
 } from './paladin_talents';
 import { armValkyrsCalling } from './paladin_valkyrs_calling';
 import { activateVeilboundMarch } from './paladin_veilbound_march';
-import { benisonAfterAbility } from './priest/benison';
 import {
   captureDirgeReapplication,
+  doctrineScouringMercyRescue,
   refreshDirgeFieldAfterReapplication,
-} from './priest/dirge_refresh';
-import { doctrineAfterAbility } from './priest/doctrine';
-import { doctrineScouringMercyRescue } from './priest/doctrine_rescue';
-import { priestAfterAbility, priestOnGroupHeal } from './priest/talents';
-import {
-  gloomtitheStacksForCast,
-  vespersAfterAbility,
   vespersDirgeSpMultiplier,
-} from './priest/vespers';
+} from './priest';
+import { benisonAfterAbility } from './priest/benison';
+import { doctrineAfterAbility } from './priest/doctrine';
+import { priestAfterAbility, priestOnGroupHeal } from './priest/talents';
+import { gloomtitheStacksForCast, vespersAfterAbility } from './priest/vespers';
 import { isPullEligible } from './pull_eligibility';
 import { offerResurrection } from './resurrection_offer';
 import { resurrectionCastRange } from './resurrection_reach';
@@ -666,8 +663,12 @@ export function runEffects(
           (ability.id === 'raptor_strike' || ability.id === 'mongoose_bite');
         let landedDamage = 0;
         // Veiled Edge (rogue sub engine): the first Lurker's Strike from
-        // inside the veil consumes the edge and strikes for double.
-        const veiledEdgeMult = consumeVeiledEdge(ctx, p, ability.id);
+        // inside the veil consumes the edge and strikes for +50% weapon
+        // damage. A true-stealth opener wins its own (stronger) reward
+        // instead and must not spend an armed Edge for a discarded return
+        // value: "cannot stack" leaves the Edge armed for the next eligible
+        // strike, so the consume call is skipped entirely here.
+        const veiledEdgeMult = trueStealthOpener ? 1 : consumeVeiledEdge(ctx, p, ability.id);
         weaponMult *= trueStealthOpener ? trueStealthOpenerMultiplier(true) : veiledEdgeMult;
         bonus = trueStealthOpenerScaleBonus(trueStealthOpener, bonus);
         const hit = ctx.meleeSwing(p, target, bonus, ability.name, {

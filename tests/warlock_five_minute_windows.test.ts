@@ -41,11 +41,10 @@ describe('Demonology full-BiS five-minute inert-boss balance', () => {
   // Measured seed-42 actual moved 179 -> 228.92 on this fixture; the corridor
   // moves with it, preserving the SAME relative floor/ceiling margins as the
   // pre-v0.42.0 corridor (150/210 against a measured 179, i.e. about -16%/
-  // +17%) rather than just raising the ceiling. On this fixture the approved
-  // buff pushes demonology's sustained DPS (228.92) past Affliction's
-  // (204.15 measured the same way); the title below reflects that intended
-  // ordering.
-  it("lands the Necromancy-buffed sustained DPS corridor, now above Affliction's", () => {
+  // +17%) rather than just raising the ceiling. This asserts demonology's own
+  // corridor only; it overlaps Affliction's (175-235, above), so no cross-spec
+  // ordering is claimed or tested here.
+  it('lands the Necromancy-buffed sustained DPS corridor', () => {
     const result = runWarlockBalanceProbe('demonology', 42, 300);
 
     expect(result.dps).toBeGreaterThanOrEqual(192);

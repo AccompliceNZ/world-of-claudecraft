@@ -2,10 +2,13 @@
 // display caller (docs/design/class-balance-v042.md): action-slot
 // replacement, the spec-gated resolvers, one post-transform talent-mod bake
 // keyed by the final id, then the Ascension/Radiant Resonance presentation
-// transforms (effect magnitudes and cast time, not cost). `mods` is the
-// caller's own precomputed TalentModifiers, never recomputed here. Sim's own
-// resource-cost tail (draining curse, cost tax, Aether Surge) stays Sim-only:
-// server cost authority, not a display concern.
+// transforms (effect magnitudes and cast time). `mods` is the caller's own
+// precomputed TalentModifiers, never recomputed here.
+//
+// applyAbilityCostTail below is the resource-cost tail (draining curse
+// cost_tax, the Measured Fury arms discount, Aether Surge's per-charge ramp):
+// also shared, so every display caller shows the same cost. The SERVER stays
+// the sole spend authority regardless of who displays it.
 
 import type { KnownAbility } from '../content/classes';
 import { applyTalentMods } from '../content/classes';
@@ -14,6 +17,7 @@ import { resolveAscensionAbility } from '../paladin_devotion';
 import type { ResolvedAbility } from '../sim';
 import type { Entity, PlayerClass } from '../types';
 import { resolveActionReplacement } from './action_replacement';
+import { aetherSurgeCostMult } from './chronomancy';
 import { resolveColdsightAbilityForSpec } from './hunter_coldsight';
 import { resolveHunterSharedAbilityForTalents } from './hunter_shared';
 import { radiantResonanceCastTime } from './paladin_radiant_resonance';
@@ -52,4 +56,39 @@ export function resolveAbilityChain(
   return castTime === ascensionResolved.castTime
     ? ascensionResolved
     : { ...ascensionResolved, castTime };
+}
+
+// Highest active cost_tax aura, expressed as a cost multiplier (1 = no tax).
+function costTaxMult(e: Entity): number {
+  let pct = 0;
+  for (const a of e.auras) if (a.kind === 'cost_tax' && a.value > pct) pct = a.value;
+  return 1 + pct;
+}
+
+/** The resource-cost tail every resolvedAbility caller applies on top of
+ *  resolveAbilityChain's output, in order: the Measured Fury (arms) discount,
+ *  the highest active draining-curse cost_tax aura, then Aether Surge's
+ *  per-charge ramp (arcane_surge only). Returns `found` unchanged (same
+ *  reference) when the cost does not change. */
+export function applyAbilityCostTail(
+  found: ResolvedAbility,
+  abilityId: string,
+  actor: Entity,
+  known: readonly KnownAbility[],
+  mods: TalentModifiers,
+): ResolvedAbility {
+  let cost = found.cost;
+  if (
+    cost > 0 &&
+    mods.spec === 'arms' &&
+    known.some((k) => k.def.id === 'measured_fury' && k.def.passive)
+  ) {
+    cost = Math.max(0, Math.round(cost * 0.9));
+  }
+  const tax = costTaxMult(actor);
+  if (tax > 1 && cost > 0) cost = Math.ceil(cost * tax);
+  if (abilityId === 'arcane_surge' && cost > 0) {
+    cost = Math.round(cost * aetherSurgeCostMult(actor));
+  }
+  return cost === found.cost ? found : { ...found, cost };
 }

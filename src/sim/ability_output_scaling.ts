@@ -1,11 +1,10 @@
 // Presentation metadata for the same base-plus-power math combat uses.
+import { DIRGE_ABILITY_ID } from './combat/priest/dirge_refresh';
 import { VESPERS_DOT_DAMAGE_MULT } from './combat/priest/vespers';
 import type { TalentModifiers } from './content/talents';
 import { primaryHealingMultiplier } from './spec_output_tuning';
 import { resolveTalentHitMult } from './talent_hit_mult';
 import type { AbilityDef, PlayerClass } from './types';
-
-const DIRGE_ABILITY_ID = 'shadow_word_pain';
 
 export interface AbilityOutputScaling {
   /** Direct damage power rider. */

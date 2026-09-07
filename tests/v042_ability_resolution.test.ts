@@ -24,7 +24,8 @@ import {
 } from '../src/sim/content/ignivar_set_bonuses';
 import type { PlayerMeta } from '../src/sim/sim';
 import { Sim } from '../src/sim/sim';
-import type { Aura, Entity, PlayerClass } from '../src/sim/types';
+import { type Aura, dist2d, type Entity, type PlayerClass } from '../src/sim/types';
+import { terrainHeight } from '../src/sim/world';
 
 function makeSim(cls: PlayerClass, spec: string | null, level: number, seed: number): Sim {
   const sim = new Sim({ seed, playerClass: cls, autoEquip: true });
@@ -276,5 +277,163 @@ describe('resolveActionReplacement stays a pure passthrough with no matching rul
     const sim = makeSim('warrior', null, 5, 313);
     const known = knownEntry(sim, 'charge');
     expect(resolveActionReplacement(known, sim.player)).toBe(known);
+  });
+});
+
+// -----------------------------------------------------------------------
+// Cost tail: draining curse (cost_tax), Measured Fury (arms discount), and
+// Aether Surge (per-charge cost ramp). Shared by both worlds via
+// applyAbilityCostTail (src/sim/combat/ability_resolution.ts); the server
+// stays the sole spend authority (docs/design/class-balance-v042.md). Pins
+// here are independent literals (base known.cost times a hand-computed
+// multiplier), never a call into the discount/tax/surge math itself. The
+// offline/online parity half lives in tests/v042_online_ability_resolution.test.ts.
+function addCostTaxAura(entity: Entity, pct: number, id = 'test_cost_tax'): void {
+  entity.auras.push({
+    id,
+    name: 'Draining Curse',
+    kind: 'cost_tax',
+    remaining: 999,
+    duration: 999,
+    value: pct,
+    sourceId: entity.id,
+    school: 'shadow',
+  });
+}
+
+function addAetherSurgeCharges(entity: Entity, charges: number): void {
+  entity.auras.push({
+    id: 'arcane_surge',
+    name: 'Aether Surge',
+    kind: 'arcane_charge',
+    remaining: 10,
+    duration: 10,
+    value: charges,
+    stacks: charges,
+    sourceId: entity.id,
+    school: 'arcane',
+  });
+}
+
+function nearestForestWolf(sim: Sim): Entity {
+  const p = sim.player;
+  const wolves = [...sim.entities.values()]
+    .filter((e) => e.kind === 'mob' && !e.dead && e.templateId === 'forest_wolf')
+    .sort((a, b) => dist2d(p.pos, a.pos) - dist2d(p.pos, b.pos));
+  const wolf = wolves[0];
+  if (!wolf) throw new Error('expected a forest_wolf in the default world');
+  return wolf;
+}
+
+function teleportTo(sim: Sim, x: number, z: number): void {
+  const p = sim.player;
+  p.pos.x = x;
+  p.pos.z = z;
+  p.pos.y = terrainHeight(x, z, sim.cfg.seed);
+  p.prevPos = { ...p.pos };
+}
+
+function facePlayerAt(sim: Sim, target: { pos: { x: number; z: number } }): void {
+  sim.player.facing = Math.atan2(target.pos.x - sim.player.pos.x, target.pos.z - sim.player.pos.z);
+}
+
+describe('Cost tail: draining curse tax, Measured Fury discount, Aether Surge charges', () => {
+  it('discounts Measured Fury (arms) by exactly 10%, rounded, only when the passive is known', () => {
+    const sim = makeSim('warrior', 'arms', 20, 401);
+    expect(sim.known.some((k) => k.def.id === 'measured_fury' && k.def.passive)).toBe(true);
+    const known = knownEntry(sim, 'mortal_strike');
+    expect(sim.resolvedAbility('mortal_strike')?.cost).toBe(Math.round(known.cost * 0.9));
+  });
+
+  it('negative control: a non-arms spec never gets the Measured Fury discount', () => {
+    const sim = makeSim('warrior', 'fury', 20, 402);
+    expect(sim.known.some((k) => k.def.id === 'measured_fury')).toBe(false);
+    // Fury's own paid spender: Mortal Strike is Arms-only (signature ability).
+    const known = knownEntry(sim, 'red_harvest');
+    expect(sim.resolvedAbility('red_harvest')?.cost).toBe(known.cost);
+  });
+
+  it('negative control: removing the passive from known drops the discount even while spec stays arms', () => {
+    const sim = makeSim('warrior', 'arms', 20, 409);
+    const meta = metaFor(sim);
+    const idx = meta.known.findIndex((k) => k.def.id === 'measured_fury');
+    expect(idx).toBeGreaterThanOrEqual(0);
+    meta.known.splice(idx, 1);
+    const known = knownEntry(sim, 'mortal_strike');
+    expect(sim.resolvedAbility('mortal_strike')?.cost).toBe(known.cost);
+  });
+
+  it('taxes cost by the HIGHEST of several active cost_tax auras, independent of aura order', () => {
+    // 80 * 1.08 = 86.4: ceil gives 87 (round would give 86), so this also
+    // pins ceil over round, not just which aura wins.
+    const simA = makeSim('warrior', 'fury', 20, 410);
+    addCostTaxAura(simA.player, 0.03, 'test_cost_tax_a');
+    addCostTaxAura(simA.player, 0.08, 'test_cost_tax_b');
+    const base = knownEntry(simA, 'red_harvest').cost;
+    const expected = Math.ceil(base * 1.08);
+    expect(expected).not.toBe(Math.round(base * 1.08));
+    expect(simA.resolvedAbility('red_harvest')?.cost).toBe(expected);
+
+    const simB = makeSim('warrior', 'fury', 20, 411);
+    addCostTaxAura(simB.player, 0.08, 'test_cost_tax_b');
+    addCostTaxAura(simB.player, 0.03, 'test_cost_tax_a');
+    expect(simB.resolvedAbility('red_harvest')?.cost).toBe(expected);
+  });
+
+  it('applies the Measured Fury discount BEFORE the cost_tax ceiling, not after', () => {
+    const sim = makeSim('warrior', 'arms', 20, 404);
+    addCostTaxAura(sim.player, 0.3);
+    const known = knownEntry(sim, 'mortal_strike');
+    const discountThenTax = Math.ceil(Math.round(known.cost * 0.9) * 1.3);
+    const taxThenDiscount = Math.round(Math.ceil(known.cost * 1.3) * 0.9);
+    // Otherwise this case cannot distinguish the two orders.
+    expect(discountThenTax).not.toBe(taxThenDiscount);
+    expect(sim.resolvedAbility('mortal_strike')?.cost).toBe(discountThenTax);
+  });
+
+  it('Aether Surge cost ramps geometrically per held Arcane Charge (2 charges = 4x)', () => {
+    const sim = makeSim('mage', 'arcane', 20, 405);
+    addAetherSurgeCharges(sim.player, 2);
+    const known = knownEntry(sim, 'arcane_surge');
+    expect(sim.resolvedAbility('arcane_surge')?.cost).toBe(Math.round(known.cost * 2 ** 2));
+  });
+
+  it('negative control: held Arcane Charges never touch the cost of a different ability', () => {
+    const sim = makeSim('mage', 'arcane', 20, 406);
+    addAetherSurgeCharges(sim.player, 4);
+    const known = knownEntry(sim, 'arcane_missiles');
+    expect(sim.resolvedAbility('arcane_missiles')?.cost).toBe(known.cost);
+  });
+
+  it('applies cost_tax BEFORE the Aether Surge ramp, not after', () => {
+    const sim = makeSim('mage', 'arcane', 20, 412);
+    addCostTaxAura(sim.player, 0.11);
+    addAetherSurgeCharges(sim.player, 2);
+    const base = knownEntry(sim, 'arcane_surge').cost;
+    const taxThenSurge = Math.round(Math.ceil(base * 1.11) * 2 ** 2);
+    const surgeThenTax = Math.ceil(Math.round(base * 2 ** 2) * 1.11);
+    expect(taxThenSurge).not.toBe(surgeThenTax);
+    expect(sim.resolvedAbility('arcane_surge')?.cost).toBe(taxThenSurge);
+  });
+
+  it('the zero-cost Charge ability stays zero under both Measured Fury discount and cost_tax', () => {
+    const sim = makeSim('warrior', 'arms', 20, 407);
+    addCostTaxAura(sim.player, 0.5);
+    const known = knownEntry(sim, 'charge');
+    expect(known.cost).toBe(0);
+    expect(sim.resolvedAbility('charge')?.cost).toBe(0);
+  });
+
+  it('an actual cast spends the Measured Fury discounted cost, not the raw known cost', () => {
+    const sim = makeSim('warrior', 'arms', 20, 408);
+    const wolf = nearestForestWolf(sim);
+    teleportTo(sim, wolf.pos.x + 2, wolf.pos.z);
+    facePlayerAt(sim, wolf);
+    sim.targetEntity(wolf.id);
+    sim.player.resource = 100;
+    const known = knownEntry(sim, 'mortal_strike');
+    sim.castAbility('mortal_strike');
+    sim.tick();
+    expect(sim.player.resource).toBe(100 - Math.round(known.cost * 0.9));
   });
 });

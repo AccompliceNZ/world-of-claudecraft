@@ -22,10 +22,13 @@ describe('scalePrimaryHealing', () => {
     expect(scalePrimaryHealing(308, 1.1)).toBe(339); // Mending Light high end
   });
 
-  it('multiplies and rounds the complete raw amount for the Groveheart +20% factor', () => {
-    expect(scalePrimaryHealing(135, 1.2)).toBe(162); // Rejuvenation tick
-    expect(scalePrimaryHealing(430, 1.2)).toBe(516); // Wildmend low end
-    expect(scalePrimaryHealing(482, 1.2)).toBe(578); // Wildmend high end
+  it('multiplies and rounds the complete raw amount for the shipped Groveheart +5% factor', () => {
+    // Groveheart shipped at 1.05 (spec_output_tuning.ts primaryHealingMultiplier),
+    // not the initial 1.20 candidate: see tests/v042_healer_custom_scaling.test.ts
+    // "Groveheart primary-healing factor" for the retune rationale.
+    expect(scalePrimaryHealing(135, 1.05)).toBe(142); // Rejuvenation tick
+    expect(scalePrimaryHealing(430, 1.05)).toBe(452); // Wildmend low end
+    expect(scalePrimaryHealing(482, 1.05)).toBe(506); // Wildmend high end
   });
 
   it('rounds half away from zero on the positive side, matching every other spell_scaling rider', () => {

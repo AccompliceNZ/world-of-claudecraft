@@ -327,8 +327,11 @@ describe('v0.42.0 offense-only package: real combat-path packets', () => {
       if (origin === undefined || copy === undefined) {
         throw new Error('missing origin/copy Ruinous Brand hit');
       }
-      expect(copy / origin).toBeCloseTo(RUINOUS_BRAND_COPY_PCT, 1);
-      expect(copy / origin).toBeCloseTo(0.5, 1);
+      expect(copy / origin).toBeCloseTo(RUINOUS_BRAND_COPY_PCT, 2);
+      // Precision 2, not 1: toBeCloseTo(0.5, 1)'s +-0.05 tolerance is loose
+      // enough to pass a small double-scaling defect on the copy path;
+      // precision 2 (+-0.005) is tight enough to actually catch one.
+      expect(copy / origin).toBeCloseTo(0.5, 2);
     });
   });
 

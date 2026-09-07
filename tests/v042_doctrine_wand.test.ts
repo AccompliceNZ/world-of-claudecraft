@@ -6,6 +6,8 @@ import { advancePendingProjectiles } from '../src/sim/projectile_travel';
 import { Sim } from '../src/sim/sim';
 
 describe('Doctrine wand damage isolation', () => {
+  // Independent literals (156/120/120), including the holy/shadow sibling
+  // controls staying at the base 120.
   it.each([
     ['discipline', 156],
     ['holy', 120],

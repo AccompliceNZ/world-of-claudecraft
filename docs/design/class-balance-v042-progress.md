@@ -2,7 +2,7 @@
 
 Reuben authorized the complete [proposal](class-balance-v042.md) on 7 September 2026, using Sonnet implementation workers with Codex integration and review.
 
-Base: release/v0.42.0 at 357b1932c2ca5eee11cadf520b7caaf61c141196.
+Initial base: release/v0.42.0 at 357b1932c2ca5eee11cadf520b7caaf61c141196.
 Feature branch: feature/v042-class-rebalance.
 
 ## Scope and ownership
@@ -54,6 +54,20 @@ Implementation and focused review are complete for a draft handoff. Release QA i
 ## CI repair pass
 
 The draft PR's checks then surfaced failures: stale combat-balance test bands/formulas against the shipped coefficients, seven parity goldens needing regeneration for the approved changes, and stale Scouring Mercy translation text plus missing M16 fills. Reuben explicitly requested these be fixed using Sonnet workers, scoped to the PR's actual failures. That repair is done; see [Measured results](class-balance-v042-results.md)'s "CI repair pass" section for the full list, evidence, and what still was not run. This is a separate, later pass from the implementation validation above and does not itself represent a green full Gate or a green GitHub Actions run.
+
+## PR review follow-up
+
+The reviews of PR #3917 at `f8b95339f0` prompted a further Sonnet implementation pass with independent Codex reviews. Release `ba7af6f280` was integrated in `66fed88936`, preserving the boss corpse lifecycle and interface changes. The approved balance numbers remain unchanged.
+
+- A true-stealth Lurker's Strike preserves an already-armed Veiled Edge for the next eligible veil strike. The bonuses still cannot stack. True stealth requires a dagger and attacking from behind, including during Shadow Veil or with a full Gloam bank.
+- Coldsight progress and cast reservations remain authoritative entity state but emit no aura feedback. The real Read still reports gain, spend, expiry and respec removal. Unrelated internal-cooldown aura feedback is preserved.
+- `applyAbilityCostTail` now serves both `Sim.resolvedAbility` and `ClientWorld.resolvedAbility`: Measured Fury discount, highest cost tax, then Aether Surge charges, with the existing rounding order. Casting and spending remain server-authoritative.
+- Dirge refresh events use entity-id order. Both primary and secondary targets preserve their next tick time. The authored duration is pinned, and a real-cast Spell Power test expects a 37-point increase at 100 SP. Removing only the Vespers rider produces 33 and fails that test.
+- Doctrine wand damage derives from the canonical discipline tuning row. Buff scaling requires the explicit legacy multiplier. Rescue, Aegis and Coldsight tests use independent numeric expectations; stale test prose is corrected.
+
+The cost extraction also lowers the Sim monolith ceiling to its measured size, closing earlier headroom. The online coordinator does not grow. Current validation and the review response are recorded on [PR #3917](https://github.com/levy-street/world-of-claudecraft/pull/3917).
+
+Scouring Mercy's Latin-script locale edits are drafts for the maintainer release pass. The existing stale-description translation worklist and unused Veiled Edge key cleanup remain release follow-ups. Browser and PBE limitations in the results document still apply.
 
 ## Delivery contract
 

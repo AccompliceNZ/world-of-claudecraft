@@ -94,7 +94,11 @@ export function refreshDirgeFieldAfterReapplication(
   carryDirgeTiming(primary, prior.priorAura);
   resyncEffigyToDirge(priest, target, primary.remaining);
 
-  for (const hostile of ctx.hostilesInRadius(priest, priest.pos, range)) {
+  // Sorted by id (not raw hostilesInRadius grid order) so the fanned-out
+  // refresh, and the per-target events it emits, are roster-independent,
+  // matching doctrine_rescue.ts's own id-sorted candidate order.
+  const hostiles = [...ctx.hostilesInRadius(priest, priest.pos, range)].sort((a, b) => a.id - b.id);
+  for (const hostile of hostiles) {
     if (hostile.id === target.id || hostile.kind !== 'mob') continue;
     const existing = activeOwnDirge(hostile, priest.id);
     if (!existing) continue; // clean/expired targets are never spread or recreated

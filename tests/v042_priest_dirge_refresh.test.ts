@@ -1,4 +1,5 @@
 import { describe, expect, it } from 'vitest';
+import { buildAbilityOutputScaling } from '../src/sim/ability_output_scaling';
 import {
   captureDirgeReapplication,
   DIRGE_ABILITY_ID,
@@ -12,11 +13,11 @@ import {
   VESPERS_DOT_DAMAGE_MULT,
   vespersDirgeSpMultiplier,
 } from '../src/sim/combat/priest/vespers';
-import { MOBS } from '../src/sim/data';
+import { ABILITIES, MOBS } from '../src/sim/data';
 import { createMob } from '../src/sim/entity';
 import { Sim } from '../src/sim/sim';
 import type { SimContext } from '../src/sim/sim_context';
-import type { Aura, Entity } from '../src/sim/types';
+import type { Aura, Entity, SimEvent } from '../src/sim/types';
 
 function vespersPriest(seed: number): { sim: Sim; priest: Entity; ctx: SimContext } {
   const sim = new Sim({ seed, playerClass: 'priest', autoEquip: true });
@@ -586,5 +587,123 @@ describe('v0.42.0 Vespers: Dirge refresh, effect_dispatch.ts integration', () =>
     const secondaryValue = ownDirgeOf(secondary, priest.id)?.value;
     expect(primaryValue).toBeGreaterThan(0);
     expect(secondaryValue).toBe(primaryValue);
+  });
+
+  it('a real cast delta pins the Vespers SP correction, not just the exposed constant', () => {
+    const { sim, priest } = vespersPriest(50423);
+    const primary = addDummy(sim, priest, 0, 8);
+    priest.gcdRemaining = 0;
+    priest.resource = priest.maxResource;
+    priest.cooldowns.delete(DIRGE_ABILITY_ID);
+    priest.hitBonus = 1;
+    priest.spellPower = 0;
+    sim.targetEntity(primary.id, priest.id);
+    sim.castAbility(DIRGE_ABILITY_ID, priest.id);
+    // Traveling projectile spellfx; give it time to land (see the recast test above).
+    for (let tick = 0; tick < 20; tick++) sim.tick();
+    const baseValue = ownDirgeOf(primary, priest.id)?.value;
+    if (baseValue === undefined) throw new Error('expected a Dirge on primary');
+
+    priest.gcdRemaining = 0;
+    priest.resource = priest.maxResource;
+    priest.cooldowns.delete(DIRGE_ABILITY_ID);
+    priest.spellPower = 100;
+    sim.targetEntity(primary.id, priest.id);
+    sim.castAbility(DIRGE_ABILITY_ID, priest.id);
+    for (let tick = 0; tick < 20; tick++) sim.tick();
+    const spValue = ownDirgeOf(primary, priest.id)?.value;
+    if (spValue === undefined) throw new Error('expected a refreshed Dirge on primary');
+
+    // dotTickBonus is round(power * coeff * mult); at spellPower 0 that term is
+    // 0 for any mult, so baseValue is the SP-free base and cancels out of the
+    // delta. shadow_word_pain: 18s/3s dot, coeff (18/15)/6 = 0.2. mult stacks
+    // THREE authored sources, all additive into talentDmgMult before the
+    // Vespers rider: Vespers mastery spellDmgPct 0.10 (talents_classic.ts) +
+    // spec_baselines.ts shadow spellDmgPct 0.15 + its shadow_word_pain-only
+    // dmgPct 0.20 => talentDmgMult = 1 + 0.25 + 0.20 = 1.45. Times
+    // (1 + dotDmgPct 0.15) times VESPERS_DOT_DAMAGE_MULT 1.10:
+    // 1.45 * 1.15 * 1.10 = 1.83425. round(100 * 0.2 * 1.83425) = 37. Drop the
+    // 1.10 rider and it falls to 33 (1.45 * 1.15 = 1.6675): a 4-point delta a
+    // removed rider cannot fake.
+    expect(spValue - baseValue).toBe(37);
+  });
+});
+
+describe('v0.42.0 Vespers: Dirge fan-out event order', () => {
+  it('fans out in ascending hostile-id order, not spatial-grid bucket order', () => {
+    const { sim, priest, ctx } = vespersPriest(50440);
+    const meta = ctx.players.get(priest.id);
+    if (!meta) throw new Error('priest meta missing');
+    const primary = addDummy(sim, priest, 0, 8);
+    pushOwnDirge(primary, priest.id);
+    // Lower id, placed EAST (larger x -> larger spatial-grid cx bucket).
+    const lowerIdEast = addDummy(sim, priest, 20, 6);
+    pushOwnDirge(lowerIdEast, priest.id, { remaining: 4, duration: 4 });
+    // Higher id, placed WEST (smaller cx bucket, visited FIRST by
+    // hostilesInRadius's cx-ascending walk): grid order would visit this
+    // HIGHER id before the lower one above, the opposite of ascending-id order.
+    const higherIdWest = addDummy(sim, priest, -20, 6);
+    pushOwnDirge(higherIdWest, priest.id, { remaining: 4, duration: 4 });
+    expect(higherIdWest.id).toBeGreaterThan(lowerIdEast.id);
+
+    sim.drainEvents();
+    recastDirge(ctx, priest, meta, primary, 90);
+
+    const fanoutTargetOrder = sim
+      .drainEvents()
+      .filter(
+        (ev): ev is Extract<SimEvent, { type: 'aura' }> =>
+          ev.type === 'aura' &&
+          ev.gained === true &&
+          ev.abilityId === DIRGE_ABILITY_ID &&
+          ev.targetId !== primary.id,
+      )
+      .map((ev) => ev.targetId);
+
+    // Match doctrine_rescue.ts's id-sorted candidate order (roster-independent
+    // event order) instead of leaking the spatial grid's bucket order.
+    expect(fanoutTargetOrder).toEqual([lowerIdEast.id, higherIdWest.id]);
+  });
+});
+
+describe('v0.42.0 Vespers: Dirge base duration stays in step with the carry constant', () => {
+  it("pins shadow_word_pain's authored dot duration (every rank) against DIRGE_BASE_DURATION", () => {
+    const ability = ABILITIES[DIRGE_ABILITY_ID];
+    if (!ability) throw new Error('shadow_word_pain ability missing from ABILITIES');
+    const dotDuration = (effect: { type: string; duration?: number } | undefined): number => {
+      if (effect?.type !== 'dot' || effect.duration === undefined) {
+        throw new Error('expected shadow_word_pain rank effect to be a dot with a duration');
+      }
+      return effect.duration;
+    };
+    const durations = [
+      dotDuration(ability.effects[0]),
+      ...(ability.ranks ?? []).map((rank) => dotDuration(rank.effects[0])),
+    ];
+    for (const duration of durations) {
+      expect(duration).toBe(DIRGE_BASE_DURATION);
+    }
+  });
+});
+
+describe('v0.42.0 Vespers: DIRGE_ABILITY_ID stays canonical', () => {
+  it('ability_output_scaling.ts matches the imported dirge_refresh.ts id', () => {
+    const { priest, ctx } = vespersPriest(50441);
+    const meta = ctx.players.get(priest.id);
+    if (!meta) throw new Error('priest meta missing');
+    const ability = ABILITIES[DIRGE_ABILITY_ID];
+    if (!ability) throw new Error('shadow_word_pain ability missing from ABILITIES');
+
+    // Swapping ONLY `spec` isolates the ability-id match: if ability_output_scaling.ts's
+    // own DIRGE_ABILITY_ID ever drifts from the one imported here, shadow_word_pain stops
+    // matching it and this ratio collapses from 1.1 to 1.
+    const shadowScaling = buildAbilityOutputScaling(ability, 'priest', meta.talentMods);
+    const nonShadowScaling = buildAbilityOutputScaling(ability, 'priest', {
+      ...meta.talentMods,
+      spec: 'holy',
+    });
+
+    expect(nonShadowScaling.dot).toBeGreaterThan(0);
+    expect(shadowScaling.dot / nonShadowScaling.dot).toBeCloseTo(1.1, 6);
   });
 });

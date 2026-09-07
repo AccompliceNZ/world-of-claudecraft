@@ -525,7 +525,16 @@ const MONOLITHS: MonolithRow[] = [
     // Plus 2 for the Phase B set-bonus seam: the set_bonus_mods import and
     // the setPlayerLevel writer routing through computeCharacterModifiers
     // (the resolver itself is the extracted module). Exact count, zero slack.
-    ceiling: 12465,
+    // Lowered to the measured size after extracting 28 lines of cost
+    // resolution and closing 224 lines of existing headroom (PR 3917).
+    // The resolved ability cost tail
+    // (the Measured Fury discount, the draining-curse cost_tax read, Aether
+    // Surge's per-charge ramp) moved into applyAbilityCostTail in
+    // combat/ability_resolution.ts, shared with ClientWorld.resolvedAbility
+    // (src/net/online.ts, unchanged at its own exact ceiling); the now-dead
+    // private costTaxMult helper and the aetherSurgeCostMult import went with
+    // it. Exact count, zero slack.
+    ceiling: 12213,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {

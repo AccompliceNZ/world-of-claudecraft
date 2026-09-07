@@ -3,14 +3,17 @@ import { DOCTRINE_AURA_ID, DOCTRINE_RANGE } from '../src/sim/combat/priest/doctr
 import {
   applyScouringMercyRescueCopies,
   doctrineScouringMercyRescue,
-  SCOURING_MERCY_RESCUE_FRACTION,
-  SCOURING_MERCY_RESCUE_MAX_RECIPIENTS,
-  SCOURING_MERCY_RESCUE_RADIUS,
   selectScouringMercyRescueRecipients,
 } from '../src/sim/combat/priest/doctrine_rescue';
 import { Sim } from '../src/sim/sim';
 import type { SimContext } from '../src/sim/sim_context';
 import type { Entity } from '../src/sim/types';
+
+// Independent literals, not imported from doctrine_rescue.ts: the authored
+// rescue-cleave budget (docs/design/class-balance-v042.md).
+const EXPECTED_RESCUE_MAX_RECIPIENTS = 2;
+const EXPECTED_RESCUE_RADIUS = 10;
+const EXPECTED_RESCUE_FRACTION = 0.5;
 
 function doctrinePriest(seed: number): { sim: Sim; priest: Entity; ctx: SimContext } {
   const sim = new Sim({ seed, playerClass: 'priest', autoEquip: true });
@@ -58,7 +61,7 @@ describe('v0.42.0 Doctrine: Scouring Mercy rescue cleave, recipient selection', 
 
     const recipients = selectScouringMercyRescueRecipients(ctx, priest, primary);
 
-    expect(recipients).toHaveLength(SCOURING_MERCY_RESCUE_MAX_RECIPIENTS);
+    expect(recipients).toHaveLength(EXPECTED_RESCUE_MAX_RECIPIENTS);
     expect(recipients[0]).toBe(worst);
     expect(recipients[1]).toBe(mid);
     expect(recipients).not.toContain(best);
@@ -90,14 +93,8 @@ describe('v0.42.0 Doctrine: Scouring Mercy rescue cleave, recipient selection', 
   it('includes an ally exactly at the 10-yard boundary and excludes one just outside it', () => {
     const { sim, priest, ctx } = doctrinePriest(50504);
     const primary = addPartyAlly(sim, priest, 'Primary', 0, 0);
-    const atBoundary = addPartyAlly(sim, priest, 'AtBoundary', SCOURING_MERCY_RESCUE_RADIUS, 0);
-    const justOutside = addPartyAlly(
-      sim,
-      priest,
-      'JustOutside',
-      SCOURING_MERCY_RESCUE_RADIUS + 0.5,
-      0,
-    );
+    const atBoundary = addPartyAlly(sim, priest, 'AtBoundary', EXPECTED_RESCUE_RADIUS, 0);
+    const justOutside = addPartyAlly(sim, priest, 'JustOutside', EXPECTED_RESCUE_RADIUS + 0.5, 0);
     atBoundary.hp = Math.floor(atBoundary.maxHp * 0.5);
     justOutside.hp = Math.floor(justOutside.maxHp * 0.5);
 
@@ -163,7 +160,7 @@ describe('v0.42.0 Doctrine: Scouring Mercy rescue cleave, copy application', () 
 
     applyScouringMercyRescueCopies(ctx, priest, [a, b], 200);
 
-    const expected = Math.max(1, Math.round(200 * SCOURING_MERCY_RESCUE_FRACTION));
+    const expected = Math.max(1, Math.round(200 * EXPECTED_RESCUE_FRACTION));
     expect(a.hp - aBefore).toBe(expected);
     expect(b.hp - bBefore).toBe(expected);
     const heals = sim
@@ -250,7 +247,7 @@ describe('v0.42.0 Doctrine: Scouring Mercy rescue cleave, copy application', () 
 
     applyScouringMercyRescueCopies(ctx, priest, [a], 100);
 
-    expect(a.hp - before).toBe(Math.max(1, Math.round(100 * SCOURING_MERCY_RESCUE_FRACTION)));
+    expect(a.hp - before).toBe(Math.max(1, Math.round(100 * EXPECTED_RESCUE_FRACTION)));
   });
 
   it('still drains a healing absorb on the recipient', () => {
@@ -271,7 +268,7 @@ describe('v0.42.0 Doctrine: Scouring Mercy rescue cleave, copy application', () 
 
     applyScouringMercyRescueCopies(ctx, priest, [a], 100);
 
-    const expected = Math.max(1, Math.round(100 * SCOURING_MERCY_RESCUE_FRACTION)) - 30;
+    const expected = Math.max(1, Math.round(100 * EXPECTED_RESCUE_FRACTION)) - 30;
     expect(a.hp - before).toBe(expected);
     expect(a.auras.some((aura) => aura.kind === 'heal_absorb')).toBe(false);
   });
@@ -307,7 +304,7 @@ describe('v0.42.0 Doctrine: Scouring Mercy rescue cleave, end-to-end helper', ()
       const before = [firstBefore, secondBefore, thirdBefore][index];
       return ally.hp > before;
     }).length;
-    expect(healedCount).toBe(SCOURING_MERCY_RESCUE_MAX_RECIPIENTS);
+    expect(healedCount).toBe(EXPECTED_RESCUE_MAX_RECIPIENTS);
   });
 
   it('is inert for a non-Discipline priest', () => {

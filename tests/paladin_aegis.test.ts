@@ -3,10 +3,8 @@ import { ABILITIES, abilitiesKnownAt } from '../src/sim/content/classes';
 import { computeTalentModifiers } from '../src/sim/content/talents';
 import { MOBS } from '../src/sim/data';
 import { createMob } from '../src/sim/entity';
-import { scalePrimaryHealing } from '../src/sim/primary_healing';
 import { Sim } from '../src/sim/sim';
 import { fiestaDownEntity } from '../src/sim/social/fiesta';
-import { primaryHealingMultiplier } from '../src/sim/spec_output_tuning';
 import { channelTickBonus, directHealBonus } from '../src/sim/spell_scaling';
 import type { Aura, Entity } from '../src/sim/types';
 
@@ -156,14 +154,14 @@ describe('Aegis of the First Dawn', () => {
         ? [event.amount]
         : [],
     );
-    const healMultiplier = primaryHealingMultiplier('paladin', 'holy');
-    const tickHeal = scalePrimaryHealing(
-      40 + channelTickBonus(sim.player.spellPower, ABILITIES.aegis_first_dawn),
-      healMultiplier,
+    // Independent literal, not primaryHealingMultiplier/scalePrimaryHealing:
+    // Sunmender's authored +10%, hand-rounded.
+    const healMultiplier = 1.1;
+    const tickHeal = Math.round(
+      (40 + channelTickBonus(sim.player.spellPower, ABILITIES.aegis_first_dawn)) * healMultiplier,
     );
-    const finalHeal = scalePrimaryHealing(
-      135 + directHealBonus(sim.player.spellPower, 0, true),
-      healMultiplier,
+    const finalHeal = Math.round(
+      (135 + directHealBonus(sim.player.spellPower, 0, true)) * healMultiplier,
     );
     expect(allyHeals).toEqual([tickHeal, tickHeal, tickHeal, tickHeal, tickHeal, finalHeal]);
     expect(ally.auras).toContainEqual(

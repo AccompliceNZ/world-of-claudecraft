@@ -8527,8 +8527,9 @@ function scaleEffect(
   // v0.42.0 class balance: dmgMult WITHOUT the offense-only spec tuning
   // (talent_hit_mult.ts's legacyDmgMult), used ONLY by the flat-magnitude
   // buff branch below so the new offense-only component can never inflate an
-  // armor/stat/spellpower buff riding the same ability.
-  buffDmgMult: number = dmgMult,
+  // armor/stat/spellpower buff riding the same ability. Required, not
+  // defaulted to dmgMult: a future call site must choose explicitly.
+  buffDmgMult: number,
 ): AbilityEffect {
   switch (eff.type) {
     case 'weaponDamage':

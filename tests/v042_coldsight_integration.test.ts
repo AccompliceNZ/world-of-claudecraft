@@ -330,3 +330,56 @@ describe('Respec clears every marker (same-class negative control)', () => {
     expect(dealt).toBe(controlDealt);
   });
 });
+
+// Review should-fix (PR 3917, f8b95339f0): the real castAbility/tick
+// coordinator flow must carry exactly the real buff's gain and spend, no
+// marker leakage (unit-level coverage: tests/v042_coldsight_read.test.ts).
+describe('Aura event feed carries no internal Coldsight marker leakage (v0.42.0 review fix)', () => {
+  it('one Rapid Fire channel plus one accepted Long Draw emits exactly two aura events', () => {
+    const sim = marksmanHunter(320);
+    const target = addDummy(sim);
+    sim.targetEntity(target.id);
+    sim.player.resource = sim.player.maxResource;
+
+    sim.castAbility('rapid_fire');
+    const channelEvents = advance(sim, 3); // the full six-pulse channel completes
+    expect(coldsightReadArmed(sim.player)).toBe(true);
+
+    sim.player.resource = sim.player.maxResource;
+    ready(sim, 'aimed_shot');
+    sim.castAbility('aimed_shot');
+    const castEvents = advance(sim, 4);
+    expect(landedHit(castEvents, 'Long Draw')).toBeGreaterThan(0);
+
+    const events = [...channelEvents, ...castEvents];
+    const auras = events.filter((e): e is Extract<SimEvent, { type: 'aura' }> => e.type === 'aura');
+    expect(auras.filter((e) => e.name === 'Fevered Draw')).toHaveLength(0);
+    expect(auras.filter((e) => e.gained && e.name === 'Coldsight Read')).toHaveLength(1);
+    expect(auras.filter((e) => !e.gained && e.name === 'Coldsight Read')).toHaveLength(1);
+    expect(auras).toHaveLength(2);
+  });
+
+  it('one Rapid Fire channel plus one accepted Fell Shot emits exactly two aura events', () => {
+    const sim = marksmanHunter(321);
+    const target = addDummy(sim);
+    sim.targetEntity(target.id);
+    sim.player.resource = sim.player.maxResource;
+
+    sim.castAbility('rapid_fire');
+    const channelEvents = advance(sim, 3);
+    expect(coldsightReadArmed(sim.player)).toBe(true);
+
+    sim.player.resource = sim.player.maxResource;
+    ready(sim, 'arcane_shot');
+    sim.castAbility('arcane_shot');
+    const castEvents = advance(sim, 1);
+    expect(landedHit(castEvents, 'Fell Shot')).toBeGreaterThan(0);
+
+    const events = [...channelEvents, ...castEvents];
+    const auras = events.filter((e): e is Extract<SimEvent, { type: 'aura' }> => e.type === 'aura');
+    expect(auras.filter((e) => e.name === 'Fevered Draw')).toHaveLength(0);
+    expect(auras.filter((e) => e.gained && e.name === 'Coldsight Read')).toHaveLength(1);
+    expect(auras.filter((e) => !e.gained && e.name === 'Coldsight Read')).toHaveLength(1);
+    expect(auras).toHaveLength(2);
+  });
+});

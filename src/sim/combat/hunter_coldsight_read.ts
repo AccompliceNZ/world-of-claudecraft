@@ -2,7 +2,7 @@
 // Accepted casts reserve it until completion or cancellation, without new RNG.
 import type { ResolvedAbility } from '../sim';
 import type { SimContext } from '../sim_context';
-import type { Entity } from '../types';
+import type { Aura, Entity } from '../types';
 
 export const COLDSIGHT_READ_AURA_ID = 'hunter_coldsight_read';
 export const COLDSIGHT_READ_DURATION_SEC = 10;
@@ -66,6 +66,21 @@ function removeAuraById(ctx: SimContext, entity: Entity, id: string): void {
   ctx.emit({ type: 'aura', targetId: entity.id, name: aura.name, gained: false });
 }
 
+// The three internal markers never emit: apply/remove them by direct
+// entity.auras mutation instead of ctx.applyAura/removeAuraById, so the real
+// armed COLDSIGHT_READ_AURA_ID (which keeps using the emitting helpers above)
+// is the only Coldsight event a player ever sees.
+function upsertMarkerSilently(entity: Entity, aura: Aura): void {
+  const index = entity.auras.findIndex((existing) => existing.id === aura.id);
+  if (index >= 0) entity.auras.splice(index, 1);
+  entity.auras.push(aura);
+}
+
+function removeMarkerSilently(entity: Entity, id: string): void {
+  const index = entity.auras.findIndex((aura) => aura.id === id);
+  if (index >= 0) entity.auras.splice(index, 1);
+}
+
 // Channel start (castAbility's `ability.channel` branch): resets the pulse
 // counter so a fresh Fevered Draw always starts from zero.
 export function coldsightFeveredDrawChannelStart(
@@ -75,7 +90,7 @@ export function coldsightFeveredDrawChannelStart(
 ): void {
   if (abilityId !== FEVERED_DRAW_ABILITY_ID) return;
   if (!isMarksmanshipHunter(ctx, hunter)) return;
-  ctx.applyAura(hunter, {
+  upsertMarkerSilently(hunter, {
     id: FEVERED_DRAW_PROGRESS_AURA_ID,
     name: 'Fevered Draw',
     kind: 'internal_cd',
@@ -113,7 +128,7 @@ export function coldsightFeveredDrawCompleted(
   target: Entity | null,
 ): void {
   const progress = hunter.auras.find((a) => a.id === FEVERED_DRAW_PROGRESS_AURA_ID);
-  if (progress) removeAuraById(ctx, hunter, FEVERED_DRAW_PROGRESS_AURA_ID);
+  if (progress) removeMarkerSilently(hunter, FEVERED_DRAW_PROGRESS_AURA_ID);
   if (completedAbilityId !== FEVERED_DRAW_ABILITY_ID) return;
   if ((progress?.value ?? 0) < FEVERED_DRAW_PULSE_COUNT) return;
   if (!target || target.dead) return;
@@ -144,8 +159,8 @@ export function coldsightReserveRead(ctx: SimContext, hunter: Entity, abilityId:
   const reservedId = reservedAuraIdFor(abilityId);
   if (!reservedId) return;
   if (!coldsightReadArmed(hunter)) return;
-  removeAuraById(ctx, hunter, COLDSIGHT_READ_AURA_ID);
-  ctx.applyAura(hunter, {
+  removeAuraById(ctx, hunter, COLDSIGHT_READ_AURA_ID); // the real buff being spent: stays visible
+  upsertMarkerSilently(hunter, {
     id: reservedId,
     name: 'Coldsight Read',
     kind: 'internal_cd',
@@ -161,15 +176,15 @@ export function coldsightReserveRead(ctx: SimContext, hunter: Entity, abilityId:
 // the opportunity (reserved above); this only clears the now-dead marker so
 // it can never resurface for a later, unrelated cast.
 export function coldsightVoidReservationOnCancel(
-  ctx: SimContext,
+  _ctx: SimContext,
   hunter: Entity,
   cancelledAbilityId: string | null,
 ): void {
   if (cancelledAbilityId === FEVERED_DRAW_ABILITY_ID) {
-    removeAuraById(ctx, hunter, FEVERED_DRAW_PROGRESS_AURA_ID);
+    removeMarkerSilently(hunter, FEVERED_DRAW_PROGRESS_AURA_ID);
   }
   const reservedId = cancelledAbilityId ? reservedAuraIdFor(cancelledAbilityId) : null;
-  if (reservedId) removeAuraById(ctx, hunter, reservedId);
+  if (reservedId) removeMarkerSilently(hunter, reservedId);
 }
 
 // applyAbility, alongside `res = consumeOverload(ctx, p, res);`: bakes the
@@ -180,7 +195,7 @@ export function coldsightVoidReservationOnCancel(
 // onHunterPrimaryDamage and any fractional echo it grants see one already
 // enlarged hit, exactly like every other pre-baked modifier.
 export function consumeColdsightReadReservation(
-  ctx: SimContext,
+  _ctx: SimContext,
   hunter: Entity,
   res: ResolvedAbility,
 ): ResolvedAbility {
@@ -189,7 +204,7 @@ export function consumeColdsightReadReservation(
   const aura = hunter.auras.find((a) => a.id === reservedId);
   if (!aura) return res;
   const mult = aura.value || 1;
-  removeAuraById(ctx, hunter, reservedId);
+  removeMarkerSilently(hunter, reservedId);
   if (mult === 1) return res;
   return {
     ...res,
@@ -203,15 +218,16 @@ export function consumeColdsightReadReservation(
 // cleanRogueEngineState/cleanDruidEngineState: leaving marksmanship drops every Coldsight Read marker outright. Death already
 // clears all of these generically (resurrection.ts aurasSurvivingDeath).
 export function cleanColdsightReadState(ctx: SimContext, hunter: Entity): void {
-  const ids = new Set([
-    COLDSIGHT_READ_AURA_ID,
-    FEVERED_DRAW_PROGRESS_AURA_ID,
-    ...Object.keys(COLDSIGHT_READ_MULT_BY_ABILITY).map((id) => reservedAuraIdFor(id) as string),
-  ]);
   for (let index = hunter.auras.length - 1; index >= 0; index--) {
     const aura = hunter.auras[index];
-    if (aura.sourceId !== hunter.id || !ids.has(aura.id)) continue;
-    hunter.auras.splice(index, 1);
-    ctx.emit({ type: 'aura', targetId: hunter.id, name: aura.name, gained: false });
+    if (aura.sourceId !== hunter.id) continue;
+    if (aura.id === COLDSIGHT_READ_AURA_ID) {
+      // The real armed buff: a respec losing it is a genuine expiry, not a
+      // marker leak, so it keeps the fade a player would expect to see.
+      hunter.auras.splice(index, 1);
+      ctx.emit({ type: 'aura', targetId: hunter.id, name: aura.name, gained: false });
+    } else if (isColdsightInternalMarkerAuraId(aura.id)) {
+      hunter.auras.splice(index, 1);
+    }
   }
 }

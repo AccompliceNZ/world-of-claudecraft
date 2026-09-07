@@ -132,6 +132,11 @@ describe('trueStealthOpenerMultiplier / trueStealthOpenerScaleBonus: the doubled
 });
 
 describe('No stack with Veiled Edge: structural guarantee', () => {
+  // The complementary "a true-stealth opener must not consume an already-armed
+  // Edge, and a subsequent eligible strike consumes the preserved Edge" case
+  // needs a live runEffects weaponStrike dispatch (the consumeVeiledEdge call
+  // this guarantee is actually about lives in effect_dispatch.ts, not here);
+  // that decisive regression lives in tests/v042_stealth_integration.test.ts.
   it('rogueGloamDetonation refuses to arm Veiled Edge while actually stealthed', () => {
     // The true-stealth opener reward and the veil-window Edge are mutually
     // exclusive by construction: the detonation that arms Veiled Edge always

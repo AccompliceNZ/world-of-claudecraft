@@ -13,7 +13,7 @@ import {
 import { bagCapacity } from '../sim/bags';
 import { signChallenge } from '../sim/client_challenge';
 import { allocRiftCollisionToken, clearRiftRegion, setRiftRegion } from '../sim/colliders';
-import { resolveAbilityChain } from '../sim/combat/ability_resolution';
+import { applyAbilityCostTail, resolveAbilityChain } from '../sim/combat/ability_resolution';
 import { heroicLeapPlacementPreview } from '../sim/combat/heroic_leap';
 import { MOUNT_RACE_COURSE, type MountKey, normalizeMountKey } from '../sim/content/mounts';
 import { mechChromaSkinIndex } from '../sim/content/skins';
@@ -2209,18 +2209,18 @@ export class ClientWorld extends ReconWireState implements IWorld {
     return this.entities.get(this.playerId) ?? blankEntity(-1);
   }
 
-  // The local player's own known ability, every presentation-layer transform
-  // folded in, including healing forms and cast-time windows. Resource-cost
-  // authority remains on Sim; talents/talentMods are cached above.
+  // The local player's own known ability, presentation transforms and the
+  // full cost tail folded in (server remains the sole spend authority).
   resolvedAbility(abilityId: string): ResolvedAbility | null {
     const known = this.known.find((k) => k.def.id === abilityId) ?? null;
     if (!known) return null;
-    return resolveAbilityChain(
+    const found = resolveAbilityChain(
       known,
       this.player,
       { cls: this.cfg.playerClass, talents: this.talents },
       this.talentMods,
     );
+    return applyAbilityCostTail(found, abilityId, this.player, this.known, this.talentMods);
   }
 
   drainEvents(): SimEvent[] {

@@ -12,9 +12,10 @@
 //     whose flat heal must gain the Sunmender-only factor while its flat
 //     damage is untouched, guarded per caster spec (not per ability).
 //
-// This depends on spec_output_tuning.ts primaryHealingMultiplier, owned by
-// the offensive-tuning worker; see /tmp/woc-v042-healing-handoff.md for
-// current status if this file cannot resolve that import.
+// This depends on spec_output_tuning.ts primaryHealingMultiplier
+// (src/sim/spec_output_tuning.ts): that module and its own suite
+// (tests/spec_output_tuning.test.ts) are the durable source for the current
+// per-spec factors if this file cannot resolve that import.
 import { describe, expect, it } from 'vitest';
 import { resolveDruidOverbloom } from '../src/sim/combat/druid_engines';
 import { completePaladinAegis, tickPaladinAegis } from '../src/sim/combat/paladin_aegis';
@@ -436,7 +437,7 @@ describe('Dawn Echo copies the already-scaled effective heal exactly once', () =
 });
 
 describe('Groveheart Overbloom harvest copies the already-scaled stored HoT exactly once', () => {
-  it('harvests 60% of the stored (already Groveheart-scaled) remaining HoT healing, not a second 1.20 factor', () => {
+  it('harvests 60% of the stored (already Groveheart-scaled) remaining HoT healing, not a second 1.05 factor', () => {
     const sim = new Sim({ seed: 4601, playerClass: 'druid', autoEquip: true });
     sim.setPlayerLevel(20);
     expect(sim.setSpec('restoration')).toBe(true);
@@ -448,7 +449,7 @@ describe('Groveheart Overbloom harvest copies the already-scaled stored HoT exac
     const ctx = ctxOf(sim);
     // A real self-cast Rejuvenation plants the HoT through the generic
     // effect_dispatch.ts 'hot' case (coordinator-owned, not mine), so its
-    // stored tick value already carries the Groveheart 1.20 factor once.
+    // stored tick value already carries the Groveheart 1.05 factor once.
     // ctx.applyAura's existing recalcPlayerStats-on-player-target behavior
     // fires here; poke the stat pair again AFTER, before reading it or
     // harvesting, same gotcha as the replant test above.

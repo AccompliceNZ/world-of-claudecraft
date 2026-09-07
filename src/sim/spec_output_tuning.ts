@@ -28,8 +28,9 @@ interface OffensiveSpecTuning {
 // untouched by this change.
 const OFFENSIVE_SPEC_TUNING: Partial<Record<PlayerClass, Record<string, OffensiveSpecTuning>>> = {
   druid: {
-    // Wildfang: feral AP is a stats.apPct edit in spec_baselines.ts; this is
-    // the paired offensive physical ability bonus (autos are covered by AP).
+    // Wildfang: feral AP is a stats.apPct edit in spec_baselines.ts (also
+    // lifts bear-form autos and threat alongside cat-form ability
+    // damage); this is the paired offensive physical ability bonus.
     feral: { physical: 0.15 },
   },
   shaman: {
@@ -55,7 +56,10 @@ const OFFENSIVE_SPEC_TUNING: Partial<Record<PlayerClass, Record<string, Offensiv
   },
   rogue: {
     // Knifework: assassination offensive melee bonus (0.22 legacy + 0.10
-    // here = 0.32 total); AP is a stats.apPct edit (0.36 -> 0.57).
+    // here = 0.32 total); AP is a stats.apPct edit (0.36 -> 0.57). Physical
+    // bucket only: the poison imbues (nature school) get none of this bonus,
+    // so the spec's share of the total arrives through AP and the physical
+    // abilities alone.
     assassination: { physical: 0.1 },
   },
   hunter: {
@@ -69,9 +73,12 @@ const OFFENSIVE_SPEC_TUNING: Partial<Record<PlayerClass, Record<string, Offensiv
     // Doctrine: discipline personal primary damage x1.30. Discipline carries
     // no legacy global bucket, so this alone reaches the target 1.30 total
     // (1 + 0.30) on Hymn/Smite, hostile Scouring Mercy, Mindfracture, and
-    // Dirge (all ordinary AbilityDefs). Wand output is a fixed-formula ranged
-    // autoattack outside the AbilityDef seam; combat/auto_attack.ts applies
-    // the same 1.30 there directly.
+    // Dirge (all ordinary AbilityDefs). Also raises Doctrine's converted
+    // healing by the same 30%, since the conversion reads
+    // the already-boosted damage; primaryHealingMultiplier itself still
+    // leaves discipline at 1 (no separate healer-side factor). Wand output is
+    // a fixed-formula ranged autoattack outside the AbilityDef seam;
+    // disciplineWandOffenseMultiplier() below applies the same 1.30 there.
     discipline: { physical: 0.3, spell: 0.3 },
   },
 };
@@ -116,6 +123,15 @@ export function offensiveAbilityBonus(
 export function petOffenseMultiplier(cls: PlayerClass, spec: string | null): number {
   if (!spec) return 1;
   return 1 + (PET_OFFENSE_TUNING[cls]?.[spec] ?? 0);
+}
+
+/** The wand-only offense multiplier for Doctrine discipline
+ *  (combat/auto_attack.ts's fixed-formula wand path, outside the AbilityDef
+ *  seam). Derived from the same discipline row offensiveAbilityBonus reads,
+ *  not a second hardcoded literal; narrowly gated to that one spec since no
+ *  other row is meant to reach a wand hit. */
+export function disciplineWandOffenseMultiplier(): number {
+  return 1 + (OFFENSIVE_SPEC_TUNING.priest?.discipline?.physical ?? 0);
 }
 
 /**

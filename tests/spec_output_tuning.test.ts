@@ -5,6 +5,7 @@
 import { describe, expect, it } from 'vitest';
 import { PYRE_AURA_DAMAGE } from '../src/sim/combat/destruction';
 import {
+  disciplineWandOffenseMultiplier,
   isPhysicalBucketAbility,
   offensiveAbilityBonus,
   petOffenseMultiplier,
@@ -116,6 +117,14 @@ describe('petOffenseMultiplier', () => {
 
   it('backs the explicit Pyre Aura 60 -> 66 refinement (combat/destruction.ts)', () => {
     expect(PYRE_AURA_DAMAGE).toBe(66);
+  });
+});
+
+// combat/auto_attack.ts's wand path reads this instead of a bare 1.3 literal,
+// so a retune of the discipline row can't leave the wand behind.
+describe('disciplineWandOffenseMultiplier', () => {
+  it('gives Doctrine discipline the canonical 1.30 wand factor', () => {
+    expect(disciplineWandOffenseMultiplier()).toBeCloseTo(1.3);
   });
 });
 
