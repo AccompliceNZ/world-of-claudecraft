@@ -2154,10 +2154,24 @@ export const hudChromeStrings = {
     crossHotbarDisplayMinimal: 'Only While Held',
     crossHotbarArrangeChord: '{bumper} + {button}',
     crossHotbarCarrying: 'Carrying {action}: confirm on a cell to place it, cancel to put it back.',
+    // The button words stay generic (confirm / cancel): both are rebindable and
+    // brand-dependent, and the chord that leaves the mode is the one the player
+    // just pressed to enter it, so the line names what each press DOES instead.
     crossHotbarEditHint:
-      'Arranging: confirm picks up from a cell or the spellbook and drops on a cell, cancel clears one.',
+      'Arranging · d-pad moves · confirm picks up and places · cancel clears a cell',
     crossHotbarEditHelp:
       'Hold the left bumper and press the top face button to arrange the bar with the controller.',
+    // The pad hint strip and the micro-menu legend: a controller's replacement
+    // for the keyboard's implicit key knowledge. The glyph beside each label is
+    // a hardware name from gamepad_map, so only the action words are keyed.
+    padHintLabel: 'Controller hints',
+    padHintInteract: 'Interact',
+    padHintTargetMenu: 'Target menu',
+    padHintSwapSet: 'Swap set',
+    padHintArrangeBar: 'Arrange bar',
+    padLegendBags: 'Bags',
+    padLegendMenu: 'Menu',
+    padLegendCycleHud: 'Cycle HUD',
   },
   // Performance overlay (the customizable in-game stats panel + its Options
   // sub-view). Player-facing, so every label is a key here; the live numbers in
