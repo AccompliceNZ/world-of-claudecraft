@@ -3054,6 +3054,12 @@ export const ko_KR: EnTranslations = {
       "invalid": "유효한 내보내기 코드가 아닙니다.",
       "wrongKind": "이 코드는 다른 종류의 내보내기입니다."
     },
+    "keybindTransfer": {
+      "setup": "단축키 설정",
+      "apply": "적용",
+      "imported": "단축키 설정을 가져왔습니다.",
+      "wrongKind": "이 코드는 설정 내보내기이며 단축키 설정이 아닙니다."
+    },
     "riftForge": {
       "title": "균열의 화로",
       "subtitle": "균열결속 반지",

@@ -3054,6 +3054,12 @@ export const tr_TR: EnTranslations = {
       "invalid": "Bu geçerli bir dışa aktarma kodu değil.",
       "wrongKind": "Bu kod farklı bir dışa aktarma türüne ait."
     },
+    "keybindTransfer": {
+      "setup": "Hotkey Setup",
+      "apply": "Apply",
+      "imported": "Hotkey setup imported.",
+      "wrongKind": "That code is a settings export, not a hotkey setup."
+    },
     "riftForge": {
       "title": "Rift Forge",
       "subtitle": "Riftbound bands",

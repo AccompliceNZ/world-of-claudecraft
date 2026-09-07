@@ -3054,6 +3054,12 @@ export const vi_VN: EnTranslations = {
       "invalid": "Đó không phải là một mã xuất hợp lệ.",
       "wrongKind": "Mã đó thuộc một loại xuất khác."
     },
+    "keybindTransfer": {
+      "setup": "Hotkey Setup",
+      "apply": "Apply",
+      "imported": "Hotkey setup imported.",
+      "wrongKind": "That code is a settings export, not a hotkey setup."
+    },
     "riftForge": {
       "title": "Rift Forge",
       "subtitle": "Riftbound bands",

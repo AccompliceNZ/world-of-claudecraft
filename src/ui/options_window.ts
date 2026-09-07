@@ -94,6 +94,7 @@ import {
 } from './i18n';
 import type { TranslationKey } from './i18n.catalog';
 import { interfaceUnlockLabelKey } from './interface_unlock_core';
+import { buildKeybindCode, parseKeybindCode } from './keybind_transfer_core';
 import {
   type BoolToggleControl,
   boolToggleNextValue,
@@ -1753,6 +1754,67 @@ export class OptionsWindow {
     const label = t(
       kind === 'frames' ? 'hudChrome.transfer.frameLayout' : 'hudChrome.transfer.allSettings',
     );
+    this.transferControls(body, label, {
+      exportCode: () => exportTransferCode(kind),
+      applyLabel: t('hudChrome.transfer.applyReload'),
+      importCode: (text) => {
+        const result = importTransferCode(kind, text);
+        if (result.ok) {
+          window.location.reload();
+          return null;
+        }
+        return t(
+          result.reason === 'kind' ? 'hudChrome.transfer.wrongKind' : 'hudChrome.transfer.invalid',
+        );
+      },
+    });
+  }
+
+  // The hotkey-setup row on the Key Bindings panel: the same Export/Import
+  // expando, carrying this character's key-code map (Keybinds.snapshot) in the
+  // keybind_transfer_core.ts envelope. Import applies live through
+  // Keybinds.importBindings (load()'s validation: unknown actions ignored,
+  // reserved codes skipped, one code per action) and repaints the panel; no
+  // reload, since every reader of the map goes through the live instance.
+  private keybindTransferRows(body: HTMLElement): void {
+    const wrap = document.createElement('div');
+    wrap.className = 'kb-transfer';
+    this.transferControls(wrap, t('hudChrome.keybindTransfer.setup'), {
+      exportCode: () => buildKeybindCode(this.deps.keybinds().snapshot()),
+      applyLabel: t('hudChrome.keybindTransfer.apply'),
+      importCode: (text) => {
+        const parsed = parseKeybindCode(text);
+        if (!parsed.ok) {
+          return t(
+            parsed.reason === 'kind'
+              ? 'hudChrome.keybindTransfer.wrongKind'
+              : 'hudChrome.transfer.invalid',
+          );
+        }
+        this.deps.keybinds().importBindings(parsed.binds);
+        this.capturingKey = null;
+        this.keybindNote = t('hudChrome.keybindTransfer.imported');
+        this.deps.refreshKeybindLabels();
+        this.renderKeybinds();
+        return null;
+      },
+    });
+    body.appendChild(wrap);
+  }
+
+  // The shared Export/Import row + expando. `exportCode` yields the code shown
+  // read-only with a Copy button; `importCode` validates and applies a pasted
+  // code, returning null on success (the caller owns the follow-up: a reload or
+  // a repaint) or the localized error to show in the status line.
+  private transferControls(
+    body: HTMLElement,
+    label: string,
+    io: {
+      exportCode: () => string;
+      applyLabel: string;
+      importCode: (text: string) => string | null;
+    },
+  ): void {
     const row = document.createElement('div');
     row.className = 'set-row';
     const name = document.createElement('span');
@@ -1789,7 +1851,7 @@ export class OptionsWindow {
       status.setAttribute('role', 'status');
       if (mode === 'export') {
         box.readOnly = true;
-        box.value = exportTransferCode(kind);
+        box.value = io.exportCode();
         const copy = document.createElement('button');
         copy.className = 'btn';
         copy.textContent = t('hudChrome.transfer.copy');
@@ -1817,19 +1879,11 @@ export class OptionsWindow {
         box.placeholder = t('hudChrome.transfer.pastePlaceholder');
         const apply = document.createElement('button');
         apply.className = 'btn';
-        apply.textContent = t('hudChrome.transfer.applyReload');
+        apply.textContent = io.applyLabel;
         apply.addEventListener('click', () => {
           audio.click();
-          const result = importTransferCode(kind, box.value);
-          if (result.ok) {
-            window.location.reload();
-            return;
-          }
-          status.textContent = t(
-            result.reason === 'kind'
-              ? 'hudChrome.transfer.wrongKind'
-              : 'hudChrome.transfer.invalid',
-          );
+          const error = io.importCode(box.value);
+          if (error !== null) status.textContent = error;
         });
         pane.appendChild(apply);
         box.focus();
@@ -2556,6 +2610,9 @@ export class OptionsWindow {
       cols.appendChild(col);
     }
     el.appendChild(cols);
+    // Export / import this character's whole key map as a shareable code
+    // (another character, another device, a friend's layout).
+    this.keybindTransferRows(el);
     const reset = document.createElement('button');
     reset.className = 'btn';
     reset.textContent = t('hud.options.resetToDefaults');

@@ -3054,6 +3054,12 @@ export const cs_CZ: EnTranslations = {
       "invalid": "To není platný exportní kód.",
       "wrongKind": "Tento kód je jiného typu exportu."
     },
+    "keybindTransfer": {
+      "setup": "Hotkey Setup",
+      "apply": "Apply",
+      "imported": "Hotkey setup imported.",
+      "wrongKind": "That code is a settings export, not a hotkey setup."
+    },
     "riftForge": {
       "title": "Rift Forge",
       "subtitle": "Riftbound bands",

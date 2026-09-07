@@ -369,6 +369,66 @@ describe('Attack Move (shared key)', () => {
   });
 });
 
+describe('snapshot / importBindings (hotkey setup export + import)', () => {
+  it('snapshot is the saved shape and a copy, not the live map', () => {
+    const kb = new Keybinds();
+    kb.bind('slot0', 0, 'KeyR');
+    kb.clear('jump', 0);
+    const snap = kb.snapshot();
+    expect(snap.slot0).toEqual(['KeyR', null]);
+    expect(snap.jump).toEqual([null, null]);
+    expect(snap.forward).toEqual(['KeyW', 'ArrowUp']);
+    expect(Object.keys(snap).length).toBe(BIND_ACTIONS.length);
+    expect(snap).toEqual(JSON.parse(localStorage.getItem('woc_keybinds') ?? '{}'));
+    snap.slot0[0] = 'KeyZ';
+    expect(kb.codeAt('slot0', 0)).toBe('KeyR');
+  });
+
+  it('importBindings replaces the profile, persists it, and keeps defaults for missing actions', () => {
+    const kb = new Keybinds();
+    kb.bind('jump', 0, 'KeyY');
+    kb.importBindings({ slot0: ['KeyR', null], autorun: [null, null] });
+    expect(kb.actionForCode('KeyR')).toBe('slot0');
+    expect(kb.codeAt('autorun', 0)).toBe(null); // explicitly unbound by the setup
+    expect(kb.actionForCode('Space')).toBe('jump'); // the local rebind did not survive
+    expect(kb.actionForCode('KeyY')).toBe(null);
+    expect(kb.actionForCode('KeyW')).toBe('forward'); // missing action keeps its default
+    const reloaded = new Keybinds();
+    expect(reloaded.snapshot()).toEqual(kb.snapshot());
+  });
+
+  it('importBindings runs the stored-profile validation: unknown, reserved, duplicate', () => {
+    const kb = new Keybinds();
+    kb.importBindings({
+      notAnAction: ['KeyR', null],
+      slot0: ['Escape', 'Mouse1'],
+      slot1: ['KeyR', null],
+      slot2: ['KeyR', null],
+      jump: 'KeyJ',
+    });
+    expect(kb.snapshot().notAnAction).toBeUndefined();
+    expect(kb.codeAt('slot0', 0)).toBe(null);
+    expect(kb.codeAt('slot0', 1)).toBe(null);
+    expect(kb.actionForCode('KeyR')).toBe('slot1'); // first writer keeps the code
+    expect(kb.codeAt('slot2', 0)).toBe(null);
+    expect(kb.actionForCode('Space')).toBe('jump'); // malformed row: default kept
+    // A default that the setup's explicit binding claimed is evicted.
+    kb.importBindings({ slot5: ['KeyW', null] });
+    expect(kb.actionForCode('KeyW')).toBe('slot5');
+    expect(kb.codeAt('forward', 0)).toBe(null);
+  });
+
+  it('a snapshot re-imported elsewhere reproduces the setup exactly', () => {
+    const a = new Keybinds('char:1');
+    a.bind('slot3', 0, 'KeyF');
+    a.bind('jump', 1, 'KeyY');
+    a.clear('autorun', 0);
+    const b = new Keybinds('char:2');
+    b.importBindings(a.snapshot());
+    expect(b.snapshot()).toEqual(a.snapshot());
+  });
+});
+
 describe('persistence', () => {
   it('round-trips bindings across instances', () => {
     const a = new Keybinds();

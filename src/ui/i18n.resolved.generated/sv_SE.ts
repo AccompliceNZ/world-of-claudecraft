@@ -3054,6 +3054,12 @@ export const sv_SE: EnTranslations = {
       "invalid": "Det är inte en giltig exportkod.",
       "wrongKind": "Den koden är av en annan exporttyp."
     },
+    "keybindTransfer": {
+      "setup": "Hotkey Setup",
+      "apply": "Apply",
+      "imported": "Hotkey setup imported.",
+      "wrongKind": "That code is a settings export, not a hotkey setup."
+    },
     "riftForge": {
       "title": "Rift Forge",
       "subtitle": "Riftbound bands",

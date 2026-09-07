@@ -3054,6 +3054,12 @@ export const zh_TW: EnTranslations = {
       "invalid": "這不是有效的匯出代碼。",
       "wrongKind": "該代碼屬於另一種匯出類型。"
     },
+    "keybindTransfer": {
+      "setup": "快捷鍵配置",
+      "apply": "套用",
+      "imported": "快捷鍵配置已匯入。",
+      "wrongKind": "該代碼是設定匯出，不是快捷鍵配置。"
+    },
     "riftForge": {
       "title": "裂隙熔爐",
       "subtitle": "裂隙之戒",

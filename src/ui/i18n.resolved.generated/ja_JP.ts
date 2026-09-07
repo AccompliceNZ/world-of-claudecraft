@@ -3054,6 +3054,12 @@ export const ja_JP: EnTranslations = {
       "invalid": "有効なエクスポートコードではありません。",
       "wrongKind": "このコードは別の種類のエクスポートです。"
     },
+    "keybindTransfer": {
+      "setup": "ホットキー設定",
+      "apply": "適用",
+      "imported": "ホットキー設定をインポートしました。",
+      "wrongKind": "このコードは設定のエクスポートで、ホットキー設定ではありません。"
+    },
     "riftForge": {
       "title": "リフトの炉",
       "subtitle": "リフトバウンドリング",

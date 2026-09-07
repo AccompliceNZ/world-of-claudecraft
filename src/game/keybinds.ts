@@ -609,11 +609,19 @@ export class Keybinds {
     // below, and leaves every other stored value (including deliberate remaps)
     // untouched. See keybinds_repair.ts.
     repairStoredBindings(obj);
-    // Apply stored codes over the defaults, but only for known actions and
-    // never letting one code land on two actions (first writer keeps it).
-    // Actions absent from the stored blob (e.g. ones added in a later release
-    // than the player's last save) KEEP their defaults rather than loading
-    // unbound — explicit stored bindings still win, so this only fills gaps.
+    this.applyBlob(obj);
+  }
+
+  /**
+   * Apply a bindings blob (stored profile or an imported setup) over the current
+   * defaults. Only known actions are read, and one code never lands on two
+   * actions (first writer keeps it). Actions absent from the blob (e.g. ones
+   * added in a later release than the blob was written by) KEEP their defaults
+   * rather than going unbound; explicit entries still win, so this only fills
+   * gaps. Shared by load() and importBindings() so an imported setup obeys the
+   * exact invariants a stored one does.
+   */
+  private applyBlob(obj: Record<string, unknown>): void {
     const claimed = new Set<string>();
     for (const a of BIND_ACTIONS) {
       const entry = obj[a.id];
@@ -646,6 +654,30 @@ export class Keybinds {
         else claimed.add(c);
       }
     }
+  }
+
+  /**
+   * The current bindings as a plain actionId -> [primary, secondary] object, the
+   * same shape save() persists. This is the payload a hotkey-setup export
+   * carries (src/ui/keybind_transfer_core.ts); a copy, so callers cannot mutate
+   * the live map through it.
+   */
+  snapshot(): Record<string, (string | null)[]> {
+    const obj: Record<string, (string | null)[]> = {};
+    for (const [id, codes] of this.map) obj[id] = [...codes];
+    return obj;
+  }
+
+  /**
+   * Replace this profile with an imported hotkey setup: defaults first, then the
+   * blob applied with load()'s validation (unknown actions ignored, reserved
+   * codes skipped, one code per action, missing actions keep their defaults).
+   * Persists immediately, so the setup survives a reload like any rebind.
+   */
+  importBindings(obj: Record<string, unknown>): void {
+    this.map = this.defaults();
+    this.applyBlob(obj);
+    this.save();
   }
 
   private save(): void {

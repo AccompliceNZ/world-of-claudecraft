@@ -3054,6 +3054,12 @@ export const nl_NL: EnTranslations = {
       "invalid": "Dat is geen geldige exportcode.",
       "wrongKind": "Die code is een ander exporttype."
     },
+    "keybindTransfer": {
+      "setup": "Hotkey Setup",
+      "apply": "Apply",
+      "imported": "Hotkey setup imported.",
+      "wrongKind": "That code is a settings export, not a hotkey setup."
+    },
     "riftForge": {
       "title": "Rift Forge",
       "subtitle": "Riftbound bands",

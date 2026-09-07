@@ -3054,6 +3054,12 @@ export const id_ID: EnTranslations = {
       "invalid": "Itu bukan kode ekspor yang valid.",
       "wrongKind": "Kode itu berjenis ekspor yang berbeda."
     },
+    "keybindTransfer": {
+      "setup": "Hotkey Setup",
+      "apply": "Apply",
+      "imported": "Hotkey setup imported.",
+      "wrongKind": "That code is a settings export, not a hotkey setup."
+    },
     "riftForge": {
       "title": "Rift Forge",
       "subtitle": "Riftbound bands",

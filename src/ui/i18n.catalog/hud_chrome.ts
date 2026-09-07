@@ -4111,6 +4111,17 @@ export const hudChromeStrings = {
     invalid: 'That is not a valid export code.',
     wrongKind: 'That code is a different export type.',
   },
+  // The Key Bindings panel's hotkey-setup export/import row (the key-code map
+  // of the current character, keybind_transfer_core.ts). Reuses transfer.* for
+  // the shared button and status strings. All wordy (M16): the five non-Latin
+  // fills land in this same change.
+  keybindTransfer: {
+    setup: 'Hotkey Setup',
+    // Import applies live (no reload), unlike the settings code's Apply and Reload.
+    apply: 'Apply',
+    imported: 'Hotkey setup imported.',
+    wrongKind: 'That code is a settings export, not a hotkey setup.',
+  },
   // Item tooltip: the minimum character level needed to equip a piece (classic
   // "Requires Level N"). Shown red when the viewer is below it. {level} runs
   // through formatNumber.

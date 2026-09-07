@@ -14138,6 +14138,11 @@
   .transfer-pane[hidden] {
     display: none;
   }
+  /* The Key Bindings panel's hotkey-setup Export/Import row: sits between the
+     binding columns and the Reset/Back buttons, with the same expando. */
+  .kb-transfer {
+    margin: 0 0 8px;
+  }
   .transfer-code {
     width: 100%;
     min-height: 72px;

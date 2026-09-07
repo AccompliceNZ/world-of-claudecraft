@@ -3054,6 +3054,12 @@ export const pl_PL: EnTranslations = {
       "invalid": "To nie jest prawidłowy kod eksportu.",
       "wrongKind": "Ten kod jest innego typu eksportu."
     },
+    "keybindTransfer": {
+      "setup": "Hotkey Setup",
+      "apply": "Apply",
+      "imported": "Hotkey setup imported.",
+      "wrongKind": "That code is a settings export, not a hotkey setup."
+    },
     "riftForge": {
       "title": "Rift Forge",
       "subtitle": "Riftbound bands",
