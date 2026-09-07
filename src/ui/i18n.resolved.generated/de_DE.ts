@@ -2784,6 +2784,8 @@ export const de_DE: EnTranslations = {
       "redline": "Rote Linie: Kerbe {stacks} von {max}. Körpertreffer fügen Kerben hinzu; der K.-o.-Schlag trifft pro Kerbe {pct}% härter und schließt das Fenster. Läuft es vorher ab, verfällt es",
       "veilstrikeWindow": "Schattenschleier: Eure Dämmerschleier-Eröffnungen sind im Offenen aus jedem Winkel einsetzbar, und der verursachte Schaden steigt um {pct}%",
       "veiledEdge": "Euer nächster Lauererschlag trifft doppelt so hart",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Fähigkeiten kosten {pct}% weniger Energie",
       "moontide": "Mondflut: Stufe {stacks} von {max}. Wildblitz-, Himmelssturz- und Mondsaat-Zauber füllen sie in Mondkingestalt; bei {max} wird Mondsaat zu Mondwoge und Himmelssturz zu Sonnenspur, und beide zehren von ihr",
       "oldBlood": "Altes Blut: Stufe {stacks} von {max}. Gelandete Wolfs- und Bruin-Schläge teilen sich diese Bank; bei {max} verwandelt sich Blutbiss oder Knochenmalmer",
@@ -10724,7 +10726,8 @@ export const de_DE: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Finsterer Schuss",
-        "description": "Beschießt das Ziel für {damage} Arkanschaden. Der Schaden steigt mit der Distanzangriffskraft."
+        "description": "Beschießt das Ziel für {damage} Arkanschaden. Der Schaden steigt mit der Distanzangriffskraft.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Rasselnder Schuss",

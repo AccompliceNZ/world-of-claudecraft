@@ -2784,6 +2784,8 @@ export const pl_PL: EnTranslations = {
       "redline": "Czerwona Linia: nacięcie {stacks} z {max}. Ciosy w Korpus dodają nacięcia; Cios Łaski trafia o {pct}% mocniej za nacięcie i zamyka okno. Wcześniejsze wygaśnięcie je przepada",
       "veilstrikeWindow": "Zasłona Cieni: twoje otwarcia Zmierzchowej Zasłony można stosować na otwartej przestrzeni pod każdym kątem, a zadawane obrażenia rosną o {pct}%",
       "veiledEdge": "Twoje następne Uderzenie Czyhającego trafia podwójnie",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Umiejętności kosztują o {pct}% mniej energii",
       "moontide": "Księżycowy przypływ: stopień {stacks} z {max}. Rzucenia Dzikiego pocisku, Spadającego nieba i Księżycowego nasienia napełniają go w Postaci księżycowej sowy; przy {max} Księżycowe nasienie staje się Księżycowym przyborem, a Spadające niebo Słonecznym śladem, i oba go zużywają",
       "oldBlood": "Stara Krew: stopień {stacks} z {max}. Trafione ciosy wilka i Bruina dzielą tę rezerwę; przy {max} przemienia się Krwawe ukąszenie lub Kruszenie kości",
@@ -10724,7 +10726,8 @@ export const pl_PL: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Plugawy strzał",
-        "description": "Strzela w cel za {damage} obrażeń arkanicznych. Obrażenia rosną z mocą ataku dystansowego."
+        "description": "Strzela w cel za {damage} obrażeń arkanicznych. Obrażenia rosną z mocą ataku dystansowego.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Wstrząsający strzał",

@@ -2784,6 +2784,8 @@ export const vi_VN: EnTranslations = {
       "redline": "Vạch Đỏ: khấc {stacks} trên {max}. Đòn Thân thêm khấc; Đòn Kết Liễu đánh mạnh hơn {pct}% mỗi khấc và đóng cửa sổ. Hết hạn trước thì mất",
       "veilstrikeWindow": "Màn Bóng Tối: các đòn mở màn Màn Hoàng Hôn của bạn dùng được ngoài trống trải từ mọi góc, và sát thương gây ra tăng {pct}%",
       "veiledEdge": "Đòn Rình Rập kế tiếp của bạn đánh mạnh gấp đôi",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Kỹ năng tốn ít hơn {pct}% năng lượng",
       "moontide": "Triều Nguyệt: tầng {stacks} trên {max}. Các lần thi triển Tia Hoang Dã, Thiên Giáng và Nguyệt Chủng tích nó trong Dạng Cú Mặt Trăng; ở {max}, Nguyệt Chủng trở thành Nguyệt Trào và Thiên Giáng trở thành Vệt Dương, và đòn nào cũng tiêu nó",
       "oldBlood": "Huyết Cổ: tầng {stacks} trên {max}. Các đòn đánh trúng ở Hình Sói và Hình Bruin dùng chung bể này; ở {max}, Cắn Xé Máu hoặc Nghiền Xương biến đổi",
@@ -10724,7 +10726,8 @@ export const vi_VN: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Bắn Tà Ác",
-        "description": "Bắn mục tiêu, gây {damage} sát thương Bí Thuật. Sát thương tăng theo sức tấn công tầm xa."
+        "description": "Bắn mục tiêu, gây {damage} sát thương Bí Thuật. Sát thương tăng theo sức tấn công tầm xa.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Bắn Rúng Động",

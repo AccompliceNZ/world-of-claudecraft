@@ -3,8 +3,10 @@ import { ABILITIES, abilitiesKnownAt } from '../src/sim/content/classes';
 import { computeTalentModifiers } from '../src/sim/content/talents';
 import { MOBS } from '../src/sim/data';
 import { createMob } from '../src/sim/entity';
+import { scalePrimaryHealing } from '../src/sim/primary_healing';
 import { Sim } from '../src/sim/sim';
 import { fiestaDownEntity } from '../src/sim/social/fiesta';
+import { primaryHealingMultiplier } from '../src/sim/spec_output_tuning';
 import { channelTickBonus, directHealBonus } from '../src/sim/spell_scaling';
 import type { Aura, Entity } from '../src/sim/types';
 
@@ -128,6 +130,17 @@ describe('Aegis of the First Dawn', () => {
     ally.hp = 1;
     sim.rng.next = () => 0.5;
     sim.castAbility('aegis_first_dawn');
+    // castAbility already applied the protection shield_wall aura to ally
+    // above (synchronously, at cast start), which runs recalcPlayerStats on
+    // every player aura target and rebuilds maxHp from gear, undoing the
+    // poke via the fraction-preserving formula (entity.ts): hp 1 against the
+    // poked 1,000,000 rescales to ~0, clamped to 1, against the NATURAL
+    // (much smaller) maxHp. Re-poke maxHp now, after that one-time reset, so
+    // the tick/final packets below are read against real headroom instead of
+    // a pool the raw 1.10-scaled amounts can fill and clamp against; no
+    // further ctx.applyAura targets ally until the final burst's speed buff,
+    // which the events read below capture BEFORE that buff's own recalc.
+    ally.maxHp = 1_000_000;
     const events: ReturnType<Sim['tick']> = [];
 
     for (let i = 0; i < 21; i++) events.push(...sim.tick());
@@ -143,8 +156,15 @@ describe('Aegis of the First Dawn', () => {
         ? [event.amount]
         : [],
     );
-    const tickHeal = 40 + channelTickBonus(sim.player.spellPower, ABILITIES.aegis_first_dawn);
-    const finalHeal = 135 + directHealBonus(sim.player.spellPower, 0, true);
+    const healMultiplier = primaryHealingMultiplier('paladin', 'holy');
+    const tickHeal = scalePrimaryHealing(
+      40 + channelTickBonus(sim.player.spellPower, ABILITIES.aegis_first_dawn),
+      healMultiplier,
+    );
+    const finalHeal = scalePrimaryHealing(
+      135 + directHealBonus(sim.player.spellPower, 0, true),
+      healMultiplier,
+    );
     expect(allyHeals).toEqual([tickHeal, tickHeal, tickHeal, tickHeal, tickHeal, finalHeal]);
     expect(ally.auras).toContainEqual(
       expect.objectContaining({

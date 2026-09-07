@@ -2784,6 +2784,8 @@ export const it_IT: EnTranslations = {
       "redline": "Linea Rossa: tacca {stacks} su {max}. I Colpi al Corpo aggiungono tacche; il Colpo di Grazia colpisce il {pct}% più forte per tacca e chiude la finestra. Se scade prima, va persa",
       "veilstrikeWindow": "Velo d'Ombra: le tue aperture del Velo Crepuscolare sono utilizzabili allo scoperto da qualsiasi angolazione, e i danni inflitti aumentano del {pct}%",
       "veiledEdge": "Il tuo prossimo Colpo dell'Agguato colpisce il doppio",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Le abilità costano il {pct}% di energia in meno",
       "moontide": "Marea Lunare: stadio {stacks} di {max}. I lanci di Dardo Silvano, Caduta Celeste e Seme Lunare la riempiono in Forma di Lunagufo; a {max}, Seme Lunare diventa Ondata Lunare e Caduta Celeste diventa Scia Solare, ed entrambe la spendono",
       "oldBlood": "Sangue Antico: stadio {stacks} di {max}. I colpi a segno in Lupo e Bruin condividono questa riserva; a {max}, Morso Cruento o Frantumaossa si trasforma",
@@ -10724,7 +10726,8 @@ export const it_IT: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Tiro Nefasto",
-        "description": "Colpisce il bersaglio per {damage} danni Arcani. Il danno aumenta con la potenza d'attacco a distanza."
+        "description": "Colpisce il bersaglio per {damage} danni Arcani. Il danno aumenta con la potenza d'attacco a distanza.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Tiro Scuotente",

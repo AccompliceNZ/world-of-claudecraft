@@ -743,6 +743,8 @@ const MONOLITHS: MonolithRow[] = [
     // Down 5898 -> 5873 for the per-surface action-bar profiles: the
     // debounced upload moved to src/net/action_bar_upload.ts
     // (ActionBarLayoutUploader). Exact count.
+    // Talent snapshot repair and ability reconstruction now live in
+    // src/net/ability_presentation.ts; the existing ceiling is retained.
     ceiling: 5873,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },

@@ -13,24 +13,25 @@ import {
 import { bagCapacity } from '../sim/bags';
 import { signChallenge } from '../sim/client_challenge';
 import { allocRiftCollisionToken, clearRiftRegion, setRiftRegion } from '../sim/colliders';
+import { resolveAbilityChain } from '../sim/combat/ability_resolution';
 import { heroicLeapPlacementPreview } from '../sim/combat/heroic_leap';
 import { MOUNT_RACE_COURSE, type MountKey, normalizeMountKey } from '../sim/content/mounts';
 import { mechChromaSkinIndex } from '../sim/content/skins';
 import {
   emptyAllocation,
+  emptyModifiers,
   type Role,
-  repairAllocation,
   rowsPicked,
   rowsUnlockedAtLevel,
   type SavedLoadout,
   type TalentAllocation,
+  type TalentModifiers,
   type TalentRowLevel,
 } from '../sim/content/talents';
 import { resolveActiveWeaponSkin, withWeaponSkinApplied } from '../sim/content/weapon_skin_rules';
 import { WEAPON_SKINS } from '../sim/content/weapon_skins';
 import {
   ALL_RECIPES,
-  abilitiesKnownAt,
   CLASSES,
   dungeonAt,
   getActiveWorldContent,
@@ -62,10 +63,7 @@ import {
   type SavedReliquaryState,
 } from '../sim/reliquary';
 import { riftFloorColliders } from '../sim/rift/rift_gen';
-import { computeCharacterModifiers } from '../sim/set_bonus_mods';
 import type { ResolvedAbility } from '../sim/sim';
-import { parseTalentAllocation } from '../sim/talent_allocation_input';
-import { repairTalentLoadouts } from '../sim/talent_loadouts';
 import {
   type Aura,
   cloneItemInstancePayload,
@@ -172,6 +170,7 @@ import type {
   MasterworkView,
   SalvageResultView,
 } from '../world_api/professions';
+import { buildClientAbilityPresentation } from './ability_presentation';
 import { normalizeAccountCosmetics } from './account_cosmetics_wire';
 import { ActionBarLayoutUploader } from './action_bar_upload';
 import { apiErrorFromBody } from './api_error';
@@ -1487,6 +1486,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
   spectating: string | null = null;
   moveInput: MoveInput = emptyMoveInput();
   known: ResolvedAbility[] = [];
+  private talentMods: TalentModifiers = emptyModifiers();
   realm = '';
   // Whether this session's account holds a staff/admin role, from the hello
   // frame. Advert only: every admin-gated command is re-checked server-side.
@@ -2210,6 +2210,20 @@ export class ClientWorld extends ReconWireState implements IWorld {
 
   get player(): Entity {
     return this.entities.get(this.playerId) ?? blankEntity(-1);
+  }
+
+  // The local player's own known ability, every presentation-layer transform
+  // folded in, including healing forms and cast-time windows. Resource-cost
+  // authority remains on Sim; talents/talentMods are cached above.
+  resolvedAbility(abilityId: string): ResolvedAbility | null {
+    const known = this.known.find((k) => k.def.id === abilityId) ?? null;
+    if (!known) return null;
+    return resolveAbilityChain(
+      known,
+      this.player,
+      { cls: this.cfg.playerClass, talents: this.talents },
+      this.talentMods,
+    );
   }
 
   drainEvents(): SimEvent[] {
@@ -3612,36 +3626,21 @@ export class ClientWorld extends ReconWireState implements IWorld {
       }
       if (s.ddiff === 'normal' || s.ddiff === 'heroic') this.selectedDungeonDifficulty = s.ddiff;
       if (s.qlog !== undefined || s.qdone !== undefined) this.pendingQuestCommands?.clear();
-      // IWorldTalents facet (W7) self-decode: tal is delta-guarded (omitted keeps
-      // the prior mirror); the known rebuild below is display-only (re-renders what
-      // the server already decided), not client authority.
-      // talent state (heavy field, sent on change): mirror it, then resolve known
-      // with the precomputed modifiers so granted abilities + tweaks show locally.
-      if (s.tal !== undefined && s.tal) {
-        const parsed = parseTalentAllocation(s.tal.alloc);
-        if (parsed) {
-          this.talents = repairAllocation(this.cfg.playerClass, parsed, e.level);
-          const repairedLoadouts = repairTalentLoadouts(
-            this.cfg.playerClass,
-            e.level,
-            s.tal.loadouts,
-            s.tal.activeLoadout,
-          );
-          this.loadouts = repairedLoadouts.loadouts;
-          this.activeLoadout = repairedLoadouts.activeLoadout;
-        }
-      }
-      if (!this.talents) this.talents = emptyAllocation();
-      const talents = this.talents;
-      const talentMods = computeCharacterModifiers(
+      const arena = s.arena !== undefined ? s.arena : this.arenaInfo;
+      const presentation = buildClientAbilityPresentation(
         this.cfg.playerClass,
-        talents,
         e.level,
-        this.equipment,
+        this,
+        s.tal,
+        arena?.match?.fiesta?.augments ?? [],
       );
-      this.talentSpec = talentMods.spec;
-      this.talentRole = talentMods.role;
-      this.known = abilitiesKnownAt(this.cfg.playerClass, e.level, talentMods, this.questsDone);
+      this.talents = presentation.talents;
+      this.loadouts = presentation.loadouts;
+      this.activeLoadout = presentation.activeLoadout;
+      this.talentMods = presentation.mods;
+      this.talentSpec = presentation.mods.spec;
+      this.talentRole = presentation.mods.role;
+      this.known = presentation.known;
       // --- IWorldParty: party roster + raid markers, delta-omitted self-decode
       // (keep the prior value when absent; `marks: null` clears on disband). ---
       if (s.party !== undefined) this.partyInfo = s.party;

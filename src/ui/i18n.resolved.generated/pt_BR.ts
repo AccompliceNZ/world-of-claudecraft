@@ -2784,6 +2784,8 @@ export const pt_BR: EnTranslations = {
       "redline": "Linha Vermelha: marca {stacks} de {max}. Golpes no Corpo adicionam marcas; o Golpe de Misericórdia atinge {pct}% mais forte por marca e encerra a janela. Se expirar antes, ela é perdida",
       "veilstrikeWindow": "Véu de Sombras: suas aberturas do Véu Crepuscular podem ser usadas a céu aberto de qualquer ângulo, e o dano causado aumenta {pct}%",
       "veiledEdge": "Seu próximo Golpe do Espreitador atinge em dobro",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "As habilidades custam {pct}% menos energia",
       "moontide": "Maré Lunar: estágio {stacks} de {max}. Lançamentos de Raio Selvagem, Queda Celeste e Semente Lunar a enchem na Forma de Luniscante; com {max}, Semente Lunar vira Onda Lunar e Queda Celeste vira Esteira Solar, e qualquer uma a gasta",
       "oldBlood": "Sangue Antigo: estágio {stacks} de {max}. Golpes conectados de Lobo e Bruin compartilham este banco; com {max}, Mordida Sanguinária ou Esmaga-Ossos se transforma",
@@ -10724,7 +10726,8 @@ export const pt_BR: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Tiro Vil",
-        "description": "Atira no alvo causando {damage} de dano Arcano. O dano aumenta com o poder de ataque à distância."
+        "description": "Atira no alvo causando {damage} de dano Arcano. O dano aumenta com o poder de ataque à distância.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Tiro Desnorteante",

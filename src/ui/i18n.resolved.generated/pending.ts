@@ -10,6 +10,7 @@
 
 export const pending: Record<string, readonly string[]> = {
   "es": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -18,6 +19,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -101,6 +104,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "es_ES": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -109,6 +113,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -192,6 +198,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "fr_FR": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -200,6 +207,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -283,6 +292,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "fr_CA": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -291,6 +301,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -375,6 +387,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "en_CA": [],
   "it_IT": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -383,6 +396,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -466,6 +481,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "de_DE": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -474,6 +490,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -557,6 +575,9 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "zh_CN": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.options.gpuBackendActiveNameOpenGL",
     "hudChrome.options.gpuBackendActiveNameVulkan",
     "hudChrome.riftForge.currency",
@@ -564,6 +585,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.targetDots.row"
   ],
   "zh_TW": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.options.gpuBackendActiveNameOpenGL",
     "hudChrome.options.gpuBackendActiveNameVulkan",
     "hudChrome.riftForge.currency",
@@ -571,6 +595,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.targetDots.row"
   ],
   "ko_KR": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.options.gpuBackendActiveNameOpenGL",
     "hudChrome.options.gpuBackendActiveNameVulkan",
     "hudChrome.riftForge.currency",
@@ -578,6 +605,9 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.targetDots.row"
   ],
   "ja_JP": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.options.gpuBackendActiveNameOpenGL",
     "hudChrome.options.gpuBackendActiveNameVulkan",
     "hudChrome.riftForge.currency",
@@ -585,6 +615,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.targetDots.row"
   ],
   "pt_BR": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -593,6 +624,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -676,6 +709,9 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "ru_RU": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.options.gpuBackendActiveNameOpenGL",
     "hudChrome.options.gpuBackendActiveNameVulkan",
     "hudChrome.riftForge.currency",
@@ -683,6 +719,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.targetDots.row"
   ],
   "cs_CZ": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -691,6 +728,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -774,6 +813,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "nl_NL": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -782,6 +822,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -865,6 +907,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "pl_PL": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -873,6 +916,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -956,6 +1001,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "id_ID": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -964,6 +1010,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -1047,6 +1095,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "tr_TR": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -1055,6 +1104,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -1138,6 +1189,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "sv_SE": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -1146,6 +1198,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -1229,6 +1283,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "vi_VN": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -1237,6 +1292,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",
@@ -1320,6 +1377,7 @@ export const pending: Record<string, readonly string[]> = {
     "worldContent.realmBuilderMonumentName"
   ],
   "da_DK": [
+    "entities.abilities.arcane_shot.specNote_marksmanship",
     "entities.items.reins_chimeglass_tortoise.name",
     "entities.items.reins_mech_bird.name",
     "entities.npcs.riftwright_maelis.greeting",
@@ -1328,6 +1386,8 @@ export const pending: Record<string, readonly string[]> = {
     "gpuNotice.bodyRequestedBackend",
     "guide.riftsPage.forgeBody",
     "guide.riftsPage.forgeHeading",
+    "hudChrome.auraEffect.coldsightRead",
+    "hudChrome.auraEffect.veiledEdgeStrike",
     "hudChrome.enchanting.riftGear",
     "hudChrome.interfaceUnlock.frameNames.targetDots",
     "hudChrome.itemTooltip.riftGemSocket",

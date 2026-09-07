@@ -2784,6 +2784,8 @@ export const id_ID: EnTranslations = {
       "redline": "Garis Merah: takik {stacks} dari {max}. Pukulan Badan menambah takik; Pukulan Penghabisan menghantam {pct}% lebih keras per takik dan menutup jendela. Habis lebih dulu berarti hilang",
       "veilstrikeWindow": "Tabir Bayangan: pembuka Tabir Senjamu dapat dipakai di area terbuka dari sudut mana pun, dan kerusakan yang kamu beri meningkat {pct}%",
       "veiledEdge": "Serangan Pengintai berikutnya menghantam dua kali lipat",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Kemampuan menghabiskan {pct}% lebih sedikit energi",
       "moontide": "Pasang Rembulan: tahap {stacks} dari {max}. Rapalan Panah Liar, Langit Runtuh, dan Benih Rembulan mengisinya dalam Wujud Burung Bulan; pada {max}, Benih Rembulan menjadi Gelombang Rembulan dan Langit Runtuh menjadi Jejak Surya, dan keduanya memakainya",
       "oldBlood": "Darah Tua: tahap {stacks} dari {max}. Serangan Serigala dan Bruin yang kena berbagi simpanan ini; pada {max}, Gigitan Berdarah atau Remuk Tulang bertransformasi",
@@ -10724,7 +10726,8 @@ export const id_ID: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Tembakan Bengis",
-        "description": "Menembak sasaran sebesar {damage} kerusakan Arkana. Kerusakan meningkat dengan daya serang jarak jauh."
+        "description": "Menembak sasaran sebesar {damage} kerusakan Arkana. Kerusakan meningkat dengan daya serang jarak jauh.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Tembakan Pengguncang",

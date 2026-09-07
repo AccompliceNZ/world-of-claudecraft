@@ -2784,6 +2784,8 @@ export const fr_CA: EnTranslations = {
       "redline": "Ligne rouge : cran {stacks} sur {max}. Les Coups au corps ajoutent des crans ; le Coup de grâce frappe {pct}% plus fort par cran et clôt la fenêtre. Expirer avant la perd",
       "veilstrikeWindow": "Voile d'ombre : vos ouvertures du Voile crépusculaire sont utilisables à découvert sous tout angle, et les dégâts infligés augmentent de {pct}%",
       "veiledEdge": "Votre prochaine Frappe du rôdeur frappe deux fois plus fort",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Les capacités coûtent {pct}% d'énergie en moins",
       "moontide": "Marée lunaire : cran {stacks} sur {max}. Les incantations de Trait sauvage, Chute céleste et Graine lunaire la remplissent en Forme de sélénien ; à {max}, Graine lunaire devient Déferlante lunaire et Chute céleste devient Sillage solaire, et l'une ou l'autre la dépense",
       "oldBlood": "Sang ancien : cran {stacks} sur {max}. Les frappes portées en loup et en Bruin partagent cette réserve ; à {max}, Morsure sanglante ou Brise-os se transforme",
@@ -10724,7 +10726,8 @@ export const fr_CA: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Tir funeste",
-        "description": "Tire sur la cible pour {damage} points de dégâts des Arcanes. Les dégâts augmentent avec la puissance d'attaque à distance."
+        "description": "Tire sur la cible pour {damage} points de dégâts des Arcanes. Les dégâts augmentent avec la puissance d'attaque à distance.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Tir déstabilisant",

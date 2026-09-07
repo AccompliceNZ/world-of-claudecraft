@@ -2784,6 +2784,8 @@ export const ru_RU: EnTranslations = {
       "redline": "Redline: деление {stacks} из {max}. Каждый «Удар с размаху» добавляет 1 деление; «Отключка» бьет на {pct}% сильнее за каждое деление и завершает Redline. Если время выйдет раньше, нокаут пропадет",
       "veilstrikeWindow": "Окутан тенью: скрытные приемы можно использовать в открытую с любого угла, наносимый урон увеличен на {pct}%",
       "veiledEdge": "Следующий «Удар скрытня» нанесет двойной урон",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Способности стоят на {pct}% меньше энергии",
       "moontide": "Лунный прилив: стадия {stacks} из {max}. Применения Дикой стрелы, Падения небес и Лунного семени в облике Лунного крыла добавляют по 1 стадии. На {max}: Лунное семя становится Лунным всплеском, а Падение небес — Пробуждением солнца; любое из них тратит все 3 стадии",
       "oldBlood": "Старая кровь: стадия {stacks} из {max}. Попавшие удары Рвущего когтя, Свежевания, Кровавого разлома, Кровавого укуса, Разящих когтей и Костолома добавляют по 1 стадии. На {max}: Кровавый укус становится Кровавой жатвой в облике волка, а Костолом — Дроблением костей в облике бурого",
@@ -10724,7 +10726,8 @@ export const ru_RU: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Зловещий выстрел",
-        "description": "Стреляет в цель, нанося {damage} урона от тайной магии. Урон растёт с силой атаки в дальнем бою."
+        "description": "Стреляет в цель, нанося {damage} урона от тайной магии. Урон растёт с силой атаки в дальнем бою.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Сотрясающий выстрел",

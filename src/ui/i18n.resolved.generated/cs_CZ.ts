@@ -2784,6 +2784,8 @@ export const cs_CZ: EnTranslations = {
       "redline": "Červená linie: zářez {stacks} z {max}. Rány do těla přidávají zářezy; Rána z milosti zasáhne o {pct}% tvrději za zářez a uzavře okno. Dřívější vypršení je ztratí",
       "veilstrikeWindow": "Stínový závoj: tvá zahájení Soumračného závoje lze použít na otevřeném prostranství z libovolného úhlu a způsobené poškození se zvyšuje o {pct}%",
       "veiledEdge": "Tvůj další Úder číhajícího zasáhne dvojnásobně",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Schopnosti stojí o {pct}% méně energie",
       "moontide": "Měsíční příliv: stupeň {stacks} z {max}. Sesílání Šípu divočiny, Pádu nebes a Měsíčního semene ho plní v Podobě měsíčního křídla; při {max} se Měsíční semeno mění v Měsíční vzedmutí a Pád nebes ve Sluneční brázdu a obojí ho čerpá",
       "oldBlood": "Stará krev: stupeň {stacks} z {max}. Zasažené vlčí a medvědí údery sdílejí tuto zásobu; při {max} se promění Krvavý skus nebo Drcení kostí",
@@ -10724,7 +10726,8 @@ export const cs_CZ: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Prokletý výstřel",
-        "description": "Střelí cíl za {damage} arkánového poškození. Poškození roste s útočnou silou na dálku."
+        "description": "Střelí cíl za {damage} arkánového poškození. Poškození roste s útočnou silou na dálku.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Otřásající výstřel",

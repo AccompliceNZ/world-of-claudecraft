@@ -34,6 +34,7 @@ import {
   DEBUFF_AURA_KINDS,
 } from '../sim/aura_classify';
 import { isCancelableAura } from '../sim/combat/aura_cancel';
+import { isColdsightInternalMarkerAuraId } from '../sim/combat/hunter_coldsight_read';
 import { isPersistentEngineAura } from '../sim/persistent_aura';
 import type { AuraKind } from '../sim/types';
 import type { AuraSchool } from './aura_effect';
@@ -443,6 +444,13 @@ export function createAurasView(
         // via echoVisibleTo, so re-filtering here would wrongly hide the viewer's OWN
         // marks too.
         if (ownFirst && a.kind === 'temporal_echo' && !deps.isOwn(a)) return;
+        // Coldsight Read's internal bookkeeping markers (the Fevered Draw progress
+        // counter, the two per-ability reserved-cast markers): kind 'internal_cd'
+        // with an 86400s reservation-timeout duration purely so nothing but their
+        // own consumer clears them, never a real day-long buff. Exact-id, so every
+        // OTHER internal_cd marker (Heating Up, Stormsurge Ready, ...) and the
+        // real armed Coldsight Read opportunity (10s) still render normally.
+        if (a.kind === 'internal_cd' && isColdsightInternalMarkerAuraId(a.id)) return;
         const debuff = isAuraDebuff(a);
         if (mode === 'debuffs' && !debuff) return;
         if (mode === 'buffs' && debuff) return;

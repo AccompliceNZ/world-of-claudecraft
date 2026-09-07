@@ -2784,6 +2784,8 @@ export const zh_CN: EnTranslations = {
       "redline": "红线：第{stacks}/{max}格。每次大摆拳增加1格。眼前一黑每格伤害提高{pct}%，使用后结束红线。若计时先行结束，这记击倒就会作废",
       "veilstrikeWindow": "暗影缠身：你的暮帷先制技可在明处以任意角度使用，造成的伤害提高{pct}%",
       "veiledEdge": "你的下一次潜伏突袭造成双倍伤害",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "技能的能量消耗降低{pct}%",
       "moontide": "月潮：第{stacks}/{max}层。月翼形态下，野性弹、天陨与月种的施法各累积1层。达到{max}层时：月种变为月涌，天陨变为日醒，使用任意一个都会消耗全部3层",
       "oldBlood": "古血：第{stacks}/{max}层。裂爪、剐削、血裂、血噬、横扫利爪与碎骨击的命中各累积1层。达到{max}层时：狼形态下血噬变为血收，巨熊形态下碎骨击变为碎髓",
@@ -10724,7 +10726,8 @@ export const zh_CN: EnTranslations = {
       },
       "arcane_shot": {
         "name": "凶邪射击",
-        "description": "射击目标，造成 {damage} 点奥术伤害。伤害随远程攻击强度提升。"
+        "description": "射击目标，造成 {damage} 点奥术伤害。伤害随远程攻击强度提升。",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "震颤射击",

@@ -2784,6 +2784,8 @@ export const es: EnTranslations = {
       "redline": "Línea Roja: muesca {stacks} de {max}. Los Golpes al Cuerpo suman muescas; el Golpe de Gracia pega un {pct}% más fuerte por muesca y cierra la ventana. Si expira antes, se pierde",
       "veilstrikeWindow": "Velo de Sombras: tus aperturas de Velo Crepuscular pueden usarse a campo abierto desde cualquier ángulo, y el daño infligido aumenta un {pct}%",
       "veiledEdge": "Tu próximo Golpe del Acechador golpea por el doble",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Las habilidades cuestan un {pct}% menos de energía",
       "moontide": "Marea Lunar: fase {stacks} de {max}. Los lanzamientos de Descarga Silvestre, Caída Celeste y Semilla Lunar la llenan en Forma de lechúcico lunar; con {max}, Semilla Lunar se convierte en Oleada Lunar y Caída Celeste en Estela Solar, y cualquiera de las dos la gasta",
       "oldBlood": "Sangre Antigua: fase {stacks} de {max}. Los golpes conectados de lobo y Bruin comparten este banco; con {max}, Mordisco Sangriento o Rompehuesos se transforma",
@@ -10724,7 +10726,8 @@ export const es: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Disparo Funesto",
-        "description": "Dispara al objetivo por {damage} de daño Arcano. El daño aumenta con el poder de ataque a distancia."
+        "description": "Dispara al objetivo por {damage} de daño Arcano. El daño aumenta con el poder de ataque a distancia.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Disparo Aturdidor",

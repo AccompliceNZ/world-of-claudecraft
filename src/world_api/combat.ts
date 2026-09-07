@@ -53,6 +53,13 @@ export interface GroundAimPointXZ {
 
 export interface IWorldCombat {
   known: ResolvedAbility[];
+  /** The local player's own known ability with every presentation-layer
+   *  transform folded in (action-slot replacement, spec-gated resolvers,
+   *  and the post-transform talent-mod bake) - the same ResolvedAbility
+   *  Sim.resolvedAbility would produce for this client's own pid, before
+   *  Sim's cost-tax/ascension/cast-time tail (docs/design/class-balance-v042.md).
+   *  Null when the id names nothing this player currently knows. */
+  resolvedAbility(abilityId: string): ResolvedAbility | null;
   /** Server-authored persistent traps currently visible to this world view. */
   activeFrostRings: ActiveFrostRing[];
   activeIgnivarMeteors: ActiveIgnivarMeteorWarning[];

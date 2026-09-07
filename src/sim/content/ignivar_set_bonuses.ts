@@ -119,9 +119,10 @@ export const CINDERFANG_2PC_VENOM_STAGE_REFUND = 20;
  *  per Lights Out cast. */
 export const SMOLDERSTRIKE_4PC_MIRRORED_BLADES_REFUND_SEC = 6;
 /** Ashveil 4pc: the Veiled Edge aura VALUE baked at arm time (base
- *  VEILED_EDGE_BONUS 1). consumeVeiledEdge returns 1 + value, so 2 reads
- *  back as the promised triple. */
-export const ASHVEIL_4PC_VEILED_EDGE_BONUS = 2;
+ *  VEILED_EDGE_BONUS 0.5, v0.42 Skulduggery pass). consumeVeiledEdge returns
+ *  1 + value, so 1 reads back as the promised double (was 2 -> triple,
+ *  halved alongside the base bonus: +200% -> +100%). */
+export const ASHVEIL_4PC_VEILED_EDGE_BONUS = 1;
 
 // Audited constants for the bespoke priest bends (read by the class-module
 // call sites AND pinned by tests, so the copy cannot drift from the code).

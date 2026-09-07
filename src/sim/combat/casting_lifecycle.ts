@@ -40,11 +40,13 @@ import {
   paladinExecuteWindowActive,
   spendDevotion,
 } from '../paladin_devotion';
+import { scalePrimaryHealing } from '../primary_healing';
 import { effectiveFishingBand, fishReelWindowSecFor } from '../professions/fishing';
 import { bestOwnedGatherToolFor } from '../professions/tools';
 import { scheduleProjectile } from '../projectile_travel';
 import type { PlayerMeta, ResolvedAbility } from '../sim';
 import type { SimContext } from '../sim_context';
+import { primaryHealingMultiplier } from '../spec_output_tuning';
 import { abilityScalingPower, channelTickBonus } from '../spell_scaling';
 import { resolveTalentHitMult } from '../talent_hit_mult';
 import { hasEscapeStealth } from '../threat';
@@ -145,6 +147,14 @@ import {
   frostMageChannelStart,
 } from './frost_mage';
 import { empoweredCastProgress, empoweredStageForProgress } from './glacial_front';
+import {
+  coldsightFeveredDrawChannelStart,
+  coldsightFeveredDrawCompleted,
+  coldsightFeveredDrawPulse,
+  coldsightReserveRead,
+  coldsightVoidReservationOnCancel,
+  consumeColdsightReadReservation,
+} from './hunter_coldsight_read';
 import { bloodhookStartError } from './hunter_fieldcraft';
 import { packCommandError } from './hunter_packlord';
 import { cancelRecedingShell, noteHunterFocusSpend } from './hunter_shared';
@@ -542,6 +552,9 @@ export function updateCasting(ctx: SimContext, p: Entity, meta: PlayerMeta): voi
         const res = ctx.resolvedAbility(abilityId, p.id);
         if (res) applyChannelTick(ctx, p, meta, res);
       }
+      // Only a pulse that didn't cancel the channel counts (applyChannelTick's
+      // dead-target/range/LoS guards call cancelCast and null castingAbility).
+      if (p.castingAbility === abilityId) coldsightFeveredDrawPulse(ctx, p, abilityId);
     };
     p.channelTickTimer -= DT;
     if (p.channelTickTimer <= 0) {
@@ -573,13 +586,11 @@ export function updateCasting(ctx: SimContext, p: Entity, meta: PlayerMeta): voi
       if (completed) completePaladinAegis(ctx, p, completed);
       stopChannelVisual(ctx, p);
       emitRainOfFireStop(ctx, p);
-      completeAfflictionDrain(
-        ctx,
-        p,
-        p.castTargetId !== null ? (ctx.entities.get(p.castTargetId) ?? null) : null,
-        p.castingAbility ?? '',
-      );
+      const channelTarget =
+        p.castTargetId !== null ? (ctx.entities.get(p.castTargetId) ?? null) : null;
+      completeAfflictionDrain(ctx, p, channelTarget, p.castingAbility ?? '');
       clearAfflictionConsumeThreads(ctx, p);
+      coldsightFeveredDrawCompleted(ctx, p, p.castingAbility, channelTarget);
       p.castingAbility = null;
       p.channeling = false;
       // completed ground-targeted channels drop their aim like every other
@@ -736,6 +747,7 @@ function fireQueuedCast(ctx: SimContext, p: Entity): void {
 
 export function cancelCast(ctx: SimContext, p: Entity): void {
   if (p.castingAbility) cleanupPaladinAegis(ctx, p.id);
+  if (p.castingAbility) coldsightVoidReservationOnCancel(ctx, p, p.castingAbility);
   stopChannelVisual(ctx, p);
   clearAfflictionConsumeThreads(ctx, p);
   emitRainOfFireStop(ctx, p);
@@ -1423,7 +1435,11 @@ export function castAbility(
         // constantly and the veiled Lurker's Strike could never land (owner
         // playtest). The armed-bank case covers the detonator itself, whose
         // veil rises at runEffects, after this gate.
-        if (veilAllowsStealthAbilities(p) || gloamBankArmed(p)) continue;
+        if (
+          !p.auras.some((aura) => aura.kind === 'stealth') &&
+          (veilAllowsStealthAbilities(p) || gloamBankArmed(p))
+        )
+          continue;
         // Inside FACING_HOLD_DIST the target's facing is held steady (see
         // steadyAngleTo) and "behind" is undefined anyway, so overlapping the
         // target always reads as in front: no point-blank Backstab through a
@@ -1751,6 +1767,7 @@ export function castAbility(
     // would also fire once more exactly as the three-second channel completes.
     p.channelTickTimer = ability.id === 'drain_life' ? DT : p.channelTickEvery;
     p.channelTicksLeft = channelTicks;
+    coldsightFeveredDrawChannelStart(ctx, p, ability.id);
     if (ability.id === 'drain_life') {
       consumeFateThreadsForDrain(ctx, p, target, channelDuration);
     }
@@ -1803,6 +1820,7 @@ export function castAbility(
     p.castRemaining = stretchedCastTime;
     p.gcdRemaining = Math.max(p.gcdRemaining, gcd);
     ctx.emit({ type: 'castStart', entityId: p.id, ability: ability.id, time: stretchedCastTime });
+    coldsightReserveRead(ctx, p, ability.id);
     return;
   }
 
@@ -1817,6 +1835,7 @@ export function castAbility(
           cheap: consumedCheapAura?.id === STORMCAST_CHEAP_ID ? consumedCheapAura : null,
         }
       : null;
+  coldsightReserveRead(ctx, p, ability.id);
   applyAbility(ctx, p, meta, instantResolved, castTargetId, stormcastReservation);
   // instant ground-targeted cast: its effects have consumed the aim point. An
   // interleaved instant instead hands the aim back to the cast still running.
@@ -2230,7 +2249,10 @@ function applyChannelTick(
         const dx = ally.pos.x - p.pos.x;
         const dz = ally.pos.z - p.pos.z;
         if (dx * dx + dz * dz > radiusSq || !ctx.hasLineOfSight(p, ally)) continue;
-        const amount = ctx.rng.range(eff.min, eff.max) + channelSp;
+        const amount = scalePrimaryHealing(
+          ctx.rng.range(eff.min, eff.max) + channelSp,
+          primaryHealingMultiplier(meta.cls, ctx.playerMods(meta).spec),
+        );
         ctx.applyHeal(p, ally, amount, res.def.name, res.def.id);
       }
     }
@@ -2422,6 +2444,7 @@ function applyAbility(
   // before cost and effects resolve (channels are exempt: they bill in the
   // castAbility channel branch and resolve per tick). Draws no rng.
   res = consumeOverload(ctx, p, res);
+  res = consumeColdsightReadReservation(ctx, p, res);
   const ability = res.def;
   if (ability.devotionCost && !hasDevotion(p, ability.devotionCost)) {
     ctx.error(p.id, 'Not enough Devotion!');

@@ -2784,6 +2784,8 @@ export const en_CA: EnTranslations = {
       "redline": "Redline {stacks}/{max}. Each Haymaker adds 1. Lights Out hits {pct}% harder for each one and ends Redline. If the timer runs out first, the knockout is lost",
       "veilstrikeWindow": "Shadow Veil: your Duskveil openers are usable in the open from any angle, and damage dealt is increased by {pct}%",
       "veiledEdge": "Your next Lurker's Strike strikes for double",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Abilities cost {pct}% less energy",
       "moontide": "Moontide {stacks}/{max}. Wildbolt, Skyfall, and Moonseed casts in Moonwing Form each add 1. At {max}: Moonseed becomes Moonsurge and Skyfall becomes Sunwake, and using either spends all 3",
       "oldBlood": "Old Blood {stacks}/{max}. Landed hits from Rendclaw, Flense, Bloodrift, Gorebite, Sweeping Claws, and Bonecrush each add 1. At {max}: Gorebite becomes Redharvest in Wolf Form, Bonecrush becomes Marrowbreak in Bruin Form",
@@ -10456,7 +10458,7 @@ export const en_CA: EnTranslations = {
       "ambush": {
         "name": "Lurker's Strike",
         "description": "Strike from the shadows for 250% weapon damage plus {damage}. Must be stealthed and behind the target. Requires a dagger. Awards 1 combo point.",
-        "specNote_subtlety": "Used from Duskveil this adds 1 Gloam (max 3). At 3 Gloam you can use it WITHOUT stealth and from any angle: that use costs nothing, spends all 3 Gloam, starts the 6 sec Shadow Veil, and hits for double."
+        "specNote_subtlety": "From Duskveil, double both the weapon damage and flat bonus, and gain 1 Gloam (max 3). Stealth still requires a dagger and attacking from behind. At 3 Gloam, using this without stealth costs nothing, spends all 3 Gloam and starts Shadow Veil for 6 sec. Veiled Edge adds 50% to its weapon damage, without increasing the flat bonus. Veiled Edge does not stack with the stealth bonus."
       },
       "stealth": {
         "name": "Duskveil",
@@ -10724,7 +10726,8 @@ export const en_CA: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Fell Shot",
-        "description": "Shoot the target for {damage} Arcane damage. Damage increases with Ranged Attack Power."
+        "description": "Shoot the target for {damage} Arcane damage. Damage increases with Ranged Attack Power.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Rattling Shot",
@@ -10756,15 +10759,15 @@ export const en_CA: EnTranslations = {
       },
       "aimed_shot": {
         "name": "Long Draw",
-        "description": "Shoot the target for {damage} Physical damage. Damage increases with Ranged Attack Power."
+        "description": "Shoot the target for {damage} Physical damage. Damage increases with Ranged Attack Power. Coldsight Read from a completed Fevered Draw makes your next Long Draw deal 50% more damage. Starting the cast spends Read."
       },
       "rapid_fire": {
         "name": "Fevered Draw",
-        "description": "Fire 6 shots over 2.4 sec while moving. Each shot deals {damage} Physical damage and increases with Ranged Attack Power."
+        "description": "Fire 6 shots over 2.4 sec while moving. Each shot deals {damage} Physical damage and increases with Ranged Attack Power. Completing all 6 shots grants Coldsight Read for 10 sec: your next Long Draw deals 50% more damage, or your next Fell Shot deals 75% more. Starting either shot spends Read, even if interrupted."
       },
       "smite": {
         "name": "Scouring Hymn",
-        "description": "Deal {damage} Holy damage. Damage increases with Spell Power. Doctrine: heal each linked ally for 30% of the damage. If no ally is linked, heal the lowest-health party member for 15%."
+        "description": "Deal {damage} Holy damage. Damage increases with Spell Power. Doctrine converts this damage into healing through your links. If no injured linked group member is within 30 yards, heal the lowest-health injured group member within 30 yards for 15% of the damage."
       },
       "lesser_heal": {
         "name": "Whispered Prayer",
@@ -10776,11 +10779,11 @@ export const en_CA: EnTranslations = {
       },
       "shadow_word_pain": {
         "name": "Dirge of Decay",
-        "description": "Deal {damage} total Shadow damage over 18 sec, once every 3 sec. Damage increases with Spell Power. Vespers: deal 10% more damage, and each tick on your Effigy grants 1 Gloomtithe."
+        "description": "Deal {damage} total Shadow damage over 18 sec, once every 3 sec. Damage increases with Spell Power. Vespers already includes 10% more damage and grants 1 Gloomtithe per tick on your Effigy. Reapplying your active Dirge to an enemy mob refreshes your existing Dirges on all living hostile mobs within 30 yards of you and in line of sight. This does not spread Dirge to new targets."
       },
       "power_word_shield": {
         "name": "Psalm of Warding",
-        "description": "Shield a friendly target, absorbing {damage} damage for 30 sec. Doctrine also links the target to your Holy damage for 30 sec."
+        "description": "Shield a friendly target, absorbing {damage} damage for 30 sec. Doctrine also links the target for 30 sec. Your Scouring Hymn and hostile Scouring Mercy heal linked group members while they are within 30 yards of you."
       },
       "renew": {
         "name": "Lingering Grace",
@@ -11755,7 +11758,7 @@ export const en_CA: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Scouring Mercy",
-        "description": "Deal 72 to 84 Holy damage to an enemy or heal a friendly target for 130 to 155. Both amounts increase with Spell Power. Damage also heals each Doctrine-linked ally for 30%, or the lowest-health party member for 15% if no ally is linked. (Doctrine signature)"
+        "description": "Deal {damage} Holy damage to an enemy or heal a friendly target for {healing}. Damage increases with Spell Power; healing increases with Healing Power. Doctrine converts this damage into healing through your links. If no injured linked group member is within 30 yards, heal the lowest-health injured group member within 30 yards for 15% of the damage. Healing a group member also heals up to 2 other injured group members within 10 yards of that target and in your line of sight, each for 50% of the health restored. These extra heals cannot critically heal or create Doctrine links. (Doctrine signature)"
       },
       "seraphic_vigil": {
         "name": "Seraphic Vigil",
@@ -18993,7 +18996,7 @@ export const en_CA: EnTranslations = {
       "ashveil": {
         "name": "Ashveil Garb",
         "bonus2": "Lurker's Strike hits 25 percent harder.",
-        "bonus4": "Your Veiled Edge strike hits for triple, up from double."
+        "bonus4": "Veiled Edge adds 100% weapon damage to your next Lurker's Strike instead of 50%. It does not increase the flat bonus or stack with the stealth bonus."
       },
       "benison_dawnweave": {
         "name": "Benison Dawnweave",

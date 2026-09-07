@@ -2784,6 +2784,8 @@ export const ko_KR: EnTranslations = {
       "redline": "레드라인: {stacks}/{max} 단계. 헤이메이커가 각각 1단계를 쌓습니다. 소등은 단계마다 {pct}% 더 강해지며 레드라인을 끝냅니다. 시간이 먼저 다 되면 녹아웃 기회는 사라집니다",
       "veilstrikeWindow": "그림자에 휩싸임: 황혼장막 전용 선제 기술을 어느 각도에서든 사용할 수 있고, 주는 피해가 {pct}% 증가합니다",
       "veiledEdge": "다음 잠복자의 일격이 두 배의 피해를 입힙니다",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "기술의 기력 소모가 {pct}% 감소합니다",
       "moontide": "달물결: {stacks}/{max}단계. 달날개 형상에서 야생 벼락, 창공 낙하, 달씨앗 시전이 각각 1단계를 쌓습니다. {max}단계에서 달씨앗이 달의 격동으로, 창공 낙하가 해돋움으로 변하며, 어느 쪽을 써도 3단계를 모두 소모합니다",
       "oldBlood": "오랜 피: {stacks}/{max}단계. 가르는 발톱, 저미기, 피의 균열, 유혈 물어뜯기, 휩쓰는 발톱, 뼈 분쇄의 적중한 공격이 각각 1단계를 쌓습니다. {max}단계에서 늑대 변신의 유혈 물어뜯기는 피의 수확으로, 큰곰 변신의 뼈 분쇄는 골수분쇄로 변합니다",
@@ -10724,7 +10726,8 @@ export const ko_KR: EnTranslations = {
       },
       "arcane_shot": {
         "name": "사악한 사격",
-        "description": "대상을 쏘아 {damage}의 비전 피해를 입힙니다. 피해량은 원거리 전투력에 따라 증가합니다."
+        "description": "대상을 쏘아 {damage}의 비전 피해를 입힙니다. 피해량은 원거리 전투력에 따라 증가합니다.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "뒤흔드는 사격",

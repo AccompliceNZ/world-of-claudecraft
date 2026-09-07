@@ -2784,6 +2784,8 @@ export const ja_JP: EnTranslations = {
       "redline": "レッドライン:{stacks}/{max}ピップ。「ヘイメーカー」ごとにピップが1増える。「消灯」はピップごとに{pct}%強化され、レッドラインを終了させる。先に時間切れになるとノックアウトは失われる",
       "veilstrikeWindow": "影に包まれている:ダスクヴェール専用の先制技をどの角度からでも使用でき、与ダメージが{pct}%増加する",
       "veiledEdge": "次に放つ「潜伏者の一撃」は2倍のダメージを与える",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "アビリティの消費エナジーが{pct}%減少する",
       "moontide": "月潮：{stacks}/{max}段階。月翼形態での野生の稲妻・天墜・月の種の詠唱ごとに1段階進む。{max}段階で月の種はムーンサージに、天墜は陽醒に変化し、どちらを使っても3段階すべてを消費する",
       "oldBlood": "古き血：{stacks}/{max}段階。裂き爪・皮剥ぎ・血の亀裂・血噛み・薙ぎ払う爪・骨砕きの命中ごとに1段階蓄える。{max}段階で、ウルフフォームでは血噛みが血の収穫に、ブルーインフォームでは骨砕きが骨髄砕きに変化する",
@@ -10724,7 +10726,8 @@ export const ja_JP: EnTranslations = {
       },
       "arcane_shot": {
         "name": "凶弾",
-        "description": "対象を撃ち、{damage}の秘術ダメージを与えます。ダメージは遠隔攻撃力とともに上がります。"
+        "description": "対象を撃ち、{damage}の秘術ダメージを与えます。ダメージは遠隔攻撃力とともに上がります。",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "動揺の射撃",

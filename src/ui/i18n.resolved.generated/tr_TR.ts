@@ -2784,6 +2784,8 @@ export const tr_TR: EnTranslations = {
       "redline": "Kırmızı Çizgi: çentik {stacks} / {max}. Gövde Vuruşları çentik ekler; Merhamet Darbesi çentik başına {pct}% daha sert vurur ve pencereyi kapatır. Önce sona ererse kaybedilir",
       "veilstrikeWindow": "Gölge Perdesi: Alacakaranlık Perdesi açılışların açık alanda her açıdan kullanılabilir ve verdiğin hasar {pct}% artar",
       "veiledEdge": "Sonraki Pusucu Vuruşun iki kat sert vurur",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Yetenekler {pct}% daha az enerji harcar",
       "moontide": "Ay Gelgiti: aşama {stacks} / {max}. Yaban Oku, Gök Düşüşü ve Ay Tohumu büyüleri Aykuşu Formunda onu doldurur; {max} olduğunda Ay Tohumu Ay Kabarışına, Gök Düşüşü Güneş İzine dönüşür ve ikisi de onu harcar",
       "oldBlood": "Kadim Kan: aşama {stacks} / {max}. İsabet eden Kurt ve Bruin vuruşları bu birikimi paylaşır; {max} olduğunda Kanlı Isırık veya Kemik Kıran dönüşür",
@@ -10724,7 +10726,8 @@ export const tr_TR: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Uğursuz Atış",
-        "description": "Hedefi {damage} Arkane hasar için vurur. Hasar menzilli saldırı gücüyle artar."
+        "description": "Hedefi {damage} Arkane hasar için vurur. Hasar menzilli saldırı gücüyle artar.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Sarsıcı Atış",
