@@ -1588,6 +1588,7 @@
   #reliquary-tracker.tf-unlocked,
   #delve-tracker.tf-unlocked,
   #rift-tracker.tf-unlocked,
+  .gathering-goal-panel.tf-unlocked,
   #swingbar-offhand.tf-unlocked,
   #paladin-devotion-frame.tf-unlocked,
   #proc-overlay.tf-unlocked,
@@ -1664,7 +1665,8 @@
   #deed-tracker.hud-frame-detached,
   #reliquary-tracker.hud-frame-detached,
   #delve-tracker.hud-frame-detached,
-  #rift-tracker.hud-frame-detached {
+  #rift-tracker.hud-frame-detached,
+  .gathering-goal-panel.hud-frame-detached {
     position: absolute;
     margin: 0;
     z-index: 20;
@@ -1676,7 +1678,8 @@
   #deed-tracker.hud-frame-detached,
   #reliquary-tracker.hud-frame-detached,
   #delve-tracker.hud-frame-detached,
-  #rift-tracker.hud-frame-detached {
+  #rift-tracker.hud-frame-detached,
+  .gathering-goal-panel.hud-frame-detached {
     width: 240px;
   }
   #actionbar .tf-move-btn,
@@ -1696,6 +1699,7 @@
   #reliquary-tracker .tf-move-btn,
   #delve-tracker .tf-move-btn,
   #rift-tracker .tf-move-btn,
+  .gathering-goal-panel .tf-move-btn,
   #swingbar-offhand .tf-move-btn,
   #paladin-devotion-frame .tf-move-btn,
   #proc-overlay .tf-move-btn,
@@ -1730,6 +1734,7 @@
   #reliquary-tracker .tf-move-btn:focus-visible,
   #delve-tracker .tf-move-btn:focus-visible,
   #rift-tracker .tf-move-btn:focus-visible,
+  .gathering-goal-panel .tf-move-btn:focus-visible,
   #swingbar-offhand .tf-move-btn:focus-visible,
   #paladin-devotion-frame .tf-move-btn:focus-visible,
   #petbar .tf-move-btn:focus-visible,
@@ -1883,7 +1888,8 @@
   body.interface-unlocked #deed-tracker.tf-unlocked,
   body.interface-unlocked #reliquary-tracker.tf-unlocked,
   body.interface-unlocked #delve-tracker.tf-unlocked,
-  body.interface-unlocked #rift-tracker.tf-unlocked {
+  body.interface-unlocked #rift-tracker.tf-unlocked,
+  body.interface-unlocked .gathering-goal-panel.tf-unlocked {
     display: block !important;
     opacity: 0.55;
     min-height: 48px;

@@ -19,6 +19,9 @@
     display: none;
     flex-direction: column;
     gap: 4px;
+    /* Anchor docked mover chrome; the detached two-class rule in hud.css
+       has higher specificity and still switches this to absolute. */
+    position: relative;
     max-width: 260px;
     padding: 8px 10px;
     background: var(--color-bg-dark);
@@ -42,6 +45,13 @@
     pointer-events: auto;
   }
 
+  /* Let arrange-mode chrome overhang the root while the inner body keeps
+     long lists bounded. Locked and mobile play retain the root scroll box. */
+  .gathering-goal-panel.tf-unlocked {
+    max-height: none;
+    overflow: visible;
+  }
+
   /* The parent composition wraps this panel's live content in
      `#gathering-goal-body` (the `#qt-body` / `#delve-body` mover-chrome
      pattern, src/ui/CLAUDE.md: the painter rebuilds this inner body so the
@@ -54,6 +64,11 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+  }
+
+  .gathering-goal-panel.tf-unlocked > #gathering-goal-body {
+    max-height: 40vh;
+    overflow-y: auto;
   }
 
   .gathering-goal-header {
