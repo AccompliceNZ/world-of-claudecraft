@@ -324,8 +324,6 @@ export const ja_JP: EnTranslations = {
     "warlock": {
       "doomLabel": "断罪",
       "fateThreadsLabel": "運命の糸",
-      "doomMeterUnlock": "苦痛リソースバーを移動",
-      "doomMeterLock": "苦痛リソースバーを固定",
       "doomEmptyStatus": "断罪 {value}/{max}。",
       "doomStatus": "断罪 {value}/{max}、残り {remaining}。",
       "fateThreadsStatus": "運命の糸 {value}/{max}。",
@@ -3101,7 +3099,17 @@ export const ja_JP: EnTranslations = {
         "targetFrame": "ターゲット",
         "partyFrames": "パーティ",
         "swingBar": "オートアタック",
-        "targetDots": "ターゲットデバフ"
+        "targetDots": "ターゲットデバフ",
+        "questTracker": "クエストトラッカー",
+        "reliquaryTracker": "聖遺物庫トラッカー",
+        "doomMeter": "苦痛リソースバー",
+        "petBar": "Pet Bar",
+        "procOverlay": "スペル発動",
+        "damageMeter": "ダメージメーター",
+        "deedTracker": "功績トラッカー",
+        "delveTracker": "デルヴトラッカー",
+        "riftTracker": "リフトトラッカー",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "フレーム設定",
       "framesMenuTitle": "各フレームの表示・非表示を切り替えます。チェックを外したフレームは、再度チェックするか初期設定に戻すまで非表示のままです。",

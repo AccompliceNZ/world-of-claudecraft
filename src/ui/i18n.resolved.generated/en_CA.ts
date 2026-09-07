@@ -324,8 +324,6 @@ export const en_CA: EnTranslations = {
     "warlock": {
       "doomLabel": "Condemnation",
       "fateThreadsLabel": "Fate Threads",
-      "doomMeterUnlock": "Move Affliction resource bar",
-      "doomMeterLock": "Lock Affliction resource bar",
       "doomEmptyStatus": "{value} of {max} Condemnation.",
       "doomStatus": "{value} of {max} Condemnation; {remaining}.",
       "fateThreadsStatus": "{value} of {max} Fate Threads.",
@@ -3101,7 +3099,17 @@ export const en_CA: EnTranslations = {
         "targetFrame": "Target",
         "partyFrames": "Party",
         "swingBar": "Auto Attack",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Frames Settings",
       "framesMenuTitle": "Show or hide individual frames. An unticked frame stays hidden until you tick it again or reset to defaults.",

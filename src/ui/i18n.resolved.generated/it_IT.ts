@@ -324,8 +324,6 @@ export const it_IT: EnTranslations = {
     "warlock": {
       "doomLabel": "Condanna",
       "fateThreadsLabel": "Filamenti del Fato",
-      "doomMeterUnlock": "Sposta la barra della risorsa Afflizione",
-      "doomMeterLock": "Blocca la barra della risorsa Afflizione",
       "doomEmptyStatus": "{value} su {max} Condanna.",
       "doomStatus": "{value} su {max} Condanna; {remaining}.",
       "fateThreadsStatus": "{value} su {max} Filamenti del Fato.",
@@ -3101,7 +3099,17 @@ export const it_IT: EnTranslations = {
         "targetFrame": "Bersaglio",
         "partyFrames": "Gruppo",
         "swingBar": "Attacco automatico",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Impostazioni riquadri",
       "framesMenuTitle": "Mostra o nascondi i singoli riquadri. Un riquadro deselezionato resta nascosto finché non lo riselezioni o ripristini i valori predefiniti.",

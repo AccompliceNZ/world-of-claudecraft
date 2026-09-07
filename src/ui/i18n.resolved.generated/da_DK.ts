@@ -324,8 +324,6 @@ export const da_DK: EnTranslations = {
     "warlock": {
       "doomLabel": "Fordømmelse",
       "fateThreadsLabel": "Skæbnetråde",
-      "doomMeterUnlock": "Flyt Lidelse-ressourcebjælken",
-      "doomMeterLock": "Lås Lidelse-ressourcebjælken",
       "doomEmptyStatus": "{value} af {max} Fordømmelse.",
       "doomStatus": "{value} af {max} Fordømmelse; {remaining}.",
       "fateThreadsStatus": "{value} af {max} Skæbnetråde.",
@@ -3101,7 +3099,17 @@ export const da_DK: EnTranslations = {
         "targetFrame": "Mål",
         "partyFrames": "Gruppe",
         "swingBar": "Autoangreb",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Rammeindstillinger",
       "framesMenuTitle": "Vis eller skjul enkelte rammer. En fravalgt ramme forbliver skjult, indtil du vælger den igen eller nulstiller til standard.",
