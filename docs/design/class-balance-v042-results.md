@@ -57,6 +57,44 @@ The mechanic is included in the approximately 10% budget. This stationary policy
 
 Receipts: /tmp/woc-v042-coldsight-summary.json, /tmp/woc-v042-final-coldsight-candidate.jsonl and /tmp/woc-v042-coldsight-state-proof.json.
 
+## Hunter CI fixture after release integration (2026-09-08)
+
+Compared feature `637196e2eb` with release `f664efc1ea` on the same world layout using
+the unmodified `scripts/hunter_dps_probe.ts`: level 20, auto-equipped gear, no choice rows,
+90 seconds, seeds 29001..29005, one and three targets (30 runs per ref). The PR diet
+uses the first two seeds. All ten paired Packlord records match exactly, including
+damage breakdowns, after excluding the source-ref label.
+
+| Spec | Release DPS (five seeds, one target) | Feature DPS | Gain (five seeds) | Gain (two seeds) |
+| --- | ---: | ---: | ---: | ---: |
+| Packlord | 78.440 | 78.440 | 0.00% | 0.00% |
+| Coldsight | 112.411 | 127.640 | +13.55% | +13.73% |
+| Fieldcraft | 95.280 | 104.733 | +9.92% | +9.89% |
+
+Coldsight's five-seed gain comprises Long Draw +12.451 DPS, Fevered Draw +1.778,
+and Measured Shot +1.000; both autoattack buckets are unchanged. Code inspection
+confirms that offense tuning scales the base and power rider separately once, followed
+by Read's complete-hit multiplier. These results describe this fixture; the preceding
+24-seed geared measurement remains a separate profile. Gear, rotation and rounding
+affect the realized gain, and these comparisons do not establish a universal +10%.
+
+Only three stale ceilings change. For each, multiply the new ratio by the former
+ceiling/actual margin and round to the nearest hundredth:
+
+| Ratio | New actual | Former margin | New ceiling |
+| --- | ---: | --- | ---: |
+| Coldsight/Packlord, five seeds | 1.627231 | 1.58 / 1.5227 | 1.69 |
+| Coldsight/Packlord, two seeds | 1.689376 | 1.64 / 1.5864 | 1.75 |
+| Fieldcraft/Packlord, five seeds | 1.335203 | 1.29 / 1.2010 | 1.43 |
+
+Fieldcraft's two-seed ratio 1.409778 passes its unchanged 1.47 ceiling. Packlord's
+three-target ratios (0.805808 five-seed, 0.797080 two-seed) pass the unchanged bounds.
+Design floors, seeds, duration and timeouts remain unchanged. These broad legacy
+corridors guard further drift; passing them does not demonstrate design parity.
+
+Receipts: /tmp/woc-hunter-feature-comparison.jsonl and
+/tmp/woc-hunter-release-comparison.jsonl, with seed, target, spec and damage breakdowns.
+
 ## Groveheart calibration
 
 The starting 1.20 primary factor, combined with correcting the omitted Healing Power multipliers on Wildbloom replants, produced roughly 36-39% more engine healing. The approved proposal explicitly counts this correction toward the total budget, so the final primary factor is 1.05.
