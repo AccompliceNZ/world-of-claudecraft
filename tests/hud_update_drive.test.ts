@@ -433,6 +433,16 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     why: 'write-elided Warlock Doom meter driven from the player-owned Fate Thread aura',
   },
   {
+    call: 'this.interfaceUnlock.relocalize',
+    band: 'frame',
+    gate: 'this.procChipSpec !== this.sim.talentSpec && this.interfaceUnlock.isUnlocked',
+    surface: 'chrome',
+    why:
+      'The proc frame chip names the ACTIVE spec mechanic; a respec while the ' +
+      'interface is unlocked re-resolves the frame labels in step with the art ' +
+      'swap below (change-gated: it fires once per spec change, never per frame)',
+  },
+  {
     call: 'this.procOverlayPainter.paintNecromancyCharges',
     band: 'frame',
     gate: "this.sim.talentSpec === 'demonology'",
@@ -1739,11 +1749,11 @@ describe('Hud.update() drives exactly the registered set, on the registered band
       // no open check and therefore no invalidation guard to name.
       // chrome 85 -> 86: the gathering goal tracker's own signature-gated
       // repaint (Intentional Gathering PR4, gatheringGoalController.update).
-      // Both chrome deltas above land alongside this merge's own crucible
-      // professions rows (this branch's window and chrome churn is separate
-      // from the release arm's), so the split below was counted directly off
-      // the fully merged table rather than carried over from either side.
-    ).toEqual({ window: 48, chrome: 87, none: 17 });
+      // chrome 87 -> 88 on this merged branch: the release arm's proc frame
+      // chip relocalizes on a spec change (interfaceUnlock.relocalize), in
+      // step with the art swap. The branch's window and chrome churn lands
+      // independently, so this exact split was counted from the merged table.
+    ).toEqual({ window: 48, chrome: 88, none: 17 });
     const windows = HUD_UPDATE_DRIVES.filter((r) => r.surface === 'window');
     expect(windows.map((r) => r.call)).toContain('this.spellbookWindow.tickOpen');
     expect(windows.map((r) => r.call)).toContain('this.refreshOpenTownFocusIfChanged');

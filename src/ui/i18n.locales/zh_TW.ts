@@ -894,7 +894,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.swingBar': '自動攻擊',
   'hudChrome.interfaceUnlock.frameNames.questTracker': '任務追蹤器',
   'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': '聖物庫追蹤器',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': '痛苦資源條',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': '冰柱',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': '法術觸發',
   'hudChrome.interfaceUnlock.frameNames.damageMeter': '傷害統計',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': '功績追蹤器',

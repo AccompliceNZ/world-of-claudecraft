@@ -1620,6 +1620,18 @@
     min-height: 34px;
     pointer-events: auto;
   }
+  /* The two warlock proc states (the Soul Fragment bank and the Wrack
+     ritual, whose art is always on) RE-ASSERT the click-through on their own
+     later rules at the same id+class specificity, so the plain unlock
+     hand-back above loses the order tie for exactly those two specs and the
+     mover's pointerdown never fires. These state-qualified selectors outrank
+     them, so a demonology or destruction warlock can drag the frame like
+     everyone else. (Prose here names no selector-plus-brace pattern: the
+     guard regexes scan comments too.) */
+  #proc-overlay.necromancy.tf-unlocked,
+  #proc-overlay.destruction.tf-unlocked {
+    pointer-events: auto;
+  }
   /* The corner button and grip need a positioned host to hang off. Only the
      action bars lack one: the cast bar, the menu rail and the minimap wrap are
      already absolute and the pet frame already relative. Re-stating the menu rail

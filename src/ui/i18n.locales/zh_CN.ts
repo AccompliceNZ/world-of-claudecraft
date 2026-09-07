@@ -894,7 +894,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.swingBar': '自动攻击',
   'hudChrome.interfaceUnlock.frameNames.questTracker': '任务追踪器',
   'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': '圣物库追踪器',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': '痛苦资源条',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': '冰刺',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': '法术触发',
   'hudChrome.interfaceUnlock.frameNames.damageMeter': '伤害统计',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': '功绩追踪器',

@@ -910,7 +910,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.swingBar': 'Автоатака',
   'hudChrome.interfaceUnlock.frameNames.questTracker': 'Трекер заданий',
   'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': 'Список Реликвария',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Шкала ресурсов Колдовства',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Ледяные осколки',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Срабатывания заклинаний',
   'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Счетчик урона',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Трекер деяний',

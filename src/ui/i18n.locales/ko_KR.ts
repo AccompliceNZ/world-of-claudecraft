@@ -910,7 +910,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.interfaceUnlock.frameNames.swingBar': '자동 공격',
   'hudChrome.interfaceUnlock.frameNames.questTracker': '퀘스트 추적기',
   'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': '성물고 추적기',
-  'hudChrome.interfaceUnlock.frameNames.doomMeter': '고통 자원 막대',
+  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': '고드름',
   'hudChrome.interfaceUnlock.frameNames.procOverlay': '주문 발동',
   'hudChrome.interfaceUnlock.frameNames.damageMeter': '피해 측정기',
   'hudChrome.interfaceUnlock.frameNames.deedTracker': '업적 추적기',

@@ -7,6 +7,7 @@ import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
   classGatedFrameActive,
+  frameRowLabelKey,
   frameRowSettingKey,
   framesToLock,
   HUD_FRAME_SPECS,
@@ -288,6 +289,61 @@ describe('frameRowSettingKey', () => {
     for (const id of ['actionBar1', 'questTracker', 'damageMeter', 'petFrame', 'minimap']) {
       expect(frameRowSettingKey(id), `${id} has no master switch`).toBeNull();
     }
+  });
+});
+
+describe('frameRowLabelKey', () => {
+  const spec = (id: string) => {
+    const row = HUD_FRAME_SPECS.find((s) => s.id === id);
+    if (!row) throw new Error(`no spec row ${id}`);
+    return row;
+  };
+
+  it('chips the proc overlay with the active mechanic in-game name', () => {
+    // Mechanic frames name themselves the way the game names the mechanic
+    // (owner request): a demonology warlock arranges "Soul Fragments", never
+    // a generic "Spell Procs" box.
+    const proc = spec('procOverlay');
+    expect(frameRowLabelKey(proc, 'warlock', 'demonology')).toBe(
+      'hudChrome.procOverlay.soulFragmentsMeter',
+    );
+    expect(frameRowLabelKey(proc, 'warlock', 'destruction')).toBe(
+      'hudChrome.procOverlay.ruinMeter',
+    );
+    expect(frameRowLabelKey(proc, 'mage', 'fire')).toBe('entities.abilities.hot_streak.name');
+    expect(frameRowLabelKey(proc, 'mage', 'arcane')).toBe('entities.abilities.arcane_surge.name');
+    expect(frameRowLabelKey(proc, 'mage', 'frost')).toBe(
+      'hudChrome.interfaceUnlock.frameNames.procOverlayFrost',
+    );
+    // An unspecced mage keeps the generic name: Hot Streak is a fire talent,
+    // so it would name a mechanic they do not have yet (the affliction rule).
+    expect(frameRowLabelKey(proc, 'mage', null)).toBe(proc.labelKey);
+  });
+
+  it('falls back to the generic name where no mechanic lights the frame', () => {
+    const proc = spec('procOverlay');
+    // The affliction warlock's placeholder is a real empty box; naming it
+    // after a mechanic they do not have would be a lie.
+    expect(frameRowLabelKey(proc, 'warlock', 'affliction')).toBe(proc.labelKey);
+    expect(frameRowLabelKey(proc, 'warlock', null)).toBe(proc.labelKey);
+  });
+
+  it('leaves every other row on its static label, doom meter included', () => {
+    for (const row of HUD_FRAME_SPECS) {
+      if (row.id === 'procOverlay') continue;
+      expect(frameRowLabelKey(row, 'mage', 'fire')).toBe(row.labelKey);
+    }
+    // The doom meter's static label IS the in-game resource name.
+    expect(spec('doomMeter').labelKey).toBe('hudChrome.warlock.doomLabel');
+  });
+
+  it('hud.ts wires the chip through this resolver, not the raw spec key', () => {
+    // A frameLabelKey: spec.labelKey regression would compile fine and only
+    // show up as every proc chip reading "Spell Procs" again.
+    const hud = readFileSync(join(import.meta.dirname, '..', 'src', 'ui', 'hud.ts'), 'utf8');
+    expect(hud).toContain(
+      'frameLabelKey: () => frameRowLabelKey(spec, this.sim.cfg.playerClass, this.sim.talentSpec)',
+    );
   });
 });
 
