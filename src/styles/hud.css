@@ -5586,7 +5586,15 @@
     bottom: auto;
   }
   .mt-panel .panel-title {
+    height: 18px;
+    min-height: 18px;
+    padding: 0;
     margin-bottom: 4px;
+  }
+  .mt-panel :is(.ui-disc, .ui-x-btn) {
+    width: 24px;
+    height: 24px;
+    padding: 0;
   }
   /* A framed panel owns its height, so the bar list takes the leftover space and
      scrolls rather than pushing the panel taller than the player sized it. */
@@ -5620,10 +5628,6 @@
   .mt-panel .mt-move-handle button {
     touch-action: auto;
   }
-  .mt-title-label {
-    font-family: var(--title-font);
-    color: var(--gold);
-  }
   body.meter-frame-dragging,
   body.meter-frame-dragging * {
     user-select: none;
@@ -5641,9 +5645,9 @@
     background: linear-gradient(
       135deg,
       transparent 0 45%,
-      #95886a 45% 55%,
+      var(--color-text-muted) 45% 55%,
       transparent 55% 70%,
-      #95886a 70% 80%,
+      var(--color-text-muted) 70% 80%,
       transparent 80%
     );
   }
@@ -5663,50 +5667,27 @@
     touch-action: auto;
   }
   .mt-tab {
-    background: #1a1410;
-    border: 1px solid var(--gold);
-    border-radius: 3px;
-    color: var(--color-text-muted);
-    font-size: 11px;
     padding: 1px 7px;
     cursor: var(--cursor-point);
   }
-  .mt-tab.on {
-    color: var(--gold);
-    border-color: var(--gold-dim);
-    background: #2a2010;
-  }
-  .mt-view {
-    font-size: 12px;
-    color: var(--gold);
-    font-family: var(--title-font);
-    text-shadow: 1px 1px 1px #000;
-  }
   .mt-sub {
-    font-size: 10px;
-    color: #9c8f6e;
     margin: 1px 0 6px;
   }
   /* Empty-state discoverability hint, shown only on the live current segment of
      the damage/healing tabs (meters.ts gates it). Its own element so it is one
      t() string, never concatenated onto .mt-sub. */
   .mt-hint {
-    font-size: 10px;
     line-height: 1.35;
-    color: #8a7d5e;
     margin: 0 0 6px;
   }
   .mt-row {
     position: relative;
     height: 17px;
     margin-bottom: 3px;
-    background: #14100c;
-    border: 1px solid #000;
-    border-radius: 2px;
     overflow: hidden;
   }
   .mt-row.aggro {
-    border-color: #c0392b;
+    border-color: var(--color-danger);
   }
   .mt-fill {
     position: absolute;
@@ -5719,8 +5700,8 @@
     top: 0;
     line-height: 17px;
     font-size: 11px;
-    color: #fff;
-    text-shadow: 1px 1px 1px #000;
+    color: var(--color-white);
+    text-shadow: 1px 1px 1px var(--color-keyline);
     font-weight: bold;
   }
   .mt-num {
@@ -5729,49 +5710,28 @@
     top: 0;
     line-height: 17px;
     font-size: 10px;
-    color: #ffe;
-    text-shadow: 1px 1px 1px #000;
+    color: var(--color-text-light);
+    text-shadow: 1px 1px 1px var(--color-keyline);
   }
   /* Each bar is focusable so its hover breakdown is reachable by keyboard, not
      by pointer only (attachTooltip shows on focusin and on a long-press). */
   .mt-row:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: -1px;
+    outline-offset: 2px;
   }
 
   /* ---------- target aura window ---------- */
   .ta-panel {
-    width: 220px;
+    width: 400px;
     height: var(--ta-preferred-height, 534px);
     max-height: calc(100vh - 16px);
     padding: 3px;
     flex-direction: column;
     container-type: inline-size;
   }
-  /* The panel itself is only a positioning surface. Aura rows provide their
-     own meter-like plates; the outer box stays invisible like the reference
-     layout, including under frosted/custom panel themes. */
-  #target-auras-window {
-    border: 0;
-    outline: 0;
-    border-radius: 0;
-    background: transparent;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    box-shadow: none;
-  }
   .ta-panel .panel-title {
-    min-height: 18px;
     margin-bottom: 4px;
-    padding: 0 1px 2px;
     justify-content: flex-start;
-    border-bottom: 1px dashed color-mix(in srgb, var(--gold-dim) 55%, transparent);
-    background: transparent;
-    opacity: 0.58;
-  }
-  .ta-panel .panel-title:hover,
-  .ta-panel.ta-unlocked .panel-title {
-    opacity: 0.9;
   }
   .ta-panel .ta-title {
     flex: 1 1 auto;
@@ -5801,15 +5761,8 @@
     height: 24px;
     margin-left: auto;
     padding: 0;
-    border: 1px solid color-mix(in srgb, var(--color-text-muted) 42%, transparent);
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--color-bg-input) 72%, transparent);
-    color: var(--color-text-muted);
     cursor: var(--cursor-point);
     opacity: 0.78;
-    box-shadow:
-      inset 0 1px 0 #ffffff14,
-      0 1px 3px #0009;
   }
   .ta-rows-config-btn {
     position: relative;
@@ -5818,10 +5771,6 @@
     height: 24px;
     margin-left: auto;
     padding: 0;
-    border: 1px solid color-mix(in srgb, var(--color-text-muted) 42%, transparent);
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--color-bg-input) 72%, transparent);
-    color: var(--color-text-muted);
     cursor: var(--cursor-point);
     opacity: 0.78;
   }
@@ -5847,7 +5796,7 @@
   .ta-rows-config-btn:focus-visible,
   .ta-visible-rows-step:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
+    outline-offset: 2px;
   }
   .ta-visible-rows-control {
     position: absolute;
@@ -5860,10 +5809,6 @@
     width: min(150px, calc(100vw - 16px));
     gap: 2px;
     padding: 3px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 3px;
-    background: var(--color-bg-input);
-    box-shadow: 0 2px 6px #0009;
   }
   .ta-visible-rows-step,
   .ta-visible-rows-value {
@@ -5874,10 +5819,6 @@
   }
   .ta-visible-rows-step {
     padding: 0;
-    border: 1px solid color-mix(in srgb, var(--gold-dim) 60%, transparent);
-    border-radius: 2px;
-    background: color-mix(in srgb, var(--color-bg-dark) 82%, transparent);
-    color: var(--color-text-light);
     cursor: var(--cursor-point);
     font-size: 18px;
     line-height: 1;
@@ -5965,7 +5906,7 @@
   }
   .ta-move-btn:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
+    outline-offset: 2px;
   }
   .ta-panel:not(.ta-unlocked) .panel-resize-grip {
     display: none;
@@ -5973,8 +5914,6 @@
   .ta-target {
     margin: 0 0 6px;
     overflow: hidden;
-    color: var(--color-text-muted);
-    font-size: 11px;
     line-height: 16px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -5997,9 +5936,6 @@
     line-height: 16px;
     text-overflow: clip;
     white-space: nowrap;
-  }
-  .ta-filters .mt-tab.on {
-    background: color-mix(in srgb, var(--gold-dim) 22%, transparent);
   }
   .ta-section {
     display: flex;
@@ -6089,9 +6025,6 @@
     height: var(--ta-row-height);
     margin-bottom: 3px;
     overflow: hidden;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 2px;
-    background: var(--color-bg-input);
     opacity: var(--ta-row-opacity, 1);
   }
   .ta-row.own {
@@ -6173,8 +6106,6 @@
     grid-row: 2;
     overflow: hidden;
     padding-left: 5px;
-    color: var(--color-text-muted);
-    font-size: clamp(9.5px, 2.3cqw, 11px);
     line-height: 14px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -6213,14 +6144,14 @@
     top: 50%;
     width: 6px;
     height: 6px;
-    border: 1px solid #fff2b0;
+    border: 1px solid var(--color-glint);
     background: var(--gold);
-    box-shadow: 0 0 4px #000;
+    box-shadow: 0 0 calc(4px * var(--fx-shadow, 1)) var(--color-keyline);
     transform: translateY(-50%) rotate(45deg);
   }
   .ta-row:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: -2px;
+    outline-offset: 2px;
   }
   @media (prefers-reduced-motion: no-preference) {
     .ta-row.expiring .ta-icon {
@@ -6230,6 +6161,10 @@
   /* Expiry remains visible on Low without keeping a compositor animation alive
      for every expiring target aura. Full tiers retain the blink above. */
   :root[data-fx-level="low"] .ta-row.expiring .ta-icon {
+    animation: none;
+    filter: brightness(1.4);
+  }
+  body.reduce-motion .ta-row.expiring .ta-icon {
     animation: none;
     filter: brightness(1.4);
   }
@@ -6260,7 +6195,7 @@
     left: 0;
     top: 0;
     bottom: 0;
-    background: #ffffff14;
+    background: color-mix(in srgb, var(--color-white) 8%, transparent);
     border-radius: 2px;
   }
   #tooltip .mt-tip-name {
@@ -7582,9 +7517,9 @@
     border-radius: 14px;
     padding: 6px 12px;
     box-shadow:
-      0 4px 24px #000b,
-      0 0 0 2px #ff3df055;
-    background: #140a1cdd;
+      0 4px 24px color-mix(in srgb, var(--color-keyline) 73%, transparent),
+      0 0 0 2px color-mix(in srgb, var(--color-xp) 33%, transparent);
+    background: color-mix(in srgb, var(--color-xp-deep) 25%, var(--color-bg-deep));
   }
   #fiesta-score .fs-team {
     display: flex;
@@ -7600,21 +7535,21 @@
     height: 42px;
     border-radius: 9px;
     overflow: hidden;
-    border: 2px solid #ffffff33;
-    background: #0008;
+    border: 2px solid color-mix(in srgb, var(--color-white) 20%, transparent);
+    background: color-mix(in srgb, var(--color-keyline) 53%, transparent);
     transition:
       filter 0.2s,
       border-color 0.2s;
   }
   #fiesta-score .fs-team.mine .fp {
-    border-color: #1b9fff88;
+    border-color: color-mix(in srgb, var(--color-team-blue) 53%, transparent);
   }
   #fiesta-score .fs-team.theirs .fp {
-    border-color: #ff2d6688;
+    border-color: color-mix(in srgb, var(--color-team-red) 53%, transparent);
   }
   #fiesta-score .fp.me {
-    border-color: #ffd24a;
-    box-shadow: 0 0 10px #ffd24a99;
+    border-color: var(--gold);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--gold) 60%, transparent);
   }
   #fiesta-score .fp.down {
     filter: grayscale(1) brightness(0.5);
@@ -7631,10 +7566,10 @@
     bottom: 0;
     font-size: 13px;
     font-weight: 900;
-    color: #fff;
+    color: var(--color-white);
     text-shadow:
-      0 0 4px #000,
-      1px 1px 2px #000;
+      0 0 4px var(--color-keyline),
+      var(--title-shadow);
     padding: 0 2px;
   }
   #fiesta-score .fs-core {
@@ -7645,18 +7580,18 @@
   #fiesta-score .fs-num {
     font-size: 40px;
     font-weight: 900;
-    color: #fff;
+    color: var(--color-white);
     text-shadow:
-      0 0 14px #000,
-      1px 1px 2px #000;
+      0 0 14px var(--color-keyline),
+      var(--title-shadow);
     min-width: 42px;
     text-align: center;
   }
   #fiesta-score .fs-num.mine {
-    color: #6bc2ff;
+    color: var(--color-xp-rested);
   }
   #fiesta-score .fs-num.theirs {
-    color: #ff7090;
+    color: var(--color-hostile);
   }
   #fiesta-score .fs-mid {
     display: flex;
@@ -7670,7 +7605,7 @@
     font-size: 13px;
     letter-spacing: 2px;
     font-weight: 800;
-    background: linear-gradient(90deg, #ff3df0, #ffd24a, #1b9fff);
+    background: linear-gradient(90deg, var(--color-xp), var(--gold), var(--color-info));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -7683,16 +7618,16 @@
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #ffffff22;
-    box-shadow: inset 0 0 0 1px #ffffff44;
+    background: color-mix(in srgb, var(--color-white) 13%, transparent);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-white) 27%, transparent);
   }
   #fiesta-score .fw-dot.on {
-    background: #ffd24a;
-    box-shadow: 0 0 8px #ffd24a;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
   }
   #fiesta-score .fs-limit {
     font-size: 10px;
-    color: #cbbcd8;
+    color: var(--color-text-secondary);
     letter-spacing: 0.5px;
   }
   #fiesta-score.flash-mine {
@@ -7704,25 +7639,25 @@
   @keyframes fiesta-flash-mine {
     0% {
       box-shadow:
-        0 4px 20px #000a,
-        0 0 0 6px #1b9fffcc;
+        0 4px 20px color-mix(in srgb, var(--color-keyline) 63%, transparent),
+        0 0 0 6px color-mix(in srgb, var(--color-team-blue) 80%, transparent);
     }
     100% {
       box-shadow:
-        0 4px 20px #000a,
-        0 0 0 2px #ff3df055;
+        0 4px 20px color-mix(in srgb, var(--color-keyline) 63%, transparent),
+        0 0 0 2px color-mix(in srgb, var(--color-xp) 33%, transparent);
     }
   }
   @keyframes fiesta-flash-theirs {
     0% {
       box-shadow:
-        0 4px 20px #000a,
-        0 0 0 6px #ff2d66cc;
+        0 4px 20px color-mix(in srgb, var(--color-keyline) 63%, transparent),
+        0 0 0 6px color-mix(in srgb, var(--color-team-red) 80%, transparent);
     }
     100% {
       box-shadow:
-        0 4px 20px #000a,
-        0 0 0 2px #ff3df055;
+        0 4px 20px color-mix(in srgb, var(--color-keyline) 63%, transparent),
+        0 0 0 2px color-mix(in srgb, var(--color-xp) 33%, transparent);
     }
   }
 
@@ -7743,24 +7678,24 @@
   #fiesta-respawn .fr-title {
     font-size: 24px;
     font-weight: 800;
-    color: #ff5a7a;
+    color: var(--color-hostile);
     letter-spacing: 2px;
     text-shadow:
-      0 0 16px #000,
-      2px 2px 4px #000;
+      0 0 16px var(--color-keyline),
+      2px 2px 4px var(--color-keyline);
   }
   #fiesta-respawn .fr-count {
     font-size: 64px;
     font-weight: 900;
-    color: #fff;
+    color: var(--color-white);
     line-height: 1;
     text-shadow:
-      0 0 24px #ff3df0aa,
-      2px 2px 6px #000;
+      0 0 24px color-mix(in srgb, var(--color-xp) 67%, transparent),
+      2px 2px 6px var(--color-keyline);
   }
   #fiesta-respawn .fr-sub {
     font-size: 14px;
-    color: #d8c8e8;
+    color: var(--color-text-secondary);
     letter-spacing: 1px;
   }
 
@@ -7779,11 +7714,11 @@
     font-family: var(--title-font);
     font-size: 16px;
     font-weight: 800;
-    color: #ffd24a;
+    color: var(--gold);
     letter-spacing: 1px;
     text-shadow:
-      0 0 10px #000,
-      1px 1px 2px #000;
+      0 0 10px var(--color-keyline),
+      var(--title-shadow);
   }
   #fiesta-augments .fa-tier {
     font-size: 12px;
@@ -7793,16 +7728,16 @@
     vertical-align: middle;
   }
   #fiesta-augments .fa-tier.silver {
-    background: #9aa7b3;
-    color: #1a1f24;
+    background: var(--color-quality-poor);
+    color: var(--color-ink);
   }
   #fiesta-augments .fa-tier.gold {
-    background: #ffcb45;
-    color: #3a2a00;
+    background: var(--gold);
+    color: var(--color-medal-ink);
   }
   #fiesta-augments .fa-tier.prismatic {
-    background: linear-gradient(90deg, #ff3df0, #1b9fff, #ffd24a);
-    color: #fff;
+    background: linear-gradient(90deg, var(--color-xp), var(--color-info), var(--gold));
+    color: var(--color-white);
   }
   #fiesta-augments .fa-cards {
     display: flex;
@@ -7818,10 +7753,10 @@
     flex-direction: column;
     gap: 8px;
     text-align: left;
-    color: #f3ecff;
-    background: linear-gradient(160deg, #241834f0, #140c1ef5);
-    border: 2px solid #5a4a78;
-    box-shadow: 0 6px 18px #000a;
+    color: var(--color-text-light);
+    background: var(--panel-bg-strong);
+    border: 2px solid color-mix(in srgb, var(--color-xp) 45%, var(--color-border-default));
+    box-shadow: 0 6px 18px color-mix(in srgb, var(--color-keyline) 63%, transparent);
     transition:
       border-color 0.15s,
       box-shadow 0.15s,
@@ -7829,35 +7764,35 @@
   }
   .fa-card:hover,
   .fa-card:focus-visible {
-    border-color: #ffd24a;
+    border-color: var(--gold);
     box-shadow:
-      0 10px 28px #000c,
-      0 0 16px #ffd24a55;
+      0 10px 28px color-mix(in srgb, var(--color-keyline) 75%, transparent),
+      0 0 16px color-mix(in srgb, var(--gold) 33%, transparent);
     translate: 0 -3px;
     outline: none;
   }
   .fa-card.silver {
-    border-color: #8b97a3;
+    border-color: var(--color-quality-poor);
   }
   .fa-card.gold {
-    border-color: #ffcb45;
+    border-color: var(--gold);
   }
   .fa-card.prismatic {
-    border-color: #ff3df0;
+    border-color: var(--color-xp);
     box-shadow:
-      0 6px 18px #000a,
-      0 0 14px #ff3df055;
+      0 6px 18px color-mix(in srgb, var(--color-keyline) 63%, transparent),
+      0 0 14px color-mix(in srgb, var(--color-xp) 33%, transparent);
   }
   .fa-card .fa-name {
     font-family: var(--title-font);
     font-size: 17px;
     font-weight: 800;
-    color: #ffe7a0;
+    color: var(--color-glint);
   }
   .fa-card .fa-desc {
     font-size: 13px;
     line-height: 1.35;
-    color: #d8cce8;
+    color: var(--color-text-secondary);
     flex: 1;
   }
   .fa-card .fa-icon {
@@ -7865,11 +7800,11 @@
     height: 42px;
     display: block;
     border-radius: 9px;
-    background: #0008;
+    background: color-mix(in srgb, var(--color-keyline) 53%, transparent);
     object-fit: cover;
     box-shadow:
-      inset 0 0 0 1px #ffffff22,
-      0 2px 7px #000b;
+      inset 0 0 0 1px color-mix(in srgb, var(--color-white) 13%, transparent),
+      0 2px 7px color-mix(in srgb, var(--color-keyline) 73%, transparent);
   }
   .fa-card .fa-cat {
     font-size: 10px;
@@ -7879,19 +7814,19 @@
     opacity: 0.9;
   }
   .cat-offense {
-    color: #ff5a5a;
+    color: var(--color-hostile);
   }
   .cat-defense {
-    color: #5aa6ff;
+    color: var(--color-xp-rested);
   }
   .cat-sustain {
-    color: #5ce08a;
+    color: var(--color-text-success);
   }
   .cat-mobility {
-    color: #32e0ff;
+    color: var(--color-info);
   }
   .cat-utility {
-    color: #ffd24a;
+    color: var(--gold);
   }
   /* augment-pending indicator */
   #fiesta-pending {
@@ -7907,13 +7842,13 @@
     font-family: var(--title-font);
     font-size: 13px;
     font-weight: 800;
-    color: #ffe7a0;
+    color: var(--color-glint);
     padding: 5px 12px;
     border-radius: 20px;
-    background: #2a1f0edd;
+    background: color-mix(in srgb, var(--color-medal-lo) 87%, transparent);
     box-shadow:
-      0 0 0 1px #ffd24a55,
-      0 3px 12px #0008;
+      0 0 0 1px color-mix(in srgb, var(--gold) 33%, transparent),
+      0 3px 12px color-mix(in srgb, var(--color-keyline) 53%, transparent);
     animation: fpend-pulse 1.4s ease-in-out infinite;
     /* Ambient: paused + duration-calmed by the effect-tier tokens. */
     animation-duration: calc(1.4s * var(--motion-scale, 1));
@@ -7922,7 +7857,7 @@
   #fiesta-pending .fpend-gem {
     width: 18px;
     height: 18px;
-    color: #ffd24a;
+    color: var(--gold);
     display: grid;
     place-items: center;
   }
@@ -7930,22 +7865,22 @@
     width: 10px;
     height: 10px;
     content: "";
-    border: 1px solid #fff0a8;
-    background: linear-gradient(135deg, #fff5bd, #f0a614 55%, #8e4b09);
-    box-shadow: 0 0 7px #ffd24aaa;
+    border: 1px solid var(--color-glint);
+    background: linear-gradient(135deg, var(--color-glint), var(--gold) 55%, var(--color-warning));
+    box-shadow: 0 0 7px color-mix(in srgb, var(--gold) 67%, transparent);
     transform: rotate(45deg);
   }
   @keyframes fpend-pulse {
     0%,
     100% {
       box-shadow:
-        0 0 0 1px #ffd24a55,
-        0 3px 12px #0008;
+        0 0 0 1px color-mix(in srgb, var(--gold) 33%, transparent),
+        0 3px 12px color-mix(in srgb, var(--color-keyline) 53%, transparent);
     }
     50% {
       box-shadow:
-        0 0 10px 2px #ffd24a88,
-        0 3px 12px #0008;
+        0 0 10px 2px color-mix(in srgb, var(--gold) 53%, transparent),
+        0 3px 12px color-mix(in srgb, var(--color-keyline) 53%, transparent);
     }
   }
   /* falling confetti for the killing team */
@@ -7983,14 +7918,14 @@
     transform: translate(-50%, -50%);
     font-family: var(--title-font);
     font-weight: 900;
-    color: var(--fw-color, #ffd24a);
+    color: var(--fw-color, var(--gold));
     pointer-events: none;
     z-index: 19;
     letter-spacing: 2px;
     text-shadow:
-      0 0 18px #000,
-      0 0 8px var(--fw-color, #ffd24a),
-      3px 3px 6px #000;
+      0 0 18px var(--color-keyline),
+      0 0 8px var(--fw-color, var(--gold)),
+      3px 3px 6px var(--color-keyline);
     white-space: nowrap;
     animation: fiesta-word-pop 1.4s cubic-bezier(0.2, 1.4, 0.3, 1) forwards;
   }
@@ -8032,16 +7967,13 @@
      .arena-bracket (arena) bases; see the header note above. */
   @media (prefers-reduced-motion: reduce) {
     .fiesta-word {
-      animation: fiesta-word-fade 1.4s ease-out forwards;
+      animation: none;
+      opacity: 1;
+      transform: translate(-50%, -50%);
     }
-    @keyframes fiesta-word-fade {
-      0%,
-      75% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 0;
-      }
+    #fiesta-score .fp,
+    .fa-card {
+      transition: none;
     }
     #fiesta-score.flash-mine,
     #fiesta-score.flash-theirs,
@@ -8051,6 +7983,23 @@
     .fiesta-confetti {
       display: none;
     }
+  }
+  body.reduce-motion .fiesta-word {
+    animation: none;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  body.reduce-motion #fiesta-score .fp,
+  body.reduce-motion .fa-card {
+    transition: none;
+  }
+  body.reduce-motion #fiesta-score.flash-mine,
+  body.reduce-motion #fiesta-score.flash-theirs,
+  body.reduce-motion #fiesta-pending {
+    animation: none;
+  }
+  body.reduce-motion .fiesta-confetti {
+    display: none;
   }
   body.mobile-touch #fiesta-score .fs-num {
     font-size: 26px;

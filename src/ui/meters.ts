@@ -587,6 +587,7 @@ export class MetersPanel {
   private refreshTabs(): void {
     this.root.querySelectorAll('.mt-tab').forEach((el) => {
       el.classList.toggle('on', (el as HTMLElement).dataset.tab === this.tab);
+      el.classList.toggle('is-on', (el as HTMLElement).dataset.tab === this.tab);
     });
   }
 
@@ -713,7 +714,7 @@ export class MetersPanel {
   private syncRowPool(count: number): void {
     while (this.rowPool.length < count) {
       const el = document.createElement('div');
-      el.className = 'mt-row';
+      el.className = 'mt-row ui-card';
       // Focusable so the breakdown is reachable by keyboard, not hover only
       // (attachTooltip shows on focusin and on a mobile long-press).
       el.tabIndex = 0;
@@ -722,7 +723,7 @@ export class MetersPanel {
       const label = document.createElement('span');
       label.className = 'mt-label';
       const num = document.createElement('span');
-      num.className = 'mt-num';
+      num.className = 'mt-num ui-num';
       el.append(fill, label, num);
       const row: MeterRowNodes = {
         el,

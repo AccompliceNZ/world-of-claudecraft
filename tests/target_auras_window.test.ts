@@ -185,11 +185,13 @@ describe('TargetAurasWindow', () => {
     expect(root.style.display).toBe('none');
     expect(root.querySelector('.ta-debuff-count')?.textContent).toBe('0');
     expect(root.querySelector('.ta-buff-count')?.textContent).toBe('0');
+    // W12 pins the redesigned desktop panel to the four rows shown on the approved board.
     expect(root.style.getPropertyValue('--ta-visible-rows-height')).toBe(
-      'clamp(240px, calc(50.4cqw + 36px), 276px)',
+      'clamp(80px, calc(16.8cqw + 12px), 92px)',
     );
-    expect(root.style.getPropertyValue('--ta-preferred-height')).toBe('306px');
-    expect(root.querySelector('.ta-visible-rows-value')?.textContent).toBe('12');
+    // W12: the full window header and four compact rows fit the redesigned 400px frame.
+    expect(root.style.getPropertyValue('--ta-preferred-height')).toBe('175px');
+    expect(root.querySelector('.ta-visible-rows-value')?.textContent).toBe('4');
     expect(root.classList.contains('ta-show-sources')).toBe(false);
     expect(root.style.getPropertyValue('--ta-row-opacity')).toBe('1');
   });
@@ -294,9 +296,10 @@ describe('TargetAurasWindow', () => {
     expect(sourceToggle?.getAttribute('aria-label')).toBe('Hide aura sources');
     expect(window.localStorage.getItem('woc_target_auras_show_sources')).toBe('1');
     expect(root.style.getPropertyValue('--ta-visible-rows-height')).toBe(
-      'clamp(468px, calc(102cqw + 36px), 588px)',
+      'clamp(156px, calc(34cqw + 12px), 196px)',
     );
-    expect(root.style.height).toBe('534px');
+    // W12: source labels and full window chrome fit without clipping the four rows.
+    expect(root.style.height).toBe('251px');
 
     const restored = setup();
     expect(restored.root.classList.contains('ta-show-sources')).toBe(true);
@@ -305,7 +308,7 @@ describe('TargetAurasWindow', () => {
     );
   });
 
-  it('opens a compact row-count control and persists increments beyond twelve', () => {
+  it('opens a compact row-count control and persists an increment from four rows', () => {
     const { panel, root } = setup();
     panel.toggle();
     const config = root.querySelector<HTMLButtonElement>('.ta-rows-config-btn');
@@ -335,15 +338,16 @@ describe('TargetAurasWindow', () => {
     config?.click();
 
     increase?.click();
-    expect(root.querySelector('.ta-visible-rows-value')?.textContent).toBe('13');
+    // W12: the approved board starts at four visible rows, so one increment yields five.
+    expect(root.querySelector('.ta-visible-rows-value')?.textContent).toBe('5');
     expect(root.style.getPropertyValue('--ta-visible-rows-height')).toBe(
-      'clamp(260px, calc(54.6cqw + 39px), 299px)',
+      'clamp(100px, calc(21cqw + 15px), 115px)',
     );
-    expect(root.style.height).toBe('326px');
-    expect(window.localStorage.getItem('woc_target_auras_visible_rows')).toBe('13');
+    expect(root.style.height).toBe('195px');
+    expect(window.localStorage.getItem('woc_target_auras_visible_rows')).toBe('5');
 
     const restored = setup();
-    expect(restored.root.querySelector('.ta-visible-rows-value')?.textContent).toBe('13');
+    expect(restored.root.querySelector('.ta-visible-rows-value')?.textContent).toBe('5');
   });
 
   it('opens the configurator from its icon and keeps it inside the viewport', () => {
@@ -420,7 +424,7 @@ describe('TargetAurasWindow', () => {
     });
   });
 
-  it('reclamps an open configurator when a filter changes the frame width', () => {
+  it('keeps an open configurator anchored while filters retain the board width', () => {
     const originalInnerWidth = window.innerWidth;
     Object.defineProperty(window, 'innerWidth', { configurable: true, value: 300 });
     const { root } = setup();
@@ -436,7 +440,8 @@ describe('TargetAurasWindow', () => {
     config?.click();
     expect(control?.style.left).toBe('62px');
     root.querySelector<HTMLButtonElement>('[data-aura-filter="debuffs"]')?.click();
-    expect(control?.style.left).toBe('-8px');
+    // W12: every filter keeps the same 400px board width, so no reclamp is needed.
+    expect(control?.style.left).toBe('62px');
 
     Object.defineProperty(window, 'innerWidth', {
       configurable: true,
@@ -453,13 +458,14 @@ describe('TargetAurasWindow', () => {
 
     root.querySelector<HTMLButtonElement>('.ta-visible-rows-more')?.click();
 
-    expect(root.style.height).toBe('326px');
+    // W12: the redesigned four-row default grows to five rows with full window chrome.
+    expect(root.style.height).toBe('195px');
     expect(JSON.parse(window.localStorage.getItem('woc_target_auras_frame') ?? '{}')).toMatchObject(
       {
         left: 40,
         top: 40,
         width: 220,
-        height: 326,
+        height: 195,
       },
     );
   });
@@ -473,23 +479,25 @@ describe('TargetAurasWindow', () => {
 
     root.querySelector<HTMLButtonElement>('.ta-visible-rows-more')?.click();
 
-    expect(root.style.height).toBe('365px');
+    // W12: five wide compact rows reach their 20px cap inside the full window frame.
+    expect(root.style.height).toBe('210px');
   });
 
-  it('recomputes preferred height from the compact width after a frame reset', () => {
+  it('recomputes preferred height from the default width after a frame reset', () => {
     window.localStorage.setItem(
       'woc_target_auras_frame',
       JSON.stringify({ left: 8, top: 8, width: 500, height: 240 }),
     );
     const { panel, root } = setup();
     root.querySelector<HTMLButtonElement>('.ta-visible-rows-more')?.click();
-    expect(root.style.getPropertyValue('--ta-preferred-height')).toBe('365px');
+    // W12: a wide five-row frame includes the shared window header before reset.
+    expect(root.style.getPropertyValue('--ta-preferred-height')).toBe('210px');
 
     panel.resetFrame();
 
-    expect(root.style.width).toBe('220px');
+    expect(root.style.width).toBe('400px');
     expect(root.style.height).toBe('');
-    expect(root.style.getPropertyValue('--ta-preferred-height')).toBe('326px');
+    expect(root.style.getPropertyValue('--ta-preferred-height')).toBe('195px');
     expect(window.localStorage.getItem('woc_target_auras_frame')).toBeNull();
   });
 
@@ -612,7 +620,7 @@ describe('TargetAurasWindow', () => {
       'Configura righe preferite',
     );
     expect(root.querySelector('.ta-visible-rows-value')?.getAttribute('aria-label')).toBe(
-      'Righe preferite: 12',
+      'Righe preferite: 4',
     );
   });
 
@@ -660,6 +668,7 @@ describe('TargetAurasWindow', () => {
     expect(root.querySelector('[data-aura-filter="all"]')?.getAttribute('aria-pressed')).toBe(
       'true',
     );
+    expect(all?.classList.contains('is-on')).toBe(true);
 
     debuffs?.click();
     panel.paint('Training Dummy', auraState(), () => 'Caster');
@@ -667,7 +676,10 @@ describe('TargetAurasWindow', () => {
     expect(root.querySelector('.ta-sections')?.classList.contains('only-one')).toBe(true);
     expect(root.querySelector('.ta-buff-section')?.classList.contains('empty-section')).toBe(true);
     expect(root.querySelector<HTMLElement>('.ta-buff-rows .ta-row')?.style.display).toBe('none');
-    expect(root.style.width).toBe('140px');
+    // W12: filtered and combined layouts share the approved 400px window width.
+    expect(root.style.width).toBe('400px');
+    expect(debuffs?.classList.contains('is-on')).toBe(true);
+    expect(all?.classList.contains('is-on')).toBe(false);
 
     buffs?.click();
     panel.paint('Training Dummy', auraState(), () => 'Caster');
@@ -675,11 +687,15 @@ describe('TargetAurasWindow', () => {
     expect(root.querySelector('.ta-debuff-section')?.classList.contains('empty-section')).toBe(
       true,
     );
-    expect(root.style.width).toBe('140px');
+    expect(root.style.width).toBe('400px');
+    expect(buffs?.classList.contains('is-on')).toBe(true);
+    expect(debuffs?.classList.contains('is-on')).toBe(false);
 
     all?.click();
     panel.paint('Training Dummy', auraState(), () => 'Caster');
-    expect(root.style.width).toBe('220px');
+    expect(root.style.width).toBe('400px');
+    expect(all?.classList.contains('is-on')).toBe(true);
+    expect(buffs?.classList.contains('is-on')).toBe(false);
   });
 
   it('restores a persisted single-section filter at compact width', () => {
@@ -688,7 +704,8 @@ describe('TargetAurasWindow', () => {
     const { root } = setup();
 
     expect(root.classList.contains('ta-filter-debuffs')).toBe(true);
-    expect(root.style.width).toBe('140px');
+    // W12: persisted single-section filters retain the redesigned 400px width.
+    expect(root.style.width).toBe('400px');
   });
 
   it('keeps every raid-sized aura available in the scrolling section', () => {

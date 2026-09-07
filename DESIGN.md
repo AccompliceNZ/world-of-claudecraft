@@ -227,7 +227,7 @@ preset; the values shown are the classic outputs):
 | `--panel-bg-strong` | `rgba(16, 16, 24, 0.97)` to `rgba(9, 9, 13, 0.97)` | panel pulled toward black at 0.97 alpha | Tooltips, text inputs, confirm dialogs |
 
 `--color-accent-hover` and `--color-accent-glint` are not emitted variables. Interactive
-gold uses the emitted accent variables. Decorative glints use the static `--color-glint`,
+gold uses the emitted accent variables. Decorative glints use the themed `--color-glint`,
 which `themeCssVars` derives from the accent per preset (classic `#ffea8c`). The existing emitted
 `--color-border-focus` remains the focus ring color.
 

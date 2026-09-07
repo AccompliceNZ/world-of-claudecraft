@@ -823,9 +823,13 @@
     --dur-press: 60ms;
     --dur-panel: 160ms;
     --dur-frame: 120ms;
-    /* W9 additions (options surfaces) */
     /* Dim the live world while the modal options family is open. */
     --color-options-scrim: color-mix(in srgb, var(--color-keyline) 74%, transparent);
+
+    /* player card canvas */
+    --color-player-card-bg-hi: #2a3a48;
+    --color-player-card-bg-lo: #0b0b12;
+    --color-player-card-chip-ink: #1c1407;
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal
