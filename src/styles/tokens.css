@@ -1004,6 +1004,10 @@
     --color-breath-drowning-soft: rgb(255 60 40 / 40%);
     /* Breath text keeps its cool high-contrast parchment tint. */
     --color-breath-label: #eaf4ff;
+
+    /* chat */
+    /* Multiplies the player's chat opacity while the dock is idle. */
+    --chat-soft: 0.74;
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal
