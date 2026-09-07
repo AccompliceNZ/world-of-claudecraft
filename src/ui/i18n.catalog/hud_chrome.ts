@@ -6640,6 +6640,35 @@ export const hudChromeStrings = {
     // Hover tooltip over a zone region: its name plus the suggested level band.
     levels: 'Levels {min} to {max}',
   },
+  // World map atlas rail. These labels name visible filters, quest actions,
+  // region facts, and the compact marker legend; wordy values carry same-change
+  // fills in the five non-Latin runtime overlays.
+  mapAtlas: {
+    level: 'Level {level}',
+    landmarkCount: '{count} landmarks',
+    filtersAria: 'Map layers',
+    filters: {
+      quests: 'Quests',
+      gather: 'Gather',
+      dungeons: 'Dungeons',
+      services: 'Services',
+      players: 'Players',
+    },
+    trackedQuests: 'Tracked quests',
+    noTrackedQuests: 'No tracked quests',
+    availableNearby: 'Available nearby',
+    noNearbyQuests: 'No nearby quests',
+    distance: '{distance} yards',
+    showRoute: 'Show Route',
+    untrack: 'Untrack',
+    legend: {
+      dungeon: 'Dungeon',
+      ore: 'Ore',
+      herb: 'Herb',
+      mail: 'Mail',
+      passage: 'Passage',
+    },
+  },
   // Ranked Arena's minimum-level queue gate (src/sim/social/arena.ts
   // arenaQueueJoin, 1v1/2v2 only): the arena window's disabled-queue note
   // when the local character is below the floor.

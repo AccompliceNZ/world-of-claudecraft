@@ -545,7 +545,9 @@ describe('hud wiring', () => {
     // The strip crest is a jump button: the accessible name rides the button
     // (aria-label + title from the deed name), and the crest img inside stays
     // alt="" so the deed is not announced twice.
-    expect(painter).toMatch(/deeds-recent-item" data-recent="\$\{esc\(r\.id\)\}"/);
+    // Re-pinned: the crest jump button now also carries the ui-chip primitive,
+    // so the class attribute no longer ends at the legacy class name.
+    expect(painter).toMatch(/deeds-recent-item ui-chip" data-recent="\$\{esc\(r\.id\)\}"/);
     expect(painter).toMatch(
       /aria-label="\$\{esc\(t\('hudChrome\.deeds\.recentJumpAria', \{ name: deedName\(r\.id\) \}\)\)\}"/,
     );
