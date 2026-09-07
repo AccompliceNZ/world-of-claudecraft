@@ -10,6 +10,7 @@
 //      BUSTS it. Without the bust the guild would be shown a pre-op history for
 //      a whole TTL precisely while somebody was watching for the op.
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { BANK_LEDGER_GUILD_MONEY_OPS_PREDICATE_SQL } from '../../server/bank_ledger_indexes';
 import {
   bustGuildBankLog,
   GUILD_BANK_LOG_HIDDEN_OPS,
@@ -24,7 +25,11 @@ import {
   readGuildBankLog,
   resetGuildBankLogCacheForTests,
 } from '../../server/guild_bank_log';
-import type { GuildBankLogDbRow } from '../../server/guild_bank_log_db';
+import {
+  type GuildBankLogDbRow,
+  guildBankLogPageSql,
+  isGuildBankMoneySlice,
+} from '../../server/guild_bank_log_db';
 import type { GuildBankLogEntry } from '../../src/world_api/guild_bank';
 
 /** One cached page as the injected reader answers it. */
@@ -490,6 +495,44 @@ describe('readGuildBankLog: the per-guild cached read', () => {
       400,
     );
     spy.mockRestore();
+  });
+});
+
+describe('the money slice rides its partial index', () => {
+  it('the partial index predicate names exactly the money ops the seam classifies', () => {
+    // The index (bank_ledger_indexes.ts) and the statement interpolate the
+    // SAME literal, derived from GUILD_BANK_LOG_OP_KIND; this pins that the
+    // literal is the money slice and nothing else, in a stable order.
+    const quoted = [...guildBankLogOpsFor('money')]
+      .sort()
+      .map((op) => `'${op}'`)
+      .join(', ');
+    expect(BANK_LEDGER_GUILD_MONEY_OPS_PREDICATE_SQL).toBe(`op IN (${quoted})`);
+  });
+
+  it('recognizes the money slice exactly, order-free, and nothing narrower or wider', () => {
+    const money = guildBankLogOpsFor('money');
+    expect(isGuildBankMoneySlice(money)).toBe(true);
+    expect(isGuildBankMoneySlice([...money].reverse())).toBe(true);
+    expect(isGuildBankMoneySlice(money.slice(1))).toBe(false);
+    expect(isGuildBankMoneySlice([...money, 'deposit'])).toBe(false);
+    expect(isGuildBankMoneySlice(guildBankLogOpsFor('all'))).toBe(false);
+    expect(isGuildBankMoneySlice(guildBankLogOpsFor('items'))).toBe(false);
+  });
+
+  it('the money arm interpolates the literal predicate and drops the op parameter', () => {
+    const money = guildBankLogPageSql({ cursor: true, money: true });
+    expect(money).toContain(`bl.${BANK_LEDGER_GUILD_MONEY_OPS_PREDICATE_SQL}`);
+    expect(money).not.toContain('ANY(');
+    expect(money).toContain('LIMIT $2');
+    expect(money).toContain('bl.realm = $3');
+    expect(money).toContain('bl.id < $4');
+    const all = guildBankLogPageSql({ cursor: true, money: false });
+    expect(all).toContain('bl.op = ANY($2::text[])');
+    expect(all).toContain('LIMIT $3');
+    expect(all).toContain('bl.realm = $4');
+    expect(all).toContain('bl.id < $5');
+    expect(guildBankLogPageSql({ cursor: false, money: false })).not.toContain('bl.id <');
   });
 });
 

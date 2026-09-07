@@ -217,12 +217,13 @@ describe('guild_bank_window: no magic values (the bank_window twin)', () => {
   });
 
   it('pins the mobile touch floor for the guild tab controls and the gold-prompt coin fields', () => {
+    // The history chips and Show older join the same rule (review item).
     // The .gbank-* selectors match NEITHER anchor of bank_window.test.ts's
     // generic >=40px mobile scan (it keys on .bank-*), so their presence is
     // pinned here: deleting either rule must go red.
     const mobileCss = readFileSync('src/styles/hud.mobile.css', 'utf8');
     expect(mobileCss).toMatch(
-      /body\.mobile-touch #bank-window \.bank-tab,\s*body\.mobile-touch #bank-window \.gbank-view-tab,\s*body\.mobile-touch #bank-window \.gbank-gold-btn \{\s*min-height: 40px;/,
+      /body\.mobile-touch #bank-window \.bank-tab,\s*body\.mobile-touch #bank-window \.gbank-view-tab,\s*body\.mobile-touch #bank-window \.gbank-gold-btn,\s*body\.mobile-touch #bank-window \.gbank-log-filter,\s*body\.mobile-touch #bank-window \.gbank-log-older \{\s*min-height: 40px;/,
     );
     expect(mobileCss).toMatch(
       /body\.mobile-touch \.gbank-coin-row \.coininput \{\s*min-height: 40px;\s*font-size: 16px;/,
@@ -1559,6 +1560,25 @@ describe('the transaction HISTORY controls (filters and older pages)', () => {
     expect(chips(h).map((c) => c.getAttribute('aria-pressed'))).toEqual(['true', 'false', 'false']);
     // The first read was made under `all`.
     expect(h.kinds[0]).toBe('all');
+    // Every chip carries a focus key: pressing one rebuilds the pane, and the
+    // restore ladder must re-land on the chip, never on the close button.
+    expect(chips(h).map((c) => c.dataset.focusKey)).toEqual([
+      'gbank:log:filter:all',
+      'gbank:log:filter:items',
+      'gbank:log:filter:money',
+    ]);
+  });
+
+  it('keeps keyboard focus on the chip that was activated across the repaint', () => {
+    const h = harness(guildInfo());
+    h.world.logView = logView({ entries: [logEntry({ id: 3 })] });
+    openHistory(h);
+    const items = chips(h)[1];
+    items.focus();
+    items.click();
+    expect((document.activeElement as HTMLElement | null)?.dataset.focusKey).toBe(
+      'gbank:log:filter:items',
+    );
   });
 
   it('pressing a chip re-reads the history under that kind and presses it', () => {
@@ -1611,6 +1631,7 @@ describe('the transaction HISTORY controls (filters and older pages)', () => {
     openHistory(h);
     const btn = h.root.querySelector<HTMLButtonElement>('.gbank-log-older');
     expect(btn).not.toBeNull();
+    expect(btn?.dataset.focusKey).toBe('gbank:log:older');
     expect(h.root.querySelector('.gbank-log-foot-older')).not.toBeNull();
     // The footer rides INSIDE the scroller, after the rows.
     expect(h.root.querySelector('.bank-scroll .gbank-log-foot')).not.toBeNull();

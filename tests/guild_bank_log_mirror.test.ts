@@ -123,6 +123,18 @@ describe('GuildBankLogMirror: matching answers to questions', () => {
     expect(view.more).toBe(false);
   });
 
+  it('accepts a pre-paging frame under ANY chip rather than sitting on loading forever', () => {
+    // A server that predates paging states no kind. Under Items or Money a
+    // strict kind match would drop it, re-request once per TTL and drop it
+    // again, with the pane on loading and no refusal to explain it.
+    const m = new GuildBankLogMirror();
+    m.read('money', 0);
+    m.receive({ t: 'gbanklog', ok: true, entries: [row(2), row(1)] });
+    const view = m.read('money', 1).view;
+    expect(view.state).toBe('ready');
+    expect(view.entries.map((e) => e.id)).toEqual([2, 1]);
+  });
+
   it('a refusal wipes every page and keeps reporting refused', () => {
     const m = new GuildBankLogMirror();
     m.read('all', 0);
@@ -267,6 +279,45 @@ describe('GuildBankLogMirror: merging a newest-window refresh over loaded pages'
     const view = m.read('all', 2).view;
     expect(view.entries.map((e) => e.id)).toEqual([9, 8, 6, 5]);
     expect(view.more).toBe(false);
+  });
+
+  it('an older page landing under a refresh that replaced the rows is DROPPED, never seated as a hole', () => {
+    // The review's probe: head 200..151 (more), Show older sends cursor 151,
+    // the TTL refresh answers 260..211 with no overlap (sixty ops landed) and
+    // replaces the rows, then the page for 151 arrives. Appending 150..101
+    // under 260..211 would seat a hole (210..151 missing) that every later
+    // overlapping refresh preserves. The page is dropped, the footer offers
+    // older rows again from the NEW oldest id, and `more` stays the head's.
+    const m = new GuildBankLogMirror();
+    m.read('all', 0);
+    const head = Array.from({ length: 50 }, (_, i) => row(200 - i));
+    m.receive(ok(head, { more: true }));
+    expect(m.requestOlder(1)).toEqual({ cmd: 'guild_bank_log', kind: 'all', before: 151 });
+    const refreshed = Array.from({ length: 50 }, (_, i) => row(260 - i));
+    m.receive(ok(refreshed, { more: true }));
+    // The in-flight older request is forgotten with the rows it belonged to.
+    expect(m.read('all', 2).view.olderPending).toBe(false);
+    const stale = Array.from({ length: 50 }, (_, i) => row(150 - i));
+    m.receive(ok(stale, { before: 151, more: false }));
+    const view = m.read('all', 3).view;
+    expect(view.entries.map((e) => e.id)).toEqual(refreshed.map((r) => r.id));
+    expect(view.more).toBe(true);
+    expect(m.requestOlder(4)).toEqual({ cmd: 'guild_bank_log', kind: 'all', before: 211 });
+  });
+
+  it('an older page whose cursor is no longer the oldest loaded id is dropped even if still pending', () => {
+    // Belt and braces for the same race: even if the pending cursor were kept,
+    // a page is appended only under the row it was asked below.
+    const m = new GuildBankLogMirror();
+    m.read('all', 0);
+    m.receive(ok([row(9), row(8)], { more: true }));
+    m.requestOlder(1);
+    // A contiguous refresh that adds a NEWER row keeps the pages and the pending
+    // cursor: the oldest loaded id is still 8, so the page still fits.
+    m.receive(ok([row(10), row(9), row(8)], { more: true }));
+    expect(m.read('all', 2).view.olderPending).toBe(true);
+    m.receive(ok([row(6)], { before: 8, more: false }));
+    expect(ids(m, 3)).toEqual([10, 9, 8, 6]);
   });
 
   it('an empty refresh over loaded rows yields an empty ready history', () => {

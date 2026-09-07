@@ -126,7 +126,7 @@ describe('decodeGuildBankLogFrame', () => {
     const decoded = decodeGuildBankLogFrame({ t: 'gbanklog', ok: true, entries: [wireRow()] });
     expect(decoded).toEqual({
       refused: false,
-      kind: 'all',
+      kind: null,
       before: null,
       more: false,
       entries: [
@@ -147,7 +147,7 @@ describe('decodeGuildBankLogFrame', () => {
     // A refusal must never be able to smuggle history onto the pane.
     expect(decodeGuildBankLogFrame({ t: 'gbanklog', ok: false, entries: [wireRow()] })).toEqual({
       refused: true,
-      kind: 'all',
+      kind: null,
       before: null,
       more: false,
       entries: [],
@@ -216,7 +216,7 @@ describe('decodeGuildBankLogFrame', () => {
   it('tolerates a missing entries array', () => {
     expect(decodeGuildBankLogFrame({ t: 'gbanklog', ok: true })).toEqual({
       refused: false,
-      kind: 'all',
+      kind: null,
       before: null,
       more: false,
       entries: [],
@@ -233,8 +233,10 @@ describe('decodeGuildBankLogFrame', () => {
       entries: [],
     });
     expect(decoded).toMatchObject({ kind: 'money', before: 400, more: true });
-    // An unknown kind reads as `all`, a bad cursor as none, a non-boolean
-    // `more` as false: a skewed frame can never invent a filter or a page.
+    // An unknown (present) kind reads as `all`, a bad cursor as none, a
+    // non-boolean `more` as false: a skewed frame can never invent a filter
+    // or a page. An ABSENT kind is different: it decodes as unstated (null),
+    // the pre-paging server's frame, which the mirror accepts under any chip.
     const skewed = decodeGuildBankLogFrame({
       t: 'gbanklog',
       ok: true,

@@ -461,6 +461,27 @@ describe('loadGuildBankLogRows: the activity log statement', () => {
     expect(params).toEqual([913, ['deposit'], 51, 'Claudemoon', 400]);
   });
 
+  it('the money slice binds no op list: its predicate is the partial index literal', async () => {
+    const client = { query: vi.fn(), release: vi.fn() };
+    client.query.mockResolvedValue({ rows: [], rowCount: 0 } as never);
+    dbMock.connect.mockResolvedValue(client as never);
+    await loadGuildBankLogPage(
+      913,
+      50,
+      ['deposit_gold', 'withdraw_gold', 'buy_slots', 'open_bank', 'create_fee'],
+      400,
+    );
+    const [sql, params] = client.query.mock.calls.find((c) =>
+      String(c[0]).includes('FROM bank_ledger'),
+    ) as [string, unknown[]];
+    expect(sql).toContain(
+      "bl.op IN ('buy_slots', 'create_fee', 'deposit_gold', 'open_bank', 'withdraw_gold')",
+    );
+    expect(sql).not.toContain('ANY(');
+    expect(sql).toContain('bl.id < $4');
+    expect(params).toEqual([913, 51, 'Claudemoon', 400]);
+  });
+
   it('reports `more` from the probe row and never hands it to the caller', async () => {
     const client = { query: vi.fn(), release: vi.fn() };
     const row = (id: number) => ({

@@ -137,8 +137,11 @@ export class GuildBankLogMirror {
       return;
     }
     // An answer for a filter the pane is no longer showing: dropped, never
-    // installed under the wrong label.
-    if (frame.kind !== this.kind) return;
+    // installed under the wrong label. A frame that states NO kind comes from
+    // a server that predates paging and answers the newest window of
+    // everything; it is accepted under any chip rather than dropped forever
+    // (the pane would otherwise sit on loading, re-requesting once per TTL).
+    if (frame.kind !== null && frame.kind !== this.kind) return;
     if (frame.before === null) {
       this.installHead(frame);
       return;
@@ -147,6 +150,13 @@ export class GuildBankLogMirror {
     // a reset in between): dropped.
     if (this.older === null || this.older.before !== frame.before) return;
     this.older = null;
+    // The cursor must STILL be the oldest loaded id. A newest-window refresh
+    // with no overlap can replace the rows while this page is in flight (the
+    // race the review probed: head 200..151, cursor 151 out, refresh lands
+    // 260..211, then 150..101 arrives); appending it under rows it is not
+    // contiguous with would seat a hole that every later overlapping refresh
+    // preserves. Dropped instead, and the footer offers older rows again.
+    if (this.entries[this.entries.length - 1]?.id !== frame.before) return;
     const before = frame.before;
     const below = frame.entries.filter((e) => e.id < before);
     this.entries = Object.freeze([...this.entries, ...below]);
@@ -171,9 +181,13 @@ export class GuildBankLogMirror {
       // worth of ops landed since the loaded pages were read, so nothing
       // below the window is known to be contiguous with it) or the window is
       // the whole history now. Either way the window replaces the pages
-      // rather than being shown above a hole.
+      // rather than being shown above a hole, and an older page still in
+      // flight for the OLD rows is forgotten with them (its answer would be
+      // dropped by the oldest-id check anyway; clearing it lets the footer
+      // offer older rows again at once).
       this.entries = Object.freeze([...head]);
       this.more = frame.more;
+      this.older = null;
       return;
     }
     // Contiguous: the window plus every loaded row older than it. `more`

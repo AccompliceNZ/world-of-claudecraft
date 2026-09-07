@@ -95,6 +95,10 @@ export class GuildBankLogPane {
   // The pane state the last paint ANNOUNCED, so a repeated repaint (any officer
   // op rebuilds this window) cannot re-announce the same refusal over and over.
   private lastAnnounced: GuildBankLogPaneModel['kind'] | null = null;
+  // The footer the last paint drew, so the older-page loading line announces
+  // once when it APPEARS (the same live-region rule as the refusal below) and
+  // not on every repaint while the page is in flight.
+  private lastFooter: GuildBankLogFooter | null = null;
 
   constructor(private readonly deps: GuildBankLogPaneDeps) {}
 
@@ -110,6 +114,7 @@ export class GuildBankLogPane {
       const notice = this.buildNotice(model);
       wrap.appendChild(notice);
       el.appendChild(wrap);
+      this.lastFooter = null;
       this.announce(notice, model.kind);
       return;
     }
@@ -165,9 +170,25 @@ export class GuildBankLogPane {
       none.textContent = t('hudChrome.bank.logSearchNoMatch');
       scroll.appendChild(none);
     }
-    scroll.appendChild(this.buildFooter(model.footer));
+    const foot = this.buildFooter(model.footer);
+    scroll.appendChild(foot);
     wrap.appendChild(scroll);
     el.appendChild(wrap);
+    this.announceFooter(foot, model.footer);
+  }
+
+  // The loading footer's live region is inserted already populated by the
+  // rebuild, which (see announce below) is generally NOT announced; re-write
+  // its text one task later, once, on the paint where it first appears.
+  private announceFooter(node: HTMLElement, footer: GuildBankLogFooter): void {
+    const changed = this.lastFooter !== footer;
+    this.lastFooter = footer;
+    if (!changed || footer !== 'loading') return;
+    const text = t('hudChrome.bank.logOlderLoading');
+    window.setTimeout(() => {
+      node.textContent = '';
+      node.appendChild(document.createTextNode(text));
+    }, 0);
   }
 
   /** The text a search matches against for one row: exactly what the row

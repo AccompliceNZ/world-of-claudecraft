@@ -1006,21 +1006,44 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
       expect(second.more).toBe(false);
     });
 
-    it('uses the partial index and never a sequential scan', async () => {
-      const plan = await pool.query(
-        `EXPLAIN (FORMAT JSON)
-         SELECT bl.id, bl.created_at, bl.op, bl.item_id, bl.count, bl.copper_delta,
-                c.name AS character_name
-           FROM bank_ledger bl
-           LEFT JOIN characters c ON c.id = bl.character_id
-          WHERE bl.container = 'guild' AND bl.container_id = $1
-            AND bl.op = ANY($2::text[])
-          ORDER BY bl.id DESC
-          LIMIT $3`,
-        [1, ['deposit_gold'], 50],
-      );
-      const text = JSON.stringify(plan.rows[0]);
-      expect(text).toContain('bank_ledger_container_recent');
+    it('every statement arm walks its partial index, never a sequential scan', async () => {
+      // EXPLAIN exactly what ships (guildBankLogPageSql), never a hand-copied
+      // statement: the two-text split exists because of plan shape, so the
+      // cursor arm and the money arm are the ones that want the pin. The money
+      // arm must land on its own partial index (bank_ledger_container_money_recent),
+      // the others on the container index.
+      await db.runConcurrentIndexMigrations();
+      const explain = async (sql: string, params: unknown[]) =>
+        JSON.stringify((await pool.query(`EXPLAIN (FORMAT JSON) ${sql}`, params)).rows[0]);
+      const ops = ['deposit', 'withdraw', 'deposit_gold'];
+      const moneyOps = ['deposit_gold', 'withdraw_gold', 'buy_slots', 'open_bank', 'create_fee'];
+      const head = await explain(logDb.guildBankLogPageSql({ cursor: false, money: false }), [
+        1,
+        ops,
+        51,
+        realm,
+      ]);
+      expect(head).toContain('bank_ledger_container_recent');
+      expect(head).not.toContain('Seq Scan');
+      const older = await explain(logDb.guildBankLogPageSql({ cursor: true, money: false }), [
+        1,
+        ops,
+        51,
+        realm,
+        400,
+      ]);
+      expect(older).toContain('bank_ledger_container_recent');
+      expect(older).not.toContain('Seq Scan');
+      const money = await explain(logDb.guildBankLogPageSql({ cursor: true, money: true }), [
+        1,
+        51,
+        realm,
+        400,
+      ]);
+      expect(money).toContain('bank_ledger_container_money_recent');
+      expect(money).not.toContain('Seq Scan');
+      // And the reader really takes the money arm for the money slice.
+      expect(logDb.isGuildBankMoneySlice(moneyOps)).toBe(true);
     });
   });
 

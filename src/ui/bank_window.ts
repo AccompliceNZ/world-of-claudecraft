@@ -41,6 +41,7 @@ import { bankBonusSectionHtml } from './bank_bonus_view';
 import { showBuyConfirmPrompt } from './bank_buy_prompt';
 import { type BankScrollOffsets, planBankScrollRestore } from './bank_chrome_layout_core';
 import { filterBankSlots } from './bank_filter';
+import { annotateGuildFocusKeys, annotateVaultFocusKeys } from './bank_focus_keys';
 import { bankMeterAriaLabel, bankMeterTooltipHtml } from './bank_meter_view';
 import { showQuantityPrompt } from './bank_quantity_prompt';
 import { BankRungPurchase } from './bank_rung_purchase_core';
@@ -73,7 +74,7 @@ import { markDialogRoot } from './dialog_root';
 import { itemDisplayName } from './entity_i18n';
 import { esc } from './esc';
 import { captureFocusKey, findFocusKey, focusedWithin, restoreFirstEnabled } from './focus_restore';
-import { type GuildBankViewModel, guildBankSlotFocusKeys } from './guild_bank_view';
+import type { GuildBankViewModel } from './guild_bank_view';
 import {
   GUILD_PANEL_ID,
   GUILD_TAB_ID,
@@ -697,7 +698,7 @@ export class BankWindow {
       if (vaultTab && el.querySelector(`#${VAULT_PANEL_ID}`)) {
         vaultTab.setAttribute('aria-controls', VAULT_PANEL_ID);
       }
-      this.annotateVaultFocusKeys(el);
+      annotateVaultFocusKeys(el);
       this.restoreScroll(el, prevScroll);
       if (hadFocus) this.restoreControlFocus(el, focusKey);
       return;
@@ -711,7 +712,7 @@ export class BankWindow {
       if (guildTab && el.querySelector(`#${GUILD_PANEL_ID}`)) {
         guildTab.setAttribute('aria-controls', GUILD_PANEL_ID);
       }
-      this.annotateGuildFocusKeys(el, guildModel);
+      annotateGuildFocusKeys(el, guildModel);
       this.restoreScroll(el, prevScroll);
       // The history view's search box shares `.bag-search`: every keystroke
       // rebuilds the pane, and the caret must land where it was.
@@ -778,43 +779,6 @@ export class BankWindow {
     } else if (hadFocus) {
       this.restoreControlFocus(el, focusKey);
     }
-  }
-
-  // Stamp the guild pane's controls with their focus keys AFTER renderInto
-  // returned: the shared data-focus-key namespace stays inside this module,
-  // the one that imports focus_restore (the single-reader guard in
-  // tests/focus_restore.test.ts), and the pane stays focus-agnostic. Cells are
-  // keyed by semantic item/copy identity. Duplicate-group cardinality is part
-  // of that key, so an ambiguous disappearing twin safely falls back instead
-  // of transferring focus to a different physical copy.
-  private annotateGuildFocusKeys(el: HTMLElement, model: GuildBankViewModel): void {
-    // The Contents / Log sub-strip first: the log repaints on ANY officer's op
-    // (its cache busts and the response lands), so a keyboard user reading it
-    // must not be thrown off the strip by somebody else's deposit.
-    for (const tab of el.querySelectorAll<HTMLElement>('.gbank-view-tab')) {
-      tab.dataset.focusKey = `gbank:view:${tab.dataset.tab}`;
-    }
-    const slotKeys = model.kind === 'guild' ? guildBankSlotFocusKeys(model.slots) : [];
-    // A key miss stamps NOTHING: '' would still satisfy the restore ladder.
-    el.querySelectorAll<HTMLElement>('.bank-grid .bank-item:not(.empty)').forEach((cell, i) => {
-      if (slotKeys[i] !== undefined) cell.dataset.focusKey = slotKeys[i];
-    });
-    const [deposit, withdraw] = Array.from(el.querySelectorAll<HTMLElement>('.gbank-gold-btn'));
-    if (deposit) deposit.dataset.focusKey = 'gbank:deposit-gold';
-    if (withdraw) withdraw.dataset.focusKey = 'gbank:withdraw-gold';
-    const buy = el.querySelector<HTMLElement>('.bank-buy-btn');
-    if (buy) buy.dataset.focusKey = 'gbank:buy';
-  }
-
-  // VaultTab owns semantic row/action keys because it has the row model in
-  // hand. This window adds only its fixed footer controls after renderInto.
-  private annotateVaultFocusKeys(el: HTMLElement): void {
-    const deposit = el.querySelector<HTMLElement>('.vault-deposit-all');
-    if (deposit) deposit.dataset.focusKey = 'vault:deposit-all';
-    const unlock = el.querySelector<HTMLElement>('.vault-unlock-btn');
-    if (unlock) unlock.dataset.focusKey = 'vault:unlock';
-    const upgrade = el.querySelector<HTMLElement>('.vault-upgrade-btn');
-    if (upgrade) upgrade.dataset.focusKey = 'vault:upgrade';
   }
 
   // Re-land focus after a full rebuild: the control the user was on (resolved

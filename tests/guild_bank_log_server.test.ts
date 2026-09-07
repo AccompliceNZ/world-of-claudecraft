@@ -561,6 +561,26 @@ describe('guild_bank_log: the read gate is the BANK gate', () => {
   });
 });
 
+describe('guild_bank_log: the read meter is not the op bucket', () => {
+  it('a burst of history reads spends read tokens and leaves the op bucket untouched', async () => {
+    // The review's scenario: a member toggling All / Items / Money and paging
+    // used to drain the deposit bucket (burst 10), so their next deposit was
+    // dropped on the floor. Reads now draw from their own bucket.
+    const server = new GameServer();
+    const { session } = joinServer(server, 1, 'Offi');
+    stand(server, session, 'officer');
+    const opTokensBefore = session.guildBankOpGuard.tokens;
+    for (let i = 0; i < 15; i++) dispatch(server, session);
+    await settle();
+    expect(session.guildBankOpGuard.tokens).toBe(opTokensBefore);
+    expect(session.guildBankLogReadGuard.tokens).toBeLessThan(opTokensBefore);
+    // ...and a read past the read budget is refused without touching the ops.
+    for (let i = 0; i < 20; i++) dispatch(server, session);
+    expect(session.guildBankOpGuard.tokens).toBe(opTokensBefore);
+    expect(session.guildBankLogReadGuard.tokens).toBeLessThan(1);
+  });
+});
+
 describe('guild_bank_log: the transaction history query', () => {
   const dispatchQuery = (
     server: GameServer,

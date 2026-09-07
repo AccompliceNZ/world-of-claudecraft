@@ -387,6 +387,35 @@ gate green). Teardown of docs/guild-bank/ awaits the user's explicit confirmatio
     reuses `.bag-search` so BankWindow's existing focus + caret capture carries typing across
     the rebuild each keystroke causes (the guild arm now restores it like the personal arm).
     The query lives on GuildBankTab, joins the repaint key, and resets on close.
+  - REVIEW (2026-09-07, PR #3913, Rubsey): five should-fix items landed.
+    (1) MIRROR RACE: an older page could land under a newest-window refresh that
+    had replaced the rows (head 200..151, cursor 151 out, refresh 260..211 with no
+    overlap, then 150..101 appended under it) and seat a hole every later overlapping
+    refresh preserved. The older arm now requires the cursor to STILL be the oldest
+    loaded id, and the replace branch forgets the in-flight cursor; the sequence is a
+    test. (2) MONEY SLICE COST: `op` is a heap filter under the container index, so
+    a Money page on a material-heavy guild walked every item row between money rows
+    and proving `more = false` walked the whole guild. A partial index
+    (`bank_ledger_container_money_recent`, `bank_ledger_indexes.ts`) carries the
+    money rows of the guild container in id order; its predicate is a LITERAL derived
+    from the seam classification and interpolated verbatim into the money arm's
+    statement (no bind parameter can prove the partial-index implication), the
+    account-wealth large-movement precedent; the reader's header now states the
+    per-slice cost honestly. (3) READ METER: history reads drew from the deposit and
+    withdraw bucket (burst 10), so a member toggling chips and paging drained it and
+    their next deposit dropped. Reads now draw from their own
+    `guild_bank_log_read_guard.ts` bucket (burst 20, 2/s) with its own drop cause
+    (`guild_bank_log` in WS_DROP_CAUSES); game.ts collapsed its four shed sites onto
+    one helper to stay under its ratchet. (4) FOCUS KEYS: the chips and Show older
+    carry `data-focus-key` (`gbank:log:filter:<kind>`, `gbank:log:older`), stamped by
+    the new `src/ui/bank_focus_keys.ts` (a focus_restore importer; bank_window.ts
+    dropped to 1879). (5) MOBILE: the chips and Show older join the 40px tap floor.
+    Nits: an ABSENT frame kind decodes as unstated (null) and the mirror accepts it
+    under any chip, so a pre-paging server never leaves the pane on loading; the
+    older-page loading line re-writes its text one task after it first appears, so
+    it really announces; the pg plan pin EXPLAINs the shipped statement text
+    (`guildBankLogPageSql`) for the head, cursor and money arms. The retired
+    sentence keys stay in the catalog pending the maintainer's call.
   - SCREENSHOTS: `docs/screenshots/guild-bank-history/{before,after}-*.png` via
     `scripts/guild_bank_history_shot.mjs`, the log shot's sibling that logs an EXISTING
     member into a guild whose ledger already runs to pages (credentials from the

@@ -86,12 +86,16 @@ export type GuildBankLogRequest = {
  *  A success frame ECHOES the query it answers (`kind`, `before`) so the
  *  mirror can drop an answer that no longer matches what the pane is showing,
  *  and carries `more`, the server's word on whether older rows exist. A frame
- *  from a server that predates paging carries none of the three: it is read
- *  as the newest window of `all` with nothing older, which is exactly what
- *  such a server was answering. */
+ *  from a server that predates paging carries none of the three: it decodes
+ *  with kind UNSTATED (null), no cursor, and nothing older, which is exactly
+ *  what such a server was answering, and the mirror accepts it under any
+ *  chip. */
 export interface GuildBankLogFrame {
   refused: boolean;
-  kind: GuildBankLogKind;
+  /** The slice the frame answers, or null when the frame states none (a
+   *  server that predates paging): unstated, not `all`, so the mirror can
+   *  accept it under any chip instead of dropping it as a mismatch. */
+  kind: GuildBankLogKind | null;
   before: number | null;
   entries: GuildBankLogEntry[];
   more: boolean;
@@ -138,7 +142,7 @@ export function decodeGuildBankLogFrame(msg: unknown): GuildBankLogFrame | null 
   const frame = msg as Record<string, unknown>;
   if (frame.t !== 'gbanklog') return null;
   if (frame.ok !== true) {
-    return { refused: true, kind: 'all', before: null, entries: [], more: false };
+    return { refused: true, kind: null, before: null, entries: [], more: false };
   }
   const rows = Array.isArray(frame.entries) ? frame.entries : [];
   const entries: GuildBankLogEntry[] = [];
@@ -153,7 +157,7 @@ export function decodeGuildBankLogFrame(msg: unknown): GuildBankLogFrame | null 
       : null;
   return {
     refused: false,
-    kind: guildBankLogKindOf(frame.kind),
+    kind: frame.kind === undefined ? null : guildBankLogKindOf(frame.kind),
     before,
     entries,
     more: frame.more === true,

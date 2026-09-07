@@ -1090,7 +1090,11 @@ const MONOLITHS: MonolithRow[] = [
     // focus + caret carry (capture before the wipe, restore after) moved to
     // src/ui/bank_search_focus.ts so the personal and guild arms share one
     // rule. Exact count, zero slack.
-    ceiling: 1915,
+    // Down 1915 -> 1879 at the history review: the guild and vault focus-key
+    // annotators moved to src/ui/bank_focus_keys.ts (a focus_restore importer,
+    // so the single-reader family holds) when the history's chips and Show
+    // older button gained keys. Exact count, zero slack.
+    ceiling: 1879,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/CLAUDE.md)',
   },
 ];
