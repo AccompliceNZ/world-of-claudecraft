@@ -73,6 +73,7 @@ import {
 } from '../src/sim/reliquary';
 import { type CharacterState, Sim } from '../src/sim/sim';
 import { runApplyEnchant, runCraft } from './helpers/enchant_family_cast';
+import { stripComments } from './helpers/strip_comments';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -865,13 +866,14 @@ describe('Reliquary profession marks (Phase 7)', () => {
       /const visitMark = `gather_event:\$\{flavor\}`;[\s\S]*?ctx\.markVisited\(finder, visitMark\);[\s\S]*?noteReliquaryMark\(ctx, finder, visitMark\);/,
     );
 
-    const interactionSrc = fs
-      .readFileSync(path.join(__dirname, '../src/sim/interaction.ts'), 'utf8')
-      .split('\n')
-      .filter((line) => !/^\s*\/\//.test(line))
-      .join('\n');
+    const corpseHarvestGrantSrc = stripComments(
+      fs.readFileSync(
+        path.join(__dirname, '../src/sim/professions/corpse_harvest_grant.ts'),
+        'utf8',
+      ),
+    );
     // Perfect specimen land: deed visit + Reliquary mark on the same arm.
-    expect(interactionSrc).toMatch(
+    expect(corpseHarvestGrantSrc).toMatch(
       /ctx\.markVisited\(meta, 'gather_event:perfect_specimen'\);[\s\S]*?noteReliquaryMark\(ctx, meta, 'gather_event:perfect_specimen'\);/,
     );
 
