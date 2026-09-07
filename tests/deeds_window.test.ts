@@ -275,11 +275,11 @@ describe('hud wiring', () => {
     const plateIdx = hudCss.indexOf('#banner.banner-deed');
     expect(plateIdx).toBeGreaterThan(-1);
     const plate = hudCss.slice(plateIdx, hudCss.indexOf('}', plateIdx));
-    expect(plate).toMatch(/color:\s*var\(--color-deed-banner-text\)/);
-    expect(plate).toMatch(/border:[^;]*var\(--color-deed-banner-border\)/);
-    expect(plate).toMatch(/background:\s*var\(--color-deed-banner-bg\)/);
-    // The decorative lift sheds with the graphics tier like its neighbours.
-    expect(plate).toMatch(/box-shadow:[^;]*var\(--fx-shadow/);
+    // The redesign delegates the look declarations to ui-panel-strong while this
+    // host rule supplies the deed-specific primitive inputs.
+    expect(plate).toMatch(/--color-text-light:\s*var\(--color-deed-banner-text\)/);
+    expect(plate).toMatch(/--border:\s*var\(--color-deed-banner-border\)/);
+    expect(plate).toMatch(/--panel-bg-strong:\s*var\(--color-deed-banner-bg\)/);
     // Tokens carry real values, and the deed text colour is NOT the level-up
     // gold: aliasing it to --gold would keep every other pin green while
     // erasing the entire point of the variant.

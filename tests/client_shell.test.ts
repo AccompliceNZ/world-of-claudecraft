@@ -2014,8 +2014,9 @@ describe('client HTML shell', () => {
     // pool into hud.ts fails here, not just deleting the builder from the painter file.
     expect(hudTs).toContain('new AurasPainter(');
     expect(aurasPainterTs).toContain('private readonly pool = new Map<string, PooledAura>();');
-    expect(aurasPainterTs).toContain("const DUR_CLASS = 'dur';");
-    expect(aurasPainterTs).toContain("const STACKS_CLASS = 'stacks';");
+    // W3 keeps the legacy child anchors while minting the primitive classes once.
+    expect(aurasPainterTs).toContain("const DUR_CLASS = 'dur ui-aura-time';");
+    expect(aurasPainterTs).toContain("const STACKS_CLASS = 'stacks ui-badge ui-badge--corner';");
     expect(aurasPainterTs).toContain('this.createNode()');
 
     // FCT nodes: a fixed-size pre-allocated div ring capped at FCT_POOL_CAP, each

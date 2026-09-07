@@ -2608,20 +2608,14 @@
     --lr-pulse: 1s;
   }
   .bar.low .bar-fill {
-    box-shadow:
-      0 0 5px 1px rgba(150, 205, 255, var(--lr-opacity)),
-      inset 0 0 4px rgba(220, 240, 255, 0.9);
+    box-shadow: var(--shadow-low-resource-mana);
     animation: low-resource-pulse var(--lr-pulse) ease-in-out infinite;
   }
   .bar.energy.low .bar-fill {
-    box-shadow:
-      0 0 5px 1px rgba(255, 225, 110, var(--lr-opacity)),
-      inset 0 0 4px rgba(255, 245, 200, 0.9);
+    box-shadow: var(--shadow-low-resource-energy);
   }
   .bar.focus.low .bar-fill {
-    box-shadow:
-      0 0 5px 1px rgba(255, 180, 70, var(--lr-opacity)),
-      inset 0 0 4px rgba(255, 235, 195, 0.9);
+    box-shadow: var(--shadow-low-resource-focus);
   }
   .low-resource-label {
     display: none;
@@ -2632,19 +2626,17 @@
     font-size: 9px;
     font-weight: bold;
     letter-spacing: 0.5px;
-    color: #eaf4ff;
-    text-shadow:
-      0 0 3px #000,
-      1px 1px 1px #000;
+    color: var(--color-low-resource-mana);
+    text-shadow: var(--outline-shadow);
     text-transform: uppercase;
     pointer-events: none;
     animation: low-resource-pulse var(--lr-pulse, 1s) ease-in-out infinite;
   }
   .bar.energy.low .low-resource-label {
-    color: #fff3c2;
+    color: var(--color-low-resource-energy);
   }
   .bar.focus.low .low-resource-label {
-    color: #ffe0a0;
+    color: var(--color-low-resource-focus);
   }
   @keyframes low-resource-pulse {
     0%,
@@ -2665,6 +2657,13 @@
     .low-resource-label {
       opacity: 1;
     }
+  }
+  body.reduce-motion .bar.low .bar-fill,
+  body.reduce-motion .low-resource-label {
+    animation: none;
+  }
+  body.reduce-motion .low-resource-label {
+    opacity: 1;
   }
   .combo-row {
     display: flex;
@@ -3014,7 +3013,7 @@
     align-items: flex-end;
     /* Clears the last buff row's out-of-flow duration labels (13px) before the
        debuff row starts, with a little breathing room on top. */
-    gap: 20px;
+    gap: 21px;
     max-width: 320px;
     /* The column's empty area must not eat clicks; the strips re-enable it. */
     pointer-events: none;
@@ -3095,13 +3094,8 @@
     display: none;
   }
   .buff {
-    width: 28px;
-    height: 28px;
-    border: 1px solid var(--color-buff);
-    border-radius: 4px;
     position: relative;
     cursor: default;
-    background-color: #10141c;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -3131,42 +3125,45 @@
       filter: brightness(1.4);
     }
   }
+  body.reduce-motion .buff.expiring {
+    animation: none;
+    filter: brightness(1.4);
+  }
   /* A debuff reads as harmful at a glance: a thicker border (border-box, so no
      layout shift) tinted by magic school, WoW-style (physical keeps the base red). */
   .buff.debuff {
-    border-color: var(--color-debuff);
+    --aura-school-color: var(--color-debuff);
+    border-color: var(--aura-school-color);
     border-width: 2px;
   }
   .buff.debuff[data-school="fire"] {
-    border-color: var(--color-debuff-fire);
+    --aura-school-color: var(--color-debuff-fire);
   }
   .buff.debuff[data-school="frost"] {
-    border-color: var(--color-debuff-frost);
+    --aura-school-color: var(--color-debuff-frost);
   }
   .buff.debuff[data-school="arcane"] {
-    border-color: var(--color-debuff-arcane);
+    --aura-school-color: var(--color-debuff-arcane);
   }
   .buff.debuff[data-school="shadow"] {
-    border-color: var(--color-debuff-shadow);
+    --aura-school-color: var(--color-debuff-shadow);
   }
   .buff.debuff[data-school="nature"] {
-    border-color: var(--color-debuff-nature);
+    --aura-school-color: var(--color-debuff-nature);
   }
   .buff.debuff[data-school="holy"] {
-    border-color: var(--color-debuff-holy);
+    --aura-school-color: var(--color-debuff-holy);
   }
   /* The LOCAL player's own auras on the target strip (auras_view ownFirst):
      larger and gold-glowed so the dots/hots YOU are maintaining read at a
      glance among other casters'. A debuff keeps its school border tint (the
      size and glow carry the prominence). Extra information only, never less,
      so no graphics tier sheds it (gameplay-neutral-graphics invariant). */
-  .buff.own {
-    width: 34px;
-    height: 34px;
-    box-shadow: 0 0 5px var(--color-primary-dim);
-  }
-  .buff.own:not(.debuff) {
-    border-color: var(--color-primary);
+  .buff.debuff.own {
+    border-color: var(--gold-dim);
+    box-shadow:
+      inset 0 0 0 1px var(--aura-school-color),
+      var(--glow-gold-soft);
   }
   /* The low-tier buff-cap overflow badge (auraVisibleCap, src/game/ui_tier_knobs.ts): a
      dashed "+N" tile standing in for the buff icons the LOW preset sheds past the cap.
@@ -3182,7 +3179,8 @@
     display: none;
     align-items: center;
     justify-content: center;
-    font: 700 12px var(--body-font);
+    font-size: 12px;
+    font-weight: 700;
     color: var(--color-text-muted);
     border-style: dashed;
   }
@@ -3191,7 +3189,7 @@
     cursor: context-menu;
   }
   .buff.cancelable:hover {
-    border-color: var(--color-gold, #d8b56b);
+    border-color: var(--gold-dim);
   }
   .buff .dur {
     position: absolute;
@@ -3199,24 +3197,9 @@
     left: 0;
     right: 0;
     text-align: center;
-    font-size: 10px;
-    color: #eee;
-    text-shadow: 1px 1px 1px #000;
   }
   .buff .stacks {
-    position: absolute;
-    top: -4px;
-    right: -3px;
-    min-width: 13px;
-    height: 13px;
-    padding: 0 2px;
     box-sizing: border-box;
-    text-align: center;
-    font: 700 10px / 12px var(--body-font);
-    color: #fff;
-    background: rgba(8, 8, 12, 0.92);
-    border: 1px solid var(--color-debuff);
-    border-radius: 7px;
   }
 
   /* ---------- target dots ---------- */
@@ -6863,7 +6846,7 @@
     position: absolute;
     font-weight: bold;
     pointer-events: none;
-    text-shadow: 1px 1px 3px #000;
+    text-shadow: var(--outline-shadow);
     animation: fct-rise 1.1s ease-out forwards;
     font-size: 17px;
     /* Centering uses the individual `translate` property (not the `transform` shorthand) so
@@ -6872,7 +6855,8 @@
        properties keep separate keyframe intervals, so the motion is byte-identical to
        the prior margin-top rise + transform scale pop. */
     translate: -50% -50%;
-    font-family: var(--title-font);
+    font-family: var(--font-display);
+    letter-spacing: 0.5px;
     z-index: 5;
   }
   .fct.crit {
@@ -6928,41 +6912,47 @@
      a landed hit blunted) vs taken (#7ec8e3, a cooler steel blue, a landed block you made);
      heal (#3ce63c); xp (#d9a3ff); rested xp (#6db8ff); Honor (#ffd100); the self note
      (#ff8c66). Crit stays the separate .fct.crit class. */
-  .fct-miss-self,
-  .fct-dodge-self {
-    color: #bbb;
+  .fct-miss-self {
+    color: var(--color-fct-miss-self);
   }
-  .fct-miss-other,
-  .fct-dodge-other,
+  .fct-dodge-self {
+    color: var(--color-fct-dodge-self);
+  }
+  .fct-miss-other {
+    color: var(--color-fct-miss-other);
+  }
+  .fct-dodge-other {
+    color: var(--color-fct-dodge-other);
+  }
   .fct-damage-done-auto {
-    color: #fff;
+    color: var(--color-fct-damage-done-auto);
   }
   .fct-damage-done-ability {
-    color: #ffe97a;
+    color: var(--color-fct-damage-done-ability);
   }
   .fct-damage-taken {
-    color: #ff5544;
+    color: var(--color-fct-damage-taken);
   }
   .fct-damage-done-block {
-    color: #b8c4d9;
+    color: var(--color-fct-damage-done-block);
   }
   .fct-damage-taken-block {
-    color: #7ec8e3;
+    color: var(--color-fct-damage-taken-block);
   }
   .fct-absorb {
-    color: #9fd7ff;
+    color: var(--color-fct-absorb);
   }
   .fct-heal {
-    color: #3ce63c;
+    color: var(--color-fct-heal);
   }
   .fct-xp {
-    color: #d9a3ff;
+    color: var(--color-fct-xp);
     font-size: calc(20px * var(--fct-scale, 1));
     animation-name: fct-xp-pop;
     animation-duration: 1.6s;
   }
   .fct-rested-xp {
-    color: #6db8ff;
+    color: var(--color-fct-rested-xp);
     font-size: calc(20px * var(--fct-scale, 1));
     animation-name: fct-xp-pop;
     animation-duration: 1.6s;
@@ -6991,10 +6981,16 @@
     animation-name: fct-rise;
   }
   .fct-honor {
-    color: #ffd100;
+    color: var(--color-fct-honor);
   }
   .fct-self-note {
-    color: #ff8c66;
+    color: var(--color-fct-self-note);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .fct {
+      animation: none !important;
+      opacity: 1;
+    }
   }
 
   /* ---------- Interface & Comfort settings ----------
@@ -7819,16 +7815,17 @@
     left: 50%;
     top: 21%;
     transform: translateX(-50%);
-    color: #ff2020;
+    color: var(--color-text-error);
     font-size: 18px;
     font-weight: bold;
-    font-family: var(--title-font);
-    text-shadow: 1px 1px 3px #000;
+    font-family: var(--font-display);
+    text-shadow: var(--title-shadow);
     opacity: 0;
     transition: opacity 0.4s;
     pointer-events: none;
   }
   #banner {
+    --color-text-light: var(--gold);
     position: absolute;
     left: 50%;
     top: 28%;
@@ -7836,18 +7833,14 @@
     width: max-content;
     max-width: calc(100vw - 48px);
     box-sizing: border-box;
-    color: var(--gold);
     font-size: 38px;
     font-weight: bold;
     line-height: 1.15;
     text-align: center;
-    text-shadow:
-      0 0 18px #00000088,
-      2px 2px 6px #000;
+    padding: 10px 22px;
     opacity: 0;
     transition: opacity 1.2s;
     pointer-events: none;
-    font-family: var(--title-font);
     letter-spacing: 1px;
     white-space: normal;
     overflow-wrap: anywhere;
@@ -7910,20 +7903,12 @@
      against the level-up's bare oversized gold text. Copy and lifetime are
      untouched: presentation only, never information. */
   #banner.banner-deed {
-    color: var(--color-deed-banner-text);
+    --color-text-light: var(--color-deed-banner-text);
+    --border: var(--color-deed-banner-border);
+    --panel-bg-strong: var(--color-deed-banner-bg);
     font-size: 26px;
     letter-spacing: 0.5px;
     padding: 8px 22px;
-    border: 1px solid var(--color-deed-banner-border);
-    border-radius: 8px;
-    background: var(--color-deed-banner-bg);
-    /* Scales with the graphics tier like every other decorative shadow here:
-       at the low preset --fx-shadow is 0 and the plate sheds its lift with
-       the rest of the HUD instead of keeping a full-blur outlier. */
-    box-shadow: 0 3px calc(14px * var(--fx-shadow, 1)) var(--color-art-shadow);
-    text-shadow:
-      0 0 10px #00000088,
-      1px 1px 4px #000;
   }
   /* Gathering skill milestone plate (hud.ts showBanner variant='skill').
      Framed copper craft card with the profession crest: distinct from the
@@ -7931,19 +7916,12 @@
      milestone never steals the "I leveled" reading. Layout comes from the
      variant-agnostic banner-with-art rules above; this class is cosmetic. */
   #banner.banner-skill {
-    color: var(--color-skill-banner-text);
+    --color-text-light: var(--color-skill-banner-text);
+    --border: var(--color-skill-banner-border);
+    --panel-bg-strong: var(--skill-banner-bg);
     font-size: 28px;
     letter-spacing: 0.6px;
     padding: 10px 26px 12px;
-    border: 1px solid var(--color-skill-banner-border);
-    border-radius: 10px;
-    background: var(--skill-banner-bg);
-    box-shadow:
-      0 0 0 1px var(--color-skill-banner-inset) inset,
-      0 4px calc(18px * var(--fx-shadow, 1)) var(--color-art-shadow);
-    text-shadow:
-      0 0 12px #00000099,
-      1px 1px 4px #000;
   }
   #banner.banner-skill .banner-subtext {
     color: var(--color-skill-banner-subtext);
@@ -7981,12 +7959,10 @@
     z-index: 7;
   }
   .quest-banner-line {
-    color: #ffd100;
+    --color-text-light: var(--gold);
+    padding: 6px 14px;
     font-size: 20px;
     font-weight: bold;
-    text-shadow:
-      0 0 10px #00000088,
-      1px 1px 3px #000;
     white-space: nowrap;
     opacity: 1;
     transition: opacity 0.4s ease;
@@ -7995,20 +7971,17 @@
     opacity: 0;
   }
   #subzone-banner {
+    --color-text-light: var(--color-white);
     position: absolute;
     left: 50%;
     top: 35%;
     transform: translateX(-50%);
-    color: #fff;
+    padding: 8px 22px;
     font-size: 22px;
     font-weight: bold;
-    text-shadow:
-      0 0 14px #00000088,
-      1px 1px 4px #000;
     opacity: 0;
     transition: opacity 1.2s;
     pointer-events: none;
-    font-family: var(--title-font);
     letter-spacing: 1px;
     white-space: nowrap;
   }
@@ -8072,13 +8045,21 @@
   #death-overlay {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse at center, #40000077 0%, #300000bb 100%);
+    background: var(--death-overlay-veil);
     display: none;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    gap: 18px;
     z-index: 30;
+  }
+  .death-panel,
+  .ghost-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    width: min(360px, calc(100vw - 32px));
+    padding: 24px;
+    gap: 12px;
   }
   /* Ghost resurrect prompt: a small, NON-BLOCKING panel shown only when a spirit is in
      reach of its corpse or a Spirit Healer. pointer-events:none on the panel so a ghost
@@ -8089,11 +8070,12 @@
     bottom: 22%;
     transform: translateX(-50%);
     display: none;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
     z-index: 30;
     pointer-events: none;
+  }
+  .ghost-panel {
+    padding: 12px;
+    gap: 8px;
   }
   #ghost-prompt .btn {
     pointer-events: auto;
@@ -8111,14 +8093,12 @@
     height: 22px;
     padding: 0 5px;
     margin-right: 8px;
-    border: 1px solid #d7ae55;
-    border-radius: 5px;
-    background: #17120d;
-    color: #ffd76a;
-    font: 700 12px / 1 var(--ui-font);
-    box-shadow:
-      inset 0 0 0 1px #000,
-      0 1px 3px #000a;
+    border: 1px solid var(--gold-dim);
+    border-radius: var(--radius-card);
+    background: var(--color-bg-deep);
+    color: var(--color-accent);
+    font: 700 12px / 1 var(--font-ui);
+    box-shadow: var(--shadow-lift);
     vertical-align: middle;
   }
   #death-overlay .btn[disabled],
@@ -8127,10 +8107,10 @@
     cursor: not-allowed;
   }
   #death-overlay h2 {
-    color: #ddd;
-    font-size: 44px;
-    text-shadow: 2px 2px 8px #000;
-    font-family: var(--title-font);
+    --color-accent: var(--color-hostile);
+    color: var(--color-accent);
+    font-size: 22px;
+    margin: 0;
   }
   /* Chrome cluster (chat input, party frames, context menu, prompts, trade window,
      elite target frame): in-world chrome that was never extracted with the
@@ -9556,22 +9536,51 @@
     font-size: 13.5px;
     color: var(--color-text-light);
     margin-bottom: 4px;
-    font-family: Georgia, serif;
+    font-family: var(--font-ui);
   }
   .prompt .prompt-number {
     width: 82px;
     margin: 8px 8px 6px 0;
-    padding: 5px 7px;
-    border: 1px solid #5d4a25;
-    border-radius: 3px;
-    background: #08080d;
-    color: #f4e6bd;
-    font: 12px var(--ui-font);
     text-align: center;
-    box-shadow: inset 0 1px 3px #000;
   }
-  .prompt .prompt-number:focus {
-    outline: 1px solid var(--gold-dim);
+  .prompt .ui-input:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+  .prompt-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+  }
+  .prompt-actions .btn {
+    margin: 0;
+  }
+  .prompt-timeout {
+    height: 2px;
+    margin-top: var(--spacing-sm);
+    --bar-color: var(--gold-dim);
+  }
+  .prompt-timeout .ui-bar-fill {
+    width: 100%;
+    animation: prompt-timeout 28s linear forwards;
+  }
+  @keyframes prompt-timeout {
+    from {
+      width: 100%;
+    }
+    to {
+      width: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .prompt-timeout .ui-bar-fill {
+      width: 62%;
+      animation: none;
+    }
+  }
+  body.reduce-motion .prompt-timeout .ui-bar-fill {
+    width: 62%;
+    animation: none;
   }
   /* Touch floor for the .prompt family's action buttons: the three quantity
      prompts (bags discard/sell, bank withdraw/deposit, vendor buy-quantity)
@@ -10074,13 +10083,13 @@
     align-items: center;
     gap: 3px;
     padding: 3px 7px;
-    background: #12100acc;
-    border: 1px solid #cc9a3c88;
-    border-radius: 12px;
+    background: var(--color-bg-deep);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
     color: var(--gold);
     appearance: none;
     cursor: pointer;
-    font: inherit;
+    font-family: inherit;
     pointer-events: auto;
   }
   #mail-indicator[hidden] {
@@ -10091,7 +10100,7 @@
     height: 14px;
   }
   .mail-indicator-count {
-    font: 700 11px var(--title-font);
+    font: 700 11px var(--font-display);
     letter-spacing: 0.4px;
   }
   /* ---------- World Market collect indicator ---------- */
@@ -10112,13 +10121,13 @@
     display: inline-flex;
     align-items: center;
     padding: 3px 7px;
-    background: #12100acc;
-    border: 1px solid #cc9a3c88;
-    border-radius: 12px;
+    background: var(--color-bg-deep);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-pill);
     color: var(--gold);
     appearance: none;
     cursor: pointer;
-    font: inherit;
+    font-family: inherit;
     pointer-events: auto;
   }
   #market-indicator[hidden] {
@@ -10126,12 +10135,12 @@
   }
   #market-indicator:hover,
   #market-indicator:focus-visible {
-    color: #d8c89a;
-    border-color: #c9a86a;
-    outline: none;
+    color: var(--color-text-light);
+    border-color: var(--gold-dim);
   }
   #market-indicator:focus-visible {
-    box-shadow: 0 0 0 2px var(--gold);
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
   #market-indicator .ui-icon {
     width: 14px;
@@ -10339,16 +10348,14 @@
     background: conic-gradient(
       from 0deg,
       transparent var(--aura-remaining-ratio, 0%),
-      rgb(0 0 0 / 62%) 0
+      var(--color-aura-overlay-timer-mask) 0
     );
-    color: white;
+    color: var(--color-white);
     font-size: 20px;
     font-weight: 800;
     font-variant-numeric: tabular-nums;
     line-height: 1;
-    text-shadow:
-      0 1px 2px black,
-      0 0 4px black;
+    text-shadow: var(--outline-shadow);
     pointer-events: none;
   }
   .aura-overlay-move-handle {
@@ -10412,13 +10419,13 @@
     --aura-color: var(--color-aura-rpg-gold);
   }
   .aura-overlay-fire {
-    --aura-color: #ff8a33;
+    --aura-color: var(--color-aura-overlay-fire);
   }
   .aura-overlay-frost {
-    --aura-color: #54d9ff;
+    --aura-color: var(--color-aura-overlay-frost);
   }
   .aura-overlay-arcane {
-    --aura-color: #bd63ff;
+    --aura-color: var(--color-aura-rpg-violet);
   }
   .aura-overlay-paladin {
     --aura-color: var(--color-aura-rpg-gold);
@@ -11632,9 +11639,9 @@
     transform: translateX(-50%);
     width: 240px;
     height: 16px;
-    background: rgba(8, 14, 24, 0.72);
-    border: 1px solid rgba(150, 190, 230, 0.55);
-    border-radius: 4px;
+    background: var(--color-breath-track);
+    border: 1px solid var(--color-breath-border);
+    border-radius: var(--radius-sm);
     overflow: hidden;
     display: none;
     pointer-events: none;
@@ -11646,11 +11653,11 @@
   .breath-bar-fill {
     height: 100%;
     width: 100%;
-    background: linear-gradient(180deg, #6fc2ff 0%, #2f7fd4 100%);
+    background: var(--breath-fill);
     transition: width 0.12s linear;
   }
   .breath-bar.breath-bar-drowning .breath-bar-fill {
-    background: linear-gradient(180deg, #ff7d6f 0%, #c22f2f 100%);
+    background: var(--breath-drowning-fill);
   }
   .breath-bar.breath-bar-drowning {
     animation: breath-drown-pulse 1s ease-in-out infinite;
@@ -11658,10 +11665,10 @@
   @keyframes breath-drown-pulse {
     0%,
     100% {
-      border-color: rgba(255, 120, 100, 0.9);
+      border-color: var(--color-breath-drowning-strong);
     }
     50% {
-      border-color: rgba(255, 60, 40, 0.4);
+      border-color: var(--color-breath-drowning-soft);
     }
   }
   .breath-bar-label {
@@ -11672,11 +11679,18 @@
     justify-content: center;
     font-size: 11px;
     letter-spacing: 0.06em;
-    color: #eaf4ff;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+    color: var(--color-breath-label);
+    text-shadow: var(--title-shadow);
   }
   body.reduce-motion .breath-bar.breath-bar-drowning {
     animation: none;
+    border-color: var(--color-breath-drowning-strong);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .breath-bar.breath-bar-drowning {
+      animation: none;
+      border-color: var(--color-breath-drowning-strong);
+    }
   }
 
   /* ---------- controller cross hotbar ----------

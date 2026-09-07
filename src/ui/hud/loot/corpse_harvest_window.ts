@@ -57,7 +57,7 @@ export function renderCorpseHarvestPicker(
   const document = container.ownerDocument;
   const section = document.createElement('div');
   section.className = 'corpse-harvest';
-  section.innerHTML = `<div class="corpse-harvest-title">${esc(t('hudChrome.corpseHarvest.title'))}</div>
+  section.innerHTML = `<div class="corpse-harvest-title ui-h">${esc(t('hudChrome.corpseHarvest.title'))}</div>
     <div class="corpse-harvest-hint">${esc(t('hudChrome.corpseHarvest.yieldTierHint'))}</div>`;
   const list = document.createElement('div');
   list.className = 'corpse-harvest-list';
@@ -66,7 +66,7 @@ export function renderCorpseHarvestPicker(
     label.className = 'corpse-harvest-row';
     const box = document.createElement('input');
     box.type = 'checkbox';
-    box.className = 'corpse-harvest-check';
+    box.className = 'corpse-harvest-check ui-check';
     box.checked = row.checked;
     box.value = row.tag;
     // #2514: a family with no harvest item behind it is marked, not hidden and
@@ -119,7 +119,7 @@ export function renderCorpseHarvestPicker(
   section.appendChild(list);
   const btn = document.createElement('button');
   btn.type = 'button';
-  btn.className = 'btn corpse-harvest-btn';
+  btn.className = 'btn corpse-harvest-btn ui-btn';
   btn.textContent = t('hudChrome.corpseHarvest.harvestButton');
   // Attached ONCE, at build: Hud.attachTooltip registers a fresh listener set
   // per call, so re-attaching it on every toggle would stack them.
