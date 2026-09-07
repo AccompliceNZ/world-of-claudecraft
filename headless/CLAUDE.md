@@ -73,6 +73,39 @@ header comment of `env_server.ts`; that header is the reference, don't restate i
   accepted, identical obs shape across all classes, the line cap. Extend it with
   any protocol or obs change.
 
+## Optional gathering commands (PR3, Intentional Gathering)
+A CLOSED, OPTIONAL `{"cmd":"gathering","verb":...}` request family sits beside
+`info`/`reset`/`step`/`close`: `inspect`, `buy_field_kit`, `set_preference`, `harvest`.
+It never advances sim time or the episode step (no `sim.tick()`, no `stepCount`
+mutation): only the existing `step`/noop advances casts. `env_server.ts` keeps only
+the metadata (the `info` reply's `gathering: GATHERING_CAPABILITY` field) and the
+one-line dispatch (`case 'gathering': send(executeGatheringCommand(env.sim, msg))`);
+all parsing and command bodies live in the sibling modules `gathering_protocol.ts`
+(pure request parsing + `GATHERING_CAPABILITY`) and `gathering_commands.ts`
+(`executeGatheringCommand`, consuming a narrow Sim-shaped host). The exact request/
+result shapes, refusal reasons, and disclosure rules are the frozen contract at
+`docs/prd/intentional-gathering/headless-gathering-contract.md`; this file and the
+`env_server.ts` header only point at it, never restate it. Python mirrors the exact
+requests through thin `WoWClassicEnv` methods (see `python/CLAUDE.md`).
+`tests/headless_gathering_transport.test.ts` is the real-subprocess NDJSON wire
+regression for this family (a temp esbuild bundle, one Node child process, one
+ordered sequence of requests/replies); the parser/dispatcher unit fixtures behind
+`gathering_protocol.ts`/`gathering_commands.ts` are pinned by their own test files.
+
+## Optional gathering-goal commands (PR4, Intentional Gathering)
+A SEPARATE, closed `{"cmd":"gathering_goal","verb":...}` request family
+(inspect, track_recipe, track_commission, clear) sits beside the PR3 one
+above, for the one-goal tracking surface; same never-advances-time rule, same
+thin `env_server.ts` wiring (the `info` reply's `gathering_goal` field plus
+one dispatch line), same split between `gathering_goal_protocol.ts` (parsing +
+capability) and `gathering_goal_commands.ts` (`executeGatheringGoalCommand`,
+against a narrow `Pick<Sim, 'gatheringGoal' | 'trackGatheringRecipe' |
+'trackGatheringCommission' | 'clearGatheringGoal'>` host). Frozen contract:
+`docs/protocols/gathering-goal.md`. `tests/headless_gathering_goal_transport.test.ts`
+is this family's wire regression; `tests/headless_gathering_goal.test.ts` covers
+parsing and dispatch. Python mirrors it through four thin `WoWClassicEnv`
+methods (see `python/CLAUDE.md`).
+
 ## Run
 Manual poke: `echo '{"cmd":"info"}' | node dist-env/env_server.cjs`.
 

@@ -3,6 +3,8 @@ import type {
   CommissionOrderStatus,
 } from '../sim/professions/commission_order';
 import type { MaterialRarity } from '../sim/professions/gathering';
+import type { GatheringGoalView } from '../sim/professions/gathering_goal_types';
+import type { HarvestPreference } from '../sim/professions/harvest_preference';
 import type { PerfectItemRef, PerfectingInfoView } from '../sim/professions/perfecting';
 import type {
   PerfectingSwapInfoView,
@@ -15,6 +17,7 @@ import type { WorldInteractionOutcome } from './interaction';
 export type {
   CommissionOrderScope,
   CommissionOrderStatus,
+  GatheringGoalView,
   PerfectItemRef,
   PerfectingInfoView,
   PerfectingSwapInfoView,
@@ -311,6 +314,21 @@ export interface IWorldProfessions {
   // (no bonus, no charge; the harvest itself proceeds). The sim re-validates
   // everything server-side; an 'always' slot ignores the flag entirely.
   harvestNode(nodeId: string, confirmEffectUse?: boolean): WorldInteractionOutcome;
+  // The remembered corpse-harvest preference (Intentional Gathering PR3, src/sim/
+  // professions/harvest_preference.ts): which material a corpse harvest
+  // concentrates on, or the `{ kind: 'all' }` spread (the default). `null` is
+  // reserved for a MALFORMED persisted preference the load refused: nothing
+  // may be harvested by preference until the player makes an explicit new
+  // choice (see PlayerMeta.harvestPreference). A settings read, never gated
+  // on kit, location, combat, or cost.
+  readonly harvestPreference: HarvestPreference | null;
+  // Set the viewer's own harvest preference to a material item id, or the
+  // 'all' token (HARVEST_PREFERENCE_ALL_TOKEN) to spread again. Validated
+  // strictly server-side through parseHarvestPreferenceCommand; a malformed
+  // or unsupported `raw` is a silent no-op that leaves the current choice
+  // byte-identical (the deeds.ts setActiveTitle/setActiveBorder precedent).
+  // No kit/location/combat/cost gate: it is a setting, not a harvest action.
+  setHarvestPreference(raw: string): void;
   recipeList: readonly RecipeDef[];
   lastCraftResult: CraftResultView | null;
   lastMasterwork: MasterworkView | null;
@@ -521,7 +539,35 @@ export interface IWorldProfessions {
   // craftingIdentity mirrors, so the two cannot drift. A pure read: no wire
   // round trip, nothing predicted.
   perfectingInfo(ref: PerfectItemRef): PerfectingInfoView | null;
-
+  // Intentional Gathering PR4 (docs/prd/intentional-gathering/goal-projection-contract.md,
+  // frozen 2026-09-07): the viewer's single explicit gathering goal, a tracked
+  // recipe batch or a bound commission, or null when none is tracked. Owner-only,
+  // fully server-computed. Offline this reads the live per-player projection
+  // (src/sim/professions/gathering_goal_projection.ts gatheringGoalFor); online it
+  // mirrors the server's `ggoal` self-delta, a COMPLETE replacement on every change
+  // (never a partial patch): an explicit `null` clears it, an OMITTED key preserves
+  // the current mirror.
+  readonly gatheringGoal: GatheringGoalView | null;
+  // Track an explicit recipe-batch goal: `count` crafts of `recipeId`, a safe
+  // integer in [1, CRAFT_BATCH_MAX]. Tracking is explicit and replacing a goal
+  // never changes the remembered harvest preference (harvestPreference/
+  // setHarvestPreference above remain the sole preference write).
+  // Server-authoritative: the sim re-validates the recipe id and the count and
+  // silently refuses a malformed request, leaving the current goal untouched;
+  // ClientWorld sends the track_gathering_recipe command and never decides the
+  // outcome.
+  trackGatheringRecipe(recipeId: string, count: number): void;
+  // Track the viewer's own currently-accepted commission order as the goal. The
+  // sim captures the EXACT live order object at track time, never a reload-time
+  // numeric-id lookup: a saved order id can never rebind an order after a full
+  // deserialization, and a terminal or reassigned order shows unavailable
+  // rather than silently converting to a recipe goal. A new explicit track on a
+  // still-accepted order may replace the binding. Server-authoritative;
+  // ClientWorld sends the track_gathering_commission command.
+  trackGatheringCommission(orderId: number): void;
+  // Explicitly stop tracking any gathering goal. Server-authoritative;
+  // ClientWorld sends the clear_gathering_goal command.
+  clearGatheringGoal(): void;
   // Exchange progress only after explicit confirmation of both pinned copies.
   // The authoritative result is personal; neither online method predicts state.
   swapPerfectingRanks(request: PerfectingSwapRequest): void;

@@ -785,12 +785,33 @@ describe('Masterwrought art completion evidence', () => {
     const currentBatch = mapping.generatedBatches.find(({ batchId: id }) => id === batchId);
     expect(currentBatch?.itemIds).toEqual(value.targetSets.items);
 
+    // The union math below is sealed against this dated audit's own passIds, not a
+    // fresh read of every current mapping owner: the mapping has grown past this
+    // dated file's own set since this audit (additive art lands afterward), so
+    // "current mapping owners" is no longer the same universe the equation below
+    // describes on its own.
+    const datedVerdict = readJson<{ visualVerdict: { passIds: string[] } }>(
+      `${evidenceDir}/final-item-art-audit-verdict.json`,
+    );
+    const datedIds = sorted(datedVerdict.visualVerdict.passIds);
+    expect(duplicateValues(datedIds)).toEqual([]);
+    // This dated verdict file already carries the Crucible professions additions,
+    // recorded as two incremental reviews (1,209 Masterwrought base + 45 Crucible
+    // collection pieces + 1 forgefathers_ember Forgebreaker quest proof item = 1,255).
+    expect(datedIds).toHaveLength(1255);
+
     const currentOwnerIds = [
       ...mapping.entries.map(({ itemId }) => itemId),
       ...mapping.generatedBatches.flatMap(({ itemIds }) => itemIds),
     ];
     expect(duplicateValues(currentOwnerIds)).toEqual([]);
-    expect(currentOwnerIds).toHaveLength(1255);
+    // 1,209 (Masterwrought completion) + 46 (Crucible professions, including
+    // the Forgebreaker quest's forgefathers_ember proof item) + 1 (Field Kit).
+    expect(currentOwnerIds).toHaveLength(1256);
+    for (const id of datedIds) {
+      expect(currentOwnerIds.includes(id), `${id} still has a current mapping owner`).toBe(true);
+    }
+
     const crucibleBatches = mapping.generatedBatches.filter(
       ({ batchId: id }) => id === 'crucible-professions-2026-09-05',
     );
@@ -798,8 +819,23 @@ describe('Masterwrought art completion evidence', () => {
     const crucibleIds = new Set(crucibleBatches[0].itemIds);
     expect(crucibleIds.size).toBe(46);
     expect(value.targetSets.items.filter((id) => crucibleIds.has(id))).toEqual([]);
-    const completionOwnerIds = currentOwnerIds.filter((id) => !crucibleIds.has(id));
+    expect(value.targetSets.items.includes('field_kit')).toBe(false);
+
+    // Derive the original 1,209-item completion set by excluding the exact ids of
+    // the one Crucible professions mapping batch (46 ids, forgefathers_ember
+    // included) from the dated file's full 1,255-item passIds set (never a bare
+    // count subtraction).
+    const completionDatedIds = datedIds.filter((id) => !crucibleIds.has(id));
+    expect(completionDatedIds).toHaveLength(1209);
+
+    // Strip both later additive waves (Crucible professions, the Field Kit) back out
+    // of the live mapping so the underlying 1,209-item completion union equation
+    // below stays isolated to exactly the same set as completionDatedIds above.
+    const completionOwnerIds = currentOwnerIds.filter(
+      (id) => !crucibleIds.has(id) && id !== 'field_kit',
+    );
     expect(completionOwnerIds).toHaveLength(1209);
+    expect(sorted(completionOwnerIds)).toEqual(completionDatedIds);
     const retainedHistoricalIds = completionOwnerIds.filter(
       (id) => !value.targetSets.items.includes(id),
     );

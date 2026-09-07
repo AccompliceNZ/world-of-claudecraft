@@ -1680,6 +1680,7 @@ describe('S3: every sim.ts emit is recognized (drift guard)', () => {
       'party.ts',
       'ready_check.ts',
       'trade.ts',
+      'trade_offer_sources.ts',
       'yumi.ts',
     ]);
     expect(

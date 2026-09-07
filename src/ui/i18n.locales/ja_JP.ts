@@ -29,7 +29,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'guide.profPages.ench.formulaRequired':
     '製法書が必要',
   'guide.profPages.econ.provenanceBodyUndiscounted':
-    '名前を持つ品があります。カーソルを合わせると、原料には採集者、完成品には製作者の名が表示されます。同じ印を、入手方法に合わせて呼び分けています。署名は品の一部であり、取引、銀行、郵便、ワールドマーケット、商人からの買い戻しを経ても消えません。\n\n採集では良い成果に自動で署名されます。レア以上になった収穫は署名入りになり、希少発見では5倍の追加収穫すべてに署名されます。死体からの採集で幸運な結果になったとき、その種類に標本がなければ収穫に署名が付き、標本があれば通常の収穫は無署名のまま、別に署名入りの完全な標本が生まれます。製作も同様で、レア以上の完成品は全個体が署名入り、傑作は品質に関係なく署名入りです。品の最上の姿には必ず作り手の名が残ります。ただし、バッグが満杯だと署名を失うことがあります。署名入りの1個を受け取るには専用の空き枠か、署名まで一致する既存のスタックが必要です。\n\n一つのスタックは同一の個体情報を共有するので、品、署名者、傑作能力値、エンチャント、帰属がすべて一致する場合だけ合流できます。署名入りの丸太と無署名の丸太は、どちらの方向にも混ぜられません。誰かの名を消してしまうためです。同じ情報なら重なるので、同じ採集者が署名した鉱石20個は1スタックになり、大量収穫でバッグが細切れになることはありません。\n\n署名は職人にも利益をもたらします。製作所で必要素材の署名入り個体を一つでも持っていれば、署名者に関係なく傑作率が2パーセントポイント上がります。自分で署名した素材なら必要量が1個減りますが、最低1個は必要です。ただし割引不可と指定された素材は対象外で、レイドの核は必ず全量を消費します。自分の署名入りのレア以上の品から技能を学ぶ効果もありますが、現在は製作したポーションだけです。自分で作り署名したレアのポーションを飲むと、その職が有効な主専攻である限り、わずかに技能が増えます。エリクサー、巻物、最高位のフラスコでは、どれほど立派に署名されていても技能は戻りません。',
+    '名前を持つ品があります。素材の入手元の行にはその区分の単位を集めた採集者が記され、プレミアムな署名者がいる場合は別の署名マークがそれを示します。この二つは独立した事実です。通常の採集素材は採集者を記録しますが署名を得るとは限らず、旧来の署名済みの在庫は採集者が記録されなかったと正直に示しつつ署名者の名だけを示すこともあります。完成品はかわりに誰が製作したかを示します。これらの記録は取引、銀行、郵便、ワールドマーケット、そして商人からの買い戻しを経ても品に付いて回り、決して薄れません。\n\n採集は最高の成果に自動で署名します。レア以上の判定になった収穫はすべて署名され、希少な発見はその5倍のまるごとの追加収穫全体に署名します。死体採集の幸運な判定は、その種類に渡せる標本がない場合は収穫そのものに署名し、標本がある場合は収穫を無署名のままにして、署名入りの完璧な標本を別に生成します。製作も同じ原則に従います。レア以上の産出物はすべての個体が署名入りとなり、傑作はその品質にかかわらず必ず署名されるため、どの品でも最上の個体には必ず作り手の名が記されます。通常素材の署名は単位そのものに付随しており、互換性のあるスタックにすでに別の採集者や署名者が含まれているという理由だけで失われることはありません。個別の完璧な標本は別のアイテムであり、なお空き枠を必要とします。収まらない場合、通常の死体収穫は残りますが標本は失われます。\n\n完成品は厳密に一つの個体情報を保つため、二つの個体はすべての印が完全に一致した場合にのみ合流します。同じ品、同じ署名者、同じ傑作の能力値、同じエンチャント、同じ帰属です。互換性のある素材は採集者や署名者が異なっても枠を共有しつつ、各入手元ごとの個数を保持します。ホバー時のツールチップは入手元を要約し、すべての一覧を見るには「入手元」を開いてください。採集者別に分けるを選ぶとバッグ内でそれらのスタックが分かれたままになり、並べ替えもその選択を尊重します。譲渡された素材は受け取り手の素材と通常どおりスタックできます。\n\n署名は職人にも利益をもたらします。製作台のそばで必要な素材の署名入りの個体を一つでも持っていれば、誰が署名したかにかかわらず傑作率が2パーセントポイント上がります。自分自身の手で署名した素材を持っていれば、その素材の必要量が1個減りますが、最低でも1個は必要です。ただし、その素材が割引不可と指定されている場合は例外で、レイドの核は常に全量を消費します。自分が署名したレア以上の作品は、今のところ製作したポーションに限り、なお技能を教え続けてくれます。自分で調合し署名したレアな飲み薬を飲むと、その職が有効な主専攻の一つである限り、それを作った職にわずかな技能が還元されます。これは本当にポーションの領域だけの効果であり、エリクサー、巻物、頂点のフラスコはどれほど見事に署名されていても技能を還元しません。',
   'guide.profPages.econ.introRaidCollections':
     '生産職の間でお金がどう動くかを紹介します。正確な料金と消費先、実際に売れる品、ワールドマーケットの規則、作業依頼、受注製作、そして通常製作と並ぶレイド素材セットの位置付けです。',
   'guide.profPages.econ.doctrineBodyRaidCollections':
@@ -845,7 +845,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.loot.takeLootTooltip':
     'お金とドロップしたアイテムを受け取ります。採取の機会は消費しません。',
   'hudChrome.loot.unifiedPressHint':
-    '相互作用キーを一度押すだけで、町のフォーカスに従って戦利品の回収と採取を同時に行います。',
+    '相互作用キーで取れるのは戦利品だけです。素材を採るには、ここで「採取」を使ってください。',
   'hudChrome.loot.bindConfirmTitle': '拾うと魂縛される',
   'hudChrome.loot.bindConfirmBody':
     'この戦利品には、取得すると自分に魂縛されるアイテムが含まれています。魂縛されたアイテムは、同じドロップを分かち合ったプレイヤーとの間でのみ、限られた時間だけ取引できます。',
@@ -1235,6 +1235,39 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.corpseHarvest.components.horn': '角',
   'hudChrome.corpseHarvest.components.tusk': '牙',
   'hudChrome.corpseHarvest.components.cloth': '布',
+  'hudChrome.corpseHarvest.preferenceLabel': '採取の希望設定：{preference}',
+  'hudChrome.corpseHarvest.changeButton': '変更',
+  'hudChrome.corpseHarvest.harvestActionTooltip':
+    '現在の希望設定で{seconds}秒かけて採取します。フィールドキットが必要です。各死体は一度だけ採取できます。倒したプレイヤーとそのパーティは{prioritySeconds}秒間優先権を持ちます。ドロップした戦利品は引き続き取得できます。',
+  'hudChrome.corpseHarvest.checkingStatus': '採取状況を確認しています…',
+  'hudChrome.corpseHarvest.statusUnavailable': '現在、採取状況を取得できません。',
+  'hudChrome.corpseHarvest.harvestStarting': '採取を開始しています…',
+  'hudChrome.corpseHarvest.allBenefit': 'この死体から入手可能な素材をすべて採取します。',
+  'hudChrome.corpseHarvest.focusBenefit': '採取を{material}に集中させます。',
+  'hudChrome.corpseHarvest.tierBonusHint':
+    '採取を{material}に集中させます：全素材採取時よりティア+{tierBonus}。',
+  'hudChrome.corpseHarvest.denial.actorDead': '採取するには生きている必要があります。',
+  'hudChrome.corpseHarvest.denial.actorInCombat': '戦闘中は採取できません。',
+  'hudChrome.corpseHarvest.denial.actorBusy': 'すでに何かをしています。',
+  'hudChrome.corpseHarvest.denial.corpseInvalid': 'この死体はもう採取できません。',
+  'hudChrome.corpseHarvest.denial.wrongWorld': 'この死体はあなたのワールドにありません。',
+  'hudChrome.corpseHarvest.denial.outOfRange': 'この死体を採取するにはもっと近づいてください。',
+  'hudChrome.corpseHarvest.denial.noFieldKit': '採取するにはフィールドキットが必要です。',
+  'hudChrome.corpseHarvest.denial.reservedSelf': 'すでにこの死体を採取しています。',
+  'hudChrome.corpseHarvest.denial.reservedOther': '{name}がこの死体を採取しています。',
+  'hudChrome.corpseHarvest.denial.reservedOtherUnknown': '他のプレイヤーがこの死体を採取しています。',
+  'hudChrome.corpseHarvest.denial.priorityProtected':
+    '現在、他のプレイヤーがこの死体の優先権を持っています。',
+  'hudChrome.corpseHarvest.denial.corpseExpiring': 'この死体は採取を終えるまで持ちません。',
+  'hudChrome.corpseHarvest.denial.preferenceMalformed':
+    '採取の希望設定が無効です。続けるには設定を選んでください。',
+  'hudChrome.corpseHarvest.denial.nothingToHarvest':
+    'あなたのフィールドキットでは、この死体から採取できるものがありません。',
+  'hudChrome.corpseHarvest.denial.materialUnavailable': '{material}はこの死体にありません。',
+  'hudChrome.corpseHarvest.denial.materialUnavailableWithList':
+    '{material}はこの死体にありません。入手可能：{materials}。',
+  'hudChrome.corpseHarvest.denial.bagsFull': 'カバンがいっぱいで採取できません。',
+  'hudChrome.corpseHarvest.denial.malformedInput': '問題が発生しました。もう一度お試しください。',
   'hudChrome.townFocus.title': '町のフォーカス',
   'hudChrome.townFocus.hint':
     'フォーカスポイントは各素材の基本産出量にボーナスを加算します。フォーカスしていない素材は基本産出量のままです。',
@@ -9884,6 +9917,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gathering.herbalism': '薬草学',
   'hudChrome.gathering.fishing': '釣り',
   'hudChrome.gathering.farming': '農耕',
+  'hudChrome.gathering.corpseHarvesting': '死体採取',
   'hudChrome.gathering.notReady': 'この資源ノードはまだあなたのために再生していません。',
   'hudChrome.gathering.gatherLine': '{name}を採集した。',
   'hudChrome.gathering.gatherLineQty': '{name}を{qty}個採集した。',
@@ -9972,7 +10006,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.farming.witheredLine': '作物が枯れた。畑を片づけた：{name}。',
   'hudChrome.farming.witheredLineQty': '作物が枯れた。畑を片づけた：{name} x{qty}。',
   'hudChrome.farming.pressTarget.feastOverHarvest':
-    '宴と自分の作物が両方とも範囲内にある。インタラクトは畑より先に宴を取る。収穫するには宴から離れよう。',
+    '宴と自分の作物が両方とも範囲内にある。インタラクトは畑より先に宴を取る。作物の畑ウィンドウを開くには宴から離れよう。',
   'hudChrome.farming.pressTarget.feastOverPlant':
     '宴と空の畑が両方とも範囲内にある。インタラクトは畑より先に宴を取る。植えるには宴から離れよう。',
   'hudChrome.farming.seedBackLine': '種を回収した：{name}。',
@@ -9988,7 +10022,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.farming.plantSheet.plant': '植える',
   'hudChrome.farming.plantSheet.sowAria': '{name}を蒔く',
   'hudChrome.farming.plantSheet.empty': 'この畑に蒔ける種を持っていません。',
-  'hudChrome.farming.plantSheet.close': '植え付けシートを閉じる',
+  'hudChrome.farming.plantSheet.close': '畑ウィンドウを閉じる',
   'hudChrome.farming.denied.bed_taken': 'そこにはすでに作物が育っています。',
   'hudChrome.farming.denied.skill': 'その作物を育てるには農耕スキルが足りません。',
   'hudChrome.farming.denied.no_seed': 'その作物の種を持っていません。',
@@ -10042,6 +10076,84 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.harvestJournal.noviceTitle': 'まだ作物畑を耕したことがありません',
   'hudChrome.harvestJournal.noviceBody':
     '作物を収穫するたびに農耕スキルが上がります。どの作物畑でもよいので、種をまいて始めましょう。',
+  // Intentional Gathering PR3: the shared corpse-harvest preference picker
+  // (Field Kit use, Professions, corpse Change entrances). M16 fills.
+  'hudChrome.harvestPreference.title': '採取設定',
+  'hudChrome.harvestPreference.allLabel': 'すべての素材',
+  'hudChrome.harvestPreference.applyButton': '適用',
+  'hudChrome.harvestPreference.cancelButton': 'キャンセル',
+  'hudChrome.harvestPreference.pickHint': '適用する前に採取するものを選んでください。',
+  'hudChrome.harvestPreference.currentUnavailable':
+    '現在選択中の{material}はここでは利用できません。',
+  'hudChrome.harvestPreference.unknownMaterial': '利用できない素材',
+  'hudChrome.harvestPreference.currentChoiceLabel': '現在：{choice}',
+  // Intentional Gathering PR5: source-info detail under the harvest
+  // preference picker (Field Kit use, Professions).
+  'hudChrome.gatheringSource.title': '{material}の入手先',
+  'hudChrome.gatheringSource.corpseExample': '{creature}（{zone}）',
+  'hudChrome.gatheringSource.corpseExampleTagged': '{creature}（{zone}、{tag}）',
+  'hudChrome.gatheringSource.rareTag': 'レア',
+  'hudChrome.gatheringSource.eliteTag': 'エリート',
+  'hudChrome.gatheringSource.gatedTag': 'クエスト限定',
+  'hudChrome.gatheringSource.moreSources': '他{count}件',
+  'hudChrome.gatheringSource.moreZones': '他{count}エリア',
+  'hudChrome.gatheringSource.premiumChance':
+    'レア以上の{material}の採取では、バッグに空きがあれば{specimen}も得られることがあります。',
+  'hudChrome.gatheringSource.specimenOfBase':
+    '{material}は{base}のレア以上の採取で得られる追加ボーナスで、上記と同じ生物から得られますが、単独で確実に手に入るものではありません。',
+  'hudChrome.gatheringSource.nodeZone': '{zone}（ティア{tier}以上の道具）',
+  'hudChrome.gatheringSource.nodeFineNote':
+    'ティア{tier}以上の採集道具を使うと、同種の採集ポイントで上質な等級に格上げされます。',
+  'hudChrome.gatheringSource.farmNote':
+    '種を植えて育てるもので、約{duration}後に収穫できます。農耕スキル{skill}以上とティア{tier}以上の鍬が必要です。',
+  'hudChrome.gatheringSource.fishingZoneProven':
+    '{zone}の水域（熟練度{skill}以上、ティア{tier}以上の釣り竿）',
+  'hudChrome.gatheringSource.fishingZoneUnproven':
+    '熟練度{skill}以上とティア{tier}以上の釣り竿が必要な水域もありますが、具体的な場所はまだ確認されていません。',
+  'hudChrome.gatheringGoal.title': '採集目標',
+  'hudChrome.gatheringGoal.close': '採集目標をクリア',
+  'hudChrome.gatheringGoal.clearButton': 'クリア',
+  'hudChrome.gatheringGoal.empty': '採集目標が設定されていません。',
+  'hudChrome.gatheringGoal.recipeGoalLabel': '{name} x{count}',
+  'hudChrome.gatheringGoal.commissionGoalLabel': '依頼：{name} x{count}',
+  'hudChrome.gatheringGoal.craftCountLine': '{count}回の製作を追跡中',
+  'hudChrome.gatheringGoal.unknownRecipeLabel': '不明なレシピ',
+  'hudChrome.gatheringGoal.invalidGoalLabel': '追跡されていません',
+  'hudChrome.gatheringGoal.statusCollecting': '収集中',
+  'hudChrome.gatheringGoal.statusReady': '準備完了',
+  'hudChrome.gatheringGoal.statusUnavailable': '利用不可',
+  'hudChrome.gatheringGoal.statusDelivered': '納品済み',
+  'hudChrome.gatheringGoal.statusCancelled': 'キャンセル済み',
+  'hudChrome.gatheringGoal.statusExpired': '期限切れ',
+  'hudChrome.gatheringGoal.readyHint':
+    '素材は揃っています。製作にはさらに所持金、作業台、バッグの空きが必要です。',
+  'hudChrome.gatheringGoal.reasonInvalidGoal': 'この目標はもう有効ではありません。',
+  'hudChrome.gatheringGoal.reasonUnknownRecipe': 'そのレシピはもう存在しません。',
+  'hudChrome.gatheringGoal.reasonRecipeUnavailable': 'そのレシピはもう利用できません。',
+  'hudChrome.gatheringGoal.reasonCommissionUnavailable':
+    'その依頼はもう追跡されていません。まだ掲載されている場合は、ボードから再度追跡してください。',
+  'hudChrome.gatheringGoal.reasonDailyLimit': 'そのレシピは本日すでに製作済みです。',
+  'hudChrome.gatheringGoal.reasonBatchLimit': 'そのバッチ数はもう無効です。',
+  'hudChrome.gatheringGoal.materialLine': '{name}：{reachable}/{required}',
+  'hudChrome.gatheringGoal.materialCarried': '{count}個を所持',
+  'hudChrome.gatheringGoal.materialStored': '保管庫に{count}個',
+  'hudChrome.gatheringGoal.materialMissing': '不足 {count}個',
+  'hudChrome.gatheringGoal.materialInaccessible': '製作に使用できない{count}個',
+  'hudChrome.gatheringGoal.storageRestrictedNote':
+    'ここから届かない保管庫に一部の素材があります。',
+  'hudChrome.gatheringGoal.payableCraftsLine': 'あと{count}回分の材料があります。',
+  'hudChrome.gatheringGoal.setPreferenceButton': '採取設定にする',
+  'hudChrome.gatheringGoal.setPreferenceButtonAria': '{name}を採取設定にする',
+  'hudChrome.gatheringGoal.currentPreferenceLabel': '現在の採取設定',
+  'hudChrome.gatheringGoal.currentPreferenceAria': '{name}が現在の採取設定です',
+  'hudChrome.gatheringGoal.sourcesToggle': '入手先',
+  'hudChrome.gatheringGoal.sourcesToggleAria': '{name}の入手先',
+  'hudChrome.crafting.goalQtyRowAria': '目標数',
+  'hudChrome.crafting.goalQtyDecreaseAria': '目標数を減らす（現在 {count}）',
+  'hudChrome.crafting.goalQtyIncreaseAria': '目標数を増やす（現在 {count}）',
+  'hudChrome.crafting.trackGoalButton': '追跡',
+  'hudChrome.crafting.trackGoalButtonAria': '{name}を{count}回製作する目標として追跡する',
+  'hudChrome.commissionBoard.trackButton': '追跡',
   'gatherEvent.pristineVein': '{finder}が純粋な鉱脈を掘り当てた！',
   'gatherEvent.ancientHeartwood': '{finder}が太古の心木を切り倒した！',
   'gatherEvent.moonlitBloom': '{finder}が月光の花を発見した！',
@@ -11298,6 +11410,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.stickyTarget': '地面クリックでターゲットを維持',
   'hudChrome.unitFrame.targetOfTargetLabel': 'ターゲットのターゲット',
   'hudChrome.mobile.professions': '専門技能',
+  'hudChrome.professions.harvestBodyButton': '死体から採取',
+  'hudChrome.professions.harvestBodyHint': '近くの採取できる死体の選択画面を開きます。選択を確定するまで採取は行われません。',
   'hudChrome.professions.title': '専門技能',
   'hudChrome.professions.close': '専門技能を閉じる',
   'hudChrome.professions.ringAria': '技の輪',
@@ -14093,7 +14207,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '仕上がった頂点装備の物語は、そこで終わりではありません。持ち主は、その品を作ったクラフトの技能125があれば、装備を完全化の4つのランクへ歩ませられます。挑戦一回ごとに匠の残り火1個、断たれし精髄1個、プリズムガラスの石座1個を費やし、五回に四回成功します。外れても失うのは素材だけで、品が傷ついたり後戻りしたりすることはありません。最初の挑戦で品は完全化する本人にバインドされるので、売るつもりの品は仕事を始める前に売っておきましょう。完全化された品は元の性能に加えて能力値ボーナスを帯び、そして完全化こそ光輝の注入が待っているものです：エンチャントのページで「完全化品のみ」と記されたただ一つのエンチャントは、それ未満には決して宿りません。',
   'guide.professions.promotionBody':
     '最後の一歩がオレンジへの昇格で、創造の証書の使い道はこれがすべてです。完全化された品と創造の証書1枚（銘文職の技能125の証文）を用意すれば、その品は自分で名を付けた伝説の品へと昇格します。ここに賽の目はありません：昇格は確定で、能力値はいっさい変わらず、変わるのは名前と色です。証書そのものは取引できるので、書き手と使い手が同じ人である必要はありません。そして一族の上限に加わった一行はここでも生きています：装備できる2つのうち、伝説の名匠鍛造の品は最大1つまでです。',
-  'guide.professions.harvestBodyFamilies': '採集はノードで終わらない。倒した獣の多くは、通常の戦利品と並んで、死体から直接素材を採取できる：毛皮、牙、爪、大牙、角、えら、絹糸、毒、布、そして肉。各死体は早い者勝ちで一度だけ採取でき、ひと押しで戦利品と採取の両方が開く。加工できる素材をふたつ以上持つ獣なら、選択はあなたのものだ：その獣が差し出せるすべてを取るか、より少ない素材に集中して、実際に取る分だけはっきりと上のグレードで受け取るか。\n\n標本を宿す系統の獣でレア以上の採取を引き当てると、通常の産出に加えて署名入りの完璧な標本（極上の獣皮、極上の蜘蛛の糸、極上の毒腺、極上の爪、極上の肉のいずれか）も手に入り、功績の書に「申し分なき標本」が刻まれる。採取はどのキャラクターにもでき、訓練も要らない。手持ちの採集道具はどの職のものであれ、このレア以上の判定を後押しする。',
+  'guide.professions.harvestBodyFamilies': '採集はノードで終わらない。倒した獣の多くは、通常の戦利品と並んで、死体から直接素材を採取できる：毛皮、牙、爪、大牙、角、えら、絹糸、毒、布、そして肉。各死体は早い者勝ちで一度だけ採取できる。相互作用キーで取れるのは戦利品だけで、採取は別の選択として、戦利品ウィンドウの「採取」欄から行う。加工できる素材をふたつ以上持つ獣なら、選択はあなたのものだ：その獣が差し出せるすべてを取るか、より少ない素材に集中して、実際に取る分だけはっきりと上のグレードで受け取るか。\n\n標本を宿す系統の獣でレア以上の採取を引き当てると、通常の産出に加えて署名入りの完璧な標本（極上の獣皮、極上の蜘蛛の糸、極上の毒腺、極上の爪、極上の肉のいずれか）も手に入り、功績の書に「申し分なき標本」が刻まれる。採取はどのキャラクターにもでき、訓練も要らない。手持ちの採集道具はどの職のものであれ、このレア以上の判定を後押しする。',
   'guide.professions.toolEffectsBody': '採集道具にはスロットがひとつあり、そこへ収まるのが製作された護符です。「採集者の貯蔵袋」は採取の産出を1つ増やし、「職人の眼」は採れるものの等級を1段上げます。「匠のお守り」は同じ仕組みで産出を2つ増やします。前の二つはエンチャントの仕事で、イーストブルックの工房の主、からくり師ギッゼルが、エンチャントのスキルが25に届いたエンチャンターに教えてくれます。「匠のお守り」のほうは工作の仕事で、ドロップで手に入る設計図をスキル100で作ります。三つとも彼の工房で作ります。\n\n装着したての護符は、コモンの道具なら20回の充填を備え、レア度が1段上がるごとに10回ずつ増えるので、同じ護符をエピックのつるはしに装着すれば50回から始まります。充填が減るのは護符が実際に結果を変えたときだけで、改善しなかった採取では決して減りません。スロットは使うたびに確認する設定にもできるので、あなたが「充填を使う」と言うまで護符は待ってくれます。新しい護符を装着すると、そのとき持っている道具に合わせてスロットが鋳直されるため、以前の最高記録ではなく、その道具が保てる回数まで満たされます。まったく何も変わらない装着し直しは、護符を食べてしまう前に断られます。\n\n充填を使い切っても護符が壊れることはありません。道具の持ち主がスロットを再充填します。秘術素材1個につき10回分で、求められる素材は、持ち歩いている道具と、そのスロットがこれまでに満たされた最上の道具の、より良いほうに従います。コモンかアンコモンの道具なら鈴音の粉塵、レアなら鈴音の精髄、エピックなら鈴音のかけらです。良い道具を銀行に置いてきても、安い再充填が買えるわけではなく、同じ値段で少ない充填になるだけです。安い段へ下りる正直な道は、劣る道具を持った状態で新しい護符を装着し、そこでスロットを鋳直すことです。スロットの上限が今の道具で満たせる量を超えている場合、再充填はその道具の限界で止まり、より良いほうを持ってくるように告げます。護符に署名した製作者本人なら再充填の素材は半分で済み、その護符自身の職（「採集者の貯蔵袋」と「職人の眼」ならエンチャント、「匠のお守り」なら工作）に特化していればさらに少なくなります。それ以外の人は全額です。再充填はこの職のほかの作業と同じく、短い詠唱です。',
   'guide.professions.toolEffectsHeading': '道具効果',
   'guide.progression.ridingBody': '登りの果てに待っているもののひとつが騎乗です。レベル{level}になれば、厩舎長がかなりの金貨と引き換えにこの技を教えてくれ、訓練コースでの稽古が最初の手綱をもたらします。マウントは力を何ひとつ与えませんが、世界を小さくしてくれます。北への長い徒歩のあとでは、それもまた立派なご褒美です。',
@@ -15018,7 +15132,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'guide.profPages.faq.q8':
     '町を離れても製作できますか？',
   'guide.profPages.faq.a3':
-    'ひと押しで両方まかなえます。死体が抱えているものは、コインとドロップ品も、採取できる素材も、すべて同じウィンドウに開きます。戦利品は通常の戦利品の規則どおりに配られ、採取のほうが生産職の側で、死体そのものから素材を剥ぎ取ります。\n\n採取は早い者勝ちの一度きりです。各死体を採取できるのはちょうど一度、最初に手をかけた者だけで、オンラインでも同じです。何が採れるかを形づくるのが「町のフォーカス」です。拠点の町の中に立っていれば、10ポイントのフォーカスの持ち分を、気にかける素材の種類へ振り分けられます。フォーカスした素材は良い採取ティアを引きやすくなり（フォーカス5ポイントごとに1段階、上がるのは最大2段階まで）、産出も増えます（1ポイントにつき10%）。フォーカスしていない素材が悪くなることは決してありません。',
+    'これは同じ死体に対するふたつの別々の操作です。死体が抱えているものは、コインとドロップ品も、採取できる素材も、すべて同じウィンドウに開きますが、相互作用キーと「戦利品を取る」が集めるのは通常の戦利品だけで、それは通常の戦利品の規則どおりに配られます。採取のほうは生産職の側で、死体そのものから素材を剥ぎ取るもので、そのウィンドウで「採取」を選んだときにだけ行われます。\n\n採取は早い者勝ちの一度きりです。各死体を採取できるのはちょうど一度、最初に手をかけた者だけで、オンラインでも同じです。何が採れるかを形づくるのが「町のフォーカス」です。拠点の町の中に立っていれば、10ポイントのフォーカスの持ち分を、気にかける素材の種類へ振り分けられます。フォーカスした素材は良い採取ティアを引きやすくなり（フォーカス5ポイントごとに1段階、上がるのは最大2段階まで）、産出も増えます（1ポイントにつき10%）。フォーカスしていない素材が悪くなることは決してありません。',
   'guide.profPages.faq.a4':
     '幸運を引き当てたのです。およそ90回の採取に1回、珍しい発見が起こります（木ならancient heartwood、鉱脈ならpristine vein、薬草ならmoonlit bloom）。収穫は5倍になり、一つ残らずあなたの名前で署名され、その発見はゾーン全体に告知されます。普通の採取でも、レア以上の品質を引き当てれば収穫に署名が入ります。\n\n署名入りの素材は、手元に置くか高く売る値打ちがあります。必要な素材の署名入りの品をひとつでも持って製作に臨めば、それだけで傑作率が2ポイント上がるからです。ただしスタックできるのは署名が完全に一致する品どうしだけなので、自分だけのバッグ枠に収まることは忘れないでください。',
   'guide.profPages.faq.a5':
@@ -15265,6 +15379,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   // masterwrought Phase 13, the orange promotion (M16 fills). The Deed of
   // Making noun matches the sim_i18n.ts error.legendaryDeed row.
   'entities.items.deed_of_making.name': '創造の証書',
+  // Intentional Gathering PR3: the Field Kit's runtime item name. M16 fill.
+  'entities.items.field_kit.name': '野外用キット',
   'hudChrome.materialHint.deedOfMaking':
     '銘刻の証書。消費すると、完全化された名匠鍛造の作品を伝説へと昇格させ、名前を与えます。',
   'hudChrome.crafting.legendaryLine': '{item}は{name}として生まれ変わり、伝説となりました！',
@@ -15364,10 +15480,42 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '自分のフレーム、ターゲットフレーム、パーティフレームは、いずれも移動できます。どれも隅に小さな移動ボタンを備えているので、固定を外し、好きな位置へドラッグし、もう一度固定すれば、うっかりクリックしてもずれません。オプションの「インターフェース」にある「フレーム」タブの先頭の「フレーム編集」を使うと、インターフェースの残りの部分もいっせいに動かせるようになり、この3つのフレームもそれに含まれます。アクションバー、キャストバー、スイングバー、経験値バー、ミニマップ、ボタンレール、ペットフレーム、スタンスバー、バフとデバフの列、そして「ウィッシュリストの通知」のチップが対象で、動かせる間はそれぞれに名前のチップが付きます。置き場所を悔やむことになったら、同じ「フレーム」タブの末尾にある「初期設定に戻す」で、すべて元の場所へ戻せます。',
   'guide.interfacePage.mapBodyZoneFirst':
     'Mを押すと、今立っているゾーンのワールドマップが開きます。自分の矢印、周囲の名所、印を掲げたクエストの依頼人と目標のあるエリア、作業場、メールボックス、掲示板、菜園、ダンジョン入口、そしてそのゾーンにあるすべての採集ノードが載り、ノードは再生を待つ間は灰色になり、手持ちの道具では採れないものには印が付きます。パーティの位置も表示されます。マップを右クリックするか「ワールドマップ」ボタンを押すと大陸全体まで引き、すべてのゾーンが名前とともに描かれ、ゾーンをクリックするとそのゾーンのマップが開きます。デルヴ、ダンジョン、リフト、城砦に足を踏み入れると、マップは今いる場所の見取り図に切り替わり、ソーンホロウ平原の戦場には専用の戦場マップがあります。\n\n画面の右側、ミニマップの下には、何も開かなくても今の用事が見えるようにトラッカーが積み重なります。追跡中のクエストとその目標、功績の進み具合、聖遺物庫のページ、潜っているデルヴ、そして参加中のリフトです。クエストトラッカーは、画面を広く使いたいときに折りたためます。',
+  'guide.interfacePage.gatheringGoalTrackerBody':
+    '製作ウィンドウでレシピを、または依頼ボードで依頼を「追跡」すると、採集目標トラッカーがこのスタックに加わります。追跡中のレシピまたは依頼の名前、目標の個数、そして所持・保管している素材でどこまで届くかを表示します。「追跡」は現在の目標を置き換え、「クリア」で明示的に解除します。どちらも採取設定を変えることはありません。',
   'guide.interfacePage.mobileBodyTwoPages':
     'タッチ操作は自動的に現れ、配置は画面の大きさに合わせて整えられます。小さなスマートフォンではコンパクトに、大きなスマートフォンでは標準に、タブレットではゆったりと並びます。\n\nアビリティは数字列ではなく輪の形に並びます。攻撃ボタンとその脇の4つのアクションボタン、そして輪を{pages}つのページの間で切り替えるページトグルです。ページを合わせると{slots}個あるアビリティスロットのすべてに届き、デスクトップ用の追加バーを有効にしているかどうかは関係ありません。輪の5番目の弧の位置は消耗品の席です。タップすればそこに据えた品を使い、長押しするか内側へスワイプすれば、持ち物から自動で埋まる列が開きます。その周りには、タッチで遊ぶ人がいちばんよく使うボタン、ターゲットの切り替え、目の前のものへの対話、ジャンプが並びます。\n\n画面の下辺には、ボタンの列の代わりに「クイック操作」のコントロールが一つ置かれています。ここからそれ以外のすべてが開きます。騎乗、チャット、マップ、バッグ、ソーシャル、クエスト、キャラクター、スペルブック、ゲームメニュー、そして残りのウィンドウを収めた「その他」で、ダンジョンファインダー、PvP、エモート、ウィキもそこに入っています。ここではウィンドウは浮かぶのではなく、画面いっぱいに開きます。\n\nユニットフレームの移動はデスクトップだけのものです。タッチでは、配置はゲームの側が決めてくれます。',
   'guide.interfacePage.winMoreBodyNoValeCup':
     'ワールドマップ（M）、PvPウィンドウ（G）、ランキング（K）、イベントカレンダー（I）も、すべて同じように使えます。エモートホイール（X）だけは例外で、キーを押し続けるとホイールが現れ、エモートの上でキーを離すとそのエモートが再生されます。ランキングは初めて開くときに少し眺めてみる価値があります。プレイヤーのタブ、ギルドのタブ、功績の書の名声でアカウント全体を順位付けするタブ、デイリーの順位のタブ、そしてゲームを作っている人々のための「開発者」タブがあり、開発者タブは「開発者バッジを表示」をオフにしない限り表示されます。\n\nほかのプレイヤーをターゲットしてターゲットフレームを右クリックするか（タッチではダブルタップか長押し）、チャットでその名前を右クリックすると、「プレイヤー情報」がその人物のカードを開きます。身につけている装備がツールチップ付きで並び、キャラクターの公開情報も載ります。見るだけで、それ以上のことはできません。装備を見るには相手が見える距離にいる必要があります。遠く離れた相手の名前をチャットから調べると、代わりにカードの公開されている半分、ポートレート、名前、レベル、クラス、ギルドが表示されます。',
   'guide.interfacePage.worldWindowsBodyStationMaster':
     'キーを押して開くことのないウィンドウもあります。しかるべき相手に話しかけたり、しかるべきものをクリックしたりすると開くのです。\n\n商人は店のウィンドウを開き、買える在庫と、同じパネルの末尾に直前に売ったものを預かる買い戻しの一覧が並びます。うっかり売ってしまったときのためです。在庫の脇には数量ボタンの列があるので、素材の束も10回押す代わりに5個か10個ずつ一押しで買え、どちらも合わないときにはカスタムの数量が使えます。クラスのアビリティに訓練士は要らず、レベルとともに手に入ります。ここでいう訓練士とは作業場に常駐する師匠たちのことで、その一人の「訓練」を選ぶと、今教えてもらえるレシピ、すでに覚えているレシピ、そしてまだ熟練が足りずに開いていないレシピが並びます。\n\n銀行員はあなたの銀行を開きます。スロットを買い足していける追加の金庫としての「個人」タブと、製作素材を種類ごとに収める「保管庫」タブがあります。ギルドが銀行を開いていれば、そこの「ギルド」タブに現れます。取り出す権限がないメンバーでも中を覗けるので、ギルドが何を抱えているのかを誰かに尋ねる必要はありません。誰が預け、引き出し、ギルドの資金を動かせるかはランクが決め、あらゆる出し入れが記録に残ります。\n\nレイヴンポストのメールボックスは手紙を開き、届いたものが一方のタブに、送る用紙がもう一方のタブに並び、添付品も扱えます。イーストブルックの商人か、山上のハイウォッチにいる競売人ヴォスのところにある世界市場は専用のウィンドウを持ち、閲覧して買うタブ、自分の品を出品するタブ、売れた分を受け取るタブの3つに分かれています。ほかのプレイヤーと面と向かって取引すれば、双方に一面ずつある取引ウィンドウが開きます。',
+  // Intentional gathering PR2: material provenance and source controls (M16 fills).
+  'hudChrome.materialStackSelectionUnavailable': 'この素材の選択は利用できなくなりました。',
+  'hudChrome.itemTooltip.materialSourceGatherer': '{count} × {name}が採集',
+  'hudChrome.itemTooltip.materialSourceGathererSigned': '{count} × {name}が採集、{signer}が署名',
+  'hudChrome.itemTooltip.materialSourceUnrecorded': '{count} × 採集者の記録なし',
+  'hudChrome.itemTooltip.materialSourceUnrecordedSigned': '{count} × 採集者の記録なし、{name}が署名',
+  'hudChrome.itemTooltip.materialSourceMore': 'ほか{sources}件の入手元、計{units}個',
+  'hudChrome.materialSources.detailsTitle': '{item}の入手元',
+  'hudChrome.materialSources.pickerTitle': '{item}の入手元を選択',
+  'hudChrome.materialSources.close': '素材の入手元を閉じる',
+  'hudChrome.materialSources.view': '入手元',
+  'hudChrome.materialSources.choose': '入手元',
+  'hudChrome.materialSources.viewAria': '{item}の素材の入手元をすべて表示',
+  'hudChrome.materialSources.chooseAria': '{item}から移動する素材の入手元を選択',
+  'hudChrome.materialSources.cancel': 'キャンセル',
+  'hudChrome.materialSources.confirm': '選択した個数を移動',
+  'hudChrome.materialSources.listAria': '素材の入手元一覧',
+  'hudChrome.materialSources.total': 'このスタックは計{units}個',
+  'hudChrome.materialSources.row': '{count}個：{source}',
+  'hudChrome.materialSources.gatherer': '{name}が採集',
+  'hudChrome.materialSources.gathererSigned': '{name}が採集、{signer}が署名',
+  'hudChrome.materialSources.unrecorded': '採集者の記録なし',
+  'hudChrome.materialSources.unrecordedSigned': '採集者の記録なし、{name}が署名',
+  'hudChrome.materialSources.quantityAria': '{source}からの個数、最大{count}個',
+  'hudChrome.materialSources.decreaseAria': '{source}からの個数を減らす',
+  'hudChrome.materialSources.increaseAria': '{source}からの個数を増やす',
+  'hudChrome.itemMenu.viewSources': '入手元を見る',
+  'hudChrome.itemMenu.separateByGatherer': '採集者別に分ける',
+  'hudChrome.itemMenu.takeChosenQuantity': '指定数を取り出す',
+  'hudChrome.itemMenu.combine': '素材スタックを結合',
 };

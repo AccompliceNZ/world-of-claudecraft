@@ -58,6 +58,7 @@ import {
   relicFillScoresForRank,
   reliquaryCatalogIndexProbe,
   reliquaryOwnershipOpts,
+  reliquarySaveFragment,
   reliquaryScoringPagesProbe,
   reliquaryWireCacheProbe,
   reliquaryWireJson,
@@ -73,6 +74,7 @@ import {
 } from '../src/sim/reliquary';
 import { type CharacterState, Sim } from '../src/sim/sim';
 import { runApplyEnchant, runCraft } from './helpers/enchant_family_cast';
+import { stripComments } from './helpers/strip_comments';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -114,6 +116,13 @@ describe('Reliquary fresh state + serialize omit-empty', () => {
 
   it('serializeReliquaryState returns undefined for a fresh state', () => {
     expect(serializeReliquaryState(freshReliquaryState())).toBeUndefined();
+  });
+
+  it('reliquarySaveFragment wraps serializeReliquaryState into the sim.ts save shape', () => {
+    expect(reliquarySaveFragment(freshReliquaryState())).toEqual({});
+    const marked = restoreReliquaryState(undefined);
+    marked.marks.add('relic_test');
+    expect(reliquarySaveFragment(marked)).toEqual({ reliquary: serializeReliquaryState(marked) });
   });
 
   it('restore of undefined yields empty state', () => {
@@ -865,13 +874,14 @@ describe('Reliquary profession marks (Phase 7)', () => {
       /const visitMark = `gather_event:\$\{flavor\}`;[\s\S]*?ctx\.markVisited\(finder, visitMark\);[\s\S]*?noteReliquaryMark\(ctx, finder, visitMark\);/,
     );
 
-    const interactionSrc = fs
-      .readFileSync(path.join(__dirname, '../src/sim/interaction.ts'), 'utf8')
-      .split('\n')
-      .filter((line) => !/^\s*\/\//.test(line))
-      .join('\n');
+    const corpseHarvestGrantSrc = stripComments(
+      fs.readFileSync(
+        path.join(__dirname, '../src/sim/professions/corpse_harvest_grant.ts'),
+        'utf8',
+      ),
+    );
     // Perfect specimen land: deed visit + Reliquary mark on the same arm.
-    expect(interactionSrc).toMatch(
+    expect(corpseHarvestGrantSrc).toMatch(
       /ctx\.markVisited\(meta, 'gather_event:perfect_specimen'\);[\s\S]*?noteReliquaryMark\(ctx, meta, 'gather_event:perfect_specimen'\);/,
     );
 
@@ -1796,13 +1806,15 @@ describe('Reliquary obtain counts', () => {
     // BOTH handovers really happened (otherwise the count claim is vacuous).
     expect(taker.inventory.some((s) => s.itemId === CATALOGUE_RELIC)).toBe(true);
     expect(taker.inventory.some((s) => s.itemId === STACKABLE_RELIC)).toBe(true);
-    // Premise for the INSTANCED arm: the received unit still carries its
-    // payload, so the handover really took grantOffer's addItemInstance branch
-    // (a unit that lost its payload would fall into the plain branch and leave
-    // that call site's movement flag untested).
-    expect(taker.inventory.find((s) => s.itemId === STACKABLE_RELIC)?.instance?.signer).toBe(
-      'Giver',
-    );
+    // Premise for the INSTANCED arm: STACKABLE_RELIC is a gathering material,
+    // so the received unit's signer rides its `materialSources` composition
+    // rather than an `instance` payload; the handover still moved through
+    // grantOffer's addItemInstance call site (a unit that lost its provenance
+    // would leave that site's movement flag untested).
+    expect(
+      taker.inventory.find((s) => s.itemId === STACKABLE_RELIC)?.materialSources?.[0]?.source
+        .signer,
+    ).toBe('Giver');
     expect(taker.deedStats.itemsDiscovered.has(CATALOGUE_RELIC)).toBe(true);
     // ...and the receiving side gained membership without gaining a tally on
     // EITHER arm (plain and instanced).

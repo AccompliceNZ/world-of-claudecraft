@@ -1,3 +1,7 @@
+import type { MaterialComposition } from '../sim/material_sources';
+import type { MaterialStackSelection } from '../sim/material_stack_selection';
+import { materialStorageTransferPayload } from './material_storage_command';
+
 // Online play: REST auth client + WebSocket world mirror.
 
 import { App } from '@capacitor/app';
@@ -50,6 +54,7 @@ import { isPrimaryOwnedPetEntity } from '../sim/pet/pet_selection';
 import { getArchetypeTitle, getHobbyCraft } from '../sim/professions/archetype';
 import type { RespecPaymentTier } from '../sim/professions/focus';
 import type { MaterialRarity } from '../sim/professions/gathering';
+import type { HarvestPreference } from '../sim/professions/harvest_preference';
 import type { PerfectingSwapRequest } from '../sim/professions/perfecting_swap';
 import { emptyCraftSkills } from '../sim/professions/wheel';
 import {
@@ -114,6 +119,7 @@ import {
   type CharacterSearchResult,
   type CivicServicePlacement,
   type ClientCommand,
+  type CorpseHarvestInfo,
   type CraftingIdentityView,
   type CraftResultView,
   type DailyRewardHistory,
@@ -175,6 +181,7 @@ import type {
   CommissionOrderScope,
   CommissionOrderView,
   DisenchantResultView,
+  GatheringGoalView,
   MasterworkView,
   PerfectItemRef,
   PerfectingInfoView,
@@ -190,11 +197,7 @@ import {
   createCivicServicePlacementsReader,
 } from './civic_service_placements';
 import { applySelfCombatScalars } from './combat_scalar_wire';
-import {
-  decodeCraftingIdentity,
-  decodeMobileStationCrafts,
-  EMPTY_MST_CRAFTS,
-} from './crafting_wire';
+import { decodeMobileStationCrafts, EMPTY_MST_CRAFTS } from './crafting_wire';
 import {
   type DesktopWalletBrowserAction,
   type DesktopWalletStatus,
@@ -212,6 +215,7 @@ import { decodeGuildBankLogFrame, GUILD_BANK_LOG_TTL_MS } from './guild_bank_log
 import { foldInputAck } from './input_ack';
 import { INPUT_SEND_TIMER_INTERVAL_MS, inputFlushGateOpen } from './input_send_cadence';
 import { inputSignature } from './input_signature';
+import { applyMaterialInventoryWire } from './material_inventory_wire';
 import {
   applyMountRaceEventToMirror,
   decodeMountRaceView,
@@ -232,6 +236,7 @@ import {
   perfectingSwapCommand,
   perfectingSwapInfoForMirror,
 } from './perfecting_swap_command';
+import { applyProfessionsSelfMirror } from './professions_self_mirror';
 import { optimisticQuestState } from './quest_state_optimistic';
 import { isTransientReconnectRejection, isTransientTimeoutRejection } from './reconnect_policy';
 import { isInputSendBackpressured } from './send_backpressure';
@@ -250,6 +255,7 @@ import {
 } from './varkhul_cinder_orb_wire';
 import { vaultWithdrawPayload } from './vault_snapshot_wire';
 import { buildWebSocketAuthMessage } from './world_auth_message';
+import { WorldInteractionRequests } from './world_interaction_requests';
 
 export { buildWebSocketAuthMessage } from './world_auth_message';
 
@@ -1755,6 +1761,15 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // never slotted an effect, which is the server's own default: the sim leaves
   // the backing PlayerMeta field absent and projects [] for it.
   toolEffectSlots: readonly ToolEffectSlotView[] = [];
+  // Corpse-harvest preference (Intentional Gathering PR3), mirrored from
+  // `hpref` below. null until the mirror syncs; reset null on reconnect
+  // hello (the marketInfo precedent) so a resume never shows a stale choice.
+  harvestPreference: HarvestPreference | null = null;
+  // Intentional Gathering PR4: the viewer's single explicit gathering goal,
+  // mirrored from the `ggoal` self-delta below. null until the mirror syncs,
+  // and reset null on reconnect hello (the harvestPreference/marketInfo
+  // precedent) so a resume never shows a stale goal.
+  gatheringGoal: GatheringGoalView | null = null;
   // Static content read (the recipeList precedent below): the garden-bed
   // geography ships with the client bundle like every other content table, so
   // this needs no wire round-trip. See src/world_api/farming.ts.
@@ -1999,11 +2014,8 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // the server echoes it or the snapshot budget runs out (server authority is
   // untouched: a refusal still wins via that valve).
   private pendingTargetEcho: { id: number | null; snapshotsLeft: number } | null = null;
-  private nextCommandOutcomeId = 1;
-  private pendingCommandOutcomes = new Map<
-    number,
-    { resolve: (succeeded: boolean) => void; timeout: ReturnType<typeof setTimeout> }
-  >();
+  // Lazy holder (the bareClient idiom): requests() below creates this on first use.
+  private worldInteractionRequests: WorldInteractionRequests | undefined;
   private mouselookFacing: number | null = null;
   private sendTimer: number | undefined;
   private lastInputSentAt = 0;
@@ -2172,7 +2184,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
     // A reconnect may land on an older binary. Drop optional behavior before
     // any new transport can accept input; the next capable snapshot re-arms it.
     this.petSpecialCommandsSupported = false;
-    this.failPendingCommandOutcomes();
+    this.worldInteractionRequests?.reset();
     if (this.sessionEnded) return;
     // A pending reconnect timer means this close is a duplicate signal of the
     // SAME physical drop: on the zombie-socket path the visibility handler
@@ -2218,7 +2230,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
     // lost to a deliberate logout within the debounce window.
     this.flushActionBarLayoutSave();
     this.sessionEnded = true;
-    this.failPendingCommandOutcomes();
+    this.worldInteractionRequests?.reset();
     // RIFT_REGIONS (src/sim/colliders.ts) is a module-level registry keyed by
     // riftCollisionToken, outside this instance: a session that ends while
     // mirroring a floor would otherwise strand that region under a token
@@ -2496,39 +2508,20 @@ export class ClientWorld extends ReconWireState implements IWorld {
   private cmdWithOutcome(
     payload: { cmd: ClientCommand } & Record<string, unknown>,
   ): Promise<boolean> {
-    if (typeof this.spectating === 'string' || !this.canSendCommand()) {
-      return Promise.resolve(false);
-    }
-    if (!this.pendingCommandOutcomes) this.pendingCommandOutcomes = new Map();
-    const rid = this.nextCommandOutcomeId ?? 1;
-    this.nextCommandOutcomeId = rid >= Number.MAX_SAFE_INTEGER ? 1 : rid + 1;
-    return new Promise<boolean>((resolve) => {
-      const timeout = setTimeout(() => {
-        const pending = this.pendingCommandOutcomes?.get(rid);
-        if (!pending) return;
-        this.pendingCommandOutcomes.delete(rid);
-        pending.resolve(false);
-      }, 5000);
-      this.pendingCommandOutcomes.set(rid, { resolve, timeout });
-      this.rawCmd({ ...payload, rid });
-    });
+    return this.requests().command(payload);
   }
 
-  private resolveCommandOutcome(rid: number, succeeded: boolean): void {
-    const pending = this.pendingCommandOutcomes?.get(rid);
-    if (!pending) return;
-    clearTimeout(pending.timeout);
-    this.pendingCommandOutcomes.delete(rid);
-    pending.resolve(succeeded);
-  }
-
-  private failPendingCommandOutcomes(): void {
-    if (!this.pendingCommandOutcomes) return;
-    for (const pending of this.pendingCommandOutcomes.values()) {
-      clearTimeout(pending.timeout);
-      pending.resolve(false);
+  // Lazy accessor for the shared request owner (world_interaction_requests.ts).
+  private requests(): WorldInteractionRequests {
+    if (!this.worldInteractionRequests) {
+      this.worldInteractionRequests = new WorldInteractionRequests({
+        canSend: () => typeof this.spectating !== 'string' && this.canSendCommand(),
+        sendRawCommand: (payload) => this.rawCmd(payload),
+        sendInspectCorpseHarvest: (id, rid) =>
+          this.rawCmd({ cmd: 'inspectCorpseHarvest', id, rid }),
+      });
     }
-    this.pendingCommandOutcomes.clear();
+    return this.worldInteractionRequests;
   }
 
   /** Raw WS command — used by dev scripts and browser console when online. */
@@ -2557,15 +2550,9 @@ export class ClientWorld extends ReconWireState implements IWorld {
       return;
     }
     const parseMs = performance.now() - parseStart;
-    if (
-      msg.t === 'commandOutcome' &&
-      Number.isSafeInteger(msg.rid) &&
-      msg.rid > 0 &&
-      typeof msg.ok === 'boolean'
-    ) {
-      this.resolveCommandOutcome(msg.rid, msg.ok);
-      return;
-    }
+    // A commandOutcome/corpseHarvestInfo reply routes to its owner; anything
+    // else falls through unchanged.
+    if (this.requests().onMessage(msg)) return;
     if (msg.t === 'hello') {
       this.movementWireVersion = msg.movementWire === 2 ? 2 : 1;
       this.movementFrameOutbox?.reset();
@@ -2619,6 +2606,14 @@ export class ClientWorld extends ReconWireState implements IWorld {
         // resync as pending until a genuinely post-reconnect market snapshot
         // decodes.
         this.marketInfo = null;
+        // Same reasoning as marketInfo above: hpref is delta-omitted, so this
+        // resets it to the unsynced state rather than showing a stale choice.
+        this.harvestPreference = null;
+        // Same reasoning again: ggoal is delta-omitted, so this resets it to
+        // the unsynced state rather than showing a stale tracked goal.
+        this.gatheringGoal = null;
+        // Same idea for a corpse-harvest-info query issued just before the drop.
+        this.worldInteractionRequests?.resetQuery();
         this.onReconnected?.();
       }
       this.connected = true;
@@ -2632,7 +2627,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
       return;
     }
     if (msg.t === 'spectate') {
-      if (typeof msg.name === 'string') this.failPendingCommandOutcomes();
+      if (typeof msg.name === 'string') this.worldInteractionRequests?.reset();
       this.spectating = typeof msg.name === 'string' ? msg.name : null;
       this.spectateFacingPending = true;
       this.pendingSpectateFacing = null;
@@ -3525,18 +3520,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
       const copper = s.copper ?? this.copper;
       if (copper !== this.copper) this.invChanged = true;
       this.copper = copper;
-      if (s.inv !== undefined) {
-        this.inventory = s.inv;
-        this.invChanged = true;
-      }
-      if (s.buyback !== undefined) {
-        this.vendorBuyback = s.buyback;
-        this.invChanged = true;
-      }
-      if (s.bags !== undefined) {
-        this.bags = s.bags;
-        this.invChanged = true;
-      }
+      if (applyMaterialInventoryWire(this, s)) this.invChanged = true;
       if (s.equip !== undefined) this.equipment = s.equip;
       if (s.einst !== undefined) this.equipmentInstances = s.einst ?? {};
       // IWorldCosmetics facet (W7) self-decode: cosmetics is delta-guarded (a
@@ -3698,29 +3682,12 @@ export class ClientWorld extends ReconWireState implements IWorld {
           this.activeMobileStationCrafts = decodeMobileStationCrafts(rawMst);
         }
       }
-      // Commission order board (issue #1298): server-gated on the board
-      // revision at the corder wire cadence (a passive party converges within
-      // one cadence window; the viewer's own commands re-arm for the next
-      // snapshot), and this is how BOTH sides of an accept/deliver converge
-      // (not the commissionOrderResult event, which is deny-toast only).
-      if (s.corder !== undefined) this.commissionOrders = s.corder ?? [];
-      // Enchanting-action outcome mirrors (Professions 2.0): the
-      // convergence arm for lastDisenchantResult/lastEnchantResult/lastSalvageResult
-      // (the event mirror above is the immediacy arm; both feed the same field).
-      // Server-diffed per tick, so two identical consecutive deny results produce
-      // no delta change, which is exactly why the event arm also exists.
-      if (s.denc !== undefined) this.lastDisenchantResult = s.denc ?? null;
-      if (s.ench !== undefined) this.lastEnchantResult = s.ench ?? null;
-      if (s.salv !== undefined) this.lastSalvageResult = s.salv ?? null;
-      if (s.gprof !== undefined) this.gatheringProficiency = s.gprof ?? {};
-      if (s.tslot !== undefined) this.toolEffectSlots = s.tslot ?? [];
-      if (s.fplot !== undefined) this.myFarmPlots = s.fplot ?? [];
-      if (s.prof !== undefined) this.professionsState = s.prof ?? { skills: [] };
-      if (s.cprof !== undefined && s.cprof) {
-        const decoded = decodeCraftingIdentity(s.cprof as CraftingIdentityView);
-        this.craftSkills = decoded.craftSkills;
-        this.craftingIdentity = decoded.identity;
-      }
+      // Profession self-mirror delta block (commission orders, enchanting
+      // result mirrors, gathering proficiency, tool slots, harvest
+      // preference, the gathering goal, farm plots, professionsState, and
+      // crafting identity): all delta-omitted, applied by the sibling
+      // module, where the delta contract and per-key malformed policy live.
+      applyProfessionsSelfMirror(this, s);
       // camera follows server-side facing changes when not mouselooking
       if (prevSelfFacing !== undefined && this.mouselookFacing === null) {
         let d = e.facing - prevSelfFacing;
@@ -4037,8 +4004,13 @@ export class ClientWorld extends ReconWireState implements IWorld {
   autoLoot(id: number): void {
     this.cmd({ cmd: 'autoloot', id });
   }
-  harvestCorpse(id: number, components?: string[]): void {
-    this.cmd({ cmd: 'harvestCorpse', id, components });
+  harvestCorpse(id: number): Promise<boolean> {
+    return this.cmdWithOutcome({ cmd: 'harvestCorpse', id });
+  }
+  // The selected-corpse status query (corpse-status-contract.md): always a
+  // Promise here, settled by the correlated reply requests().onMessage routes.
+  corpseHarvestInfo(id: number): Promise<CorpseHarvestInfo | null> {
+    return this.requests().inspectCorpse(id);
   }
   setTownFocus(allocation: Record<string, number>, tier: RespecPaymentTier): void {
     this.cmd({ cmd: 'set_town_focus', allocation, tier });
@@ -4093,6 +4065,16 @@ export class ClientWorld extends ReconWireState implements IWorld {
   }
   sortInventory(): void {
     this.cmd({ cmd: 'inv_sort' });
+  }
+  separateMaterialStack(
+    itemId: string,
+    target: MaterialStackSelection,
+    selectedSources?: MaterialComposition,
+  ): void {
+    this.cmd({ cmd: 'material_separate', item: itemId, target, sources: selectedSources });
+  }
+  combineMaterialStacks(itemId: string, target: MaterialStackSelection): void {
+    this.cmd({ cmd: 'material_combine', item: itemId, target });
   }
   // Same 'equip' wire token with the aimed slot attached: an older server that
   // ignores the field simply resolves the slot itself, so the field is additive.
@@ -4192,6 +4174,25 @@ export class ClientWorld extends ReconWireState implements IWorld {
       return this.cmdWithOutcome({ cmd: 'harvest_node', node: nodeId, confirmUse: true });
     }
     return this.cmdWithOutcome({ cmd: 'harvest_node', node: nodeId });
+  }
+  // Corpse-harvest preference: command only, no optimistic write (the
+  // setActiveTitle precedent). The server re-validates `raw` and derives pid
+  // from the authenticated session, never from this payload.
+  setHarvestPreference(raw: string): void {
+    this.cmd({ cmd: 'set_harvest_preference', raw });
+  }
+  // Intentional Gathering PR4: command only, no optimistic write (the
+  // setHarvestPreference precedent). The server re-validates the recipe id
+  // and count and derives pid from the authenticated session; the goal itself
+  // mirrors back via the ggoal self-delta.
+  trackGatheringRecipe(recipeId: string, count: number): void {
+    this.cmd({ cmd: 'track_gathering_recipe', recipe: recipeId, count });
+  }
+  trackGatheringCommission(orderId: number): void {
+    this.cmd({ cmd: 'track_gathering_commission', order: orderId });
+  }
+  clearGatheringGoal(): void {
+    this.cmd({ cmd: 'clear_gathering_goal' });
   }
   // `commission` (Professions 2.0): the boolean Maker's Bond
   // opt-in, sent ONLY when true so a non-commission craft's wire message
@@ -5089,11 +5090,11 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // re-validates banker proximity, capacity, and quest-item rules on every send. The
   // slotIndex rides as `slot` and the optional partial count as `count`, matching the
   // castAbilityBySlot/discard wire idiom. ---
-  bankDeposit(slotIndex: number, count?: number): void {
-    this.cmd({ cmd: 'bank_deposit', slot: slotIndex, ...(count !== undefined ? { count } : {}) });
+  bankDeposit(...args: Parameters<typeof materialStorageTransferPayload>): void {
+    this.cmd({ cmd: 'bank_deposit', ...materialStorageTransferPayload(...args) });
   }
-  bankWithdraw(slotIndex: number, count?: number): void {
-    this.cmd({ cmd: 'bank_withdraw', slot: slotIndex, ...(count !== undefined ? { count } : {}) });
+  bankWithdraw(...args: Parameters<typeof materialStorageTransferPayload>): void {
+    this.cmd({ cmd: 'bank_withdraw', ...materialStorageTransferPayload(...args) });
   }
   bankBuySlots(): void {
     this.cmd({ cmd: 'bank_buy_slots' });
@@ -5122,8 +5123,8 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // re-validates banker proximity, material scope, cap, and price. Deposit uses
   // carried-inventory index, optional partial `count`); pooled withdrawals use
   // `itemId`, while special rows add their snapshot index plus fingerprint. ---
-  vaultDeposit(slotIndex: number, count?: number): void {
-    this.cmd({ cmd: 'vault_deposit', slot: slotIndex, ...(count !== undefined ? { count } : {}) });
+  vaultDeposit(...args: Parameters<typeof materialStorageTransferPayload>): void {
+    this.cmd({ cmd: 'vault_deposit', ...materialStorageTransferPayload(...args) });
   }
   vaultWithdraw(...args: Parameters<typeof vaultWithdrawPayload>): void {
     this.cmd({ cmd: 'vault_withdraw', ...vaultWithdrawPayload(...args) });
@@ -5146,19 +5147,11 @@ export class ClientWorld extends ReconWireState implements IWorld {
   guildBankWithdrawGold(amount: number): void {
     this.cmd({ cmd: 'guild_bank_withdraw_gold', amount });
   }
-  guildBankDeposit(slotIndex: number, count?: number): void {
-    this.cmd({
-      cmd: 'guild_bank_deposit',
-      slot: slotIndex,
-      ...(count !== undefined ? { count } : {}),
-    });
+  guildBankDeposit(...args: Parameters<typeof materialStorageTransferPayload>): void {
+    this.cmd({ cmd: 'guild_bank_deposit', ...materialStorageTransferPayload(...args) });
   }
-  guildBankWithdraw(slotIndex: number, count?: number): void {
-    this.cmd({
-      cmd: 'guild_bank_withdraw',
-      slot: slotIndex,
-      ...(count !== undefined ? { count } : {}),
-    });
+  guildBankWithdraw(...args: Parameters<typeof materialStorageTransferPayload>): void {
+    this.cmd({ cmd: 'guild_bank_withdraw', ...materialStorageTransferPayload(...args) });
   }
   guildBankBuySlots(): void {
     this.cmd({ cmd: 'guild_bank_buy_slots' });

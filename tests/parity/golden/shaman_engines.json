@@ -32,7 +32,7 @@
       "tick": 20,
       "time": 1,
       "nextId": 1007,
-      "state": "0b8ae6cc",
+      "state": "f7dd7d74",
       "events": "ac6437b9",
       "rng": {
         "draws": 0,
@@ -43,7 +43,7 @@
       "tick": 40,
       "time": 2,
       "nextId": 1007,
-      "state": "24ca05a6",
+      "state": "51ef917e",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -54,7 +54,7 @@
       "tick": 60,
       "time": 3,
       "nextId": 1007,
-      "state": "375862df",
+      "state": "f9bce0e3",
       "events": "c5ec63a3",
       "rng": {
         "draws": 154,
@@ -65,7 +65,7 @@
       "tick": 80,
       "time": 4,
       "nextId": 1007,
-      "state": "c74f7fdc",
+      "state": "3e659484",
       "events": "741638a5",
       "rng": {
         "draws": 328,
@@ -76,7 +76,7 @@
       "tick": 100,
       "time": 5,
       "nextId": 1007,
-      "state": "10948d20",
+      "state": "73b130f8",
       "events": "acc5e950",
       "rng": {
         "draws": 508,
@@ -87,7 +87,7 @@
       "tick": 100,
       "time": 5,
       "nextId": 1007,
-      "state": "10948d20",
+      "state": "73b130f8",
       "events": "741638a5",
       "rng": {
         "draws": 508,
@@ -176,6 +176,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -283,6 +286,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -390,6 +396,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -494,6 +503,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -826,7 +838,7 @@
       "tick": 120,
       "time": 6,
       "nextId": 1007,
-      "state": "96b8c8ff",
+      "state": "de4ea4a9",
       "events": "6ca0bec0",
       "rng": {
         "draws": 696,
@@ -837,7 +849,7 @@
       "tick": 140,
       "time": 7,
       "nextId": 1007,
-      "state": "c48f7a62",
+      "state": "eaf44640",
       "events": "741638a5",
       "rng": {
         "draws": 921,
@@ -848,7 +860,7 @@
       "tick": 160,
       "time": 8,
       "nextId": 1007,
-      "state": "e8e338a4",
+      "state": "cabb43ba",
       "events": "4573fd91",
       "rng": {
         "draws": 1159,
@@ -859,7 +871,7 @@
       "tick": 180,
       "time": 9,
       "nextId": 1007,
-      "state": "c1fadb20",
+      "state": "b59a08c6",
       "events": "741638a5",
       "rng": {
         "draws": 1423,
@@ -870,7 +882,7 @@
       "tick": 182,
       "time": 9.1,
       "nextId": 1007,
-      "state": "6e42f720",
+      "state": "bd1f64c6",
       "events": "741638a5",
       "rng": {
         "draws": 1452,
@@ -959,6 +971,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1071,6 +1086,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1178,6 +1196,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1282,6 +1303,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1683,7 +1707,7 @@
       "tick": 200,
       "time": 10,
       "nextId": 1007,
-      "state": "9bb78a44",
+      "state": "7d1591ea",
       "events": "3b588808",
       "rng": {
         "draws": 1710,
@@ -1694,7 +1718,7 @@
       "tick": 220,
       "time": 11,
       "nextId": 1007,
-      "state": "9e23dea3",
+      "state": "848e387d",
       "events": "741638a5",
       "rng": {
         "draws": 1866,
@@ -1705,7 +1729,7 @@
       "tick": 224,
       "time": 11.2,
       "nextId": 1007,
-      "state": "f4624694",
+      "state": "6ee76dba",
       "events": "741638a5",
       "rng": {
         "draws": 1886,
@@ -1794,6 +1818,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1906,6 +1933,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -2013,6 +2043,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -2117,6 +2150,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -2538,7 +2574,7 @@
       "tick": 240,
       "time": 12,
       "nextId": 1007,
-      "state": "05dc2c8b",
+      "state": "80591625",
       "events": "b95122eb",
       "rng": {
         "draws": 2008,
@@ -2549,7 +2585,7 @@
       "tick": 260,
       "time": 13,
       "nextId": 1007,
-      "state": "c1289b7a",
+      "state": "8a5818e4",
       "events": "0bcfe696",
       "rng": {
         "draws": 2177,
@@ -2560,7 +2596,7 @@
       "tick": 280,
       "time": 14,
       "nextId": 1007,
-      "state": "7f8cb431",
+      "state": "eed4b01f",
       "events": "3df1458b",
       "rng": {
         "draws": 2341,
@@ -2571,7 +2607,7 @@
       "tick": 300,
       "time": 15,
       "nextId": 1007,
-      "state": "a9177e0f",
+      "state": "3bad6c39",
       "events": "e8cd705e",
       "rng": {
         "draws": 2541,
@@ -2582,7 +2618,7 @@
       "tick": 306,
       "time": 15.3,
       "nextId": 1007,
-      "state": "cd738e94",
+      "state": "6b2139b2",
       "events": "741638a5",
       "rng": {
         "draws": 2588,
@@ -2671,6 +2707,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -2783,6 +2822,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -2890,6 +2932,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -2994,6 +3039,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -3424,7 +3472,7 @@
       "tick": 306,
       "time": 15.3,
       "nextId": 1007,
-      "state": "cd738e94",
+      "state": "6b2139b2",
       "events": "741638a5",
       "rng": {
         "draws": 2588,
@@ -3513,6 +3561,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -3625,6 +3676,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -3732,6 +3786,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -3836,6 +3893,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {

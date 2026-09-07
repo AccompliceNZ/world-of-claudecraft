@@ -211,13 +211,26 @@ extra stale corpse proof. Failed or cancelled crafts consume neither. The
 existing save fields carry the quest completion and learned/spent knowledge;
 there is no new permanent quest ledger, cooldown or weekly gate.
 
-The stacked storage-rich serializer fixture measures 209,474 UTF-8 bytes,
-213 above the professions integration: completed quest ids +50, retained recipe
+The stacked storage-rich serializer fixture is a conservative per-field
+ceiling envelope (every recipe known, every repeatable quest cadence live,
+both worn Perfected cap slots at their legal maximum), not a claim that one
+character simultaneously reaches every one of those states; the crafted gear
+payloads and cap-slot counts it measures stay individually legal on their own.
+
+Measured combined (Crucible content, the Field Kit discovery, and this
+hammer quest chain, settled through the real merge): 209,486 UTF-8 bytes,
+213 above the professions-integration baseline the Crucible/Field Kit merge
+alone settled at (209,273): completed quest ids +50, retained recipe
 knowledge +30, deed records +32, the Ember discovery +21, and the personal
-Reliquary page/first-find record +80. The professions subset is 18,837 bytes
-and retains 205 knowledge ids below the 512-id cap. The existing 229,376-byte
-warning threshold stays unchanged, with 19,902 bytes of modeled headroom.
-These are serialized payload measurements, not PostgreSQL/WAL latency claims.
+Reliquary page/first-find record +80, each attributed against the
+Field-Kit-excluded state so the hammer's own delta stays isolated from the
+Field Kit's. Removing only the Field Kit discovery from the combined fixture
+reproduces 209,474 bytes (the hammer content still present); the Field Kit
+alone contributes exactly 12 of those bytes. The professions subset is
+18,837 bytes and retains 205 knowledge ids below the 512-id cap. The existing
+229,376-byte warning threshold stays unchanged, with 19,890 bytes of modeled
+headroom. These are serialized payload measurements, not PostgreSQL/WAL
+latency claims.
 
 Requiem at the Forge (`q_requiem_at_the_forge`) is an ownership turn-in for
 the finished hammer, which the player keeps. Carried or equipped copies count;

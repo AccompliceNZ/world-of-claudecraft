@@ -56,6 +56,11 @@ const EXPECTED_CMDS = [
   'market_collect',
   'market_list',
   'market_list_instance',
+  // Masterwrought stack-grouping commands: both mutate the carried inventory
+  // in place (a combine/separate reshapes existing stacks, never grants a new
+  // copy), so the inv self mirror must re-diff exactly like inv_move/inv_sort.
+  'material_combine',
+  'material_separate',
   'mount_toggle',
   // Masterwrought phase 12: an attempt spends materials and mutates an
   // instance payload in place, so the inv/einst self mirrors must re-diff.

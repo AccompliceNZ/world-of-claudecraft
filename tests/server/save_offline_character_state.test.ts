@@ -19,6 +19,7 @@ vi.mock('pg', () => ({
   },
 }));
 
+import { CHARACTER_SAVE_PREIMAGE_SELECT } from '../../server/character_save_statement';
 import { DB_HEAVY_STATEMENT_TIMEOUT_MS, saveOfflineCharacterState } from '../../server/db';
 import {
   applyOfflineCharacterSaveBounds,
@@ -28,6 +29,11 @@ import {
 } from '../../server/offline_character_save_db';
 import { type CharacterState, Sim } from '../../src/sim/sim';
 
+// The offline writer's row lock projects the SAME pre-image select as the live
+// save family (server/character_save_statement.ts), never a hand-duplicated
+// literal that could silently drift from it.
+const OFFLINE_ROW_LOCK_SQL = `SELECT ${CHARACTER_SAVE_PREIMAGE_SELECT} FROM characters WHERE id = $1 AND realm = $2 FOR UPDATE`;
+
 function realCharacterState(): CharacterState {
   const sim = new Sim({ seed: 11, playerClass: 'mage', autoEquip: true });
   const state = sim.serializeCharacter(sim.playerId);
@@ -35,9 +41,16 @@ function realCharacterState(): CharacterState {
   return state;
 }
 
+// The one answer stands in for every statement, so it carries the material
+// source PRE-IMAGE columns this writer's own FOR UPDATE lock reads: a character
+// holding neither container. A row that answered NOTHING is refused by the
+// journal rather than read as an empty bank.
 function transactionClient(rowCount: number) {
   const client = { query: vi.fn(), release: vi.fn() };
-  client.query.mockResolvedValue({ rows: [], rowCount } as never);
+  client.query.mockResolvedValue({
+    rows: [{ before_bank: null, before_vault: null }],
+    rowCount,
+  } as never);
   return client;
 }
 
@@ -105,8 +118,11 @@ describe('saveOfflineCharacterState: fenced on the absence of a live lease', () 
     expect(statements[2]).toBe('SET LOCAL lock_timeout = 2000');
     expect(statements[3]).toBe('SET LOCAL idle_in_transaction_session_timeout = 10000');
     // The row lock comes BEFORE the fenced write, and in the stronger mode
-    // (the Phase 18 QA fix round; see below).
-    expect(statements[4]).toBe('SELECT 1 FROM characters WHERE id = $1 AND realm = $2 FOR UPDATE');
+    // (the Phase 18 QA fix round; see below). Its projection is the material
+    // source pre-image: this writer REPLACES the blob, so the state it
+    // overwrites is the before-state its journal replays from, read under the
+    // lock it already takes rather than as a second statement.
+    expect(statements[4]).toBe(OFFLINE_ROW_LOCK_SQL);
     // Every bound is set BEFORE the write it bounds.
     const update = statements.findIndex((text) => text.includes('UPDATE characters'));
     expect(update).toBe(5);
@@ -151,9 +167,7 @@ describe('saveOfflineCharacterState: fenced on the absence of a live lease', () 
     // The weaker mode the UPDATE alone would take is NOT what is asked for.
     expect(statements[lock]).not.toContain('FOR NO KEY UPDATE');
     // Realm-pinned like the write it precedes, so a cross-realm id locks nothing.
-    expect(statements[lock]).toBe(
-      'SELECT 1 FROM characters WHERE id = $1 AND realm = $2 FOR UPDATE',
-    );
+    expect(statements[lock]).toBe(OFFLINE_ROW_LOCK_SQL);
     const lockValues = client.query.mock.calls[lock][1] as unknown[];
     expect(lockValues[0]).toBe(41);
     const updateValues = client.query.mock.calls[update][1] as unknown[];

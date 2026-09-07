@@ -152,3 +152,28 @@ export function sanitizeDailyGateLoad(s: DailyGateSaveFragments): DailyGateLoadR
   }
   return out;
 }
+
+/** The sparse CharacterState fragment for wyrmfallDaily on one save (the
+ *  sim.ts serializeCharacter shape every optional field follows): absent
+ *  while the faucet has never paid (zero-default omission, the honor
+ *  idiom), so a character the faucets never paid serializes byte-identically
+ *  to a pre-materials save. */
+export function wyrmfallDailySaveFragment(wyrmfallDaily: {
+  date: string;
+  sources: ReadonlySet<string>;
+}): { wyrmfallDaily?: { date: string; sources: string[] } } {
+  if (wyrmfallDaily.date === '' && wyrmfallDaily.sources.size === 0) return {};
+  return { wyrmfallDaily: { date: wyrmfallDaily.date, sources: [...wyrmfallDaily.sources] } };
+}
+
+/** The sparse CharacterState fragment for the oncePerDay craft stamp on one
+ *  save, the same zero-default-omission contract as wyrmfallDailySaveFragment
+ *  above: absent while nothing has crafted a daily-gated recipe, so a
+ *  pre-phase-07 save stays byte-identical. */
+export function craftDailySaveFragment(craftDaily: {
+  date: string;
+  crafted: ReadonlySet<string>;
+}): { craftDaily?: { date: string; crafted: string[] } } {
+  if (craftDaily.date === '' && craftDaily.crafted.size === 0) return {};
+  return { craftDaily: { date: craftDaily.date, crafted: [...craftDaily.crafted] } };
+}

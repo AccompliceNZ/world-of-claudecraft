@@ -326,6 +326,7 @@ export const zh_TW: EnTranslations = {
     }
   },
   "hudChrome": {
+    "materialStackSelectionUnavailable": "此素材選擇已失效。",
     "warlock": {
       "doomLabel": "譴罪",
       "fateThreadsLabel": "命運絲線",
@@ -2411,6 +2412,35 @@ export const zh_TW: EnTranslations = {
         "tusk": "獠牙",
         "meat": "獸肉",
         "cloth": "布"
+      },
+      "preferenceLabel": "採集偏好：{preference}",
+      "changeButton": "更改",
+      "harvestActionTooltip": "依照你目前的偏好採集，耗時{seconds}秒。需要一個野外工具包。每具屍體只能被採集一次。擊殺者及其隊伍在{prioritySeconds}秒內擁有優先權。掉落的戰利品仍可拾取。",
+      "checkingStatus": "正在檢查採集狀態……",
+      "statusUnavailable": "目前無法取得採集狀態。",
+      "harvestStarting": "正在開始採集……",
+      "allBenefit": "從這具屍體上採集所有可用材料。",
+      "focusBenefit": "將採集集中於{material}。",
+      "tierBonusHint": "將採集集中於{material}：相較於全部材料，品階+{tierBonus}。",
+      "denial": {
+        "actorDead": "你必須存活才能採集。",
+        "actorInCombat": "你在戰鬥中無法採集。",
+        "actorBusy": "你正忙於其他事情。",
+        "corpseInvalid": "這具屍體已無法採集。",
+        "wrongWorld": "這具屍體不在你的世界中。",
+        "outOfRange": "靠近一點才能採集這具屍體。",
+        "noFieldKit": "你需要一個野外工具包才能採集。",
+        "reservedSelf": "你已經在採集這具屍體了。",
+        "reservedOther": "{name}正在採集這具屍體。",
+        "reservedOtherUnknown": "另一名玩家正在採集這具屍體。",
+        "priorityProtected": "目前另一名玩家對這具屍體擁有優先權。",
+        "corpseExpiring": "這具屍體維持的時間不足以完成採集。",
+        "preferenceMalformed": "你的採集偏好無效，請選擇一個以繼續。",
+        "nothingToHarvest": "你的野外工具包無法從這具屍體上採集到任何東西。",
+        "materialUnavailable": "{material}不在這具屍體上。",
+        "materialUnavailableWithList": "{material}不在這具屍體上。可用：{materials}。",
+        "bagsFull": "你的背包太滿，無法採集。",
+        "malformedInput": "出了點問題，請再試一次。"
       }
     },
     "townFocus": {
@@ -2429,6 +2459,70 @@ export const zh_TW: EnTranslations = {
       "respecTierInstantOption": "即時（全額花費）",
       "respecCostFree": "免費",
       "respecCostLine": "花費 {coin} 和 {materials}"
+    },
+    "harvestPreference": {
+      "title": "採集偏好",
+      "allLabel": "全部材料",
+      "applyButton": "套用",
+      "cancelButton": "取消",
+      "pickHint": "套用前請選擇要採集的材料。",
+      "currentUnavailable": "你目前選擇的{material}在此處不可用。",
+      "unknownMaterial": "不可用的材料",
+      "currentChoiceLabel": "目前：{choice}"
+    },
+    "gatheringSource": {
+      "title": "在哪裡取得{material}",
+      "corpseExample": "{creature}（{zone}）",
+      "corpseExampleTagged": "{creature}（{zone}，{tag}）",
+      "rareTag": "稀有",
+      "eliteTag": "精英",
+      "gatedTag": "任務解鎖",
+      "moreSources": "另有{count}處",
+      "moreZones": "另有{count}個區域",
+      "premiumChance": "精良或更高品質的{material}採集，若背包有空間，還會額外獲得{specimen}。",
+      "specimenOfBase": "{material}是從{base}擲出精良或更高品質時獲得的額外獎勵，來自上方列出的同一批生物，但不是單獨保證獲得的戰利品。",
+      "nodeZone": "{zone}（{tier}階以上工具）",
+      "nodeFineNote": "使用{tier}階以上的採集工具，在同類型的採集點會升級為上等品質。",
+      "farmNote": "由播種培育而成，約{duration}後可收穫。需要農耕技能{skill}以上和{tier}階以上的鋤頭。",
+      "fishingZoneProven": "{zone}水域（熟練度{skill}以上，魚竿{tier}階以上）",
+      "fishingZoneUnproven": "有些水域需要熟練度{skill}以上和{tier}階以上的魚竿，但尚未確認具體地點。"
+    },
+    "gatheringGoal": {
+      "title": "採集目標",
+      "close": "清除採集目標",
+      "clearButton": "清除",
+      "empty": "尚未設定採集目標。",
+      "recipeGoalLabel": "{name} x{count}",
+      "commissionGoalLabel": "委託：{name} x{count}",
+      "craftCountLine": "正在追蹤{count}次製作",
+      "unknownRecipeLabel": "未知配方",
+      "invalidGoalLabel": "已不再追蹤",
+      "statusCollecting": "收集中",
+      "statusReady": "已就緒",
+      "statusUnavailable": "不可用",
+      "statusDelivered": "已交付",
+      "statusCancelled": "已取消",
+      "statusExpired": "已過期",
+      "readyHint": "材料已備齊。製作仍需要金幣、工作台和背包空間。",
+      "reasonInvalidGoal": "該目標已不再有效。",
+      "reasonUnknownRecipe": "該配方已不存在。",
+      "reasonRecipeUnavailable": "該配方對你已不可用。",
+      "reasonCommissionUnavailable": "該委託已不再追蹤。如果仍在公告欄中列出，請從公告欄重新追蹤。",
+      "reasonDailyLimit": "該配方今天已經製作過了。",
+      "reasonBatchLimit": "該批次數量已不再有效。",
+      "materialLine": "{name}：{reachable}/{required}",
+      "materialCarried": "隨身攜帶{count}個",
+      "materialStored": "倉庫中有{count}個",
+      "materialMissing": "缺少{count}個",
+      "materialInaccessible": "{count}個無法用於製作",
+      "storageRestrictedNote": "部分材料存放在此處無法取用的倉庫中。",
+      "payableCraftsLine": "現有材料還可製作{count}次。",
+      "setPreferenceButton": "設為採集偏好",
+      "setPreferenceButtonAria": "將{name}設為你的採集偏好",
+      "currentPreferenceLabel": "目前採集偏好",
+      "currentPreferenceAria": "{name}是你目前的採集偏好",
+      "sourcesToggle": "來源",
+      "sourcesToggleAria": "{name}的來源"
     },
     "party": {
       "promoteLeader": "提升為隊長",
@@ -2919,7 +3013,7 @@ export const zh_TW: EnTranslations = {
       "chestTitle": "寶箱",
       "takeLootButton": "拾取戰利品",
       "takeLootTooltip": "收取金幣和掉落的物品。不會用掉採集機會。",
-      "unifiedPressHint": "按一次互動鍵即可同時拾取戰利品並按城鎮專注進行採集。",
+      "unifiedPressHint": "互動鍵只會拾取戰利品。要採集材料，請在此使用「採集」。",
       "bindConfirmTitle": "拾取後綁定",
       "bindConfirmBody": "這批戰利品中有一件物品在拾取後將與你綁定。綁定的物品只能在限定時間內交易給共同獲得該掉落的玩家。"
     },
@@ -3049,7 +3143,33 @@ export const zh_TW: EnTranslations = {
       "enchantedFallback": "已附魔",
       "partyTradeWindow": "在接下來的{time}內，你可以將此物品交易給共同獲得該掉落的玩家。裝備後交易期限即告結束。",
       "perfectedBadge": "臻至完美",
-      "perfectingRank": "完美化：第{rank}階，共{ranks}階"
+      "perfectingRank": "完美化：第{rank}階，共{ranks}階",
+      "materialSourceGatherer": "{count} × 由{name}採集",
+      "materialSourceGathererSigned": "{count} × 由{name}採集，由{signer}簽名",
+      "materialSourceUnrecorded": "{count} × 未記錄採集者",
+      "materialSourceUnrecordedSigned": "{count} × 未記錄採集者，由{name}簽名",
+      "materialSourceMore": "另有{sources}個來源，共{units}個單位"
+    },
+    "materialSources": {
+      "detailsTitle": "{item}的來源",
+      "pickerTitle": "從{item}中選擇來源",
+      "close": "關閉素材來源",
+      "view": "來源",
+      "choose": "來源",
+      "viewAria": "查看{item}的所有素材來源",
+      "chooseAria": "選擇要從{item}轉移的素材來源",
+      "cancel": "取消",
+      "confirm": "轉移所選單位",
+      "listAria": "素材來源清單",
+      "total": "此堆疊共{units}個單位",
+      "row": "{count}個單位：{source}",
+      "gatherer": "由{name}採集",
+      "gathererSigned": "由{name}採集，由{signer}簽名",
+      "unrecorded": "未記錄採集者",
+      "unrecordedSigned": "未記錄採集者，由{name}簽名",
+      "quantityAria": "來自{source}的單位，最多{count}個",
+      "decreaseAria": "減少來自{source}的單位",
+      "increaseAria": "增加來自{source}的單位"
     },
     "materialHint": {
       "fineGrade": "優質品級。以等級高於該材料的工具在滿級礦脈採集所得，在任何需要普通版本的地方均可替代使用。",
@@ -3575,6 +3695,7 @@ export const zh_TW: EnTranslations = {
       "herbalism": "藥草學",
       "fishing": "釣魚",
       "farming": "耕作",
+      "corpseHarvesting": "屍體採集",
       "notReady": "這個資源節點尚未為你重新生成。",
       "gatherLine": "你採集了：{name}。",
       "gatherLineQty": "你採集了：{name} x{qty}。",
@@ -3676,7 +3797,7 @@ export const zh_TW: EnTranslations = {
       "witheredLine": "作物枯萎了。你清理了田畦：{name}。",
       "witheredLineQty": "作物枯萎了。你清理了田畦：{name} x{qty}。",
       "pressTarget": {
-        "feastOverHarvest": "盛宴和你的作物都在範圍內。互動會優先取用盛宴，而不是田畦；離開盛宴再去收穫。",
+        "feastOverHarvest": "盛宴和你的作物都在範圍內。互動會優先取用盛宴，而不是田畦；離開盛宴才能開啟你作物的田畦視窗。",
         "feastOverPlant": "盛宴和空田畦都在範圍內。互動會優先取用盛宴，而不是田畦；離開盛宴再去播種。"
       },
       "seedBackLine": "你回收了種子：{name}。",
@@ -3716,7 +3837,7 @@ export const zh_TW: EnTranslations = {
         "plant": "種植",
         "sowAria": "播種{name}",
         "empty": "你沒有可以在這塊田裡播種的種子。",
-        "close": "關閉種植面板"
+        "close": "關閉田畦視窗"
       },
       "husksConvertedLine": "你用{husksName} x{husks}換取了{name}。",
       "husksConvertedLineQty": "你用{husksName} x{husks}換取了{name} x{qty}。",
@@ -3836,6 +3957,8 @@ export const zh_TW: EnTranslations = {
     "professions": {
       "title": "專業",
       "close": "關閉專業",
+      "harvestBodyButton": "從屍體採集",
+      "harvestBodyHint": "開啟附近可採集屍體的選項。只有確認選擇後才會採集。",
       "ringAria": "技藝之輪",
       "skillsHeader": "製作技能",
       "gatheringHeader": "採集",
@@ -3937,6 +4060,11 @@ export const zh_TW: EnTranslations = {
       "qtyDecreaseAria": "減少製作數量（目前 {count}）",
       "qtyIncreaseAria": "增加製作數量（目前 {count}）",
       "qtyValueAria": "製作數量，{count}",
+      "goalQtyRowAria": "目標數量",
+      "goalQtyDecreaseAria": "減少目標數量（目前 {count}）",
+      "goalQtyIncreaseAria": "增加目標數量（目前 {count}）",
+      "trackGoalButton": "追蹤",
+      "trackGoalButtonAria": "將製作{count}個{name}追蹤為你的採集目標",
       "batchRemaining": "剩餘 {remaining}/{total}",
       "batchRemainingAria": "還剩 {remaining} 個，共 {total} 個",
       "durationChip": "{seconds}秒",
@@ -4062,7 +4190,11 @@ export const zh_TW: EnTranslations = {
       "applyEnchant": "施加附魔",
       "sunder": "裂斷",
       "sell": "出售",
-      "sellAll": "全部出售（{count}）"
+      "sellAll": "全部出售（{count}）",
+      "viewSources": "查看來源",
+      "separateByGatherer": "依採集者拆分",
+      "takeChosenQuantity": "取出指定數量",
+      "combine": "合併素材堆疊"
     },
     "enchanting": {
       "recipeNotLearned": "施加此附魔前，請先學習配方。",
@@ -4275,6 +4407,7 @@ export const zh_TW: EnTranslations = {
       "acceptButton": "接單",
       "deliverButton": "交付",
       "deliverHint": "先製作出委託的物品（勾選委託選項），再回到這裡交付。",
+      "trackButton": "追蹤",
       "opened": "你發布了一份{item}的委託訂單。",
       "cancelled": "你取消了{item}的委託訂單。",
       "accepted": "你接下了{item}的委託訂單。",
@@ -5518,6 +5651,7 @@ export const zh_TW: EnTranslations = {
       "mapTitle": "世界地圖與你的追蹤面板",
       "mapBody": "M 會開啟世界地圖：整片大陸攤在眼前，上頭有你自己的箭頭、各個區域與它們的名稱、你周遭的興趣地點、傳送門，以及你已經發現的採集節點。你的隊伍也會顯示在上面。進入秘探之後，地圖會切換成你目前已探索房間的示意圖。\n\n右側、小地圖下方，一疊追蹤面板讓你不必打開任何東西就能看見手邊的事務：你追蹤中的任務與它們的目標、你的功績進度、你所在的秘探，以及你正參與的任何裂隙。想把畫面要回來時，任務追蹤面板可以收合。",
       "mapBodyZoneFirst": "M 會開啟世界地圖，直接落在你所站的區域上，上頭有你自己的箭頭、你周遭的興趣地點、帶著標記的任務發布者與你任務目標所在的範圍、製作站、郵箱、告示板與菜畦、地城入口，以及這個區域裡的每一個採集節點：重新長出之前它會呈灰色，你的工具還應付不了時則會加上標示。你的隊伍也會顯示在上面。在地圖上按右鍵，或按下它的「世界地圖」按鈕，地圖便會拉遠到整片大陸，每個區域都連同名稱一起畫出，點擊某個區域即可開啟那個區域的地圖。踏進秘探、地城、裂隙或城堡要塞，地圖會切換成你所在之處的平面圖；荊谷原野戰場則有一張自己專屬的戰場地圖。\n\n右側、小地圖下方，一疊追蹤面板讓你不必打開任何東西就能看見手邊的事務：你追蹤中的任務與它們的目標、你的功績進度、你的聖物庫頁面、你所在的秘探，以及你正參與的任何裂隙。想把畫面要回來時，任務追蹤面板可以收合。",
+      "gatheringGoalTrackerBody": "在製作視窗追蹤一個配方，或在委託公告欄追蹤一個委託後，採集目標追蹤器就會加入這個堆疊：它會顯示你正在追蹤的配方或委託、你要收集的數量，以及你隨身攜帶和倉庫中的材料能滿足多少。追蹤會取代你目前的目標，清除則會明確取消它；兩者都不會改變你的採集偏好。",
       "chatTitle": "聊天框",
       "chatBody": "位於左下角。按 Enter 開始輸入，再按一次 Enter 送出。\n\n有兩個分頁始終都在：「聊天」，也就是你周遭一切發言的合併紀錄；以及「戰鬥」，你這場戰鬥的文字紀錄。加號按鈕可以再添更多分頁，一個頻道一個：說話、大喊、隊伍、綜合、世界、尋求組隊、公會與幹部，另外還有一個密語分頁，把你收發的每一則密語都集中在同一處。在頻道分頁中輸入，就會直接送到那個頻道，不必再重打一次指令。\n\n整個聊天框都能拖到別的位置並調整大小，而且它會記住你把它留在哪裡。",
       "keyWindowsTitle": "用按鍵開啟的視窗",
@@ -6634,7 +6768,7 @@ export const zh_TW: EnTranslations = {
       "colHub": "主城",
       "colMaster": "大師",
       "masterCellFmt": "{name}（{title}）",
-      "harvestBodyFamilies": "採集並不止於節點。許多被擊倒的野獸都可以各被採收一次，先到先得，取得獸皮、尖牙、利爪、獠牙、獸角、魚鰓、蛛絲、毒液、布料與獸肉，直接從屍體上與牠的普通戰利品一併取得；按下同一個鍵，兩者一同開啟。當一頭野獸身上帶有不只一種可用部件時，選擇便由你決定：把牠能給的一切盡數取走，或專注於較少的部件，換取你確實取得之物明顯更精細的品級。\n\n在會產出標本的野獸族類身上擲出精良或更高的採收品質，除了普通產出之外，還會額外給予一件署名的完美標本（完美的獸皮、完美的蜘蛛絲、完美的毒液腺、完美的爪或上等肉塊），並在你的功績之書中記下「完美標本」。任何角色都能採收，無需訓練，而你持有的任何採集工具都會計入最上等產出的判定，無論它屬於哪一門行業。",
+      "harvestBodyFamilies": "採集並不止於節點。許多被擊倒的野獸都可以各被採收一次，先到先得，取得獸皮、尖牙、利爪、獠牙、獸角、魚鰓、蛛絲、毒液、布料與獸肉，直接從屍體上與牠的普通戰利品一併取得。互動鍵只會拾取戰利品；採集是另一項選擇，需在戰利品視窗的「採集」一欄中進行。當一頭野獸身上帶有不只一種可用部件時，選擇便由你決定：把牠能給的一切盡數取走，或專注於較少的部件，換取你確實取得之物明顯更精細的品級。\n\n在會產出標本的野獸族類身上擲出精良或更高的採收品質，除了普通產出之外，還會額外給予一件署名的完美標本（完美的獸皮、完美的蜘蛛絲、完美的毒液腺、完美的爪或上等肉塊），並在你的功績之書中記下「完美標本」。任何角色都能採收，無需訓練，而你持有的任何採集工具都會計入最上等產出的判定，無論它屬於哪一門行業。",
       "focusBodyTiers": "每座主據點城鎮都為到訪的採收者備有一面城鎮專注面板：站在鎮上，從小地圖旁打開它，把 10 點專注點數分配到你在意的部件類型上。某個部件每投入 5 點，它的採收品級就提升一階（最多兩階），而每 1 點都會為它的產量再添 10 個百分點；未受專注的部件絕不會因此變差。\n\n你的分配會跟著角色走遍天涯，日後任何一次回到鎮上都能重新調整，快慢由你決定。慢慢來是免費的：你每移動 1 點，重新分配就進行 1 分鐘。付一點錢可以加快，每點 15 秒外加 5 銅與 1 個鈴音之塵；全額付款則讓它立即完成，每點 25 銅與 5 個鈴音之塵。只有你實際移動的點數才會計算，所以微調一點很便宜，而打開面板卻什麼都沒改就關掉，在任何檔位下都不花一毛錢。",
       "toolEffectsHeading": "工具效果",
       "toolEffectsBody": "採集工具上有一個插槽，而填進去的東西就是製作出來的符物。採集者儲囊會讓一次採收的產出多出一個單位；匠人之眼則會提升採上來之物的品級；匠人護符則以同樣的方式多出兩個單位。前兩者是附魔的活計：Eastbrook 工坊之主 Tinker Gizzel 會把它們教給附魔技能達到 25 的附魔師。匠人護符則是工程學的活計，圖樣由掉落取得，需 100 技能製作；三者都在他的工坊製作。\n\n剛插上的符物在普通品質的工具上帶有 20 次充能，工具每高一個稀有度階級就再多 10 次，所以同一枚符物插在史詩級的鎬上就從 50 次起跳。只有當符物確實改變了結果時才會消耗一次充能，對它沒能改善的採收絕不扣減；插槽也可以設定成每次使用前先問過你，讓符物等你說了「使用一次充能」再動。插上一枚新的符物，會以你當下攜帶的工具為準重鑄這個插槽，因此它會填到那把工具所能承載的量，而不是回到先前的某個高點；而一次完全不會造成任何改變的重插，會被擋下來，不會白白吃掉那枚符物。\n\n充能用盡並不會毀掉符物：由工具的持有者為插槽補充，每消耗一份秘法材料補 10 次充能，而它要求哪一種材料，取決於你身上攜帶的工具與這個插槽曾經被填充過的最好工具之間較好的那一個：普通或優秀工具用鈴音之塵，精良工具用鈴音精華，史詩工具用鈴音碎片。把好工具留在銀行裡並不會換來更便宜的補充，只會在同樣的價格下換來更少的次數；想誠實地降到便宜的階級，做法是帶著較差的工具插上一枚新的符物，如此便會就地重鑄插槽。如果插槽的上限高於你目前工具所能填滿的量，補充會停在那把工具的極限，並要你帶上更好的那一把。當你就是簽下這枚符物的製作者時，補充只需一半的材料；若你還專精該符物所屬的行業（採集者儲囊與匠人之眼屬附魔，匠人護符屬工程學），則更少；其他人一律付全額。補充是一次短暫的施法，和這個製作家族的其他動作一樣。"
@@ -6949,7 +7083,7 @@ export const zh_TW: EnTranslations = {
         "commissionsBody": "自願選擇的委託製作會附上製作者之約：成品會綁定給交易中收到它的人，而任意工位大師都可按層級費用為其解綁。",
         "provenanceHeading": "署名作品",
         "provenanceBody": "精良及以上的成品與發現都帶有製作者的署名，而署名完全相同的物品仍可堆疊。",
-        "provenanceBodyUndiscounted": "有些物品帶著名字。懸停查看時，原材料的說明會顯示「採集者」，成品會顯示「製作者」：同一種印記，依據物品來歷使用不同措辭。署名是物品本身的一部分，會隨物品經過交易、銀行、郵件、世界市場，甚至商人回購，永不褪去。\n\n採集會自動為最佳收穫署名：擲出精良及以上品質的收穫都會署名，稀有發現的整份五倍額外收穫也會署名。屍體採集觸發幸運結果時，若該類別沒有標本，則為產出署名；若有標本，則普通產出不署名，並額外生成一個署名的完美標本。製作遵循相同原則：每件精良及以上的成品都會署名，傑作無論品質如何也總會署名，因此每件物品的最佳版本都會記錄製作者。背包滿是可能失去署名的唯一原因：署名單件需要自己的空位，或一疊完全相符的署名物品來接收。\n\n一疊物品共用同一個身分，因此兩件物品只有全部印記完全一致才能合併：同種物品、同一署名者、相同傑作屬性、相同附魔、相同綁定。署名原木絕不能與普通原木混疊，否則會抹去某人的名字；但標記完全一致的物品可以合併，同一採集者署名的二十塊礦石只占一疊，額外收穫不會因此塞滿背包。\n\n署名也會回報工匠：在工作台旁持有任意一份所需材料的署名版本，無論由誰署名，都會讓傑作機率增加2個百分點。若材料由你親自署名，其所需數量還會減少1個，最低為1個；但標記為不可打折的材料除外，團隊副本核心始終維持全額用量。親手署名的精良及以上作品還會繼續教你，目前只有製作的藥水具有這種效果：喝下自己製作並署名的精良藥水，只要對應專業仍是啟用的主修專業，就會獲得少量技能進度。只有藥水生效，藥劑、卷軸或巔峰合劑無論署名多精美，都不會回饋技能。",
+        "provenanceBodyUndiscounted": "有些物品帶著名字。素材的來源行會說明是誰採集了每一組單位，若存在高級署名者，則會有另一個署名標記指明其身分。這兩項事實彼此獨立：一般採集素材會記錄採集者，卻不一定獲得署名；舊有的已署名庫存可能只寫明署名者，同時如實說明未記錄採集者。成品則改為說明是誰製作了它。這些記錄會隨物品經過交易、銀行、郵件、世界市場，甚至商人回購而保留，永不褪去。\n\n採集會自動為最佳成果署名：擲出精良及以上品質的收穫都會帶有署名，稀有發現則為其整份五倍額外收穫全部署名。屍體採集觸發幸運結果時，若該分類沒有可給出的標本，則為產出署名；若有標本，則讓產出保持無署名，並在旁邊額外鑄造一個已署名的完美標本。製作遵循相同原則：每件精良及以上的產出都會鑄造為已署名，傑作無論品質如何都會署名，因此任何物品的最佳版本都會記錄製作者之名。一般素材的署名附著在單位本身上，不會僅因為相容的堆疊中已經包含另一位採集者或署名者而遺失。獨立的完美標本是單獨的物品，仍然需要空間；若放不下，一般的屍體產出會保留，但標本會遺失。\n\n成品保持單一的嚴格身分，因此兩件物品只有在所有標記完全一致時才會合併：同一物品、同一署名者、同一傑作屬性、同一附魔、同一綁定。相容的素材會在不同採集者與署名者之間共用同一個格子，同時為每個來源分別保留數量。懸停提示會概括來源；開啟「來源」可查看完整清單。選擇依採集者拆分會讓背包中的這些堆疊保持分開，排序也會遵循這項選擇。轉移得到的素材可以照常與接收者的素材堆疊在一起。\n\n署名也會回報工匠：在工作台旁持有任意一份所需材料的已署名個體，無論由誰署名，都會讓傑作機率增加2個百分點；若材料由你親自署名，其所需數量還會減少1個（最低為1個），但標記為不可打折的材料除外，團隊副本核心的用量始終維持全額。親手署名的精良及以上作品目前仍只透過製作的藥水繼續傳授技能：喝下自己釀造並署名的稀有飲品，只要對應專業仍是你啟用的主修專業之一，就會有少量技能回流到製作它的專業。這的確只是藥水的效果，別無其他：無論簽署得多麼精美，藥劑、卷軸或巔峰長頸瓶都不會回饋技能。",
         "collectorsHeading": "收藏家、戰利品與故事的價格",
         "collectorsBody": "商人看不見出處：署名物品賣給NPC只值普通價，簽名的溢價只存在於玩家之間。名家署名的橫財礦石、一塊Prime Cut、一柄署著已退隱工匠之名的傑作之刃，價格全憑記憶開價。功業之書裡的Pristine Vein、Ancient Heartwood、Moonlit Bloom、A Perfect Specimen與Glimmer of Hope都是零聲望的收藏印記，只為證明那一刻發生在你身上。出處不買屬性也不贏戰鬥，它是這遊戲裡美好日子的存根。",
         "castPaceHeading": "讀條時間與金幣消耗",
@@ -6996,7 +7130,7 @@ export const zh_TW: EnTranslations = {
         "q2": "通用配方會永遠提升我的技能嗎？",
         "a2": "不會。每個配方都按它落在你當前檔位之下多遠來計算，也就是經典的橙、黃、綠、灰讀法：在你檔位或以上給予全額成長，低一層減半，低兩層為四分之一，低三層及以上毫無成長。每25點技能為一檔，所以技能0的免費配方到技能75就再也教不了你任何東西。\n\n上限也比你可能預期的經典300要低：十種可修製作行業各以125為上限，採礦、伐木與藥草學以100為上限，釣魚則一路放長到200。攀升的意思是換上你自己檔位的配方，而不是死磨最便宜的那一個。",
         "q3": "拾取屍體和採收屍體有什麼不同？",
-        "a3": "按一次鍵，兩者一同處理。屍體身上的一切，金幣與掉落物，加上任何可採收的部件，都在同一個視窗中開啟：戰利品照一般的拾取規則走，採收則是專業這一側，直接從屍身上剝下材料。\n\n採收先到先得，而且只有一次：每具屍體恰好只能被採收一次，由最先取得它的人採收，線上模式亦然。你的城鎮專注決定你拿到什麼：站在主據點城鎮裡，你可以把10點專注點數分配到你在意的部件類型上，每個受專注的部件都會擲出更好的品級（每5點提升一階，最多兩階），產量也更多（每1點10%）。未受專注的部件絕不會因此變差。",
+        "a3": "這是對同一具屍體的兩個獨立操作。屍體身上的一切，金幣與掉落物，加上任何可採收的部件，都在同一個視窗中開啟，但互動鍵與「拾取戰利品」只會取走普通戰利品，它照一般的拾取規則走。採收則是專業這一側，直接從屍身上剝下材料，只有當你在那個視窗中選擇「採集」時才會發生。\n\n採收先到先得，而且只有一次：每具屍體恰好只能被採收一次，由最先取得它的人採收，線上模式亦然。你的城鎮專注決定你拿到什麼：站在主據點城鎮裡，你可以把10點專注點數分配到你在意的部件類型上，每個受專注的部件都會擲出更好的品級（每5點提升一階，最多兩階），產量也更多（每1點10%）。未受專注的部件絕不會因此變差。",
         "q4": "我的Ironbark Log為什麼帶著署名？",
         "a4": "你撞上了一次橫財。大約每90次採集會觸發一次稀有發現（樹上的遠古心材、礦上的純淨礦脈、草藥上的月光綻放）：它讓產量乘以五倍，為每一個單位署上你的名字，並向全區域播報這項發現。而在一次普通採集中擲出精良或更高的品質，同樣會為收穫署名。\n\n署名材料值得留著，或賣個好價錢：在工作檯上只要持有所需材料的任何一份署名副本，傑作機率就多2個百分點。只是別忘了，它們只能與署名完全相同的副本堆疊，因此會各自佔去一格背包欄位。",
         "q5": "委託品要怎麼解綁？費用多少？",
@@ -14906,6 +15040,9 @@ export const zh_TW: EnTranslations = {
       },
       "formula_lastflame_zeal": {
         "name": "配方：末焰熱忱"
+      },
+      "field_kit": {
+        "name": "野外工具包"
       },
       "conjured_water4": {
         "name": "魔法泉水"

@@ -1,7 +1,9 @@
 import { describe, expect, it } from 'vitest';
 import {
+  craftDailySaveFragment,
   type DailyGateSaveFragments,
   sanitizeDailyGateLoad,
+  wyrmfallDailySaveFragment,
 } from '../src/sim/professions/daily_gate_load';
 import { type CharacterState, Sim } from '../src/sim/sim';
 
@@ -182,6 +184,22 @@ describe('sanitizeDailyGateLoad', () => {
     expect(out.delveDaily).toEqual({ date: '', firstClearXp: new Set(), markClears: 0 });
     expect(out.heroicDaily).toEqual({ date: '', marked: new Set() });
     expect(out.emberWeekAnchor).toBe('');
+  });
+});
+
+describe('the sim.ts save-fragment wrappers (zero-default omission)', () => {
+  it('wyrmfallDailySaveFragment omits while never paid, present once it has', () => {
+    expect(wyrmfallDailySaveFragment({ date: '', sources: new Set() })).toEqual({});
+    expect(wyrmfallDailySaveFragment({ date: '2026-08-14', sources: new Set(['rift']) })).toEqual({
+      wyrmfallDaily: { date: '2026-08-14', sources: ['rift'] },
+    });
+  });
+
+  it('craftDailySaveFragment omits while nothing has crafted a daily-gated recipe', () => {
+    expect(craftDailySaveFragment({ date: '', crafted: new Set() })).toEqual({});
+    expect(
+      craftDailySaveFragment({ date: '2026-08-14', crafted: new Set([LIVE_ONCE_PER_DAY]) }),
+    ).toEqual({ craftDaily: { date: '2026-08-14', crafted: [LIVE_ONCE_PER_DAY] } });
   });
 });
 

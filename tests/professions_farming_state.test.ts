@@ -15,6 +15,7 @@ import {
   countDroppedHiddenSlots,
   deriveHiddenSlots,
   FARM_MAX_GROW_MS,
+  farmPlotsSaveFragment,
   normalizeFarmPlots,
   type PersistedFarmPlot,
   serializeFarmPlots,
@@ -135,6 +136,14 @@ describe('the pure farm-plot round trip (no Sim)', () => {
 
   it('omits the field entirely when no bed is planted', () => {
     expect(serializeFarmPlots(new Map())).toBeUndefined();
+  });
+
+  it('farmPlotsSaveFragment wraps serializeFarmPlots into the sim.ts save shape', () => {
+    expect(farmPlotsSaveFragment(new Map())).toEqual({});
+    const live = new Map<string, PlotState>([
+      ['bed_alpha', { ...VALID, compost: false, watch: false, tonic: false, notified: false }],
+    ]);
+    expect(farmPlotsSaveFragment(live)).toEqual({ farmPlots: serializeFarmPlots(live) });
   });
 
   it('omits a non-finite hidden slot at write time, the JSON hygiene arm', () => {

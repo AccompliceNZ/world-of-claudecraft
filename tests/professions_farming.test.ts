@@ -2955,7 +2955,14 @@ describe('the golden_harvest roll: the shared rare event at the farm bed', () =>
     for (const itemId of [PRODUCE_ID, FINE_ID]) {
       const slots = h.meta.inventory.filter((s) => s.itemId === itemId);
       expect(slots.length, itemId).toBeGreaterThan(0);
-      for (const slot of slots) expect(slot.instance?.signer, itemId).toBe(h.meta.name);
+      for (const slot of slots) {
+        expect(slot.instance, itemId).toBeUndefined();
+        const totalSigned = (slot.materialSources ?? []).reduce(
+          (sum, bucket) => sum + (bucket.source.signer === h.meta.name ? bucket.count : 0),
+          0,
+        );
+        expect(totalSigned, itemId).toBe(slot.count);
+      }
     }
     // The zone fanout event, whole payload shape: the crop source, the
     // AUTHORED bed zone (bed_eastbrook_1's patch), the base produce id, and
@@ -3145,7 +3152,7 @@ describe('the golden_harvest roll: the shared rare event at the farm bed', () =>
         fine: h.sim.countItem(FINE_ID, h.pid),
         signed: h.meta.inventory
           .filter((s) => s.itemId === PRODUCE_ID || s.itemId === FINE_ID)
-          .map((s) => ({ itemId: s.itemId, count: s.count, signer: s.instance?.signer })),
+          .map((s) => ({ itemId: s.itemId, count: s.count, materialSources: s.materialSources })),
         events: JSON.parse(
           JSON.stringify(
             h.sim.events
@@ -3179,19 +3186,36 @@ describe('the golden_harvest roll: the shared rare event at the farm bed', () =>
     return expected;
   }
 
+  // The premium mark now rides the granted units' own source bucket rather
+  // than a distinct instanced payload (#2, gathering stacks): a signed slot
+  // has no `instance` at all, so provenance must be read from
+  // `materialSources`, summing only the buckets whose signer is this
+  // harvester (never a whole mixed slot, and never a legacy raw
+  // `instance.signer` that a merge has not yet touched).
   function signedCountOf(h: Harness, itemId: string): number {
     return h.meta.inventory
-      .filter((s) => s.itemId === itemId && s.instance?.signer === h.meta.name)
-      .reduce((sum, s) => sum + s.count, 0);
+      .filter((s) => s.itemId === itemId)
+      .reduce(
+        (sum, s) =>
+          sum +
+          (s.materialSources ?? []).reduce(
+            (bucketSum, bucket) =>
+              bucketSum + (bucket.source.signer === h.meta.name ? bucket.count : 0),
+            0,
+          ),
+        0,
+      );
   }
 
-  it('a golden win with FULL bags: totals conserved, only the SIGNATURE truncates ((bu))', () => {
-    // The merge-room-only split, unreachable on empty bags: a same-signer
-    // stack two under its cap and ZERO free slots. countFit must see the
-    // signer (drop it and the fit reads 0), the fit must cap the SIGNED
-    // grant (pass qty instead and the stack overshoots its room), and the
-    // remainder must ride the plain overflow-tolerant grant (zero it and
-    // grown produce is destroyed, the rot farming forbids).
+  it('a golden win with FULL bags: totals conserved, the WHOLE signature lands regardless of merge room ((bu))', () => {
+    // Once a merge-room ceiling would have applied: a same-signer stack two
+    // under its cap and ZERO free slots. Since the mark moved into the
+    // granted units' own source bucket, `grantGolden` is a plain uncapped
+    // force-add with no separate room to run out of (farming.ts's own
+    // comment on the retired `gatherDowngrade { surface: 'crop' }` arm), so
+    // the whole five-fold yield lands signed regardless of the pre-existing
+    // stack's remaining cap: the excess simply spills into fresh stacks
+    // (nothing rots, and nothing is left unattributed).
     const h = makeHarness(GOLDEN_WIN_SEED);
     const expected = ripenWinner(h);
     const stack = stackSizeOf(ITEMS[PRODUCE_ID]);
@@ -3210,25 +3234,21 @@ describe('the golden_harvest roll: the shared rare event at the farm bed', () =>
     // NOTHING ROTS: the full five-fold totals landed despite the full bags.
     expect(h.sim.countItem(PRODUCE_ID, h.pid)).toBe(stack - 2 + count5);
     expect(h.sim.countItem(FINE_ID, h.pid)).toBe(fine5);
-    // Only the SIGNATURE truncated: exactly the merge room (2) signed on top
-    // of the pre-seeded stack, the remainder landed PLAIN.
-    expect(signedCountOf(h, PRODUCE_ID)).toBe(stack);
-    expect(
-      h.meta.inventory
-        .filter((s) => s.itemId === PRODUCE_ID && !s.instance)
-        .reduce((sum, s) => sum + s.count, 0),
-    ).toBe(count5 - 2);
-    // The fine grade found no signed room at all: fully plain.
-    expect(h.meta.inventory.some((s) => s.itemId === FINE_ID && s.instance)).toBe(false);
+    // No slot carries an `instance` anymore (the mark rides
+    // `materialSources` instead): a positive full-premium proof over BOTH
+    // grades, exact counts conserved, never an `!instance` guess.
+    expect(signedCountOf(h, PRODUCE_ID)).toBe(stack - 2 + count5);
+    expect(signedCountOf(h, FINE_ID)).toBe(fine5);
     // The overflow is VISIBLE (the 17/16 rule), never silently absorbed.
     expect(h.meta.inventory.length).toBeGreaterThan(capacity);
   });
 
-  it('a golden win into the LAST free slot: the fine grade reads the mutated bags ((bu))', () => {
-    // The deliberate second-read the grantGolden comment forbids "cleaning
-    // up": the base grade consumes the one free slot, so the fine grade's
-    // countFit must see the NOW-FULL bags and land fully plain. A hoisted
-    // inventory snapshot would sign the fine grade into the phantom slot.
+  it('a golden win into the LAST free slot: both grades still land fully signed ((bu))', () => {
+    // grantGolden is a plain uncapped force-add (no separate signed-room
+    // ceiling exists to run out of, since the mark rides the granted units'
+    // own source bucket): the base grade takes the one free slot and the
+    // fine grade, reading the now-full bags, still lands as a fresh
+    // over-capacity stack, both fully signed.
     const h = makeHarness(GOLDEN_WIN_SEED);
     const expected = ripenWinner(h);
     const capacity = bagCapacity(h.meta.bags);
@@ -3238,23 +3258,27 @@ describe('the golden_harvest roll: the shared rare event at the farm bed', () =>
     expect(values).toHaveLength(harvestDraws(1));
     expect(values[0]).toBeLessThan(GATHER_RARE_EVENT_CHANCE);
     const count5 = expected.count * GATHER_RARE_EVENT_YIELD_MULT;
+    const fine5 = expected.fine * GATHER_RARE_EVENT_YIELD_MULT;
     expect(h.sim.countItem(PRODUCE_ID, h.pid)).toBe(count5);
-    expect(h.sim.countItem(FINE_ID, h.pid)).toBe(expected.fine * GATHER_RARE_EVENT_YIELD_MULT);
-    // The base grade took the one free slot, signed in full...
+    expect(h.sim.countItem(FINE_ID, h.pid)).toBe(fine5);
+    // Both grades fully signed: a positive full-premium proof, exact counts.
     expect(signedCountOf(h, PRODUCE_ID)).toBe(count5);
-    // ...and the fine grade, reading the mutated bags, landed fully plain.
-    expect(h.meta.inventory.some((s) => s.itemId === FINE_ID && s.instance)).toBe(false);
+    expect(signedCountOf(h, FINE_ID)).toBe(fine5);
   });
 
-  it('a truncating golden win NAMES its surface: one gatherDowngrade crop/mark ((bu) follow-up)', () => {
-    // The Phase 14 widening: the signature truncation is no longer silent.
-    // The full-bags construction truncates BOTH grades (the base grade signs
-    // only its merge room, the fine grade lands fully plain), yet exactly ONE
-    // event fires per harvest command (the gatherDenied dedupe idiom). The
-    // client needs no new line: hud.ts's gatherDowngrade case resolves the
-    // toast off the lost arm alone (downgradeMark), surface-independent.
+  it('the gatherDowngrade crop/mark arm is retired: the old full-bags construction still lands the whole signature', () => {
+    // The premium mark now rides the granted units' own source bucket beside
+    // the gatherer rather than a distinct instanced payload, so it shares
+    // real stack room with plain and differently-signed units instead of
+    // needing byte-equal room of its own: the `gatherDowngrade { surface:
+    // 'crop' }` arm this construction used to trigger is REMOVED, not merely
+    // hard to reach (src/sim/professions/farming.ts, the grantGolden
+    // comment). This is the standing negative control over the exact same
+    // full-bags shape the removed arm used to fire on, with a positive
+    // full-premium proof so the quiet reads as the whole signature landing,
+    // never as a missed win.
     const h = makeHarness(GOLDEN_WIN_SEED);
-    ripenWinner(h);
+    const expected = ripenWinner(h);
     const stack = stackSizeOf(ITEMS[PRODUCE_ID]);
     h.sim.ctx.addItemInstance(PRODUCE_ID, { signer: h.meta.name }, h.pid, stack - 2, {
       silent: true,
@@ -3265,15 +3289,19 @@ describe('the golden_harvest roll: the shared rare event at the farm bed', () =>
     const from = h.sim.events.length;
     const values = recordDraws(h.sim, () => harvest(h));
     expect(values[0]).toBeLessThan(GATHER_RARE_EVENT_CHANCE); // the probed win, in-arm
-    const downgrades = h.sim.events.slice(from).filter((e) => e.type === 'gatherDowngrade');
-    expect(downgrades).toEqual([
-      { type: 'gatherDowngrade', pid: h.pid, surface: 'crop', lost: 'mark' },
-    ]);
-    // BOTH grades really truncated in this construction, so the single event
-    // above proves the DEDUPE, not a one-grade emitter: the fine grade found
-    // no signed room at all, and the base grade signed only its merge room.
-    expect(h.meta.inventory.some((s) => s.itemId === FINE_ID && s.instance)).toBe(false);
-    expect(signedCountOf(h, PRODUCE_ID)).toBe(stack);
+    expect(h.sim.events.slice(from).filter((e) => e.type === 'gatherDowngrade')).toHaveLength(0);
+    // Nothing rots and nothing is left unsigned: the whole five-fold base
+    // yield landed, and every unit of it (the pre-seeded stack included)
+    // carries this harvester's signature.
+    const count5 = expected.count * GATHER_RARE_EVENT_YIELD_MULT;
+    expect(h.sim.countItem(PRODUCE_ID, h.pid)).toBe(stack - 2 + count5);
+    expect(signedCountOf(h, PRODUCE_ID)).toBe(stack - 2 + count5);
+    // The fine grade rides the same signed source-bucket grant as the base
+    // grade (grantGolden signs both), so it lands fully signed too, not
+    // unconditionally plain: exact per-source count, not a dropped field.
+    const fine5 = expected.fine * GATHER_RARE_EVENT_YIELD_MULT;
+    expect(h.sim.countItem(FINE_ID, h.pid)).toBe(fine5);
+    expect(signedCountOf(h, FINE_ID)).toBe(fine5);
   });
 
   it('a golden win with bag room emits NO downgrade (the signature landed in full)', () => {

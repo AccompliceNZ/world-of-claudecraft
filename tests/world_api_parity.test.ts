@@ -147,6 +147,7 @@ export const IWORLD_MEMBERS = [
   { name: 'lootCorpse', kind: 'method' },
   { name: 'autoLoot', kind: 'method' },
   { name: 'harvestCorpse', kind: 'method' },
+  { name: 'corpseHarvestInfo', kind: 'method' }, // read-returning
   { name: 'submitLootRoll', kind: 'method' },
   { name: 'activeLootRolls', kind: 'method' }, // read-returning (2/6)
   { name: 'lootRollGroupStatus', kind: 'method' }, // read-returning
@@ -164,6 +165,8 @@ export const IWORLD_MEMBERS = [
   { name: 'equipItemToSlot', kind: 'method' },
   { name: 'moveInventoryItem', kind: 'method' },
   { name: 'sortInventory', kind: 'method' },
+  { name: 'separateMaterialStack', kind: 'method' },
+  { name: 'combineMaterialStacks', kind: 'method' },
   { name: 'unequipItem', kind: 'method' },
   { name: 'useItem', kind: 'method' },
   { name: 'discardItem', kind: 'method' },
@@ -366,6 +369,10 @@ export const IWORLD_MEMBERS = [
   { name: 'nodeHarvestableByMe', kind: 'method' }, // read-returning
   { name: 'nodeRespawnSeconds', kind: 'method' }, // read-returning (countdown of the same timer)
   { name: 'harvestNode', kind: 'method' },
+  // The remembered corpse-harvest preference (Intentional Gathering PR3): a
+  // settings read plus its command, never gated on kit/location/combat/cost.
+  { name: 'harvestPreference', kind: 'data' },
+  { name: 'setHarvestPreference', kind: 'method' },
   { name: 'recipeList', kind: 'data' },
   { name: 'lastCraftResult', kind: 'data' },
   { name: 'lastMasterwork', kind: 'data' },
@@ -404,6 +411,14 @@ export const IWORLD_MEMBERS = [
   // the shared both-hosts state read (perfectingInfoFrom).
   { name: 'perfectItem', kind: 'method' },
   { name: 'perfectingInfo', kind: 'method' }, // read-returning
+  // Intentional Gathering PR4 (docs/prd/intentional-gathering/goal-projection-
+  // contract.md): the viewer's single explicit gathering goal, plus its
+  // track/clear commands.
+  { name: 'gatheringGoal', kind: 'data' },
+  { name: 'trackGatheringRecipe', kind: 'method' },
+  { name: 'trackGatheringCommission', kind: 'method' },
+  { name: 'clearGatheringGoal', kind: 'method' },
+  // Perfecting rank exchange (Masterwrought phase 15).
   { name: 'swapPerfectingRanks', kind: 'method' },
   { name: 'perfectingSwapInfo', kind: 'method' },
   { name: 'raidLockouts', kind: 'method' }, // read-returning (5/6)
@@ -780,10 +795,21 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // (six data, two method; no overlap, no kind flips): 354 members, 97
     // data, 257 method. Set from a suite run on the merged tree, never by
     // arithmetic in the diff. This cleanup removes that retired ferry method:
-    // 353 members, 97 data, 256 methods.
-    expect(IWORLD_MEMBERS.length).toBe(355);
-    expect(DATA_MEMBERS.length).toBe(97);
-    expect(METHOD_MEMBERS.length).toBe(258);
+    // Material grouping adds two inventory methods: 355 members, 97 data, 258 methods.
+    // Intentional Gathering PR3 adds the harvest-preference settings pair
+    // (harvestPreference data + setHarvestPreference method):
+    // 357 members, 98 data, 259 methods.
+    // Intentional Gathering PR3 adds the selected-corpse status query
+    // (corpseHarvestInfo, a read-returning method):
+    // 358 members, 98 data, 260 methods.
+    // Intentional Gathering PR4 adds the gathering-goal projection (gatheringGoal
+    // data plus trackGatheringRecipe/trackGatheringCommission/clearGatheringGoal):
+    // 362 members, 99 data, 263 methods.
+    // Masterwrought Perfecting rank exchange adds swapPerfectingRanks and
+    // perfectingSwapInfo (both methods): 364 members, 99 data, 265 methods.
+    expect(IWORLD_MEMBERS.length).toBe(364);
+    expect(DATA_MEMBERS.length).toBe(99);
+    expect(METHOD_MEMBERS.length).toBe(265);
   });
   it('has no duplicate member names', () => {
     const names = IWORLD_MEMBERS.map((m) => m.name);
@@ -861,8 +887,10 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'chat',
       'civicServicePlacements',
       'claimEventSkin',
+      'clearGatheringGoal',
       'clearMarker',
       'collectDelveChestLoot',
+      'combineMaterialStacks',
       'commissionOrders',
       'companionState',
       'companionUpgrade',
@@ -872,6 +900,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'convertPartyToRaid',
       'convertRaidToParty',
       'copper',
+      'corpseHarvestInfo',
       'craftItem',
       'craftSkills',
       'craftVaultStock',
@@ -929,6 +958,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'friendAdd',
       'friendRemove',
       'friendlyTabTarget',
+      'gatheringGoal',
       'gatheringProficiency',
       'groundAimPlacementPreview',
       'guildAccept',
@@ -959,6 +989,7 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'harvestCorpse',
       'harvestCrop',
       'harvestNode',
+      'harvestPreference',
       'healPet',
       'hobbyCraft',
       'honor',
@@ -1085,10 +1116,12 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'selectTalentRow',
       'sellAllJunk',
       'sellItem',
+      'separateMaterialStack',
       'setActiveBorder',
       'setActiveTitle',
       'setDungeonDifficulty',
       'setGuildPledgeSettings',
+      'setHarvestPreference',
       'setHelmHidden',
       'setItemLocked',
       'setMarker',
@@ -1125,6 +1158,8 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'toggleWeaponStow',
       'toolEffectSlots',
       'townFocus',
+      'trackGatheringCommission',
+      'trackGatheringRecipe',
       'tradeAccept',
       'tradeCancel',
       'tradeClose',
@@ -1198,8 +1233,10 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'equipment',
       'equipmentInstances',
       'farmPatches',
+      'gatheringGoal',
       'gatheringProficiency',
       'guildBankInfo',
+      'harvestPreference',
       'hobbyCraft',
       'honor',
       'inventory',
@@ -1298,13 +1335,16 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'characterProfile',
       'chat',
       'claimEventSkin',
+      'clearGatheringGoal',
       'clearMarker',
       'collectDelveChestLoot',
+      'combineMaterialStacks',
       'companionUpgrade',
       'consumeFeast',
       'convertHusks',
       'convertPartyToRaid',
       'convertRaidToParty',
+      'corpseHarvestInfo',
       'craftItem',
       'dailyRewardHistory',
       'dailyRewardLeaderboard',
@@ -1463,10 +1503,12 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'selectTalentRow',
       'sellAllJunk',
       'sellItem',
+      'separateMaterialStack',
       'setActiveBorder',
       'setActiveTitle',
       'setDungeonDifficulty',
       'setGuildPledgeSettings',
+      'setHarvestPreference',
       'setHelmHidden',
       'setItemLocked',
       'setMarker',
@@ -1495,6 +1537,8 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'targetNearestFriendly',
       'toggleMounted',
       'toggleWeaponStow',
+      'trackGatheringCommission',
+      'trackGatheringRecipe',
       'tradeAccept',
       'tradeCancel',
       'tradeClose',
@@ -1655,6 +1699,7 @@ const FACET_INTERACTION = [
   'interact',
   'lootCorpse',
   'harvestCorpse',
+  'corpseHarvestInfo',
   'pickUpObject',
   'townFocus',
   'setTownFocus',
@@ -1684,6 +1729,8 @@ const FACET_INVENTORY = [
   'equipItemToSlot',
   'moveInventoryItem',
   'sortInventory',
+  'separateMaterialStack',
+  'combineMaterialStacks',
   'unequipItem',
   'useItem',
   'discardItem',
@@ -2027,6 +2074,8 @@ const FACET_PROFESSIONS = [
   'nodeHarvestableByMe',
   'nodeRespawnSeconds',
   'harvestNode',
+  'harvestPreference',
+  'setHarvestPreference',
   'recipeList',
   'lastCraftResult',
   'lastMasterwork',
@@ -2054,6 +2103,10 @@ const FACET_PROFESSIONS = [
   'rechargeToolEffect',
   'perfectItem',
   'perfectingInfo',
+  'gatheringGoal',
+  'trackGatheringRecipe',
+  'trackGatheringCommission',
+  'clearGatheringGoal',
   'swapPerfectingRanks',
   'perfectingSwapInfo',
 ] as const satisfies readonly (keyof IWorldProfessions)[];
@@ -2236,8 +2289,8 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
 
   it('the facet union equals the pinned IWORLD_MEMBERS set', () => {
     const union = Object.values(FACET_MEMBER_ARRAYS).flatMap((arr) => [...arr]);
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(355);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(355);
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(364);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(364);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);
