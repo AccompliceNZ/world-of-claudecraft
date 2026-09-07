@@ -217,8 +217,9 @@ describe('ActionBarPainter: routes every write through the elided writers', () =
     expect(css).toMatch(
       /@media \(prefers-reduced-motion: reduce\) \{[\s\S]*?\.action-btn\.proc,[\s\S]*?animation: none;/,
     );
+    // The ring reads the same proc tokens as the socket primitive; only the blur radius tiers.
     expect(mobileCss).toMatch(
-      /#mobile-action-ring button\.proc \{[\s\S]*?border-color: #ffd97a;[\s\S]*?0 0 12px #ffcf40e6/,
+      /#mobile-action-ring button\.proc \{[\s\S]*?border-color: var\(--color-proc-rim\);[\s\S]*?calc\(12px \* var\(--fx-shadow, 1\)\)[\s\S]*?var\(--color-proc-glow\)/,
     );
     expect(mobileCss).toMatch(
       /@media \(forced-colors: active\) \{[\s\S]*?#mobile-action-ring button\.proc \{[\s\S]*?border: 3px double Highlight;[\s\S]*?outline: 1px solid CanvasText;/,
