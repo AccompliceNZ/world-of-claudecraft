@@ -1924,3 +1924,46 @@ describe('zone-map crafting stations', () => {
     }
   });
 });
+
+describe('atlas layer filters', () => {
+  it('hides only player-selectable marker layers while retaining navigation and self', () => {
+    const world = makeOverworldWorldWithParty('sim');
+    const baseline = buildOverworldMapModel(input(world, LABELS_ZOOM));
+    const model = buildOverworldMapModel({
+      ...input(world, LABELS_ZOOM),
+      filters: {
+        quests: false,
+        gather: false,
+        dungeons: false,
+        services: false,
+        players: false,
+      },
+    });
+
+    expect(model.questAreas).toEqual([]);
+    expect(model.npcs).toEqual([]);
+    expect(model.gatherNodes).toEqual([]);
+    expect(model.portals).toEqual([]);
+    expect(model.services).toEqual([]);
+    expect(model.stations).toEqual([]);
+    expect(model.allies).toEqual([]);
+    expect(model.party).toEqual([]);
+    expect(model.player).not.toBeNull();
+    expect(model.navigation).toEqual(baseline.navigation);
+  });
+
+  it('projects the selected quest route from the player to the objective', () => {
+    const world = makeOverworldWorld('sim');
+    const route = { questId: 'q_wolves', x: 30, z: ZONE_CZ + 24 };
+    const model = buildOverworldMapModel({ ...input(world, 1), route });
+
+    expect(model.route).not.toBeNull();
+    expect(model.route?.from).toEqual(
+      expect.objectContaining({ mx: expect.any(Number), my: expect.any(Number) }),
+    );
+    expect(model.route?.to).toEqual(
+      expect.objectContaining({ mx: expect.any(Number), my: expect.any(Number) }),
+    );
+    expect(model.route?.to).not.toEqual(model.route?.from);
+  });
+});

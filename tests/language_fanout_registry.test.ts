@@ -417,6 +417,12 @@ const NOT_A_LANGUAGE_GATE: ReadonlyArray<{
       'lastHash retains the text-independent marker summary signature, while lastLanguage is compared against getLanguage() in the same early-return guard. A locale switch always moves lastLanguage and rebuilds every localized label on the next map paint, so the gate is explicitly locale-aware rather than a stale-language hazard.',
   },
   {
+    file: 'map_sidebar_controller.ts',
+    memos: ['lastHtml'],
+    reason:
+      'lastHtml retains the last BUILT rail html, which embeds every localized string through t(), so a locale switch changes the freshly built side of the comparison and the atlas rail repaints by itself on its next update. Write-elision, not a data signature.',
+  },
+  {
     file: 'hud/quest/quest_tracker_controller.ts',
     memos: ['lastHtml'],
     reason:
@@ -772,7 +778,11 @@ describe('language fan-out: half 2, every signature-gated src/ui surface is clas
       // hover row: movable_frame's `lastHoverCursor` elides an inline CSS
       // cursor-keyword write and can never hold text; the frame's t() labels
       // already ride the interface_unlock relocalize() arm.
-    ).toBe(12);
+      // 13 as of the world map atlas rail: map_sidebar_controller's `lastHtml`
+      // is the quest tracker's write-elision shape, the freshly BUILT html with
+      // every t() value already resolved, so a locale switch moves the
+      // comparison itself and the rail repaints with no fan-out arm.
+    ).toBe(13);
   });
 
   it('gives every relocalize() in src/ui a caller in the fan-out', () => {

@@ -439,6 +439,7 @@ const UI_PURE_CORES = [
   'src/ui/castle_plan_core.ts',
   'src/ui/map_gather_tip_memo.ts',
   'src/ui/map_window_view.ts',
+  'src/ui/map_sidebar_view.ts',
   'src/ui/continent_land_mask_core.ts',
   'src/ui/map_show_on_map_core.ts',
   'src/ui/continent_map_view.ts',

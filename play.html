@@ -488,16 +488,20 @@
     <div id="commission-board-window" class="window panel"></div>
     <div id="card-duel-window" class="window panel"></div>
     <div id="town-focus-window" class="window panel"></div>
-    <div id="map-window" class="window panel">
-      <button class="x-btn" id="map-close" data-i18n-title="hud.core.closeMap" data-i18n-aria="hud.core.closeMap" title="Close map" aria-label="Close map" data-icon="close"></button>
-      <button type="button" id="map-level-toggle" data-i18n="hudChrome.continentMap.toWorld" data-i18n-title="hudChrome.continentMap.toggleAria" data-i18n-aria="hudChrome.continentMap.toggleAria" title="Switch between the world map and the zone map" aria-label="Switch between the world map and the zone map">World map</button>
-      <div id="map-zoom">
-        <button class="map-zoom-btn" id="map-zoom-in" data-i18n-title="hud.core.zoomIn" data-i18n-aria="hud.core.zoomIn" title="Zoom in" aria-label="Zoom in">+</button>
-        <button class="map-zoom-btn" id="map-zoom-out" data-i18n-title="hud.core.zoomOut" data-i18n-aria="hud.core.zoomOut" title="Zoom out" aria-label="Zoom out">&minus;</button>
+    <div id="map-window" class="window panel ui-window">
+      <aside id="map-sidebar" class="map-atlas-sidebar ui-panel-strong"></aside>
+      <div class="map-atlas-stage">
+        <button type="button" class="x-btn ui-x-btn" id="map-close" data-i18n-title="hud.core.closeMap" data-i18n-aria="hud.core.closeMap" title="Close map" aria-label="Close map" data-icon="close"></button>
+        <button type="button" class="ui-btn" id="map-level-toggle" data-i18n="hudChrome.continentMap.toWorld" data-i18n-title="hudChrome.continentMap.toggleAria" data-i18n-aria="hudChrome.continentMap.toggleAria" title="Switch between the world map and the zone map" aria-label="Switch between the world map and the zone map">World map</button>
+        <div id="map-zoom">
+          <button type="button" class="map-zoom-btn ui-disc" id="map-zoom-in" data-i18n-title="hud.core.zoomIn" data-i18n-aria="hud.core.zoomIn" title="Zoom in" aria-label="Zoom in">+</button>
+          <button type="button" class="map-zoom-btn ui-disc" id="map-zoom-out" data-i18n-title="hud.core.zoomOut" data-i18n-aria="hud.core.zoomOut" title="Zoom out" aria-label="Zoom out">&minus;</button>
+        </div>
+        <div class="map-atlas-compass" aria-hidden="true"></div>
+        <canvas id="map-canvas" width="560" height="560" role="img" aria-describedby="map-summary map-marker-summary" data-i18n-aria="hud.core.mapCanvasLabel" aria-label="Map"></canvas>
+        <span id="map-summary" class="visually-hidden" role="status" aria-live="polite"></span>
+        <span id="map-marker-summary" class="visually-hidden"></span>
       </div>
-      <canvas id="map-canvas" width="560" height="560" role="img" aria-describedby="map-summary map-marker-summary" data-i18n-aria="hud.core.mapCanvasLabel" aria-label="Map"></canvas>
-      <span id="map-summary" class="visually-hidden" role="status" aria-live="polite"></span>
-      <span id="map-marker-summary" class="visually-hidden"></span>
     </div>
     <div id="arena-window" class="window panel"></div>
     <div id="dungeon-finder-window" class="window panel"></div>
@@ -513,14 +517,14 @@
     <div id="woc-market-window" class="window panel"></div>
     <div id="mailbox-window" class="window panel"></div>
     <div id="bank-window" class="window panel"></div>
-    <div id="deeds-window" class="window panel"></div>
-    <div id="reliquary-window" class="window panel"></div>
+    <div id="deeds-window" class="window panel ui-window"></div>
+    <div id="reliquary-window" class="window panel ui-window"></div>
     <div id="professions-window" class="window panel"></div>
     <div id="calendar-window" class="window panel"></div>
     <div id="arena-status"></div>
     <div id="options-menu" class="window panel"></div>
     <div id="emote-editor" class="window panel"></div>
-    <div id="social-window" class="window panel"></div>
+    <div id="social-window" class="window panel ui-window"></div>
     <div id="report-window" class="window panel"></div>
     <div id="side-buttons">
       <div id="side-buttons-col-a" class="side-buttons-col">
