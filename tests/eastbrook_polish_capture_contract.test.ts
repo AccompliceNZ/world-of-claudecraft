@@ -386,8 +386,11 @@ interface AttributionTargetFixture {
 // retaken.
 // Re-minted for the v0.42.0 release candidate renderer merge: the selected
 // renderer changes move the runtimeRender.renderer leaf. No capture was retaken.
+// Re-minted for the v0.42.0 reconcile after the release branch advanced with
+// Nythraxis renderer work: the merged runtimeRender.renderer leaf matches
+// neither parent. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '6b4c20fe43aac64cea9879e24f0e61a5647fcc2978c9344334d01c0e9e1675ee';
+  '63dadd29dcdca5f8bd373fd476582ea886065e28dbd9799eaedcba03c2e624a9';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

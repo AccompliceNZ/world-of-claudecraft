@@ -44,7 +44,8 @@ import {
 import { recipeById } from '../src/sim/content/recipes';
 import { DUNGEON_X_THRESHOLD } from '../src/sim/data';
 import { resolveCraftForRecipe } from '../src/sim/professions/crafting';
-import { Sim } from '../src/sim/sim';
+import { type PlayerMeta, Sim } from '../src/sim/sim';
+import type { Entity, InvSlot } from '../src/sim/types';
 import {
   bareClient,
   broadcast,
@@ -124,29 +125,33 @@ function send(server: GameServerType, session: unknown, msg: Record<string, unkn
   server.handleMessage(session as any, JSON.stringify({ t: 'cmd', ...msg }));
 }
 
+function requirePlayer(sim: Sim, pid: number): PlayerMeta {
+  const meta = sim.players.get(pid);
+  if (!meta) throw new Error(`missing test player ${pid}`);
+  return meta;
+}
+
 // Relocate the first banker NPC onto the player (the bank_wire.test.ts idiom):
 // nearBanker is a dist2d check, and moving the NPC (which has no wander AI)
 // avoids pushing the PLAYER into a collider. Returns the banker entity.
-// biome-ignore lint/suspicious/noExplicitAny: the Sim internals this rig reaches for
-function bringBankerToPlayer(sim: any, pid: number): any {
+function bringBankerToPlayer(sim: Sim, pid: number): Entity {
   const banker = sim.entities.get(sim.bankerIds[0]);
   const p = sim.entities.get(pid);
+  if (!banker || !p) throw new Error('missing banker/player test entity');
   banker.pos = { ...p.pos };
   banker.prevPos = { ...banker.pos };
   return banker;
 }
 
-// biome-ignore lint/suspicious/noExplicitAny: see bringBankerToPlayer
-function itemIndex(sim: any, pid: number, itemId: string): number {
-  return sim.players.get(pid).inventory.findIndex((s: any) => s.itemId === itemId);
+function itemIndex(sim: Sim, pid: number, itemId: string): number {
+  return requirePlayer(sim, pid).inventory.findIndex((s: InvSlot) => s.itemId === itemId);
 }
 
 /** The LAST bag slot holding `itemId`. copper_ore stacks at 20, so a 60-item
  *  grant lands as three slots; the headroom tests need an untouched full stack,
  *  which is never the first index once earlier deposits have eaten into it. */
-// biome-ignore lint/suspicious/noExplicitAny: see bringBankerToPlayer
-function lastItemIndex(sim: any, pid: number, itemId: string): number {
-  const inv = sim.players.get(pid).inventory;
+function lastItemIndex(sim: Sim, pid: number, itemId: string): number {
+  const inv = requirePlayer(sim, pid).inventory;
   for (let i = inv.length - 1; i >= 0; i--) if (inv[i].itemId === itemId) return i;
   return -1;
 }
@@ -154,12 +159,10 @@ function lastItemIndex(sim: any, pid: number, itemId: string): number {
 /** The TOTAL carried count of `itemId`, summed across every bag slot: a stack
  *  cap means one material can occupy several, and a first-slot read would
  *  under-report the bags exactly where the headroom cases put them. */
-// biome-ignore lint/suspicious/noExplicitAny: see bringBankerToPlayer
-function bagCount(sim: any, pid: number, itemId: string): number {
-  return sim.players
-    .get(pid)
-    .inventory.filter((s: any) => s.itemId === itemId)
-    .reduce((sum: number, s: any) => sum + s.count, 0);
+function bagCount(sim: Sim, pid: number, itemId: string): number {
+  return requirePlayer(sim, pid)
+    .inventory.filter((s: InvSlot) => s.itemId === itemId)
+    .reduce((sum: number, s: InvSlot) => sum + s.count, 0);
 }
 
 /** Every value stored under `key` anywhere inside a decoded wire frame, at any
@@ -769,17 +772,27 @@ describe('materials vault wire round-trip', () => {
     // Sim handed the identical null refuses outright. Without this arm the
     // "deviation" is only half recorded, and an offline change that started
     // accepting null would close the gap with nothing going red.
-    // biome-ignore lint/suspicious/noExplicitAny: the Sim internals this rig reaches for
-    const offline = new Sim({ seed: 7, playerClass: 'warrior', autoEquip: true }) as any;
+    const offline = new Sim({ seed: 7, playerClass: 'warrior', autoEquip: true });
     const offPid = offline.playerId;
     bringBankerToPlayer(offline, offPid);
     offline.addItem('copper_ore', 5, offPid);
-    offline.players.get(offPid).copper = 20000;
+    requirePlayer(offline, offPid).copper = 20000;
     offline.vaultBuyUpgrade(offPid);
-    offline.vaultDeposit(itemIndex(offline, offPid, 'copper_ore'), null as any, offPid);
+    const vaultDepositWithNullableCount = offline.vaultDeposit as (
+      this: Sim,
+      slotIndex: number,
+      count: number | null,
+      pid?: number,
+    ) => void;
+    vaultDepositWithNullableCount.call(
+      offline,
+      itemIndex(offline, offPid, 'copper_ore'),
+      null,
+      offPid,
+    );
     // Nothing moved in EITHER direction: the stock is still empty and the bags
     // still hold all 5 (the exact opposite of the online 5/0 above).
-    expect(offline.players.get(offPid).vault.stock).toEqual({});
+    expect(requirePlayer(offline, offPid).vault.stock).toEqual({});
     expect(bagCount(offline, offPid, 'copper_ore')).toBe(5);
   });
 
@@ -1525,7 +1538,7 @@ describe('materials vault wire round-trip', () => {
       simAny.craftItem('recipe_eastbrook_arming_sword', false, thePid, 1);
       completeCraftCast(simAny as never, thePid);
     }
-    const craftOutcome = (simAny: unknown, thePid: number) => {
+    const craftOutcome = (simAny: Sim, thePid: number) => {
       const meta = (
         simAny as {
           players: Map<

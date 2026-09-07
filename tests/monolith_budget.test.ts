@@ -759,10 +759,12 @@ const MONOLITHS: MonolithRow[] = [
     // src/net/guild_bank_log_mirror.ts (GuildBankLogMirror); what stays is
     // the two one-line IWorld arms that put its requests on the wire. Exact
     // count.
-    // Re-pinned at this release/v0.42.0 reconcile. Measured on the merged
-    // tree after the release-line and candidate network mirrors composed.
+    // Re-pinned at this release/v0.42.0 reconcile. The candidate's guild bank
+    // transaction history extraction lands beside the release-side ground
+    // telegraph snapshot extraction, leaving only the thin call sites in this
+    // file. Measured on the merged tree, never reconciled by arithmetic.
     // Exact count, zero slack.
-    ceiling: 5858,
+    ceiling: 5845,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

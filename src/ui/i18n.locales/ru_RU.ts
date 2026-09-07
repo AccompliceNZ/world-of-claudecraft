@@ -4318,6 +4318,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.nhalia_mourner.name': 'Плакальщица Налии',
   'entities.mobs.nightkin_stargazer.name': 'Ночерождённый звездочёт',
   'entities.mobs.normal_boss_dummy.name': 'Обычный манекен босса',
+  'entities.mobs.nythraxis_bone_spike.name': 'Костяной шип',
   'entities.mobs.nythraxis_heroic_priest_add.name': 'Малрик, бессмертный иерофант',
   'entities.mobs.nythraxis_heroic_rogue_add.name': 'Восс, бессмертный клинок',
   'entities.mobs.nythraxis_heroic_warrior_add.name': 'Олдрен, бессмертный страж',
@@ -10388,6 +10389,22 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.necromancyOssuaryMark':
     'Накапливает {storedPct}% урона от вас и нежити и ещё {lancePct}% урона Копья души. Повторное применение взрывает метку. Смерть вызывает взрыв в радиусе {radius} м и создаёт 1 осколок души',
   'hudChrome.auraEffect.nextAttackCrit': 'Следующая атака гарантированно станет критической',
+  'hudChrome.auraEffect.nythraxisAscension':
+    'Бессмертное восхождение: {stacks} зарядов, урон и скорость атаки выше на {pct}%. Затащите Нитраксиса на Печать связывания, чтобы снять эффект.',
+  'hudChrome.auraEffect.nythraxisBoneStorm':
+    'Костяная буря: Нитраксис игнорирует угрозу, каждую секунду наносит вихрем {tick}% максимального здоровья в радиусе {radius} м и таранит рейдеров. Рассредоточьтесь и бегите.',
+  'hudChrome.auraEffect.nythraxisBound':
+    'Связан древними оберегами: Нитраксис получает на {pct}% больше урона в течение {duration} сек.',
+  'hudChrome.auraEffect.nythraxisCrownEndures':
+    'Корона выстоит: {stacks} зарядов, урон выше на {pct}%, скорость атаки — на {haste}%. У рейда закончилось время.',
+  'hudChrome.auraEffect.nythraxisDreadCurse':
+    'Каждый заряд увеличивает урон, получаемый от Нитраксиса, на {perStack}% в течение {duration} сек.: сейчас {stacks} из {max} зарядов, урон выше на {pct}%. Каждые {every} сек. следующий удар Нитраксиса по цели наносит {hit}% максимального здоровья и добавляет заряд. Танкам следует меняться при {swap} зарядах.',
+  'hudChrome.auraEffect.nythraxisImpaled':
+    'Пронзены Костяным шипом: вы не можете действовать и теряете {normal}% максимального здоровья каждые {interval} сек. ({heroic}% на героическом), пока рейд не уничтожит шип.',
+  'hudChrome.auraEffect.nythraxisKingsWrath':
+    'Королевский гнев: Нитраксис наносит на {pct}% больше урона до конца боя.',
+  'hudChrome.auraEffect.nythraxisUnbound':
+    'Не связан: Нитраксис наносит на {pct}% больше урона, пока его не удержит Печать связывания.',
   'hudChrome.auraEffect.oldBlood':
     'Старая кровь: стадия {stacks} из {max}. Попавшие удары Рвущего когтя, Свежевания, Кровавого разлома, Кровавого укуса, Разящих когтей и Костолома добавляют по 1 стадии. На {max}: Кровавый укус становится Кровавой жатвой в облике волка, а Костолом — Дроблением костей в облике бурого',
   'hudChrome.auraEffect.overloadNext':
@@ -12022,15 +12039,29 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.finder.lootGuaranteed': 'Всегда выпадает один из:',
   'hudChrome.finder.lootHeroic': 'Героическая награда, всегда один из:',
   'hudChrome.finder.lootMaybe': 'Выпадает не более одного из:',
+  'hudChrome.finder.mech.binding_sigil':
+    'Печать связывания (затащите босса на печать, или заплатит весь рейд)',
+  'hudChrome.finder.mech.bone_spike':
+    'Костяной шип (пронзённые рейдеры теряют здоровье, пока шип не уничтожен)',
+  'hudChrome.finder.mech.bone_storm': 'Костяная буря (игнорирует угрозу, вращается и таранит рейд)',
+  'hudChrome.finder.mech.crown_endures':
+    'Корона выстоит (жёсткий энрейдж на 6:00, на героическом — 5:00)',
+  'hudChrome.finder.mech.deathless_court':
+    'Бессмертный двор (только на героическом, королевский двор восстаёт после Бессмертной ярости)',
   'hudChrome.finder.mech.deathless_rage': 'Бессмертная ярость (прерывается у охранных камней)',
   'hudChrome.finder.mech.deathstalker_cleave': 'Секач смертохода (рассекающий удар спереди)',
   'hudChrome.finder.mech.dread_curse':
-    'Проклятие ужаса (только на героическом, накапливающийся дебафф смены танка)',
+    'Проклятие ужаса (накапливающийся дебафф смены танка, смена при 2 зарядах)',
   'hudChrome.finder.mech.enrage': 'Приходит в ярость при низком здоровье',
   'hudChrome.finder.mech.grave_cleaver': 'Могильный секач (рассекающий удар спереди)',
+  'hudChrome.finder.mech.grave_eruption':
+    'Могильное извержение (предупреждающие круги оставляют горящую землю)',
   'hudChrome.finder.mech.grave_inferno':
     'Могильный инферно (канализируемый огненный AoE, держите дистанцию)',
   'hudChrome.finder.mech.gravebreaker': 'Гробокрушитель (конус спереди, разверните от рейда)',
+  'hudChrome.finder.mech.gravefire': 'Могильный огонь (движущаяся огненная линия, уклоняйтесь)',
+  'hudChrome.finder.mech.kings_wrath':
+    'Королевский гнев (30%: постоянный бонус к урону, ускоренные опасности на полу)',
   'hudChrome.finder.mech.lunar_tide': 'Лунный прилив (периодический урон по области)',
   'hudChrome.finder.mech.mana_burn': 'Увядшее благословение (сжигает ману)',
   'hudChrome.finder.mech.mist_surge': 'Волна тумана (периодический урон по области)',
@@ -12042,7 +12073,9 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.finder.mech.shadow_nova': 'Кольцо тьмы (взрыв по области)',
   'hudChrome.finder.mech.shadow_pulse': 'Пульс тьмы (периодический урон по области)',
   'hudChrome.finder.mech.shuddering_stomp': 'Сотрясающий топот (оглушение по области)',
-  'hudChrome.finder.mech.soul_rend': 'Разрыв души (отмеченным разойтись и получать лечение)',
+  'hudChrome.finder.mech.soul_rend':
+    'Разрыв души (отмеченным собраться вместе, затем покинуть огонь)',
+  'hudChrome.finder.mech.soulfire': 'Огонь души (взрывы Разрыва души оставляют горящие лужи)',
   'hudChrome.finder.mech.summons_adds': 'Призывает подкрепления',
   'hudChrome.finder.mech.wardstones': 'Охранные камни (смена фазы)',
   'hudChrome.finder.needs': 'Нужны: {roles}',
@@ -12622,6 +12655,24 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.noticeboard.popupTitle': 'Гильдейский столб',
   'hudChrome.noticeboard.rosterTitle': 'Просмотреть состав гильдии {guild}',
   'hudChrome.noticeboard.subtitle': 'Гильдии мира',
+  'hudChrome.nythraxisCallout.boneStormBegins': 'Костяная буря! Рассредоточьтесь и бегите!',
+  'hudChrome.nythraxisCallout.boneStormCharge': 'Нитраксис несётся на ВАС! Бегите!',
+  'hudChrome.nythraxisCallout.boneStormEnds': 'Костяная буря закончилась. Танки, принимайте его!',
+  'hudChrome.nythraxisCallout.crownEndures': 'Корона выстоит! Нитраксис в ярости!',
+  'hudChrome.nythraxisCallout.crownEndures10': 'Десять секунд! Жгите его!',
+  'hudChrome.nythraxisCallout.crownEndures30': 'До «Корона выстоит» осталось тридцать секунд!',
+  'hudChrome.nythraxisCallout.crownEndures60': 'До «Корона выстоит» осталась минута!',
+  'hudChrome.nythraxisCallout.dreadCurseSwap': 'Проклятие ужаса: смена танков!',
+  'hudChrome.nythraxisCallout.gravefireTarget': 'Могильный огонь мчится к вам! Уклонитесь!',
+  'hudChrome.nythraxisCallout.impaled': 'Костяные шипы! Освободите пронзённых!',
+  'hudChrome.nythraxisCallout.kingsWrath': 'Король восстаёт в гневе! Теперь всё бьёт сильнее!',
+  'hudChrome.nythraxisCallout.sigilAppears':
+    'Печать связывания вспыхнула! Тащите Нитраксиса на неё!',
+  'hudChrome.nythraxisCallout.sigilBound': 'Нитраксис связан! Жгите его!',
+  'hudChrome.nythraxisCallout.sigilUnbound':
+    'Печать гаснет впустую! Нитраксис не связан и становится лишь сильнее!',
+  'hudChrome.nythraxisCallout.spikeBroken': 'Шип разбит!',
+  'hudChrome.nythraxisCallout.youAreImpaled': 'Вы пронзены! Держитесь!',
   'hudChrome.options.alwaysShowAllBuffs': 'Всегда показывать все баффы',
   'hudChrome.options.auraBarBelowFrame': 'Баффы под рамкой игрока',
   'hudChrome.options.aurasOnPlayerFrame': 'Баффы у рамки игрока',
@@ -13448,6 +13499,106 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.raidBossGuide.ignivar.searingTorrentSummary':
     'Игнивар отслеживает игрока, а затем выпускает широкий фронтальный поток. Готовый водовод, задетый атакой, ненадолго активируется.',
   'hudChrome.raidBossGuide.normal': 'Обычный',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilHeroicSummary':
+    'Каждые {everyHeroic} сек. на полу в {minDist}-{maxDist} м от Нитраксиса вспыхивает печать древних оберегов, и он начинает Бессмертное восхождение, получая {ascensionHeroic} урона и скорости атаки каждые {ascensionEvery} сек. Если он встанет на печать в течение {bindHeroic} сек., он оказывается Связан: Восхождение снимается, он оглушается на {stunHeroic} сек. и получает на {vulnerability} больше урона в течение {boundHeroic} сек. В противном случае каждый рейдер получает {unboundHitHeroic} максимального здоровья как урон тьмой, а Нитраксис сохраняет на {unboundBonusHeroic} больше урона до следующего связывания.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilName': 'Печать связывания',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilResponse':
+    'Танк сразу же тащит Нитраксиса на печать, невзирая на оставленный рейдом огонь. Бойцы ближнего боя следуют за перетаскиванием, а дальники держатся вне нового конуса Гробокрушителя. Пока он Связан, все выжигают по нему урон.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilSummary':
+    'Каждые {everyNormal} сек. на полу в {minDist}-{maxDist} м от Нитраксиса вспыхивает печать древних оберегов, и он начинает Бессмертное восхождение, получая {ascensionNormal} урона и скорости атаки каждые {ascensionEvery} сек. Если он встанет на печать в течение {bindNormal} сек., он оказывается Связан: Восхождение снимается, он оглушается на {stunNormal} сек. и получает на {vulnerability} больше урона в течение {boundNormal} сек. В противном случае каждый рейдер получает {unboundHitNormal} максимального здоровья как урон тьмой, а Нитраксис сохраняет на {unboundBonusNormal} больше урона до следующего связывания.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeHeroicSummary':
+    'Каждые {everyHeroic} сек. Нитраксис пронзает Костяными шипами {victimsHeroic} рейдеров, кроме текущей цели. Пронзённый рейдер не может действовать и теряет {drainHeroic} максимального здоровья каждую секунду, пока его шип не будет уничтожен.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeName': 'Костяной шип',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeResponse':
+    'Бойцы немедленно переключаются на Костяные шипы и уничтожают их, чтобы освободить пронзённых рейдеров. Лекари поддерживают пронзённых, пока шипы падают.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
+    'Каждые {everyNormal} сек. Нитраксис пронзает Костяными шипами {victimsNormal} рейдеров, кроме текущей цели. Пронзённый рейдер не может действовать и теряет {drainNormal} максимального здоровья каждую секунду, пока его шип не будет уничтожен.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
+    'Начиная с {first} сек. после начала Королевского гнева и затем каждые {everyHeroic} сек., Нитраксис начинает Костяную бурю на {duration} сек. Он игнорирует угрозу, двигается в {speed} раза быстрее обычного и совершает {charges} рывков по {chargeSeconds} сек. каждый. Его вихрь наносит {whirlHeroic} максимального здоровья каждую секунду в радиусе {radius} м. Каждый рывок завершается Костяным ударом в том же радиусе на {slamHeroic} максимального здоровья. Через {spikeAt} сек. после начала бури он применяет Костяной шип, а Гробокрушитель снова активируется через {rearm} сек. после её окончания.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Костяная буря',
+  'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
+    'Рассредоточьтесь и продолжайте убегать от Нитраксиса. Рейдер, которого он преследует рывком, убегает, а все остальные освобождают место вокруг пути рывка, затем танки принимают его на себя, когда буря заканчивается.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
+    'Начиная с {first} сек. после начала Королевского гнева и затем каждые {everyNormal} сек., Нитраксис начинает Костяную бурю на {duration} сек. Он игнорирует угрозу, двигается в {speed} раза быстрее обычного и совершает {charges} рывков по {chargeSeconds} сек. каждый. Его вихрь наносит {whirlNormal} максимального здоровья каждую секунду в радиусе {radius} м. Каждый рывок завершается Костяным ударом в том же радиусе на {slamNormal} максимального здоровья. Через {spikeAt} сек. после начала бури он применяет Костяной шип, а Гробокрушитель снова активируется через {rearm} сек. после её окончания.',
+  'hudChrome.raidBossGuide.nythraxis.courtName': 'Бессмертный двор',
+  'hudChrome.raidBossGuide.nythraxis.courtResponse':
+    'Танки принимают на себя Олдрена и разворачивают его удар от рейда. Оглушите или заставьте замолчать Малрика в момент начала Исцеления Малрика и убейте его первым, затем обездвижьте или оглушите Восса, оттащив от лекарей (спровоцировать его нельзя), и добейте его следующим.',
+  'hudChrome.raidBossGuide.nythraxis.courtSummary':
+    'На героическом Нитраксис поднимает свой двор после каждой Бессмертной ярости, прервана она или нет, как только предыдущий двор пал. Дух Олдрена рассекает всё рядом со своей целью Королевским секачом. Дух Малрика канализирует Исцеление Малрика, с каждым применением исцеляя Нитраксиса всё сильнее. Дух Восса игнорирует провокацию и охотится на рейд.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresHeroicSummary':
+    'Через {enrageHeroic} сек. после пула (таймер приостанавливается на время появления Брата Алдрика на 70% здоровья) срабатывает жёсткий энрейдж «Корона выстоит». Нитраксис получает на {damage} больше урона и на {haste} более быстрые атаки, а затем ещё на {rampStep} урона каждые {rampEveryHeroic} сек. Полосы таймера нет. Предупреждения приходят выкриками за {warn60}, {warn30} и {warn10} сек. до срабатывания.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresName': 'Корона выстоит',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresResponse':
+    'Считайте первое предупреждение сигналом к финальному рывку урона. Сохраните манёвренность и защитные способности для оставшихся механик, а затем победите Нитраксиса до наступления энрейджа.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresSummary':
+    'Через {enrageNormal} сек. после пула (таймер приостанавливается на время появления Брата Алдрика на 70% здоровья) срабатывает жёсткий энрейдж «Корона выстоит». Нитраксис получает на {damage} больше урона и на {haste} более быстрые атаки, а затем ещё на {rampStep} урона каждые {rampEveryNormal} сек. Полосы таймера нет. Предупреждения приходят выкриками за {warn60}, {warn30} и {warn10} сек. до срабатывания.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageHeroicSummary':
+    'Каждые {every} сек. Нитраксис применяет Бессмертную ярость, читая её {cast} сек. Пока идёт чтение, каждый зажжённый охранный камень может канализировать один рейдер в течение {channel} сек. Если три разных рейдера завершат канализацию своих камней до конца чтения, Ярость прерывается, а Нитраксис оглушается на {stun} сек. В противном случае каждый рейдер получает {damageHeroic} максимального здоровья как урон тьмой, который не переживёт ни один запас здоровья.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageName': 'Бессмертная ярость',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageResponse':
+    'Назначьте по одному рейдеру на каждый охранный камень до пула. Когда начинается чтение, каждый бежит к своему камню и канализирует его до завершения. Оглушение, отход от камня и смерть прерывают канализацию, поэтому берегите канализирующих и никогда не назначайте пронзённого рейдера.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageSummary':
+    'Каждые {every} сек. Нитраксис применяет Бессмертную ярость, читая её {cast} сек. Пока идёт чтение, каждый зажжённый охранный камень может канализировать один рейдер в течение {channel} сек. Если три разных рейдера завершат канализацию своих камней до конца чтения, Ярость прерывается, а Нитраксис оглушается на {stun} сек. В противном случае каждый рейдер получает {damageNormal} максимального здоровья как урон тьмой.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseHeroicSummary':
+    'Каждые {every} сек. Нитраксис бьёт текущего танка на {hitHeroic} максимального здоровья как урон тьмой и накладывает заряд Проклятия ужаса. В течение {duration} сек. каждый заряд увеличивает урон, получаемый этим танком от Нитраксиса, на {perStackHeroic}, вплоть до {max} зарядов.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseName': 'Проклятие ужаса',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseResponse':
+    'Танки меняются при {stacks} зарядах: второй танк провоцирует Нитраксиса, а проклятый танк держится вне конуса Гробокрушителя, пока заряды спадают. Лекари готовят входящего танка до смены.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseSummary':
+    'Каждые {every} сек. Нитраксис бьёт текущего танка на {hitNormal} максимального здоровья как урон тьмой и накладывает заряд Проклятия ужаса. В течение {duration} сек. каждый заряд увеличивает урон, получаемый этим танком от Нитраксиса, на {perStackNormal}, вплоть до {max} зарядов.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerName': 'Гробокрушитель',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerResponse':
+    'Танки держат Нитраксиса лицом от рейда. Все остальные держатся сзади или сбоку от него и никогда не пересекают конус.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerSummary':
+    'Каждые {seconds} сек. Нитраксис заряжает свой следующий удар, который достигнет цели. Его цель получает только сам удар, но все остальные в радиусе {range} м внутри конуса {arc} градусов перед ним получают {splash} этого удара как физический урон, сниженный их собственной бронёй.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionHeroicSummary':
+    'Каждые {everyHeroic} сек. костлявые руки отмечают {countHeroic} кругов радиусом {radius} м под рейдерами. Через {warning} сек. каждый круг взрывается на {burstHeroic} максимального здоровья как урон тьмой, а затем горит Могильным пламенем ещё {flameHeroic} сек., нанося {tickHeroic} максимального здоровья каждую секунду всем, кто в нём стоит.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionName': 'Могильное извержение',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionResponse':
+    'Выходите из каждого предупреждающего круга до его взрыва и держитесь подальше от горящей земли. Танки уводят Нитраксиса подальше от пламени, чтобы у бойцов ближнего боя оставалось место для работы.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionSummary':
+    'Каждые {everyNormal} сек. костлявые руки отмечают {countNormal} кругов радиусом {radius} м под рейдерами. Через {warning} сек. каждый круг взрывается на {burstNormal} максимального здоровья как урон тьмой, а затем горит Могильным пламенем ещё {flameNormal} сек., нанося {tickNormal} максимального здоровья каждую секунду всем, кто в нём стоит.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireHeroicSummary':
+    'Каждые {everyHeroic} сек. от Нитраксиса к одному из рейдеров тянется линия лилового могильного огня, растущая на {speed} м в секунду до {length} м. Каждый метр горит {burnHeroic} сек. и наносит {tickHeroic} максимального здоровья каждую секунду всем, кто в нём стоит.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireName': 'Могильный огонь',
+  'hudChrome.raidBossGuide.nythraxis.gravefireResponse':
+    'Уклоняйтесь от линии по мере её приближения: она узкая и никогда не поворачивает. Дальним рейдерам следует постоянно двигаться, а не стоять на месте.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireSummary':
+    'Каждые {everyNormal} сек. от Нитраксиса к одному из рейдеров тянется линия лилового могильного огня, растущая на {speed} м в секунду до {length} м. Каждый метр горит {burnNormal} сек. и наносит {tickNormal} максимального здоровья каждую секунду всем, кто в нём стоит.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathName': 'Королевский гнев',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathResponse':
+    'Используйте оставшиеся защитные способности от неизбежного урона. Продолжайте чисто выполнять все прежние механики, пока рейд не закончит бой.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathSummary':
+    'Нитраксис наносит на {bonusNormal} больше урона на обычном режиме или на {bonusHeroic} на героическом до конца боя. Могильное извержение происходит каждые {eruptionEveryNormal} сек. ({eruptionEveryHeroic} на героическом), а Могильный огонь — каждые {gravefireEveryNormal} сек. ({gravefireEveryHeroic} на героическом).',
+  'hudChrome.raidBossGuide.nythraxis.overview':
+    'Верховный жрец Малрик не позволил своему королю умереть, и ритуал, поднявший Нитраксиса, привязал к крипте весь его двор. Бой проверяет дисциплинированную смену танков, быстрые переключения на Костяные шипы, уход с горящей земли и слаженную канализацию охранных камней после падения Трона.',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathName': 'Королевский гнев',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathSummary':
+    'На {health} здоровья Нитраксис ревёт в Королевском гневе и получает на {bonusNormal} больше урона на обычном режиме или на {bonusHeroic} на героическом до конца боя. Могильное извержение теперь происходит каждые {eruptionEveryNormal} сек. ({eruptionEveryHeroic} на героическом), а Могильный огонь — каждые {gravefireEveryNormal} сек. ({gravefireEveryHeroic} на героическом). Все остальные механики сохраняют свой темп.',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneName': 'Трон',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneSummary':
+    'Нитраксис удерживает тронный зал заряженным фронтальным ударом, сменой танков от Проклятия ужаса, Костяными шипами, пронзающими рейдеров, и Могильными извержениями, оставляющими горящую землю.',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesName': 'Охранные камни',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesSummary':
+    'На {health} здоровья Сотрясающий топот удерживает рейд на месте, пока прибывает Брат Алдрик и зажигает охранные камни. Все шипы разбиваются, и пол перестаёт гореть, затем к механикам Трона добавляются Разрыв души и Бессмертная ярость.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenName': 'Поднятие павших',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenResponse':
+    'Оф-танк принимает на себя каждую поднявшуюся волну. Бойцы зачищают стражей между Костяными шипами, чтобы волны не накапливались до падения Трона.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenSummary':
+    'Каждые {every} сек. во время фазы Трон Нитраксис поднимает у себя за спиной Восставших королевских стражей. Они бросаются на его текущую цель и сражаются, пока не будут уничтожены.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireHeroicSummary':
+    'Каждый взрыв Разрыва души оставляет одну лужу лилового огня радиусом {radius} м на каждую группу сближенных меток, которая горит {secondsHeroic} сек., нанося {tickHeroic} максимального здоровья каждую секунду. Если лужи пересекаются, урон засчитывается лишь один раз, без наложения. Лужи никогда не появляются в пределах {clearance} м от охранного камня.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireName': 'Огонь души',
+  'hudChrome.raidBossGuide.nythraxis.soulfireResponse':
+    'Выходите из лиловой лужи сразу после взрыва меток. Выбирайте следующую точку сбора подальше от горящего огня.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
+    'Каждый взрыв Разрыва души оставляет на месте каждой метки лужу лилового огня радиусом {radius} м, которая горит {seconds} сек., нанося {tickNormal} максимального здоровья каждую секунду. Там, где лужи пересекаются, урон наносится от каждой из них. Лужи никогда не появляются в пределах {clearance} м от охранного камня.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendHeroicSummary':
+    'Нитраксис отмечает Разрывом души {marksHeroic} рейдеров, кроме текущей цели. Через {fuse} сек. каждая метка наносит {damageHeroic} максимального здоровья её носителя как урон тьмой, поделённое между отмеченными рейдерами в радиусе {range} м от него. Метка, сработавшая в одиночку, смертельна.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendResponse':
+    'Каждый отмеченный рейдер бежит к общей точке сбора и встаёт в пределах {range} м от других меток до истечения {fuse}-секундного таймера. Лекари поднимают здоровье группы, пока метки срабатывают.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendSummary':
+    'Нитраксис отмечает Разрывом души {marksNormal} рейдеров, кроме текущей цели. Через {fuse} сек. каждая метка наносит полное максимальное здоровье её носителя как урон тьмой, поделённое между отмеченными рейдерами в радиусе {range} м от него.',
   'hudChrome.raidBossGuide.overviewHeading': 'Обзор',
   'hudChrome.raidBossGuide.portraitAlt': 'Портрет босса {boss}',
   'hudChrome.raidBossGuide.roleAll': 'Все роли',

@@ -112,6 +112,10 @@ export const IWORLD_MEMBERS = [
   { name: 'activeConsecrations', kind: 'data' },
   { name: 'activeFrostRings', kind: 'data' },
   { name: 'activeIgnivarMeteors', kind: 'data' },
+  { name: 'activeNythraxisGraveEruptions', kind: 'data' },
+  { name: 'activeNythraxisGraveFlames', kind: 'data' },
+  { name: 'activeNythraxisGravefires', kind: 'data' },
+  { name: 'activeNythraxisBindingSigils', kind: 'data' },
   { name: 'activeVarkhulCinderFires', kind: 'data' },
   { name: 'activeVarkhulCinderOrbProjectiles', kind: 'data' },
   { name: 'activeVarkhulForgestormWarnings', kind: 'data' },
@@ -664,8 +668,13 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // even when the total agrees. Only running the suite says what these
     // numbers really are; never reconcile them by arithmetic in the diff (the
     // numbers below were set from a suite run, not from this narrative).
-    expect(IWORLD_MEMBERS.length).toBe(344);
-    expect(DATA_MEMBERS.length).toBe(95);
+    // The Nythraxis redo's four ground-telegraph data members
+    // (activeNythraxisGraveEruptions/GraveFlames/Gravefires/BindingSigils, all
+    // IWorldCombat) merge against the release's guild-bank history mirror,
+    // which adds one method (guildBankLogOlder, IWorldGuildBank): 343 base +
+    // 4 data + 1 method = 348 total, 99 data, 249 method.
+    expect(IWORLD_MEMBERS.length).toBe(348);
+    expect(DATA_MEMBERS.length).toBe(99);
     expect(METHOD_MEMBERS.length).toBe(249);
   });
   it('has no duplicate member names', () => {
@@ -693,6 +702,10 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'activeLootRolls',
       'activeMasterLootRolls',
       'activeMobileStationCraft',
+      'activeNythraxisBindingSigils',
+      'activeNythraxisGraveEruptions',
+      'activeNythraxisGraveFlames',
+      'activeNythraxisGravefires',
       'activeTemporalHourglasses',
       'activeTitle',
       'activeVarkhulAnvilMeteors',
@@ -1034,6 +1047,10 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'activeIgnivarMeteors',
       'activeLoadout',
       'activeMobileStationCraft',
+      'activeNythraxisBindingSigils',
+      'activeNythraxisGraveEruptions',
+      'activeNythraxisGraveFlames',
+      'activeNythraxisGravefires',
       'activeTemporalHourglasses',
       'activeTitle',
       'activeVarkhulAnvilMeteors',
@@ -1475,6 +1492,10 @@ const FACET_COMBAT = [
   'activeConsecrations',
   'activeFrostRings',
   'activeIgnivarMeteors',
+  'activeNythraxisGraveEruptions',
+  'activeNythraxisGraveFlames',
+  'activeNythraxisGravefires',
+  'activeNythraxisBindingSigils',
   'activeTemporalHourglasses',
   'activeVarkhulForgestormWarnings',
   'activeVarkhulCinderFires',
@@ -2025,8 +2046,8 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
 
   it('the facet union equals the pinned IWORLD_MEMBERS set', () => {
     const union = Object.values(FACET_MEMBER_ARRAYS).flatMap((arr) => [...arr]);
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(344);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(344);
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(348);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(348);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);

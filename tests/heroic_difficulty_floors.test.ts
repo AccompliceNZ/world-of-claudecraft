@@ -41,8 +41,14 @@ const RAID_ADD_FLOOR = 250;
 // and the skeleton waves to 1.2x their NORMAL-mode health via the new
 // healthMultiplierByMob map. Ships with the wave-2 package; the morning
 // hotfix, if raids still cannot clear, nerfs FURTHER from here.
-const HEROIC_NYTHRAXIS_BOSS_FLOOR = 1000;
-const NORMAL_NYTHRAXIS_BOSS_FLOOR = 600;
+// 2026-09-04 first playtest of the mechanics redo: the boss swing is 70% of
+// its old weapon (the Dread Curse stacks now carry the tank pressure), so the
+// floors follow it down: heroic 1000 -> 700, normal 600 -> 420.
+// 2026-09-07 playtest tuning pass: raw swing retuned to ~90% of the lower
+// comparator final boss (dungeon_difficulty.ts), so the floors follow it
+// down: heroic 700 -> 146, normal 420 -> 98.
+const HEROIC_NYTHRAXIS_BOSS_FLOOR = 146;
+const NORMAL_NYTHRAXIS_BOSS_FLOOR = 98;
 const NORMAL_NYTHRAXIS_ADD_FLOOR = 300;
 
 const FIVE_MANS = [
@@ -152,7 +158,7 @@ describe('heroic five-man doubled health', () => {
 });
 
 describe('Nythraxis raid floors', () => {
-  it('heroic boss swings for at least 1000, add waves for the raid 250 add floor', () => {
+  it('heroic boss swings for at least 700, add waves for the raid 250 add floor', () => {
     expect(minSwing(RAID_BOSS, RAID, 'heroic')).toBeGreaterThanOrEqual(HEROIC_NYTHRAXIS_BOSS_FLOOR);
     for (const addId of RAID_HEROIC_ADDS) {
       const swing = minSwing(addId, RAID, 'heroic');
@@ -161,7 +167,7 @@ describe('Nythraxis raid floors', () => {
     }
   });
 
-  it('normal boss swings for at least 600, skeleton waves for at least 300', () => {
+  it('normal boss swings for at least 420, skeleton waves for at least 300', () => {
     expect(minSwing(RAID_BOSS, RAID, 'normal', undefined, 20)).toBeGreaterThanOrEqual(
       NORMAL_NYTHRAXIS_BOSS_FLOOR,
     );
@@ -170,13 +176,17 @@ describe('Nythraxis raid floors', () => {
     );
   });
 
-  it('pins raid health: boss doubled, heroic skeletons at 1.2x their normal HP', () => {
-    expect(maxHpAt(RAID_BOSS, RAID, 'heroic')).toBe(192000); // was 96000
+  it('pins raid health: the redo boss pool, heroic skeletons at 1.2x their normal HP', () => {
+    // The mechanics redo sets the boss pool directly through the per-mob health
+    // multiplier on the tuning records (120,000 normal, 192,000 heroic after
+    // the first playtest, 2026-09-04; the redo tried 160,000 / 230,000); the
+    // adds keep the shared difficulty multipliers.
+    expect(maxHpAt(RAID_BOSS, RAID, 'heroic')).toBe(192000);
     // Skeleton waves: 2.22x base = 3,768 at the level-22 pin, 1.2x the normal
     // wave's 3,137 (heroic waves stay beefier than normal, but stop being
     // 73% beefier: they are wave pressure, not extra bosses).
     expect(maxHpAt(RAID_NORMAL_ADD, RAID, 'heroic')).toBe(3768);
-    expect(maxHpAt(RAID_BOSS, RAID, 'normal', undefined, 20)).toBe(120000); // was 60000
+    expect(maxHpAt(RAID_BOSS, RAID, 'normal', undefined, 20)).toBe(120000);
     expect(maxHpAt(RAID_NORMAL_ADD, RAID, 'normal', undefined, 20)).toBe(3137); // was 1569
   });
 
@@ -185,7 +195,7 @@ describe('Nythraxis raid floors', () => {
     expect(tuning).toBeTruthy();
     expect(tuning.healthMultiplier).toBe(2.0);
     expect(tuning.damageMultiplierByMob).toEqual({
-      nythraxis_scourge_of_thornpeak: 5,
+      nythraxis_scourge_of_thornpeak: 1.132,
       nythraxis_skeleton_warrior: 5,
     });
   });
@@ -219,6 +229,7 @@ describe('heroic tuning data contract', () => {
       korzul_the_gravewyrm: 19,
     });
     expect(HEROIC_DUNGEON_TUNING.nythraxis_boss_arena.damageMultiplierByMob).toEqual({
+      nythraxis_scourge_of_thornpeak: 1.488,
       nythraxis_skeleton_warrior: 3.75,
       nythraxis_heroic_warrior_add: 3.75,
       nythraxis_heroic_priest_add: 8,
