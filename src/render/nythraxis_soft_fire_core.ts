@@ -22,10 +22,11 @@ export interface NythraxisSoftFireRamp {
 export const NYTHRAXIS_SOFT_FIRE_RAMPS: Readonly<
   Record<NythraxisSoftFireKind, NythraxisSoftFireRamp>
 > = {
-  // Grave Flame: sickly green with a pale lime core.
-  grave: { core: 0xf2ffc8, body: 0x6fe04a, tip: 0x0f3d1e },
-  // Soulfire: blood red with an orange-white core.
-  soul: { core: 0xffe6c4, body: 0xff4a2e, tip: 0x4a0808 },
+  // Grave Flame: blue-violet with a pale violet core.
+  grave: { core: 0xefe4ff, body: 0x8a5cf0, tip: 0x1f0e3d },
+  // Soulfire: magenta-violet with a pale pink-violet core, warmer than Grave
+  // Flame so the two pools stay tellable apart in the same purple family.
+  soul: { core: 0xf8dcff, body: 0xc84fff, tip: 0x3a0a3a },
   // Gravefire: the Coldflame read, violet with a near-white core.
   gravefire: { core: 0xf4ecff, body: 0xa070ff, tip: 0x2a0c4e },
 };

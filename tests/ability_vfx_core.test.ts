@@ -8,6 +8,7 @@ import {
   abilityVfxFullSpecFor,
   abilityVfxSpecFor,
 } from '../src/render/ability_vfx/encounter_specs';
+import { usesCrescendoScale } from '../src/render/ability_vfx/spectacle';
 import {
   ABILITY_VFX_ACCENT_CAP,
   ABILITY_VFX_CASTER_CAP,
@@ -27,6 +28,10 @@ import {
 } from '../src/render/ability_vfx_core';
 import { ABILITY_VFX_SPECS } from '../src/render/ability_vfx_specs';
 import { ABILITIES } from '../src/sim/data';
+import {
+  NYTHRAXIS_GRAVEBREAKER_CAST_ID,
+  NYTHRAXIS_SHUDDERING_STOMP_CAST_ID,
+} from '../src/sim/encounters/nythraxis';
 import {
   NYTHRAXIS_BONE_SLAM_CAST_ID,
   NYTHRAXIS_BONE_STORM_CAST_ID,
@@ -58,32 +63,73 @@ describe('ABILITY_VFX_SPECS table', () => {
 });
 
 describe('Nythraxis phase three encounter VFX specs', () => {
-  it('makes Bone Storm a large physical bone nova centered on the caster', () => {
+  it('keeps offensive spell particles and full-sequence lights in the purple palette', () => {
+    // 'Shuddering Stomp' is deliberately NOT the spec key here: it collides
+    // with Korgath the Bound's own stomp mechanic of the same display name
+    // (content/dungeons.ts), so the encounter routes on
+    // NYTHRAXIS_SHUDDERING_STOMP_CAST_ID, a render-only id never shown to
+    // players, instead.
+    for (const id of [
+      NYTHRAXIS_GRAVEBREAKER_CAST_ID,
+      NYTHRAXIS_SHUDDERING_STOMP_CAST_ID,
+      'Soulfire',
+      'Bone Storm',
+      'Bone Slam',
+    ]) {
+      expect(abilityVfxSpecFor(id)?.p, id).toBe('shadow');
+      expect(abilityVfxFullSpecFor(id)?.palette, id).toBe('shadow');
+    }
+    expect(abilityVfxFullSpecFor('Dread Curse')?.dot?.drip).toBe('rise');
+  });
+
+  it('keeps Gravebreaker and Shuddering Stomp out of the marquee crescendo', () => {
+    // Both are quiet boss self-cues (see their spec comments), not scripted
+    // casts: without filler:true, usesCrescendoScale (spectacle.ts) treats any
+    // non-filler burst as a marquee crescendo and the sequencer plays the full
+    // release explosion/vertical halo/afterglow regardless of the impact
+    // block saying ring:false - defeating the quiet recolor these specs exist
+    // for.
+    for (const id of [NYTHRAXIS_GRAVEBREAKER_CAST_ID, NYTHRAXIS_SHUDDERING_STOMP_CAST_ID]) {
+      const full = abilityVfxFullSpecFor(id);
+      if (full === undefined) throw new Error(`${id}: no full spec registered`);
+      expect(full.filler, id).toBe(true);
+      expect(usesCrescendoScale(full), id).toBe(false);
+    }
+  });
+
+  it('makes Bone Storm a large purple bone nova centered on the caster', () => {
+    // Palette is 'shadow', not 'physical': SCHOOL_BY_PALETTE (painter.ts) maps
+    // 'physical' to a pale-gold impact light, so a bone-motif ability still
+    // needs 'shadow' to keep its light pulse and rim in the purple family.
+    // The sim's own dealDamage school stays physical; this is VFX-only.
     expect(abilityVfxSpecFor(NYTHRAXIS_BONE_STORM_CAST_ID)).toMatchObject({
-      p: 'physical',
+      p: 'shadow',
       a: 'nova',
     });
     expect(abilityVfxFullSpecFor(NYTHRAXIS_BONE_STORM_CAST_ID)).toMatchObject({
       archetype: 'nova',
-      palette: 'physical',
+      palette: 'shadow',
       power: 1.9,
       motifs: ['bladestorm', 'orbitals'],
       motifAt: 'caster',
       motifR: NYTHRAXIS_BONE_STORM_RADIUS,
       nova: { radius: NYTHRAXIS_BONE_STORM_RADIUS },
-      tint: '#d8ccb8',
-      rim: '#fff5df',
+      tint: '#a879ff',
+      rim: '#e6d4ff',
     });
   });
 
-  it('makes Bone Slam a nine-yard physical nova with debris', () => {
+  it('makes Bone Slam a nine-yard purple nova with debris', () => {
+    // Same palette fix as Bone Storm; impact.debris still drives the debris
+    // burst shape (sequencer.ts keys it on the flag plus the ability's own
+    // tint, not on this palette), so the bone-shard read is unaffected.
     expect(abilityVfxSpecFor(NYTHRAXIS_BONE_SLAM_CAST_ID)).toMatchObject({
-      p: 'physical',
+      p: 'shadow',
       a: 'nova',
     });
     expect(abilityVfxFullSpecFor(NYTHRAXIS_BONE_SLAM_CAST_ID)).toMatchObject({
       archetype: 'nova',
-      palette: 'physical',
+      palette: 'shadow',
       nova: { radius: 9 },
       impact: { debris: true },
     });

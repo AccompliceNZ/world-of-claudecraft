@@ -9,6 +9,10 @@ import {
   IGNIVAR_LAST_INFERNO_AURA_ID,
   IGNIVAR_SKYFIRE_CAST_ID,
 } from '../../sim/encounters/ignivar';
+import {
+  NYTHRAXIS_GRAVEBREAKER_CAST_ID,
+  NYTHRAXIS_SHUDDERING_STOMP_CAST_ID,
+} from '../../sim/encounters/nythraxis';
 import { DUNGEON_MINIBOSS_STOMP_ABILITY_ID } from '../../sim/mob/dungeon_miniboss_stomp';
 import {
   NYTHRAXIS_SIGIL_CAST_ID,
@@ -115,7 +119,7 @@ const ENCOUNTER_VFX_SPECS: Readonly<Record<string, AbilityVfxSpec>> = {
     a: 'burst',
   },
   [NYTHRAXIS_GRAVE_ERUPTION_CAST_ID]: {
-    c: '#6dff4f',
+    c: '#9a5df0',
     p: 'shadow',
     pw: 1.7,
     sp: 48,
@@ -126,7 +130,7 @@ const ENCOUNTER_VFX_SPECS: Readonly<Record<string, AbilityVfxSpec>> = {
     a: 'burst',
   },
   [NYTHRAXIS_GRAVE_FLAME_CAST_ID]: {
-    c: '#8cff6a',
+    c: '#8a5cf0',
     p: 'shadow',
     pw: 0.7,
     sp: 6,
@@ -136,8 +140,10 @@ const ENCOUNTER_VFX_SPECS: Readonly<Record<string, AbilityVfxSpec>> = {
     a: 'dot',
   },
   [NYTHRAXIS_SOULFIRE_CAST_ID]: {
-    c: '#ff6a4a',
-    p: 'blood',
+    c: '#c84fff',
+    // 'blood' maps to the fire school's orange light pulse (SCHOOL_BY_PALETTE):
+    // 'shadow' keeps the impact light purple without touching that shared map.
+    p: 'shadow',
     pw: 0.65,
     sp: 5,
     li: 0.4,
@@ -177,8 +183,12 @@ const ENCOUNTER_VFX_SPECS: Readonly<Record<string, AbilityVfxSpec>> = {
     a: 'nova',
   },
   [NYTHRAXIS_BONE_STORM_CAST_ID]: {
-    c: '#d8ccb8',
-    p: 'physical',
+    c: '#a879ff',
+    // 'physical' maps to a pale-gold light pulse (SCHOOL_BY_PALETTE): 'shadow'
+    // keeps the impact light purple. The debris burst stays keyed on the
+    // impact.debris flag and the ability's own tint, not this field, and the
+    // sim's dealDamage school (physical) is untouched.
+    p: 'shadow',
     pw: 1.9,
     sp: 60,
     rg: NYTHRAXIS_BONE_STORM_RADIUS / 4,
@@ -190,8 +200,8 @@ const ENCOUNTER_VFX_SPECS: Readonly<Record<string, AbilityVfxSpec>> = {
     a: 'nova',
   },
   [NYTHRAXIS_BONE_SLAM_CAST_ID]: {
-    c: '#e8dfcf',
-    p: 'physical',
+    c: '#c79bff',
+    p: 'shadow',
     pw: 1.7,
     sp: 48,
     rg: NYTHRAXIS_BONE_STORM_RADIUS / 4,
@@ -234,6 +244,28 @@ const ENCOUNTER_VFX_SPECS: Readonly<Record<string, AbilityVfxSpec>> = {
     li: 1,
     lg: 4,
     a: 'dot',
+  },
+  // Gravebreaker and Shuddering Stomp are boss self-anchored cues (their
+  // spellfx event carries no travel: sourceId === targetId === boss.id), not
+  // scripted casts, so they stay quiet bursts rather than novas.
+  [NYTHRAXIS_GRAVEBREAKER_CAST_ID]: {
+    c: '#b48cff',
+    p: 'shadow',
+    pw: 1.3,
+    sp: 16,
+    li: 1.6,
+    a: 'burst',
+  },
+  [NYTHRAXIS_SHUDDERING_STOMP_CAST_ID]: {
+    c: '#9a5df0',
+    p: 'shadow',
+    pw: 1.6,
+    sp: 24,
+    rg: 2,
+    vr: 1,
+    sm: 1,
+    li: 2.2,
+    a: 'burst',
   },
 };
 
@@ -384,7 +416,7 @@ const ENCOUNTER_VFX_FULL_SPECS: Readonly<Record<string, AbilityVfxFullSpec>> = {
       smoke: true,
       light: 3,
     },
-    rim: '#6dff4f',
+    rim: '#9a5df0',
   },
   // Grave Flame: a one-second tick for standing in the patch. Quiet on purpose
   // (the patch painter owns the read); a filler so the ticks never crescendo.
@@ -405,17 +437,19 @@ const ENCOUNTER_VFX_FULL_SPECS: Readonly<Record<string, AbilityVfxFullSpec>> = {
       light: 0.5,
     },
   },
-  // Soulfire ticks stay quiet and red because the persistent patch owns the
+  // Soulfire ticks stay quiet and purple because the persistent patch owns the
   // actionable read. This is only the small damage confirmation at its feet.
+  // Palette is 'shadow' (not 'blood') so the impact light pulse stays purple;
+  // 'blood' maps to the fire school's orange light through SCHOOL_BY_PALETTE.
   [NYTHRAXIS_SOULFIRE_CAST_ID]: {
     archetype: 'dot',
-    palette: 'blood',
+    palette: 'shadow',
     power: 0.65,
     filler: true,
     dot: { drip: 'rise' },
     linger: 2,
-    tint: '#ff6a4a',
-    rim: '#ffb08a',
+    tint: '#c84fff',
+    rim: '#e8b8ff',
     impact: {
       flipbook: false,
       ring: false,
@@ -493,19 +527,24 @@ const ENCOUNTER_VFX_FULL_SPECS: Readonly<Record<string, AbilityVfxFullSpec>> = {
       light: 3.2,
     },
   },
-  // Bone Storm fills the nine-yard whirl with an ivory physical cyclone.
-  // Its caster motif keeps the storm centered while Nythraxis charges.
+  // Bone Storm fills the nine-yard whirl with a purple cyclone (the
+  // offensive-VFX purple pass; the bone-shard motif and debris shape are
+  // driven by the motif list and impact.debris, not this palette, so they
+  // stay physical). Palette is 'shadow' (not 'physical') so the impact light
+  // pulse stays purple instead of SCHOOL_BY_PALETTE's pale-gold physical read;
+  // the sim's dealDamage school is untouched. Its caster motif keeps the
+  // storm centered while Nythraxis charges.
   [NYTHRAXIS_BONE_STORM_CAST_ID]: {
     archetype: 'nova',
-    palette: 'physical',
+    palette: 'shadow',
     power: 1.9,
     motifs: ['bladestorm', 'orbitals'],
     motifAt: 'caster',
     motifR: NYTHRAXIS_BONE_STORM_RADIUS,
     nova: { radius: NYTHRAXIS_BONE_STORM_RADIUS },
     linger: 12,
-    tint: '#d8ccb8',
-    rim: '#fff5df',
+    tint: '#a879ff',
+    rim: '#e6d4ff',
     impact: {
       flipbook: false,
       ring: NYTHRAXIS_BONE_STORM_RADIUS / 4,
@@ -518,14 +557,14 @@ const ENCOUNTER_VFX_FULL_SPECS: Readonly<Record<string, AbilityVfxFullSpec>> = {
   },
   [NYTHRAXIS_BONE_SLAM_CAST_ID]: {
     archetype: 'nova',
-    palette: 'physical',
+    palette: 'shadow',
     power: 1.7,
     motifs: ['fissure'],
     motifAt: 'caster',
     motifR: NYTHRAXIS_BONE_STORM_RADIUS,
     nova: { radius: NYTHRAXIS_BONE_STORM_RADIUS },
-    tint: '#e8dfcf',
-    rim: '#fff8ea',
+    tint: '#c79bff',
+    rim: '#f0e0ff',
     impact: {
       flipbook: false,
       ring: NYTHRAXIS_BONE_STORM_RADIUS / 4,
@@ -583,12 +622,14 @@ const ENCOUNTER_VFX_FULL_SPECS: Readonly<Record<string, AbilityVfxFullSpec>> = {
     },
   },
   // Dread Curse: dread made visible on the tank, the curse_of_agony read with
-  // chains for the stacking swap call.
+  // chains for the stacking swap call. drip:'rise' (not 'fall'): a 'fall' drip
+  // bursts in the hardcoded blood-red kind (fx.ts), which would force red on
+  // an otherwise-purple curse the moment its dot linger ever wired the drip.
   [NYTHRAXIS_DREAD_CURSE_CAST_ID]: {
     archetype: 'dot',
     palette: 'shadow',
     power: 1.2,
-    dot: { drip: 'fall' },
+    dot: { drip: 'rise' },
     linger: 4,
     motifs: ['chains'],
     motifAt: 'target',
@@ -602,6 +643,56 @@ const ENCOUNTER_VFX_FULL_SPECS: Readonly<Record<string, AbilityVfxFullSpec>> = {
       light: 1,
     },
     decal: 'rune',
+  },
+  // Gravebreaker: a charged auto-attack splash, not a scripted cast. Quiet and
+  // focused so it never reads as an area attack: the real shape is an 11yd
+  // frontal arc off the landed swing, not a ring from the boss. filler:true
+  // is load-bearing: without it usesCrescendoScale (spectacle.ts) treats any
+  // non-filler burst as a marquee crescendo and plays the full release
+  // explosion/vertical halo/afterglow regardless of impact.ring being false.
+  [NYTHRAXIS_GRAVEBREAKER_CAST_ID]: {
+    archetype: 'burst',
+    palette: 'shadow',
+    power: 1.3,
+    filler: true,
+    burst: { style: 'ground' },
+    tint: '#b48cff',
+    rim: '#d9b8ff',
+    impact: {
+      flipbook: false,
+      ring: false,
+      vRing: false,
+      debris: false,
+      sparks: 16,
+      smoke: false,
+      light: 1.6,
+      focused: true,
+    },
+  },
+  // Shuddering Stomp: the phase-one-to-two transition slam that stuns the
+  // whole room. Genuinely room-wide (unlike Gravebreaker's frontal arc), so a
+  // small ring is honest here; still quiet, since the CC read carries the
+  // moment - filler:true keeps it out of the marquee crescendo the same way
+  // it does for Gravebreaker above. The cast id is a render-only routing id,
+  // not the display string (see the constant's own comment: an unrelated
+  // ogre mid-boss names its own stomp mechanic 'Shuddering Stomp' too).
+  [NYTHRAXIS_SHUDDERING_STOMP_CAST_ID]: {
+    archetype: 'burst',
+    palette: 'shadow',
+    power: 1.6,
+    filler: true,
+    burst: { style: 'ground' },
+    tint: '#9a5df0',
+    rim: '#d9b8ff',
+    impact: {
+      flipbook: false,
+      ring: 2,
+      vRing: true,
+      debris: false,
+      sparks: 24,
+      smoke: true,
+      light: 2.2,
+    },
   },
 };
 

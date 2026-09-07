@@ -12,7 +12,7 @@
 //
 // `src/sim`-pure: no rng stream, no wall clock, no DOM.
 
-import { NYTHRAXIS_FLAME_PERMANENT_SECONDS, nythraxisSoulfireSeconds } from './nythraxis_soulfire';
+import { nythraxisSoulfireSeconds } from './nythraxis_soulfire';
 import { hash2 } from './rng';
 import type { DungeonDifficulty } from './types';
 
@@ -79,9 +79,7 @@ export const NYTHRAXIS_GRAVE_ERUPTION_REVEAL_DELAY_SECONDS = 0.75;
 export const NYTHRAXIS_GRAVE_ERUPTION_DAMAGE_MAX_HP_NORMAL = 0.45;
 export const NYTHRAXIS_GRAVE_ERUPTION_DAMAGE_MAX_HP_HEROIC = 0.75;
 export const NYTHRAXIS_GRAVE_FLAME_SECONDS_NORMAL = 12;
-// Heroic patches never time out (they clear with the transition or a reset):
-// the floor fills unless the raid keeps moving.
-export const NYTHRAXIS_GRAVE_FLAME_SECONDS_HEROIC = NYTHRAXIS_FLAME_PERMANENT_SECONDS;
+export const NYTHRAXIS_GRAVE_FLAME_SECONDS_HEROIC = 8;
 export const NYTHRAXIS_GRAVE_FLAME_TICK_SECONDS = 1;
 export const NYTHRAXIS_GRAVE_FLAME_TICK_MAX_HP_NORMAL = 0.06;
 export const NYTHRAXIS_GRAVE_FLAME_TICK_MAX_HP_HEROIC = 0.09;

@@ -11,7 +11,7 @@
 // The Nythraxis GRAVE ERUPTION rides the same meteor-warning path (it shares
 // the reconnect-safe warning contract with Ignivar's meteors) but reads as
 // skeletal hands bursting UP from the crypt floor: the actionable ring
-// geometry is identical, the palette is the sickly green / violet set in
+// geometry is identical, the palette is the purple set in
 // nythraxis_grave_core.ts, no rock ever falls, and the rim-flame instances
 // become a cluster of bone shards erupting from the disc at impact.
 //

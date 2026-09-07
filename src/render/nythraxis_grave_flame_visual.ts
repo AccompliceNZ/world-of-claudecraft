@@ -1,5 +1,6 @@
-// Nythraxis Grave Flame and Soulfire: green eruption residue and blood-red Soul
-// Rend residue. The encounter snapshot (`activeNythraxisGraveFlames`) owns
+// Nythraxis Grave Flame and Soulfire: purple eruption residue and purple Soul
+// Rend residue, warmer-toned so the two pools stay tellable apart. The
+// encounter snapshot (`activeNythraxisGraveFlames`) owns
 // position, radius and remaining time; this painter only turns those rows into
 // persistent danger patches, one per row, disposed the frame a row vanishes.
 // It has no graphics-tier input on purpose: standing in a patch is gameplay,

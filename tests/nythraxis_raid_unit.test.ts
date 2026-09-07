@@ -274,11 +274,12 @@ describe('Nythraxis raid encounter', () => {
     const origin = enterRaid(sim, pid);
     expect(sim.entities.get(pid)!.pos.x).toBeGreaterThan(3000);
     const boss = mob(sim, 'nythraxis_scourge_of_thornpeak');
-    // Normal-raid retune (NORMAL_DUNGEON_TUNING): doubled health (was 60000)
-    // and the 5x per-mob damage multiplier on the redo's 70% swing.
+    // Normal-raid retune (NORMAL_DUNGEON_TUNING): doubled health (was 60000).
+    // Boss-only melee retune (2026-09-07): raw swing ~90% of normal Ignivar's
+    // own boss (286..446, unmultiplied).
     expect(boss.maxHp).toBe(120000);
-    expect(boss.weapon.min).toBe(1137);
-    expect(boss.weapon.max).toBe(1776);
+    expect(boss.weapon.min).toBe(257);
+    expect(boss.weapon.max).toBe(402);
     expect(visualKeyFor(boss)).toBe('skel_golem');
     expect(
       visualKeyFor({ kind: 'mob', templateId: 'nythraxis_heroic_warrior_add' } as Entity),

@@ -96,13 +96,26 @@ describe('Nythraxis encounter module (N1)', () => {
   });
 
   it('transitions to phase two at 70%: room War Stomp stun + Aldric + lit wardstones', () => {
-    const { ctx, boss, tank } = setup();
+    const { sim, ctx, boss, tank } = setup();
     boss.hp = Math.floor(boss.maxHp * 0.69);
     nythraxis.updateNythraxisEncounter(ctx, boss);
     expect(boss.nythraxis?.phase).toBe('transition');
     expect(tank.auras.find((a) => a.id === 'nythraxis_transition_stun')).toMatchObject({
       unbreakableControl: true,
     });
+    // The transition slam carries its VFX routing id: with none, the render
+    // side could never resolve this cue to a spec (see the constant's header
+    // for why it is not the display string 'Shuddering Stomp').
+    expect(sim.events).toContainEqual(
+      expect.objectContaining({
+        type: 'spellfx',
+        sourceId: boss.id,
+        targetId: boss.id,
+        school: 'physical',
+        fx: 'nova',
+        ability: nythraxis.NYTHRAXIS_SHUDDERING_STOMP_CAST_ID,
+      }),
+    );
     const aldric = [...ctx.entities.values()].find(
       (e) => e.templateId === 'brother_aldric_raid' && !e.dead,
     );

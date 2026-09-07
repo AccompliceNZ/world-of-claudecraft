@@ -168,11 +168,14 @@ describe('Nythraxis Grave Flame rendering', () => {
     expect(maxRadiusOf(graveRim)).toBeCloseTo(3, 5);
     expect(maxRadiusOf(soulRim)).toBeCloseTo(4, 5);
     expect(soul.userData.kind).toBe('soul');
+    // Palette is 'shadow', not 'blood': SCHOOL_BY_PALETTE (painter.ts) maps
+    // 'blood' to the fire school's orange impact light, so Soulfire needs
+    // 'shadow' to keep its light pulse purple like its tint.
     expect(abilityVfxFullSpecFor(NYTHRAXIS_SOULFIRE_CAST_ID)).toMatchObject({
       archetype: 'dot',
-      palette: 'blood',
+      palette: 'shadow',
       filler: true,
-      tint: '#ff6a4a',
+      tint: '#c84fff',
     });
   });
 
@@ -305,7 +308,7 @@ describe('Nythraxis Grave Flame rendering', () => {
     const root = buildNythraxisGravePrewarmVisual();
     expect(root.name).toBe(NYTHRAXIS_GRAVE_PREWARM_NAME);
     const patches = root.children.filter((c) => c.name === NYTHRAXIS_GRAVE_FLAME_VISUAL_NAME);
-    // Both fire programs (green and red ramps) are staged so neither links under a cast.
+    // Both fire programs (the grave and soul purple ramps) are staged so neither links under a cast.
     expect(patches.map((c) => c.userData.kind).sort()).toEqual(['grave', 'soul']);
     for (const patch of patches) expect(fireOf(patch)).toBeDefined();
     const eruption = root.getObjectByName('mage-meteor-fx') as THREE.Group;

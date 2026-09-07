@@ -5207,6 +5207,12 @@ export interface NythraxisEncounterState {
     tickTimer: number;
   }[];
   graveFlameSeq?: number;
+  // Heroic-only: the last boss-clock time (ctx.time) each player took a
+  // Soulfire tick, so standing in more than one heroic pool, or catching two
+  // staggered Soul Rend casts, never yields more than one normal-strength
+  // tick per second (nythraxis_soulfire.ts admitNythraxisSoulfireTick owns
+  // the gate; encounters/nythraxis.ts is the sole reader/writer).
+  soulfireTickAt?: { playerId: number; at: number }[];
   // Gravefire: the cadence and the live traveling lines (nythraxis_gravefire.ts).
   gravefireTimer?: number;
   gravefires?: {

@@ -2215,9 +2215,7 @@ describe('dungeons: heroic Nythraxis raid arena', () => {
     expect(boss.maxHp).toBe(pins.maxHp);
     expect(boss.weapon.min).toBe(pins.weaponMin);
     expect(boss.weapon.max).toBe(pins.weaponMax);
-    expect(boss.mechanicDamageMult).toBe(
-      HEROIC_DUNGEON_TUNING.nythraxis_boss_arena.damageMultiplier,
-    );
+    expect(boss.mechanicDamageMult).toBe(1.488);
 
     // The encounter's scripted add waves inherit the instance difficulty.
     spawnNythraxisAdds(sim.ctx, boss);
@@ -2241,10 +2239,10 @@ describe('dungeons: heroic Nythraxis raid arena', () => {
   it('a normal raid claim carries the normal retune; a heroic kill pays marks to every raider', () => {
     const normal = raidSetup('normal');
     const nBoss = mobInInstance(normal.sim, normal.inst, NYTHRAXIS_BOSS_ID);
-    // Normal Nythraxis rides NORMAL_DUNGEON_TUNING (economy retune): doubled
-    // health (was 60000) and the 5x per-mob multiplier stamped for mechanics.
-    expect(nBoss.maxHp).toBe(160000);
-    expect(nBoss.mechanicDamageMult).toBe(5);
+    // The boss keeps the 120k health pool and its new melee factor;
+    // skeletons retain their separate 5x tuning.
+    expect(nBoss.maxHp).toBe(120000);
+    expect(nBoss.mechanicDamageMult).toBe(1.132);
     spawnNythraxisAdds(normal.sim.ctx, nBoss);
     const nAdd = normal.sim.entities.get((nBoss.summonedIds as number[])[0]) as AnyEntity;
     expect(nAdd.mechanicDamageMult).toBe(5);

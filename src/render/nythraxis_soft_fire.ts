@@ -2,7 +2,8 @@
 // sprites on the game's shared flipbook atlas (ignivar_fire_vfx.ts), each
 // sprite looping on its own clock from a fixed spot: it rises, grows, tears
 // away, and is reborn at its foot. Colour comes from a three-stop ramp per
-// mechanic so the same program burns green, red, or violet. Everything moves
+// mechanic so the same program burns a blue-violet, magenta-violet, or violet
+// shade of the one purple danger family. Everything moves
 // on the GPU from one time uniform; the CPU touches the instance buffers only
 // when a spot is placed (a new line yard lit), never per frame.
 //

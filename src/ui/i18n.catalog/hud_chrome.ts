@@ -3552,7 +3552,7 @@ export const hudChromeStrings = {
       graveEruptionSummary:
         'Every {everyNormal} sec, skeletal hands mark {countNormal} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstNormal} of maximum health as Shadow damage, then burns as Grave Flame for {flameNormal} sec, dealing {tickNormal} of maximum health every second to anyone standing in it.',
       graveEruptionHeroicSummary:
-        'Every {everyHeroic} sec, skeletal hands mark {countHeroic} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstHeroic} of maximum health as Shadow damage, then burns as Grave Flame for the rest of the phase, dealing {tickHeroic} of maximum health every second to anyone standing in it. The fire never goes out on its own: the floor fills unless the raid keeps moving.',
+        'Every {everyHeroic} sec, skeletal hands mark {countHeroic} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstHeroic} of maximum health as Shadow damage, then burns as Grave Flame for {flameHeroic} sec, dealing {tickHeroic} of maximum health every second to anyone standing in it.',
       graveEruptionResponse:
         'Step out of every warning circle before it erupts and stay off the burning ground. Tanks pull Nythraxis clear of the flames so melee keeps room to work.',
       bindingSigilName: 'Binding Sigil',
@@ -3576,11 +3576,11 @@ export const hudChromeStrings = {
         'Every marked raider runs to one stack point and stands within {range} yd of the other marks before the {fuse} sec fuse ends. Healers top the group off as the marks resolve.',
       soulfireName: 'Soulfire',
       soulfireSummary:
-        'Every Soul Rend detonation leaves a pool of red fire {radius} yd wide where the mark stood, burning for {seconds} sec at {tickNormal} of maximum health every second. Pools never form within {clearance} yd of a wardstone.',
+        'Every Soul Rend detonation leaves a pool of purple fire with a {radius} yd radius where each mark stood, burning for {seconds} sec at {tickNormal} of maximum health every second. Standing where pools overlap takes a tick from each one. Pools never form within {clearance} yd of a wardstone.',
       soulfireHeroicSummary:
-        'Every Soul Rend detonation leaves a pool of red fire {radius} yd wide where the mark stood, burning for the rest of the phase at {tickHeroic} of maximum health every second. Pools never form within {clearance} yd of a wardstone, and they never go out on their own.',
+        'Every Soul Rend detonation leaves one pool of purple fire with a {radius} yd radius per stacked group of marks, burning for {secondsHeroic} sec at {tickHeroic} of maximum health every second. Standing where pools overlap takes only one tick, never stacked copies. Pools never form within {clearance} yd of a wardstone.',
       soulfireResponse:
-        "Rotate the Soul Rend stack point every cast so the raid never stacks in the last cast's fire.",
+        'Move out of the purple pool as soon as the marks detonate. Keep the next stack point clear of active fire.',
       gravefireName: 'Gravefire',
       gravefireSummary:
         'Every {everyNormal} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnNormal} sec and deals {tickNormal} of maximum health every second to anyone standing in it.',

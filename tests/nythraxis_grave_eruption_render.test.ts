@@ -1,6 +1,6 @@
 // Grave Eruption on the shared meteor-warning path: the fourth snapshot source,
-// the grave read (no falling rock, green/violet telegraph, bone shards at
-// impact), the school-keyed landing burst, and the encounter VFX specs.
+// the grave read (no falling rock, purple telegraph, bone shards at impact),
+// the school-keyed landing burst, and the encounter VFX specs.
 import { readFileSync } from 'node:fs';
 import * as THREE from 'three';
 import { describe, expect, it, vi } from 'vitest';

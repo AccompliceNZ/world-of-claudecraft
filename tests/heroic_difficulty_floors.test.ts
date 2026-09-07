@@ -44,8 +44,11 @@ const RAID_ADD_FLOOR = 250;
 // 2026-09-04 first playtest of the mechanics redo: the boss swing is 70% of
 // its old weapon (the Dread Curse stacks now carry the tank pressure), so the
 // floors follow it down: heroic 1000 -> 700, normal 600 -> 420.
-const HEROIC_NYTHRAXIS_BOSS_FLOOR = 700;
-const NORMAL_NYTHRAXIS_BOSS_FLOOR = 420;
+// 2026-09-07 playtest tuning pass: raw swing retuned to ~90% of the lower
+// comparator final boss (dungeon_difficulty.ts), so the floors follow it
+// down: heroic 700 -> 146, normal 420 -> 98.
+const HEROIC_NYTHRAXIS_BOSS_FLOOR = 146;
+const NORMAL_NYTHRAXIS_BOSS_FLOOR = 98;
 const NORMAL_NYTHRAXIS_ADD_FLOOR = 300;
 
 const FIVE_MANS = [
@@ -192,7 +195,7 @@ describe('Nythraxis raid floors', () => {
     expect(tuning).toBeTruthy();
     expect(tuning.healthMultiplier).toBe(2.0);
     expect(tuning.damageMultiplierByMob).toEqual({
-      nythraxis_scourge_of_thornpeak: 5,
+      nythraxis_scourge_of_thornpeak: 1.132,
       nythraxis_skeleton_warrior: 5,
     });
   });
@@ -226,6 +229,7 @@ describe('heroic tuning data contract', () => {
       korzul_the_gravewyrm: 19,
     });
     expect(HEROIC_DUNGEON_TUNING.nythraxis_boss_arena.damageMultiplierByMob).toEqual({
+      nythraxis_scourge_of_thornpeak: 1.488,
       nythraxis_skeleton_warrior: 3.75,
       nythraxis_heroic_warrior_add: 3.75,
       nythraxis_heroic_priest_add: 8,

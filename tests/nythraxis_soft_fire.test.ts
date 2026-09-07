@@ -30,13 +30,16 @@ describe('nythraxis soft fire core', () => {
       expect(shape.rise).toBeGreaterThan(0);
       expect(shape.duration).toBeGreaterThan(0);
     }
-    // Grave Flame is green, Soulfire red, Gravefire violet: the body stop says which.
+    // Grave Flame, Soulfire, and Gravefire all read as the same purple danger
+    // family (offensive-VFX purple pass): Soulfire runs warmer/redder than
+    // the other two so the pools stay tellable apart.
     const grave = new THREE.Color(NYTHRAXIS_SOFT_FIRE_RAMPS.grave.body);
     const soul = new THREE.Color(NYTHRAXIS_SOFT_FIRE_RAMPS.soul.body);
     const violet = new THREE.Color(NYTHRAXIS_SOFT_FIRE_RAMPS.gravefire.body);
-    expect(grave.g).toBeGreaterThan(Math.max(grave.r, grave.b));
-    expect(soul.r).toBeGreaterThan(Math.max(soul.g, soul.b));
+    expect(grave.b).toBeGreaterThan(grave.g);
+    expect(soul.b).toBeGreaterThan(soul.g);
     expect(violet.b).toBeGreaterThan(violet.g);
+    expect(soul.r).toBeGreaterThan(grave.r);
   });
 
   it('budgets patch sprites by area inside a fixed band and line sprites by yard', () => {

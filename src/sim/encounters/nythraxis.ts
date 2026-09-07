@@ -165,8 +165,10 @@ import {
   nythraxisWrathGravefireEvery,
 } from '../nythraxis_kings_wrath';
 import {
+  admitNythraxisSoulfireTick,
   igniteNythraxisSoulfire,
   NYTHRAXIS_SOULFIRE_CAST_ID,
+  nythraxisSoulfireGroupCentroids,
   nythraxisSoulfireSeconds,
   nythraxisSoulfireTickMaxHp,
 } from '../nythraxis_soulfire';
@@ -215,6 +217,7 @@ type NythraxisMechanicField =
   | 'eruptionPoints'
   | 'graveFlames'
   | 'graveFlameSeq'
+  | 'soulfireTickAt'
   | 'gravefireTimer'
   | 'gravefires'
   | 'gravefireSeq'
@@ -249,6 +252,7 @@ export function nythraxisMechanicState(st: NythraxisState): NythraxisMechanicSta
   st.eruptionPoints ??= [];
   st.graveFlames ??= [];
   st.graveFlameSeq ??= 0;
+  st.soulfireTickAt ??= [];
   st.gravefireTimer ??= NYTHRAXIS_GRAVEFIRE_FIRST_SECONDS;
   st.gravefires ??= [];
   st.gravefireSeq ??= 0;
@@ -284,6 +288,15 @@ export const NYTHRAXIS_GRAVEBREAKER_EVERY = 12;
 export const NYTHRAXIS_GRAVEBREAKER_RANGE = 11;
 export const NYTHRAXIS_GRAVEBREAKER_HALF_ARC = Math.PI / 3;
 export const NYTHRAXIS_GRAVEBREAKER_SPLASH_MULT = 1.5;
+export const NYTHRAXIS_GRAVEBREAKER_CAST_ID = 'Gravebreaker';
+// A render-only VFX routing id, deliberately NOT the display string
+// 'Shuddering Stomp': Korgath the Bound (content/dungeons.ts) names its own,
+// unrelated ogre stomp mechanic the same thing, and the spellfx event's
+// `ability` field is a pure VFX lookup key (never shown to players; the
+// aura below still carries the real display name), so a shared display
+// string would let a future fix to fireWarStomp's ID-less emit repaint
+// Korgath's stomp with this encounter's palette.
+export const NYTHRAXIS_SHUDDERING_STOMP_CAST_ID = 'nythraxis_shuddering_stomp';
 const NYTHRAXIS_OPENER_SECOND_YELL_DELAY = 4;
 const NYTHRAXIS_DIALOGUE_LINE_SECONDS = 2.6;
 // Raise Fallen add-wave cadence, both difficulties (heroic scales the ADDS,
@@ -482,6 +495,7 @@ export function initNythraxisEncounter(boss: Entity): NonNullable<Entity['nythra
       eruptionPoints: [],
       graveFlames: [],
       graveFlameSeq: 0,
+      soulfireTickAt: [],
       gravefireTimer: NYTHRAXIS_GRAVEFIRE_FIRST_SECONDS,
       gravefires: [],
       gravefireSeq: 0,
@@ -1321,6 +1335,16 @@ export function updateNythraxisGraveHazards(
       const tickFrac = soul ? soulTick : graveTick;
       for (const p of room) {
         if (p.dead || !pointInNythraxisCircle(flame, flame.radius, p.pos)) continue;
+        // Heroic Soulfire pools can overlap (separate groups, or a fresh cast
+        // landing atop an older pool's still-burning footprint); this gate is
+        // what keeps that overlap, including staggered per-pool tick timers,
+        // from ever costing a raider more than one tick per second.
+        if (
+          soul &&
+          difficulty === 'heroic' &&
+          !admitNythraxisSoulfireTick(ms.soulfireTickAt, p.id, ctx.time)
+        )
+          continue;
         ctx.dealDamage(
           boss,
           p,
@@ -1401,6 +1425,7 @@ export function clearNythraxisGraveHazards(boss: Entity): void {
   ms.eruptionImpactRemaining = 0;
   ms.graveFlames = [];
   ms.gravefires = [];
+  ms.soulfireTickAt = [];
 }
 
 // ----- Gravefire: the traveling line the ranged must sidestep --------------------
@@ -2185,6 +2210,7 @@ export function nythraxisGravebreakerOnMobSwing(
     targetId: boss.id,
     school: 'physical',
     fx: 'nova',
+    ability: NYTHRAXIS_GRAVEBREAKER_CAST_ID,
   });
   const splashBasis = crit ? rawDmg / 2 : rawDmg;
   for (const p of playersInNythraxisRoom(ctx, boss)) {
@@ -2203,7 +2229,7 @@ export function nythraxisGravebreakerOnMobSwing(
       Math.max(1, Math.round(mitigated)),
       false,
       'physical',
-      'Gravebreaker',
+      NYTHRAXIS_GRAVEBREAKER_CAST_ID,
       'hit',
       true,
     );
@@ -2391,6 +2417,7 @@ export function startNythraxisTransition(
     targetId: boss.id,
     school: 'physical',
     fx: 'nova',
+    ability: NYTHRAXIS_SHUDDERING_STOMP_CAST_ID,
   });
   applyNythraxisTransitionControl(ctx, boss, st);
   const transitionControlDuration = st.transitionTimer + NYTHRAXIS_TRANSITION_CONTROL_GRACE;
@@ -2632,14 +2659,22 @@ export function updateNythraxisSoulRend(
   }
   // Every detonation leaves Soulfire where the mark stood (never beside a
   // wardstone), so the stack point has to rotate: the pool burns as part of
-  // the shared flame list the hazard tick above drains.
+  // the shared flame list the hazard tick above drains. Heroic groups each
+  // stacked cluster into a single pool at its centroid; Normal is unchanged,
+  // one pool per mark.
   const ms = nythraxisMechanicState(st);
+  const difficulty = nythraxisDifficulty(ctx, boss);
+  const detonationPoints = marked.map((p) => ({ x: p.pos.x, z: p.pos.z }));
+  const poolPoints =
+    difficulty === 'heroic'
+      ? nythraxisSoulfireGroupCentroids(detonationPoints, NYTHRAXIS_SOUL_REND_STACK_RANGE)
+      : detonationPoints;
   ms.graveFlameSeq = igniteNythraxisSoulfire(
     ms.graveFlames,
-    marked.map((p) => ({ x: p.pos.x, z: p.pos.z })),
+    poolPoints,
     nythraxisWardstones(ctx, boss).map((w) => ({ x: w.pos.x, z: w.pos.z })),
     ms.graveFlameSeq,
-    nythraxisSoulfireSeconds(nythraxisDifficulty(ctx, boss)),
+    nythraxisSoulfireSeconds(difficulty),
   );
   st.soulRendMarks = [];
 }

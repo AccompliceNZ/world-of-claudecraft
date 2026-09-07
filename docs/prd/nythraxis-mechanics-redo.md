@@ -501,3 +501,36 @@ golden is regenerated once more at the end rather than per slice.
   mark is inside the ring.
 - Nythraxis's swing is 70% of its pre-redo value (Gravebreaker's splash scales
   with it), and his health is 120,000 on normal and 192,000 on heroic.
+
+## 14. Second playtest adjustments (2026-09-07)
+
+Supersedes only the numbers named below; sections 1-13 stand as the historical
+record of how the fight got here.
+
+- **Difficulty target.** Nythraxis stays the easier raid on both
+  difficulties. His raw (pre-mitigation) white swing is tuned to about 90% of
+  the comparable Crucible of the Last Spring boss for that tier: Normal
+  targets 257..402 against Normal Ignivar, Herald of the Last Flame's
+  286..446; Heroic targets 367..573 against Heroic Varkhul, Forgefather of
+  the Last Flame's 407..637 (the raid's harder second boss, fought only in
+  its Inner Crucible). Gravebreaker's splash scales with the same swing.
+- **Heroic-only: Grave Flame and Soulfire stop being permanent floor fire.**
+  Grave Flame now burns out 8 sec after ignition (Normal stays 12 sec,
+  unchanged) and Soulfire 12 sec after ignition (Normal stays 15 sec,
+  unchanged).
+- **Heroic-only: Soulfire pools group by the Soul Rend stack point.** A
+  detonation leaves one pool per stacked group of marks, not one overlapping
+  pool per mark, and standing where pools overlap deals one tick, never
+  stacked copies. **Normal is unchanged**: still one pool per marked raider,
+  and standing where Normal pools overlap still takes a tick from each one.
+- **Gravefire is unchanged**: cadence, burn window, damage, and half-width on
+  both difficulties stay exactly as tuned in section 13.
+- **Every offensive Nythraxis effect now reads purple on both difficulties**
+  (Grave Eruption's warning rings, Grave Flame, Soulfire, Gravefire, and Bone
+  Storm/Bone Slam), replacing the prior green/red/ivory reads, so "purple
+  ground or light" always means danger. The Binding Sigil's ring stays blue
+  (the one friendly, stand-here color) and the Soul Rend floor ring/overhead
+  mark keep their red-alone, green-once-stacked read: both are deliberately
+  off the purple family.
+- **Unchanged by this pass:** Dread Curse (cadence, per-stack hit, duration,
+  swap threshold) and every King's Wrath / Crown Endures phase buff.

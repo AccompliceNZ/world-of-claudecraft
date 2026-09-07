@@ -5,11 +5,17 @@
 //
 // Grave Eruption is skeletal hands bursting UP out of a crypt floor, so it keeps
 // the meteor ring's exact actionable geometry (radius, countdown, rim) and swaps
-// only the read: a sickly green rim and countdown, violet grave-light cracks,
-// green mist motes rising from the centre, no rock in the sky, and a cluster of
+// only the read: a purple rim and countdown, violet grave-light cracks, pale
+// violet mist motes rising from the centre, no rock in the sky, and a cluster of
 // bone shards that erupt from the disc at impact. Every helper here is
 // allocation-free (the caller owns the output records) and deterministic: the
 // scatter is a golden-angle spiral, never a random draw.
+//
+// Owner call (offensive-VFX purple pass): every Nythraxis damaging read shares
+// one purple danger family with pale-violet highlights, so Grave Eruption and
+// the ground fire it leaves no longer read green; only the friendly Binding
+// Sigil (blue) and the Soul Rend stack marker (red-alone/green-stacked) stay
+// off this family, since both are deliberately distinct reads.
 //
 // Node-only (RENDER_PURE_CORES): no three.js, no DOM, no randomness.
 
@@ -18,37 +24,39 @@ import {
   type NythraxisGravePoint,
 } from '../sim/nythraxis_grave_eruption';
 
-/** Sickly green / violet read for the eruption telegraph, one slot per meteor
+/** Purple/violet read for the eruption telegraph, one slot per meteor
  *  telegraph material so the fire meteor's palette maps onto it 1:1. */
 export const NYTHRAXIS_GRAVE_ERUPTION_PALETTE = {
-  /** the dark rotted-moss disc under the ring */
-  footprint: 0x07180b,
-  /** the toxic-green actionable rim (the exact authored radius) */
-  boundary: 0x5cff4a,
-  /** the collapsing countdown ring */
-  countdown: 0x9dff7a,
+  /** the dark violet disc under the ring */
+  footprint: 0x140a1e,
+  /** the actionable rim (the exact authored radius) */
+  boundary: 0x9a5df0,
+  /** the collapsing countdown ring, a pale-violet highlight */
+  countdown: 0xd9b8ff,
   /** violet grave-light cracks spreading over the flagstones */
   vein: 0xa06cff,
-  /** green mist motes rising from the centre while the ground stirs */
-  mote: 0x7dff9a,
-  /** the bone shards that burst up at impact */
-  shard: 0xe6f3d6,
+  /** pale violet mist motes rising from the centre while the ground stirs */
+  mote: 0xb98cff,
+  /** the bone shards that burst up at impact, pale-violet highlighted bone */
+  shard: 0xf0e6ff,
 } as const;
 
-/** The burning patch an eruption leaves behind: green ground fire. */
+/** The burning patch an eruption leaves behind: blue-violet ground fire. */
 export const NYTHRAXIS_GRAVE_FLAME_PALETTE = {
-  fill: 0x0b2412,
-  rim: 0x6dff4f,
-  ember: 0xa06cff,
-  tongue: 0x8cff6a,
+  fill: 0x1a0a2a,
+  rim: 0x8a5cf0,
+  ember: 0x5a2e9a,
+  tongue: 0xd9b8ff,
 } as const;
 
-/** Soul Rend's residue: blood-red fire, kept distinct from Grave Flame. */
+/** Soulfire (the pool a Soul Rend mark leaves behind): magenta-violet fire,
+ *  warmer than Grave Flame's blue-violet so the two pools stay tellable apart
+ *  while both read as the same purple danger family. */
 export const NYTHRAXIS_SOUL_FLAME_PALETTE = {
-  fill: 0x2a0608,
-  rim: 0xff4a3a,
-  ember: 0x7a1a24,
-  tongue: 0xff6a4a,
+  fill: 0x2a0a2a,
+  rim: 0xc84fff,
+  ember: 0x7a1a6e,
+  tongue: 0xe8b8ff,
 } as const;
 
 export interface NythraxisFlamePalette {

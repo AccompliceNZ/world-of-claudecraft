@@ -38,9 +38,13 @@ import {
 } from '../src/sim/nythraxis_bone_storm';
 import {
   NYTHRAXIS_DREAD_CURSE_AURA_ID,
+  NYTHRAXIS_DREAD_CURSE_DURATION,
+  NYTHRAXIS_DREAD_CURSE_EVERY,
   NYTHRAXIS_DREAD_CURSE_HIT_MAX_HP_NORMAL,
+  NYTHRAXIS_DREAD_CURSE_MAX_STACKS,
   NYTHRAXIS_DREAD_CURSE_PER_STACK_HEROIC,
   NYTHRAXIS_DREAD_CURSE_PER_STACK_NORMAL,
+  NYTHRAXIS_DREAD_CURSE_TANK_SWAP_STACKS,
 } from '../src/sim/nythraxis_dread_curse';
 import {
   NYTHRAXIS_CROWN_ENDURES_AURA_ID,
@@ -174,7 +178,16 @@ describe('auraEffectDescriptor', () => {
       }),
     ).toEqual({
       key: 'hudChrome.auraEffect.nythraxisDreadCurse',
-      nums: { perStack: 35, duration: 30, stacks: 1, max: 3, pct: 35, hit: 25, every: 10, swap: 2 },
+      nums: {
+        perStack: 35,
+        duration: NYTHRAXIS_DREAD_CURSE_DURATION,
+        stacks: 1,
+        max: NYTHRAXIS_DREAD_CURSE_MAX_STACKS,
+        pct: 35,
+        hit: 25,
+        every: NYTHRAXIS_DREAD_CURSE_EVERY,
+        swap: NYTHRAXIS_DREAD_CURSE_TANK_SWAP_STACKS,
+      },
     });
     // Heroic at the swap point: value = 2 x 0.45, read back as 45% per stack.
     expect(
@@ -184,7 +197,12 @@ describe('auraEffectDescriptor', () => {
         value: 2 * NYTHRAXIS_DREAD_CURSE_PER_STACK_HEROIC,
         stacks: 2,
       })?.nums,
-    ).toMatchObject({ perStack: 45, pct: 90, stacks: 2, swap: 2 });
+    ).toMatchObject({
+      perStack: 45,
+      pct: 90,
+      stacks: 2,
+      swap: NYTHRAXIS_DREAD_CURSE_TANK_SWAP_STACKS,
+    });
     // A mirror that has not carried the value yet falls back to the normal bonus.
     expect(
       desc({ id: NYTHRAXIS_DREAD_CURSE_AURA_ID, kind: 'vuln_source', value: 0, stacks: 2 })?.nums,
