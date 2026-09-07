@@ -1366,6 +1366,13 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     why: 'the always-on Reliquary tracker (not gated on a window): pinned pages fill from normal play and an illuminated page drops off',
   },
   {
+    call: 'this.gatheringGoalController.update',
+    band: 'slow',
+    gate: '',
+    surface: 'chrome',
+    why: 'the always-on gathering goal tracker (Intentional Gathering PR4, not gated on a window): a projection change has no dedicated event, so it rides the same slow poll; the module itself signature-gates the rebuild so an unchanged goal touches no DOM (a chrome row carries no guard field, same as updateDeedTracker/updateReliquaryTracker beside it)',
+  },
+  {
     call: 'this.trackerStackAnchor.apply',
     band: 'slow',
     gate: '',
@@ -1719,7 +1726,9 @@ describe('Hud.update() drives exactly the registered set, on the registered band
       // and the farming affordance row are different calls), and the window
       // delta lands once, so the split below was counted from the merged table
       // rather than carried over from either side.
-    ).toEqual({ window: 47, chrome: 85, none: 17 });
+      // chrome 85 -> 86: the gathering goal tracker's own signature-gated
+      // repaint (Intentional Gathering PR4, gatheringGoalController.update).
+    ).toEqual({ window: 47, chrome: 86, none: 17 });
     const windows = HUD_UPDATE_DRIVES.filter((r) => r.surface === 'window');
     expect(windows.map((r) => r.call)).toContain('this.spellbookWindow.tickOpen');
     expect(windows.map((r) => r.call)).toContain('this.refreshOpenTownFocusIfChanged');

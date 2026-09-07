@@ -20,6 +20,7 @@ import {
 import { ITEMS } from '../src/sim/data';
 import {
   APEX_TIER_SKILL_REQ,
+  apexChannelLabelKey,
   apexPatternChannel,
   apexRecipePresentation,
 } from '../src/ui/hud/professions/apex_recipe_view';
@@ -82,6 +83,19 @@ describe('apexRecipePresentation (content-derived, never invented)', () => {
     const plainRod = ROD_RECIPES.find((r) => r.skillReq < APEX_TIER_SKILL_REQ);
     expect(plainRod).toBeDefined();
     expect(apexRecipePresentation(plainRod!.id, plainRod!.resultItemId, 1).apex).toBe(false);
+  });
+});
+
+describe('apexChannelLabelKey', () => {
+  it('resolves a translation key for each real channel', () => {
+    expect(apexChannelLabelKey('raid')).toBe('hudChrome.crafting.apexPatternRaid');
+    expect(apexChannelLabelKey('rift')).toBe('hudChrome.crafting.apexPatternRift');
+    expect(apexChannelLabelKey('vendor')).toBe('hudChrome.crafting.apexPatternVendor');
+    expect(apexChannelLabelKey('drop')).toBe('hudChrome.crafting.apexPatternDrop');
+  });
+
+  it('resolves null for a channel-less row', () => {
+    expect(apexChannelLabelKey(null)).toBeNull();
   });
 });
 

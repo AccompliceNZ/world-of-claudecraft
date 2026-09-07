@@ -58,6 +58,7 @@ import {
   relicFillScoresForRank,
   reliquaryCatalogIndexProbe,
   reliquaryOwnershipOpts,
+  reliquarySaveFragment,
   reliquaryScoringPagesProbe,
   reliquaryWireCacheProbe,
   reliquaryWireJson,
@@ -115,6 +116,13 @@ describe('Reliquary fresh state + serialize omit-empty', () => {
 
   it('serializeReliquaryState returns undefined for a fresh state', () => {
     expect(serializeReliquaryState(freshReliquaryState())).toBeUndefined();
+  });
+
+  it('reliquarySaveFragment wraps serializeReliquaryState into the sim.ts save shape', () => {
+    expect(reliquarySaveFragment(freshReliquaryState())).toEqual({});
+    const marked = restoreReliquaryState(undefined);
+    marked.marks.add('relic_test');
+    expect(reliquarySaveFragment(marked)).toEqual({ reliquary: serializeReliquaryState(marked) });
   });
 
   it('restore of undefined yields empty state', () => {

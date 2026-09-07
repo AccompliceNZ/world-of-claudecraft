@@ -687,6 +687,18 @@ const HOT_PAINTERS: ReadonlyArray<ScannedPainter> = [
     allow: { '.innerHTML': 1, '.setAttribute': 1 },
     reflowAllow: {},
   },
+  // The persistent gathering goal tracker (Intentional Gathering PR4): a
+  // cold full-rebuild, not a per-frame path. GatheringGoalController owns
+  // the invalidation signature (an unchanged goal never calls this at all),
+  // so the whole panel body rebuilds in ONE innerHTML write plus the ONE
+  // display-flip write that shows/hides the panel; every dynamic value and
+  // every focus key rides that same template string via esc()/focusKeyAttr(),
+  // so no other raw write exists anywhere in the file.
+  {
+    file: 'hud/professions/gathering_goal_painter.ts',
+    allow: { '.style': 1, '.innerHTML': 1 },
+    reflowAllow: {},
+  },
 ];
 
 // BUCKET 2 of 3: the src/ui painters that are NOT facet-routed because they draw to a 2D

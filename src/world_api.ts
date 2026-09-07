@@ -774,6 +774,19 @@ export const COMMAND_NAMES = [
   // id, rid, info}` out), never a harvest action. Appended at the END, like
   // every wire token above.
   'inspectCorpseHarvest',
+  // Intentional Gathering PR4 (docs/prd/intentional-gathering/goal-projection-
+  // contract.md): track/clear the viewer's single explicit gathering goal.
+  // `track_gathering_recipe` carries a recipe id plus the requested batch
+  // count; `track_gathering_commission` carries only the order id (the sim
+  // resolves and captures the live accepted order itself); `clear_gathering_
+  // goal` carries no payload. Like harvest_node/craft_item and the rest of the
+  // IWorldProfessions surface, these are deliberately UNTAGGED in
+  // COMMAND_FACETS below (the row-less W6 PARTIAL design; see
+  // FACET_PROFESSIONS in tests/world_api_parity.test.ts). Appended at the END
+  // because wire tokens are never reordered.
+  'track_gathering_recipe',
+  'track_gathering_commission',
+  'clear_gathering_goal',
 ] as const;
 
 // The union both the send path (`online.ts`) and the dispatch switch

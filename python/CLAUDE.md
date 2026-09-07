@@ -52,6 +52,19 @@ contract; see `headless/CLAUDE.md` for the full protocol. With Gymnasium and Num
 installed, run `python3 -m unittest discover -s python -p test_gathering_protocol.py`.
 Missing dependencies or binding import errors fail this check; they never skip it.
 
+## Optional gathering-goal commands (PR4, Intentional Gathering)
+`WoWClassicEnv` also exposes four thin methods mirroring the SEPARATE optional
+`{"cmd":"gathering_goal","verb":...}` family (the one-goal tracking surface,
+never merged with the PR3 family above): `inspect_gathering_goal()`,
+`track_gathering_recipe(recipe_id, count)`, `track_gathering_commission(order_id)`,
+`clear_gathering_goal()`. Same rules as the PR3 methods: no sim-time advance, no
+argument coercion, full reply returned verbatim including a refusal reason.
+`env.gathering_goal_capability` (from the `info` reply, `None` on an older server
+bundle) is the discovery point. Contract: `docs/protocols/gathering-goal.md`.
+Wire pin: `tests/headless_gathering_goal_transport.test.ts` (TS side) and
+`test_gathering_goal_protocol.py` (this side, subprocess mocked); run with
+`python3 -m unittest discover -s python -p test_gathering_goal_protocol.py`.
+
 ## Gotchas
 - **The Node bundle must be rebuilt** after any change to `src/sim/` or
   `headless/`, this client loads `dist-env/env_server.cjs`, not the TS source.

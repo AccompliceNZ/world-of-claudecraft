@@ -5083,6 +5083,7 @@ const ALL_DELTA_KEYS = [
   'ench',
   'equip',
   'fplot',
+  'ggoal',
   'gprof',
   'guildBank',
   'hbl',
@@ -5201,6 +5202,7 @@ const TERSE_TO_IWORLD: Record<string, string> = {
   ench: 'lastEnchantResult',
   equip: 'equipment',
   fplot: 'myFarmPlots',
+  ggoal: 'gatheringGoal',
   gprof: 'gatheringProficiency',
   guildBank: 'guildBankInfo',
   hirat: 'hitRating',
@@ -5418,6 +5420,13 @@ function dirtyEveryDeltaField(): {
     amendsProgress: 4,
     isJackOfAllTrades: false,
   };
+  // `ggoal`: a real tracked recipe goal (Intentional Gathering PR4), seeded
+  // through the actual command body (trackGatheringRecipe) rather than a
+  // hand-mutation, so the wire shape under test matches what the command
+  // really produces. Needs the recipe known and combo-eligible, which the
+  // archetype/craftSkills dirtied just above already satisfy.
+  meta.knownRecipes.add('recipe_ironbound_warplate_helm');
+  sim.trackGatheringRecipe('recipe_ironbound_warplate_helm', 5, lp);
   // An ACTIVE own mobile crafting station (`mst`, the own-station arm of the
   // serving set): set directly on the meta slot (the placement command's
   // specialization gate is pinned in tests/professions_crafting_hub.test.ts;
@@ -5938,6 +5947,28 @@ describe('full self-state snapshot delta fixture', () => {
     // craft id, and it must reflect the cprof delta just applied.
     expect(client.archetypeTitle).toBe('weaponcrafting+armorcrafting');
     expect(client.craftSkills).toMatchObject({ armorcrafting: 31, weaponcrafting: 29 });
+    // ggoal -> gatheringGoal: the tracked recipe goal survives the wire whole,
+    // decoded through the strict leaf gathering_goal_wire.ts (its own key,
+    // never folded into cprof). A crossed identity/kind, a wrong count, or a
+    // status/reason mismatch reddens here.
+    expect(client.gatheringGoal?.goal).toEqual({
+      kind: 'recipe',
+      recipeId: 'recipe_ironbound_warplate_helm',
+      count: 5,
+    });
+    expect(client.gatheringGoal?.status).toBe('collecting');
+    expect(client.gatheringGoal?.reason).toBeNull();
+    // storageRestricted: this fixture's live delve run (drun) refuses the
+    // vault draw for craft reagents the same way it does for cvault above.
+    expect(client.gatheringGoal?.storageRestricted).toBe(true);
+    // No fixture inventory or bank slot carries arcanite_bar, so nothing is
+    // payable and that row arrives entirely missing.
+    expect(client.gatheringGoal?.payableCrafts).toBe(0);
+    expect(
+      client.gatheringGoal?.materials.some(
+        (m) => m.itemId === 'arcanite_bar' && m.carried === 0 && m.missing > 0,
+      ),
+    ).toBe(true);
     // mst -> activeMobileStationCrafts: the server-computed serving set as a
     // comma-joined scalar (expiry and party range resolved server-side
     // against the sim's own tickCount and positions), split on decode.
@@ -6292,7 +6323,7 @@ describe('gather node cooldown wire round trip (ncd)', () => {
 });
 
 describe('delta-key contract pins (anti-drift)', () => {
-  it('ALL_DELTA_KEYS contains exactly 91 unique keys in sorted order', () => {
+  it('ALL_DELTA_KEYS contains exactly 93 unique keys in sorted order', () => {
     // +1: guildBank (Guild Bank Phase 2), +1: the battleground bg key, +1: the
     // commission order board's corder key (issue #1298), +1: the character
     // sheet's lifetime played-time key ptime, for 67, then +16: the static
@@ -6332,9 +6363,11 @@ describe('delta-key contract pins (anti-drift)', () => {
     // counted from the merged registry above rather than from either side.
     // Intentional Gathering PR3 then adds the corpse-harvest preference key
     // hpref (a gathering-adjacent self scalar, sibling of gprof/tfocus/tslot),
-    // for 92.
-    expect(ALL_DELTA_KEYS).toHaveLength(92);
-    expect(new Set(ALL_DELTA_KEYS).size).toBe(92);
+    // for 92. Intentional Gathering PR4 adds the owner-only tracked-goal
+    // full-view key ggoal (its own leaf, gathering_goal_wire.ts, not folded
+    // into the gprof/tfocus/tslot/hpref cluster), for 93.
+    expect(ALL_DELTA_KEYS).toHaveLength(93);
+    expect(new Set(ALL_DELTA_KEYS).size).toBe(93);
     expect([...ALL_DELTA_KEYS]).toEqual([...ALL_DELTA_KEYS].sort());
   });
 
@@ -6492,8 +6525,10 @@ describe('delta-key contract pins (anti-drift)', () => {
     // Masterwrought branch) then makes 90, and the release's off-hand bar key
     // offhandWeapon makes 91 on the merged tree. Intentional Gathering PR3's
     // hpref (emitted from the new gathering_self_wire.ts sibling, still
-    // inside the recursive server-tree scrape) makes 92.
-    expect(scraped.size).toBe(92);
+    // inside the recursive server-tree scrape) makes 92. Intentional
+    // Gathering PR4's ggoal (emitted from the new gathering_goal_wire.ts
+    // sibling, likewise inside the recursive scrape) makes 93.
+    expect(scraped.size).toBe(93);
     expect([...scraped].sort()).toEqual([...ALL_DELTA_KEYS].sort());
   });
 

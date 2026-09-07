@@ -181,6 +181,7 @@ import type {
   CommissionOrderScope,
   CommissionOrderView,
   DisenchantResultView,
+  GatheringGoalView,
   MasterworkView,
   PerfectItemRef,
   PerfectingInfoView,
@@ -196,11 +197,7 @@ import {
   createCivicServicePlacementsReader,
 } from './civic_service_placements';
 import { applySelfCombatScalars } from './combat_scalar_wire';
-import {
-  decodeCraftingIdentity,
-  decodeMobileStationCrafts,
-  EMPTY_MST_CRAFTS,
-} from './crafting_wire';
+import { decodeMobileStationCrafts, EMPTY_MST_CRAFTS } from './crafting_wire';
 import {
   type DesktopWalletBrowserAction,
   type DesktopWalletStatus,
@@ -215,7 +212,6 @@ import {
   decodeVarkhulForgestormWarnings,
 } from './ground_telegraph_wire';
 import { decodeGuildBankLogFrame, GUILD_BANK_LOG_TTL_MS } from './guild_bank_log_wire';
-import { decodeHarvestPreferenceWire } from './harvest_preference_wire';
 import { foldInputAck } from './input_ack';
 import { INPUT_SEND_TIMER_INTERVAL_MS, inputFlushGateOpen } from './input_send_cadence';
 import { inputSignature } from './input_signature';
@@ -235,6 +231,7 @@ import { applyReconSelfWire, ReconWireState } from './movement_reconciliation_wi
 import { createNativeAttestationProof } from './native_attestation';
 import { createNetPipelineStats, type NetPipelineStats } from './net_pipeline_stats';
 import { perfectingCommand } from './perfecting_command';
+import { applyProfessionsSelfMirror } from './professions_self_mirror';
 import { optimisticQuestState } from './quest_state_optimistic';
 import { isTransientReconnectRejection, isTransientTimeoutRejection } from './reconnect_policy';
 import { isInputSendBackpressured } from './send_backpressure';
@@ -1763,6 +1760,11 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // `hpref` below. null until the mirror syncs; reset null on reconnect
   // hello (the marketInfo precedent) so a resume never shows a stale choice.
   harvestPreference: HarvestPreference | null = null;
+  // Intentional Gathering PR4: the viewer's single explicit gathering goal,
+  // mirrored from the `ggoal` self-delta below. null until the mirror syncs,
+  // and reset null on reconnect hello (the harvestPreference/marketInfo
+  // precedent) so a resume never shows a stale goal.
+  gatheringGoal: GatheringGoalView | null = null;
   // Static content read (the recipeList precedent below): the garden-bed
   // geography ships with the client bundle like every other content table, so
   // this needs no wire round-trip. See src/world_api/farming.ts.
@@ -2602,6 +2604,9 @@ export class ClientWorld extends ReconWireState implements IWorld {
         // Same reasoning as marketInfo above: hpref is delta-omitted, so this
         // resets it to the unsynced state rather than showing a stale choice.
         this.harvestPreference = null;
+        // Same reasoning again: ggoal is delta-omitted, so this resets it to
+        // the unsynced state rather than showing a stale tracked goal.
+        this.gatheringGoal = null;
         // Same idea for a corpse-harvest-info query issued just before the drop.
         this.worldInteractionRequests?.resetQuery();
         this.onReconnected?.();
@@ -3672,32 +3677,12 @@ export class ClientWorld extends ReconWireState implements IWorld {
           this.activeMobileStationCrafts = decodeMobileStationCrafts(rawMst);
         }
       }
-      // Commission order board (issue #1298): server-gated on the board
-      // revision at the corder wire cadence (a passive party converges within
-      // one cadence window; the viewer's own commands re-arm for the next
-      // snapshot), and this is how BOTH sides of an accept/deliver converge
-      // (not the commissionOrderResult event, which is deny-toast only).
-      if (s.corder !== undefined) this.commissionOrders = s.corder ?? [];
-      // Enchanting-action outcome mirrors (Professions 2.0): the
-      // convergence arm for lastDisenchantResult/lastEnchantResult/lastSalvageResult
-      // (the event mirror above is the immediacy arm; both feed the same field).
-      // Server-diffed per tick, so two identical consecutive deny results produce
-      // no delta change, which is exactly why the event arm also exists.
-      if (s.denc !== undefined) this.lastDisenchantResult = s.denc ?? null;
-      if (s.ench !== undefined) this.lastEnchantResult = s.ench ?? null;
-      if (s.salv !== undefined) this.lastSalvageResult = s.salv ?? null;
-      if (s.gprof !== undefined) this.gatheringProficiency = s.gprof ?? {};
-      if (s.tslot !== undefined) this.toolEffectSlots = s.tslot ?? [];
-      // hpref: delta-omitted; present decodes via the shared wire leaf, which
-      // refuses a malformed value to null rather than reviving All.
-      if (s.hpref !== undefined) this.harvestPreference = decodeHarvestPreferenceWire(s.hpref);
-      if (s.fplot !== undefined) this.myFarmPlots = s.fplot ?? [];
-      if (s.prof !== undefined) this.professionsState = s.prof ?? { skills: [] };
-      if (s.cprof !== undefined && s.cprof) {
-        const decoded = decodeCraftingIdentity(s.cprof as CraftingIdentityView);
-        this.craftSkills = decoded.craftSkills;
-        this.craftingIdentity = decoded.identity;
-      }
+      // Profession self-mirror delta block (commission orders, enchanting
+      // result mirrors, gathering proficiency, tool slots, harvest
+      // preference, the gathering goal, farm plots, professionsState, and
+      // crafting identity): all delta-omitted, applied by the sibling
+      // module, where the delta contract and per-key malformed policy live.
+      applyProfessionsSelfMirror(this, s);
       // camera follows server-side facing changes when not mouselooking
       if (prevSelfFacing !== undefined && this.mouselookFacing === null) {
         let d = e.facing - prevSelfFacing;
@@ -4190,6 +4175,19 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // from the authenticated session, never from this payload.
   setHarvestPreference(raw: string): void {
     this.cmd({ cmd: 'set_harvest_preference', raw });
+  }
+  // Intentional Gathering PR4: command only, no optimistic write (the
+  // setHarvestPreference precedent). The server re-validates the recipe id
+  // and count and derives pid from the authenticated session; the goal itself
+  // mirrors back via the ggoal self-delta.
+  trackGatheringRecipe(recipeId: string, count: number): void {
+    this.cmd({ cmd: 'track_gathering_recipe', recipe: recipeId, count });
+  }
+  trackGatheringCommission(orderId: number): void {
+    this.cmd({ cmd: 'track_gathering_commission', order: orderId });
+  }
+  clearGatheringGoal(): void {
+    this.cmd({ cmd: 'clear_gathering_goal' });
   }
   // `commission` (Professions 2.0): the boolean Maker's Bond
   // opt-in, sent ONLY when true so a non-commission craft's wire message

@@ -472,6 +472,7 @@ import { MapMarkerInteractionController, MapMarkerTooltipContent } from './hud/m
 import { livingSecondaryPet } from './hud/pet_bar_core';
 import { CARD_POSES } from './hud/player_card/player_card';
 import { PlayerCardController } from './hud/player_card/player_card_controller';
+import { commissionOrderResultLine } from './hud/professions/commission_order_feedback';
 import { buildCommissionOrderBoardModel } from './hud/professions/commission_order_view';
 import { renderCommissionOrderWindow } from './hud/professions/commission_order_window';
 import { cookingCatchHintKey } from './hud/professions/cooking_catch_hint_view';
@@ -518,6 +519,7 @@ import { handleFarmEvent } from './hud/professions/farm_event_feedback';
 import { FarmPressAffordanceController } from './hud/professions/farm_press_affordance_controller';
 import { PlantSheetWindow } from './hud/professions/farming_plant_sheet_window';
 import { feastTooltipLines } from './hud/professions/feast_tooltip_view';
+import { GatheringGoalController } from './hud/professions/gathering_goal_controller';
 import { gatheringProfessionNameKey } from './hud/professions/gathering_profession_name';
 import {
   handleGatherResult,
@@ -1850,6 +1852,7 @@ export class Hud {
   private readonly delveBoard: DelveBoardController;
   private readonly delveTracker: DelveTrackerController;
   private readonly riftTracker: RiftFloorTrackerController;
+  private readonly gatheringGoalController: GatheringGoalController;
   private readonly lockpickController: LockpickController;
   private readonly riteController: RiteController;
   private readonly questTracker: QuestTrackerController;
@@ -2259,6 +2262,14 @@ export class Hud {
     });
     this.riftTracker = new RiftFloorTrackerController({
       element: $('#rift-tracker'),
+      world: () => this.sim,
+    });
+    // The gathering goal tracker (Intentional Gathering PR4): a persistent
+    // #right-tracker-stack member like the two above; `this.sim` (typed
+    // IWorld) structurally satisfies the controller's narrow GatheringGoalWorld
+    // shape (see that module's header for why it is not `Pick<IWorld, ...>`).
+    this.gatheringGoalController = new GatheringGoalController({
+      element: $('#gathering-goal-tracker'),
       world: () => this.sim,
     });
     this.delveBoard = new DelveBoardController({
@@ -7012,6 +7023,10 @@ export class Hud {
     // Same reason as delveTracker above: the rift floor tracker's signature is
     // floor/timer numbers, none of which move with the locale.
     this.riftTracker.relocalize();
+    // Same shape again: the gathering goal panel's signature is the raw
+    // GatheringGoalView (ids/counts/enums), none of which moves with the
+    // locale, so relocalize() clears the latch for exactly one rebuild.
+    this.gatheringGoalController.relocalize();
     this.partyFramesPainter.relocalize();
     this.raidBossGuideWindow.relocalize();
     // The world map rasterizes its labels into sprites keyed on the RESOLVED
@@ -9853,6 +9868,11 @@ export class Hud {
     // The Reliquary tracker is always-on chrome for the same reason: pinned
     // pages fill from normal play, and an illuminated page drops off.
     if (slowHud) this.updateReliquaryTracker();
+    // The gathering goal tracker is always-on chrome too: a projection
+    // change (inventory/bank/vault moves the reachable/missing counts) has
+    // no dedicated event, so it rides the same slow poll; update() is
+    // signature-gated, so an unchanged goal costs nothing.
+    if (slowHud) this.gatheringGoalController.update();
     // Re-seat the tracker stack under the minimap column (bounded layout read).
     if (slowHud) this.trackerStackAnchor.apply();
     if (slowHud && this.calendarWindow.isOpen) this.calendarWindow.refreshIfChanged();
@@ -12115,66 +12135,12 @@ export class Hud {
           break;
         }
         case 'commissionOrderResult': {
-          // Commission order board (issue #1298). Text-free event: derive
-          // the item name from ev.itemId (resolved sim-side off the live
-          // board for every action, not just deliver) plus static content.
-          // ONE chat line either way (the trainResult/unbindResult
-          // single-surface rule: no toast, no extra sound cue).
-          const orderItem = ev.itemId ? ITEMS[ev.itemId] : undefined;
-          const orderItemName = orderItem ? itemDisplayName(orderItem) : (ev.itemId ?? '');
-          if (ev.ok) {
-            const successKey =
-              ev.action === 'open'
-                ? 'hudChrome.commissionBoard.opened'
-                : ev.action === 'cancel'
-                  ? 'hudChrome.commissionBoard.cancelled'
-                  : ev.action === 'accept'
-                    ? 'hudChrome.commissionBoard.accepted'
-                    : 'hudChrome.commissionBoard.delivered';
-            this.log(
-              t(successKey, {
-                item: orderItemName,
-                // Only 'deliver' interpolates {name}, and it names the
-                // REQUESTER (who receives the item), not ev.pid (the
-                // acting crafter): resolve off the event's own
-                // requesterName, never the crafter's own entity name.
-                name: ev.action === 'deliver' ? (ev.requesterName ?? '') : '',
-              }),
-              PROF_LOG_GRANT,
-            );
-          } else if (ev.reason) {
-            const denyKey =
-              ev.reason === 'unknown_recipe'
-                ? 'hudChrome.commissionBoard.denyUnknownRecipe'
-                : ev.reason === 'not_commission_eligible'
-                  ? 'hudChrome.commissionBoard.denyNotCommissionEligible'
-                  : ev.reason === 'unknown_crafter'
-                    ? 'hudChrome.commissionBoard.denyUnknownCrafter'
-                    : ev.reason === 'self_crafter'
-                      ? 'hudChrome.commissionBoard.denySelfCrafter'
-                      : ev.reason === 'too_many_open'
-                        ? 'hudChrome.commissionBoard.denyTooManyOpen'
-                        : ev.reason === 'unknown_order'
-                          ? 'hudChrome.commissionBoard.denyUnknownOrder'
-                          : ev.reason === 'order_not_open'
-                            ? 'hudChrome.commissionBoard.denyOrderNotOpen'
-                            : ev.reason === 'self_order'
-                              ? 'hudChrome.commissionBoard.denySelfOrder'
-                              : ev.reason === 'not_eligible_crafter'
-                                ? 'hudChrome.commissionBoard.denyNotEligibleCrafter'
-                                : ev.reason === 'not_your_order'
-                                  ? 'hudChrome.commissionBoard.denyNotYourOrder'
-                                  : ev.reason === 'order_not_accepted'
-                                    ? 'hudChrome.commissionBoard.denyOrderNotAccepted'
-                                    : ev.reason === 'not_your_acceptance'
-                                      ? 'hudChrome.commissionBoard.denyNotYourAcceptance'
-                                      : ev.reason === 'not_crafted'
-                                        ? 'hudChrome.commissionBoard.denyNotCrafted'
-                                        : ev.reason === 'deliver_out_of_range'
-                                          ? 'hudChrome.commissionBoard.denyOutOfRange'
-                                          : 'hudChrome.commissionBoard.denyNoSpace';
-            this.log(t(denyKey), PROF_LOG_DENY);
-          }
+          // Commission order board (issue #1298): the item name, chat key,
+          // params and tone are resolved by commission_order_feedback.ts;
+          // this arm only logs (a deny with no reason resolves to null, the
+          // historical no-op) and delegates the board/bag refresh.
+          const orderLine = commissionOrderResultLine(ev);
+          if (orderLine) this.log(t(orderLine.key, orderLine.params), orderLine.tone);
           // Refresh the board window if open (renderCommissionBoard no-ops
           // when it is not); deliver also touches bags on the crafter's own
           // arm (the requester's side rides the ordinary loot event's bag
@@ -16016,6 +15982,20 @@ export class Hud {
           this.craftQtyByRecipe.set(recipeId, Math.max(1, Math.floor(qty)));
           this.renderCrafting();
         },
+        // The gathering goal Track control (Intentional Gathering PR4): its
+        // OWN qty map, held by the gathering goal controller rather than
+        // craftQtyByRecipe above (deliberately uncoupled from mats-fit).
+        goalQty: (recipeId) => this.gatheringGoalController.goalQty(recipeId),
+        onGoalQty: (recipeId, qty) => {
+          this.gatheringGoalController.onGoalQty(recipeId, qty);
+          this.renderCrafting();
+        },
+        // The crafting window itself renders no "tracked" indicator (there is
+        // nothing in its own row state that changes), so Track does not
+        // repaint it; the panel's own immediate update() is what shows the
+        // new goal, and focus stays on the Track button the player pressed.
+        onTrackRecipe: (recipeId, count) =>
+          this.gatheringGoalController.onTrackRecipe(recipeId, count),
         announce: (text) => this.announceCraftCast(text),
         selectedCraft: () => this.selectedCraftTab,
         onSelectCraft: (professionId) => {
@@ -16135,6 +16115,10 @@ export class Hud {
         onCancel: (orderId) => this.sim.cancelCommissionOrder(orderId),
         onAccept: (orderId) => this.sim.acceptCommissionOrder(orderId),
         onDeliver: (orderId) => this.sim.deliverCommissionOrder(orderId),
+        // The gathering goal Track control (Intentional Gathering PR4):
+        // renders only on a row this viewer accepted to craft (canDeliver),
+        // so no separate accepted-mine check is needed here.
+        onTrack: (orderId) => this.gatheringGoalController.onTrack(orderId),
         onClose: () => this.closeCommissionBoard(),
       },
     );

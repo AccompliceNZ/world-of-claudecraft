@@ -21,6 +21,7 @@ import { HEROIC_VENDOR_STOCK } from '../../../sim/content/heroic_vendor';
 import { APEX_ARMOR_RECIPES, APEX_GEAR_RECIPES, ROD_RECIPES } from '../../../sim/content/recipes';
 import { ITEMS } from '../../../sim/data';
 import { craftForApexItem } from '../../../sim/professions/perfecting';
+import type { TranslationKey } from '../../i18n';
 
 // The apex tier's skill floor (the phase 09 apex rung: every apex recipe is
 // authored at skillReq 100; masterwrought Phase 11o retired the fictional 150).
@@ -77,6 +78,23 @@ export function apexPatternChannel(recipeId: string): ApexPatternChannel {
   if (RIFT_RECIPE_IDS.has(recipeId)) return 'rift';
   if (VENDOR_TAUGHT_RECIPE_IDS.has(recipeId)) return 'vendor';
   return PATTERN_TAUGHT_RECIPE_IDS.has(recipeId) ? 'drop' : null;
+}
+
+// The pattern-provenance lines (deliverable C): where a KNOWN apex recipe's
+// pattern came from, keyed by the content-derived channel above. Text like
+// every other actionable line the crafting window renders: never
+// color-only, folded into the aria name and the tooltip alike.
+const APEX_CHANNEL_KEY: Record<Exclude<ApexPatternChannel, null>, TranslationKey> = {
+  raid: 'hudChrome.crafting.apexPatternRaid',
+  rift: 'hudChrome.crafting.apexPatternRift',
+  vendor: 'hudChrome.crafting.apexPatternVendor',
+  drop: 'hudChrome.crafting.apexPatternDrop',
+};
+
+/** The localization key for where a KNOWN apex recipe's pattern came from,
+ *  or null for a channel-less row (not on the apex tier at all). */
+export function apexChannelLabelKey(channel: ApexPatternChannel): TranslationKey | null {
+  return channel !== null ? APEX_CHANNEL_KEY[channel] : null;
 }
 
 export function apexRecipePresentation(

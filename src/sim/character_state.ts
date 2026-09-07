@@ -13,6 +13,7 @@ import type { LocalGathererIdentity } from './material_gatherer';
 import type { SavedMaterialsVaultState } from './materials_vault';
 import type { ArchetypeState } from './professions/archetype';
 import type { PersistedFarmPlot } from './professions/farm_persist';
+import type { SavedGatheringGoal } from './professions/gathering_goal_persist';
 import type { ToolEffectSlot } from './professions/tools';
 import type { SavedReliquaryState } from './reliquary';
 import type {
@@ -159,6 +160,15 @@ export interface CharacterState {
   // (savedHarvestPreference/loadHarvestPreference own the encoding; never
   // hand-roll a second parser).
   harvestPreference?: string | null;
+  // The one explicit tracked gathering goal (Intentional Gathering PR4; JSONB,
+  // optional with zero-default omission: absent for a pre-feature save and
+  // whenever no goal is tracked). Compact kind/recipeId/count or
+  // kind/recipeId/orderId/count only: never the derived projection, cache, or
+  // the live commission-order binding, which is session state and is never
+  // restored from a saved orderId (see PlayerMeta.gatheringGoalOrder).
+  // Loaded/saved through professions/gathering_goal_persist.ts
+  // (loadGatheringGoal/saveGatheringGoal), the one encoding/decoding path.
+  gatheringGoal?: SavedGatheringGoal;
   pet?: PetState | null;
   // WoW-style ghost state (JSONB; optional so pre-ghost saves load alive). A player who
   // logs out as a released spirit resumes as a ghost at the graveyard with the corpse

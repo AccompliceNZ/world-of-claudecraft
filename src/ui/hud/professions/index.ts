@@ -1,4 +1,5 @@
 export * from './apex_recipe_view';
+export * from './commission_order_feedback';
 export * from './commission_order_view';
 export * from './commission_order_window';
 export * from './cooking_catch_hint_view';
@@ -23,6 +24,10 @@ export * from './farming_plant_sheet_window';
 export * from './farming_view';
 export * from './feast_title';
 export * from './feast_tooltip_view';
+export * from './gathering_goal_controller';
+export * from './gathering_goal_painter';
+export * from './gathering_goal_track_row';
+export * from './gathering_goal_view';
 export * from './gathering_profession_name';
 export * from './gathering_result_feedback';
 export * from './gathering_view';

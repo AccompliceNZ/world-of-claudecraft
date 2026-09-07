@@ -199,6 +199,24 @@ export function savedHarvestPreference(
   return preference.kind === 'material' ? preference.itemId : undefined;
 }
 
+/** Restore on load (the sim.ts addPlayer shape): an ok LoadedHarvestPreference
+ *  becomes the live preference, a refusal becomes null, never the active All
+ *  default (see loadHarvestPreference above for why). */
+export function applyHarvestPreferenceOnLoad(saved: unknown): HarvestPreference | null {
+  const loaded = loadHarvestPreference(saved);
+  return loaded.ok ? loaded.preference : null;
+}
+
+/** The sparse CharacterState fragment for one save (the sim.ts
+ *  serializeCharacter shape every optional field follows): absent when
+ *  savedHarvestPreference has nothing to write. */
+export function serializeHarvestPreference(preference: HarvestPreference | null): {
+  harvestPreference?: string | null;
+} {
+  const saved = savedHarvestPreference(preference);
+  return saved === undefined ? {} : { harvestPreference: saved };
+}
+
 /**
  * Resolve a preference against one body's tags into the pick the canonical
  * harvest path takes. All spreads (the empty pick). A material resolves to

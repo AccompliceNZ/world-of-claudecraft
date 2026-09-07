@@ -171,6 +171,14 @@ export function serializeReliquaryState(state: ReliquaryState): SavedReliquarySt
   return out;
 }
 
+/** The sparse CharacterState fragment for one save (the sim.ts
+ *  serializeCharacter shape every optional field follows): absent when
+ *  serializeReliquaryState has nothing to write. */
+export function reliquarySaveFragment(state: ReliquaryState): { reliquary?: SavedReliquaryState } {
+  const reliquary = serializeReliquaryState(state);
+  return reliquary ? { reliquary } : {};
+}
+
 /**
  * Restore from a saved blob. Filters firstFind and marks to catalogued ids
  * only so a hand-edited save cannot grow unbounded membership. The marks and

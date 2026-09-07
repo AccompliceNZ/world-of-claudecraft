@@ -115,3 +115,94 @@ export function gatheringSupplyByFamily(): Map<string, Set<string>> {
   out.set(CORPSE_HARVEST_FAMILY, corpseSupply());
   return out;
 }
+
+// ---------------------------------------------------------------------------
+// THE REVERSE LOOKUP (Intentional Gathering PR4): given an item id, which
+// gathering family (if any) supplies it, plus, for a corpse-harvest item, the
+// ORDINARY MATERIAL id a harvest preference actually stores (never a tag,
+// never the specimen id itself; harvest_preference.ts states that contract).
+// Built once from gatheringSupplyByFamily() plus the same
+// HARVEST_COMPONENT_ITEMS / HARVEST_COMPONENT_SPECIMENS tables the preference
+// module reads, so this is a SECOND reader of those two tables, never a
+// second registry: nothing here invents a source id gathering_supply.ts does
+// not already derive.
+// ---------------------------------------------------------------------------
+
+/** One family's answer for one item id. `corpsePreferenceItemId` is non-null
+ *  ONLY when `familyId` is the corpse family and the item resolves to a
+ *  material a harvest preference can target: the plain component item itself
+ *  (corpsePreferenceItemId === the id being looked up) or a Pristine specimen
+ *  (corpsePreferenceItemId names the ordinary material behind it, e.g.
+ *  pristine_hide -> rough_hide). Every node/fish/farm hint carries null here:
+ *  there is no harvest-preference concept for those families. */
+export interface GatheringSupplyHint {
+  readonly familyId: GatheringProfessionId | typeof CORPSE_HARVEST_FAMILY;
+  readonly corpsePreferenceItemId: string | null;
+}
+
+const NO_SUPPLY_HINTS: readonly GatheringSupplyHint[] = Object.freeze([]);
+
+/** Composite dedupe key: horn and tusk both map to curved_tusk, so both tags'
+ *  loop iterations must collapse to exactly ONE hint on that item, not two
+ *  identical ones. */
+function hintKey(hint: GatheringSupplyHint): string {
+  return `${hint.familyId}|${hint.corpsePreferenceItemId ?? ''}`;
+}
+
+function buildSupplyHintIndex(): ReadonlyMap<string, readonly GatheringSupplyHint[]> {
+  const byItem = new Map<string, Map<string, GatheringSupplyHint>>();
+  const add = (itemId: string, hint: GatheringSupplyHint): void => {
+    let hints = byItem.get(itemId);
+    if (!hints) {
+      hints = new Map();
+      byItem.set(itemId, hints);
+    }
+    // Frozen at construction, matching the array's own freeze below: the
+    // cache is documented immutable end to end, row objects included, so a
+    // caller can never mutate a shared hint out from under a later reader.
+    hints.set(hintKey(hint), Object.freeze(hint));
+  };
+
+  for (const [family, ids] of gatheringSupplyByFamily()) {
+    if (family === CORPSE_HARVEST_FAMILY) continue; // corpse hints are built below, per component
+    for (const itemId of ids) {
+      add(itemId, { familyId: family as GatheringProfessionId, corpsePreferenceItemId: null });
+    }
+  }
+  // Every plain component item names itself as the preference target.
+  for (const itemId of Object.values(HARVEST_COMPONENT_ITEMS)) {
+    add(itemId, { familyId: CORPSE_HARVEST_FAMILY, corpsePreferenceItemId: itemId });
+  }
+  // Every Pristine specimen names the ORDINARY material behind its own
+  // component tag as the preference target (a preference is never a
+  // specimen id): materialId is undefined only for a specimen family with no
+  // HARVEST_COMPONENT_ITEMS row, which does not exist on the shipped tables.
+  for (const [component, specimenId] of Object.entries(HARVEST_COMPONENT_SPECIMENS)) {
+    const materialId = HARVEST_COMPONENT_ITEMS[component];
+    if (materialId === undefined) continue;
+    add(specimenId, { familyId: CORPSE_HARVEST_FAMILY, corpsePreferenceItemId: materialId });
+  }
+
+  const frozen = new Map<string, readonly GatheringSupplyHint[]>();
+  for (const [itemId, hints] of byItem) frozen.set(itemId, Object.freeze([...hints.values()]));
+  return frozen;
+}
+
+// Lazily built and cached: the content tables this derives from are frozen
+// for the life of the process, so the index never needs invalidation. Cached
+// as a plain module-level singleton (never exposed directly: a caller only
+// ever sees gatheringSupplyHintsForItem's per-id, already-frozen answer), the
+// same pattern reliquary.ts's content-keyed memos use for an immutable table.
+let cachedSupplyHintIndex: ReadonlyMap<string, readonly GatheringSupplyHint[]> | null = null;
+
+/**
+ * Every gathering family that supplies `itemId`, most specific first (there
+ * is no ordering rule beyond insertion order today: no shipped item is
+ * supplied by two families). Unknown, prototype, and non-supplied ids all
+ * answer the same frozen empty array; the returned array is never mutable, so
+ * a caller can never corrupt the shared cache.
+ */
+export function gatheringSupplyHintsForItem(itemId: string): readonly GatheringSupplyHint[] {
+  if (cachedSupplyHintIndex === null) cachedSupplyHintIndex = buildSupplyHintIndex();
+  return cachedSupplyHintIndex.get(itemId) ?? NO_SUPPLY_HINTS;
+}

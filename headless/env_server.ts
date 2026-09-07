@@ -9,6 +9,8 @@
 //   <- {"obs":[...],"reward":0.01,"terminated":false,"truncated":false,"info":{...}}
 //   -> {"cmd":"gathering","verb":"inspect"}
 //   <- {"ok":true,"verb":"inspect","state":{...},"corpses":[...],"vendors":[...]}
+//   -> {"cmd":"gathering_goal","verb":"inspect"}
+//   <- {"ok":true,"verb":"inspect","goal":null}
 //   -> {"cmd":"close"}
 //
 // The optional `gathering` command is a closed request union (inspect,
@@ -19,6 +21,12 @@
 // `docs/prd/intentional-gathering/headless-gathering-contract.md`; this header
 // only names the wire shape, not the contract.
 //
+// The optional `gathering_goal` command (Intentional Gathering PR4) is a
+// SEPARATE closed request union (inspect, track_recipe, track_commission,
+// clear) for the one-goal tracking surface; same never-advances-time rule.
+// Exact shapes: `gathering_goal_protocol.ts` and
+// `docs/protocols/gathering-goal.md`.
+//
 // Run `node dist-env/env_server.cjs --bench` for a throughput benchmark.
 
 import * as readline from 'node:readline';
@@ -28,6 +36,8 @@ import { type RewardCounters, Sim } from '../src/sim/sim';
 import { ALL_CLASSES, MAX_LEVEL, type PlayerClass } from '../src/sim/types';
 import { allocateHeadlessGathererIdentity } from './gatherer_identity';
 import { executeGatheringCommand } from './gathering_commands';
+import { executeGatheringGoalCommand } from './gathering_goal_commands';
+import { GATHERING_GOAL_CAPABILITY } from './gathering_goal_protocol';
 import { GATHERING_CAPABILITY } from './gathering_protocol';
 import {
   MAX_INPUT_LINE_LENGTH,
@@ -223,6 +233,7 @@ function serve(): void {
             actions: ACTIONS,
             max_level: MAX_LEVEL,
             gathering: GATHERING_CAPABILITY,
+            gathering_goal: GATHERING_GOAL_CAPABILITY,
           });
           break;
         case 'reset':
@@ -260,6 +271,9 @@ function serve(): void {
           break;
         case 'gathering':
           send(executeGatheringCommand(env.sim, msg));
+          break;
+        case 'gathering_goal':
+          send(executeGatheringGoalCommand(env.sim, msg));
           break;
         case 'close':
           send({ ok: true });

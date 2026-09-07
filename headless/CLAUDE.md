@@ -92,6 +92,20 @@ regression for this family (a temp esbuild bundle, one Node child process, one
 ordered sequence of requests/replies); the parser/dispatcher unit fixtures behind
 `gathering_protocol.ts`/`gathering_commands.ts` are pinned by their own test files.
 
+## Optional gathering-goal commands (PR4, Intentional Gathering)
+A SEPARATE, closed `{"cmd":"gathering_goal","verb":...}` request family
+(inspect, track_recipe, track_commission, clear) sits beside the PR3 one
+above, for the one-goal tracking surface; same never-advances-time rule, same
+thin `env_server.ts` wiring (the `info` reply's `gathering_goal` field plus
+one dispatch line), same split between `gathering_goal_protocol.ts` (parsing +
+capability) and `gathering_goal_commands.ts` (`executeGatheringGoalCommand`,
+against a narrow `Pick<Sim, 'gatheringGoal' | 'trackGatheringRecipe' |
+'trackGatheringCommission' | 'clearGatheringGoal'>` host). Frozen contract:
+`docs/protocols/gathering-goal.md`. `tests/headless_gathering_goal_transport.test.ts`
+is this family's wire regression; `tests/headless_gathering_goal.test.ts` covers
+parsing and dispatch. Python mirrors it through four thin `WoWClassicEnv`
+methods (see `python/CLAUDE.md`).
+
 ## Run
 Manual poke: `echo '{"cmd":"info"}' | node dist-env/env_server.cjs`.
 

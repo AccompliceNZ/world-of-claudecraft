@@ -1,0 +1,211 @@
+/* The persistent gathering goal panel (Intentional Gathering PR4). Scoped
+   entirely under `.gathering-goal-panel`, the root class the parent
+   composition applies to its own tracker element (this module owns no
+   element and no window id: gathering_goal_painter.ts only paints into
+   whatever root it is handed). NOT registered in the mobile `.window`
+   coverage sweep (tests/mobile_window_coverage.test.ts) on purpose: this is
+   not a `.window` id, it is a persistent HUD readout, so its own mobile rules
+   live here instead of the shared mobile sheet.
+
+   Layer: `@layer components`, beside hud.css/components.css (see
+   src/styles/CLAUDE.md's module table), imported from index.css right after
+   components.css. Its mobile-touch override lives INSIDE this same layer
+   block rather than a bare `@media` (an unlayered rule would outrank every
+   layered rule regardless of import order, which is not a mobile OVERRIDE
+   at that point, it is an unconditional one). */
+
+@layer components {
+  .gathering-goal-panel {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 260px;
+    padding: 8px 10px;
+    background: var(--color-bg-dark);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-light);
+    font-size: 11px;
+    line-height: 1.35;
+    /* A goal can carry several reagent rows (a batch craft, a rich
+       commission); scroll rather than grow unbounded or clip silently. */
+    max-height: 40vh;
+    overflow-y: auto;
+    /* #right-tracker-stack (hud.css) sets pointer-events: none so its
+       transparent, text-over-world rows (the quest/delve trackers) never
+       steal a rail-icon click; those rows opt individual controls back in
+       at fit-content width instead. This panel is a solid bordered card,
+       not a transparent overlay row, so there is no rail underneath it to
+       steal from: opting the whole box back in (buttons AND the scroll
+       area both need pointer events) is the correct, deliberate choice
+       here rather than per-control fit-content. */
+    pointer-events: auto;
+  }
+
+  .gathering-goal-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .gathering-goal-title {
+    font-weight: 600;
+    color: var(--color-accent);
+    overflow-wrap: break-word;
+  }
+
+  .gathering-goal-header-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .gathering-goal-status {
+    flex: none;
+    padding: 0 5px;
+    border: 1px solid var(--color-border-default);
+    border-radius: 3px;
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  .gathering-goal-status[data-status="ready"] {
+    color: var(--color-text-success);
+    border-color: var(--color-border-valid);
+  }
+
+  .gathering-goal-status[data-status="unavailable"],
+  .gathering-goal-status[data-status="expired"] {
+    color: var(--color-text-error);
+    border-color: var(--color-border-invalid);
+  }
+
+  .gathering-goal-clear-btn {
+    flex: none;
+    padding: 2px 6px;
+    background: transparent;
+    border: 1px solid var(--color-border-default);
+    border-radius: 3px;
+    color: var(--color-text-muted);
+    font-size: 10px;
+    cursor: pointer;
+  }
+
+  .gathering-goal-clear-btn:hover,
+  .gathering-goal-clear-btn:focus-visible {
+    color: var(--color-text-light);
+    border-color: var(--color-border-focus);
+  }
+
+  .gathering-goal-reason,
+  .gathering-goal-ready-hint,
+  .gathering-goal-payable,
+  .gathering-goal-storage-note,
+  .gathering-goal-craft-count {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 10.5px;
+  }
+
+  .gathering-goal-reason {
+    color: var(--color-text-error);
+  }
+
+  .gathering-goal-materials {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* Column, never a same-row layout: the text (name plus every counter) and
+     the family badge / preference button are two SEPARATE full-width rows.
+     At the rail's ~240px width, a same-row flex squeezed the text span
+     toward zero and wrapped it one character per line. */
+  .gathering-goal-material {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .gathering-goal-material-line {
+    overflow-wrap: break-word;
+    color: var(--color-text-muted);
+  }
+
+  .gathering-goal-material.satisfied .gathering-goal-material-line {
+    color: var(--color-text-success);
+  }
+
+  .gathering-goal-material-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .gathering-goal-material-family {
+    flex: none;
+    padding: 0 4px;
+    border: 1px solid var(--color-border-default);
+    border-radius: 3px;
+    font-size: 9px;
+    letter-spacing: 0.02em;
+    color: var(--color-text-muted);
+  }
+
+  .gathering-goal-pref-btn {
+    flex: none;
+    padding: 2px 6px;
+    background: transparent;
+    border: 1px solid var(--color-border-default);
+    border-radius: 3px;
+    color: var(--color-accent);
+    font-size: 9.5px;
+    cursor: pointer;
+  }
+
+  .gathering-goal-pref-btn:hover,
+  .gathering-goal-pref-btn:focus-visible {
+    border-color: var(--color-border-focus);
+  }
+
+  /* The read-only "already selected" state (row.isCurrentHarvestPreference):
+     muted and non-interactive, distinct from the actionable Set button so a
+     player never mistakes it for a second live action on the same target. */
+  .gathering-goal-pref-btn.current {
+    color: var(--color-text-muted);
+    cursor: default;
+  }
+
+  .gathering-goal-pref-btn.current:hover {
+    border-color: var(--color-border-default);
+  }
+
+  /* Mobile touch: gated on the runtime body.mobile-touch state (not only a
+     media feature: landscape phones need it too, src/ui/CLAUDE.md). Every
+     tappable target here (Clear, the per-material harvest preference
+     shortcut) meets the >=40x40 floor; the panel narrows to fit a phone's
+     safe width instead of a fixed max-width, in both orientations. Kept in
+     THIS layer (never an unlayered bare @media) so it never outranks every
+     other layered rule regardless of import order; body.mobile-touch on its
+     own is enough specificity to win within the layer since no other rule
+     here shares its selector weight. */
+  body.mobile-touch .gathering-goal-panel {
+    max-width: min(260px, calc(100vw - 24px));
+  }
+
+  body.mobile-touch .gathering-goal-clear-btn,
+  body.mobile-touch .gathering-goal-pref-btn {
+    min-height: 40px;
+    min-width: 40px;
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
