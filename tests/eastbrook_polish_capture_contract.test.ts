@@ -389,8 +389,10 @@ interface AttributionTargetFixture {
 // Re-minted for the v0.42.0 reconcile after the release branch advanced with
 // Nythraxis renderer work: the merged runtimeRender.renderer leaf matches
 // neither parent. No capture was retaken.
+// Re-minted for the second v0.42.0 reconcile after the release branch advanced
+// with Drakelands/hotkey renderer work. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  '63dadd29dcdca5f8bd373fd476582ea886065e28dbd9799eaedcba03c2e624a9';
+  '7f6715ad25ff5a4a1a7c778d54690eea0675e0c997a1980b576b01760b8af26a';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

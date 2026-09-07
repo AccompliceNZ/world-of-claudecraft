@@ -15668,4 +15668,38 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'yumi.queue.leave': 'Protect Yumiのキューを離れました。',
   'yumi.queue.teamLeave': 'チームがProtect Yumiのキューを離れました。',
   'yumi.respawn.title': 'ダウン！',
+  'hudChrome.keybindTransfer.setup': 'ホットキー設定',
+  'hudChrome.keybindTransfer.apply': '適用',
+  'hudChrome.keybindTransfer.imported': 'ホットキー設定をインポートしました。',
+  'hudChrome.keybindTransfer.wrongKind':
+    'このコードは設定のエクスポートで、ホットキー設定ではありません。',
+  'hudChrome.keyboardMap.title': 'キーボード一覧',
+  'hudChrome.keyboardMap.close': 'キーボード一覧を閉じる',
+  'hudChrome.keyboardMap.hint':
+    '使用中のキーはカテゴリ別に色分けされています。キーにカーソルを合わせるかフォーカスすると、そのキーの割り当てがすべて表示されます。',
+  'hudChrome.keyboardMap.hintInteractive':
+    '使用中のキーはカテゴリ別に色分けされています。キーをクリックすると割り当てを変更できます。カーソルを合わせるかフォーカスすると、そのキーの割り当てがすべて表示されます。',
+  'hudChrome.keyboardMap.pressKey':
+    '{action} に割り当てるキーを押してください。Esc でキャンセルします。',
+  'hudChrome.keyboardMap.notBindable': 'そのキーは割り当てできません。',
+  'hudChrome.keyboardMap.boundTo': '{action} を {key} に割り当てました。',
+  'hudChrome.keyboardMap.assignHint': '{key} に割り当てるアクションを選んでください。',
+  'hudChrome.keyboardMap.assignPlaceholder': '{key} にアクションを割り当てる',
+  'hudChrome.keyboardMap.layerGroup': '修飾キーレイヤー',
+  'hudChrome.keyboardMap.formGroup': 'キーボードのサイズ',
+  'hudChrome.keyboardMap.formFull': 'フルサイズ',
+  'hudChrome.keyboardMap.formTkl': 'テンキーレス',
+  'hudChrome.keyboardMap.notOnLayout': 'このキーボードにないキー: {bindings}',
+  'hudChrome.keyboardMap.legendGroup': 'キーの表記',
+  'hudChrome.keyboardMap.legendLayout': '使用中の配列',
+  'hudChrome.keyboardMap.layerNone': '修飾キーなし',
+  'hudChrome.keyboardMap.layerShift': 'Shift キー',
+  'hudChrome.keyboardMap.otherLayers': '修飾キーとの組み合わせでも割り当て済み',
+  'hudChrome.fullTransfer.menu': 'インポート / エクスポート',
+  'hudChrome.fullTransfer.title': '設定のインポート / エクスポート',
+  'hudChrome.fullTransfer.fullSettings': 'すべての設定',
+  'hudChrome.fullTransfer.intro':
+    'この端末に保存されたすべての設定を1つのコードとしてエクスポートし、別の端末やブラウザに貼り付けてインポートできます。対象: グラフィック、オーディオ、インターフェース、テーマ、フレーム配置、全キャラクターのキー設定、コントローラーとクロスホットバーの設定、チャット、ウィンドウのフィルター、言語、閉じたヒント。',
+  'hudChrome.fullTransfer.excluded':
+    '含まれないもの: ログイン、アカウント、ウォレット、購入データ。アクションバーの配置はアカウントに保存され、アカウントと共に引き継がれます。',
 };

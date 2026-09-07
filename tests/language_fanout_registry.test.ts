@@ -117,6 +117,10 @@ const FANOUT_ARMS: readonly string[] = [
   'this.interfaceUnlock.relocalize|',
   'this.targetAurasWindow.relocalize|',
   'this.doomMeter.relocalize|',
+  // The options window forwards to the keyboard overview pop-out
+  // (KeyboardMapWindow), which can stay open across a language switch and
+  // repaints its title, option captions, legends and hint on this arm.
+  'this.optionsWindow.relocalize|',
   // The Target dots frame: only its aria-label is constructor-written, so this
   // arm is what keeps that one string from sticking in the previous locale.
   'this.targetDotsPainter.relocalize|',

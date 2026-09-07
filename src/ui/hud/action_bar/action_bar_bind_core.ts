@@ -1,9 +1,9 @@
 // On-bar action-bar key-binding mode (issue #1238): pure phase/state helpers for
 // the click-a-slot-then-press-a-key rebind flow. DOM-free (no button refs, no key
-// capture) so the state transitions are Vitest-testable directly; the thin
-// controller in hud.ts owns the banner DOM, the action-bar click intercept, the
-// Reset confirm dialog, and the shared key-capture seam (Input.captureNextKey via
-// OptionsHooks.captureKey) every other rebind flow already uses.
+// capture) so the state transitions are Vitest-testable directly. The controller
+// (action_bar_bind_controller.ts) owns the slot clicks, the key capture and the
+// confirm dialogs, the banner DOM lives in action_bar_bind_banner.ts, and hud.ts
+// keeps only the action-bar click intercept.
 
 /**
  * selectedSlot: the bar slot index awaiting a keypress, or null between
@@ -11,6 +11,11 @@
  * null after a cancelled/rejected capture), shown as transient feedback until
  * the next slot is selected.
  */
+import {
+  type KeybindConflictPrompt,
+  keybindConflictPrompt,
+} from '../../keybind_conflict_prompt_core';
+
 export interface ActionBarBindState {
   selectedSlot: number | null;
   lastBoundKeyLabel: string | null;
@@ -43,51 +48,21 @@ export function actionBarBindStatus(state: ActionBarBindState): ActionBarBindSta
   return 'idle';
 }
 
-/** A box in HUD author px (the #ui zoom already divided out). */
-export interface ActionBarBindBox {
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-}
-
-/** How far above the bottom edge the banner sits when the primary bar has no
- *  box to anchor to (hidden under the cross hotbar, or the touch layout):
- *  clear of the stock docked bar plus the player frame beneath it. */
-export const ACTION_BAR_BIND_BANNER_FALLBACK_LIFT = 200;
+/** The are-you-sure prompt the on-bar mode raises before a capture commits:
+ *  the shared keybind conflict prompt, with the slot as the gaining action. */
+export type ActionBarBindPrompt = KeybindConflictPrompt;
 
 /**
- * Where the banner goes, in HUD author px: centred above the LIVE primary bar
- * with `gap` between them, dropping below the bar when there is no room above,
- * and clamped `gap` inside the viewport on every edge. The bar is measured live
- * (not assumed docked in #actionbar-stack) because Interface Unlock reparents a
- * moved bar to the HUD root: anchoring to the stack left the banner under the
- * moved bar, whose slots ate every Done / Reset click and re-armed a capture
- * instead, trapping the player in the mode until a restart. With no bar box at
- * all the banner takes the stock bottom-centre seat.
+ * Decide whether binding `key` to the selected slot needs a warning first.
+ * `other` is the name of the action that would LOSE `key` (null when the key
+ * is free); `slot` names the slot being bound. Only a key already in use
+ * elsewhere warns: replacing the slot's own previous key is the point of the
+ * mode and asks nothing.
  */
-export function actionBarBindBannerPlacement(args: {
-  bar: ActionBarBindBox | null;
-  banner: { width: number; height: number };
-  viewport: { width: number; height: number };
-  gap?: number;
-}): { left: number; top: number } {
-  const gap = args.gap ?? 8;
-  const { banner, viewport, bar } = args;
-  let left: number;
-  let top: number;
-  if (bar) {
-    left = bar.left + bar.width / 2 - banner.width / 2;
-    top = bar.top - gap - banner.height;
-    if (top < gap) top = bar.top + bar.height + gap;
-  } else {
-    left = (viewport.width - banner.width) / 2;
-    top = viewport.height - banner.height - ACTION_BAR_BIND_BANNER_FALLBACK_LIFT;
-  }
-  const maxLeft = Math.max(gap, viewport.width - banner.width - gap);
-  const maxTop = Math.max(gap, viewport.height - banner.height - gap);
-  return {
-    left: Math.min(Math.max(left, gap), maxLeft),
-    top: Math.min(Math.max(top, gap), maxTop),
-  };
+export function actionBarBindPrompt(input: {
+  key: string;
+  other: string | null;
+  slot: string;
+}): ActionBarBindPrompt | null {
+  return keybindConflictPrompt({ key: input.key, other: input.other, action: input.slot });
 }

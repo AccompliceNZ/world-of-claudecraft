@@ -1069,10 +1069,12 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // Re-minted for the v0.42.0 reconcile after the release branch advanced with
 // Nythraxis renderer work: the merged runtimeRender.renderer leaf matches
 // neither parent. No capture was retaken.
+// Re-minted for the second v0.42.0 reconcile after the release branch advanced
+// with Drakelands/hotkey renderer work. No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  '6627e3c579cf7bf11e5b4d77541dc5337966221c6aff8d7f3fdf42b538e8646d';
+  '78b2b6a5e5d711f6ff87cf6cefd73186898da54dae835637acf5ebdc53b244b5';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  '63dadd29dcdca5f8bd373fd476582ea886065e28dbd9799eaedcba03c2e624a9';
+  '7f6715ad25ff5a4a1a7c778d54690eea0675e0c997a1980b576b01760b8af26a';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2251,7 +2253,10 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // Re-minted for the v0.42.0 reconcile after the release branch advanced
       // with Nythraxis renderer work: same order, the composite first, then
       // this seal. No capture was retaken.
-    ).toBe('bff3e471590e1991d39878e3816cc7f627d546b92fa6e59a3f30b18be872f49b');
+      // Re-minted for the second v0.42.0 reconcile after Drakelands/hotkey
+      // renderer work: same order, the composite first, then this seal. No
+      // capture was retaken.
+    ).toBe('dc8545931ee460095757aea62ab2de6f0b69b6cf8d953273830ceb2ca7a1d312');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

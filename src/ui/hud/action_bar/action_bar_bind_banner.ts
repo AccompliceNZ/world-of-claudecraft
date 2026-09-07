@@ -1,26 +1,23 @@
-// The on-bar key-binding mode's banner (issue #1238): the hint, the transient
-// status line, and the Reset / Done buttons. A HUD-ROOT element (appended to
-// #ui by the Hud, never to #actionbar-stack): a bar moved with Interface Unlock
-// is reparented to #ui and painted over a stack-anchored banner, so every
-// "Done" click landed on a slot and armed another capture, with no exit short
-// of a restart. Placement is computed against the live bar's box through the
-// DOM-free actionBarBindBannerPlacement core; this module owns only the DOM.
+// The on-bar action-bar key-binding mode's banner (issue #1238): the hint, the
+// status line and the Reset / Done buttons that sit under the bar while the
+// mode is active. Owns only that DOM; the mode's state machine is the pure
+// action_bar_bind_core.ts and action_bar_bind_controller.ts owns the slot
+// clicks, the key capture and the confirm dialogs. Registered in
+// tests/architecture.test.ts UI_DOM_MODULES.
+
+import { audio } from '../../../game/audio';
 import { t } from '../../i18n';
-import { actionBarBindBannerPlacement } from './action_bar_bind_core';
+import { type ActionBarBindState, actionBarBindStatus } from './action_bar_bind_core';
 
-export interface ActionBarBindBannerHandle {
-  el: HTMLElement;
-  /** Write the status line (the capturing prompt or "bound to X"); '' clears it. */
-  setStatus(text: string): void;
-  remove(): void;
-}
+const ACTION_BAR_BIND_BANNER_ID = 'actionbar-bind-banner';
 
-export function createActionBarBindBanner(deps: {
-  onReset: () => void;
-  onDone: () => void;
-}): ActionBarBindBannerHandle {
+/** Build the banner and append it to `parent`. Returns the banner root. */
+export function mountActionBarBindBanner(
+  parent: HTMLElement | null,
+  handlers: { onReset: () => void; onDone: () => void },
+): HTMLElement {
   const el = document.createElement('div');
-  el.id = 'actionbar-bind-banner';
+  el.id = ACTION_BAR_BIND_BANNER_ID;
   el.setAttribute('role', 'status');
   const hint = document.createElement('div');
   hint.className = 'actionbar-bind-hint';
@@ -33,53 +30,33 @@ export function createActionBarBindBanner(deps: {
   resetBtn.type = 'button';
   resetBtn.className = 'btn';
   resetBtn.textContent = t('hudChrome.actionBar.reset');
-  resetBtn.addEventListener('click', deps.onReset);
+  resetBtn.addEventListener('click', () => {
+    audio.click();
+    handlers.onReset();
+  });
   const doneBtn = document.createElement('button');
   doneBtn.type = 'button';
   doneBtn.className = 'btn';
   doneBtn.textContent = t('hudChrome.actionBar.done');
-  doneBtn.addEventListener('click', deps.onDone);
+  doneBtn.addEventListener('click', () => {
+    audio.click();
+    handlers.onDone();
+  });
   actions.append(resetBtn, doneBtn);
   el.append(hint, status, actions);
-  return {
-    el,
-    setStatus: (text) => {
-      status.textContent = text;
-    },
-    remove: () => el.remove(),
-  };
+  parent?.appendChild(el);
+  return el;
 }
 
-/**
- * Position a connected banner against the live primary bar, in HUD author px.
- * getBoundingClientRect reports VISUAL px (the #ui zoom applied), so the bar's
- * box is divided by `uiScale` before it meets the banner's own offset size and
- * the #ui client box, which are already author px. A bar with no box (hidden
- * under the cross hotbar, or display:none) anchors nothing and the core's
- * bottom-centre fallback applies.
- */
-export function placeActionBarBindBanner(
-  el: HTMLElement,
-  bar: HTMLElement | null,
-  uiRoot: HTMLElement,
-  uiScale: number,
-): void {
-  const scale = uiScale > 0 ? uiScale : 1;
-  const r = bar?.getBoundingClientRect() ?? null;
-  const box =
-    r && r.width > 0 && r.height > 0
-      ? {
-          left: r.left / scale,
-          top: r.top / scale,
-          width: r.width / scale,
-          height: r.height / scale,
-        }
-      : null;
-  const placed = actionBarBindBannerPlacement({
-    bar: box,
-    banner: { width: el.offsetWidth, height: el.offsetHeight },
-    viewport: { width: uiRoot.clientWidth, height: uiRoot.clientHeight },
-  });
-  el.style.left = `${placed.left}px`;
-  el.style.top = `${placed.top}px`;
+/** Paint the status line for the mode's current state. */
+export function setActionBarBindBannerStatus(banner: HTMLElement, state: ActionBarBindState): void {
+  const el = banner.querySelector<HTMLElement>('.actionbar-bind-status');
+  if (!el) return;
+  const status = actionBarBindStatus(state);
+  el.textContent =
+    status === 'capturing'
+      ? t('hudChrome.actionBar.bannerCapturing')
+      : status === 'bound'
+        ? t('hudChrome.actionBar.boundToKey', { key: state.lastBoundKeyLabel ?? '' })
+        : '';
 }

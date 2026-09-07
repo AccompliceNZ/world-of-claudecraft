@@ -1480,18 +1480,15 @@ export const DUNGEON_DEFS: Record<string, DungeonDef> = {
     // Overflow band: indexes 0..7 are taken (temple 3, orkadia 6, wildheart 7),
     // so the keep claims 8 (instanceOrigin: DUNGEON_OVERFLOW_X_BASE + 600).
     index: 8,
-    // On the keep model's door axis (the keep sits at 421,2001.5 at scale
-    // 9.5, face at z 2012.2, facing +z), standing 1.2yd PROUD of the facade
-    // as a porch rather than flush against it. Flush put the arch's stone
-    // jambs 0.3yd off the keep's collision circle, and the two slivers of
-    // floor pinched between them were narrower than a body could turn around
-    // in. The apron cannot be fenced off instead: the restore path below
-    // drops a player inside the keep's own circle, which depenetrates them
-    // south across exactly this ground. Leaving drops the player FORWARD onto
-    // the terrace (leaveOffset +z) instead of the default z - 4, which would
-    // land inside the keep's decor collider (castle_layout)
-    doorPos: { x: 421, z: 2013.4 },
-    leaveOffset: { x: 0, z: 3.5 },
+    // The rebuilt keep's real door: the owner's placed castle_door facade
+    // on the temple court (forgefather_fortress.ts, the keep rebuild rows;
+    // the facade base sits at the court's stamped ground and faces WEST
+    // over the terrace). doorPos stands 1.2yd proud of the facade as a
+    // porch (the old keep's flush-jamb lesson), the visible body is the
+    // facade itself (door_portal.ts doorArchAuthoredElsewhere), and
+    // leaving drops the player forward onto the terrace deck (-x).
+    doorPos: { x: 479.4, z: 2168.1 },
+    leaveOffset: { x: -3.5, z: 0 },
     staticDoor: true,
     // Arrival just inside the entrance hall's south end, 4yd north of the exit
     // portal so zoning in never lands inside the exit's 2yd door trigger.

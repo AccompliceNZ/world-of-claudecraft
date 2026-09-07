@@ -186,7 +186,13 @@ export type {
 // and fire it cannot see (the hazard entries 21 and 25 fenced). A bump moves
 // this constant, scripts/lib/world_auth.mjs and its .d.mts,
 // tests/bank_wire_epoch.test.ts, and tests/world_auth_scripts.test.ts together.
-export const ONLINE_WORLD_LAYOUT_VERSION = 26 as const;
+// 27 = the Drakelands site swap (docs/design/drakelands-improvements): the
+// Last Keep's castle removed to flat build land on the old Trollmoot rise,
+// the trolls mooting on the old keep grounds by the restored ruin ring,
+// Wyrmwatch's dressing stripped for the placer rebuild, roads re-aimed.
+// Epoch 26 clients would render a castle, a town, and camps the server no
+// longer stands anywhere near, and collide with walls that are not there.
+export const ONLINE_WORLD_LAYOUT_VERSION = 27 as const;
 export const ONLINE_WORLD_AUTH_TYPE = `auth-world-${ONLINE_WORLD_LAYOUT_VERSION}` as const;
 // The one wire literal both sides emit for a layout-epoch mismatch. The server
 // rejects with it, the client synthesizes it for pre-epoch servers, and the UI
