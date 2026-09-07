@@ -17,11 +17,19 @@ import { expectScansOnlyThroughSharedWalkers } from './helpers/scan_guard_self_a
 // ceiling; the integrator lowers a ceiling after a section is migrated and adds the
 // section to the zero set so it cannot regress.
 //
-// What counts as a literal: a hex color (#rgb, #rgba, #rrggbb, #rrggbbaa) or an
-// rgb()/rgba() call with a numeric first channel, inside a DECLARATION. Selectors
-// are dropped first (an id like #deed-tracker would otherwise read as hex), and so
-// are comments, quoted strings and url() bodies. color-mix(in srgb, var(--x) ...)
-// does not count: it composes a token. tokens.css is exempt because it IS the home.
+// What counts as a literal: a hex color (#rgb, #rgba, #rrggbb, #rrggbbaa), an
+// rgb()/rgba() call with a numeric first channel, any other CSS color function
+// (hsl/hsla/hwb/lab/lch/oklab/oklch), or a CSS named color, inside a DECLARATION.
+// Selectors are dropped first (an id like #deed-tracker would otherwise read as
+// hex), and so are comments, quoted strings and url() bodies.
+// color-mix(in srgb, var(--x) ...) does not count: it composes a token.
+// tokens.css is exempt because it IS the home.
+//
+// The function and named forms are read from declaration VALUES only, with each
+// var() token NAME stripped out first: a property name is not a value
+// (`white-space` does not spell the color white) and neither is a token name
+// (`var(--gray-mid)` reads a token). The word boundary excludes `-` on both sides,
+// so an identifier like `pulse-gold` is not a color either.
 
 const repoRoot = fileURLToPath(new URL('..', import.meta.url));
 const stylesDir = join(repoRoot, 'src', 'styles');
@@ -29,6 +37,33 @@ const stylesDir = join(repoRoot, 'src', 'styles');
 const MARKER_RE = /\/\*\s*-{10,}\s*([^*]+?)\s*-{10,}\s*\*\//g;
 const HEX_RE = /#[0-9a-fA-F]{3,8}\b/g;
 const RGB_RE = /\brgba?\(\s*\d/g;
+const COLOR_FN_RE = /(?<![\w-])(?:hsla?|hwb|lab|lch|oklab|oklch)\(/gi;
+
+// The CSS named colors, minus the keywords that name no value of their own:
+// `transparent` and `currentcolor` compose, and `inherit`/`initial`/`unset`/`none`
+// defer, so all six stay legal in a tokenized sheet.
+const NAMED_COLORS = `
+  aliceblue antiquewhite aqua aquamarine azure beige bisque black blanchedalmond blue
+  blueviolet brown burlywood cadetblue chartreuse chocolate coral cornflowerblue cornsilk
+  crimson cyan darkblue darkcyan darkgoldenrod darkgray darkgreen darkgrey darkkhaki
+  darkmagenta darkolivegreen darkorange darkorchid darkred darksalmon darkseagreen
+  darkslateblue darkslategray darkslategrey darkturquoise darkviolet deeppink deepskyblue
+  dimgray dimgrey dodgerblue firebrick floralwhite forestgreen fuchsia gainsboro ghostwhite
+  gold goldenrod gray green greenyellow grey honeydew hotpink indianred indigo ivory khaki
+  lavender lavenderblush lawngreen lemonchiffon lightblue lightcoral lightcyan
+  lightgoldenrodyellow lightgray lightgreen lightgrey lightpink lightsalmon lightseagreen
+  lightskyblue lightslategray lightslategrey lightsteelblue lightyellow lime limegreen linen
+  magenta maroon mediumaquamarine mediumblue mediumorchid mediumpurple mediumseagreen
+  mediumslateblue mediumspringgreen mediumturquoise mediumvioletred midnightblue mintcream
+  mistyrose moccasin navajowhite navy oldlace olive olivedrab orange orangered orchid
+  palegoldenrod palegreen paleturquoise palevioletred papayawhip peachpuff peru pink plum
+  powderblue purple rebeccapurple red rosybrown royalblue saddlebrown salmon sandybrown
+  seagreen seashell sienna silver skyblue slateblue slategray slategrey snow springgreen
+  steelblue tan teal thistle tomato turquoise violet wheat white whitesmoke yellow yellowgreen
+`
+  .trim()
+  .split(/\s+/);
+const NAMED_COLOR_RE = new RegExp(`(?<![\\w-])(?:${NAMED_COLORS.join('|')})(?![\\w-])`, 'gi');
 
 function declarationsOnly(css: string): string {
   return css
@@ -38,20 +73,55 @@ function declarationsOnly(css: string): string {
     .replace(/[^{};]+\{/g, '{');
 }
 
+/** The declaration VALUES inside `code` (already declarationsOnly), var() names removed. */
+function declarationValues(code: string): string {
+  const out: string[] = [];
+  const re = /:([^;{}]*)/g;
+  let match = re.exec(code);
+  while (match) {
+    out.push(match[1]);
+    match = re.exec(code);
+  }
+  return out.join(' ; ').replace(/var\(\s*--[\w-]+/g, 'var(');
+}
+
 /** Raw color literals in a stylesheet's declarations. */
 function rawColorLiterals(css: string): number {
   const code = declarationsOnly(css);
-  return (code.match(HEX_RE)?.length ?? 0) + (code.match(RGB_RE)?.length ?? 0);
+  const values = declarationValues(code);
+  return (
+    (code.match(HEX_RE)?.length ?? 0) +
+    (code.match(RGB_RE)?.length ?? 0) +
+    (values.match(COLOR_FN_RE)?.length ?? 0) +
+    (values.match(NAMED_COLOR_RE)?.length ?? 0)
+  );
+}
+
+/** Declarations in a body, counted the way the ratchet reads a sheet. */
+function declarationCount(css: string): number {
+  return (declarationsOnly(css).match(/(?:^|[{;])\s*[-\w]+\s*:/g) ?? []).length;
+}
+
+/** Token reads in a body: the thing a tokenized section is supposed to be made of. */
+function tokenReads(css: string): number {
+  return (declarationsOnly(css).match(/var\(\s*--/g) ?? []).length;
+}
+
+/** Per ten-dash section: banner name to its body (a name repeated across sheets concatenates). */
+function sectionBodies(css: string): Map<string, string> {
+  const parts = css.split(MARKER_RE);
+  const out = new Map<string, string>();
+  for (let i = 1; i < parts.length; i += 2) {
+    const name = parts[i].trim();
+    out.set(name, `${out.get(name) ?? ''}\n${parts[i + 1] ?? ''}`);
+  }
+  return out;
 }
 
 /** Per ten-dash section: banner name to literal count (the text before the first banner is unnamed). */
 function sectionLiterals(css: string): Map<string, number> {
-  const parts = css.split(MARKER_RE);
   const out = new Map<string, number>();
-  for (let i = 1; i < parts.length; i += 2) {
-    const name = parts[i].trim();
-    out.set(name, (out.get(name) ?? 0) + rawColorLiterals(parts[i + 1] ?? ''));
-  }
+  for (const [name, body] of sectionBodies(css)) out.set(name, rawColorLiterals(body));
   return out;
 }
 
@@ -72,7 +142,9 @@ const TOKEN_HOME = 'tokens.css';
 // sheet with no row fails until it gets one.
 const CEILINGS: Record<string, number> = {
   'base.css': 23,
-  'components.css': 453,
+  // W19: 454, not 453, since the counter learned to read named colors and found a
+  // pre-existing `white` inside a color-mix in the item-quality section.
+  'components.css': 454,
   'hud.css': 423,
   'hud.mobile.css': 29,
   'index.css': 0,
@@ -95,6 +167,13 @@ const ZERO_LITERAL_SECTIONS = [
   'window shell',
   'interaction prompt',
 ];
+
+// A section counts zero when it is tokenized AND when it is empty, so the zero pin
+// alone would bless a deleted or relocated section. These floors sit well under the
+// live bodies (the smallest today is `window shell`: 42 declarations, 13 token reads),
+// so ordinary editing never trips them but an emptied section does.
+const MIN_ZERO_SECTION_DECLARATIONS = 20;
+const MIN_ZERO_SECTION_TOKEN_READS = 4;
 
 const COUNTS = literalCountsUnder(stylesDir);
 
@@ -141,16 +220,27 @@ describe('raw color literals stay in tokens.css (the ratchet)', () => {
   });
 
   it('every tokenized section stays at zero and still exists under its banner name', () => {
-    const seen = new Map<string, number>();
+    const seen = new Map<string, string>();
     for (const { full } of cssTreeUnder(stylesDir).files) {
-      for (const [name, n] of sectionLiterals(readFileSync(full, 'utf8'))) {
-        seen.set(name, (seen.get(name) ?? 0) + n);
+      for (const [name, body] of sectionBodies(readFileSync(full, 'utf8'))) {
+        seen.set(name, `${seen.get(name) ?? ''}\n${body}`);
       }
     }
     expect(ZERO_LITERAL_SECTIONS.length).toBeGreaterThan(0);
     for (const name of ZERO_LITERAL_SECTIONS) {
-      expect(seen.has(name), `section banner "${name}" no longer exists`).toBe(true);
-      expect(seen.get(name), `section "${name}" regained raw color literals`).toBe(0);
+      const body = seen.get(name);
+      expect(body, `section banner "${name}" no longer exists`).toBeDefined();
+      expect(rawColorLiterals(body ?? ''), `section "${name}" regained raw color literals`).toBe(0);
+      // Zero is only a virtue with a body behind it: an emptied or relocated section
+      // would otherwise pass this pin forever.
+      expect(
+        declarationCount(body ?? ''),
+        `section "${name}" lost its body (a deleted or relocated section counts zero too)`,
+      ).toBeGreaterThanOrEqual(MIN_ZERO_SECTION_DECLARATIONS);
+      expect(
+        tokenReads(body ?? ''),
+        `section "${name}" stopped reading tokens`,
+      ).toBeGreaterThanOrEqual(MIN_ZERO_SECTION_TOKEN_READS);
     }
   });
 
@@ -160,7 +250,7 @@ describe('raw color literals stay in tokens.css (the ratchet)', () => {
 });
 
 describe('raw color ratchet: the counter has teeth', () => {
-  it('counts hex and numeric rgb() in declarations, not selectors, comments, strings or tokens', () => {
+  it('counts every color form in declarations, not selectors, comments, strings or tokens', () => {
     const css = [
       '#deed-tracker, #bags { color: #fff; }',
       '/* #123456 in a comment */',
@@ -168,8 +258,16 @@ describe('raw color ratchet: the counter has teeth', () => {
       '.b { border: 1px solid rgba(0, 0, 0, 0.5); outline: 1px solid rgb(1 2 3 / 50%); }',
       '.c { color: color-mix(in srgb, var(--gold) 50%, transparent); background: var(--panel-bg); }',
       '.d { box-shadow: 0 0 0 1px #000c, inset 0 1px 0 #ffffff14; }',
+      '.e { color: hsl(40 90% 50%); background: hsla(0, 0%, 0%, 0.5); }',
+      '.f { color: hwb(40 10% 20%); outline-color: lab(50% 40 59.5); }',
+      '.g { color: lch(50% 70 40); background: oklab(0.5 0.1 0.1); border-color: oklch(0.7 0.1 90); }',
+      '.h { color: red; background: rebeccapurple; border-color: var(--gray-mid); }',
+      '.i { white-space: nowrap; animation-name: pulse-gold; fill: currentcolor; border: none; }',
     ].join('\n');
-    expect(rawColorLiterals(css)).toBe(5);
+    // 5 hex/rgb, 7 color functions, 2 named colors. The last two rules are the
+    // negative controls: a token name, a property name and a hyphenated identifier
+    // all read as colors under a looser matcher, and none of them is one.
+    expect(rawColorLiterals(css)).toBe(14);
   });
 
   it('splits sections on the ten-dash banner only', () => {
