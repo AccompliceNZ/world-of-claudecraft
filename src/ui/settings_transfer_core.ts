@@ -24,7 +24,8 @@ const FRAME_KEYS = [
   'woc_target_frame_pos',
   'woc_party_frame_pos',
   'woc_chat_geometry',
-  'woc_meters_frame',
+  // (The pre-frames 'woc_meters_frame' key is dead: the tabbed window's box
+  // rides the damageMeter registry row's woc_hud_frame_meters prefix now.)
   'woc_meters_frame_heal',
   'woc_meters_frame_threat',
   'woc_meters_detached',

@@ -267,7 +267,9 @@ describe('ProcOverlayPainter class mapping', () => {
     expect(attrs.get('aria-valuenow')).toBe('5');
     expect(attrs.get('aria-valuetext')).toBe('5 of 5 Ruin');
     expect(attrs.get('aria-label')).toBe('Ruin');
-    expect(attrs.get('tabindex')).toBe('0');
+    // -1 like every other state: the mover chrome owns the keyboard path, so
+    // the always-on bank must not be a focus stop of its own.
+    expect(attrs.get('tabindex')).toBe('-1');
   });
 
   it('clears every Destruction mark and restores the meter label on a theme switch', () => {
@@ -380,7 +382,10 @@ describe('Necromancy Soul Fragment visual progression', () => {
     expect(rule).toContain('pointer-events: none');
     // No per-artwork pointer-events/cursor rules: the retired grab-drag's
     // rules made the always-on bank eat world clicks; movement belongs to
-    // the Unlock Interface registry frame now.
+    // the Unlock Interface registry frame now. The POSITIVE control below
+    // proves the regex shape can match at all (the edit-mode rule really
+    // hands pointer events back), so the negative cannot rot silently.
+    expect(css).toMatch(/#proc-overlay\.tf-unlocked[^{}]*\{[^}]*pointer-events: auto/);
     expect(css).not.toMatch(/#proc-overlay\.necromancy[^{}]*\{[^}]*pointer-events: auto/);
   });
 
@@ -445,6 +450,22 @@ describe('Destruction Ruin visual progression', () => {
     );
   });
 
+  it('the unlock hook drives the edit placeholder and the login preview yields to it', () => {
+    // Caller-side pins on Hud's wiring (the file's source-shape idiom):
+    // deleting any of these compiles and every DOM test stays green, but the
+    // edit mode silently loses its sample art or its aria lift.
+    const hud = readFileSync(new URL('../src/ui/hud.ts', import.meta.url), 'utf8');
+    expect(hud).toContain('this.unlockPreview.setActive(unlocked);');
+    expect(hud).toContain("const previewBird = unlocked && this.sim.cfg.playerClass === 'mage';");
+    expect(hud).toContain("this.procOverlayEl.classList.toggle('preview', previewBird);");
+    expect(hud).toContain('this.procOverlayPainter.setEditing(unlocked);');
+    // The one-shot login preview's 8s timer must yield to an active edit
+    // session instead of stripping the sample art out from under it.
+    expect(hud).toContain(
+      "if (this.interfaceUnlock.isUnlocked && this.sim.cfg.playerClass === 'mage') return;",
+    );
+  });
+
   it('keeps the empty bank visible and pointer-inert, and gives the full bank a flare', () => {
     const css = readFileSync(new URL('../src/styles/hud.css', import.meta.url), 'utf8');
     const rootRule = css.match(/#proc-overlay\.destruction\s*\{([^}]*)\}/)?.[1] ?? '';
@@ -456,7 +477,10 @@ describe('Destruction Ruin visual progression', () => {
     expect(rootRule).toContain('pointer-events: none');
     // The retired grab-drag's per-artwork pointer-events/cursor rules must
     // not come back: the always-on ritual would eat world clicks with no
-    // drag handler behind them (movement is the registry frame's now).
+    // drag handler behind them (movement is the registry frame's now). The
+    // positive control on the same shape (the edit-mode move cursor exists)
+    // keeps the negative honest if the regex ever stops matching anything.
+    expect(css).toMatch(/#proc-overlay[^{}]*\{[^}]*cursor: var\(--cursor-move/);
     expect(css).not.toMatch(/#proc-overlay[^{}]*\{[^}]*cursor: grab/);
     expect(fullRule).toContain('opacity: 1');
     expect(flareRule).toContain('animation: ruin-bank-full-flare');

@@ -5574,10 +5574,17 @@
      seat reproduces the old flex-end spot; the detached state below clears it
      so the registry mover's inline left/top own the box. The two pop-out
      meters keep their flex slots: they are transient windows a player has
-     usually already parked via their own title drag. */
+     usually already parked via their own title drag.
+     The left is CLAMPED to the #ui edge: the seat resolves against the
+     612px centered row, so on any #ui narrower than 1108 author px (a
+     1280px window at UI Scale 1.2) the flex-end spot would hang past the
+     overflow:hidden root and clip. Half the #ui author width plus 66px is
+     the largest left that keeps the 240px panel's right edge inside
+     ((uiW - 612) / 2 + left + 240 <= uiW); the #ui width derives from
+     --app-vw the same way the tracker rule below does. */
   #meters-window {
     position: absolute;
-    left: calc(100% + 8px);
+    left: min(calc(100% + 8px), calc(var(--app-vw, 100vw) / var(--ui-scale, 1) / 2 + 66px));
     bottom: 6px;
     margin-bottom: 0;
   }

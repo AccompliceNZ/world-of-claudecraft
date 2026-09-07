@@ -134,7 +134,10 @@ export class ProcOverlayPainter {
   // aria-valuetext (that masked aria-valuenow for screen-reader users).
   paintNecromancyCharges(n: number, label: string, status: string): void {
     this.writers.setAttr(this.root, 'aria-hidden', 'false');
-    this.writers.setAttr(this.root, 'tabindex', '0');
+    // -1 like every other state: the mover chrome owns the keyboard path now,
+    // so an always-on bank as a focus stop would sit one tab from the corner
+    // button that actually does something (the devotion frame's rule).
+    this.writers.setAttr(this.root, 'tabindex', '-1');
     this.writers.setAttr(this.root, 'aria-valuenow', String(n));
     this.writers.setAttr(this.root, 'aria-valuetext', status);
     this.writers.setAttr(this.root, 'aria-label', label);
@@ -166,7 +169,8 @@ export class ProcOverlayPainter {
   // bank, then ignite one at a time as the caster gathers Ruin.
   paintDestructionMarks(n: number, label: string, status: string): void {
     this.writers.setAttr(this.root, 'aria-hidden', 'false');
-    this.writers.setAttr(this.root, 'tabindex', '0');
+    // -1: see paintNecromancyCharges above.
+    this.writers.setAttr(this.root, 'tabindex', '-1');
     this.writers.setAttr(this.root, 'aria-valuenow', String(n));
     this.writers.setAttr(this.root, 'aria-valuetext', status);
     this.writers.setAttr(this.root, 'aria-label', label);

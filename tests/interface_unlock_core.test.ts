@@ -172,10 +172,16 @@ describe('HUD_FRAME_SPECS', () => {
   });
 
   it('declares a resolved stock slot for exactly the rows that share a detaching sibling', () => {
-    // The two player aura rows are the only detaching frames whose stock parent
-    // (#aura-stack) holds ANOTHER detaching frame, so a slot remembered at detach
-    // time can point at a sibling that has since left; they declare the slot
-    // instead. Every other detaching frame keeps the captured-slot path.
+    // A slot remembered at detach time can point at a sibling that has since
+    // left its parent. The two player aura rows close that hazard by declaring
+    // their slot ('first'/'last' in #aura-stack). The #actionbar-stack rows
+    // share the hazard (the stack is all detaching frames plus the
+    // runtime-mounted doom bar, whose seat is "before #player-frame", a slot
+    // 'first'/'last' cannot spell), and they ACCEPT the captured-slot path
+    // instead: the detacher's append fallback keeps release from throwing, at
+    // the cost of a possible in-stack drift until reload after a mixed reset,
+    // the same drift the base already had. Extending stockHome with a
+    // before-sibling slot is the upgrade path if that drift ever matters.
     const declared = HUD_FRAME_SPECS.filter((s) => s.stockHome).map((s) => [s.id, s.stockHome]);
     expect(declared).toEqual([
       ['buffBar', { parentId: 'aura-stack', slot: 'first' }],

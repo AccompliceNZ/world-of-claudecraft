@@ -181,7 +181,14 @@ const RUNTIME_MOUNTED_FRAME_IDS = ['proc-overlay', 'warlock-doom-frame'];
 
 interface Harvest {
   ids: string[];
+  /** Ids of the DIRECT #ui children only (the container interiors excluded),
+   *  so the anti-vacuity floor can hold each harvest half separately. */
+  directIds: string[];
   windows: Set<string>;
+  /** class= strings of any id-less child, reported by a named test below
+   *  (an expect() here would fire at collection time and take the whole
+   *  suite down as one anonymous collection error). */
+  anonymous: string[];
 }
 
 /** Every standing-chrome candidate in one entry: the #ui direct children plus
@@ -191,16 +198,16 @@ function harvestEntry(html: string): Harvest {
   const uiOpen = template.indexOf('<div id="ui"');
   if (uiOpen < 0) throw new Error('#ui not found in the game-ui template');
   const ids: string[] = [];
+  const directIds: string[] = [];
   const windows = new Set<string>();
-  const visit = (children: HarvestedChild[]) => {
+  const anonymous: string[] = [];
+  const visit = (children: HarvestedChild[], direct: boolean) => {
     for (const child of children) {
       // A standing surface with no id cannot be classified, persisted, or
       // registered: give it one (the breath bar is the historical example).
-      expect(
-        child.id,
-        `a #ui-subtree element has no id (classes: ${child.classes.join(' ')})`,
-      ).not.toBe('');
+      if (child.id === '') anonymous.push(child.classes.join(' ') || '(classless)');
       ids.push(child.id);
+      if (direct) directIds.push(child.id);
       if (child.classes.includes('window') && child.classes.includes('panel')) {
         windows.add(child.id);
       }
@@ -209,20 +216,30 @@ function harvestEntry(html: string): Harvest {
         // Recurse over the container's own direct children. The container's
         // inner slice starts AFTER its opening tag, so wrap it in a
         // synthetic root for the walker.
-        visit(directChildren(`<div>${opened}</div>`, 0));
+        visit(directChildren(`<div>${opened}</div>`, 0), false);
       }
     }
   };
-  visit(directChildren(template, uiOpen));
-  return { ids, windows };
+  visit(directChildren(template, uiOpen), true);
+  return { ids, directIds, windows, anonymous };
 }
 
 describe('hud_frame_coverage (standing HUD surfaces are movable frames)', () => {
-  const entries = HTML_ENTRIES.map((entry) => ({ entry, harvest: harvestEntry(read(entry)) }));
+  // Lazily built and memoized so a harvest failure surfaces inside a NAMED
+  // test rather than as a describe-scope collection error.
+  let built: Array<{ entry: string; harvest: Harvest }> | null = null;
+  const entries = () =>
+    (built ??= HTML_ENTRIES.map((entry) => ({ entry, harvest: harvestEntry(read(entry)) })));
   const frameIds = new Set(HUD_FRAME_SPECS.map((s) => s.elementId));
 
+  it('every element in the harvest carries an id', () => {
+    for (const { entry, harvest } of entries()) {
+      expect(harvest.anonymous, `${entry}: #ui-subtree element(s) with no id`).toEqual([]);
+    }
+  });
+
   it('classifies every standing surface in both entries', () => {
-    for (const { entry, harvest } of entries) {
+    for (const { entry, harvest } of entries()) {
       const unclassified = harvest.ids.filter(
         (id) =>
           !frameIds.has(id) &&
@@ -241,22 +258,24 @@ describe('hud_frame_coverage (standing HUD surfaces are movable frames)', () => 
   });
 
   it('the two entries carry the same standing-surface set', () => {
-    const [index, play] = entries.map(({ harvest }) => new Set(harvest.ids));
+    const [index, play] = entries().map(({ harvest }) => new Set(harvest.ids));
     expect([...index].filter((id) => !play.has(id))).toEqual([]);
     expect([...play].filter((id) => !index.has(id))).toEqual([]);
   });
 
-  it('harvests a full-size surface set (anti-vacuity floor)', () => {
-    // ~90 surfaces per entry today (72 direct #ui children plus the container
-    // interiors); a collapsed harvest (template rename, walker bug) must fail
-    // rather than green-light an empty classification.
-    for (const { entry, harvest } of entries) {
-      expect(harvest.ids.length, entry).toBeGreaterThanOrEqual(60);
+  it('harvests a full-size surface set in BOTH halves (anti-vacuity floors)', () => {
+    // Held per half on purpose: a single total floor under the direct-child
+    // count alone would stay green with the container recursion (where every
+    // registered frame row of the 0.42 round lives) failing outright.
+    for (const { entry, harvest } of entries()) {
+      expect(harvest.directIds.length, `${entry}: direct #ui children`).toBeGreaterThanOrEqual(60);
+      const containerIds = harvest.ids.length - harvest.directIds.length;
+      expect(containerIds, `${entry}: container interiors`).toBeGreaterThanOrEqual(12);
     }
   });
 
   it('keeps the exemption and container tables honest', () => {
-    const harvestedIds = new Set(entries.flatMap(({ harvest }) => harvest.ids));
+    const harvestedIds = new Set(entries().flatMap(({ harvest }) => harvest.ids));
     for (const [id, reason] of [
       ...Object.entries(FRAME_EXEMPT),
       ...Object.entries(SELF_GOVERNED),
@@ -283,8 +302,13 @@ describe('hud_frame_coverage (standing HUD surfaces are movable frames)', () => 
 
   it('pins the exact file set allowed to reach the #ui root', () => {
     // Runtime mounts are the harvest's blind spot, so the gate moves to the
-    // module level: touching the #ui root at all is a classified act.
-    const uiRootRe = /getElementById\(\s*'ui'\s*\)|\$\(\s*'#ui'\s*\)/;
+    // module level: touching the #ui root at all is a classified act. The
+    // alternation covers every spelling this tree could reach for (both
+    // quote styles, getElementById, querySelector/querySelectorAll, and the
+    // $ helper); a genuinely new spelling still needs adding here, so the
+    // pin is exactly as wide as this regex, no wider.
+    const uiRootRe =
+      /getElementById\(\s*["']ui["']\s*\)|\$\(\s*["']#ui["']\s*\)|querySelector(?:All)?\(\s*["']#ui["']\s*\)/;
     const touchers = tsFilesUnder(fileURLToPath(new URL('../src', import.meta.url)))
       .filter((source) => uiRootRe.test(readFileSync(source.full, 'utf8')))
       .map((source) => `src/${source.file}`)
@@ -292,6 +316,18 @@ describe('hud_frame_coverage (standing HUD surfaces are movable frames)', () => 
     expect(touchers).toEqual(Object.keys(UI_ROOT_TOUCHERS).sort());
     for (const [file, reason] of Object.entries(UI_ROOT_TOUCHERS)) {
       expect(reason.length, `${file} needs a real reason`).toBeGreaterThan(10);
+    }
+  });
+
+  it('every runtime-mounted frame id is really minted somewhere in src', () => {
+    // RUNTIME_MOUNTED_FRAME_IDS is otherwise an unchecked escape hatch from
+    // the harvest parity above: tie each id to the module that assigns it
+    // (el.id = '<id>'), so a renamed or deleted mount fails here by name.
+    const sources = tsFilesUnder(fileURLToPath(new URL('../src', import.meta.url)));
+    for (const id of RUNTIME_MOUNTED_FRAME_IDS) {
+      const assignRe = new RegExp(`id\\s*=\\s*'${id}'`);
+      const minted = sources.some((source) => assignRe.test(readFileSync(source.full, 'utf8')));
+      expect(minted, `runtime frame #${id} has no id assignment in src`).toBe(true);
     }
   });
 

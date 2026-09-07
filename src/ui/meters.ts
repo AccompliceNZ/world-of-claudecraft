@@ -407,8 +407,9 @@ export interface PanelSpec {
   root: HTMLElement;
   /** null = the tabbed damage window; a tab = a detached single-meter window. */
   lockedTab: DetachableTab | null;
-  /** localStorage key this panel's box persists under. */
-  frameStorageKey: string;
+  /** localStorage key this panel's box persists under. Detached windows only:
+   *  the tabbed window's box lives on its damageMeter registry row instead. */
+  frameStorageKey?: string;
 }
 
 /**
@@ -494,7 +495,14 @@ export class MetersPanel {
     // (HUD_FRAME_SPECS 'damageMeter'), so the Unlock Interface registry owns
     // its drag, resize, hide and persistence instead of a private MeterFrame.
     const title = this.root.querySelector('.panel-title') as HTMLElement | null;
-    if (title && spec.lockedTab && deps?.storage && deps.uiScale && deps.isMobileLayout) {
+    if (
+      title &&
+      spec.lockedTab &&
+      spec.frameStorageKey &&
+      deps?.storage &&
+      deps.uiScale &&
+      deps.isMobileLayout
+    ) {
       this.frame = new MeterFrame(
         {
           el: this.root,
@@ -858,8 +866,9 @@ export class MetersPanel {
 /** The meters that can leave the main window; damage is always its home. */
 type DetachableTab = Exclude<Tab, 'dmg'>;
 
-const FRAME_KEYS: Record<'main' | DetachableTab, string> = {
-  main: 'woc_meters_frame',
+// The tabbed window has no key: its box is the damageMeter registry row's
+// (woc_hud_frame_meters), and the pre-frames 'woc_meters_frame' key is dead.
+const FRAME_KEYS: Record<DetachableTab, string> = {
   heal: 'woc_meters_frame_heal',
   threat: 'woc_meters_frame_threat',
 };
@@ -900,7 +909,6 @@ export class Meters {
       {
         root: document.querySelector('#meters-window') as HTMLElement,
         lockedTab: null,
-        frameStorageKey: FRAME_KEYS.main,
       },
       host,
       deps,

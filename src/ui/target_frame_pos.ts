@@ -481,10 +481,16 @@ export function anchorAdjustedPos(
 // Matching axes collapse to the single uniform `scale` field (the payload a
 // uniformly zoomed frame always had); only a genuinely stretched frame writes
 // scaleX/scaleY, and only a box-resized one its w/h.
-export function serializeTargetFramePos(pos: TargetFramePos): string {
+export function serializeTargetFramePos(
+  pos: TargetFramePos,
+  maxScale: number = FRAME_SCALE_MAX,
+): string {
   const out: Record<string, number> = { left: pos.left, top: pos.top };
   if (pos.scaleX !== undefined || pos.scaleY !== undefined) {
-    const { sx, sy } = frameScales(pos);
+    // The caller's own ceiling, not the shared band: a frame with a lifted
+    // maxScale (the wishlist chip) must persist its real zoom, or the box
+    // silently snaps back to 2x on the next load.
+    const { sx, sy } = frameScales(pos, maxScale);
     if (sx === sy) out.scale = sx;
     else {
       out.scaleX = sx;

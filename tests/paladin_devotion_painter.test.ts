@@ -205,13 +205,18 @@ describe('PaladinDevotionPainter', () => {
     expect(hud).not.toContain('attachOverlayDrag(this.paladinDevotionFrameEl');
     const devotionSpec = HUD_FRAME_SPECS.find((s) => s.id === 'paladinDevotion');
     expect(devotionSpec?.elementId).toBe('paladin-devotion-frame');
-    expect(css).toMatch(/\.paladin-devotion-frame\s*\{[\s\S]*pointer-events:\s*none/);
+    // Extract the frame's own rule body (the same-file necromancy idiom), so
+    // the negative below is scoped to THIS rule rather than a 400-char window
+    // that could cross into a neighbor; the positive pointer-events pin
+    // doubles as proof the extraction found the rule at all.
+    const devotionRule = css.match(/\.paladin-devotion-frame\s*\{([^}]*)\}/)?.[1] ?? '';
+    expect(devotionRule).toContain('pointer-events: none');
+    expect(devotionRule).not.toContain('cursor: grab');
     // The detached rule is a selector GROUP (the proc overlay shares its
     // translate reset), so allow list members between selector and brace.
     expect(css).toMatch(
       /\.paladin-devotion-frame\.hud-frame-detached[^{}]*\{[^}]*translate:\s*none/,
     );
-    expect(css).not.toMatch(/\.paladin-devotion-frame\s*\{[\s\S]{0,400}cursor:\s*grab/);
   });
 
   it('renders 7 charge pips so Extended Dawn (5 base + 2) can fully light up', () => {

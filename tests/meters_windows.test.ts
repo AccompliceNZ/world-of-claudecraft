@@ -8,6 +8,8 @@
 // covered by tests/meters_frame_core.test.ts and the bar model by
 // tests/meters_rows_view.test.ts; this file pins the wiring between them.
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it } from 'vitest';
 import type { SimEvent } from '../src/sim/types';
 import { Meters } from '../src/ui/meters';
@@ -323,6 +325,43 @@ describe('detachable meter windows', () => {
     // Reopening remembers the framed state too.
     meters.mainFramed(true);
     meters.toggle();
+    meters.toggle();
+    expect(panel.style.display).toBe('flex');
+  });
+
+  it('the docked seat is an absolute, viewport-clamped slot beside the bars', () => {
+    // Source pins on the dock seat CSS: the seat is what fixed the reported
+    // "opening the meters moves the UI around" (a flex slot re-centered the
+    // whole #bottom-bar), so all three legs must hold together: the row is
+    // the containing block, the seat is absolute, and its left is CLAMPED to
+    // the #ui author width so a narrow window (1280px at UI Scale 1.2) does
+    // not push the 240px panel past the overflow:hidden root.
+    // join() rather than an import.meta URL: happy-dom swaps in its own URL
+    // class, which node:fs refuses as a path.
+    const css = readFileSync(join(import.meta.dirname, '..', 'src', 'styles', 'hud.css'), 'utf8');
+    const rowRule = css.match(/#actionbar-row\s*\{([^}]*)\}/)?.[1] ?? '';
+    expect(rowRule).toContain('position: relative');
+    const seatRule = css.match(/\n {2}#meters-window\s*\{([^}]*)\}/)?.[1] ?? '';
+    expect(seatRule).toContain('position: absolute');
+    expect(seatRule).toContain(
+      'left: min(calc(100% + 8px), calc(var(--app-vw, 100vw) / var(--ui-scale, 1) / 2 + 66px))',
+    );
+    expect(seatRule).toContain('bottom: 6px');
+    // And the detached state clears the seat so the mover's inline box wins.
+    const detachedRule = css.match(/#meters-window\.hud-frame-detached\s*\{([^}]*)\}/)?.[1] ?? '';
+    expect(detachedRule).toContain('left: auto');
+    expect(detachedRule).toContain('bottom: auto');
+  });
+
+  it('a framed report on a CLOSED panel latches state without opening it', () => {
+    // The registry mover reports at boot (a saved box applies before the
+    // player ever opens the meters); without the isOpen guard that report
+    // would force display: flex and pop the window open uninvited. The
+    // latched state still shapes the first real open.
+    const { meters, el, shown } = setup();
+    const panel = el('meters-window');
+    meters.mainFramed(true);
+    expect(shown('meters-window')).toBe(false);
     meters.toggle();
     expect(panel.style.display).toBe('flex');
   });

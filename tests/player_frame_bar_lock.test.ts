@@ -55,6 +55,9 @@ describe('lockPlayerFrameToActionBar wiring', () => {
     const wrap = hudTs.slice(start, start + 300);
     expect(wrap).toContain('detach(active);');
     expect(wrap).toContain("if (spec.id === 'actionBarGroup') this.applyPlayerFrameBarLock();");
+    // The same closure carries the damage meter's framed-layout arm; pin it
+    // here too so deleting it cannot pass the suite.
+    expect(wrap).toContain("if (spec.id === 'damageMeter') this.meters.mainFramed(active);");
   });
 
   it('turning the lock on drops the applied spot (save kept); off restores it', () => {

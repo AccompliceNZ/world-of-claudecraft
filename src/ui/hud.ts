@@ -2235,7 +2235,6 @@ export class Hud {
     });
     this.riftTracker = new RiftFloorTrackerController({
       element: $('#rift-body'), // same reason as #delve-body above
-
       world: () => this.sim,
     });
     this.delveBoard = new DelveBoardController({
@@ -3902,9 +3901,8 @@ export class Hud {
       if (!frame) continue;
       const detach = makeUiRootDetacher(document, spec, frame);
       // The combined group is the anchor lockPlayerFrameToActionBar rides:
-      // every position apply (a drag move, a resolution re-anchor, the
-      // detach/re-dock transitions) re-evaluates whether the player frame
-      // should be sitting inside it.
+      // every position apply (drag move, resolution re-anchor, detach and
+      // re-dock) re-evaluates whether the player frame sits inside it.
       const onPositioned = (active: boolean) => {
         detach(active);
         if (spec.id === 'actionBarGroup') this.applyPlayerFrameBarLock();
@@ -4571,7 +4569,9 @@ export class Hud {
   // The spell-activation proc overlay (the Rising Phoenix, owner design
   // 2026-07-11): built ONCE here (proc_overlay_dom), class-toggled per frame
   // via the elided writers. Mounted on #ui, not body: it is a movable HUD
-  // frame ('procOverlay') and MovableFrame positions in #ui space.
+  // frame ('procOverlay') and MovableFrame positions in #ui space. Visible
+  // side effect: it zooms with UI Scale and stacks under focused windows now,
+  // where the old body mount floated above everything at a fixed size.
   private readonly procOverlayEl = (() => {
     const el = buildProcOverlay(t('hudChrome.procOverlay.soulFragmentsMeter'));
     $('#ui').appendChild(el);

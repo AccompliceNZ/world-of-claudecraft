@@ -1247,7 +1247,7 @@ export class MovableFrame {
   private persistPos(): void {
     if (!this.pos) return;
     try {
-      localStorage.setItem(this.cfg.storageKey, serializeTargetFramePos(this.pos));
+      localStorage.setItem(this.cfg.storageKey, serializeTargetFramePos(this.pos, this.maxScale()));
     } catch {
       /* storage unavailable */
     }
