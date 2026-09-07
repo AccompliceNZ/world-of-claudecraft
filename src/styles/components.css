@@ -5793,13 +5793,15 @@
     align-items: center;
     width: 100%;
     padding: 5px;
+    cursor: var(--cursor-point);
+    text-align: left;
+  }
+  .vendor-item:not(.ui-card) {
     border: 0;
     border-radius: 4px;
-    cursor: var(--cursor-point);
     background: transparent;
     color: inherit;
     font-family: var(--ui-font);
-    text-align: left;
   }
   /* Inside the grid, a tile stacks icon over name over price rather than a
      left-to-right row, so several fit per line at the window's new width. */
@@ -5810,7 +5812,7 @@
     gap: 4px;
     padding: 8px 6px;
   }
-  .vendor-item:hover {
+  .vendor-item:not(.ui-card):hover {
     background: #ffffff10;
   }
   .vendor-item .vi-name {
@@ -5986,39 +5988,13 @@
      is gold text over a gold underline; the strip wraps on narrow widths. */
   .crafting-tabs {
     flex: none;
-    display: flex;
     flex-wrap: wrap;
-    gap: 4px;
     margin: 10px 0 0;
     padding-bottom: 6px;
-    border-bottom: 1px solid var(--color-border-showcase);
   }
   .crafting-tab {
-    display: inline-flex;
-    align-items: center;
     gap: 6px;
-    padding: 5px 10px;
-    border: 1px solid transparent;
-    border-radius: 5px;
-    background: transparent;
-    color: var(--color-text-muted);
-    font-family: var(--title-font);
-    font-size: 12px;
     cursor: var(--cursor-point);
-  }
-  .crafting-tab:hover {
-    background: #ffffff0e;
-    color: var(--color-text-light);
-  }
-  .crafting-tab:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
-  }
-  .crafting-tab.sel {
-    border-color: var(--color-border-showcase);
-    background: rgba(0, 0, 0, 0.3);
-    color: var(--gold);
-    box-shadow: inset 0 -2px 0 #cc9a3c;
   }
   .crafting-tab-icon {
     flex: 0 0 22px;
@@ -6028,17 +6004,7 @@
     filter: drop-shadow(var(--art-shadow-sm));
   }
   .crafting-tab-count {
-    padding: 1px 6px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.3);
-    font-family: var(--ui-font);
-    font-size: 10px;
     font-variant-numeric: tabular-nums;
-    color: var(--color-text-muted);
-  }
-  .crafting-tab.sel .crafting-tab-count {
-    color: var(--color-text-light);
   }
   /* The scrolling recipe pane: the selected craft's header, learn hint, and
      recipe cards, breathing on an 8px rhythm. */
@@ -6113,19 +6079,14 @@
   .qd-profession-preview-copy {
     min-width: 0;
   }
-  /* The crafting identity card, restyled to the showcase inset-card idiom
-     (char-window stat panels): dark inset fill, gold-brown hairline, 7px
-     radius. Two columns beside each other (narrative left, skill table
-     right) so the card reads as a compact hero, not a tall stack. */
+  /* The crafting identity card uses the shared card surface. Two columns sit
+     beside each other so it reads as a compact hero, not a tall stack. */
   .profession-identity-card {
     flex: none;
     display: flex;
     gap: 16px;
     margin: 10px 0 0;
     padding: 10px 12px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
-    background: rgba(0, 0, 0, 0.24);
   }
   .profession-identity-main {
     flex: 1 1 0;
@@ -6192,10 +6153,7 @@
     grid-template-columns: max-content 1fr;
     gap: 3px 8px;
     margin: 0 0 8px;
-    /* 12px, never lower: DESIGN.md's authored-body floor. Phase 22 raised
-       the card's narrative text to it; the two settled exemptions below it
-       are the family's bordered 10px pill chips and its 11px tabular-nums
-       skill value (the Q28 family spec). */
+    /* 12px, never lower: DESIGN.md's authored-body floor. */
     font-size: 12px;
   }
   .profession-identity-summary dt {
@@ -6210,13 +6168,9 @@
     padding: 0;
     list-style: none;
   }
-  /* The skill rows reuse the professions window's row family (phase 22, the
-     Q28 ruling: .prof-craft-row head + chips anatomy, 13px names, the 11px
-     right-aligned tabular-nums value, bordered pill chips), so the card no
-     longer carries the app's only sub-11px data rows or its 9px uppercase
-     header. Card-scope overrides keep the compact inset rhythm without
-     forking the family; dormant rows dim through the family's own
-     .role-dormant name mute. */
+  /* The skill rows reuse the professions window's row anatomy and shared
+     chips. Card-scope overrides keep the compact rhythm without forking the
+     family; dormant rows dim through the family's own role treatment. */
   .profession-skill-list {
     display: flex;
     flex-direction: column;
@@ -6250,27 +6204,15 @@
     font-size: 12px;
     line-height: 1.35;
   }
-  /* One recipe card (the showcase inset-card idiom): the whole first row stays
-     the Craft button (big target), with a quality-glow socket, a wrapping
-     display-font name, the reagent and skill lines, and the gold Craft chip
-     at the right; combo/station reasons and the commission opt-in dock under
-     it inside the same card. */
+  /* One shared recipe card: the whole first row stays the Craft button (big
+     target), with a socket, wrapping display-font name, reagent and skill
+     lines, and the red Create commitment at the right. Combo and commission
+     controls dock under it inside the same card. */
   .crafting-recipe-item {
     flex-wrap: wrap;
     gap: 0;
     padding: 0;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
-    background: rgba(0, 0, 0, 0.24);
     overflow: hidden;
-  }
-  /* The recipe card rides .vendor-item for its base metrics, so the family's
-     .vendor-item:hover wash would REPLACE the card's inset fill on any hover
-     over the card (the pseudo-class rule outranks the single-class fill).
-     The card itself is not interactive (the Craft and commission chips carry
-     the affordances), so hover restates the fill with no wash. */
-  .vendor-item.crafting-recipe-item:hover {
-    background: rgba(0, 0, 0, 0.24);
   }
   .crafting-recipe-item > .vendor-item {
     flex: 1 0 100%;
@@ -6280,18 +6222,16 @@
     border-radius: 0;
   }
   .crafting-recipe-socket {
-    flex: 0 0 44px;
-    width: 44px;
-    height: 44px;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 7px;
-    background: var(--color-bg-input);
   }
   .crafting-recipe-socket .item-icon {
-    width: 38px;
-    height: 38px;
+    width: 34px;
+    height: 34px;
   }
   .crafting-recipe-name {
     display: block;
@@ -6329,45 +6269,18 @@
   .crafting-vault-draw {
     color: var(--gold-dim);
   }
-  /* The Craft affordance chip: the gold-gradient primary the mailbox send
-     button established. It is decoration inside the row-button (the whole row
-     is the target); disabled rows desaturate it through the button opacity. */
+  /* The Create affordance is decoration inside the row-button; the whole row
+     remains the target and disabled rows inherit the shared disabled state. */
   .crafting-craft-chip {
     flex: none;
     align-self: center;
-    padding: 7px 16px;
-    border: 1px solid #6a5320;
-    border-radius: 5px;
-    background: linear-gradient(180deg, #e9c064, #b98a2e);
-    color: #1c1206;
-    font-family: var(--title-font);
-    font-size: 12px;
-    font-weight: 700;
-  }
-  .crafting-recipe-btn:hover:not(:disabled) .crafting-craft-chip {
-    filter: brightness(1.1);
-  }
-  .crafting-recipe-btn:disabled .crafting-craft-chip {
-    filter: grayscale(0.7);
-  }
-  /* Active craft row: gold wash on the chip (still disabled; progress is the
-     strip). Tint is a redundant hint next to the "Crafting" label + aria-busy. */
-  .crafting-recipe-btn.casting .crafting-craft-chip {
-    filter: none;
-    box-shadow: inset 0 0 0 1px var(--gold);
   }
   /* Duration chip: expected cast time before the click (actionable pace info,
      identical on every graphics preset; never tier-gated or color-only). */
   .crafting-duration-chip {
     display: inline-block;
     margin-left: 6px;
-    padding: 0 5px;
-    border: 1px solid var(--color-border-default);
-    border-radius: 3px;
-    font-family: var(--ui-font);
-    font-size: 10px;
     font-variant-numeric: tabular-nums;
-    color: var(--color-text-muted);
     white-space: nowrap;
   }
   /* Polite live region: off-screen, announces cast start/complete/cancel. */
@@ -6386,35 +6299,20 @@
     gap: 10px;
     margin: 8px 12px 0;
     padding: 6px 8px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: var(--radius-sm);
-    background: rgba(0, 0, 0, 0.3);
   }
   /* Programmatic focus target for the mid-cast focus ladder (tabindex -1):
      the shared button ring does not apply to a div, so it gets its own. */
   .crafting-cast-progress:focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
   }
   .crafting-cast-progress-track {
-    position: relative;
     flex: 1 1 auto;
     min-width: 0;
-    height: 20px;
-    border-radius: var(--radius-sm);
-    background: rgba(0, 0, 0, 0.45);
-    border: 1px solid rgba(0, 0, 0, 0.85);
-    overflow: hidden;
+    width: auto;
   }
   .crafting-cast-progress-fill {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    height: 100%;
     width: 0%;
-    background: linear-gradient(180deg, var(--gold), var(--gold-dim));
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
     /* Width is set every frame from real cast fields (no CSS animation). Always
        transition:none so reduced-motion and full-motion read the same bar;
        remaining time also lives in .crafting-cast-progress-timer text + aria. */
@@ -6423,31 +6321,13 @@
   /* The recipe's display name, centered IN the bar (10.5: centered text when
      height allows), above the fill in paint order. */
   .crafting-cast-progress-label {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     padding: 0 3.5em;
-    font-family: var(--ui-font);
-    font-size: 12px;
-    color: var(--color-text-light);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
     white-space: nowrap;
     overflow: hidden;
   }
   .crafting-cast-progress-timer {
-    position: absolute;
-    top: 0;
     right: 8px;
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    font-family: var(--ui-font);
-    font-size: 11px;
     font-variant-numeric: tabular-nums;
-    color: var(--color-text-light);
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
   }
   /* Phase 3 batch remaining on the cast strip (hidden when total <= 1). */
   .crafting-cast-progress-batch {
@@ -6479,23 +6359,8 @@
     min-width: 32px;
     min-height: 32px;
     padding: 0 8px;
-    border: 1px solid var(--color-border-default);
-    border-radius: 4px;
-    background: var(--color-bg-input);
-    color: var(--color-text-light);
-    font-family: var(--ui-font);
-    font-size: 14px;
-    font-weight: 700;
     line-height: 1;
     cursor: pointer;
-  }
-  .crafting-qty-btn:hover:not(:disabled) {
-    border-color: var(--gold-dim);
-    color: var(--gold);
-  }
-  .crafting-qty-btn:disabled {
-    opacity: 0.45;
-    cursor: default;
   }
   .crafting-qty-value {
     min-width: 1.75em;
@@ -6508,22 +6373,7 @@
   .crafting-create-all-btn {
     min-height: 32px;
     padding: 5px 12px;
-    border: 1px solid var(--color-gold-600);
-    border-radius: var(--radius-sm);
-    background: linear-gradient(180deg, var(--gold-dim), var(--color-gold-600));
-    color: #1c1206;
-    font-family: var(--title-font);
-    font-size: 11px;
-    font-weight: 700;
     cursor: pointer;
-  }
-  .crafting-create-all-btn:hover:not(:disabled) {
-    filter: brightness(1.08);
-  }
-  .crafting-create-all-btn:disabled {
-    filter: grayscale(0.7);
-    opacity: 0.55;
-    cursor: default;
   }
   .crafting-recipe-item > .crafting-combo-requirement {
     flex: 1 0 100%;
@@ -6566,18 +6416,24 @@
     color: var(--color-craft-none);
   }
   .crafting-station-badge {
-    display: inline-block;
     margin-left: 6px;
-    padding: 0 4px;
-    border: 1px solid var(--color-border-default);
-    border-radius: 3px;
-    font-size: 9px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
   }
   .crafting-station-badge.out-of-range {
     border-style: dashed;
+  }
+  .crafting-station-badge .ui-icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+  }
+  .crafting-footer {
+    flex: none;
+    margin: var(--spacing-xs) 0 0;
+    padding: var(--spacing-xs) var(--spacing-sm) 0;
+    border-top: 1px solid var(--color-border-showcase);
+    font-size: 12px;
   }
   /* Discoverability: the per-section "learnable at a master" hint,
      shown under a craft section when the viewer has unlearned trainer recipes
@@ -6798,25 +6654,12 @@
     display: flex;
     justify-content: flex-end;
     padding: 6px 10px 8px;
-    border-top: 1px solid #ffffff0d;
+    border-top: 1px solid var(--color-border-default);
   }
   .crafting-commission-chip {
-    display: inline-flex;
-    align-items: center;
     gap: 7px;
     min-height: 26px;
-    padding: 4px 12px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.3);
-    color: var(--color-text-muted);
-    font-family: var(--title-font);
-    font-size: 11px;
     cursor: var(--cursor-point);
-  }
-  .crafting-commission-chip:hover {
-    color: var(--gold);
-    border-color: var(--gold-dim);
   }
   .crafting-commission-pip {
     flex: none;
@@ -6825,11 +6668,6 @@
     border-radius: 50%;
     border: 1px solid var(--color-border-default);
     background: var(--color-bg-input);
-  }
-  .crafting-commission-chip[aria-pressed="true"] {
-    color: var(--gold);
-    border-color: var(--gold-dim);
-    background: rgb(200 163 74 / 12%);
   }
   .crafting-commission-chip[aria-pressed="true"] .crafting-commission-pip {
     border-color: var(--gold-dim);
@@ -6851,23 +6689,10 @@
   /* The crafting window's header button that opens the board, sized like the
      adjacent .x-btn close button but text-bearing (a pill, not a glyph). */
   .crafting-orders-btn {
-    display: inline-flex;
-    align-items: center;
     margin-left: auto;
     margin-right: 8px;
-    padding: 4px 12px;
     min-height: 26px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.3);
-    color: var(--color-text-muted);
-    font-family: var(--title-font);
-    font-size: 11px;
     cursor: var(--cursor-point);
-  }
-  .crafting-orders-btn:hover {
-    color: var(--gold);
-    border-color: var(--gold-dim);
   }
   @media (pointer: coarse) {
     .crafting-orders-btn {
@@ -6959,8 +6784,7 @@
     filter: brightness(1.08);
   }
   .commission-submit-btn:focus-visible,
-  .commission-order-btn:focus-visible,
-  .crafting-orders-btn:focus-visible {
+  .commission-order-btn:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
   }
@@ -10563,10 +10387,8 @@
      gathering rows) over IWorldProfessions. Bar widths and ring node
      positions are build-time inline writes; ring strokes carry
      vector-effect="non-scaling-stroke" so these pixel widths survive the
-     unit-circle viewBox. Semantic colours come from tokens; the showcase
-     hairline is the shared --color-border-showcase token, and the remaining
-     inset-card cosmetics (rgba card fills, the ring stage haze) are
-     deliberate literals shared with the char-window showcase family. */
+     unit-circle viewBox. Shared cards own the surfaces while semantic colours
+     come from tokens. */
   #professions-window {
     width: 720px;
     max-height: calc(var(--app-vh, 100vh) * 0.85 / var(--window-scale) - 24px);
@@ -10602,8 +10424,7 @@
     font-variant: small-caps;
     color: var(--gold);
   }
-  /* Every section rides the showcase inset-card idiom (the char-window stat
-     panels): dark inset fill, gold-brown hairline, 7px radius. */
+  /* Every section rides the shared card surface. */
   .prof-identity,
   .prof-crafts,
   .prof-perks,
@@ -10613,9 +10434,6 @@
     flex-direction: column;
     gap: 8px;
     padding: 10px 14px 12px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
-    background: rgba(0, 0, 0, 0.24);
   }
   /* The hero band: the identity card beside the wheel on its stage. */
   .prof-hero {
@@ -10624,23 +10442,13 @@
     gap: 12px;
     align-items: stretch;
   }
-  /* The wheel's stage: the char-window model-panel treatment (keyline, inner
-     vignette, warm radial haze, ground shadow), purely decorative around the
-     role="img" ring. */
+  /* The wheel's shared card stage is decorative around the role="img" ring. */
   .prof-ring-stage {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 240px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
-    background:
-      radial-gradient(ellipse 62% 46% at 50% 58%, rgba(216, 166, 69, 0.1), transparent 70%),
-      linear-gradient(180deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.34));
-    box-shadow:
-      inset 0 0 0 1px rgba(0, 0, 0, 0.55),
-      inset 0 0 40px rgba(0, 0, 0, 0.35);
   }
   .prof-pair-title {
     font-family: var(--title-font);
@@ -10668,7 +10476,10 @@
     font-size: 12px;
     color: var(--color-text-light);
   }
-  .prof-switch-cost,
+  .prof-switch-cost {
+    margin: 0;
+    align-self: flex-start;
+  }
   .prof-tutorial {
     margin: 0;
     font-size: 12px;
@@ -10756,8 +10567,6 @@
     align-items: flex-start;
     gap: 10px;
     padding: 8px 10px;
-    border-radius: 5px;
-    background: #ffffff05;
   }
   .prof-craft-icon {
     flex: none;
@@ -10800,13 +10609,7 @@
   }
   .prof-role-badge,
   .prof-ceiling {
-    font-size: 10px;
     line-height: 1;
-    color: var(--color-text-muted);
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 999px;
-    padding: 4px 9px;
-    background: rgba(0, 0, 0, 0.3);
     white-space: nowrap;
   }
   .role-major .prof-role-badge {
@@ -10829,20 +10632,12 @@
     gap: 8px;
   }
   .prof-bar {
-    display: inline-block;
     flex: 1 1 auto;
     height: 9px;
-    border: 1px solid var(--color-border-default);
-    border-radius: 4px;
-    background: var(--color-bg-input);
-    overflow: hidden;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
+    --bar-color: var(--gold);
   }
   .prof-bar-fill {
-    display: block;
-    height: 100%;
-    background: linear-gradient(180deg, var(--gold), var(--gold-dim) 85%);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28);
+    width: 0;
   }
   /* The slotted tool effect, under its profession's skill bar. Quieter than the
      bar above it on purpose: it is a state readout, not progress, and it must
@@ -10887,11 +10682,8 @@
     opacity: 0.85;
     font-variant-numeric: tabular-nums;
   }
-  /* The slot/recharge affordances the acquisition craft opened: compact
-     .btn variants on the effect line and in their own wrapping action row.
-     Padding narrows on fine pointers; coarse pointers get the explicit
-     40px target floor the sibling window buttons set (the delve board
-     idiom), since .btn itself carries no floor. */
+  /* Slot and recharge actions keep compact local padding; shared buttons own
+     the visual states and coarse pointers retain the explicit 40px floor. */
   .prof-effect-actions {
     display: flex;
     flex-wrap: wrap;
@@ -10902,16 +10694,10 @@
     margin-top: 0;
     margin-right: 0;
     padding: 2px 10px;
-    font-size: 11px;
   }
   /* The R40 prompt-mode chip on a live slot line: words, not hue, per the
      color-independence rule (the chip IS the second signal). */
   .prof-effect-mode {
-    font-size: 10px;
-    color: var(--color-text-light);
-    border: 1px solid currentcolor;
-    border-radius: 3px;
-    padding: 0 4px;
     opacity: 0.85;
   }
   /* The "Ask each use" toggle beside the slot buttons: a real labeled
@@ -10955,6 +10741,26 @@
     margin: 0;
     font-size: 11px;
     color: var(--color-text-muted);
+  }
+  .prof-footer {
+    flex: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md) 0;
+    border-top: 1px solid var(--color-border-showcase);
+    font-size: 12px;
+  }
+  .prof-footer a {
+    color: var(--gold);
+  }
+  .prof-footer a:hover {
+    color: var(--color-text-light);
+  }
+  .prof-footer a:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
   /* ---------- AAA window-frame adoption: master-detail windows (batch 2) ---------- */
   /* The quest log, mailbox, social panel, and spellbook adopt the shared
@@ -13046,11 +12852,8 @@
      checkmark reveal is an opacity swap only. */
 
   /* ---------- The World Market (the Merchant's auction house) ---------- */
-  /* Widened from the old 560px tall single-column box into a landscape shape so
-     .mkt-list (below) can lay listings out in multiple columns instead of one
-     long stacked list; the .window shell's max-width clamp still shrinks this on
-     a narrow viewport, and .mkt-list's own auto-fill columns (plus the mobile
-     single-column override in hud.mobile.css) collapse back to one column there. */
+  /* Landscape shell leaves room for the persistent filters beside the listing
+     ledger; the shared window clamp still protects narrow viewports. */
   #market-window {
     width: 860px;
     height: min(640px, calc(85vh - 24px));
@@ -13103,31 +12906,12 @@
     transform: translateX(var(--bank-dock-gap));
   }
   .mkt-tabs {
-    display: flex;
-    gap: 4px;
     margin: 2px 0 8px;
   }
   .mkt-tab {
     flex: 1;
     text-align: center;
-    font-family: var(--title-font);
-    font-size: 12px;
-    color: var(--color-text-muted);
-    padding: 5px 4px;
-    border: 0;
-    border-radius: 4px 4px 0 0;
     cursor: var(--cursor-point);
-    background: #ffffff08;
-    border-bottom: 2px solid transparent;
-  }
-  .mkt-tab:hover {
-    background: #ffffff14;
-    color: var(--color-accent);
-  }
-  .mkt-tab.sel {
-    color: var(--gold);
-    background: #ffffff16;
-    border-bottom-color: #cc9a3c;
   }
   .mkt-tab .pip {
     /* literal, NOT --color-friendly: the value matches but a market tab pip is a UI accent,
@@ -13139,14 +12923,26 @@
      rows wrapped independently, so the search aligned against the bottom of the entire
      filter block and jumped beside its last row as the window narrowed. A shared grid
      keeps every control on the same columns and moves complete fields between rows. */
-  .mkt-controls {
+  .mkt-layout {
+    flex: 1 1 auto;
+    min-height: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: var(--spacing-md);
+  }
+  .mkt-layout-wide {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .mkt-controls {
+    display: flex;
+    flex-direction: column;
     gap: var(--spacing-sm);
-    align-items: end;
-    margin: 2px 0 var(--spacing-md);
+    margin: 0;
     position: relative;
     z-index: 3;
+    min-height: 0;
+    overflow-y: auto;
+    padding-right: var(--spacing-xs);
   }
   .mkt-search {
     width: 100%;
@@ -13154,22 +12950,6 @@
     min-width: 0;
     box-sizing: border-box;
     margin: 0;
-    padding: 7px 10px;
-    font-size: 16px;
-    background: #120d07;
-    border: 1px solid #5a4a2a;
-    border-radius: 6px;
-    color: #ffe6a8;
-    font-family: Georgia, serif;
-  }
-  .mkt-search::placeholder {
-    color: #8c8468;
-    font-style: italic;
-  }
-  .mkt-search:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
-    border-color: var(--color-border-focus);
   }
   .mkt-filters {
     display: contents;
@@ -13203,7 +12983,7 @@
   .mkt-collapse-toggle span {
     font-family: var(--font-ui);
     font-size: 13px;
-    color: #f0e4c8;
+    color: var(--color-text-light);
   }
   .mkt-select {
     position: relative;
@@ -13217,26 +12997,9 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    border: 1px solid #6f5a2a;
-    border-radius: 5px;
-    background: #120d07;
-    color: #f0e4c8;
-    font-family: var(--font-ui);
-    font-size: 13px;
     padding: 5px 8px;
     cursor: var(--cursor-point);
-    box-shadow: inset 0 1px 0 #ffffff12;
     text-align: left;
-  }
-  .mkt-select-btn:hover,
-  .mkt-select.open .mkt-select-btn {
-    border-color: #cc9a3c;
-    color: #ffe6a8;
-    background: #181107;
-  }
-  .mkt-select-btn:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
   }
   .mkt-select-btn > span:first-child {
     min-width: 0;
@@ -13244,7 +13007,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     color: inherit;
-    font: inherit;
     text-transform: none;
     letter-spacing: 0;
   }
@@ -13252,8 +13014,8 @@
     width: 8px;
     height: 8px;
     flex: none;
-    border-right: 2px solid #cabb8c;
-    border-bottom: 2px solid #cabb8c;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
     transform: translateY(-2px) rotate(45deg);
   }
   .mkt-select.open .mkt-select-chevron {
@@ -13270,12 +13032,6 @@
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
     padding: 5px;
-    border: 1px solid #6f5a2a;
-    border-radius: 6px;
-    background: #140f09f7;
-    box-shadow:
-      0 10px 24px #000c,
-      inset 0 1px 0 #ffffff12;
     z-index: 20;
   }
   /* Flipped by market_window.ts (positionFilterMenu) when there is more clip-box
@@ -13289,54 +13045,33 @@
   .mkt-select-option {
     width: 100%;
     display: block;
-    border: 0;
-    border-radius: 4px;
-    background: transparent;
-    color: #f0e4c8;
-    font-family: var(--font-ui);
-    font-size: 13px;
     line-height: 1.2;
     text-align: left;
     padding: 7px 8px;
     cursor: var(--cursor-point);
   }
-  .mkt-select-option:hover,
-  .mkt-select-option:focus-visible {
-    background: #ffffff14;
-    color: var(--color-accent);
-  }
-  /* Focus must not rely on background alone (was outline:0); add a steady,
-     tokenized inset ring that also survives forced-colors. */
-  .mkt-select-option:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: -2px;
-  }
-  .mkt-select-option.sel {
-    background: #cc9a3c2e;
-    color: var(--gold);
-  }
   #market-body {
     overflow-y: auto;
-    flex: 1;
     min-height: 0;
     padding-right: 2px;
     touch-action: pan-y;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
   }
-  /* The listing list itself: multiple columns of item cards (the landscape
-     relayout) instead of one long stacked column. auto-fill + a minmax floor
-     lets the count of columns follow the window's actual width (the shell's
-     max-width clamp on a narrow viewport, or the mobile-touch override below,
-     both naturally fall back to a single column without a hardcoded breakpoint
-     list here); each row still lays its own icon/name/price/button out as a
-     grid (below), it just now occupies one card cell instead of a full-width
-     stripe. The note/empty/pager children are not cards, so they span every
-     column. */
+  .mkt-footer {
+    flex: none;
+    margin: var(--spacing-sm) 0 0;
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border-default);
+    font-size: 12px;
+    line-height: 16px;
+  }
+  /* Listings stay in one dense ledger column so names, prices, and actions scan
+     on stable vertical rails. */
   .mkt-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 3px var(--spacing-md);
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--spacing-xs);
     align-content: start;
   }
   .mkt-note,
@@ -13346,10 +13081,10 @@
   }
   .mkt-note {
     font-size: 11.5px;
-    color: #b6ad8c;
+    color: var(--color-text-muted);
     line-height: 1.45;
     margin: 2px 0 8px;
-    font-family: Georgia, serif;
+    font-family: var(--font-ui);
   }
   /* Single-line rows: the name and seller sit inline (below), so each listing is
      one line and the list stays dense without feeling heavy. Row padding and the
@@ -13358,16 +13093,12 @@
      type, and give elements room). */
   .mkt-row {
     display: grid;
-    grid-template-columns: 28px 1fr auto auto;
+    grid-template-columns: 40px minmax(0, 1fr) auto auto;
     gap: var(--spacing-sm);
     align-items: center;
-    padding: 4px var(--spacing-xs);
-    border-radius: var(--radius-sm);
+    padding: var(--spacing-xs) var(--spacing-sm);
     font-size: 12px;
-    min-height: 32px;
-  }
-  .mkt-row:hover {
-    background: #ffffff0d;
+    min-height: 48px;
   }
   /* Inline layout: the name and the seller share ONE baseline row instead of
      stacking, so each listing is a single line. That keeps the rows short (the
@@ -13405,7 +13136,7 @@
      long name eats the seller before the name itself ever truncates. */
   .mkt-row .mkt-name .seller {
     font-size: 10.5px;
-    color: #6f6853;
+    color: var(--color-text-muted);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -13414,7 +13145,7 @@
   }
   .mkt-row .mkt-name .seller::before {
     content: "\00b7\00a0";
-    color: #4a4230;
+    color: var(--color-text-faint);
   }
   .mkt-row .mkt-name .seller.house {
     color: var(--gold-dim);
@@ -13424,8 +13155,6 @@
   .mkt-ico {
     position: relative;
     display: block;
-    width: 28px;
-    height: 28px;
   }
   /* Cloth/leather/mail armor-class cue (issue #3104): a weight-pips symbol, NOT a
      colored dot. The pip COUNT (cloth 1, leather 2, mail 3) carries the
@@ -13443,10 +13172,10 @@
     min-width: 13px;
     height: 13px;
     padding: 0 2.5px;
-    border-radius: 4px;
-    background: #0d0b07;
+    border-radius: var(--radius-xs);
+    background: var(--color-bg-dark);
     border: 1px solid var(--mkt-pip-color);
-    box-shadow: 0 1px 2px #000a;
+    box-shadow: 0 1px 2px var(--color-keyline);
   }
   .mkt-pip-row {
     display: flex;
@@ -13466,13 +13195,13 @@
   /* Per-class color: a fast-scan bonus on top of the countable pips, never the
      sole cue. Values match the shipped armor-badge palette. */
   .mkt-armor-pips--cloth {
-    --mkt-pip-color: #6fc0e8;
+    --mkt-pip-color: var(--mkt-name-rare);
   }
   .mkt-armor-pips--leather {
-    --mkt-pip-color: #d79a55;
+    --mkt-pip-color: var(--mkt-name-legendary);
   }
   .mkt-armor-pips--mail {
-    --mkt-pip-color: #b6c0cd;
+    --mkt-pip-color: var(--mkt-name-poor);
   }
   /* Heroic-tier mark: a small gold star on the icon's TOP-LEFT corner, opposite
      the armor pips (bottom-right) so the two never collide. Warm gold, distinct
@@ -13483,11 +13212,12 @@
     top: -4px;
     font-size: 12px;
     line-height: 1;
-    color: #ffcf6a;
-    text-shadow:
-      0 1px 2px #000,
-      0 0 3px #000;
+    color: var(--color-gold-400);
+    text-shadow: var(--title-shadow);
     pointer-events: none;
+  }
+  .mkt-heroic-label {
+    flex: none;
   }
   /* Price is the number a shopper is actually comparing, so give it real weight.
      The market paints a gold-dominant, coinless, copper-trimmed block
@@ -13495,6 +13225,9 @@
      rest sit small beside it, and the number's COLOR carries the denomination
      instead of a coin circle. */
   .mkt-row .mkt-price {
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
     text-align: right;
     white-space: nowrap;
   }
@@ -13527,13 +13260,13 @@
      non-color backup so it is never color-only. Gold is yellow, copper a clear
      orange-brown, kept distinct so a copper price never reads as gold. */
   .mkt-price-main--gold {
-    color: #e8c874;
+    color: var(--color-gold-400);
   }
   .mkt-price-main--silver {
-    color: #dfe3ea;
+    color: var(--color-text-secondary);
   }
   .mkt-price-main--copper {
-    color: #d17a4e;
+    color: var(--color-warning);
   }
   /* The denomination letter (g/s/c) is the NON-COLOR cue, so it stays large and
      fully opaque, set off by a clear gap: it anchors the value (colorblind-safe)
@@ -13549,7 +13282,7 @@
   .mkt-row .mkt-price .seller {
     font-size: 10.5px;
     font-weight: 400;
-    color: #8c8468;
+    color: var(--color-text-muted);
   }
   /* Buy button: a forged, dimensional button in the shared .btn recipe
      (DESIGN.md 10.1), not a flat chip: a gradient fill, a one-pixel bronze
@@ -13557,52 +13290,9 @@
      a one-pixel press. Buy reads green for "purchase"; Reclaim keeps the warm
      brown of a returning action. */
   .mkt-btn {
-    font-family: var(--title-font);
-    font-size: 11px;
-    letter-spacing: 0.3px;
     cursor: var(--cursor-point);
-    border-radius: var(--radius-sm);
     padding: 4px 12px;
-    border: 1px solid var(--color-gold-800);
-    outline: 1px solid #000;
-    background: linear-gradient(var(--color-gold-900), #241d0e 55%, #1a140a);
-    color: #ffe6a8;
     white-space: nowrap;
-    text-shadow: 1px 1px 1px #000;
-    box-shadow:
-      inset 0 1px 0 #ffffff26,
-      0 2px 4px #0007;
-    transition:
-      filter var(--transition-speed),
-      box-shadow var(--transition-speed),
-      border-color var(--transition-speed);
-  }
-  .mkt-btn:hover {
-    filter: brightness(1.22);
-    border-color: var(--color-gold-600);
-    box-shadow:
-      inset 0 1px 0 #ffffff26,
-      0 2px 4px #0007,
-      0 0 8px var(--color-primary-glow);
-  }
-  .mkt-btn:active {
-    transform: translateY(1px);
-    box-shadow: inset 0 1px 2px #0009;
-  }
-  /* Keyboard focus: the black keyline above is a static border effect that would
-     otherwise sit where a focus ring belongs, and (living in @layer components,
-     after base) it beats the shared .btn:focus-visible from base.css on layer
-     order. Restore a visible ring in the same layer, mirroring .btn:focus-visible
-     (components.css) so every Buy / Reclaim button shows keyboard focus again. */
-  .mkt-btn:focus-visible {
-    outline: 3px solid var(--color-border-focus) !important;
-    outline-offset: 2px !important;
-    box-shadow: 0 0 8px var(--color-primary-glow) !important;
-  }
-  /* Reclaim: the same forged button in the warm returning-action palette. */
-  .mkt-btn.cancel {
-    background: linear-gradient(#6a3a18, #4a2810 60%, #381c0c);
-    color: #ffd8b8;
   }
   .mkt-page {
     display: flex;
@@ -13611,7 +13301,7 @@
     gap: 8px;
     margin: 8px 0 2px;
     padding: 7px 6px 0;
-    border-top: 1px solid #5a4a2a;
+    border-top: 1px solid var(--color-border-showcase);
   }
   .mkt-page-info {
     flex: 1;
@@ -13623,46 +13313,21 @@
   .mkt-page-btn {
     min-width: 72px;
     min-height: 28px;
-    border: 1px solid #6f5a2a;
-    border-radius: 4px;
-    background: #181107;
-    color: #f0e4c8;
-    font-family: var(--title-font);
-    font-size: 10.5px;
     cursor: var(--cursor-point);
-  }
-  .mkt-page-btn:hover:not(:disabled),
-  .mkt-page-btn:focus-visible {
-    border-color: #cc9a3c;
-    color: var(--color-accent);
-  }
-  /* Restore a steady, tokenized focus ring (was outline:0). */
-  .mkt-page-btn:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
-  }
-  .mkt-page-btn:disabled {
-    opacity: 0.45;
-    cursor: var(--cursor-arrow);
   }
   .mkt-empty {
     font-size: 12px;
-    color: #887c5c;
+    color: var(--color-text-muted);
     font-style: italic;
     padding: 10px 6px;
     text-align: center;
   }
-  /* The staged item card matches a Browse card (bordered, accent spine) instead
-     of the old dashed box, so the Sell tab reads like the rest of the window. */
+  /* The staged item uses the shared card surface so Sell matches Browse. */
   .mkt-sell-pick {
     display: flex;
     gap: 10px;
     align-items: center;
     padding: 8px;
-    border: 1px solid #2a2418;
-    border-left: 3px solid #6f5a2a;
-    background: linear-gradient(180deg, #ffffff07, #ffffff02);
-    border-radius: 7px;
     margin-bottom: 10px;
   }
   .mkt-sell-pick.empty {
@@ -13670,7 +13335,6 @@
     font-size: 12px;
     justify-content: center;
     font-style: italic;
-    border-left-color: #2a2418;
   }
   /* Serif name, matching the Browse row headline. */
   .mkt-sell-pick .ps-name {
@@ -13710,12 +13374,7 @@
   }
   .mkt-price-row .coininput {
     width: 56px;
-    background: #120d07;
-    border: 1px solid #5a4a2a;
-    color: #ffe6a8;
-    border-radius: 4px;
     padding: 4px 6px;
-    font-family: var(--ui-font, inherit);
     font-size: 12px;
   }
   .mkt-coin-tag {
@@ -13723,71 +13382,24 @@
     font-size: 11px;
     margin-right: 6px;
   }
-  /* The primary List / Collect-all action is the forged GOLD PRIMARY button
-     (DESIGN.md 10.1: at most one per surface): a subdued gold-brown gradient over
-     ink, a bronze border on a black keyline, an inset top highlight with a drop
-     shadow, and the standard 14px/700 label. Sized to its label and left-aligned
-     under the form, distinct from the green Buy buttons in the rows. */
+  /* Shared gold primary; the local selector only sizes and positions it. */
   .mkt-list-btn {
     display: inline-block;
-    font-family: var(--title-font);
-    font-size: 14px;
-    font-weight: 700;
     letter-spacing: 0.4px;
     cursor: var(--cursor-point);
-    border-radius: var(--radius-sm);
     padding: 9px 22px;
-    border: 1px solid var(--color-gold-700);
-    outline: 1px solid #000;
-    background: linear-gradient(var(--color-gold-900), #241d0e 60%, #1a140a);
-    color: #ffe6a8;
-    text-shadow: 1px 1px 1px #000;
-    box-shadow:
-      inset 0 1px 0 #ffffff1f,
-      0 2px 4px #0007;
     margin-top: var(--spacing-sm);
-    transition:
-      filter var(--transition-speed),
-      box-shadow var(--transition-speed),
-      border-color var(--transition-speed);
-  }
-  .mkt-list-btn:hover {
-    filter: brightness(1.15);
-    border-color: var(--color-gold-500);
-    box-shadow:
-      inset 0 1px 0 #ffffff1f,
-      0 2px 4px #0007,
-      0 0 8px var(--color-primary-glow);
-  }
-  .mkt-list-btn:active {
-    transform: translateY(1px);
-    box-shadow: inset 0 1px 2px #0009;
-  }
-  /* Restore keyboard focus over the black keyline (see .mkt-btn:focus-visible
-     above for why the same-layer override is needed). Covers List and
-     Collect-all. */
-  .mkt-list-btn:focus-visible {
-    outline: 3px solid var(--color-border-focus) !important;
-    outline-offset: 2px !important;
-    box-shadow: 0 0 8px var(--color-primary-glow) !important;
   }
   .mkt-list-btn:disabled {
-    filter: grayscale(1) brightness(0.7);
     cursor: default;
-    box-shadow: none;
   }
-  /* Collect rows get the Browse card treatment (bordered, accent spine) so the
-     tab matches the rest of the window. */
+  /* Collect rows use the shared card surface so the tab matches Browse. */
   .mkt-collect {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
     padding: 8px;
-    border: 1px solid #241f16;
-    border-left: 3px solid #6f5a2a;
-    background: linear-gradient(180deg, #ffffff07, #ffffff02);
-    border-radius: 7px;
     margin-bottom: 8px;
   }
   /* The icon + name cluster inside a collect row (was an inline flex literal in
@@ -13819,7 +13431,6 @@
     justify-content: space-between;
     gap: 10px;
     padding: 6px 8px;
-    border-left: 2px solid var(--border);
     margin-bottom: 4px;
   }
   .mkt-sale-name {
@@ -17170,10 +16781,7 @@
     font: 700 13px / 17px var(--font-ui);
     color: var(--color-text-muted);
   }
-  /* The tab strip (DESIGN.md 10.2): unselected muted, hover to parchment,
-     selected in accent text over an accent underline that sits ON the strip's
-     own hairline (the -1px margin), no boxed buttons.
-     flex: none, like .soc-tabs. The strip is a flex ITEM of the window column;
+  /* Shared tabs own the visual states. The strip is a flex ITEM of the window column;
      without it the column squeezed the strip below its own tab height and the
      labels rendered sliced in half. */
   #woc-market-window .wm-tabs {
@@ -17221,10 +16829,6 @@
     gap: var(--spacing-sm);
     margin: 0;
     padding: 6px 10px;
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--color-bg-dark);
-    color: var(--color-text-light);
     font-size: 13px;
     line-height: 17px;
   }
@@ -17355,52 +16959,19 @@
     width: 20px;
     height: 20px;
   }
-  /* EVERY button in the window, not a list of the containers that happen to
-     hold one. The per-container list this replaces missed the Activity tab's
-     pay-bond and pay-settlement buttons, which are the two controls a winning
-     bidder uses to hand over real money: they rendered as unthemed browser
-     chrome under the 40px tap floor. .x-btn is excluded because the shared
-     window-chrome family already owns the close button, floor included.
-     No sheet in this tree carries a generic `button` rule, so a control with
-     no window-scoped rule gets raw UA chrome; every sibling window ships its
-     own, and this is ours. The full 10.1 state set: hover lifts the fill one
-     accent tone and moves the border to the accent, pressed drops one pixel
-     with the gold-900 inner edge (static gold on a guaranteed-dark edge),
-     disabled desaturates and dims but keeps its label, focus is the shared
-     outline ring below. Label type is the ui face at 14/700, never the
-     display face beside inputs and numbers on the same row. */
+  /* Shared buttons own the visual states; the window rule keeps the common
+     40px control geometry. The close button uses window-chrome geometry. */
   #woc-market-window button:not(.x-btn) {
     min-width: 40px;
     min-height: 40px;
     padding: var(--spacing-sm) var(--spacing-md);
-    font: 700 14px / 17px var(--font-ui);
-    color: var(--color-text-light);
-    background: var(--color-bg-dark);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
     cursor: var(--cursor-point);
-    transition:
-      background-color var(--transition-speed) var(--transition-ease),
-      border-color var(--transition-speed) var(--transition-ease);
-  }
-  #woc-market-window button:not(.x-btn):hover:enabled {
-    background: color-mix(in srgb, var(--color-accent) 10%, var(--color-bg-dark));
-    border-color: var(--color-accent);
-  }
-  #woc-market-window button:not(.x-btn):active:enabled {
-    transform: translateY(1px);
-    box-shadow: inset 0 1px 0 var(--color-gold-900);
   }
   #woc-market-window button:not(.x-btn):disabled {
-    color: var(--color-text-muted);
-    border-color: var(--color-border-default);
-    opacity: 0.6;
-    filter: saturate(0.6);
     cursor: var(--cursor-arrow);
   }
-  /* The row activator and the seller click-through are table cells wearing
-     buttons, so both opt back out of the chrome above (the transparent cell
-     look; wm-row-open's own rule below restores the rest). */
+  /* The row activator and seller click-through are table-cell controls with a
+     transparent link treatment; the window-wide 40px floor remains. */
   #woc-market-window button.wm-row-open,
   #woc-market-window button.wm-seller-link {
     padding: 0;
@@ -17569,11 +17140,6 @@
   #woc-market-window .wm-locked {
     display: inline-block;
     margin-left: var(--spacing-xs);
-    padding: 1px var(--spacing-xs);
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--radius-sm);
-    font: 700 12px / 15px var(--font-ui);
-    color: var(--color-text-muted);
     white-space: nowrap;
     vertical-align: middle;
   }
@@ -17611,12 +17177,9 @@
        losing the pane's own scroll. The mobile sheet drops the cap entirely
        (position: static there), so this is the desktop pane's rule alone. */
     max-height: calc(min(var(--app-vh, 100dvh) * 0.84, 700px) - 132px);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
     padding: var(--window-pad);
     overflow-y: auto;
     min-height: 0;
-    background: color-mix(in srgb, var(--color-bg-dark) 55%, transparent);
   }
   #woc-market-window .wm-detail > p,
   #woc-market-window .wm-detail > h3,
@@ -17650,12 +17213,6 @@
     display: block;
     width: 100%;
     margin-top: var(--spacing-md);
-    background: transparent;
-  }
-  #woc-market-window .wm-detail button[data-action="cancel-listing"]:hover:enabled {
-    color: var(--color-text-error);
-    border-color: var(--color-border-invalid);
-    background: transparent;
   }
   #woc-market-window .wm-bid-form,
   #woc-market-window .wm-sell-form,
@@ -17693,9 +17250,6 @@
     flex-direction: column;
     gap: var(--spacing-xs);
     padding: var(--spacing-sm);
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--radius-sm);
-    background: color-mix(in srgb, var(--color-bg-dark) 70%, transparent);
   }
   /* The collapsed state the Bid terms toggle drives. Its own arm because the
      flex rule above outranks the UA's [hidden] display, the same trap the
@@ -17778,9 +17332,6 @@
     gap: var(--spacing-sm);
     min-height: 40px;
     padding: 6px var(--spacing-sm);
-    border: 1px solid var(--color-accent);
-    border-radius: var(--radius-sm);
-    background: var(--color-bg-dark);
   }
   #woc-market-window .wm-combo-clear {
     margin-left: auto;
@@ -17790,10 +17341,6 @@
     margin-top: 2px;
     max-height: 240px;
     overflow-y: auto;
-    background: var(--panel-base);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    box-shadow: 0 6px calc(16px * var(--fx-shadow, 1)) var(--color-art-shadow);
   }
   #woc-market-window .wm-combo-list[hidden] {
     display: none;
@@ -17897,9 +17444,6 @@
   #woc-market-window .wm-quote {
     max-width: 480px;
     padding: var(--spacing-md);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md);
-    background: color-mix(in srgb, var(--color-bg-dark) 55%, transparent);
   }
   #woc-market-window .wm-quote-total {
     font-weight: 700;
@@ -17910,81 +17454,32 @@
     gap: var(--spacing-sm);
     flex-wrap: wrap;
   }
-  /* The tab buttons, the primary action, and the row activator. These three
-     shipped with markup but no rule, so they rendered as raw browser chrome
-     (white boxes, system font) against the dark panel: the exact
-     default-browser-chrome look src/ui/CLAUDE.md forbids. */
-  /* button.wm-tab, not .wm-tab: the window-wide `button:not(.x-btn)` rule above
-     is (1,1,1) because :not() carries its argument's specificity, so a (1,1,0)
-     class selector loses to it however late it sits and the SELECTED tab stopped
-     reading as selected. Matching its specificity and coming later wins. */
+  /* Shared tabs own their look; these scoped hooks retain Exchange geometry. */
   #woc-market-window button.wm-tab {
     flex: 1;
     min-height: 32px;
     margin-bottom: -1px;
     padding: 7px 10px;
-    font: 700 14px / 17px var(--font-ui);
-    color: var(--color-text-muted);
     cursor: var(--cursor-point);
-    background: transparent;
-    border: 0;
-    border-bottom: 2px solid transparent;
-    border-radius: 0;
     text-align: center;
   }
-  #woc-market-window button.wm-tab:hover {
-    color: var(--color-text-light);
-    background: transparent;
-  }
   #woc-market-window button.wm-tab-selected {
-    color: var(--color-accent);
-    border-bottom-color: var(--color-accent);
-    background: transparent;
+    z-index: 1;
   }
-  /* The one primary (gold) button per face (DESIGN.md 10.1): the accent mixed
-     toward the panel as a subdued gold-brown fill, the accent as its edge,
-     primary text; disabled it drops back to the ordinary chrome. */
+  /* The shared gold variant owns the primary treatment. */
   #woc-market-window button.wm-primary {
-    color: var(--color-text-light);
-    background: color-mix(in srgb, var(--color-accent) 22%, var(--panel-base));
-    border-color: var(--color-accent);
+    white-space: nowrap;
   }
-  #woc-market-window button.wm-primary:hover:enabled {
-    background: color-mix(in srgb, var(--color-accent) 32%, var(--panel-base));
-  }
-  #woc-market-window button.wm-primary:disabled {
-    color: var(--color-text-muted);
-    border-color: var(--color-border-default);
-    background: var(--color-bg-dark);
-  }
-  /* The money-entry controls (DESIGN.md 10.7): the strong fill with the
-     structural edge, at the 40px height of the buttons they sit beside. No
-     sheet in this tree has a generic input/select rule (base.css normalizes
-     only range/number/checkbox/radio and textarea), so every window themes its
-     own; without this the bid amount and all three dropdowns rendered as white
-     browser chrome on a dark panel. The 16px coarse-pointer font floor in
-     base.css targets these controls directly and still wins. */
+  /* Shared inputs own the visual treatment; these controls match the 40px
+     buttons beside them. The coarse-pointer font floor still wins. */
   #woc-market-window input[type="text"],
   #woc-market-window input[type="number"],
   #woc-market-window select {
     min-height: 40px;
     padding: var(--spacing-sm) 10px;
-    color: var(--color-text-light);
-    background: var(--color-bg-dark);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    font: 400 14px / 19px var(--font-ui);
   }
-  #woc-market-window input::placeholder {
-    color: var(--color-text-muted);
-    opacity: 1;
-  }
-  #woc-market-window button.wm-tab:focus-visible,
-  #woc-market-window button.wm-primary:focus-visible,
   #woc-market-window .wm-row-open:focus-visible,
-  #woc-market-window button:not(.x-btn):focus-visible,
-  #woc-market-window input:focus-visible,
-  #woc-market-window select:focus-visible,
+  #woc-market-window .wm-seller-link:focus-visible,
   #woc-market-window .wm-terms-link:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;

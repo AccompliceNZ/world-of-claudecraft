@@ -190,9 +190,10 @@ describe('ProfessionsWindow: focus and scroll survive rebuilds', () => {
     expect(document.activeElement).toBe(el);
   });
 
-  it('keeps Close the only focusable control on the CHARM-LESS surface', () => {
+  it('keeps only Close and the tutorial link focusable on the CHARM-LESS surface', () => {
     // The pre-craft default: with no charms and no slot the window has no
-    // action buttons, so Close is the whole refocus story for that state.
+    // action buttons, so only the window escape and the standing tutorial
+    // disclosure participate in keyboard navigation.
     // The acquisition craft's buttons are the inner controls the old version
     // of this pin predicted; their own refocus behavior is the two arms
     // below.
@@ -202,8 +203,9 @@ describe('ProfessionsWindow: focus and scroll survive rebuilds', () => {
         'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
       ),
     ];
-    expect(focusables).toHaveLength(1);
+    expect(focusables).toHaveLength(2);
     expect(focusables[0].hasAttribute('data-close')).toBe(true);
+    expect(focusables[1].matches('a[href="/wiki/professions"]')).toBe(true);
   });
 
   it('carries focus across a rebuild to the SAME action button by its key', () => {

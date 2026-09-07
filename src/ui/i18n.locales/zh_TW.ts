@@ -8194,6 +8194,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.close': '關閉製作',
   'hudChrome.crafting.reagentsNeeded': '需要:',
   'hudChrome.crafting.empty': '尚無已知配方。',
+  'hudChrome.crafting.materialsFooter': '保管庫中的材料會自動取用。可在製作站學習更多配方。',
   'hudChrome.crafting.resultAria': '製作{name}',
   'hudChrome.crafting.craftedToast': '已製作:{name}',
   'hudChrome.crafting.craftedToastQty': '已製作:{name} x{qty}',
@@ -10721,6 +10722,10 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.professions.majorsLabel': '主修：{a}和{b}',
   'hudChrome.professions.pairsHeld': '已持有組合：{count}',
   'hudChrome.professions.returnsLabel': '回歸：{count}',
+  'hudChrome.professions.retentionFooter': '重置專業後保留60%的技能。',
+  'hudChrome.professions.tutorialLink': '專業教學',
+  'hudChrome.marketWindow.mixedListingsFooter':
+    '商人會補充普通商品；玩家上架的物品會以其要價並列顯示。',
   'entities.npcs.forgemistress_darva.name': '達爾瓦鍛造師',
   'entities.npcs.forgemistress_darva.title': '熔爐大師',
   'entities.npcs.forgemistress_darva.greeting':

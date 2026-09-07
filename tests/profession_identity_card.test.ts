@@ -84,9 +84,10 @@ describe('profession identity card painter contract', () => {
       ]);
       const chips = head?.nextElementSibling as HTMLElement;
       expect(chips?.className, 'chips line').toBe('prof-craft-chips');
+      // Shared chips now own the role and cap look while the row anatomy stays unchanged.
       expect([...(chips?.children ?? [])].map((c) => c.className)).toEqual([
-        'prof-role-badge',
-        'prof-ceiling',
+        'prof-role-badge ui-chip',
+        'prof-ceiling ui-chip',
       ]);
     }
     const armorRow = rows.find((r) =>
@@ -534,6 +535,10 @@ describe('identity card type floor and numeral pins (phase 22, source pins)', ()
     path.resolve(process.cwd(), 'src/styles/hud.mobile.css'),
     'utf8',
   ).replace(/\r\n/g, '\n');
+  const library = readFileSync(
+    path.resolve(process.cwd(), 'src/styles/library.css'),
+    'utf8',
+  ).replace(/\r\n/g, '\n');
 
   it('the row family the card reuses carries the 13px name line and the tabular-nums value', () => {
     // .prof-craft-head is the name line (13px, at or above the DESIGN.md
@@ -550,13 +555,11 @@ describe('identity card type floor and numeral pins (phase 22, source pins)', ()
       /\n {2}\.prof-skill-value \{[^}]*font-variant-numeric: tabular-nums;[^}]*color/,
     );
     expect(components).toMatch(/\n {2}\.prof-skill-value \{[^}]*margin-left: auto;/);
-    // The pills stay BORDERED at their family 10px: the border is the
-    // condition of the sub-12px chip exemption in acceptance (a). Two
-    // separate pins on the same block so a harmless declaration reorder
-    // stays green (the mobile-lift idiom below).
-    const pillBlock = /\n {2}\.prof-role-badge,\s*\.prof-ceiling \{[^}]*/;
-    expect(components).toMatch(new RegExp(`${pillBlock.source}font-size: 10px;`));
-    expect(components).toMatch(new RegExp(`${pillBlock.source}border: 1px solid`));
+    // The shared chip primitive now owns the role/cap look at the authored
+    // 12px body floor, including its visible edge.
+    const chipBlock = /\n {2}\.ui-chip \{[^}]*/;
+    expect(library).toMatch(new RegExp(`${chipBlock.source}font-size: 12px;`));
+    expect(library).toMatch(new RegExp(`${chipBlock.source}border: 1px solid`));
   });
 
   it('the 10px rows and the 9px uppercase header are gone from the card scope', () => {

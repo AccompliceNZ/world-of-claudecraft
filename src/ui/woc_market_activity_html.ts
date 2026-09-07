@@ -120,7 +120,7 @@ export function wocActivityHtml(a: WocActivityModel, host: WocActivityHtmlHost):
         ? `<span class="wm-inline-busy">${wocSpinnerHtml()}${esc(t('hudChrome.wocMarket.activityCancelPending'))}</span>`
         : '';
       const directedBadge = l.directed
-        ? `<span class="wm-mine">${esc(t('hudChrome.wocMarket.activityDirected'))}</span>`
+        ? `<span class="wm-mine ui-chip">${esc(t('hudChrome.wocMarket.activityDirected'))}</span>`
         : '';
       // The seller's own cancel, HERE where their listings actually render:
       // a directed listing never passes through the browse detail pane (the
@@ -129,7 +129,7 @@ export function wocActivityHtml(a: WocActivityModel, host: WocActivityHtmlHost):
       // unbid; the server's guards decide the rest, including the
       // cancel-pending conversion on a locked window).
       const cancel = canCancelListing(l)
-        ? `<button type="button" data-action="cancel-listing" data-listing="${l.id}" ${host.busy ? 'disabled' : ''} ` +
+        ? `<button type="button" class="ui-btn" data-action="cancel-listing" data-listing="${l.id}" ${host.busy ? 'disabled' : ''} ` +
           `aria-label="${esc(t('hudChrome.wocMarket.cancelAria', { item: host.itemName(l.itemId) }))}" ${FOCUS_KEY_ATTR}="wm-activity-cancel-${l.id}">` +
           `${esc(t('hudChrome.wocMarket.cancelButton'))}</button>`
         : '';
@@ -171,7 +171,7 @@ export function wocActivityHtml(a: WocActivityModel, host: WocActivityHtmlHost):
               // inline label on every affected row must stay terse (the
               // first-accepted toast names WHICH pending it is instead).
               `<span class="wm-inline-busy" role="status">${wocSpinnerHtml()}${esc(t('hudChrome.wocMarket.confirming'))}</span>`
-            : `<button type="button" data-action="pay-bond" data-bid="${b.id}" ${host.busy ? 'disabled' : ''} ` +
+            : `<button type="button" class="ui-btn" data-action="pay-bond" data-bid="${b.id}" ${host.busy ? 'disabled' : ''} ` +
               // The accessible name names the item when the wire carries it
               // (H13 put the item on the row), the listing id otherwise.
               `aria-label="${esc(
@@ -216,7 +216,7 @@ export function wocActivityHtml(a: WocActivityModel, host: WocActivityHtmlHost):
       const itemName = s.itemId != null && s.itemId !== '' ? host.itemName(s.itemId) : null;
       const payable = s.state === 'offered' || s.state === 'failed';
       const pay = payable
-        ? `<button type="button" class="wm-primary" data-action="pay-settlement" data-settlement="${s.id}" ${host.busy ? 'disabled' : ''} ` +
+        ? `<button type="button" class="wm-primary ui-btn ui-btn--gold" data-action="pay-settlement" data-settlement="${s.id}" ${host.busy ? 'disabled' : ''} ` +
           `aria-label="${esc(
             itemName === null
               ? t('hudChrome.wocMarket.activityPayNowAria', {

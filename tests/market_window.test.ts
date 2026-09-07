@@ -397,8 +397,9 @@ describe('market_window: behavior preserved through the core', () => {
 
 describe('market_window: Browse row cloth/leather/mail cue (#3104)', () => {
   it('resolves the badge from the shared armor-type resolver, not a second classification', () => {
-    expect(painter).toContain(
-      "import { marketArmorBadge, marketArmorPips, marketHeroicStar } from './market_armor_badge';",
+    // The visible Heroic word now shares this import, so pin members without pinning formatter order.
+    expect(painter).toMatch(
+      /import \{[\s\S]*?isHeroicItem,[\s\S]*?marketArmorBadge,[\s\S]*?marketArmorPips,[\s\S]*?marketHeroicStar,[\s\S]*?\} from '\.\/market_armor_badge';/,
     );
     expect(painter).toContain('const armorBadge = marketArmorBadge(item);');
   });
