@@ -81,6 +81,20 @@ describe('HUD_FRAME_SPECS', () => {
     // A duplicated storage key would make two frames overwrite each other's
     // saved box, which is silent and only shows up after a reload.
     expect(new Set(HUD_FRAME_STORAGE_KEYS).size).toBe(HUD_FRAME_SPECS.length);
+    // Plateless rows use the 596px rail width, while three rows keep the 150px stack height.
+    expect(
+      Object.fromEntries(
+        HUD_FRAME_SPECS.filter((spec) =>
+          ['actionBar1', 'actionBar2', 'actionBar3', 'actionBarGroup', 'xpBar'].includes(spec.id),
+        ).map((spec) => [spec.id, spec.fallbackSize]),
+      ),
+    ).toEqual({
+      actionBar1: { w: 596, h: 46 },
+      actionBar2: { w: 596, h: 46 },
+      actionBar3: { w: 596, h: 46 },
+      actionBarGroup: { w: 596, h: 150 },
+      xpBar: { w: 596, h: 10 },
+    });
     // The FULL key list, pinned as literals in spec order: these are persisted
     // player data (localStorage), so renaming any one of them orphans every
     // player's saved layout for that frame with no other test failing. A new

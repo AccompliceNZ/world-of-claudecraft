@@ -104,6 +104,13 @@ describe('XpBarPainter: no raw DOM writes, no magic values (decisions 5a / 12)',
   const src = readFileSync(new URL('../src/ui/xp_bar_painter.ts', import.meta.url), 'utf8');
   const code = src.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1');
 
+  it('keeps the numeric mobile fraction on the root and scopes rail paint to the fill', () => {
+    const css = readFileSync(new URL('../src/styles/hud.css', import.meta.url), 'utf8');
+    // The library rail and mobile ring both name --xp-fill but require different value types.
+    expect(css).toMatch(/#xpbar \.fill \{[\s\S]*?--xp-fill: var\(--xp-rail-fill\);/);
+    expect(css).toMatch(/#xpbar\.overflow \.fill \{\s*--xp-fill: var\(--xp-overflow-fill\);/);
+  });
+
   it('makes no raw style / textContent / classList / setAttribute / setProperty write', () => {
     expect(code).not.toMatch(/\.style\b/);
     expect(code).not.toMatch(/\.textContent\b/);

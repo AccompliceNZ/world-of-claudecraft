@@ -3620,88 +3620,36 @@
     text-align: center;
   }
   #xpbar {
-    width: 612px;
-    height: 10px;
-    background: #14101e;
-    border: 1px solid #000;
-    outline: 1px solid #3a3148;
-    margin: 4px auto 0;
-    position: relative;
-    border-radius: 2px;
-    overflow: hidden;
+    margin: var(--socket-row-gap) auto 0;
+    overflow: visible;
   }
   #xpbar .fill {
-    height: 100%;
+    /* The root keeps numeric --xp-fill for the mobile portrait ring. Scope the
+       rail's paint value to the child so the ui-rail recipe can use the same name. */
+    --xp-fill: var(--xp-rail-fill);
     width: 0%;
-    background: linear-gradient(#b85eff, #6a1bb0);
-    transition: background 0.3s;
   }
   /* Rested XP overlay (classic inn-rested bonus): a blue segment ahead of the fill. */
   #xpbar .rested {
-    position: absolute;
-    top: 0;
-    height: 100%;
     left: 0;
     width: 0%;
-    background: linear-gradient(#5fb0ff, #2b6fd0);
-    opacity: 0.5;
   }
   #xpbar.rested {
-    outline-color: #2b6fd0;
-    box-shadow: 0 0 6px #4a9eff55;
-  }
-  #xpbar .ticks {
-    position: absolute;
-    inset: 0;
-    display: flex;
-  }
-  #xpbar .ticks i {
-    flex: 1;
-    border-right: 1px solid #00000055;
+    outline: 1px solid var(--color-xp-rested-deep);
+    box-shadow: var(--glow-xp-rested);
   }
   #xpbar .label {
-    position: absolute;
-    inset: 0;
-    font-size: 10px;
-    color: #fff;
-    text-align: center;
-    line-height: 10px;
-    text-shadow: 1px 1px 1px #000;
-    opacity: 0;
-    transition: opacity 0.15s;
-  }
-  #xpbar:hover .label {
-    opacity: 1;
-  }
-  /* Always-visible percent (new-player-first-hour: the number was hover-only
-     before, invisible on touch entirely since mobile has no hover). Reads the
-     xp_bar_painter data-percent attribute rather than a new DOM element, so it
-     needs no markup change; swaps out for the fuller .label on hover instead
-     of overlapping it. */
-  #xpbar::after {
-    content: attr(data-percent);
-    position: absolute;
-    inset: 0;
-    padding-right: 4px;
-    font-size: 10px;
-    color: #fff;
-    text-align: right;
-    line-height: 10px;
-    text-shadow: 1px 1px 1px #000;
+    white-space: nowrap;
     pointer-events: none;
-    opacity: 1;
-    transition: opacity 0.15s;
-  }
-  #xpbar:hover::after {
-    opacity: 0;
   }
   /* Post-cap overflow bar (Max-Level XP Overflow): gold/prestige tint. */
   #xpbar.overflow {
-    outline-color: #b8902a;
-    box-shadow: 0 0 6px #f5c84355;
+    border-top-color: var(--gold-dim);
+    border-bottom-color: var(--gold-dim);
+    box-shadow: var(--glow-xp-overflow);
   }
   #xpbar.overflow .fill {
-    background: linear-gradient(#ffe27a, #d99a1c);
+    --xp-fill: var(--xp-overflow-fill);
   }
   #actionbar-row {
     display: flex;
@@ -3723,65 +3671,43 @@
     position: absolute;
     left: 0;
     top: -52px;
-    gap: 6px;
+    gap: var(--socket-row-gap);
     padding: 0;
     margin: 0;
     background: transparent;
     border: 0;
+    border-radius: 0;
     outline: 0;
     box-shadow: none;
+    color: inherit;
   }
   .petbar-group {
     display: flex;
-    gap: 4px;
-    padding: 4px;
-    border: 2px solid #000;
-    outline: 1px solid #5b4618;
-    border-radius: 6px;
-    background: linear-gradient(170deg, #15131fdd, #09080edd);
-    box-shadow: 0 2px 8px #000c;
+    gap: var(--socket-gap);
   }
   .pet-btn {
-    width: 40px;
-    height: 40px;
+    --ui-socket-size: var(--socket-size-pet);
+    flex: none;
     padding: 0;
-    border: 2px solid #4a3d1d;
-    border-radius: 6px;
-    background: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
-    color: #f3df9a;
     cursor: var(--cursor-point);
-    position: relative;
     touch-action: manipulation;
     -webkit-touch-callout: none;
     user-select: none;
-    box-shadow:
-      inset 0 1px 0 #ffffff18,
-      0 2px 4px #0009;
   }
   .pet-btn .icon-label {
-    position: absolute;
-    inset: 1px;
-    border-radius: 4px;
-    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     pointer-events: none;
   }
-  .pet-btn:hover {
-    border-color: var(--gold);
-  }
-  .pet-btn.active {
-    border-color: var(--gold);
-    box-shadow:
-      inset 0 0 0 1px #ffd10066,
-      0 0 6px #ffd10033;
+  .pet-btn:hover:not(:focus-visible),
+  .stance-btn:hover:not(:focus-visible),
+  .action-btn:hover:not(:focus-visible) {
+    outline: 1px solid var(--gold-dim);
+    outline-offset: -1px;
   }
   .pet-btn.autocast {
     border-color: var(--gold);
-    box-shadow:
-      inset 0 0 0 1px color-mix(in srgb, var(--gold) 67%, transparent),
-      0 0 10px color-mix(in srgb, var(--gold) 40%, transparent),
-      0 0 18px color-mix(in srgb, var(--gold) 20%, transparent);
+    box-shadow: var(--glow-pet-autocast);
   }
   @media (forced-colors: active) {
     /* The normal gold glow is flattened by the system palette. Keep autocast
@@ -3815,99 +3741,64 @@
   .pet-btn.disabled,
   .pet-btn.disabled:hover,
   .pet-btn.disabled.active {
-    border-color: #4a3d1d;
-    box-shadow:
-      inset 0 1px 0 #ffffff18,
-      0 2px 4px #0009;
+    border-color: var(--color-socket-rim);
+    box-shadow: var(--shadow-socket);
   }
   .pet-btn.cooldown.autocast {
     filter: grayscale(0.45) brightness(0.78);
   }
-  .pet-btn .cdtext {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    color: var(--gold);
-    /* Same legible outline as the action bar cdtext (issue 1660). */
-    text-shadow:
-      0 0 4px #000,
-      1px 1px 1px #000,
-      -1px -1px 1px #000,
-      1px -1px 1px #000,
-      -1px 1px 1px #000;
-    font-weight: bold;
-    pointer-events: none;
-  }
   /* Stance-style choice bar: warrior stances and paladin auras share this exact
-     in-flow row above the action bars (JS flips it to flex when applicable). */
+     row beside the action bars (JS flips it to flex when applicable). */
   #stancebar {
     display: none;
-    margin: 2px 0 0 0;
+    position: absolute;
+    left: -110px;
+    bottom: calc(var(--xp-rail-h) + var(--socket-row-gap) + var(--spacing-2xs));
+    margin: 0;
     padding: 0;
   }
   .stancebar-group {
     display: flex;
-    gap: 4px;
+    gap: var(--socket-gap);
   }
   .stance-btn {
-    width: 40px;
-    height: 40px;
+    flex: none;
     padding: 0;
-    position: relative;
-    border: 2px solid #4a3d1d;
-    border-radius: 6px;
-    background: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
-    color: #f3df9a;
     cursor: var(--cursor-point);
     touch-action: manipulation;
     -webkit-touch-callout: none;
     user-select: none;
-    box-shadow:
-      inset 0 1px 0 #ffffff18,
-      0 2px 4px #0009;
   }
   .stance-btn .icon-label {
-    position: absolute;
-    inset: 1px;
-    border-radius: 4px;
-    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     pointer-events: none;
   }
-  .stance-btn:hover {
-    border-color: var(--gold);
-  }
-  .stance-btn:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 1px;
-  }
-  .stance-btn.active {
-    border-color: var(--gold);
-    box-shadow:
-      inset 0 0 0 1px #ffd10066,
-      0 0 6px #ffd10033;
-  }
-  /* A third action row adds 58px to the stack. Lift the cast and swing timers
+  /* A third action row adds 52px to the stack. Lift the cast and swing timers
      by the same amount so 720p layouts keep both timers clear of the stack. */
   body.show-actionbar3 #castbar {
-    bottom: 318px;
+    bottom: 312px;
   }
   body.show-actionbar3 #swingbar {
-    bottom: 292px;
+    bottom: 286px;
   }
   body.show-actionbar3 #swingbar-offhand {
-    bottom: 278px;
+    bottom: 272px;
   }
   #actionbar,
   #actionbar2,
   #actionbar3 {
     display: flex;
-    gap: 4px;
-    padding: 6px;
+    gap: var(--socket-gap);
+    width: var(--action-rail-w);
+    min-height: var(--socket-size);
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    outline: 0;
+    box-shadow: none;
+    color: inherit;
   }
   /* The optional rows stack above the primary action bar. Tighter bottom padding
      keeps the group compact. Both are off by default; Interface options add
@@ -3917,7 +3808,7 @@
      Mobile uses the paged action ring regardless of these desktop options. */
   #actionbar2,
   #actionbar3 {
-    padding-bottom: 2px;
+    margin-bottom: var(--socket-row-gap);
     display: none;
   }
   body.show-actionbar2 #actionbar2 {
@@ -3944,8 +3835,26 @@
   #actionbar.bar-vertical .bar-toggle,
   #actionbar2.bar-vertical .bar-toggle,
   #actionbar3.bar-vertical .bar-toggle {
-    flex-direction: row;
-    justify-content: center;
+    right: auto;
+    bottom: -28px;
+    left: 50%;
+    width: var(--socket-size);
+    height: 24px;
+    transform: translateX(-50%);
+  }
+  #actionbar.bar-vertical .bar-toggle-btn:first-child,
+  #actionbar2.bar-vertical .bar-toggle-btn:first-child,
+  #actionbar3.bar-vertical .bar-toggle-btn:first-child {
+    top: 0;
+    left: -5px;
+  }
+  #actionbar.bar-vertical .bar-toggle-btn:last-child,
+  #actionbar2.bar-vertical .bar-toggle-btn:last-child,
+  #actionbar3.bar-vertical .bar-toggle-btn:last-child {
+    top: 0;
+    right: -5px;
+    bottom: auto;
+    left: auto;
   }
   /* The combined block follows bar 1's orientation (body class stamped by
      main.ts): vertical bars sit side by side, bottom-aligned so bar 1 keeps
@@ -3966,13 +3875,17 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
+    gap: var(--socket-row-gap);
     position: relative;
     /* Sized to the bars, not the stack: a block-level flex child stretches to
        its parent's full width, which drew the arrange-mode outline across the
        whole screen instead of around the combined block. */
     width: fit-content;
     margin: 0 auto;
+  }
+  body.combined-action-bars #actionbar2,
+  body.combined-action-bars #actionbar3 {
+    margin-bottom: 0;
   }
   /* A combined group re-homed onto #ui positions off its own left/top, exactly
      as each bar does when moved on its own. The body-qualified selector is
@@ -4003,107 +3916,98 @@
     padding: 0;
     border: 1px solid var(--gold);
     border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
+    background: var(--socket-fill);
     color: var(--gold);
     cursor: var(--cursor-point);
     z-index: 21;
   }
   #actionbar-group .tf-move-btn:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
+    outline-offset: 2px;
   }
   /* While combined, only the rows the player has TURNED ON appear inside the
      group, editing or not: the stock body.show-actionbar2/3 rules keep working
      inside the wrapper, and a switched-off row never renders as a placeholder
      (the options note points at the plus/minus buttons for turning more on). */
-  /* The plus/minus optional-row toggle at the end of the primary bar: a slim
-     vertical pair matching the slot chrome. 24x24 per button is the WCAG 2.2
-     SC 2.5.8 absolute target-size floor (src/ui/CLAUDE.md); do not shrink it. */
+  /* The optional-row control floats off the primary row as gold chevrons with
+     the visible row count between them. Each button keeps the WCAG 2.2 24px
+     absolute target-size floor. */
   .bar-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 2px;
+    position: absolute;
+    right: -28px;
+    bottom: calc(var(--xp-rail-h) + var(--socket-row-gap) + var(--spacing-2xs));
+    width: 24px;
+    height: var(--socket-size);
   }
   .bar-toggle-btn {
+    position: absolute;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 24px;
     height: 24px;
     padding: 0;
-    line-height: 1;
-    font-size: 13px;
-    font-family: var(--title-font);
-    color: #d8c98f;
-    border: 1px solid #4a3d1d;
-    border-radius: 4px;
-    background: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
+    color: var(--gold);
+    border: 0;
+    background: transparent;
     cursor: var(--cursor-point);
-    text-shadow: 1px 1px 2px #000;
-    box-shadow:
-      inset 0 1px 0 #ffffff18,
-      0 2px 4px #0009;
+    filter: drop-shadow(0 1px 1px var(--color-keyline));
+  }
+  .bar-toggle-btn:first-child {
+    top: -5px;
+  }
+  .bar-toggle-btn:last-child {
+    bottom: -5px;
+  }
+  .bar-toggle-btn .ui-icon {
+    width: 14px;
+    height: 14px;
+    transform: rotate(90deg);
+  }
+  .bar-toggle-count {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    color: var(--gold);
+    font-size: 10px;
+    text-shadow: var(--title-shadow);
+    transform: translate(-50%, -50%);
   }
   .bar-toggle-btn:hover:not(:disabled) {
-    border-color: var(--gold);
-    color: #fff;
+    color: var(--color-glint);
   }
   .bar-toggle-btn:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 1px;
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
   .bar-toggle-btn:disabled {
     opacity: 0.35;
     cursor: var(--cursor-arrow);
   }
   .action-btn {
-    width: 46px;
-    height: 46px;
-    position: relative;
-    border: 2px solid #4a3d1d;
-    border-radius: 6px;
-    background: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
-    color: #fff;
+    flex: none;
+    padding: 0;
     cursor: var(--cursor-point);
-    font-family: var(--title-font);
-    text-shadow: 1px 1px 2px #000;
-    box-shadow:
-      inset 0 1px 0 #ffffff18,
-      0 2px 4px #0009;
   }
   .action-btn .icon-label {
-    position: absolute;
-    inset: 1px;
-    border-radius: 4px;
-    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     pointer-events: none;
   }
-  .action-btn:hover {
-    border-color: var(--gold);
-  }
   .action-btn:active {
     transform: translateY(1px);
   }
-  .action-btn.used {
-    border-color: var(--color-border-focus);
-    box-shadow:
-      0 0 10px #ffd100aa,
-      inset 0 0 0 1px #ffd10077,
-      inset 0 1px 0 #ffffff28;
-  }
   .action-btn.empty {
-    background: #0d0d13;
     cursor: default;
-    box-shadow: inset 0 0 10px #000;
   }
   /* Issue 2429: the "Hide Unused Action Slots" Interface option (hideUnusedActionSlots,
      applied as this body class by main.ts). A slot with no ability or item bound loses
      its black background, border, and keybind label so an unlearned class's bar reads
      clean instead of a wall of empty squares; the box stays in the flex row (no
      display: none) so it neither shifts a bound neighbor on the extra rows nor disturbs
-     the deliberate slot layout those rows exist for. The .action-btn:hover rule above
-     still applies (border-color: var(--gold)), so the slot stays a discoverable drop
-     target for dragging a new ability or item in. */
+     the deliberate slot layout those rows exist for. The shared hover outline keeps the
+     slot discoverable as a drop target for dragging a new ability or item in. */
   body.hide-unused-action-slots .action-btn.empty {
     background: transparent;
     border-color: transparent;
@@ -4111,55 +4015,6 @@
   }
   body.hide-unused-action-slots .action-btn.empty .keybind {
     display: none;
-  }
-  .action-btn .keybind {
-    position: absolute;
-    top: 1px;
-    right: 3px;
-    font-size: 10px;
-    color: #ddd;
-    font-family: var(--ui-font);
-  }
-  .action-btn .item-count {
-    position: absolute;
-    right: 3px;
-    bottom: 1px;
-    min-width: 10px;
-    text-align: right;
-    font-size: 10px;
-    color: #fff;
-    font-family: var(--ui-font);
-    font-weight: bold;
-    text-shadow: 1px 1px 2px #000;
-  }
-  .action-btn .cdtext {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 17px;
-    color: var(--gold);
-    /* Crisp dark outline plus a soft halo so the gold number stays legible on
-       bright or warm icons, not just a thin 1px shadow that the art swallows. */
-    text-shadow:
-      0 0 4px #000,
-      1px 1px 1px #000,
-      -1px -1px 1px #000,
-      1px -1px 1px #000,
-      -1px 1px 1px #000;
-  }
-  .action-btn .cd-overlay {
-    position: absolute;
-    inset: 0;
-    /* Classic radial clock wipe: the dark wedge covers the remaining cooldown
-       (--cd-fill, written by action_bar_painter) and sweeps away clockwise as it
-       recovers, instead of the old bottom-up height fill. */
-    background: conic-gradient(
-      transparent 0 calc(100% - var(--cd-fill, 0%)),
-      #000d calc(100% - var(--cd-fill, 0%))
-    );
-    border-radius: 4px;
   }
   /* The recharge veil on a charge-pool ability (Twinstrike, Double Charge): a
      spent charge regenerating while the button stays pressable. Same bottom-up
@@ -4172,8 +4027,8 @@
     right: 0;
     bottom: 0;
     height: 0%;
-    background: #0008;
-    border-radius: 0 0 4px 4px;
+    background: color-mix(in srgb, var(--color-keyline) 53%, transparent);
+    border-radius: 0 0 calc(var(--radius-socket) - 2px) calc(var(--radius-socket) - 2px);
     pointer-events: none;
   }
   /* A charge count reads as CHARGES, not an item stack: gold, a step larger
@@ -4186,25 +4041,12 @@
     bottom: 2px;
     font-size: 13px;
     color: var(--gold);
-    text-shadow:
-      -1px -1px 0 #000,
-      1px -1px 0 #000,
-      -1px 1px 0 #000,
-      1px 1px 0 #000,
-      0 0 3px #000;
+    text-shadow: var(--outline-shadow);
     z-index: 1;
   }
-  .action-btn.unusable .icon-label {
-    filter: grayscale(1) brightness(0.5);
-  }
-  .action-btn.oor .icon-label {
-    filter: brightness(0.55) saturate(0.4);
-  }
   .action-btn.queued {
-    border-color: #fff;
-    box-shadow:
-      0 0 9px #ffd100cc,
-      inset 0 1px 0 #ffffff18;
+    border-color: var(--color-white);
+    box-shadow: var(--glow-action-queued);
   }
   /* Armed ground aim: the queued/proc gold family, double so it can never be
      read as the focus-visible ring (which stays the focus token, solid). */
@@ -4217,10 +4059,6 @@
      gold rim on the covered abilities. Actionable info: never gated by a graphics tier; the
      pulse (motion only) stops under reduced motion, the steady glow stays. */
   .action-btn.proc {
-    border-color: #ffd97a;
-    box-shadow:
-      0 0 12px #ffcf40e6,
-      inset 0 0 6px #ffcf4066;
     animation: abtn-proc-pulse 1.1s ease-in-out infinite alternate;
   }
   @media (forced-colors: active) {
@@ -4233,22 +4071,15 @@
   }
   @keyframes abtn-proc-pulse {
     from {
-      box-shadow:
-        0 0 7px #ffcf40b0,
-        inset 0 0 4px #ffcf4044;
+      box-shadow: var(--glow-action-proc-soft);
     }
     to {
-      box-shadow:
-        0 0 15px #ffcf40f0,
-        inset 0 0 7px #ffcf4088;
+      box-shadow: var(--glow-action-proc-strong);
     }
   }
   .action-btn.empowered {
     border-color: var(--gold);
-    box-shadow:
-      0 0 12px #ffd100dd,
-      inset 0 0 0 1px #fff0a6aa,
-      inset 0 1px 0 #ffffff28;
+    box-shadow: var(--glow-action-empowered);
     animation: action-empowered-pulse 1.15s ease-in-out infinite;
   }
   .action-btn.ascension-spender::after {
@@ -4287,39 +4118,27 @@
   }
   .action-btn.fate-consume-ready,
   .mobile-action-slot.fate-consume-ready {
-    border-color: #76e1cf;
-    outline: 1px solid #a77cff;
+    border-color: var(--color-fate-consume-rim);
+    outline: 1px solid var(--color-fate-consume-outline);
     outline-offset: 1px;
-    box-shadow:
-      0 0 10px rgba(93, 229, 208, 0.9),
-      0 0 20px rgba(129, 73, 218, 0.72),
-      inset 0 0 7px rgba(113, 238, 219, 0.48);
+    box-shadow: var(--glow-action-fate-consume);
     animation: fate-consume-button-pulse 1.05s ease-in-out infinite alternate;
   }
   .action-btn.fate-sentence-ready,
   .mobile-action-slot.fate-sentence-ready {
-    border-color: #ff789d;
-    outline: 1px solid #d99cff;
+    border-color: var(--color-fate-sentence-rim);
+    outline: 1px solid var(--color-fate-sentence-outline);
     outline-offset: 1px;
-    box-shadow:
-      0 0 10px rgba(255, 84, 137, 0.92),
-      0 0 20px rgba(159, 64, 220, 0.76),
-      inset 0 0 7px rgba(255, 102, 153, 0.52);
+    box-shadow: var(--glow-action-fate-sentence);
     animation: fate-sentence-button-pulse 0.92s ease-in-out infinite alternate;
   }
   @keyframes action-empowered-pulse {
     0%,
     100% {
-      box-shadow:
-        0 0 9px #ffd100bb,
-        inset 0 0 0 1px #fff0a688,
-        inset 0 1px 0 #ffffff28;
+      box-shadow: var(--glow-action-empowered-soft);
     }
     50% {
-      box-shadow:
-        0 0 18px #ffd100,
-        inset 0 0 0 1px #fff6c8cc,
-        inset 0 1px 0 #ffffff34;
+      box-shadow: var(--glow-action-empowered-strong);
     }
   }
   @keyframes fate-consume-button-pulse {
@@ -4348,6 +4167,16 @@
       animation: none;
     }
   }
+  body.reduce-motion .action-btn.proc,
+  body.reduce-motion .action-btn.empowered,
+  body.reduce-motion .action-btn.fate-consume-ready,
+  body.reduce-motion .action-btn.fate-sentence-ready,
+  body.reduce-motion .mobile-action-slot.fate-consume-ready,
+  body.reduce-motion .mobile-action-slot.fate-sentence-ready,
+  body.reduce-motion.mobile-touch #mobile-action-ring button.proc,
+  body.reduce-motion.mobile-touch #mobile-action-ring button.empowered {
+    animation: none;
+  }
   @media (forced-colors: active) {
     .action-btn.fate-consume-ready,
     .action-btn.fate-sentence-ready,
@@ -4363,8 +4192,8 @@
     cursor: grab;
   }
   .action-btn.drop-target {
-    border-color: #7fd1ff;
-    box-shadow: 0 0 8px #7fd1ff88;
+    border-color: var(--color-action-drop-target);
+    box-shadow: var(--glow-action-drop-target);
   }
   /* micro-menu: bottom-right, stacked upward, sitting just above the
      Discord/GitHub buttons (both right-aligned to the same edge). Two adjacent
@@ -4581,14 +4410,11 @@
     width: max-content;
     max-width: 90vw;
     padding: 8px 14px;
-    border: 2px solid var(--color-border-focus);
-    border-radius: 6px;
-    background: linear-gradient(170deg, #15131fee, #09080eee);
-    box-shadow: 0 2px 10px #000c;
-    color: var(--color-text-light);
-    font-family: var(--ui-font);
     text-align: center;
     z-index: 25;
+  }
+  #actionbar-bind-banner .btn.ui-btn {
+    all: revert-layer;
   }
   .actionbar-bind-hint {
     font-size: 13px;
@@ -4607,9 +4433,7 @@
      so it reads clearly mid-capture. */
   .action-btn.bind-selected {
     border-color: var(--gold);
-    box-shadow:
-      0 0 10px #ffd100cc,
-      inset 0 0 0 2px var(--gold);
+    box-shadow: var(--glow-action-bind-selected);
   }
   /* While the mode is active every slot is a click target, whether or not it
      currently holds anything: a dashed hover ring is the only extra affordance

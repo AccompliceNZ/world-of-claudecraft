@@ -7628,18 +7628,18 @@ export class Hud {
     for (let i = 0; i < totalButtons; i++) {
       const container = bars[actionBarRowForSlot(i) - 1];
       const btn = document.createElement('button');
-      btn.className = 'action-btn empty';
+      btn.className = 'action-btn ui-socket empty';
       const label = document.createElement('span');
-      label.className = 'icon-label';
+      label.className = 'icon-label ui-socket-art';
       const countEl = document.createElement('span');
-      countEl.className = 'item-count';
+      countEl.className = 'item-count ui-socket-count';
       const kb = document.createElement('span');
-      kb.className = 'keybind';
+      kb.className = 'keybind ui-socket-key';
       kb.textContent = keyCapLabel(this.keybinds.primaryLabel(`slot${i}`)); // initial keycap; the ActionBarPainter keeps it current each frame
       const cdOverlay = document.createElement('div');
-      cdOverlay.className = 'cd-overlay';
+      cdOverlay.className = 'cd-overlay ui-socket-cd';
       const cdText = document.createElement('div');
-      cdText.className = 'cdtext';
+      cdText.className = 'cdtext ui-socket-cd-text';
       const rechargeOverlay = document.createElement('div');
       rechargeOverlay.className = 'recharge-overlay';
       btn.append(label, countEl, kb, cdOverlay, rechargeOverlay, cdText);
@@ -7925,7 +7925,7 @@ export class Hud {
       (iconKey) => this.actionBarIconBg(iconKey),
     );
 
-    // The plus/minus optional-row toggle rides the end of the primary bar. Its
+    // The chevron optional-row toggle rides the end of the primary bar. Its
     // clicks route the visibility settings through optionsHooks.onSettingChange,
     // so main.ts applySetting stays the one resolver (dependency rule, body
     // classes, persistence) and pushes the result back via setActionBarVisibility.
@@ -8217,11 +8217,11 @@ export class Hud {
     });
     document.body.classList.toggle('actionbar-bind-active', this.actionBarBind !== null);
   }
-
   private buildActionBarBindBanner(): void {
     this.actionBarBindBannerEl?.remove();
     const el = document.createElement('div');
     el.id = 'actionbar-bind-banner';
+    el.className = 'ui-panel-strong';
     el.setAttribute('role', 'status');
     const hint = document.createElement('div');
     hint.className = 'actionbar-bind-hint';
@@ -8232,7 +8232,7 @@ export class Hud {
     actions.className = 'actionbar-bind-actions';
     const resetBtn = document.createElement('button');
     resetBtn.type = 'button';
-    resetBtn.className = 'btn';
+    resetBtn.className = 'btn ui-btn';
     resetBtn.textContent = t('hudChrome.actionBar.reset');
     resetBtn.addEventListener('click', () => {
       audio.click();
@@ -8240,7 +8240,7 @@ export class Hud {
     });
     const doneBtn = document.createElement('button');
     doneBtn.type = 'button';
-    doneBtn.className = 'btn';
+    doneBtn.className = 'btn ui-btn';
     doneBtn.textContent = t('hudChrome.actionBar.done');
     doneBtn.addEventListener('click', () => {
       audio.click();
@@ -8381,9 +8381,9 @@ export class Hud {
       } = {},
     ) => {
       const btn = document.createElement('button');
-      btn.className = 'pet-btn';
+      btn.className = 'pet-btn ui-socket';
       btn.dataset.focusKey = opts.focusKey ?? iconId;
-      if (opts.active) btn.classList.add('active');
+      if (opts.active) btn.classList.add('active', 'is-on');
       if (opts.autocast) btn.classList.add('autocast');
       if (opts.cooldownText) btn.classList.add('cooldown');
       if (opts.disabled) btn.classList.add('disabled');
@@ -8407,12 +8407,12 @@ export class Hud {
         btn.setAttribute('aria-keyshortcuts', 'Shift+Enter');
       }
       const icon = document.createElement('span');
-      icon.className = 'icon-label';
+      icon.className = 'icon-label ui-socket-art';
       icon.style.backgroundImage = `url(${iconDataUrl('ability', iconId)})`;
       btn.appendChild(icon);
       if (opts.cooldownText) {
         const cdText = document.createElement('span');
-        cdText.className = 'cdtext';
+        cdText.className = 'cdtext ui-socket-cd-text';
         cdText.textContent = opts.cooldownText;
         btn.appendChild(cdText);
       }
