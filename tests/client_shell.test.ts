@@ -1263,7 +1263,9 @@ describe('client HTML shell', () => {
       expect(entry, name).toMatch(/id="mm-discord"\s+hidden/);
       // Shows the 'U' default keybind as a discoverability hint, same as every
       // other micro-menu button (#mm-social shows 'o', #mm-valecup shows 'y').
-      expect(entry, name).toMatch(/id="mm-discord"[^>]*>\s*<span class="keybind">u<\/span>/);
+      expect(entry, name).toMatch(
+        /id="mm-discord"[^>]*>\s*<span class="keybind ui-keycap">u<\/span>/,
+      );
     }
     // main.ts wires the click through the Hud's discord hook (attachDiscordHook)
     // to openDiscordEntry, the SAME entry point the mobile tray uses: it opens
@@ -1798,7 +1800,7 @@ describe('client HTML shell', () => {
     // button next to the real Social button in the top-left trio.
     expect(html).toContain('<a class="donate-cta"');
     expect(html).toContain('<details id="community-menu">');
-    expect(html).toContain('<summary class="community-toggle"');
+    expect(html).toContain('<summary class="community-toggle ui-disc"');
     expect(html).toContain('<div class="community-tray">');
     // The tray is wishlist-only now (its GitHub/Donate links were removed,
     // owner request); the marketing donate-cta above stays.

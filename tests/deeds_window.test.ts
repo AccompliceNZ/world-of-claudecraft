@@ -662,7 +662,7 @@ describe('tracker accessibility (quest-tracker contract)', () => {
 
   it('hides the decorative glyphs from assistive tech (dt-count text carries the numbers)', () => {
     expect(tracker).toMatch(/dt-chevron" aria-hidden="true"/);
-    expect(tracker).toMatch(/dt-bar" aria-hidden="true"/);
+    expect(tracker).toMatch(/dt-bar ui-bar" aria-hidden="true"/);
   });
 
   it('arms Enter/Space on #deed-tracker, stopped before the game binds hijack them', () => {
@@ -681,7 +681,7 @@ describe('tracker accessibility (quest-tracker contract)', () => {
 
   it('paints the gold focus ring on the focused header', () => {
     expect(hudCss).toMatch(
-      /#deed-tracker \.dt-header:focus-visible \{\s*outline: 2px solid var\(--gold\);\s*outline-offset: 2px;\s*border-radius: 2px;\s*\}/,
+      /#deed-tracker \.dt-header:focus-visible \{\s*outline: 2px solid var\(--color-border-focus\);\s*outline-offset: 2px;\s*\}/,
     );
   });
 });
@@ -1123,8 +1123,6 @@ describe('chrome keys and CSS floors', () => {
 });
 
 describe('non-modal Enter/Space activation guard (WCAG 2.1.1)', () => {
-  const buttonEl = (): HTMLElement => document.createElement('button');
-
   it('adds the Book of Deeds window to the guard array, keeping the shared guard body', () => {
     // The Book is a non-modal overlay, so canUseGameKeys() stays true while a
     // Book button has focus: without the guard, Space jumps the character and

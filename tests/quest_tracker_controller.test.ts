@@ -89,7 +89,9 @@ function harness(entries: QuestProgress[] = []) {
 
 describe('QuestTrackerController', () => {
   it('renders authoritative quests in acceptance order and elides an identical paint', () => {
-    const test = harness([progress('q_wolves'), progress('q_boars', 'ready')]);
+    const wolves = progress('q_wolves');
+    wolves.counts[0] = 0;
+    const test = harness([wolves, progress('q_boars', 'ready')]);
 
     test.controller.update(0);
     test.controller.update(0);
@@ -102,6 +104,27 @@ describe('QuestTrackerController', () => {
     );
     expect(test.html()).toContain('objective:q_wolves:0');
     expect(test.html()).toContain('quest-complete');
+    expect(test.html()).toContain('class="qt-header ui-cin"');
+    expect(test.html()).toContain('class="qt-num ui-badge ui-num"');
+    // The right-rail board separates the objective label from its live numeric column.
+    expect(test.html()).toContain('class="qt-obj ui-meta counted"');
+    expect(test.html()).toContain('class="qt-obj-count ui-num"');
+    expect(test.html()).toContain('0 / 8');
+    expect(test.html()).toContain('<span class="qt-count ui-num">2</span>');
+  });
+
+  it('renders complete and single-target objectives without a numeric column', () => {
+    const incomplete = progress('q_greyjaw');
+    incomplete.counts[0] = 0;
+    const test = harness([incomplete, progress('q_ringleader')]);
+
+    test.controller.update(0);
+
+    expect(test.html()).toContain('class="qt-obj ui-meta muted"');
+    expect(test.html()).toContain('objective:q_greyjaw:0</span></div>');
+    expect(test.html()).toContain('class="qt-obj ui-meta done"');
+    expect(test.html()).toContain('objective:q_ringleader:0</span></div>');
+    expect(test.html()).not.toContain('class="qt-obj-count ui-num"');
   });
 
   it('keeps an unknown quest id tracked at its log position, never a throw (R34)', () => {

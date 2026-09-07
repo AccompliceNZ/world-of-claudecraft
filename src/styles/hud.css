@@ -4132,16 +4132,8 @@
   .micro-btn {
     width: 34px;
     height: 30px;
-    border: 2px solid #4a3d1d;
-    border-radius: 5px;
-    background: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
-    color: var(--color-text-muted);
     cursor: var(--cursor-point);
-    font-size: 12px;
     font-weight: bold;
-    box-shadow:
-      inset 0 1px 0 #ffffff18,
-      0 2px 4px #0009;
     position: relative;
   }
   /* hover flyout: the button's background grows leftward to reveal its label.
@@ -4160,19 +4152,16 @@
     overflow: hidden;
     opacity: 0;
     white-space: nowrap;
-    font-family: var(--font-ui);
     font-size: 12px;
     font-weight: 600;
     letter-spacing: 0.3px;
     line-height: 1;
     color: var(--color-text-muted);
-    background: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
-    border: 2px solid #4a3d1d;
+    background: var(--socket-fill);
+    border: 2px solid var(--color-control-border);
     border-right: none;
-    border-radius: 5px 0 0 5px;
-    box-shadow:
-      inset 0 1px 0 #ffffff18,
-      0 2px 4px #0009;
+    border-radius: var(--radius-card) 0 0 var(--radius-card);
+    box-shadow: var(--edge-glint), var(--shadow-lift);
     pointer-events: none;
     z-index: -1;
     transition:
@@ -4187,16 +4176,16 @@
     opacity: 1;
     padding: 0 18px 0 12px;
   }
-  .micro-btn:hover,
   .micro-btn:hover::before {
-    border-color: var(--gold);
-    color: #fff;
+    border-color: var(--gold-dim);
+    color: var(--color-text-light);
   }
   /* talent button glows while unspent talent points are available */
   .micro-btn.has-points,
   .mobile-btn.has-points {
     border-color: var(--gold);
-    color: #fff;
+    color: var(--color-text-light);
+    box-shadow: var(--glow-gold-soft), var(--edge-glint);
     animation: tal-pulse 1.6s ease-in-out infinite;
     /* Ambient: paused + duration-calmed by the effect-tier tokens. */
     animation-duration: calc(1.6s * var(--motion-scale, 1));
@@ -4205,23 +4194,32 @@
   @keyframes tal-pulse {
     0%,
     100% {
-      box-shadow: 0 0 5px #ffd10066;
+      box-shadow: 0 0 calc(5px * var(--fx-shadow, 1))
+        color-mix(in srgb, var(--gold) 40%, transparent);
     }
     50% {
-      box-shadow: 0 0 12px #ffd100dd;
+      box-shadow: var(--glow-gold);
     }
   }
   .micro-btn .keybind {
     position: absolute;
     bottom: -1px;
     right: 2px;
-    font-size: 9px;
-    color: #998;
+    min-width: 12px;
+    height: 12px;
+    padding: 0 2px;
+    font-size: 8px;
+    line-height: 10px;
   }
   /* music button: a bigger note with a small diagonal slash when audio is off */
   #mm-music .ui-icon {
     width: 22px;
     height: 22px;
+  }
+  /* Music on is the note's own gold, not the launcher's open-window ring: the
+     ring stays reserved for "this button's window is open". */
+  #mm-music.mm-on {
+    color: var(--gold);
   }
   .micro-btn.mm-muted::after {
     content: "";
@@ -4230,11 +4228,23 @@
     top: 50%;
     width: 17px;
     height: 2px;
-    border-radius: 2px;
-    background: #f0e8d2;
-    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.7);
+    border-radius: var(--radius-2xs);
+    background: var(--color-text-light);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-keyline) 70%, transparent);
     transform: translate(-50%, -50%) rotate(-45deg);
     pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .micro-btn.has-points,
+    .mobile-btn.has-points {
+      animation: none;
+      box-shadow: var(--glow-gold-soft), var(--edge-glint);
+    }
+  }
+  body.reduce-motion .micro-btn.has-points,
+  body.reduce-motion .mobile-btn.has-points {
+    animation: none;
+    box-shadow: var(--glow-gold-soft), var(--edge-glint);
   }
   /* Short-viewport rescue: #side-buttons is bottom-anchored and grows upward,
      so on a very short viewport the topmost button in the taller column (the
@@ -4539,25 +4549,9 @@
     bottom: calc(100% + 10px);
     width: 100%;
     aspect-ratio: 1000 / 590;
-    border: 2px solid #4a3d1d;
-    border-radius: 5px;
-    background: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
-    box-shadow:
-      inset 0 1px 0 #ffffff18,
-      0 2px 4px #0009;
-    overflow: hidden;
+    overflow: visible;
     isolation: isolate;
     container-type: inline-size;
-    transition:
-      border-color 0.12s ease,
-      box-shadow 0.12s ease;
-  }
-  .store-promo-card:hover,
-  .store-promo-card:focus-within {
-    border-color: var(--gold);
-    box-shadow:
-      inset 0 1px 0 #ffffff24,
-      0 3px 8px #000b;
   }
   .store-promo-card-open {
     position: absolute;
@@ -4567,7 +4561,9 @@
     padding: 0;
     border: 0;
     background: transparent;
+    border-radius: inherit;
     cursor: var(--cursor-point);
+    overflow: hidden;
   }
   .store-promo-card-open img {
     width: 100%;
@@ -4585,13 +4581,9 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    color: #fff;
     text-align: left;
     line-height: 0.98;
     pointer-events: none;
-    text-shadow:
-      0 2px 2px #000,
-      0 0 12px #000;
   }
   .store-promo-card-season {
     font-size: 5.2cqw;
@@ -4612,15 +4604,11 @@
     min-width: 32%;
     max-width: 47%;
     padding: 2.4% 4%;
-    border: 2px solid #d4ae5f;
-    background: #3a2712e8;
-    color: #fff7df;
     font-size: 4.2cqw;
     font-weight: 800;
     line-height: 1;
     text-align: center;
     text-transform: uppercase;
-    text-shadow: 0 1px 2px #000;
     pointer-events: none;
   }
   .store-promo-card-open:hover img,
@@ -4629,7 +4617,7 @@
   }
   .store-promo-card-open:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: -4px;
+    outline-offset: 2px;
   }
   .store-promo-card-close {
     position: absolute;
@@ -4641,9 +4629,7 @@
     padding: 0;
     display: grid;
     place-items: center;
-    font-size: 22px;
     line-height: 1;
-    box-shadow: 0 1px 3px #000c;
   }
   body.mobile-touch .store-promo-card,
   body.native-app .store-promo-card,
@@ -4880,7 +4866,6 @@
     width: 100%;
     font-size: 12px;
     color: var(--color-text-overlay);
-    text-shadow: 1px 1px 2px #000;
     pointer-events: none;
   }
   /* The header is a <button>: it re-enables pointer events over the otherwise
@@ -4900,9 +4885,7 @@
     gap: 6px;
     width: fit-content;
     max-width: 100%;
-    font-family: var(--title-font);
     font-size: 14px;
-    color: var(--color-text-overlay);
     text-align: left;
     background: none;
     border: 0;
@@ -4911,15 +4894,13 @@
     padding: 0 0 2px;
     cursor: pointer;
     pointer-events: auto;
-    text-shadow: 1px 1px 2px #000;
   }
   #quest-tracker .qt-header:hover {
-    color: #fff;
+    color: var(--color-text-light);
   }
   #quest-tracker .qt-header:focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
-    border-radius: 2px;
   }
   #quest-tracker .qt-chevron {
     font-size: 10px;
@@ -4944,14 +4925,13 @@
   #quest-tracker .qt-title {
     font-weight: bold;
     margin-top: 8px;
-    font-family: var(--title-font);
     width: fit-content;
     max-width: 100%;
     pointer-events: auto;
     cursor: pointer;
   }
   #quest-tracker .qt-title:hover {
-    color: #fff;
+    color: var(--color-text-light);
   }
   /* Bag-hover highlight: matching quest title while a quest stack is hovered
      in bags. Information-add, always-on (no --fx gate). Quest gold wash, not
@@ -4960,36 +4940,43 @@
     color: var(--color-quest-tracker-bag-hover);
     text-shadow:
       0 0 6px color-mix(in srgb, var(--color-quest-tracker-bag-hover) 55%, transparent),
-      1px 1px 2px #000;
+      var(--title-shadow);
   }
   #quest-tracker .qt-title:focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
-    border-radius: 2px;
   }
-  /* acceptance-order number, the same gold badge the world map paints */
+  /* acceptance-order number: the ui-badge SHAPE in the map's quest gold, so the
+     tracker chip and the map badge stay the same object. The library has no
+     gold badge variant yet (a ui-badge--gold would replace these three lines),
+     so the host names the three colors on the shared quest-badge tokens. */
   #quest-tracker .qt-num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
     width: 16px;
+    min-width: 16px;
     height: 16px;
+    padding: 0;
     margin-right: 5px;
-    border-radius: 50%;
     background: var(--color-map-quest-badge-fill);
+    border-color: var(--color-keyline);
     color: var(--color-map-quest-badge-text);
-    border: 1px solid #000;
     font-size: 11px;
-    font-family: var(--ui-font);
-    vertical-align: text-bottom;
     /* dark digit on a gold fill: the tracker's inherited black text-shadow
        only blurs it, so drop it inside the badge */
     text-shadow: none;
+    vertical-align: text-bottom;
   }
   #quest-tracker .qt-obj {
-    color: var(--color-text-overlay);
-    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
     margin-left: 8px;
+  }
+  #quest-tracker .qt-obj-count {
+    flex: none;
+    color: var(--color-text-light);
+  }
+  #quest-tracker .qt-obj.muted {
+    color: var(--color-text-muted);
   }
   #quest-tracker .qt-obj.done,
   .qd-obj.done,
@@ -5000,7 +4987,7 @@
      blue, matching the map/minimap repeat tokens. Plain color classes so the
      marker reads on every graphics tier (fairness invariant). */
   .quest-repeat {
-    color: #0070dd;
+    color: var(--color-quality-rare);
   }
   /* The map tooltip's TAG texts are 13.5px prose over the panel gradient,
      where #0070dd reads 4.07:1 (under the 4.5:1 AA floor for text) and a
@@ -5026,7 +5013,6 @@
     width: 100%;
     font-size: 12px;
     color: var(--color-text-overlay);
-    text-shadow: 1px 1px 2px #000;
     pointer-events: none;
   }
   /* width: fit-content, same rail click-steal rationale as #quest-tracker
@@ -5037,9 +5023,7 @@
     gap: 6px;
     width: fit-content;
     max-width: 100%;
-    font-family: var(--title-font);
     font-size: 14px;
-    color: var(--color-text-overlay);
     text-align: left;
     background: none;
     border: 0;
@@ -5048,15 +5032,13 @@
     padding: 0 0 2px;
     cursor: pointer;
     pointer-events: auto;
-    text-shadow: 1px 1px 2px #000;
   }
   #deed-tracker .dt-header:hover {
-    color: #fff;
+    color: var(--color-text-light);
   }
   #deed-tracker .dt-header:focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
-    border-radius: 2px;
   }
   #deed-tracker .dt-chevron {
     font-size: 10px;
@@ -5080,7 +5062,6 @@
   }
   #deed-tracker .dt-name {
     font-weight: bold;
-    font-family: var(--title-font);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -5088,17 +5069,13 @@
     flex: 1 1 auto;
   }
   #deed-tracker .dt-bar {
+    --bar-color: var(--gold);
+
     flex: 0 0 56px;
-    height: 6px;
-    border: 1px solid #3a3325;
-    border-radius: 3px;
-    background: #14110b;
-    overflow: hidden;
+    height: 3px;
   }
   #deed-tracker .dt-bar-fill {
     display: block;
-    height: 100%;
-    background: linear-gradient(#e6c76a, #a8842f);
   }
   #deed-tracker .dt-count {
     font-size: 11px;
@@ -5116,7 +5093,6 @@
     width: 100%;
     font-size: 12px;
     color: var(--color-text-overlay);
-    text-shadow: 1px 1px 2px #000;
     pointer-events: none;
   }
   /* width: fit-content, same rail click-steal rationale as #quest-tracker
@@ -5127,9 +5103,7 @@
     gap: 6px;
     width: fit-content;
     max-width: 100%;
-    font-family: var(--title-font);
     font-size: 14px;
-    color: var(--color-text-overlay);
     text-align: left;
     background: none;
     border: 0;
@@ -5138,15 +5112,13 @@
     padding: 0 0 2px;
     cursor: pointer;
     pointer-events: auto;
-    text-shadow: 1px 1px 2px #000;
   }
   #reliquary-tracker .dt-header:hover {
-    color: #fff;
+    color: var(--color-text-light);
   }
   #reliquary-tracker .dt-header:focus-visible {
-    outline: 2px solid var(--gold);
+    outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
-    border-radius: 2px;
   }
   #reliquary-tracker .dt-chevron {
     font-size: 10px;
@@ -5170,7 +5142,6 @@
   }
   #reliquary-tracker .dt-name {
     font-weight: bold;
-    font-family: var(--title-font);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -5178,17 +5149,13 @@
     flex: 1 1 auto;
   }
   #reliquary-tracker .dt-bar {
+    --bar-color: var(--color-tracker-reliquary);
+
     flex: 0 0 56px;
-    height: 6px;
-    border: 1px solid #3a3325;
-    border-radius: 3px;
-    background: #14110b;
-    overflow: hidden;
+    height: 3px;
   }
   #reliquary-tracker .dt-bar-fill {
     display: block;
-    height: 100%;
-    background: linear-gradient(#e6c76a, #a8842f);
   }
   #reliquary-tracker .dt-count {
     font-size: 11px;
@@ -5199,18 +5166,25 @@
   }
   @keyframes reliquary-tracker-flash {
     from {
-      color: #ffe9a8;
-      text-shadow: 0 0 6px var(--gold);
+      color: var(--color-text-light);
+      text-shadow: 0 0 6px var(--color-tracker-reliquary);
     }
     to {
       color: var(--color-text-overlay);
-      text-shadow: 1px 1px 2px #000;
+      text-shadow: var(--title-shadow);
     }
   }
   @media (prefers-reduced-motion: reduce) {
     #reliquary-tracker .dt-flash {
       animation: none;
+      color: var(--color-text-light);
+      text-shadow: 0 0 6px var(--color-tracker-reliquary);
     }
+  }
+  body.reduce-motion #reliquary-tracker .dt-flash {
+    animation: none;
+    color: var(--color-text-light);
+    text-shadow: 0 0 6px var(--color-tracker-reliquary);
   }
 
   /* ---------- delve tracker ---------- */
@@ -5222,32 +5196,26 @@
     width: 100%;
     font-size: 12px;
     color: var(--gold);
-    text-shadow: 1px 1px 2px #000;
     pointer-events: none;
   }
   #delve-tracker:has(> #delve-body:empty) {
     display: none;
   }
   #delve-tracker .dt-header {
-    font-family: var(--title-font);
     font-size: 14px;
-    border-bottom: 1px solid #ffd10044;
+    border-bottom: 1px solid color-mix(in srgb, var(--gold) 27%, transparent);
     margin-bottom: 4px;
     padding-bottom: 2px;
   }
   #delve-tracker .dt-title {
     font-weight: bold;
     margin-top: 8px;
-    font-family: var(--title-font);
   }
   #delve-tracker .dt-tier {
-    color: #c9b27a;
-    font-size: 11px;
-    font-weight: normal;
+    height: 18px;
+    padding: 0 6px;
   }
   #delve-tracker .dt-obj {
-    color: #e8e0c8;
-    font-size: 11px;
     margin-left: 8px;
   }
   #delve-tracker .dt-obj.done {
@@ -5267,20 +5235,16 @@
     max-width: calc(100% - 8px);
   }
   #delve-tracker .dt-affix-label {
-    color: #c9b27a;
-    font-size: 11px;
     margin-right: 2px;
   }
   #delve-tracker .dt-affix-icon {
     display: inline-block;
     width: 18px;
     height: 18px;
-    border-radius: 3px;
-    border: 1px solid #0008;
+    border-radius: var(--radius-xs);
+    border: 1px solid color-mix(in srgb, var(--color-keyline) 53%, transparent);
     object-fit: cover;
-    box-shadow:
-      inset 0 0 0 1px #ffffff18,
-      0 1px 3px #0009;
+    box-shadow: var(--edge-glint), var(--shadow-lift);
     cursor: help;
   }
 
@@ -5293,22 +5257,18 @@
     width: 100%;
     font-size: 12px;
     color: var(--gold);
-    text-shadow: 1px 1px 2px #000;
     pointer-events: none;
   }
   #rift-tracker:has(> #rift-body:empty) {
     display: none;
   }
   #rift-tracker .rt-header {
-    font-family: var(--title-font);
     font-size: 14px;
-    border-bottom: 1px solid #ffd10044;
+    border-bottom: 1px solid color-mix(in srgb, var(--gold) 27%, transparent);
     margin-bottom: 4px;
     padding-bottom: 2px;
   }
   #rift-tracker .rt-obj {
-    color: #e8e0c8;
-    font-size: 11px;
     margin-left: 8px;
     margin-top: 4px;
   }
@@ -6023,46 +5983,47 @@
     text-align: center;
   }
   #zone-label {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--gold);
-    font-family: var(--title-font);
-    text-shadow: 1px 1px 3px #000;
-    margin-bottom: 3px;
-    letter-spacing: 0.5px;
+    margin-bottom: 8px;
   }
   #minimap {
+    display: block;
     border-radius: 50%;
     border: 4px solid var(--border);
     box-shadow:
-      0 0 14px #000c,
-      inset 0 0 20px #0008;
+      0 0 calc(14px * var(--fx-shadow, 1)) color-mix(in srgb, var(--color-keyline) 75%, transparent),
+      inset 0 0 20px color-mix(in srgb, var(--color-keyline) 53%, transparent);
   }
-  /* Digital clock pinned to the bottom of the minimap ring, classic style. */
+  /* The board's clock medallion straddles the ring's lower edge. It is anchored
+     from the wrap's BOTTOM, not its top: a zone name that wraps to two lines
+     grows the whole column downward, so a top offset would drift into the ring
+     while a bottom offset moves with it. */
   #minimap-clock {
     position: absolute;
     left: 50%;
-    bottom: -3px;
+    bottom: 97px;
     transform: translateX(-50%);
     min-width: 52px;
     padding: 1px 8px;
+    appearance: none;
     cursor: pointer;
     user-select: none;
-    font-family: var(--font-ui);
     font-size: 12px;
     font-weight: 600;
-    letter-spacing: 0.4px;
     color: var(--gold);
-    text-shadow: 1px 1px 2px #000;
-    background: radial-gradient(circle at 50% 30%, #2c2c3a, #14141d);
-    border: 2px solid var(--border);
+    background: var(--socket-fill);
+    border: 2px solid var(--color-control-border);
     border-radius: 8px;
-    box-shadow:
-      0 2px 4px #0009,
-      inset 0 1px 0 #ffffff14;
+    box-shadow: var(--edge-glint), var(--shadow-lift);
   }
   #minimap-clock:hover {
-    color: #fff;
-    border-color: #c9a86a;
+    color: var(--color-text-light);
+    border-color: var(--gold-dim);
+  }
+  #minimap-clock:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
   /* day/night dial: a satellite disc on the top-right rim of the minimap
      (mirrors the #raid-lockout button placement), showing the world day/night
@@ -6075,44 +6036,46 @@
     z-index: 3;
     width: 44px;
     height: 44px;
-    border-radius: 50%;
-    border: 2px solid var(--border);
-    background: #14141d;
-    box-shadow:
-      0 1px 3px #000a,
-      inset 0 0 6px #0007;
     pointer-events: none;
   }
   #minimap-coords {
-    margin-top: 4px;
+    margin-top: 6px;
     display: inline-block;
-    padding: 1px 8px;
     font-size: 11px;
-    font-variant-numeric: tabular-nums;
-    color: #e8d9b0;
-    background: #0008;
-    border: 1px solid var(--border);
-    border-radius: 9px;
-    text-shadow: 1px 1px 2px #000;
     letter-spacing: 0.3px;
   }
 
-  /* heading compass, a horizontal rose strip beneath the minimap */
+  /* heading compass, a horizontal rose strip beneath the minimap. The top
+     margin is the seat the bottom-anchored clock medallion and zoom discs
+     occupy between the ring and this strip. */
   #compass {
     position: relative;
     width: 162px;
-    margin: 5px auto 0;
+    margin: 42px auto 0;
   }
   #compass-strip {
     position: relative;
     height: 18px;
     overflow: hidden;
-    border: 2px solid var(--border);
-    border-radius: 5px;
-    background: linear-gradient(#1c1a14, #100f0b);
-    box-shadow: inset 0 0 8px #000a;
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
-    mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+    border: 2px solid var(--color-control-border);
+    border-radius: var(--radius-card);
+    background: linear-gradient(var(--color-chrome-ground), var(--color-ink-deep));
+    box-shadow: inset 0 0 calc(8px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--color-keyline) 65%, transparent);
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-keyline) 18%,
+      var(--color-keyline) 82%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      var(--color-keyline) 18%,
+      var(--color-keyline) 82%,
+      transparent
+    );
   }
   #compass-track {
     position: absolute;
@@ -6122,10 +6085,8 @@
     position: absolute;
     top: 50%;
     transform: translate(-50%, -50%);
-    font-family: var(--title-font);
     font-size: 11px;
-    color: #b9ad86;
-    text-shadow: 1px 1px 2px #000;
+    color: var(--color-text-muted);
     pointer-events: none;
     white-space: nowrap;
   }
@@ -6145,62 +6106,48 @@
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 6px solid var(--gold);
-    filter: drop-shadow(0 1px 1px #000);
+    filter: drop-shadow(
+      0 1px calc(1px * var(--fx-shadow, 1))
+        color-mix(in srgb, var(--color-keyline) 75%, transparent)
+    );
   }
   #compass-heading {
     margin-top: 2px;
-    font-family: var(--title-font);
     font-size: 12px;
     color: var(--gold);
-    letter-spacing: 1px;
-    text-shadow: 1px 1px 2px #000;
   }
-  /* minimap zoom control: a compact gold pill pinned to the bottom rim of the
-     round minimap. Vertical centre holds the live zoom readout (e.g. "2×"). */
+  /* minimap zoom control: three compact discs hugging the ring's lower arc,
+     under the clock medallion. Vertical centre holds the live zoom readout
+     (e.g. "2x"). Bottom-anchored for the same reason as the medallion. */
   #minimap-zoom {
     position: absolute;
     left: 50%;
-    bottom: -6px;
+    bottom: 65px;
     transform: translateX(-50%);
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 1px 4px;
     z-index: 2;
-    background: radial-gradient(circle at 50% 30%, #2c2c3a, #15151f);
-    border: 1px solid #4a3d1d;
-    border-radius: 9px;
-    box-shadow: 0 1px 3px #000a;
   }
   .minimap-zoom-btn {
-    width: 17px;
-    height: 17px;
+    --disc-size: 22px;
+
     padding: 0;
     line-height: 1;
     font-size: 14px;
     font-weight: bold;
-    color: var(--color-text-muted);
-    background: none;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-    font-family: var(--title-font);
-  }
-  .minimap-zoom-btn:hover:not(:disabled) {
-    color: #fff;
-    background: #ffffff1a;
   }
   .minimap-zoom-btn:disabled {
     opacity: 0.3;
     cursor: default;
   }
   #minimap-zoom-label {
+    --disc-size: 24px;
+
     min-width: 24px;
     font-size: 11px;
     color: var(--gold);
-    font-family: var(--title-font);
-    text-shadow: 1px 1px 2px #000;
-    letter-spacing: 0.3px;
+    cursor: default;
   }
 
   /* wraps the round minimap canvas so the raid-lockout badge can anchor to the
@@ -6210,63 +6157,56 @@
     display: inline-block;
     line-height: 0;
   }
-  /* Hand-gilded ring around the round minimap disc, reusing the Performance
-     Overlay's gilt-gradient technique (#2196, perf_ornament_svg.ts /
-     applyMinimapOrnamentVars, called once at boot). A circular disc needs no
-     mask geometry the way that window's straight edges/corners did: the ring
-     is simply a same-shape ::before sized a few px larger than the canvas,
-     painted BEHIND it (negative z-index), so the canvas's own fully opaque
-     pixels cover the center and only the extra outer band reads as the ring.
-     No layout change: the ring lives outside #minimap-disc's own box (which
-     stays exactly canvas-sized), so the rim badges below keep their existing
-     positions and z-index: 3 stacks safely above this ring. */
+  /* The board's conic-bronze bezel, painted BEHIND the canvas and outside the
+     disc's own layout box (inset -6px, z-index -1), so the canvas covers the
+     centre and only the outer band reads as a ring: the four guarded rim seats
+     do not move. Three layers, each a real axis of variation:
+       1) the deterministic 9-stop conic bronze from the board, which replaces
+          the generated `--minimap-gilt` tone ramp as the ring's base metal;
+       2) `--minimap-speckle` (minimap_gilded_ornament.ts), the seeded field of
+          dark tarnish spots that keeps the ring reading as hand-gilded rather
+          than printed. `hard-light` (not `overlay`) decides multiply-vs-screen
+          from the SOURCE, so a dark spot consistently darkens whatever tone it
+          lands on. The low effect tier resolves this token to `none`, which is
+          how the expensive layer (an SVG data URI) is still shed there;
+       3) the board's soft directional sheen on top.
+     The -6px inset is load-bearing: minimap_gilded_ornament.ts's SPECKLE_R_MIN
+     is tuned to the band that inset leaves visible. */
   #minimap-disc::before {
     content: "";
     position: absolute;
-    /* Thin: matches a real gold ring's proportions (and this element's own
-       pre-ornament width), not a thick painted band. An earlier pass widened
-       this to make the texture easier to see and overshot into "thick single
-       color border" territory; the fix was better texture, not more width.
-       -6px (not the -5px this narrowly missed) also gives the dark tarnish
-       speckles (minimap_gilded_ornament.ts) enough visible band width to
-       render as more than sub-pixel dots. */
     inset: -6px;
     z-index: -1;
     border-radius: 50%;
-    /* Not a stack of discrete color BANDS (an earlier pass read as a
-       striped/layered ring once actually compared against the reference):
-       real hand-gilded gold reads as textured because of slight dark
-       tarnish spotting across the surface, not because the metal is
-       painted in rings. Three layers, each a real axis of variation:
-       1) `--minimap-gilt` (#2196's perfGiltGradientBackground(), reused
-          as-is): hand-applied, uneven tone BY ANGLE around the ring;
-       2) `--minimap-speckle` (minimap_gilded_ornament.ts,
-          minimapGiltSpeckleBackground(), reusing that same file's seeded
-          mulberry32 PRNG): a sparse field of small dark tarnish spots
-          (weighted heavily toward the dark end of the gold ramp, matching
-          the reference's brass-with-dark-spotting look, not bright
-          flecks). `hard-light` (not `overlay`) blends it into (1):
-          hard-light's multiply-vs-screen choice is decided by the SOURCE
-          (this speckle layer), so a dark spot consistently darkens
-          wherever it sits; overlay decides by the BACKDROP instead, which
-          read as washed out against the gilt gradient's own swings. The
-          spots read as tarnish IN the metal, not decals on top of it;
-       3) a soft directional sheen on top (normal blend; the same
-          `radial-gradient(circle at 50% 30%, ...)` fake-3D highlight
-          convention this file already uses on #minimap-clock/#raid-lockout/
-          #minimap-zoom). */
     background:
-      radial-gradient(circle at 50% 20%, #fff8df50, transparent 55%), var(--minimap-speckle),
-      var(--minimap-gilt);
+      radial-gradient(
+        circle at 50% 20%,
+        color-mix(in srgb, var(--color-glint) 35%, transparent),
+        transparent 55%
+      ),
+      var(--minimap-speckle),
+      conic-gradient(
+        from 18deg,
+        var(--color-bronze-dark),
+        var(--color-glint) 9%,
+        var(--color-bronze-light) 17%,
+        var(--color-bronze-dark) 31%,
+        var(--color-bronze-light) 46%,
+        var(--color-glint) 53%,
+        var(--color-bronze-dark) 68%,
+        var(--color-bronze-light) 83%,
+        var(--color-bronze-dark)
+      );
     background-size:
       auto,
       100% 100%,
       auto;
     background-blend-mode: normal, hard-light, normal;
     box-shadow:
-      inset 0 0 0 1px #fff2c440,
-      inset 0 0 2px 1px #00000060,
-      0 1px 3px #000a;
+      inset 0 0 0 1px color-mix(in srgb, var(--color-glint) 25%, transparent),
+      inset 0 0 2px 1px color-mix(in srgb, var(--color-keyline) 38%, transparent),
+      0 1px calc(3px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--color-keyline) 65%, transparent);
     pointer-events: none;
   }
   /* raid-lockout badge: a small satellite button hugging the bottom-left rim of
@@ -6277,48 +6217,24 @@
     left: 10px;
     bottom: 10px;
     z-index: 3;
-    width: 26px;
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 28px;
+    height: 28px;
     padding: 0;
-    cursor: pointer;
-    border-radius: 50%;
-    background: radial-gradient(circle at 50% 30%, #2c2c3a, #15151f);
-    border: 1px solid #4a3d1d;
-    box-shadow: 0 1px 3px #000a;
-    color: #8c8472;
-    transition:
-      color 0.2s,
-      border-color 0.2s,
-      box-shadow 0.2s;
   }
   #raid-lockout svg {
     width: 15px;
     height: 15px;
     display: block;
   }
-  #raid-lockout:hover,
-  #raid-lockout:focus-visible {
-    color: #d8c89a;
-    border-color: #c9a86a;
-    outline: none;
-  }
-  #raid-lockout:focus-visible {
-    box-shadow: 0 0 0 2px var(--gold);
-  }
   #raid-lockout.locked {
     color: var(--gold);
-    border-color: #c9a86a;
-    box-shadow:
-      0 0 8px #c9a86a66,
-      0 1px 3px #000a;
+    border-color: var(--gold-dim);
+    box-shadow: var(--glow-gold-soft), var(--edge-glint);
   }
   #daily-rewards-button {
     position: relative;
-    width: 50px;
-    height: 46px;
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -6326,20 +6242,11 @@
     cursor: var(--cursor-point);
     pointer-events: auto;
     touch-action: manipulation;
-    border-radius: 8px;
     margin-bottom: 14px;
     background: transparent;
     border: 0;
-    box-shadow: none;
-    color: #f6c15b;
     overflow: visible;
-    transition:
-      transform 0.16s,
-      filter 0.16s;
-  }
-  #daily-rewards-button.spin-ready {
-    box-shadow: none;
-    color: #fff;
+    transition: filter var(--dur-panel) ease;
   }
   #daily-rewards-button.spin-ready .daily-rewards-icon {
     animation: daily-rewards-icon-pulse 1.6s ease-in-out infinite;
@@ -6354,7 +6261,12 @@
     width: 54px;
     height: 54px;
     border-radius: 50%;
-    background: radial-gradient(circle, #ffe08a99 0%, #ffd10066 34%, #ffd10000 72%);
+    background: radial-gradient(
+      circle,
+      color-mix(in srgb, var(--color-glint) 60%, transparent) 0%,
+      color-mix(in srgb, var(--gold) 40%, transparent) 34%,
+      transparent 72%
+    );
     opacity: 0;
     transform: translate(-50%, -50%) scale(0.85);
     pointer-events: none;
@@ -6371,36 +6283,58 @@
   #daily-rewards-button .daily-rewards-icon {
     position: relative;
     z-index: 1;
-    width: 64px;
-    height: 64px;
+    width: 48px;
+    height: 48px;
     display: block;
     object-fit: contain;
     pointer-events: none;
-    filter: drop-shadow(0 2px 2px #000b) drop-shadow(0 0 4px #ffd56d55);
+    filter: drop-shadow(
+        0 2px calc(2px * var(--fx-shadow, 1))
+          color-mix(in srgb, var(--color-keyline) 70%, transparent)
+      )
+      drop-shadow(
+        0 0 calc(4px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 35%, transparent)
+      );
+  }
+  #daily-rewards-button .daily-reward-count {
+    top: -2px;
+    right: -2px;
+    z-index: 2;
+    display: none;
+  }
+  #daily-rewards-button.spin-ready .daily-reward-count {
+    display: inline-flex;
   }
   #daily-rewards-button:hover,
   #daily-rewards-button:focus-visible {
-    border-color: #ffe08a;
-    outline: none;
-    color: #fff;
-  }
-  #daily-rewards-button:hover,
-  #daily-rewards-button:focus-visible {
-    transform: translateY(-1px);
     filter: brightness(1.1);
   }
   #daily-rewards-button:focus-visible {
-    outline: 2px solid var(--gold);
-    outline-offset: 3px;
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
   @keyframes daily-rewards-icon-pulse {
     0%,
     100% {
-      filter: drop-shadow(0 2px 2px #000b) drop-shadow(0 0 4px #ffd56d55) brightness(1);
+      filter: drop-shadow(
+          0 2px calc(2px * var(--fx-shadow, 1))
+            color-mix(in srgb, var(--color-keyline) 70%, transparent)
+        )
+        drop-shadow(
+          0 0 calc(4px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 35%, transparent)
+        )
+        brightness(1);
     }
     50% {
-      filter: drop-shadow(0 2px 2px #000b) drop-shadow(0 0 14px #ffe08acc) brightness(1.16)
-        saturate(1.12);
+      filter: drop-shadow(
+          0 2px calc(2px * var(--fx-shadow, 1))
+            color-mix(in srgb, var(--color-keyline) 70%, transparent)
+        )
+        drop-shadow(
+          0 0 calc(14px * var(--fx-shadow, 1))
+            color-mix(in srgb, var(--color-glint) 80%, transparent)
+        )
+        brightness(1.16) saturate(1.12);
     }
   }
   @keyframes daily-rewards-glow-pulse {
@@ -6414,6 +6348,24 @@
       transform: translate(-50%, -50%) scale(1.18);
     }
   }
+  @media (prefers-reduced-motion: reduce) {
+    #daily-rewards-button.spin-ready .daily-rewards-icon,
+    #daily-rewards-button.spin-ready::before {
+      animation: none;
+    }
+    #daily-rewards-button.spin-ready::before {
+      opacity: 0.62;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+  body.reduce-motion #daily-rewards-button.spin-ready .daily-rewards-icon,
+  body.reduce-motion #daily-rewards-button.spin-ready::before {
+    animation: none;
+  }
+  body.reduce-motion #daily-rewards-button.spin-ready::before {
+    opacity: 0.62;
+    transform: translate(-50%, -50%) scale(1);
+  }
   /* the lockout panel rows inside the shared tooltip box */
   .rl-panel-title {
     margin-bottom: 4px;
@@ -6426,7 +6378,7 @@
     line-height: 1.5;
   }
   .rl-row .rl-name {
-    color: #e8dcc0;
+    color: var(--color-text-secondary);
   }
   .rl-row .rl-time {
     color: var(--gold);
@@ -6434,7 +6386,7 @@
   }
   .rl-empty {
     font-size: 12px;
-    color: #b8c8a0;
+    color: var(--color-text-success);
   }
 
   /* ---------- community HUD ---------- */
@@ -6461,6 +6413,8 @@
     align-items: center;
     gap: 4px;
   }
+  /* The tray plate stays fixed dark on every preset: it floats over the world,
+     not over a themed panel, so its ink is fixed too (see the chip below). */
   .community-link {
     width: 34px;
     height: 30px;
@@ -6469,51 +6423,29 @@
     justify-content: center;
     color: var(--color-text-muted);
     text-decoration: none;
-    border: 2px solid #4a3d1d;
-    border-radius: 5px;
-    background: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
-    box-shadow:
-      inset 0 1px 0 #ffffff18,
-      0 2px 4px #0009;
+    border: 2px solid var(--color-socket-rim);
+    border-radius: var(--radius-card);
+    background: var(--chrome-plate-fixed);
+    box-shadow: var(--edge-glint), var(--shadow-lift);
     transition:
-      color 0.15s,
-      border-color 0.15s;
+      color var(--dur-frame) ease,
+      border-color var(--dur-frame) ease;
   }
-  .community-link:hover {
-    color: #fff;
-    border-color: #7f8cff;
-  } /* Discord brand */
-  .community-link.github:hover {
-    color: #fff;
-    border-color: #e4e4ea;
-  } /* GitHub brand */
   .community-link svg {
     width: 18px;
     height: 18px;
     flex: none;
     display: block;
   }
+  /* The tray toggle is a ui-disc; only its glyph needs a size here (the summary
+     itself is display:none on desktop, where the tray is always open). */
+  .community-toggle .ui-icon {
+    width: 16px;
+    height: 16px;
+  }
   .community-link span {
     display: none;
   }
-  /* Donate is the one labelled community button, show its text and auto-width to fit. */
-  .community-link.donate {
-    width: auto;
-    gap: 6px;
-    padding: 0 11px;
-    font-family: var(--font-ui);
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.3px;
-  }
-  .community-link.donate span {
-    display: inline;
-    line-height: 1;
-  }
-  .community-link.donate:hover {
-    color: #fff;
-    border-color: #ff6b8b;
-  } /* Donate */
   body.native-app .donate-cta,
   body.native-app .community-link.donate,
   body.native-app .social-link.donate,
@@ -6543,7 +6475,7 @@
        - its only motion is a single slow sheen that crosses the plate about once
          every 14 seconds and spends the rest of the cycle parked off the left
          edge, so it registers peripherally and never asks to be looked at.
-     Steam's own #66c0f4 arrives on hover and keyboard focus only, identifying the
+     Steam's own accent token arrives on hover and keyboard focus only, identifying the
      destination the way each sibling link's brand colour already does. */
   .community-link.steam-wishlist-chip {
     position: relative;
@@ -6558,7 +6490,7 @@
     /* The plate itself is fixed dark across themes, so the ink is fixed too.
        Parchment's repaired themed token is dark brown for light panels and
        fails here; this muted silver holds above 7:1 on both gradient stops. */
-    color: #b8bcc8;
+    color: var(--color-chrome-plate-ink);
   }
   .community-link.steam-wishlist-chip span {
     display: inline;
@@ -6580,7 +6512,7 @@
     background: linear-gradient(
       100deg,
       transparent 36%,
-      rgb(255 238 190 / 22%) 50%,
+      color-mix(in srgb, var(--color-glint) 22%, transparent) 50%,
       transparent 64%
     );
     transform: translateX(-140%);
@@ -6599,8 +6531,16 @@
   }
   .community-link.steam-wishlist-chip:hover,
   .community-link.steam-wishlist-chip:focus-visible {
-    color: #fff;
-    border-color: #66c0f4;
+    color: var(--color-text-light);
+    border-color: var(--color-steam-accent);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .community-link.steam-wishlist-chip::after {
+      animation: none;
+    }
+  }
+  body.reduce-motion .community-link.steam-wishlist-chip::after {
+    animation: none;
   }
   /* Two audiences never see the reminder: a player already inside the Steam
      build of the desktop app (body.steam-build, stamped from the shell's own
@@ -10088,17 +10028,10 @@
     right: 4px;
     bottom: 4px;
     z-index: 3;
-    display: inline-flex;
-    align-items: center;
-    gap: 3px;
-    padding: 3px 7px;
-    background: var(--color-bg-deep);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-pill);
-    color: var(--gold);
+    width: 28px;
+    height: 28px;
+    padding: 0;
     appearance: none;
-    cursor: pointer;
-    font-family: inherit;
     pointer-events: auto;
   }
   #mail-indicator[hidden] {
@@ -10109,8 +10042,7 @@
     height: 14px;
   }
   .mail-indicator-count {
-    font: 700 11px var(--font-display);
-    letter-spacing: 0.4px;
+    pointer-events: none;
   }
   /* ---------- World Market collect indicator ---------- */
   /* The Merchant's coin: sale proceeds or returned items wait for collection.
@@ -10127,29 +10059,14 @@
     left: 4px;
     top: 4px;
     z-index: 3;
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 7px;
-    background: var(--color-bg-deep);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-pill);
-    color: var(--gold);
+    width: 28px;
+    height: 28px;
+    padding: 0;
     appearance: none;
-    cursor: pointer;
-    font-family: inherit;
     pointer-events: auto;
   }
   #market-indicator[hidden] {
     display: none;
-  }
-  #market-indicator:hover,
-  #market-indicator:focus-visible {
-    color: var(--color-text-light);
-    border-color: var(--gold-dim);
-  }
-  #market-indicator:focus-visible {
-    outline: 2px solid var(--color-border-focus);
-    outline-offset: 2px;
   }
   #market-indicator .ui-icon {
     width: 14px;

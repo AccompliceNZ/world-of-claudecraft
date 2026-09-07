@@ -255,45 +255,43 @@
     <div id="swingbar-offhand" aria-hidden="true"><div class="fill"></div><div class="label"></div></div>
 
     <div id="minimap-wrap">
-      <div id="zone-label" data-i18n="entities.zones.eastbrook_vale.name">Eastbrook Vale</div>
+      <div id="zone-label" class="ui-cin ui-outline" data-i18n="entities.zones.eastbrook_vale.name">Eastbrook Vale</div>
       <div id="minimap-disc">
         <!-- Decorative canvas: the minimap pixels are not screen-readable, so the
              canvas is aria-hidden, like #nameplates/#swingbar and the FCT nodes. Its textual
              surface is the adjacent #zone-label + #minimap-coords (role=status), with the fully
              accessible #map-window as the alternative, per the zone-label decision. -->
         <canvas id="minimap" width="162" height="162" aria-hidden="true"></canvas>
-        <button id="raid-lockout" type="button" hidden data-i18n-title="hudChrome.raidLockout.title" data-i18n-aria="hudChrome.raidLockout.title" title="Raid Lockouts" aria-label="Raid Lockouts"></button>
-        <!-- Ravenpost envelope: visible while unread letters wait (role=status so
-             arrivals are announced; reading them still requires a mailbox). -->
-        <div id="mail-indicator" role="status" hidden data-icon="mail"><span class="mail-indicator-count">0</span></div>
+        <button id="raid-lockout" class="ui-disc" type="button" hidden data-i18n-title="hudChrome.raidLockout.title" data-i18n-aria="hudChrome.raidLockout.title" title="Raid Lockouts" aria-label="Raid Lockouts"></button>
+        <!-- Ravenpost envelope: visible while unread letters wait; opens the mailbox
+             window, which explains when the player is too far from a mailbox. -->
+        <button id="mail-indicator" class="ui-disc" type="button" hidden data-icon="mail" aria-live="polite"><span class="mail-indicator-count ui-badge ui-badge--corner">0</span></button>
         <!-- World Market coin: visible while sale proceeds or returned items wait at
              the Merchant; opens the market window when standing at the Merchant, and
              is informational only (the tooltip) anywhere else. -->
-        <button id="market-indicator" type="button" hidden data-icon="market" aria-live="polite" data-i18n-title="hudChrome.marketIndicator.tip" data-i18n-aria="hudChrome.marketIndicator.aria" title="Sale proceeds or returned items are waiting for you at the Merchant." aria-label="World Market proceeds or items waiting"></button>
+        <button id="market-indicator" class="ui-disc" type="button" hidden data-icon="market" aria-live="polite" data-i18n-title="hudChrome.marketIndicator.tip" data-i18n-aria="hudChrome.marketIndicator.aria" title="Sale proceeds or returned items are waiting for you at the Merchant." aria-label="World Market proceeds or items waiting"></button>
         <!-- Decorative day/night dial: paints the 12h world cycle as a ring of sky
              colors with a "now" marker. aria-hidden like the minimap; the accessible
              time surface is #minimap-clock. -->
-        <canvas id="minimap-daynight" width="88" height="88" aria-hidden="true"></canvas>
+        <canvas id="minimap-daynight" class="ui-disc" width="88" height="88" aria-hidden="true"></canvas>
       </div>
-      <div id="minimap-clock" data-i18n-title="hudChrome.widgets.clockTitle" title="Local time — click to toggle 12/24-hour">--:--</div>
-      <div id="minimap-coords" data-i18n-title="hudChrome.widgets.worldCoordinates" data-i18n-aria="hudChrome.widgets.coordinates" title="Your current world coordinates" aria-label="Coordinates">0, 0</div>
-      <div id="compass" data-i18n-aria="hudChrome.widgets.heading" aria-label="Heading">
+      <button id="minimap-clock" class="ui-cin ui-num" type="button" data-i18n-title="hudChrome.widgets.clockTitle" title="Local time — click to toggle 12/24-hour">--:--</button>
+      <div id="compass" class="ui-outline" role="img" data-i18n-aria="hudChrome.widgets.heading" aria-label="Heading">
         <div id="compass-strip"><div id="compass-track"></div></div>
         <div id="compass-center"></div>
-        <div id="compass-heading">N</div>
+        <div id="compass-heading" class="ui-cin">N</div>
       </div>
-      <div id="minimap-zoom" data-i18n-aria="hudChrome.widgets.minimapZoom" aria-label="Minimap zoom">
-        <button class="minimap-zoom-btn" id="minimap-zoom-out" data-i18n-title="hud.core.zoomOut" data-i18n-aria="hud.core.zoomOut" title="Zoom out" aria-label="Zoom out minimap">&minus;</button>
-        <span id="minimap-zoom-label" aria-live="polite">1×</span>
-        <button class="minimap-zoom-btn" id="minimap-zoom-in" data-i18n-title="hud.core.zoomIn" data-i18n-aria="hud.core.zoomIn" title="Zoom in" aria-label="Zoom in minimap">+</button>
+      <div id="minimap-coords" class="ui-chip ui-num" role="status" data-i18n-title="hudChrome.widgets.worldCoordinates" data-i18n-aria="hudChrome.widgets.coordinates" title="Your current world coordinates" aria-label="Coordinates">0, 0</div>
+      <div id="minimap-zoom" role="group" data-i18n-aria="hudChrome.widgets.minimapZoom" aria-label="Minimap zoom">
+        <button type="button" class="minimap-zoom-btn ui-disc ui-cin" id="minimap-zoom-out" data-i18n-title="hud.core.zoomOut" data-i18n-aria="hud.core.zoomOut" title="Zoom out" aria-label="Zoom out minimap">&minus;</button>
+        <span id="minimap-zoom-label" class="ui-disc ui-num" aria-live="polite">1×</span>
+        <button type="button" class="minimap-zoom-btn ui-disc ui-cin" id="minimap-zoom-in" data-i18n-title="hud.core.zoomIn" data-i18n-aria="hud.core.zoomIn" title="Zoom in" aria-label="Zoom in minimap">+</button>
       </div>
     </div>
 
     <nav id="community-hud" data-i18n-aria="hud.core.communityLinks" aria-label="Community links">
       <details id="community-menu">
-        <summary class="community-toggle" data-i18n-title="hud.core.communityLinks" data-i18n-aria="hud.core.communityLinks" title="Community links" aria-label="Community links">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.5 11.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Zm9 0a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7ZM1.7 19.6c.5-3.6 2.6-5.5 5.8-5.5s5.3 1.9 5.8 5.5c.1.6-.4 1.1-1 1.1H2.7c-.6 0-1.1-.5-1-1.1Zm9.7-4.6c1.1-.7 2.8-.9 5.1-.9 3.2 0 5.3 1.9 5.8 5.5.1.6-.4 1.1-1 1.1h-6.6c-.3-2.3-1.4-4.2-3.3-5.7Z"/></svg>
-        </summary>
+        <summary class="community-toggle ui-disc" data-icon="more" data-i18n-title="hud.core.communityLinks" data-i18n-aria="hud.core.communityLinks" title="Community links" aria-label="Community links"></summary>
         <div class="community-tray">
           <a class="community-link steam-wishlist steam-wishlist-chip" href="https://store.steampowered.com/app/4897790/World_of_ClaudeCraft/" target="_blank" rel="noopener noreferrer" data-icon="steam" data-i18n-title="hudChrome.steam.wishlistAria" data-i18n-aria="hudChrome.steam.wishlistAria" title="Wishlist on Steam: open the World of ClaudeCraft store page" aria-label="Wishlist on Steam: open the World of ClaudeCraft store page">
             <span data-i18n="hudChrome.steam.wishlist">Wishlist on Steam</span>
@@ -306,7 +304,7 @@
       </details>
     </nav>
 
-    <div id="right-tracker-stack">
+    <div id="right-tracker-stack" class="ui-outline">
       <div id="quest-tracker"><div id="qt-body"></div></div>
       <div id="deed-tracker"></div>
       <div id="reliquary-tracker"></div>
@@ -533,31 +531,31 @@
     <div id="report-window" class="window panel ui-window"></div>
     <div id="side-buttons">
       <div id="side-buttons-col-a" class="side-buttons-col">
-        <button class="micro-btn" id="mm-char" data-i18n-title="hud.keybinds.actions.char" data-i18n-aria="hud.keybinds.actions.char" title="Character" aria-label="Character" data-icon="character"><span class="keybind">c</span></button>
-        <button class="micro-btn" id="mm-spell" data-i18n-title="abilityUi.spellbook.title" data-i18n-aria="abilityUi.spellbook.title" title="Spellbook" aria-label="Spellbook" data-icon="spellbook"><span class="keybind">p</span></button>
-        <button class="micro-btn" id="mm-talents" data-i18n-title="game.talents.title" data-i18n-aria="game.talents.title" title="Talents" aria-label="Talents" data-icon="talents"><span class="keybind">n</span></button>
-        <button class="micro-btn" id="mm-town-focus" style="display:none" data-i18n-title="hudChrome.townFocus.title" data-i18n-aria="hudChrome.townFocus.title" title="Town Focus" aria-label="Town Focus" data-icon="map"></button>
-        <button class="micro-btn" id="mm-quest" data-i18n-title="questUi.log.title" data-i18n-aria="questUi.log.title" title="Quest Log" aria-label="Quest Log" data-icon="questlog"><span class="keybind">l</span></button>
-        <button class="micro-btn" id="mm-deeds" data-i18n-title="hudChrome.deeds.title" data-i18n-aria="hudChrome.deeds.title" title="Book of Deeds" aria-label="Book of Deeds" data-icon="book"><span class="keybind">s-z</span></button>
-        <button type="button" class="micro-btn" id="mm-reliquary" data-i18n-title="hudChrome.reliquary.title" data-i18n-aria="hudChrome.reliquary.title" title="The Reliquary" aria-label="The Reliquary" data-icon="crown"><span class="keybind">s-x</span></button>
-        <button type="button" class="micro-btn" id="mm-professions" data-i18n-title="hudChrome.professions.title" data-i18n-aria="hudChrome.professions.title" title="Professions" aria-label="Professions" data-icon="professions"><span class="keybind">s-p</span></button>
-        <button class="micro-btn" id="mm-map" data-i18n-title="hud.keybinds.actions.map" data-i18n-aria="hud.keybinds.actions.map" title="World Map" aria-label="World Map" data-icon="map"><span class="keybind">m</span></button>
-        <button class="micro-btn" id="mm-bag" data-i18n-title="itemUi.bags.title" data-i18n-aria="itemUi.bags.title" title="Bags" aria-label="Bags" data-icon="bags"><span class="keybind">b</span></button>
-        <button class="micro-btn" id="mm-crafting" data-i18n-title="hudChrome.crafting.title" data-i18n-aria="hudChrome.crafting.title" title="Crafting" aria-label="Crafting" data-icon="crafting"><span class="keybind">t</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-char" data-i18n-title="hud.keybinds.actions.char" data-i18n-aria="hud.keybinds.actions.char" title="Character" aria-label="Character" data-icon="character"><span class="keybind ui-keycap">c</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-spell" data-i18n-title="abilityUi.spellbook.title" data-i18n-aria="abilityUi.spellbook.title" title="Spellbook" aria-label="Spellbook" data-icon="spellbook"><span class="keybind ui-keycap">p</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-talents" data-i18n-title="game.talents.title" data-i18n-aria="game.talents.title" title="Talents" aria-label="Talents" data-icon="talents"><span class="keybind ui-keycap">n</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-town-focus" style="display:none" data-i18n-title="hudChrome.townFocus.title" data-i18n-aria="hudChrome.townFocus.title" title="Town Focus" aria-label="Town Focus" data-icon="map"></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-quest" data-i18n-title="questUi.log.title" data-i18n-aria="questUi.log.title" title="Quest Log" aria-label="Quest Log" data-icon="questlog"><span class="keybind ui-keycap">l</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-deeds" data-i18n-title="hudChrome.deeds.title" data-i18n-aria="hudChrome.deeds.title" title="Book of Deeds" aria-label="Book of Deeds" data-icon="book"><span class="keybind ui-keycap">s-z</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-reliquary" data-i18n-title="hudChrome.reliquary.title" data-i18n-aria="hudChrome.reliquary.title" title="The Reliquary" aria-label="The Reliquary" data-icon="crown"><span class="keybind ui-keycap">s-x</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-professions" data-i18n-title="hudChrome.professions.title" data-i18n-aria="hudChrome.professions.title" title="Professions" aria-label="Professions" data-icon="professions"><span class="keybind ui-keycap">s-p</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-map" data-i18n-title="hud.keybinds.actions.map" data-i18n-aria="hud.keybinds.actions.map" title="World Map" aria-label="World Map" data-icon="map"><span class="keybind ui-keycap">m</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-bag" data-i18n-title="itemUi.bags.title" data-i18n-aria="itemUi.bags.title" title="Bags" aria-label="Bags" data-icon="bags"><span class="keybind ui-keycap">b</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-crafting" data-i18n-title="hudChrome.crafting.title" data-i18n-aria="hudChrome.crafting.title" title="Crafting" aria-label="Crafting" data-icon="crafting"><span class="keybind ui-keycap">t</span></button>
       </div>
       <div id="side-buttons-col-b" class="side-buttons-col">
         <button id="daily-rewards-button" type="button" data-i18n-title="hudChrome.wocStore.title" data-i18n-aria="hudChrome.wocStore.title" title="WOC Store" aria-label="WOC Store"></button>
-        <button class="micro-btn" id="mm-arena" data-i18n-title="hudChrome.pvp.launcherTitle" data-i18n-aria="hudChrome.pvp.launcherTitle" title="PvP: Thornhollow Fields and the Arenas" aria-label="PvP: Thornhollow Fields and the Arenas" data-icon="arena"><span class="keybind">g</span></button>
-        <button class="micro-btn" id="mm-dfinder" data-i18n-title="hudChrome.finder.title" data-i18n-aria="hudChrome.finder.title" title="Dungeon Finder" aria-label="Dungeon Finder" data-icon="dfinder"><span class="keybind">Shift+I</span></button>
-        <button class="micro-btn" id="mm-cardduel" data-i18n-title="cardDuel.title" data-i18n-aria="cardDuel.title" title="Card Duel" aria-label="Card Duel" data-icon="cards"></button>
-        <button class="micro-btn" id="mm-leaderboard" data-i18n-title="game.leaderboard.title" data-i18n-aria="game.leaderboard.title" title="Leaderboard" aria-label="Leaderboard" data-icon="leaderboard"><span class="keybind">k</span></button>
-        <button class="micro-btn" id="mm-wocmarket" hidden data-i18n-title="hudChrome.wocMarket.launcherLabel" data-i18n-aria="hudChrome.wocMarket.launcherLabel" title="$WOC Exchange" aria-label="$WOC Exchange" data-icon="market"></button>
-        <button class="micro-btn" id="mm-emote" data-i18n-aria="hudChrome.emoteWheel.label" aria-label="Emotes" data-icon="emote"><span class="keybind">x</span></button>
-        <button class="micro-btn" id="mm-music" data-i18n-title="hud.options.music" data-i18n-aria="hud.options.music" title="Music" aria-label="Music" data-icon="music"></button>
-        <button class="micro-btn" id="mm-social" data-i18n-title="hud.keybinds.actions.social" data-i18n-aria="hud.keybinds.actions.social" title="Friends &amp; Guild" aria-label="Friends &amp; Guild" data-icon="social"><span class="keybind">o</span></button>
-        <button class="micro-btn" id="mm-discord" hidden data-i18n-title="hudChrome.discord.title" data-i18n-aria="hudChrome.discord.title" title="Discord" aria-label="Discord" data-icon="discord"><span class="keybind">u</span></button>
-        <button class="micro-btn" id="mm-wiki" data-i18n-title="nav.wiki" data-i18n-aria="nav.wiki" title="Wiki" aria-label="Wiki" data-icon="wiki"></button>
-        <button class="micro-btn" id="mm-options" data-i18n-title="hud.options.gameMenu" data-i18n-aria="hud.options.gameMenu" title="Game Menu" aria-label="Game Menu" data-icon="menu"><span class="keybind">esc</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-arena" data-i18n-title="hudChrome.pvp.launcherTitle" data-i18n-aria="hudChrome.pvp.launcherTitle" title="PvP: Thornhollow Fields and the Arenas" aria-label="PvP: Thornhollow Fields and the Arenas" data-icon="arena"><span class="keybind ui-keycap">g</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-dfinder" data-i18n-title="hudChrome.finder.title" data-i18n-aria="hudChrome.finder.title" title="Dungeon Finder" aria-label="Dungeon Finder" data-icon="dfinder"><span class="keybind ui-keycap">Shift+I</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-cardduel" data-i18n-title="cardDuel.title" data-i18n-aria="cardDuel.title" title="Card Duel" aria-label="Card Duel" data-icon="cards"></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-leaderboard" data-i18n-title="game.leaderboard.title" data-i18n-aria="game.leaderboard.title" title="Leaderboard" aria-label="Leaderboard" data-icon="leaderboard"><span class="keybind ui-keycap">k</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-wocmarket" hidden data-i18n-title="hudChrome.wocMarket.launcherLabel" data-i18n-aria="hudChrome.wocMarket.launcherLabel" title="$WOC Exchange" aria-label="$WOC Exchange" data-icon="market"></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-emote" data-i18n-aria="hudChrome.emoteWheel.label" aria-label="Emotes" data-icon="emote"><span class="keybind ui-keycap">x</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-music" data-i18n-title="hud.options.music" data-i18n-aria="hud.options.music" title="Music" aria-label="Music" data-icon="music"></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-social" data-i18n-title="hud.keybinds.actions.social" data-i18n-aria="hud.keybinds.actions.social" title="Friends &amp; Guild" aria-label="Friends &amp; Guild" data-icon="social"><span class="keybind ui-keycap">o</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-discord" hidden data-i18n-title="hudChrome.discord.title" data-i18n-aria="hudChrome.discord.title" title="Discord" aria-label="Discord" data-icon="discord"><span class="keybind ui-keycap">u</span></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-wiki" data-i18n-title="nav.wiki" data-i18n-aria="nav.wiki" title="Wiki" aria-label="Wiki" data-icon="wiki"></button>
+        <button type="button" class="micro-btn ui-icon-btn ui-icon-btn--micro" id="mm-options" data-i18n-title="hud.options.gameMenu" data-i18n-aria="hud.options.gameMenu" title="Game Menu" aria-label="Game Menu" data-icon="menu"><span class="keybind ui-keycap">esc</span></button>
       </div>
     </div>
     <div id="tooltip" class="panel"></div>

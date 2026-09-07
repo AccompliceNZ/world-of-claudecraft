@@ -127,9 +127,7 @@ export class QuestTrackerController {
   private renderHtml(view: QuestTrackerView): string {
     if (!view.visible) return '';
     const chevron = view.collapsed ? '▸' : '▾';
-    const count = view.collapsed
-      ? ` <span class="qt-count">${esc(t('hudChrome.questTracker.count', { count: this.number(view.count) }))}</span>`
-      : '';
+    const count = ` <span class="qt-count ui-num">${esc(this.number(view.count))}</span>`;
     const hint = esc(
       t(
         view.collapsed
@@ -138,14 +136,19 @@ export class QuestTrackerController {
       ),
     );
     const header =
-      `<button type="button" class="qt-header" aria-expanded="${!view.collapsed}" aria-controls="qt-list" title="${hint}">` +
+      `<button type="button" class="qt-header ui-cin" aria-expanded="${!view.collapsed}" aria-controls="qt-list" title="${hint}">` +
       `<span class="qt-chevron" aria-hidden="true">${chevron}</span>` +
       `<span class="qt-h-label">${esc(t('questUi.tracker.title'))}</span>${count}</button>`;
     let rows = '';
     for (const quest of view.quests) {
-      rows += `<div class="qt-title" role="button" tabindex="0" data-quest="${esc(quest.id)}"><span class="qt-num">${esc(this.number(quest.number))}</span>${esc(quest.title)}${quest.complete ? ` <span class="quest-complete">(${esc(t('questUi.tracker.complete'))})</span>` : ''}</div>`;
+      rows += `<div class="qt-title ui-cin" role="button" tabindex="0" data-quest="${esc(quest.id)}"><span class="qt-num ui-badge ui-num">${esc(this.number(quest.number))}</span>${esc(quest.title)}${quest.complete ? ` <span class="quest-complete">(${esc(t('questUi.tracker.complete'))})</span>` : ''}</div>`;
       for (const objective of quest.objectives) {
-        rows += `<div class="qt-obj${objective.done ? ' done' : ''}">- ${esc(this.progressText(objective.label, objective.current, objective.total))}</div>`;
+        const state = objective.done ? ' done' : objective.counted ? ' counted' : ' muted';
+        const value =
+          !objective.done && objective.counted
+            ? `<span class="qt-obj-count ui-num">${esc(this.progressValue(objective.current, objective.total))}</span>`
+            : '';
+        rows += `<div class="qt-obj ui-meta${state}"><span>- ${esc(objective.label)}</span>${value}</div>`;
       }
     }
     return `${header}<div id="qt-list">${rows}</div>`;
@@ -155,9 +158,8 @@ export class QuestTrackerController {
     return formatNumber(value, { maximumFractionDigits: 0 });
   }
 
-  private progressText(label: string, current: number, total: number): string {
-    return t('questUi.detail.objectiveProgress', {
-      label,
+  private progressValue(current: number, total: number): string {
+    return t('hudChrome.questTracker.objectiveValue', {
       current: this.number(current),
       total: this.number(total),
     });
