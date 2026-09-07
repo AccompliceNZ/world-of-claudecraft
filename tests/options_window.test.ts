@@ -9,12 +9,61 @@ import { OptionsWindow } from '../src/ui/options_window';
 // roles/aria, the bug-report + keybind dispatch, and that the window stays cold
 // (never wired into the per-frame Hud.update path).
 const painter = readFileSync(new URL('../src/ui/options_window.ts', import.meta.url), 'utf8');
+const settingsControls = readFileSync(
+  new URL('../src/ui/settings_controls.ts', import.meta.url),
+  'utf8',
+);
 const hudTs = readFileSync(new URL('../src/ui/hud.ts', import.meta.url), 'utf8');
 const componentsCss = readFileSync(
   new URL('../src/styles/components.css', import.meta.url),
   'utf8',
 );
 const mobileCss = readFileSync(new URL('../src/styles/hud.mobile.css', import.meta.url), 'utf8');
+const indexHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
+const playHtml = readFileSync(new URL('../play.html', import.meta.url), 'utf8');
+
+describe('options_window: interface-redesign primitive adoption', () => {
+  it('keeps legacy hooks while adopting the shared window and control primitives', () => {
+    expect(painter).toContain('panel-title ui-win-head');
+    expect(painter).toContain('ui-win-art');
+    expect(painter).toContain('btn ui-btn opt-btn');
+    expect(painter).toContain("b.classList.add('ui-btn--red', 'ui-btn--lg')");
+    expect(painter).toContain("b.classList.add('opt-btn-hostile')");
+    expect(painter).toContain("status.textContent = t('hudChrome.bugReport.online')");
+    expect(painter).toContain('set-choice ui-seg');
+    expect(painter).toContain('btn ui-seg-tab set-choice-btn');
+    expect(painter).toContain('btn ui-keycap kb-key');
+    expect(settingsControls).toContain('perf-card ui-card');
+  });
+
+  it('uses shared card, input, toggle, and action primitives in the bug sub-view', () => {
+    const report = painter.slice(painter.indexOf('private renderBugReport(): void {'));
+    expect(report).toContain("infoEl.className = 'bug-info ui-card'");
+    expect(report).toContain("desc.className = 'bug-desc ui-input'");
+    expect(report).toContain("toggle.className = 'btn ui-btn ui-btn--plate set-toggle'");
+    expect(report).toContain("submit.className = 'btn ui-btn ui-btn--gold'");
+  });
+
+  it('keeps static HUD frame ids and gives index and play identical option surfaces', () => {
+    for (const html of [indexHtml, playHtml]) {
+      expect(html).toContain('id="ctx-menu" class="panel ui-panel-strong"');
+      expect(html).toContain('id="options-menu" class="window panel ui-window"');
+      expect(html).toContain('id="report-window" class="window panel ui-window"');
+    }
+  });
+
+  it('renders controller status, two panes, and all three reset scopes', () => {
+    const controller = painter.slice(
+      painter.indexOf('private renderController(): void {'),
+      painter.indexOf('private renderCrossHotbarRows('),
+    );
+    expect(controller).toContain('controllerDeviceStatusView(');
+    expect(controller).toContain("className = 'controller-pane controller-pane-tuning'");
+    expect(controller).toContain("className = 'controller-pane controller-pane-layout'");
+    expect(controller).toContain('this.renderCrossHotbarRows(tuning, hooks);');
+    expect(controller).toContain('this.settingsViewFooter(controls');
+  });
+});
 
 describe('options_window: no magic values', () => {
   it('carries no literal color in TS (colors live in the extracted stylesheet)', () => {
@@ -204,7 +253,8 @@ describe('options_window: WCAG 2.2 AA', () => {
       'if (crossHotbarOwned && isCrossHotbarModifier(button)) continue;',
     );
     expect(controller).not.toContain('isCrossHotbarButton(button)');
-    expect(controller).not.toContain('crossHotbarOwnsButtons');
+    // W9 makes the existing ownership explanation visible without hiding editable d-pad rows.
+    expect(controller).toContain('crossHotbarOwnsButtons');
   });
 });
 
@@ -225,8 +275,9 @@ describe('options_window: deed-broadcast account row', () => {
     expect(body).toContain("toggle.setAttribute('aria-pressed', String(on));");
     expect(body).toContain('toggle.disabled = true;');
     // The row renders in the classic set-row grammar beside the chat rows.
-    expect(body).toContain("row.className = 'set-row';");
-    expect(body).toContain("toggle.className = 'btn set-toggle';");
+    // W9 adds library classes beside the load-bearing legacy hooks.
+    expect(body).toContain("row.className = 'set-row ui-stat-row';");
+    expect(body).toContain("toggle.className = 'btn ui-btn ui-btn--plate set-toggle';");
     // The behavior round-trip (echo wins, failed write reverts) is jsdom-driven
     // in tests/deed_broadcast_row.test.ts.
   });
@@ -556,7 +607,8 @@ describe('options_window: title-bar back control', () => {
     expect(body).toContain("this.view === 'main'");
     expect(body).toContain('data-back');
     // square x-btn chrome, kept in flow at the inline start via .back-btn
-    expect(body).toContain('class="x-btn back-btn"');
+    // W9 keeps those legacy hooks beside the shared close-button primitive.
+    expect(body).toContain('class="x-btn ui-x-btn back-btn"');
     // accessible name from the existing footer-Back key (no new i18n key)
     expect(body).toContain("t('hud.options.back')");
   });

@@ -311,6 +311,7 @@ const UI_PURE_CORES = [
   'src/ui/guild_bank_view.ts',
   'src/ui/item_set_tooltip_view.ts',
   'src/ui/weapon_proc_view.ts',
+  'src/ui/controller_options_view.ts',
   'src/ui/options_view.ts',
   'src/ui/hud/vendor/vendor_view.ts',
   'src/ui/hud/vendor/heroic_vendor_view.ts',

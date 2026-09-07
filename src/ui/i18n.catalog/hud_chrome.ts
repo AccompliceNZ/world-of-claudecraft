@@ -2111,6 +2111,9 @@ export const hudChromeStrings = {
   // hardware glyphs in gamepad_map and need no translation.
   controller: {
     title: 'Controller',
+    device: 'Connected Device',
+    deviceConnected: 'Connected',
+    deviceDisconnected: 'No controller detected',
     glyphStyle: 'Button Labels',
     glyphStyleAuto: 'Auto',
     glyphStyleXbox: 'Xbox',
@@ -2140,7 +2143,7 @@ export const hudChromeStrings = {
     crossHotbarResetLayout: 'Reset Cross Hotbar',
     crossHotbarPosition: '{trigger} + {button}',
     crossHotbarOwnsButtons:
-      'The triggers and the d-pad belong to the cross hotbar while it is on, so they are set up below rather than here.',
+      'The triggers modify the cross hotbar while it is on. D-pad directions remain editable here for menus and movement.',
     cancelAction: 'Cancel / Back',
     subcommandsAction: 'Subcommands / Map',
     cycleHudAction: 'Cycle Interface',
@@ -2893,6 +2896,7 @@ export const hudChromeStrings = {
   // position/screenshot plus a free-text description and posts to the server.
   bugReport: {
     menuButton: 'Report a Bug',
+    online: 'Online',
     realm: 'World',
     character: 'Character',
     position: 'Position',

@@ -823,6 +823,9 @@
     --dur-press: 60ms;
     --dur-panel: 160ms;
     --dur-frame: 120ms;
+    /* W9 additions (options surfaces) */
+    /* Dim the live world while the modal options family is open. */
+    --color-options-scrim: color-mix(in srgb, var(--color-keyline) 74%, transparent);
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal

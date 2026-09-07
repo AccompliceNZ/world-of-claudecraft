@@ -4993,9 +4993,9 @@
   #report-window select,
   #report-window textarea {
     width: 100%;
-    background: #101018;
-    border: 1px solid #4a3d1d;
-    border-radius: 4px;
+    background: var(--color-bg-input);
+    border: 1px solid var(--color-border-showcase);
+    border-radius: var(--radius-sm);
     color: var(--color-text-light);
     padding: 6px;
   }
@@ -5005,7 +5005,7 @@
   }
   .report-error {
     min-height: 16px;
-    color: #ff7a5e;
+    color: var(--color-text-error);
     font-size: 12px;
     margin-top: 6px;
   }
@@ -5022,9 +5022,6 @@
     flex-direction: column;
     gap: 2px;
     margin-bottom: 8px;
-    background: #101018;
-    border: 1px solid #4a3d1d;
-    border-radius: 4px;
     padding: 8px;
   }
   .bug-info-row {
@@ -5051,10 +5048,6 @@
     width: 100%;
     height: 90px;
     resize: none;
-    background: #101018;
-    border: 1px solid #4a3d1d;
-    border-radius: 4px;
-    color: var(--color-text-light);
     padding: 6px;
     font-size: 16px;
   }
@@ -5066,8 +5059,8 @@
     width: 100%;
     max-width: 100%;
     margin-top: 6px;
-    border: 1px solid #4a3d1d;
-    border-radius: 4px;
+    border: 1px solid var(--color-border-showcase);
+    border-radius: var(--radius-sm);
   }
 
   /* ---------- right tracker stack (quest tracker + delve tracker) ----------
@@ -9448,15 +9441,15 @@
     font-size: 12.5px;
     color: var(--color-text-light);
     cursor: var(--cursor-point);
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
   }
   #ctx-menu .ctx-item:hover {
-    background: #ffffff18;
-    color: #fff;
+    background: color-mix(in srgb, var(--color-glint) 9%, transparent);
+    color: var(--color-white);
   }
   #ctx-menu .ctx-item:focus-visible {
-    background: #ffffff18;
-    color: #fff;
+    background: color-mix(in srgb, var(--color-glint) 9%, transparent);
+    color: var(--color-white);
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
   }
