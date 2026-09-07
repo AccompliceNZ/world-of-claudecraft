@@ -108,7 +108,7 @@ export function progressionHtml(sim: IWorld, level: number): string {
     // XP earned). It's disabled (and the requirement shown) until eligible;
     // the server re-checks regardless, so a forged click does nothing.
     const ready = canPrestige(level, sim.lifetimeXp, sim.prestigeRank);
-    html += `<div class="cp-actions ui-card"><button class="ui-btn ui-btn--gold" data-act="prestige"${ready ? '' : ' disabled'}>${t('game.prestige.action')}${sim.prestigeRank > 0 ? ` (★ ${sim.prestigeRank})` : ''}</button>`;
+    html += `<div class="cp-actions ui-card"><button class="ui-btn ui-btn--gold" data-act="prestige"${ready ? '' : ' disabled'}>${t('game.prestige.action')}${sim.prestigeRank > 0 ? ` (&#9733; ${sim.prestigeRank})` : ''}</button>`;
     if (!ready)
       html += `<span class="cp-hint">${formatXp(xpUntilNextPrestige(sim.lifetimeXp, sim.prestigeRank))} ${t('game.prestige.needXp')}</span>`;
     html += `</div>`;
