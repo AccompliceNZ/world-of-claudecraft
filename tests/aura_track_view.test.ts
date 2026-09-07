@@ -303,9 +303,27 @@ describe('aura track view: the points (shield) shape', () => {
     expect(state.rows[0].points).toBe(0);
   });
 
-  it('forgets the peak of a row that is gone, so a recast starts fresh', () => {
-    // The prune runs once the map outgrows the cap; without it a session-long
-    // fight would keep every shield ever cast on every ally.
+  it('forgets the peak the tick its row disappears, so a smaller recast reads full', () => {
+    // The review case: cast 800, let it lapse, recast 600. A prune that waited
+    // for the map to outgrow some size never ran for a solo player's own shield,
+    // so the fresh shield filled against the dead one's peak and sat at 75%.
+    const view = createAuraTrackView(track('shields'), deps());
+    const cast = (value: number | null) =>
+      view.tick(
+        input({
+          player: unit(PLAYER_ID, value === null ? [] : [aura('power_word_shield', { value })]),
+        }),
+      );
+    cast(800);
+    expect(cast(null).count).toBe(0);
+    const fresh = cast(600);
+    expect(fresh.rows[0].points).toBe(600);
+    expect(fresh.rows[0].fraction).toBe(1);
+  });
+
+  it('forgets the peaks of many rows that are gone, so the map cannot grow across a session', () => {
+    // Without a prune a session-long fight would keep every shield ever cast on
+    // every ally.
     const view = createAuraTrackView(track('shields'), deps());
     for (let i = 0; i < AURA_TRACK_ROW_CAP * 5; i++) {
       view.tick(

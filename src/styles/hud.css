@@ -3454,31 +3454,37 @@
     max-width: 42vw;
     pointer-events: none;
   }
-  /* Default seats, stacked down the left rail and paired across from it. A
-     player moves them; these only decide where an opted-in track first appears,
-     and none of them sits under the action bars or the minimap. */
+  /* Default seats: two columns of three, starting one frame width in from the
+     left rail. The rail itself (left: 18px, top: 34%) is the Target dots
+     tracker's seat, and a first cut put the Defensives and Self tracks at 30%
+     and 44% on that same rail, so a player who opened both families watched
+     the dot bars land between two aura bars. The 16% pitch is about seven rows
+     at 1080p, so a track fills most of the way to its cap before it reaches the
+     seat below; none sits under the action bars, the chat box or the minimap.
+     A player moves them from here; these only decide where an opted-in track
+     first appears. */
   #aura-track-defensives {
-    left: 18px;
+    left: 268px;
     top: 30%;
   }
   #aura-track-self {
-    left: 18px;
-    top: 44%;
+    left: 268px;
+    top: 46%;
   }
   #aura-track-power {
-    left: 18px;
-    top: 58%;
+    left: 268px;
+    top: 62%;
   }
   #aura-track-utility {
-    left: 268px;
+    left: 518px;
     top: 30%;
   }
   #aura-track-friendly {
-    left: 268px;
-    top: 44%;
+    left: 518px;
+    top: 46%;
   }
   #aura-track-shields {
-    left: 268px;
+    left: 518px;
     top: 62%;
   }
 

@@ -2943,9 +2943,11 @@ describe('hud_perf_budget ARM 2: per-frame allocation budget (Node, npm test)', 
   // them tick every frame, so a container minted per tick is six allocations per
   // frame rather than one. The core claims its state, its row array and every row
   // record are reused; this is what makes that claim load-bearing instead of
-  // hand-checked. The points track is driven too, because its peak map is the one
-  // piece of per-row state that grows.
-  for (const trackId of ['self', 'shields'] as const) {
+  // hand-checked. Both the self scan and the ally scan run (the steady ally
+  // carries a row on both tracks), and the points track is driven too, because
+  // its peak map and the live-key set it prunes with are the per-row state that
+  // could grow.
+  for (const trackId of ['friendly', 'shields'] as const) {
     it(`aura_track_view reuses its state container every tick (${trackId})`, () => {
       const descriptor = AURA_TRACKS.find((t) => t.id === trackId);
       if (!descriptor) throw new Error(`no such track: ${trackId}`);
@@ -2956,23 +2958,21 @@ describe('hud_perf_budget ARM 2: per-frame allocation budget (Node, npm test)', 
         unitName: (e) => e.name,
         iconKey: (a) => a.id,
       });
-      const player = {
-        id: 1,
-        name: 'P',
-        dead: false,
-        auras: [
-          {
-            id: trackId === 'shields' ? 'power_word_shield' : 'rejuvenation',
-            name: 'A',
-            kind: trackId === 'shields' ? 'absorb' : 'hot',
-            remaining: 8,
-            duration: 12,
-            sourceId: 1,
-            value: 600,
-          },
-        ],
-      };
-      const input = { player, allies: [], enabled: true, includeModes: true };
+      const auras = [
+        {
+          id: trackId === 'shields' ? 'power_word_shield' : 'rejuvenation',
+          name: 'A',
+          kind: trackId === 'shields' ? 'absorb' : 'hot',
+          remaining: 8,
+          duration: 12,
+          sourceId: 1,
+          value: 600,
+        },
+      ];
+      const player = { id: 1, name: 'P', dead: false, auras };
+      const ally = { id: 2, name: 'B', dead: false, auras };
+      const allies = [ally];
+      const input = { player, allies, enabled: true, includeModes: true };
       expect(() => {
         assertAllocationStable(
           () => view.tick(input),

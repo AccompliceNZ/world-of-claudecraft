@@ -104,7 +104,11 @@ export interface AuraTrackDeps {
 export interface AuraTrackInput<TEntity extends AuraTrackEntityInput = AuraTrackEntityInput> {
   /** The player, always scanned first so their rows lead a mixed track. */
   player: TEntity | null;
-  /** Everyone else worth scanning: party and raid members in range. */
+  /** Everyone else worth scanning. The Hud passes every entity in interest
+   *  scope (party, raid, pets AND mobs), since an own HoT or shield can sit on
+   *  any friendly unit and the family has no roster of its own; a unit with no
+   *  auras costs one length check, and the scan is bounded by the interest
+   *  radius the world already enforces. */
   allies: Iterable<TEntity>;
   enabled: boolean;
   /** Whether MODE rows (stealth, travel form) are wanted. Its own sub-option:
@@ -162,6 +166,9 @@ export function createAuraTrackView<TEntity extends AuraTrackEntityInput>(
   // The high-water peak absorb per aura key, so a points bar has something to
   // fill against: the sim stores what is LEFT, never what it started with.
   const peakPoints = new Map<string, number>();
+  // The keys still standing this tick, reused so the prune below allocates
+  // nothing on the frame path.
+  const liveKeys = new Set<string>();
 
   let count = 0;
   let overflow = 0;
@@ -240,12 +247,17 @@ export function createAuraTrackView<TEntity extends AuraTrackEntityInput>(
         scanUnit(ally, false);
       }
 
-      // Forget the peak of any row that is gone, so a recast starts fresh and
-      // the map cannot grow without bound across a session.
-      if (peakPoints.size > cap * 4) {
-        const live = new Set<string>();
-        for (let i = 0; i < count; i++) live.add(rows[i].key);
-        for (const key of peakPoints.keys()) if (!live.has(key)) peakPoints.delete(key);
+      // Forget the peak of any row that is gone THIS tick, so a recast starts
+      // fresh. Not once the map has grown past some size: a solo player's own
+      // shield key would never have been evicted by a size rule, so a fresh,
+      // smaller shield read against the peak of one that had already expired
+      // (cast 800, let it lapse, recast 600, and the bar sat at 75%). The map
+      // holds at most `count` live keys, so the sweep is a handful of lookups,
+      // and it only runs when a key has actually gone stale.
+      if (peakPoints.size > count) {
+        liveKeys.clear();
+        for (let i = 0; i < count; i++) liveKeys.add(rows[i].key);
+        for (const key of peakPoints.keys()) if (!liveKeys.has(key)) peakPoints.delete(key);
       }
 
       state.count = count;

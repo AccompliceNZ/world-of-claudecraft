@@ -514,7 +514,7 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     band: 'frame',
     gate: '',
     surface: 'chrome',
-    why: 'the six aura tracks (src/ui/hud/aura_tracks/), ONE call, because AuraTrackFamily owns the loop over the descriptor table and the reused per-frame input, which is why a seventh track adds no row here. Same band and same rule as the two aura rows above: these are countdowns a refresh is timed against, so they are never tier-gated. Each track is driven UNCONDITIONALLY and its core answers with an empty state when the setting is off, which keeps the enabled check in one place instead of six gates on this path',
+    why: 'the six aura tracks (src/ui/hud/aura_tracks/), ONE call, because AuraTrackFamily owns the loop over the descriptor table and the reused per-frame input, which is why a seventh track adds no row here. Same band and same rule as the two aura rows above: these are countdowns a refresh is timed against, so they are never tier-gated. Deliberately UNGATED at the call site: the family resolves the six switches itself, skips the roster copy and every painter when none is on (the default for every player), and lets each core answer with an empty state when its own switch is off, which keeps the enabled check in one place instead of six gates on this path',
   },
   {
     call: 'this.targetReannounce.mark',

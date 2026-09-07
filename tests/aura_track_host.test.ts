@@ -19,6 +19,8 @@
 // So the first test below feeds a REAL one-shot iterator, and asserts that the
 // LAST track still sees the ally. Feeding an array would pass on the broken code.
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
   AURA_TRACK_FRAME_PREFIX,
@@ -30,6 +32,9 @@ import type { AuraTrackEntityInput } from '../src/ui/hud/aura_tracks/aura_track_
 import type { PainterHostWriters } from '../src/ui/painter_host';
 
 const PLAYER_ID = 7;
+
+/** The language the frame labels resolve in; the relocalize test flips it. */
+let lang = 'en';
 
 /** Applies every write, so the assertions can read the resulting DOM. */
 function writers(): PainterHostWriters {
@@ -80,7 +85,7 @@ function makeFamily() {
       return el;
     },
     rowLabel: (aura, unit) => (unit ? `${aura} on ${unit}` : aura),
-    frameLabel: (track) => track.id,
+    frameLabel: (track) => (lang === 'en' ? track.id : `${track.id} (${lang})`),
     overflowLabel: (n) => `${n} more`,
     secondsSuffix: () => 's',
     modeLabel: () => 'ON',
@@ -185,6 +190,95 @@ describe('AuraTrackFamily: the shared per-tick input', () => {
     expect(rowsOf('friendly')).toEqual(['renew on Bob']);
   });
 
+  it('passes the mode sub-option through to every core, both ways', () => {
+    // The wiring pin for Include Stealth and Travel Modes. Feeding the same
+    // stealth aura with the flag on and then off must change the utility track's
+    // rows; without this, dropping the pass-through kept every other test green.
+    const containers = new Map<string, HTMLElement>();
+    for (const track of AURA_TRACKS) {
+      const el = document.createElement('div');
+      el.id = `${track.elementId}-modes`;
+      document.body.append(el);
+      containers.set(track.elementId, el);
+    }
+    const family = new AuraTrackFamily<AuraTrackEntityInput>({
+      isOwn: (a) => a.sourceId === PLAYER_ID,
+      isMode: (a) => a.id === 'stealth',
+      auraName: (a) => a.id,
+      unitName: (e) => e.name,
+      iconKey: (a) => a.id,
+      iconBackground: (key) => `url(${key}.png)`,
+      writers: writers(),
+      container: (elementId) => {
+        const el = containers.get(elementId);
+        if (!el) throw new Error(`no container for ${elementId}`);
+        return el;
+      },
+      rowLabel: (aura, unit) => (unit ? `${aura} on ${unit}` : aura),
+      frameLabel: (track) => track.id,
+      overflowLabel: (n) => `${n} more`,
+      secondsSuffix: () => 's',
+      modeLabel: () => 'ON',
+    });
+    const stealthed = (): AuraTrackEntityInput => ({
+      ...player(),
+      auras: [
+        {
+          id: 'sprint',
+          name: 'Sprint',
+          kind: 'buff_speed',
+          remaining: 9,
+          duration: 15,
+          sourceId: PLAYER_ID,
+        },
+        {
+          id: 'stealth',
+          name: 'Stealth',
+          kind: 'stealth',
+          remaining: 3600,
+          duration: 3600,
+          sourceId: PLAYER_ID,
+        },
+      ],
+    });
+    const utility = AURA_TRACKS.find((t) => t.id === 'utility');
+    if (!utility) throw new Error('no utility track');
+    const rows = () => {
+      const root = containers.get(utility.elementId);
+      if (!root) throw new Error('no container');
+      return [...root.querySelectorAll<HTMLElement>('.at-row')]
+        .filter((r) => r.style.display !== 'none')
+        .map((r) => r.querySelector('.at-label')?.textContent ?? '');
+    };
+    family.tick(stealthed(), [], on, true);
+    expect(rows()).toEqual(['sprint', 'stealth']);
+    family.tick(stealthed(), [], on, false);
+    expect(rows()).toEqual(['sprint']);
+  });
+
+  it('does nothing per frame while every track is off, not even read the roster', () => {
+    // All six ship off, so this is the frame every player pays by default. The
+    // roster arrives as an iterator; a family that walked it would consume it.
+    const { family, rowsOf } = makeFamily();
+    let pulled = 0;
+    function* counting(): Generator<AuraTrackEntityInput> {
+      pulled++;
+      yield ally();
+    }
+    family.tick(player(), counting(), () => false, true);
+    expect(pulled).toBe(0);
+    for (const track of AURA_TRACKS) expect(rowsOf(track.id)).toEqual([]);
+
+    // Switched on, the same roster is read and the rows appear; switched off
+    // again, the frame hides on that one tick and the roster is left alone.
+    family.tick(player(), counting(), on, true);
+    expect(pulled).toBe(1);
+    expect(rowsOf('friendly')).toEqual(['renew on Bob']);
+    family.tick(player(), counting(), () => false, true);
+    expect(pulled).toBe(1);
+    expect(rowsOf('friendly')).toEqual([]);
+  });
+
   it('composes one view and one painter per descriptor, in table order', () => {
     const { family } = makeFamily();
     expect(family.tracks.map((t) => t.descriptor.id)).toEqual(AURA_TRACKS.map((t) => t.id));
@@ -195,14 +289,31 @@ describe('AuraTrackFamily: the shared per-tick input', () => {
   });
 
   it('relocalizes every track, not merely the first', () => {
+    // The label resolver reads a language that flips between the two sweeps, so
+    // the second sweep can only pass if relocalize() really re-resolved every
+    // frame's name (a constant on both sides would pass with the method empty).
     const { family, containers } = makeFamily();
     family.tick(player(), [ally()], on, true);
     for (const track of AURA_TRACKS) {
       expect(containers.get(track.elementId)?.getAttribute('aria-label')).toBe(track.id);
     }
+    lang = 'fr';
     family.relocalize();
     for (const track of AURA_TRACKS) {
-      expect(containers.get(track.elementId)?.getAttribute('aria-label')).toBe(track.id);
+      expect(containers.get(track.elementId)?.getAttribute('aria-label')).toBe(`${track.id} (fr)`);
+    }
+    lang = 'en';
+  });
+
+  it('has a container for every track in both HTML entries', () => {
+    // The painter resolves its root in the constructor, so a missing container
+    // is a construction-time failure on every login, not one degraded frame.
+    // This file builds its own containers and cannot see that; the entries can.
+    for (const entry of ['index.html', 'play.html']) {
+      const html = readFileSync(join(process.cwd(), entry), 'utf8');
+      for (const track of AURA_TRACKS) {
+        expect(html, `${entry} lacks #${track.elementId}`).toContain(`id="${track.elementId}"`);
+      }
     }
   });
 });

@@ -5,7 +5,10 @@
 // happened to produce the same list, and red on every new spell, which turns the
 // gate into a chore people update without reading. The membership rules are what
 // carry meaning, so those are what is asserted: the duration ceiling, the
-// defensive cooldown line, each kind set, and the by-id exclusions.
+// defensive cooldown line, each kind set, the by-id exclusions, and the two
+// contracts the catalog shares with the rest of the game: its keys are the ids
+// the SIM applies (proven by casting through a real Sim), and its modes are the
+// ones the aura STRIPS call modes (proven against isToggleAuraKind).
 //
 // The exception is a short list of LOAD-BEARING spells pinned by id. Those are
 // the ones a player would call the feature broken without (a mage's Ice Block, a
@@ -15,25 +18,20 @@
 
 import { describe, expect, it } from 'vitest';
 import { ABILITIES } from '../src/sim/data';
-import type { AbilityDef } from '../src/sim/types';
+import { Sim } from '../src/sim/sim';
+import type { AbilityDef, AuraKind, PlayerClass } from '../src/sim/types';
+import { isToggleAuraKind } from '../src/ui/auras_view';
 import {
   AURA_TRACK_CATALOG,
   AURA_TRACK_DURATION_CEILING_SEC,
+  type AuraTrackEntry,
   auraTrackEntry,
   DEFENSIVE_COOLDOWN_SEC,
 } from '../src/ui/hud/aura_tracks/aura_track_catalog';
 import { AURA_TRACKS } from '../src/ui/hud/aura_tracks/aura_track_descriptors';
+import { EMPTY_TEST_WORLD } from './sim_shared';
 
 const abilities = ABILITIES as Record<string, AbilityDef>;
-
-/** Every effect an ability declares, base ranks and ranked ranks alike. */
-function effectsOf(def: AbilityDef): Array<Record<string, unknown>> {
-  const ranked = (def as { ranks?: Array<{ effects?: unknown[] }> }).ranks ?? [];
-  return [
-    ...((def.effects ?? []) as unknown[]),
-    ...ranked.flatMap((r) => r.effects ?? []),
-  ] as Array<Record<string, unknown>>;
-}
 
 describe('aura track catalog: what it derives', () => {
   it('is built from the ability table and is neither empty nor everything', () => {
@@ -43,24 +41,43 @@ describe('aura track catalog: what it derives', () => {
     // "less than all" one.
     expect(AURA_TRACK_CATALOG.size).toBeGreaterThan(40);
     expect(AURA_TRACK_CATALOG.size).toBeLessThan(Object.keys(abilities).length / 3);
-    for (const id of AURA_TRACK_CATALOG.keys()) expect(abilities[id]).toBeDefined();
+    for (const [key, entry] of AURA_TRACK_CATALOG) {
+      expect(entry.id).toBe(key);
+      expect(abilities[entry.abilityId], `${entry.id} names no ability`).toBeDefined();
+    }
   });
 
   it('admits nothing longer than the duration ceiling except a mode', () => {
     // The whole reason the long buffs stay out. Everything timed is 60s or less;
     // a mode (stealth, travel form) carries a long duration purely so nothing
     // can expire it, so it is admitted past the ceiling and drawn without a
-    // countdown.
-    for (const [id, entry] of AURA_TRACK_CATALOG) {
+    // countdown. The mode exemption is decided by the shared classifier in the
+    // next test, not by the catalog's own label, so this cannot be satisfied by
+    // calling a long buff a mode.
+    for (const entry of AURA_TRACK_CATALOG.values()) {
       if (entry.shape === 'mode') continue;
-      const durations = effectsOf(abilities[id])
-        .map((e) => Number(e.duration ?? 0))
-        .filter((d) => d > 0);
-      if (durations.length === 0) continue;
       expect(
-        Math.min(...durations),
-        `${id} is timed but its shortest aura runs ${Math.min(...durations)}s`,
+        entry.duration,
+        `${entry.id} is timed but its aura runs ${entry.duration}s`,
       ).toBeLessThanOrEqual(AURA_TRACK_DURATION_CEILING_SEC);
+    }
+  });
+
+  it('calls a row a mode exactly when the aura strips do', () => {
+    // ONE toggle classifier. An earlier cut admitted any long utility-kind aura
+    // as a mode by its own rule, while the view drew rows by the strips' rule:
+    // the hunter aspects (buff_speed, 1800s) came in as "modes" and were painted
+    // as 1,800s countdowns, and Vanish (10s, kind stealth) was labelled a timer
+    // and painted as a mode. Now the catalog asks the same question the painter
+    // will, so the two cannot disagree.
+    for (const entry of AURA_TRACK_CATALOG.values()) {
+      expect(entry.shape === 'mode', `${entry.id} (${entry.kind})`).toBe(
+        isToggleAuraKind(entry.id, entry.kind as AuraKind),
+      );
+    }
+    for (const id of ['stealth', 'prowl', 'travel_form', 'ghost_wolf', 'vanish']) {
+      if (!abilities[id]) continue;
+      expect(auraTrackEntry(id)?.shape, `${id} is a toggle for the strips`).toBe('mode');
     }
   });
 
@@ -69,7 +86,16 @@ describe('aura track catalog: what it derives', () => {
     // buffs, aspects, poisons and imbues, the 3600s forms and stances. The
     // ceiling sits in a 10x gap, so these are not borderline cases; if one of
     // them ever shows up here, a rule moved and this is the file that says so.
-    for (const id of ['thunder_ward', 'briarguard', 'battle_shout', 'arcane_intellect']) {
+    // The three speed buffs are the ones the first cut let through as "modes".
+    for (const id of [
+      'thunder_ward',
+      'briarguard',
+      'battle_shout',
+      'arcane_intellect',
+      'aspect_of_the_cheetah',
+      'pack_rally',
+      'sacrilegious_march',
+    ]) {
       if (!abilities[id]) continue;
       expect(auraTrackEntry(id), `${id} is a long buff and must not be tracked`).toBeUndefined();
     }
@@ -127,6 +153,68 @@ describe('aura track catalog: what it derives', () => {
       const entry = auraTrackEntry(id);
       expect(entry, `${id} is no longer tracked at all`).toBeDefined();
       expect(entry?.category, `${id} changed category`).toBe(category);
+    }
+  });
+
+  it('keys every entry by the aura id the sim applies, not by the ability id', () => {
+    // The miss a derived catalog exists to prevent, found in review: an effect
+    // can name its own auraId, a second self-buff is kind-suffixed, and an
+    // absorb beside a stasis takes _absorb. A catalog keyed by ability id had
+    // rows for raised_guard and whirlwind that no live aura could ever match,
+    // and no row at all for Hallowed Wall's shield.
+    const byAuraId: ReadonlyArray<readonly [string, string, string]> = [
+      ['raised_guard_dr', 'raised_guard', 'guard'],
+      ['bladed_echo', 'whirlwind', 'power'],
+      ['holy_shield', 'holy_shield', 'guard'],
+      ['holy_shield_absorb', 'holy_shield', 'absorb'],
+      ['arcane_power', 'arcane_power', 'power'],
+      ['arcane_power_buff_spellhaste', 'arcane_power', 'power'],
+    ];
+    for (const [auraId, abilityId, category] of byAuraId) {
+      const entry = auraTrackEntry(auraId);
+      expect(entry, `${auraId} is not tracked`).toBeDefined();
+      expect(entry?.abilityId).toBe(abilityId);
+      expect(entry?.category).toBe(category);
+    }
+    // The ability-id ghosts: an entry here would be a row no aura can fill.
+    for (const ghost of ['raised_guard', 'whirlwind']) {
+      expect(auraTrackEntry(ghost), `${ghost} is an ability id, not an aura id`).toBeUndefined();
+    }
+  });
+
+  it('resolves every helpful aura a real cast leaves, under the id the sim gave it', () => {
+    // The catalog and the dispatcher share src/sim/combat/aura_ids.ts; this is
+    // what proves they still do. Each class casts one ability that exercises a
+    // different id rule (an explicit auraId, a stasis-free absorb beside a
+    // self-buff, a kind-suffixed companion, a plain primary) and every aura the
+    // cast puts on the player must have a catalog row keyed by its live id.
+    // Raised Guard and Hallowed Wall are Protection abilities, so those two
+    // casts pick the spec first; the rest are baseline spells of their class.
+    const casts: ReadonlyArray<readonly [PlayerClass, string | null, string, readonly string[]]> = [
+      ['warrior', 'prot', 'raised_guard', ['raised_guard_dr']],
+      ['paladin', 'protection', 'holy_shield', ['holy_shield', 'holy_shield_absorb']],
+      ['paladin', null, 'avenging_wrath', ['avenging_wrath', 'avenging_wrath_buff_healing_done']],
+      ['priest', null, 'power_word_shield', ['power_word_shield']],
+      ['druid', null, 'barkskin', ['barkskin']],
+    ];
+    for (const [playerClass, spec, abilityId, expectedIds] of casts) {
+      const sim = new Sim({ seed: 7, playerClass, autoEquip: true, world: EMPTY_TEST_WORLD });
+      sim.setPlayerLevel(60);
+      if (spec) expect(sim.setSpec(spec), `${playerClass} could not pick ${spec}`).toBe(true);
+      sim.player.resource = sim.player.maxResource;
+      const eventsBefore = sim.events.length;
+      sim.castAbility(abilityId);
+      for (let i = 0; i < 5; i++) sim.tick();
+      const refused = sim.events
+        .slice(eventsBefore)
+        .filter((e) => e.type === 'error')
+        .map((e) => ('text' in e ? e.text : ''));
+      expect(refused, `${playerClass} ${abilityId} was refused`).toEqual([]);
+      const live = sim.player.auras.filter((a) => a.sourceId === sim.player.id).map((a) => a.id);
+      for (const id of expectedIds) {
+        expect(live, `${playerClass} ${abilityId} did not apply ${id}`).toContain(id);
+        expect(auraTrackEntry(id), `${id} is live but has no catalog row`).toBeDefined();
+      }
     }
   });
 
@@ -195,7 +283,15 @@ describe('aura track catalog: how the six tracks partition it', () => {
     const friendly = AURA_TRACKS.find((t) => t.id === 'friendly');
     expect(defensives && self && friendly).toBeTruthy();
     if (!defensives || !self || !friendly) return;
-    const hot = { id: 'x', category: 'hot' as const, shape: 'timer' as const, cooldown: 0 };
+    const hot: AuraTrackEntry = {
+      id: 'x',
+      abilityId: 'x',
+      kind: 'hot',
+      duration: 12,
+      category: 'hot',
+      shape: 'timer',
+      cooldown: 0,
+    };
     expect(self.accepts(hot, true)).toBe(true);
     expect(self.accepts(hot, false)).toBe(false);
     expect(friendly.accepts(hot, false)).toBe(true);
@@ -243,6 +339,14 @@ describe('aura track catalog: how the six tracks partition it', () => {
 });
 
 /** A minimal guard entry the threshold assertions vary one field of. */
-function guard() {
-  return { id: 'g', category: 'guard' as const, shape: 'timer' as const, cooldown: 0 };
+function guard(): AuraTrackEntry {
+  return {
+    id: 'g',
+    abilityId: 'g',
+    kind: 'buff_dr',
+    duration: 10,
+    category: 'guard',
+    shape: 'timer',
+    cooldown: 0,
+  };
 }

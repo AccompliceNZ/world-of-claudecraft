@@ -85,15 +85,26 @@ export class AuraTrackFamily<TEntity extends AuraTrackEntityInput> {
    * rather than re-running the world's iterator six times.
    */
   private readonly allyScratch: TEntity[] = [];
+  /** This frame's switch per track, in descriptor order; reused. */
+  private readonly enabledScratch: boolean[];
+  /** Whether each track's frame currently shows rows, so a track that is off
+   *  AND already hidden costs nothing per frame. */
+  private readonly painted: boolean[];
 
   constructor(deps: AuraTrackHostDeps<TEntity>) {
     this.tracks = composeAuraTracks(deps);
+    this.enabledScratch = this.tracks.map(() => false);
+    this.painted = this.tracks.map(() => false);
   }
 
   /**
-   * Paint every track for this frame. Each is driven UNCONDITIONALLY and its
-   * core answers with an empty state when `enabled` says no, so whether a frame
-   * exists is decided in ONE place rather than six gates on the hot path.
+   * Paint every enabled track for this frame.
+   *
+   * The switches are resolved FIRST. All six ship off, so the common frame is
+   * "nothing enabled", and that frame must cost nothing: no roster copy and no
+   * painter walk. A track that was just switched off still gets one empty paint
+   * so its frame hides, and is then skipped until it is on again; whether a frame
+   * exists is still decided by its core, in one place, not by six gates here.
    */
   tick(
     player: TEntity | null,
@@ -101,14 +112,27 @@ export class AuraTrackFamily<TEntity extends AuraTrackEntityInput> {
     enabled: (settingKey: string) => boolean,
     includeModes: boolean,
   ): void {
-    this.input.player = player;
-    this.allyScratch.length = 0;
-    for (const ally of allies) this.allyScratch.push(ally);
-    this.input.allies = this.allyScratch;
-    this.input.includeModes = includeModes;
-    for (const track of this.tracks) {
-      this.input.enabled = enabled(track.descriptor.settingKey);
-      track.painter.update(track.view.tick(this.input));
+    let anyEnabled = false;
+    for (let i = 0; i < this.tracks.length; i++) {
+      const on = enabled(this.tracks[i].descriptor.settingKey);
+      this.enabledScratch[i] = on;
+      if (on) anyEnabled = true;
+    }
+    if (anyEnabled) {
+      this.input.player = player;
+      this.allyScratch.length = 0;
+      for (const ally of allies) this.allyScratch.push(ally);
+      this.input.allies = this.allyScratch;
+      this.input.includeModes = includeModes;
+    }
+    for (let i = 0; i < this.tracks.length; i++) {
+      const on = this.enabledScratch[i];
+      if (!on && !this.painted[i]) continue;
+      const track = this.tracks[i];
+      this.input.enabled = on;
+      const state = track.view.tick(this.input);
+      track.painter.update(state);
+      this.painted[i] = state.count > 0;
     }
   }
 

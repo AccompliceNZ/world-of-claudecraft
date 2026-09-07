@@ -58,7 +58,7 @@ describe('aura track painter: the source contract', () => {
     // update path is a subtree walk whose answer the painter already had.
     const queries = source.match(/\.querySelector(All)?\b/g) ?? [];
     expect(queries.length).toBeGreaterThan(0);
-    const updateBody = source.slice(source.indexOf('update(state: AuraTrackState)'));
+    const updateBody = updateMethodBody();
     expect(updateBody).not.toMatch(/\.querySelector/);
   });
 
@@ -68,10 +68,26 @@ describe('aura track painter: the source contract', () => {
     // hot path, six frames over.
     expect(source).toMatch(/const NUMBER_OPTIONS = \[/);
     expect(source).toMatch(/const POINTS_OPTIONS = /);
-    const updateBody = source.slice(source.indexOf('update(state: AuraTrackState)'));
+    const updateBody = updateMethodBody();
     expect(updateBody).not.toMatch(/maximumFractionDigits:/);
   });
 });
+
+/** The text of `update()`, located by its signature and PROVEN found: an
+ *  unguarded `source.slice(source.indexOf(...))` returns the file's last
+ *  character when the signature has been renamed, and every negative pin over
+ *  it passes on anything. The slice also stops at the method's close rather
+ *  than the end of file, so the pins read the method and only the method. */
+function updateMethodBody(): string {
+  const start = source.indexOf('update(state: AuraTrackState): void {');
+  expect(start, 'the update(state) signature moved; re-anchor this helper').toBeGreaterThan(-1);
+  const end = source.indexOf('\n  }\n', start);
+  expect(end, 'the update() method never closes').toBeGreaterThan(start);
+  const body = source.slice(start, end);
+  // Anti-vacuity: the body has to contain the one write every refresh makes.
+  expect(body).toContain('w.setDisplay(this.root');
+  return body;
+}
 
 // ---------------------------------------------------------------------------
 // End-to-end over a real DOM

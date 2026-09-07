@@ -8,6 +8,19 @@
 // the pins in tests/aura_track_catalog.test.ts assert the DERIVATION rather than
 // a copy of its output, so a rule change has to be argued rather than absorbed.
 //
+// KEYED BY THE AURA ID THE SIM APPLIES, NOT THE ABILITY ID. The two differ more
+// often than a reader expects: an effect can name its own auraId (Raised Guard
+// lands as raised_guard_dr, Whirlwind's Bladed Echo as bladed_echo, Hallowed
+// Wall's shield as holy_shield_absorb), a second self-buff on one ability is
+// kind-suffixed (Arcane Power's haste is arcane_power_buff_spellhaste), and an
+// absorb beside a stasis takes _absorb. Those rules live in
+// src/sim/combat/aura_ids.ts and the dispatcher calls the same functions, so an
+// id computed here is an id a live aura can actually carry. One entry per
+// qualifying EFFECT, so Hallowed Wall's block buff and its shield are two rows
+// in two tracks. tests/aura_track_catalog.test.ts casts through a real Sim and
+// checks every helpful aura it leaves resolves here, which is what keeps the two
+// sides honest.
+//
 // It is built at module load and read as a Map on the frame path, so the
 // per-frame cost is a lookup, never a scan of the ability table.
 //
@@ -16,11 +29,16 @@
 // (Briarguard, Thunder Ward), then 1800 (the raid buffs, aspects, poisons,
 // imbues) and 3600 (forms and stances). The cutoff therefore sits in a 10x gap
 // and nothing is borderline. Toggles are the deliberate exception: they carry
-// 3600 purely so nothing can expire them, and they are admitted by the toggle
-// rule below rather than by duration.
+// 3600 purely so nothing can expire them, and they are admitted by the SAME
+// classifier the aura strips use (isToggleAuraKind), never by a second rule
+// here. A long buff that is not a toggle (the hunter aspects, Pack Rally,
+// Sacrilegious March) stays out: a bar counting down 1,800 seconds is exactly
+// what this family is not for.
 
+import { absorbAuraId, buffTargetAuraId, selfBuffAuraId } from '../../../sim/combat/aura_ids';
 import { ABILITIES } from '../../../sim/data';
-import type { AbilityDef } from '../../../sim/types';
+import type { AbilityDef, AuraKind } from '../../../sim/types';
+import { isToggleAuraKind } from '../../auras_view';
 
 /** What kind of thing an aura is, which decides its track and its row shape. */
 export type AuraTrackCategory = 'hot' | 'guard' | 'absorb' | 'utility' | 'power';
@@ -31,8 +49,16 @@ export type AuraTrackCategory = 'hot' | 'guard' | 'absorb' | 'utility' | 'power'
 export type AuraTrackRowShape = 'timer' | 'points' | 'mode';
 
 export interface AuraTrackEntry {
-  /** The ability id, which is also the aura id the sim applies. */
+  /** The id a LIVE aura carries (src/sim/combat/aura_ids.ts), which is the
+   *  ability id only for an ability's primary effect. */
   id: string;
+  /** The ability that applies it: its cooldown decides the Defensives line. */
+  abilityId: string;
+  /** The authored aura kind (the effect type for a hot or an absorb), so the
+   *  tests can ask the strips' classifier the same question this module did. */
+  kind: string;
+  /** The authored duration in seconds; a mode's is anti-expiry, not a timer. */
+  duration: number;
   category: AuraTrackCategory;
   shape: AuraTrackRowShape;
   /** The ability's cooldown in seconds, 0 for none. Separates the emergency
@@ -130,9 +156,9 @@ const ABSORB_TYPES: ReadonlySet<string> = new Set([
 ]);
 
 /**
- * Abilities that carry a helpful aura this family must NOT show, for a reason
- * the duration and kind rules cannot see. Kept explicit and short: a silent
- * exclusion is how a tracker loses a spell nobody notices is missing.
+ * Aura ids this family must NOT show, for a reason the duration and kind rules
+ * cannot see. Kept explicit and short: a silent exclusion is how a tracker loses
+ * a spell nobody notices is missing.
  */
 const EXCLUDED_IDS: ReadonlySet<string> = new Set([
   // Permanent until death or replacement (`permanent: true`), so there is no
@@ -149,6 +175,7 @@ const EXCLUDED_IDS: ReadonlySet<string> = new Set([
 /**
  * Abilities whose helpful aura the shape rules cannot see, because the content
  * models them with a bespoke effect type rather than a kind. Each names why.
+ * The aura id is the ability id for every one of these.
  */
 const FORCED: ReadonlyMap<string, AuraTrackCategory> = new Map([
   // A 20 second vanish on a 120 second cooldown, modelled as its own effect
@@ -157,25 +184,15 @@ const FORCED: ReadonlyMap<string, AuraTrackCategory> = new Map([
   ['greater_invisibility', 'utility'],
 ]);
 
-function firstAuraEffect(def: AbilityDef): Record<string, unknown> | null {
-  const ranked = (def as { ranks?: Array<{ effects?: unknown[] }> }).ranks ?? [];
-  const all = [...((def.effects ?? []) as unknown[]), ...ranked.flatMap((r) => r.effects ?? [])];
-  for (const raw of all) {
-    const eff = raw as Record<string, unknown>;
-    const type = String(eff.type ?? '');
-    const kind = String(eff.kind ?? '');
-    const duration = Number(eff.duration ?? 0);
-    if (type === 'hot') return eff;
-    if (ABSORB_TYPES.has(type)) return eff;
-    if (!duration) continue;
-    if (GUARD_KINDS.has(kind) || POWER_KINDS.has(kind) || UTILITY_KINDS.has(kind)) return eff;
-  }
-  return null;
-}
+/** The loose view of an authored effect this module reads. */
+type EffectRecord = {
+  type?: unknown;
+  kind?: unknown;
+  duration?: unknown;
+  auraId?: unknown;
+};
 
-function categoryOf(eff: Record<string, unknown>): AuraTrackCategory | null {
-  const type = String(eff.type ?? '');
-  const kind = String(eff.kind ?? '');
+function categoryOf(type: string, kind: string): AuraTrackCategory | null {
   if (type === 'hot') return 'hot';
   if (ABSORB_TYPES.has(type)) return 'absorb';
   if (GUARD_KINDS.has(kind)) return 'guard';
@@ -184,48 +201,84 @@ function categoryOf(eff: Record<string, unknown>): AuraTrackCategory | null {
   return null;
 }
 
-/** A toggle carries a long finite duration purely so nothing can expire it, so
- *  it is admitted past the ceiling and drawn as a mode. Mirrors the classifier
- *  the aura strips already use (auras_view isToggleAura). */
-function isModeDuration(duration: number, kind: string): boolean {
-  return duration > AURA_TRACK_DURATION_CEILING_SEC && UTILITY_KINDS.has(kind);
+/**
+ * The id the sim will apply this effect's aura under. The three shapes with a
+ * suffix rule go through the dispatcher's own helpers; every other shape keeps
+ * the ability id unless the effect names its own.
+ */
+function auraIdOf(def: AbilityDef, eff: EffectRecord, type: string, buffTargetIndex: number) {
+  const idEff = { kind: String(eff.kind ?? ''), auraId: eff.auraId as string | undefined };
+  if (type === 'selfBuff') return selfBuffAuraId(def, idEff);
+  if (type === 'absorb') return absorbAuraId(def, idEff);
+  if (type === 'buffTarget') return buffTargetAuraId(def, idEff, buffTargetIndex);
+  return idEff.auraId ?? def.id;
+}
+
+/** The effect lists one ability can resolve a cast from: its base effects and
+ *  each rank's. buffTarget positions count within ONE list, as the dispatcher
+ *  counts them within one cast. */
+function effectLists(def: AbilityDef): ReadonlyArray<readonly EffectRecord[]> {
+  const ranked = (def as { ranks?: Array<{ effects?: unknown[] }> }).ranks ?? [];
+  return [
+    (def.effects ?? []) as unknown as readonly EffectRecord[],
+    ...ranked.map((r) => (r.effects ?? []) as readonly EffectRecord[]),
+  ];
 }
 
 function buildCatalog(): ReadonlyMap<string, AuraTrackEntry> {
   const out = new Map<string, AuraTrackEntry>();
-  for (const [id, def] of Object.entries(ABILITIES as Record<string, AbilityDef>)) {
-    if (EXCLUDED_IDS.has(id)) continue;
-    const forced = FORCED.get(id);
+  for (const [abilityId, def] of Object.entries(ABILITIES as Record<string, AbilityDef>)) {
+    const cooldown = Number((def as { cooldown?: number }).cooldown ?? 0);
+    const forced = FORCED.get(abilityId);
     if (forced) {
-      out.set(id, {
-        id,
+      const first = effectLists(def)[0][0];
+      out.set(abilityId, {
+        id: abilityId,
+        abilityId,
+        kind: String(first?.type ?? ''),
+        duration: Number(first?.duration ?? 0),
         category: forced,
         shape: 'timer',
-        cooldown: Number((def as { cooldown?: number }).cooldown ?? 0),
+        cooldown,
       });
       continue;
     }
-    const eff = firstAuraEffect(def);
-    if (!eff) continue;
-    const category = categoryOf(eff);
-    if (!category) continue;
-
-    const duration = Number(eff.duration ?? 0);
-    const kind = String(eff.kind ?? '');
-    const mode = isModeDuration(duration, kind);
-    if (!mode && (duration <= 0 || duration > AURA_TRACK_DURATION_CEILING_SEC)) continue;
-
-    out.set(id, {
-      id,
-      category,
-      shape: mode ? 'mode' : category === 'absorb' ? 'points' : 'timer',
-      cooldown: Number((def as { cooldown?: number }).cooldown ?? 0),
-    });
+    for (const effects of effectLists(def)) {
+      let buffTargetIndex = 0;
+      for (const eff of effects) {
+        const type = String(eff.type ?? '');
+        const kind = String(eff.kind ?? '');
+        const auraId = auraIdOf(def, eff, type, buffTargetIndex);
+        if (type === 'buffTarget') buffTargetIndex++;
+        if (EXCLUDED_IDS.has(auraId) || out.has(auraId)) continue;
+        const category = categoryOf(type, kind);
+        if (!category) continue;
+        const duration = Number(eff.duration ?? 0);
+        if (duration <= 0) continue;
+        // ONE toggle classifier, shared with the aura strips: the shape a row
+        // takes and the pass it gets through the ceiling come from the same
+        // answer, so a catalog mode is always drawn as a mode and never as a
+        // timer the strips would suppress.
+        const auraKind = kind || category;
+        const mode = isToggleAuraKind(auraId, auraKind as AuraKind);
+        if (!mode && duration > AURA_TRACK_DURATION_CEILING_SEC) continue;
+        out.set(auraId, {
+          id: auraId,
+          abilityId,
+          kind: auraKind,
+          duration,
+          category,
+          shape: mode ? 'mode' : category === 'absorb' ? 'points' : 'timer',
+          cooldown,
+        });
+      }
+    }
   }
   return out;
 }
 
-/** Every trackable aura, keyed by its id. Built once at module load. */
+/** Every trackable aura, keyed by the id a live aura carries. Built once at
+ *  module load. */
 export const AURA_TRACK_CATALOG: ReadonlyMap<string, AuraTrackEntry> = buildCatalog();
 
 /** The catalog entry for an aura id, or undefined when nothing tracks it. */

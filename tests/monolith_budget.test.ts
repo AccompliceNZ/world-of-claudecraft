@@ -313,8 +313,9 @@ const MONOLITHS: MonolithRow[] = [
     // Re-measured at the aura-tracks sync (PR #3925): the release's 18723 less
     // the net 82 lines that branch takes out of hud.ts by moving
     // localizeSystemText to src/ui/system_text_i18n.ts (its six-frame wiring
-    // costs about 45 of the 122 it removes). Exact merged count, zero slack.
-    ceiling: 18641,
+    // costs about 45 of the 122 it removes), then plus 3 for the review round's
+    // hoisted per-track switch predicate. Exact count, zero slack.
+    ceiling: 18644,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

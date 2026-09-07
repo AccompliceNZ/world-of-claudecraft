@@ -315,6 +315,22 @@ describe('frameRowSettingKey', () => {
       expect(frameRowSettingKey(id), `${id} has no master switch`).toBeNull();
     }
   });
+
+  it('routes every aura track row to that track own master switch', () => {
+    // Six frames, six switches, all shipped off. Pinned by literal on both sides
+    // so neither the generated frame id nor the setting can move on its own,
+    // then against the table so a seventh track is covered without an edit here.
+    expect(frameRowSettingKey('auraTrack_defensives')).toBe('showDefensivesTrack');
+    expect(frameRowSettingKey('auraTrack_self')).toBe('showSelfBuffTrack');
+    expect(frameRowSettingKey('auraTrack_power')).toBe('showOffensiveTrack');
+    expect(frameRowSettingKey('auraTrack_utility')).toBe('showUtilityTrack');
+    expect(frameRowSettingKey('auraTrack_friendly')).toBe('showFriendlyTrack');
+    expect(frameRowSettingKey('auraTrack_shields')).toBe('showShieldTrack');
+    for (const track of AURA_TRACKS) {
+      expect(frameRowSettingKey(`auraTrack_${track.id}`)).toBe(track.settingKey);
+    }
+    expect(frameRowSettingKey('auraTrack_nope')).toBeNull();
+  });
 });
 
 describe('interfaceUnlockLabelKey', () => {

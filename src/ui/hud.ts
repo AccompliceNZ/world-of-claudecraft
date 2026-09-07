@@ -4992,6 +4992,9 @@ export class Hud {
   private boolSetting(key: string, fallback = false): boolean {
     return (this.optionsHooks?.settings.get(key as BoolSettingKey) ?? fallback) === true;
   }
+  /** The per-track switch the family asks for, bound once rather than minted
+   *  as a closure on every frame of the per-frame band. */
+  private readonly auraTrackEnabled = (key: string): boolean => this.boolSetting(key);
   private readonly auraTracks = new AuraTrackFamily<Entity>({
     isOwn: (a) => isOwnAura(a, this.sim.playerId),
     isMode: (a) => isToggleAuraKind(a.id, (a.kind ?? '') as AuraKind),
@@ -8977,7 +8980,7 @@ export class Hud {
     this.auraTracks.tick(
       p,
       sim.entities.values(),
-      (key) => this.boolSetting(key),
+      this.auraTrackEnabled,
       this.boolSetting('showUtilityModes', true),
     );
 
