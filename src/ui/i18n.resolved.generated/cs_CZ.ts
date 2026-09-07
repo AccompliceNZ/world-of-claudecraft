@@ -2980,7 +2980,11 @@ export const cs_CZ: EnTranslations = {
         "doomMeter": "Affliction Bar",
         "petBar": "Pet Bar",
         "procOverlay": "Spell Procs",
-        "damageMeter": "Damage Meter"
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Nastavení rámečků",
       "framesMenuTitle": "Zobraz nebo skryj jednotlivé rámečky. Nezaškrtnutý rámeček zůstane skrytý, dokud ho znovu nezaškrtneš nebo neobnovíš výchozí nastavení.",

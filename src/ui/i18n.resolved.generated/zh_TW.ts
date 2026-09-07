@@ -2980,7 +2980,11 @@ export const zh_TW: EnTranslations = {
         "doomMeter": "痛苦資源條",
         "petBar": "Pet Bar",
         "procOverlay": "法術觸發",
-        "damageMeter": "傷害統計"
+        "damageMeter": "傷害統計",
+        "deedTracker": "功績追蹤器",
+        "delveTracker": "秘探追蹤器",
+        "riftTracker": "裂隙追蹤器",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "框體設定",
       "framesMenuTitle": "顯示或隱藏各個框體。取消勾選的框體會一直隱藏，直到你重新勾選或還原預設值。",

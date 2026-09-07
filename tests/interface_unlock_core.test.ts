@@ -41,6 +41,10 @@ describe('HUD_FRAME_SPECS', () => {
       'doomMeter',
       'procOverlay',
       'damageMeter',
+      'deedTracker',
+      'delveTracker',
+      'riftTracker',
+      'swingBarOffhand',
     ]);
     expect(HUD_FRAME_SPECS.map((s) => s.elementId)).toEqual([
       'actionbar',
@@ -64,6 +68,10 @@ describe('HUD_FRAME_SPECS', () => {
       'warlock-doom-frame',
       'proc-overlay',
       'meters-window',
+      'deed-tracker',
+      'delve-tracker',
+      'rift-tracker',
+      'swingbar-offhand',
     ]);
     // A duplicated storage key would make two frames overwrite each other's
     // saved box, which is silent and only shows up after a reload.
@@ -97,6 +105,10 @@ describe('HUD_FRAME_SPECS', () => {
       'woc_warlock_doom_frame_pos',
       'woc_hud_frame_proc_overlay',
       'woc_hud_frame_meters',
+      'woc_hud_frame_deed_tracker',
+      'woc_hud_frame_delve_tracker',
+      'woc_hud_frame_rift_tracker',
+      'woc_hud_frame_swingbar_offhand',
     ]);
   });
 
@@ -126,6 +138,9 @@ describe('HUD_FRAME_SPECS', () => {
       'reliquaryTracker',
       'doomMeter',
       'damageMeter',
+      'deedTracker',
+      'delveTracker',
+      'riftTracker',
     ]);
   });
 

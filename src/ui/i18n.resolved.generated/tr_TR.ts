@@ -2980,7 +2980,11 @@ export const tr_TR: EnTranslations = {
         "doomMeter": "Affliction Bar",
         "petBar": "Pet Bar",
         "procOverlay": "Spell Procs",
-        "damageMeter": "Damage Meter"
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Çerçeve Ayarları",
       "framesMenuTitle": "Ayrı ayrı çerçeveleri göster ya da gizle. İşareti kaldırılmış bir çerçeve, tekrar işaretleyene ya da varsayılanlara sıfırlayana kadar gizli kalır.",

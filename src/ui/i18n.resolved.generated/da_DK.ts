@@ -2980,7 +2980,11 @@ export const da_DK: EnTranslations = {
         "doomMeter": "Affliction Bar",
         "petBar": "Pet Bar",
         "procOverlay": "Spell Procs",
-        "damageMeter": "Damage Meter"
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Rammeindstillinger",
       "framesMenuTitle": "Vis eller skjul enkelte rammer. En fravalgt ramme forbliver skjult, indtil du vælger den igen eller nulstiller til standard.",

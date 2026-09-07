@@ -2980,7 +2980,11 @@ export const de_DE: EnTranslations = {
         "doomMeter": "Affliction Bar",
         "petBar": "Pet Bar",
         "procOverlay": "Spell Procs",
-        "damageMeter": "Damage Meter"
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Rahmeneinstellungen",
       "framesMenuTitle": "Einzelne Rahmen ein- oder ausblenden. Ein deaktivierter Rahmen bleibt verborgen, bis du ihn wieder aktivierst oder auf die Standardeinstellungen zurücksetzt.",

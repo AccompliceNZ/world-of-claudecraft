@@ -2273,7 +2273,7 @@ export class Hud {
       persistLayout: (layout) => this.sim.saveActionBarLayout(layout),
     });
     this.delveTracker = new DelveTrackerController({
-      element: $('#delve-tracker'),
+      element: $('#delve-body'), // never the frame root: rebuilds wipe chrome
       world: () => this.sim,
       delveName: delveDisplayName,
       mobName: mobDisplayName,
@@ -2281,7 +2281,8 @@ export class Hud {
       closeRitePanel: (restoreFocus) => this.closeRitePanel(restoreFocus),
     });
     this.riftTracker = new RiftFloorTrackerController({
-      element: $('#rift-tracker'),
+      element: $('#rift-body'), // same reason as #delve-body above
+
       world: () => this.sim,
     });
     this.delveBoard = new DelveBoardController({

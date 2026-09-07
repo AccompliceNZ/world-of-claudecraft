@@ -1500,7 +1500,11 @@
   #buff-bar.tf-unlocked,
   #debuff-bar.tf-unlocked,
   #quest-tracker.tf-unlocked,
+  #deed-tracker.tf-unlocked,
   #reliquary-tracker.tf-unlocked,
+  #delve-tracker.tf-unlocked,
+  #rift-tracker.tf-unlocked,
+  #swingbar-offhand.tf-unlocked,
   #paladin-devotion-frame.tf-unlocked,
   #proc-overlay.tf-unlocked,
   #meters-window.tf-unlocked {
@@ -1514,7 +1518,10 @@
      world stays clickable behind them), so arranging has to switch events
      back on, the doom meter's own rule above. */
   #quest-tracker.tf-unlocked,
+  #deed-tracker.tf-unlocked,
   #reliquary-tracker.tf-unlocked,
+  #delve-tracker.tf-unlocked,
+  #rift-tracker.tf-unlocked,
   #paladin-devotion-frame.tf-unlocked,
   #proc-overlay.tf-unlocked {
     pointer-events: auto;
@@ -1548,7 +1555,10 @@
   #buff-bar.hud-frame-detached,
   #debuff-bar.hud-frame-detached,
   #quest-tracker.hud-frame-detached,
-  #reliquary-tracker.hud-frame-detached {
+  #deed-tracker.hud-frame-detached,
+  #reliquary-tracker.hud-frame-detached,
+  #delve-tracker.hud-frame-detached,
+  #rift-tracker.hud-frame-detached {
     position: absolute;
     margin: 0;
     z-index: 20;
@@ -1557,7 +1567,10 @@
      width: 100% resolved against #right-tracker-stack's 240px, and against
      #ui it would span the whole screen. */
   #quest-tracker.hud-frame-detached,
-  #reliquary-tracker.hud-frame-detached {
+  #deed-tracker.hud-frame-detached,
+  #reliquary-tracker.hud-frame-detached,
+  #delve-tracker.hud-frame-detached,
+  #rift-tracker.hud-frame-detached {
     width: 240px;
   }
   #actionbar .tf-move-btn,
@@ -1573,7 +1586,11 @@
   #buff-bar .tf-move-btn,
   #debuff-bar .tf-move-btn,
   #quest-tracker .tf-move-btn,
+  #deed-tracker .tf-move-btn,
   #reliquary-tracker .tf-move-btn,
+  #delve-tracker .tf-move-btn,
+  #rift-tracker .tf-move-btn,
+  #swingbar-offhand .tf-move-btn,
   #paladin-devotion-frame .tf-move-btn,
   #proc-overlay .tf-move-btn,
   #meters-window .tf-move-btn,
@@ -1603,7 +1620,11 @@
   #buff-bar .tf-move-btn:focus-visible,
   #debuff-bar .tf-move-btn:focus-visible,
   #quest-tracker .tf-move-btn:focus-visible,
+  #deed-tracker .tf-move-btn:focus-visible,
   #reliquary-tracker .tf-move-btn:focus-visible,
+  #delve-tracker .tf-move-btn:focus-visible,
+  #rift-tracker .tf-move-btn:focus-visible,
+  #swingbar-offhand .tf-move-btn:focus-visible,
   #paladin-devotion-frame .tf-move-btn:focus-visible,
   #petbar .tf-move-btn:focus-visible,
   #proc-overlay .tf-move-btn:focus-visible,
@@ -1724,7 +1745,8 @@
      inline value beats an ordinary rule. A real cast repaints over the top of
      this, so it never suppresses live cast information. */
   body.interface-unlocked #castbar,
-  body.interface-unlocked #swingbar {
+  body.interface-unlocked #swingbar,
+  body.interface-unlocked #swingbar-offhand {
     display: block !important;
     opacity: 0.55;
   }
@@ -1752,7 +1774,10 @@
      the stack's :empty rule), so their placeholders force block display and
      keep a graspable minimum box like the stance bar's. */
   body.interface-unlocked #quest-tracker.tf-unlocked,
-  body.interface-unlocked #reliquary-tracker.tf-unlocked {
+  body.interface-unlocked #deed-tracker.tf-unlocked,
+  body.interface-unlocked #reliquary-tracker.tf-unlocked,
+  body.interface-unlocked #delve-tracker.tf-unlocked,
+  body.interface-unlocked #rift-tracker.tf-unlocked {
     display: block !important;
     opacity: 0.55;
     min-height: 48px;
@@ -1838,7 +1863,8 @@
      placeholders, so letting them spill costs nothing. */
   body.interface-unlocked #xpbar.tf-unlocked,
   body.interface-unlocked #castbar.tf-unlocked,
-  body.interface-unlocked #swingbar.tf-unlocked {
+  body.interface-unlocked #swingbar.tf-unlocked,
+  body.interface-unlocked #swingbar-offhand.tf-unlocked {
     overflow: visible;
   }
   /* While unlocked a frame's CONTENTS are a static picture: pointer-inert so a
@@ -5175,12 +5201,18 @@
   }
 
   /* ---------- delve tracker ---------- */
+  /* Visibility is the body's: the controller paints #delve-body (the root is
+     a movable frame hosting the mover chrome beside it), and an empty body
+     folds the whole tracker out of the stack, replacing the old inline
+     root display toggle. The edit mode's force-show still wins. */
   #delve-tracker {
     width: 100%;
     font-size: 12px;
     color: var(--gold);
     text-shadow: 1px 1px 2px #000;
     pointer-events: none;
+  }
+  #delve-tracker:has(> #delve-body:empty) {
     display: none;
   }
   #delve-tracker .dt-header {
@@ -5243,12 +5275,15 @@
   /* Floor progress + the "closes in" event countdown (issue #2655). Same shape
      as the delve tracker above; actionable pacing info, so it stays visible on
      every graphics tier (docs/design/graphics-settings-fairness.md). */
+  /* Same body-owned visibility as #delve-tracker above. */
   #rift-tracker {
     width: 100%;
     font-size: 12px;
     color: var(--gold);
     text-shadow: 1px 1px 2px #000;
     pointer-events: none;
+  }
+  #rift-tracker:has(> #rift-body:empty) {
     display: none;
   }
   #rift-tracker .rt-header {

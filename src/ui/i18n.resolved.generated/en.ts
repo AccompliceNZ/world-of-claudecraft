@@ -2980,7 +2980,11 @@ export const en: EnTranslations = {
         "doomMeter": "Affliction Bar",
         "petBar": "Pet Bar",
         "procOverlay": "Spell Procs",
-        "damageMeter": "Damage Meter"
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Frames Settings",
       "framesMenuTitle": "Show or hide individual frames. An unticked frame stays hidden until you tick it again or reset to defaults.",

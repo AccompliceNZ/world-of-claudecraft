@@ -2980,7 +2980,11 @@ export const en_XA: EnTranslations = {
         "doomMeter": "[Áƒƒļíçţíóñ Ɓáŕ]",
         "petBar": "[Þéţ Ɓáŕ]",
         "procOverlay": "[Šþéļļ Þŕóçš]",
-        "damageMeter": "[Ðáɱáĝé Ɱéţéŕ]"
+        "damageMeter": "[Ðáɱáĝé Ɱéţéŕ]",
+        "deedTracker": "[Ðééð Ţŕáçķéŕ]",
+        "delveTracker": "[Ðéļʋé Ţŕáçķéŕ]",
+        "riftTracker": "[Ŕíƒţ Ţŕáçķéŕ]",
+        "swingBarOffhand": "[Óƒƒ Ĥáñð]"
       },
       "framesMenu": "[Ƒŕáɱéš Šéţţíñĝš]",
       "framesMenuTitle": "[Šĥóŵ óŕ ĥíðé íñðíʋíðúáļ ƒŕáɱéš. Áñ úñţíçķéð ƒŕáɱé šţáýš ĥíððéñ úñţíļ ýóú ţíçķ íţ áĝáíñ óŕ ŕéšéţ ţó ðéƒáúļţš.]",

@@ -274,6 +274,47 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
     detachToUiRoot: true,
     resizeMode: 'box',
   },
+  // The remaining right-stack trackers (the deed watch list, the delve run
+  // tracker, the rift floor tracker), re-homed like the quest and Reliquary
+  // rows. The delve and rift controllers rebuild their paint target's HTML,
+  // so each paints an inner body element (#delve-body / #rift-body) and the
+  // frame chrome lives beside it on the root; the deed painter builds its
+  // skeleton once, so its root is safe as-is.
+  {
+    id: 'deedTracker',
+    elementId: 'deed-tracker',
+    storageKey: 'woc_hud_frame_deed_tracker',
+    labelKey: 'hudChrome.interfaceUnlock.frameNames.deedTracker',
+    fallbackSize: { w: 240, h: 120 },
+    detachToUiRoot: true,
+  },
+  {
+    id: 'delveTracker',
+    elementId: 'delve-tracker',
+    storageKey: 'woc_hud_frame_delve_tracker',
+    labelKey: 'hudChrome.interfaceUnlock.frameNames.delveTracker',
+    fallbackSize: { w: 240, h: 140 },
+    detachToUiRoot: true,
+  },
+  {
+    id: 'riftTracker',
+    elementId: 'rift-tracker',
+    storageKey: 'woc_hud_frame_rift_tracker',
+    labelKey: 'hudChrome.interfaceUnlock.frameNames.riftTracker',
+    fallbackSize: { w: 240, h: 100 },
+    detachToUiRoot: true,
+  },
+  // The off-hand swing timer, the main-hand row's dual-wield sibling: same
+  // placeholder posture as the cast and swing bars (hidden outside combat,
+  // force-shown dimmed while editing).
+  {
+    id: 'swingBarOffhand',
+    elementId: 'swingbar-offhand',
+    storageKey: 'woc_hud_frame_swingbar_offhand',
+    labelKey: 'hudChrome.interfaceUnlock.frameNames.swingBarOffhand',
+    fallbackSize: { w: 220, h: 12 },
+    detachToUiRoot: false,
+  },
 ] as const;
 
 /** Every storage key the option owns, so a reset can clear the whole set. */

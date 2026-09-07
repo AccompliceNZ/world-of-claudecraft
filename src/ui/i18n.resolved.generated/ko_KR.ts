@@ -2980,7 +2980,11 @@ export const ko_KR: EnTranslations = {
         "doomMeter": "고통 자원 막대",
         "petBar": "Pet Bar",
         "procOverlay": "주문 발동",
-        "damageMeter": "피해 측정기"
+        "damageMeter": "피해 측정기",
+        "deedTracker": "업적 추적기",
+        "delveTracker": "탐굴 추적기",
+        "riftTracker": "균열 추적기",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "프레임 설정",
       "framesMenuTitle": "각 프레임을 표시하거나 숨깁니다. 선택을 해제한 프레임은 다시 선택하거나 기본값으로 초기화할 때까지 숨겨진 상태로 유지됩니다.",

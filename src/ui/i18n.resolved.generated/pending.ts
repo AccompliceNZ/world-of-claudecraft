@@ -11,138 +11,203 @@
 export const pending: Record<string, readonly string[]> = {
   "es": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "es_ES": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "fr_FR": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "fr_CA": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "en_CA": [],
   "it_IT": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "de_DE": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "zh_CN": [
-    "hudChrome.interfaceUnlock.frameNames.petBar"
+    "hudChrome.interfaceUnlock.frameNames.petBar",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "zh_TW": [
-    "hudChrome.interfaceUnlock.frameNames.petBar"
+    "hudChrome.interfaceUnlock.frameNames.petBar",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "ko_KR": [
-    "hudChrome.interfaceUnlock.frameNames.petBar"
+    "hudChrome.interfaceUnlock.frameNames.petBar",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "ja_JP": [
-    "hudChrome.interfaceUnlock.frameNames.petBar"
+    "hudChrome.interfaceUnlock.frameNames.petBar",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "pt_BR": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "ru_RU": [
-    "hudChrome.interfaceUnlock.frameNames.petBar"
+    "hudChrome.interfaceUnlock.frameNames.petBar",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "cs_CZ": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "nl_NL": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "pl_PL": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "id_ID": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "tr_TR": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "sv_SE": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "vi_VN": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ],
   "da_DK": [
     "hudChrome.interfaceUnlock.frameNames.damageMeter",
+    "hudChrome.interfaceUnlock.frameNames.deedTracker",
+    "hudChrome.interfaceUnlock.frameNames.delveTracker",
     "hudChrome.interfaceUnlock.frameNames.doomMeter",
     "hudChrome.interfaceUnlock.frameNames.petBar",
     "hudChrome.interfaceUnlock.frameNames.procOverlay",
     "hudChrome.interfaceUnlock.frameNames.questTracker",
-    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker"
+    "hudChrome.interfaceUnlock.frameNames.reliquaryTracker",
+    "hudChrome.interfaceUnlock.frameNames.riftTracker",
+    "hudChrome.interfaceUnlock.frameNames.swingBarOffhand"
   ]
 };
