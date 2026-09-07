@@ -706,7 +706,12 @@
 
   /* ---------- windows ---------- */
   #quest-dialog {
-    width: 440px;
+    width: 460px;
+    max-height: calc(var(--app-vh, 100vh) * 0.78 / var(--window-scale) - 24px);
+    overflow-y: auto;
+  }
+  #quest-dialog:has(.qd-sub) {
+    width: 560px;
   }
   .qd-text {
     font-size: 12.5px;
@@ -730,13 +735,8 @@
     display: inline-block;
     margin: 0 0 10px;
     padding: 2px 9px;
-    font-family: var(--title-font);
     font-size: 11px;
     letter-spacing: 0.3px;
-    color: var(--gold);
-    background: #1a140a66;
-    border: 1px solid var(--color-border-default);
-    border-radius: 4px;
   }
   .quest-muted {
     color: var(--color-text-muted);
@@ -766,15 +766,12 @@
   .qd-list-item {
     display: block;
     width: 100%;
-    padding: 5px 8px;
+    min-height: 36px;
+    margin-top: 6px;
+    padding: 7px 10px;
     cursor: var(--cursor-point);
-    border: 0;
-    border-radius: 4px;
-    background: transparent;
     text-align: left;
     font-size: 13px;
-    color: var(--gold);
-    font-family: var(--title-font);
   }
   .qd-text,
   .qd-sub,
@@ -795,10 +792,10 @@
   .qd-reward-name {
     min-width: 0;
   }
-  .qd-list-item:hover {
-    background: #ffffff14;
+  .qd-list-item:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
-  .qd-list-item:focus-visible,
   .ql-item:focus-visible {
     outline: 3px solid var(--color-border-focus);
     outline-offset: 2px;
@@ -813,8 +810,8 @@
     border: 2px solid var(--gold);
     border-radius: 6px;
     box-shadow:
-      0 0 14px #ffc860aa,
-      inset 0 0 8px #ffc86033;
+      0 0 calc(14px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 67%, transparent),
+      inset 0 0 calc(8px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 20%, transparent);
     animation: qd-coach-pulse 900ms ease-in-out infinite;
   }
   /* The mobile cluster, ring, and Quick Actions controls are circles: the
@@ -834,24 +831,28 @@
     0%,
     100% {
       border-color: var(--gold);
-      background-color: #ffc86014;
+      background-color: color-mix(in srgb, var(--gold) 8%, transparent);
       box-shadow:
-        0 0 8px #ffc86077,
-        inset 0 0 6px #ffc86022;
+        0 0 calc(8px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 47%, transparent),
+        inset 0 0 calc(6px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 13%, transparent);
     }
     50% {
-      border-color: #ffe9b0;
-      background-color: #ffc8602e;
+      border-color: var(--color-text-light);
+      background-color: color-mix(in srgb, var(--gold) 18%, transparent);
       box-shadow:
-        0 0 26px #ffc860ee,
-        0 0 6px #fff3d088,
-        inset 0 0 12px #ffc86055;
+        0 0 calc(26px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 93%, transparent),
+        0 0 calc(6px * var(--fx-shadow, 1))
+        color-mix(in srgb, var(--color-text-light) 53%, transparent),
+        inset 0 0 calc(12px * var(--fx-shadow, 1)) color-mix(in srgb, var(--gold) 33%, transparent);
     }
   }
   @media (prefers-reduced-motion: reduce) {
     .qd-coach {
       animation: none;
     }
+  }
+  body.reduce-motion .qd-coach {
+    animation: none;
   }
   .btn {
     background: linear-gradient(#8a3326, #5a1d12 55%, #471409);
@@ -894,6 +895,24 @@
     filter: grayscale(1) brightness(0.7);
     cursor: default;
     box-shadow: none;
+  }
+  #quest-dialog .btn {
+    background: revert-layer;
+    color: revert-layer;
+    border: revert-layer;
+    outline: revert-layer;
+    border-radius: revert-layer;
+    font-family: revert-layer;
+    letter-spacing: revert-layer;
+    text-shadow: revert-layer;
+    box-shadow: revert-layer;
+    filter: revert-layer;
+    transition: revert-layer;
+  }
+  #quest-dialog .btn:focus-visible {
+    outline: 2px solid var(--color-border-focus) !important;
+    outline-offset: 2px !important;
+    box-shadow: revert-layer !important;
   }
 
   #loot-window {
@@ -5825,17 +5844,16 @@
     width: max(
       400px,
       min(
-        860px,
+        560px,
         calc(0.5 * (var(--app-vw, 100vw) / var(--window-scale)) + var(--bags-bar-half) - 362px)
       )
     );
+    max-height: calc(var(--app-vh, 100vh) * 0.78 / var(--window-scale) - 24px);
+    overflow-y: auto;
   }
   .vendor-goods-grid {
     display: grid;
-    /* auto-fill instead of a fixed repeat(4, ...): once the width cap above
-       shrinks the window on a narrower viewport, the grid drops to 3 or 2
-       columns on its own rather than squeezing 4 undersized tiles. */
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 6px;
   }
   .vendor-item {
@@ -5854,29 +5872,26 @@
     color: inherit;
     font-family: var(--ui-font);
   }
-  /* Inside the grid, a tile stacks icon over name over price rather than a
-     left-to-right row, so several fit per line at the window's new width. */
   .vendor-goods-grid .vendor-item {
-    flex-direction: column;
     justify-content: flex-start;
-    text-align: center;
-    gap: 4px;
-    padding: 8px 6px;
+    min-height: 54px;
+    padding: 6px;
   }
-  .vendor-item:not(.ui-card):hover {
-    background: #ffffff10;
+  .vendor-item:hover {
+    filter: brightness(1.08);
+  }
+  .vendor-item > .ui-socket {
+    flex: 0 0 auto;
   }
   .vendor-item .vi-name {
     font-size: 12px;
     flex: 1;
   }
   .vendor-goods-grid .vendor-item .vi-name {
-    flex: none;
-    width: 100%;
+    min-width: 0;
   }
   .vendor-item .vi-price {
     font-size: 11px;
-    color: #ddd;
   }
   .vendor-item .vi-price .warfare-price,
   .warfare-balance {
@@ -5890,7 +5905,6 @@
   .vendor-item .vi-sub {
     display: block;
     font-size: 10px;
-    color: #887c5c;
   }
   .vendor-item:disabled {
     opacity: 0.45;
@@ -5914,7 +5928,7 @@
     color: var(--color-text-error);
   }
   .vendor-item:disabled:hover {
-    background: transparent;
+    filter: none;
   }
   /* Bulk ("Buy Stack") tile (#2374): a plain sibling tile beside the ordinary
      single-unit buy tile (never a nested <button> inside it), so a gold top
@@ -5924,6 +5938,12 @@
   }
   .vendor-item-bulk .vi-name {
     color: var(--gold);
+  }
+  .vendor-buyback-empty {
+    display: flex;
+    align-items: center;
+    min-height: 54px;
+    padding: 6px;
   }
   /* The 1x/5x/10x/custom purchase control row (phase 21): one strip of
      toggle chips above the goods grid. The selected state rides
@@ -5937,22 +5957,7 @@
   .vendor-qty-btn {
     flex: 0 0 auto;
     min-width: 34px;
-    padding: 3px 8px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 4px;
-    cursor: var(--cursor-point);
-    background: transparent;
-    color: inherit;
-    font-family: var(--ui-font);
     font-size: 11px;
-  }
-  .vendor-qty-btn:hover {
-    background: #ffffff20;
-  }
-  .vendor-qty-btn[aria-pressed="true"] {
-    border-color: var(--gold-dim);
-    background: #ffffff20;
-    color: var(--gold);
   }
   /* forced-colors drops the gold border/fill/text tints above to the same
      system values as an unpressed chip, so the armed multiple would read by
@@ -5989,19 +5994,11 @@
     min-height: 40px;
     margin-top: 8px;
     padding: 8px;
-    border: 1px solid #6a5320;
-    border-radius: 4px;
     cursor: var(--cursor-point);
-    background: linear-gradient(#8a6a26, #5a4413 55%, #473409);
-    color: #ffe6a8;
-    font-family: var(--title-font);
     font-size: 12px;
   }
   .vendor-sell-junk .vi-name {
     flex: 0 1 auto;
-  }
-  .vendor-sell-junk:hover:not(:disabled) {
-    filter: brightness(1.12);
   }
   .vendor-sell-junk:disabled {
     opacity: 0.5;
@@ -6106,11 +6103,10 @@
   .qd-profession-choice select {
     width: 100%;
     padding: 6px 8px;
-    border: 1px solid var(--color-border-default);
-    border-radius: 4px;
-    background: var(--color-bg-input);
-    color: var(--color-text-light);
-    font-family: var(--ui-font);
+  }
+  #quest-dialog .ui-input:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
   .qd-profession-preview {
     display: flex;
@@ -6499,14 +6495,44 @@
   .vendor-empty {
     padding: 5px;
     font-size: 11px;
-    color: #887c5c;
+    color: var(--color-text-muted);
   }
   .vendor-hint {
     font-size: 11px;
-    color: #c8b888;
+    color: var(--color-text-muted);
     margin-top: 8px;
     border-top: 1px solid var(--color-border-showcase);
     padding-top: 6px;
+  }
+  .buy-quantity-prompt .prompt-number {
+    border: revert-layer;
+    border-radius: revert-layer;
+    background: revert-layer;
+    color: revert-layer;
+    font: revert-layer;
+    box-shadow: revert-layer;
+  }
+  .buy-quantity-prompt .prompt-number:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+  .buy-quantity-prompt .btn {
+    background: revert-layer;
+    color: revert-layer;
+    border: revert-layer;
+    outline: revert-layer;
+    border-radius: revert-layer;
+    font-family: revert-layer;
+    letter-spacing: revert-layer;
+    text-shadow: revert-layer;
+    box-shadow: revert-layer;
+    filter: revert-layer;
+    transition: revert-layer;
+  }
+  .buy-quantity-prompt .btn:focus-visible {
+    outline: 2px solid var(--color-border-focus) !important;
+    outline-offset: 2px !important;
+    box-shadow: revert-layer !important;
   }
 
   /* ---------- WARFARE quartermaster shop ---------- */
@@ -6598,6 +6624,8 @@
      opacity). The unbind service below shares every card rule. */
   #train-window {
     width: 400px;
+    max-height: calc(var(--app-vh, 100vh) * 0.78 / var(--window-scale) - 24px);
+    overflow-y: auto;
   }
   /* The craft section headers follow the crafting window's small-caps
      treatment so the two teaching surfaces read as one family. */
@@ -6611,35 +6639,31 @@
     margin: 0 0 8px;
     padding: 9px 10px;
     gap: 10px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
-    background: rgba(0, 0, 0, 0.24);
   }
-  /* The vendor family's hover rules predate the card migration: on the old
-     transparent rows they were a light wash or a no-op, but on a card they
-     REPLACE the inset fill (blanking it via .vendor-item:disabled:hover, or
-     swapping it via .vendor-item:hover), so the card restates its fill at
-     matching specificity, layering the hover wash over it on live rows. */
+  /* Service rows share the vendor card hover; disabled and already-known
+     rows suppress that filter without replacing the shared card fill. */
   .train-row:hover:not(:disabled),
   .unbind-row:hover:not(:disabled) {
-    background: linear-gradient(0deg, #ffffff10, #ffffff10), rgba(0, 0, 0, 0.24);
+    filter: brightness(1.08);
   }
   .train-row:disabled:hover,
   .unbind-row:disabled:hover {
-    background: rgba(0, 0, 0, 0.24);
+    filter: none;
   }
   /* The shared quality-glow socket, sized down for the narrower service
      windows (the crafting book's 44px socket crowds a 400px card). */
   #train-window .crafting-recipe-socket,
   #unbind-window .crafting-recipe-socket {
-    flex: 0 0 36px;
-    width: 36px;
-    height: 36px;
+    flex: 0 0 40px;
+    width: 40px;
+    height: 40px;
+    background: revert-layer;
+    border-radius: revert-layer;
   }
   #train-window .crafting-recipe-socket .item-icon,
   #unbind-window .crafting-recipe-socket .item-icon {
-    width: 30px;
-    height: 30px;
+    width: calc(100% - 2 * var(--socket-art-inset));
+    height: calc(100% - 2 * var(--socket-art-inset));
   }
   /* The gold-gradient action chip on an affordable service fee (the Craft
      chip family): decoration inside the row button, the whole card stays
@@ -6647,12 +6671,6 @@
   .vi-price-chip {
     flex: none;
     align-self: center;
-    padding: 6px 12px;
-    border: 1px solid #6a5320;
-    border-radius: 5px;
-    background: linear-gradient(180deg, #e9c064, #b98a2e);
-    color: #1c1206;
-    font-family: var(--title-font);
     font-size: 11px;
     font-weight: 700;
     white-space: nowrap;
@@ -6663,13 +6681,7 @@
   }
   /* The tri-state label rides the shared pill-chip idiom. */
   .train-state {
-    font-family: var(--title-font);
     font-size: 10px;
-    color: var(--gold);
-    padding: 2px 8px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.3);
     white-space: nowrap;
   }
   /* Locked rows stay VISIBLE (the teaching ladder): grayed like a disabled
@@ -6685,6 +6697,8 @@
      treatment); only the intro line lives here. */
   #unbind-window {
     width: 400px;
+    max-height: calc(var(--app-vh, 100vh) * 0.78 / var(--window-scale) - 24px);
+    overflow-y: auto;
   }
   .unbind-intro {
     display: block;
@@ -6728,9 +6742,7 @@
     cursor: default;
   }
   .train-row.train-known:hover {
-    /* Keep the card fill, no hover wash: the known row is informational and
-       must not imply interactivity (transparent here would blank the card). */
-    background: rgba(0, 0, 0, 0.24);
+    filter: none;
   }
   .train-row.train-known .train-state {
     opacity: 0.7;
@@ -6752,6 +6764,8 @@
   }
   #commission-board-window {
     width: 460px;
+    max-height: calc(var(--app-vh, 100vh) * 0.78 / var(--window-scale) - 24px);
+    overflow-y: auto;
   }
   .commission-board-intro {
     display: block;
@@ -6769,9 +6783,6 @@
     gap: 8px;
     padding: 6px;
     margin: 0 6px 10px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 8px;
-    background: rgba(0, 0, 0, 0.2);
   }
   .commission-form-title {
     font-family: var(--title-font);
@@ -6792,18 +6803,11 @@
   .commission-field input[type="text"] {
     box-sizing: border-box;
     width: 100%;
-    padding: 7px 10px;
     font-size: 16px;
-    background: #120d07;
-    border: 1px solid #5a4a2a;
-    border-radius: 6px;
-    color: #ffe6a8;
-    font-family: Georgia, serif;
   }
-  .commission-field input[type="text"]:focus-visible {
+  .commission-field :is(input, select):focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
-    border-color: var(--color-border-focus);
+    outline-offset: 2px;
   }
   .commission-radio-row {
     display: flex;
@@ -6823,12 +6827,7 @@
   .commission-submit-btn {
     padding: 10px;
     min-height: 40px;
-    font-family: var(--title-font);
     font-size: 13px;
-    color: #1c1206;
-    background: linear-gradient(180deg, #e9c064, #b98a2e);
-    border: 1px solid #7a5a1e;
-    border-radius: 6px;
     cursor: var(--cursor-point);
   }
   .commission-submit-btn:hover {
@@ -6852,6 +6851,17 @@
     gap: 10px;
     flex-wrap: wrap;
   }
+  #commission-board-window .crafting-recipe-socket {
+    flex-basis: 40px;
+    width: 40px;
+    height: 40px;
+    background: revert-layer;
+    border-radius: revert-layer;
+  }
+  #commission-board-window .crafting-recipe-socket .item-icon {
+    width: calc(100% - 2 * var(--socket-art-inset));
+    height: calc(100% - 2 * var(--socket-art-inset));
+  }
   .commission-order-actions {
     display: flex;
     gap: 6px;
@@ -6859,7 +6869,6 @@
   }
   .commission-order-btn {
     cursor: var(--cursor-point);
-    border: none;
   }
   @media (pointer: coarse) {
     .commission-order-btn {
@@ -7534,7 +7543,7 @@
      note): the family's tokenized focus ring. */
   .bank-meter:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
+    outline-offset: 2px;
   }
   .bank-meter-track {
     display: flex;
@@ -7595,7 +7604,7 @@
      never change visibility or legibility with it). */
   .bank-footer.near-full .bank-meter-track {
     border-color: var(--bank-meter-gilt);
-    box-shadow: 0 0 4px var(--bank-meter-gilt-glow);
+    box-shadow: 0 0 calc(4px * var(--fx-shadow, 1)) var(--bank-meter-gilt-glow);
   }
   .bank-footer.near-full .bank-meter-seg-general .bank-meter-fill {
     background: var(--bank-meter-gilt-fill);
@@ -7665,7 +7674,7 @@
        band treatment in the same footer, and the deposit-all summary would look
        like a different surface if only one of them moved. They migrate to a
        palette token together or not at all. */
-    background: #1c1812;
+    background: color-mix(in srgb, var(--panel-base) 84%, var(--panel-edge));
     font-family: var(--ui-font);
     font-size: 12px;
   }
@@ -7715,6 +7724,21 @@
     gap: 4px;
     margin: 0 0 6px;
   }
+  .bank-socket {
+    flex-basis: 32px;
+    width: 32px;
+    height: 32px;
+    background: revert-layer;
+    border: revert-layer;
+    border-radius: revert-layer;
+    box-shadow: revert-layer;
+  }
+  .bank-socket .item-icon {
+    inset: var(--socket-art-inset);
+    width: calc(100% - 2 * var(--socket-art-inset));
+    height: calc(100% - 2 * var(--socket-art-inset));
+    border-radius: calc(var(--radius-socket) - 2px);
+  }
   .bank-socket.locked {
     display: inline-flex;
     align-items: center;
@@ -7759,15 +7783,53 @@
   #bank-window .bag-search {
     flex: 1 1 96px;
   }
+  #bank-window .bag-chip,
+  #bank-window .bag-search,
+  #bank-window .bag-sort {
+    background: revert-layer;
+    border: revert-layer;
+    border-radius: revert-layer;
+    color: revert-layer;
+    font-family: revert-layer;
+    box-shadow: revert-layer;
+  }
+  #bank-window :is(.bag-chip, .bag-search, .bag-sort, .bank-socket):focus-visible,
+  .bank-quantity-prompt .prompt-number:focus-visible,
+  .gbank-gold-prompt .ui-input:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+  .bank-quantity-prompt .prompt-number {
+    border: revert-layer;
+    border-radius: revert-layer;
+    background: revert-layer;
+    color: revert-layer;
+    font: revert-layer;
+    box-shadow: revert-layer;
+  }
+  :is(.bank-buy-prompt, .bank-quantity-prompt, .gbank-gold-prompt) .btn {
+    background: revert-layer;
+    color: revert-layer;
+    border: revert-layer;
+    outline: revert-layer;
+    border-radius: revert-layer;
+    font-family: revert-layer;
+    letter-spacing: revert-layer;
+    text-shadow: revert-layer;
+    box-shadow: revert-layer;
+    filter: revert-layer;
+    transition: revert-layer;
+  }
+  :is(.bank-buy-prompt, .bank-quantity-prompt, .gbank-gold-prompt) .btn:focus-visible {
+    outline: 2px solid var(--color-border-focus) !important;
+    outline-offset: 2px !important;
+    box-shadow: revert-layer !important;
+  }
   .bank-deposit-all {
     flex: none;
     font-family: var(--ui-font);
     font-size: 12px;
     padding: 4px 9px;
-    border-radius: 4px;
-    border: 1px solid #6a5320;
-    background: linear-gradient(#8a6a26, #5a4413 55%, #473409);
-    color: #ffe6a8;
     cursor: var(--cursor-point);
     white-space: nowrap;
   }
@@ -7780,7 +7842,7 @@
   }
   .bank-deposit-all:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
+    outline-offset: 2px;
   }
   body.mobile-touch .bank-deposit-all {
     min-height: 40px;
@@ -7818,45 +7880,35 @@
     gap: 4px;
     padding: 2px;
     align-content: start;
+    justify-items: center;
   }
   .bank-item {
     position: relative;
     aspect-ratio: 1;
-    /* SC 2.5.8: the 42px column floor keeps every cell >= 40x40 on touch too. */
     min-width: 0;
     min-height: 40px;
     padding: 0;
-    border: 1px solid #4a3d26;
-    border-radius: 5px;
     cursor: var(--cursor-point);
-    background: linear-gradient(160deg, #17130c, #0c0a07);
-    box-shadow: inset 0 1px 4px #000c;
-    color: inherit;
-    font-family: var(--ui-font);
   }
   .bank-item:hover {
     filter: brightness(1.25);
   }
   .bank-item .item-icon {
-    position: absolute;
-    inset: 2px;
-    width: calc(100% - 4px);
-    height: calc(100% - 4px);
     border: 0;
-    border-radius: 4px;
   }
   /* the cell owns the quality border; a soft outer glow from the same quality color
      (set by the painter from the shared QUALITY_COLOR map) lifts rare+ */
   .bank-item[class*=" q-"] {
     box-shadow:
-      inset 0 1px 4px #000c,
-      0 0 5px color-mix(in srgb, var(--bank-slot-quality, transparent) 45%, transparent);
+      var(--shadow-socket),
+      0 0 calc(5px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--bank-slot-quality, transparent) 45%, transparent);
   }
   /* classic look: poor/common cells keep the neutral socket border */
   .bank-item.q-poor,
   .bank-item.q-common {
-    border-color: #4a3d26 !important;
-    box-shadow: inset 0 1px 4px #000c;
+    border-color: var(--color-socket-rim) !important;
+    box-shadow: var(--shadow-socket);
   }
   /* Fine-grade material cells (material_grades fine_* ids): cool refined
      teal-silver rim + soft wash so craft reagents stand apart from plain
@@ -7882,7 +7934,7 @@
     box-shadow:
       inset 0 0 10px var(--color-bag-fine-wash),
       inset 0 0 0 1px color-mix(in srgb, var(--color-bag-fine-rim) 45%, transparent),
-      inset 0 1px 4px #000c,
+      inset 0 1px 4px color-mix(in srgb, var(--color-keyline) 80%, transparent),
       0 0 6px color-mix(in srgb, var(--color-bag-fine-rim) 32%, transparent);
   }
   .bank-count {
@@ -7892,23 +7944,18 @@
     font-size: 11px;
     font-weight: 700;
     line-height: 1;
-    color: #fff;
-    text-shadow:
-      0 1px 2px #000,
-      0 0 3px #000;
+    color: var(--color-white);
+    text-shadow: var(--title-shadow);
     pointer-events: none;
   }
   .bank-item.empty {
     cursor: default;
-    background: #0b0906;
-    border-color: #2f281a;
-    box-shadow: inset 0 2px 6px #000d;
   }
   .bank-empty {
     grid-column: 1 / -1;
     padding: 12px 5px;
     font-size: 12px;
-    color: #887c5c;
+    color: var(--color-text-muted);
     text-align: center;
   }
   .bank-buy-row {
@@ -7927,12 +7974,7 @@
     width: 100%;
     min-height: 40px;
     padding: 8px;
-    border: 1px solid #6a5320;
-    border-radius: 4px;
     cursor: var(--cursor-point);
-    background: linear-gradient(#8a6a26, #5a4413 55%, #473409);
-    color: #ffe6a8;
-    font-family: var(--title-font);
     font-size: 12px;
   }
   .bank-buy-btn:hover:not(:disabled) {
@@ -7957,11 +7999,11 @@
   .bank-item:focus-visible,
   .bank-buy-btn:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
+    outline-offset: 2px;
   }
   .bank-buy-maxed {
     padding: 8px;
-    color: #c8b888;
+    color: var(--color-text-muted);
     font-family: var(--title-font);
     font-size: 12px;
   }
@@ -7976,27 +8018,12 @@
   }
   .bank-tab {
     flex: 1;
-    padding: 7px 0;
     font-size: 13px;
-    font-family: var(--title-font);
-    color: var(--color-text-muted);
-    cursor: var(--cursor-point);
-    background: #1a1410;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 4px;
     text-align: center;
-  }
-  .bank-tab:hover {
-    color: var(--gold);
   }
   .bank-tab:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
-  }
-  .bank-tab.on {
-    color: var(--gold);
-    border-color: #6f5a2a;
-    background: linear-gradient(#2a2436, #161220);
   }
   /* The Guild pane's role=tabpanel wrapper. It exists for ACCESSIBILITY, not
      layout (the pane holds a nested tab list, which needs an owning panel to be
@@ -8019,27 +8046,12 @@
   }
   .gbank-view-tab {
     flex: 1;
-    padding: 6px 0;
     font-size: 12px;
-    font-family: var(--title-font);
-    color: var(--color-text-muted);
-    cursor: var(--cursor-point);
-    background: #15100d;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 4px;
     text-align: center;
-  }
-  .gbank-view-tab:hover {
-    color: var(--gold);
   }
   .gbank-view-tab:focus-visible {
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
-  }
-  .gbank-view-tab.on {
-    color: var(--gold);
-    border-color: #6f5a2a;
-    background: #221c14;
   }
   /* The activity log: the officer-visible history of guild bank actions. A
      plain reading surface (no controls in a row), so it is a list rather than a
@@ -8080,23 +8092,9 @@
     flex: none;
   }
   .gbank-log-filter {
-    font-family: var(--title-font);
     font-size: 11px;
     cursor: var(--cursor-point);
-    color: var(--gold-dim);
-    background: #1a1410;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 3px;
     padding: 2px 8px;
-  }
-  .gbank-log-filter:hover,
-  .gbank-log-filter:focus-visible {
-    color: var(--gold);
-  }
-  .gbank-log-filter[aria-pressed="true"] {
-    color: var(--gold);
-    border-color: var(--color-border-focus);
-    background: #221c14;
   }
   /* The list's tail: the show-older button, its in-flight line, or the
      start-of-history line. Inside the scroller, after the rows, so it is met
@@ -8109,18 +8107,9 @@
     text-align: center;
   }
   .gbank-log-older {
-    font-family: var(--title-font);
     font-size: 11px;
     cursor: var(--cursor-point);
-    color: var(--gold-dim);
-    background: #1a1410;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 4px;
     padding: 4px 12px;
-  }
-  .gbank-log-older:hover,
-  .gbank-log-older:focus-visible {
-    color: var(--gold);
   }
   /* The history TABLE. Four columns under a header row that STAYS PINNED to
      the top of the .bank-scroll scroller (position: sticky needs the header's
@@ -8146,18 +8135,18 @@
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: var(--gold-dim);
-    background: #1a1410;
+    background: var(--color-bg-input);
     padding: 5px 8px;
     border-bottom: 1px solid var(--color-border-showcase);
   }
   .gbank-log-list td {
     padding: 5px 8px;
     vertical-align: top;
-    border-bottom: 1px solid #2a2118;
-    background: #17120e;
+    border-bottom: 1px solid var(--color-border-showcase);
+    background: color-mix(in srgb, var(--panel-base) 90%, var(--panel-edge));
   }
   .gbank-log-row:nth-child(even) td {
-    background: #1c1611;
+    background: color-mix(in srgb, var(--panel-base) 82%, var(--panel-edge));
   }
   .gbank-log-time {
     font-size: 10px;
@@ -8215,17 +8204,9 @@
     margin-left: auto;
   }
   .gbank-gold-btn {
-    font-family: var(--title-font);
     font-size: 12px;
     cursor: var(--cursor-point);
-    color: var(--gold-dim);
-    background: #1a1410;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 4px;
     padding: 6px 10px;
-  }
-  .gbank-gold-btn:hover:not(:disabled) {
-    color: var(--gold);
   }
   .gbank-gold-btn:disabled {
     opacity: 0.5;
@@ -8273,7 +8254,7 @@
     width: 100%;
     height: 100%;
     display: block;
-    filter: drop-shadow(0 1px 2px #000);
+    filter: drop-shadow(var(--art-shadow-sm));
   }
   /* Unknown-id (removed-def) slots: still withdrawable (the recovery path),
      named by the localized unknown-item label since no def exists to draw. */
@@ -8336,12 +8317,6 @@
   }
   .gbank-coin-row .coininput {
     width: 56px;
-    background: #120d07;
-    border: 1px solid #5a4a2a;
-    color: #ffe6a8;
-    border-radius: 4px;
-    padding: 4px 6px;
-    font-family: var(--ui-font, inherit);
     font-size: 12px;
   }
   /* Bonus-slot breakdown footer (online only): a compact non-interactive
@@ -8453,14 +8428,9 @@
     gap: 7px;
     min-height: 40px; /* SC 2.5.8 target size, the .bank-item floor */
     padding: 3px 7px;
-    border-radius: 4px;
-    border: 1px solid var(--color-border-showcase);
     border-left: 3px solid var(--bank-slot-quality, var(--color-quality-default));
     flex: 1 1 auto;
     min-width: 0;
-    background: color-mix(in srgb, var(--panel-base) 88%, var(--panel-edge));
-    color: var(--color-text);
-    font-family: var(--ui-font);
     font-size: 12px;
     text-align: left;
     cursor: var(--cursor-point);
@@ -8470,7 +8440,7 @@
   }
   .vault-row:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
+    outline-offset: 2px;
   }
   .vault-row-special {
     background: color-mix(in srgb, var(--panel-base) 82%, var(--color-accent));
@@ -8514,10 +8484,8 @@
   }
   .vault-row-stack-count {
     flex: none;
-    padding: 2px 4px;
-    border-radius: 999px;
-    background: color-mix(in srgb, var(--panel-edge) 72%, transparent);
-    color: var(--color-text-muted);
+    height: 18px;
+    padding: 0 5px;
     font-size: 10px;
     line-height: 1;
   }
@@ -8540,11 +8508,8 @@
     min-width: 40px;
     min-height: 40px;
     padding: 4px 8px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 4px;
-    background: color-mix(in srgb, var(--panel-base) 78%, var(--panel-edge));
-    color: var(--color-accent);
-    font: 11px / 1.1 var(--ui-font);
+    font-size: 11px;
+    line-height: 1.1;
     cursor: var(--cursor-point);
   }
   .vault-row-partial:hover {
@@ -8553,7 +8518,7 @@
   }
   .vault-row-partial:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
+    outline-offset: 2px;
   }
   .vault-row-partial .ui-icon {
     flex: none;
@@ -8593,9 +8558,6 @@
     flex: none;
     margin: 4px 0 8px;
     padding: 6px 8px;
-    border-radius: 4px;
-    border: 1px solid var(--color-border-showcase);
-    background: color-mix(in srgb, var(--panel-base) 84%, var(--panel-edge));
     color: var(--gold-dim);
     font-family: var(--ui-font);
     font-size: 12px;
@@ -15378,24 +15340,7 @@
   .mail-tab {
     flex: 1;
     text-align: center;
-    font-family: var(--title-font);
     font-size: 12px;
-    color: var(--color-text-muted);
-    padding: 5px 4px;
-    border: 0;
-    border-radius: 4px 4px 0 0;
-    cursor: var(--cursor-point);
-    background: #ffffff08;
-    border-bottom: 2px solid transparent;
-  }
-  .mail-tab:hover {
-    background: #ffffff14;
-    color: var(--color-accent);
-  }
-  .mail-tab.sel {
-    color: var(--gold);
-    background: #ffffff16;
-    border-bottom-color: #cc9a3c;
   }
   .mail-empty,
   .mail-note {
@@ -15417,20 +15362,20 @@
     width: 100%;
     text-align: left;
     padding: 7px 8px;
-    border: 1px solid #ffffff14;
-    border-radius: 6px;
-    background: #ffffff06;
-    color: var(--color-text);
     cursor: var(--cursor-point);
     min-height: 40px;
   }
   .mail-row:hover {
-    background: #ffffff12;
-    border-color: #cc9a3c66;
+    filter: brightness(1.08);
+  }
+  .mail-row:focus-visible,
+  .mail-parcel-name:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
   .mail-row.unread {
-    border-color: #cc9a3c99;
-    background: #cc9a3c14;
+    border-color: var(--gold-dim);
+    background: color-mix(in srgb, var(--gold) 8%, transparent);
   }
   .mail-row-icon {
     flex: 0 0 auto;
@@ -15486,17 +15431,9 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    background: #ffffff0a;
-    border: 1px solid #ffffff1e;
-    border-radius: 5px;
-    color: var(--color-text-muted);
     padding: 5px 10px;
     cursor: var(--cursor-point);
     min-height: 28px;
-  }
-  .mail-back:hover {
-    color: var(--color-accent);
-    background: #ffffff14;
   }
   .mail-back .ui-icon {
     width: 11px;
@@ -15506,7 +15443,7 @@
     display: flex;
     flex-direction: column;
     gap: 2px;
-    border-bottom: 1px solid #ffffff14;
+    border-bottom: 1px solid var(--color-border-showcase);
     padding-bottom: 6px;
   }
   .mail-reading-subject {
@@ -15522,10 +15459,6 @@
     font-family: Georgia, serif;
     font-size: 13.5px;
     line-height: 1.5;
-    color: #ffe6c8;
-    background: #12100a99;
-    border: 1px solid #5a4a2a55;
-    border-radius: 6px;
     padding: 12px 14px;
     overflow-y: auto;
     min-height: 90px;
@@ -15542,16 +15475,11 @@
     align-items: center;
     gap: 6px;
     padding: 4px 8px;
-    background: #ffffff08;
-    border: 1px solid #ffffff1a;
-    border-radius: 6px;
     font-size: 12.5px;
   }
   .mail-attachment-item img,
   .mail-parcel-chip img {
-    width: 22px;
-    height: 22px;
-    border-radius: 4px;
+    object-fit: cover;
   }
   .mail-actions {
     display: flex;
@@ -15561,25 +15489,15 @@
     flex: 1;
     padding: 9px 10px;
     min-height: 40px;
-    font-family: var(--title-font);
     font-size: 12.5px;
-    color: #1c1206;
-    background: linear-gradient(180deg, #e9c064, #b98a2e);
-    border: 1px solid #7a5a1e;
-    border-radius: 6px;
     cursor: var(--cursor-point);
   }
   .mail-action-btn:hover {
     filter: brightness(1.08);
   }
-  .mail-action-btn.danger {
-    background: #ffffff0a;
-    color: var(--color-text-muted);
-    border-color: #ffffff22;
-  }
   .mail-action-btn.danger:hover {
-    color: #ff9c8a;
-    border-color: #ff9c8a55;
+    color: var(--color-text-error);
+    border-color: var(--color-border-invalid);
   }
   .mail-send-form {
     display: flex;
@@ -15601,20 +15519,18 @@
   .mail-field textarea {
     box-sizing: border-box;
     width: 100%;
-    padding: 7px 10px;
     font-size: 16px;
-    background: #120d07;
-    border: 1px solid #5a4a2a;
-    border-radius: 6px;
-    color: #ffe6a8;
-    font-family: Georgia, serif;
     resize: vertical;
+  }
+  .mail-field textarea {
+    height: auto;
+    min-height: 96px;
+    padding: 8px 10px;
   }
   .mail-field input:focus-visible,
   .mail-field textarea:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
-    border-color: var(--color-border-focus);
+    outline-offset: 2px;
   }
   /* Recipient field autocomplete: relative wrapper anchors the listbox below the
      input. Reuses .soc-sugg-item / .soc-suggest visual tokens from the social panel
@@ -15629,12 +15545,12 @@
     top: calc(100% + 3px);
     display: none;
     z-index: 30;
-    background: #14110d;
-    border: 1px solid #6f5a2a;
+    background: var(--color-bg-input);
+    border: 1px solid var(--color-border-showcase);
     border-radius: 5px;
     max-height: 210px;
     overflow-y: auto;
-    box-shadow: 0 6px 18px #000a;
+    box-shadow: var(--shadow-window);
   }
   .mail-to-suggest.up {
     top: auto;
@@ -15667,10 +15583,6 @@
     gap: 6px;
     padding: 4px 8px;
     min-height: 32px;
-    background: #ffffff08;
-    border: 1px solid #ffffff1a;
-    border-radius: 6px;
-    color: var(--color-text);
     font-size: 12.5px;
   }
   /* The icon+name pair inside a chip: the icon img is display: block
@@ -15696,16 +15608,15 @@
      steppers ARE the spinner). */
   .mail-parcel-qty-input {
     width: 40px;
-    padding: 1px 2px;
     text-align: center;
     font-variant-numeric: tabular-nums;
     font-size: 12px;
-    background: #ffffff10;
-    border: 1px solid #ffffff26;
-    border-radius: 4px;
-    color: var(--color-text);
     appearance: textfield;
     -moz-appearance: textfield;
+  }
+  .mail-parcel-qty-input:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
   }
   .mail-parcel-qty-input::-webkit-outer-spin-button,
   .mail-parcel-qty-input::-webkit-inner-spin-button {
@@ -15719,13 +15630,8 @@
     width: 18px;
     height: 18px;
     padding: 0;
-    font-family: var(--title-font);
     font-size: 12px;
     line-height: 1;
-    background: #ffffff10;
-    border: 1px solid #ffffff26;
-    border-radius: 4px;
-    color: var(--color-text);
     cursor: var(--cursor-point);
   }
   .mail-parcel-step:hover:not(:disabled) {
@@ -15738,18 +15644,16 @@
   .mail-parcel-step:focus-visible,
   .mail-parcel-remove-btn:focus-visible {
     outline: 2px solid var(--color-border-focus);
-    outline-offset: 1px;
+    outline-offset: 2px;
   }
   .mail-parcel-remove-btn {
     display: inline-flex;
     align-items: center;
     padding: 0;
-    background: none;
-    border: none;
     cursor: var(--cursor-point);
   }
   .mail-parcel-remove-btn:hover .mail-parcel-remove {
-    color: #ff9c8a;
+    color: var(--color-text-error);
   }
   @media (pointer: coarse) {
     .mail-parcel-step,
@@ -15766,12 +15670,7 @@
   .mail-send-btn {
     padding: 10px;
     min-height: 40px;
-    font-family: var(--title-font);
     font-size: 13px;
-    color: #1c1206;
-    background: linear-gradient(180deg, #e9c064, #b98a2e);
-    border: 1px solid #7a5a1e;
-    border-radius: 6px;
     cursor: var(--cursor-point);
   }
   .mail-send-btn:hover {

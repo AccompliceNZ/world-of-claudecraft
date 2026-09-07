@@ -74,7 +74,6 @@ import { markDialogRoot } from './dialog_root';
 import { itemDisplayName } from './entity_i18n';
 import { esc } from './esc';
 import { captureFocusKey, findFocusKey, focusedWithin, restoreFirstEnabled } from './focus_restore';
-import type { GuildBankViewModel } from './guild_bank_view';
 import {
   GUILD_PANEL_ID,
   GUILD_TAB_ID,
@@ -636,8 +635,8 @@ export class BankWindow {
     const vaultAvailable = this.deps.world().vaultInfo != null;
     if (!vaultAvailable && this.tab === 'vault') this.tab = 'personal';
     el.innerHTML =
-      `<div class="panel-title"><span>${esc(t('hudChrome.bank.title'))} <span class="panel-subtitle">${esc(t('hudChrome.bank.subtitle'))}</span></span>` +
-      `<button type="button" class="x-btn" data-close aria-label="${esc(t('hudChrome.bank.close'))}">${svgIcon('close')}</button></div>`;
+      `<div class="panel-title ui-win-head"><span class="ui-win-title">${esc(t('hudChrome.bank.title'))} <span class="panel-subtitle ui-win-sub">${esc(t('hudChrome.bank.subtitle'))}</span></span>` +
+      `<button type="button" class="x-btn ui-x-btn" data-close aria-label="${esc(t('hudChrome.bank.close'))}">${svgIcon('close')}</button></div>`;
     el.querySelector('[data-close]')?.addEventListener('click', () => this.close());
     if (guildAvailable || vaultAvailable) {
       // The shared WAI-ARIA tab strip (tab_strip_view core + wireTabStrip),
@@ -653,9 +652,9 @@ export class BankWindow {
         tabStripHtml(
           tabStripModel({
             ariaLabel: t('hudChrome.bank.tabsAria'),
-            stripClass: 'bank-tabs',
-            tabClass: 'bank-tab',
-            selectedClass: 'on',
+            stripClass: 'bank-tabs ui-tabs',
+            tabClass: 'bank-tab ui-tab',
+            selectedClass: 'on is-on',
             tabs: [
               { id: 'personal', label: t('hudChrome.bank.personalTab') },
               // The two conditional tabs carry stable button ids so their
@@ -1012,7 +1011,7 @@ export class BankWindow {
       // deposit. Id-based, so no def is needed; a stale-client unknown id is
       // never in the local grade table and simply stays unmarked.
       const fineMark = bagFineMark(slot.itemId);
-      cell.className = `bank-item q-${slot.qualityKey}${bagRimClasses(null, fineMark)}`;
+      cell.className = `bank-item ui-socket ui-socket--bag q-${slot.qualityKey}${bagRimClasses(null, fineMark)}`;
       const qColor = QUALITY_COLOR[slot.qualityKey] ?? QUALITY_DEFAULT_COLOR;
       cell.style.setProperty('--bank-slot-quality', qColor);
       // Corner marks (masterwork seal, fine seal, enchanted / signed / bound
@@ -1088,7 +1087,7 @@ export class BankWindow {
   private appendEmptyCells(grid: HTMLElement, n: number): void {
     for (let i = 0; i < n; i++) {
       const cell = document.createElement('div');
-      cell.className = 'bank-item empty';
+      cell.className = 'bank-item ui-socket ui-socket--bag empty';
       cell.setAttribute('aria-hidden', 'true');
       grid.appendChild(cell);
     }
@@ -1148,7 +1147,7 @@ export class BankWindow {
       for (const category of BAG_CATEGORIES) {
         const chip = document.createElement('button');
         chip.type = 'button';
-        chip.className = `bag-chip${this.filter.category === category ? ' active' : ''}`;
+        chip.className = `bag-chip ui-chip${this.filter.category === category ? ' active' : ''}`;
         chip.textContent = t(BANK_CATEGORY_LABEL_KEYS[category]);
         chip.setAttribute('aria-pressed', this.filter.category === category ? 'true' : 'false');
         chip.addEventListener('click', () => {
@@ -1164,7 +1163,7 @@ export class BankWindow {
 
       const search = document.createElement('input');
       search.type = 'search';
-      search.className = 'bag-search';
+      search.className = 'bag-search ui-input';
       search.placeholder = t('hudChrome.bags.searchPlaceholder');
       search.setAttribute('aria-label', t('hudChrome.bank.searchAria'));
       search.value = this.filter.search;
@@ -1176,7 +1175,7 @@ export class BankWindow {
       tools.appendChild(search);
 
       const sort = document.createElement('select');
-      sort.className = 'bag-sort';
+      sort.className = 'bag-sort ui-input';
       sort.setAttribute('aria-label', t('hudChrome.bank.sortAria'));
       for (const option of BAG_SORTS) {
         const opt = document.createElement('option');
@@ -1206,7 +1205,7 @@ export class BankWindow {
     // pointer at all, so it also covers touch users who tap the button directly.
     const deposit = document.createElement('button');
     deposit.type = 'button';
-    deposit.className = 'bank-deposit-all';
+    deposit.className = 'bank-deposit-all ui-btn';
     deposit.textContent = t('hudChrome.bank.depositAll');
     const depositTooltip = t('hudChrome.bank.depositAllTooltip');
     deposit.title = depositTooltip;
@@ -1343,7 +1342,7 @@ export class BankWindow {
         const item = knownItemDef(ITEMS, cell.itemId);
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = `bag-socket bank-socket q-${cell.qualityKey}`;
+        btn.className = `bag-socket bank-socket ui-socket ui-socket--bank q-${cell.qualityKey}`;
         btn.dataset.focusKey = `bank:socket:${cell.socket}`;
         // Stale-client guard (the grid's R34 rule): an id this bundle predates
         // still holds a real socket, so it renders with the fallback icon and
@@ -1401,7 +1400,7 @@ export class BankWindow {
         // click that fills it.
         const empty = document.createElement('button');
         empty.type = 'button';
-        empty.className = 'bag-socket bank-socket empty';
+        empty.className = 'bag-socket bank-socket ui-socket ui-socket--bank empty';
         empty.dataset.focusKey = `bank:socket:${cell.socket}`;
         empty.setAttribute('aria-disabled', 'true');
         empty.setAttribute('aria-label', t('hudChrome.bank.socketEmpty'));
@@ -1413,7 +1412,7 @@ export class BankWindow {
       } else {
         const locked = document.createElement('button');
         locked.type = 'button';
-        locked.className = 'bag-socket bank-socket locked';
+        locked.className = 'bag-socket bank-socket ui-socket ui-socket--bank locked';
         locked.dataset.focusKey = `bank:socket:${cell.socket}`;
         locked.innerHTML = svgIcon('lock');
         if (cell.unlockCost !== null) {
@@ -1561,7 +1560,7 @@ export class BankWindow {
     }
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'bank-buy-btn';
+    btn.className = 'bank-buy-btn ui-btn ui-btn--gold';
     // The focus identity the post-purchase repaint lands back on. Stamped here
     // rather than in an annotate pass because the guild pane's own annotation
     // claims '.bank-buy-btn' for gbank:buy, and only one of the two panes is

@@ -351,10 +351,10 @@ export class MailboxWindow {
           })
         : t('hudChrome.mailbox.tabInbox');
     const tabButton = (id: MailTab, label: string) =>
-      `<button type="button" class="mail-tab${this.tab === id ? ' sel' : ''}" data-tab="${id}" aria-pressed="${this.tab === id ? 'true' : 'false'}">${esc(label)}</button>`;
+      `<button type="button" class="mail-tab ui-tab${this.tab === id ? ' sel is-on' : ''}" data-tab="${id}" aria-pressed="${this.tab === id ? 'true' : 'false'}">${esc(label)}</button>`;
     el.innerHTML =
-      `<div class="panel-title"><span>${esc(t('hudChrome.mailbox.title'))} <span class="panel-subtitle">${esc(t('hudChrome.mailbox.subtitle'))}</span></span><button type="button" class="x-btn" data-close aria-label="${esc(t('hudChrome.mailbox.close'))}">${svgIcon('close')}</button></div>` +
-      `<div class="mail-tabs">${tabButton('inbox', inboxLabel)}${tabButton('send', t('hudChrome.mailbox.tabSend'))}</div>` +
+      `<div class="panel-title ui-win-head"><span class="ui-win-title">${esc(t('hudChrome.mailbox.title'))} <span class="panel-subtitle ui-win-sub">${esc(t('hudChrome.mailbox.subtitle'))}</span></span><button type="button" class="x-btn ui-x-btn" data-close aria-label="${esc(t('hudChrome.mailbox.close'))}">${svgIcon('close')}</button></div>` +
+      `<div class="mail-tabs ui-tabs">${tabButton('inbox', inboxLabel)}${tabButton('send', t('hudChrome.mailbox.tabSend'))}</div>` +
       `<div id="mailbox-body"></div>`;
     el.querySelector('[data-close]')?.addEventListener('click', () => this.close());
     el.querySelectorAll('[data-tab]').forEach((node) => {
@@ -410,7 +410,7 @@ export class MailboxWindow {
       const subject = this.subjectLabel(row);
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = `mail-row${row.unread ? ' unread' : ''}`;
+      btn.className = `mail-row ui-card${row.unread ? ' unread' : ''}`;
       btn.setAttribute('aria-label', t('hudChrome.mailbox.openAria', { subject, name: sender }));
       btn.innerHTML =
         `<span class="mail-row-icon${row.unread ? ' unread' : ''}">${svgIcon('mail')}</span>` +
@@ -449,10 +449,10 @@ export class MailboxWindow {
         : opened.body;
     body.innerHTML =
       `<div class="mail-reading">` +
-      `<button type="button" class="mail-back" data-mail-back>${svgIcon('prev')}<span>${esc(t('hudChrome.mailbox.back'))}</span></button>` +
+      `<button type="button" class="mail-back ui-btn" data-mail-back>${svgIcon('prev')}<span>${esc(t('hudChrome.mailbox.back'))}</span></button>` +
       `<div class="mail-reading-head"><span class="mail-reading-subject">${esc(subject)}</span>` +
       `<span class="mail-reading-sender">${esc(sender)}</span></div>` +
-      `<div class="mail-reading-body">${esc(letterBody).replace(/\n/g, '<br>')}</div>` +
+      `<div class="mail-reading-body ui-card">${esc(letterBody).replace(/\n/g, '<br>')}</div>` +
       `<div class="mail-attachments" id="mail-attachments"></div>` +
       `<div class="mail-actions" id="mail-actions"></div>` +
       `</div>`;
@@ -466,19 +466,19 @@ export class MailboxWindow {
     if (attachmentsRow) {
       if (opened.copper > 0) {
         const coin = document.createElement('span');
-        coin.className = 'mail-attachment-coin';
+        coin.className = 'mail-attachment-coin ui-card ui-money';
         coin.innerHTML = this.deps.moneyHtml(opened.copper);
         attachmentsRow.appendChild(coin);
       }
       for (const slot of opened.items) {
         const item = ITEMS[slot.itemId];
         const chip = document.createElement('span');
-        chip.className = 'mail-attachment-item';
+        chip.className = 'mail-attachment-item ui-card';
         if (item) {
           const qColor = QUALITY_COLOR[item.quality ?? 'common'] ?? QUALITY_DEFAULT_COLOR;
           const stack =
             slot.count > 1 ? ` x${formatNumber(slot.count, { maximumFractionDigits: 0 })}` : '';
-          chip.innerHTML = `${this.deps.itemIcon(item)}<span style="color:${qColor}">${esc(itemDisplayName(item))}${esc(stack)}</span>`;
+          chip.innerHTML = `<span class="ui-socket ui-socket--bag">${this.deps.itemIcon(item)}</span><span style="color:${qColor}">${esc(itemDisplayName(item))}${esc(stack)}</span>`;
           this.deps.attachTooltip(chip, () => this.deps.itemTooltip(item, slot.instance));
         } else {
           chip.textContent = slot.itemId;
@@ -491,7 +491,7 @@ export class MailboxWindow {
     if (opened.hasAttachments) {
       const take = document.createElement('button');
       take.type = 'button';
-      take.className = 'mail-action-btn';
+      take.className = 'mail-action-btn ui-btn ui-btn--red';
       take.textContent = t('hudChrome.mailbox.take');
       take.addEventListener('click', () => {
         this.deps.world().mailTake(opened.id);
@@ -502,7 +502,7 @@ export class MailboxWindow {
     } else {
       const del = document.createElement('button');
       del.type = 'button';
-      del.className = 'mail-action-btn danger';
+      del.className = 'mail-action-btn danger ui-btn';
       del.textContent = t('hudChrome.mailbox.delete');
       del.setAttribute(
         'aria-label',
@@ -526,15 +526,15 @@ export class MailboxWindow {
       `<div class="mail-field"><label for="mail-to">${esc(t('hudChrome.mailbox.toLabel'))}</label>` +
       `<div class="mail-to-wrap">` +
       `<div class="mail-to-suggest" id="mail-to-suggest" role="listbox"></div>` +
-      `<input id="mail-to" type="text" maxlength="32" autocomplete="off" placeholder="${esc(t('hudChrome.mailbox.toPlaceholder'))}" role="combobox" aria-autocomplete="list" aria-controls="mail-to-suggest" aria-expanded="false"></div></div>` +
+      `<input id="mail-to" class="ui-input" type="text" maxlength="32" autocomplete="off" placeholder="${esc(t('hudChrome.mailbox.toPlaceholder'))}" role="combobox" aria-autocomplete="list" aria-controls="mail-to-suggest" aria-expanded="false"></div></div>` +
       `<div class="mail-field"><label for="mail-subject">${esc(t('hudChrome.mailbox.subjectLabel'))}</label>` +
-      `<input id="mail-subject" type="text" maxlength="64" autocomplete="off"></div>` +
+      `<input id="mail-subject" class="ui-input" type="text" maxlength="64" autocomplete="off"></div>` +
       `<div class="mail-field"><label for="mail-body">${esc(t('hudChrome.mailbox.bodyLabel'))}</label>` +
-      `<textarea id="mail-body" maxlength="600" rows="5"></textarea></div>` +
+      `<textarea id="mail-body" class="ui-input" maxlength="600" rows="5"></textarea></div>` +
       `<div class="mail-field mail-coin-row"><label>${esc(t('hudChrome.mailbox.coinLabel'))}</label>` +
-      `<input class="coininput" id="mail-g" type="number" min="0" value="0" aria-label="${esc(t('itemUi.money.gold'))}"><span class="coin g" aria-hidden="true"></span>` +
-      `<input class="coininput" id="mail-s" type="number" min="0" max="99" value="0" aria-label="${esc(t('itemUi.money.silver'))}"><span class="coin s" aria-hidden="true"></span>` +
-      `<input class="coininput" id="mail-c" type="number" min="0" max="99" value="0" aria-label="${esc(t('itemUi.money.copper'))}"><span class="coin c" aria-hidden="true"></span></div>` +
+      `<input class="coininput ui-input" id="mail-g" type="number" min="0" value="0" aria-label="${esc(t('itemUi.money.gold'))}"><span class="coin g" aria-hidden="true"></span>` +
+      `<input class="coininput ui-input" id="mail-s" type="number" min="0" max="99" value="0" aria-label="${esc(t('itemUi.money.silver'))}"><span class="coin s" aria-hidden="true"></span>` +
+      `<input class="coininput ui-input" id="mail-c" type="number" min="0" max="99" value="0" aria-label="${esc(t('itemUi.money.copper'))}"><span class="coin c" aria-hidden="true"></span></div>` +
       `<div class="mail-field"><label>${esc(t('hudChrome.mailbox.parcelsLabel'))}</label>` +
       `<div class="mail-parcels" id="mail-parcels"></div></div>` +
       `<div class="mail-note">${esc(
@@ -543,7 +543,7 @@ export class MailboxWindow {
           seconds: formatNumber(view.deliverySeconds, { maximumFractionDigits: 0 }),
         }),
       )}</div>` +
-      `<button type="button" class="mail-send-btn" id="mail-send-btn">${esc(t('hudChrome.mailbox.sendButton'))}</button>` +
+      `<button type="button" class="mail-send-btn ui-btn ui-btn--red" id="mail-send-btn">${esc(t('hudChrome.mailbox.sendButton'))}</button>` +
       `</div>`;
     this.renderParcels();
     // Bags ride alongside so parcels can be clicked straight onto the letter.
@@ -740,10 +740,13 @@ export class MailboxWindow {
     const focusKey = captureFocusKey(parcels);
     parcels.innerHTML = '';
     if (this.attachments.length === 0) {
+      const socket = document.createElement('span');
+      socket.className = 'ui-socket ui-socket--bag empty';
+      socket.setAttribute('aria-hidden', 'true');
       const hint = document.createElement('span');
       hint.className = 'mail-parcel-hint';
       hint.textContent = t('hudChrome.mailbox.parcelsHint');
-      parcels.appendChild(hint);
+      parcels.append(socket, hint);
       return;
     }
     const itemControls = new Map<
@@ -767,13 +770,13 @@ export class MailboxWindow {
       const chipKey = slot.instance ? `${slot.itemId}#i${chipIdx}` : slot.itemId;
       const qColor = QUALITY_COLOR[item.quality ?? 'common'] ?? QUALITY_DEFAULT_COLOR;
       const chip = document.createElement('span');
-      chip.className = 'mail-parcel-chip';
+      chip.className = 'mail-parcel-chip ui-card';
       const name = document.createElement('span');
       name.className = 'mail-parcel-name';
       // Keyboard-focusable so Tab can reach it: attachTooltip's keyboard path
       // is a focusin listener on this exact element.
       name.tabIndex = 0;
-      name.innerHTML = `${this.deps.itemIcon(item)}<span style="color:${qColor}">${esc(itemDisplayName(item))}</span>`;
+      name.innerHTML = `<span class="ui-socket ui-socket--bag">${this.deps.itemIcon(item)}</span><span style="color:${qColor}">${esc(itemDisplayName(item))}</span>`;
       this.deps.attachTooltip(name, () => this.deps.itemTooltip(item, slot.instance));
       chip.appendChild(name);
       const owned = this.ownedCountFor(slot.itemId);
@@ -788,7 +791,7 @@ export class MailboxWindow {
         step.className = 'mail-parcel-qty';
         const minus = document.createElement('button');
         minus.type = 'button';
-        minus.className = 'mail-parcel-step';
+        minus.className = 'mail-parcel-step ui-btn';
         minus.textContent = '−';
         minus.disabled = slot.count <= 1;
         minus.dataset.focusKey = `${slot.itemId}:minus`;
@@ -806,7 +809,7 @@ export class MailboxWindow {
         qty.min = '1';
         qty.max = String(owned);
         qty.inputMode = 'numeric';
-        qty.className = 'mail-parcel-qty-input';
+        qty.className = 'mail-parcel-qty-input ui-input';
         qty.value = String(slot.count);
         qty.dataset.focusKey = `${slot.itemId}:qty`;
         // Still a live region even as an input: a +/- stepper click changes
@@ -833,7 +836,7 @@ export class MailboxWindow {
         });
         const plus = document.createElement('button');
         plus.type = 'button';
-        plus.className = 'mail-parcel-step';
+        plus.className = 'mail-parcel-step ui-btn';
         plus.textContent = '+';
         plus.disabled = slot.count >= owned;
         plus.dataset.focusKey = `${slot.itemId}:plus`;
@@ -850,7 +853,7 @@ export class MailboxWindow {
       }
       const remove = document.createElement('button');
       remove.type = 'button';
-      remove.className = 'mail-parcel-remove-btn';
+      remove.className = 'mail-parcel-remove-btn ui-x-btn';
       remove.innerHTML = svgIcon('close', { cls: 'mail-parcel-remove' });
       remove.dataset.focusKey = `${chipKey}:remove`;
       remove.setAttribute(
