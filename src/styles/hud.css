@@ -943,18 +943,18 @@
     top: auto;
     left: auto;
     /* The children zoom with the Player Frame Scale slider (the rule further
-       down), so the box carries the same factor: a fixed 612px box around
-       zoomed content leaves the unlock outline and the drag clamp working a
-       frame edge the player cannot see (90px of dead band per side at 0.75).
+       down), so the box carries the same factor: an unscaled box around zoomed
+       content leaves the unlock outline and the drag clamp working a frame edge
+       the player cannot see.
        The content stays centred, so the locked HUD renders exactly as before
        at every scale; only the invisible box edges move. The base width is
        the playerFrameWidth setting (the interface editor's edge drags), a
        real layout dimension so the bars reflow instead of stretching. */
-    width: calc(var(--player-frame-width, 612px) * var(--player-frame-scale, 1));
+    width: calc(var(--player-frame-width, var(--unit-frame-w)) * var(--player-frame-scale, 1));
     /* Bar thickness for this frame's hp/resource bars (playerFrameHeight):
        .bar and .bar-text read the var, so a height drag thickens the bars at
        crisp text instead of distorting them through a transform. */
-    --uf-bar-height: var(--player-frame-height, 15px);
+    --uf-bar-height: var(--player-frame-height, var(--bar-h-hp));
     margin: 0 auto 8px;
     display: flex;
     align-items: center;
@@ -1276,19 +1276,14 @@
   }
   #player-frame .uf-bars {
     flex: 1;
-    width: auto;
+    width: 232px;
     min-width: 0;
-    /* Rides the playerFrameWidth setting minus the frame's fixed chrome
-       (92px: portrait plus the centring margins), so the bar panel takes the
-       whole width change and the content inset below stays constant. Stock
-       612px - 92px = the historical 520px. */
-    max-width: calc(var(--player-frame-width, 612px) - 92px);
+    /* The setting overrides the 278px unit-frame default. The 46px subtraction
+       accounts for the portrait after its 14px overlap with the bar stack. */
+    max-width: calc(var(--player-frame-width, var(--unit-frame-w)) - 46px);
   }
-  /* How far the player frame's centred content row sits from the left edge of its
-     612px box: (612 - (portrait + the 520px bar column)) / 2. The pet frame hangs
-     beneath with a shorter row, so it cannot reach the same column by centring and
-     pays this inset explicitly instead. Held as one token so the two cannot drift
-     apart; measured against the rendered frames, not derived on paper. */
+  /* The pet cluster keeps its existing action-bar alignment independently of the
+     narrower unit-frame default. */
   #actionbar-stack {
     --unit-frame-content-inset: 18px;
   }
@@ -1304,10 +1299,8 @@
     /* Same width and centring as the docked seat above: the class flips at the
        first grab (MovableFrame applies the position before measuring the grab
        offset), so any difference between the two seats renders as the visible
-       content jumping sideways under the cursor the moment a drag starts
-       (18px at the default scale, 85px at 0.75 back when this was
-       flex-start over a fixed 612px). */
-    width: calc(var(--player-frame-width, 612px) * var(--player-frame-scale, 1));
+       content jumping sideways under the cursor the moment a drag starts. */
+    width: calc(var(--player-frame-width, var(--unit-frame-w)) * var(--player-frame-scale, 1));
     margin: 0;
     justify-content: center;
     z-index: 6;
@@ -1361,7 +1354,7 @@
   }
   #pet-frame .uf-bars {
     flex: none;
-    width: 210px;
+    width: 232px;
   }
   #pet-frame:hover {
     outline: 1px solid var(--gold-dim);
@@ -1380,9 +1373,10 @@
     top: 12px;
     display: none;
     z-index: 6;
+    width: var(--target-frame-width, var(--unit-frame-w));
     /* Bar thickness for this frame's bars (targetFrameHeight): the nested
        target-of-target frame inherits the var, so its strip thickens in step. */
-    --uf-bar-height: var(--target-frame-height, 15px);
+    --uf-bar-height: var(--target-frame-height, var(--bar-h-hp));
   }
   /* Target Frame Scale (--target-frame-scale, targetFrameScale setting): the
      player frame's twin. Children only, never the drag-positioned frame itself
@@ -1398,8 +1392,8 @@
      sharing the children-zoom scale above. */
   #target-frame > #tf-debuffs {
     position: absolute;
-    top: calc(100% + 6px);
-    left: 0;
+    top: calc(100% + 8px);
+    left: 4px;
     display: flex;
     flex-wrap: wrap;
     /* Each icon's duration text hangs 13px BELOW it, out of flow (.buff .dur,
@@ -1423,16 +1417,16 @@
      actually applies; it compounds --target-frame-scale explicitly to stay
      proportional at any scale. Percentage offsets resolve against the unzoomed
      containing block but px lengths are multiplied by the element's zoom, so the
-     gap divides by the same factor to stay a true 18px (clear of the button) at
-     every scale. Shown by its own unit_frame painter only when the
-     target-of-target is known. Portrait + name + hp bar only: no resource rail,
-     cast bar, elite tag, or level chip. A far-right-dragged target frame can push
+     gap divides by the same factor to stay a true 4px at every scale. Shown by
+     its own unit_frame painter only when the target-of-target is known. Portrait,
+     level, name and hp bar only: no resource rail, cast bar or elite tag. A
+     far-right-dragged target frame can push
      the mini offscreen, the same clipping the debuff strip accepts in extreme
      drag positions. */
   #target-frame > #totarget-frame {
     position: absolute;
-    left: calc(100% + 18px / (0.74 * var(--target-frame-scale, 1)));
-    top: 0;
+    left: calc(100% + 4px / (0.74 * var(--target-frame-scale, 1)));
+    top: calc(4px / (0.74 * var(--target-frame-scale, 1)));
     z-index: 7;
     zoom: calc(0.74 * var(--target-frame-scale, 1));
     display: none;
@@ -1440,9 +1434,9 @@
   /* Boss-ranked target: the boss chrome moves the move button further outside
      the corner (top: -18px; right: -30px, below) and the dragon emblem
      overhangs the portrait side by 15px at children-zoom, so the beside-gap
-     widens to a true 36px to clear both. */
+     widens to 22px to clear both. */
   #target-frame.boss > #totarget-frame {
-    left: calc(100% + 36px / (0.74 * var(--target-frame-scale, 1)));
+    left: calc(100% + 22px / (0.74 * var(--target-frame-scale, 1)));
   }
   /* Standard portrait-left orientation: the old right-edge hug flipped the mini
      bars-first; beside the frame it reads like every other unit frame. The
@@ -1454,14 +1448,9 @@
   }
   #target-frame > #totarget-frame .uf-bars {
     order: 2;
-    width: 132px;
-    margin-left: -16px;
+    width: 232px;
+    margin-left: -14px;
     margin-right: 0;
-    border-radius: 11px 6px 6px 11px;
-    padding: 4px 8px 4px 22px;
-  }
-  #totarget-frame .level-chip {
-    display: none;
   }
   /* Movable unit frames: the small corner toggle (built by MovableFrame in
      movable_frame.ts) that unlocks
@@ -2288,21 +2277,13 @@
     position: relative;
     width: 64px;
     height: 64px;
+    margin-right: -4px;
     z-index: 2;
   }
   .portrait {
     width: 60px;
     height: 60px;
-    border-radius: 50%;
-    border: 3px solid var(--border);
-    outline: 1px solid #000;
-    background: radial-gradient(circle at 35% 30%, #3a3a4e, #14141c);
-    box-shadow:
-      0 2px 8px #000c,
-      inset 0 0 12px #0009;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: block;
   }
   /* Display size is fixed by the frame; the canvas backing store is scaled by
      devicePixelRatio in unit_portrait_painter.ts, so this just maps it back to 1:1 CSS px. */
@@ -2334,6 +2315,9 @@
       inset 0 0 2px var(--border-accent-edge, transparent);
     z-index: 2;
     pointer-events: none;
+  }
+  .level-chip {
+    z-index: 3;
   }
   /* The canonical forged seal replaces the old hollow 12-o'clock clasp. It sits
      at the portrait/name joint, not over a bar, and remains below gameplay
@@ -2378,34 +2362,9 @@
       stroke: CanvasText;
     }
   }
-  .level-chip {
-    position: absolute;
-    bottom: -3px;
-    left: -3px;
-    width: 24px;
-    height: 24px;
-    background: radial-gradient(circle at 40% 35%, #4a3a14, #241c08);
-    border: 2px solid var(--gold-dim);
-    border-radius: 50%;
-    color: var(--gold);
-    font-size: 12px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-shadow: 1px 1px 1px #000;
-    z-index: 3;
-  }
   /* painted combat-status crest on the player portrait (classic style) */
   .combat-flash {
-    position: absolute;
-    top: -4px;
-    right: -4px;
-    width: 22px;
-    height: 22px;
     display: none;
-    align-items: center;
-    justify-content: center;
     z-index: 4;
     pointer-events: none;
   }
@@ -2413,10 +2372,7 @@
     display: block;
     width: 100%;
     height: 100%;
-    border: 1px solid var(--color-hostile);
-    border-radius: 5px;
     object-fit: cover;
-    box-shadow: var(--art-shadow-sm);
   }
   #player-frame.combat .combat-flash {
     display: flex;
@@ -2427,25 +2383,26 @@
     animation-play-state: var(--fx-ambient-anim, running);
   }
   #player-frame.combat .portrait {
-    border-color: #e74c3c;
+    border-color: var(--color-danger);
     /* Glow: the decorative outer glow scales with --fx-shadow (0 at low, 1 = full
        8px today); the structural inset shadow stays literal. */
     box-shadow:
-      0 0 calc(8px * var(--fx-shadow, 1)) #e74c3c99,
-      inset 0 0 12px #0009;
+      0 0 calc(8px * var(--fx-shadow, 1)) color-mix(in srgb, var(--color-danger) 60%, transparent),
+      inset 0 0 12px color-mix(in srgb, var(--color-keyline) 60%, transparent);
   }
   .uf-bars {
-    width: 190px;
-    margin-left: -8px;
-    padding: 5px 8px 5px 14px;
-    background: var(--panel-bg);
-    border: 2px solid var(--border);
-    outline: 1px solid #000;
-    border-radius: 0 6px 6px 0;
-    box-shadow: 0 2px 10px #000a;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    width: 232px;
+    margin-left: -14px;
+    padding-top: 2px;
   }
   #target-frame .portrait-wrap {
     order: 2;
+  }
+  #target-frame:has(#tf-name.hostile) > .portrait-wrap .ui-portrait {
+    border-color: var(--color-hostile-rim);
   }
   /* The disc sits as a medallion over the bar's right end: enough overlap that
      the circle covers the bar's (rounded) seam-side corners (no poke, no crescent
@@ -2453,16 +2410,9 @@
   #target-frame .uf-bars {
     order: 1;
     margin-left: 0;
-    margin-right: -18px;
-    border-radius: 6px 11px 11px 6px;
-    padding: 5px 26px 5px 8px;
-    /* The targetFrameWidth setting (the interface editor's edge drags): a real
-       layout width over the base .uf-bars 190px, so the bars reflow. */
-    width: var(--target-frame-width, 190px);
-  }
-  #target-frame .level-chip {
-    left: auto;
-    right: -3px;
+    margin-right: -14px;
+    /* The targetFrameWidth setting overrides the shared unit-frame default. */
+    width: calc(var(--target-frame-width, var(--unit-frame-w)) - 46px);
   }
   /* The target's power bar rail is ALWAYS present (classic WoW look): a
      resource-less target (a plain beast) keeps every type class off, its fill
@@ -2596,49 +2546,34 @@
        their height settings (the interface editor's vertical drags); every
        other host (pet frame) keeps the stock 15px fallback. */
     height: var(--uf-bar-height, 15px);
-    background: #1a1a1a;
-    border: 1px solid #000;
-    margin-top: 3px;
-    border-radius: 2px;
     overflow: hidden;
+  }
+  .unitframe .bar.ui-bevel--res {
+    height: var(--bar-h-res);
+  }
+  .unitframe .bar.ui-bevel--res.is-empty {
+    height: var(--bar-h-res-empty);
   }
   .bar-fill {
     position: absolute;
     inset: 0;
     width: 100%;
     transform-origin: left;
-    background-image: linear-gradient(
-      rgba(255, 255, 255, 0.25),
-      rgba(255, 255, 255, 0.02) 45%,
-      rgba(0, 0, 0, 0.15)
-    );
   }
-  .bar-text {
-    position: absolute;
-    inset: 0;
-    text-align: center;
-    font-size: 11px;
-    /* Tracks the var-driven bar thickness above so the text stays vertically
-       centred at any playerFrameHeight / targetFrameHeight. */
-    line-height: var(--uf-bar-height, 15px);
-    color: #fff;
-    text-shadow: 1px 1px 1px #000;
-    font-weight: bold;
+  .hp {
+    --bar-color: var(--color-hp);
   }
-  .hp .bar-fill {
-    background-color: var(--color-hp);
+  .mana {
+    --bar-color: var(--color-mana);
   }
-  .mana .bar-fill {
-    background-color: var(--color-mana);
+  .rage {
+    --bar-color: var(--color-rage);
   }
-  .rage .bar-fill {
-    background-color: var(--color-rage);
+  .energy {
+    --bar-color: var(--color-energy);
   }
-  .energy .bar-fill {
-    background-color: var(--color-energy);
-  }
-  .focus .bar-fill {
-    background-color: var(--color-focus);
+  .focus {
+    --bar-color: var(--color-focus);
   }
   /* Damage-absorb shield overlay (Power Word: Shield, Ice Barrier, …): a hatched
      translucent segment laid over the health bar, extending past current health. */
@@ -3426,86 +3361,24 @@
     left: 50%;
     transform: translateX(-50%);
     bottom: 260px;
-    width: 300px;
-    height: 24px;
+    width: var(--castbar-w);
+    height: var(--castbar-h);
     display: none;
-    border: 2px solid var(--border);
-    outline: 1px solid #000;
-    border-radius: 4px;
-    background: #100c08;
     overflow: hidden;
   }
   #castbar .fill {
-    height: 100%;
     width: 0%;
-    background: linear-gradient(#ffe48a, #c9941a 60%, #9a6f12);
-    box-shadow: inset 0 1px 0 #fff5;
-  }
-  #castbar.channel .fill {
-    background: linear-gradient(#8ad4ff, #1a74c9 60%, #125a9a);
-  }
-  #castbar .label {
-    position: absolute;
-    inset: 0;
-    text-align: center;
-    font-size: 12px;
-    line-height: 21px;
-    color: #fff;
-    text-shadow: 1px 1px 2px #000;
-    font-family: var(--title-font);
-  }
-  #castbar .timer {
-    position: absolute;
-    top: 0;
-    right: 6px;
-    line-height: 21px;
-    font-size: 11px;
-    color: #fff;
-    text-shadow: 1px 1px 2px #000;
-    font-family: var(--title-font);
-    font-variant-numeric: tabular-nums;
   }
   /* target/boss cast bar, sits under the target name+HP so the raid sees the cast */
   #tf-castbar {
     position: relative;
     width: 100%;
-    height: 22px;
-    margin-top: 4px;
+    height: var(--castbar-h);
     display: none;
-    border: 2px solid var(--border);
-    outline: 1px solid #000;
-    border-radius: 4px;
-    background: #100606;
     overflow: hidden;
   }
   #tf-castbar .fill {
-    height: 100%;
     width: 0%;
-    background: linear-gradient(#ff9a8f, #c93024 60%, #73110d);
-    box-shadow: inset 0 1px 0 #fff5;
-  }
-  #tf-castbar.channel .fill {
-    background: linear-gradient(#ff9a8f, #c93024 60%, #73110d);
-  }
-  #tf-castbar .label {
-    position: absolute;
-    inset: 0;
-    text-align: center;
-    font-size: 12px;
-    line-height: 21px;
-    color: #fff;
-    text-shadow: 1px 1px 2px #000;
-    font-family: var(--title-font);
-  }
-  #tf-castbar .timer {
-    position: absolute;
-    top: 0;
-    right: 6px;
-    line-height: 21px;
-    font-size: 11px;
-    color: #fff0d0;
-    text-shadow: 1px 1px 2px #000;
-    font-variant-numeric: tabular-nums;
   }
   /* Target / target-of-target swing timers: sit in the SAME .uf-bars flex
      flow as #tf-castbar (position: relative, NOT the absolute-positioned
@@ -3520,30 +3393,29 @@
     position: relative;
     width: 100%;
     height: 12px;
-    margin-top: 4px;
     display: none;
     border: 1px solid var(--border);
-    outline: 1px solid #000;
-    border-radius: 3px;
-    background: #0c0a07;
+    outline: 1px solid var(--color-keyline);
+    border-radius: var(--radius-xs);
+    background: var(--color-swing-track);
     overflow: hidden;
   }
   #swingbar-target .fill,
   #swingbar-tot .fill {
     height: 100%;
     width: 0%;
-    box-shadow: inset 0 1px 0 #fff4;
+    box-shadow: var(--edge-glint);
     transition: width 60ms linear;
   }
   #swingbar-target .fill {
-    background: linear-gradient(#c9a3ff, #7c3fd9 60%, #481f8a);
+    background: var(--swing-fill-target);
   }
   #swingbar-tot .fill {
-    background: linear-gradient(#ffb3c6, #d9427c 60%, #8a1f4e);
+    background: var(--swing-fill-tot);
   }
   #swingbar-target.ready .fill,
   #swingbar-tot.ready .fill {
-    background: linear-gradient(#d8e8ff, #8fb6e6 60%, #5b86b8);
+    background: var(--swing-fill-ready);
   }
   #swingbar-target .label,
   #swingbar-tot .label {
@@ -3552,8 +3424,8 @@
     text-align: center;
     font-size: 10px;
     line-height: 12px;
-    color: #fff;
-    text-shadow: 1px 1px 2px #000;
+    color: var(--color-white);
+    text-shadow: var(--title-shadow);
     font-family: var(--title-font);
   }
   /* Swing timers: sit just under the cast bar, steel-on-amber (main-hand) /
@@ -3570,9 +3442,9 @@
     height: 12px;
     display: none;
     border: 1px solid var(--border);
-    outline: 1px solid #000;
-    border-radius: 3px;
-    background: #0c0a07;
+    outline: 1px solid var(--color-keyline);
+    border-radius: var(--radius-xs);
+    background: var(--color-swing-track);
     overflow: hidden;
   }
   #swingbar {
@@ -3585,18 +3457,18 @@
   #swingbar-offhand .fill {
     height: 100%;
     width: 0%;
-    box-shadow: inset 0 1px 0 #fff4;
+    box-shadow: var(--edge-glint);
     transition: width 60ms linear;
   }
   #swingbar .fill {
-    background: linear-gradient(#ffcf7a, #d97b1e 60%, #8a4a10);
+    background: var(--swing-fill-main);
   }
   #swingbar-offhand .fill {
-    background: linear-gradient(#8fe6d6, #1e9d97 60%, #0f5a58);
+    background: var(--swing-fill-offhand);
   }
   #swingbar.ready .fill,
   #swingbar-offhand.ready .fill {
-    background: linear-gradient(#d8e8ff, #8fb6e6 60%, #5b86b8);
+    background: var(--swing-fill-ready);
   }
   #swingbar .label,
   #swingbar-offhand .label {
@@ -3605,8 +3477,8 @@
     text-align: center;
     font-size: 10px;
     line-height: 12px;
-    color: #fff;
-    text-shadow: 1px 1px 1px #000;
+    color: var(--color-white);
+    text-shadow: var(--title-shadow);
     font-family: var(--title-font);
     letter-spacing: 0.5px;
   }
@@ -8465,6 +8337,45 @@
     gap: var(--party-frame-spacing, 4px);
     zoom: var(--party-frame-scale, 1);
   }
+  #party-frame-header {
+    width: var(--party-row-w);
+    min-height: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0 4px 2px;
+    appearance: none;
+    border: 0;
+    border-bottom: 1px solid var(--gold-dim);
+    border-radius: 0;
+    background: transparent;
+    color: var(--gold);
+    font-size: 12px;
+    line-height: 16px;
+    cursor: var(--cursor-point);
+  }
+  #party-frame-header:focus-visible {
+    outline: 2px solid var(--color-border-focus);
+    outline-offset: 2px;
+  }
+  #party-frame-header .ui-icon {
+    margin-left: auto;
+    width: 11px;
+    height: 11px;
+    flex: none;
+    transform: rotate(-90deg);
+  }
+  #party-frame-header .party-frame-header-count {
+    color: var(--color-text-light);
+    font-variant-numeric: tabular-nums;
+    opacity: 0.85;
+  }
+  #party-frames.party-header-collapsed #party-frame-header .ui-icon {
+    transform: none;
+  }
+  #party-frames.party-header-collapsed > :is(.party-rows, .party-boss-guide-button, .party-loot) {
+    display: none;
+  }
   .party-boss-guide-button {
     width: 170px;
     min-height: 30px;
@@ -9028,9 +8939,9 @@
     overflow: auto;
   }
   .party-frame {
-    --cls: #7fb8ff;
+    --cls: var(--color-party-class-default);
     position: relative;
-    width: var(--party-frame-width, 170px);
+    width: var(--party-frame-width, var(--party-row-w));
     min-height: var(--party-frame-height, 42px);
     box-sizing: border-box;
     padding: 4px 8px 5px;
@@ -9043,21 +8954,48 @@
      unchanged: this profile only rearranges their stable DOM, so mouseover casts,
      absorbs, incoming healing, threat, Rewind, and auras share one implementation. */
   #party-frames.party-style-raid .party-frame {
-    height: var(--party-frame-height, 42px);
-    min-height: var(--party-frame-height, 42px);
+    width: var(--party-raid-cell-w);
+    height: var(--party-raid-cell-h);
+    min-height: var(--party-raid-cell-h);
     padding: 0;
     overflow: hidden;
-    border: 1px solid #050505;
-    border-radius: 2px;
-    background: #101010;
-    box-shadow: inset 0 0 0 1px #ffffff14;
+    border: 1px solid var(--color-party-raid-border);
+    border-radius: var(--radius-2xs);
+    background: var(--color-party-raid-ground);
+    box-shadow: var(--edge-hairline);
+  }
+  #party-frames.party-style-raid .party-rows {
+    grid-template-columns: repeat(var(--party-frame-columns, 1), var(--party-raid-cell-w));
   }
   #party-frames.party-style-raid .party-frame .pfm-name {
     position: absolute;
     inset: 2px 4px 5px;
     z-index: 4;
     min-width: 0;
+    padding-left: 14px;
     pointer-events: none;
+  }
+  #party-frames.party-style-raid .party-frame .pfm-role {
+    display: block;
+    position: absolute;
+    left: 4px;
+    top: 4px;
+    z-index: 5;
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--color-keyline);
+    border-radius: var(--radius-2xs);
+    background: var(--color-party-role-damage);
+    pointer-events: none;
+  }
+  #party-frames.party-style-raid .party-frame .pfm-role.tank {
+    background: var(--color-party-role-tank);
+  }
+  #party-frames.party-style-raid .party-frame .pfm-role.healer {
+    background: var(--color-party-role-healer);
+  }
+  #party-frames.party-style-raid .party-frame .pfm-role.damage {
+    background: var(--color-party-role-damage);
   }
   #party-frames.party-style-raid .party-frame .pfm-name-text {
     overflow: hidden;
@@ -9074,7 +9012,7 @@
   }
   #party-frames.party-style-raid .party-frame .pfm-id {
     min-width: 0;
-    color: #fff;
+    color: var(--color-white);
   }
   #party-frames.party-style-raid .party-frame .pfm-crest {
     display: none;
@@ -9085,8 +9023,8 @@
     height: auto;
     margin: 0;
     border: 0;
-    border-radius: 1px 1px 0 0;
-    background: #171717;
+    border-radius: var(--radius-2xs) var(--radius-2xs) 0 0;
+    background: var(--color-party-raid-track);
   }
   #party-frames.party-style-raid .party-frame .bar.hp .bar-fill {
     background-color: var(--cls);
@@ -9102,11 +9040,11 @@
     height: 3px;
     margin: 0;
     border: 0;
-    border-radius: 0 0 1px 1px;
+    border-radius: 0 0 var(--radius-2xs) var(--radius-2xs);
   }
   #party-frames.party-style-raid .party-frame.pf-hide-resource .bar.hp {
     bottom: 0;
-    border-radius: 1px;
+    border-radius: var(--radius-2xs);
   }
   #party-frames.party-style-raid .party-frame .pfm-auras {
     left: auto;
@@ -9119,7 +9057,7 @@
     flex: 0 0 12px;
     width: 12px;
     height: 12px;
-    box-shadow: 0 1px 2px #000;
+    box-shadow: 0 1px 2px var(--color-keyline);
   }
   .party-loot {
     width: 170px;
@@ -9156,12 +9094,30 @@
     flex-shrink: 0;
   }
   .party-frame .pfm-name {
+    min-height: 14px;
+    box-sizing: border-box;
+    padding-left: 38px;
     font-size: 12px;
     font-family: var(--title-font);
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 6px;
+  }
+  .party-frame .pfm-crest {
+    position: absolute;
+    left: 8px;
+    top: 5px;
+    width: 30px;
+    height: 30px;
+    flex: none;
+    border: 2px solid var(--cls);
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px var(--color-keyline);
+    object-fit: cover;
+  }
+  .party-frame .pfm-role {
+    display: none;
   }
   #loot-settings-window {
     min-width: 220px;
@@ -9207,7 +9163,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    text-shadow: 1px 1px 1px #000;
+    text-shadow: 1px 1px 1px var(--color-keyline);
   }
   .party-frame .pfm-meta {
     display: flex;
@@ -9222,7 +9178,7 @@
   .party-frame .pf-badge {
     font-size: 10px;
     line-height: 1;
-    filter: drop-shadow(0 0 2px #000);
+    filter: drop-shadow(0 0 2px var(--color-keyline));
   }
   .party-frame :is(.pf-badge, .lead-star) .ui-icon {
     width: 1em;
@@ -9235,17 +9191,15 @@
     animation-play-state: var(--fx-ambient-anim, running);
   }
   .party-frame .bar {
-    /* The hp/resource bars absorb a height drag the way the player and
-       target frames' --uf-bar-height does (partyFrameHeight is the ROW
-       height: the name line plus padding cost about 24px, the remainder
-       splits across the two bars, landing on the stock 9px at the stock
-       42px row). The raid presentation overrides this with its own
-       full-cell bar geometry. */
-    height: max(4px, calc((var(--party-frame-height, 42px) - 24px) / 2));
+    /* Classic rows keep the authored 9px/5px hierarchy at every row height;
+       raid presentation overrides this with full-cell bar geometry. */
+    height: var(--party-res-h);
+    margin-left: 38px;
     margin-top: 2px;
   }
   .party-frame .bar.hp {
     position: relative;
+    height: var(--party-hp-h);
   }
   .party-frame .pfm-hp-text {
     position: absolute;
@@ -9258,7 +9212,7 @@
     font-family: var(--ui-font);
     font-size: 9px;
     line-height: 1;
-    text-shadow: 1px 1px 1px #000;
+    text-shadow: var(--title-shadow);
     pointer-events: none;
   }
   .party-frame .pfm-rewind {
@@ -9293,10 +9247,11 @@
   .party-frame .pfm-pet {
     position: relative;
     height: 5px;
+    margin-left: 38px;
     margin-top: 2px;
-    background: #0c0c14;
-    border: 1px solid #000;
-    border-radius: 2px;
+    background: var(--color-party-pet-track);
+    border: 1px solid var(--color-keyline);
+    border-radius: var(--radius-2xs);
     overflow: hidden;
     cursor: var(--cursor-point);
   }
@@ -9304,15 +9259,21 @@
     height: 100%;
     width: 100%;
     transform-origin: left center;
-    background: linear-gradient(180deg, #6fbf5a, #3f8a33);
+    background: var(--party-pet-fill);
   }
   /* A dead pet is ALWAYS hp 0, so its fill is scaleX(0) and has no pixels: styling
      the fill here rendered nothing and left a dead pet identical to an empty track.
      The dead state goes on the TRACK, which is the part that still has area, so a
      hunter can tell "dead, revive it" from "alive and nearly dead" at a glance. */
   .party-frame .pfm-pet.dead {
-    background: repeating-linear-gradient(135deg, #3a3a3a, #3a3a3a 2px, #262626 2px, #262626 4px);
-    border-color: #555;
+    background: repeating-linear-gradient(
+      135deg,
+      var(--color-party-pet-dead-hi),
+      var(--color-party-pet-dead-hi) 2px,
+      var(--color-party-pet-dead-lo) 2px,
+      var(--color-party-pet-dead-lo) 4px
+    );
+    border-color: var(--color-party-pet-dead-border);
   }
   .party-frame .pfm-pet:hover {
     outline: 1px solid var(--gold-dim);
@@ -9383,7 +9344,8 @@
   }
   /* Glow: decorative combat outer glow scales with --fx-shadow (0 at low). */
   .party-frame.combat {
-    box-shadow: 0 0 calc(7px * var(--fx-shadow, 1)) #e74c3c99;
+    box-shadow: 0 0 calc(7px * var(--fx-shadow, 1))
+      color-mix(in srgb, var(--color-danger) 60%, transparent);
   }
   .party-frame.threat {
     border-color: var(--color-hostile);
@@ -9399,11 +9361,24 @@
     opacity: 0.7;
   }
   .party-frame.dead .pfm-id {
-    color: #888 !important;
+    color: var(--color-text-muted) !important;
     text-shadow: none;
   }
   .party-frame.oor {
-    opacity: 0.45;
+    opacity: 0.55;
+  }
+  .party-frame.is-on {
+    outline: 1px solid var(--gold);
+    outline-offset: 1px;
+  }
+
+  #party-frames:not(.party-style-raid) .party-frame.is-on::after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: var(--glow-gold-soft);
+    content: "";
+    pointer-events: none;
   }
   .party-frame:hover {
     outline: 1px solid var(--gold-dim);
@@ -10165,8 +10140,8 @@
   #target-frame.elite > .portrait-wrap .portrait {
     border-color: var(--gold);
     box-shadow:
-      0 0 12px #ffd10066,
-      0 2px 8px #000c;
+      0 0 12px color-mix(in srgb, var(--gold) 40%, transparent),
+      0 2px 8px color-mix(in srgb, var(--color-keyline) 75%, transparent);
   }
   #tf-elite-tag {
     font-size: 9px;
@@ -10204,16 +10179,7 @@
     left: 50%;
     right: auto;
     bottom: -7px;
-    width: 24px;
-    height: 24px;
-    border-color: var(--gold-dim);
-    border-radius: 50%;
-    background: radial-gradient(circle at 40% 35%, #4a3a14, #241c08);
-    box-shadow:
-      0 0 0 1px var(--color-bg-deep),
-      0 0 7px color-mix(in srgb, var(--gold) 45%, transparent);
     transform: translateX(-50%);
-    text-shadow: 1px 1px 1px #000;
     z-index: 4;
   }
   #target-frame.boss #tf-elite-tag {

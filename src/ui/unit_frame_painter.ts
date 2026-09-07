@@ -44,6 +44,7 @@ import type { UnitFrameView } from './unit_frame';
 // The mutually-exclusive resource-type classes the painter toggles on the resource
 // container. Exactly one is on for a live power bar; all are off for `none`.
 const RES_TYPE_CLASSES = ['rage', 'energy', 'focus', 'mana'] as const;
+const EMPTY_RESOURCE_CLASS = 'is-empty';
 // The shield-overlay class (the shield reaches the bar's right edge).
 const OVERSHIELD_CLASS = 'overshield';
 // Frame-state classes target/party need; the player always passes them off.
@@ -231,6 +232,7 @@ export class UnitFramePainter {
     for (const cls of RES_TYPE_CLASSES) {
       this.writers.toggleClass(res.container, cls, view.resClass === cls);
     }
+    this.writers.toggleClass(res.container, EMPTY_RESOURCE_CLASS, view.resText.length === 0);
     this.writers.setTransform(res.fill, this.barScaleX(view.resFrac));
     if (res.text) this.writers.setText(res.text, view.resText);
   }
