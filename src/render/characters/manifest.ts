@@ -2050,6 +2050,7 @@ export const VISUALS: Record<string, VisualDef> = {
     url: `${MOUNTS_DIR}/goblin_rocket_sled.glb`,
     height: 2.5,
     clips: MOUNT_RIGGED,
+    authoredAtlas: true,
     lazyPreload: true,
   },
   // Toy rally car. Rigid node animation, no skin: the wheels, the four
@@ -2078,6 +2079,7 @@ export const VISUALS: Record<string, VisualDef> = {
     },
     walkRef: 3,
     runRef: 4.4,
+    authoredAtlas: true,
     // Wheels stop when the car stops, rather than turning on through a fade.
     cutToIdle: true,
     lazyPreload: true,

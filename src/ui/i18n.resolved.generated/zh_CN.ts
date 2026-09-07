@@ -10736,11 +10736,11 @@ export const zh_CN: EnTranslations = {
       },
       "melting_acid": {
         "name": "溶解酸",
-        "description": "向目标泼洒腐蚀性毒液，造成 {damage} 点自然伤害，并使其护甲降低 5%，持续 12 秒。"
+        "description": "为你的武器涂覆 30 分钟。你的每次近战挥击都会向目标溅洒腐蚀酸液，使其护甲降低 5%，持续 12 秒。"
       },
       "nightshade_coating": {
         "name": "夜影涂层",
-        "description": "用夜影覆盖目标，造成 {damage} 点自然伤害，并使其受到的治疗降低 25%，持续 12 秒。"
+        "description": "为你的武器涂覆 30 分钟。你的每次近战挥击都会让目标沾染夜影，使其受到的治疗降低 25%，持续 12 秒。"
       },
       "expose_armor": {
         "name": "护甲突破",
@@ -11859,7 +11859,7 @@ export const zh_CN: EnTranslations = {
       },
       "temporal_echo": {
         "name": "时光回响",
-        "description": "以更健康时刻的回响标记一名盟友，立即恢复{damage}点生命值。{duration}秒内，你造成的奥术伤害有一部分会通过回响转化为对其的治疗。"
+        "description": "以更健康时刻的回响标记一名盟友，立即恢复{damage}点生命值。{duration}秒内，你其他单体奥术伤害的{echoSinglePct}%和范围奥术伤害的{echoAreaPct}%会治疗该盟友。以太涌动和以太飞镖改为按其造成伤害的{echoDriverPct}%治疗该盟友。"
       },
       "temporal_cascade": {
         "name": "时光奔流",

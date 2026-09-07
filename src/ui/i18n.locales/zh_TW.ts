@@ -10678,7 +10678,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '將目標移出當下一瞬:時光之殼在10秒內吸收{damage}點傷害，隨後時間線彈回原位。',
   'entities.abilities.temporal_echo.name': '時光迴響',
   'entities.abilities.temporal_echo.description':
-    '以更健康時刻的迴響標記一名盟友，立即恢復{damage}點生命值。{duration}秒內，你造成的秘法傷害有一部分會透過迴響轉化為對其的治療。',
+    '以更健康時刻的迴響標記一名盟友，立即恢復{damage}點生命值。{duration}秒內，你其他單體秘法傷害的{echoSinglePct}%和範圍秘法傷害的{echoAreaPct}%會治療該盟友。乙太湧動和乙太飛鏢改為按其造成傷害的{echoDriverPct}%治療該盟友。',
   'entities.abilities.aspect_of_the_wild.description':
     '以野性力量激勵30碼內的盟友，使其攻擊強度提高45、攻擊速度提高5%，持續5分鐘。（獵人天賦）',
   'entities.abilities.avenging_wrath.description':
@@ -14647,10 +14647,10 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'abilityUi.tooltip.anyTarget': '敵方或友方目標',
   'entities.abilities.melting_acid.name': '溶解酸',
   'entities.abilities.melting_acid.description':
-    '向目標潑灑腐蝕性毒液，造成 {damage} 點自然傷害，並使其護甲降低 5%，持續 12 秒。',
+    '為你的武器塗覆 30 分鐘。你的每次近戰揮擊都會向目標濺灑腐蝕酸液，使其護甲降低 5%，持續 12 秒。',
   'entities.abilities.nightshade_coating.name': '夜影塗層',
   'entities.abilities.nightshade_coating.description':
-    '用夜影覆蓋目標，造成 {damage} 點自然傷害，並使其受到的治療降低 25%，持續 12 秒。',
+    '為你的武器塗覆 30 分鐘。你的每次近戰揮擊都會讓目標沾染夜影，使其受到的治療降低 25%，持續 12 秒。',
   // v0.41 release i18n fill.
   'hudChrome.itemMenu.sell': '出售',
   'hudChrome.itemMenu.sellAll': '全部出售（{count}）',

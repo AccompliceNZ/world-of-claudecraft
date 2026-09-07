@@ -336,5 +336,4 @@ export const fr_CA: Partial<Record<TranslationKey, string>> = {
   'sim.lockpick.lockJammed':
     "La serrure est bloquée, impossible à crocheter : terminez l'excavation de nouveau pour une autre tentative.",
   'sim.lockpick.lockYields': 'La serrure cède! Butin {tier}.',
-  'hudChrome.interfaceUnlock.frameNames.procOverlayFrost': 'Glaçons',
 };

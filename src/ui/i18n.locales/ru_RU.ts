@@ -11415,7 +11415,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'Смещает цель на мгновение из настоящего: временная оболочка поглощает {damage} урона в течение 10 сек, после чего линия времени возвращается на место.',
   'entities.abilities.temporal_echo.name': 'Временное эхо',
   'entities.abilities.temporal_echo.description':
-    'Отмечает союзника эхом более здорового мгновения, мгновенно восполняя {damage} здоровья. В течение {duration} сек часть наносимого вами урона от тайной магии возвращается через эхо, исцеляя его.',
+    'Отмечает союзника эхом более здорового мгновения, мгновенно восполняя {damage} здоровья. В течение {duration} сек {echoSinglePct}% прочего вашего урона от тайной магии по одной цели и {echoAreaPct}% урона от тайной магии по области исцеляют его. «Выброс эфира» и «Эфирные дротики» вместо этого исцеляют его на {echoDriverPct}% от наносимого ими урона.',
   'entities.abilities.aspect_of_the_wild.description':
     'Воодушевляет союзников в радиусе 30 м дикой силой, повышая их силу атаки на 45 и скорость атаки на 5% на 5 мин. (талант охотника)',
   'entities.abilities.avenging_wrath.description':
@@ -15691,10 +15691,10 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'abilityUi.tooltip.anyTarget': 'Вражеская или дружественная цель',
   'entities.abilities.melting_acid.name': 'Плавящая кислота',
   'entities.abilities.melting_acid.description':
-    'Обливает цель едким ядом, нанося {damage} ед. урона от сил природы и снижая её броню на 5% на 12 сек.',
+    'Покрывает ваше оружие на 30 мин. Каждый ваш удар в ближнем бою обрызгивает цель едкой кислотой, снижая её броню на 5% на 12 сек.',
   'entities.abilities.nightshade_coating.name': 'Покрытие паслёном',
   'entities.abilities.nightshade_coating.description':
-    'Покрывает цель паслёном, нанося {damage} ед. урона от сил природы и снижая получаемое ею исцеление на 25% на 12 сек.',
+    'Покрывает ваше оружие на 30 мин. Каждый ваш удар в ближнем бою покрывает цель паслёном, снижая получаемое ею исцеление на 25% на 12 сек.',
   // v0.41 release i18n fill.
   'hudChrome.itemMenu.sell': 'Продать',
   'hudChrome.itemMenu.sellAll': 'Продать все ({count})',

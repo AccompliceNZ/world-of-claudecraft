@@ -11246,7 +11246,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '対象を現在から一拍だけずらし、時の殻が10秒間、{damage}のダメージを吸収してから時間軸が元に戻る。',
   'entities.abilities.temporal_echo.name': '時の残響',
   'entities.abilities.temporal_echo.description':
-    'より健やかだった瞬間の残響で味方に刻印し、即座に{damage}の体力を回復する。{duration}秒間、与えた秘術ダメージの一部が残響を通じてその味方を癒やす。',
+    'より健やかだった瞬間の残響で味方に刻印し、即座に{damage}の体力を回復する。{duration}秒間、他の単体秘術ダメージの{echoSinglePct}%と範囲秘術ダメージの{echoAreaPct}%がその味方を癒やす。エーテルサージとエーテルダーツは代わりに、与えたダメージの{echoDriverPct}%分その味方を癒やす。',
   'entities.abilities.aspect_of_the_wild.description':
     '30ヤード以内の味方を野生の力で鼓舞し、攻撃力を45、攻撃速度を5%上昇させる。効果時間5分。（ハンターのタレント）',
   'entities.abilities.avenging_wrath.description':
@@ -15437,10 +15437,10 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'abilityUi.tooltip.anyTarget': '敵または味方の対象',
   'entities.abilities.melting_acid.name': '溶解酸',
   'entities.abilities.melting_acid.description':
-    '対象に腐食性の毒を浴びせ、{damage}の自然ダメージを与え、12秒間その防御力を5%低下させます。',
+    '武器を30分間コーティングします。近接攻撃のたびに対象へ苛性酸を浴びせ、12秒間その防御力を5%低下させます。',
   'entities.abilities.nightshade_coating.name': 'ナス科毒の塗布',
   'entities.abilities.nightshade_coating.description':
-    '対象をナス科毒で覆い、{damage}の自然ダメージを与え、12秒間受ける回復量を25%低下させます。',
+    '武器を30分間コーティングします。近接攻撃のたびに対象をナス科毒で覆い、12秒間受ける回復量を25%低下させます。',
   // v0.41 release i18n fill.
   'hudChrome.itemMenu.sell': '売却',
   'hudChrome.itemMenu.sellAll': 'すべて売却（{count}）',

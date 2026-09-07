@@ -10736,11 +10736,11 @@ export const ja_JP: EnTranslations = {
       },
       "melting_acid": {
         "name": "溶解酸",
-        "description": "対象に腐食性の毒を浴びせ、{damage}の自然ダメージを与え、12秒間その防御力を5%低下させます。"
+        "description": "武器を30分間コーティングします。近接攻撃のたびに対象へ苛性酸を浴びせ、12秒間その防御力を5%低下させます。"
       },
       "nightshade_coating": {
         "name": "ナス科毒の塗布",
-        "description": "対象をナス科毒で覆い、{damage}の自然ダメージを与え、12秒間受ける回復量を25%低下させます。"
+        "description": "武器を30分間コーティングします。近接攻撃のたびに対象をナス科毒で覆い、12秒間受ける回復量を25%低下させます。"
       },
       "expose_armor": {
         "name": "装甲破り",
@@ -11859,7 +11859,7 @@ export const ja_JP: EnTranslations = {
       },
       "temporal_echo": {
         "name": "時の残響",
-        "description": "より健やかだった瞬間の残響で味方に刻印し、即座に{damage}の体力を回復する。{duration}秒間、与えた秘術ダメージの一部が残響を通じてその味方を癒やす。"
+        "description": "より健やかだった瞬間の残響で味方に刻印し、即座に{damage}の体力を回復する。{duration}秒間、他の単体秘術ダメージの{echoSinglePct}%と範囲秘術ダメージの{echoAreaPct}%がその味方を癒やす。エーテルサージとエーテルダーツは代わりに、与えたダメージの{echoDriverPct}%分その味方を癒やす。"
       },
       "temporal_cascade": {
         "name": "時の連鎖",

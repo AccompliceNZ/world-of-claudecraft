@@ -10736,11 +10736,11 @@ export const ko_KR: EnTranslations = {
       },
       "melting_acid": {
         "name": "용해 산",
-        "description": "대상에게 부식성 독을 끼얹어 {damage}의 자연 피해를 주고 12초 동안 방어도를 5% 감소시킵니다."
+        "description": "30분 동안 무기에 산을 입힙니다. 근접 공격을 할 때마다 대상에게 부식성 산을 튀겨 12초 동안 방어도를 5% 감소시킵니다."
       },
       "nightshade_coating": {
         "name": "가지독 코팅",
-        "description": "대상을 가지독으로 뒤덮어 {damage}의 자연 피해를 주고 12초 동안 받는 치유 효과를 25% 감소시킵니다."
+        "description": "30분 동안 무기에 가지독을 입힙니다. 근접 공격을 할 때마다 대상에게 가지독을 묻혀 12초 동안 받는 치유 효과를 25% 감소시킵니다."
       },
       "expose_armor": {
         "name": "방어구 돌파",
@@ -11859,7 +11859,7 @@ export const ko_KR: EnTranslations = {
       },
       "temporal_echo": {
         "name": "시간의 메아리",
-        "description": "더 건강했던 순간의 메아리로 아군에게 표식을 남겨 즉시 생명력을 {damage} 회복시킵니다. {duration}초 동안 당신이 입힌 비전 피해의 일부가 메아리를 통해 그 아군을 치유합니다."
+        "description": "더 건강했던 순간의 메아리로 아군에게 표식을 남겨 즉시 생명력을 {damage} 회복시킵니다. {duration}초 동안 당신의 다른 단일 대상 비전 피해의 {echoSinglePct}%와 광역 비전 피해의 {echoAreaPct}%가 그 아군을 치유합니다. 에테르 쇄도와 에테르 다트는 대신 자신들이 입힌 피해의 {echoDriverPct}%만큼 그 아군을 치유합니다."
       },
       "temporal_cascade": {
         "name": "시간의 연쇄",
