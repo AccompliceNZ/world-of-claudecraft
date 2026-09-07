@@ -301,8 +301,26 @@ const MONOLITHS: MonolithRow[] = [
     // captured home and the dead body class left applyAuraAnchor for
     // restoreFrameHome (src/ui/interface_unlock.ts), and Reset Frame Positions
     // re-applies the anchor in one line. Exact merged count.
-    ceiling: 18851,
+    // Lowered 18851 -> 18728 by the on-bar key-binding mode extraction: the
+    // mode's controller (slot select, capture, the conflict warning prompt,
+    // Reset confirm) moved to
+    // src/ui/hud/action_bar/action_bar_bind_controller.ts and its banner DOM to
+    // action_bar_bind_banner.ts; the HUD keeps one deps object and the slot
+    // click intercept. Then 18728 -> 18725 once the review pass tightened
+    // that deps object. Exact count.
+    // Re-measured at the release/v0.42.0 sync that brought in the Nythraxis redo (PR #3848):
+    // 18725 less the 2 lines that PR trimmed from hud.ts. Exact merged count.
+    ceiling: 18723,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
+  },
+  {
+    // The Esc options window: joined the ratchet at the keyboard-overview /
+    // import-export round (review request on PR #3926) so the next feature
+    // there lands as a sibling module the window composes, not another
+    // inline sub-panel. Exact count at the time of joining.
+    file: 'src/ui/options_window.ts',
+    ceiling: 2813,
+    seam: 'a pure view model (src/ui/options_view.ts) painted with the shared settings_controls.ts builders; sub-panels as sibling modules',
   },
   {
     file: 'src/render/renderer.ts',

@@ -40,6 +40,87 @@ describe('options_window: no magic values', () => {
   });
 });
 
+describe('options_window: keyboard overview', () => {
+  it('paints the keyboard overview on desktop only, hiding the same Attack Move row the list does', () => {
+    const keybinds = painter.slice(
+      painter.indexOf('private renderKeybinds(): void {'),
+      painter.indexOf('private beginCapture('),
+    );
+    expect(keybinds).toContain('if (!useTouchInterface()) this.paintKeyboardOverview(el);');
+    const deps = painter.slice(painter.indexOf('private keyboardMapDeps('));
+    expect(deps.slice(0, deps.indexOf('\n  }\n'))).toContain('delete snapshot.attackMove;');
+    // The pop-out closes the menu first so the board floats over the world.
+    const overview = painter.slice(painter.indexOf('private paintKeyboardOverview('));
+    expect(overview.slice(0, overview.indexOf('\n  }\n'))).toContain('this.keyboardWindow.open();');
+  });
+});
+
+describe('options_window: hotkey setup row', () => {
+  it('exports the live snapshot and imports live, refusing a code that names no known action', () => {
+    const rows = painter.slice(
+      painter.indexOf('private keybindTransferRows('),
+      painter.indexOf('private transferControls('),
+    );
+    expect(rows).toContain('buildKeybindCode(this.deps.keybinds().snapshot())');
+    expect(rows).toContain('importBindings(parsed.binds)');
+    expect(rows).toContain("'hudChrome.keybindTransfer.wrongKind'");
+    // The hollow-code refusal lives in the core (pinned in
+    // tests/keybind_transfer_core.test.ts); the panel hands it the registry ids.
+    expect(rows).toContain('parseKeybindCode(text, KNOWN_ACTION_IDS)');
+    expect(painter).toContain(
+      'const KNOWN_ACTION_IDS: ReadonlySet<string> = new Set(BIND_ACTIONS.map((a) => a.id));',
+    );
+    expect(rows).toContain('this.dropKeyCapture();');
+    expect(rows).toContain('this.renderKeybinds();');
+    expect(rows).not.toContain('window.location.reload()');
+    // The row sits at the foot of the panel, right before Reset / Back.
+    expect(painter).toMatch(/el\.appendChild\(cols\);[\s\S]*?this\.keybindTransferRows\(el\);/);
+  });
+
+  it('never leaves a key capture armed behind a closed or rebuilt panel', () => {
+    const close = painter.slice(painter.indexOf('  close(): void {'));
+    const body = close.slice(0, close.indexOf('\n  }\n'));
+    expect(body).toContain('if (this.capturingKey) this.deps.options()?.captureKey(null);');
+    expect(body).toContain('this.keyboardBoard?.dispose();');
+    const keybinds = painter.slice(
+      painter.indexOf('private renderKeybinds(): void {'),
+      painter.indexOf('private beginCapture('),
+    );
+    expect(keybinds).toContain('this.keyboardBoard?.dispose();');
+    // A board capture replaces a row capture on the one-shot seam, so the row
+    // stops painting as capturing.
+    const deps = painter.slice(painter.indexOf('private keyboardMapDeps('));
+    expect(deps.slice(0, deps.indexOf('\n  }\n'))).toMatch(
+      /captureKey: \(cb\) => \{\s*this\.capturingKey = null;\s*hooks\.captureKey\(cb\);/,
+    );
+  });
+
+  it('every rebind path repaints the pop-out through the HUD keycap refresh', () => {
+    expect(painter).toContain('repaintKeyboardWindow(): void {');
+    const refresh = hudTs.slice(hudTs.indexOf('refreshKeybindLabels(): void {'));
+    expect(refresh.slice(0, refresh.indexOf('\n  }\n'))).toContain(
+      'this.optionsWindow.repaintKeyboardWindow();',
+    );
+  });
+});
+
+describe('options_window: import / export routing', () => {
+  it('routes the Import / Export view to the full-settings transfer panel', () => {
+    expect(painter).toContain("case 'transfer':");
+    expect(painter).toContain('this.renderTransfer();');
+    const panel = painter.slice(
+      painter.indexOf('private renderTransfer(): void {'),
+      painter.indexOf('private renderKeybinds(): void {'),
+    );
+    // The widest kind, through the same allowlisted envelope as the Interface
+    // tab's rows, and a reload on success (every family is read at boot).
+    expect(panel).toContain("exportTransferCode('full')");
+    expect(panel).toContain("importTransferCode('full', text)");
+    expect(panel).toContain('window.location.reload();');
+    expect(panel).toContain("t('hudChrome.fullTransfer.excluded')");
+  });
+});
+
 describe('options_window: aura menu routing', () => {
   it('routes the top-level Auras view to its settings panel and placement preview', () => {
     expect(painter).toContain("case 'auras':");
@@ -450,13 +531,23 @@ describe('options_window: keybind rebind dispatch (cluster 5)', () => {
   }
 
   it('localizes the Target Buffs and Debuffs row through its chrome key', () => {
-    expect(painter).toContain("targetAuras: 'hudChrome.targetAuras.keybindLabel'");
+    // The label table lives in the shared keybind_action_names_core.ts (the on-bar
+    // rebind prompts name actions from the same table); the painter's
+    // actionDisplayName must resolve through it, never a private copy.
+    const names = readFileSync(
+      new URL('../src/ui/keybind_action_names_core.ts', import.meta.url),
+      'utf8',
+    );
+    expect(names).toContain("targetAuras: 'hudChrome.targetAuras.keybindLabel'");
+    expect(names).toContain('t(key)');
     const displayName = painter.slice(
       painter.indexOf('private actionDisplayName('),
       painter.indexOf('private gamepadActionOptions('),
     );
-    expect(displayName).toContain('BIND_ACTION_LABEL_KEYS[actionId]');
-    expect(displayName).toContain('t(BIND_ACTION_LABEL_KEYS[actionId])');
+    expect(displayName).toContain(
+      'bindActionDisplayName(actionId, fallback, this.deps.slotActionName)',
+    );
+    expect(painter).not.toContain('const BIND_ACTION_LABEL_KEYS');
   });
 
   it('captures a key and binds it to the same action/index', () => {
@@ -565,13 +656,13 @@ describe('options_window: title-bar back control', () => {
     expect(painter).toContain(
       "el.querySelector('[data-back]')?.addEventListener('click', () => this.goBack());",
     );
-    // the four footer Back buttons (the shared settingsViewFooter, which
+    // the five footer Back buttons (the shared settingsViewFooter, which
     // Audio/Controller/Interface feed into; the graphics inline action row,
-    // which replaces it for that view; bug report; keybinds) reuse the same
-    // path (no inline copies left)
+    // which replaces it for that view; bug report; keybinds; import / export)
+    // reuse the same path (no inline copies left)
     expect(
       painter.match(/back\.addEventListener\('click', \(\) => this\.goBack\(\)\);/g),
-    ).toHaveLength(4);
+    ).toHaveLength(5);
     // the click-then-flip-to-main sequence lives ONLY in goBack itself; a stray
     // inline copy in some handler would push this count past 1
     expect(painter.match(/audio\.click\(\);\s*this\.view = 'main';/g) ?? []).toHaveLength(1);

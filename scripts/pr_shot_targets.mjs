@@ -14,6 +14,19 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 // 500ms. Some windows (crafting: several icon-bearing rows) settle their layout
 // noticeably slower than others in headless swiftshader; a fixed wait is either
 // too short (flaky) or wastefully long, so this returns as soon as it is ready.
+// The tutorial island's one-shot arrival greeting (#tutorial-greeting) spawns a
+// beat after the reveal and sits over every window; a panel shot taken under it
+// shows the greeting, not the panel. Wait for it briefly and dismiss it.
+async function dismissArrivalGreeting(page) {
+  if (await pollForSize(page, '#tutorial-greeting', 4, 500)) {
+    await page.evaluate(() => {
+      document.querySelector('#tutorial-greeting button')?.click();
+      document.querySelector('#tutorial-greeting')?.remove();
+    });
+    await wait(200);
+  }
+}
+
 async function pollForSize(page, selector, attempts = 20, intervalMs = 500) {
   for (let i = 0; i < attempts; i++) {
     await wait(intervalMs);
@@ -7150,6 +7163,151 @@ export const TARGETS = [
           ?.scrollIntoView({ block: 'center' });
       });
       return { clip: '#options-menu' };
+    },
+  },
+  {
+    // The Key Bindings panel's keyboard overview: the live board coloured by
+    // category, the option rows under it, and the Hotkey Setup export row at
+    // the foot. Falls back to the plain panel on a base without the board, so
+    // a before shot still frames the same window.
+    key: 'keybinds-keyboard-overview',
+    label: 'Key Bindings panel: keyboard overview, options and Hotkey Setup row',
+    when: ['ui/keyboard_map', 'ui/keybind_transfer', 'ui/keyboard_layout_pref'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        // Key Bindings is the first row on the main options menu.
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .kb-actionbar-edit');
+      const board = await pollForSize(page, '#options-menu .kbm-key', 6);
+      await dismissArrivalGreeting(page);
+      // The panel outgrows the capture viewport, so clip the overview section
+      // itself (the board, its legend and option rows); a base without the
+      // board frames the whole panel instead.
+      if (!open) return {};
+      return board ? { clip: '#options-menu .kbm' } : { clip: '#options-menu' };
+    },
+  },
+  {
+    // The Hotkey Setup export pane open on the Key Bindings panel: the code box
+    // with its Copy button (text based, no file).
+    key: 'keybinds-hotkey-setup-export',
+    label: 'Key Bindings panel: Hotkey Setup export code',
+    when: ['ui/keybind_transfer'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .kb-transfer .set-toggle');
+      if (!open) return {};
+      await page.evaluate(() => {
+        document.querySelector('#options-menu .kb-transfer .set-toggle')?.click();
+      });
+      await pollForSize(page, '#options-menu .kb-transfer .transfer-code');
+      await dismissArrivalGreeting(page);
+      // The row sits at the foot of a panel taller than the viewport: clip it.
+      return { clip: '#options-menu .kb-transfer' };
+    },
+  },
+  {
+    // The keyboard overview popped out into its own movable window over the
+    // world (the menu closes).
+    key: 'keybinds-keyboard-popout',
+    label: 'Keyboard overview pop-out window',
+    when: ['ui/keyboard_map_window'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      const ready = await pollForSize(page, '#options-menu .kbm-popout');
+      if (!ready) return {};
+      await page.evaluate(() => document.querySelector('#options-menu .kbm-popout')?.click());
+      const open = await pollForSize(page, '#keyboard-map-window .kbm-key');
+      await dismissArrivalGreeting(page);
+      return open ? { clip: '#keyboard-map-window' } : {};
+    },
+  },
+  {
+    // The Game Menu's Import / Export sub-panel: the Full Settings row with its
+    // export code open.
+    key: 'options-import-export',
+    label: 'Game Menu: Import / Export Settings panel with the full settings code',
+    when: ['ui/settings_transfer'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        // The entry sits between Performance Overlay and Wiki; find it by its
+        // transfer panel rather than a fixed index.
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        const entry = buttons.find((b) => /Import/.test(b.textContent ?? ''));
+        entry?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .transfer-body .set-toggle', 6);
+      if (!open) return {};
+      await page.evaluate(() =>
+        document.querySelector('#options-menu .transfer-body .set-toggle')?.click(),
+      );
+      await pollForSize(page, '#options-menu .transfer-body .transfer-code');
+      await dismissArrivalGreeting(page);
+      return { clip: '#options-menu' };
+    },
+  },
+  {
+    // The on-bar key-binding mode's conflict prompt: a slot selected, a key
+    // another action already holds pressed, the are-you-sure dialog up.
+    key: 'actionbar-keybind-conflict',
+    label: 'On-bar key-binding mode: key already bound prompt',
+    when: ['ui/hud/action_bar/action_bar_bind_controller'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      await pollForSize(page, '#options-menu .kb-actionbar-edit');
+      await page.evaluate(() => document.querySelector('.kb-actionbar-edit')?.click());
+      const open = await pollForSize(page, '#actionbar-bind-banner');
+      if (!open) return {};
+      await page.evaluate(() => {
+        document.querySelectorAll('#actionbar .action-btn')[3]?.click();
+      });
+      await wait(300);
+      // W is Move Forward by default: pressing it for a bar slot raises the prompt.
+      await page.keyboard.press('KeyW');
+      const prompt = await pollForSize(page, '#confirm-dialog', 6);
+      await dismissArrivalGreeting(page);
+      return prompt ? { clip: '#confirm-dialog' } : {};
     },
   },
   {
