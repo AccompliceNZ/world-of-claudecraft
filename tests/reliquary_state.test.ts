@@ -1796,13 +1796,15 @@ describe('Reliquary obtain counts', () => {
     // BOTH handovers really happened (otherwise the count claim is vacuous).
     expect(taker.inventory.some((s) => s.itemId === CATALOGUE_RELIC)).toBe(true);
     expect(taker.inventory.some((s) => s.itemId === STACKABLE_RELIC)).toBe(true);
-    // Premise for the INSTANCED arm: the received unit still carries its
-    // payload, so the handover really took grantOffer's addItemInstance branch
-    // (a unit that lost its payload would fall into the plain branch and leave
-    // that call site's movement flag untested).
-    expect(taker.inventory.find((s) => s.itemId === STACKABLE_RELIC)?.instance?.signer).toBe(
-      'Giver',
-    );
+    // Premise for the INSTANCED arm: STACKABLE_RELIC is a gathering material,
+    // so the received unit's signer rides its `materialSources` composition
+    // rather than an `instance` payload; the handover still moved through
+    // grantOffer's addItemInstance call site (a unit that lost its provenance
+    // would leave that site's movement flag untested).
+    expect(
+      taker.inventory.find((s) => s.itemId === STACKABLE_RELIC)?.materialSources?.[0]?.source
+        .signer,
+    ).toBe('Giver');
     expect(taker.deedStats.itemsDiscovered.has(CATALOGUE_RELIC)).toBe(true);
     // ...and the receiving side gained membership without gaining a tally on
     // EITHER arm (plain and instanced).

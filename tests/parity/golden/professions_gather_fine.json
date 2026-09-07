@@ -167,7 +167,7 @@
       "tick": 51,
       "time": 2.55,
       "nextId": 1003,
-      "state": "a5256c53",
+      "state": "2dc6bc7e",
       "events": "40ba9783",
       "rng": {
         "draws": 2,
@@ -262,7 +262,13 @@
             },
             {
               "count": 2,
-              "itemId": "fine_iron_ore"
+              "itemId": "fine_iron_ore",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 36,
@@ -359,7 +365,7 @@
       "tick": 104,
       "time": 5.2,
       "nextId": 1003,
-      "state": "c78e03be",
+      "state": "f3091eeb",
       "events": "6b3f9773",
       "rng": {
         "draws": 4,
@@ -455,14 +461,25 @@
             },
             {
               "count": 2,
-              "itemId": "fine_iron_ore"
+              "itemId": "fine_iron_ore",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "iron_ore"
+              "itemId": "iron_ore",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             }
           ],
           "lifetimeXp": 72,
@@ -560,7 +577,7 @@
       "tick": 157,
       "time": 7.85,
       "nextId": 1003,
-      "state": "fdbe956b",
+      "state": "d24f119e",
       "events": "050f0f41",
       "rng": {
         "draws": 6,
@@ -658,21 +675,37 @@
             },
             {
               "count": 2,
-              "itemId": "fine_iron_ore"
+              "itemId": "fine_iron_ore",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "iron_ore"
+              "itemId": "iron_ore",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "goldleaf_herb"
+              "itemId": "goldleaf_herb",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             }
           ],
           "lifetimeXp": 108,
@@ -771,7 +804,7 @@
       "tick": 159,
       "time": 7.95,
       "nextId": 1003,
-      "state": "6125294e",
+      "state": "57f319b7",
       "events": "741638a5",
       "rng": {
         "draws": 6,
@@ -869,21 +902,37 @@
             },
             {
               "count": 2,
-              "itemId": "fine_iron_ore"
+              "itemId": "fine_iron_ore",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "iron_ore"
+              "itemId": "iron_ore",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "goldleaf_herb"
+              "itemId": "goldleaf_herb",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             }
           ],
           "lifetimeXp": 108,

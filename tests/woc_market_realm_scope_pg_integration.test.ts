@@ -15,6 +15,7 @@
 import { Pool } from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import type { WocListingRow, WocSettlementRow } from '../server/woc_market';
+import { materialSourceConnection } from '../server/material_source_connection';
 import type { PgWocMarketDb } from '../server/woc_market_db';
 import type { CharacterState } from '../src/sim/sim';
 
@@ -66,7 +67,7 @@ describeDb('woc market realm scoping against real Postgres', () => {
     await db.ensureSchema();
     await db.runConcurrentIndexMigrations();
 
-    pool = new Pool({ connectionString: verifyUrl(ADMIN_URL as string), max: 8 });
+    pool = new Pool({ ...materialSourceConnection(verifyUrl(ADMIN_URL as string)), max: 8 });
     marketDb = new marketDbMod.PgWocMarketDb(pool);
   }, 120_000);
 

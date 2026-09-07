@@ -341,7 +341,7 @@
       "tick": 51,
       "time": 2.55,
       "nextId": 1003,
-      "state": "5d332dbb",
+      "state": "2efb635b",
       "events": "9b2aaec3",
       "rng": {
         "draws": 2,
@@ -432,7 +432,13 @@
             },
             {
               "count": 3,
-              "itemId": "fine_iron_ore"
+              "itemId": "fine_iron_ore",
+              "materialSources": [
+                {
+                  "count": 3,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 36,
@@ -538,7 +544,7 @@
       "tick": 53,
       "time": 2.65,
       "nextId": 1003,
-      "state": "af745712",
+      "state": "9f5f72ca",
       "events": "d0855371",
       "rng": {
         "draws": 2,
@@ -629,7 +635,13 @@
             },
             {
               "count": 3,
-              "itemId": "fine_iron_ore"
+              "itemId": "fine_iron_ore",
+              "materialSources": [
+                {
+                  "count": 3,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 36,
@@ -735,7 +747,7 @@
       "tick": 55,
       "time": 2.75,
       "nextId": 1003,
-      "state": "daea5a5c",
+      "state": "5f525034",
       "events": "435c2047",
       "rng": {
         "draws": 2,
@@ -826,7 +838,13 @@
             },
             {
               "count": 3,
-              "itemId": "fine_iron_ore"
+              "itemId": "fine_iron_ore",
+              "materialSources": [
+                {
+                  "count": 3,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 36,
@@ -932,7 +950,7 @@
       "tick": 106,
       "time": 5.3,
       "nextId": 1003,
-      "state": "87abfdcd",
+      "state": "b73cd2a1",
       "events": "6b3f9773",
       "rng": {
         "draws": 4,
@@ -1024,14 +1042,25 @@
             },
             {
               "count": 3,
-              "itemId": "fine_iron_ore"
+              "itemId": "fine_iron_ore",
+              "materialSources": [
+                {
+                  "count": 3,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "iron_ore"
+              "itemId": "iron_ore",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             }
           ],
           "lifetimeXp": 72,
@@ -1138,7 +1167,7 @@
       "tick": 157,
       "time": 7.85,
       "nextId": 1003,
-      "state": "5f62a023",
+      "state": "c52fcef3",
       "events": "31f6bc05",
       "rng": {
         "draws": 6,
@@ -1230,22 +1259,32 @@
               "itemId": "mithril_mining_pick"
             },
             {
-              "count": 3,
-              "itemId": "fine_iron_ore"
+              "count": 7,
+              "itemId": "fine_iron_ore",
+              "materialSources": [
+                {
+                  "count": 3,
+                  "source": {}
+                },
+                {
+                  "count": 4,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "iron_ore"
-            },
-            {
-              "count": 4,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "fine_iron_ore"
+              "itemId": "iron_ore",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             }
           ],
           "lifetimeXp": 108,
@@ -1353,7 +1392,7 @@
       "tick": 159,
       "time": 7.95,
       "nextId": 1003,
-      "state": "4f874c26",
+      "state": "c1b7f408",
       "events": "741638a5",
       "rng": {
         "draws": 6,
@@ -1445,22 +1484,32 @@
               "itemId": "mithril_mining_pick"
             },
             {
-              "count": 3,
-              "itemId": "fine_iron_ore"
+              "count": 7,
+              "itemId": "fine_iron_ore",
+              "materialSources": [
+                {
+                  "count": 3,
+                  "source": {}
+                },
+                {
+                  "count": 4,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             },
             {
               "count": 2,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "iron_ore"
-            },
-            {
-              "count": 4,
-              "instance": {
-                "signer": "Adventurer"
-              },
-              "itemId": "fine_iron_ore"
+              "itemId": "iron_ore",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {
+                    "signer": "Adventurer"
+                  }
+                }
+              ]
             }
           ],
           "lifetimeXp": 108,

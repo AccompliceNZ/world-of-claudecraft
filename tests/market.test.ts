@@ -606,7 +606,9 @@ describe('the World Market: the Merchant', () => {
       expect(copperOf(sim, seller)).toBe(950); // gold always lands
       expect(after.collectionCopper).toBe(0);
       expect(after.collectionSales).toEqual([]); // and its ledger left with it
-      expect(after.collectionItems).toEqual([{ itemId: 'bone_fragments', count: 1 }]);
+      expect(after.collectionItems).toEqual([
+        { itemId: 'bone_fragments', count: 1, materialSources: [{ source: {}, count: 1 }] },
+      ]);
     });
 
     // A 1-copper listing nets floor(1 * 0.95) = 0, so the sale leaves a row and no
@@ -839,7 +841,9 @@ describe('the World Market: the Merchant', () => {
     standAtMerchant(sim, seller);
     sim.addItemInstance('wolf_fang', { signer: 'Seller' }, seller, 1);
     sim.marketListInstance('wolf_fang', 500, { signer: 'Seller' }, seller);
-    const listing = listingBy(sim, (l) => !!l.instance, 'instanced listing');
+    // wolf_fang is a material: its legacy signer rides the listing's
+    // `materialSources` composition, not `instance`.
+    const listing = listingBy(sim, (l) => !!l.materialSources, 'instanced listing');
     listing.sellerKey = 'Seller';
     listing.sellerName = 'Seller';
     const internals = sim.market as unknown as {
@@ -855,7 +859,7 @@ describe('the World Market: the Merchant', () => {
     });
 
     expect(sim.rekeyMarketSeller(77, 'Seller', 'Renamed')).toBe(true);
-    expect(listing.instance?.signer).toBe('Renamed');
+    expect(listing.materialSources?.[0]?.source.signer).toBe('Renamed');
     expect(internals.marketCollections.get('77')?.items[0].instance?.signer).toBe('Renamed');
   });
 
@@ -868,12 +872,12 @@ describe('the World Market: the Merchant', () => {
     standAtMerchant(sim, seller);
     sim.addItemInstance('wolf_fang', { signer: 'Seller' }, seller, 1);
     sim.marketListInstance('wolf_fang', 500, { signer: 'Seller' }, seller);
-    const listing = listingBy(sim, (l) => !!l.instance, 'instanced listing');
+    const listing = listingBy(sim, (l) => !!l.materialSources, 'instanced listing');
     listing.sellerKey = 'somebody-else';
     listing.sellerName = 'Somebody Else';
 
     sim.rekeyMarketSeller(77, 'Seller', 'Renamed');
-    expect(listing.instance?.signer).toBe('Seller');
+    expect(listing.materialSources?.[0]?.source.signer).toBe('Seller');
   });
 
   it('rejects a purchase the buyer cannot afford', () => {
@@ -927,7 +931,9 @@ describe('the World Market: the Merchant', () => {
 
     expect(sim.marketListings.some((l) => l.id === listing.id)).toBe(false);
     const info = marketInfo(sim, seller);
-    expect(info.collectionItems).toEqual([{ itemId: 'wolf_fang', count: 1 }]);
+    expect(info.collectionItems).toEqual([
+      { itemId: 'wolf_fang', count: 1, materialSources: [{ source: {}, count: 1 }] },
+    ]);
   });
 
   it('refuses to deal with anyone who is not standing at the Merchant', () => {

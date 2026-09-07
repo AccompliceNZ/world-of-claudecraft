@@ -296,13 +296,18 @@ describe('food, drink, vendor', () => {
     sim.addItem('wolf_fang', 2);
     sim.sellItem('wolf_fang');
     sim.sellItem('wolf_fang');
-    expect(sim.vendorBuyback).toEqual([{ itemId: 'wolf_fang', count: 2 }]);
+    // Both sold units are unrecorded provenance, coalesced into one bucket.
+    expect(sim.vendorBuyback).toEqual([
+      { itemId: 'wolf_fang', count: 2, materialSources: [{ source: {}, count: 2 }] },
+    ]);
     sim.copper = 0;
 
     sim.buyBackItem('wolf_fang');
 
     expect(sim.countItem('wolf_fang')).toBe(0);
-    expect(sim.vendorBuyback).toEqual([{ itemId: 'wolf_fang', count: 2 }]);
+    expect(sim.vendorBuyback).toEqual([
+      { itemId: 'wolf_fang', count: 2, materialSources: [{ source: {}, count: 2 }] },
+    ]);
     expect(sim.events).toContainEqual({
       type: 'error',
       text: 'Not enough money.',

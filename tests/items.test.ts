@@ -313,7 +313,11 @@ describe('items vendor: buy / sell / sellAllJunk / buyBack', () => {
     items.sellItem(ctx, 'wolf_fang', 1, pid);
     expect(meta.copper).toBe(79); // + sellValue 4
     expect(sim.countItem('wolf_fang', pid)).toBe(1);
-    expect(meta.vendorBuyback[0]).toEqual({ itemId: 'wolf_fang', count: 1 });
+    expect(meta.vendorBuyback[0]).toEqual({
+      itemId: 'wolf_fang',
+      count: 1,
+      materialSources: [{ source: {}, count: 1 }],
+    });
   });
 
   it("sellItem spares the seller's self-signed charm copy (the copy-choice rule, vendor arm)", () => {

@@ -720,7 +720,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1012,
-      "state": "324fca9e",
+      "state": "8296c407",
       "events": "22aef4df",
       "rng": {
         "draws": 16,
@@ -869,7 +869,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -1040,7 +1046,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -1207,7 +1219,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -1374,7 +1392,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -1541,7 +1565,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -1926,7 +1956,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1012,
-      "state": "324fca9e",
+      "state": "8296c407",
       "events": "741638a5",
       "rng": {
         "draws": 16,
@@ -2075,7 +2105,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -2246,7 +2282,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -2413,7 +2455,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -2580,7 +2628,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
@@ -2747,7 +2801,13 @@
             },
             {
               "count": 2,
-              "itemId": "wyrmfall_core"
+              "itemId": "wyrmfall_core",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             }
           ],
           "lifetimeXp": 167298,
