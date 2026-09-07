@@ -13,7 +13,7 @@
 // to 5 minutes), and neither outcome can be reached by an attempt that started on
 // the other side of the life/death line (see cancelReason).
 
-import { BG_HALF_X, BG_HALF_Z } from './battleground_layout';
+import { BG_HALF_X, BG_HALF_Z, battlegroundColliders } from './battleground_layout';
 import { moverHeight, resolvePosition } from './colliders';
 import { isRooted, isStunned } from './combat/cc';
 import {
@@ -69,8 +69,6 @@ const CANCEL_VERTICAL_DISTANCE = 0.25;
 const BG_WALL_PRESS_PROBE_DISTANCE = 0.35;
 const BG_WALL_PRESS_MIN_PROGRESS = 0.05;
 const BG_WALL_PRESS_ESC_GRACE_SECONDS = 3;
-// Authored perimeter blockers sit on BG_HALF_* and extend this far outward.
-const BG_PERIMETER_WALL_HALF_DEPTH = 0.6;
 const battlegroundWallPressGrace = new WeakMap<SimContext, Map<number, number>>();
 
 export interface PendingUnstuck {
@@ -115,6 +113,31 @@ function battlegroundArea(match: BgMatch): UnstuckArea {
   };
 }
 
+function battlegroundGeometryHalfExtents(): { x: number; z: number } {
+  let x = BG_HALF_X;
+  let z = BG_HALF_Z;
+  for (const collider of battlegroundColliders()) {
+    if (collider.type === 'circle') {
+      x = Math.max(x, Math.abs(collider.x) + collider.r);
+      z = Math.max(z, Math.abs(collider.z) + collider.r);
+      continue;
+    }
+    const cos = Math.cos(collider.rot);
+    const sin = Math.sin(collider.rot);
+    x = Math.max(
+      x,
+      Math.abs(collider.x) + Math.abs(cos) * collider.hw + Math.abs(sin) * collider.hd,
+    );
+    z = Math.max(
+      z,
+      Math.abs(collider.z) + Math.abs(sin) * collider.hw + Math.abs(cos) * collider.hd,
+    );
+  }
+  return { x, z };
+}
+
+const BG_GEOMETRY_HALF_EXTENTS = battlegroundGeometryHalfExtents();
+
 function battlegroundLocation(
   match: BgMatch,
   pos: Vec3,
@@ -122,8 +145,9 @@ function battlegroundLocation(
   const origin = battlegroundOrigin(match.slot);
   const localX = pos.x - origin.x;
   const localZ = pos.z - origin.z;
-  const margin = PLAYER_BODY_RADIUS + BG_PERIMETER_WALL_HALF_DEPTH + POSITION_EPS;
-  if (Math.abs(localX) > BG_HALF_X + margin || Math.abs(localZ) > BG_HALF_Z + margin) {
+  const maxX = BG_GEOMETRY_HALF_EXTENTS.x + PLAYER_BODY_RADIUS + POSITION_EPS;
+  const maxZ = BG_GEOMETRY_HALF_EXTENTS.z + PLAYER_BODY_RADIUS + POSITION_EPS;
+  if (Math.abs(localX) > maxX || Math.abs(localZ) > maxZ) {
     return null;
   }
   return { origin, point: { ...pos, localX, localZ } };
