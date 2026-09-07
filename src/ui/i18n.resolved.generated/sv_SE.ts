@@ -324,8 +324,6 @@ export const sv_SE: EnTranslations = {
     "warlock": {
       "doomLabel": "Fördömelse",
       "fateThreadsLabel": "Ödestrådar",
-      "doomMeterUnlock": "Flytta resurspanelen för Vånda",
-      "doomMeterLock": "Lås resurspanelen för Vånda",
       "doomEmptyStatus": "{value} av {max} Fördömelse.",
       "doomStatus": "{value} av {max} Fördömelse; {remaining}.",
       "fateThreadsStatus": "{value} av {max} Ödestrådar.",
@@ -3014,7 +3012,17 @@ export const sv_SE: EnTranslations = {
         "targetFrame": "Mål",
         "partyFrames": "Grupp",
         "swingBar": "Autoattack",
-        "targetDots": "Target Dots"
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "doomMeter": "Affliction Bar",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Raminställningar",
       "framesMenuTitle": "Visa eller göm enskilda ramar. En avbockad ram förblir dold tills du bockar för den igen eller återställer till standard.",
