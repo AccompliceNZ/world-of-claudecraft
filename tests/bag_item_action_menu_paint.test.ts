@@ -230,14 +230,22 @@ function harness(innerHeight: number, stubOrInventory: WorldStub | InvSlot[] = {
 
 describe('BagItemActionMenu.paint placement reserves', () => {
   it('a plain menu keeps the narrow reserve and the natural estimate, no modifier', () => {
-    const h = harness(768);
-    h.openPlain();
+    // arcane_dust (DUST, used by openPlain elsewhere in this file) is BOTH an
+    // enchant reagent AND an honest material (material_ids.ts), and every
+    // material item now always offers the Combine row (bag_item_context_menu.ts
+    // bagItemNewActions), so it no longer isolates the plain reserve geometry
+    // this case pins: use a genuinely plain fixture instead (a quest item,
+    // never disenchantable/salvageable/sunderable/an enchant reagent/a
+    // material) so the row count stays exactly what the comment below claims.
+    const PLAIN = 'boar_hide';
+    const h = harness(768, [{ itemId: PLAIN, count: 1 }]);
+    h.openFor(PLAIN);
     expect(h.placed).toHaveLength(1);
     expect(h.placed[0].reserveRight).toBe(190);
-    // Dust rows: the classic default action, Apply Enchant, and the lock
-    // toggle every item now offers (issue #3042).
+    // Plain rows: the classic default action, plus the lock toggle every item
+    // now offers (issue #3042).
     const rows = h.el.querySelectorAll('.ctx-item').length;
-    expect(rows).toBe(3);
+    expect(rows).toBe(2);
     expect(h.placed[0].reserveBottom).toBe(80 + rows * 32);
     expect(h.el.classList.contains(CTX_MENU_PICKER_CLASS)).toBe(false);
   });

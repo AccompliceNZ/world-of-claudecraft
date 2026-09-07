@@ -5202,10 +5202,11 @@ function professionsGather(seed = 1): Scenario {
       // start (which would skip a harvest and shift the stream): the
       // proficiency reset pins the window at band 0 (the pre-gather-cast window ran
       // at an undrained proficiency 0 anyway), and the retention filter
-      // sheds the accumulating common stacks while keeping the NEWEST eight
-      // signed instances, so a hunted hit's forced-signed x5 yield (all
-      // moonlit-bloom sheenleaf) survives into the final inventory sample
-      // even when the window hits more than once. The hunted seed's FIRST
+      // sheds the accumulating common stacks while keeping the newest eight
+      // slots carrying a materialSources bucket signed by this player, so a
+      // hunted hit's forced-signed x5 yield (all moonlit-bloom sheenleaf)
+      // survives into the final inventory sample even when the window hits
+      // more than once. The hunted seed's FIRST
       // rare event lands inside this window (gatherRareEvent + x5 yield).
       // Stands ON herb_eastbrook_1, since harvestNode gates on INTERACT_RANGE.
       // This literal tracked the patch when it sat on the Mirror Lake floor;
@@ -5219,12 +5220,20 @@ function professionsGather(seed = 1): Scenario {
       for (let i = 0; i < 100; i++) {
         meta.gatheringProficiency.herbalism = 0;
         // The retention filter keeps the three tools (ahead of the gate,
-        // #2343) plus the newest eight signed instances, shedding the
-        // accumulating common stacks exactly as before.
+        // #2343) plus the newest eight slots carrying a materialSources
+        // bucket signed by this player, shedding the accumulating common
+        // stacks exactly as before. Signed premium units now ride the
+        // granted stack's materialSources bucket (material_gatherer.ts
+        // gatheredMaterialSources) rather than a distinct instance.signer
+        // payload, so the slot is kept by its bucket's signer matching this
+        // gatherer's own name, never by the bucket's gatherer field (every
+        // unit, signed or not, carries a gatherer once identity is known).
         const TOOL_IDS = ['copper_mining_pick', 'handaxe', 'gathering_sickle'];
         meta.inventory = [
           ...meta.inventory.filter((s) => TOOL_IDS.includes(s.itemId)),
-          ...meta.inventory.filter((s) => s.instance?.signer !== undefined).slice(-8),
+          ...meta.inventory
+            .filter((s) => s.materialSources?.some((bucket) => bucket.source.signer === meta.name))
+            .slice(-8),
         ];
         delete meta.nodeHarvestReadyAt.herb_eastbrook_1;
         sim.harvestNode('herb_eastbrook_1', undefined, pid);

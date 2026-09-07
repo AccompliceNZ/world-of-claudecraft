@@ -312,7 +312,7 @@ BEGIN
   -- Several audit statements queue several deferred trigger events for the
   -- same transaction. Exactly one event wins this DELETE and applies the
   -- final accumulated counters; every later event observes no row and is inert.
-  DELETE FROM ${pendingRegclass}
+  DELETE FROM "${schemaName}".bank_ledger_growth_pending
    WHERE transaction_id = NEW.transaction_id
   RETURNING inserted_rows, deleted_rows
        INTO attempted_inserted_rows, attempted_deleted_rows;
@@ -328,7 +328,7 @@ BEGIN
   -- clamping a miscount silently to zero. A net-zero transaction still takes
   -- the update, deliberately: that is how every audit-writing transaction
   -- keeps re-proving this process agrees with the durable limit.
-  UPDATE ${budgetRegclass}
+  UPDATE "${schemaName}".bank_ledger_growth_budget
      SET committed_rows = committed_rows + attempted_rows,
          updated_at = now()
    WHERE singleton = TRUE
@@ -468,11 +468,11 @@ ${triggerRefusals}
     -- (the singleton deleted over a grown audit surface) pays the same shape
     -- and stays a maintenance-window operation.
 ${sourceLocks}
-    DELETE FROM ${pendingRegclass};
+    DELETE FROM "${schemaName}".bank_ledger_growth_pending;
 
 ${triggerCreates}
 
-    INSERT INTO ${budgetRegclass}
+    INSERT INTO "${schemaName}".bank_ledger_growth_budget
       (singleton, committed_rows, hard_limit_rows, budget_revision)
     -- Deliberately allow committed_rows to start above the ceiling. The
     -- enforcement predicate then refuses every future net-growth transaction
@@ -495,7 +495,7 @@ ${sourceLocks}
 
 ${triggerCreates}
 
-    UPDATE ${budgetRegclass}
+    UPDATE "${schemaName}".bank_ledger_growth_budget
        SET committed_rows = ${exactAggregateCount},
            budget_revision = ${BANK_LEDGER_GROWTH_BUDGET_REVISION},
            updated_at = now()

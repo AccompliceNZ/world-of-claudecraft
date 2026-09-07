@@ -652,8 +652,10 @@ describe('hud.itemTooltip composition order (source pins)', () => {
   const badges = hud.indexOf('instanceBadgeLines(instance)');
   const bonus = hud.indexOf('instanceBonusStatLines(instance)');
   // The mark line takes the def's kind too: the gathered-vs-crafted
-  // wording split resolves from item.kind at the one composition site.
-  const mark = hud.indexOf('instanceMakersMarkLine(instance, item)');
+  // wording split resolves from item.kind at the one composition site, now
+  // wrapped in materialMakersMarkLines alongside the per-unit material
+  // source rows (item_instance_tooltip.ts owns both).
+  const mark = hud.indexOf('materialMakersMarkLines(item, instance, materialSources)');
   const soulbound = hud.indexOf("t('hudChrome.itemSoulbound')");
   const setBlock = hud.indexOf('this.itemSetBlock(item)');
 
@@ -663,7 +665,7 @@ describe('hud.itemTooltip composition order (source pins)', () => {
     expect(mark).toBeGreaterThan(-1);
     expect(hud.indexOf('instanceBadgeLines(instance)', badges + 1)).toBe(-1);
     expect(hud.indexOf('instanceBonusStatLines(instance)', bonus + 1)).toBe(-1);
-    expect(hud.indexOf('instanceMakersMarkLine(', mark + 1)).toBe(-1);
+    expect(hud.indexOf('materialMakersMarkLines(', mark + 1)).toBe(-1);
   });
 
   it('orders them badge lines, then bonus stats, then the makers mark', () => {

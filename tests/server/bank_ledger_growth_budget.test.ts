@@ -116,10 +116,10 @@ describe('bank ledger durable growth budget', () => {
     // Inserts and deletes accumulate into their OWN column, and several
     // statements in one transaction add into the same pending row.
     expect(folded).toContain(
-      'VALUES (pg_catalog.pg_current_xact_id(), changed_rows, 0) ON CONFLICT (transaction_id) DO UPDATE SET inserted_rows = "public".bank_ledger_growth_pending.inserted_rows + EXCLUDED.inserted_rows;',
+      'VALUES (pg_catalog.pg_current_xact_id(), changed_rows, 0) ON CONFLICT (transaction_id) DO UPDATE SET inserted_rows = bank_ledger_growth_pending.inserted_rows + EXCLUDED.inserted_rows;',
     );
     expect(folded).toContain(
-      'VALUES (pg_catalog.pg_current_xact_id(), 0, changed_rows) ON CONFLICT (transaction_id) DO UPDATE SET deleted_rows = "public".bank_ledger_growth_pending.deleted_rows + EXCLUDED.deleted_rows;',
+      'VALUES (pg_catalog.pg_current_xact_id(), 0, changed_rows) ON CONFLICT (transaction_id) DO UPDATE SET deleted_rows = bank_ledger_growth_pending.deleted_rows + EXCLUDED.deleted_rows;',
     );
     expect(folded).toContain('DEFERRABLE INITIALLY DEFERRED');
     expect(folded).toContain(

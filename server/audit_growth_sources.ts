@@ -253,7 +253,6 @@ export function auditGrowthTriggerCreateSql(schema: string, trigger: AuditGrowth
  * no audit row consumes no budget.
  */
 export function auditGrowthAccumulatorSql(schema: string, source: AuditGrowthSource): string {
-  const pending = `${schema}.${AUDIT_GROWTH_PENDING_TABLE}`;
   return `CREATE OR REPLACE FUNCTION ${schema}.${source.accumulator}()
 RETURNS TRIGGER
 LANGUAGE plpgsql
@@ -267,10 +266,10 @@ BEGIN
     IF changed_rows = 0 THEN
       RETURN NULL;
     END IF;
-    INSERT INTO ${pending} (transaction_id, inserted_rows, deleted_rows)
+    INSERT INTO bank_ledger_growth_pending (transaction_id, inserted_rows, deleted_rows)
     VALUES (pg_catalog.pg_current_xact_id(), changed_rows, 0)
     ON CONFLICT (transaction_id) DO UPDATE
-      SET inserted_rows = ${pending}.inserted_rows + EXCLUDED.inserted_rows;
+      SET inserted_rows = bank_ledger_growth_pending.inserted_rows + EXCLUDED.inserted_rows;
     RETURN NULL;
   END IF;
 
@@ -279,10 +278,10 @@ BEGIN
     IF changed_rows = 0 THEN
       RETURN NULL;
     END IF;
-    INSERT INTO ${pending} (transaction_id, inserted_rows, deleted_rows)
+    INSERT INTO bank_ledger_growth_pending (transaction_id, inserted_rows, deleted_rows)
     VALUES (pg_catalog.pg_current_xact_id(), 0, changed_rows)
     ON CONFLICT (transaction_id) DO UPDATE
-      SET deleted_rows = ${pending}.deleted_rows + EXCLUDED.deleted_rows;
+      SET deleted_rows = bank_ledger_growth_pending.deleted_rows + EXCLUDED.deleted_rows;
     RETURN NULL;
   END IF;
 

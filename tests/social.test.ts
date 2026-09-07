@@ -753,8 +753,12 @@ describe('trading', () => {
     for (let i = 0; i < 3; i++) sim.addItemInstance('wolf_fang', { signer: 'Cyn' }, b);
     const fangsOf = (pid: number) =>
       sim.meta(pid)!.inventory.filter((s) => s.itemId === 'wolf_fang');
-    expect(fangsOf(a)).toEqual([{ itemId: 'wolf_fang', count: 4, instance: { signer: 'Cyn' } }]);
-    expect(fangsOf(b)).toEqual([{ itemId: 'wolf_fang', count: 3, instance: { signer: 'Cyn' } }]);
+    // The legacy signer projects into the units' own source bucket rather
+    // than surviving as an `instance` payload: the whole stack is one
+    // signed bucket, exact count.
+    const cynSource = (count: number) => [{ source: { signer: 'Cyn' }, count }];
+    expect(fangsOf(a)).toEqual([{ itemId: 'wolf_fang', count: 4, materialSources: cynSource(4) }]);
+    expect(fangsOf(b)).toEqual([{ itemId: 'wolf_fang', count: 3, materialSources: cynSource(3) }]);
 
     sim.drainEvents();
     sim.tradeRequest(b, a);
@@ -765,8 +769,8 @@ describe('trading', () => {
     sim.tradeConfirm(b);
     expect(sim.tradeFor(a)).toBe(null);
     // Merge-on-receive on both ends: one counted slot each, 7 units conserved.
-    expect(fangsOf(a)).toEqual([{ itemId: 'wolf_fang', count: 5, instance: { signer: 'Cyn' } }]);
-    expect(fangsOf(b)).toEqual([{ itemId: 'wolf_fang', count: 2, instance: { signer: 'Cyn' } }]);
+    expect(fangsOf(a)).toEqual([{ itemId: 'wolf_fang', count: 5, materialSources: cynSource(5) }]);
+    expect(fangsOf(b)).toEqual([{ itemId: 'wolf_fang', count: 2, materialSources: cynSource(2) }]);
 
     // Second leg back: B returns its remainder; A reunites the full seven.
     sim.tradeRequest(a, b);
@@ -775,7 +779,7 @@ describe('trading', () => {
     sim.tradeSetOffer([], 0, a);
     sim.tradeConfirm(b);
     sim.tradeConfirm(a);
-    expect(fangsOf(a)).toEqual([{ itemId: 'wolf_fang', count: 7, instance: { signer: 'Cyn' } }]);
+    expect(fangsOf(a)).toEqual([{ itemId: 'wolf_fang', count: 7, materialSources: cynSource(7) }]);
     expect(fangsOf(b)).toEqual([]);
     expect(sim.drainEvents().some((e) => e.type === 'error')).toBe(false);
   });
@@ -855,7 +859,10 @@ describe('trading', () => {
     ] as any;
     // must not throw, and only the one valid slot survives
     expect(() => sim.tradeSetOffer(junk, 0, a)).not.toThrow();
-    expect(sim.tradeFor(a)?.offerA.items).toEqual([{ itemId: 'wolf_fang', count: 2 }]);
+    // The staged unit is unrecorded provenance, stated as its own bucket.
+    expect(sim.tradeFor(a)?.offerA.items).toEqual([
+      { itemId: 'wolf_fang', count: 2, materialSources: [{ source: {}, count: 2 }] },
+    ]);
     sim.tradeConfirm(a);
     sim.tradeConfirm(b);
     expect(sim.tradeFor(a)).toBe(null);
@@ -882,7 +889,10 @@ describe('trading', () => {
       0,
       a,
     );
-    expect(sim.tradeFor(a)?.offerA.items).toEqual([{ itemId: 'wolf_fang', count: 4 }]);
+    // Both merged units are unrecorded provenance, coalesced into one bucket.
+    expect(sim.tradeFor(a)?.offerA.items).toEqual([
+      { itemId: 'wolf_fang', count: 4, materialSources: [{ source: {}, count: 4 }] },
+    ]);
     sim.tradeConfirm(a);
     sim.tradeConfirm(b);
     expect(sim.tradeFor(a)).toBe(null);

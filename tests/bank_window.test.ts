@@ -15,6 +15,13 @@ import { SUPPORTED_LANGUAGES } from '../src/ui/i18n.resolved.generated/loaders';
 import { itemKindLabel } from '../src/ui/item_kind_label';
 
 const painter = readFileSync(new URL('../src/ui/bank_window.ts', import.meta.url), 'utf8');
+// The personal-bank grid CELL (icon/mark/aria/tooltip) was extracted out of
+// BankWindow into its own module; the quality-color fallback pin below lives
+// there now, not in the coordinator it was pulled out of.
+const personalBankItemCell = readFileSync(
+  new URL('../src/ui/personal_bank_item_cell.ts', import.meta.url),
+  'utf8',
+);
 const promptDialog = readFileSync(new URL('../src/ui/prompt_dialog.ts', import.meta.url), 'utf8');
 const tokens = readFileSync(new URL('../src/styles/tokens.css', import.meta.url), 'utf8');
 const components = readFileSync(new URL('../src/styles/components.css', import.meta.url), 'utf8');
@@ -31,7 +38,7 @@ describe('bank_window: no magic values', () => {
   });
 
   it('uses the --color-quality-default token for the unranked-quality fallback', () => {
-    expect(painter).toContain('var(--color-quality-default)');
+    expect(personalBankItemCell).toContain('var(--color-quality-default)');
   });
 
   it('defines --color-quality-default in the design-token sheet', () => {
@@ -448,7 +455,21 @@ describe('bank_window: search / sort / deposit-all', () => {
   });
 
   it('carries the ORIGINAL slotIndex through the filtered grid to the click handler', () => {
-    expect(painter).toContain('this.onSlotClick(slot.slotIndex, ev.shiftKey)');
+    // The click wiring itself now sits in the extracted personal-bank cell
+    // (personal_bank_item_cell.ts), which reads the click straight off the
+    // slot it was minted for: slot.slotIndex + event.shiftKey. BankWindow
+    // only forwards that pair into its own onSlotClick via the injected
+    // onWithdraw callback; both halves are load-bearing for the ORIGINAL
+    // (unfiltered) index to actually reach the world command.
+    // The callback/leaf pins alone could both pass against an orphan leaf that
+    // no longer wires from BankWindow's actual grid-fill call, so also span the
+    // real buildPersonalBankItemCell(...) call site itself, comment-stripped,
+    // with its exact args in construction context.
+    const code = painter.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+    expect(code).toMatch(
+      /buildPersonalBankItemCell\(\s*this\.deps,\s*slot,\s*this\.fmt\(slot\.count\),\s*\(slotIndex, partial\) => this\.onSlotClick\(slotIndex, partial\),\s*\(\) => this\.render\(\),\s*\)/,
+    );
+    expect(personalBankItemCell).toContain('onWithdraw(slot.slotIndex, event.shiftKey)');
   });
 
   it('gates the deposit-all button on hasDepositableMaterials and plans + sends on click', () => {
@@ -674,11 +695,14 @@ describe('bank_window: touch peek suppression', () => {
   it('consults the shared peek guard FIRST in the cell click, before onSlotClick', () => {
     // A long-press peek shows the tooltip and marks the guard; the release click must
     // consume that peek and inspect the slot instead of withdrawing. The guard check
-    // must sit BEFORE onSlotClick, so deleting it (or moving onSlotClick above it)
-    // reds this. A plain tap / desktop click returns false and falls through.
+    // must sit BEFORE the withdraw callback, so deleting it (or moving the withdraw
+    // above it) reds this. A plain tap / desktop click returns false and falls through.
+    // The click itself now lives in the extracted personal-bank cell
+    // (personal_bank_item_cell.ts): deps.consumePeek is threaded through as an
+    // injected dep, and the actual click handler moved with it.
     expect(painter).toContain('consumePeek(): boolean;');
-    expect(painter).toMatch(
-      /cell\.addEventListener\('click', \(ev\) => \{[\s\S]{0,260}?if \(this\.deps\.consumePeek\(\)\) \{\s*this\.deps\.hideTooltip\(\);\s*return;\s*\}\s*this\.onSlotClick\(slot\.slotIndex, ev\.shiftKey\);/,
+    expect(personalBankItemCell).toMatch(
+      /cell\.addEventListener\('click', \(event\) => \{[\s\S]{0,260}?if \(deps\.consumePeek\(\)\) \{\s*deps\.hideTooltip\(\);\s*return;\s*\}\s*onWithdraw\(slot\.slotIndex, event\.shiftKey\);/,
     );
   });
 
@@ -932,22 +956,22 @@ describe('bank_window: unknown-id slots stay visible (stale-client guard, R34)',
     // The grid loop used to drop the row entirely (`if (!item) continue`),
     // which is how a counted bank slot turned invisible.
     expect(code).not.toContain('if (!item) continue');
-    expect(code).toContain(
-      'item && parts ? this.deps.itemIcon(item, parts.quality) : unknownItemIconHtml(slot.itemId)',
+    // The per-cell icon/aria/tooltip decisions were extracted out of
+    // BankWindow into personal_bank_item_cell.ts (buildPersonalBankItemCell);
+    // BankWindow's own grid loop now only forwards the slot into it, so the
+    // detailed pins below moved with the logic they describe.
+    const cell = personalBankItemCell.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+    expect(cell).toContain(
+      'item && parts ? deps.itemIcon(item, parts.quality) : unknownItemIconHtml(slot.itemId)',
     );
     // Plain unknown cells use unknownItemAria; instanced unknown cells (a
     // masterwork / signed copy whose def this client predates) use the shared
-    // UNKNOWN_INSTANCE_GLYPH_ARIA_KEYS so the per-copy flag still announces.
-    // Both pins are scoped to the grid-fill loop (a whole-file contain is
-    // satisfied by the import line alone), and the argument literal keeps the
-    // raw id as the {id} the unknown wording speaks.
-    const loop = code.slice(
-      code.indexOf('for (const slot of visible)'),
-      code.indexOf('private appendEmptyCells('),
-    );
-    expect(loop).toContain("'itemUi.bags.unknownItemAria'");
-    expect(loop).toContain('UNKNOWN_INSTANCE_GLYPH_ARIA_KEYS[glyphKind]');
-    expect(loop).toContain('{ id: slot.itemId, count: countLabel }');
+    // UNKNOWN_INSTANCE_GLYPH_ARIA_KEYS so the per-copy flag still announces,
+    // and the argument literal keeps the raw id as the {id} the unknown
+    // wording speaks.
+    expect(cell).toContain("'itemUi.bags.unknownItemAria'");
+    expect(cell).toContain('UNKNOWN_INSTANCE_GLYPH_ARIA_KEYS[glyphKind]');
+    expect(cell).toMatch(/\{\s*id: slot\.itemId,\s*count: countLabel,\s*\}/);
   });
 
   it('never skips a slot in the grid fill (no continue of any wording)', () => {
@@ -964,14 +988,16 @@ describe('bank_window: unknown-id slots stay visible (stale-client guard, R34)',
   it('keeps the withdraw click def-free and swaps only the tooltip body', () => {
     // Withdraw resolves server-side by slotIndex, so the click stays wired
     // for an unknown slot; the def-derived tooltip body is what falls back.
-    const start = code.indexOf('for (const slot of visible)');
-    const end = code.indexOf('private appendEmptyCells(');
-    expect(start).toBeGreaterThan(-1);
-    expect(end).toBeGreaterThan(start);
-    const body = code.slice(start, end);
-    expect(body).toContain('this.onSlotClick(slot.slotIndex, ev.shiftKey)');
-    expect(body).toContain('? this.deps.itemTooltip(item, slot.instance)');
-    expect(body).toContain("t('itemUi.bags.unknownItem')");
+    // Both halves now live in the extracted personal-bank cell
+    // (personal_bank_item_cell.ts): BankWindow forwards the wiring, and the
+    // cell itself reads slot.slotIndex/event.shiftKey and swaps the tooltip
+    // body (the call also carries the material composition, displayedSources,
+    // since the source-count algebra landed).
+    expect(code).toContain('(slotIndex, partial) => this.onSlotClick(slotIndex, partial)');
+    const cell = personalBankItemCell.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/[^\n]*/g, '');
+    expect(cell).toContain('onWithdraw(slot.slotIndex, event.shiftKey)');
+    expect(cell).toContain('? deps.itemTooltip(item, slot.instance, displayedSources)');
+    expect(cell).toContain("t('itemUi.bags.unknownItem')");
   });
 });
 

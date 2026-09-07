@@ -787,7 +787,7 @@ describe('material source save paths: measured statement counts', () => {
 // ---------------------------------------------------------------------------
 
 describe('escrow workload ladder vs the measured statement count', () => {
-  it('pins the ladder inputs and records the journal statement it does not count', async () => {
+  it('pins the ladder inputs: the conservative base figure prices the conditional journal statement in, so it matches the WITH-movement count, one more than the no-movement count', async () => {
     const { DB_HEAVY_STATEMENT_TIMEOUT_MS, DB_POOL_CONNECT_TIMEOUT_MS } = await import(
       '../server/db'
     );
@@ -800,13 +800,18 @@ describe('escrow workload ladder vs the measured statement count', () => {
     } = await import('../server/woc_market_db');
 
     // Pinned literals, not self-comparisons: a re-tune must come here and be
-    // re-measured rather than silently absorbed.
-    expect(ESCROW_STATEMENT_TIMEOUT_MS).toBe(4_000);
+    // re-measured rather than silently absorbed. The intentional-gathering
+    // source journal added a CONDITIONAL statement to the escrow save arm
+    // (server/woc_market_db.ts docblock above these exports), which repriced
+    // the whole ladder: the statement allowance dropped from 4,000 to 3,500ms
+    // and every workload count grew by exactly the one conditional journal
+    // statement it now prices in as the worst case.
+    expect(ESCROW_STATEMENT_TIMEOUT_MS).toBe(3_500);
     expect(ESCROW_LOCK_TIMEOUT_MS).toBe(2_000);
     expect(DB_POOL_CONNECT_TIMEOUT_MS).toBe(5_000);
-    expect(ESCROW_DIRECTED_BASE_WORKLOAD_STATEMENTS).toBe(5);
-    expect(ESCROW_LEDGER_WORKLOAD_STATEMENTS).toBe(6);
-    expect(ESCROW_LEDGER_STORAGE_WORKLOAD_STATEMENTS).toBe(12);
+    expect(ESCROW_DIRECTED_BASE_WORKLOAD_STATEMENTS).toBe(6);
+    expect(ESCROW_LEDGER_WORKLOAD_STATEMENTS).toBe(7);
+    expect(ESCROW_LEDGER_STORAGE_WORKLOAD_STATEMENTS).toBe(13);
 
     // AUTOSAVE_SECONDS is module-private in game.ts; scrape it through the
     // shared block-aware stripper, the tunables-suite idiom, so a re-tuned
@@ -897,13 +902,23 @@ describe('escrow workload ladder vs the measured statement count', () => {
       lockAndConnectTermsCountedOnce: true,
     });
 
-    // The two facts this fixture is entitled to assert. First: with no movement
-    // the source-counted body agrees with the pinned figure, so the count is
-    // reading the same transaction the ladder prices.
-    expect(observedBaseNoMovement).toBe(ESCROW_DIRECTED_BASE_WORKLOAD_STATEMENTS);
-    // Second: a material-moving save issues strictly more than the pinned
-    // figure. This is NOT an acceptance of the resulting ceiling; the ladder
-    // relation stays owned by tests/server/tunables.test.ts.
-    expect(observedBaseWithMovement).toBeGreaterThan(ESCROW_DIRECTED_BASE_WORKLOAD_STATEMENTS);
+    // The three facts this fixture is entitled to assert. First: with NO
+    // movement the source-counted body issues exactly ONE FEWER statement than
+    // the pinned base figure, because the conditional journal statement (the
+    // one thing the source-counted body cannot see, since escrowInsertListing
+    // calls into saveCharacterStateOnClient rather than issuing it directly)
+    // does not fire.
+    expect(observedBaseNoMovement).toBe(5);
+    // Second: the pinned base figure is CONSERVATIVE by construction, pricing
+    // the conditional journal statement in as its worst case, so a
+    // material-moving save agrees with it EXACTLY rather than merely staying
+    // under it.
+    expect(observedBaseWithMovement).toBe(ESCROW_DIRECTED_BASE_WORKLOAD_STATEMENTS);
+    // Third: the journal is the WHOLE difference between the two arms, exactly
+    // one batched statement, never more (a second material-moving container in
+    // the same save would still cost one, since the journal batches every
+    // moved container into a single statement; see
+    // tests/material_source_journal_db.test.ts).
+    expect(observedBaseWithMovement - observedBaseNoMovement).toBe(1);
   });
 });

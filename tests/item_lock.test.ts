@@ -298,7 +298,12 @@ describe('the lock, threaded through save/load', () => {
     const sim2 = new Sim({ seed: 11, playerClass: 'warrior', noPlayer: true });
     const pid2 = sim2.addPlayer('warrior', 'Lockwright', { state: state ?? undefined });
     const loaded = inventoryOf(sim2, pid2).find((s) => s.itemId === 'bone_fragments');
-    expect(loaded).toEqual({ itemId: 'bone_fragments', count: 5, instance: { locked: true } });
+    expect(loaded).toEqual({
+      itemId: 'bone_fragments',
+      count: 5,
+      instance: { locked: true },
+      materialSources: [{ source: {}, count: 5 }],
+    });
   });
 });
 

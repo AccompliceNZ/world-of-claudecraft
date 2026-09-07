@@ -194,19 +194,29 @@ const PINS: PoolWiringPin[] = [
     grantsOnly: false,
   },
   {
+    // The signed-component loop's OWN capacity gate retired: a signed component
+    // no longer competes for same-signer room (its signature rides the granted
+    // units' own source bucket instead of a distinct payload), so it merges via
+    // the plain ctx.addItem path with no bagPools( read of its own. Two
+    // legitimate sites remain: the fitsAll pre-gate and the specimen grant,
+    // which keeps its guard because a specimen is a distinct item id that can
+    // still genuinely fail to fit.
     path: 'src/sim/interaction.ts',
     sites: [
       { fn: 'harvestCorpse', what: 'the fitsAll pre-gate over the wanted component rows' },
-      { fn: 'harvestCorpse', what: 'the canGrantItemInstance gate on a signed non-specimen grant' },
       { fn: 'harvestCorpse', what: 'the canGrantItemInstance gate on a specimen grant' },
     ],
     grantsOnly: true,
   },
   {
+    // completeGatherCast no longer reads bagPools( directly: both its capacity
+    // questions (the pre-gate and the fungible-fit walk) route through
+    // ctx.canAddItem, the shared hub pinned separately (sim.ts canAddItem
+    // above), so there is nothing left for THIS file's bagPools( count to pin.
+    // The hub-call pin below (not the bagPools sweep) is what keeps this
+    // function honest.
     path: 'src/sim/professions/gathering.ts',
-    sites: [
-      { fn: 'completeGatherCast', what: 'the pools binding the signed-yield countFit consumes' },
-    ],
+    sites: [],
     grantsOnly: true,
   },
   {
@@ -316,13 +326,13 @@ const PINS: PoolWiringPin[] = [
   // branch carries two grant gates of its own that were adapted to the
   // two-pool shape at the merge and join the table here.
   {
+    // harvestCrop deliberately carries no local capacity gate at all: every
+    // crop/seed/husk/bonus grant is a force-add (a no-rot crop grant that must
+    // never destroy a harvest for lack of bag room), so there is no bagPools(
+    // read to pin here, unlike gathering's completeGatherCast, which still
+    // gates through the shared ctx.canAddItem hub.
     path: 'src/sim/professions/farming.ts',
-    sites: [
-      {
-        fn: 'harvestCrop',
-        what: 'the hoisted pools binding both golden-windfall countFit signature gates read',
-      },
-    ],
+    sites: [],
     grantsOnly: true,
   },
   {
@@ -369,6 +379,20 @@ describe('two-pool wiring at the migrated sim command boundaries', () => {
     // `bagCapacity(requesterMeta.bags)`, which is the shape a commission_order.ts
     // revert would actually take.
     expect(occurrences(sourceOf(pin.path), 'bagCapacity('), pin.path).toBe(0);
+  });
+
+  it('completeGatherCast gates both its capacity questions through the shared ctx.canAddItem hub', () => {
+    // gathering.ts's own PINS row above has no bagPools( sites left to pin
+    // (the signed-component loop's dedicated gate retired), so the wiring this
+    // function still owes is that its two remaining capacity questions (the
+    // pre-gate and the fungible-fit walk) keep reaching the split through the
+    // shared hub, sim.ts's canAddItem, rather than reverting to a local flat
+    // read of their own.
+    const src = sourceOf('src/sim/professions/gathering.ts');
+    const body = fnBody(src, 'completeGatherCast');
+    expect(body.match(new RegExp(DECL_SOURCE, 'gm')), 'completeGatherCast slice').toHaveLength(1);
+    expect(occurrences(body, 'ctx.canAddItem(')).toBe(2);
+    expect(occurrences(body, 'bagPools(')).toBe(0);
   });
 
   it('items.ts keeps its ONE flat total, and only for the arrangement command', () => {
