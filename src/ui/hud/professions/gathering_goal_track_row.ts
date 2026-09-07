@@ -14,6 +14,7 @@
 // explicit Track button, never from a Create click, never from selecting a
 // recipe row, and never from a repaint.
 
+import { FOCUS_KEY_ATTR } from '../../focus_restore';
 import { formatNumber, t } from '../../i18n';
 import { CRAFT_BATCH_UI_MAX, clampCraftQty } from './craft_cast_view';
 
@@ -53,7 +54,7 @@ export function renderGatheringGoalTrackRow(
   const goalDecBtn = document.createElement('button');
   goalDecBtn.type = 'button';
   goalDecBtn.className = 'crafting-qty-btn';
-  goalDecBtn.dataset.focusKey = `goal-qty-dec:${recipeId}`;
+  goalDecBtn.setAttribute(FOCUS_KEY_ATTR, `goal-qty-dec:${recipeId}`);
   goalDecBtn.textContent = '-';
   goalDecBtn.setAttribute(
     'aria-label',
@@ -70,7 +71,7 @@ export function renderGatheringGoalTrackRow(
   const goalIncBtn = document.createElement('button');
   goalIncBtn.type = 'button';
   goalIncBtn.className = 'crafting-qty-btn';
-  goalIncBtn.dataset.focusKey = `goal-qty-inc:${recipeId}`;
+  goalIncBtn.setAttribute(FOCUS_KEY_ATTR, `goal-qty-inc:${recipeId}`);
   goalIncBtn.textContent = '+';
   goalIncBtn.setAttribute(
     'aria-label',
@@ -87,7 +88,7 @@ export function renderGatheringGoalTrackRow(
   const trackBtn = document.createElement('button');
   trackBtn.type = 'button';
   trackBtn.className = 'crafting-create-all-btn crafting-track-goal-btn';
-  trackBtn.dataset.focusKey = `track-goal:${recipeId}`;
+  trackBtn.setAttribute(FOCUS_KEY_ATTR, `track-goal:${recipeId}`);
   trackBtn.textContent = t('hudChrome.crafting.trackGoalButton');
   trackBtn.setAttribute(
     'aria-label',
