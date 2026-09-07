@@ -3,6 +3,7 @@
 // keeps a pasted code from planting arbitrary localStorage keys, and the
 // three distinct rejections (not a code, wrong kind, nothing usable).
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
   buildTransferCode,
@@ -397,9 +398,7 @@ describe('settings_transfer_core', () => {
     ]);
     const literalRe = /['"\x60](woc[A-Za-z0-9_.:-]*)/g;
     const admitted = new Set<string>();
-    const files = tsFilesUnder(
-      new URL('../src', import.meta.url).pathname.replace(/^\/([A-Za-z]:)/, '$1'),
-    );
+    const files = tsFilesUnder(fileURLToPath(new URL('../src', import.meta.url)));
     expect(files.length).toBeGreaterThan(500);
     for (const { file, full } of files) {
       if (file.includes('i18n.') || file.includes('.generated.')) continue;
