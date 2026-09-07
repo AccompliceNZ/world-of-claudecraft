@@ -58,6 +58,7 @@
 import { bagPools, consumeOneScratch, countFit, fitsAll, removeStacked } from '../bags';
 import { ENCHANTS, type EnchantDef } from '../content/enchants';
 import { ENCHANT_FAMILY_CAST_DURATION_SEC } from '../content/professions';
+import { RIFT_GEAR_ITEM_ID_SET } from '../content/rift/items';
 import { ITEMS } from '../data';
 import { recalcPlayerStats } from '../entity';
 import { consumeSelectedInventorySlot, itemCopyPin } from '../item_copy_ref';
@@ -164,6 +165,11 @@ export { DISENCHANT_MATERIAL_BY_QUALITY };
  *  on, so double-enchant prevention holds for both legacy and
  *  marker-carrying copies. */
 export function isEnchantedInstance(instance: ItemInstancePayload): boolean {
+  // A Riftbound band's bare rolled.stats are its ladder-priced stat line
+  // (rift/band_ladder.ts), not an enchant; the rift record is what explains
+  // them, the way rolled.masterwork explains a masterwork bake. Bands are
+  // forge-only, refused by id in resolveApplyEnchant below.
+  if (instance.rift) return false;
   return (
     instance.enchant !== undefined ||
     (!!instance.rolled?.stats &&
@@ -754,6 +760,9 @@ export interface ApplyEnchantResult {
     //     enchant's skillReq. Absent skillReq keeps the historical free floor.
     | 'not_perfected'
     | 'insufficient_skill'
+    // A Riftbound band: forge-only gear (its stat line is rebuilt from the
+    // rift record at every load, so an enchant could never survive one).
+    | 'rift_gear'
     | 'busy';
 }
 
@@ -1335,18 +1344,21 @@ function resolveReplaceEnchantBagged(
  *  never offers what this refuses):
  *    1. unknown_item / unknown_enchant: nothing to reason about without both
  *       defs, so they come first whatever else is wrong.
- *    2. not_perfected: a requiresPerfected enchant is a fact about the
+ *    2. rift_gear: a pure item-identity fact (a Riftbound band, forge-only),
+ *       answered before any applier resolution: no crafter fact could ever
+ *       change the answer.
+ *    3. not_perfected: a requiresPerfected enchant is a fact about the
  *       ENCHANT, so it is answered before the slot compare. Deliberate: the
  *       Lucent Infusion refuses identically whether the player aimed it at a
  *       chest piece or a boot, and the message never changes under them when
  *       phase 12 moves its slot.
- *    3. wrong_slot: the enchant does not target this item's slot kind.
- *    4. insufficient_skill: the applier cannot work this tier at all. Above
+ *    4. wrong_slot: the enchant does not target this item's slot kind.
+ *    5. insufficient_skill: the applier cannot work this tier at all. Above
  *       the holding and material checks because it is the standing fact about
  *       the CRAFTER, not about this attempt's inventory: telling a skill-40
  *       enchanter to go find more reagents would send them shopping for an
  *       enchant they still could not apply.
- *    5. per-arm holding gates (not_held, already_enchanted, same_enchant),
+ *    6. per-arm holding gates (not_held, already_enchanted, same_enchant),
  *       then reagents (all-or-nothing), then the #2350 capacity gate.
  *  Every deny is side-effect free and draws no rng. */
 export function resolveApplyEnchant(
@@ -1361,6 +1373,13 @@ export function resolveApplyEnchant(
   if (!itemDef) return { ok: false, itemId, enchantId, reason: 'unknown_item' };
   const enchant = ENCHANTS[enchantId];
   if (!enchant) return { ok: false, itemId, enchantId, reason: 'unknown_enchant' };
+  // Bands are forge-only (rift/band_ladder.ts): their stat line is rebuilt from
+  // the rift record at every load, so an enchant could never survive one. A
+  // pure item-identity fact, so it is answered before any applier resolution.
+  // Mirrored in evaluateApplyEnchantAdmission so a doomed cast never starts.
+  if (RIFT_GEAR_ITEM_ID_SET.has(itemId)) {
+    return { ok: false, itemId, enchantId, reason: 'rift_gear' };
+  }
   // ONE applier resolution, the same ctx.resolve seam the admission twin uses,
   // so both twins judge a meta-without-entity ghost identically (the mirror
   // contract; a players.get read here once made the twins diverge on that
@@ -1520,6 +1539,9 @@ export function evaluateApplyEnchantAdmission(
   if (!itemDef) return { ok: false, itemId, enchantId, reason: 'unknown_item' };
   const enchant = ENCHANTS[enchantId];
   if (!enchant) return { ok: false, itemId, enchantId, reason: 'unknown_enchant' };
+  if (RIFT_GEAR_ITEM_ID_SET.has(itemId)) {
+    return { ok: false, itemId, enchantId, reason: 'rift_gear' };
+  }
   // ONE applier resolution for the whole twin, through the seam its holding
   // gates already use. Reading the two Lucent gates off ctx.players while every
   // gate below them reads ctx.resolve would let a meta-without-entity ghost be

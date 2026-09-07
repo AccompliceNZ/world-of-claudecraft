@@ -1308,6 +1308,11 @@ export const ko_KR: EnTranslations = {
       "separate": "{meter} 분리",
       "regroup": "{meter} 통합"
     },
+    "targetDots": {
+      "title": "대상 디버프",
+      "row": "{aura} on {target}",
+      "overflow": "{count}개 더 있음, 표시되지 않음"
+    },
     "targetAuras": {
       "title": "대상 오라",
       "keybindLabel": "대상 강화 및 약화 효과",
@@ -1568,6 +1573,26 @@ export const ko_KR: EnTranslations = {
       "showPlaytime": "캐릭터 화면에 플레이 시간 표시",
       "forceHighPerfGpu": "전용 게이밍 GPU 사용",
       "forceHighPerfGpuNote": "기본값 켜짐: 데스크톱 앱이 이 컴퓨터의 전용 게이밍 GPU를 요청합니다. 게임이 시작되지 않거나, 시작 후 검은 화면만 보이거나, 노트북 화면이 나오지 않으면 끄세요. 이 설정은 다음에 게임을 시작할 때 적용됩니다.",
+      "shaderWarm": "셰이더 사전 워밍업 워커",
+      "shaderWarmAuto": "자동",
+      "shaderWarmOff": "끄기",
+      "shaderWarmOn": "켜기",
+      "shaderWarmNote": "게임 중 끊김을 막기 위해 백그라운드에서 셰이더 캐시를 미리 준비합니다. 자동: 그래픽 시스템이 지원하는 경우에만 켜집니다(권장). 켜기: 모든 환경에서 강제로 사용하며, 일부 환경에서는 성능이 나빠질 수 있습니다. 끄기: 사용하지 않습니다.",
+      "gpuBackend": "그래픽 백엔드",
+      "gpuBackendAuto": "자동",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL(느림)",
+      "gpuBackendNote": "자동은 가장 알맞은 옵션을 대신 선택합니다. Vulkan이 더 빠르며 대부분의 플레이어에게 권장됩니다. OpenGL은 더 느리지만 Vulkan이 제대로 작동하지 않을 때 도움이 될 수 있습니다. 다음에 게임을 시작할 때 적용됩니다.",
+      "gpuBackendActive": "현재 {backend}을(를) 사용 중입니다.",
+      "gpuBackendActiveUnavailable": "현재 {backend}을(를) 사용 중입니다(Vulkan을 활성화할 수 없음).",
+      "gpuBackendActiveAutoCapped": "현재 {backend}을(를) 사용 중입니다. 이 그래픽 카드에서는 자동이 아직 Vulkan을 시도하지 않습니다. 시도하려면 Vulkan을 선택하세요.",
+      "gpuBackendSaveFailed": "선택을 저장하지 못했습니다. 다음 실행에서도 {backend}을(를) 사용합니다.",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "일부 변경 사항은 재시작 후에 적용됩니다.",
+      "restartGame": "게임 재시작",
+      "restartInProgress": "게임을 재시작하는 중...",
+      "restartFailed": "게임을 자동으로 재시작할 수 없습니다. 종료한 뒤 다시 실행하세요.",
       "discordPresence": "Discord 리치 프레즌스",
       "discordPresenceNote": "플레이하는 동안 현재 있는 지역과 이번 세션의 플레이 시간을 Discord 활동으로 표시하며, 당신의 Discord 프로필을 볼 수 있는 사람은 누구나 둘 다 볼 수 있습니다. 공유되는 것은 지역 이름, 이번 세션의 플레이 시간, 게임뿐이며, 캐릭터나 계정, 함께 플레이하는 사람은 절대 공유되지 않습니다. 이 컴퓨터에서 Discord 앱이 실행 중이어야 합니다.",
       "showDevBadges": "개발자 배지 표시",
@@ -1599,6 +1624,9 @@ export const ko_KR: EnTranslations = {
       "showTargetOfTarget": "대상의 대상 표시",
       "showTargetSwingTimer": "대상의 공격 타이머 표시",
       "showPetFrame": "내 펫 표시",
+      "showNameplateDots": "이름표에 내 디버프 표시",
+      "nameplateDotScale": "이름표 디버프 아이콘 크기",
+      "showTargetDots": "대상 디버프 목록 표시",
       "waterRipples": "수면 물결 (물살)",
       "showAttackButton": "공격 버튼 표시",
       "showDailyRewardsChest": "일일 보상 보물상자 표시",
@@ -3102,7 +3130,8 @@ export const ko_KR: EnTranslations = {
         "playerFrame": "플레이어",
         "targetFrame": "대상",
         "partyFrames": "파티",
-        "swingBar": "자동 공격"
+        "swingBar": "자동 공격",
+        "targetDots": "대상 디버프"
       },
       "framesMenu": "프레임 설정",
       "framesMenuTitle": "각 프레임을 표시하거나 숨깁니다. 선택을 해제한 프레임은 다시 선택하거나 기본값으로 초기화할 때까지 숨겨진 상태로 유지됩니다.",
@@ -3134,11 +3163,42 @@ export const ko_KR: EnTranslations = {
       "invalid": "유효한 내보내기 코드가 아닙니다.",
       "wrongKind": "이 코드는 다른 종류의 내보내기입니다."
     },
+    "riftForge": {
+      "title": "균열의 화로",
+      "subtitle": "균열결속 반지",
+      "currency": "{name}: {count}",
+      "empty": "가방에 균열결속 반지가 없습니다. 등급 균열의 첫 완파가 하나를 만들어 냅니다.",
+      "wornHint": "착용 중입니다. 화로에 올리려면 벗으세요.",
+      "upgradeBtn": "아이템 레벨 {level}(으)로 강화 (정수 {cost})",
+      "upgradeMax": "강화 완료",
+      "gemPickAria": "박을 보석",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "소켓이 가득 찼습니다. 다음 보석은 가장 오래된 {gem}을(를) 대체합니다.",
+      "socketBtn": "박기",
+      "socketsNone": "보석 없음",
+      "noGems": "가방에 균열 보석이 없습니다",
+      "refused": "화로가 거부했습니다. 균열장인 곁에 서서 다시 시도하세요.",
+      "reason": {
+        "notFound": "그 반지는 가방에 없습니다.",
+        "notRiftGear": "균열결속 반지만 화로에 올릴 수 있습니다.",
+        "maxUpgrade": "그 반지는 이미 최대로 강화되었습니다.",
+        "insufficientEssence": "균열의 정수가 부족합니다.",
+        "invalidGem": "그런 균열 보석이 없습니다.",
+        "dead": "죽은 상태에서는 할 수 없습니다.",
+        "tooFar": "균열의 화로에서 너무 멀리 떨어져 있습니다."
+      },
+      "done": {
+        "upgrade": "{name}을(를) 강화했습니다.",
+        "socket": "{name}에 보석을 박았습니다.",
+        "socketReplaced": "{name}에 보석을 박았습니다. {gem}은(는) 파괴되었습니다."
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "필요 레벨 {level}",
       "riftTier": "{tier} 등급 균열 아이템",
       "riftUpgrade": "균열 강화 {level}/{max}",
       "riftSockets": "균열 보석 {used}/{total}",
+      "riftGemSocket": "균열결속 반지 소켓 보너스",
       "statEnchanted": "+{value} {stat} (마법부여)",
       "enchantedFallback": "마법부여됨",
       "partyTradeWindow": "앞으로 {time} 동안 이 아이템을 같은 전리품을 함께 획득한 플레이어와 거래할 수 있습니다. 착용하면 거래 기간이 끝납니다.",
@@ -3459,6 +3519,15 @@ export const ko_KR: EnTranslations = {
       "popupTitle": "길드 게시 기둥",
       "close": "닫기"
     },
+    "realmBuilder": {
+      "title": "이달의 왕국 건설자",
+      "currentLabel": "이달의 수상자",
+      "placeholderName": "당신의 이름",
+      "placeholderHint": "이 명판은 첫 번째 이름을 기다리고 있습니다.",
+      "pastTitle": "역대 수상자",
+      "pastEmpty": "아직 명단에 이름이 없습니다.",
+      "close": "닫기"
+    },
     "bank": {
       "title": "은행",
       "subtitle": "도금 금고",
@@ -3586,8 +3655,34 @@ export const ko_KR: EnTranslations = {
       "guildViewsAria": "길드 은행 보기",
       "guildContentsTab": "내용물",
       "guildLogTab": "기록",
+      "guildHistoryTab": "기록",
       "logAria": "길드 은행 활동 기록",
       "logNote": "최근 길드 은행 활동 {count}건입니다.",
+      "logShowing": "길드 은행 활동 {count}건을 최신순으로 표시합니다.",
+      "logFilterAria": "길드 은행 기록 필터",
+      "logFilterAll": "전체",
+      "logFilterItems": "아이템",
+      "logFilterMoney": "골드",
+      "logOlder": "이전 기록 보기",
+      "logOlderLoading": "이전 활동을 불러오는 중...",
+      "logEnd": "길드 은행의 전체 기록입니다.",
+      "logEmptyFiltered": "이 필터와 일치하는 길드 은행 활동이 없습니다.",
+      "logColTime": "시간",
+      "logColMember": "구성원",
+      "logColAction": "활동",
+      "logColDetail": "내용",
+      "logActionDeposit": "입금",
+      "logActionWithdraw": "출금",
+      "logActionBuySlots": "확장 구매",
+      "logActionOpenBank": "은행 개설",
+      "logActionCharterFee": "창설 수수료 지불",
+      "logActionAdminPurge": "삭제",
+      "logActorAdmin": "관리자",
+      "logDetailItem": "{item} {count}개",
+      "logSearchPlaceholder": "이 기록 검색",
+      "logSearchAria": "불러온 길드 은행 활동을 구성원, 활동, 아이템으로 검색",
+      "logShowingMatched": "불러온 길드 은행 활동 {count}건 중 {matched}건을 표시합니다.",
+      "logSearchNoMatch": "검색과 일치하는 활동이 없습니다. 이전 기록을 불러와 범위를 넓히세요.",
       "logLoading": "길드 은행 기록을 불러오는 중...",
       "logEmpty": "아직 길드 은행에 넣거나 뺀 것이 없습니다.",
       "logUnavailable": "지금은 길드 은행 기록을 볼 수 없습니다.",
@@ -3685,6 +3780,20 @@ export const ko_KR: EnTranslations = {
         "result": {
           "set": "길드 게시판이 업데이트되었습니다.",
           "notOfficer": "게시판은 임원과 길드 마스터만 수정할 수 있습니다."
+        }
+      },
+      "roster": {
+        "seats": "{count} / {cap} 자리",
+        "expand": "명단 확장 (+{seats}자리, {price})",
+        "maxed": "명단이 이미 최대 규모입니다",
+        "confirm": "{price}(으)로 길드 명단을 {seats}자리 확장하시겠습니까? 골드는 본인의 소지금에서 차감되며 환불되지 않습니다.",
+        "confirmAction": "확장",
+        "expandedLine": "{name}님이 길드 명단을 {cap}명으로 확장했습니다.",
+        "result": {
+          "notLeader": "길드 명단은 길드 마스터만 확장할 수 있습니다.",
+          "maxed": "길드 명단은 더 이상 확장할 수 없습니다.",
+          "cannotAfford": "길드 명단을 확장하려면 {price}이(가) 필요합니다.",
+          "retry": "구매 중에 길드 명단이 변경되었습니다. 다시 시도하세요."
         }
       }
     },
@@ -4248,6 +4357,7 @@ export const ko_KR: EnTranslations = {
       "sameEnchant": "해당 아이템에는 이미 같은 마법부여가 되어 있습니다.",
       "notPerfected": "그 마법부여는 완전해진 아이템에만 깃듭니다.",
       "enchantSkillTooLow": "그 마법부여를 다루기에는 마법부여 숙련이 부족합니다.",
+      "riftGear": "균열결속 반지는 균열 보석만 장착할 수 있으며 마법부여는 불가능합니다.",
       "replaceTag": "{enchant} 대체",
       "sameEnchantTag": "이미 적용됨",
       "plainTag": "마법부여 없음",
@@ -6425,6 +6535,8 @@ export const ko_KR: EnTranslations = {
       "raceBody": "왕국의 모든 파티가 같은 균열에 동시에 도전할 수 있고 각자 자기 사본에서 싸우지만, 맨 아래의 존재를 가장 먼저 쓰러뜨린 파티만이 균열을 봉인합니다. 한 파티가 이기면 왕국이 그들의 이름과 기록을 듣고, 들어가는 길은 그들 뒤에서 닫힙니다. 경쟁에서 진다고 공략이 끝나지는 않습니다. 당신의 사본은 그대로 열려 있고, 맨 아래의 존재도 당신 손에 쓰러지며, 당신은 제 발로 걸어 나옵니다. 다만 잃는 것은 봉인이 주었을 보상 전부입니다. 우두머리는 두 번째로 도착한 파티에게 아무것도 남기지 않으므로, 집으로 가져가는 것은 내려오는 길에 적들이 떨어뜨린 것뿐이고 그 이상은 없습니다. 그래도 업적의 서는 공략을 인정합니다. 어쨌든 당신이 그것을 쓰러뜨렸으니까요. 자신을 이긴 사람의 얼굴을 한 번도 보지 못한 채 질 수 있는, 이 게임 유일한 경쟁입니다.",
       "rewardsHeading": "무엇을 들고 나오나",
       "rewardsBody": "보상을 주는 것은 균열에서 살아남는 일이 아니라 균열을 봉인하는 일입니다. 균열을 가장 먼저 무너뜨리면 그 등급에 견주는 인스턴스 콘텐츠만큼의 보상이 나오므로, 높은 등급일수록 험한 공략의 값어치를 합니다. 봉인은 또한 그 자리에 있던 모두의 손에 균열결속 반지를 쥐여 줍니다. 직업의 역할에 맞게 재단된, 당신만의 것입니다. 그 밖에 균열 정수와 균열 보석도 가방에 남습니다. 귀환의 길 옆에는 맨 아래의 존재가 봉인된 상자를 남기며, 탐굴 상자에서 익힌 것과 같은 열쇠공의 길 자물쇠 따기로 파티가 열어 추가 전리품을 챙길 수 있으니, 서두른 손보다 깔끔하고 참을성 있는 손이 더 많이 가져갑니다. 두 번째로 도착한 파티에게는 그중 무엇도 돌아가지 않습니다. 경쟁에서 지면 내려오는 길에 적들이 떨어뜨린 것만 남습니다. 업적의 서만이 예외로, 어느 쪽이든 당신의 공략을 인정하며, 첫 균열을 닫는 업적과 S등급 균열을 쓰러뜨리는 업적이 준비되어 있습니다.",
+      "forgeHeading": "균열의 화로",
+      "forgeBody": "등급 균열의 첫 완파가 만들어 내는 반지는 받은 순간에 완성된 것이 아닙니다. 파샤 해안의 감시 초원, 갈매기항에서 해안을 따라 올라간 곳의 파열 학자 곁에서 화로를 지키는 균열장인 마엘리스가 반지의 아이템 레벨을 한 단계씩 끌어올리고, 균열이 떨어뜨리는 색색의 보석을 홈에 박아 줍니다. 보석의 색은 각각 하나의 전투 능력치입니다. 홈이 가득 찬 반지는 새 보석이 가장 오래된 보석을 대체하므로 나중에 다시 조정할 수 있습니다. 그 대가는 모두 균열의 정수와 균열 보석입니다. 균열 우두머리에게서 떨어지고 자유롭게 거래되는 화로 통화이니, 모자란 정수는 친구가 건네줄 수 있습니다. 가져가기 전에 반지를 벗으세요. 그녀는 가방 안에 있는 것만 다루며, 당신이 화로 곁에 서 있지 않으면 아무것도 하지 않습니다.",
       "trackerHeading": "화면의 추적기",
       "trackerBody": "안에 있는 동안 화면 한쪽의 작은 띠가 길잡이가 되어 줍니다. 전체 몇 층 가운데 지금 몇 층인지, 그리고 실시간 카운트다운이 표시됩니다. 그 카운트다운은 주의해서 읽으세요. 당신의 공략 시간이 끝나 가는 것이 아니라, 바깥 세계의 입구가 새 파티에게 닫히는 시간이니까요. 일단 들어온 뒤에는 파티가 원하는 만큼 시간을 들여 균열을 끝까지 풀어 갈 수 있습니다."
     },
@@ -7869,10 +7981,7 @@ export const ko_KR: EnTranslations = {
     "playAria": "World of ClaudeCraft 플레이",
     "serverLabel": "월드를 선택하세요",
     "serverAria": "월드 선택: 온라인 또는 오프라인",
-    "serverOfflineSub": "즉시 시작하는 로컬 세상",
-    "caLabel": "$WOC 계약 주소",
-    "caCopyAria": "계약 주소 복사",
-    "caNote": "WOC는 커뮤니티 토큰입니다. 플레이에는 필요하지 않습니다. WOC의 활용과 선순환 구조에 관해 이야기하려면 Discord에 참여하세요."
+    "serverOfflineSub": "즉시 시작하는 로컬 세상"
   },
   "auth": {
     "enterRealm": "월드 입장",
@@ -8422,6 +8531,7 @@ export const ko_KR: EnTranslations = {
       "forgeUpgraded": "{name}의 균열 강화가 완료되었습니다.",
       "forgeEnchanted": "{name}의 균열 마법부여가 완료되었습니다.",
       "forgeSocketed": "{name}에 균열 보석을 장착했습니다.",
+      "forgeGemReplaced": "{name}의 균열 보석을 교체했습니다. {gem}은(는) 파괴되었습니다.",
       "detonateGlacialGrave": "빙하의 무덤이 폭발합니다!",
       "detonateAbsoluteZero": "절대 영도가 폭발합니다!",
       "detonateMagmaWell": "마그마 우물이 분출합니다!",
@@ -9162,6 +9272,7 @@ export const ko_KR: EnTranslations = {
     "bodyWeb": "게임이 GPU 가속 없이 실행되고 있어 매우 느립니다. 브라우저 설정에서 하드웨어 가속을 켜고 그래픽 드라이버를 업데이트한 뒤 브라우저를 다시 시작하세요.",
     "hybridBodyWindows": "이 세션은 통합(절전형) GPU에서 렌더링되고 있습니다. 이 컴퓨터에 별도의 게이밍 GPU도 있다면, 설정 > 시스템 > 디스플레이 > 그래픽에서 브라우저를 고성능으로 설정한 다음 다시 시작하세요. 데스크톱 앱은 자동으로 전용 GPU를 선택합니다.",
     "hybridBodyLinux": "이 세션은 통합(절전형) GPU에서 렌더링되고 있습니다. 이 컴퓨터에 별도의 게이밍 GPU도 있다면, 브라우저나 그래픽 드라이버에 자체 GPU 선택 설정이 있거나 배포판에 GPU 전환 도구(PRIME 또는 optimus-manager 등)가 있을 수 있습니다. 데스크톱 앱은 자동으로 전용 GPU를 선택합니다.",
+    "bodyRequestedBackend": "선택한 그래픽 백엔드로 게임을 시작할 수 없어 OpenGL로 실행 중입니다. 정상적으로 작동하지만 로딩과 처음 몇 분 동안 더 끊길 수 있습니다. 옵션 > 그래픽 > 시스템에서 백엔드를 다시 선택할 수 있습니다.",
     "hybridBodyOther": "이 세션은 통합(절전형) GPU에서 렌더링되고 있습니다. 이 컴퓨터에 별도의 게이밍 GPU도 있다면, 브라우저와 운영체제의 그래픽 설정을 확인하여 활성화하세요. 데스크톱 앱은 자동으로 전용 GPU를 선택합니다.",
     "dismiss": "닫기"
   },
@@ -15044,6 +15155,48 @@ export const ko_KR: EnTranslations = {
       "field_kit": {
         "name": "야외 도구 키트"
       },
+      "bramblehide_crown": {
+        "name": "루츠의 가시덤불가죽 왕관"
+      },
+      "bramblehide_mantle": {
+        "name": "루츠의 가시덤불가죽 어깨보호구"
+      },
+      "bramblehide_harness": {
+        "name": "루츠의 가시덤불가죽 흉갑"
+      },
+      "bramblehide_cinch": {
+        "name": "루츠의 가시덤불가죽 허리띠"
+      },
+      "bramblehide_legguards": {
+        "name": "루츠의 가시덤불가죽 다리보호구"
+      },
+      "bramblehide_grips": {
+        "name": "루츠의 가시덤불가죽 장갑"
+      },
+      "bramblehide_treads": {
+        "name": "루츠의 가시덤불가죽 장화"
+      },
+      "courtiers_bonefang": {
+        "name": "조신의 뼈송곳니"
+      },
+      "thornpeak_wardblade": {
+        "name": "가시봉우리 수호검"
+      },
+      "gravecourt_hewer": {
+        "name": "무덤궁정 도끼"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "불사 궁정의 봉헌 방패"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "가시봉우리 달가죽 두건"
+      },
+      "stormhymn_chain_grips": {
+        "name": "폭풍찬가 사슬 장갑"
+      },
+      "stormhymn_chain_treads": {
+        "name": "폭풍찬가 사슬 장화"
+      },
       "conjured_water4": {
         "name": "창조된 샘물"
       },
@@ -16995,6 +17148,11 @@ export const ko_KR: EnTranslations = {
         "name": "겁먹은 넬",
         "title": "걸헤이븐 어부",
         "greeting": "그물을 말리던 바로 그 자리에서 열렸어요. 바로 거기, 제가 평생 매일 아침 서 있던 그 자리에서요. 이제 저는 해안으로 내려가지 않아요. 이제는 어디로도 잘 가지 않는답니다."
+      },
+      "riftwright_maelis": {
+        "name": "균열장인 마엘리스",
+        "title": "균열 화로장",
+        "greeting": "균열결속 반지는 자신을 만든 균열을 기억한다네, {className}. 반지와 균열이 흘린 정수를 가져오게. 더 많은 것을 기억하도록 가르쳐 주지."
       },
       "forgemistress_darva": {
         "name": "단조사 다르바",
@@ -20132,6 +20290,12 @@ export const ko_KR: EnTranslations = {
         "name": "속박석 선봉대",
         "bonus3": "공격 속도와 시전 속도가 15% 증가합니다."
       },
+      "bramblehide": {
+        "name": "루츠의 가시덤불가죽",
+        "bonus2": "힘이 10, 체력이 10만큼 증가합니다.",
+        "bonus4": "전투력이 25만큼 증가합니다. 무기 치명타 적중 시 50% 확률로 \"무덤의 위력\"이 발동하여 전투력이 40만큼 증가합니다. 10초 동안 지속됩니다.",
+        "bonus6": "공격 및 시전 속도가 4%, 적중이 3% 증가합니다. 무기 치명타 적중 시 대상에게 \"뼈 파편\"을 남겨 12초 동안 2초마다 5의 출혈 피해를 입힙니다. 최대 3번 중첩됩니다."
+      },
       "chronoweave": {
         "name": "에테르직조 예복",
         "bonus2": "시간의 메아리가 단일 대상 비전 피해의 50%를 치유로 전환합니다. 피해를 입어도 주문 시전이 더 이상 지연되지 않습니다.",
@@ -20408,6 +20572,7 @@ export const ko_KR: EnTranslations = {
     "delveRiteShrineSkullInteract": "해골 제단: F를 눌러 만지기",
     "mailboxName": "우편함",
     "noticeboardName": "게시판",
-    "farmPatchName": "텃밭"
+    "farmPatchName": "텃밭",
+    "realmBuilderMonumentName": "왕국 건설자 기념비"
   }
 };

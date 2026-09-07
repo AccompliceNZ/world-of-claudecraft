@@ -236,3 +236,15 @@ export function restoreFirstEnabled(
     return;
   }
 }
+
+/**
+ * Stamp one fixed control's focus key: the first element matching `selector`
+ * under `root` gets `key`, and a miss stamps NOTHING (an empty key would still
+ * satisfy the restore ladder). For the windows that annotate a handful of
+ * fixed controls after a rebuild (the bank's buy row, the history's Show
+ * older), so each site is one line and the namespace stays in this module.
+ */
+export function stampFocusKey(root: ParentNode, selector: string, key: string): void {
+  const el = root.querySelector<HTMLElement>(selector);
+  if (el) el.dataset.focusKey = key;
+}

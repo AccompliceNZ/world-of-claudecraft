@@ -13,13 +13,13 @@
 // database the URL points at. Pattern: tests/woc_market_settlement_pg_integration.test.ts.
 import { Pool } from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { materialSourceConnection } from '../server/material_source_connection';
 import type {
   WocMarketCustody,
   WocMarketEconomy,
   WocMarketService,
   WocQuoteIntent,
 } from '../server/woc_market';
-import { materialSourceConnection } from '../server/material_source_connection';
 import type { PgWocMarketDb } from '../server/woc_market_db';
 
 const ADMIN_URL = process.env.TEST_DATABASE_URL;

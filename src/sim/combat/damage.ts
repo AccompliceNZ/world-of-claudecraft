@@ -35,6 +35,7 @@ import {
   lockNormalDungeonResetOnBossKill,
   spawnBossExitPortal,
 } from '../instances/dungeons';
+import { applyBossCorpseHold } from '../mob/boss_corpse_hold';
 import { spawnWidowHatchlingOnEggDeath } from '../mob/egg_hatchling';
 import { grantAbilityDevotion } from '../paladin_devotion';
 import { snapshotPetOnOwnerDeath } from '../pet/pet_owner_revive';
@@ -1606,6 +1607,14 @@ export function handleDeath(
       e.respawnTimer = Infinity;
       ctx.despawnSummonedAdds(e);
     }
+    // Instance bosses hold their lootable corpse for BOSS_CORPSE_HOLD_SECONDS:
+    // corpseTimer is the loot window, and an instance boss that never respawns
+    // in place went unlootable and invisible on the 60s trash decay while its
+    // loot still sat on the entity. Only ever raises the timer; a fixed
+    // respawnSeconds caps it like the decay above, and an open-world boss, a
+    // world boss, or a per-player summon is left on the classic window
+    // (mob/boss_corpse_hold.ts). Draws no rng.
+    applyBossCorpseHold(e, template);
     e.aggroTargetId = null;
     clearThreat(e);
     if (e.ownerId !== null) {

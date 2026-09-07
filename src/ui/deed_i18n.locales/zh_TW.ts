@@ -790,4 +790,8 @@ export const table: DeedLocaleTable = {
     name: '解放之泉',
     desc: '親手鍛造碎爐者，攜帶完成的戰鎚回到梅琳身邊。',
   },
+  col_set_bramblehide: {
+    name: '魯茨的荊棘皮甲',
+    desc: '發現魯茨的荊棘皮甲的每一個部件。',
+  },
 };

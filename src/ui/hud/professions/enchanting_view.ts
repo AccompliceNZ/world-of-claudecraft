@@ -77,6 +77,7 @@ export interface ApplyEnchantResultEvent {
     // #2415: the honest already-enchanted deny (no confirm flag), and the
     // identical-enchant-id re-apply denied on every arm.
     | 'already_enchanted'
+    | 'rift_gear'
     | 'same_enchant'
     // Masterwrought phase 10, the Lucent tier's two gates: the Perfected-only
     // enchant aimed at an ordinary copy, and an enchant above the applier's
@@ -191,6 +192,8 @@ export function applyEnchantResultToast(ev: ApplyEnchantResultEvent): Enchanting
       return { key: 'hudChrome.enchanting.notPerfected', sink: 'error' };
     case 'insufficient_skill':
       return { key: 'hudChrome.enchanting.enchantSkillTooLow', sink: 'error' };
+    case 'rift_gear':
+      return { key: 'hudChrome.enchanting.riftGear', sink: 'error' };
     default:
       return { key: 'hudChrome.enchanting.notHeld', sink: 'error' };
   }

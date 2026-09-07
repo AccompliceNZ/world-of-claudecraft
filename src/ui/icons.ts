@@ -10,6 +10,10 @@
 
 import { IGNIVAR_ART_PENDING_ITEM_IDS } from '../sim/content/ignivar_loot';
 import { isRawCookingCatch } from '../sim/content/items';
+import {
+  BRAMBLEHIDE_ART_PENDING_ITEM_IDS,
+  NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS,
+} from '../sim/content/zone3';
 import { ABILITIES, ITEMS } from '../sim/data';
 import { crestIconUrl } from './crest_icon_art';
 import { currencyImageUrl } from './currency_art';
@@ -5348,9 +5352,14 @@ for (const item of Object.values(ITEMS)) {
 export const UI_ITEM_IMAGE_IDS = new Set<string>(['backpack']);
 
 // Explicit development-only item-art debt ledger. The Masterwrought completion wave
-// cleared all 81 feature entries; keep the Crucible-owned spread as the canonical seam for
-// future parked raid art. Tests reject both unenumerated debt and stale entries after art lands.
-export const ITEM_ART_PENDING = new Set<string>([...IGNIVAR_ART_PENDING_ITEM_IDS]);
+// cleared the Ignivar raid's 81 feature entries (content/ignivar_loot.ts), so that spread
+// is currently empty; it stays in the union below as the canonical seam for future parked
+// raid art. Tests reject both unenumerated debt and stale entries after art lands.
+export const ITEM_ART_PENDING = new Set<string>([
+  ...IGNIVAR_ART_PENDING_ITEM_IDS,
+  ...BRAMBLEHIDE_ART_PENDING_ITEM_IDS,
+  ...NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS,
+]);
 
 /** Static URL of an item's (or a UI pseudo-item's) image icon, or null if it uses a recipe. */
 export function itemImageUrl(id: string): string | null {

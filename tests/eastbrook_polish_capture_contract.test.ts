@@ -564,8 +564,50 @@ interface AttributionTargetFixture {
 // sequencing fix moved renderer.ts to 7c10f934. No capture was retaken.
 // Re-minted during PR closeout after farm compile staging changed renderer.ts.
 // No capture was retaken.
+//
+// UPSTREAM'S OWN RE-MINT HISTORY over the same later release/v0.42.0 span,
+// kept rather than dropped (the block that follows is the release's record
+// verbatim).
+// Re-minted for the 2026-08-31 v0.41.0 sync into the shader-warm branch: both
+// arms had re-minted, and the merged renderer, three patch, lockfile, and
+// re-stamped GLB inputs land together. No capture was retaken.
+// Re-minted for review round 3 of the shader-warm PR (the battleground ward
+// walk left renderer.ts for battleground_views.ts and the prebuild release
+// call replaced it). No capture was retaken.
+// Re-minted for the shader-warm PR's give-up rule and its review fixes
+// (renderer.ts: the census bracket and the cast units' compile-arm host).
+// No capture was retaken.
+// Re-minted at the release/v0.42.0 sync of PR #3439: renderer.ts moved for the
+// mount lifecycle seam (mount_lifecycle.ts) and the rickshaw hooks it absorbed.
+// Re-minted for the Cluckwork Mech Bird store mount (PR #3464) on top of the
+// v0.42.0 mount-lifecycle move: the renderer's stride accumulator moved to
+// src/render/stride_audio_core.ts and the mounted audio branch gained the
+// idle-hum poll. No capture was retaken.
+// Re-minted for the 2026-09-04 release/v0.42.0 sync into the shader-warm branch:
+// both arms had re-minted, and the merged renderer (the mount lifecycle and
+// stride audio moves beside this branch's changes) and evidence inputs land
+// together. No capture was retaken.
+// Re-minted for the Realm Builder monument (PR #3695) at its release/v0.42.0
+// base merge: the civic centrepiece changed asset, subject and shader cache
+// key on top of the mount-lifecycle and occluder-fade moves already sealed
+// above, so every fingerprinted input carries the merged bytes. No capture
+// was retaken.
+// Re-minted for the PR #3695 review fixes: the monument's impostor fragment
+// gained the fog, tonemapping and colourspace tail, moving
+// realm_builder_monument_fx.ts. No capture was retaken.
+// Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
+// the Realm Builder monument (PR #3695) and this branch's renderer changes
+// land together on the merged tree. No capture was retaken.
+//
+// RE-MINTED for the professions/Crucible base merge into release/v0.42.0:
+// renderer.ts changed on both sides again (ours: farm/shadow compile-gate
+// churn; theirs: the shader-warm branch's own renderer moves above), so this
+// composite mints a value matching neither parent's pin (ours d137e84a,
+// theirs 3a5b183e). Run over the fully resolved merged tree via:
+//   node scripts/assets/eastbrook_grand_armoury/remint_polish_provenance.mjs
+// No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'd137e84a98c7eca03d0ea7eadc8d1a3a0665f726d6bd54e6c2b9a3af7995f493';
+  'c0048af8119c8292092fca3e07759338fe2d4eeb0a4493a56ccc57501f914f6e';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [
@@ -716,7 +758,7 @@ describe('Eastbrook polish capture contract', () => {
       'apothecary_lin',
       'mailbox_eastbrook',
       'eastbrook_noticeboard',
-      'eastbrook_civic_well_beacon',
+      'eastbrook_realm_builder_monument',
       'chronicler_saul',
       'fury',
     ]);
@@ -970,7 +1012,10 @@ describe('Eastbrook polish capture contract', () => {
       },
       'chapel-and-weaving': {
         camera: { x: 26, y: 12, z: -100 },
-        target: { x: -13, y: 3, z: -100 },
+        // Round 8: the aim was the middle of the square, which the doubled
+        // Realm Builder monument now occupies, so it moved a yard past the
+        // plinth's west face. Same establishing shot, statue as its backdrop.
+        target: { x: -10.5, y: 3, z: -100 },
       },
       'toolworks-service-perimeter': {
         camera: { x: -11, y: 7, z: -120 },
@@ -1216,9 +1261,12 @@ describe('Eastbrook polish capture contract', () => {
       EASTBROOK_LAYOUT.services.noticeboard.id,
       EASTBROOK_LAYOUT.services.noticeboard.frontStandingPoint,
     );
-    subjectPoints.set(EASTBROOK_LAYOUT.civic.wellBeacon.id, {
-      x: EASTBROOK_LAYOUT.civic.wellBeacon.position.x,
-      z: EASTBROOK_LAYOUT.civic.wellBeacon.position.z - 2,
+    // Off-axis on purpose (see capture_contract.mjs, civic-motion): the middle
+    // of the square is the statue and due south of it is a bench, so the aim
+    // sits on the southwest diagonal, outside the plinth.
+    subjectPoints.set(EASTBROOK_LAYOUT.civic.monument.id, {
+      x: EASTBROOK_LAYOUT.civic.monument.position.x + 2.7,
+      z: EASTBROOK_LAYOUT.civic.monument.position.z - 3.2,
     });
     for (const npc of EASTBROOK_LAYOUT.services.npcs) {
       subjectPoints.set(npc.id, npc.position);

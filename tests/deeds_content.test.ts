@@ -152,7 +152,11 @@ describe('audited launch totals (literals: update deliberately with the catalog)
     // reader can act on without seeing the diff. It went stale once already.
     // Forgebreaker's personal, class-restricted quest celebration adds one
     // hidden deed at zero Renown: 299 / 3525, all older content untouched.
-    expect(DEED_ORDER.length).toBe(299);
+    // THIS release/v0.42.0 merge additionally brings in the Roots Bramblehide
+    // set collection deed (col_set_bramblehide, renown 0) the release side
+    // added independently: 300 / 3525. UNION MERGE: base plus both deltas,
+    // the professions and release branches content is disjoint.
+    expect(DEED_ORDER.length).toBe(300);
     expect(ALL.reduce((sum, d) => sum + d.renown, 0)).toBe(3525);
   });
 
@@ -179,8 +183,10 @@ describe('audited launch totals (literals: update deliberately with the catalog)
       // +4 farming first-harvest chronicles (chr_*_first_harvest).
       chronicle: 53,
       // +4 Reliquary Curator rank bridges and +5 Phase 18 completion ladder
-      // deeds on top of the release collection set, +1 col_golden_harvest.
-      collection: 40,
+      // deeds on top of the release collection set, +1 col_golden_harvest,
+      // +1 the Roots Bramblehide set collection (col_set_bramblehide) the
+      // release side added independently. UNION MERGE: base plus both deltas.
+      collection: 41,
       // Release's Thornhollow battlegrounds plus the WARFARE honor ladder.
       pvp: 35,
       // +2 bank socket ladder deeds (soc_strongbox_outfitter,
@@ -375,6 +381,11 @@ describe('audited launch totals (literals: update deliberately with the catalog)
       'dgn_varkhul',
       'dgn_varkhul_heroic',
       'dgn_varkhul_flawless',
+      // Roots' Bramblehide, the feral druid's Strength leather family off the
+      // Nythraxis raid: the release side's addition, seated ahead of the
+      // branch's Forgebreaker quest deed (the release merge put its own row
+      // first here rather than appending it behind the branch's tail).
+      'col_set_bramblehide',
       'hid_forgebreaker',
     ]);
     expect(DEEDS.dgn_wildheart_basin.renown).toBe(10);
@@ -966,7 +977,14 @@ describe('frozen trigger + renown catalog (design rule 9: never retro-edit a tri
   // either side.
   // Forgebreaker's personal quest adds one hidden, zero-Renown tail row.
   // The pre-append proof below preserves every earlier trigger and value.
-  const FROZEN_CATALOG_SHA256 = 'ed5078343bcd897c66006561b7eb5bbeef7c98c0a5597807235ff4e11529e47d';
+  // THIS MERGE additionally brings in Roots' Bramblehide (the feral druid's
+  // Strength leather family off the Nythraxis raid): one more appended
+  // zero-Renown collection deed (col_set_bramblehide), which the release
+  // side added independently, seated ahead of the branch's hid_forgebreaker
+  // row. Recomputed against the merged DEED_ORDER/DEEDS table with the
+  // one-liner this file's own comment prescribes: no shipped trigger or
+  // renown changed on either side, only the two appended rows above.
+  const FROZEN_CATALOG_SHA256 = 'ec055f18eef91cea2132109bf9554b8e5f95b7321a6f31109422d46372c3f323';
 
   it('every shipped deed keeps its trigger and renown unchanged', () => {
     const canonical = JSON.stringify(
@@ -1003,7 +1021,7 @@ describe('frozen trigger + renown catalog (design rule 9: never retro-edit a tri
   // Removing it must reproduce the preceding frozen catalogue exactly.
   const PRE_APPEND_CATALOG_SHA256 =
     '77b670a2b8eefdfb6768290dbbee7146828636c3b7327d0cb88cb5683c072a4b';
-  const APPENDED_SINCE: readonly string[] = ['hid_forgebreaker'];
+  const APPENDED_SINCE: readonly string[] = ['col_set_bramblehide', 'hid_forgebreaker'];
 
   it('the catalog minus the ids appended since the previous mint reproduces the previous digest', () => {
     const appended = new Set(APPENDED_SINCE);
@@ -1230,7 +1248,8 @@ describe('table shape', () => {
     // Phase 13's promotion capstone prog_legendmaker closed it, and the
     // 2026-08-30 sync merge seats the release's Crucible raid block behind
     // that (appended behind the branch's rows; the flawless task is its
-    // final entry).
+    // final entry). The Roots' Bramblehide set collection appends behind the
+    // raid block (whose flawless task was the previous final entry).
     // The one-time Forgebreaker quest's hidden celebration appends after it.
     expect(DEED_ORDER[DEED_ORDER.length - 1]).toBe('hid_forgebreaker');
   });

@@ -9409,10 +9409,6 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Hãy chơi ở chế độ ngang toàn màn hình để có trải nghiệm di động tốt nhất.',
   'mobilePreflight.rotateTitle': 'Xoay Sang Ngang',
   'mobilePreflight.title': 'Chơi Toàn Màn Hình Ngang',
-  'mode.caCopyAria': 'Sao chép địa chỉ hợp đồng',
-  'mode.caLabel': 'Địa Chỉ Hợp Đồng $WOC',
-  'mode.caNote':
-    'WOC là token cộng đồng của chúng tôi. Không cần nó để chơi. Hãy tham gia Discord để thảo luận về tiện ích và vòng xoáy tăng trưởng của WOC.',
   'mode.offlineAria': 'Chơi Ngoại Tuyến: bắt đầu phiên chơi đơn cục bộ tức thì',
   'mode.offlineDesc':
     'Thế giới chơi đơn tức thì ngay trong trình duyệt. Không lưu lại gì: hoàn hảo cho một trận đánh nhanh hoặc để thử nghiệm.',
@@ -13857,6 +13853,10 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Đòn chí mạng của Long Draw kéo dài Cold Focus thêm 2 giây, tối đa 6 giây mỗi lần kích hoạt.',
   'entities.itemSets.coldsight_trackers.name': 'Thợ Săn Coldsight',
   'entities.itemSets.crownforged.bonus6': 'Tăng 4% tốc độ tấn công và thi triển, cùng 3% Hit. Đòn chí mạng bằng vũ khí của bạn khiến mục tiêu bị Bonesplinter, gây chảy máu 5 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần.',
+  'entities.itemSets.bramblehide.name': 'Da Gai Của Roots',
+  'entities.itemSets.bramblehide.bonus2': 'Tăng sức mạnh tấn công thêm 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Các đòn chí mạng bằng vũ khí của bạn găm Dằm Xương vào mục tiêu, khiến nó chảy máu nhận 8 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần.',
+  'entities.itemSets.bramblehide.bonus6': 'Tăng 4% tốc độ tấn công và thi triển, cùng 3% Hit. Đòn chí mạng bằng vũ khí của bạn khiến mục tiêu bị Bonesplinter, gây chảy máu 5 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần.',
   'entities.itemSets.dawnforged.bonus2': 'Beacon of Light sao chép 55% lượng hồi máu trực tiếp của bạn. Sát thương phải chịu không còn làm chậm việc thi triển phép.',
   'entities.itemSets.dawnforged.bonus4': 'Dawn\'s Embrace được Radiant Resonance cường hóa sẽ được thi triển ngay lập tức.',
   'entities.itemSets.dawnforged.name': 'Lễ Phục Rèn Bình Minh',

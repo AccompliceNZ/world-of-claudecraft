@@ -54,13 +54,12 @@ import { setDisplayChangeTarget } from './game/desktop_display_change';
 import {
   desktopDisplayModeSupported,
   pushDesktopDisplayMode,
-  syncDesktopDisplayModeSetting,
 } from './game/desktop_display_mode_sync';
 import { initDesktopDownload } from './game/desktop_download';
-import { pushDesktopGpuPref, syncDesktopGpuPrefSetting } from './game/desktop_gpu_pref_sync';
 import { desktopNotifyOnSimEvents } from './game/desktop_notifications';
 import { desktopPresentationHidden } from './game/desktop_presentation';
 import { initDesktopShellIntegration } from './game/desktop_shell_integration';
+import { applyDesktopShellSetting, syncDesktopShellSettings } from './game/desktop_shell_settings';
 import { installDevTeleports } from './game/dev_shortcuts';
 import {
   clearDiscordChoice,
@@ -68,7 +67,7 @@ import {
   type ExternalAuthLoginChoice,
   readDiscordChoice,
 } from './game/discord_login_choice';
-import { desktopPresenceOnFrame, pushDiscordPresenceEnabled } from './game/discord_presence';
+import { desktopPresenceOnFrame } from './game/discord_presence';
 import { cycleHudFocus } from './game/dpad_focus_nav';
 import { takeEditorPlaytestRequest } from './game/editor_playtest';
 import {
@@ -174,6 +173,7 @@ import { initPerfNudge } from './game/perf_nudge';
 import { startPerfReporter } from './game/perf_reporter';
 import { kickCharacterPreloadStream, runPostEntryWarmups } from './game/post_entry_warmups_core';
 import { newPresentationGateInput, presentationGate } from './game/presentation_gate';
+import { startRealmBuilderRollLoad } from './game/realm_builder_boot';
 import { adaptiveSelfAlphaLead } from './game/self_alpha_lead';
 import { SelfMotionFrameBuffer } from './game/self_motion_frame_buffer';
 import {
@@ -189,6 +189,12 @@ import {
   Settings,
 } from './game/settings';
 import { sfx } from './game/sfx';
+import {
+  finishShaderWarmup,
+  startShaderWarmup,
+  stopShaderWarmup,
+} from './game/shader_cache_warmup';
+import { registerShaderWarmSetting } from './game/shader_warm_setting';
 import { toggleSheatheWithCue } from './game/sheathe_toggle';
 import { initSoftwareRenderNotice } from './game/software_render_notice';
 import {
@@ -348,6 +354,7 @@ import {
   graphicsPresetLabel,
   resolveGfxProfile,
 } from './render/gfx';
+import { setNameplateDotScale } from './render/nameplate_dot_scale';
 import { createInitialPrewarmResumeStartGate } from './render/prewarm_resume_start_gate';
 import { Renderer } from './render/renderer';
 import { hasAuthoritativeSelfPositionDiscontinuity } from './render/self_motion';
@@ -584,8 +591,8 @@ if (DESKTOP_APP) initDesktopShellIntegration();
 // whole-blob rewrite) would silently revert it.
 let liveSettings: Settings | null = null;
 const settingsForShellReflection = (): Settings => liveSettings ?? new Settings();
-if (DESKTOP_APP) void syncDesktopGpuPrefSetting(desktopBridge(), settingsForShellReflection);
-if (DESKTOP_APP) void syncDesktopDisplayModeSetting(desktopBridge(), settingsForShellReflection);
+if (DESKTOP_APP) syncDesktopShellSettings(desktopBridge(), settingsForShellReflection);
+registerShaderWarmSetting(() => settingsForShellReflection().get('shaderWarm'));
 // Free every WebGL context (game renderer, character preview, portrait rig) when
 // the page is torn down, so logout/login reload cycles don't exhaust the GPU
 // context pool and break the next renderer with "Error creating WebGL context".
@@ -1504,6 +1511,7 @@ async function startGame(
     renderer.showDevBadges = settings.get('showDevBadges');
     renderer.showOwnNameplate = settings.get('showOwnNameplate');
     renderer.showPlayerNameplates = settings.get('showPlayerNameplates');
+    setNameplateDotScale(settings.nameplateDotRenderScale());
     renderer.setWaterRipples(settings.get('waterRipples'));
     // Dev-only: ?targetcone=1 draws the Tab-target front cone on the ground in
     // front of the player, for tuning the targeting angle/radius (tab_target.ts).
@@ -1616,6 +1624,7 @@ async function startGame(
     entryDiagnostics.markStable('[entry-guard] world entry stable; runtime probe armed');
   }, ENTRY_PROBE_STABLE_MS);
 
+  startRealmBuilderRollLoad(renderer, online);
   const chatInput = $('#chat-input') as unknown as HTMLTextAreaElement;
   const clickMoveMarker = $('#click-move-marker') as HTMLDivElement;
   // Grow the chat bar to fit what it is displaying (typed text, or the
@@ -2582,18 +2591,7 @@ async function startGame(
       hud.renderCharIfOpen();
       return;
     }
-    if (key === 'forceHighPerfGpu') {
-      // The push owns the inversion (the shell stores the opt-out) and swallows
-      // a failed write; the shell applies it at its next launch, so nothing in
-      // the running session changes.
-      pushDesktopGpuPref(desktopBridge(), settings.set('forceHighPerfGpu', !!value));
-      return;
-    }
-    if (key === 'discordPresence') {
-      // Same polarity on both sides: the shell drops its RPC connection on false.
-      pushDiscordPresenceEnabled(desktopBridge(), settings.set('discordPresence', !!value));
-      return;
-    }
+    if (applyDesktopShellSetting(key, value, settings, desktopBridge())) return;
     if (key === 'showDevBadges') {
       renderer.showDevBadges = settings.set('showDevBadges', !!value);
       return;
@@ -2604,6 +2602,16 @@ async function startGame(
     }
     if (key === 'showPlayerNameplates') {
       renderer.showPlayerNameplates = settings.set('showPlayerNameplates', !!value);
+      return;
+    }
+    if (key === 'showNameplateDots') {
+      settings.set('showNameplateDots', !!value);
+      setNameplateDotScale(settings.nameplateDotRenderScale());
+      return;
+    }
+    if (key === 'nameplateDotScale') {
+      settings.set('nameplateDotScale', Number(value));
+      setNameplateDotScale(settings.nameplateDotRenderScale());
       return;
     }
     if (key === 'invertLookY') {
@@ -2837,6 +2845,7 @@ async function startGame(
     next.showDevBadges = settings.get('showDevBadges');
     next.showOwnNameplate = settings.get('showOwnNameplate');
     next.showPlayerNameplates = settings.get('showPlayerNameplates');
+    setNameplateDotScale(settings.nameplateDotRenderScale());
     next.reduceMotionSetting = settings.get('reduceMotion');
     next.setBrightness(settings.get('brightness'));
     next.setCameraFov(settings.get('cameraFov'));
@@ -5101,6 +5110,7 @@ async function startGame(
         loadPhaseEnd('settle-cover');
         loadPhaseStart('curtain-fade');
         renderer.markGpuHitchReveal();
+        finishShaderWarmup(renderer.webgl);
         hideLoadingScreen();
         // Start the intro clock as the loading screen begins to fade: the camera
         // holds the opening pose until now, so the fade doubles as the cut in.
@@ -5249,6 +5259,7 @@ async function startOffline(
   world?: WorldContent,
   seedOverride?: number,
 ): Promise<void> {
+  stopShaderWarmup();
   if (!(await prepareWorldEntry())) return;
   resetLoadProfile();
   loadPhaseStart('entry');
@@ -5880,12 +5891,10 @@ function show(el: string): void {
     authModeApply?.('login');
   }
 
+  const isPlayPanel =
+    el === '#charselect-panel' || el === '#charcreate-panel' || el === '#offline-select';
   const logoImg = $('#title-logo');
-  if (logoImg) {
-    const shouldHideLogo =
-      el === '#charselect-panel' || el === '#charcreate-panel' || el === '#offline-select';
-    logoImg.toggleAttribute('hidden', shouldHideLogo);
-  }
+  if (logoImg) logoImg.toggleAttribute('hidden', isPlayPanel);
 
   if (
     document.activeElement instanceof HTMLInputElement ||
@@ -5898,6 +5907,7 @@ function show(el: string): void {
   // moment the player can actually read it, and the NEW-badge marker should
   // advance only then.
   if (el === '#charselect-panel') {
+    startShaderWarmup();
     void loadCharselectNews($('#charselect-news-feed'), () => api.releases(20));
   }
 
@@ -5942,9 +5952,7 @@ function show(el: string): void {
     for (const id of panels) {
       document.querySelector(id)?.toggleAttribute('hidden', id !== el);
     }
-    if (el === '#charselect-panel' || el === '#charcreate-panel' || el === '#offline-select') {
-      updatePreviewContainer(el);
-    }
+    if (isPlayPanel) updatePreviewContainer(el);
     return;
   }
 
@@ -5965,9 +5973,7 @@ function show(el: string): void {
   if (isReducedMotion) {
     fromPanel.toggleAttribute('hidden', true);
     toPanel.toggleAttribute('hidden', false);
-    if (el === '#charselect-panel' || el === '#charcreate-panel' || el === '#offline-select') {
-      updatePreviewContainer(el);
-    }
+    if (isPlayPanel) updatePreviewContainer(el);
     return;
   }
 
@@ -5989,9 +5995,7 @@ function show(el: string): void {
     // Set initial state for fade-in
     toPanel.classList.add('panel-transition', 'panel-fade-in-start');
     toPanel.toggleAttribute('hidden', false);
-    if (el === '#charselect-panel' || el === '#charcreate-panel' || el === '#offline-select') {
-      updatePreviewContainer(el);
-    }
+    if (isPlayPanel) updatePreviewContainer(el);
 
     // Force layout reflow
     void toPanel.offsetHeight;
@@ -7021,6 +7025,7 @@ function syncCharselectEnterButton(): void {
 }
 
 async function enterWorld(c: CharacterSummary, button?: HTMLButtonElement): Promise<void> {
+  stopShaderWarmup();
   try {
     if (button) {
       button.disabled = true;
@@ -7784,59 +7789,6 @@ async function loadHighscores(): Promise<void> {
 // out of this firewall file); this call site just supplies the host + fetcher.
 async function loadNews(): Promise<void> {
   await loadNewsInto($('#news-feed'), () => api.releases(20));
-}
-
-let caCopyResetTimer: number | null = null;
-
-// Click-to-copy for the $WOC contract address on the landing page. Falls back to
-// a hidden-textarea copy when the async Clipboard API is unavailable (insecure
-// context / older browsers); the copied state is only shown on a real success.
-function wireContractAddressCopy(): void {
-  const btn = document.getElementById('btn-copy-ca');
-  const container = document.getElementById('token-ca');
-  if (!btn || !container) return;
-
-  const showCopied = () => {
-    container.classList.add('is-copied');
-    if (caCopyResetTimer !== null) window.clearTimeout(caCopyResetTimer);
-    caCopyResetTimer = window.setTimeout(() => {
-      container.classList.remove('is-copied');
-      caCopyResetTimer = null;
-    }, 1800);
-  };
-
-  const fallbackCopy = (text: string): boolean => {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.setAttribute('readonly', '');
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    let ok = false;
-    try {
-      ok = document.execCommand('copy');
-    } catch {
-      ok = false;
-    }
-    document.body.removeChild(ta);
-    return ok;
-  };
-
-  btn.addEventListener('click', () => {
-    const ca = btn.getAttribute('data-ca');
-    if (!ca) return;
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard
-        .writeText(ca)
-        .then(showCopied)
-        .catch(() => {
-          if (fallbackCopy(ca)) showCopied();
-        });
-    } else if (fallbackCopy(ca)) {
-      showCopied();
-    }
-  });
 }
 
 function syncHomepageMusicToggle(): void {
@@ -9598,7 +9550,6 @@ function wireStartScreens(): void {
   for (const ensure of CONTENT_LOCALE_CHANNEL_ENSURERS) void ensure(bootLang).catch(() => {});
   hydrateIcons();
   void loadProjectStats();
-  wireContractAddressCopy();
   wireHomepageMusicToggle();
   void wireWallet();
   wireGithubLink();

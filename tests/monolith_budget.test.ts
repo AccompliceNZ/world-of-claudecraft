@@ -447,7 +447,37 @@ const MONOLITHS: MonolithRow[] = [
     // slack.
     // LOWERED 18679 -> 18677 at the professions-merge-crucible integration.
     // Measured with wc -l < src/ui/hud.ts after biome. Exact count, zero slack.
-    ceiling: 18677,
+    //
+    // THE RELEASE PARENT'S OWN HALF over this same release/v0.42.0 span, kept
+    // so the merge drops neither parent's record: the Target dots frame
+    // extraction (describeAbilitySummary + abilityRequirementLines out to
+    // ability_tooltip_lines.ts) paid for the compass-strip and rest-badge work
+    // above and then some (18905 -> 18879); the Realm Builder monument
+    // honour-roll card (PR #3695) added six lines no sibling can own (18879 ->
+    // 18885); the guild roster expansion (PR #3874) extracted 27 lines to the
+    // roster page modules (18885 -> 18858); the Riftbound band item-level
+    // ladder moved the rift tooltip lines to src/ui/rift_band_tooltip.ts
+    // (18858 -> 18851); the Rift Forge window wiring re-pinned at the exact
+    // merged count over the same 18851; the guild roster pages sync
+    // re-measured at 18851 + 15 = 18866; the per-surface action-bar profiles
+    // moved the world-entry restore into ActionBarController.restoreLayout
+    // (18866 -> 18857); the aura-strip column moved the buff row's anchor
+    // capture into restoreFrameHome, src/ui/interface_unlock.ts (18857 ->
+    // 18851).
+    //
+    // RE-PINNED at this merge of release/v0.42.0 into feature/masterwrought.
+    // BOTH parent pins for the record: ours 18677, the release 18851 (base
+    // 18905). src/ui/hud.ts's own conflicts (owned by a different
+    // conflict-resolution unit) are now resolved. The earlier PROVISIONAL
+    // arithmetic estimate (18623, base + ours' delta + theirs' delta) undershot
+    // the real merged file: the two arms touched overlapping regions of the Rift
+    // fix round, so the hand-resolved text carries 93 lines the pure arithmetic
+    // union could not predict. Measured `wc -l < src/ui/hud.ts` on the resolved
+    // tree: 18716, which lands BELOW the release parent's own 18851 pin, so this
+    // is INHERITED release-side growth over our prior 18677, never an authored
+    // raise; no maintainer decision is needed. Exact merged count, zero slack:
+    // any further growth reds again.
+    ceiling: 18716,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -772,6 +802,25 @@ const MONOLITHS: MonolithRow[] = [
     // that arm's entry-horizon cull and this branch's ground-aim reticle
     // pass-through both land in the merged file. Measured on the merged tree,
     // never reconciled by arithmetic. Exact merged count, zero headroom.
+    // LOWERED at the 2026-08-29 v0.41.0 sync: this branch's extractions
+    // (compile_arms.ts, prewarm_resume_runner.ts, self_spirit_warm.ts,
+    // corpse_beacon.ts, battleground_views.ts) pay for the release arm's
+    // battleground compile-gate wiring and then some, and the field
+    // construction PR 3706 added inline left the file with the view module.
+    // Measured on the merged tree. Exact merged count, zero headroom.
+    // Lowered by the unused import the cast_vfx_prewarm.ts extraction left
+    // behind (its removal collapsed the import block). Exact count.
+    // Re-pinned at the 2026-08-31 v0.41.0 sync: the release arm's raid
+    // consolidation and set-proc extraction (set_proc_fx.ts) land alongside
+    // this branch's extractions; neither parent pin fits the combined file.
+    // Measured on the merged tree. Exact merged count, zero headroom.
+    // Lowered again after the battleground view drive (the per-frame ward-state
+    // push, and the release of a copy the session is done with) moved into
+    // src/render/battleground_views.ts beside the build it belongs to.
+    // Lowered again after the scene census's child adapter (the renderCategory
+    // read and the visibility accessors) moved to sceneCensusChild in
+    // src/render/scene_census_core.ts, which paid for the census burst's new
+    // shader-warm-audit hook. Exact count.
     // the raid consolidation paid its additions by moving the fog scene chain (fog_scene_state.ts), the spellfxAt dispatch arms, the boss facing lock, and the raid anchor/rig syncs out; exact count.
     // Lowered 13265 -> 13243: the set-proc swirl table and both resolution
     // walks moved to src/render/set_proc_fx.ts (the Crucible engine-proc arm
@@ -802,7 +851,23 @@ const MONOLITHS: MonolithRow[] = [
     // compile gate gained its narrow actionable-priority override. Measured
     // after formatting, banking the three remaining inherited lines of slack.
     // Exact count, zero headroom.
-    ceiling: 12989,
+    //
+    // THE RELEASE PARENT'S OWN HALF over this same release/v0.42.0 span, kept
+    // so the merge drops neither parent's record: the mount lifecycle and
+    // stride audio moves land beside this branch's extractions (stays below
+    // both parent pins); the Realm Builder monument (PR #3695) adds 12 lines
+    // that land exactly on the pin, so the ceiling does not move but the
+    // slack goes to zero; theirs re-pins at the exact merged count, 13085.
+    //
+    // RE-PINNED at this merge of release/v0.42.0 into feature/masterwrought.
+    // BOTH parent pins for the record: ours 12989, the release 13085 (base
+    // 13214). src/render/renderer.ts's own conflicts (owned by a different
+    // conflict-resolution unit) are now resolved; the earlier provisional
+    // arithmetic estimate (12860) undershot the real merged file, so this is
+    // the exact `wc -l < src/render/renderer.ts` measurement on the resolved
+    // tree. RE-CONFIRMED at the final line-budget reconciliation: still
+    // 12917, below both parent pins. Exact merged count, zero slack.
+    ceiling: 12917,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
@@ -1209,7 +1274,24 @@ const MONOLITHS: MonolithRow[] = [
     // behavioral, since the only suite that drives the sender drives the module.
     // Measured with wc -l after biome. Exact count, zero slack.
     // Offline gathering identity bootstrap moved to offline_world_config.ts.
-    ceiling: 11448,
+    //
+    // THE RELEASE PARENT'S OWN HALF over this same release/v0.42.0 span, kept
+    // so the merge drops neither parent's record: the desktop_shell_settings.ts
+    // extraction; the /daynight dev-command extraction and Discord
+    // login-choice rows; the Realm Builder monument (PR #3695), release-side
+    // growth only; a further re-pin where both arms added and extracted
+    // independently; then the landing page $WOC contract address box and its
+    // click-to-copy wiring were removed, ratcheting theirs down to 11462.
+    //
+    // RE-PINNED at this merge of release/v0.42.0 into feature/masterwrought.
+    // BOTH parent pins for the record: ours 11448, the release 11462 (base
+    // 11551). src/main.ts's own conflict (owned by a different
+    // conflict-resolution unit) is now resolved; the earlier provisional
+    // arithmetic estimate (11359) undershot the real merged file, so this is
+    // the exact `wc -l < src/main.ts` measurement on the resolved tree.
+    // RE-CONFIRMED at the final line-budget reconciliation: still 11399,
+    // below both parent pins. Exact merged count, zero slack.
+    ceiling: 11399,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
@@ -1402,7 +1484,27 @@ const MONOLITHS: MonolithRow[] = [
     // both this extraction and the Intentional Gathering dispatch trimming
     // (whose own arm read 10333) land together and their savings compose.
     // Measured with wc -l < server/game.ts after biome. Exact count, zero slack.
-    ceiling: 10327,
+    //
+    // THE RELEASE PARENT'S OWN HALF over this same release/v0.42.0 span, kept
+    // so the merge drops neither parent's record: chatChannelHint and
+    // chatSenderFlair moved to their own server/ modules; the guild roster
+    // purchase rework moved the post-COMMIT save acknowledgement to
+    // server/character_save_acknowledge.ts; the Riftbound band item-level
+    // ladder collapsed the retired forge enchant arm to a tombstone; the
+    // guild roster pages sync re-measured the ladder's 10613 plus theirs' -9;
+    // the per-surface action-bar profiles moved the join read, per-profile
+    // merge and FIFO write to server/hotbar_layout.ts (HotbarLayoutStore),
+    // ratcheting theirs down to 10587.
+    //
+    // RE-PINNED at this merge of release/v0.42.0 into feature/masterwrought.
+    // BOTH parent pins for the record: ours 10327, the release 10587 (base
+    // 10641). server/game.ts's own conflicts (owned by a different
+    // conflict-resolution unit) are now resolved; the earlier provisional
+    // arithmetic estimate (10273) undershot the real merged file, so this is
+    // the exact `wc -l < server/game.ts` measurement on the resolved tree.
+    // RE-CONFIRMED at the final line-budget reconciliation: still 10291,
+    // below both parent pins. Exact merged count, zero slack.
+    ceiling: 10291,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1547,7 +1649,26 @@ const MONOLITHS: MonolithRow[] = [
     // professions snapshot self-mirror decode moved to
     // src/net/professions_self_mirror.ts (applyProfessionsSelfMirror). Exact
     // count, zero slack.
-    ceiling: 5854,
+    //
+    // THE RELEASE PARENT'S OWN HALF over this same release/v0.42.0 span, kept
+    // so the merge drops neither parent's record: wrapAngle and copyPos moved
+    // to src/net/interp_math.ts; the Riftbound band item-level ladder retired
+    // the forge enchant sender; the guild roster pages sync re-measured the
+    // ladder's 5892 plus theirs' +6; the per-surface action-bar profiles moved
+    // the debounced upload to src/net/action_bar_upload.ts
+    // (ActionBarLayoutUploader); the guild bank transaction history moved the
+    // log mirror to src/net/guild_bank_log_mirror.ts (GuildBankLogMirror),
+    // ratcheting theirs down to 5856.
+    //
+    // RE-PINNED at this merge of release/v0.42.0 into feature/masterwrought.
+    // BOTH parent pins for the record: ours 5854, the release 5856 (base
+    // 5908). src/net/online.ts's own conflict (owned by a different
+    // conflict-resolution unit) is now resolved: the arithmetic estimate
+    // (5908 + (5854 - 5908) + (5856 - 5908) = 5802) happens to match the
+    // exact `wc -l < src/net/online.ts` measurement on the resolved tree.
+    // RE-CONFIRMED at the final line-budget reconciliation: still 5802,
+    // below both parent pins. Exact merged count, zero slack.
+    ceiling: 5802,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -1660,7 +1781,25 @@ const MONOLITHS: MonolithRow[] = [
     // entitlement character-count subquery. Exact count, zero slack.
     // Account export projection added; obsolete offline moderation prose removed.
     // Measured after formatting, exact count.
-    ceiling: 5119,
+    //
+    // THE RELEASE PARENT'S OWN HALF over this same release/v0.42.0 span, kept
+    // so the merge drops neither parent's record: the two shader-warm
+    // perf-report columns paid for themselves by moving the whole
+    // client_perf_reports DDL to client_perf_reports_schema.ts; the Realm
+    // Builder of the Month roll (PR #3695) left an ensureSchema() residue
+    // against server/realm_builder_db.ts; the guild bank transaction history
+    // moved the activity log statement to server/guild_bank_log_db.ts,
+    // ratcheting theirs down to 5003.
+    //
+    // RE-PINNED at this merge of release/v0.42.0 into feature/masterwrought.
+    // BOTH parent pins for the record: ours 5119, the release 5003 (base
+    // 5145). server/db.ts's own conflicts (owned by a different
+    // conflict-resolution unit) are now resolved: the arithmetic estimate
+    // (5145 + (5119 - 5145) + (5003 - 5145) = 4977) happens to match the
+    // exact `wc -l < server/db.ts` measurement on the resolved tree.
+    // RE-CONFIRMED at the final line-budget reconciliation: still 4977,
+    // below both parent pins. Exact merged count, zero slack.
+    ceiling: 4977,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {
@@ -1761,7 +1900,19 @@ const MONOLITHS: MonolithRow[] = [
     // the record: ours 864, the release 864. Measured on the merged tree,
     // never reconciled by arithmetic. Exact merged count, zero slack.
     // Corpse icon dispatch and marker tones moved to nameplate_markers.
-    ceiling: 856,
+    //
+    // THE RELEASE PARENT'S OWN HALF over the release/v0.42.0 span, kept so the
+    // merge drops neither parent's record: LOWERED for the nameplate dot row,
+    // the row's drawing moved to nameplate_dot_row.ts and the image cache to
+    // nameplate_image_cache.ts, which more than paid for the new draw step
+    // (theirs 864 -> 848).
+    // RE-PINNED at the merge of release/v0.42.0 into feature/masterwrought.
+    // BOTH parent pins for the record: ours 856, the release 848. The merged
+    // file lands BELOW both parent pins (neither side's extraction covers the
+    // other's, and the union composes below both), so the ratchet follows it
+    // down: measured 841 (wc -l < src/render/nameplate_canvas.ts). Exact
+    // merged count, zero slack: any further growth reds again.
+    ceiling: 841,
     seam: 'the pure src/render/nameplate_heraldry_core.ts geometry module',
   },
   {
@@ -1969,7 +2120,23 @@ const MONOLITHS: MonolithRow[] = [
     // it. Measured after the fix round, the phase 17 rule.
     // LOWERED 1937 -> 1859: personal bank item painting now lives in
     // personal_bank_item_cell.ts; this coordinator only composes the cell.
-    ceiling: 1859,
+    //
+    // THE RELEASE PARENT'S OWN HALF over this same release/v0.42.0 span, kept
+    // so the merge drops neither parent's record: the guild bank history
+    // search moved the search-box focus + caret carry to
+    // src/ui/bank_search_focus.ts; the history review moved the guild and
+    // vault focus-key annotators to src/ui/bank_focus_keys.ts, ratcheting
+    // theirs down to 1879.
+    //
+    // RE-PINNED at this merge of release/v0.42.0 into feature/masterwrought.
+    // BOTH parent pins for the record: ours 1859, the release 1879 (base
+    // 1928). src/ui/bank_window.ts's own conflict (owned by a different
+    // conflict-resolution unit) is now resolved: the arithmetic estimate
+    // (1928 + (1859 - 1928) + (1879 - 1928) = 1810) happens to match the
+    // exact `wc -l < src/ui/bank_window.ts` measurement on the resolved tree.
+    // RE-CONFIRMED at the final line-budget reconciliation: still 1810,
+    // below both parent pins. Exact merged count, zero slack.
+    ceiling: 1810,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/CLAUDE.md)',
   },
   {

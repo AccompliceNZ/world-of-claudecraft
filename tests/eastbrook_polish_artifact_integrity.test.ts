@@ -1250,10 +1250,48 @@ const ACCEPTED_POLISH_V2_METADATA_PATH = path.join(REPO_ROOT, POLISH_SEAL_PATH);
 // sequencing fix moved renderer.ts to 7c10f934. No capture was retaken.
 // Re-minted during PR closeout after farm compile staging changed renderer.ts.
 // No capture was retaken.
+//
+// UPSTREAM'S OWN RE-MINT HISTORY over the same later release/v0.42.0 span,
+// kept rather than dropped (the block that follows is the release's record
+// verbatim).
+// Re-minted for the 2026-08-31 v0.41.0 sync into the shader-warm branch: both
+// arms had re-minted, the merged renderer, lockfile, and re-stamped GLB inputs
+// land together. No capture was retaken.
+// Re-minted for the shader-warm PR's give-up rule and its review fixes
+// (renderer.ts: the census bracket and the cast units' compile-arm host).
+// No capture was retaken.
+// Re-minted at the release/v0.42.0 sync of PR #3439: renderer.ts moved for the
+// mount lifecycle seam (mount_lifecycle.ts) and the rickshaw hooks it absorbed.
+// Re-minted for the Cluckwork Mech Bird store mount (PR #3464) on top of the
+// v0.42.0 mount-lifecycle move: the renderer's stride accumulator moved to
+// src/render/stride_audio_core.ts and the mounted audio branch gained the
+// idle-hum poll. No capture was retaken.
+// Re-minted for the 2026-09-04 release/v0.42.0 sync into the shader-warm branch:
+// both arms had re-minted, and the merged renderer (the mount lifecycle and
+// stride audio moves beside this branch's changes) and evidence inputs land
+// together. No capture was retaken.
+// Re-minted for the Realm Builder monument (PR #3695) at its release/v0.42.0
+// base merge: the civic centrepiece changed asset, subject and shader cache
+// key, so every provenance block was swept onto the merged fingerprinted
+// inputs. No capture was retaken.
+// Re-minted for the PR #3695 review fixes: the impostor fragment's fog and
+// tone-mapping tail moved realm_builder_monument_fx.ts. No capture was retaken.
+// Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
+// the Realm Builder monument (PR #3695) and this branch's renderer changes
+// land together on the merged tree. No capture was retaken.
+//
+// RE-MINTED for the professions/Crucible base merge into release/v0.42.0:
+// renderer.ts changed on both sides again (ours: farm/shadow compile-gate
+// churn; theirs: the shader-warm branch's own renderer moves above), so both
+// seals below mint values matching neither parent (metadata ours 9f33fa0f /
+// theirs bd53b318, composite ours d137e84a / theirs 3a5b183e). Run over the
+// fully resolved merged tree via:
+//   node scripts/assets/eastbrook_grand_armoury/remint_polish_provenance.mjs
+// No capture was retaken.
 const ACCEPTED_POLISH_V2_METADATA_SHA256 =
-  '9f33fa0fabff6173ffdb78c728ab1dd8495a12ec4775d0ceca261f57330bde1b';
+  '64f3f1a3b056bb861609fbc9e5eac8a4ba95ec2a28a4ecb6f681ab894cd8ff11';
 const ACCEPTED_POLISH_V2_COMPOSITE_PROVENANCE =
-  'd137e84a98c7eca03d0ea7eadc8d1a3a0665f726d6bd54e6c2b9a3af7995f493';
+  'c0048af8119c8292092fca3e07759338fe2d4eeb0a4493a56ccc57501f914f6e';
 const ACCEPTED_POLISH_V2_METADATA = readJsonFile<CaptureMetadata>(ACCEPTED_POLISH_V2_METADATA_PATH);
 const ACCEPTED_POLISH_V2_PROVENANCE = ACCEPTED_POLISH_V2_METADATA.polishProvenance;
 const ACCEPTED_POLISH_V2_TOWN_CONTRACT = ACCEPTED_POLISH_V2_METADATA.records[0]?.townContract;
@@ -2539,7 +2577,37 @@ describe('Eastbrook polish performance and contact evidence', () => {
       // fix changed renderer.ts. This seal was recomputed LAST; no recapture.
       // Re-minted during PR closeout after farm compile staging changed
       // renderer.ts. This seal was recomputed LAST; no capture was retaken.
-    ).toBe('09cf2684e38684f7c8c9d0ba0fa95fb9ed83b8af2eafc6e98546b27b5e17c9f6');
+      //
+      // UPSTREAM'S OWN RE-MINT HISTORY over the same later release/v0.42.0
+      // span, kept rather than dropped (the block that follows is the
+      // release's record verbatim).
+      // Re-minted for the Drakelands entrance merge into the raid branch: the
+      // composite first, then this seal. No capture was retaken.
+      // Re-minted for review round 3 of the shader-warm PR: the composite
+      // follows the moved ward walk, then this seal. No capture was retaken.
+      // Re-minted for the shader-warm PR's give-up rule and its review fixes:
+      // the composite first, then this seal. No capture was retaken.
+      // Re-minted for the 2026-09-04 release/v0.42.0 sync into the shader-warm
+      // branch: the composite first, then this seal. No capture was retaken.
+      // Re-minted for the Realm Builder monument (PR #3695) at its
+      // release/v0.42.0 base merge: the first-order composite follows the
+      // renderer, town and civicShader leaves, then this second-order seal
+      // follows the swept evidence bytes. No capture was retaken.
+      // Re-minted for the PR #3695 review fixes: the impostor fragment's fog
+      // and tone-mapping tail moved realm_builder_monument_fx.ts, the composite
+      // followed it, then this seal followed the swept bytes. No capture was
+      // retaken.
+      // Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
+      // the Realm Builder monument (PR #3695) and this branch's renderer changes
+      // land together on the merged tree. No capture was retaken.
+      //
+      // RE-MINTED for the professions/Crucible base merge into
+      // release/v0.42.0: renderer.ts changed on both sides again, so this
+      // seal mints a value matching neither parent (ours 09cf2684, theirs
+      // 7691517f). Run over the fully resolved merged tree via:
+      //   node scripts/assets/eastbrook_grand_armoury/remint_polish_provenance.mjs
+      // No capture was retaken.
+    ).toBe('cd040a04860532ff9462c2e425df84e58b76c6483aeb3d8f0ffba650c309a819');
   });
 
   it('binds every historical after record to its accepted source and asset provenance', () => {

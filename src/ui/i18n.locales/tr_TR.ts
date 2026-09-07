@@ -9420,10 +9420,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'En iyi mobil deneyim için yatay tam ekranda oynayın.',
   'mobilePreflight.rotateTitle': 'Yatay Konuma Çevir',
   'mobilePreflight.title': 'Yatay Tam Ekranda Oyna',
-  'mode.caCopyAria': 'Sözleşme adresini kopyala',
-  'mode.caLabel': '$WOC Sözleşme Adresi',
-  'mode.caNote':
-    "WOC topluluk jetonumuzdur. Oynamak için gerekli değildir. WOC'un faydasını ve döngüsünü tartışmak için Discord'a katılın.",
   'mode.offlineAria': 'Çevrimdışı Oyna: anında yerel tek oyunculu oturum başlat',
   'mode.offlineDesc':
     'Tarayıcınızda anında tek oyunculu dünya. Hiçbir şey kaydedilmez: hızlı bir kapışma veya test için ideal.',
@@ -13991,6 +13987,10 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Uzun Çekiş kritik vuruşları Soğuk Odağı 2 saniye uzatır; her etkinleştirmede en fazla 6 saniye.',
   'entities.itemSets.coldsight_trackers.name': 'Soğuk Görüş İz Sürücüleri',
   'entities.itemSets.crownforged.bonus6': 'Saldırı ve büyü yapma hızını %4, İsabeti %3 artırır. Silahlarının kritik vuruşları hedefi Kemik Yarığı ile parçalar ve 12 saniye boyunca her 2 saniyede 5 hasar vererek kanatır. En fazla 3 kez birikir.',
+  'entities.itemSets.bramblehide.name': "Roots'un Dikenli Postu",
+  'entities.itemSets.bramblehide.bonus2': 'Saldırı gücünü 40 artırır.',
+  'entities.itemSets.bramblehide.bonus4': "Silah kritik vuruşların hedefi Kemikkıymık ile parçalar, 12 sn boyunca her 2 sn'de 8 kanama hasarı verir. 3 kata kadar üst üste binebilir.",
+  'entities.itemSets.bramblehide.bonus6': 'Saldırı ve büyü yapma hızını %4, İsabeti %3 artırır. Silahlarının kritik vuruşları hedefi Kemik Yarığı ile parçalar ve 12 saniye boyunca her 2 saniyede 5 hasar vererek kanatır. En fazla 3 kez birikir.',
   'entities.itemSets.dawnforged.bonus2': 'Işık Feneri doğrudan iyileştirmelerinin %55\'ini kopyalar. Alınan hasar artık büyü yapmanı geciktirmez.',
   'entities.itemSets.dawnforged.bonus4': 'Parlak Rezonans\'ın güçlendirilmiş Şafağın Kucaklayışı anında gerçekleşir.',
   'entities.itemSets.dawnforged.name': 'Şafak Dövmesi Giysileri',

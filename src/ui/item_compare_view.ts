@@ -23,7 +23,7 @@ import { formatNumber, type TranslationKey, t } from './i18n';
 // block here, so the edit is mirrored onto the extracted home (merge of
 // 3e801dc925, 2026-08-30).
 import { compareStatLabelKey } from './item_affix_tooltip';
-import { itemStatDeltas } from './item_compare';
+import { itemStatDeltas, shouldCompareCopies } from './item_compare';
 import { wornTooltipInstance } from './item_instance_tooltip';
 
 /** The worn source the comparison reads: the equipment map plus the worn
@@ -71,6 +71,12 @@ function compareBlockForSlot(
   if (!equippedId) return '';
   const equipped = lookup(equippedId);
   if (!equipped) return '';
+  // Never compare a copy against itself (the paperdoll hovering the worn
+  // slot): a different item id always compares, and a same-id Rift copy only
+  // compares when it genuinely differs from the worn one.
+  if (!shouldCompareCopies(item.id, equippedId, candidateInstance, source.instances?.[slot])) {
+    return '';
+  }
   // Both sides' per-copy payloads feed the delta math: the hovered candidate
   // copy and the worn slot's own instance (its rolled.stats carry the bakes).
   const deltas = itemStatDeltas(item, equipped, candidateInstance, source.instances?.[slot])

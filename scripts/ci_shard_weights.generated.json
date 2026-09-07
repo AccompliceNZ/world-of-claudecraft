@@ -2,8 +2,8 @@
   "__provenance": {
     "run": "32621561241",
     "harvested": "2026-08-23",
-    "files": 3651,
-    "harvestedFiles": 2938,
+    "files": 3714,
+    "harvestedFiles": 2937,
     "carried": {
       "tests/ability_avoidance.test.ts": {
         "ms": 892,
@@ -23,6 +23,15 @@
       "tests/ability_tooltip_lines.test.ts": {
         "ms": 20,
         "method": "prose-backfill"
+      },
+      "tests/ability_vfx_cast_gate.test.ts": {
+        "ms": 6,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          6
+        ]
       },
       "tests/account_wealth.test.ts": {
         "ms": 13,
@@ -128,6 +137,15 @@
       "tests/admin_rate_limit_buckets.test.ts": {
         "ms": 10,
         "method": "prose-backfill"
+      },
+      "tests/admin_realm_builders.test.ts": {
+        "ms": 13,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          13
+        ]
       },
       "tests/anim_state_entity_core.test.ts": {
         "ms": 4,
@@ -370,6 +388,15 @@
           5
         ]
       },
+      "tests/battleground_views.test.ts": {
+        "ms": 10,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          10
+        ]
+      },
       "tests/bg_flag_interact.test.ts": {
         "ms": 3,
         "method": "local-median",
@@ -426,6 +453,15 @@
           5
         ]
       },
+      "tests/boss_corpse_hold.test.ts": {
+        "ms": 1064,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          1064
+        ]
+      },
       "tests/broker_custody.test.ts": {
         "ms": 1082,
         "method": "prose-backfill"
@@ -444,6 +480,15 @@
       "tests/cast_display_name.test.ts": {
         "ms": 3,
         "method": "prose-backfill"
+      },
+      "tests/cast_vfx_readiness_core.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
+        ]
       },
       "tests/character_blob_size.test.ts": {
         "ms": 1244,
@@ -480,6 +525,15 @@
           2,
           3,
           2
+        ]
+      },
+      "tests/character_save_acknowledge.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
         ]
       },
       "tests/character_save_fixups.test.ts": {
@@ -543,6 +597,15 @@
         "ms": 6,
         "method": "prose-backfill"
       },
+      "tests/chat_sender_flair.test.ts": {
+        "ms": 3,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          3
+        ]
+      },
       "tests/cheetah_daze.test.ts": {
         "ms": 1695,
         "method": "prose-backfill"
@@ -571,6 +634,15 @@
           6,
           6,
           40
+        ]
+      },
+      "tests/ci_shard_weight_harvest_guard.test.ts": {
+        "ms": 17,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          17
         ]
       },
       "tests/claudium_latency_proxy_target.test.ts": {
@@ -637,6 +709,15 @@
           2
         ]
       },
+      "tests/compile_arms.test.ts": {
+        "ms": 7,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          7
+        ]
+      },
       "tests/consumable_seat_controller.test.ts": {
         "ms": 43,
         "method": "prose-backfill"
@@ -656,6 +737,15 @@
       "tests/consuming.test.ts": {
         "ms": 87,
         "method": "prose-backfill"
+      },
+      "tests/corpse_beacon.test.ts": {
+        "ms": 3,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          3
+        ]
       },
       "tests/corpse_interaction.test.ts": {
         "ms": 2,
@@ -831,13 +921,49 @@
           12
         ]
       },
+      "tests/deploy_rift_forge_switch.test.ts": {
+        "ms": 2,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          2
+        ]
+      },
       "tests/derelict_bomber.test.ts": {
         "ms": 1467,
         "method": "prose-backfill"
       },
+      "tests/desktop_gpu_backend_sync.test.ts": {
+        "ms": 5,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          5
+        ]
+      },
+      "tests/desktop_gpu_report.test.ts": {
+        "ms": 2,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          2
+        ]
+      },
       "tests/desktop_login_exit.test.ts": {
         "ms": 6,
         "method": "prose-backfill"
+      },
+      "tests/desktop_shell_settings.test.ts": {
+        "ms": 8,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          8
+        ]
       },
       "tests/dev_kit_tie_chain_census.test.ts": {
         "ms": 45,
@@ -1014,6 +1140,15 @@
           5,
           5,
           4
+        ]
+      },
+      "tests/electron_gpu_backend.test.ts": {
+        "ms": 11,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          11
         ]
       },
       "tests/electron_linux_url_handler.test.ts": {
@@ -1203,6 +1338,15 @@
           4,
           4,
           4
+        ]
+      },
+      "tests/farm_program_anchor_lifecycle.test.ts": {
+        "ms": 88,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          88
         ]
       },
       "tests/farm_props_asset.test.ts": {
@@ -1407,6 +1551,15 @@
         "ms": 5,
         "method": "prose-backfill"
       },
+      "tests/gpu_backend_class_core.test.ts": {
+        "ms": 3,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          3
+        ]
+      },
       "tests/ground_aim_hud.test.ts": {
         "ms": 12,
         "method": "local-median",
@@ -1469,6 +1622,33 @@
       "tests/guild_board_window.test.ts": {
         "ms": 756,
         "method": "prose-backfill"
+      },
+      "tests/guild_roster.test.ts": {
+        "ms": 765,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          765
+        ]
+      },
+      "tests/guild_roster_page_db.test.ts": {
+        "ms": 1773,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          1773
+        ]
+      },
+      "tests/guild_roster_transport.test.ts": {
+        "ms": 1194,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          1194
+        ]
       },
       "tests/guild_roster_view.test.ts": {
         "ms": 3,
@@ -2199,6 +2379,15 @@
           4
         ]
       },
+      "tests/interp_math.test.ts": {
+        "ms": 2,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          2
+        ]
+      },
       "tests/inventory_extract.test.ts": {
         "ms": 5,
         "method": "prose-backfill"
@@ -2697,6 +2886,24 @@
           950
         ]
       },
+      "tests/nameplate_dot_scale.test.ts": {
+        "ms": 2,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          2
+        ]
+      },
+      "tests/nameplate_dots_core.test.ts": {
+        "ms": 5,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          5
+        ]
+      },
       "tests/nameplate_heraldry_core.test.ts": {
         "ms": 21,
         "method": "prose-backfill"
@@ -2888,6 +3095,15 @@
           3
         ]
       },
+      "tests/perf_boot_phases_core.test.ts": {
+        "ms": 9,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          9
+        ]
+      },
       "tests/perf_entry_reveal_core.test.ts": {
         "ms": 3,
         "method": "local-median",
@@ -2897,6 +3113,15 @@
           3,
           3,
           3
+        ]
+      },
+      "tests/perf_report_entry_blocks.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
         ]
       },
       "tests/perfect_item_ref.test.ts": {
@@ -3002,6 +3227,15 @@
           614
         ]
       },
+      "tests/post_reveal_links_core.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
+        ]
+      },
       "tests/pr_shot_entry_opts.test.ts": {
         "ms": 2,
         "method": "prose-backfill"
@@ -3009,6 +3243,15 @@
       "tests/preview_prewarm_wiring.test.ts": {
         "ms": 4,
         "method": "prose-backfill"
+      },
+      "tests/prewarm_resume_runner.test.ts": {
+        "ms": 8,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          8
+        ]
       },
       "tests/profession_log_tones.test.ts": {
         "ms": 8,
@@ -3079,6 +3322,33 @@
           11,
           11,
           10
+        ]
+      },
+      "tests/program_key_ledger.test.ts": {
+        "ms": 5,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          5
+        ]
+      },
+      "tests/program_key_ledger_core.test.ts": {
+        "ms": 6,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          6
+        ]
+      },
+      "tests/program_sources.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
         ]
       },
       "tests/proving_shore_content.test.ts": {
@@ -3272,6 +3542,60 @@
         "ms": 7,
         "method": "prose-backfill"
       },
+      "tests/realm_builder_monument.test.ts": {
+        "ms": 1004,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          1004
+        ]
+      },
+      "tests/realm_builder_monument_fx.test.ts": {
+        "ms": 21,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          21
+        ]
+      },
+      "tests/realm_builder_monument_fx_core.test.ts": {
+        "ms": 12,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          12
+        ]
+      },
+      "tests/realm_builder_name.test.ts": {
+        "ms": 2,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          2
+        ]
+      },
+      "tests/realm_builder_popup.test.ts": {
+        "ms": 23,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          23
+        ]
+      },
+      "tests/realm_builder_roll_fetch.test.ts": {
+        "ms": 56,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          56
+        ]
+      },
       "tests/recipe_index_memo.test.ts": {
         "ms": 4,
         "method": "prose-backfill"
@@ -3297,6 +3621,15 @@
           10,
           11,
           11
+        ]
+      },
+      "tests/renderer_extensions.test.ts": {
+        "ms": 6,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          6
         ]
       },
       "tests/renderer_farm_event_route.test.ts": {
@@ -3325,6 +3658,15 @@
           713
         ]
       },
+      "tests/result_code_keys.test.ts": {
+        "ms": 8,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          8
+        ]
+      },
       "tests/reward_counters.test.ts": {
         "ms": 765,
         "method": "prose-backfill"
@@ -3351,6 +3693,24 @@
           24
         ]
       },
+      "tests/rift_band_ladder.test.ts": {
+        "ms": 5,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          5
+        ]
+      },
+      "tests/rift_band_tooltip.test.ts": {
+        "ms": 10,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          10
+        ]
+      },
       "tests/rift_collision_region_online.test.ts": {
         "ms": 5,
         "method": "local-median",
@@ -3360,6 +3720,42 @@
           5,
           5,
           5
+        ]
+      },
+      "tests/rift_forge_dispatch.test.ts": {
+        "ms": 3,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          3
+        ]
+      },
+      "tests/rift_forge_place_gate.test.ts": {
+        "ms": 777,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          777
+        ]
+      },
+      "tests/rift_forge_view.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
+        ]
+      },
+      "tests/rift_forge_window.test.ts": {
+        "ms": 29,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          29
         ]
       },
       "tests/rift_resume_state.test.ts": {
@@ -3486,6 +3882,15 @@
           147,
           142,
           143
+        ]
+      },
+      "tests/self_spirit_warm.test.ts": {
+        "ms": 5,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          5
         ]
       },
       "tests/server/admin_analytics_reads.test.ts": {
@@ -3859,6 +4264,15 @@
         "ms": 4,
         "method": "prose-backfill"
       },
+      "tests/server/realm_builder.test.ts": {
+        "ms": 14,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          14
+        ]
+      },
       "tests/server/save_mail_state_custody_bake.test.ts": {
         "ms": 4,
         "method": "local-median",
@@ -4132,15 +4546,103 @@
           3
         ]
       },
-      "tests/shadow_depth_compile.test.ts": {
-        "ms": 5,
+      "tests/shader_cache_warmup.test.ts": {
+        "ms": 59,
         "method": "local-median",
-        "measured": "2026-08-31",
-        "reason": "phase 18 local carry pending the post-push harvest",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
         "runs": [
-          5,
-          5,
+          59
+        ]
+      },
+      "tests/shader_warm_audit.test.ts": {
+        "ms": 37,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          37
+        ]
+      },
+      "tests/shader_warm_audit_core.test.ts": {
+        "ms": 13,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          13
+        ]
+      },
+      "tests/shader_warm_client.test.ts": {
+        "ms": 12,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          12
+        ]
+      },
+      "tests/shader_warm_client_core.test.ts": {
+        "ms": 7,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          7
+        ]
+      },
+      "tests/shader_warm_gate.test.ts": {
+        "ms": 8,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          8
+        ]
+      },
+      "tests/shader_warm_lane.test.ts": {
+        "ms": 8,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          8
+        ]
+      },
+      "tests/shader_warm_setting.test.ts": {
+        "ms": 9,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          9
+        ]
+      },
+      "tests/shader_warm_worker_core.test.ts": {
+        "ms": 7,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          7
+        ]
+      },
+      "tests/shader_warmup_core.test.ts": {
+        "ms": 6,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
           6
+        ]
+      },
+      "tests/shader_warmup_gl_core.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
         ]
       },
       "tests/sheathe_toggle.test.ts": {
@@ -4211,6 +4713,15 @@
           3,
           3,
           3
+        ]
+      },
+      "tests/social_db_guild_roster.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
         ]
       },
       "tests/social_db_seat_pledge.test.ts": {
@@ -4344,6 +4855,33 @@
         "ms": 5,
         "method": "prose-backfill"
       },
+      "tests/target_dots_painter.test.ts": {
+        "ms": 25,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          25
+        ]
+      },
+      "tests/target_dots_refresh.test.ts": {
+        "ms": 4353,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4353
+        ]
+      },
+      "tests/target_dots_view.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
+        ]
+      },
       "tests/target_flair_line_view.test.ts": {
         "ms": 4,
         "method": "local-median",
@@ -4440,6 +4978,15 @@
       "tests/transfer_lock.test.ts": {
         "ms": 6,
         "method": "prose-backfill"
+      },
+      "tests/transmission_neutralize.test.ts": {
+        "ms": 1894,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          1894
+        ]
       },
       "tests/trophy_domination_claims.test.ts": {
         "ms": 6,
@@ -4745,6 +5292,15 @@
         "ms": 5,
         "method": "prose-backfill"
       },
+      "tests/vfx_basic_materials.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
+        ]
+      },
       "tests/virtual_clock.test.ts": {
         "ms": 5,
         "method": "local-median",
@@ -4811,6 +5367,24 @@
       "tests/wallet_verify_request.test.ts": {
         "ms": 4,
         "method": "prose-backfill"
+      },
+      "tests/water_simulation_prewarm.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
+        ]
+      },
+      "tests/webgl_context_fallback.test.ts": {
+        "ms": 4,
+        "method": "local-median",
+        "measured": "2026-09-07",
+        "reason": "PR 3872 release merge: measured release-only suites and new lifecycle regressions locally; latest green child CI was selective and refused as a full harvest. One real passing run per row; skipped suites retain fallback.",
+        "runs": [
+          4
+        ]
       },
       "tests/wellfed.test.ts": {
         "ms": 41123,
@@ -5021,6 +5595,7 @@
   "tests/ability_tooltip_consistency.test.ts": 49,
   "tests/ability_tooltip_lines.test.ts": 20,
   "tests/ability_tooltip_talents.test.ts": 7,
+  "tests/ability_vfx_cast_gate.test.ts": 6,
   "tests/ability_vfx_cc_bands.test.ts": 121,
   "tests/ability_vfx_core.test.ts": 604,
   "tests/ability_vfx_frame_cost.test.ts": 47,
@@ -5153,6 +5728,7 @@
   "tests/admin_nav_visibility.test.ts": 10,
   "tests/admin_permissions.test.ts": 16,
   "tests/admin_rate_limit_buckets.test.ts": 10,
+  "tests/admin_realm_builders.test.ts": 13,
   "tests/admin_retention_db.test.ts": 15,
   "tests/admin_routes.test.ts": 16,
   "tests/affliction.test.ts": 20077,
@@ -5368,6 +5944,7 @@
   "tests/battleground_render.test.ts": 297,
   "tests/battleground_rune_models.test.ts": 189,
   "tests/battleground_rune_vfx.test.ts": 70,
+  "tests/battleground_views.test.ts": 10,
   "tests/battleground_wire.test.ts": 3868,
   "tests/beacon_keeper_platform.test.ts": 2250,
   "tests/beacon_spiral.test.ts": 2995,
@@ -5395,6 +5972,7 @@
   "tests/border_ridge_skirt.test.ts": 787,
   "tests/border_waters.test.ts": 4759,
   "tests/boss_add_leash.test.ts": 4169,
+  "tests/boss_corpse_hold.test.ts": 1064,
   "tests/bot_detector_stub.test.ts": 7,
   "tests/breath.test.ts": 2164,
   "tests/broker_custody.test.ts": 1082,
@@ -5439,6 +6017,7 @@
   "tests/cast_bar.test.ts": 8,
   "tests/cast_bar_painter.test.ts": 25,
   "tests/cast_display_name.test.ts": 3,
+  "tests/cast_vfx_readiness_core.test.ts": 4,
   "tests/caster_set_bonus.test.ts": 2491,
   "tests/casting_command.test.ts": 3172,
   "tests/castle_building_boxes.test.ts": 1877,
@@ -5483,6 +6062,7 @@
   "tests/character_preview_policy.test.ts": 11,
   "tests/character_profile.test.ts": 9,
   "tests/character_rename.test.ts": 7,
+  "tests/character_save_acknowledge.test.ts": 4,
   "tests/character_save_fixups.test.ts": 5,
   "tests/character_save_statement_pg_integration.test.ts": 100,
   "tests/character_shadow_policy.test.ts": 4,
@@ -5531,6 +6111,7 @@
   "tests/chat_line.test.ts": 27,
   "tests/chat_log.test.ts": 4768,
   "tests/chat_mod_live.test.ts": 6,
+  "tests/chat_sender_flair.test.ts": 3,
   "tests/chat_tab_strip.test.ts": 11,
   "tests/chat_timestamp.test.ts": 23,
   "tests/chat_window.test.ts": 17,
@@ -5567,6 +6148,7 @@
   "tests/ci_shard_plan.test.ts": 10878,
   "tests/ci_shard_walk.test.ts": 21,
   "tests/ci_shard_weight_carry.test.ts": 6,
+  "tests/ci_shard_weight_harvest_guard.test.ts": 17,
   "tests/ci_shard_weight_parse.test.ts": 5,
   "tests/ci_stall_rerun.test.ts": 430,
   "tests/ci_test_select.test.ts": 29,
@@ -5629,6 +6211,7 @@
   "tests/community_test_accounts.test.ts": 3238,
   "tests/companion_read_api.test.ts": 136,
   "tests/compass.test.ts": 9,
+  "tests/compile_arms.test.ts": 7,
   "tests/compile_gate.test.ts": 25,
   "tests/compile_gate_pieces.test.ts": 17,
   "tests/compile_priority_core.test.ts": 9,
@@ -5657,6 +6240,7 @@
   "tests/cooldowns_command.test.ts": 2797,
   "tests/coords_format.test.ts": 14,
   "tests/copper_dig_pathing.test.ts": 2575,
+  "tests/corpse_beacon.test.ts": 3,
   "tests/corpse_harvest_result_event.test.ts": 10127,
   "tests/corpse_harvest_sim.test.ts": 64878,
   "tests/corpse_harvest_view.test.ts": 20,
@@ -5808,6 +6392,7 @@
   "tests/deploy_metrics_endpoint.test.ts": 5,
   "tests/deploy_node_version.test.ts": 15,
   "tests/deploy_ota_updates.test.ts": 9,
+  "tests/deploy_rift_forge_switch.test.ts": 2,
   "tests/deploy_wallet_connect.test.ts": 11,
   "tests/deploy_watchdog.test.ts": 3001,
   "tests/derelict_bomber.test.ts": 1467,
@@ -5818,7 +6403,9 @@
   "tests/desktop_download.test.ts": 7,
   "tests/desktop_download_dom.test.ts": 550,
   "tests/desktop_error_relay.test.ts": 8,
+  "tests/desktop_gpu_backend_sync.test.ts": 5,
   "tests/desktop_gpu_pref_sync.test.ts": 11,
+  "tests/desktop_gpu_report.test.ts": 2,
   "tests/desktop_gpu_status.test.ts": 1756,
   "tests/desktop_login_exit.test.ts": 6,
   "tests/desktop_notifications.test.ts": 14,
@@ -5826,6 +6413,7 @@
   "tests/desktop_presentation_threading.test.ts": 150,
   "tests/desktop_publish_guard.test.ts": 28,
   "tests/desktop_shell_integration.test.ts": 8,
+  "tests/desktop_shell_settings.test.ts": 8,
   "tests/desktop_shell_strings.test.ts": 9,
   "tests/desktop_uninstall_cleanup.test.ts": 5,
   "tests/desktop_update_toast.test.ts": 72,
@@ -5954,7 +6542,6 @@
   "tests/dynamic_resolution_wiring.test.ts": 9,
   "tests/early_ability_curve.test.ts": 5,
   "tests/eastbrook_camp_spacing.test.ts": 1514,
-  "tests/eastbrook_civic_beacon.test.ts": 107,
   "tests/eastbrook_dedupe_objectives.test.ts": 6,
   "tests/eastbrook_gameplay_integration.test.ts": 115664,
   "tests/eastbrook_grand_armoury.test.ts": 1832,
@@ -6010,6 +6597,7 @@
   "tests/electron_display_events.test.ts": 9,
   "tests/electron_display_push.test.ts": 11,
   "tests/electron_epic.test.ts": 27,
+  "tests/electron_gpu_backend.test.ts": 11,
   "tests/electron_gpu_preference.test.ts": 37,
   "tests/electron_gpu_push.test.ts": 6,
   "tests/electron_gpu_status_events.test.ts": 6,
@@ -6115,6 +6703,7 @@
   "tests/farm_pattern_items.test.ts": 1510,
   "tests/farm_press_affordance_controller.test.ts": 5,
   "tests/farm_press_target_core.test.ts": 4,
+  "tests/farm_program_anchor_lifecycle.test.ts": 88,
   "tests/farm_props_asset.test.ts": 59,
   "tests/farm_quest_objective.test.ts": 1511,
   "tests/farm_ready.test.ts": 5828,
@@ -6296,6 +6885,7 @@
   "tests/gltf_decoder_csp.test.ts": 5,
   "tests/gold_command.test.ts": 2560,
   "tests/gossip_menu.test.ts": 9,
+  "tests/gpu_backend_class_core.test.ts": 3,
   "tests/gpu_hitch_receipt.test.ts": 9,
   "tests/gpu_notice_toast.test.ts": 2124,
   "tests/gpu_notice_view.test.ts": 11,
@@ -6368,6 +6958,9 @@
   "tests/guild_letter_online.test.ts": 6746,
   "tests/guild_motd_login.test.ts": 12,
   "tests/guild_motd_plaintext.test.ts": 34,
+  "tests/guild_roster.test.ts": 765,
+  "tests/guild_roster_page_db.test.ts": 1773,
+  "tests/guild_roster_transport.test.ts": 1194,
   "tests/guild_roster_view.test.ts": 3,
   "tests/guild_stamp_fence.test.ts": 1873,
   "tests/hallowed_wall_bounce.test.ts": 2113,
@@ -6577,6 +7170,7 @@
   "tests/interior_map_controller.test.ts": 4,
   "tests/interior_resource_lifecycle.test.ts": 39,
   "tests/internal_api.test.ts": 7,
+  "tests/interp_math.test.ts": 2,
   "tests/inventory_extract.test.ts": 5,
   "tests/inventory_order.test.ts": 2647,
   "tests/inventory_sort.test.ts": 2816,
@@ -7019,6 +7613,8 @@
   "tests/nameplate_combo.test.ts": 2720,
   "tests/nameplate_declutter.test.ts": 173,
   "tests/nameplate_dev_glow.test.ts": 5,
+  "tests/nameplate_dot_scale.test.ts": 2,
+  "tests/nameplate_dots_core.test.ts": 5,
   "tests/nameplate_heraldry_core.test.ts": 21,
   "tests/nameplate_i18n_transition.test.ts": 1295,
   "tests/nameplate_loot_icon.test.ts": 10,
@@ -7230,6 +7826,7 @@
   "tests/perceptual_lod_wiring.test.ts": 7,
   "tests/perf_attrib_math.test.ts": 13,
   "tests/perf_attrib_plan.test.ts": 8,
+  "tests/perf_boot_phases_core.test.ts": 9,
   "tests/perf_diagnosis.test.ts": 42,
   "tests/perf_diagnosis_titles.test.ts": 5,
   "tests/perf_diagnostics_panel.test.ts": 467,
@@ -7252,6 +7849,7 @@
   "tests/perf_overlay_settings_scroll_wrap.test.ts": 42,
   "tests/perf_prewarm_lists_core.test.ts": 10,
   "tests/perf_report.test.ts": 2544,
+  "tests/perf_report_entry_blocks.test.ts": 4,
   "tests/perf_report_schedule.test.ts": 11,
   "tests/perf_reporter.test.ts": 39,
   "tests/perf_suggestion_id_parity.test.ts": 497,
@@ -7349,6 +7947,7 @@
   "tests/post_output_grade.test.ts": 18,
   "tests/post_pipeline.test.ts": 110,
   "tests/post_plan_core.test.ts": 15,
+  "tests/post_reveal_links_core.test.ts": 4,
   "tests/potion_command.test.ts": 2394,
   "tests/pr_shot_entry_opts.test.ts": 2,
   "tests/pr_shot_targets.test.ts": 35,
@@ -7375,6 +7974,7 @@
   "tests/prewarm_program_key_contract.test.ts": 32,
   "tests/prewarm_resume.test.ts": 49,
   "tests/prewarm_resume_ledger_core.test.ts": 13,
+  "tests/prewarm_resume_runner.test.ts": 8,
   "tests/prewarm_resume_start_gate_core.test.ts": 9,
   "tests/prewarm_submit_stop_core.test.ts": 13,
   "tests/priest_benison.test.ts": 4395,
@@ -7501,6 +8101,9 @@
   "tests/professions_zone_scaling.test.ts": 1757,
   "tests/proficiency_display_heal.test.ts": 3006,
   "tests/profile_page.test.ts": 33,
+  "tests/program_key_ledger.test.ts": 5,
+  "tests/program_key_ledger_core.test.ts": 6,
+  "tests/program_sources.test.ts": 4,
   "tests/program_variant_settle.test.ts": 26,
   "tests/program_variant_settle_core.test.ts": 9,
   "tests/progression.test.ts": 2280,
@@ -7598,6 +8201,12 @@
   "tests/reach_palms_cliffs.test.ts": 492,
   "tests/reachability.test.ts": 35,
   "tests/ready_check.test.ts": 2450,
+  "tests/realm_builder_monument.test.ts": 1004,
+  "tests/realm_builder_monument_fx.test.ts": 21,
+  "tests/realm_builder_monument_fx_core.test.ts": 12,
+  "tests/realm_builder_name.test.ts": 2,
+  "tests/realm_builder_popup.test.ts": 23,
+  "tests/realm_builder_roll_fetch.test.ts": 56,
   "tests/realm_population.test.ts": 8,
   "tests/realm_public_origin.test.ts": 5,
   "tests/realm_status.test.ts": 8,
@@ -7648,6 +8257,7 @@
   "tests/renderer_build_ledger_wiring.test.ts": 11,
   "tests/renderer_compile_gate.test.ts": 35,
   "tests/renderer_cpu_hot_path.test.ts": 9,
+  "tests/renderer_extensions.test.ts": 6,
   "tests/renderer_farm_event_route.test.ts": 72,
   "tests/renderer_frame_stats_snapshot.test.ts": 11,
   "tests/renderer_lifecycle.test.ts": 16,
@@ -7662,6 +8272,7 @@
   "tests/respawn_policy.test.ts": 15338,
   "tests/rest_indicator.test.ts": 5,
   "tests/rested_xp.test.ts": 5257,
+  "tests/result_code_keys.test.ts": 8,
   "tests/resume_play.test.ts": 19,
   "tests/resurrection.test.ts": 13,
   "tests/resurrection_reach.test.ts": 3491,
@@ -7676,6 +8287,8 @@
   "tests/rickshaw_mount.test.ts": 6,
   "tests/rickshaw_mount_asset.test.ts": 23,
   "tests/ride_height.test.ts": 133,
+  "tests/rift_band_ladder.test.ts": 5,
+  "tests/rift_band_tooltip.test.ts": 10,
   "tests/rift_binding.test.ts": 2154,
   "tests/rift_boss_reactable_mechanics.test.ts": 3434,
   "tests/rift_collider_cells.test.ts": 1263,
@@ -7690,8 +8303,12 @@
   "tests/rift_entry_clearance.test.ts": 638,
   "tests/rift_floor_tracker_controller.test.ts": 22,
   "tests/rift_floor_tracker_view.test.ts": 12,
+  "tests/rift_forge_dispatch.test.ts": 3,
   "tests/rift_forge_gate.test.ts": 2513,
+  "tests/rift_forge_place_gate.test.ts": 777,
   "tests/rift_forge_rollback_migration.test.ts": 32,
+  "tests/rift_forge_view.test.ts": 4,
+  "tests/rift_forge_window.test.ts": 29,
   "tests/rift_gen.test.ts": 997,
   "tests/rift_infernal.test.ts": 5014,
   "tests/rift_loot_pools.test.ts": 26,
@@ -7772,6 +8389,7 @@
   "tests/self_render_position_core.test.ts": 678,
   "tests/self_social_wire.test.ts": 143,
   "tests/self_spirit_prewarm.test.ts": 28,
+  "tests/self_spirit_warm.test.ts": 5,
   "tests/self_wire_phase_breakdown.test.ts": 2412,
   "tests/send_backpressure.test.ts": 6,
   "tests/sentence_renderer.test.ts": 37,
@@ -7969,6 +8587,7 @@
   "tests/server/ratelimit.test.ts": 21,
   "tests/server/ratelimit_clock.test.ts": 22,
   "tests/server/ratelimit_db.test.ts": 18,
+  "tests/server/realm_builder.test.ts": 14,
   "tests/server/realm_readout_memo.test.ts": 11,
   "tests/server/reliquary.test.ts": 13,
   "tests/server/reliquary_rarity_db.test.ts": 15,
@@ -8063,10 +8682,20 @@
   "tests/sfx_runtime_pack.test.ts": 187,
   "tests/sfx_studio.test.ts": 2293,
   "tests/sfx_studio_server_security.test.ts": 21820,
+  "tests/shader_cache_warmup.test.ts": 59,
   "tests/shader_debug_flag.test.ts": 7,
   "tests/shader_pow_domain.test.ts": 10,
+  "tests/shader_warm_audit.test.ts": 37,
+  "tests/shader_warm_audit_core.test.ts": 13,
+  "tests/shader_warm_client.test.ts": 12,
+  "tests/shader_warm_client_core.test.ts": 7,
+  "tests/shader_warm_gate.test.ts": 8,
+  "tests/shader_warm_lane.test.ts": 8,
+  "tests/shader_warm_setting.test.ts": 9,
+  "tests/shader_warm_worker_core.test.ts": 7,
+  "tests/shader_warmup_core.test.ts": 6,
+  "tests/shader_warmup_gl_core.test.ts": 4,
   "tests/shadow_cadence_core.test.ts": 88,
-  "tests/shadow_depth_compile.test.ts": 5,
   "tests/shadow_only_material.test.ts": 7,
   "tests/shadow_pass_gate_core.test.ts": 5,
   "tests/shadow_pass_gate_three.test.ts": 12,
@@ -8130,6 +8759,7 @@
   "tests/social_aggro.test.ts": 2829,
   "tests/social_classes.test.ts": 11378,
   "tests/social_db_guild_names.test.ts": 9,
+  "tests/social_db_guild_roster.test.ts": 4,
   "tests/social_db_seat_pledge.test.ts": 4,
   "tests/social_frames.test.ts": 2736,
   "tests/social_guild_create_lock.test.ts": 30,
@@ -8279,6 +8909,9 @@
   "tests/target_click.test.ts": 5,
   "tests/target_command.test.ts": 2511,
   "tests/target_cone_debug.test.ts": 9,
+  "tests/target_dots_painter.test.ts": 25,
+  "tests/target_dots_refresh.test.ts": 4353,
+  "tests/target_dots_view.test.ts": 4,
   "tests/target_echo_client.test.ts": 51,
   "tests/target_flair_line_view.test.ts": 4,
   "tests/target_frame.test.ts": 8,
@@ -8370,6 +9003,7 @@
   "tests/training_dummy.test.ts": 2629,
   "tests/training_dummy_preload.test.ts": 378,
   "tests/transfer_lock.test.ts": 6,
+  "tests/transmission_neutralize.test.ts": 1894,
   "tests/travel_speed_fx.test.ts": 11,
   "tests/trivial_mob_passive.test.ts": 2339,
   "tests/trophy_domination_claims.test.ts": 6,
@@ -8470,6 +9104,7 @@
   "tests/version_sync.test.ts": 15,
   "tests/vfx.test.ts": 139,
   "tests/vfx_anchor.test.ts": 12,
+  "tests/vfx_basic_materials.test.ts": 4,
   "tests/vfx_mote_floor.test.ts": 9,
   "tests/vfx_pool_core.test.ts": 6,
   "tests/view_candidate_pool.test.ts": 30,
@@ -8551,6 +9186,7 @@
   "tests/water_flora_shader_core.test.ts": 279,
   "tests/water_paint_order.test.ts": 7520,
   "tests/water_shore_shape.test.ts": 1624,
+  "tests/water_simulation_prewarm.test.ts": 4,
   "tests/water_streaming.test.ts": 38908,
   "tests/water_swell_gate.test.ts": 13,
   "tests/water_terrain_awareness.test.ts": 2319,
@@ -8575,6 +9211,7 @@
   "tests/weather.test.ts": 97,
   "tests/weather_field_core.test.ts": 17,
   "tests/web_login_guard.test.ts": 9,
+  "tests/webgl_context_fallback.test.ts": 4,
   "tests/wellfed.test.ts": 41123,
   "tests/wellfed_tooltip_composition.test.ts": 8,
   "tests/wellfed_tooltip_view.test.ts": 14,

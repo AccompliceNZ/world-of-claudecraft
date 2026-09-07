@@ -202,6 +202,8 @@ export interface ApplyEnchantResultView {
     // above the applier's flat Enchanting skill.
     | 'not_perfected'
     | 'insufficient_skill'
+    // A Riftbound band: forge-only, refused by id (professions/enchanting.ts).
+    | 'rift_gear'
     | 'busy';
 }
 

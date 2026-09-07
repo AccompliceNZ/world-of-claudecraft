@@ -45,6 +45,13 @@ tested sibling module here, never as more methods on `online.ts`. Exemplars
   restated on this side of the wire, so server-internal diagnostic ops could never render
   as guild history even from a regressed server), `account_cosmetics_wire.ts`
   (`self.cosmetics`; malformed input yields all-empty defaults, never a throw).
+- `guild_bank_log_mirror.ts`: the guild bank transaction history's client state machine
+  (`GuildBankLogMirror`, behind `guildBankLog(kind)` / `guildBankLogOlder()`): the loaded
+  pages for one filter kind, the per-TTL newest-window request gate, the older-page cursor,
+  and the merge rules (an answer is matched to the kind and cursor it was asked under and
+  dropped otherwise; a refresh that no longer overlaps the loaded pages starts over rather
+  than showing a hole). Clock-injected and socket-free: `read()`/`requestOlder()` RETURN the
+  request to send, `online.ts` only puts it on the wire (`tests/guild_bank_log_mirror.test.ts`).
 - `net_pipeline_stats.ts`: always-on snapshot-pipeline counters (parse/apply timing,
   approx bytes, raw inter-arrival gap). Clock-injected (it never reads `performance.now`
   itself) and deliberately bucket-agnostic: `src/net` never imports `src/game`;

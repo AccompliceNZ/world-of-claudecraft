@@ -151,21 +151,78 @@ describe('itemCompareBlocksHtml', () => {
     expect(withCandidate).not.toContain('tt-red');
   });
 
-  it('compares separately rolled copies even when they share an item id', () => {
+  it('compares separately rolled Rift copies even when they share an item id', () => {
+    // Only a Riftbound band is a genuinely multi-copy item id (shouldCompareCopies's
+    // contract, src/ui/item_compare.ts): the rift field is what marks the hovered
+    // copy as possibly NOT the worn one, so this scenario carries distinct rift
+    // records on top of the differing bakes.
+    const wornRift = {
+      sourceEventId: 'e',
+      tier: 'S' as const,
+      power: 4,
+      upgradeLevel: 2,
+      maxUpgradeLevel: 5,
+      gemSlots: 2,
+      gems: [] as string[],
+    };
+    const hoveredRift = { ...wornRift, upgradeLevel: 5 };
     const { calls, render } = recordingRenderer();
     const html = itemCompareBlocksHtml(
       HOVERED_HELM,
       {
         equipment: { helmet: HOVERED_HELM.id },
-        instances: { helmet: { rolled: { stats: { sta: 3 } } } },
+        instances: { helmet: { rolled: { stats: { sta: 3 } }, rift: wornRift } },
       },
       lookup,
       render,
-      { rolled: { stats: { sta: 5 } } },
+      { rolled: { stats: { sta: 5 } }, rift: hoveredRift },
     );
     expect(html).toContain('[card:cmp_test_helm]');
     expect(html).toContain('+2');
-    expect(calls).toEqual([{ id: HOVERED_HELM.id, instance: { rolled: { stats: { sta: 3 } } } }]);
+    expect(calls).toEqual([
+      { id: HOVERED_HELM.id, instance: { rolled: { stats: { sta: 3 } }, rift: wornRift } },
+    ]);
+  });
+
+  it('suppresses the compare when the hovered copy is literally the worn copy', () => {
+    // The paperdoll-hovers-itself case: same item id, no distinguishing per-copy
+    // data at all. shouldCompareCopies says no ("never a copy against itself"),
+    // so the redundant Currently Equipped card must not render.
+    const { calls, render } = recordingRenderer();
+    const html = itemCompareBlocksHtml(
+      HOVERED_HELM,
+      { equipment: { helmet: HOVERED_HELM.id } },
+      lookup,
+      render,
+    );
+    expect(html).toBe('');
+    expect(calls).toEqual([]);
+  });
+
+  it('suppresses the compare for an identical Rift band against itself', () => {
+    // Same id, same rift record, same rolled line: a structurally identical
+    // copy of the worn band (e.g. re-hovering the paperdoll slot), never a
+    // real "if you equip" swap.
+    const rift = {
+      sourceEventId: 'e',
+      tier: 'S' as const,
+      power: 4,
+      upgradeLevel: 2,
+      maxUpgradeLevel: 5,
+      gemSlots: 2,
+      gems: [] as string[],
+    };
+    const worn = { rolled: { stats: { sta: 5 } }, rift };
+    const { calls, render } = recordingRenderer();
+    const html = itemCompareBlocksHtml(
+      HOVERED_RING,
+      { equipment: { ring1: HOVERED_RING.id }, instances: { ring1: worn } },
+      lookup,
+      render,
+      structuredClone(worn),
+    );
+    expect(html).toBe('');
+    expect(calls).toEqual([]);
   });
 
   it('is empty for a slotless item or an empty slot', () => {

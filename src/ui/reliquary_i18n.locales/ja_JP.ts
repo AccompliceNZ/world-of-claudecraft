@@ -200,4 +200,8 @@ export const table: ReliquaryLocaleTable = {
     name: 'フォージブレイカー',
     desc: '鍛冶場から解き放たれ、自ら作った槌に宿る最後の泉の声。',
   },
+  conquerors_set_bramblehide: {
+    name: 'ルーツのブランブルハイド',
+    desc: 'ブランブルハイドのレザー一式。',
+  },
 };

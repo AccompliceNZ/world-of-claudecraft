@@ -14,8 +14,8 @@
 // database the URL points at. Pattern: tests/woc_market_settlement_pg_integration.test.ts.
 import { Pool } from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
-import type { WocListingRow, WocSettlementRow } from '../server/woc_market';
 import { materialSourceConnection } from '../server/material_source_connection';
+import type { WocListingRow, WocSettlementRow } from '../server/woc_market';
 import type { PgWocMarketDb } from '../server/woc_market_db';
 import type { CharacterState } from '../src/sim/sim';
 

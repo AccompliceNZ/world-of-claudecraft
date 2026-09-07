@@ -3458,10 +3458,6 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'auth.username': 'Uživatelské jméno',
   'auth.usernameError': 'Zadej uživatelské jméno.',
   'auth.usernamePlaceholder': 'Zadej uživatelské jméno',
-  'mode.caCopyAria': 'Kopírovat adresu kontraktu',
-  'mode.caLabel': 'Adresa kontraktu $WOC',
-  'mode.caNote':
-    'WOC je komunitní token. Ke hraní není potřeba. Připoj se na Discord a diskutuj o využití a ekonomickém modelu WOC.',
   'mode.offlineAria': 'Hrát offline: spustit okamžitou lokální hru pro jednoho hráče',
   'mode.offlineDesc':
     'Okamžitý svět pro jednoho hráče v prohlížeči. Nic se neukládá: ideální pro rychlou bitku nebo testování.',
@@ -13974,6 +13970,10 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Kritické zásahy Dlouhého nátahu prodlužují Chladné soustředění o 2 s, až o 6 s při jednom spuštění.',
   'entities.itemSets.coldsight_trackers.name': 'Stopaři Chladného zraku',
   'entities.itemSets.crownforged.bonus6': 'Zvyšuje rychlost útoků a sesílání o 4 % a zásah o 3 %. Kritické zásahy zbraní způsobí Krvavý střep, který cíl krvácí za 5 poškození každé 2 s po dobu 12 s. Sčítá se až 3krát.',
+  'entities.itemSets.bramblehide.name': 'Rootsova ostružinová kůže',
+  'entities.itemSets.bramblehide.bonus2': 'Zvyšuje sílu útoku o 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Kritické zásahy tvé zbraně roztříští cíl efektem Kostitříska a způsobí mu krvácení za 8 poškození každé 2 s po dobu 12 s. Nasčítá se až 3krát.',
+  'entities.itemSets.bramblehide.bonus6': 'Zvyšuje rychlost útoků a sesílání o 4 % a zásah o 3 %. Kritické zásahy zbraní způsobí Krvavý střep, který cíl krvácí za 5 poškození každé 2 s po dobu 12 s. Sčítá se až 3krát.',
   'entities.itemSets.dawnforged.bonus2': 'Maják světla kopíruje 55 procent tvých přímých léčení. Utržené poškození již nezpožďuje sesílání kouzel.',
   'entities.itemSets.dawnforged.bonus4': 'Posílené objetí úsvitu Zářivé rezonance je okamžité.',
   'entities.itemSets.dawnforged.name': 'Roucha Kovaná úsvitem',

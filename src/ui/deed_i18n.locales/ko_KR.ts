@@ -1018,4 +1018,8 @@ export const table: DeedLocaleTable = {
     name: '풀려난 샘',
     desc: '화로파괴자를 직접 벼리고 완성된 망치를 가지고 메일린에게 돌아가세요.',
   },
+  col_set_bramblehide: {
+    name: '루츠의 가시덤불가죽',
+    desc: '루츠의 가시덤불가죽의 모든 부위를 발견하십시오.',
+  },
 };

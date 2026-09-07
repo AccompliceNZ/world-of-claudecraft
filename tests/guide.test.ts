@@ -1136,7 +1136,9 @@ describe('Guide Reliquary spoiler-safe catalog', () => {
     expect(html).toContain(t('guide.reliquaryPage.shelf.professions' as never));
     expect(html).toContain(t('guide.reliquaryPage.shelf.horizons' as never));
     for (const page of GUIDE_RELIQUARY) {
-      expect(html).toContain(page.name);
+      // The renderer HTML-escapes every page name (Roots' Bramblehide carries
+      // an apostrophe), so compare against the escaped form it emits.
+      expect(html).toContain(esc(page.name));
     }
     // Pure catalog helper covers the same rows the page composes.
     const sections = reliquaryCatalogSections(GUIDE_RELIQUARY);

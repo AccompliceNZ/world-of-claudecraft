@@ -1069,4 +1069,8 @@ export const table: DeedLocaleTable = {
     desc: 'Kalahkan Varkhul, Bapak Penempa Api Terakhir, pada tingkat kesulitan Heroik tanpa satu pun anggota raid yang mati.',
     title: 'sang Nirbakar',
   },
+  col_set_bramblehide: {
+    name: 'Kulit Semak Duri Roots',
+    desc: 'Temukan setiap bagian dari Kulit Semak Duri Roots.',
+  },
 };

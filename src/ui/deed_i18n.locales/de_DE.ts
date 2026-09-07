@@ -1066,4 +1066,8 @@ export const table: DeedLocaleTable = {
     desc: 'Besiege Varkhul, Schmiedevater der Letzten Flamme, auf heroischem Schwierigkeitsgrad, ohne dass ein einziges Schlachtzugsmitglied stirbt.',
     title: 'Unversengt',
   },
+  col_set_bramblehide: {
+    name: "Roots' Dornenhaut",
+    desc: "Entdecke jedes Teil von Roots' Dornenhaut.",
+  },
 };

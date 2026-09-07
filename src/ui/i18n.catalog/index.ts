@@ -356,10 +356,6 @@ export const en = {
     serverLabel: 'Choose your world',
     serverAria: 'Select world: Online or Offline',
     serverOfflineSub: 'Instant local world',
-    caLabel: '$WOC Contract Address',
-    caCopyAria: 'Copy contract address',
-    caNote:
-      'WOC is our community token. It is not needed to play. Join Discord to discuss the WOC utility and flywheel.',
   },
   auth: {
     enterRealm: 'Enter the World',
@@ -925,6 +921,7 @@ export const en = {
       forgeUpgraded: 'Rift upgrade completed for {name}.',
       forgeEnchanted: 'Rift enchant completed for {name}.',
       forgeSocketed: 'Rift gem socketed for {name}.',
+      forgeGemReplaced: 'Rift gem replaced for {name}: {gem} destroyed.',
       // Boss lethal death-zone detonation log lines (src/sim/mob/locomotion.ts).
       // Each fires at the moment a telegraphed zone expires. Emitted in English
       // by the sim; re-localized via the sim.rift.detonate* rules in sim_i18n.ts.

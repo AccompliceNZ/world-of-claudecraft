@@ -200,4 +200,8 @@ export const table: ReliquaryLocaleTable = {
     name: '화로파괴자',
     desc: '대장간에서 풀려나 직접 만든 망치에 깃든 마지막 샘의 목소리.',
   },
+  conquerors_set_bramblehide: {
+    name: '루츠의 가시덤불가죽',
+    desc: '브램블하이드 가죽 세트 전체.',
+  },
 };

@@ -70,6 +70,27 @@ describe('publicInstanceView: the display trim', () => {
     expect(live.rolled!.stats!.str).toBe(2);
   });
 
+  it('projects a Riftbound band record by value (rank, upgrades, gems) and nothing bound', () => {
+    const live: ItemInstancePayload = {
+      boundTo: 7,
+      rolled: { quality: 'epic', stats: { str: 8, sta: 6 } },
+      rift: {
+        sourceEventId: 'e',
+        tier: 'S',
+        power: 4,
+        upgradeLevel: 5,
+        maxUpgradeLevel: 5,
+        gemSlots: 2,
+        gems: ['rift_gem_verdant'],
+      },
+    };
+    const pub = publicInstanceView(live);
+    expect(pub).toEqual({ rolled: live.rolled, rift: live.rift });
+    expect(pub).not.toHaveProperty('boundTo');
+    pub.rift!.gems.push('rift_gem_azure');
+    expect(live.rift!.gems).toEqual(['rift_gem_verdant']);
+  });
+
   it('matches the eqi wire allowlist in server/game.ts: widen both or neither', () => {
     // Source-scrape the eqi projection loop (the enchant_apply_view.test.ts
     // pin) and assert this module projects the identical key set. `name`
@@ -77,7 +98,7 @@ describe('publicInstanceView: the display trim', () => {
     // still holds every non-cosmetic field out by name.
     const game = readFileSync(new URL('../server/game.ts', import.meta.url), 'utf8');
     const projected = [...game.matchAll(/pub\.(\w+) = inst\.(\w+);/g)].map((m) => m[1]);
-    expect(projected.sort()).toEqual(['enchant', 'name', 'perfected', 'rolled', 'signer']);
+    expect(projected.sort()).toEqual(['enchant', 'name', 'perfected', 'rift', 'rolled', 'signer']);
     const transfer = readFileSync(
       new URL('../src/sim/item_instance_transfer.ts', import.meta.url),
       'utf8',
@@ -87,6 +108,7 @@ describe('publicInstanceView: the display trim', () => {
       'enchant',
       'name',
       'perfected',
+      'rift',
       'rolled',
       'signer',
     ]);

@@ -307,15 +307,18 @@ describe('missing painted icon accepted-art manifest', () => {
     // bespoke Elemental Trance replacing its interim duplicate: 206/190/86
     // become 220/204/100. The Sowfield demolition retires the 10 sport_*
     // Vale Cup abilities with their art: 220/204/100 become 210/194/90.
+    // The Nythraxis gap-fill one-handers add three generated heroic resolvers at
+    // the current head (heroic_courtiers_bonefang, heroic_gravecourt_hewer,
+    // heroic_thornpeak_wardblade): 210/16/12 become 213/19/15.
     expect(accepted.scope).toEqual({
-      targetRows: 210,
+      targetRows: 213,
       rasterPaintings: 194,
       abilities: 90,
       items: 101,
       deeds: 3,
-      heroicWeaponResolvers: 16,
+      heroicWeaponResolvers: 19,
       originalInventoryRows: 197,
-      supplementalCurrentHeadRows: 12,
+      supplementalCurrentHeadRows: 15,
     });
     expect(accepted.assets).toHaveLength(194);
     expect(accepted.assets.filter((asset) => asset.kind === 'ability')).toHaveLength(90);
@@ -332,7 +335,7 @@ describe('missing painted icon accepted-art manifest', () => {
         accepted.assets.filter((asset) => asset.kind === kind).map((asset) => asset.id),
       ).toEqual(ids);
     }
-    expect(accepted.targetSets.heroicWeaponResolvers).toHaveLength(16);
+    expect(accepted.targetSets.heroicWeaponResolvers).toHaveLength(19);
     expect(accepted.targetSets.heroicWeaponResolvers.map(({ id }) => id)).toEqual(
       sorted(new Set(accepted.targetSets.heroicWeaponResolvers.map(({ id }) => id))),
     );
@@ -665,7 +668,10 @@ describe('missing painted deed and Heroic weapon integration', () => {
     // Crucible raid deeds (276 to 281 on its own arm) join the same pending
     // side on the deed_cat_dungeon crest.
     // The personal hammer quest uses the explicitly pending hidden-category crest.
-    expect(DEED_ORDER).toHaveLength(299);
+    // 300 at THIS release/v0.42.0 merge: the Roots' Bramblehide set collection
+    // (col_set_bramblehide, 281 to 282 on the release's own arm) joins the
+    // same pending side.
+    expect(DEED_ORDER).toHaveLength(300);
     expect(DEED_ART_PENDING.has('hid_forgebreaker')).toBe(true);
     expect(DEED_ORDER.filter((id) => !DEED_IMAGE_IDS.has(id))).toEqual([...DEED_ART_PENDING]);
     const credits = readFileSync(path.join(repoRoot, 'CREDITS.md'), 'utf8');

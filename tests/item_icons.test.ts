@@ -313,10 +313,13 @@ describe('item webp icons', () => {
   it('has image-backed item ids wired (guards the fixture)', () => {
     expect(ITEM_IMAGE_IDS.size).toBeGreaterThan(0);
     // 123 -> 125 at Masterwrought phase 09: duskforged_warblade + ridgebreaker joined
-    // ITEM_WEAPON_VARIANTS (set from a suite run, not arithmetic); 125 -> 135 at the
-    // release/v0.41.0 merge (2026-08-30), which brought the ten Ignivar raid weapons
-    // (the release's own arm read 133 = 123 + 10). Re-derived on the merged tree.
-    expect(WEAPON_IMAGE_IDS.size).toBe(135);
+    // ITEM_WEAPON_VARIANTS; 125 -> 135 at the release/v0.41.0 merge (2026-08-30), which
+    // brought the ten Ignivar raid weapons. Release's own lineage separately grew the
+    // shared 133-weapon base by three with the Nythraxis gap-fill one-handers
+    // (nythraxis-gap-weapon-renders-2026-09-04) to 136. This merge unions both waves
+    // plus this branch's own Crucible professions weapon additions; re-counted directly
+    // off the merged src/ui/weapon_variants.ts (Object.keys(ITEM_WEAPON_VARIANTS).size).
+    expect(WEAPON_IMAGE_IDS.size).toBe(138);
   });
 
   it('A) every image-backed item and weapon resolves to a committed, decodable .webp', async () => {
@@ -364,8 +367,14 @@ describe('item webp icons', () => {
     for (const id of ITEM_ART_PENDING) {
       expect(itemImageUrl(id), `${id} must not resolve to uncommitted art`).toBeNull();
     }
-    // The completion wave clears the feature debt. The release-owned Crucible
-    // spread is also empty today, so any future parked id needs an explicit re-pin.
+    // The completion wave, the Crucible wave (crucible-set-icons-2026-08-29), and the
+    // release's Roots' Bramblehide plus Nythraxis gap-fill wave
+    // (roots-bramblehide-icons-2026-09-07) are all fully painted (confirmed on the
+    // merged tree: IGNIVAR_ART_PENDING_ITEM_IDS, BRAMBLEHIDE_ART_PENDING_ITEM_IDS, and
+    // NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS are each declared empty in
+    // src/sim/content/ignivar_loot.ts / zone3.ts), so the ledger is back to the EMPTY
+    // set: no artless item can hide behind an open wave, and the next commissioned wave
+    // re-pins its exact membership here when it stages.
     expect(
       [...ITEM_ART_PENDING].sort(),
       'art debt is enumerated and re-pinned deliberately, never grown quietly',

@@ -198,4 +198,8 @@ export const table: ReliquaryLocaleTable = {
     name: 'Горнолом',
     desc: 'Голос Последнего Источника, освобождённый из горна и заключённый в молоте вашей работы.',
   },
+  conquerors_set_bramblehide: {
+    name: 'Тернистая шкура Рутса',
+    desc: 'Полное кожаное семейство Bramblehide.',
+  },
 };

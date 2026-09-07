@@ -180,15 +180,17 @@ export interface BagCopy {
 
 /** Whether destroying this specific copy loses something irreplaceable: it was
  *  signed/crafted, is a masterwork proc, is enchanted (isEnchantedInstance:
- *  the explicit marker or a legacy bare rolled.stats without masterwork), or
+ *  the explicit marker or a legacy bare rolled.stats without masterwork),
  *  carries Perfecting progress or the Perfected stamp (Masterwrought phase
  *  12: by contract, not by the signer every live Perfected copy happens to
- *  carry). A plain fungible copy is never special. */
+ *  carry), or is a Riftbound band (a personal first-clear reward priced by
+ *  its copy, rift/band_ladder.ts). A plain fungible copy is never special. */
 export function isSpecialCopy(instance: ItemInstancePayload | undefined): boolean {
   if (!instance) return false;
   return (
     !!instance.signer ||
     !!instance.rolled?.masterwork ||
+    !!instance.rift ||
     isEnchantedInstance(instance) ||
     instance.perfected === true ||
     instance.perfecting !== undefined

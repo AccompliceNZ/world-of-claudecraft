@@ -85,7 +85,10 @@ describe('deed_i18n English resolution', () => {
     // Crucible raid deeds; the Varkhul flawless task carries a title (the
     // release's own chain read 281 * 2 + 43), so the title count moves to 46.
     // The personal hammer quest adds a name and desc, but no title reward.
-    expect(manifest.length).toBe(299 * 2 + 46);
+    // 300 since THIS release/v0.42.0 merge brought in the Roots' Bramblehide
+    // set collection (col_set_bramblehide, no title reward; the release's own
+    // chain read 282 * 2 + 43), so the title count stays at 46.
+    expect(manifest.length).toBe(300 * 2 + 46);
     expect(manifest.filter((row) => row.field === 'title').length).toBe(46);
     expect(manifest.filter((row) => row.id === 'hid_forgebreaker')).toEqual([
       { id: 'hid_forgebreaker', field: 'name', source: 'A Spring Unchained' },

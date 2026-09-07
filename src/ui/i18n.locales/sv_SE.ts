@@ -8702,10 +8702,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Spela i liggande helskärm för bästa mobila upplevelse.',
   'mobilePreflight.rotateTitle': 'Rotera till liggande läge',
   'mobilePreflight.title': 'Spela i liggande helskärm',
-  'mode.caCopyAria': 'Kopiera kontraktsadress',
-  'mode.caLabel': '$WOC Kontraktsadress',
-  'mode.caNote':
-    'WOC är vår community-token. Den behövs inte för att spela. Gå med i Discord för att diskutera WOC:s nytta och svänghjul.',
   'mode.offlineAria': 'Spela offline: starta en omedelbar lokal enspelarsession',
   'mode.offlineDesc':
     'Omedelbar enspelarvärld i din webbläsare. Inget sparas: perfekt för en snabb drabbning eller testning.',
@@ -13977,6 +13973,10 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Långdrags kritiska träffar förlänger Kallfokus med 2 sek, upp till 6 sek per aktivering.',
   'entities.itemSets.coldsight_trackers.name': 'Kallsynernas spårare',
   'entities.itemSets.crownforged.bonus6': 'Ökar attack- och kastningshastigheten med 4 procent och träffsäkerheten med 3 procent. Dina vapens kritiska träffar splittrar målet med Bensplitter och får det att blöda 5 skada varannan sek i 12 sek. Staplas upp till 3 gånger.',
+  'entities.itemSets.bramblehide.name': "Roots' Törnehud",
+  'entities.itemSets.bramblehide.bonus2': 'Ökar attackkraft med 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Dina kritiska vapenträffar splittrar målet med Benflisa och får det att blöda för 8 skada var 2:e sek i 12 sek. Staplas upp till 3 gånger.',
+  'entities.itemSets.bramblehide.bonus6': 'Ökar attack- och kastningshastigheten med 4 procent och träffsäkerheten med 3 procent. Dina vapens kritiska träffar splittrar målet med Bensplitter och får det att blöda 5 skada varannan sek i 12 sek. Staplas upp till 3 gånger.',
   'entities.itemSets.dawnforged.bonus2': 'Ljusets fyr kopierar 55 procent av dina direkta läkningseffekter. Skada du tar fördröjer inte längre dina besvärjelser.',
   'entities.itemSets.dawnforged.bonus4': 'Strålande resonans förstärkta Gryningens omfamning är omedelbar.',
   'entities.itemSets.dawnforged.name': 'Gryningssmidda klädnader',

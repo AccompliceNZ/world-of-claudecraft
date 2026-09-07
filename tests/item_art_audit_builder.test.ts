@@ -832,30 +832,38 @@ describe('item-art audit builder', () => {
         timeout: 30_000,
       }),
     ) as Record<string, unknown>;
+    // Restored post-merge (release/v0.42.0 into professions): neither
+    // pre-merge parent's pin matches the merged tree (professions HEAD:
+    // catalogCount 1256; release: catalogCount 1069). These are the measured
+    // values from `node scripts/item_art_audit.mjs --verify-only` run
+    // directly on the merged tree (see the matching restore in
+    // scripts/item_art_audit.mjs's `expected` block), not invented or
+    // derived from either parent.
     expect(verified).toMatchObject({
       catalogPath: 'tmp/imagegen/item-art-consistency/final-audit/catalog.json',
-      // Measured by an actual `--verify-only` run over the merged tree, including
-      // the Forgebreaker quest's forgefathers_ember art in the Crucible batch;
-      // receipt: /tmp/professions-merge-pr3885-art-verify.json.
-      catalogSha256: '6dfe10fcbc5806a4296760a362d6c36d1c8a5823b6795ec696fc47bb8aed366d',
-      catalogBytes: 684325,
+      catalogSha256: 'a142b3eb8a5e2e4442987b5be3a2b773f1042a7297c241bea4eb23a3c2624e5e',
+      catalogBytes: 698071,
       rendererFingerprint: '41f5404c4d6d9643c8f03b9d88a8546e44564cc03a1baabdd4a72cb9258a2da7',
-      // 1,209 (Masterwrought) + 1 (Field Kit) + 45 (Crucible professions) + 1
-      // (the Forgebreaker quest's forgefathers_ember proof item) = 1,256.
-      catalogCount: 1256,
-      // 1,224 (Masterwrought) + 1 (Field Kit) + 45 (Crucible professions) + 1
-      // (forgefathers_ember) = 1,271.
-      liveItemCount: 1271,
-      generatedHeroicDefinitions: 64,
-      heroicDefinitionsWithOwnWebp: 48,
-      heroicWeaponArtAliases: 16,
+      catalogCount: 1281,
+      liveItemCount: 1299,
+      generatedHeroicDefinitions: 78,
+      heroicDefinitionsWithOwnWebp: 59,
+      heroicWeaponArtAliases: 19,
       groupCount: 25,
       sheetPageCount: 31,
       sheetCount: 248,
-      sheetModeCounts: Object.fromEntries(ITEM_ART_AUDIT_MODES.map((mode) => [mode, 31])),
+      sheetModeCounts: {
+        '128-color': 31,
+        '40-color': 31,
+        '28-color': 31,
+        '22-color': 31,
+        '28-grayscale': 31,
+        '64-circle': 31,
+        'small-multiview': 31,
+        identity: 31,
+      },
       sheetSetSha256: null,
-      // Same `--verify-only` receipt as the catalogSha256 note above.
-      shippingCatalogSha256: '56570a72b0538ce4b9632583f614baa07c4c962f2cf8c53364a9bf4b25f03fd7',
+      shippingCatalogSha256: '0e2f5e7cca8ed82b6a37ccbda5a56c4aeeeb7eaf43cda590face156b3093de78',
       machineChecksPassed: true,
       verdict: null,
     });

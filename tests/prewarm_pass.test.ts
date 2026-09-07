@@ -341,12 +341,15 @@ describe('runBackgroundPrewarm', () => {
     const boundedStart = source.indexOf('private renderBoundedPrewarmRoot(');
     const boundedEnd = source.indexOf('\n  private renderPrewarmPass(', boundedStart);
     const boundedMethod = source.slice(boundedStart, boundedEnd);
-    const compileStart = source.indexOf('private async compilePrewarmColorPrograms(');
-    // The shadow arm follows the colour arm, behind its doc comment (the body
-    // itself is src/render/shadow_depth_compile.ts since phase 18).
-    const compileEnd = source.indexOf('\n  private compileShadowPrograms(', compileStart);
-    expect(compileEnd).toBeGreaterThan(compileStart);
-    const compileMethod = source.slice(compileStart, compileEnd);
+    // The colour arm moved to src/render/compile_arms.ts (the renderer's
+    // compilePrewarmColorPrograms delegates to linkColorPrograms).
+    const compileMethod = readFileSync(
+      new URL('../src/render/compile_arms.ts', import.meta.url),
+      'utf8',
+    );
+    expect(source).toContain(
+      'return linkColorPrograms(this.compileArms, root, includeOffscreenVariant);',
+    );
 
     expect(zoneMethod).toContain('() => this.compilePrewarmColorPrograms(childRoot, true)');
     expect(zoneMethod).toContain('() => this.compileShadowPrograms(childRoot)');
@@ -366,20 +369,26 @@ describe('runBackgroundPrewarm', () => {
       zoneMethod.indexOf('this.scene.add(mobGroup, npcGroup)'),
     );
     expect(zoneMethod).not.toContain('Promise.race');
-    expect(compileMethod).toContain('if (!this.post) await compileAtTarget(null)');
-    expect(compileMethod).toContain('if (this.post || includeOffscreenVariant)');
-    const setTargetAt = compileMethod.indexOf('this.webgl.setRenderTarget(target)');
-    const compileAt = compileMethod.indexOf('compilePromise = this.webgl.compileAsync(');
-    const restoreAt = compileMethod.indexOf(
-      'this.webgl.setRenderTarget(previousTarget)',
-      compileAt,
+    expect(compileMethod).toContain('if (!host.offscreen()) targets.push(null);');
+    expect(compileMethod).toContain(
+      'if (host.offscreen() || includeOffscreenVariant) targets.push(host.offscreenTarget());',
     );
-    const awaitAt = compileMethod.indexOf('await compilePromise', restoreAt);
+    // The target is bound, the op (compileAsync's synchronous prologue) runs,
+    // the previous target is restored in the finally, and only then does the
+    // link get awaited: no throwaway target is held across a live frame.
+    const setTargetAt = compileMethod.indexOf('webgl.setRenderTarget(target);');
+    const opAt = compileMethod.indexOf('return op();', setTargetAt);
+    const restoreAt = compileMethod.indexOf('webgl.setRenderTarget(previousTarget);', opAt);
+    const awaitAt = compileMethod.indexOf('await underRenderTarget(host, target, () =>', restoreAt);
+    const compileAt = compileMethod.indexOf(
+      'host.webgl().compileAsync(root, host.camera(), host.scene())',
+      awaitAt,
+    );
     expect(setTargetAt).toBeGreaterThan(-1);
-    expect(compileAt).toBeGreaterThan(setTargetAt);
-    expect(restoreAt).toBeGreaterThan(compileAt);
+    expect(opAt).toBeGreaterThan(setTargetAt);
+    expect(restoreAt).toBeGreaterThan(opAt);
     expect(awaitAt).toBeGreaterThan(restoreAt);
-    expect(compileMethod).toContain('await compileAtTarget(this.prewarmRenderTarget)');
+    expect(compileAt).toBeGreaterThan(awaitAt);
     expect(boundedMethod).toContain('boundedPrewarmVisibility(entry.visible, keepVisible)');
     expect(boundedMethod).toContain('this.webgl.shadowMap.autoUpdate = false');
     expect(boundedMethod).not.toContain('if (!this.post)');
@@ -415,7 +424,7 @@ describe('runBackgroundPrewarm', () => {
     // The wrapper's body lives in the extracted arm; scan both halves.
     const shadowSlice =
       source.slice(shadowStart, shadowEnd) +
-      readFileSync(new URL('../src/render/shadow_depth_compile.ts', import.meta.url), 'utf8');
+      readFileSync(new URL('../src/render/compile_arms.ts', import.meta.url), 'utf8');
     const bootStart = source.indexOf("id: 'programs.compile'");
     const bootEnd = source.indexOf("id: 'sky.current-zone'", bootStart);
     const bootSlice = source.slice(bootStart, bootEnd);

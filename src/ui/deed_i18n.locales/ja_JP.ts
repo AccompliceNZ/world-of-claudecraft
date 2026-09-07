@@ -967,4 +967,8 @@ export const table: DeedLocaleTable = {
     name: '解き放たれた泉',
     desc: 'フォージブレイカーを自ら鍛え、完成した槌を携えてメイリンのもとへ戻る。',
   },
+  col_set_bramblehide: {
+    name: 'ルーツのブランブルハイド',
+    desc: 'ルーツのブランブルハイドの全部位を発見する。',
+  },
 };

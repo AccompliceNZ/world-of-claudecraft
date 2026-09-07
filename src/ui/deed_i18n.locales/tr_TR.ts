@@ -1025,4 +1025,8 @@ export const table: DeedLocaleTable = {
     desc: "Tek bir akıncı bile ölmeden Varkhul, Forgefather of the Last Flame'yi Kahramanca zorlukta alt et.",
     title: 'Yanmaz',
   },
+  col_set_bramblehide: {
+    name: "Roots'un Dikenli Postu",
+    desc: "Roots'un Dikenli Postu'nun her parçasını keşfet.",
+  },
 };

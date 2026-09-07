@@ -199,4 +199,8 @@ export const table: ReliquaryLocaleTable = {
     name: '碎炉者',
     desc: '末泉的声音从锻炉中解放，寄宿在你亲手打造的战锤中。',
   },
+  conquerors_set_bramblehide: {
+    name: '鲁茨的荆棘皮甲',
+    desc: '完整的荆棘皮甲系列。',
+  },
 };

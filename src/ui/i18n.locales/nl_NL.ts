@@ -8862,10 +8862,6 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Speel in liggend volledig scherm voor de beste mobiele ervaring.',
   'mobilePreflight.rotateTitle': 'Draai naar Liggend',
   'mobilePreflight.title': 'Speel in Liggend Volledig Scherm',
-  'mode.caCopyAria': 'Contractadres kopiëren',
-  'mode.caLabel': '$WOC Contractadres',
-  'mode.caNote':
-    'WOC is onze communitytoken. Het is niet nodig om te spelen. Word lid van Discord om de WOC-toepassing en het vliegwiel te bespreken.',
   'mode.offlineAria': 'Offline Spelen: start direct een lokale singleplayer-sessie',
   'mode.offlineDesc':
     'Direct een singleplayer-wereld in je browser. Er wordt niets opgeslagen: perfect voor een snel gevecht of om te testen.',
@@ -14057,6 +14053,10 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Kritieke treffers van Long Draw verlengen Cold Focus met 2 sec., tot maximaal 6 sec. per activering.',
   'entities.itemSets.coldsight_trackers.name': 'Koudzicht-Verkenners',
   'entities.itemSets.crownforged.bonus6': 'Verhoogt aanvals- en spreuksnelheid met 4% en Trefferkans met 3%. Kritieke treffers van je wapen splijten het doel met Bonesplinter, waardoor het 12 sec. lang elke 2 sec. 5 schade oploopt. Stapelt tot 3 keer.',
+  'entities.itemSets.bramblehide.name': "Roots' Doornhuid",
+  'entities.itemSets.bramblehide.bonus2': 'Verhoogt aanvalskracht met 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Je kritieke wapentreffers splinteren het doelwit met Beensplinter, waardoor het 8 schade bloedt elke 2 sec gedurende 12 sec. Stapelt tot 3 keer.',
+  'entities.itemSets.bramblehide.bonus6': 'Verhoogt aanvals- en spreuksnelheid met 4% en Trefferkans met 3%. Kritieke treffers van je wapen splijten het doel met Bonesplinter, waardoor het 12 sec. lang elke 2 sec. 5 schade oploopt. Stapelt tot 3 keer.',
   'entities.itemSets.dawnforged.bonus2': 'Beacon of Light kopieert 55 procent van je directe genezingen. Opgelopen schade vertraagt het uitspreken van je spreuken niet meer.',
   'entities.itemSets.dawnforged.bonus4': 'De versterkte Dawn’s Embrace van Radiant Resonance is onmiddellijk.',
   'entities.itemSets.dawnforged.name': 'Dageraadgesmede Gewaden',

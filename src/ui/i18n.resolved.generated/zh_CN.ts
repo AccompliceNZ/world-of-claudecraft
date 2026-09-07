@@ -1308,6 +1308,11 @@ export const zh_CN: EnTranslations = {
       "separate": "分离{meter}",
       "regroup": "合并{meter}"
     },
+    "targetDots": {
+      "title": "目标减益",
+      "row": "{aura} on {target}",
+      "overflow": "还有 {count} 个未显示"
+    },
     "targetAuras": {
       "title": "目标光环",
       "keybindLabel": "目标增益和减益效果",
@@ -1568,6 +1573,26 @@ export const zh_CN: EnTranslations = {
       "showPlaytime": "在角色界面显示游戏时长",
       "forceHighPerfGpu": "使用独立游戏显卡",
       "forceHighPerfGpuNote": "默认开启：桌面版会向本机申请使用独立游戏显卡。如果游戏无法启动、启动后黑屏，或笔记本屏幕没有画面，请关闭此选项。该设置将在下次启动游戏时生效。",
+      "shaderWarm": "着色器预热工作线程",
+      "shaderWarmAuto": "自动",
+      "shaderWarmOff": "关闭",
+      "shaderWarmOn": "开启",
+      "shaderWarmNote": "在后台预热着色器缓存，以避免游戏中出现卡顿。自动：仅在你的图形系统支持时启用（推荐）。开启：在所有环境中强制启用，在部分配置上可能会让性能变差。关闭：不启用。",
+      "gpuBackend": "图形后端",
+      "gpuBackendAuto": "自动",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL（较慢）",
+      "gpuBackendNote": "自动会为你选择最合适的选项。Vulkan 更快，推荐大多数玩家使用。OpenGL 较慢，但在 Vulkan 无法正常工作时可能会有帮助。下次启动游戏时生效。",
+      "gpuBackendActive": "当前使用 {backend}。",
+      "gpuBackendActiveUnavailable": "当前使用 {backend}（无法启用 Vulkan）。",
+      "gpuBackendActiveAutoCapped": "当前使用 {backend}。自动模式暂不会在此显卡上尝试 Vulkan；如需尝试，请选择 Vulkan。",
+      "gpuBackendSaveFailed": "无法保存该选择。下次启动仍将使用 {backend}。",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "部分更改将在重启后生效。",
+      "restartGame": "重启游戏",
+      "restartInProgress": "正在重启游戏...",
+      "restartFailed": "游戏无法自行重启。请退出后重新启动。",
       "discordPresence": "Discord 游戏状态",
       "discordPresenceNote": "游戏时将你当前所在的区域以及本次游戏时长显示为你的 Discord 活动状态，任何能看到你 Discord 个人资料的人都能看到这两项。只会分享区域名称、本次游戏时长和游戏名称，绝不会分享你的角色、账号或与你同行的人。需要本机正在运行 Discord 应用。",
       "showDevBadges": "显示开发者徽章",
@@ -1599,6 +1624,9 @@ export const zh_CN: EnTranslations = {
       "showTargetOfTarget": "显示目标的目标",
       "showTargetSwingTimer": "显示目标的挥击计时器",
       "showPetFrame": "显示你的宠物",
+      "showNameplateDots": "在姓名板上显示我的减益",
+      "nameplateDotScale": "姓名板减益图标大小",
+      "showTargetDots": "显示目标减益追踪",
       "waterRipples": "水面涟漪（尾波）",
       "showAttackButton": "显示攻击按钮",
       "showDailyRewardsChest": "显示每日奖励宝箱",
@@ -3102,7 +3130,8 @@ export const zh_CN: EnTranslations = {
         "playerFrame": "玩家",
         "targetFrame": "目标",
         "partyFrames": "队伍",
-        "swingBar": "自动攻击"
+        "swingBar": "自动攻击",
+        "targetDots": "目标减益"
       },
       "framesMenu": "框体设置",
       "framesMenuTitle": "显示或隐藏各个框体。取消勾选的框体会一直隐藏，直到你重新勾选或恢复默认设置。",
@@ -3134,11 +3163,42 @@ export const zh_CN: EnTranslations = {
       "invalid": "这不是有效的导出代码。",
       "wrongKind": "该代码属于另一种导出类型。"
     },
+    "riftForge": {
+      "title": "裂隙熔炉",
+      "subtitle": "裂隙之戒",
+      "currency": "{name}: {count}",
+      "empty": "背包里没有裂隙之戒。首次通关排位裂隙会铸造一枚。",
+      "wornHint": "已装备。卸下后才能锻造。",
+      "upgradeBtn": "强化至物品等级 {level}（{cost} 精华）",
+      "upgradeMax": "已强化至满级",
+      "gemPickAria": "要镶嵌的宝石",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "插槽已满：下一颗宝石将替换最早镶嵌的 {gem}。",
+      "socketBtn": "镶嵌",
+      "socketsNone": "没有宝石",
+      "noGems": "背包里没有裂隙宝石",
+      "refused": "熔炉拒绝了。请站在裂隙锻匠身旁再试。",
+      "reason": {
+        "notFound": "那枚戒指不在你的背包里。",
+        "notRiftGear": "只有裂隙之戒才能锻造。",
+        "maxUpgrade": "那枚戒指已强化至满级。",
+        "insufficientEssence": "裂隙精华不足。",
+        "invalidGem": "你没有那种裂隙宝石。",
+        "dead": "死亡时无法这么做。",
+        "tooFar": "你离裂隙熔炉太远了。"
+      },
+      "done": {
+        "upgrade": "已强化{name}。",
+        "socket": "已为{name}镶嵌一颗宝石。",
+        "socketReplaced": "已将宝石镶入{name}；{gem}已被摧毁。"
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "需要等级 {level}",
       "riftTier": "{tier}级裂隙物品",
       "riftUpgrade": "裂隙强化 {level}/{max}",
       "riftSockets": "裂隙宝石 {used}/{total}",
+      "riftGemSocket": "裂隙之戒的镶嵌加成",
       "statEnchanted": "+{value} {stat}（附魔）",
       "enchantedFallback": "已附魔",
       "partyTradeWindow": "在接下来的{time}内，你可以将此物品交易给共同获得该掉落的玩家。装备后交易期限即告结束。",
@@ -3459,6 +3519,15 @@ export const zh_CN: EnTranslations = {
       "popupTitle": "公会告示柱",
       "close": "关闭"
     },
+    "realmBuilder": {
+      "title": "本月王国建造者",
+      "currentLabel": "本月荣誉获得者",
+      "placeholderName": "你的名字",
+      "placeholderHint": "这块铭牌还在等待它的第一个名字。",
+      "pastTitle": "历届荣誉获得者",
+      "pastEmpty": "荣誉榜上还没有名字。",
+      "close": "关闭"
+    },
     "bank": {
       "title": "银行",
       "subtitle": "镀金保险箱",
@@ -3586,8 +3655,34 @@ export const zh_CN: EnTranslations = {
       "guildViewsAria": "公会银行视图",
       "guildContentsTab": "内容",
       "guildLogTab": "日志",
+      "guildHistoryTab": "历史",
       "logAria": "公会银行活动日志",
       "logNote": "最近 {count} 条公会银行操作。",
+      "logShowing": "正在显示 {count} 条公会银行操作，最新的在前。",
+      "logFilterAria": "筛选公会银行历史",
+      "logFilterAll": "全部",
+      "logFilterItems": "物品",
+      "logFilterMoney": "金钱",
+      "logOlder": "显示更早",
+      "logOlderLoading": "正在加载更早的操作...",
+      "logEnd": "这是公会银行的全部历史。",
+      "logEmptyFiltered": "没有符合此筛选条件的公会银行操作。",
+      "logColTime": "时间",
+      "logColMember": "成员",
+      "logColAction": "操作",
+      "logColDetail": "详情",
+      "logActionDeposit": "存入",
+      "logActionWithdraw": "取出",
+      "logActionBuySlots": "购买了扩展",
+      "logActionOpenBank": "开设了银行",
+      "logActionCharterFee": "支付了创建费",
+      "logActionAdminPurge": "移除",
+      "logActorAdmin": "管理员",
+      "logDetailItem": "{item} x{count}",
+      "logSearchPlaceholder": "搜索此历史",
+      "logSearchAria": "按成员、操作或物品搜索已加载的公会银行操作",
+      "logShowingMatched": "正在显示已加载的 {count} 条公会银行操作中的 {matched} 条。",
+      "logSearchNoMatch": "已加载的公会银行操作中没有符合搜索的结果。显示更早的记录以扩大范围。",
       "logLoading": "正在加载公会银行日志...",
       "logEmpty": "公会银行中尚未存入或取出任何物品。",
       "logUnavailable": "目前无法读取公会银行日志。",
@@ -3685,6 +3780,20 @@ export const zh_CN: EnTranslations = {
         "result": {
           "set": "公会公告板已更新。",
           "notOfficer": "只有官员和会长可以编辑公告板。"
+        }
+      },
+      "roster": {
+        "seats": "{count} / {cap} 席位",
+        "expand": "扩充名册（+{seats} 席位，{price}）",
+        "maxed": "名册已达最大规模",
+        "confirm": "花费 {price} 为公会名册扩充 {seats} 个席位？金币从你自己的钱包扣除，不予退还。",
+        "confirmAction": "扩充",
+        "expandedLine": "{name} 已将公会名册扩充至 {cap} 名成员。",
+        "result": {
+          "notLeader": "只有会长可以扩充公会名册。",
+          "maxed": "公会名册无法再扩充。",
+          "cannotAfford": "扩充公会名册需要 {price}。",
+          "retry": "购买期间公会名册已发生变化，请重试。"
         }
       }
     },
@@ -4248,6 +4357,7 @@ export const zh_CN: EnTranslations = {
       "sameEnchant": "那件物品已经拥有该附魔。",
       "notPerfected": "只有臻至完美的物品才能承载该附魔。",
       "enchantSkillTooLow": "你的附魔技能不足以施加该附魔。",
+      "riftGear": "裂隙之戒只能镶嵌裂隙宝石，无法附魔。",
       "replaceTag": "替换{enchant}",
       "sameEnchantTag": "已施加",
       "plainTag": "未附魔",
@@ -6425,6 +6535,8 @@ export const zh_CN: EnTranslations = {
       "raceBody": "王国里的每一支队伍都可以同时攻打同一道裂隙，各打各的那一份副本，但只有第一个把最底下那个东西放倒的队伍才能封印它。有队伍获胜时，全王国都会听到他们的名字和用时，入口也随之在他们身后关闭。输掉这场竞速并不会结束你的这一趟：你的副本仍然开着，最底下那个东西照样会倒在你手上，你也照样能靠自己走出来。你失去的，是通关本该带来的一切。首领不会为第二名留下任何东西，所以你带回家的，只有一路向下时从小怪身上掉出来的东西，再无其他。功绩之书仍然会记下这次通关，因为那东西确实是你放倒的。这是游戏里唯一一场你可能输掉、却连赢家的面都见不着的竞速。",
       "rewardsHeading": "你能带走什么",
       "rewardsBody": "真正给报酬的，是封印一道裂隙，而不只是活着从里面出来。抢先把裂隙打下来，它的报酬就对得起与它等级相当的副本内容，所以更高的等级值得你跑更难的一趟。封印还会把一枚裂隙之戒交到在场每个人手里，按你职业的定位裁剪打造，并且专属于你，同时在你的背包里留下裂隙精华和裂隙宝石。除了归途之外，最底下那个东西还会留下一口封着的储藏，你的队伍可以撬开它取走额外的战利品，用的正是你在探秘宝箱那里熟悉的锁簧之径撬锁，所以干净沉稳地撬，比慌乱赶工赚得更多。这些第二名的队伍一样都拿不到：输掉的竞速只留给你一路向下时从小怪身上掉出来的东西。功绩之书是唯一的例外，无论输赢它都会记下你的通关，其中一个功绩为封闭你的第一道裂隙，另一个为放倒一道 S 级裂隙。",
+      "forgeHeading": "裂隙熔炉",
+      "forgeBody": "首次通关排位裂隙铸造的戒指，在你拿到手时还没有完工。裂隙锻匠梅莉丝在远滩的守望草甸、沿岸上行离开鸥港后的破裂学者身旁守着一座熔炉，她会一步步提升戒指的物品等级，并把裂隙掉落的彩色宝石镶进插槽，每种颜色对应一项战斗评级。插槽已满的戒指会用新宝石替换最早镶嵌的那颗，所以日后还能重新调整。这一切都以裂隙精华和裂隙宝石支付，它们是裂隙首领掉落、可自由交易的熔炉货币，所以缺的精华可以请朋友递给你。带去之前先把戒指卸下：她只处理背包里的东西，而且除非你站在她的熔炉旁，否则她什么都不会做。",
       "trackerHeading": "屏幕上的追踪条",
       "trackerBody": "在里面时，屏幕上的一小条会帮你保持方向：你在第几层、总共几层，以及一个实时倒计时。这个倒计时要看仔细，因为它数的不是你这一趟剩下的时间，而是外面世界里的入口对新队伍关闭的时间。只要你已经进来了，你的小队就能按自己的节奏把这道裂隙打完，花多久都行。"
     },
@@ -7869,10 +7981,7 @@ export const zh_CN: EnTranslations = {
     "playAria": "开始游玩 World of ClaudeCraft",
     "serverLabel": "选择你的世界",
     "serverAria": "选择世界：在线或离线",
-    "serverOfflineSub": "即时本地世界",
-    "caLabel": "$WOC 合约地址",
-    "caCopyAria": "复制合约地址",
-    "caNote": "WOC 是我们的社区代币。游玩游戏并不需要它。加入 Discord 一起讨论 WOC 的用途与飞轮效应。"
+    "serverOfflineSub": "即时本地世界"
   },
   "auth": {
     "enterRealm": "进入服务器",
@@ -8422,6 +8531,7 @@ export const zh_CN: EnTranslations = {
       "forgeUpgraded": "{name} 的裂隙强化已完成。",
       "forgeEnchanted": "{name} 的裂隙附魔已完成。",
       "forgeSocketed": "已为 {name} 镶嵌裂隙宝石。",
+      "forgeGemReplaced": "已为 {name} 更换裂隙宝石：{gem} 已被摧毁。",
       "detonateGlacialGrave": "冰川之墓引爆！",
       "detonateAbsoluteZero": "绝对零度爆发！",
       "detonateMagmaWell": "岩浆泉喷涌！",
@@ -9162,6 +9272,7 @@ export const zh_CN: EnTranslations = {
     "bodyWeb": "游戏正在没有 GPU 加速的情况下运行，会非常缓慢。请在浏览器设置中启用硬件加速，更新显卡驱动，然后重启浏览器。",
     "hybridBodyWindows": "本次会话正在集成（节能）显卡上渲染。如果这台电脑还配有独立游戏显卡，请在 设置 > 系统 > 显示 > 显示卡 中将浏览器设为“高性能”，然后重启浏览器。桌面版会自动选择独立显卡。",
     "hybridBodyLinux": "本次会话正在集成（节能）显卡上渲染。如果这台电脑还配有独立游戏显卡，您的浏览器或显卡驱动可能提供了自己的显卡选择设置，或者您的发行版可能提供了显卡切换工具（例如 PRIME 或 optimus-manager）。桌面版会自动选择独立显卡。",
+    "bodyRequestedBackend": "游戏无法在你选择的图形后端上启动，因此正在使用 OpenGL 运行。一切功能正常，但加载和最初几分钟可能更卡顿。你可以在「选项 > 图形 > 系统」中重新选择后端。",
     "hybridBodyOther": "本次会话正在集成（节能）显卡上渲染。如果这台电脑还配有独立游戏显卡，请检查浏览器和操作系统的显卡设置以启用它。桌面版会自动选择独立显卡。",
     "dismiss": "关闭"
   },
@@ -15044,6 +15155,48 @@ export const zh_CN: EnTranslations = {
       "field_kit": {
         "name": "野外工具包"
       },
+      "bramblehide_crown": {
+        "name": "鲁茨的荆棘皮甲头冠"
+      },
+      "bramblehide_mantle": {
+        "name": "鲁茨的荆棘皮甲护肩"
+      },
+      "bramblehide_harness": {
+        "name": "鲁茨的荆棘皮甲胸甲"
+      },
+      "bramblehide_cinch": {
+        "name": "鲁茨的荆棘皮甲腰带"
+      },
+      "bramblehide_legguards": {
+        "name": "鲁茨的荆棘皮甲护腿"
+      },
+      "bramblehide_grips": {
+        "name": "鲁茨的荆棘皮甲手套"
+      },
+      "bramblehide_treads": {
+        "name": "鲁茨的荆棘皮甲之靴"
+      },
+      "courtiers_bonefang": {
+        "name": "廷臣骨牙"
+      },
+      "thornpeak_wardblade": {
+        "name": "荆峰守护之刃"
+      },
+      "gravecourt_hewer": {
+        "name": "墓庭劈斧"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "不死王庭的许愿护盾"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "荆峰月皮兜帽"
+      },
+      "stormhymn_chain_grips": {
+        "name": "风暴颂歌链甲手套"
+      },
+      "stormhymn_chain_treads": {
+        "name": "风暴颂歌链甲之靴"
+      },
       "conjured_water4": {
         "name": "魔法泉水"
       },
@@ -16995,6 +17148,11 @@ export const zh_CN: EnTranslations = {
         "name": "受惊的奈尔",
         "title": "鸥港渔民",
         "greeting": "它就在晾网的地方裂开了。就在那儿，我这辈子每天清晨都站着的地方。我再也不下到海岸去了。如今我哪儿都不太去了。"
+      },
+      "riftwright_maelis": {
+        "name": "裂隙锻匠梅莉丝",
+        "title": "裂隙熔炉大师",
+        "greeting": "裂隙之戒记得造就它的那道裂隙，{className}。把戒指和裂隙散落的精华带来，我会教它记住更多。"
       },
       "forgemistress_darva": {
         "name": "达尔瓦锻造师",
@@ -20132,6 +20290,12 @@ export const zh_CN: EnTranslations = {
         "name": "缚石先锋",
         "bonus3": "攻击速度和施法速度提高 15%。"
       },
+      "bramblehide": {
+        "name": "鲁茨的荆棘皮甲",
+        "bonus2": "力量提高 10 点，耐力提高 10 点。",
+        "bonus4": "攻击强度提高 25 点。你的武器致命一击有 50% 的几率触发“墓冢之力”，使攻击强度提高 40 点，持续 10 秒。",
+        "bonus6": "攻击与施法速度提高 4%，命中提高 3%。你的武器致命一击会使目标产生“骨刺”，每 2 秒流血 5 点伤害，持续 12 秒。最多叠加 3 层。"
+      },
       "chronoweave": {
         "name": "以太织法衣",
         "bonus2": "时光回响将你 50% 的单体奥术伤害转化为治疗。受到伤害不再延迟你的施法。",
@@ -20408,6 +20572,7 @@ export const zh_CN: EnTranslations = {
     "delveRiteShrineSkullInteract": "骷髅神龛：按 F 触碰",
     "mailboxName": "邮箱",
     "noticeboardName": "告示板",
-    "farmPatchName": "菜畦"
+    "farmPatchName": "菜畦",
+    "realmBuilderMonumentName": "王国建造者纪念碑"
   }
 };

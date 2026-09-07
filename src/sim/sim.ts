@@ -1,6 +1,7 @@
 import type {
   AccountCosmetics,
   ActionBarLayout,
+  ActionBarLayoutProfile,
   ActionBarLayoutRestore,
   ActiveConsecration,
   ActiveFrostRing,
@@ -628,6 +629,7 @@ import {
   WARFARE_QUARTERMASTER_NPC_ID,
 } from './pvp/warfare_quartermaster';
 import { sanitizeCreditedObjects } from './quests/interact_object_credit';
+import { spawnRealmBuilderMonument } from './realm_builder_monument_spawn';
 import {
   catalogRankOwned,
   catalogRelicCompletion,
@@ -731,7 +733,6 @@ import {
 import { migrateRestoredQuestProgress } from './quests/quest_progress_migration';
 import { type NaturalRiftPortal, updateRiftPortals as updateRiftPortalsImpl } from './rift/portals';
 import {
-  enchantRiftItem as enchantRiftItemImpl,
   type RiftForgeResult,
   sanitizeRiftGearInstance,
   socketRiftGem as socketRiftGemImpl,
@@ -1879,7 +1880,10 @@ export type { RewardCounters };
 // caller into a per-Sim divergence.
 const OFFLINE_GUILD_BANK_LOG: import('../world_api').GuildBankLogView = Object.freeze({
   state: 'ready' as const,
+  kind: 'all' as const,
   entries: Object.freeze([]) as readonly import('../world_api').GuildBankLogEntry[],
+  more: false,
+  olderPending: false,
 });
 
 // isPetClass relocated to types.ts (P1b; imported in the './types' block above). The
@@ -2576,6 +2580,7 @@ export class Sim {
       this.addEntity(board);
     }
 
+    spawnRealmBuilderMonument(this.ctx, this.worldContent.props);
     if (cfg.noPlayer && this.devCommands) this.spawnHealerPracticeDummy();
 
     if (!cfg.noPlayer) {
@@ -4509,7 +4514,7 @@ export class Sim {
   // reconcile ('noop' leaves the localStorage-loaded bars untouched). Keeping
   // these host-agnostic no-ops here is what stops the offline Sim ever becoming
   // aware of a persistence host.
-  saveActionBarLayout(_layout: ActionBarLayout): void {
+  saveActionBarLayout(_profile: ActionBarLayoutProfile, _layout: ActionBarLayout): void {
     // Offline: the controller already wrote localStorage; nothing else to do.
   }
 
@@ -9064,16 +9069,6 @@ export class Sim {
     return upgradeRiftItemImpl(this.ctx, itemId, pid, named);
   }
 
-  enchantRiftItem(
-    itemId: string,
-    stat: string,
-    pidOrTarget?: number | { slotIndex: number },
-    slotIndex?: number,
-  ): RiftForgeResult {
-    const { pid, named } = foldNamedSlotTarget(pidOrTarget, slotIndex);
-    return enchantRiftItemImpl(this.ctx, itemId, stat, pid, named);
-  }
-
   socketRiftGem(
     itemId: string,
     gemId: string,
@@ -9872,6 +9867,7 @@ export class Sim {
   guildEventCreate(_day: string, _hour: number | null, _title: string, _note: string): void {}
   guildEventRemove(_eventId: number): void {}
   guildSetMotd(_text: string): void {}
+  guildBuyRosterPage(): void {}
   // The Guild Bank is a guild feature, and guilds live in the server social DB,
   // so offline play never has one: the read is null and the commands are inert
   // (the socialInfo idiom), forever. The online path is live: ClientWorld sends
@@ -9887,9 +9883,12 @@ export class Sim {
    *  never 'loading' (nothing is ever in flight) and never 'refused' (nothing
    *  declined it). The Guild pane never renders offline anyway, so this is the
    *  inert-arm answer that keeps the facet total: no request, no wire send. */
-  guildBankLog(): import('../world_api').GuildBankLogView {
+  guildBankLog(
+    _kind?: import('../world_api').GuildBankLogKind,
+  ): import('../world_api').GuildBankLogView {
     return OFFLINE_GUILD_BANK_LOG;
   }
+  guildBankLogOlder(): void {}
   searchCharacters(_query: string): Promise<import('../world_api').CharacterSearchResult[]> {
     return Promise.resolve([]);
   }

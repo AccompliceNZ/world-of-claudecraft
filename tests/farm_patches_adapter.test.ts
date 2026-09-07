@@ -1332,6 +1332,21 @@ describe('the prepared producer: the gated attach, the stand-ins and the program
     expect(src).toContain('label = `live-gate:');
     expect(src).toContain('{ priority, label },');
   });
+
+  it('never stages the farm program anchors on a constrained-memory device (source pin)', () => {
+    // The anchor stand-ins dedupe every farm stage/feast material signature into
+    // one hidden mesh apiece and submit it as compile debt: real GPU-memory cost
+    // for content a constrained (phone-class) boot deliberately drops from its
+    // manifest. Staging it anyway defeats the whole point of the minimal manifest.
+    const src = readFileSync(join(__dirname, '..', 'src/render/renderer.ts'), 'utf8')
+      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .replace(/(^|[^:])\/\/.*$/gm, '$1');
+    const prewarmAt = src.indexOf('async prewarmInitialScene(');
+    const prewarm = src.slice(prewarmAt, src.indexOf('const policy:', prewarmAt));
+    expect(prewarm).toMatch(
+      /if \(!GFX\.constrainedMemory\) this\.farmPatchVisuals\?\.stageProgramAnchors\(\);/,
+    );
+  });
   it('keeps one visible stand-in across a watchdog and three overlapping generations', async () => {
     vi.useFakeTimers();
     const warn = vi.spyOn(console, 'warn').mockImplementation(() => undefined);

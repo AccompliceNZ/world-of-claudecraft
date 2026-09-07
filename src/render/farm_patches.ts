@@ -417,6 +417,15 @@ export class FarmPatchVisuals {
   private readonly compileGate: FarmCompileGate | null;
   // The hidden program anchors (module header), built at construction and staged after the first-paint boundary is installed.
   private readonly anchors: THREE.Group | null;
+  // Fallback-arm BufferGeometries the anchors own (glb_instanced_props.ts mints
+  // a fresh BoxGeometry per fallback call): the only anchor geometries dispose()
+  // may free. A loaded anchor wears the GLB cache's own geometry instead (shared
+  // with the instanced beds and every later template read) and never lands here.
+  private readonly ownedAnchorGeometries: readonly THREE.BufferGeometry[];
+  // Guards dispose() against a second call (a retire path plus an explicit
+  // shutdown can both reach it): the fallback geometries above must free exactly
+  // once, never per call.
+  private disposed = false;
 
   constructor(
     private readonly scene: THREE.Scene,
@@ -425,7 +434,9 @@ export class FarmPatchVisuals {
     compileGate: FarmCompileGate | null = null,
   ) {
     this.compileGate = compileGate;
-    this.anchors = this.compileGate ? buildFarmProgramAnchors() : null;
+    const anchors = this.compileGate ? buildFarmProgramAnchors() : null;
+    this.anchors = anchors?.root ?? null;
+    this.ownedAnchorGeometries = anchors?.ownedGeometries ?? [];
   }
 
   /** Stages the retained program anchors after the renderer has installed its
@@ -648,12 +659,19 @@ export class FarmPatchVisuals {
   }
 
   dispose(): void {
+    if (this.disposed) return;
+    this.disposed = true;
     for (const [bedId, visual] of this.plots) this.disposePlot(bedId, visual);
     for (const [id, visual] of this.feasts) this.disposeFeast(id, visual);
     // The anchors wear the GLB cache's own materials (shared with the
     // instanced beds and every later template read) and the deduped gfx
-    // surface materials, so they are detached, never disposed.
+    // surface materials, so they are detached, never disposed. A loaded
+    // anchor's GEOMETRY is the same cache sharing, also left alone; only the
+    // primitive-box fallback geometries this group minted itself (tracked at
+    // construction, see ownedAnchorGeometries) are freed, whether or not
+    // stageProgramAnchors() ever ran (they exist from the constructor on).
     if (this.anchors) this.scene.remove(this.anchors);
+    for (const geo of this.ownedAnchorGeometries) geo.dispose();
   }
 
   /**
@@ -944,13 +962,27 @@ export class FarmPatchVisuals {
  * the anchors missed). Never visible: the root and every mesh are hidden, and
  * compile traverses hidden objects (scene.traverse, not traverseVisible).
  */
-function buildFarmProgramAnchors(): THREE.Group {
+/** buildFarmProgramAnchors' return: the hidden root plus the subset of its
+ *  mesh geometries this call itself allocated (the primitive-box fallback
+ *  arm of templateParts). Geometry an anchor drew from an already-loaded GLB
+ *  is the asset cache's own object and is deliberately left out: the caller
+ *  (FarmPatchVisuals.dispose) frees only what is listed here. */
+interface FarmProgramAnchors {
+  root: THREE.Group;
+  ownedGeometries: THREE.BufferGeometry[];
+}
+
+function buildFarmProgramAnchors(): FarmProgramAnchors {
   const root = new THREE.Group();
   root.name = FARM_PROGRAM_ANCHORS_NAME;
   root.visible = false;
   setRenderCategory(root, 'prewarm');
   const seen = new Set<string>();
+  const ownedGeometries: THREE.BufferGeometry[] = [];
   const anchor = (url: string, height: number, fallbackColor: number): void => {
+    // Resolved BEFORE templateParts (which reads the same map): a loaded GLB's
+    // parts wear the cache's own geometry, the fallback arm mints a fresh one.
+    const isFallback = !loadedFarmGltf.has(url);
     for (const part of templateParts(url, height, fallbackColor)) {
       const materials = Array.isArray(part.mat) ? part.mat : [part.mat];
       const key = `${materials.map((m) => materialProgramSignature(m)).join('+')}|${Object.keys(
@@ -966,6 +998,7 @@ function buildFarmProgramAnchors(): THREE.Group {
       mesh.castShadow = false;
       mesh.receiveShadow = true;
       root.add(mesh);
+      if (isFallback) ownedGeometries.push(part.geo);
     }
   };
   const families: FarmCropFamily[] = ['grain', 'rootleaf', 'gourd'];
@@ -984,7 +1017,7 @@ function buildFarmProgramAnchors(): THREE.Group {
   // dedupe below stages one anchor for the pair; an apex-only recipe would
   // stage its own).
   for (const url of farmFeastModelUrls()) anchor(url, FEAST_HEIGHT, 0x8a6a4a);
-  return root;
+  return { root, ownedGeometries };
 }
 
 /** The fallback colour a stage anchor takes (the same surfaceMat a plot's
