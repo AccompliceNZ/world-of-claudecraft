@@ -171,6 +171,17 @@ export interface VisualDef {
    *  albedo. For rigs whose authored PBR response reads as gloss under an
    *  interior light rig (the Ignivar raid roster). */
   matte?: boolean;
+  /** The body atlas is an AUTHORED baked texture (a Tripo or Blender export
+   *  that carries its own shading, largely dark texels), not a KayKit palette.
+   *  On the low graphics tier the Lambert rebuild adds a small uniform
+   *  emissive floor for readability (assets.ts applyLowReadabilityLift);
+   *  sized for bright palette swatches, that same constant lifts every dark
+   *  texel of an authored atlas to one grey and reads as a flat film over the
+   *  whole texture. With this flag the floor is scaled by the atlas instead
+   *  (emissiveMap = map), so black stays black. Standard tiers ignore it.
+   *  Opt-in per def on purpose: player bodies and every other kit rig keep
+   *  the uniform floor they always had. */
+  authoredAtlas?: boolean;
   /** KayKit chars ship every accessory visible: non-skinned mesh nodes to KEEP.
    *  undefined = keep everything (creature GLBs have no accessories). */
   show?: string[];
@@ -1053,7 +1064,10 @@ const CREATURES = 'models/creatures';
 const WEAPONS = 'models/weapons';
 const MOUNTS_DIR = 'models/mounts';
 
-const ITEM_OFFHAND_MODELS: Readonly<Record<string, string>> = {
+/** Exported for the authored-surface guard (tests/authored_surfaces.test.ts),
+ *  which sweeps every shipped held model; render code resolves through
+ *  itemOffhandModelUrl, never this table directly. */
+export const ITEM_OFFHAND_MODELS: Readonly<Record<string, string>> = {
   eastbrook_buckler: 'shield_round',
   highwatch_wallshield: 'shield_square',
   bonewrought_bulwark: 'shield_square',
@@ -1063,6 +1077,29 @@ const ITEM_OFFHAND_MODELS: Readonly<Record<string, string>> = {
   ember_wardens_barrier: 'shield_round',
   varkhul_emberward: 'varkhul_emberward', // Ignivar raid legendary (Varkhul drop)
 };
+
+/** Held-model GLBs whose materials are AUTHORED surfaces: a Tripo or Blender
+ *  atlas that already carries its own shading, wear, and ember detail. The
+ *  held-weapon polish (assets.ts applyWeaponMaterialPolish: cream lift, gloss
+ *  clamp, metalness floor, uniform emissive floor) was authored for the KayKit
+ *  palette kit; on one of these it lays a flat grey film over the whole atlas
+ *  (the emissive floor lifts every black texel to the same grey, the gloss
+ *  clamp adds a sheen the atlas never asked for). attachProp tags their meshes
+ *  so applyMaterials keeps the shipped response instead. Also scales the
+ *  low-tier readability floor by the atlas, as VisualDef.authoredAtlas does
+ *  for bodies. Opt-in per model on purpose: every other held model keeps the
+ *  polish it always had. Keyed by held-model key (ITEM_WEAPON_VARIANTS /
+ *  ITEM_OFFHAND_MODELS values). */
+export const AUTHORED_HELD_MODELS: ReadonlySet<string> = new Set([
+  'hammer_varkhul', // Varkhul Forgebreaker (Ignivar raid legendary)
+  'varkhul_emberward', // Varkhul Emberward (Ignivar raid legendary)
+]);
+
+/** True when a held-prop GLB url resolves to one of AUTHORED_HELD_MODELS. */
+export function isAuthoredHeldModelUrl(url: string): boolean {
+  const m = /^models\/weapons\/([^/]+)\.glb$/.exec(url);
+  return m !== null && AUTHORED_HELD_MODELS.has(m[1]);
+}
 
 function itemModelKey(
   itemId: string | null | undefined,
@@ -2087,6 +2124,7 @@ export const VISUALS: Record<string, VisualDef> = {
   // 1-2-1 mount_run gait beat carries the footfall read.
   mount_mech_bird: {
     url: `${MOUNTS_DIR}/mech_bird.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 3.4,
     clips: MOUNT_MECH_BIRD,
     walkRef: 5.2,
@@ -2144,6 +2182,7 @@ export const VISUALS: Record<string, VisualDef> = {
     // time. Baked basecolor texture; keeps a light entity tint so this doubles
     // as the beast-family fallback and each beast keeps its own colour.
     url: `${CREATURES}/wolf_basic.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 1.6,
     clips: WOLF_BAKED,
     tint: 'entity',
@@ -2177,6 +2216,7 @@ export const VISUALS: Record<string, VisualDef> = {
     // Old Greyjaw's model: 2.2 at scale 1 (his template scale 1.25 makes the
     // rare ~2.75 in-world vs the 1.6 pack wolf).
     url: `${CREATURES}/greyjaw.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 2.2,
     clips: GREYJAW_WOLF,
     // Greyjaw_Attack clip donor (scripts/build_greyjaw_anims.mjs): mesh-free,
@@ -2402,6 +2442,7 @@ export const VISUALS: Record<string, VisualDef> = {
   // drop: v01's cycles gave 1.31/2.22, and its Walk was 1.00s against v02's 1.13s.
   mob_kobold_digger: {
     url: `${CREATURES}/kobold.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 2.1,
     clips: KOBOLD_DIGGER,
     // The mid-idle pose drops the tail 0.23 units (at scale 1) below the foot
@@ -2439,6 +2480,7 @@ export const VISUALS: Record<string, VisualDef> = {
   // 1.0: natural 1.23 and 2.31 yd/s against a 7 yd/s chase.
   mob_grix: {
     url: `${CREATURES}/grix.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 2.1,
     clips: GRIX,
     // Same dragging-tail float as mob_kobold_digger, smaller: mid-idle his
@@ -2479,6 +2521,7 @@ export const VISUALS: Record<string, VisualDef> = {
   // at ~1.2x with clamp headroom instead of at the 1.6 edge.
   mob_ogre: {
     url: `${CREATURES}/ogre.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 2.8,
     clips: OGRE,
     walkRef: 2.79,
@@ -2502,6 +2545,7 @@ export const VISUALS: Record<string, VisualDef> = {
   // clamp with headroom to spare.
   mob_drogmar: {
     url: `${CREATURES}/drogmar.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 2.8,
     clips: DROGMAR,
     walkRef: 2.65,
@@ -2593,6 +2637,7 @@ export const VISUALS: Record<string, VisualDef> = {
   },
   mob_ignivar: {
     url: `${CREATURES}/ignivar_herald.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 2.65,
     // The contributor rig is authored directly onto the game's +Z-facing bind.
     yaw: 0,
@@ -2612,6 +2657,7 @@ export const VISUALS: Record<string, VisualDef> = {
   },
   mob_ignivar_heart_of_the_end: {
     url: `${CREATURES}/ignivar_ashcaller.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 1.8,
     yaw: 0,
     selfIllumination: 0.16,
@@ -2627,6 +2673,7 @@ export const VISUALS: Record<string, VisualDef> = {
   },
   mob_ignivar_crucible_warden: {
     url: `${CREATURES}/crucible_warden.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 2.2,
     yaw: 0,
     // The three automata (this def and the two below) carried 0.18 plus an
@@ -2642,6 +2689,7 @@ export const VISUALS: Record<string, VisualDef> = {
   },
   mob_ignivar_ember_sentinel: {
     url: `${CREATURES}/ember_sentinel.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 2.3,
     yaw: 0,
     selfIllumination: 0.08,
@@ -2650,6 +2698,7 @@ export const VISUALS: Record<string, VisualDef> = {
   },
   mob_ignivar_cinder_artificer: {
     url: `${CREATURES}/cinder_artificer.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     height: 2.1,
     yaw: 0,
     selfIllumination: 0.08,
@@ -2658,6 +2707,7 @@ export const VISUALS: Record<string, VisualDef> = {
   },
   mob_varkhul_forgefather: {
     url: `${CREATURES}/varkhul_forgefather.glb`,
+    authoredAtlas: true, // baked Tripo/contributor atlas: low-tier floor rides the map
     // 9.6u at the template's 3.2 scale: colossus-class, matching Ignivar's
     // own arena presence.
     height: 3,
@@ -2737,6 +2787,7 @@ export const VISUALS: Record<string, VisualDef> = {
   // ground per cycle, and reusing the lord's refs over-strode her by 25%.
   mob_dragonkin_broodlord: {
     url: `${CREATURES}/dragonkin_elite.glb`,
+    authoredAtlas: true, // baked Tripo atlas: low-tier floor rides the map
     height: 2.6,
     clips: DRAGONKIN_BROODLORD,
     // scale 2.25: walk 4.24 (wander 3.3 -> 0.78x), run 7.92 (chase 9.5 ->
@@ -2753,6 +2804,7 @@ export const VISUALS: Record<string, VisualDef> = {
   // as the gilded mother of the same brood.
   mob_dragonkin_matriarch: {
     url: `${CREATURES}/dragonkin_elite.glb`,
+    authoredAtlas: true, // baked Tripo atlas: low-tier floor rides the map
     height: 2.6,
     clips: DRAGONKIN_BROODLORD,
     walkRef: 5.37,
@@ -2762,6 +2814,7 @@ export const VISUALS: Record<string, VisualDef> = {
   },
   mob_dragonkin_broodguard: {
     url: `${CREATURES}/dragonkin_mob.glb`,
+    authoredAtlas: true, // baked Tripo atlas: low-tier floor rides the map
     height: 2.2,
     clips: DRAGONKIN_BROODGUARD,
     // scale 1.5: walk 2.15 (wander 2.98 -> 1.39x), run 5.59 (chase 8.5 ->
@@ -2773,6 +2826,7 @@ export const VISUALS: Record<string, VisualDef> = {
   },
   mob_dragonkin_whelp: {
     url: `${CREATURES}/dragonkin_baby.glb`,
+    authoredAtlas: true, // baked Tripo atlas: low-tier floor rides the map
     height: 1.05,
     clips: DRAGONKIN_WHELP,
     // scale 0.85: walk 0.54, run 1.87. A hatchling 0.9yd tall CANNOT
@@ -2790,6 +2844,10 @@ export const VISUALS: Record<string, VisualDef> = {
   // swaps to Egg_Open (the cracked shell IS the corpse; see corpseMeshSwap).
   mob_dragon_egg: {
     url: `${CREATURES}/dragon_egg.glb`,
+    // Blender-default roughness 0.5 export: the body clamp kept it glossy, a grey
+    // specular sheen over the painted shell. matte restores the flat paint.
+    matte: true,
+    authoredAtlas: true, // baked atlas: low-tier floor rides the map
     height: 0.95,
     clips: STATIC_PROP,
     corpseMeshSwap: { hide: 'Egg_Closed', show: 'Egg_Open' },
