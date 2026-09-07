@@ -11785,6 +11785,13 @@
     background: var(--color-ink-deep);
     box-shadow: 0 0 0 1px var(--color-keyline);
   }
+  .xhb-set-swap {
+    min-width: 0;
+    height: 14px;
+    padding: 0 4px;
+    font-size: 9px;
+    line-height: 12px;
+  }
   .xhb-pip[data-xhb-set="0"],
   .xhb.xhb-expanded .xhb-pip[data-xhb-set="1"] {
     background: var(--gold);

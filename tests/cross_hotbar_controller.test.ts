@@ -257,6 +257,10 @@ describe('the cross hotbar stylesheet', () => {
     expect(section).toContain('border-radius: calc(var(--radius-cell) - 2px);');
   });
 
+  it('sizes the set-swap chip to the pip rail', () => {
+    expect(section).toContain('.xhb-set-swap {\n    min-width: 0;\n    height: 14px;');
+  });
+
   it('rides the armed halo on the decorative-glow scale', () => {
     expect(section).toContain(
       '.xhb-half.xhb-armed::before {\n    opacity: 1;\n    box-shadow: 0 0 calc(24px * var(--fx-shadow, 1))',
