@@ -5566,6 +5566,8 @@ export const hudChromeStrings = {
     majorsLabel: 'Majors: {a} and {b}',
     pairsHeld: 'Pairs held: {count}',
     returnsLabel: 'Returns: {count}',
+    retentionFooter: 'Returns on respec: 60% of skill kept.',
+    tutorialLink: 'Profession tutorial',
   },
   // Crafting window (#1127): the minimal common-tier crafting action, one row
   // per known recipe, a Craft button enabled only when every reagent is held.
@@ -5630,6 +5632,8 @@ export const hudChromeStrings = {
     // the row's Create and Create All controls can submit multi-craft batches.
     craftFeeLine: 'Craft fee: {fee} each',
     empty: 'No recipes known yet.',
+    materialsFooter:
+      'Materials in your vault are drawn automatically. Learn more recipes at the station.',
     resultAria: 'Craft {name}',
     // The SOLE player-visible line for a craft grant (#2430). The grant hub's
     // own 'loot' event no longer prints its "You receive:" line for a craft
@@ -5817,6 +5821,10 @@ export const hudChromeStrings = {
     commissionToggleHint: 'Binds to the first character to receive it in a trade.',
     commissionUnbound: 'Commission piece: binds to the first recipient',
     commissionBound: 'Commission piece: bound to its recipient',
+  },
+  marketWindow: {
+    mixedListingsFooter:
+      'The Merchant restocks common goods; player listings sit beside them at their asking price.',
   },
   // Bag-item context menu verbs (Professions 2.0): the row labels for
   // the right-click / touch action menu (bag_item_context_menu.ts). The first

@@ -8663,6 +8663,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.close': 'Закрыть крафт',
   'hudChrome.crafting.reagentsNeeded': 'Требуется:',
   'hudChrome.crafting.empty': 'Известных рецептов пока нет.',
+  'hudChrome.crafting.materialsFooter':
+    'Материалы из хранилища используются автоматически. Новые рецепты можно изучить у станка.',
   'hudChrome.crafting.resultAria': 'Создать {name}',
   'hudChrome.crafting.craftedToast': 'Создано: {name}',
   'hudChrome.crafting.craftedToastQty': 'Создано: {name} x{qty}',
@@ -11444,6 +11446,10 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.professions.majorsLabel': 'Главные ремёсла: {a} и {b}',
   'hudChrome.professions.pairsHeld': 'Открыто пар: {count}',
   'hudChrome.professions.returnsLabel': 'Возвращений: {count}',
+  'hudChrome.professions.retentionFooter': 'При смене специализации сохраняется 60% навыка.',
+  'hudChrome.professions.tutorialLink': 'Обучение профессиям',
+  'hudChrome.marketWindow.mixedListingsFooter':
+    'Торговец пополняет обычные товары; лоты игроков размещаются рядом по назначенной ими цене.',
   'entities.npcs.forgemistress_darva.name': 'Мастерица кузни Дарва',
   'entities.npcs.forgemistress_darva.title': 'Хозяйка кузни',
   'entities.npcs.forgemistress_darva.greeting':

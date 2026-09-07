@@ -170,7 +170,7 @@ export function renderCraftingWindow(
   const skillListScrollTop = oldSkillList?.scrollTop ?? 0;
   const skillListHadFocus = oldSkillList !== null && document.activeElement === oldSkillList;
   const cardScrollTop = el.querySelector('.profession-identity-card')?.scrollTop ?? 0;
-  el.innerHTML = `<div class="panel-title"><span>${esc(t('hudChrome.crafting.title'))}</span><button type="button" class="crafting-orders-btn" data-open-orders data-skip-open-focus data-focus-key="orders" aria-label="${esc(t('hudChrome.commissionBoard.openButtonAria'))}">${esc(t('hudChrome.commissionBoard.openButton'))}</button><button type="button" class="x-btn" data-close data-focus-key="close" aria-label="${esc(t('hudChrome.crafting.close'))}">${svgIcon('close')}</button></div>`;
+  el.innerHTML = `<div class="panel-title ui-win-head"><span class="ui-win-title">${esc(t('hudChrome.crafting.title'))}</span><button type="button" class="crafting-orders-btn ui-btn ui-btn--gold" data-open-orders data-skip-open-focus data-focus-key="orders" aria-label="${esc(t('hudChrome.commissionBoard.openButtonAria'))}">${esc(t('hudChrome.commissionBoard.openButton'))}</button><button type="button" class="x-btn ui-x-btn" data-close data-focus-key="close" aria-label="${esc(t('hudChrome.crafting.close'))}">${svgIcon('close')}</button></div>`;
   el.querySelector('[data-open-orders]')?.addEventListener('click', () => deps.onOpenOrders());
 
   if (identity) renderProfessionIdentityCard(el, identity);
@@ -200,16 +200,16 @@ export function renderCraftingWindow(
   const selected = resolveSelectedCraft(tabs, deps.selectedCraft());
   if (tabs.length > 0) {
     const strip = document.createElement('div');
-    strip.className = 'crafting-tabs';
+    strip.className = 'crafting-tabs ui-tabs';
     for (const tab of tabs) {
       const name = craftNameText(tab.professionId);
       const btn = document.createElement('button');
       btn.type = 'button';
-      btn.className = `crafting-tab${tab.professionId === selected ? ' sel' : ''}`;
+      btn.className = `crafting-tab ui-tab${tab.professionId === selected ? ' sel is-on' : ''}`;
       btn.setAttribute('aria-pressed', tab.professionId === selected ? 'true' : 'false');
       btn.dataset.craft = tab.professionId;
       const art = professionImageUrl(`prof_${tab.professionId}`);
-      btn.innerHTML = `${art ? `<img class="crafting-tab-icon" src="${esc(art)}" alt="" draggable="false">` : ''}<span class="crafting-tab-label">${esc(name)}</span><span class="crafting-tab-count">${formatNumber(tab.recipeCount, { maximumFractionDigits: 0 })}</span>`;
+      btn.innerHTML = `${art ? `<img class="crafting-tab-icon" src="${esc(art)}" alt="" draggable="false">` : ''}<span class="crafting-tab-label">${esc(name)}</span><span class="crafting-tab-count ui-badge">${formatNumber(tab.recipeCount, { maximumFractionDigits: 0 })}</span>`;
       btn.addEventListener('click', () => {
         if (tab.professionId !== selected) deps.onSelectCraft(tab.professionId);
       });
@@ -230,7 +230,7 @@ export function renderCraftingWindow(
   // ladder can park keyboard focus here while every row control is disabled
   // mid-cast (programmatic focus only, never in the Tab cycle).
   const progress = document.createElement('div');
-  progress.className = 'crafting-cast-progress';
+  progress.className = 'crafting-cast-progress ui-card';
   progress.setAttribute('role', 'progressbar');
   progress.setAttribute('aria-label', t('hudChrome.crafting.progressAria'));
   progress.setAttribute('aria-valuemin', '0');
@@ -238,7 +238,7 @@ export function renderCraftingWindow(
   progress.tabIndex = -1;
   progress.dataset.focusKey = 'cast-strip';
   progress.innerHTML =
-    `<div class="crafting-cast-progress-track"><div class="crafting-cast-progress-fill"></div><span class="crafting-cast-progress-label"></span><span class="crafting-cast-progress-timer"></span></div>` +
+    `<div class="crafting-cast-progress-track ui-cast"><div class="crafting-cast-progress-fill ui-cast-fill"></div><span class="ui-cast-edge"></span><span class="crafting-cast-progress-label ui-cast-label"></span><span class="crafting-cast-progress-timer ui-cast-timer"></span></div>` +
     `<span class="crafting-cast-progress-batch"></span>`;
   // Rendered SYNCHRONOUSLY when a cast is live: the focus ladder below may
   // pick the strip, and focus() on a display:none element is a no-op in a
@@ -293,7 +293,7 @@ export function renderCraftingWindow(
     const sectionName = craftNameText(selected);
     const sectionImageUrl = professionImageUrl(`prof_${selected}`);
     const section = document.createElement('div');
-    section.className = 'vendor-section-title crafting-section-title';
+    section.className = 'vendor-section-title crafting-section-title ui-h';
     section.setAttribute('role', 'heading');
     section.setAttribute('aria-level', '3');
     if (sectionImageUrl) {
@@ -327,7 +327,7 @@ export function renderCraftingWindow(
 
     for (const row of rows) {
       const item = document.createElement('div');
-      item.className = 'vendor-item crafting-recipe-item';
+      item.className = 'vendor-item crafting-recipe-item ui-card';
       const resultName = row.result ? itemDisplayName(row.result) : row.resultItemId;
       // The fine-substitution suffix (the UX pass): stated in words on both
       // the visible line and the aria fold, never color alone.
@@ -451,7 +451,7 @@ export function renderCraftingWindow(
       // the icon img keeps its own .q-* quality border class.
       const icon = row.result ? deps.itemIcon(row.result) : '';
       const glow = row.result?.quality ? qualityGlowShadow(QUALITY_COLOR[row.result.quality]) : '';
-      const socket = `<span class="crafting-recipe-socket"${glow ? ` style="box-shadow:${glow}"` : ''}>${icon}</span>`;
+      const socket = `<span class="crafting-recipe-socket ui-socket ui-socket--bag"${glow ? ` style="box-shadow:${glow}"` : ''}>${icon}</span>`;
       const btnState: CraftButtonState = craftButtonState(row, session);
       const canCraft = craftButtonEnabled(btnState);
       const castingActive = session.active;
@@ -481,14 +481,14 @@ export function renderCraftingWindow(
       // the :disabled opacity (components.css .vendor-item:disabled) makes an
       // unaffordable recipe visually distinct without hovering.
       const stationBadgeHtml = row.station
-        ? `<span class="crafting-station-badge${row.station.inRange ? '' : ' out-of-range'}">${esc(stationLabel)}</span>`
+        ? `<span class="crafting-station-badge ui-chip${row.station.inRange ? '' : ' out-of-range'}">${svgIcon('crafting')}${esc(stationLabel)}</span>`
         : '';
       const chipLabel =
         btnState === 'casting' ? t('hudChrome.crafting.crafting') : t('hudChrome.crafting.create');
       const craftFeeHtml = craftFeeLine
         ? `<span class="vi-sub crafting-fee-line">${esc(craftFeeLine)}</span>`
         : '';
-      craftBtn.innerHTML = `${socket}<span class="vi-name"><span class="crafting-recipe-name">${esc(resultName)}${esc(resultCountSuffix)}</span><span class="vi-sub crafting-reagent-line">${esc(t('hudChrome.crafting.reagentsNeeded'))} ${reagentHtml}</span>${craftFeeHtml}<span class="vi-sub crafting-skill-line">${esc(skillLine)} <span class="crafting-difficulty" data-difficulty="${esc(row.difficulty)}">${esc(difficultyLabel)}</span>${stationBadgeHtml} <span class="crafting-duration-chip">${esc(durationText)}</span></span></span><span class="vi-price crafting-craft-chip">${esc(chipLabel)}</span>`;
+      craftBtn.innerHTML = `${socket}<span class="vi-name"><span class="crafting-recipe-name">${esc(resultName)}${esc(resultCountSuffix)}</span><span class="vi-sub crafting-reagent-line">${esc(t('hudChrome.crafting.reagentsNeeded'))} ${reagentHtml}</span>${craftFeeHtml}<span class="vi-sub crafting-skill-line">${esc(skillLine)} <span class="crafting-difficulty ui-chip" data-difficulty="${esc(row.difficulty)}">${esc(difficultyLabel)}</span>${stationBadgeHtml} <span class="crafting-duration-chip ui-chip">${esc(durationText)}</span></span></span><span class="vi-price crafting-craft-chip ui-btn ui-btn--red${canCraft ? '' : ' ui-btn--dis'}">${esc(chipLabel)}</span>`;
       craftBtn.addEventListener('click', () => {
         if (canCraft) deps.onCraft(row.recipeId, qty);
       });
@@ -514,7 +514,7 @@ export function renderCraftingWindow(
       // a11y review chose over a composite spinbutton widget.
       const decBtn = document.createElement('button');
       decBtn.type = 'button';
-      decBtn.className = 'crafting-qty-btn';
+      decBtn.className = 'crafting-qty-btn ui-btn';
       decBtn.dataset.focusKey = `qty-dec:${row.recipeId}`;
       decBtn.textContent = '-';
       decBtn.setAttribute(
@@ -538,7 +538,7 @@ export function renderCraftingWindow(
       qtyValue.setAttribute('aria-hidden', 'true');
       const incBtn = document.createElement('button');
       incBtn.type = 'button';
-      incBtn.className = 'crafting-qty-btn';
+      incBtn.className = 'crafting-qty-btn ui-btn';
       incBtn.dataset.focusKey = `qty-inc:${row.recipeId}`;
       incBtn.textContent = '+';
       incBtn.setAttribute(
@@ -564,7 +564,7 @@ export function renderCraftingWindow(
       batchRow.appendChild(qtyGroup);
       const createAllBtn = document.createElement('button');
       createAllBtn.type = 'button';
-      createAllBtn.className = 'crafting-create-all-btn';
+      createAllBtn.className = 'crafting-create-all-btn ui-btn';
       createAllBtn.dataset.focusKey = `create-all:${row.recipeId}`;
       createAllBtn.textContent = t('hudChrome.crafting.createAll');
       createAllBtn.setAttribute('aria-label', t('hudChrome.crafting.createAllAria'));
@@ -591,7 +591,7 @@ export function renderCraftingWindow(
         commissionRow.className = 'crafting-commission-row';
         const chip = document.createElement('button');
         chip.type = 'button';
-        chip.className = 'crafting-commission-chip';
+        chip.className = 'crafting-commission-chip ui-chip';
         chip.setAttribute('aria-pressed', deps.commissionChecked(row.recipeId) ? 'true' : 'false');
         chip.innerHTML = `<span class="crafting-commission-pip" aria-hidden="true"></span>${esc(t('hudChrome.crafting.commissionToggle'))}`;
         chip.addEventListener('click', () => {
@@ -629,6 +629,11 @@ export function renderCraftingWindow(
       body.appendChild(item);
     }
   }
+
+  const footer = document.createElement('p');
+  footer.className = 'crafting-footer ui-muted';
+  footer.textContent = t('hudChrome.crafting.materialsFooter');
+  el.appendChild(footer);
 
   el.querySelector('[data-close]')?.addEventListener('click', () => deps.onClose());
   el.style.display = 'flex';

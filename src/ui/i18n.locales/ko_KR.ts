@@ -8520,6 +8520,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.close': '제작 닫기',
   'hudChrome.crafting.reagentsNeeded': '필요 재료:',
   'hudChrome.crafting.empty': '알려진 제작법이 없습니다.',
+  'hudChrome.crafting.materialsFooter':
+    '보관함의 재료는 자동으로 사용됩니다. 작업대에서 더 많은 제작법을 배우세요.',
   'hudChrome.crafting.resultAria': '{name} 제작',
   'hudChrome.crafting.craftedToast': '제작 완료:{name}',
   'hudChrome.crafting.craftedToastQty': '제작 완료:{name} x{qty}',
@@ -11218,6 +11220,10 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.professions.majorsLabel': '주 전공: {a}, {b}',
   'hudChrome.professions.pairsHeld': '보유한 조합: {count}',
   'hudChrome.professions.returnsLabel': '복귀: {count}',
+  'hudChrome.professions.retentionFooter': '전문 기술 재설정 시 숙련도의 60%가 유지됩니다.',
+  'hudChrome.professions.tutorialLink': '전문 기술 튜토리얼',
+  'hudChrome.marketWindow.mixedListingsFooter':
+    '상인은 일반 상품을 보충하며, 플레이어 매물은 판매자가 정한 가격으로 함께 표시됩니다.',
   'entities.npcs.forgemistress_darva.name': '단조사 다르바',
   'entities.npcs.forgemistress_darva.title': '대장간의 주인',
   'entities.npcs.forgemistress_darva.greeting':

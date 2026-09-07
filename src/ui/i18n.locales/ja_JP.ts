@@ -8528,6 +8528,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.crafting.close': '製作を閉じる',
   'hudChrome.crafting.reagentsNeeded': '必要素材:',
   'hudChrome.crafting.empty': '既知のレシピはありません。',
+  'hudChrome.crafting.materialsFooter':
+    '保管庫の素材は自動的に使用されます。ステーションでさらにレシピを習得できます。',
   'hudChrome.crafting.resultAria': '{name}を製作',
   'hudChrome.crafting.craftedToast': '製作しました:{name}',
   'hudChrome.crafting.craftedToastQty': '製作しました:{name} x{qty}',
@@ -11239,6 +11241,10 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.professions.majorsLabel': '主専攻：{a}と{b}',
   'hudChrome.professions.pairsHeld': '保持している組み合わせ：{count}',
   'hudChrome.professions.returnsLabel': '復帰：{count}',
+  'hudChrome.professions.retentionFooter': 'リスペック時はスキルの60%を保持します。',
+  'hudChrome.professions.tutorialLink': '専門技能チュートリアル',
+  'hudChrome.marketWindow.mixedListingsFooter':
+    '商人はコモンの商品を補充し、プレイヤーの出品は希望価格でその隣に並びます。',
   'entities.npcs.forgemistress_darva.name': '鍛冶長ダルヴァ',
   'entities.npcs.forgemistress_darva.title': '鍛冶場の主',
   'entities.npcs.forgemistress_darva.greeting':
