@@ -3060,6 +3060,19 @@ export const en_CA: EnTranslations = {
       "imported": "Hotkey setup imported.",
       "wrongKind": "That code is a settings export, not a hotkey setup."
     },
+    "keyboardMap": {
+      "title": "Keyboard Overview",
+      "hint": "Keys in use are coloured by category. Hover or focus a key to see everything bound to it.",
+      "layerGroup": "Modifier layer",
+      "layerNone": "No modifier",
+      "layerShift": "Shift",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "unbound": "Not bound",
+      "otherLayers": "Also bound with a modifier"
+    },
     "fullTransfer": {
       "menu": "Import / Export",
       "title": "Import / Export Settings",

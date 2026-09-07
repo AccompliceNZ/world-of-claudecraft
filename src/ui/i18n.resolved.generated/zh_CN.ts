@@ -3060,6 +3060,19 @@ export const zh_CN: EnTranslations = {
       "imported": "快捷键配置已导入。",
       "wrongKind": "该代码是设置导出，不是快捷键配置。"
     },
+    "keyboardMap": {
+      "title": "键盘总览",
+      "hint": "正在使用的按键按类别着色。将鼠标悬停或聚焦到某个按键即可查看其全部绑定。",
+      "layerGroup": "修饰键层",
+      "layerNone": "无修饰键",
+      "layerShift": "Shift 键",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "unbound": "未绑定",
+      "otherLayers": "也与修饰键组合绑定"
+    },
     "fullTransfer": {
       "menu": "导入 / 导出",
       "title": "导入 / 导出设置",

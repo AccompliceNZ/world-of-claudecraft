@@ -13937,6 +13937,164 @@
     width: min(880px, calc(100vw - 32px));
     --kb-btn-w: 96px;
   }
+  /* Key Bindings panel: the keyboard overview (src/ui/keyboard_map.ts). Keys sit
+     on a quarter-unit grid so the 1.25 / 1.5 / 2.25-wide caps line up; a key in
+     use takes its category colour, a dot marks bindings in other modifier
+     layers, and the detail line under the board spells the hovered key out. */
+  .kbm {
+    margin: 4px 0 10px;
+    --kbm-u: 34px;
+  }
+  .kbm-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .kbm-title {
+    font-family: var(--title-font);
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .kbm-layers {
+    display: flex;
+    gap: 4px;
+  }
+  .kbm-layer {
+    font-size: 11px;
+    padding: 2px 8px;
+  }
+  .kbm-layer[aria-pressed="true"] {
+    color: var(--gold);
+    border-color: var(--gold);
+  }
+  .kbm-board {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .kbm-block {
+    display: grid;
+    grid-template-columns: repeat(var(--kbm-cols), calc(var(--kbm-u) / 4));
+    grid-auto-rows: var(--kbm-u);
+    flex: none;
+  }
+  .kbm-key {
+    position: relative;
+    grid-column: span var(--kbm-w);
+    grid-row: span var(--kbm-h);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+    margin: 1.5px;
+    padding: 0 2px;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: #1a150e;
+    color: #b9ac82;
+    font: inherit;
+    font-size: 10px;
+    line-height: 1.1;
+    cursor: var(--cursor-point);
+  }
+  .kbm-key:hover,
+  .kbm-key:focus-visible {
+    border-color: var(--gold);
+  }
+  .kbm-key.in-use {
+    color: #f4ead0;
+  }
+  .kbm-spacer {
+    visibility: hidden;
+  }
+  .kbm-legend {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .kbm-action {
+    max-width: 100%;
+    font-size: 8px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0.95;
+  }
+  .kbm-dot {
+    position: absolute;
+    top: 2px;
+    right: 3px;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+  .kbm-cat-movement.in-use,
+  .kbm-swatch.kbm-cat-movement {
+    background: #2f5a34;
+  }
+  .kbm-cat-targeting.in-use,
+  .kbm-swatch.kbm-cat-targeting {
+    background: #6a3a2a;
+  }
+  .kbm-cat-interface.in-use,
+  .kbm-swatch.kbm-cat-interface {
+    background: #2d4a66;
+  }
+  .kbm-cat-pet.in-use,
+  .kbm-swatch.kbm-cat-pet {
+    background: #5a4a7a;
+  }
+  .kbm-cat-action-bar.in-use,
+  .kbm-swatch.kbm-cat-action-bar {
+    background: #7a5a1e;
+  }
+  .kbm-legend-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    margin-top: 4px;
+    font-size: 11px;
+    color: #b9ac82;
+  }
+  .kbm-legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .kbm-swatch {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    border: 1px solid var(--border);
+  }
+  .kbm-swatch-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    border: none;
+    background: var(--gold);
+    margin: 0 2px;
+  }
+  .kbm-detail {
+    min-height: 14px;
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 1.4;
+    color: #e8dcb8;
+  }
   .kb-cols {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));

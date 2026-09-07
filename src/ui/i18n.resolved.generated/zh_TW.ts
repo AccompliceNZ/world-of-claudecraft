@@ -3060,6 +3060,19 @@ export const zh_TW: EnTranslations = {
       "imported": "快捷鍵配置已匯入。",
       "wrongKind": "該代碼是設定匯出，不是快捷鍵配置。"
     },
+    "keyboardMap": {
+      "title": "鍵盤總覽",
+      "hint": "正在使用的按鍵依類別著色。將滑鼠懸停或聚焦到某個按鍵即可查看其全部綁定。",
+      "layerGroup": "修飾鍵層",
+      "layerNone": "無修飾鍵",
+      "layerShift": "Shift 鍵",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "unbound": "未綁定",
+      "otherLayers": "也與修飾鍵組合綁定"
+    },
     "fullTransfer": {
       "menu": "匯入 / 匯出",
       "title": "匯入 / 匯出設定",

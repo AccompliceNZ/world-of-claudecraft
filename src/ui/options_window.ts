@@ -96,6 +96,7 @@ import type { TranslationKey } from './i18n.catalog';
 import { interfaceUnlockLabelKey } from './interface_unlock_core';
 import { BIND_CATEGORY_LABEL_KEYS, bindActionDisplayName } from './keybind_action_names';
 import { buildKeybindCode, parseKeybindCode } from './keybind_transfer_core';
+import { paintKeyboardMap } from './keyboard_map';
 import {
   type BoolToggleControl,
   boolToggleNextValue,
@@ -2172,6 +2173,24 @@ export class OptionsWindow {
     return bindActionDisplayName(actionId, fallback, this.deps.slotActionName);
   }
 
+  private paintKeyboardOverview(el: HTMLElement, attackMoveOn: boolean): void {
+    const byId = new Map(BIND_ACTIONS.map((a) => [a.id, a]));
+    paintKeyboardMap(el, {
+      bindings: () => {
+        const snapshot = this.deps.keybinds().snapshot();
+        if (!attackMoveOn) delete snapshot.attackMove;
+        return snapshot;
+      },
+      actionName: (id) => this.actionDisplayName(id, byId.get(id)?.label ?? id),
+      actionCategory: (id) => byId.get(id)?.category ?? '',
+      categories: () =>
+        BIND_CATEGORIES.map((id) => {
+          const key = BIND_CATEGORY_LABEL_KEYS[id];
+          return { id, label: key ? t(key) : id };
+        }),
+    });
+  }
+
   // Action ids a gamepad button may be bound to: explicit unbind, the game menu,
   // the two pad-only camera zoom steps, plus every one-shot (edge) keybind action
   // and Jump. Movement-axis actions (forward/strafe/turn) are excluded, they live
@@ -2490,11 +2509,15 @@ export class OptionsWindow {
       mouseNote.textContent = t('hudChrome.keybinds.mouseHint');
       el.appendChild(mouseNote);
     }
-    const cols = document.createElement('div');
-    cols.className = 'kb-cols';
     // The Attack Move key is only meaningful (and only rebindable) while its mode
     // is on; otherwise hide its row so it can't shadow Turn Left's A in the list.
     const attackMoveOn = !!hooks?.settings.get('attackMove');
+    // The keyboard overview: every key in use, coloured by category and
+    // captioned with its action, one modifier layer at a time. Desktop only
+    // (touch has no keyboard); it hides the same Attack Move row the list does.
+    if (!useTouchInterface()) this.paintKeyboardOverview(el, attackMoveOn);
+    const cols = document.createElement('div');
+    cols.className = 'kb-cols';
     for (const category of BIND_CATEGORIES) {
       if (category === 'Action Bar') {
         // The wall of per-slot rebind rows (one per action-bar slot, 34 on this

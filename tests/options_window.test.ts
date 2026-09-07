@@ -40,6 +40,20 @@ describe('options_window: no magic values', () => {
   });
 });
 
+describe('options_window: keyboard overview', () => {
+  it('paints the keyboard overview on desktop only, hiding the same Attack Move row the list does', () => {
+    const keybinds = painter.slice(
+      painter.indexOf('private renderKeybinds(): void {'),
+      painter.indexOf('private beginCapture('),
+    );
+    expect(keybinds).toContain(
+      'if (!useTouchInterface()) this.paintKeyboardOverview(el, attackMoveOn);',
+    );
+    const overview = painter.slice(painter.indexOf('private paintKeyboardOverview('));
+    expect(overview.slice(0, overview.indexOf('\n  }\n'))).toContain('delete snapshot.attackMove;');
+  });
+});
+
 describe('options_window: import / export routing', () => {
   it('routes the Import / Export view to the full-settings transfer panel', () => {
     expect(painter).toContain("case 'transfer':");

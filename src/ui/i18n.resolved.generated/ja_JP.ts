@@ -3060,6 +3060,19 @@ export const ja_JP: EnTranslations = {
       "imported": "ホットキー設定をインポートしました。",
       "wrongKind": "このコードは設定のエクスポートで、ホットキー設定ではありません。"
     },
+    "keyboardMap": {
+      "title": "キーボード一覧",
+      "hint": "使用中のキーはカテゴリ別に色分けされています。キーにカーソルを合わせるかフォーカスすると、そのキーの割り当てがすべて表示されます。",
+      "layerGroup": "修飾キーレイヤー",
+      "layerNone": "修飾キーなし",
+      "layerShift": "Shift キー",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "unbound": "未割り当て",
+      "otherLayers": "修飾キーとの組み合わせでも割り当て済み"
+    },
     "fullTransfer": {
       "menu": "インポート / エクスポート",
       "title": "設定のインポート / エクスポート",

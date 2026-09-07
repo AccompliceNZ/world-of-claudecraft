@@ -3060,6 +3060,19 @@ export const ko_KR: EnTranslations = {
       "imported": "단축키 설정을 가져왔습니다.",
       "wrongKind": "이 코드는 설정 내보내기이며 단축키 설정이 아닙니다."
     },
+    "keyboardMap": {
+      "title": "키보드 개요",
+      "hint": "사용 중인 키는 범주별로 색이 칠해집니다. 키에 마우스를 올리거나 포커스하면 그 키의 모든 지정을 볼 수 있습니다.",
+      "layerGroup": "보조키 레이어",
+      "layerNone": "보조키 없음",
+      "layerShift": "Shift 키",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "unbound": "지정되지 않음",
+      "otherLayers": "보조키 조합으로도 지정됨"
+    },
     "fullTransfer": {
       "menu": "가져오기 / 내보내기",
       "title": "설정 가져오기 / 내보내기",

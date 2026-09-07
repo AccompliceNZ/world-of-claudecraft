@@ -4122,6 +4122,27 @@ export const hudChromeStrings = {
     imported: 'Hotkey setup imported.',
     wrongKind: 'That code is a settings export, not a hotkey setup.',
   },
+  // The Key Bindings panel's keyboard overview (src/ui/keyboard_map.ts): a live
+  // keyboard with every key in use coloured by category and captioned with its
+  // action, shown one modifier layer at a time. The layer names (Ctrl, Alt) are
+  // the key legends themselves and stay identical across locales; the wordy
+  // rows (M16) get their five non-Latin fills in this same change.
+  keyboardMap: {
+    title: 'Keyboard Overview',
+    hint: 'Keys in use are coloured by category. Hover or focus a key to see everything bound to it.',
+    layerGroup: 'Modifier layer',
+    layerNone: 'No modifier',
+    layerShift: 'Shift',
+    layerCtrl: 'Ctrl',
+    layerAlt: 'Alt',
+    // The hovered key's detail line: {key} is the keycap legend, {bindings} the
+    // separator-joined list of "combo: action" pairs (or the unbound row).
+    keyDetail: '{key}: {bindings}',
+    separator: ', ',
+    unbound: 'Not bound',
+    // Legend entry for the dot on a key that also carries bindings in other layers.
+    otherLayers: 'Also bound with a modifier',
+  },
   // The Game Menu's Import / Export sub-panel: the FULL preference set as one
   // text code (settings_transfer_core.ts kind 'full'). Reuses transfer.*
   // for the shared button and status strings. All wordy (M16): the five
