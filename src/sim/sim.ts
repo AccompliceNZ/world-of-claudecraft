@@ -174,7 +174,6 @@ import {
 } from './content/skins';
 import {
   cloneAllocation,
-  computeTalentModifiers,
   emptyAllocation,
   emptyModifiers,
   FIRST_TALENT_LEVEL,
@@ -375,6 +374,7 @@ import {
   mountTrainBegin as mountTrainBeginImpl,
   tickMountTraining as tickMountTrainingImpl,
 } from './mounts_training';
+import * as nythraxisReadouts from './nythraxis_raid_readouts';
 import {
   grantDevotionFromBlock,
   grantGroundAoEDevotionOnFirstHit,
@@ -1980,6 +1980,18 @@ export class Sim {
   }
   get activeIgnivarMeteors(): raidReadouts.ActiveIgnivarMeteorWarning[] {
     return raidReadouts.collectActiveIgnivarMeteors(this.ctx);
+  }
+  get activeNythraxisGraveEruptions(): nythraxisReadouts.ActiveNythraxisGraveEruption[] {
+    return nythraxisReadouts.collectActiveNythraxisGraveEruptions(this.ctx);
+  }
+  get activeNythraxisGraveFlames(): nythraxisReadouts.ActiveNythraxisGraveFlame[] {
+    return nythraxisReadouts.collectActiveNythraxisGraveFlames(this.ctx);
+  }
+  get activeNythraxisGravefires(): nythraxisReadouts.ActiveNythraxisGravefire[] {
+    return nythraxisReadouts.collectActiveNythraxisGravefires(this.ctx);
+  }
+  get activeNythraxisBindingSigils(): nythraxisReadouts.ActiveNythraxisBindingSigil[] {
+    return nythraxisReadouts.collectActiveNythraxisBindingSigils(this.ctx);
   }
   get activeVarkhulForgestormWarnings(): raidReadouts.ActiveVarkhulForgestormWarning[] {
     return raidReadouts.collectActiveVarkhulForgestormWarnings(this.ctx);

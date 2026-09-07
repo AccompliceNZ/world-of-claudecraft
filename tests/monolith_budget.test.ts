@@ -531,7 +531,10 @@ const MONOLITHS: MonolithRow[] = [
     // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
     // map-improvements epic (PR #3746): the /dev freezemobs loop skip and aggro refusal paid for by moving the sandbox scenario data to dev/dev_sandbox_config.ts. Measured with wc -l on the
     // merged tree. Exact merged count, zero headroom.
-    ceiling: 12272,
+    // Re-pinned 12272 -> 12284 at the Nythraxis redo sync (PR #3848 landed ahead in
+    // the queue; its arms sat under release's slack, so its pin never moved).
+    // Measured with wc -l on the merged tree. Exact merged count, zero headroom.
+    ceiling: 12284,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -755,12 +758,19 @@ const MONOLITHS: MonolithRow[] = [
     // Down 5898 -> 5873 for the per-surface action-bar profiles: the
     // debounced upload moved to src/net/action_bar_upload.ts
     // (ActionBarLayoutUploader). Exact count.
-    // Down 5873 -> 5856 for the guild bank transaction history: the log
-    // mirror's fields, the gbanklog install, and the request gate moved to
-    // src/net/guild_bank_log_mirror.ts (GuildBankLogMirror); what stays is
-    // the two one-line IWorld arms that put its requests on the wire. Exact
-    // count.
-    ceiling: 5856,
+    // Re-pinned at the PR #3848 release/v0.42.0 sync: this branch's own
+    // ground-telegraph extraction (the decode block for rings, Ignivar
+    // meteors, the Varkhul families, hourglasses and consecrations, plus
+    // the two new Nythraxis families, all moved behind
+    // applyGroundTelegraphSnapshot in src/net/ground_telegraph_wire.ts)
+    // lands alongside the release arm's guild bank transaction history
+    // extraction (the log mirror's fields, the gbanklog install, and the
+    // request gate moved to src/net/guild_bank_log_mirror.ts,
+    // GuildBankLogMirror; what stays here is the two one-line IWorld arms
+    // that put its requests on the wire), so the merged file sits below
+    // both single-arm counts (5860 and 5856). Measured on the merged tree,
+    // never reconciled by arithmetic. Exact merged count, zero slack.
+    ceiling: 5843,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

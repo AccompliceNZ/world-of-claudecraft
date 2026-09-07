@@ -378,10 +378,13 @@ interface AttributionTargetFixture {
 // Re-minted for the 2026-09-05 release/v0.42.0 sync into the shader-warm branch:
 // the Realm Builder monument (PR #3695) and this branch's renderer changes
 // land together on the merged tree. No capture was retaken.
-// Re-minted at the 2026-09-07 release/v0.42.0 sync of the Drakelands epic (PR #3746):
-// the renderer shed its castle-features arm (remint_polish_provenance.mjs).
+// Re-minted for the release/v0.42.0 merge into the Nythraxis playtest-tuning
+// branch (PR #3903's Varkhul heroic add-health lands beside this branch's
+// Nythraxis hazard-color renderer change): both arms had re-minted, so the
+// merged renderer.ts bytes replace either side's value. No capture was
+// retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'b89aee13a6231a2bc195d61d202b9c9d7fd628e2522016d97182083bbf6b6274';
+  'b106691f5bae01bbaeb5e1156dc3e5b25a903f4bd9278d4b2b9581891eb5a86a';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

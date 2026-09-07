@@ -252,13 +252,13 @@ describe('createWsAuth: authenticateWebSocket reject paths', () => {
     expectNoAdmissionWork(fixture);
   });
 
-  it('2c. rejects an auth-world-24 client on the auth-world-25 server before all admission work', async () => {
+  it('2c. rejects an auth-world-25 client on the auth-world-26 server before all admission work', async () => {
     const fixture = setup();
     const { ws, deps, req } = fixture;
 
     await createWsAuth(deps).authenticateWebSocket(
       asWs(ws),
-      JSON.stringify({ t: 'auth-world-24', token: 'tok', character: 7 }),
+      JSON.stringify({ t: 'auth-world-25', token: 'tok', character: 7 }),
       req,
     );
 
