@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { CORPSE_DURATION } from '../src/sim/combat/damage';
 import { DUNGEON_X_THRESHOLD, MOBS, riftInstanceOrigin } from '../src/sim/data';
+import { summonQuestMob } from '../src/sim/encounters/quest_summon';
 import { createMob } from '../src/sim/entity';
 import {
   applyBossCorpseHold,
@@ -11,21 +12,23 @@ import {
 import { corpseHasDecayed } from '../src/sim/respawn_policy';
 import type { PlayerMeta } from '../src/sim/sim';
 import { Sim } from '../src/sim/sim';
+import type { SimContext } from '../src/sim/sim_context';
 import { DT, type Entity } from '../src/sim/types';
 import { WORLD_BOSS_CORPSE_SECONDS } from '../src/sim/world_boss';
 import { EMPTY_TEST_WORLD } from './sim_shared';
 
-// Boss corpse hold (mob/boss_corpse_hold.ts): a slain boss keeps its lootable
-// corpse for BOSS_CORPSE_HOLD_SECONDS instead of the CORPSE_DURATION window
-// trash gets. The bug this pins: an instance boss never respawns in place, so
-// its corpse used to be lootable for as long as the instance stood, but once
-// corpseTimer hit zero the decay signal (corpseHasDecayed) made it unlootable
-// and invisible after 60s while a member's personal first-clear ring was still
-// sitting on the entity.
+// Boss corpse hold (mob/boss_corpse_hold.ts): a slain instance boss keeps its
+// lootable corpse for BOSS_CORPSE_HOLD_SECONDS instead of the CORPSE_DURATION
+// window trash gets. The bug this pins: an instance boss never respawns in
+// place, so its corpse used to be lootable for as long as the instance stood,
+// but once corpseTimer hit zero the decay signal (corpseHasDecayed) made it
+// unlootable and invisible after 60s while a member's personal first-clear
+// ring was still sitting on the entity.
 
 type SimInternals = {
   entities: Map<number, Entity>;
   players: Map<number, PlayerMeta>;
+  ctx: SimContext;
   addEntity(e: Entity): void;
 };
 
@@ -52,6 +55,13 @@ function placePlayer(
   e.prevPos = { ...pos };
 }
 
+function kill(sim: Sim, internals: SimInternals, killerId: number, mob: Entity): void {
+  const killer = internals.entities.get(killerId);
+  if (!killer) throw new Error('killer entity missing');
+  sim.dealDamage(killer, mob, 999_999, false, 'physical', null, 'hit');
+  expect(mob.dead).toBe(true);
+}
+
 function spawnAndKill(
   sim: Sim,
   internals: SimInternals,
@@ -62,10 +72,7 @@ function spawnAndKill(
   const template = MOBS[templateId];
   const mob = createMob(9000 + internals.entities.size, template, template.maxLevel, { ...pos });
   internals.addEntity(mob);
-  const killer = internals.entities.get(killerId);
-  if (!killer) throw new Error('killer entity missing');
-  sim.dealDamage(killer, mob, 999_999, false, 'physical', null, 'hit');
-  expect(mob.dead).toBe(true);
+  kill(sim, internals, killerId, mob);
   return mob;
 }
 
@@ -74,14 +81,9 @@ function tickSeconds(sim: Sim, seconds: number): void {
 }
 
 /** A minimal dead-mob shape for the pure leaf: a camp-placed mob unless told otherwise. */
-function corpse(
-  x: number,
-  respawnTimer: number,
-  flags: { summonedAdd?: boolean; runScoped?: boolean } = {},
-) {
+function corpse(x: number, flags: { summonedAdd?: boolean; runScoped?: boolean } = {}) {
   return {
     spawnPos: { x, y: 0, z: 0 },
-    respawnTimer,
     summonedAdd: flags.summonedAdd ?? false,
     runScoped: flags.runScoped ?? false,
   };
@@ -102,33 +104,27 @@ describe('bossCorpseHoldSeconds (pure leaf)', () => {
   });
 
   it('grants nothing to a non-boss, wherever it died', () => {
-    expect(bossCorpseHoldSeconds({}, corpse(instance, 25))).toBe(0);
-    expect(bossCorpseHoldSeconds({ elite: true } as never, corpse(world, 3600))).toBe(0);
-    expect(bossCorpseHoldSeconds(undefined, corpse(world, Number.POSITIVE_INFINITY))).toBe(0);
+    expect(bossCorpseHoldSeconds({}, corpse(instance))).toBe(0);
+    expect(bossCorpseHoldSeconds({ elite: true } as never, corpse(instance))).toBe(0);
+    expect(bossCorpseHoldSeconds(undefined, corpse(instance))).toBe(0);
   });
 
-  it('gives an instance boss the full hold regardless of its (never used) respawn delay', () => {
-    expect(bossCorpseHoldSeconds({ boss: true }, corpse(instance, 25))).toBe(
-      BOSS_CORPSE_HOLD_SECONDS,
-    );
+  it('gives an instance boss the full hold', () => {
+    expect(bossCorpseHoldSeconds({ boss: true }, corpse(instance))).toBe(BOSS_CORPSE_HOLD_SECONDS);
+    // The threshold itself is the open-world side, exactly like the respawn gate.
+    expect(bossCorpseHoldSeconds({ boss: true }, corpse(DUNGEON_X_THRESHOLD))).toBe(0);
   });
 
-  it('bounds an in-place open-world respawner by its own respawn delay', () => {
-    expect(bossCorpseHoldSeconds({ boss: true }, corpse(world, 180))).toBe(180);
-    expect(bossCorpseHoldSeconds({ boss: true }, corpse(world, 3600))).toBe(
-      BOSS_CORPSE_HOLD_SECONDS,
-    );
+  it('leaves an open-world boss on the classic decay: its in-place respawn owns the window', () => {
+    expect(bossCorpseHoldSeconds({ boss: true }, corpse(world))).toBe(0);
+    expect(bossCorpseHoldSeconds(MOBS.warlord_drogmar, corpse(world))).toBe(0);
+    expect(bossCorpseHoldSeconds(MOBS.bound_guardian, corpse(world))).toBe(0);
   });
 
-  it('an authored fixed schedule caps the hold everywhere, like the decay cap in handleDeath', () => {
-    // A practice dummy (boss + respawnSeconds 10) keeps returning on schedule.
-    expect(bossCorpseHoldSeconds({ boss: true, respawnSeconds: 10 }, corpse(world, 10))).toBe(10);
-    // The instance arm is capped too, not only the in-place one.
-    expect(bossCorpseHoldSeconds({ boss: true, respawnSeconds: 120 }, corpse(instance, 25))).toBe(
-      120,
-    );
+  it('an authored fixed schedule caps the hold, like the decay cap in handleDeath', () => {
+    expect(bossCorpseHoldSeconds({ boss: true, respawnSeconds: 120 }, corpse(instance))).toBe(120);
     // A schedule longer than the hold does not extend it.
-    expect(bossCorpseHoldSeconds({ boss: true, respawnSeconds: 7200 }, corpse(instance, 25))).toBe(
+    expect(bossCorpseHoldSeconds({ boss: true, respawnSeconds: 7200 }, corpse(instance))).toBe(
       BOSS_CORPSE_HOLD_SECONDS,
     );
   });
@@ -136,12 +132,7 @@ describe('bossCorpseHoldSeconds (pure leaf)', () => {
   it('leaves a world boss to its scheduler-owned window', () => {
     // The world-boss corpse also blocks the next scheduled spawn, so its window
     // is not the hold's to lengthen. Pinned at the pure leaf AND at the writer.
-    expect(
-      bossCorpseHoldSeconds(
-        { boss: true, worldBoss: true },
-        corpse(world, Number.POSITIVE_INFINITY),
-      ),
-    ).toBe(0);
+    expect(bossCorpseHoldSeconds({ boss: true, worldBoss: true }, corpse(instance))).toBe(0);
     const template = MOBS.thunzharr_waking_peak;
     expect(template.worldBoss).toBe(true);
     const boss = createMob(3, template, template.maxLevel, { ...WORLD_POS });
@@ -152,28 +143,14 @@ describe('bossCorpseHoldSeconds (pure leaf)', () => {
   });
 
   it('leaves a per-player summon (run-scoped or summoned add) on the classic decay', () => {
-    // The Bound Guardian rite summons a boss-flagged, run-scoped mob in the
-    // open world; its corpse decay is its only teardown.
-    expect(MOBS.bound_guardian.boss).toBe(true);
-    expect(
-      bossCorpseHoldSeconds(
-        MOBS.bound_guardian,
-        corpse(world, Number.POSITIVE_INFINITY, {
-          runScoped: true,
-          summonedAdd: true,
-        }),
-      ),
-    ).toBe(0);
-    expect(bossCorpseHoldSeconds({ boss: true }, corpse(instance, 25, { summonedAdd: true }))).toBe(
-      0,
-    );
+    expect(bossCorpseHoldSeconds({ boss: true }, corpse(instance, { runScoped: true }))).toBe(0);
+    expect(bossCorpseHoldSeconds({ boss: true }, corpse(instance, { summonedAdd: true }))).toBe(0);
   });
 
   it('applyBossCorpseHold only ever raises corpseTimer', () => {
     const template = MOBS.rift_boss_frost;
     const boss = createMob(1, template, template.maxLevel, { ...RIFT_POS });
     boss.corpseTimer = CORPSE_DURATION;
-    boss.respawnTimer = 25;
     applyBossCorpseHold(boss, template);
     expect(boss.corpseTimer).toBe(BOSS_CORPSE_HOLD_SECONDS);
     // A longer window already granted (a pending loot roll, say) stands.
@@ -241,22 +218,37 @@ describe('boss corpse hold through handleDeath', () => {
     expect(sim.lootCorpse(boss.id, pid)).toBe(false);
   });
 
-  it('an open-world quest boss keeps its cadence: the corpse lasts exactly the respawn wait', () => {
+  it('an open-world quest boss is untouched: classic decay, respawn on schedule', () => {
     const { sim, internals, pid } = setup();
     placePlayer(internals, pid, WORLD_POS);
     const drogmar = spawnAndKill(sim, internals, pid, 'warlord_drogmar', WORLD_POS);
     expect(MOBS.warlord_drogmar.boss).toBe(true);
     expect(drogmar.spawnPos.x).toBeLessThanOrEqual(DUNGEON_X_THRESHOLD);
-    // Longer than the trash window, bounded by his own three-minute return.
     expect(drogmar.respawnTimer).toBe(180);
-    expect(drogmar.corpseTimer).toBe(drogmar.respawnTimer);
-    expect(drogmar.corpseTimer).toBeGreaterThan(CORPSE_DURATION);
-    expect(drogmar.corpseTimer).toBeLessThan(BOSS_CORPSE_HOLD_SECONDS);
-    // Unlooted loot must not push the respawn past its schedule.
+    expect(drogmar.corpseTimer).toBe(CORPSE_DURATION);
     drogmar.loot = { copper: 650, items: [] };
     drogmar.lootable = true;
     tickSeconds(sim, 180);
     expect(drogmar.dead).toBe(false);
+  });
+
+  it('the Bound Guardian rite summon, spawned through the real script path, keeps the classic decay', () => {
+    // summonQuestMob without a hard lifetime marks nothing on the mob (no
+    // runScoped, no summonedAdd), so only the open-world placement rule keeps
+    // this boss-flagged summon off the hold. Pinned through the real path so a
+    // future camp marker cannot be assumed here.
+    const { sim, internals, pid } = setup();
+    placePlayer(internals, pid, WORLD_POS);
+    summonQuestMob(internals.ctx, 'bound_guardian', { ...WORLD_POS }, pid);
+    const guardian = [...internals.entities.values()].find(
+      (e) => e.kind === 'mob' && e.templateId === 'bound_guardian',
+    );
+    if (!guardian) throw new Error('bound_guardian did not summon');
+    expect(MOBS.bound_guardian.boss).toBe(true);
+    expect(guardian.runScoped).toBeFalsy();
+    expect(guardian.summonedAdd).toBeFalsy();
+    kill(sim, internals, pid, guardian);
+    expect(guardian.corpseTimer).toBe(CORPSE_DURATION);
   });
 
   it('a slain world boss keeps its own window, so the hourly spawn cadence is untouched', () => {

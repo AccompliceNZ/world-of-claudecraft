@@ -1,5 +1,5 @@
-// Boss corpse hold: a slain boss keeps its lootable corpse standing for
-// BOSS_CORPSE_HOLD_SECONDS instead of the CORPSE_DURATION window trash gets.
+// Boss corpse hold: a slain instance boss keeps its lootable corpse standing
+// for BOSS_CORPSE_HOLD_SECONDS instead of the CORPSE_DURATION window trash gets.
 //
 // Why: corpseTimer is the LOOT WINDOW, not only a decay clock. Once it reaches
 // zero the corpse reads as decayed (respawn_policy.ts corpseHasDecayed):
@@ -15,30 +15,32 @@
 // resurrecting the member who died to the boss routinely takes longer than
 // that, and that member then found no body to loot.
 //
-// The hold is scoped to camp-placed `boss` templates so trash, ordinary elites,
-// and rares keep the classic 60s decay:
-// - an instance boss (rift floors, dungeons, raids, delves: spawnPos beyond
-//   DUNGEON_X_THRESHOLD) takes the full hold. The instance reapers still bound
-//   it from outside: an empty instance frees on its own timeout, and freeing
-//   drops the corpse with the rest of the floor;
-// - an open-world boss that respawns IN PLACE (Warlord Drogmar's three-minute
-//   quest cadence) is bounded by its own respawn delay. The respawn gate defers
-//   an in-place respawn while the corpse is still lootable, so an unbounded
-//   hold would let one unlooted kill block a required quest kill for half an
-//   hour. Its loot window becomes the whole respawn wait (never shorter than
-//   before) and the respawn lands on schedule;
-// - an authored fixed schedule (`respawnSeconds`, the practice dummies) caps
-//   the hold exactly as it caps the default decay in handleDeath: that mob
-//   returns on schedule whether or not it was looted, hold or no hold.
-// Deliberately NOT held:
+// The hold applies to a camp-placed `boss` template inside an instance (rift
+// floors, dungeons, raids, delves: spawnPos beyond DUNGEON_X_THRESHOLD, the
+// same predicate the respawn gate uses). An authored fixed schedule
+// (`respawnSeconds`) caps it exactly as it caps the default decay in
+// handleDeath, so such a mob returns on schedule whether or not it was looted.
+// Everything else keeps the classic 60s decay, deliberately:
+// - trash, ordinary elites, and rares: the classic window is the design;
+// - an open-world boss: it respawns IN PLACE on its zone cadence (Warlord
+//   Drogmar every three minutes, most others on the trash delay), and the
+//   respawn gate defers an in-place respawn while the corpse is still
+//   lootable, so a hold there would let one unlooted kill block a required
+//   quest kill. Script summons (the Bound Guardian rite, summonQuestMob) carry
+//   no marker that separates them from a camp placement either, and a held
+//   summon corpse would pile bodies at its altar. The open world is left
+//   alone wholesale rather than guessed at;
 // - a world boss: its corpse window is WORLD_BOSS_CORPSE_SECONDS, owned by the
 //   world-boss scheduler, and that corpse also BLOCKS the next scheduled spawn
 //   (updateWorldBosses only spawns into an empty slot), so lengthening it would
 //   silently skip an hourly spawn after any kill in the back half of the hour;
-// - a per-player summon (`runScoped` / `summonedAdd`, the Bound Guardian rite):
-//   every summon mints a fresh entity and the corpse decay is its only teardown,
-//   so a long hold would pile half-hour bodies at the altar. The summoner is
-//   standing right there; the classic window is the right one.
+// - a per-player summon (`runScoped` / `summonedAdd`): every summon mints a
+//   fresh entity and the corpse decay is its only teardown.
+// Bounds from outside the hold, so a held corpse never outlives its instance:
+// the instance reapers free an empty instance on their own timeouts and drop
+// every entity with it; a rift descent tears the floor down the same way; and
+// the idle cull (isInertInstanceCorpse) FREEZES corpseTimer while no player is
+// near, so the hold is measured in attended seconds, not wall-clock seconds.
 // The loot-side clamps stay in charge of an EMPTIED corpse: pruneCorpseLoot
 // collapses a boss corpse with nothing left exactly as before, so the hold
 // never keeps an empty body standing. No shipped boss carries harvest
@@ -51,13 +53,13 @@
 import { DUNGEON_X_THRESHOLD } from '../data';
 import type { Entity, MobTemplate } from '../types';
 
-/** How long a slain boss's lootable corpse stands (seconds). */
+/** How long a slain instance boss's lootable corpse stands (seconds). */
 export const BOSS_CORPSE_HOLD_SECONDS = 30 * 60;
 
 type HoldTemplate = Pick<MobTemplate, 'boss' | 'worldBoss' | 'respawnSeconds'>;
-type HoldMob = Pick<Entity, 'spawnPos' | 'respawnTimer' | 'summonedAdd' | 'runScoped'>;
+type HoldMob = Pick<Entity, 'spawnPos' | 'summonedAdd' | 'runScoped'>;
 
-/** A `boss` template the hold applies to: world bosses keep their
+/** A `boss` template the hold can apply to: world bosses keep their
  * scheduler-owned window (see the header). */
 export function isHeldBossTemplate(template: HoldTemplate | undefined): boolean {
   return template?.boss === true && template.worldBoss !== true;
@@ -65,20 +67,16 @@ export function isHeldBossTemplate(template: HoldTemplate | undefined): boolean 
 
 /**
  * Seconds a fresh boss corpse must stay lootable: 0 when no hold applies (a
- * non-boss, a world boss, a per-player summon), the full hold for an instance
- * boss, and min(hold, respawn delay) for an in-place open-world respawner; an
- * authored `respawnSeconds` caps every arm. `mob.respawnTimer` is the delay
- * handleDeath just assigned (Infinity for a run-scoped mob).
+ * non-boss, a world boss, an open-world placement, a per-player summon), else
+ * the full hold, capped by an authored `respawnSeconds`.
  */
 export function bossCorpseHoldSeconds(template: HoldTemplate | undefined, mob: HoldMob): number {
   if (!template || !isHeldBossTemplate(template)) return 0;
   if (mob.summonedAdd || mob.runScoped) return 0;
-  const respawnsInPlace =
-    mob.spawnPos.x <= DUNGEON_X_THRESHOLD && Number.isFinite(mob.respawnTimer);
-  const hold = respawnsInPlace
-    ? Math.min(BOSS_CORPSE_HOLD_SECONDS, mob.respawnTimer)
-    : BOSS_CORPSE_HOLD_SECONDS;
-  return template.respawnSeconds === undefined ? hold : Math.min(hold, template.respawnSeconds);
+  if (mob.spawnPos.x <= DUNGEON_X_THRESHOLD) return 0;
+  return template.respawnSeconds === undefined
+    ? BOSS_CORPSE_HOLD_SECONDS
+    : Math.min(BOSS_CORPSE_HOLD_SECONDS, template.respawnSeconds);
 }
 
 /**
