@@ -1364,10 +1364,6 @@ export const ru_RU: EnTranslations = {
       "conflictTitle": "Клавиша уже занята",
       "conflictBody": "{key} уже назначена на «{other}». Назначение на «{action}» снимет привязку с «{other}».",
       "conflictAccept": "Всё равно переназначить",
-      "replaceTitle": "Заменить назначение клавиши?",
-      "replaceBody": "Для {slot} назначена клавиша {current}. Заменить её на {key}?",
-      "replaceConflictBody": "Для {slot} назначена клавиша {current}, а {key} уже назначена для {other}. При замене назначение {other} будет снято.",
-      "replaceAccept": "Заменить",
       "resetConfirmTitle": "Сбросить клавиши панели действий?",
       "resetConfirmBody": "Первая панель вернётся к клавишам по умолчанию, а вторая и третья панели останутся без назначенных клавиш. Это действие нельзя отменить."
     },

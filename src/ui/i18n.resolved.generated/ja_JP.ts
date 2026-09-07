@@ -1364,10 +1364,6 @@ export const ja_JP: EnTranslations = {
       "conflictTitle": "キーは割り当て済み",
       "conflictBody": "{key} はすでに{other}に割り当てられています。{action}に割り当てると{other}の割り当ては解除されます。",
       "conflictAccept": "それでも再割り当て",
-      "replaceTitle": "キー設定を置き換えますか？",
-      "replaceBody": "{slot} は {current} に割り当てられています。{key} に置き換えますか？",
-      "replaceConflictBody": "{slot} は {current} に割り当てられており、{key} はすでに {other} に割り当てられています。置き換えると {other} の割り当てが解除されます。",
-      "replaceAccept": "置き換える",
       "resetConfirmTitle": "アクションバーのキーをリセットしますか？",
       "resetConfirmBody": "1本目のバーはデフォルトのキーに戻り、2本目と3本目のバーは未設定になります。この操作は取り消せません。"
     },

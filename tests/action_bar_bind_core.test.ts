@@ -52,40 +52,17 @@ describe('actionBarBindResolveCapture', () => {
 });
 
 describe('actionBarBindPrompt', () => {
-  it('binds silently when the slot is empty and the key is free', () => {
-    expect(
-      actionBarBindPrompt({ key: 'R', current: null, other: null, slot: 'Fireball' }),
-    ).toBeNull();
+  it('binds silently when the key is free, whether or not the slot already had one', () => {
+    expect(actionBarBindPrompt({ key: 'R', other: null, slot: 'Fireball' })).toBeNull();
+    expect(actionBarBindPrompt({ key: 'R', other: null, slot: 'Slot 4' })).toBeNull();
   });
 
-  it('warns before replacing a pre-existing key on the slot', () => {
-    expect(actionBarBindPrompt({ key: 'R', current: '3', other: null, slot: 'Fireball' })).toEqual({
-      titleKey: 'hudChrome.actionBar.replaceTitle',
-      bodyKey: 'hudChrome.actionBar.replaceBody',
-      acceptKey: 'hudChrome.actionBar.replaceAccept',
-      params: { slot: 'Fireball', current: '3', key: 'R' },
-    });
-  });
-
-  it('warns with the classic conflict prompt when a free slot steals a key', () => {
-    expect(
-      actionBarBindPrompt({ key: 'R', current: null, other: 'Toggle Autorun', slot: 'Slot 4' }),
-    ).toEqual({
+  it('warns with the conflict prompt when the pressed key is already in use elsewhere', () => {
+    expect(actionBarBindPrompt({ key: 'R', other: 'Toggle Autorun', slot: 'Fireball' })).toEqual({
       titleKey: 'hudChrome.actionBar.conflictTitle',
       bodyKey: 'hudChrome.actionBar.conflictBody',
       acceptKey: 'hudChrome.actionBar.conflictAccept',
-      params: { key: 'R', other: 'Toggle Autorun', action: 'Slot 4' },
-    });
-  });
-
-  it('names both facts in one prompt when a bound slot also steals a key', () => {
-    expect(
-      actionBarBindPrompt({ key: 'R', current: '3', other: 'Toggle Autorun', slot: 'Fireball' }),
-    ).toEqual({
-      titleKey: 'hudChrome.actionBar.replaceTitle',
-      bodyKey: 'hudChrome.actionBar.replaceConflictBody',
-      acceptKey: 'hudChrome.actionBar.replaceAccept',
-      params: { slot: 'Fireball', current: '3', key: 'R', other: 'Toggle Autorun' },
+      params: { key: 'R', other: 'Toggle Autorun', action: 'Fireball' },
     });
   });
 });

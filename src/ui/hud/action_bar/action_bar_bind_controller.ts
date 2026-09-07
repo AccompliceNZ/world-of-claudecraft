@@ -2,10 +2,10 @@
 // Key Bindings menu's single "Edit action bar keys" entry. While active, a slot
 // click on the live bar selects that slot instead of casting, and the next
 // physical keypress binds it through the same Input.captureNextKey seam every
-// other rebind flow uses, so it never fires the ability. Before a capture
-// commits over a PRE-EXISTING binding (the slot's current key, or a key another
-// action holds) it raises an are-you-sure prompt; cancelling leaves every
-// binding untouched. Exited via the banner's Done button.
+// other rebind flow uses, so it never fires the ability. When the pressed key
+// is ALREADY IN USE by another action it raises an are-you-sure prompt first
+// (accepting unbinds that action); cancelling leaves every binding untouched.
+// Exited via the banner's Done button.
 //
 // The state machine is the pure action_bar_bind_core.ts, the banner DOM is
 // action_bar_bind_banner.ts; this class wires both to the HUD through deps and
@@ -108,17 +108,12 @@ export class ActionBarBindController {
         this.resolve(null);
         return;
       }
-      // Warn before touching a pre-existing binding: the slot's current key
-      // (unless the player pressed that very key, which changes nothing) and
-      // any other action the pressed key would be stolen from. Cancelling
-      // leaves every binding untouched.
+      // Warn when the pressed key is already in use: binding it here steals it
+      // from that other action. Cancelling leaves every binding untouched.
       const id = `slot${slot}`;
-      const keybinds = this.deps.keybinds();
-      const currentCode = keybinds.codeAt(id, 0);
-      const conflict = keybinds.findBindConflict(id, 0, code);
+      const conflict = this.deps.keybinds().findBindConflict(id, 0, code);
       const prompt = actionBarBindPrompt({
         key: keyLabel(code),
-        current: currentCode !== null && currentCode !== code ? keyLabel(currentCode) : null,
         other: conflict ? this.deps.actionName(conflict.id) : null,
         slot: this.deps.actionName(id),
       });

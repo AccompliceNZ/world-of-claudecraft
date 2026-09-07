@@ -1364,10 +1364,6 @@ export const pt_BR: EnTranslations = {
       "conflictTitle": "Tecla Já Atribuída",
       "conflictBody": "A tecla {key} já está atribuída a {other}. Atribuí-la a {action} vai desatribuir {other}.",
       "conflictAccept": "Atribuir Assim Mesmo",
-      "replaceTitle": "Replace Key Binding?",
-      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
-      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
-      "replaceAccept": "Replace",
       "resetConfirmTitle": "Redefinir as teclas da barra de ação?",
       "resetConfirmBody": "A primeira barra volta às teclas padrão. A segunda e a terceira ficam sem atribuição. Isso não pode ser desfeito."
     },

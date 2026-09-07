@@ -1364,10 +1364,6 @@ export const es_ES: EnTranslations = {
       "conflictTitle": "Tecla ya asignada",
       "conflictBody": "{key} ya está asignada a {other}. Asignarla a {action} anulará la asignación de {other}.",
       "conflictAccept": "Reasignar de todos modos",
-      "replaceTitle": "Replace Key Binding?",
-      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
-      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
-      "replaceAccept": "Replace",
       "resetConfirmTitle": "¿Restablecer las teclas de la barra de acción?",
       "resetConfirmBody": "La primera barra vuelve a sus teclas predeterminadas. La segunda y la tercera quedan sin asignar. Esto no se puede deshacer."
     },

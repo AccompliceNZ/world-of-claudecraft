@@ -57,44 +57,22 @@ export interface ActionBarBindPrompt {
 
 /**
  * Decide whether binding `key` to the selected slot needs a warning first.
- * `current` is the label of the key the slot ALREADY holds (null when the slot
- * is unbound, or when the player pressed the very key it already has, which
- * changes nothing); `other` is the name of the action that would LOSE `key`
- * (null when the key is free); `slot` names the slot being bound. A slot
- * with a pre-existing key always warns before it is replaced; a free slot
- * warns only when the key is stolen from elsewhere; both facts in one prompt
- * when both apply.
+ * `other` is the name of the action that would LOSE `key` (null when the key
+ * is free); `slot` names the slot being bound. Only a key already in use
+ * elsewhere warns: replacing the slot's own previous key is the point of the
+ * mode and asks nothing.
  */
 export function actionBarBindPrompt(input: {
   key: string;
-  current: string | null;
   other: string | null;
   slot: string;
 }): ActionBarBindPrompt | null {
-  const { key, current, other, slot } = input;
-  if (current !== null && other !== null) {
-    return {
-      titleKey: 'hudChrome.actionBar.replaceTitle',
-      bodyKey: 'hudChrome.actionBar.replaceConflictBody',
-      acceptKey: 'hudChrome.actionBar.replaceAccept',
-      params: { slot, current, key, other },
-    };
-  }
-  if (current !== null) {
-    return {
-      titleKey: 'hudChrome.actionBar.replaceTitle',
-      bodyKey: 'hudChrome.actionBar.replaceBody',
-      acceptKey: 'hudChrome.actionBar.replaceAccept',
-      params: { slot, current, key },
-    };
-  }
-  if (other !== null) {
-    return {
-      titleKey: 'hudChrome.actionBar.conflictTitle',
-      bodyKey: 'hudChrome.actionBar.conflictBody',
-      acceptKey: 'hudChrome.actionBar.conflictAccept',
-      params: { key, other, action: slot },
-    };
-  }
-  return null;
+  const { key, other, slot } = input;
+  if (other === null) return null;
+  return {
+    titleKey: 'hudChrome.actionBar.conflictTitle',
+    bodyKey: 'hudChrome.actionBar.conflictBody',
+    acceptKey: 'hudChrome.actionBar.conflictAccept',
+    params: { key, other, action: slot },
+  };
 }

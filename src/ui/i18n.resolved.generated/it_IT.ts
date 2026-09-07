@@ -1364,10 +1364,6 @@ export const it_IT: EnTranslations = {
       "conflictTitle": "Tasto già assegnato",
       "conflictBody": "{key} è già assegnato a {other}. Assegnarlo a {action} annullerà l'assegnazione a {other}.",
       "conflictAccept": "Assegna comunque",
-      "replaceTitle": "Replace Key Binding?",
-      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
-      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
-      "replaceAccept": "Replace",
       "resetConfirmTitle": "Ripristinare i tasti della barra delle azioni?",
       "resetConfirmBody": "La prima barra torna ai suoi tasti predefiniti. La seconda e la terza restano senza tasti assegnati. L'operazione non può essere annullata."
     },

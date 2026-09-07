@@ -1569,16 +1569,6 @@ export const hudChromeStrings = {
     conflictTitle: 'Key Already Bound',
     conflictBody: '{key} is already bound to {other}. Binding it to {action} will unbind {other}.',
     conflictAccept: 'Rebind Anyway',
-    // The on-bar mode's warning before a slot that ALREADY has a key takes a
-    // new one: {slot} is the slot's ability/item name (or its numbered label),
-    // {current} the key it holds, {key} the key just pressed. The *Conflict*
-    // body adds {other}, the action that would lose {key}, when both apply.
-    // Wordy (M16): the five non-Latin fills land in this same change.
-    replaceTitle: 'Replace Key Binding?',
-    replaceBody: '{slot} is bound to {current}. Replace it with {key}?',
-    replaceConflictBody:
-      '{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.',
-    replaceAccept: 'Replace',
     resetConfirmTitle: 'Reset action bar keys?',
     resetConfirmBody:
       'The first bar returns to its default keys. The second and third bars become unbound. This cannot be undone.',

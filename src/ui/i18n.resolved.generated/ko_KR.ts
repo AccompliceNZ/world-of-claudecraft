@@ -1364,10 +1364,6 @@ export const ko_KR: EnTranslations = {
       "conflictTitle": "이미 지정된 키",
       "conflictBody": "{key} 키는 이미 {other}에 지정되어 있습니다. {action}에 지정하면 {other}의 지정이 해제됩니다.",
       "conflictAccept": "그래도 재지정",
-      "replaceTitle": "단축키를 바꾸시겠습니까?",
-      "replaceBody": "{slot}에는 {current} 키가 지정되어 있습니다. {key} 키로 바꾸시겠습니까?",
-      "replaceConflictBody": "{slot}에는 {current} 키가 지정되어 있고, {key} 키는 이미 {other}에 지정되어 있습니다. 바꾸면 {other}의 지정이 해제됩니다.",
-      "replaceAccept": "바꾸기",
       "resetConfirmTitle": "액션 바 키를 초기화하시겠습니까?",
       "resetConfirmBody": "첫 번째 바는 기본 키로 되돌아가고, 두 번째와 세 번째 바는 지정 해제됩니다. 이 작업은 되돌릴 수 없습니다."
     },

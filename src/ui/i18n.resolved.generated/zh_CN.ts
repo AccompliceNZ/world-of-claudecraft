@@ -1364,10 +1364,6 @@ export const zh_CN: EnTranslations = {
       "conflictTitle": "按键已被占用",
       "conflictBody": "{key} 已绑定到{other}。将其绑定到{action}会解除{other}的绑定。",
       "conflictAccept": "仍然重新绑定",
-      "replaceTitle": "替换按键绑定？",
-      "replaceBody": "{slot} 已绑定到 {current}。要替换为 {key} 吗？",
-      "replaceConflictBody": "{slot} 已绑定到 {current}，而 {key} 已绑定到 {other}。替换后将解除 {other} 的绑定。",
-      "replaceAccept": "替换",
       "resetConfirmTitle": "重置动作条按键？",
       "resetConfirmBody": "第一条动作条将恢复为默认按键，第二条和第三条动作条将变为未绑定状态。此操作无法撤销。"
     },

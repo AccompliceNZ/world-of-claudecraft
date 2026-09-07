@@ -1364,10 +1364,6 @@ export const cs_CZ: EnTranslations = {
       "conflictTitle": "Klávesa už je přiřazena",
       "conflictBody": "Klávesa {key} je už přiřazena k {other}. Přiřazení k {action} zruší přiřazení k {other}.",
       "conflictAccept": "Přesto přiřadit znovu",
-      "replaceTitle": "Replace Key Binding?",
-      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
-      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
-      "replaceAccept": "Replace",
       "resetConfirmTitle": "Resetovat klávesy akční lišty?",
       "resetConfirmBody": "První lišta se vrátí ke svým výchozím klávesám. Druhá a třetí lišta zůstanou bez přiřazení. Tuto akci nelze vzít zpět."
     },

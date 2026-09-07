@@ -1364,10 +1364,6 @@ export const fr_CA: EnTranslations = {
       "conflictTitle": "Touche déjà assignée",
       "conflictBody": "{key} est déjà assignée à {other}. L'assigner à {action} annulera l'assignation de {other}.",
       "conflictAccept": "Réassigner quand même",
-      "replaceTitle": "Replace Key Binding?",
-      "replaceBody": "{slot} is bound to {current}. Replace it with {key}?",
-      "replaceConflictBody": "{slot} is bound to {current}, and {key} is already bound to {other}. Replacing it will unbind {other}.",
-      "replaceAccept": "Replace",
       "resetConfirmTitle": "Réinitialiser les touches de la barre d'action ?",
       "resetConfirmBody": "La première barre retrouve ses touches par défaut. Les deuxième et troisième barres deviennent non assignées. Cette action est irréversible."
     },
