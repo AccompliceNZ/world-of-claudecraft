@@ -1,5 +1,7 @@
 // @vitest-environment happy-dom
 
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { NPCS, QUESTS, zoneAt } from '../src/sim/data';
 import type { QuestProgress } from '../src/sim/types';
@@ -125,5 +127,72 @@ describe('map sidebar controller', () => {
     expect(test.controller.shownRoute()).toBeNull();
     expect(abandonQuest).not.toHaveBeenCalled();
     expect(test.root.querySelector('[data-map-untrack]')?.hasAttribute('disabled')).toBe(true);
+  });
+});
+
+// The headerless map window has exactly ONE drag surface: the --window-pad band
+// around its two panes (Hud.isWindowDragHandle returns true only for
+// `target === win`). Both panes are absolutely positioned, and an absolutely
+// positioned child resolves against the PADDING box, so an `inset: 0` pane
+// covers that band and the window stops being draggable at all. jsdom has no
+// layout, so this reads the shipped declarations instead of a computed rect.
+describe('map window: the pad band stays the drag handle', () => {
+  // join(__dirname, ...) rather than an import.meta URL: the DOM environment
+  // rewrites import.meta.url to an http scheme (the bags-window precedent).
+  const indexHtml = readFileSync(join(__dirname, '../index.html'), 'utf8');
+  const componentsCss = readFileSync(join(__dirname, '../src/styles/components.css'), 'utf8');
+
+  /** The body of the rule whose whole selector text is exactly `selector`. */
+  function ruleBody(css: string, selector: string): string {
+    const at = css.indexOf(`\n  ${selector} {`);
+    expect(at, `components.css declares no rule for ${selector}`).toBeGreaterThan(-1);
+    const open = css.indexOf('{', at);
+    return css.slice(open + 1, css.indexOf('}', open));
+  }
+
+  function inset(selector: string): string {
+    const body = ruleBody(componentsCss, selector);
+    const match = body.match(/(?:^|[;{])\s*inset:([^;]*)/);
+    expect(match, `${selector} declares no inset`).not.toBeNull();
+    return (match?.[1] ?? '').replace(/\s+/g, ' ').trim();
+  }
+
+  it('mounts both panes as absolutely positioned direct children of #map-window', () => {
+    document.body.innerHTML = '';
+    const at = indexHtml.indexOf('<div id="map-window"');
+    expect(at).toBeGreaterThan(-1);
+    const host = document.createElement('div');
+    host.innerHTML = indexHtml.slice(at, indexHtml.indexOf('<div id="arena-window"', at));
+    document.body.appendChild(host);
+    const win = document.getElementById('map-window');
+    expect(win).not.toBeNull();
+    expect(win?.querySelector(':scope > .map-atlas-sidebar')).not.toBeNull();
+    expect(win?.querySelector(':scope > .map-atlas-stage')).not.toBeNull();
+    for (const selector of ['.map-atlas-sidebar', '.map-atlas-stage']) {
+      expect(ruleBody(componentsCss, selector)).toContain('position: absolute');
+    }
+  });
+
+  it('insets the rail by the pad on the three edges it touches', () => {
+    const value = inset('.map-atlas-sidebar');
+    expect(value).toBe('var(--window-pad) auto var(--window-pad) var(--window-pad)');
+    expect(value.startsWith('0')).toBe(false);
+  });
+
+  it('insets the stage by the pad, its left edge past the rail and the gutter', () => {
+    const value = inset('.map-atlas-stage');
+    // top / right / bottom are the bare pad; left clears the 300px rail + 12px gutter.
+    expect(value).toBe(
+      'var(--window-pad) var(--window-pad) var(--window-pad) calc(var(--window-pad) + 300px + 12px)',
+    );
+    expect(value).not.toContain(' 312px');
+  });
+
+  it('keeps the pad when the empty rail collapses and the stage takes the window', () => {
+    const value = inset(
+      'body:not(.mobile-touch) #map-window:has(> .map-atlas-sidebar:empty) .map-atlas-stage',
+    );
+    expect(value).toBe('var(--window-pad)');
+    expect(value).not.toBe('0');
   });
 });

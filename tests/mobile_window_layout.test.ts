@@ -436,3 +436,37 @@ describe('mobile window layout CSS', () => {
     expect(offenders, 'add `height: auto` so the four-edge pin drives the box').toEqual([]);
   });
 });
+
+// W20: the desktop sheet gave `.ql-cols` a `height: calc(100% - var(--win-head-h))`
+// and `#spellbook .spell-list` a height plus `overflow-y: auto`, which turns each
+// into its own bounded scroller. The touch sheet's model is a SINGLE outer scroll
+// (the sheet itself), so both are released back to their content height here.
+describe('mobile: the sheet stays the single scroller', () => {
+  const body = (selector: string): string => {
+    const at = mobileCss.indexOf(`${selector} {`);
+    expect(at, `hud.mobile.css declares no rule for ${selector}`).toBeGreaterThan(-1);
+    return mobileCss.slice(at, mobileCss.indexOf('}', at));
+  };
+
+  it('releases the quest-log columns from the desktop height cap', () => {
+    const rule = body('body.mobile-touch #quest-log-window .ql-cols');
+    expect(rule).toContain('height: auto;');
+  });
+
+  it('releases the spellbook list from its own bounded scroll', () => {
+    const rule = body('body.mobile-touch #spellbook .spell-list');
+    expect(rule).toContain('height: auto;');
+    expect(rule).toContain('overflow-y: visible;');
+  });
+
+  it('still has desktop rules worth overriding (anti-vacuity)', () => {
+    const components = readFileSync(
+      new URL('../src/styles/components.css', import.meta.url),
+      'utf8',
+    );
+    expect(components).toContain('#spellbook .spell-list {');
+    expect(components).toMatch(
+      /#quest-log-window \.ql-cols \{[^}]*height: calc\(100% - var\(--win-head-h\)\)/,
+    );
+  });
+});

@@ -195,3 +195,25 @@ describe('talents_window: W7 visible footer actions', () => {
     expect(respec).toHaveBeenCalledOnce();
   });
 });
+
+// W20: the painter still stamps `.active` on the current loadout row, but the
+// rule that painted `.tal-lo-row.active .tal-lo-pick` was deleted with the legacy
+// menu look, so the active build was indistinguishable from the others.
+describe('talents loadout menu: the active build is marked', () => {
+  it('still stamps the active class and the radio state', () => {
+    expect(painter).toContain("`tal-lo-row${index === activeIndex ? ' active' : ''}`");
+    expect(painter).toContain("pick.setAttribute('aria-checked', String(index === activeIndex));");
+  });
+
+  it('paints the active pick with the library selected fill', () => {
+    const at = styles.indexOf('\n  .tal-lo-row.active .tal-lo-pick {');
+    expect(at, 'components.css has no active-loadout rule').toBeGreaterThan(-1);
+    const body = styles.slice(at, styles.indexOf('}', at));
+    expect(body).toContain('background: var(--btn-fill-selected);');
+    expect(body).toContain('border-color: var(--gold-dim);');
+    expect(body).toContain('color: var(--color-accent);');
+    // aria-checked is not what the library reads (it reads aria-pressed), which is
+    // exactly why the row needs its own rule rather than a bare .ui-btn--on.
+    expect(painter).not.toContain("pick.setAttribute('aria-pressed'");
+  });
+});

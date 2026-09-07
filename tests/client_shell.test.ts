@@ -3651,6 +3651,102 @@ describe('pet cluster layout', () => {
   });
 });
 
+// W20 correctness sweep, stylesheet side. Three findings whose only shipped
+// evidence is the markup plus the extracted sheets.
+describe('the legacy .btn plate never outranks the library', () => {
+  // .btn sits in @layer components and library.css in @layer library, so an
+  // unguarded .btn look declaration beats every ui-btn variant on a host that
+  // wears both classes. The look declarations are therefore guarded, and the
+  // per-window `revert-layer` islands that existed only to undo them are gone.
+  const lookProperties = [
+    'background',
+    'color',
+    'border',
+    'outline',
+    'border-radius',
+    'font-family',
+    'letter-spacing',
+    'text-shadow',
+    'box-shadow',
+    'transition',
+  ];
+
+  const ruleBody = (css: string, selector: string): string => {
+    const at = css.indexOf(`\n  ${selector} {`);
+    expect(at, `no rule for ${selector}`).toBeGreaterThan(-1);
+    const open = css.indexOf('{', at);
+    return css.slice(open + 1, css.indexOf('}', open));
+  };
+
+  it('guards every .btn look selector with :not(.ui-btn)', () => {
+    const guarded = ruleBody(componentsCss, '.btn:where(:not(.ui-btn))');
+    for (const property of lookProperties) {
+      expect(guarded, `${property} must be guarded`).toMatch(
+        new RegExp(`(?:^|[;{])\\s*${property}:`),
+      );
+    }
+    // The unguarded .btn rule that remains is geometry only.
+    const shared = ruleBody(componentsCss, '.btn');
+    for (const property of lookProperties) {
+      expect(shared, `${property} must not stay unguarded`).not.toMatch(
+        new RegExp(`(?:^|[;{])\\s*${property}:`),
+      );
+    }
+    for (const state of [':hover', ':focus-visible', ':active', ':disabled']) {
+      expect(componentsCss, `.btn${state} must be guarded`).toContain(
+        `.btn:where(:not(.ui-btn))${state} {`,
+      );
+      expect(componentsCss).not.toContain(`\n  .btn${state} {`);
+    }
+  });
+
+  it('drops the revert-layer islands that only undid .btn', () => {
+    for (const selector of [
+      '#quest-dialog .btn {',
+      '.buy-quantity-prompt .btn {',
+      ':is(.bank-buy-prompt, .bank-quantity-prompt, .gbank-gold-prompt) .btn {',
+      '#arena-window .btn.ui-btn {',
+      '#dungeon-finder-window .btn.ui-btn,',
+    ]) {
+      expect(componentsCss, `${selector} should be gone`).not.toContain(selector);
+    }
+    expect(hudCss).not.toContain('#trade-window .btn {');
+  });
+
+  it('keeps the death overlay actions on the library button in both entries', () => {
+    for (const entry of [html, playHtml]) {
+      expect(entry).toContain(
+        '<button type="button" class="btn ui-btn ui-btn--red ui-btn--lg" id="release-btn"',
+      );
+      expect(entry).toContain('class="btn ui-btn" id="resurrect-corpse-btn"');
+      expect(entry).toContain('class="btn ui-btn" id="resurrect-healer-btn"');
+    }
+  });
+});
+
+describe('#minimap-clock: the touch seat and the accessible name', () => {
+  // The pill went position: static -> relative for its ::after hit area, which
+  // makes the desktop rule's left: 50% / bottom: 97px apply as FLOW offsets and
+  // shove the clock right and up. Both must be cleared on the touch sheet.
+  it('clears the desktop offsets on the mobile sheet', () => {
+    const at = hudMobileCss.indexOf('body.mobile-touch #minimap-clock {');
+    expect(at).toBeGreaterThan(-1);
+    const body = hudMobileCss.slice(at, hudMobileCss.indexOf('}', at));
+    expect(body).toContain('position: relative;');
+    expect(body).toContain('left: auto;');
+    expect(body).toContain('bottom: auto;');
+  });
+
+  it('gives the re-minted clock button an accessible name in both entries', () => {
+    for (const entry of [html, playHtml]) {
+      const tag = /<button id="minimap-clock"[^>]*>/.exec(entry)?.[0] ?? '';
+      expect(tag, 'no #minimap-clock button').not.toBe('');
+      expect(tag).toContain('data-i18n-aria="hudChrome.widgets.clockTitle"');
+      expect(tag).toContain('aria-label="Local time - click to toggle 12/24-hour"');
+    }
+  });
+});
+
 /** The INSIDE of the #mobile-controls region: everything between its opening tag
  *  and the matching close, or null when it never closes. Walks only `tag`, which
  *  is the region's own element (a <section> in index.html, a <div> in play.html),

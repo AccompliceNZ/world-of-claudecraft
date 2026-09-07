@@ -248,3 +248,74 @@ describe('ui library: theme derivations back the text and surface tokens', () =>
     }
   });
 });
+
+// W20 correctness sweep: three library-side findings.
+describe('ui library: hover states and the orphan tokens', () => {
+  const code = stripComments(library);
+  const hudCss = read('src/styles/hud.css');
+
+  const ruleBody = (css: string, selector: string): string => {
+    const at = css.indexOf(`\n  ${selector} {`);
+    expect(at, `no rule for ${selector}`).toBeGreaterThan(-1);
+    const open = css.indexOf('{', at);
+    return css.slice(open + 1, css.indexOf('}', open));
+  };
+
+  // A disabled control must not light a gold edge under the pointer. The guard is
+  // written :where(:not(:disabled)) so it adds no specificity: an unguarded
+  // .ui-tab:hover at (0,2,0) already lost to .ui-tab[aria-selected="true"], and a
+  // plain :not() would have flipped that tie and de-accented the selected tab.
+  it('guards every hover state against :disabled without gaining specificity', () => {
+    for (const family of ['.ui-btn', '.ui-icon-btn', '.ui-disc', '.ui-tab']) {
+      expect(code, `${family}:hover must be guarded`).toContain(
+        `${family}:hover:where(:not(:disabled)) {`,
+      );
+      expect(code, `${family}:hover must not stay unguarded`).not.toContain(
+        `\n  ${family}:hover {`,
+      );
+    }
+  });
+
+  // .vendor-item:hover was narrowed to :not(.ui-card), which left every card and
+  // chip that IS a button with no pointer feedback at all.
+  it('gives an interactive card or chip pointer feedback, and a static one none', () => {
+    for (const selector of [
+      'button.ui-card:hover:where(:not(:disabled)),\n  .ui-card[role="button"]:hover',
+      'button.ui-chip:hover:where(:not(:disabled)),\n  .ui-chip[role="button"]:hover',
+    ]) {
+      const at = code.indexOf(`  ${selector} {`);
+      expect(at, `no interactive hover for ${selector}`).toBeGreaterThan(-1);
+      const open = code.indexOf('{', at);
+      expect(code.slice(open + 1, code.indexOf('}', open))).toContain('filter: brightness(1.06);');
+    }
+    // A plain .ui-card / .ui-chip stays inert: the hover is on the button forms only.
+    expect(code).not.toContain('\n  .ui-card:hover {');
+    expect(code).not.toContain('\n  .ui-chip:hover {');
+  });
+
+  // --tracker-w, --chat-w and --dur-press were declared with zero consumers while
+  // the rules they were meant to drive spelled the literal.
+  it('reads --dur-press for the button press instead of a literal', () => {
+    expect(ruleBody(code, '.ui-btn')).toContain('transition: transform var(--dur-press);');
+    // Every transition here drops under reduced motion; the pressed offset still lands.
+    expect(code).toMatch(
+      /@media \(prefers-reduced-motion: reduce\) \{\s*\.ui-toggle-thumb,\s*\.ui-btn \{/,
+    );
+    expect(code).toContain('body.reduce-motion .ui-btn {');
+  });
+
+  it('reads --tracker-w and --chat-w at the sites that hard-coded them', () => {
+    for (const [token, literal, count] of [
+      ['--tracker-w', '240px', 3],
+      ['--chat-w', '370px', 2],
+    ] as const) {
+      expect(tokens, `${token} must still be declared`).toContain(`${token}:`);
+      expect(
+        (hudCss.match(new RegExp(`var\\(${token}\\)`, 'g')) ?? []).length,
+        `${token} has no consumers`,
+      ).toBe(count);
+      // Anti-vacuity: the token's own value is still the literal it replaced.
+      expect(tokens).toContain(`${token}: ${literal};`);
+    }
+  });
+});

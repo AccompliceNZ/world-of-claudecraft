@@ -212,7 +212,9 @@ export class PerfOverlaySettingsPanel {
       for (const chip of chips) {
         const btn = document.createElement('button');
         btn.type = 'button';
-        btn.className = 'btn set-choice-btn';
+        // ui-btn carries the selected fill off aria-pressed, which sync() sets
+        // below; the legacy .set-choice-btn.sel look no longer exists.
+        btn.className = 'btn ui-btn set-choice-btn';
         const label = t(chip.labelKey);
         btn.textContent = label;
         const isOn = (): boolean => perf.get().metrics[chip.key];

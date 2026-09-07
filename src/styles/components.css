@@ -854,17 +854,24 @@
   body.reduce-motion .qd-coach {
     animation: none;
   }
+  /* The legacy plate keeps its geometry for every host, but every LOOK
+     declaration below is guarded by :where(:not(.ui-btn)) so a host that also
+     wears .ui-btn is painted by the library alone. :where() is zero-specificity,
+     so the guard cannot outrank the per-surface .btn overrides that already
+     tune the legacy plate. */
   .btn {
-    background: linear-gradient(#8a3326, #5a1d12 55%, #471409);
-    color: #ffd9a0;
-    border: 1px solid #a86;
-    outline: 1px solid #000;
-    border-radius: 4px;
     padding: 6px 16px;
     font-size: 12.5px;
     cursor: var(--cursor-point);
     margin-top: 10px;
     margin-right: 8px;
+  }
+  .btn:where(:not(.ui-btn)) {
+    background: linear-gradient(#8a3326, #5a1d12 55%, #471409);
+    color: #ffd9a0;
+    border: 1px solid #a86;
+    outline: 1px solid #000;
+    border-radius: 4px;
     font-family: var(--title-font);
     letter-spacing: 0.4px;
     text-shadow: 1px 1px 1px #000;
@@ -876,43 +883,25 @@
       box-shadow var(--transition-speed),
       border-color var(--transition-speed);
   }
-  .btn:hover {
+  .btn:where(:not(.ui-btn)):hover {
     filter: brightness(1.25);
     box-shadow:
       inset 0 1px 0 #ffffff2a,
       0 2px 4px #0008,
       0 0 8px var(--color-primary-glow);
   }
-  .btn:focus-visible {
+  .btn:where(:not(.ui-btn)):focus-visible {
     outline: 3px solid var(--color-border-focus) !important;
     outline-offset: 2px !important;
     box-shadow: 0 0 8px var(--color-primary-glow) !important;
   }
-  .btn:active {
+  .btn:where(:not(.ui-btn)):active {
     transform: translateY(1px);
   }
-  .btn:disabled {
+  .btn:where(:not(.ui-btn)):disabled {
     filter: grayscale(1) brightness(0.7);
     cursor: default;
     box-shadow: none;
-  }
-  #quest-dialog .btn {
-    background: revert-layer;
-    color: revert-layer;
-    border: revert-layer;
-    outline: revert-layer;
-    border-radius: revert-layer;
-    font-family: revert-layer;
-    letter-spacing: revert-layer;
-    text-shadow: revert-layer;
-    box-shadow: revert-layer;
-    filter: revert-layer;
-    transition: revert-layer;
-  }
-  #quest-dialog .btn:focus-visible {
-    outline: 2px solid var(--color-border-focus) !important;
-    outline-offset: 2px !important;
-    box-shadow: revert-layer !important;
   }
 
   #loot-window {
@@ -5036,6 +5025,14 @@
     align-items: stretch;
     gap: 2px;
   }
+  /* The active loadout: the pick is a .ui-btn whose selected state is
+     aria-checked (role menuitemradio), which the library reads off aria-pressed,
+     so the row marks it with the library's own selected fill. */
+  .tal-lo-row.active .tal-lo-pick {
+    background: var(--btn-fill-selected);
+    border-color: var(--gold-dim);
+    color: var(--color-accent);
+  }
   .tal-lo-item,
   .tal-lo-pick {
     flex: 1;
@@ -6308,6 +6305,14 @@
     flex: none;
     align-self: center;
   }
+  /* Active craft row: the chip keeps a gold rim at full strength while the row
+     is disabled mid-cast, so a casting row reads apart from a merely
+     unaffordable one. Redundant with the "Crafting" label and aria-busy, never
+     the only cue. */
+  .crafting-recipe-btn.casting .crafting-craft-chip {
+    opacity: 1;
+    box-shadow: inset 0 0 0 1px var(--gold);
+  }
   /* Duration chip: expected cast time before the click (actionable pace info,
      identical on every graphics preset; never tier-gated or color-only). */
   .crafting-duration-chip {
@@ -6502,24 +6507,6 @@
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
   }
-  .buy-quantity-prompt .btn {
-    background: revert-layer;
-    color: revert-layer;
-    border: revert-layer;
-    outline: revert-layer;
-    border-radius: revert-layer;
-    font-family: revert-layer;
-    letter-spacing: revert-layer;
-    text-shadow: revert-layer;
-    box-shadow: revert-layer;
-    filter: revert-layer;
-    transition: revert-layer;
-  }
-  .buy-quantity-prompt .btn:focus-visible {
-    outline: 2px solid var(--color-border-focus) !important;
-    outline-offset: 2px !important;
-    box-shadow: revert-layer !important;
-  }
 
   /* ---------- WARFARE quartermaster shop ---------- */
   /* The honor shop (#warfare-window, warfare_vendor_window.ts) is the vendor
@@ -6626,8 +6613,10 @@
     padding: 9px 10px;
     gap: 10px;
   }
-  /* Service rows share the vendor card hover; disabled and already-known
-     rows suppress that filter without replacing the shared card fill. */
+  /* Service rows are .ui-card buttons, so the library's interactive-card hover
+     already lifts them; this keeps the slightly stronger vendor-row value, and
+     disabled and already-known rows suppress the filter without replacing the
+     shared card fill. */
   .train-row:hover:not(:disabled),
   .unbind-row:hover:not(:disabled) {
     filter: brightness(1.08);
@@ -6790,6 +6779,48 @@
     box-sizing: border-box;
     width: 100%;
     font-size: 16px;
+  }
+  /* The recipe picker is a native <select> on .ui-input, which carries no
+     select chrome: without this it renders as OS chrome inside the HUD. The
+     caret is drawn from two gradients tinted by --gold (a data-URI fill cannot
+     read a CSS var), matching the shared .hud-select recipe. */
+  #cob-recipe {
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+    width: 100%;
+    padding-right: 26px;
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--gold) 50%),
+      linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+    background-position:
+      right 13px center,
+      right 8px center;
+    background-size:
+      5px 5px,
+      5px 5px;
+    background-repeat: no-repeat, no-repeat;
+  }
+  #cob-recipe option {
+    background: var(--color-bg-dark);
+    color: var(--color-text-light);
+  }
+  /* Keep the tappable control at the mobile 40px floor (appearance: none leaves
+     height to padding plus the line box). */
+  @media (pointer: coarse) {
+    #cob-recipe {
+      min-height: 40px;
+    }
+  }
+  /* High-contrast: appearance: none and a background-image caret both vanish
+     under forced-colors, so restore the native control and a system border. */
+  @media (forced-colors: active) {
+    #cob-recipe {
+      appearance: auto;
+      -webkit-appearance: auto;
+      background-image: none;
+      border: 1px solid ButtonBorder;
+    }
   }
   .commission-field :is(input, select):focus-visible {
     outline: 2px solid var(--color-border-focus);
@@ -7792,24 +7823,6 @@
     color: revert-layer;
     font: revert-layer;
     box-shadow: revert-layer;
-  }
-  :is(.bank-buy-prompt, .bank-quantity-prompt, .gbank-gold-prompt) .btn {
-    background: revert-layer;
-    color: revert-layer;
-    border: revert-layer;
-    outline: revert-layer;
-    border-radius: revert-layer;
-    font-family: revert-layer;
-    letter-spacing: revert-layer;
-    text-shadow: revert-layer;
-    box-shadow: revert-layer;
-    filter: revert-layer;
-    transition: revert-layer;
-  }
-  :is(.bank-buy-prompt, .bank-quantity-prompt, .gbank-gold-prompt) .btn:focus-visible {
-    outline: 2px solid var(--color-border-focus) !important;
-    outline-offset: 2px !important;
-    box-shadow: revert-layer !important;
   }
   .bank-deposit-all {
     flex: none;
@@ -11092,10 +11105,12 @@
   }
 
   /* ---------- map ---------- */
-  /* The atlas: a 300px plated rail beside the map stage. The window keeps its
-     shipped --window-pad, and both panes are absolutely positioned inside the
-     padding box, so that pad band stays the one drag handle a headerless map
-     window has (Hud.isWindowDragHandle grabs #map-window itself). */
+  /* The atlas: a 300px plated rail beside the map stage. An absolutely
+     positioned child resolves against the PADDING box, so inset: 0 would cover
+     the --window-pad band, and that band is the only drag handle a headerless
+     map window has (Hud.isWindowDragHandle grabs #map-window itself). Both
+     panes therefore inset by --window-pad on every edge they touch, and the
+     stage's left edge is that pad plus the 300px rail plus the 12px gutter. */
   #map-window {
     width: 924px;
     max-width: calc(100vw - 24px);
@@ -11106,7 +11121,7 @@
   }
   .map-atlas-sidebar {
     position: absolute;
-    inset: 0 auto 0 0;
+    inset: var(--window-pad) auto var(--window-pad) var(--window-pad);
     box-sizing: border-box;
     width: 300px;
     padding: 14px 12px;
@@ -11117,7 +11132,8 @@
   }
   .map-atlas-stage {
     position: absolute;
-    inset: 0 0 0 312px;
+    inset: var(--window-pad) var(--window-pad) var(--window-pad)
+      calc(var(--window-pad) + 300px + 12px);
     min-width: 0;
     display: flex;
     align-items: center;
@@ -11133,7 +11149,7 @@
     display: none;
   }
   body:not(.mobile-touch) #map-window:has(> .map-atlas-sidebar:empty) .map-atlas-stage {
-    inset: 0;
+    inset: var(--window-pad);
   }
   /* Touch keeps the shipped single-pane map: the rail and the map-face chrome
      the atlas adds have no room on a 330px sheet (W13 owns the touch rail). */
@@ -11410,24 +11426,6 @@
     display: none;
     flex-direction: column;
     max-height: min(700px, 80vh);
-  }
-  #dungeon-finder-window .btn.ui-btn,
-  #dfinder-proposal-popup .btn.ui-btn,
-  #bg-proposal-popup .btn.ui-btn {
-    background: revert-layer;
-    border: revert-layer;
-    border-radius: revert-layer;
-    box-shadow: revert-layer;
-    color: revert-layer;
-    font-family: revert-layer;
-    text-shadow: revert-layer;
-  }
-  #dungeon-finder-window .btn.ui-btn:focus-visible,
-  #dfinder-proposal-popup .btn.ui-btn:focus-visible,
-  #bg-proposal-popup .btn.ui-btn:focus-visible {
-    outline: 2px solid var(--color-border-focus) !important;
-    outline-offset: 2px !important;
-    box-shadow: none !important;
   }
   .df-tabs {
     display: flex;
@@ -11947,24 +11945,10 @@
   /* ---------- Ashen Coliseum (arena) ---------- */
   #arena-window {
     width: min(760px, calc(100vw - 40px));
-    height: min(480px, calc(var(--app-vh, 100vh) * 0.85 - 24px));
+    height: min(480px, calc(var(--app-vh, 100vh) * 0.85 / var(--window-scale) - 24px));
     --window-pad: 14px;
     flex-direction: column;
     overflow: hidden;
-  }
-  #arena-window .btn.ui-btn {
-    background: revert-layer;
-    border: revert-layer;
-    border-radius: revert-layer;
-    box-shadow: revert-layer;
-    color: revert-layer;
-    font-family: revert-layer;
-    text-shadow: revert-layer;
-  }
-  #arena-window .btn.ui-btn:focus-visible {
-    outline: 2px solid var(--color-border-focus) !important;
-    outline-offset: 2px !important;
-    box-shadow: none !important;
   }
   .arena-sub {
     font-family: var(--title-font);
@@ -15464,7 +15448,9 @@
   .mail-action-btn:hover {
     filter: brightness(1.08);
   }
-  .mail-action-btn.danger:hover {
+  /* The Delete rail wears its danger cue AT REST, not on hover: a touch device
+     has no hover state, so a hover-only tint is no cue at all there. */
+  .mail-action-btn.danger {
     color: var(--color-text-error);
     border-color: var(--color-border-invalid);
   }
