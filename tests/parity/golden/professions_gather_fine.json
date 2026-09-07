@@ -18,7 +18,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "2567625d",
+      "state": "e186bbc4",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -72,6 +72,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -167,7 +170,7 @@
       "tick": 51,
       "time": 2.55,
       "nextId": 1003,
-      "state": "2dc6bc7e",
+      "state": "0ceb5921",
       "events": "40ba9783",
       "rng": {
         "draws": 2,
@@ -245,6 +248,9 @@
           "gatheringProficiency": {
             "herbalism": 40,
             "mining": 70.5
+          },
+          "harvestPreference": {
+            "kind": "all"
           },
           "heroicDaily": {},
           "inventory": [
@@ -365,7 +371,7 @@
       "tick": 104,
       "time": 5.2,
       "nextId": 1003,
-      "state": "f3091eeb",
+      "state": "8ac522fe",
       "events": "6b3f9773",
       "rng": {
         "draws": 4,
@@ -444,6 +450,9 @@
           "gatheringProficiency": {
             "herbalism": 40,
             "mining": 70.75
+          },
+          "harvestPreference": {
+            "kind": "all"
           },
           "heroicDaily": {},
           "inventory": [
@@ -577,7 +586,7 @@
       "tick": 157,
       "time": 7.85,
       "nextId": 1003,
-      "state": "d24f119e",
+      "state": "a0f7379d",
       "events": "050f0f41",
       "rng": {
         "draws": 6,
@@ -658,6 +667,9 @@
           "gatheringProficiency": {
             "herbalism": 41,
             "mining": 70.75
+          },
+          "harvestPreference": {
+            "kind": "all"
           },
           "heroicDaily": {},
           "inventory": [
@@ -804,7 +816,7 @@
       "tick": 159,
       "time": 7.95,
       "nextId": 1003,
-      "state": "57f319b7",
+      "state": "081f7606",
       "events": "741638a5",
       "rng": {
         "draws": 6,
@@ -885,6 +897,9 @@
           "gatheringProficiency": {
             "herbalism": 41,
             "mining": 70.75
+          },
+          "harvestPreference": {
+            "kind": "all"
           },
           "heroicDaily": {},
           "inventory": [

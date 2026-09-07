@@ -31,7 +31,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1029,
-      "state": "e4181b15",
+      "state": "6a2af4c2",
       "events": "70840060",
       "rng": {
         "draws": 21,
@@ -87,6 +87,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -158,6 +161,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -232,6 +238,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -306,6 +315,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -380,6 +392,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -731,7 +746,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1029,
-      "state": "b463367b",
+      "state": "74d3f78d",
       "events": "96e46d73",
       "rng": {
         "draws": 65,
@@ -864,6 +879,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -1042,6 +1060,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -1216,6 +1237,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -1390,6 +1414,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -1564,6 +1591,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -1889,6 +1919,17 @@
           "aiState": "dead",
           "ccImmune": true,
           "comboUntil": -1,
+          "corpseHarvestState": {
+            "priorityEndsAt": 10,
+            "priorityMemberKeys": [
+              "entity:1002",
+              "entity:1003",
+              "entity:1004",
+              "entity:1005",
+              "entity:1006"
+            ],
+            "token": {}
+          },
           "corpseTimer": 59.95,
           "critChance": 0.05,
           "dead": true,
@@ -1975,7 +2016,7 @@
       "tick": 1,
       "time": 0.05,
       "nextId": 1029,
-      "state": "b463367b",
+      "state": "74d3f78d",
       "events": "741638a5",
       "rng": {
         "draws": 65,
@@ -2108,6 +2149,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -2286,6 +2330,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -2460,6 +2507,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -2634,6 +2684,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -2808,6 +2861,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {
             "date": "reset:1",
             "marked": [
@@ -3133,6 +3189,17 @@
           "aiState": "dead",
           "ccImmune": true,
           "comboUntil": -1,
+          "corpseHarvestState": {
+            "priorityEndsAt": 10,
+            "priorityMemberKeys": [
+              "entity:1002",
+              "entity:1003",
+              "entity:1004",
+              "entity:1005",
+              "entity:1006"
+            ],
+            "token": {}
+          },
           "corpseTimer": 59.95,
           "critChance": 0.05,
           "dead": true,

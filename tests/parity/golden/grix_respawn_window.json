@@ -28,7 +28,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "38d4e970",
+      "state": "1cb48030",
       "events": "b9aa077e",
       "rng": {
         "draws": 8,
@@ -97,6 +97,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -201,6 +204,13 @@
             1002
           ],
           "comboUntil": -1,
+          "corpseHarvestState": {
+            "priorityEndsAt": 10,
+            "priorityMemberKeys": [
+              "entity:1002"
+            ],
+            "token": {}
+          },
           "corpseTimer": 60,
           "critChance": 0.05,
           "dead": true,
@@ -279,7 +289,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "5fbe2d57",
+      "state": "ae345303",
       "events": "3a14e372",
       "rng": {
         "draws": 17,
@@ -348,6 +358,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -452,6 +465,13 @@
             1002
           ],
           "comboUntil": -1,
+          "corpseHarvestState": {
+            "priorityEndsAt": 10,
+            "priorityMemberKeys": [
+              "entity:1002"
+            ],
+            "token": {}
+          },
           "corpseTimer": 60,
           "critChance": 0.05,
           "dead": true,
@@ -535,7 +555,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1004,
-      "state": "5fbe2d57",
+      "state": "ae345303",
       "events": "741638a5",
       "rng": {
         "draws": 17,
@@ -604,6 +624,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -708,6 +731,13 @@
             1002
           ],
           "comboUntil": -1,
+          "corpseHarvestState": {
+            "priorityEndsAt": 10,
+            "priorityMemberKeys": [
+              "entity:1002"
+            ],
+            "token": {}
+          },
           "corpseTimer": 60,
           "critChance": 0.05,
           "dead": true,
