@@ -7563,10 +7563,7 @@ export const pl_PL: EnTranslations = {
     "playAria": "Zagraj w World of ClaudeCraft",
     "serverLabel": "Wybierz swój świat",
     "serverAria": "Wybierz świat: online lub offline",
-    "serverOfflineSub": "Natychmiastowy lokalny świat",
-    "caLabel": "Adres kontraktu $WOC",
-    "caCopyAria": "Skopiuj adres kontraktu",
-    "caNote": "WOC to nasz token społecznościowy. Nie jest potrzebny do gry. Dołącz do Discorda, aby porozmawiać o użyteczności WOC i jego napędzie."
+    "serverOfflineSub": "Natychmiastowy lokalny świat"
   },
   "auth": {
     "enterRealm": "Wejdź do świata",

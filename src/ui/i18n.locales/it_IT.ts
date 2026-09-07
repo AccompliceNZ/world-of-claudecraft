@@ -15330,10 +15330,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
     'Gioca a schermo intero orizzontale per la migliore esperienza mobile.',
   'mobilePreflight.rotateTitle': 'Ruota in orizzontale',
   'mobilePreflight.title': 'Gioca a schermo intero orizzontale',
-  'mode.caCopyAria': "Copia l'indirizzo del contratto",
-  'mode.caLabel': 'Indirizzo del contratto $WOC',
-  'mode.caNote':
-    "WOC è il token della nostra community. Non serve per giocare. Entra nel Discord per discutere dell'utilità e del flywheel di WOC.",
+
   'mode.offlineAria': 'Gioca offline: avvia una sessione locale a giocatore singolo istantanea',
   'mode.offlineDesc':
     'Un mondo a giocatore singolo istantaneo nel tuo browser. Nulla viene salvato: perfetto per un combattimento rapido o per testare.',

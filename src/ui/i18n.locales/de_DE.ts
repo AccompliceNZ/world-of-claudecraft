@@ -15350,10 +15350,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Spiele im Vollbild-Querformat für das beste mobile Erlebnis.',
   'mobilePreflight.rotateTitle': 'Ins Querformat drehen',
   'mobilePreflight.title': 'Im Vollbild-Querformat spielen',
-  'mode.caCopyAria': 'Vertragsadresse kopieren',
-  'mode.caLabel': '$WOC-Vertragsadresse',
-  'mode.caNote':
-    'WOC ist unser Community-Token. Es wird zum Spielen nicht benötigt. Tritt dem Discord bei, um über den Nutzen und das Schwungrad von WOC zu sprechen.',
+
   'mode.offlineAria': 'Offline spielen: Starte eine sofortige lokale Einzelspielersitzung',
   'mode.offlineDesc':
     'Sofortige Einzelspielerwelt in deinem Browser. Es wird nichts gespeichert: perfekt für einen schnellen Kampf oder zum Testen.',

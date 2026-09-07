@@ -15405,10 +15405,7 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Jouez en plein écran paysage pour la meilleure expérience mobile.',
   'mobilePreflight.rotateTitle': 'Passez en paysage',
   'mobilePreflight.title': 'Jouer en plein écran paysage',
-  'mode.caCopyAria': "Copier l'adresse du contrat",
-  'mode.caLabel': 'Adresse du contrat $WOC',
-  'mode.caNote':
-    "WOC est notre jeton communautaire. Il n'est pas nécessaire pour jouer. Rejoignez le Discord pour discuter de l'utilité et de la dynamique du WOC.",
+
   'mode.offlineAria': 'Jouer hors ligne: démarrer une session solo locale instantanée',
   'mode.offlineDesc':
     "Un monde solo instantané dans votre navigateur. Rien n'est sauvegardé: parfait pour un combat rapide ou des tests.",

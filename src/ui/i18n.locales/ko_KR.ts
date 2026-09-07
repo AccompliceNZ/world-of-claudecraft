@@ -7162,7 +7162,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'guide.dungeonsPage.raidName': '최종 단계 공격대',
   'guide.dungeonsPage.raidSize': '10인, {n}레벨',
   'guide.dungeonsPage.resetBody':
-    '파티가 점유한 인스턴스를 가진 채 난이도를 바꾸면 이전 점유는 잠시 남았다가 자동으로 사라집니다. 파티장은 자신의 초상화 메뉴에서 모든 인스턴스 초기화를 선택하거나 /dungeon reset을 입력해 즉시 해제할 수 있습니다. 초기화는 난이도가 실제로 변경되었고, 안에 살아 있거나 쓰러진 플레이어가 아무도 없으며, 모든 시체의 전리품을 비웠고, 짧은 재사용 대기시간이 지난 뒤에만 작동합니다. 잘못된 난이도로 입구에 도착하면 시작 전에 게임이 알려 줍니다. 공격대도 같은 방식으로 초기화되지만, 고유한 귀속과 시체 복귀 규칙은 그대로 적용됩니다.',
+    "파티가 아직 차지한 여정을 쥐고 있는 동안 난이도를 바꾸면, 예전 차지가 잠시 남았다가 저절로 풀립니다. 파티장은 대신 한꺼번에 놓아 줄 수 있습니다. 자기 초상화 메뉴에서 '모든 인스턴스 초기화'를 고르거나 /dungeon reset 을 입력하세요. 초기화는 난이도가 실제로 바뀐 뒤에만, 산 자든 쓰러진 자든 안에 아무도 남지 않은 동안에만, 그리고 안의 모든 시신을 남김없이 챙긴 뒤에만 작동하며, 초기화 사이에는 짧은 재사용 대기시간이 있습니다. 잘못된 난이도로 문에 이르면 여정이 시작되기 전에 게임이 알려 줍니다. 공격대는 이런 식으로 초기화되는 일이 결코 없으며, 그 자신의 잠금 규칙이 적용됩니다.",
   'guide.dungeonsPage.resetTitle': '인스턴스 초기화',
   'guide.dungeonsPage.sanctumBody':
     '가시봉우리의 어두운 심장부로, 교단의 오랜 작업이 끔찍한 정점에 다다르는 곳.',
@@ -14902,10 +14902,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': '최상의 모바일 경험을 위해 가로 전체 화면으로 플레이하세요.',
   'mobilePreflight.rotateTitle': '가로로 회전',
   'mobilePreflight.title': '가로 전체 화면으로 플레이',
-  'mode.caCopyAria': '계약 주소 복사',
-  'mode.caLabel': '$WOC 계약 주소',
-  'mode.caNote':
-    'WOC는 커뮤니티 토큰입니다. 플레이에는 필요하지 않습니다. WOC의 활용과 선순환 구조에 관해 이야기하려면 Discord에 참여하세요.',
+
   'mode.offlineAria': '오프라인 플레이: 즉각적인 로컬 싱글 플레이 세션을 시작합니다',
   'mode.offlineDesc':
     '브라우저에서 즉시 일인용 세상을 플레이합니다. 아무것도 저장되지 않아 빠른 전투나 연습에 적합합니다.',

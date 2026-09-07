@@ -587,10 +587,12 @@ const MONOLITHS: MonolithRow[] = [
     // added and extracted independently, so neither parent pin fits the combined
     // file. Measured with wc -l on the merged tree, never reconciled by
     // arithmetic. Exact merged count, zero headroom.
-    // Re-pinned at this release/v0.42.0 reconcile. Measured on the merged
-    // tree after the release-line and candidate entry wiring composed.
-    // Exact count, zero slack.
-    ceiling: 11543,
+    // Ratcheted 11516 -> 11462 when the landing page $WOC contract address box
+    // and its click-to-copy wiring (wireContractAddressCopy) were removed.
+    // Re-pinned at this release/v0.42.0 reconcile after that release-side
+    // deletion composed with the candidate entry wiring. Measured with wc -l.
+    // Exact count, zero headroom.
+    ceiling: 11489,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {

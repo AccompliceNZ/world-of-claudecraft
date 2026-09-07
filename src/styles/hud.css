@@ -6701,7 +6701,6 @@
   body.native-app .community-link.donate,
   body.native-app .social-link.donate,
   body.native-app #mobile-donate,
-  body.native-app #token-ca,
   body.native-app #nav-btn-download,
   body.native-app:not(.seeker-wallet-enabled) .cs-wallet,
   body.native-app:not(.seeker-wallet-enabled) .cs-wallet-hidden-note,
@@ -6710,7 +6709,6 @@
   body.native-app .official-site-copy {
     display: none !important;
   }
-  body.desktop-app #token-ca,
   body.desktop-app .official-site-copy {
     display: none !important;
   }

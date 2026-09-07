@@ -6843,7 +6843,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'guide.dungeonsPage.raidName': '最終團隊副本',
   'guide.dungeonsPage.raidSize': '十名玩家，{n} 級',
   'guide.dungeonsPage.resetBody':
-    '當隊伍仍保有已佔用的副本時切換難度，舊佔用會過一段時間才自行清除。隊長也可以立刻釋放它們：在自己的頭像選單選擇「重置所有副本」，或輸入 /dungeon reset。只有難度確實已切換、裡面沒有任何存活或倒下的玩家、所有屍體都已拾取乾淨，而且短暫冷卻結束後，重置才會生效。若你以錯誤難度抵達入口，遊戲會在開打前提醒你。團隊副本也以同樣方式重置，但仍保留自身的鎖定與屍體返回規則。',
+    '在隊伍仍佔用著副本時切換難度，舊的佔用會滯留一陣，然後自行釋放。隊長也可以讓它們一次性釋放：在自己的頭像選單中選擇「重置所有副本」，或輸入 /dungeon reset。重置只有在難度確實更改之後才生效，只有在裡面不再有任何人（無論活著還是倒下）時才生效，只有在裡面每具屍體都被拾取乾淨之後才生效，而且兩次重置之間隔著一段短暫的冷卻。若你們帶著錯誤的難度來到門口，遊戲會在副本開始前告知。團隊副本從不以這種方式重置；適用的是它自己的鎖定規則。',
   'guide.dungeonsPage.resetTitle': '重置你的地城副本',
   'guide.dungeonsPage.sanctumBody': '棘峰的黑暗核心，邪教漫長的圖謀在此達到恐怖的頂點。',
   'guide.dungeonsPage.sanctumName': '墓龍聖所',
@@ -14185,9 +14185,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': '使用橫向全螢幕可獲得最佳行動裝置體驗。',
   'mobilePreflight.rotateTitle': '旋轉為橫向',
   'mobilePreflight.title': '橫向全螢幕遊玩',
-  'mode.caCopyAria': '複製合約地址',
-  'mode.caLabel': '$WOC 合約地址',
-  'mode.caNote': 'WOC 是我們的社群代幣，並非遊玩所需。加入 Discord 一起討論 WOC 的用途與飛輪效應。',
+
   'mode.offlineAria': '單機試玩：直接開始本地單人遊戲會話',
   'mode.offlineDesc': '在瀏覽器中直接開啟單人世界。所有數據均不保存：非常適合快速試玩或功能測試。',
   'mode.offlineTitle': '單機試玩',

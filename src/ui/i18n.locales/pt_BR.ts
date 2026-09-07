@@ -15224,10 +15224,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Jogue em tela cheia horizontal para a melhor experiência móvel.',
   'mobilePreflight.rotateTitle': 'Gire para horizontal',
   'mobilePreflight.title': 'Jogue em tela cheia horizontal',
-  'mode.caCopyAria': 'Copiar endereço do contrato',
-  'mode.caLabel': 'Endereço do contrato $WOC',
-  'mode.caNote':
-    'WOC é o token da nossa comunidade. Não é necessário para jogar. Entre no Discord para discutir a utilidade e o flywheel do WOC.',
+
   'mode.offlineAria': 'Jogar offline: inicie uma sessão local de um jogador instantânea',
   'mode.offlineDesc':
     'Mundo solo instantâneo no seu navegador. Nada é salvo: perfeito para uma luta rápida ou testes.',
