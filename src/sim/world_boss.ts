@@ -19,7 +19,6 @@
 // loot entries in array order) so the parity gate's rng draw-order log stays stable.
 
 import { MOBS } from './data';
-import { BOSS_CORPSE_HOLD_SECONDS } from './mob/boss_corpse_hold';
 import type { PlayerMeta } from './sim';
 import type { SimContext } from './sim_context';
 import type { Entity, LootSlot } from './types';
@@ -33,10 +32,9 @@ export const WORLD_BOSS_INTERVAL_SECONDS = 1 * 3600;
 // longer than a normal corpse (and than the raid needs to clear trash) so every
 // contributor has time to walk over and loot their personal drops, INCLUDING those
 // who died to the boss and have to run back from the graveyard and resurrect first
-// (a ghost cannot loot). It IS the major-boss corpse hold (mob/boss_corpse_hold.ts),
-// one window for every boss-class corpse. Well inside the spawn cadence, so corpse
-// windows never overlap. The scheduler drops the entity once this elapses.
-export const WORLD_BOSS_CORPSE_SECONDS = BOSS_CORPSE_HOLD_SECONDS;
+// (a ghost cannot loot). Well inside the spawn cadence, so corpse windows never
+// overlap. The scheduler drops the entity once this elapses.
+export const WORLD_BOSS_CORPSE_SECONDS = 900;
 
 export interface WorldBossDef {
   // MobTemplate id (must have `worldBoss: true`).

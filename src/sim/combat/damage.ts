@@ -1577,12 +1577,13 @@ export function handleDeath(
       e.respawnTimer = Infinity;
       ctx.despawnSummonedAdds(e);
     }
-    // Major bosses (boss / worldBoss) hold their lootable corpse for
-    // BOSS_CORPSE_HOLD_SECONDS: corpseTimer is the loot window, and an instance
-    // boss that never respawns in place went unlootable and invisible on the
-    // 60s trash decay while its loot still sat on the entity. Only ever raises
-    // the timer, and an in-place open-world respawner stays bounded by its own
-    // respawn delay (mob/boss_corpse_hold.ts). Draws no rng.
+    // Camp-placed bosses hold their lootable corpse for BOSS_CORPSE_HOLD_SECONDS:
+    // corpseTimer is the loot window, and an instance boss that never respawns
+    // in place went unlootable and invisible on the 60s trash decay while its
+    // loot still sat on the entity. Only ever raises the timer; an in-place
+    // open-world respawner stays bounded by its own respawn delay, a fixed
+    // respawnSeconds caps it like the decay above, and a world boss or a
+    // per-player summon is left alone (mob/boss_corpse_hold.ts). Draws no rng.
     applyBossCorpseHold(e, template);
     e.aggroTargetId = null;
     clearThreat(e);
