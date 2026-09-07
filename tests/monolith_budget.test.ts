@@ -746,12 +746,19 @@ const MONOLITHS: MonolithRow[] = [
     // Down 5898 -> 5873 for the per-surface action-bar profiles: the
     // debounced upload moved to src/net/action_bar_upload.ts
     // (ActionBarLayoutUploader). Exact count.
-    // Down 5873 -> 5856 for the guild bank transaction history: the log
-    // mirror's fields, the gbanklog install, and the request gate moved to
-    // src/net/guild_bank_log_mirror.ts (GuildBankLogMirror); what stays is
-    // the two one-line IWorld arms that put its requests on the wire. Exact
-    // count.
-    ceiling: 5856,
+    // Re-pinned at the PR #3848 release/v0.42.0 sync: this branch's own
+    // ground-telegraph extraction (the decode block for rings, Ignivar
+    // meteors, the Varkhul families, hourglasses and consecrations, plus
+    // the two new Nythraxis families, all moved behind
+    // applyGroundTelegraphSnapshot in src/net/ground_telegraph_wire.ts)
+    // lands alongside the release arm's guild bank transaction history
+    // extraction (the log mirror's fields, the gbanklog install, and the
+    // request gate moved to src/net/guild_bank_log_mirror.ts,
+    // GuildBankLogMirror; what stays here is the two one-line IWorld arms
+    // that put its requests on the wire), so the merged file sits below
+    // both single-arm counts (5860 and 5856). Measured on the merged tree,
+    // never reconciled by arithmetic. Exact merged count, zero slack.
+    ceiling: 5843,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
