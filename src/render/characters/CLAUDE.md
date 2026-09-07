@@ -131,7 +131,8 @@ Sibling families (one line each; extraction targets, never re-grow `visual.ts`):
   `VisualDef.authoredAtlas` (a creature atlas that takes the low-tier
   readability floor through its map); both opt-in per model. **Every new
   Tripo or Blender creature, mount, or held item declares one of them** (the
-  asset pipeline's `visualDefSnippet` already emits the flag);
+  asset pipeline's `visualDefSnippet` emits the flag for a creature, and its
+  `registerWeapon` returns the held-model decision as a follow-up action);
   `tests/authored_surfaces.test.ts` scans the shipped GLBs and fails any
   authored atlas that is neither flagged nor on its explicit legacy list.
 - Perf cores: `skeleton_update_cache.ts`/`skeleton_update_core.ts` (skeleton

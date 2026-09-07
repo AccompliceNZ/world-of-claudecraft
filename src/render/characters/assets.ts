@@ -1885,6 +1885,13 @@ function applyLowReadabilityLift(
     // stays black. Every other rig (player bodies included) keeps the uniform
     // floor it always had. The rebuild owns this fresh Lambert (never
     // compiled), so adding the map slot here costs no recompile.
+    // Only the ADDITIVE floor is map-scaled: the colour lift above stays on
+    // authored surfaces too. It is a multiply on the atlas (black stays
+    // black), so it cannot film a dark texture the way the floor did, and it
+    // is what keeps a low-tier character readable at all. That leaves the
+    // authored drops a touch warmer on this tier than on standard, where the
+    // polish (and its cream lift) is skipped outright: deliberate, the tiers
+    // trade colour accuracy for readability in different places.
     if (authored && lambert.map) lambert.emissiveMap = lambert.map;
   }
 }
