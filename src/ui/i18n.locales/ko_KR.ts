@@ -9846,6 +9846,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.calendar.events.moongateCommunion.note':
     '보름의 달 아래 순례자들이 사원의 달문에 모입니다.',
   'hudChrome.interactPrompt.talk': '대화',
+  'hudChrome.partyFrames.header': '파티',
   'hudChrome.interactPrompt.loot': '전리품 획득',
   'hudChrome.interactPrompt.open': '열기',
   'hudChrome.interactPrompt.gather': '채집',

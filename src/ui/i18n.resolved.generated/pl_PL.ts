@@ -3061,6 +3061,7 @@ export const pl_PL: EnTranslations = {
       "lock": "Zablokuj ramkę gracza"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Ramki grupy i rajdu",
       "optionsSection": "Opcje ramek drużyny",
       "unlock": "Przenieś ramki grupy i rajdu",
@@ -3753,6 +3754,16 @@ export const pl_PL: EnTranslations = {
           "retry": "The guild roster changed while you were buying. Try again."
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "Speak with",
+      "loot": "Loot",
+      "open": "Open",
+      "gather": "Gather",
+      "mail": "Check mail",
+      "bank": "Use bank",
+      "use": "Use",
+      "harvest": "Harvest"
     },
     "gathering": {
       "title": "Zbieractwo",

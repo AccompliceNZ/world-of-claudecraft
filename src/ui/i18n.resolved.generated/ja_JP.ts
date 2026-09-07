@@ -3061,6 +3061,7 @@ export const ja_JP: EnTranslations = {
       "lock": "プレイヤーフレームを固定"
     },
     "partyFrames": {
+      "header": "パーティ",
       "section": "パーティ・レイドフレーム",
       "optionsSection": "パーティフレーム設定",
       "unlock": "パーティ・レイドフレームを移動",
@@ -3753,6 +3754,16 @@ export const ja_JP: EnTranslations = {
           "retry": "購入中にギルド名簿が変更されました。もう一度お試しください。"
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "話す",
+      "loot": "戦利品を拾う",
+      "open": "開く",
+      "gather": "採集する",
+      "mail": "郵便を確認",
+      "bank": "銀行を利用",
+      "use": "使う",
+      "harvest": "採取する"
     },
     "gathering": {
       "title": "採集",

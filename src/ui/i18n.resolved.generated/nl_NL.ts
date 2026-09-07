@@ -3061,6 +3061,7 @@ export const nl_NL: EnTranslations = {
       "lock": "Spelerframe vergrendelen"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Groeps- en raidframes",
       "optionsSection": "Groepsframe-opties",
       "unlock": "Groeps- en raidframes verplaatsen",
@@ -3753,6 +3754,16 @@ export const nl_NL: EnTranslations = {
           "retry": "The guild roster changed while you were buying. Try again."
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "Speak with",
+      "loot": "Loot",
+      "open": "Open",
+      "gather": "Gather",
+      "mail": "Check mail",
+      "bank": "Use bank",
+      "use": "Use",
+      "harvest": "Harvest"
     },
     "gathering": {
       "title": "Verzamelen",

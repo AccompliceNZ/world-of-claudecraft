@@ -9428,6 +9428,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.calendar.events.moongateCommunion.title': '月门共祷',
   'hudChrome.calendar.events.moongateCommunion.note': '朝圣者在月中之月下聚于神庙月门。',
   'hudChrome.interactPrompt.talk': '交谈',
+  'hudChrome.partyFrames.header': '队伍',
   'hudChrome.interactPrompt.loot': '拾取战利品',
   'hudChrome.interactPrompt.open': '打开',
   'hudChrome.interactPrompt.gather': '采集',

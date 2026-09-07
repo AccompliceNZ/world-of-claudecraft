@@ -3061,6 +3061,7 @@ export const sv_SE: EnTranslations = {
       "lock": "Lås spelarramen"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Grupp- och raidramar",
       "optionsSection": "Alternativ för gruppramar",
       "unlock": "Flytta grupp- och raidramar",
@@ -3753,6 +3754,16 @@ export const sv_SE: EnTranslations = {
           "retry": "The guild roster changed while you were buying. Try again."
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "Speak with",
+      "loot": "Loot",
+      "open": "Open",
+      "gather": "Gather",
+      "mail": "Check mail",
+      "bank": "Use bank",
+      "use": "Use",
+      "harvest": "Harvest"
     },
     "gathering": {
       "title": "Insamling",

@@ -3061,6 +3061,7 @@ export const da_DK: EnTranslations = {
       "lock": "Lås spillerrammen"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Gruppe- og raidrammer",
       "optionsSection": "Indstillinger for gruppens rammer",
       "unlock": "Flyt gruppe- og raidrammer",
@@ -3753,6 +3754,16 @@ export const da_DK: EnTranslations = {
           "retry": "The guild roster changed while you were buying. Try again."
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "Speak with",
+      "loot": "Loot",
+      "open": "Open",
+      "gather": "Gather",
+      "mail": "Check mail",
+      "bank": "Use bank",
+      "use": "Use",
+      "harvest": "Harvest"
     },
     "gathering": {
       "title": "Indsamling",

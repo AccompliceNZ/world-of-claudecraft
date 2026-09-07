@@ -3061,6 +3061,7 @@ export const zh_TW: EnTranslations = {
       "lock": "鎖定玩家框"
     },
     "partyFrames": {
+      "header": "隊伍",
       "section": "隊伍和團隊框體",
       "optionsSection": "隊伍框體選項",
       "unlock": "移動隊伍和團隊框體",
@@ -3753,6 +3754,16 @@ export const zh_TW: EnTranslations = {
           "retry": "購買期間公會名冊已發生變化，請重試。"
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "交談",
+      "loot": "拾取戰利品",
+      "open": "開啟",
+      "gather": "採集",
+      "mail": "查看郵件",
+      "bank": "使用銀行",
+      "use": "使用",
+      "harvest": "剝取"
     },
     "gathering": {
       "title": "採集",

@@ -3061,6 +3061,7 @@ export const id_ID: EnTranslations = {
       "lock": "Kunci bingkai pemain"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Bingkai Grup dan Raid",
       "optionsSection": "Opsi Bingkai Party",
       "unlock": "Pindahkan bingkai grup dan raid",
@@ -3753,6 +3754,16 @@ export const id_ID: EnTranslations = {
           "retry": "The guild roster changed while you were buying. Try again."
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "Speak with",
+      "loot": "Loot",
+      "open": "Open",
+      "gather": "Gather",
+      "mail": "Check mail",
+      "bank": "Use bank",
+      "use": "Use",
+      "harvest": "Harvest"
     },
     "gathering": {
       "title": "Pengumpulan",

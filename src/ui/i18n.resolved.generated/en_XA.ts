@@ -3061,6 +3061,7 @@ export const en_XA: EnTranslations = {
       "lock": "[Ļóçķ þļáýéŕ ƒŕáɱé]"
     },
     "partyFrames": {
+      "header": "[Þáŕţý]",
       "section": "[Þáŕţý áñð Ŕáíð Ƒŕáɱéš]",
       "optionsSection": "[Þáŕţý Ƒŕáɱé Óþţíóñš]",
       "unlock": "[Ɱóʋé þáŕţý áñð ŕáíð ƒŕáɱéš]",
@@ -3753,6 +3754,16 @@ export const en_XA: EnTranslations = {
           "retry": "[Ţĥé ĝúíļð ŕóšţéŕ çĥáñĝéð ŵĥíļé ýóú ŵéŕé ƀúýíñĝ. Ţŕý áĝáíñ.]"
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "[Šþéáķ ŵíţĥ]",
+      "loot": "[Ļóóţ]",
+      "open": "[Óþéñ]",
+      "gather": "[Ĝáţĥéŕ]",
+      "mail": "[Çĥéçķ ɱáíļ]",
+      "bank": "[Úšé ƀáñķ]",
+      "use": "[Úšé]",
+      "harvest": "[Ĥáŕʋéšţ]"
     },
     "gathering": {
       "title": "[Ĝáţĥéŕíñĝ]",

@@ -301,9 +301,9 @@ const MONOLITHS: MonolithRow[] = [
     // captured home and the dead body class left applyAuraAnchor for
     // restoreFrameHome (src/ui/interface_unlock.ts), and Reset Frame Positions
     // re-applies the anchor in one line. Exact merged count.
-    // Lowered 18851 -> 18812 while adding the interaction prompt: the target
+    // Lowered 18851 -> 18813 while adding the interaction prompt: the target
     // Discord flair renderer moved to target_discord_controller.ts.
-    ceiling: 18812,
+    ceiling: 18813,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

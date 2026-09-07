@@ -3061,6 +3061,7 @@ export const en_CA: EnTranslations = {
       "lock": "Lock player frame"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Party and Raid Frames",
       "optionsSection": "Party Frame Options",
       "unlock": "Move party and raid frames",
@@ -3753,6 +3754,16 @@ export const en_CA: EnTranslations = {
           "retry": "The guild roster changed while you were buying. Try again."
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "Speak with",
+      "loot": "Loot",
+      "open": "Open",
+      "gather": "Gather",
+      "mail": "Check mail",
+      "bank": "Use bank",
+      "use": "Use",
+      "harvest": "Harvest"
     },
     "gathering": {
       "title": "Gathering",

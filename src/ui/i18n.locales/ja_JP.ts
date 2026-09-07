@@ -9876,6 +9876,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.calendar.events.moongateCommunion.title': '月門の集い',
   'hudChrome.calendar.events.moongateCommunion.note': '月半ばの月の下、巡礼者が神殿の月門に集う。',
   'hudChrome.interactPrompt.talk': '話す',
+  'hudChrome.partyFrames.header': 'パーティ',
   'hudChrome.interactPrompt.loot': '戦利品を拾う',
   'hudChrome.interactPrompt.open': '開く',
   'hudChrome.interactPrompt.gather': '採集する',

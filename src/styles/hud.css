@@ -9221,7 +9221,7 @@
     opacity: 0.7;
   }
   .party-frame.dead .pfm-id {
-    color: var(--color-text-muted) !important;
+    color: var(--color-text-muted);
     text-shadow: none;
   }
   .party-frame.oor {

@@ -3061,6 +3061,7 @@ export const pt_BR: EnTranslations = {
       "lock": "Travar quadro do jogador"
     },
     "partyFrames": {
+      "header": "Party",
       "section": "Quadros de grupo e raide",
       "optionsSection": "Opções de Quadros de Grupo",
       "unlock": "Mover quadros de grupo e raide",
@@ -3753,6 +3754,16 @@ export const pt_BR: EnTranslations = {
           "retry": "The guild roster changed while you were buying. Try again."
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "Speak with",
+      "loot": "Loot",
+      "open": "Open",
+      "gather": "Gather",
+      "mail": "Check mail",
+      "bank": "Use bank",
+      "use": "Use",
+      "harvest": "Harvest"
     },
     "gathering": {
       "title": "Coleta",

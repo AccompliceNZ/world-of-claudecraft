@@ -3763,7 +3763,7 @@ export class Hud {
         resizeLabelKey: 'hudChrome.interfaceUnlock.resizeFrame',
         frameLabelKey: 'hudChrome.interfaceUnlock.frameNames.targetFrame',
         draggingBodyClass: 'target-frame-dragging',
-        fallbackSize: { w: 220, h: 92 },
+        fallbackSize: { w: 278, h: 60 },
         isMobileLayout,
         scalable: true,
         resizeMode: 'dimensions',
@@ -3797,7 +3797,7 @@ export class Hud {
         resizeLabelKey: 'hudChrome.interfaceUnlock.resizeFrame',
         frameLabelKey: 'hudChrome.interfaceUnlock.frameNames.playerFrame',
         draggingBodyClass: 'player-frame-dragging',
-        fallbackSize: { w: 260, h: 84 },
+        fallbackSize: { w: 278, h: 60 },
         isMobileLayout,
         scalable: true,
         resizeMode: 'dimensions',
@@ -17780,6 +17780,7 @@ export class Hud {
       undefined,
       config,
       pets,
+      this.sim.player.targetId,
     );
     if (sig === this.lastPartySig) return;
     this.lastPartySig = sig;
@@ -17791,7 +17792,7 @@ export class Hud {
       config,
       pets,
     );
-    this.partyFramesPainter.sync(others, info.leader, info.raid, config);
+    this.partyFramesPainter.sync(others, info.leader, info.raid, config, this.sim.player.targetId);
     // Re-dock the Loot Settings panel below the (just re-synced) party frames when their
     // size changes (row count / raid grouping). Gated so the layout measure runs on a real
     // geometry change, not every combat tick; positionLootSettingsPanel honors a manual drag.

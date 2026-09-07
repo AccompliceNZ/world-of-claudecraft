@@ -10042,6 +10042,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.calendar.events.moongateCommunion.note':
     'Паломники собираются у лунных врат храма под срединной луной.',
   'hudChrome.interactPrompt.talk': 'Поговорить',
+  'hudChrome.partyFrames.header': 'Группа',
   'hudChrome.interactPrompt.loot': 'Собрать добычу',
   'hudChrome.interactPrompt.open': 'Открыть',
   'hudChrome.interactPrompt.gather': 'Собрать',

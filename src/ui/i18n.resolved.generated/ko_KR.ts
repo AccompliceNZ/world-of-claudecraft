@@ -3061,6 +3061,7 @@ export const ko_KR: EnTranslations = {
       "lock": "플레이어 프레임 고정"
     },
     "partyFrames": {
+      "header": "파티",
       "section": "파티 및 공격대 프레임",
       "optionsSection": "파티 프레임 옵션",
       "unlock": "파티 및 공격대 프레임 이동",
@@ -3753,6 +3754,16 @@ export const ko_KR: EnTranslations = {
           "retry": "구매 중에 길드 명단이 변경되었습니다. 다시 시도하세요."
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "대화",
+      "loot": "전리품 획득",
+      "open": "열기",
+      "gather": "채집",
+      "mail": "우편 확인",
+      "bank": "은행 이용",
+      "use": "사용",
+      "harvest": "수확"
     },
     "gathering": {
       "title": "채집",

@@ -5869,7 +5869,7 @@
     min-height: 54px;
     padding: 6px;
   }
-  .vendor-item:hover {
+  .vendor-item:not(.ui-card):hover {
     filter: brightness(1.08);
   }
   .vendor-item > .ui-socket {

@@ -3061,6 +3061,7 @@ export const zh_CN: EnTranslations = {
       "lock": "锁定玩家框"
     },
     "partyFrames": {
+      "header": "队伍",
       "section": "队伍和团队框体",
       "optionsSection": "队伍框体选项",
       "unlock": "移动队伍和团队框体",
@@ -3753,6 +3754,16 @@ export const zh_CN: EnTranslations = {
           "retry": "购买期间公会名册已发生变化，请重试。"
         }
       }
+    },
+    "interactPrompt": {
+      "talk": "交谈",
+      "loot": "拾取战利品",
+      "open": "打开",
+      "gather": "采集",
+      "mail": "查看邮件",
+      "bank": "使用银行",
+      "use": "使用",
+      "harvest": "剥取"
     },
     "gathering": {
       "title": "采集",
