@@ -25,7 +25,9 @@ const stripComments = (source: string): string =>
   source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/(^|[^:])\/\/.*$/gm, '$1');
 
 const painterSource = stripComments(repoFile('../src/ui/day_night_dial_painter.ts'));
-const hudSource = repoFile('../src/ui/hud.ts');
+// Comments stripped like the other source pins below: a commented-out call is not a
+// call, and must not satisfy the drive assertions.
+const hudSource = stripComments(repoFile('../src/ui/hud.ts'));
 const tokensCss = stripComments(repoFile('../src/styles/tokens.css'));
 
 const TOKEN_VALUES: Record<string, string> = {

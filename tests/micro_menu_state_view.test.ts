@@ -59,6 +59,11 @@ describe('micro_menu_state_view: the open-window ring', () => {
     // The ring means "this button's window is open". #mm-music keeps its own
     // mm-on gold, and the three non-window launchers open no `.window` at all.
     const selectors = MICRO_MENU_LAUNCHERS.map((l) => l.selector);
+    // The positive control: an emptied registry would satisfy every exclusion below
+    // without ringing anything, so name launchers that MUST still be here.
+    expect(selectors, 'the window openers still take the ring').toEqual(
+      expect.arrayContaining(['#mm-map', '#mm-bag', '#mm-char', '#mm-options']),
+    );
     for (const excluded of ['#mm-music', '#mm-emote', '#mm-wiki', '#mm-discord']) {
       expect(selectors, `${excluded} must not take the open-window ring`).not.toContain(excluded);
     }

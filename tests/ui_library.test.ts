@@ -102,7 +102,10 @@ describe('ui library: the sheet', () => {
     );
     const at = (m: string) => barrel.indexOf(`@import "./${m}";`);
     expect(at('library.css')).toBeGreaterThan(at('layout.css'));
+    // The claim in the title is layout < library < components; hud.css sits between
+    // the last two, so it is pinned as well rather than standing in for components.
     expect(at('library.css')).toBeLessThan(at('hud.css'));
+    expect(at('library.css')).toBeLessThan(at('components.css'));
   });
 
   it('declares every size, radius and duration token the primitives read', () => {

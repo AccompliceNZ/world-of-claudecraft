@@ -449,6 +449,41 @@ describe('TargetAurasWindow', () => {
     });
   });
 
+  it('reclamps an open configurator when the frame width actually changes', () => {
+    // The filter buttons no longer resize the board, so the reclamp needs a real
+    // width change to exercise it: a saved narrow frame reset back to the 400px
+    // default through the panel's own public path.
+    const originalInnerWidth = window.innerWidth;
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: 600 });
+    window.localStorage.setItem(
+      'woc_target_auras_frame',
+      JSON.stringify({ left: 300, top: 40, width: 220, height: 240 }),
+    );
+    const { panel, root } = setup();
+    const config = root.querySelector<HTMLButtonElement>('.ta-rows-config-btn');
+    const control = root.querySelector<HTMLElement>('.ta-visible-rows-control');
+    // The wide frame is pushed left to stay on screen, so the anchor moves with it.
+    const wide = () => root.style.width === '400px';
+    root.getBoundingClientRect = () => layoutRect(wide() ? 200 : 300, wide() ? 400 : 220);
+    if (config) config.getBoundingClientRect = () => layoutRect(wide() ? 500 : 480, 24);
+    if (control) control.getBoundingClientRect = () => layoutRect(0, 150);
+
+    config?.click();
+    // maxLeft = 600 - 150 - 8 = 442, so the button at 480 clamps to 442: 442 - 300.
+    expect(control?.style.left).toBe('142px');
+
+    panel.resetFrame();
+
+    expect(root.style.width).toBe('400px');
+    // Same 442 clamp against the moved root: the derived left has to follow it.
+    expect(control?.style.left).toBe('242px');
+
+    Object.defineProperty(window, 'innerWidth', {
+      configurable: true,
+      value: originalInnerWidth,
+    });
+  });
+
   it('updates and persists the height of an already framed window', () => {
     window.localStorage.setItem(
       'woc_target_auras_frame',

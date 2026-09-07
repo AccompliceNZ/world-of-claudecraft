@@ -466,6 +466,8 @@ describe('client HTML shell', () => {
   });
 
   it('carries the pad hint strip and the launcher legend in BOTH entries', () => {
+    const emptySpans = (block: string, cls: string) =>
+      block.split(`<span class="${cls}"></span>`).length - 1;
     for (const entry of [html, playHtml]) {
       // Static markup, minted nowhere: the strip and the legend are standing pad
       // chrome, so both entries have to agree on them node for node.
@@ -483,8 +485,10 @@ describe('client HTML shell', () => {
       expect(legend.split('class="pad-legend-glyph"').length - 1).toBe(PAD_LEGEND_ROW_COUNT);
       // Every glyph slot ships EMPTY: the button names are written from the live
       // bindings, so a shipped letter would be a lie on a rebound or non-Xbox pad.
-      expect(entry).not.toContain('class="pad-glyph">A<');
-      expect(entry).not.toContain('class="pad-legend-glyph">Back<');
+      // Counted rather than merely absent, so ONE filled glyph fails: an empty span
+      // per row, in the strip and in the legend alike.
+      expect(emptySpans(strip, 'pad-glyph')).toBe(PAD_HINT_ROW_COUNT);
+      expect(emptySpans(legend, 'pad-legend-glyph')).toBe(PAD_LEGEND_ROW_COUNT);
     }
   });
 
