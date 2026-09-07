@@ -823,6 +823,30 @@
     --dur-press: 60ms;
     --dur-panel: 160ms;
     --dur-frame: 120ms;
+
+    /* W4 additions (right rail) */
+    --color-steam-accent: #66c0f4; /* Steam destination accent, restricted to interactive edges. */
+    --color-tracker-reliquary: var(
+      --color-quality-epic
+    ); /* Reliquary progress and collection flash accent. */
+    --color-delve-affix-restless-graves: #8b7355; /* Restless Graves fallback tile. */
+    --color-delve-affix-bad-air: #6a8a6a; /* Bad Air fallback tile. */
+    --color-delve-affix-candleblind: #c9a227; /* Candleblind fallback tile. */
+    --color-delve-affix-old-mechanisms: #7a8a9a; /* Old Mechanisms fallback tile. */
+    --color-delve-affix-flooded-paths: #4a7a9a; /* Flooded Paths fallback tile. */
+    --color-delve-affix-grave-tax: #9a6a4a; /* Grave Tax fallback tile. */
+    --color-delve-affix-unstable-roof: #8a6a5a; /* Unstable Roof fallback tile. */
+    --color-delve-affix-cult-remnants: #7a4a8a; /* Cult Remnants fallback tile. */
+    --color-delve-affix-chapel-candle: #ffd100; /* Chapel Candle fallback tile. */
+    --color-delve-affix-high-water: #2f718c; /* High Water fallback tile. */
+    --color-delve-affix-lively-choir: #5f70a5; /* Lively Choir fallback tile. */
+    --color-delve-affix-belligerent-dead: #6f5a46; /* Belligerent Dead fallback tile. */
+    --color-delve-affix-unknown: #888; /* Accessible neutral tile for future affixes. */
+    /* The community tray's plate is deliberately preset-independent: it floats
+       over the 3D world, and its ink contrast is pinned against these two stops
+       (tests/browser/steam_wishlist.browser.test.ts). */
+    --chrome-plate-fixed: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
+    --color-chrome-plate-ink: #b8bcc8; /* Muted silver ink for that fixed plate. */
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal

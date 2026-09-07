@@ -2700,7 +2700,7 @@ export class Hud {
       this.dailyRewardsButtonEl = dailyRewardsButton;
       this.mobileDailyRewardsButtonEl = mobileDailyRewardsButton;
       dailyRewardsButton.innerHTML =
-        '<img class="daily-rewards-icon" src="/ui/daily-rewards/treasure_chest.webp" alt="" draggable="false" decoding="async">';
+        '<img class="daily-rewards-icon" src="/ui/daily-rewards/treasure_chest.webp" alt="" draggable="false" decoding="async"><span class="daily-reward-count ui-badge ui-badge--corner" aria-hidden="true">1</span>';
       this.syncDailyRewardsSurfaceLabels();
       dailyRewardsButton.classList.remove('spin-ready');
       this.applyDailyRewardsChestButtonVisibility();
@@ -3098,7 +3098,7 @@ export class Hud {
     const styleMusicBtn = () => {
       // keep the note clearly readable when off (a plain tan, not gold) — the
       // slash, not dimming, signals "muted"
-      musicBtn.style.color = music.enabled ? 'var(--gold)' : '#cdbd8e';
+      musicBtn.classList.toggle('mm-on', music.enabled);
       musicBtn.classList.toggle('mm-muted', !music.enabled);
     };
     styleMusicBtn();
@@ -10538,7 +10538,7 @@ export class Hud {
     const ids: CardinalId[] = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
     for (const id of ids) {
       const el = document.createElement('span');
-      el.className = `compass-mark${id.length === 1 ? ' major' : ''}`;
+      el.className = `compass-mark ui-cin ui-outline${id.length === 1 ? ' major' : ''}`;
       el.textContent = t(`hudChrome.compass.${id}`);
       track.appendChild(el);
       this.compassMarks.set(id, el);

@@ -1143,9 +1143,12 @@ describe('border accent graphics fairness (cosmetic identity, preset-identical)'
     }
     expect(
       allTierShadowDeclarations,
-      // 30 shipped uses plus the two library glow composites in tokens.css.
-      'the style graph owns 32 reviewed tier-shadow uses',
-    ).toHaveLength(32);
+      // 30 shipped uses plus the two library glow composites in tokens.css,
+      // plus the 11 the right-rail redesign moved onto the tier knob (minimap
+      // ring and disc shadows, compass strip and caret, the chest beacon and
+      // its pulse keyframes, the talent-point pulse).
+      'the style graph owns 43 reviewed tier-shadow uses',
+    ).toHaveLength(43);
 
     for (const [name, body] of [
       [

@@ -587,12 +587,16 @@ export const hudChromeStrings = {
       energy: 'Energy',
     },
   },
-  // On-screen quest tracker. The "(N)" count shown beside the header while the
-  // tracker is collapsed (the number is spliced in via formatNumber), plus the
-  // header button's state-aware hover/title hint (Collapse while expanded,
-  // Expand while collapsed).
+  // On-screen quest tracker. The "(N)" count beside a collapsed deed/Reliquary
+  // header (the number is spliced in via formatNumber), the bare "4 / 8" value
+  // column the quest tracker's counted objective rows carry opposite their
+  // label, plus the header button's state-aware hover/title hint (Collapse
+  // while expanded, Expand while collapsed).
   questTracker: {
     count: '({count})',
+    // Both numbers arrive already localized; a locale that writes the fraction
+    // tight ("4/8") drops the spaces here.
+    objectiveValue: '{current} / {total}',
     collapseHint: 'Collapse quest tracker',
     expandHint: 'Expand quest tracker',
   },
