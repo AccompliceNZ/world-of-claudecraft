@@ -3,7 +3,9 @@ import { describe, expect, it } from 'vitest';
 import { ITEMS } from '../src/sim/data';
 import type { EquipSlot } from '../src/sim/types';
 import {
+  buildCharacterSidebarView,
   buildPaperdollView,
+  CHARACTER_SIDEBAR_TABS,
   PAPERDOLL_LEFT_SLOTS,
   PAPERDOLL_RIGHT_SLOTS,
 } from '../src/ui/char_view';
@@ -82,6 +84,25 @@ describe('char_view: paperdoll data model', () => {
     expect(view.left[3].item).toBeNull(); // chest: id present but unknown -> empty
     // every right-column slot is empty when nothing is equipped there
     expect(view.right.every((c) => c.item === null)).toBe(true);
+  });
+});
+
+describe('char_view: sidebar tabs', () => {
+  it('models the Stats, Progression, and Skills tabs with one selected tab', () => {
+    expect(CHARACTER_SIDEBAR_TABS).toEqual(['stats', 'progression', 'skills']);
+    expect(buildCharacterSidebarView('progression')).toEqual({
+      selected: 'progression',
+      tabs: [
+        { id: 'stats', selected: false },
+        { id: 'progression', selected: true },
+        { id: 'skills', selected: false },
+      ],
+    });
+  });
+
+  it('fails closed to Stats for an absent or stale tab id', () => {
+    expect(buildCharacterSidebarView(null).selected).toBe('stats');
+    expect(buildCharacterSidebarView('not-a-tab').selected).toBe('stats');
   });
 });
 

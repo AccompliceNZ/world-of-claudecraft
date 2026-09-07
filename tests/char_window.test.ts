@@ -23,7 +23,10 @@ import { svgIcon } from '../src/ui/ui_icons';
 // Vitest's injected filesystem dirname.
 const painter = readFileSync(join(__dirname, '../src/ui/char_window.ts'), 'utf8');
 
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {
+  vi.restoreAllMocks();
+  document.body.replaceChildren();
+});
 
 describe('char_window: no magic values', () => {
   it('carries no literal color in TS (colors live in tokens/stylesheet)', () => {
@@ -144,7 +147,7 @@ describe('char_window: profession art placements', () => {
   it('renders gathering rows with their dedicated painted icons', () => {
     expect(painter).toMatch(/professionImageUrl\(`gather_\$\{r\.professionId\}`\)/);
     expect(painter).toContain('class="char-gather-icon"');
-    expect(painter).toContain('class="char-gather-row"');
+    expect(painter).toContain('class="char-gather-row char-skill-row');
   });
 
   it('shows the current pair crest inline without inventing a tiny tooltip target', () => {
@@ -168,6 +171,12 @@ describe('char_window: profession art placements', () => {
       'data:image/png;base64,stub',
     );
     const root = document.createElement('div');
+    document.body.appendChild(root);
+    const professionsLauncher = document.createElement('button');
+    professionsLauncher.id = 'mm-professions';
+    const openProfessions = vi.fn();
+    professionsLauncher.addEventListener('click', openProfessions);
+    document.body.appendChild(professionsLauncher);
     let world = {
       cfg: { playerClass: 'warrior' },
       player: { name: 'Aurelia', level: 60, skin: 0 },
@@ -175,6 +184,7 @@ describe('char_window: profession art placements', () => {
       honor: 187,
       archetypeTitle: 'weaponcrafting+armorcrafting' as string | null,
       hobbyCraft: 'jewelcrafting',
+      craftingIdentity: { craftSkills: { [CRAFT_RING[0].id]: 37 } },
       selectedMount: () => null,
       ownedMounts: () => [],
       selectMount: () => {},
@@ -199,7 +209,7 @@ describe('char_window: profession art placements', () => {
       statCellHtml: () => '',
       statTooltipHtml: () => '',
       talentSummaryHtml: () => '',
-      progressionHtml: () => '',
+      progressionHtml: () => '<div data-progression-test>Progression fixture</div>',
       unequip: vi.fn(),
       beginUnequipDrag: vi.fn(),
       endUnequipDrag: vi.fn(),
@@ -224,6 +234,43 @@ describe('char_window: profession art placements', () => {
     });
 
     win.render();
+    const tabs = [...root.querySelectorAll<HTMLElement>('.char-sidebar-tab')];
+    expect(tabs.map((tab) => [tab.dataset.tab, tab.getAttribute('aria-selected')])).toEqual([
+      ['stats', 'true'],
+      ['progression', 'false'],
+      ['skills', 'false'],
+    ]);
+    const progressionTab = root.querySelector<HTMLElement>('[data-tab="progression"]');
+    progressionTab?.click();
+    expect(root.querySelector('[data-progression-test]')?.textContent).toBe('Progression fixture');
+    expect(root.querySelector('[data-tab="progression"]')?.getAttribute('aria-selected')).toBe(
+      'true',
+    );
+    // Gathering now lives on the Skills board instead of being duplicated under Stats.
+    const skillsTab = root.querySelector<HTMLElement>('[data-tab="skills"]');
+    skillsTab?.focus();
+    skillsTab?.click();
+    expect(document.activeElement).toBe(root.querySelector('[data-tab="skills"]'));
+    expect(root.querySelector('[data-tab="skills"]')?.getAttribute('aria-selected')).toBe('true');
+    const skillGroups = root.querySelectorAll<HTMLElement>('.char-skill-group');
+    expect(skillGroups).toHaveLength(2);
+    const craftingRows = skillGroups[1].querySelectorAll<HTMLElement>('.char-skill-row');
+    expect(craftingRows).toHaveLength(CRAFT_RING.length);
+    expect(craftingRows[0].classList.contains('is-empty')).toBe(false);
+    expect([...craftingRows].slice(1).every((row) => row.classList.contains('is-empty'))).toBe(
+      true,
+    );
+    expect([...craftingRows].map((row) => row.querySelector('b')?.textContent)).toEqual(
+      CRAFT_RING.map((craft, index) => `${index === 0 ? 37 : 0} / ${craft.maxSkill}`),
+    );
+    expect(skillGroups[1].querySelectorAll('.char-skill-rail')).toHaveLength(CRAFT_RING.length);
+    expect(
+      skillGroups[1]
+        .querySelector<HTMLElement>('.char-skill-rail')
+        ?.style.getPropertyValue('--char-skill-pct'),
+    ).toBe(`${(37 / CRAFT_RING[0].maxSkill) * 100}%`);
+    root.querySelector<HTMLButtonElement>('[data-act="open-professions"]')?.click();
+    expect(openProfessions).toHaveBeenCalledOnce();
     const honorBalance = root.querySelector<HTMLElement>('.char-honor-balance');
     expect(honorBalance?.textContent).toContain('187');
     expect(
@@ -300,6 +347,7 @@ describe('char_window: profession art placements', () => {
       honor: 0,
       archetypeTitle: null,
       hobbyCraft: 'jewelcrafting',
+      craftingIdentity: { craftSkills: {} },
       selectedMount: () => null,
       ownedMounts: () => [],
       selectMount: () => {},
@@ -348,6 +396,8 @@ describe('char_window: profession art placements', () => {
     });
 
     win.render();
+    // Gathering now lives on the Skills board instead of being duplicated under Stats.
+    root.querySelector<HTMLElement>('[data-tab="skills"]')?.click();
     const values = [...root.querySelectorAll('.char-gather-row b')].map((b) => b.textContent);
     // The row renders a BOUNDED "skill / max", never a bare integer. The floor
     // still holds (99.75 and 99.5 read 99, never a fake crossed 100), and

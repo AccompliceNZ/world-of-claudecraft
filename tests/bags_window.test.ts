@@ -155,9 +155,12 @@ describe('bags_window: accessibility contract', () => {
 });
 
 describe('bags_window: load-bearing behaviors preserved', () => {
-  it('uses the branded Claudium icon and matching balance color', () => {
+  it('uses the branded Claudium icon and shared money-row primitives', () => {
     expect(hud).toContain('src="/claudium/icons/claudium_coin_64.webp"');
-    expect(components).toMatch(/\.claudium-launcher\s*\{[^}]*color:\s*#9eeeff;/s);
+    // W7 hands wallet color and interaction paint to the shared button and chip primitives.
+    expect(painter).toContain("'[data-wallet-action], [data-claudium-launcher]'");
+    expect(painter).toContain("control.classList.add('ui-btn')");
+    expect(painter).toContain("classList.add('ui-chip')");
   });
 
   it('reuses bag_filter via buildBagGrid (does not re-derive the filter)', () => {
@@ -706,7 +709,8 @@ describe('bags_window: unknown-id stacks stay visible (stale-client guard, R34)'
     expect(body).toContain('unknownItemIconHtml(s.itemId)');
     // The cell keeps the shared bag-cell styling at the default rung and its
     // count badge, so an unknown stack reads like a stack, not a hole.
-    expect(body).toContain("row.className = 'bag-item q-common'");
+    // W7 gives fallback stacks the same shared socket ownership as known bag cells.
+    expect(body).toContain("row.className = 'bag-item ui-socket ui-socket--bag q-common'");
     expect(body).toContain('bi-count');
     // The aria channel carries the UNKNOWN signal (the tooltip is hover-only),
     // plus the raw id; the tooltip title is the raw id with the unknown
