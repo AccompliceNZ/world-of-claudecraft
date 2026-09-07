@@ -15,6 +15,7 @@ import {
   KEYBOARD_LAYERS,
   type KeyboardKeyView,
   type KeyboardLayer,
+  splitCombo,
 } from './keyboard_map_core';
 
 export interface KeyboardMapPaintDeps {
@@ -80,7 +81,11 @@ export function paintKeyboardMap(root: HTMLElement, deps: KeyboardMapPaintDeps):
         key: key.legend,
         bindings: t('hudChrome.keyboardMap.unbound'),
       });
-    const parts = key.bindings.map((b) => `${keyLabel(b.combo)}: ${b.name}`);
+    // A bare binding is already named by the {key} prefix; only a modifier
+    // combo needs its own label ("3: Iron Bellow, Ctrl+3: Pet: Taunt").
+    const parts = key.bindings.map((b) =>
+      splitCombo(b.combo).head === '' ? b.name : `${keyLabel(b.combo)}: ${b.name}`,
+    );
     return t('hudChrome.keyboardMap.keyDetail', {
       key: key.legend,
       bindings: parts.join(t('hudChrome.keyboardMap.separator')),
