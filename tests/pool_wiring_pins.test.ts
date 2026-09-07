@@ -194,6 +194,17 @@ const PINS: PoolWiringPin[] = [
     grantsOnly: false,
   },
   {
+    // harvestCorpse itself carries no local capacity gate any more: both real
+    // sites moved into src/sim/professions/corpse_harvest_grant.ts's
+    // grantCorpseHarvest (below) when that module was extracted from this file.
+    // Kept as a zero-site grantsOnly row rather than dropped, so a NEW local
+    // capacity read added back to harvestCorpse (or the file total drifting off
+    // zero) still reds here instead of silently reintroducing an unpinned site.
+    path: 'src/sim/interaction.ts',
+    sites: [],
+    grantsOnly: true,
+  },
+  {
     // The signed-component loop's OWN capacity gate retired: a signed component
     // no longer competes for same-signer room (its signature rides the granted
     // units' own source bucket instead of a distinct payload), so it merges via
@@ -201,10 +212,16 @@ const PINS: PoolWiringPin[] = [
     // legitimate sites remain: the fitsAll pre-gate and the specimen grant,
     // which keeps its guard because a specimen is a distinct item id that can
     // still genuinely fail to fit.
-    path: 'src/sim/interaction.ts',
+    path: 'src/sim/professions/corpse_harvest_grant.ts',
     sites: [
-      { fn: 'harvestCorpse', what: 'the fitsAll pre-gate over the wanted component rows' },
-      { fn: 'harvestCorpse', what: 'the canGrantItemInstance gate on a specimen grant' },
+      {
+        fn: 'grantCorpseHarvest',
+        what: 'the fitsAll pre-gate over the wanted component rows',
+      },
+      {
+        fn: 'grantCorpseHarvest',
+        what: 'the canAddItem gate on a specimen grant',
+      },
     ],
     grantsOnly: true,
   },
