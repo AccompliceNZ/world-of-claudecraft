@@ -2574,6 +2574,21 @@ export const hudChromeStrings = {
     showPlaytimeAria: 'Show time played',
     hidePlaytimeAria: 'Hide time played',
   },
+  charSidebar: {
+    label: 'Character details',
+    subtitle: 'Level {level} {className} . {archetype} . Hobby: {hobby}',
+    stats: 'Stats',
+    progression: 'Progression',
+    skills: 'Skills',
+    gathering: 'Gathering',
+    crafting: 'Crafting',
+    openProfessions: 'Open Professions',
+  },
+  questLog: {
+    completed: 'Completed',
+    zoneSummary: '{count} ({ready} ready)',
+    shiftHint: 'Shift-click a quest to link it in chat.',
+  },
   // Character-screen stat tooltips (hover a stat on the C panel). The stat NAMES
   // reuse itemUi.stats.*; only these descriptions / effect lines / notes are new.
   // The breakdown numbers are recomputed live from the player's current stats

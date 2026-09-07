@@ -19,17 +19,12 @@
 import { ITEMS, NPCS } from '../../../sim/data';
 import type { IWorld } from '../../../world_api';
 import { markDialogRoot } from '../../dialog_root';
-import { itemDisplayName, tEntity } from '../../entity_i18n';
+import { itemDisplayName, tEntity, zoneDisplayName } from '../../entity_i18n';
 import { esc } from '../../esc';
 import { formatNumber, t } from '../../i18n';
-import { QUALITY_COLOR } from '../../icons';
 import type { PainterHostPresentation } from '../../painter_host';
 import { svgIcon } from '../../ui_icons';
 import { buildQuestLogView, type QuestDetailModel } from './questlog_view';
-
-// The reward-name color comes from the shared QUALITY_COLOR map; this token covers
-// an unknown quality, so the painter carries no literal hex.
-const QUALITY_DEFAULT_COLOR = 'var(--color-quality-default)';
 
 /**
  * Hud-supplied glue. The quest log renders from IWorld + these callbacks plus the
@@ -63,6 +58,7 @@ export class QuestLogWindow {
   // source of truth and Hud reads it back, mirroring the inline window's field.
   private selected: string | null = null;
   private openerFocus: HTMLElement | null = null;
+  private readonly collapsedGroups = new Set<string>(['completed']);
 
   constructor(private readonly deps: QuestLogWindowDeps) {}
 
@@ -121,16 +117,17 @@ export class QuestLogWindow {
       selectedQuestId: this.selected,
       playerClass: world.cfg.playerClass,
       completedCount: world.questsDone.size,
+      collapsedGroupIds: [...this.collapsedGroups],
     });
     this.selected = view.selectedQuestId;
 
     markDialogRoot(el, { labelledBy: 'quest-log-title' });
-    el.innerHTML = `<div class="panel-title"><span id="quest-log-title">${esc(t('questUi.log.title'))} <span class="quest-muted">${esc(
+    el.innerHTML = `<div class="panel-title ui-win-head"><img class="ui-win-art" src="/ui/chrome/questlog.webp" alt="" draggable="false"><span class="ui-win-title" id="quest-log-title">${esc(t('questUi.log.title'))}<span class="quest-muted ui-win-sub">${esc(
       t('questUi.log.summary', {
         active: this.questNumber(view.summary.active),
         completed: this.questNumber(view.summary.completed),
       }),
-    )}</span></span><button type="button" class="x-btn" data-close aria-label="${esc(t('questUi.log.close'))}">${svgIcon('close')}</button></div>`;
+    )}</span></span><button type="button" class="x-btn ui-x-btn" data-close aria-label="${esc(t('questUi.log.close'))}">${svgIcon('close')}</button></div>`;
     const cols = document.createElement('div');
     cols.className = 'ql-cols';
     const list = document.createElement('div');
@@ -141,34 +138,71 @@ export class QuestLogWindow {
     el.appendChild(cols);
 
     if (view.empty) {
-      list.innerHTML = `<div class="ql-empty">${esc(t('questUi.log.emptyTitle'))}</div>`;
+      list.innerHTML = `<div class="ql-empty ui-card">${esc(t('questUi.log.emptyTitle'))}</div>`;
       detail.innerHTML = `<div class="ql-detail-body"><div class="qd-text">${esc(t('questUi.log.emptyHint'))}</div></div>`;
     }
-    for (const item of view.items) {
-      const status = item.ready ? t('questUi.log.readyStatus') : t('questUi.log.activeStatus');
-      const title = this.questTitle(item.questId);
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = `ql-item${item.selected ? ' sel' : ''}`;
-      // Row identity for the island coach's press-this-next glow (the
-      // bootcamp overlay toggles .qd-coach by this attribute).
-      button.dataset.quest = item.questId;
-      button.setAttribute('aria-pressed', item.selected ? 'true' : 'false');
-      button.setAttribute(
-        'aria-label',
-        t('questUi.log.selectedQuestAria', { name: title, status }),
-      );
-      button.title = t('hudChrome.questShare.linkTitle');
-      button.innerHTML = `${esc(title)}${item.ready ? ` <span class="quest-complete">(${esc(t('questUi.log.readyStatus'))})</span>` : ''}`;
-      button.addEventListener('click', (ev) => {
-        if (ev.shiftKey) {
-          this.deps.insertQuestChatLink(item.questId);
-          return;
-        }
-        this.selected = item.questId;
+    for (const group of view.groups) {
+      if (view.empty && group.id === 'completed' && group.count === 0) continue;
+      const section = document.createElement('section');
+      section.className = `ql-group${group.dimmed ? ' is-dimmed' : ''}${group.collapsed ? ' is-collapsed' : ''}`;
+      const toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'ql-group-toggle ui-btn';
+      toggle.dataset.questGroup = group.id;
+      toggle.setAttribute('aria-expanded', String(!group.collapsed));
+      const name = group.zoneId ? zoneDisplayName(group.zoneId) : t('hudChrome.questLog.completed');
+      const summary =
+        group.readyCount > 0
+          ? t('hudChrome.questLog.zoneSummary', {
+              count: this.questNumber(group.count),
+              ready: this.questNumber(group.readyCount),
+            })
+          : this.questNumber(group.count);
+      toggle.innerHTML = `<span class="ql-group-chevron" aria-hidden="true">${svgIcon(group.collapsed ? 'next' : 'prev')}</span><span>${esc(name)}</span><span class="ql-group-count">${esc(summary)}</span>`;
+      toggle.addEventListener('click', () => {
+        if (this.collapsedGroups.has(group.id)) this.collapsedGroups.delete(group.id);
+        else this.collapsedGroups.add(group.id);
         this.render();
+        const rebuilt = [
+          ...this.deps.root().querySelectorAll<HTMLElement>('[data-quest-group]'),
+        ].find((candidate) => candidate.dataset.questGroup === group.id);
+        rebuilt?.focus();
       });
-      list.appendChild(button);
+      section.appendChild(toggle);
+      if (!group.collapsed) {
+        for (const item of group.items) {
+          const status = item.ready ? t('questUi.log.readyStatus') : t('questUi.log.activeStatus');
+          const title = this.questTitle(item.questId);
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = `ql-item ui-btn${item.selected ? ' sel' : ''}${item.ready ? ' is-complete' : ''}`;
+          button.dataset.quest = item.questId;
+          button.setAttribute('aria-pressed', item.selected ? 'true' : 'false');
+          if (item.selected) button.setAttribute('aria-current', 'true');
+          button.setAttribute(
+            'aria-label',
+            t('questUi.log.selectedQuestAria', { name: title, status }),
+          );
+          button.title = t('hudChrome.questShare.linkTitle');
+          button.innerHTML = `<span>${esc(title)}</span>${item.ready ? `<span class="quest-complete">${esc(t('questUi.log.readyStatus'))}</span>` : ''}`;
+          button.addEventListener('click', (ev) => {
+            if (ev.shiftKey) {
+              this.deps.insertQuestChatLink(item.questId);
+              return;
+            }
+            this.selected = item.questId;
+            this.render();
+          });
+          section.appendChild(button);
+        }
+      }
+      list.appendChild(section);
+    }
+    if (!view.empty) {
+      const hint = document.createElement('div');
+      hint.className = 'ql-shift-hint';
+      hint.textContent = t('hudChrome.questLog.shiftHint');
+      list.appendChild(hint);
     }
 
     if (view.detail) this.renderDetail(detail, view.detail, world.player.name);
@@ -185,15 +219,14 @@ export class QuestLogWindow {
     html += d.objectives
       .map(
         (o) =>
-          `<div class="qd-obj${o.done ? ' done' : ''}">${esc(this.questProgressText(this.questObjectiveLabel(d.questId, o.index), o.count, o.required))}</div>`,
+          `<div class="qd-obj${o.done ? ' done' : ''}"><span>${esc(this.questProgressText(this.questObjectiveLabel(d.questId, o.index), o.count, o.required))}</span><span class="ui-bar qd-progress"><span class="ui-bar-fill" style="width:${Math.min(100, (o.count / o.required) * 100)}%"></span></span></div>`,
       )
       .join('');
     html += `<div class="qd-text ql-detail-text">${esc(this.questNarrative(d.questId, playerName))}</div>`;
-    html += `<div class="qd-sub">${esc(t('questUi.detail.rewards'))}</div><div class="qd-obj">${esc(t('questUi.detail.xpReward', { xp: this.questNumber(d.xpReward) }))} &nbsp; ${this.deps.moneyHtml(d.copperReward)}</div>`;
+    html += `<div class="qd-sub">${esc(t('questUi.detail.rewards'))}</div><div class="ui-divider"></div><div class="qd-obj qd-reward-currency">${esc(t('questUi.detail.xpReward', { xp: this.questNumber(d.xpReward) }))}<span class="ui-money">${this.deps.moneyHtml(d.copperReward)}</span></div>`;
     if (d.rewardItemId) {
       const item = ITEMS[d.rewardItemId];
-      const qColor = QUALITY_COLOR[item.quality ?? 'common'] ?? QUALITY_DEFAULT_COLOR;
-      html += `<div class="qd-reward-row" data-reward><span class="qd-reward-label">${esc(t('questUi.detail.itemReward'))}</span>${this.deps.itemIcon(item)}<span class="qd-reward-name" style="color:${qColor}">${esc(itemDisplayName(item))}</span></div>`;
+      html += `<div class="qd-reward-row ui-card" data-reward><span class="qd-reward-label">${esc(t('questUi.detail.itemReward'))}</span><span class="qd-reward-socket ui-socket ui-socket--bag">${this.deps.itemIcon(item)}</span><span class="qd-reward-name q-${item.quality ?? 'common'}">${esc(itemDisplayName(item))}</span></div>`;
     }
     const giver = NPCS[d.turnInNpcId];
     html += `<div class="qd-obj quest-return">${esc(t('questUi.log.returnTo', { name: giver ? this.npcDisplayName(giver.id) : '?' }))}</div>`;
@@ -208,8 +241,13 @@ export class QuestLogWindow {
     }
     const actions = document.createElement('div');
     actions.className = 'ql-detail-actions';
+    const showMap = document.createElement('button');
+    showMap.className = 'ui-btn';
+    showMap.type = 'button';
+    showMap.textContent = t('hudChrome.finder.showOnMap');
+    showMap.addEventListener('click', () => document.getElementById('mm-map')?.click());
     const abandon = document.createElement('button');
-    abandon.className = 'btn';
+    abandon.className = 'ui-btn ui-btn--red';
     abandon.type = 'button';
     abandon.textContent = t('questUi.log.abandon');
     abandon.addEventListener('click', () => {
@@ -227,7 +265,7 @@ export class QuestLogWindow {
         },
       );
     });
-    actions.appendChild(abandon);
+    actions.append(showMap, abandon);
     detail.appendChild(actions);
   }
 

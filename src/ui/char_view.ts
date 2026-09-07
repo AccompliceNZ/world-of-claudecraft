@@ -28,6 +28,29 @@ export interface PaperdollView {
   right: PaperdollSlot[];
 }
 
+export type CharacterSidebarTab = 'stats' | 'progression' | 'skills';
+
+export const CHARACTER_SIDEBAR_TABS: readonly CharacterSidebarTab[] = [
+  'stats',
+  'progression',
+  'skills',
+];
+
+export interface CharacterSidebarView {
+  selected: CharacterSidebarTab;
+  tabs: Array<{ id: CharacterSidebarTab; selected: boolean }>;
+}
+
+export function buildCharacterSidebarView(selected: string | null): CharacterSidebarView {
+  const resolved = CHARACTER_SIDEBAR_TABS.includes(selected as CharacterSidebarTab)
+    ? (selected as CharacterSidebarTab)
+    : 'stats';
+  return {
+    selected: resolved,
+    tabs: CHARACTER_SIDEBAR_TABS.map((id) => ({ id, selected: id === resolved })),
+  };
+}
+
 // Two balanced 6/6 columns flanking the model, like the classic character sheet:
 // the left column holds head/neck/shoulder/chest plus both weapon hands (mainhand
 // then offhand); the right column holds the hands/waist/legs/feet quartet with the

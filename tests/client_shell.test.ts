@@ -3271,7 +3271,10 @@ describe('client HTML shell', () => {
   });
 
   it('shows mobile spellbook add and remove controls for the spell bar', () => {
-    expect(componentsCss).toContain('.spell-hotbar-toggle {\n    display: none;\n  }');
+    // W7 keeps the shipped hotbar action visible on desktop and enlarges it only for touch.
+    expect(componentsCss).toContain(
+      '.spell-hotbar-toggle {\n    display: inline-flex;\n    width: 28px;\n    height: 26px;',
+    );
     expect(hudMobileCss).toContain(
       'body.mobile-touch #spellbook .spell-hotbar-toggle {\n    min-width: 40px;\n    min-height: 40px;',
     );
