@@ -166,9 +166,11 @@ export const KEYBOARD_LAYOUT: KeyboardBlockSpec[] = [
   },
 ];
 
-/** A binding riding on a key, in any layer. */
+/** A binding riding on a key, in any layer. `index` is the action's slot the
+ *  combo sits in (0 primary, 1 alternate), what a rebind or unbind targets. */
 export interface KeyboardKeyBinding {
   actionId: string;
+  index: number;
   combo: string;
   name: string;
   category: string;
@@ -222,13 +224,19 @@ function bindingsByCode(
 ): Map<string, KeyboardKeyBinding[]> {
   const out = new Map<string, KeyboardKeyBinding[]>();
   for (const [actionId, combos] of Object.entries(snapshot)) {
-    for (const combo of combos) {
-      if (typeof combo !== 'string' || combo.length === 0) continue;
+    combos.forEach((combo, index) => {
+      if (typeof combo !== 'string' || combo.length === 0) return;
       const { code } = splitCombo(combo);
       const list = out.get(code) ?? [];
-      list.push({ actionId, combo, name: deps.name(actionId), category: deps.category(actionId) });
+      list.push({
+        actionId,
+        index,
+        combo,
+        name: deps.name(actionId),
+        category: deps.category(actionId),
+      });
       out.set(code, list);
-    }
+    });
   }
   return out;
 }

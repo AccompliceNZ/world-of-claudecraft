@@ -4130,6 +4130,18 @@ export const hudChromeStrings = {
   keyboardMap: {
     title: 'Keyboard Overview',
     hint: 'Keys in use are coloured by category. Hover or focus a key to see everything bound to it.',
+    hintInteractive:
+      'Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.',
+    // The header button that opens the overview in its own movable window.
+    popOut: 'Pop Out',
+    // Status lines while rebinding through a key: {action} is the binding's
+    // action name, {key} the key label just pressed or clicked.
+    pressKey: 'Press a key for {action}. Esc cancels.',
+    unbind: 'Unbind',
+    unbound_: 'Unbound {action}.',
+    boundTo: 'Bound {action} to {key}.',
+    assignHint: 'Choose an action to bind to {key}.',
+    assignPlaceholder: 'Assign an action to {key}',
     layerGroup: 'Modifier layer',
     layerNone: 'No modifier',
     layerShift: 'Shift',

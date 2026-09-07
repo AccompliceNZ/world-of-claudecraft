@@ -96,7 +96,9 @@ import type { TranslationKey } from './i18n.catalog';
 import { interfaceUnlockLabelKey } from './interface_unlock_core';
 import { BIND_CATEGORY_LABEL_KEYS, bindActionDisplayName } from './keybind_action_names';
 import { buildKeybindCode, parseKeybindCode } from './keybind_transfer_core';
-import { paintKeyboardMap } from './keyboard_map';
+import { type KeyboardMapPaintDeps, paintKeyboardMap } from './keyboard_map';
+import type { KeyboardLayer } from './keyboard_map_core';
+import { KeyboardMapWindow } from './keyboard_map_window';
 import {
   type BoolToggleControl,
   boolToggleNextValue,
@@ -360,6 +362,10 @@ export class OptionsWindow {
   private interfaceTab: InterfaceTab = 'general';
   private capturingKey: { action: string; index: number } | null = null; // binding awaiting a key
   private keybindNote = '';
+  // The keyboard overview's modifier layer, kept across the panel's rebuilds
+  // (every rebind repaints the whole panel) and shared with the pop-out.
+  private keyboardLayer: KeyboardLayer = '';
+  private readonly keyboardWindow = new KeyboardMapWindow(() => this.keyboardMapDeps());
   // The Options > Performance panel, lazily built and reused (it caches the live
   // position-slider handles so a drag-to-move can update them in place).
   private perfSettings: PerfOverlaySettingsPanel | null = null;
@@ -2173,22 +2179,74 @@ export class OptionsWindow {
     return bindActionDisplayName(actionId, fallback, this.deps.slotActionName);
   }
 
-  private paintKeyboardOverview(el: HTMLElement, attackMoveOn: boolean): void {
-    const byId = new Map(BIND_ACTIONS.map((a) => [a.id, a]));
+  /** Close the keyboard overview pop-out (Hud.closeManagedWindow's arm for it). */
+  closeKeyboardWindow(): void {
+    this.keyboardWindow.close();
+  }
+
+  private paintKeyboardOverview(el: HTMLElement): void {
     paintKeyboardMap(el, {
+      ...this.keyboardMapDeps(),
+      onPopOut: () => {
+        // The pop-out replaces the in-menu board: close the menu so the
+        // keyboard floats over the world (the on-bar bind mode's precedent).
+        this.close();
+        this.keyboardWindow.open();
+      },
+    });
+  }
+
+  // The keyboard overview's wiring, shared by the in-panel board and the pop-out
+  // window: the live bindings (minus the Attack Move row the list hides while
+  // its mode is off), names and categories from the shared label table, and the
+  // rebind seams (the same key capture, conflict prompt and refresh the rows use).
+  private keyboardMapDeps(): KeyboardMapPaintDeps {
+    const byId = new Map(BIND_ACTIONS.map((a) => [a.id, a]));
+    const hooks = this.deps.options();
+    const attackMoveOn = !!hooks?.settings.get('attackMove');
+    const name = (id: string) => this.actionDisplayName(id, byId.get(id)?.label ?? id);
+    const categoryLabel = (id: string) => {
+      const key = BIND_CATEGORY_LABEL_KEYS[id];
+      return key ? t(key) : id;
+    };
+    return {
       bindings: () => {
         const snapshot = this.deps.keybinds().snapshot();
         if (!attackMoveOn) delete snapshot.attackMove;
         return snapshot;
       },
-      actionName: (id) => this.actionDisplayName(id, byId.get(id)?.label ?? id),
+      actionName: name,
       actionCategory: (id) => byId.get(id)?.category ?? '',
-      categories: () =>
-        BIND_CATEGORIES.map((id) => {
-          const key = BIND_CATEGORY_LABEL_KEYS[id];
-          return { id, label: key ? t(key) : id };
-        }),
-    });
+      categories: () => BIND_CATEGORIES.map((id) => ({ id, label: categoryLabel(id) })),
+      layer: this.keyboardLayer,
+      onLayerChange: (layer) => {
+        this.keyboardLayer = layer;
+      },
+      rebind: hooks
+        ? {
+            keybinds: () => this.deps.keybinds(),
+            captureKey: (cb) => hooks.captureKey(cb),
+            confirmDialog: (title, body, okText, cancelText, onOk) =>
+              this.deps.confirmDialog(title, body, okText, cancelText, onOk),
+            onChanged: (status) => {
+              this.deps.refreshKeybindLabels();
+              this.keyboardWindow.repaint();
+              if (this.isOpen && this.view === 'keybinds') {
+                // The panel rebuilds its board, so the outcome moves to its note.
+                this.keybindNote = status;
+                this.renderKeybinds();
+              }
+            },
+            assignable: () =>
+              BIND_ACTIONS.filter((a) => attackMoveOn || a.id !== 'attackMove').map((a) => ({
+                id: a.id,
+                label: `${categoryLabel(a.category)}: ${name(a.id)}`,
+              })),
+            buildDropdown: (options, current, onChange, placeholder, a11y) =>
+              this.deps.buildDropdown(options, current, onChange, placeholder, a11y),
+          }
+        : undefined,
+    };
   }
 
   // Action ids a gamepad button may be bound to: explicit unbind, the game menu,
@@ -2515,7 +2573,7 @@ export class OptionsWindow {
     // The keyboard overview: every key in use, coloured by category and
     // captioned with its action, one modifier layer at a time. Desktop only
     // (touch has no keyboard); it hides the same Attack Move row the list does.
-    if (!useTouchInterface()) this.paintKeyboardOverview(el, attackMoveOn);
+    if (!useTouchInterface()) this.paintKeyboardOverview(el);
     const cols = document.createElement('div');
     cols.className = 'kb-cols';
     for (const category of BIND_CATEGORIES) {

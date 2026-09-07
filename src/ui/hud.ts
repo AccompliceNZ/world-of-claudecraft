@@ -1267,8 +1267,7 @@ export class Hud {
   private readonly actionBarBind = new ActionBarBindController({
     keybinds: () => this.keybinds,
     captureKey: (cb) => this.optionsHooks?.captureKey(cb),
-    confirmDialog: (title, body, okText, cancelText, onOk) =>
-      this.confirmDialog(title, body, okText, cancelText, onOk),
+    confirmDialog: (...args) => this.confirmDialog(...args),
     refreshKeybindLabels: () => this.refreshKeybindLabels(),
     actionName: (id) => bindActionDisplayName(id, id, (slot) => this.slotActionName(slot)),
     closeOptions: () => this.optionsWindow.close(),
@@ -3543,6 +3542,9 @@ export class Hud {
         break;
       case 'options-menu':
         this.closeOptions();
+        break;
+      case 'keyboard-map-window':
+        this.optionsWindow.closeKeyboardWindow();
         break;
       case 'social-window':
         // Route through the painter so focus returns to the opener (WCAG 2.2 AA),
@@ -8134,8 +8136,6 @@ export class Hud {
   // On-bar action-bar key-binding mode (issue #1238)
   // -------------------------------------------------------------------------
 
-  // What a bar slot holds, for prompts and rows: the ability or item name, or
-  // null for an empty slot (the caller falls back to the numbered slot label).
   private slotActionName(slot: number): string | null {
     const ability = this.abilityForSlot(slot);
     if (ability) return abilityDisplayName(ability.def);

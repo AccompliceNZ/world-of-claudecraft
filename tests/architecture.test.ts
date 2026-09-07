@@ -2357,6 +2357,7 @@ const UI_DOM_MODULES = [
   'src/ui/interface_unlock.ts',
   'src/ui/settings_transfer.ts',
   'src/ui/keyboard_map.ts',
+  'src/ui/keyboard_map_window.ts',
   'src/ui/item_drop_hit_test.ts',
   'src/ui/loading_backdrop.ts',
   'src/ui/loading_slow_hint.ts',

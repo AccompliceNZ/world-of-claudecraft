@@ -13960,9 +13960,19 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
   }
+  .kbm-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
   .kbm-layers {
     display: flex;
     gap: 4px;
+  }
+  .kbm-popout {
+    font-size: 11px;
+    padding: 2px 8px;
   }
   .kbm-layer {
     font-size: 11px;
@@ -14013,6 +14023,10 @@
   }
   .kbm-key.in-use {
     color: #f4ead0;
+  }
+  .kbm-key.capturing {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 1px var(--gold);
   }
   .kbm-spacer {
     visibility: hidden;
@@ -14094,6 +14108,30 @@
     font-size: 11px;
     line-height: 1.4;
     color: #e8dcb8;
+  }
+  /* Unbind / Cancel while a capture is armed, or the assign picker for an
+     empty key; sits under the detail line. */
+  .kbm-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 4px;
+  }
+  .kbm-actions[hidden] {
+    display: none;
+  }
+  /* The pop-out window (src/ui/keyboard_map_window.ts): the same board in a
+     movable panel that can stay up while playing. Desktop only. */
+  #keyboard-map-window {
+    width: min(900px, calc(100vw - 48px));
+    padding: 0 10px 10px;
+  }
+  #keyboard-map-window .kbm {
+    margin-top: 6px;
+  }
+  #keyboard-map-window .kbm-title {
+    display: none;
   }
   .kb-cols {
     display: grid;

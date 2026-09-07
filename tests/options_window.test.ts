@@ -46,11 +46,12 @@ describe('options_window: keyboard overview', () => {
       painter.indexOf('private renderKeybinds(): void {'),
       painter.indexOf('private beginCapture('),
     );
-    expect(keybinds).toContain(
-      'if (!useTouchInterface()) this.paintKeyboardOverview(el, attackMoveOn);',
-    );
+    expect(keybinds).toContain('if (!useTouchInterface()) this.paintKeyboardOverview(el);');
+    const deps = painter.slice(painter.indexOf('private keyboardMapDeps('));
+    expect(deps.slice(0, deps.indexOf('\n  }\n'))).toContain('delete snapshot.attackMove;');
+    // The pop-out closes the menu first so the board floats over the world.
     const overview = painter.slice(painter.indexOf('private paintKeyboardOverview('));
-    expect(overview.slice(0, overview.indexOf('\n  }\n'))).toContain('delete snapshot.attackMove;');
+    expect(overview.slice(0, overview.indexOf('\n  }\n'))).toContain('this.keyboardWindow.open();');
   });
 });
 

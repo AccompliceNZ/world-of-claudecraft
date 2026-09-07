@@ -86,11 +86,14 @@ describe('buildKeyboardMap', () => {
     const w = find('', 'KeyW');
     expect(w.layerBinding).toEqual({
       actionId: 'forward',
+      index: 0,
       combo: 'KeyW',
       name: 'name:forward',
       category: 'Movement',
     });
     expect(w.otherLayers).toBe(true); // Shift+W is on the bar
+    // The alternate slot carries index 1, what a rebind or unbind targets.
+    expect(find('', 'ArrowUp').layerBinding?.index).toBe(1);
     expect(w.bindings.map((b) => b.combo)).toEqual(['KeyW', 'Shift+KeyW']);
   });
 
