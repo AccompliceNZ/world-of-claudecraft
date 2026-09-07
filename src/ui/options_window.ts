@@ -174,6 +174,27 @@ const KEYBIND_PANEL_SETTING_KEYS: (keyof GameSettings)[] = [
   'filterProfanity',
 ];
 
+// The full-settings code's file round-trip (Import / Export sub-panel).
+const TRANSFER_FILE_NAME = 'woc-settings.json';
+const TRANSFER_FILE_ACCEPT = '.json,application/json';
+
+/** Offer `text` as a downloaded file. Returns false where the anchor-download
+ *  path is unavailable (the copy button remains the fallback). */
+function downloadTextFile(fileName: string, text: string): boolean {
+  try {
+    const blob = new Blob([text], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    URL.revokeObjectURL(url);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // Endonyms for the in-game language picker; never localized (they render
 // identically in every locale, matching the homepage footer picker), keyed by
 // SupportedLanguage so a new locale appears once its label is added here.
@@ -578,6 +599,9 @@ export class OptionsWindow {
         break;
       case 'performance':
         this.renderPerformance();
+        break;
+      case 'transfer':
+        this.renderTransfer();
         break;
       case 'bugreport':
         this.renderBugReport();
@@ -1813,6 +1837,10 @@ export class OptionsWindow {
       exportCode: () => string;
       applyLabel: string;
       importCode: (text: string) => string | null;
+      // When set, the export pane also offers the code as a downloaded file of
+      // this name and the import pane can read one back in (a full-settings
+      // code runs to tens of kilobytes, past what a chat paste carries well).
+      fileName?: string;
     },
   ): void {
     const row = document.createElement('div');
@@ -1873,6 +1901,19 @@ export class OptionsWindow {
           }
         });
         pane.appendChild(copy);
+        if (io.fileName) {
+          const fileName = io.fileName;
+          const download = document.createElement('button');
+          download.className = 'btn';
+          download.textContent = t('hudChrome.fullTransfer.downloadFile');
+          download.addEventListener('click', () => {
+            audio.click();
+            status.textContent = downloadTextFile(fileName, box.value)
+              ? t('hudChrome.fullTransfer.downloaded')
+              : t('hudChrome.fullTransfer.downloadFailed');
+          });
+          pane.appendChild(download);
+        }
         box.focus();
         box.select();
       } else {
@@ -1886,6 +1927,36 @@ export class OptionsWindow {
           if (error !== null) status.textContent = error;
         });
         pane.appendChild(apply);
+        if (io.fileName) {
+          // A hidden file input behind a real button: the picker's own control
+          // cannot take the chrome's button styling or its focus ring.
+          const picker = document.createElement('input');
+          picker.type = 'file';
+          picker.accept = TRANSFER_FILE_ACCEPT;
+          picker.hidden = true;
+          picker.addEventListener('change', () => {
+            const file = picker.files?.[0];
+            if (!file) return;
+            file.text().then(
+              (text) => {
+                box.value = text;
+                status.textContent = t('hudChrome.fullTransfer.fileLoaded');
+                apply.focus();
+              },
+              () => {
+                status.textContent = t('hudChrome.fullTransfer.loadFailed');
+              },
+            );
+          });
+          const load = document.createElement('button');
+          load.className = 'btn';
+          load.textContent = t('hudChrome.fullTransfer.loadFile');
+          load.addEventListener('click', () => {
+            audio.click();
+            picker.click();
+          });
+          pane.append(load, picker);
+        }
         box.focus();
       }
       pane.appendChild(status);
@@ -2480,6 +2551,48 @@ export class OptionsWindow {
     });
     row.append(name, toggle);
     parent.appendChild(row);
+  }
+
+  // The Import / Export sub-panel: the FULL preference set as one code (or a
+  // downloaded file). Same envelope and allowlist boundary as the Interface
+  // tab's rows (settings_transfer_core.ts, kind 'full'), so a pasted blob still
+  // cannot plant a session, wallet, purchase or cache key; a successful import
+  // reloads, since every family it writes is read at boot.
+  private renderTransfer(): void {
+    const el = this.deps.root();
+    el.innerHTML = this.panelTitle(t('hudChrome.fullTransfer.title'));
+    const intro = document.createElement('div');
+    intro.className = 'set-note';
+    intro.textContent = t('hudChrome.fullTransfer.intro');
+    el.appendChild(intro);
+    const body = document.createElement('div');
+    body.className = 'transfer-body';
+    this.transferControls(body, t('hudChrome.fullTransfer.fullSettings'), {
+      exportCode: () => exportTransferCode('full'),
+      applyLabel: t('hudChrome.transfer.applyReload'),
+      fileName: TRANSFER_FILE_NAME,
+      importCode: (text) => {
+        const result = importTransferCode('full', text);
+        if (result.ok) {
+          window.location.reload();
+          return null;
+        }
+        return t(
+          result.reason === 'kind' ? 'hudChrome.transfer.wrongKind' : 'hudChrome.transfer.invalid',
+        );
+      },
+    });
+    el.appendChild(body);
+    const excluded = document.createElement('div');
+    excluded.className = 'set-note';
+    excluded.textContent = t('hudChrome.fullTransfer.excluded');
+    el.appendChild(excluded);
+    const back = document.createElement('button');
+    back.className = 'btn';
+    back.textContent = t('hud.options.back');
+    back.addEventListener('click', () => this.goBack());
+    el.appendChild(back);
+    el.querySelector('[data-close]')?.addEventListener('click', () => this.close());
   }
 
   private renderKeybinds(): void {

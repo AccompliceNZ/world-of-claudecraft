@@ -3060,6 +3060,19 @@ export const pt_BR: EnTranslations = {
       "imported": "Hotkey setup imported.",
       "wrongKind": "That code is a settings export, not a hotkey setup."
     },
+    "fullTransfer": {
+      "menu": "Import / Export",
+      "title": "Import / Export Settings",
+      "fullSettings": "Full Settings",
+      "intro": "Export every saved preference on this device as one code or file, and import it on another device or browser: graphics, audio, interface, theme, frame layout, key bindings for every character, controller and cross hotbar bindings, chat, window filters, language, and dismissed hints.",
+      "excluded": "Never included: your login, account, wallet, or purchase data. Action bar layouts are saved to your account and travel with it.",
+      "downloadFile": "Download File",
+      "downloaded": "Download started.",
+      "downloadFailed": "Download unavailable here. Use Copy instead.",
+      "loadFile": "Load File",
+      "fileLoaded": "File loaded. Press Apply and Reload to import it.",
+      "loadFailed": "That file could not be read."
+    },
     "riftForge": {
       "title": "Rift Forge",
       "subtitle": "Riftbound bands",

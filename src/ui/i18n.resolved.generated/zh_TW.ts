@@ -3060,6 +3060,19 @@ export const zh_TW: EnTranslations = {
       "imported": "快捷鍵配置已匯入。",
       "wrongKind": "該代碼是設定匯出，不是快捷鍵配置。"
     },
+    "fullTransfer": {
+      "menu": "匯入 / 匯出",
+      "title": "匯入 / 匯出設定",
+      "fullSettings": "全部設定",
+      "intro": "將此裝置上儲存的全部偏好匯出為一段代碼或檔案，並在其他裝置或瀏覽器上匯入：圖形、音訊、介面、主題、框體配置、每個角色的按鍵綁定、控制器與十字快捷列綁定、聊天、視窗篩選、語言以及已關閉的提示。",
+      "excluded": "絕不包含：您的登入、帳號、錢包或購買資料。動作列配置儲存在您的帳號中，會隨帳號同步。",
+      "downloadFile": "下載檔案",
+      "downloaded": "已開始下載。",
+      "downloadFailed": "此處無法下載。請改用複製。",
+      "loadFile": "載入檔案",
+      "fileLoaded": "檔案已載入。按「套用並重新載入」以匯入。",
+      "loadFailed": "無法讀取該檔案。"
+    },
     "riftForge": {
       "title": "裂隙熔爐",
       "subtitle": "裂隙之戒",

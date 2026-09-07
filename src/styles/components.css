@@ -14143,6 +14143,10 @@
   .kb-transfer {
     margin: 0 0 8px;
   }
+  /* The Import / Export sub-panel's body around the Full Settings row. */
+  .transfer-body {
+    margin: 8px 0;
+  }
   .transfer-code {
     width: 100%;
     min-height: 72px;

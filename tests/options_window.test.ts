@@ -40,6 +40,23 @@ describe('options_window: no magic values', () => {
   });
 });
 
+describe('options_window: import / export routing', () => {
+  it('routes the Import / Export view to the full-settings transfer panel', () => {
+    expect(painter).toContain("case 'transfer':");
+    expect(painter).toContain('this.renderTransfer();');
+    const panel = painter.slice(
+      painter.indexOf('private renderTransfer(): void {'),
+      painter.indexOf('private renderKeybinds(): void {'),
+    );
+    // The widest kind, through the same allowlisted envelope as the Interface
+    // tab's rows, and a reload on success (every family is read at boot).
+    expect(panel).toContain("exportTransferCode('full')");
+    expect(panel).toContain("importTransferCode('full', text)");
+    expect(panel).toContain('window.location.reload();');
+    expect(panel).toContain("t('hudChrome.fullTransfer.excluded')");
+  });
+});
+
 describe('options_window: aura menu routing', () => {
   it('routes the top-level Auras view to its settings panel and placement preview', () => {
     expect(painter).toContain("case 'auras':");
@@ -565,13 +582,13 @@ describe('options_window: title-bar back control', () => {
     expect(painter).toContain(
       "el.querySelector('[data-back]')?.addEventListener('click', () => this.goBack());",
     );
-    // the four footer Back buttons (the shared settingsViewFooter, which
+    // the five footer Back buttons (the shared settingsViewFooter, which
     // Audio/Controller/Interface feed into; the graphics inline action row,
-    // which replaces it for that view; bug report; keybinds) reuse the same
-    // path (no inline copies left)
+    // which replaces it for that view; bug report; keybinds; import / export)
+    // reuse the same path (no inline copies left)
     expect(
       painter.match(/back\.addEventListener\('click', \(\) => this\.goBack\(\)\);/g),
-    ).toHaveLength(4);
+    ).toHaveLength(5);
     // the click-then-flip-to-main sequence lives ONLY in goBack itself; a stray
     // inline copy in some handler would push this count past 1
     expect(painter.match(/audio\.click\(\);\s*this\.view = 'main';/g) ?? []).toHaveLength(1);

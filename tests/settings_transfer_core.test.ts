@@ -22,12 +22,39 @@ const SETTINGS_ENTRIES = {
   woc_keybinds: '{}',
   woc_target_auras_opacity: '0.8',
 };
+const FULL_ENTRIES = {
+  ...SETTINGS_ENTRIES,
+  'woc_keybinds:char:12': '{"jump":["KeyY",null]}',
+  'woc_keybinds:offline:warrior:Bob': '{}',
+  woc_gamepad: '{"a":"jump"}',
+  'woc_gamepad_xhb:char:12': '{}',
+  woc_gamepad_xhb_claimed: '1',
+  'woc_aura_overlays:char:12': '{}',
+  woc_emote_wheel_warrior_Bob: '["wave"]',
+  woc_deed_watch_warrior_Bob: '[]',
+  woc_reliquary_pins_warrior_Bob: '[]',
+  'woc_spawn_intro_seen:char:12': '1',
+  woc_player_frame_pos_hidden: '1',
+  woc_layout_reset_epoch: '1',
+  chatTimestamps: '1',
+  clock24h: '1',
+  minimapZoom: '2',
+  woc_bag_filter: 'all',
+  woc_ignored_chat_names: '["Griefer"]',
+  ev_music_on: '0',
+  locale: 'de_DE',
+  woc_perf_overlay: '{}',
+  'wocc.charSort': 'level',
+  'woc.tutorial.v1': '1',
+  woc_gpu_notice_dismissed: '1',
+};
 
 describe('settings_transfer_core', () => {
-  it('round-trips a frames code and a settings code', () => {
+  it('round-trips a frames code, a settings code and a full code', () => {
     for (const [kind, entries] of [
       ['frames', FRAME_ENTRIES],
       ['settings', SETTINGS_ENTRIES],
+      ['full', FULL_ENTRIES],
     ] as const) {
       const parsed = parseTransferCode(kind, buildTransferCode(kind, entries));
       expect(parsed).toEqual({ ok: true, entries });
@@ -40,6 +67,7 @@ describe('settings_transfer_core', () => {
     for (const hostile of ['woc_session', '__proto__', 'constructor', 'totally_unrelated']) {
       expect(transferKeyAllowed('frames', hostile)).toBe(false);
       expect(transferKeyAllowed('settings', hostile)).toBe(false);
+      expect(transferKeyAllowed('full', hostile)).toBe(false);
     }
     const code = buildTransferCode('frames', { ...FRAME_ENTRIES, woc_session: 'stolen' });
     expect(code).not.toContain('woc_session');
@@ -88,6 +116,68 @@ describe('settings_transfer_core', () => {
     // the dead key would resurrect stale boxes from old layout codes).
     expect(transferKeyAllowed('frames', 'woc_keybinds')).toBe(false);
     expect(transferKeyAllowed('frames', 'woc_meters_frame')).toBe(false);
+  });
+
+  it('the full kind carries every preference family and still no identity, purchase or cache key', () => {
+    for (const key of Object.keys(FULL_ENTRIES))
+      expect(transferKeyAllowed('full', key), key).toBe(true);
+    // The families the narrower kinds never carried: per-character keybinds
+    // and controller binds are the ones players most often lose between devices.
+    for (const key of ['woc_keybinds:char:12', 'woc_gamepad', 'woc_gamepad_xhb:char:12']) {
+      expect(transferKeyAllowed('settings', key), key).toBe(false);
+      expect(transferKeyAllowed('frames', key), key).toBe(false);
+    }
+    // Identity, session, wallet, purchase, attribution and cache keys stay out
+    // even of the widest kind; `woc_` is never a prefix.
+    for (const forbidden of [
+      'woc_session',
+      'woc_active_play',
+      'woc_purchase_intents_warrior_Bob',
+      'woc_first_touch_v1',
+      'woc_site_visitor_id',
+      'woc.wallet.standard.selectedWallet',
+      'woc.wallet.mobile.v1.session.phantom',
+      'woc_native_discord_verifier',
+      'woc_seed',
+      'woc_cached_stats',
+      'woc_last_realm',
+      'woc_entry_probe',
+      'woc_hotbar_warrior_Bob',
+      'woc_editor_maps',
+      'claudecraft_admin_token',
+      'woc_keybindsX',
+      'woc_gamepad_xhbX',
+    ]) {
+      expect(transferKeyAllowed('full', forbidden), forbidden).toBe(false);
+    }
+    // A crafted full code smuggling a session is stripped on parse.
+    const crafted = JSON.stringify({
+      woc: 'woc-transfer',
+      v: 1,
+      kind: 'full',
+      data: { ...FULL_ENTRIES, woc_session: 'stolen', woc_purchase_intents_warrior_Bob: '{}' },
+    });
+    expect(parseTransferCode('full', crafted)).toEqual({ ok: true, entries: FULL_ENTRIES });
+  });
+
+  it('kinds are strict supersets: a full code fills any box, a narrower code never fills a wider one', () => {
+    const fullCode = buildTransferCode('full', FULL_ENTRIES);
+    expect(parseTransferCode('frames', fullCode)).toEqual({ ok: true, entries: FRAME_ENTRIES });
+    expect(parseTransferCode('settings', fullCode)).toEqual({
+      ok: true,
+      entries: SETTINGS_ENTRIES,
+    });
+    expect(parseTransferCode('full', buildTransferCode('settings', SETTINGS_ENTRIES))).toEqual({
+      ok: false,
+      reason: 'kind',
+    });
+    expect(parseTransferCode('full', buildTransferCode('frames', FRAME_ENTRIES))).toEqual({
+      ok: false,
+      reason: 'kind',
+    });
+    // An unknown kind is a mismatch, not a crash.
+    const alien = JSON.stringify({ woc: 'woc-transfer', v: 1, kind: 'alien', data: FRAME_ENTRIES });
+    expect(parseTransferCode('frames', alien)).toEqual({ ok: false, reason: 'kind' });
   });
 
   it('rejects garbage as format, the reverse kind as kind, and a hollow code as empty', () => {
