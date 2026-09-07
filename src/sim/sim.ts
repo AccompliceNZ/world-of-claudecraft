@@ -236,6 +236,7 @@ import * as companionMod from './delves/companion';
 import * as lockpickMod from './delves/lockpick_controller';
 import * as runsMod from './delves/runs';
 import { CASCADE_SCENARIO } from './dev/cascade_playtest';
+import { DEV_SANDBOX_CFG, DEV_SANDBOX_CLASSES } from './dev/dev_sandbox_config';
 import { despawnMobsForDev } from './dev_commands';
 import { projectOutsideDungeonDoors } from './dungeon_door_clearance';
 import { arenaMapForSlot } from './dungeon_layout';
@@ -1963,6 +1964,10 @@ export class Sim {
   // DB) and exposed as a live SimContext view. Always empty offline: guilds are
   // a server social system, so the offline sim never creates a book.
   guildBanks: Map<number, GuildBankState> = new Map();
+  /** [dev] /dev freezemobs: while true, every mob skips its AI update and
+   *  acquires no aggro, so the placer works among live packs without
+   *  scattering them. Set via setDevMobsFrozen; never persisted. */
+  devMobsFrozen = false;
   /** When true, /dev level|tp|give chat commands are accepted (local dev only). */
   readonly devCommands: boolean;
   // Entities spawned by the last /dev sandbox (dummy + practice bots), so re-running
@@ -3554,6 +3559,13 @@ export class Sim {
   // abilities moving it. Re-running RESETS it (clears the previous dummy + bots).
   // Returns the number of allies spawned. (The Cascada-specific readout stays in
   // startCascadePlaytest; this one is class-agnostic.)
+  // [dev] /dev freezemobs: flip (or set) the sim-wide mob freeze; returns
+  // the resulting state so the caller can word its readout.
+  setDevMobsFrozen(on?: boolean): boolean {
+    this.devMobsFrozen = on ?? !this.devMobsFrozen;
+    return this.devMobsFrozen;
+  }
+
   startDevSandbox(pid?: number): number {
     const casterId = pid ?? this.primaryId;
     const me = this.entities.get(casterId);
@@ -3563,16 +3575,7 @@ export class Sim {
       else this.dropEntity(id);
     }
     this.devSandboxIds = [];
-    const cfg = {
-      dummyX: -3,
-      dummyZ: 4,
-      bots: 5,
-      botZ: 2,
-      botX0: 2,
-      botGap: 1.5,
-      maxHp: 10_000,
-      hp: 0.15,
-    };
+    const cfg = DEV_SANDBOX_CFG;
     const dummy = createMob(
       this.nextId++,
       MOBS.training_dummy,
@@ -3581,20 +3584,7 @@ export class Sim {
     );
     dummy.hostile = true;
     this.addEntity(dummy);
-    // A mixed party rather than all-mages (owner 2026-07-13): a rotating spread of
-    // classes so the practice allies read like a real group (tank/healer/melee/etc.),
-    // each with its own class HP pool and armor.
-    const sandboxClasses: PlayerClass[] = [
-      'warrior',
-      'priest',
-      'rogue',
-      'hunter',
-      'shaman',
-      'warlock',
-      'druid',
-      'paladin',
-      'mage',
-    ];
+    const sandboxClasses = DEV_SANDBOX_CLASSES;
     const botIds: number[] = [];
     for (let i = 0; i < cfg.bots; i++) {
       const cls = sandboxClasses[i % sandboxClasses.length];
@@ -5513,6 +5503,7 @@ export class Sim {
       spawnDevVendor: sim.spawnDevVendor.bind(sim),
       startCascadePlaytest: sim.startCascadePlaytest.bind(sim),
       startDevSandbox: sim.startDevSandbox.bind(sim),
+      setDevMobsFrozen: sim.setDevMobsFrozen.bind(sim),
       seedDungeonFinderDev: sim.seedDungeonFinderDev.bind(sim),
       // L2 inventory/vendor (W2): the helpers the moved items.useItem dispatches to.
       // Late-bound arrows (looked up at call time, not `.bind`d at ctor) so they preserve
@@ -5996,7 +5987,13 @@ export class Sim {
 
     for (const e of this.entities.values()) {
       if (e.kind === 'mob') {
-        if (e.guardianState) {
+        // [dev] /dev freezemobs: skip every mob's AI update outright
+        // (guardians included): no wander, no chase, no swings while props
+        // are placed; auras below still tick. Never true in shipped play,
+        // so the skipped wander draws shift no production stream.
+        if (this.devMobsFrozen) {
+          // frozen in place
+        } else if (e.guardianState) {
           if (!updateGuardian(this.ctx, e)) continue;
         } else {
           if (this.shouldSkipIdleMobTick(e)) continue;
@@ -7648,6 +7645,9 @@ export class Sim {
     // pulls, so the pack stays exactly where it spawned. The single aggro choke
     // point, so this covers proximity, social, and retaliation pulls alike.
     if (target.kind === 'player' && target.devNoAggro) return false;
+    // [dev] /dev freezemobs: a frozen world acquires no aggro either (the AI
+    // update skip alone would still let a proximity sweep seed a hate table).
+    if (this.devMobsFrozen) return false;
     // A quest-gated destructible (e.g. a Broodmother egg) never autonomously pulls a
     // player its own damage gate would refuse: see mob/quest_gated_aggro.ts.
     if (questGateBlocksAggro(this.players, mob, target)) return false;

@@ -48,7 +48,6 @@ import { clientEnvBits, installPageStateTracking, pageStateBits } from './game/c
 import { getClientSeed } from './game/client_seed';
 import { localPartyMemberIds } from './game/corpse_loot_availability';
 import { createCrossHotbar, measureCrossHotbarLift } from './game/cross_hotbar_wiring';
-import { tryDayNightDevCommand } from './game/daynight_dev_command';
 import { shouldClearAutorunOnDeath } from './game/death_input_reset';
 import { setDisplayChangeTarget } from './game/desktop_display_change';
 import {
@@ -60,6 +59,7 @@ import { desktopNotifyOnSimEvents } from './game/desktop_notifications';
 import { desktopPresentationHidden } from './game/desktop_presentation';
 import { initDesktopShellIntegration } from './game/desktop_shell_integration';
 import { applyDesktopShellSetting, syncDesktopShellSettings } from './game/desktop_shell_settings';
+import { tryDevChatHooks } from './game/dev_chat_hooks';
 import { installDevTeleports } from './game/dev_shortcuts';
 import {
   clearDiscordChoice,
@@ -109,7 +109,6 @@ import {
   stampGraphicsRebuildProbe,
   updateGraphicsRebuildProbePhase,
 } from './game/graphics_rebuild_crash_guard';
-import { tryIgnivarPlacerCommand } from './game/ignivar_placer';
 import { Input } from './game/input';
 import { InputActivityMeter, installInputActivityTracking } from './game/input_activity';
 import { stopAutorunForInteraction } from './game/interaction_autorun';
@@ -1806,21 +1805,8 @@ async function startGame(
       // the active channel tab supplies the send prefix, so plain text goes to
       // that channel without the player retyping "/world" etc.
       const raw = chatInput.value;
-      // dev-only day/night scrub command, intercepted before the chat send path
-      if (import.meta.env.DEV && tryDayNightDevCommand(raw, hud)) {
-        chatInput.value = '';
-        closeChat();
-        return;
-      }
-      // dev-only Ignivar prop placement rig (local branch tooling)
-      if (
-        import.meta.env.DEV &&
-        tryIgnivarPlacerCommand(raw, {
-          scene: renderer.scene,
-          getPlayer: () => world.player,
-          log: (text, color) => hud.log(text, color),
-        })
-      ) {
+      // dev-only chat interceptors (day/night scrub, the placer rig)
+      if (tryDevChatHooks(raw, { hud, scene: renderer.scene, world })) {
         chatInput.value = '';
         closeChat();
         return;

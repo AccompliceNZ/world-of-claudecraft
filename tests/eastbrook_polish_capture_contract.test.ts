@@ -384,7 +384,7 @@ interface AttributionTargetFixture {
 // merged renderer.ts bytes replace either side's value. No capture was
 // retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'fe96bae53b2d75d68d4123d21d0d3b0d59e66ecff72ee0f3f8d6c1fee8447927';
+  'b106691f5bae01bbaeb5e1156dc3e5b25a903f4bd9278d4b2b9581891eb5a86a';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

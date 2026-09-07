@@ -9,8 +9,8 @@
     "victory rush on-kill window + selfHealPctMax",
     "bladestorm self-centered channel ticks"
   ],
-  "draws": 1011,
-  "drawDigest": "fbf95731",
+  "draws": 1005,
+  "drawDigest": "ff3076fd",
   "frames": [
     {
       "tick": 0,
@@ -2336,10 +2336,10 @@
       "time": 5.6,
       "nextId": 1005,
       "state": "1dffc3e2",
-      "events": "cedf235e",
+      "events": "addfa870",
       "rng": {
-        "draws": 670,
-        "digest": "31981420"
+        "draws": 669,
+        "digest": "86b26f0a"
       }
     },
     {
@@ -2349,26 +2349,26 @@
       "state": "dcae8a29",
       "events": "741638a5",
       "rng": {
-        "draws": 720,
-        "digest": "a157cf15"
+        "draws": 719,
+        "digest": "72fe3122"
       }
     },
     {
       "tick": 120,
       "time": 6,
       "nextId": 1005,
-      "state": "0e6ebe32",
-      "events": "4fe9a44f",
+      "state": "2a0cd234",
+      "events": "69ad8909",
       "rng": {
-        "draws": 756,
-        "digest": "742325a0"
+        "draws": 755,
+        "digest": "66b1e7c4"
       }
     },
     {
       "tick": 124,
       "time": 6.2,
       "nextId": 1005,
-      "state": "ea76d420",
+      "state": "9ab7f686",
       "events": "741638a5",
       "rng": {
         "draws": 802,
@@ -2379,55 +2379,55 @@
       "tick": 128,
       "time": 6.4,
       "nextId": 1005,
-      "state": "55d09337",
+      "state": "d6eb5c2d",
       "events": "f3899911",
       "rng": {
-        "draws": 845,
-        "digest": "26d144a9"
+        "draws": 844,
+        "digest": "cd55f8e1"
       }
     },
     {
       "tick": 132,
       "time": 6.6,
       "nextId": 1005,
-      "state": "038d2278",
+      "state": "e8d4bd46",
       "events": "741638a5",
       "rng": {
-        "draws": 895,
-        "digest": "a9e2e38e"
+        "draws": 891,
+        "digest": "daadef22"
       }
     },
     {
       "tick": 136,
       "time": 6.8,
       "nextId": 1005,
-      "state": "7dc3abe8",
-      "events": "c07631c1",
+      "state": "8ccab900",
+      "events": "460c086e",
       "rng": {
-        "draws": 936,
-        "digest": "c32d5366"
+        "draws": 928,
+        "digest": "0d316e79"
       }
     },
     {
       "tick": 140,
       "time": 7,
       "nextId": 1005,
-      "state": "5c871984",
+      "state": "696bca4c",
       "events": "741638a5",
       "rng": {
-        "draws": 976,
-        "digest": "85e9d0a8"
+        "draws": 972,
+        "digest": "3339f0e9"
       }
     },
     {
       "tick": 140,
       "time": 7,
       "nextId": 1005,
-      "state": "5c871984",
+      "state": "696bca4c",
       "events": "741638a5",
       "rng": {
-        "draws": 976,
-        "digest": "85e9d0a8"
+        "draws": 972,
+        "digest": "3339f0e9"
       },
       "label": "bladestorm-done",
       "players": [
@@ -2455,14 +2455,14 @@
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 1248,
-            "damageTaken": 48,
+            "damageDealt": 1250,
+            "damageTaken": 34,
             "kills": 2
           },
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 1248,
+              "damageDealt": 1250,
               "kills": 2
             },
             "dungeonClears": {},
@@ -2652,7 +2652,7 @@
           "channelTickEvery": 1,
           "channelTickTimer": 1,
           "chargeTimeLeft": 2.4,
-          "combatTimer": 0.2,
+          "combatTimer": 1.05,
           "comboUntil": -1,
           "cooldowns": [
             [
@@ -2679,7 +2679,7 @@
           "fallStartY": 6.672031,
           "fiveSecondRule": 106,
           "healPower": 5,
-          "hp": 627,
+          "hp": 641,
           "id": 995,
           "inCombat": true,
           "kind": "player",
@@ -2698,7 +2698,7 @@
             "z": 17.534589
           },
           "potionCooldownUntil": -1,
-          "resource": 82.0125,
+          "resource": 80.0875,
           "resourceType": "rage",
           "spawnPos": {
             "x": -94,
@@ -2738,7 +2738,7 @@
             }
           ],
           "autoAttack": true,
-          "combatTimer": 0.2,
+          "combatTimer": 4.05,
           "comboUntil": -1,
           "critChance": 0.05,
           "detonateTimer": "Infinity",
@@ -2992,7 +2992,7 @@
           "fallStartY": 6.672031,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 8877,
+          "hp": 8875,
           "id": 1004,
           "inCombat": true,
           "kind": "mob",
@@ -3028,7 +3028,7 @@
           "threat": [
             [
               995,
-              144.5
+              146.5
             ]
           ],
           "weapon": {
@@ -3043,22 +3043,22 @@
       "tick": 144,
       "time": 7.2,
       "nextId": 1005,
-      "state": "aa5e6563",
-      "events": "7510a233",
+      "state": "d227e459",
+      "events": "244888b5",
       "rng": {
-        "draws": 1011,
-        "digest": "fbf95731"
+        "draws": 1005,
+        "digest": "ff3076fd"
       }
     },
     {
       "tick": 144,
       "time": 7.2,
       "nextId": 1005,
-      "state": "aa5e6563",
+      "state": "d227e459",
       "events": "741638a5",
       "rng": {
-        "draws": 1011,
-        "digest": "fbf95731"
+        "draws": 1005,
+        "digest": "ff3076fd"
       },
       "label": "final",
       "players": [
@@ -3086,14 +3086,14 @@
           "cls": "warrior",
           "companionUpgrades": {},
           "counters": {
-            "damageDealt": 1248,
-            "damageTaken": 61,
+            "damageDealt": 1250,
+            "damageTaken": 34,
             "kills": 2
           },
           "craftSkills": {},
           "deedStats": {
             "counters": {
-              "damageDealt": 1248,
+              "damageDealt": 1250,
               "kills": 2
             },
             "dungeonClears": {},
@@ -3283,7 +3283,7 @@
           "channelTickEvery": 1,
           "channelTickTimer": 1,
           "chargeTimeLeft": 2.4,
-          "combatTimer": 0.05,
+          "combatTimer": 1.25,
           "comboUntil": -1,
           "cooldowns": [
             [
@@ -3310,7 +3310,7 @@
           "fallStartY": 6.672031,
           "fiveSecondRule": 106.2,
           "healPower": 5,
-          "hp": 614,
+          "hp": 641,
           "id": 995,
           "inCombat": true,
           "kind": "player",
@@ -3329,7 +3329,7 @@
             "z": 17.534589
           },
           "potionCooldownUntil": -1,
-          "resource": 83.8,
+          "resource": 80.0875,
           "resourceType": "rage",
           "spawnPos": {
             "x": -94,
@@ -3369,7 +3369,7 @@
             }
           ],
           "autoAttack": true,
-          "combatTimer": 0.4,
+          "combatTimer": 4.25,
           "comboUntil": -1,
           "critChance": 0.05,
           "detonateTimer": "Infinity",
@@ -3614,7 +3614,7 @@
             }
           ],
           "autoAttack": true,
-          "combatTimer": 0.05,
+          "combatTimer": 1.25,
           "comboUntil": -1,
           "critChance": 0.05,
           "detonateTimer": "Infinity",
@@ -3623,7 +3623,7 @@
           "fallStartY": 6.672031,
           "fiveSecondRule": 99,
           "hostile": true,
-          "hp": 8877,
+          "hp": 8875,
           "id": 1004,
           "inCombat": true,
           "kind": "mob",
@@ -3659,7 +3659,7 @@
           "threat": [
             [
               995,
-              144.5
+              146.5
             ]
           ],
           "weapon": {

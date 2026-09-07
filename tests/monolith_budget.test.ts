@@ -419,7 +419,10 @@ const MONOLITHS: MonolithRow[] = [
     // branch: the release arm's Realm Builder monument lines (PR #3695) land
     // beside this branch's extractions, so the merged file sits below both
     // parent pins. Measured on the merged tree. Exact merged count, zero headroom.
-    ceiling: 13085,
+    // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
+    // map-improvements epic (PR #3746): the Last Keep castle assembly's build/attach arm left the ember zone case. Measured with wc -l on the
+    // merged tree. Exact merged count, zero headroom.
+    ceiling: 13073,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
@@ -525,7 +528,13 @@ const MONOLITHS: MonolithRow[] = [
     // Plus 2 for the Phase B set-bonus seam: the set_bonus_mods import and
     // the setPlayerLevel writer routing through computeCharacterModifiers
     // (the resolver itself is the extracted module). Exact count, zero slack.
-    ceiling: 12465,
+    // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
+    // map-improvements epic (PR #3746): the /dev freezemobs loop skip and aggro refusal paid for by moving the sandbox scenario data to dev/dev_sandbox_config.ts. Measured with wc -l on the
+    // merged tree. Exact merged count, zero headroom.
+    // Re-pinned 12272 -> 12284 at the Nythraxis redo sync (PR #3848 landed ahead in
+    // the queue; its arms sat under release's slack, so its pin never moved).
+    // Measured with wc -l on the merged tree. Exact merged count, zero headroom.
+    ceiling: 12284,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -584,7 +593,10 @@ const MONOLITHS: MonolithRow[] = [
     // Ratcheted 11516 -> 11462 when the landing page $WOC contract address box
     // and its click-to-copy wiring (wireContractAddressCopy) were removed.
     // Measured with wc -l. Exact count, zero headroom.
-    ceiling: 11462,
+    // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
+    // map-improvements epic (PR #3746): the dev chat interceptors moved to src/game/dev_chat_hooks.ts. Measured with wc -l on the
+    // merged tree. Exact merged count, zero headroom.
+    ceiling: 11448,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
@@ -785,7 +797,13 @@ const MONOLITHS: MonolithRow[] = [
     // stair ramps fold in there), then EMBER_LAVA_POOLS moved home to
     // ember_lava_layout.ts beside its flat-pool sibling (paying for the
     // fortress scatter screen); exact count.
-    ceiling: 5275,
+    // Lowered with the Last Keep castle removal: the castle pad chain and
+    // the Last Spring's authored bank left the pad chain (keep_site.ts is
+    // the pad's new leaf home). Exact count, zero slack.
+    // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
+    // map-improvements epic (PR #3746): the castle pad chain and the Last Spring bank left with the castle (keep_site.ts holds the new pad). Measured with wc -l on the
+    // merged tree. Exact merged count, zero headroom.
+    ceiling: 5216,
     seam: 'zone/terrain data as content records; logic as sim sibling modules',
   },
   {
@@ -924,7 +942,16 @@ const MONOLITHS: MonolithRow[] = [
     // colliders). Exact count, zero slack.
     // the dungeon-door jamb block extracted to dungeon_door_jambs.ts; the
     // fortress collider hook rode the freed room
-    ceiling: 2587,
+    // Lowered with the Last Keep castle removal: the keep's wall-ledge and
+    // parapet collider loops retired (Dawnhold keeps its own). Exact
+    // count, zero slack.
+    // Lowered again with the Wildheart static-set assembly moved beside its
+    // field data (wildheart_field.ts); the pass-under balcony clause rode
+    // the freed room. Exact count, zero slack.
+    // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
+    // map-improvements epic (PR #3746): the keep wall-ledge and parapet loops retired and the Wildheart static set moved beside its field data. Measured with wc -l on the
+    // merged tree. Exact merged count, zero headroom.
+    ceiling: 2548,
     seam: 'per-zone collider data beside the zone content; shared logic stays here',
   },
   {
