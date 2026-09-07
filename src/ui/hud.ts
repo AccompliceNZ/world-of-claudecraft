@@ -481,6 +481,7 @@ import {
   type CrossHotbarOverlayAction,
   type CrossHotbarPanelHooks,
   crossHotbarResolvers,
+  crossHotbarSeedActions,
 } from './hud/cross_hotbar';
 import { DelveBoardController } from './hud/delve/delve_board_controller';
 import { DelveMapPainter } from './hud/delve/delve_map_painter';
@@ -649,6 +650,7 @@ import { type FrameDimension, MovableFrame } from './movable_frame';
 import { NoticeboardPopup } from './noticeboard_popup';
 import { NPC_WINDOW_CLOSE_RANGE } from './npc_service_range';
 import { OptionsWindow } from './options_window';
+import { PadHintStripController } from './pad_hint_strip_controller';
 import {
   makeWriterFacet,
   type PainterHostPresentation,
@@ -779,7 +781,6 @@ import {
 import { SocialWindow } from './social_window';
 import { SpellbookWindow } from './spellbook_window';
 import { stackSizeTooltipLine } from './stack_size_tooltip_view';
-import { isStanceBarAbilityGroup } from './stance_bar_view';
 import {
   type BuffStatSource,
   buildStatTooltip,
@@ -4500,6 +4501,7 @@ export class Hud {
     keyCapLabel,
     labelForGamepadAction,
   );
+  private readonly padHintStrip = PadHintStripController.create(this.writerFacet);
   private readonly interactPromptPainter = new InteractPromptPainter(this.writerFacet, {
     root: this.interactPromptEl,
     keycap: this.interactPromptKeycapEl,
@@ -8894,6 +8896,9 @@ export class Hud {
         gamepad?.kind() ?? 'generic',
       ),
     );
+    // The pad hint strip rides the same read: one gamepad lookup, one band, and
+    // the two pad-facing readouts can never disagree about which pad is live.
+    this.padHintStrip?.update(padActive, gamepad ?? null);
   }
 
   update(paint = true): void {
@@ -18747,17 +18752,7 @@ export class Hud {
   /** What an untouched cross hotbar is filled from: this character's action bar,
    *  plus stance-style abilities, known but unbound and so unreachable on a pad. */
   crossHotbarSeed(): { bar: CrossHotbarOverlayAction[]; extras: string[] } {
-    return {
-      bar: this.hotbarActions.map((a) => (a ? { type: a.type, id: a.id } : null)),
-      // Attack leads: it is on no hotbar slot to copy (the desktop bar draws it as
-      // a fixed button), so a pad player would otherwise have no auto-attack at all.
-      extras: [
-        CROSS_HOTBAR_ATTACK_ID,
-        ...this.sim.known
-          .filter((k) => isStanceBarAbilityGroup(k.def.exclusiveGroup))
-          .map((k) => k.def.id),
-      ],
-    };
+    return crossHotbarSeedActions(this.hotbarActions, this.sim.known);
   }
 
   /** The bar's own arrange surface, whole rather than proxied method by method. */

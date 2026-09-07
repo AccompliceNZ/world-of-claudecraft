@@ -270,7 +270,7 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     band: 'medium',
     gate: '',
     surface: 'chrome',
-    why: 'the write-elided one-at-a-time nearby interaction prompt',
+    why: 'the write-elided one-at-a-time nearby interaction prompt, plus the pad hint strip and launcher legend it shares its gamepad read with',
   },
   {
     call: 'this.bootcamp.update',

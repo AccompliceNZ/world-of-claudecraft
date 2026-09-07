@@ -63,6 +63,7 @@ function hold(expanded: boolean): CrossHotbarHold {
     buttons: Array.from({ length: CELL_COUNT }, (_, i) => `B${i}`),
     triggers: { left: 'LT', right: 'RT' },
     arrange: { bumper: 'LB', button: 'Y' },
+    swap: 'RB',
   };
 }
 
@@ -209,6 +210,36 @@ describe('the trigger pair', () => {
       'utf8',
     );
     expect(src).toContain("t('hudChrome.controller.crossHotbarPosition'");
+  });
+});
+
+describe('the set rail', () => {
+  it('names the set-swap button under the two pips, on the shared keycap', () => {
+    const controller = build();
+    controller.setHold(hold(false));
+    const rail = document.querySelector<HTMLElement>('.xhb-set-rail') as HTMLElement;
+    const children = [...rail.children];
+    // Two pips first, then the chip: the rail reads "which set" then "how to
+    // change it", which is the order the board draws it in.
+    expect(children.map((el) => el.className.split(' ')[0])).toEqual([
+      'xhb-pip',
+      'xhb-pip',
+      'xhb-set-swap',
+    ]);
+    const chip = children[2] as HTMLElement;
+    expect(chip.classList.contains('ui-keycap')).toBe(true);
+    expect(chip.textContent).toBe('RB');
+    expect(chip.style.display).toBe('inline-flex');
+  });
+
+  it('stands the chip down when the player has cleared that bind', () => {
+    // An empty keycap is a plate around nothing, so the chip goes rather than
+    // sitting under the pips saying no button at all.
+    const controller = build();
+    controller.setHold({ ...hold(false), swap: '' });
+    const chip = document.querySelector<HTMLElement>('.xhb-set-swap') as HTMLElement;
+    expect(chip.style.display).toBe('none');
+    expect(chip.textContent).toBe('');
   });
 });
 

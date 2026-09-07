@@ -183,6 +183,25 @@
       <span id="interact-prompt-verb"></span>
       <span id="interact-prompt-name" class="ui-cin"></span>
     </div>
+    <!-- Pad mode's replacement for the keyboard's implicit key knowledge: the hint
+         strip under the minimap cluster, and the legend under the launcher rail.
+         Both are text over the world (never plated, never a pointer target) and the
+         stylesheet alone decides whether they show (body.xhb-mode:not(.mobile-touch)).
+         Every glyph is written from the LIVE bindings, so a rebound button or a
+         non-Xbox pad names itself rather than printing a letter nobody has. -->
+    <div id="pad-hint-strip" role="group" aria-live="off">
+      <div class="pad-hint-row"><span class="pad-glyph"></span><span class="pad-hint-label"></span></div>
+      <div class="pad-hint-row"><span class="pad-glyph"></span><span class="pad-hint-label"></span></div>
+      <div class="pad-hint-row"><span class="pad-glyph"></span><span class="pad-hint-label"></span></div>
+      <div class="pad-hint-row"><span class="pad-glyph"></span><span class="pad-hint-label"></span></div>
+    </div>
+    <div id="pad-legend" role="group" aria-live="off">
+      <span class="pad-hint-row"><span class="pad-legend-glyph"></span><span class="pad-hint-label"></span></span>
+      <span aria-hidden="true">·</span>
+      <span class="pad-hint-row"><span class="pad-legend-glyph"></span><span class="pad-hint-label"></span></span>
+      <span aria-hidden="true">·</span>
+      <span class="pad-hint-row"><span class="pad-legend-glyph"></span><span class="pad-hint-label"></span></span>
+    </div>
     <div id="click-move-marker" class="click-move-marker" aria-hidden="true">
       <span class="ctm-arrow ctm-n"></span>
       <span class="ctm-arrow ctm-e"></span>
