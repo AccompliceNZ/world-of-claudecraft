@@ -668,8 +668,75 @@ describe('Fenbridge content projection and preservation', () => {
     expect(ZONE2_NPCS.scout_maren.greeting).toBe(
       'Quiet feet and a short blade keep you breathing out here. Speak quick, for I am due back in the reeds.',
     );
+    // Re-pinned for Intentional Gathering (PR3): field_kit, the
+    // corpse-harvest key, joined two vendorItems rows: provisioner_hale
+    // (appended last, after ironreel_fishing_rod) and farmer_teasel
+    // (appended last, after compost). Nothing else in any def, and no
+    // placement field, changed. Asserted BEFORE the digest, same as the
+    // greeting rows above, so each moved row is described where it can
+    // actually fail; the counterfactual ahead of the digest strips exactly
+    // these two rows and reproduces the PRE-PR3 hash byte for byte.
+    expect(ZONE2_NPCS.provisioner_hale.vendorItems).toEqual([
+      'fenbridge_rye',
+      'marsh_mint_tea',
+      'smoked_eel',
+      'silvermist_cordial',
+      'lesser_healing_potion',
+      'lesser_mana_potion',
+      'bogiron_mace',
+      'fenreed_staff',
+      'mirefen_skinner',
+      'bogiron_hauberk',
+      'marshcloth_robe',
+      'reedwoven_jerkin',
+      'fenwalker_boots',
+      'reedwoven_trousers',
+      'copper_mining_pick',
+      'iron_mining_pick',
+      'handaxe',
+      'felling_axe',
+      'gathering_sickle',
+      'bronze_sickle',
+      'simple_fishing_pole',
+      'ironreel_fishing_rod',
+      'field_kit',
+    ]);
+    expect(ZONE2_NPCS.farmer_teasel.vendorItems).toEqual([
+      'marsh_rice_seed',
+      'bog_beet_seed',
+      'compost',
+      'field_kit',
+    ]);
+    // PRE-PR3 counterfactual: strip exactly the two field_kit rows the
+    // assertions above just proved are real (provisioner_hale, farmer_teasel),
+    // one row each, and the remaining payload reproduces the digest that was
+    // pinned here before PR3 landed, byte for byte. Any OTHER drift in any
+    // other field would still show up as a mismatch on this expectation.
+    const PR3_FIELD_KIT_VENDOR_ROWS = ['provisioner_hale', 'farmer_teasel'] as const;
+    function withoutPr3FieldKitRows(): Record<string, Omit<NpcDef, 'pos' | 'facing'>> {
+      const payload = stableNpcPayload();
+      for (const id of PR3_FIELD_KIT_VENDOR_ROWS) {
+        const def = payload[id];
+        const items = def.vendorItems;
+        if (!items) throw new Error(`${id} has no vendorItems to strip field_kit from`);
+        const idx = items.indexOf('field_kit');
+        if (idx < 0) throw new Error(`${id} vendorItems carries no field_kit row to strip`);
+        payload[id] = {
+          ...def,
+          vendorItems: [...items.slice(0, idx), ...items.slice(idx + 1)],
+        };
+      }
+      return payload;
+    }
+    expect(
+      createHash('sha256').update(JSON.stringify(withoutPr3FieldKitRows())).digest('hex'),
+      'stripping exactly the two PR3 field_kit rows reproduces the pre-PR3 digest',
+    ).toBe('27011def4d1208cee33aaee8a80283204e5b639ff95294e8b11f51ae10dbfc24');
+    // CURRENT digest, WITH the two field_kit rows. Measured on the merged
+    // working tree; the counterfactual above already proves the only content
+    // difference from the pre-PR3 payload is those two rows.
     expect(createHash('sha256').update(JSON.stringify(stableNpcPayload())).digest('hex')).toBe(
-      '27011def4d1208cee33aaee8a80283204e5b639ff95294e8b11f51ae10dbfc24',
+      '553c58cfd811e8af35894c5aeacadb3effed7a563bf5caf51216878c06a4fe20',
     );
     for (const placement of FENBRIDGE_LAYOUT.services.npcs) {
       expect(FENBRIDGE_NPC_PLACEMENTS_BY_ID[placement.id]).toBe(placement);

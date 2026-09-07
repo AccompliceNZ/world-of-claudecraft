@@ -78,14 +78,25 @@ describe('buildBankView', () => {
 
   it('passes the per-copy instance payload through to the slot model (tooltip lines)', () => {
     const instance = { signer: 'Anna', rolled: { masterwork: true, stats: { str: 2 } } };
+    // Two source buckets (an unrecorded bucket plus a signed one), the merged
+    // shape a material stack now carries (src/ui/bank_view.ts:295-303).
+    const materialSources = [
+      { source: {}, count: 4 },
+      { source: { signer: 'Bankwyn' }, count: 1 },
+    ];
     const slots: InvSlot[] = [
       { itemId: 'sword', count: 1, instance },
       { itemId: 'potion', count: 5 },
+      { itemId: 'copper_ore', count: 5, materialSources },
     ];
     const view = buildBankView(bankInfo({ slots, capacity: 24 }), lookup);
     if (view.kind !== 'bank') throw new Error('expected bank');
     expect(view.slots[0].instance).toBe(instance);
     expect(view.slots[1].instance).toBeUndefined();
+    // materialSources rides through unchanged: same buckets, same length.
+    expect(view.slots[2].materialSources).toEqual(materialSources);
+    expect(view.slots[2].materialSources).toHaveLength(2);
+    expect(view.slots[1].materialSources).toBeUndefined();
   });
 
   it('keys the rim off instance-effective quality: a promoted copy reads legendary in the bank too', () => {
@@ -939,10 +950,15 @@ describe('planDepositAllMaterials: replays cleanly against a real Sim', () => {
     expect(m.inventory.map((s) => s.itemId)).toEqual(['boar_hide']);
   });
 
-  it('moves an instanced (signed) material whole through the real sim, never merging it', () => {
-    // #1145 corpse harvest stamps rare+ materials with an instance payload; the
-    // deposit-all plan must carry such a slot through the real sim.bankDeposit as
-    // one indivisible unit that never merges into a plain stack of the same id.
+  it('moves a signed material through the real sim, merging into the compatible bucketed stack', () => {
+    // #1145 corpse harvest stamps rare+ materials with a legacy signer payload.
+    // Since the source-count algebra landed, a legacy signer projects into its
+    // own MaterialSourceCount bucket (material_stack.ts normalizeMaterialStack)
+    // rather than staying a separate per-instance slot: a signed and an
+    // unrecorded stack of the same material id are COMPATIBLE
+    // (compatibleMaterialStacks) and share one bank slot, with each bucket's
+    // exact count and signer preserved in materialSources rather than merged
+    // away or lost.
     const sim = new Sim({ seed: 13, playerClass: 'warrior', autoEquip: false });
     moveToBanker(sim);
     const m = metaOf(sim);
@@ -968,13 +984,20 @@ describe('planDepositAllMaterials: replays cleanly against a real Sim', () => {
     }
     expect(errors).toEqual([]);
     expect(m.inventory).toEqual([]);
-    // Two separate bank slots: the signed copy keeps its payload and count 1.
+    // One merged bank slot: the two source buckets ride together, each with its
+    // own exact count, and neither the total count nor the signer is lost.
     const banked = m.bank.inventory.filter((s) => s.itemId === MATS[0]);
-    expect(banked).toHaveLength(2);
-    const signed = banked.find((s) => s.instance);
-    expect(signed?.count).toBe(1);
-    expect(signed?.instance).toEqual({ signer: 'Bankwyn' });
-    expect(banked.find((s) => !s.instance)?.count).toBe(4);
+    expect(banked).toHaveLength(1);
+    const [merged] = banked;
+    expect(merged.count).toBe(5);
+    expect(merged.instance).toBeUndefined();
+    expect(merged.materialSources).toEqual(
+      expect.arrayContaining([
+        { source: {}, count: 4 },
+        { source: { signer: 'Bankwyn' }, count: 1 },
+      ]),
+    );
+    expect(merged.materialSources).toHaveLength(2);
   });
 
   it('replays a mid-run-full plan exactly: only the fitting stacks deposit, none refuse', () => {

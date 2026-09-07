@@ -512,6 +512,75 @@ d('bank ledger durable growth budget against real PostgreSQL', () => {
           .rows[0].committed_rows,
       ),
     ).toBe(0);
+
+    // The same hostile search_path, extended to the pending accumulator
+    // table: a counterfeit planted in the attacker's own schema AND a second
+    // one in pg_temp (the actual last-resort schema on the accumulator
+    // function's own SET search_path), each shaped exactly like the real
+    // table. The accumulator's search_path is pinned to the REAL schema at
+    // CREATE FUNCTION time, so a caller-set session search_path can redirect
+    // neither: both counterfeits must stay empty across a transaction that
+    // drives BOTH accumulation directions (a delete and an insert) under it.
+    await pool.query(`CREATE TABLE "${counterfeit}".bank_ledger_growth_pending (
+      transaction_id xid8 PRIMARY KEY,
+      inserted_rows BIGINT NOT NULL DEFAULT 0,
+      deleted_rows BIGINT NOT NULL DEFAULT 0
+    )`);
+
+    const hostilePending = await pool.connect();
+    try {
+      await hostilePending.query('BEGIN');
+      await hostilePending.query(`SET LOCAL search_path = "${counterfeit}", "${SCHEMA}"`);
+      await hostilePending.query(`CREATE TEMP TABLE bank_ledger_growth_pending (
+        transaction_id xid8 PRIMARY KEY,
+        inserted_rows BIGINT NOT NULL DEFAULT 0,
+        deleted_rows BIGINT NOT NULL DEFAULT 0
+      )`);
+      const hostileVictim = (
+        await hostilePending.query(`SELECT item_id FROM "${SCHEMA}".bank_ledger LIMIT 1`)
+      ).rows[0].item_id;
+      // DELETE accumulation under the hostile search_path.
+      await hostilePending.query(`DELETE FROM "${SCHEMA}".bank_ledger WHERE item_id = $1`, [
+        hostileVictim,
+      ]);
+      // INSERT accumulation, same transaction, same hostile search_path. Net
+      // row-count change is zero, so this stays admissible even at the cap.
+      await hostilePending.query(insertSql, ledgerValues('hostile_pending_bypass'));
+      await hostilePending.query('COMMIT');
+      expect(
+        Number(
+          (await hostilePending.query('SELECT count(*) FROM pg_temp.bank_ledger_growth_pending'))
+            .rows[0].count,
+        ),
+      ).toBe(0);
+    } finally {
+      await hostilePending.query('ROLLBACK').catch(() => {});
+      hostilePending.release();
+    }
+    // The canonical budget still accounts for both directions exactly.
+    expect(await budgetRows()).toBe(4);
+    expect(
+      Number(
+        (
+          await pool.query(
+            `SELECT count(*) FROM "${SCHEMA}".bank_ledger WHERE item_id = 'hostile_pending_bypass'`,
+          )
+        ).rows[0].count,
+      ),
+    ).toBe(1);
+    // Neither counterfeit pending table was ever the accumulator's target.
+    expect(
+      Number(
+        (await pool.query(`SELECT count(*) FROM "${counterfeit}".bank_ledger_growth_pending`))
+          .rows[0].count,
+      ),
+    ).toBe(0);
+    expect(
+      Number(
+        (await pool.query(`SELECT committed_rows FROM "${counterfeit}".bank_ledger_growth_budget`))
+          .rows[0].committed_rows,
+      ),
+    ).toBe(0);
   });
 
   it('seeds an already-over-cap ledger exactly and refuses only later ledger inserts', async () => {

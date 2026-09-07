@@ -51,7 +51,11 @@ describe('serializeCharacter <-> addPlayer round-trip (G2 persistence)', () => {
     meta.delveLoreUnlocked = new Set(['lore_1']);
     meta.delveDaily = { date: '2026-06-26', firstClearXp: new Set(['crypt']), markClears: 2 };
     meta.bank.inventory = [
-      { itemId: 'linen_scrap', count: 9 },
+      // linen_scrap is a material: its canonical anonymous composition is an
+      // explicit materialSources row, not a bare count, so the hand-stuffed
+      // row already matches what a load normalizes it to and the round trip
+      // stays byte-identical.
+      { itemId: 'linen_scrap', count: 9, materialSources: [{ source: {}, count: 9 }] },
       { itemId: 'worn_sword', count: 1, instance: { signer: 'Ana' } },
     ];
     meta.bank.purchasedSlots = 6;

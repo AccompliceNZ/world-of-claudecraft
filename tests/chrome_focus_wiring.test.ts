@@ -106,6 +106,7 @@ describe('the wired roots (the surfaces the fix covers)', () => {
       '#woc-market-window',
       '#harvest-journal-window',
       '#plant-sheet-window',
+      '#harvest-preference-window',
       '#side-buttons',
     ]);
   });

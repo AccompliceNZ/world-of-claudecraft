@@ -1053,6 +1053,9 @@ describe('the farming ladder: every farming zone arrives mechanically whole', ()
     // farmer (the husk trade's anchor). Literal lists, ORDER INCLUDED: the
     // vendor grid renders in this order and a re-sorted row is a content
     // change to be made on purpose.
+    // Intentional Gathering (PR3) appended field_kit, the corpse-harvest key,
+    // to every farmer's counter (not a farming item, so it never joins
+    // farmingItemIds below).
     const FARMER_STOCK: Readonly<Record<string, readonly string[]>> = {
       farmer_jessica: [
         'vale_wheat_seed',
@@ -1060,8 +1063,9 @@ describe('the farming ladder: every farming zone arrives mechanically whole', ()
         'brook_carrot',
         'compost',
         'garden_hoe',
+        'field_kit',
       ],
-      farmer_teasel: ['marsh_rice_seed', 'bog_beet_seed', 'compost'],
+      farmer_teasel: ['marsh_rice_seed', 'bog_beet_seed', 'compost', 'field_kit'],
       // GATE 1 (Phase 11e): the upper two counters gained their tier's seeds,
       // four rows each, in one edit under one convention. Before this the
       // tier-3 and tier-4 seeds had no faucet anywhere, so a farmer could see
@@ -1072,6 +1076,7 @@ describe('the farming ladder: every farming zone arrives mechanically whole', ()
         'frost_gourd_seed',
         'thornpeak_cabbage_seed',
         'frost_lentils_seed',
+        'field_kit',
       ],
       farmer_verbena: [
         'compost',
@@ -1079,6 +1084,7 @@ describe('the farming ladder: every farming zone arrives mechanically whole', ()
         'evergarden_greens_seed',
         'gilded_yam_seed',
         'evergarden_pumpkin_seed',
+        'field_kit',
       ],
     };
     for (const [npcId, stock] of Object.entries(FARMER_STOCK)) {

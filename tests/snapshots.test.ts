@@ -1826,9 +1826,13 @@ describe('delta snapshots', () => {
 
   it('a counted identical-payload stack rides the inv snapshot as one slot', () => {
     // Three byte-equal signed grants merge server-side into a single count-3
-    // slot; the wire sends the inventory wholesale, so the client mirror must
-    // show the same one slot with the count AND the payload intact (a mirror
-    // that re-split or dropped either would red here).
+    // slot; wolf_fang is a material, so the legacy premium signer moves off
+    // the instance payload and into the exact per-unit composition
+    // (material_stack.ts normalizeMaterialStack) as source.signer; no
+    // gatherer is invented, signer and gatherer are distinct concepts
+    // (material_sources.ts). The wire and the client mirror must both carry
+    // the composition intact (a mirror that re-split or dropped either would
+    // red here).
     const signed = { signer: 'Testa' };
     for (let i = 0; i < 3; i++) server.sim.addItemInstance('wolf_fang', signed, session.pid);
 
@@ -1837,14 +1841,16 @@ describe('delta snapshots', () => {
     const wireSlots = snap.self.inv.filter((s: any) => s.itemId === 'wolf_fang');
     expect(wireSlots).toHaveLength(1);
     expect(wireSlots[0].count).toBe(3);
-    expect(wireSlots[0].instance).toEqual(signed);
+    expect(wireSlots[0].instance).toBeUndefined();
+    expect(wireSlots[0].materialSources).toEqual([{ count: 3, source: signed }]);
 
     const client = bareClient(session.pid);
     (client as any).applySnapshot(snap);
     const mirrored = client.inventory.filter((s) => s.itemId === 'wolf_fang');
     expect(mirrored).toHaveLength(1);
     expect(mirrored[0].count).toBe(3);
-    expect(mirrored[0].instance).toEqual(signed);
+    expect(mirrored[0].instance).toBeUndefined();
+    expect(mirrored[0].materialSources).toEqual([{ count: 3, source: signed }]);
   });
 
   it('mirrors vendor buyback deltas to the client', () => {
@@ -5818,7 +5824,9 @@ describe('full self-state snapshot delta fixture', () => {
     // whole, canEdit included (the client renders read-only panes from it)
     expect(client.guildBankInfo).toEqual({
       treasury: 12345,
-      slots: [{ itemId: 'wolf_fang', count: 4 }],
+      // loadGuildBank sanitizes on load (normalizeLoadedMaterialSlot), so an
+      // unsigned legacy wolf_fang stack picks up its exact provenance.
+      slots: [{ itemId: 'wolf_fang', count: 4, materialSources: [{ count: 4, source: {} }] }],
       capacity: 30,
       purchasedSlots: 30,
       nextExpansionPrice: 50000, // rung-2 literal
@@ -6030,7 +6038,9 @@ describe('full self-state snapshot delta fixture', () => {
     (client as any).applySnapshot(lastSnap(fc.sent));
     expect(client.guildBankInfo).not.toBeNull();
     expect(client.guildBankInfo?.canEdit).toBe(false);
-    expect(client.guildBankInfo?.slots).toEqual([{ itemId: 'wolf_fang', count: 4 }]);
+    expect(client.guildBankInfo?.slots).toEqual([
+      { itemId: 'wolf_fang', count: 4, materialSources: [{ count: 4, source: {} }] },
+    ]);
   });
 
   it('keeps the live ride distinct from the persisted mount pick on self snapshots', () => {

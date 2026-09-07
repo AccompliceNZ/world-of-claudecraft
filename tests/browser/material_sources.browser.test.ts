@@ -101,8 +101,14 @@ describe('material source prompt in Chromium', () => {
     const { opener, sources } = mount(1280, 720);
     const associated = host('bags');
     Object.assign(associated.style, {
-      display: 'block', position: 'fixed', left: '10px', top: '10px',
-      width: '160px', height: '80px', right: 'auto', bottom: 'auto',
+      display: 'block',
+      position: 'fixed',
+      left: '10px',
+      top: '10px',
+      width: '160px',
+      height: '80px',
+      right: 'auto',
+      bottom: 'auto',
     });
     const behind = document.createElement('button');
     behind.textContent = 'Storage action';

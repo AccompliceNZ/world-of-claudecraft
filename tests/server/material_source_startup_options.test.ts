@@ -64,6 +64,7 @@ vi.mock('pg', () => ({
 
 import { ensureSchema, runConcurrentIndexMigrations } from '../../server/db';
 import { materialSourceConnection } from '../../server/material_source_connection';
+import { MATERIAL_SOURCE_CAPABILITY_PROBE_SQL } from '../../server/material_source_host';
 import { MATERIAL_SOURCE_WRITER_STARTUP_OPTION } from '../../server/material_source_writer';
 
 /** What every db.ts connection must be handed, composed once here so the three
@@ -120,11 +121,14 @@ describe('every db.ts connection announces the writer capability', () => {
 
   it('probes the capability on the pool as well as the boot client', async () => {
     // The pool is a different connection from the boot client, and it is the
-    // one production writes ride, so boot asks IT too.
+    // one production writes ride, so boot asks IT too. Matched on the EXACT
+    // probe text: the guard DDL (MATERIAL_SOURCE_WRITER_GUARD_SQL) also
+    // mentions the same GUC name inside its trigger function body, so a
+    // substring match would over-count the guard install as a third probe.
     h.query.mockClear();
     await ensureSchema();
-    const probes = h.query.mock.calls.filter((call) =>
-      String(call[0]).includes('woc.material_source_writer'),
+    const probes = h.query.mock.calls.filter(
+      (call) => String(call[0]) === MATERIAL_SOURCE_CAPABILITY_PROBE_SQL,
     );
     expect(probes).toHaveLength(2);
   });

@@ -386,8 +386,11 @@ describe('saveCharacterState lease fence', () => {
     // Legacy path returns true regardless of rowCount (unconditional write, as before).
     expect(ok).toBe(true);
     const updateCall = client.query.mock.calls.find((c) => /UPDATE characters/i.test(String(c[0])));
-    // No lease fence, and the params stop at the JSON state (no holder / nonce).
-    expect(String(updateCall?.[0])).not.toContain('EXISTS');
+    // No lease fence: the `none` fence still takes the single-statement
+    // pre-image CTE form (its RETURNING carries the two anchor EXISTS probes
+    // every save family member carries), so an EXISTS in the text no longer
+    // proves a lease fence; the absence of character_leases does.
+    expect(String(updateCall?.[0])).not.toContain('character_leases');
     expect(updateCall?.[1]).toEqual([42, 7, expect.any(String)]);
   });
 

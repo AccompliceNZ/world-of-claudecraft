@@ -21,7 +21,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "c22ade12",
+      "state": "f38fe8b1",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -74,6 +74,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -169,7 +172,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "4fb80d27",
+      "state": "5bd4cb52",
       "events": "916cf005",
       "rng": {
         "draws": 0,
@@ -222,6 +225,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -321,7 +327,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "d17cd051",
+      "state": "2d080c0c",
       "events": "97fd192a",
       "rng": {
         "draws": 1,
@@ -384,6 +390,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -493,7 +502,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "a2f47f74",
+      "state": "5f77474f",
       "events": "8fdccdc5",
       "rng": {
         "draws": 2,
@@ -572,6 +581,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -584,11 +596,23 @@
             },
             {
               "count": 1,
-              "itemId": "homespun_cloth"
+              "itemId": "homespun_cloth",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "spool_of_thread"
+              "itemId": "spool_of_thread",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -729,7 +753,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "af9aae45",
+      "state": "5e447ef2",
       "events": "97fd192a",
       "rng": {
         "draws": 3,
@@ -808,6 +832,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -820,11 +847,23 @@
             },
             {
               "count": 1,
-              "itemId": "homespun_cloth"
+              "itemId": "homespun_cloth",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "spool_of_thread"
+              "itemId": "spool_of_thread",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -963,7 +1002,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "102128c2",
+      "state": "0ff01abd",
       "events": "b03d17d5",
       "rng": {
         "draws": 4,
@@ -1053,6 +1092,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1065,11 +1107,23 @@
             },
             {
               "count": 1,
-              "itemId": "homespun_cloth"
+              "itemId": "homespun_cloth",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "spool_of_thread"
+              "itemId": "spool_of_thread",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -1088,15 +1142,33 @@
             },
             {
               "count": 1,
-              "itemId": "goldleaf_herb"
+              "itemId": "goldleaf_herb",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "venom_gland"
+              "itemId": "venom_gland",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "quickening_catalyst"
+              "itemId": "quickening_catalyst",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "knownRecipes": [
@@ -1223,7 +1295,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "2c1c4f23",
+      "state": "4db153b6",
       "events": "4122ac66",
       "rng": {
         "draws": 4,
@@ -1313,6 +1385,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1325,11 +1400,23 @@
             },
             {
               "count": 1,
-              "itemId": "homespun_cloth"
+              "itemId": "homespun_cloth",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "spool_of_thread"
+              "itemId": "spool_of_thread",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -1348,15 +1435,33 @@
             },
             {
               "count": 1,
-              "itemId": "goldleaf_herb"
+              "itemId": "goldleaf_herb",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "venom_gland"
+              "itemId": "venom_gland",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "quickening_catalyst"
+              "itemId": "quickening_catalyst",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             }
           ],
           "knownRecipes": [
@@ -1480,7 +1585,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "75c65902",
+      "state": "ffd82852",
       "events": "0afce131",
       "rng": {
         "draws": 4,
@@ -1570,6 +1675,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1582,11 +1690,23 @@
             },
             {
               "count": 1,
-              "itemId": "homespun_cloth"
+              "itemId": "homespun_cloth",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "spool_of_thread"
+              "itemId": "spool_of_thread",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -1605,27 +1725,63 @@
             },
             {
               "count": 1,
-              "itemId": "goldleaf_herb"
+              "itemId": "goldleaf_herb",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "venom_gland"
+              "itemId": "venom_gland",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "quickening_catalyst"
+              "itemId": "quickening_catalyst",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 2,
-              "itemId": "linen_scrap"
+              "itemId": "linen_scrap",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 2,
-              "itemId": "spider_leg"
+              "itemId": "spider_leg",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 4,
-              "itemId": "silverleaf_herb"
+              "itemId": "silverleaf_herb",
+              "materialSources": [
+                {
+                  "count": 4,
+                  "source": {}
+                }
+              ]
             }
           ],
           "knownRecipes": [
@@ -1754,7 +1910,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1003,
-      "state": "75c65902",
+      "state": "ffd82852",
       "events": "741638a5",
       "rng": {
         "draws": 4,
@@ -1844,6 +2000,9 @@
           },
           "equipmentInstance": {},
           "gatheringProficiency": {},
+          "harvestPreference": {
+            "kind": "all"
+          },
           "heroicDaily": {},
           "inventory": [
             {
@@ -1856,11 +2015,23 @@
             },
             {
               "count": 1,
-              "itemId": "homespun_cloth"
+              "itemId": "homespun_cloth",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "spool_of_thread"
+              "itemId": "spool_of_thread",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
@@ -1879,27 +2050,63 @@
             },
             {
               "count": 1,
-              "itemId": "goldleaf_herb"
+              "itemId": "goldleaf_herb",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "venom_gland"
+              "itemId": "venom_gland",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 1,
-              "itemId": "quickening_catalyst"
+              "itemId": "quickening_catalyst",
+              "materialSources": [
+                {
+                  "count": 1,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 2,
-              "itemId": "linen_scrap"
+              "itemId": "linen_scrap",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 2,
-              "itemId": "spider_leg"
+              "itemId": "spider_leg",
+              "materialSources": [
+                {
+                  "count": 2,
+                  "source": {}
+                }
+              ]
             },
             {
               "count": 4,
-              "itemId": "silverleaf_herb"
+              "itemId": "silverleaf_herb",
+              "materialSources": [
+                {
+                  "count": 4,
+                  "source": {}
+                }
+              ]
             }
           ],
           "knownRecipes": [

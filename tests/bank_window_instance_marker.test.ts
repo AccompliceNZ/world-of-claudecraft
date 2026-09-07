@@ -293,7 +293,10 @@ describe('bank-item instance mark stylesheet contract', () => {
   it('the bank painter mints marks through the shared helper, not a private fork', () => {
     // Comment-stripped (the bank_window.test.ts idiom) so prose naming the
     // seal class can neither satisfy a positive pin nor false-fail a negative.
-    const painter = readFileSync(join(__dirname, '../src/ui/bank_window.ts'), 'utf8')
+    // The personal bank cell (extracted from BankWindow into
+    // personal_bank_item_cell.ts) is the module that actually mints the mark;
+    // pin it there rather than the coordinator it was pulled out of.
+    const painter = readFileSync(join(__dirname, '../src/ui/personal_bank_item_cell.ts'), 'utf8')
       .replace(/\/\*[\s\S]*?\*\//g, '')
       .replace(/\/\/[^\n]*/g, '');
     expect(painter).toContain('cornerMarkHtml(cornerMark)');
