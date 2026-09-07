@@ -2138,8 +2138,8 @@ export class Hud {
     private keybinds: Keybinds,
     private readonly features: HudFeatures = { dailyRewardsEnabled: true },
   ) {
-    this.interactPromptEl.removeAttribute('hidden');
     hydrateCrestImageFallbacks(document);
+    this.interactPromptEl.removeAttribute('hidden');
     this.mapMarkerTooltipContent = new MapMarkerTooltipContent(this.sim);
     this.mapMarkerInteraction = new MapMarkerInteractionController({
       names: {

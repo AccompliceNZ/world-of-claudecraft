@@ -4,6 +4,7 @@ import type { IWorld } from '../../../world_api';
 import { itemDisplayName } from '../../entity_i18n';
 import { esc } from '../../esc';
 import { formatNumber, t } from '../../i18n';
+import { itemNameColor } from '../../item_name_color';
 import { knownItemDef } from '../../known_item';
 import type { PainterHostWriters } from '../../painter_host';
 import { unknownItemIconHtml } from '../../unknown_item_icon';
@@ -474,6 +475,7 @@ export class LootRollController {
       const itemName = item ? itemDisplayName(item) : event.itemName;
       const quality = item?.quality ?? event.quality ?? 'common';
       const nameClass = lootRollNameClass(item, quality);
+      const nameColor = itemNameColor({ kind: item?.kind, quality });
       const status = statusByRoll.get(rollId);
       const row = this.deps.document.createElement('div');
       row.className = 'loot-roll panel ui-panel-strong';
@@ -484,7 +486,7 @@ export class LootRollController {
           ${item ? this.deps.itemIcon(item) : unknownItemIconHtml(event.itemId, quality)}
           <div class="loot-roll-copy">
             <div class="loot-roll-title ui-cin ui-muted">${esc(t('itemUi.lootRoll.title'))}</div>
-            <div class="loot-roll-name ui-outline ${nameClass}">${esc(itemName)}</div>
+            <div class="loot-roll-name ui-outline ${nameClass}" style="color:${nameColor}">${esc(itemName)}</div>
             ${bindsOnPickupNoteHtml(item)}
           </div>
         </div>
@@ -513,6 +515,7 @@ export class LootRollController {
       const itemName = item ? itemDisplayName(item) : status.itemName;
       const quality = item?.quality ?? status.quality ?? 'common';
       const nameClass = lootRollNameClass(item, quality);
+      const nameColor = itemNameColor({ kind: item?.kind, quality });
       const row = this.deps.document.createElement('div');
       row.className = 'loot-roll panel ui-panel-strong watch';
       row.dataset.rollId = String(status.rollId);
@@ -523,7 +526,7 @@ export class LootRollController {
           ${item ? this.deps.itemIcon(item) : unknownItemIconHtml(status.itemId, quality)}
           <div class="loot-roll-copy">
             <div class="loot-roll-title ui-cin ui-muted">${esc(t('itemUi.lootRoll.title'))}</div>
-            <div class="loot-roll-name ui-outline ${nameClass}">${esc(itemName)}</div>
+            <div class="loot-roll-name ui-outline ${nameClass}" style="color:${nameColor}">${esc(itemName)}</div>
           </div>
         </div>
         <div class="loot-roll-timer ui-bar" aria-hidden="true"><span class="ui-bar-fill"></span></div>
@@ -546,6 +549,7 @@ export class LootRollController {
     const itemName = item ? itemDisplayName(item) : event.itemName;
     const quality = item?.quality ?? event.quality ?? 'common';
     const nameClass = lootRollNameClass(item, quality);
+    const nameColor = itemNameColor({ kind: item?.kind, quality });
     const row = this.deps.document.createElement('div');
     row.className = 'loot-roll panel ui-panel-strong master';
     row.dataset.rollId = String(rollId);
@@ -562,7 +566,7 @@ export class LootRollController {
         ${item ? this.deps.itemIcon(item) : unknownItemIconHtml(event.itemId, quality)}
         <div class="loot-roll-copy">
           <div class="loot-roll-title ui-cin ui-muted">${esc(t('hudChrome.masterLoot.assignPrompt', { item: itemName }))}</div>
-          <div class="loot-roll-name ui-outline ${nameClass}">${esc(itemName)}</div>
+          <div class="loot-roll-name ui-outline ${nameClass}" style="color:${nameColor}">${esc(itemName)}</div>
           ${bindsOnPickupNoteHtml(item)}
         </div>
       </div>

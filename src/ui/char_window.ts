@@ -91,6 +91,8 @@ const CHARACTER_SIDEBAR_LABEL_KEYS: Record<CharacterSidebarTab, TranslationKey> 
   skills: 'hudChrome.charSidebar.skills',
 };
 
+const charSidebarTabId = (id: CharacterSidebarTab): string => `char-sidebar-tab-${id}`;
+
 // The per-craft display-name table lives in the shared craft_name_view.ts
 // pure core (the material_profession_hint_view Used-by line reads it too, and
 // a pure core may not import a *_window module). Re-exported here so the
@@ -311,10 +313,15 @@ export class CharWindow {
         tabs: sidebar.tabs.map(({ id }) => ({
           id,
           label: t(CHARACTER_SIDEBAR_LABEL_KEYS[id]),
+          buttonId: charSidebarTabId(id),
         })),
         selected: sidebar.selected,
       }),
-    )}<div id="char-sidebar-panel" class="char-sidebar-panel" role="tabpanel">${this.sidebarHtml(world, sidebar.selected)}</div></section></div>`;
+      // The panel scrolls (overflow-y: auto) and the Stats tab holds no
+      // focusable content, so it needs its own tab stop plus the selected
+      // tab's label as its name: the WAI-ARIA tabs pattern, and what
+      // axe's scrollable-region-focusable asks for.
+    )}<div id="char-sidebar-panel" class="char-sidebar-panel" role="tabpanel" tabindex="0" aria-labelledby="${esc(charSidebarTabId(sidebar.selected))}">${this.sidebarHtml(world, sidebar.selected)}</div></section></div>`;
     el.innerHTML = html;
     hydratePortraits(el);
     wireTabStrip(el, 'char-sidebar-tab', (id, focusFollow) => {

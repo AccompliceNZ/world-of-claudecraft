@@ -1068,6 +1068,11 @@
     /* The Claudium store hero's cool wash over its coin artwork. */
     --color-woc-store-hero-hi: #030a10;
     --color-woc-store-hero-lo: #04111b;
+    /* W18 additions (target size) */
+    /* Stance disc on a coarse pointer: the 40x40 box the shipped desktop
+       stance button carried, so a touch device keeps the WCAG 2.5.5 floor the
+       30px board disc would lose. */
+    --socket-size-stance-coarse: 40px;
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal

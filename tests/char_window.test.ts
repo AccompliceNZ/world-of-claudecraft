@@ -240,11 +240,22 @@ describe('char_window: profession art placements', () => {
       ['progression', 'false'],
       ['skills', 'false'],
     ]);
+    // The sidebar panel scrolls and the Stats board holds no focusable
+    // content, so it carries its own tab stop and takes its name from the
+    // selected tab (axe scrollable-region-focusable, WAI-ARIA tabs).
+    const panel = root.querySelector<HTMLElement>('#char-sidebar-panel');
+    expect(panel?.getAttribute('tabindex')).toBe('0');
+    expect(panel?.getAttribute('aria-labelledby')).toBe('char-sidebar-tab-stats');
+    expect(root.querySelector('#char-sidebar-tab-stats')?.getAttribute('data-tab')).toBe('stats');
     const progressionTab = root.querySelector<HTMLElement>('[data-tab="progression"]');
     progressionTab?.click();
     expect(root.querySelector('[data-progression-test]')?.textContent).toBe('Progression fixture');
     expect(root.querySelector('[data-tab="progression"]')?.getAttribute('aria-selected')).toBe(
       'true',
+    );
+    // The name follows the selection: a re-render re-points aria-labelledby.
+    expect(root.querySelector('#char-sidebar-panel')?.getAttribute('aria-labelledby')).toBe(
+      'char-sidebar-tab-progression',
     );
     // Gathering now lives on the Skills board instead of being duplicated under Stats.
     const skillsTab = root.querySelector<HTMLElement>('[data-tab="skills"]');
