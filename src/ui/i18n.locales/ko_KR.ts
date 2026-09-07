@@ -15662,7 +15662,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '포함되지 않는 항목: 로그인, 계정, 지갑, 구매 데이터. 행동 단축바 배치는 계정에 저장되어 계정과 함께 이동합니다.',
   'entities.abilities.arcane_shot.specNote_marksmanship':
     '열광의 연사를 완료해 얻은 냉정한 시선의 간파는 다음 사악한 사격이 입히는 피해를 75% 증가시킵니다. 사격을 발사하면 간파를 소모합니다.',
-  'hudChrome.auraEffect.veiledEdgeStrike': '다음 잠복자의 일격이 입히는 무기 피해가 {pct}% 증가합니다',
+  'hudChrome.auraEffect.veiledEdgeStrike':
+    '다음 잠복자의 일격이 입히는 무기 피해가 {pct}% 증가합니다',
   'hudChrome.auraEffect.coldsightRead':
     '다음 긴 시위가 입히는 피해가 {longDrawPct}% 증가하거나, 다음 사악한 사격이 입히는 피해가 {fellShotPct}% 증가합니다',
 };
