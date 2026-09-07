@@ -144,7 +144,7 @@ const CEILINGS: Record<string, number> = {
   'base.css': 23,
   // W19: 454, not 453, since the counter learned to read named colors and found a
   // pre-existing `white` inside a color-mix in the item-quality section.
-  'components.css': 454,
+  'components.css': 453,
   'hud.css': 423,
   'hud.mobile.css': 29,
   'index.css': 0,

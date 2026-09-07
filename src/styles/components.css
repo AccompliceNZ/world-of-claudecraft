@@ -9540,7 +9540,7 @@
     border-color: var(--gold);
     background: radial-gradient(
       circle at 35% 30%,
-      color-mix(in srgb, var(--gold) 35%, white),
+      color-mix(in srgb, var(--gold) 35%, var(--color-white)),
       var(--gold) 45%,
       var(--gold-dim) 85%
     );
