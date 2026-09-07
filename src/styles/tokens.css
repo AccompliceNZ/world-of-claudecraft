@@ -1032,6 +1032,31 @@
        (tests/browser/steam_wishlist.browser.test.ts). */
     --chrome-plate-fixed: radial-gradient(circle at 35% 30%, #2c2c3a, #15151f);
     --color-chrome-plate-ink: #b8bcc8; /* Muted silver ink for that fixed plate. */
+
+    /* W13 additions (mobile touch HUD) */
+    /* Out-of-range actions keep one invariant rim on desktop and touch alike. */
+    --color-action-oor-rim: #a33;
+    /* Post-cap XP's overflow gold, named so the mobile XP ring can read the
+       same stops the desktop rail's --xp-overflow-fill paints. */
+    --color-xp-overflow: #ffe27a;
+    --color-xp-overflow-deep: #b8902a;
+    --color-xp-overflow-glow: #f5c843;
+    /* The touch window scrim: dims the world behind a mobile sheet without
+       hiding it, one stop every mobile backdrop mixes its alpha from. */
+    --color-touch-scrim: #030407;
+    /* The mobile preflight gate and the rotate-device gate: full-screen
+       pre-game surfaces, so their grounds are declared here rather than in the
+       body.mobile-touch block (neither rule is scoped to that class). */
+    --color-preflight-ground: #12172b;
+    --color-preflight-panel-hi: #171a25;
+    --color-preflight-heading: #f0dfab;
+    --color-preflight-body: #cfc09a;
+    --color-rotate-gate-hi: #161826;
+    --color-rotate-gate-lo: #040509;
+    --color-rotate-gate-ink: #f5e7b2;
+    /* The Claudium store hero's cool wash over its coin artwork. */
+    --color-woc-store-hero-hi: #030a10;
+    --color-woc-store-hero-lo: #04111b;
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal

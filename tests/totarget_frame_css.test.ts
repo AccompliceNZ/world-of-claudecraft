@@ -89,7 +89,11 @@ describe('target-of-target frame sits BESIDE the target frame', () => {
     // the beside-the-frame anchor there as an EXPLICIT rule (verified to fit at
     // 844x390 landscape); hiding or moving it must stay a conscious change here.
     const mobile = rule(hudMobileCss, 'body.mobile-touch #target-frame > #totarget-frame');
-    expect(mobile).toContain('left: calc(100% + 18px / (0.74 * var(--target-frame-scale, 1)));');
-    expect(mobile).toContain('top: 0;');
+    // W13: re-derived against the redesigned desktop seat (4px beside, 4px down,
+    // both divided out of the mini's own zoom) after the unit-frame slice moved
+    // the desktop pair off 18px/0. Mobile restates the desktop offsets so the
+    // later mobile mirror rules cannot win the same-specificity tie.
+    expect(mobile).toContain('left: calc(100% + 4px / (0.74 * var(--target-frame-scale, 1)));');
+    expect(mobile).toContain('top: calc(4px / (0.74 * var(--target-frame-scale, 1)));');
   });
 });
