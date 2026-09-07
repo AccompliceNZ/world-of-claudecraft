@@ -15624,8 +15624,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'entities.items.stormhymn_chain_treads.name': 'Stormhymnens Kædestøvler',
   'entities.items.thornpeak_moonhide_cowl.name': 'Tjørnetops Månehudshætte',
   'entities.items.thornpeak_wardblade.name': 'Tjørnetops Værnklinge',
-  'entities.items.votive_ward_of_the_deathless_court.name':
-    'Votivværn fra det Dødsløse Hof',
+  'entities.items.votive_ward_of_the_deathless_court.name': 'Votivværn fra det Dødsløse Hof',
   'entities.mobs.nythraxis_bone_spike.name': 'Knoglespyd',
   'gpuNotice.bodyRequestedBackend':
     'Spillet kunne ikke starte på den grafik-backend, du valgte, så det kører på OpenGL i stedet. Alt fungerer, men indlæsning og de første minutter kan hakke mere. Du kan vælge en backend igen under Indstillinger, Grafik, System.',
@@ -15647,8 +15646,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Kongens vrede: Nythraxis giver {pct}% mere skade resten af kampen.',
   'hudChrome.auraEffect.nythraxisUnbound':
     'Ubundet: Nythraxis giver {pct}% mere skade, indtil et Bindingssigil holder ham.',
-  'hudChrome.auraEffect.veiledEdgeStrike':
-    'Dit næste Lureslag giver {pct}% mere våbenskade',
+  'hudChrome.auraEffect.veiledEdgeStrike': 'Dit næste Lureslag giver {pct}% mere våbenskade',
   'hudChrome.bank.guildHistoryTab': 'Historik',
   'hudChrome.bank.logActionAdminPurge': 'Fjernet',
   'hudChrome.bank.logActionBuySlots': 'Købte en udvidelse',
@@ -15676,16 +15674,14 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Ingen indlæste gildebankhandlinger matcher din søgning. Vis ældre rækker for at udvide den.',
   'hudChrome.bank.logSearchPlaceholder': 'Søg i denne historik',
   'hudChrome.bank.logShowing': 'Viser {count} gildebankhandlinger, nyeste først.',
-  'hudChrome.bank.logShowingMatched':
-    'Viser {matched} af {count} indlæste gildebankhandlinger.',
+  'hudChrome.bank.logShowingMatched': 'Viser {matched} af {count} indlæste gildebankhandlinger.',
   'hudChrome.finder.mech.binding_sigil':
     'Bindingssigil (træk bossen hen på sigillet, ellers betaler raidet)',
   'hudChrome.finder.mech.bone_spike':
     'Knoglespyd (spiddede raiddeltagere drænes, indtil spyddet ødelægges)',
   'hudChrome.finder.mech.bone_storm':
     'Knoglestorm (han ignorerer trussel, hvirvler og stormer mod raidet)',
-  'hudChrome.finder.mech.crown_endures':
-    'Kronen holder stand (hård rasen ved 6:00, heroic 5:00)',
+  'hudChrome.finder.mech.crown_endures': 'Kronen holder stand (hård rasen ved 6:00, heroic 5:00)',
   'hudChrome.finder.mech.deathless_court':
     'Det Dødsløse Hof (kun heroic, kongehofet rejser sig efter Dødsløs Rasen)',
   'hudChrome.finder.mech.grave_eruption':
@@ -15751,23 +15747,18 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'hudChrome.nythraxisCallout.boneStormBegins': 'Knoglestorm! Spred jer og løb!',
   'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis stormer mod DIG! Løb!',
   'hudChrome.nythraxisCallout.boneStormEnds': 'Knoglestorm ovre. Tanks, saml ham op!',
-  'hudChrome.nythraxisCallout.crownEndures':
-    'Kronen holder stand! Nythraxis er rasende!',
+  'hudChrome.nythraxisCallout.crownEndures': 'Kronen holder stand! Nythraxis er rasende!',
   'hudChrome.nythraxisCallout.crownEndures10': 'Ti sekunder! Brænd ham ned!',
-  'hudChrome.nythraxisCallout.crownEndures30':
-    'Tredive sekunder til Kronen holder stand!',
+  'hudChrome.nythraxisCallout.crownEndures30': 'Tredive sekunder til Kronen holder stand!',
   'hudChrome.nythraxisCallout.crownEndures60': 'Et minut til Kronen holder stand!',
   'hudChrome.nythraxisCallout.dreadCurseSwap': 'Rædselsforbandelse: skift tanks!',
-  'hudChrome.nythraxisCallout.gravefireTarget':
-    'Gravild farer mod dig! Træd til siden!',
+  'hudChrome.nythraxisCallout.gravefireTarget': 'Gravild farer mod dig! Træd til siden!',
   'hudChrome.nythraxisCallout.impaled': 'Knoglespyd! Befri de spiddede!',
-  'hudChrome.nythraxisCallout.kingsWrath':
-    'Kongen rejser sig i vrede! Alt rammer hårdere nu!',
+  'hudChrome.nythraxisCallout.kingsWrath': 'Kongen rejser sig i vrede! Alt rammer hårdere nu!',
   'hudChrome.nythraxisCallout.sigilAppears':
     'Et Bindingssigil flammer op! Træk Nythraxis hen på det!',
   'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis er bundet! Brænd ham ned!',
-  'hudChrome.nythraxisCallout.sigilUnbound':
-    'Sigillet falmer ubundet! Nythraxis bliver stærkere!',
+  'hudChrome.nythraxisCallout.sigilUnbound': 'Sigillet falmer ubundet! Nythraxis bliver stærkere!',
   'hudChrome.nythraxisCallout.spikeBroken': 'Spyd knust!',
   'hudChrome.nythraxisCallout.youAreImpaled': 'Du er spiddet! Hold ud!',
   'hudChrome.options.gpuBackend': 'Grafik-backend',

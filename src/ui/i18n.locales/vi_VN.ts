@@ -15760,21 +15760,28 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bank.logFilterMoney': 'Tiền',
   'hudChrome.bank.logOlder': 'Hiển thị cũ hơn',
   'hudChrome.bank.logOlderLoading': 'Đang tải hành động cũ hơn...',
-  'hudChrome.bank.logSearchAria': 'Tìm trong các hành động ngân hàng guild đã tải theo thành viên, hành động hoặc vật phẩm',
+  'hudChrome.bank.logSearchAria':
+    'Tìm trong các hành động ngân hàng guild đã tải theo thành viên, hành động hoặc vật phẩm',
   'hudChrome.bank.logSearchNoMatch':
     'Không có hành động ngân hàng guild đã tải nào khớp tìm kiếm của bạn. Hiển thị các dòng cũ hơn để mở rộng phạm vi.',
   'hudChrome.bank.logSearchPlaceholder': 'Tìm trong lịch sử này',
   'hudChrome.bank.logShowing': 'Đang hiển thị {count} hành động ngân hàng guild, mới nhất trước.',
-  'hudChrome.bank.logShowingMatched': 'Đang hiển thị {matched} trong {count} hành động ngân hàng guild đã tải.',
-  'hudChrome.finder.mech.binding_sigil': 'Phù Ấn Trói Buộc (kéo boss lên phù ấn, nếu không raid sẽ trả giá)',
-  'hudChrome.finder.mech.bone_spike': 'Cọc Xương (raider bị xuyên bị rút máu cho đến khi cọc bị phá)',
+  'hudChrome.bank.logShowingMatched':
+    'Đang hiển thị {matched} trong {count} hành động ngân hàng guild đã tải.',
+  'hudChrome.finder.mech.binding_sigil':
+    'Phù Ấn Trói Buộc (kéo boss lên phù ấn, nếu không raid sẽ trả giá)',
+  'hudChrome.finder.mech.bone_spike':
+    'Cọc Xương (raider bị xuyên bị rút máu cho đến khi cọc bị phá)',
   'hudChrome.finder.mech.bone_storm': 'Bão Xương (hắn bỏ qua thù hận, xoáy và lao vào raid)',
-  'hudChrome.finder.mech.crown_endures': 'Vương Miện Trường Tồn (cuồng nộ cứng ở 6:00, heroic 5:00)',
+  'hudChrome.finder.mech.crown_endures':
+    'Vương Miện Trường Tồn (cuồng nộ cứng ở 6:00, heroic 5:00)',
   'hudChrome.finder.mech.deathless_court':
     'Triều Đình Bất Tử (chỉ heroic, triều đình hoàng gia trỗi dậy sau Cơn Thịnh Nộ Bất Tử)',
-  'hudChrome.finder.mech.grave_eruption': 'Mộ Phần Phun Trào (vòng cảnh báo để lại mặt đất bốc cháy)',
+  'hudChrome.finder.mech.grave_eruption':
+    'Mộ Phần Phun Trào (vòng cảnh báo để lại mặt đất bốc cháy)',
   'hudChrome.finder.mech.gravefire': 'Lửa Mộ (một vệt lửa di chuyển cần né sang bên)',
-  'hudChrome.finder.mech.kings_wrath': 'Cơn Thịnh Nộ Của Vua (30%: cộng sát thương vĩnh viễn, bẫy sàn nhanh hơn)',
+  'hudChrome.finder.mech.kings_wrath':
+    'Cơn Thịnh Nộ Của Vua (30%: cộng sát thương vĩnh viễn, bẫy sàn nhanh hơn)',
   'hudChrome.finder.mech.soulfire': 'Lửa Linh Hồn (vụ nổ Xé Linh Hồn để lại vũng lửa)',
   'hudChrome.fullTransfer.excluded':
     'Không bao giờ bao gồm: dữ liệu đăng nhập, tài khoản, ví hoặc mua hàng của bạn. Bố cục thanh hành động được lưu vào tài khoản và đi cùng tài khoản đó.',
@@ -15796,7 +15803,8 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keybindTransfer.apply': 'Áp dụng',
   'hudChrome.keybindTransfer.imported': 'Đã nhập thiết lập phím tắt.',
   'hudChrome.keybindTransfer.setup': 'Thiết Lập Phím Tắt',
-  'hudChrome.keybindTransfer.wrongKind': 'Mã đó là bản xuất cài đặt, không phải thiết lập phím tắt.',
+  'hudChrome.keybindTransfer.wrongKind':
+    'Mã đó là bản xuất cài đặt, không phải thiết lập phím tắt.',
   'hudChrome.keyboardMap.assignHint': 'Chọn hành động để gán cho {key}.',
   'hudChrome.keyboardMap.assignOption': '{category}: {action}',
   'hudChrome.keyboardMap.assignPlaceholder': 'Gán một hành động cho {key}',
@@ -15838,7 +15846,8 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.nythraxisCallout.dreadCurseSwap': 'Lời Nguyền Kinh Hoàng: đổi tank!',
   'hudChrome.nythraxisCallout.gravefireTarget': 'Lửa Mộ lao về phía bạn! Né sang bên!',
   'hudChrome.nythraxisCallout.impaled': 'Cọc Xương! Giải cứu người bị xuyên!',
-  'hudChrome.nythraxisCallout.kingsWrath': 'Nhà vua trỗi dậy trong thịnh nộ! Mọi thứ giờ đánh đau hơn!',
+  'hudChrome.nythraxisCallout.kingsWrath':
+    'Nhà vua trỗi dậy trong thịnh nộ! Mọi thứ giờ đánh đau hơn!',
   'hudChrome.nythraxisCallout.sigilAppears': 'Phù Ấn Trói Buộc bùng sáng! Kéo Nythraxis lên đó!',
   'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis bị trói! Dồn sát thương hắn!',
   'hudChrome.nythraxisCallout.sigilUnbound': 'Phù ấn mờ đi mà không trói được! Nythraxis mạnh hơn!',
@@ -15850,12 +15859,14 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Hiện đang dùng {backend}. Tự động chưa thử Vulkan trên card đồ họa này; hãy chọn Vulkan để thử.',
   'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
   'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
-  'hudChrome.options.gpuBackendActiveUnavailable': 'Hiện đang dùng {backend} (không thể bật Vulkan).',
+  'hudChrome.options.gpuBackendActiveUnavailable':
+    'Hiện đang dùng {backend} (không thể bật Vulkan).',
   'hudChrome.options.gpuBackendAuto': 'Tự động',
   'hudChrome.options.gpuBackendNote':
     'Tự động chọn tùy chọn tốt nhất cho bạn. Vulkan nhanh hơn và được khuyến nghị cho hầu hết người chơi. OpenGL chậm hơn, nhưng có thể giúp nếu Vulkan không hoạt động đúng. Có hiệu lực vào lần khởi động trò chơi tiếp theo.',
   'hudChrome.options.gpuBackendOpenGL': 'OpenGL (chậm)',
-  'hudChrome.options.gpuBackendSaveFailed': 'Không thể lưu lựa chọn. Lần khởi động tiếp theo vẫn giữ {backend}.',
+  'hudChrome.options.gpuBackendSaveFailed':
+    'Không thể lưu lựa chọn. Lần khởi động tiếp theo vẫn giữ {backend}.',
   'hudChrome.options.gpuBackendVulkan': 'Vulkan',
   'hudChrome.options.restartFailed': 'Trò chơi không thể tự khởi động lại. Hãy thoát và mở lại.',
   'hudChrome.options.restartGame': 'Khởi Động Lại Trò Chơi',

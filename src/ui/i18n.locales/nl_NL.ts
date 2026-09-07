@@ -15833,8 +15833,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'entities.items.stormhymn_chain_treads.name': 'Stormhymne-kettinglaarzen',
   'entities.items.thornpeak_moonhide_cowl.name': 'Doornpiek-Maanhuidkap',
   'entities.items.thornpeak_wardblade.name': 'Doornpiek-wachtzwaard',
-  'entities.items.votive_ward_of_the_deathless_court.name':
-    'Votiefscherm van het Doodloze Hof',
+  'entities.items.votive_ward_of_the_deathless_court.name': 'Votiefscherm van het Doodloze Hof',
   'entities.mobs.nythraxis_bone_spike.name': 'Beenderspies',
   'gpuNotice.bodyRequestedBackend':
     'Het spel kon niet starten met de grafische backend die je koos, dus het draait in plaats daarvan op OpenGL. Alles werkt, maar het laden en de eerste minuten kunnen meer haperen. Je kunt onder Opties, Graphics, System opnieuw een backend kiezen.',
@@ -15879,14 +15878,12 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bank.logFilterMoney': 'Geld',
   'hudChrome.bank.logOlder': 'Oudere tonen',
   'hudChrome.bank.logOlderLoading': 'Oudere acties laden...',
-  'hudChrome.bank.logSearchAria':
-    'Doorzoek de geladen gildebankacties op lid, actie of voorwerp',
+  'hudChrome.bank.logSearchAria': 'Doorzoek de geladen gildebankacties op lid, actie of voorwerp',
   'hudChrome.bank.logSearchNoMatch':
     'Geen geladen gildebankacties passen bij je zoekopdracht. Toon oudere rijen om breder te zoeken.',
   'hudChrome.bank.logSearchPlaceholder': 'Deze geschiedenis doorzoeken',
   'hudChrome.bank.logShowing': '{count} gildebankacties getoond, nieuwste eerst.',
-  'hudChrome.bank.logShowingMatched':
-    '{matched} van {count} geladen gildebankacties getoond.',
+  'hudChrome.bank.logShowingMatched': '{matched} van {count} geladen gildebankacties getoond.',
   'hudChrome.finder.mech.binding_sigil':
     'Bindingszegel (sleep de baas naar het zegel of de raid betaalt ervoor)',
   'hudChrome.finder.mech.bone_spike':
@@ -15959,23 +15956,16 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keyboardMap.title': 'Toetsenbordoverzicht',
   'hudChrome.nythraxisCallout.boneStormBegins': 'Beenderstorm! Verspreid je en ren!',
   'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis stormt op JOU af! Rennen!',
-  'hudChrome.nythraxisCallout.boneStormEnds':
-    'Beenderstorm voorbij. Tanks, pak hem op!',
-  'hudChrome.nythraxisCallout.crownEndures':
-    'De Kroon houdt stand! Nythraxis is razend!',
+  'hudChrome.nythraxisCallout.boneStormEnds': 'Beenderstorm voorbij. Tanks, pak hem op!',
+  'hudChrome.nythraxisCallout.crownEndures': 'De Kroon houdt stand! Nythraxis is razend!',
   'hudChrome.nythraxisCallout.crownEndures10': 'Tien seconden! Brand hem neer!',
-  'hudChrome.nythraxisCallout.crownEndures30':
-    'Dertig seconden tot De Kroon houdt stand!',
-  'hudChrome.nythraxisCallout.crownEndures60':
-    'Eén minuut tot De Kroon houdt stand!',
+  'hudChrome.nythraxisCallout.crownEndures30': 'Dertig seconden tot De Kroon houdt stand!',
+  'hudChrome.nythraxisCallout.crownEndures60': 'Eén minuut tot De Kroon houdt stand!',
   'hudChrome.nythraxisCallout.dreadCurseSwap': 'Schrikvloek: tanks wisselen!',
-  'hudChrome.nythraxisCallout.gravefireTarget':
-    'Grafvuur raast naar je toe! Stap opzij!',
+  'hudChrome.nythraxisCallout.gravefireTarget': 'Grafvuur raast naar je toe! Stap opzij!',
   'hudChrome.nythraxisCallout.impaled': 'Beenderspiezen! Bevrijd de gespietsten!',
-  'hudChrome.nythraxisCallout.kingsWrath':
-    'De Koning rijst op in woede! Alles slaat nu harder!',
-  'hudChrome.nythraxisCallout.sigilAppears':
-    'Een Bindingszegel licht op! Sleep Nythraxis erop!',
+  'hudChrome.nythraxisCallout.kingsWrath': 'De Koning rijst op in woede! Alles slaat nu harder!',
+  'hudChrome.nythraxisCallout.sigilAppears': 'Een Bindingszegel licht op! Sleep Nythraxis erop!',
   'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis is gebonden! Brand hem neer!',
   'hudChrome.nythraxisCallout.sigilUnbound':
     'Het zegel vervaagt ongebonden! Nythraxis wordt sterker!',

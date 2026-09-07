@@ -15785,22 +15785,31 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bank.logFilterMoney': 'Pieniądze',
   'hudChrome.bank.logOlder': 'Pokaż starsze',
   'hudChrome.bank.logOlderLoading': 'Wczytywanie starszych działań...',
-  'hudChrome.bank.logSearchAria': 'Szukaj w załadowanych działaniach banku gildii według członka, akcji lub przedmiotu',
+  'hudChrome.bank.logSearchAria':
+    'Szukaj w załadowanych działaniach banku gildii według członka, akcji lub przedmiotu',
   'hudChrome.bank.logSearchNoMatch':
     'Żadne załadowane działania banku gildii nie pasują do wyszukiwania. Pokaż starsze wiersze, aby rozszerzyć zakres.',
   'hudChrome.bank.logSearchPlaceholder': 'Szukaj w historii',
   'hudChrome.bank.logShowing': 'Pokazano {count} działań banku gildii, od najnowszych.',
-  'hudChrome.bank.logShowingMatched': 'Pokazano {matched} z {count} załadowanych działań banku gildii.',
-  'hudChrome.finder.mech.binding_sigil': 'Pieczęć Wiążąca (przeciągnij bossa na pieczęć albo rajd zapłaci)',
-  'hudChrome.finder.mech.bone_spike': 'Kościany kolec (nadziani rajderzy słabną, dopóki kolec nie zostanie zniszczony)',
-  'hudChrome.finder.mech.bone_storm': 'Kościana Burza (ignoruje zagrożenie, wiruje i szarżuje na rajd)',
+  'hudChrome.bank.logShowingMatched':
+    'Pokazano {matched} z {count} załadowanych działań banku gildii.',
+  'hudChrome.finder.mech.binding_sigil':
+    'Pieczęć Wiążąca (przeciągnij bossa na pieczęć albo rajd zapłaci)',
+  'hudChrome.finder.mech.bone_spike':
+    'Kościany kolec (nadziani rajderzy słabną, dopóki kolec nie zostanie zniszczony)',
+  'hudChrome.finder.mech.bone_storm':
+    'Kościana Burza (ignoruje zagrożenie, wiruje i szarżuje na rajd)',
   'hudChrome.finder.mech.crown_endures': 'Korona Trwa (twardy enrage o 6:00, Heroic 5:00)',
   'hudChrome.finder.mech.deathless_court':
     'Nieśmiertelny Dwór (tylko Heroic, królewski dwór powstaje po Nieśmiertelnym Szału)',
-  'hudChrome.finder.mech.grave_eruption': 'Grobowa Erupcja (kręgi ostrzegawcze zostawiające płonącą ziemię)',
-  'hudChrome.finder.mech.gravefire': 'Grobowy Ogień (wędrująca linia ognia, której trzeba zejść z drogi)',
-  'hudChrome.finder.mech.kings_wrath': 'Gniew Króla (30%: stały bonus obrażeń, szybsze zagrożenia na podłodze)',
-  'hudChrome.finder.mech.soulfire': 'Ogień Dusz (detonacje Rozdarcia Duszy zostawiają płonące kałuże)',
+  'hudChrome.finder.mech.grave_eruption':
+    'Grobowa Erupcja (kręgi ostrzegawcze zostawiające płonącą ziemię)',
+  'hudChrome.finder.mech.gravefire':
+    'Grobowy Ogień (wędrująca linia ognia, której trzeba zejść z drogi)',
+  'hudChrome.finder.mech.kings_wrath':
+    'Gniew Króla (30%: stały bonus obrażeń, szybsze zagrożenia na podłodze)',
+  'hudChrome.finder.mech.soulfire':
+    'Ogień Dusz (detonacje Rozdarcia Duszy zostawiają płonące kałuże)',
   'hudChrome.fullTransfer.excluded':
     'Nigdy nie obejmuje: danych logowania, konta, portfela ani zakupów. Układy pasków akcji są zapisywane na koncie i przenoszą się razem z nim.',
   'hudChrome.fullTransfer.fullSettings': 'Pełne ustawienia',
@@ -15863,10 +15872,13 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.nythraxisCallout.dreadCurseSwap': 'Straszliwa Klątwa: zmienić tanków!',
   'hudChrome.nythraxisCallout.gravefireTarget': 'Grobowy Ogień pędzi ku tobie! Zejdź w bok!',
   'hudChrome.nythraxisCallout.impaled': 'Kościane kolce! Uwolnijcie nadzianych!',
-  'hudChrome.nythraxisCallout.kingsWrath': 'Król powstaje w gniewie! Wszystko uderza teraz mocniej!',
-  'hudChrome.nythraxisCallout.sigilAppears': 'Pieczęć Wiążąca rozbłyska! Przeciągnij na nią Nythraxis!',
+  'hudChrome.nythraxisCallout.kingsWrath':
+    'Król powstaje w gniewie! Wszystko uderza teraz mocniej!',
+  'hudChrome.nythraxisCallout.sigilAppears':
+    'Pieczęć Wiążąca rozbłyska! Przeciągnij na nią Nythraxis!',
   'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis spętany! Spalcie go!',
-  'hudChrome.nythraxisCallout.sigilUnbound': 'Pieczęć gaśnie bez spętania! Nythraxis rośnie w siłę!',
+  'hudChrome.nythraxisCallout.sigilUnbound':
+    'Pieczęć gaśnie bez spętania! Nythraxis rośnie w siłę!',
   'hudChrome.nythraxisCallout.spikeBroken': 'Kolec roztrzaskany!',
   'hudChrome.nythraxisCallout.youAreImpaled': 'Jesteś nadziany! Wytrzymaj!',
   'hudChrome.options.gpuBackend': 'Zaplecze graficzne',
@@ -15875,14 +15887,17 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Obecnie używane: {backend}. Auto jeszcze nie próbuje Vulkan na tej karcie graficznej; wybierz Vulkan, aby go sprawdzić.',
   'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
   'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
-  'hudChrome.options.gpuBackendActiveUnavailable': 'Obecnie używane: {backend} (nie udało się włączyć Vulkan).',
+  'hudChrome.options.gpuBackendActiveUnavailable':
+    'Obecnie używane: {backend} (nie udało się włączyć Vulkan).',
   'hudChrome.options.gpuBackendAuto': 'Automatycznie',
   'hudChrome.options.gpuBackendNote':
     'Auto wybiera najlepszą opcję. Vulkan jest szybszy i zalecany dla większości graczy. OpenGL jest wolniejszy, ale może pomóc, jeśli Vulkan nie działa poprawnie. Zmiana zacznie działać przy następnym uruchomieniu gry.',
   'hudChrome.options.gpuBackendOpenGL': 'OpenGL (wolne)',
-  'hudChrome.options.gpuBackendSaveFailed': 'Nie udało się zapisać wyboru. Następny start zachowa {backend}.',
+  'hudChrome.options.gpuBackendSaveFailed':
+    'Nie udało się zapisać wyboru. Następny start zachowa {backend}.',
   'hudChrome.options.gpuBackendVulkan': 'Vulkan',
-  'hudChrome.options.restartFailed': 'Gra nie mogła uruchomić się ponownie sama. Zamknij ją i włącz jeszcze raz.',
+  'hudChrome.options.restartFailed':
+    'Gra nie mogła uruchomić się ponownie sama. Zamknij ją i włącz jeszcze raz.',
   'hudChrome.options.restartGame': 'Uruchom grę ponownie',
   'hudChrome.options.restartInProgress': 'Ponowne uruchamianie gry...',
   'hudChrome.options.restartPending': 'Niektóre zmiany zaczną działać po ponownym uruchomieniu.',

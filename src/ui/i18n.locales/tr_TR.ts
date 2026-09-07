@@ -15643,7 +15643,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'yumi.queue.teamLeave': "Takımın Yumi'yi Koru kuyruğundan ayrılıyor.",
   'yumi.respawn.title': 'DÜŞTÜN!',
   'entities.abilities.arcane_shot.specNote_marksmanship':
-    "Tamamlanmış Ateşli Çekişten gelen Soğukgörü Okuması, sonraki Düşüş Atışının %75 daha fazla hasar vermesini sağlar. Atışı yapmak Okumayı harcar.",
+    'Tamamlanmış Ateşli Çekişten gelen Soğukgörü Okuması, sonraki Düşüş Atışının %75 daha fazla hasar vermesini sağlar. Atışı yapmak Okumayı harcar.',
   'entities.items.bramblehide_cinch.name': 'Köklerin Dikenpost Kuşağı',
   'entities.items.bramblehide_crown.name': 'Köklerin Dikenpost Tacı',
   'entities.items.bramblehide_grips.name': 'Köklerin Dikenpost Tutacakları',
@@ -15702,21 +15702,28 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bank.logFilterMoney': 'Para',
   'hudChrome.bank.logOlder': 'Daha eskileri göster',
   'hudChrome.bank.logOlderLoading': 'Daha eski eylemler yükleniyor...',
-  'hudChrome.bank.logSearchAria': 'Yüklenen lonca bankası eylemlerinde üyeye, eyleme veya eşyaya göre ara',
+  'hudChrome.bank.logSearchAria':
+    'Yüklenen lonca bankası eylemlerinde üyeye, eyleme veya eşyaya göre ara',
   'hudChrome.bank.logSearchNoMatch':
     'Yüklenen lonca bankası eylemlerinde aramanla eşleşen yok. Kapsamı genişletmek için daha eski satırları göster.',
   'hudChrome.bank.logSearchPlaceholder': 'Bu geçmişte ara',
-  'hudChrome.bank.logShowing': 'En yeniler önce olmak üzere {count} lonca bankası eylemi gösteriliyor.',
-  'hudChrome.bank.logShowingMatched': 'Yüklenen {count} lonca bankası eyleminden {matched} tanesi gösteriliyor.',
-  'hudChrome.finder.mech.binding_sigil': 'Bağlama Mührü (bossu mührün üzerine sürükle, yoksa akın bedel öder)',
-  'hudChrome.finder.mech.bone_spike': 'Kemik Dikeni (saplanan akıncılar diken yok edilene kadar tükenir)',
-  'hudChrome.finder.mech.bone_storm': 'Kemik Fırtınası (tehdidi yok sayar, döner ve akına hücum eder)',
+  'hudChrome.bank.logShowing':
+    'En yeniler önce olmak üzere {count} lonca bankası eylemi gösteriliyor.',
+  'hudChrome.bank.logShowingMatched':
+    'Yüklenen {count} lonca bankası eyleminden {matched} tanesi gösteriliyor.',
+  'hudChrome.finder.mech.binding_sigil':
+    'Bağlama Mührü (bossu mührün üzerine sürükle, yoksa akın bedel öder)',
+  'hudChrome.finder.mech.bone_spike':
+    'Kemik Dikeni (saplanan akıncılar diken yok edilene kadar tükenir)',
+  'hudChrome.finder.mech.bone_storm':
+    'Kemik Fırtınası (tehdidi yok sayar, döner ve akına hücum eder)',
   'hudChrome.finder.mech.crown_endures': 'Taç Dayanır (6:00’da sert öfke, heroic 5:00)',
   'hudChrome.finder.mech.deathless_court':
     'Ölümsüz Saray (yalnız heroic, kraliyet sarayı Ölümsüz Öfke’den sonra ayağa kalkar)',
   'hudChrome.finder.mech.grave_eruption': 'Mezar Patlaması (yanan zemin bırakan uyarı çemberleri)',
   'hudChrome.finder.mech.gravefire': 'Mezar Ateşi (yana kaçılması gereken ilerleyen ateş çizgisi)',
-  'hudChrome.finder.mech.kings_wrath': 'Kralın Gazabı (30%: kalıcı hasar bonusu, daha hızlı zemin tehlikeleri)',
+  'hudChrome.finder.mech.kings_wrath':
+    'Kralın Gazabı (30%: kalıcı hasar bonusu, daha hızlı zemin tehlikeleri)',
   'hudChrome.finder.mech.soulfire': 'Ruh Ateşi (Ruh Yırtma patlamaları yanan havuzlar bırakır)',
   'hudChrome.fullTransfer.excluded':
     'Asla dahil edilmez: giriş, hesap, cüzdan veya satın alma verilerin. Eylem çubuğu düzenleri hesabına kaydedilir ve onunla birlikte taşınır.',
@@ -15780,7 +15787,8 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.nythraxisCallout.dreadCurseSwap': 'Dehşet Laneti: tank değişin!',
   'hudChrome.nythraxisCallout.gravefireTarget': 'Mezar Ateşi sana doğru geliyor! Yana kaç!',
   'hudChrome.nythraxisCallout.impaled': 'Kemik Dikenleri! Saplananları kurtarın!',
-  'hudChrome.nythraxisCallout.kingsWrath': 'Kral gazapla yükseliyor! Artık her şey daha sert vuruyor!',
+  'hudChrome.nythraxisCallout.kingsWrath':
+    'Kral gazapla yükseliyor! Artık her şey daha sert vuruyor!',
   'hudChrome.nythraxisCallout.sigilAppears': 'Bağlama Mührü parladı! Nythraxis’i üzerine sürükle!',
   'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis bağlandı! Yakın onu!',
   'hudChrome.nythraxisCallout.sigilUnbound': 'Mühür bağlamadan sönüyor! Nythraxis güçleniyor!',
@@ -15792,12 +15800,14 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Şu anda {backend} kullanılıyor. Otomatik seçenek bu grafik kartında Vulkan’ı henüz denemiyor; denemek için Vulkan’ı seç.',
   'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
   'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
-  'hudChrome.options.gpuBackendActiveUnavailable': 'Şu anda {backend} kullanılıyor (Vulkan etkinleştirilemedi).',
+  'hudChrome.options.gpuBackendActiveUnavailable':
+    'Şu anda {backend} kullanılıyor (Vulkan etkinleştirilemedi).',
   'hudChrome.options.gpuBackendAuto': 'Otomatik',
   'hudChrome.options.gpuBackendNote':
     'Otomatik seçenek senin için en iyi seçeneği seçer. Vulkan daha hızlıdır ve çoğu oyuncu için önerilir. OpenGL daha yavaştır, ancak Vulkan düzgün çalışmazsa yardımcı olabilir. Oyunun bir sonraki başlangıcında geçerli olur.',
   'hudChrome.options.gpuBackendOpenGL': 'OpenGL (yavaş)',
-  'hudChrome.options.gpuBackendSaveFailed': 'Seçim kaydedilemedi. Bir sonraki başlangıç {backend} kullanmayı sürdürür.',
+  'hudChrome.options.gpuBackendSaveFailed':
+    'Seçim kaydedilemedi. Bir sonraki başlangıç {backend} kullanmayı sürdürür.',
   'hudChrome.options.gpuBackendVulkan': 'Vulkan',
   'hudChrome.options.restartFailed': 'Oyun kendini yeniden başlatamadı. Çık ve yeniden başlat.',
   'hudChrome.options.restartGame': 'Oyunu Yeniden Başlat',

@@ -15645,8 +15645,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'entities.items.stormhymn_chain_treads.name': 'Stormhymnens Kedjestövlar',
   'entities.items.thornpeak_moonhide_cowl.name': 'Törntoppens Månhudskåpa',
   'entities.items.thornpeak_wardblade.name': 'Törntoppens Värnklinga',
-  'entities.items.votive_ward_of_the_deathless_court.name':
-    'Votivvärn från det Dödslösa Hovet',
+  'entities.items.votive_ward_of_the_deathless_court.name': 'Votivvärn från det Dödslösa Hovet',
   'entities.mobs.nythraxis_bone_spike.name': 'Benspett',
   'gpuNotice.bodyRequestedBackend':
     'Spelet kunde inte starta med grafikbakänden du valde, så det körs på OpenGL i stället. Allt fungerar, men laddning och de första minuterna kan hacka mer. Du kan välja en bakände igen under Alternativ, Grafik, System.',
@@ -15668,8 +15667,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Kungens Vrede: Nythraxis orsakar {pct}% mer skada resten av striden.',
   'hudChrome.auraEffect.nythraxisUnbound':
     'Obunden: Nythraxis orsakar {pct}% mer skada tills ett Bindningssigill håller honom.',
-  'hudChrome.auraEffect.veiledEdgeStrike':
-    'Ditt nästa Smygarslag orsakar {pct}% mer vapenskada',
+  'hudChrome.auraEffect.veiledEdgeStrike': 'Ditt nästa Smygarslag orsakar {pct}% mer vapenskada',
   'hudChrome.bank.guildHistoryTab': 'Historik',
   'hudChrome.bank.logActionAdminPurge': 'Togs bort',
   'hudChrome.bank.logActionBuySlots': 'Köpte en utökning',
@@ -15697,20 +15695,16 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Inga inlästa gillesbanksåtgärder matchar din sökning. Visa äldre rader för att bredda sökningen.',
   'hudChrome.bank.logSearchPlaceholder': 'Sök i historiken',
   'hudChrome.bank.logShowing': 'Visar {count} gillesbanksåtgärder, nyaste först.',
-  'hudChrome.bank.logShowingMatched':
-    'Visar {matched} av {count} inlästa gillesbanksåtgärder.',
+  'hudChrome.bank.logShowingMatched': 'Visar {matched} av {count} inlästa gillesbanksåtgärder.',
   'hudChrome.finder.mech.binding_sigil':
     'Bindningssigill (dra bossen till sigillet, annars får raiden betala)',
   'hudChrome.finder.mech.bone_spike':
     'Benspett (spetsade raiddeltagare dräneras tills spettet förstörs)',
-  'hudChrome.finder.mech.bone_storm':
-    'Benstorm (han ignorerar hot, virvlar och rusar mot raiden)',
-  'hudChrome.finder.mech.crown_endures':
-    'Kronan består (hård raseri vid 6:00, heroic 5:00)',
+  'hudChrome.finder.mech.bone_storm': 'Benstorm (han ignorerar hot, virvlar och rusar mot raiden)',
+  'hudChrome.finder.mech.crown_endures': 'Kronan består (hård raseri vid 6:00, heroic 5:00)',
   'hudChrome.finder.mech.deathless_court':
     'Det Dödslösa Hovet (endast heroic, kungahovet reser sig efter Dödslöst Raseri)',
-  'hudChrome.finder.mech.grave_eruption':
-    'Gravutbrott (varningscirklar som lämnar brinnande mark)',
+  'hudChrome.finder.mech.grave_eruption': 'Gravutbrott (varningscirklar som lämnar brinnande mark)',
   'hudChrome.finder.mech.gravefire': 'Graveld (en rörlig eldlinje att sidostega)',
   'hudChrome.finder.mech.kings_wrath':
     'Kungens Vrede (30%: permanent skadebonus, snabbare golvfaror)',
@@ -15777,16 +15771,13 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.nythraxisCallout.crownEndures30': 'Trettio sekunder till Kronan består!',
   'hudChrome.nythraxisCallout.crownEndures60': 'En minut till Kronan består!',
   'hudChrome.nythraxisCallout.dreadCurseSwap': 'Skräckförbannelse: byt tankar!',
-  'hudChrome.nythraxisCallout.gravefireTarget':
-    'Graveld rusar mot dig! Sidostega!',
+  'hudChrome.nythraxisCallout.gravefireTarget': 'Graveld rusar mot dig! Sidostega!',
   'hudChrome.nythraxisCallout.impaled': 'Benspett! Befria de spetsade!',
-  'hudChrome.nythraxisCallout.kingsWrath':
-    'Kungen reser sig i vrede! Allt slår hårdare nu!',
+  'hudChrome.nythraxisCallout.kingsWrath': 'Kungen reser sig i vrede! Allt slår hårdare nu!',
   'hudChrome.nythraxisCallout.sigilAppears':
     'Ett Bindningssigill flammar upp! Dra Nythraxis till det!',
   'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis är bunden! Bränn ner honom!',
-  'hudChrome.nythraxisCallout.sigilUnbound':
-    'Sigillet bleknar obundet! Nythraxis blir starkare!',
+  'hudChrome.nythraxisCallout.sigilUnbound': 'Sigillet bleknar obundet! Nythraxis blir starkare!',
   'hudChrome.nythraxisCallout.spikeBroken': 'Spettet krossat!',
   'hudChrome.nythraxisCallout.youAreImpaled': 'Du är spetsad! Håll ut!',
   'hudChrome.options.gpuBackend': 'Grafikbakände',

@@ -15597,21 +15597,27 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bank.logFilterMoney': 'Peníze',
   'hudChrome.bank.logOlder': 'Zobrazit starší',
   'hudChrome.bank.logOlderLoading': 'Načítají se starší akce...',
-  'hudChrome.bank.logSearchAria': 'Hledat v načtených akcích cechovní banky podle člena, akce nebo předmětu',
+  'hudChrome.bank.logSearchAria':
+    'Hledat v načtených akcích cechovní banky podle člena, akce nebo předmětu',
   'hudChrome.bank.logSearchNoMatch':
     'Žádná načtená akce cechovní banky neodpovídá hledání. Zobraz starší řádky, aby se záběr rozšířil.',
   'hudChrome.bank.logSearchPlaceholder': 'Hledat v historii',
   'hudChrome.bank.logShowing': 'Zobrazuje se {count} akcí cechovní banky, nejnovější první.',
-  'hudChrome.bank.logShowingMatched': 'Zobrazuje se {matched} z {count} načtených akcí cechovní banky.',
-  'hudChrome.finder.mech.binding_sigil': 'Vazebná pečeť (přetáhni bosse na pečeť, jinak raid zaplatí)',
-  'hudChrome.finder.mech.bone_spike': 'Kostěný bodec (nabodnutí raideři slábnou, dokud není bodec zničen)',
+  'hudChrome.bank.logShowingMatched':
+    'Zobrazuje se {matched} z {count} načtených akcí cechovní banky.',
+  'hudChrome.finder.mech.binding_sigil':
+    'Vazebná pečeť (přetáhni bosse na pečeť, jinak raid zaplatí)',
+  'hudChrome.finder.mech.bone_spike':
+    'Kostěný bodec (nabodnutí raideři slábnou, dokud není bodec zničen)',
   'hudChrome.finder.mech.bone_storm': 'Kostěná bouře (ignoruje hrozbu, víří a útočí na raid)',
   'hudChrome.finder.mech.crown_endures': 'Koruna vytrvá (tvrdé rozzuření v 6:00, heroic 5:00)',
   'hudChrome.finder.mech.deathless_court':
     'Nesmrtelný dvůr (jen heroic, královský dvůr povstane po Nesmrtelném běsnění)',
-  'hudChrome.finder.mech.grave_eruption': 'Hrobová erupce (varovné kruhy, které zanechají hořící zem)',
+  'hudChrome.finder.mech.grave_eruption':
+    'Hrobová erupce (varovné kruhy, které zanechají hořící zem)',
   'hudChrome.finder.mech.gravefire': 'Hrobový oheň (pohyblivá ohnivá linie, které je třeba uhnout)',
-  'hudChrome.finder.mech.kings_wrath': 'Králův hněv (30%: trvalý bonus k poškození, rychlejší nebezpečí na podlaze)',
+  'hudChrome.finder.mech.kings_wrath':
+    'Králův hněv (30%: trvalý bonus k poškození, rychlejší nebezpečí na podlaze)',
   'hudChrome.finder.mech.soulfire': 'Oheň duší (výbuchy Trhání duše zanechají hořící kaluže)',
   'hudChrome.fullTransfer.excluded':
     'Nikdy se nezahrnuje: tvoje přihlášení, účet, peněženka ani údaje o nákupech. Rozložení akčních lišt se ukládá k účtu a cestuje s ním.',
@@ -15687,12 +15693,14 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
     'Právě se používá {backend}. Automatika zatím na této grafické kartě Vulkan nezkouší; vyber Vulkan ručně, pokud ho chceš zkusit.',
   'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
   'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
-  'hudChrome.options.gpuBackendActiveUnavailable': 'Právě se používá {backend} (Vulkan se nepodařilo zapnout).',
+  'hudChrome.options.gpuBackendActiveUnavailable':
+    'Právě se používá {backend} (Vulkan se nepodařilo zapnout).',
   'hudChrome.options.gpuBackendAuto': 'Automaticky',
   'hudChrome.options.gpuBackendNote':
     'Automatika vybere nejlepší možnost. Vulkan je rychlejší a doporučený pro většinu hráčů. OpenGL je pomalejší, ale může pomoct, když Vulkan nefunguje správně. Projeví se při příštím spuštění hry.',
   'hudChrome.options.gpuBackendOpenGL': 'OpenGL (pomalé)',
-  'hudChrome.options.gpuBackendSaveFailed': 'Volbu se nepodařilo uložit. Příští spuštění ponechá {backend}.',
+  'hudChrome.options.gpuBackendSaveFailed':
+    'Volbu se nepodařilo uložit. Příští spuštění ponechá {backend}.',
   'hudChrome.options.gpuBackendVulkan': 'Vulkan',
   'hudChrome.options.restartFailed': 'Hra se nedokázala sama restartovat. Ukonči ji a spusť znovu.',
   'hudChrome.options.restartGame': 'Restartovat hru',

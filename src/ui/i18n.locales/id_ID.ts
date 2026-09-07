@@ -15820,7 +15820,8 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'entities.items.stormhymn_chain_treads.name': 'Tapak Rantai Himne Badai',
   'entities.items.thornpeak_moonhide_cowl.name': 'Tudung Kulit Rembulan Puncak Duri',
   'entities.items.thornpeak_wardblade.name': 'Pedang Pelindung Puncak Duri',
-  'entities.items.votive_ward_of_the_deathless_court.name': 'Pelindung Persembahan Istana Tanpa Kematian',
+  'entities.items.votive_ward_of_the_deathless_court.name':
+    'Pelindung Persembahan Istana Tanpa Kematian',
   'entities.mobs.nythraxis_bone_spike.name': 'Pancang Tulang',
   'gpuNotice.bodyRequestedBackend':
     'Game tidak dapat dimulai dengan backend grafis yang Anda pilih, jadi kini berjalan dengan OpenGL. Semuanya tetap berfungsi; pemuatan dan menit-menit pertama mungkin lebih tersendat. Anda dapat memilih backend lagi di Opsi, Grafis, Sistem.',
@@ -15865,21 +15866,28 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bank.logFilterMoney': 'Uang',
   'hudChrome.bank.logOlder': 'Tampilkan yang lebih lama',
   'hudChrome.bank.logOlderLoading': 'Memuat aksi yang lebih lama...',
-  'hudChrome.bank.logSearchAria': 'Cari aksi bank guild yang dimuat berdasarkan anggota, aksi, atau item',
+  'hudChrome.bank.logSearchAria':
+    'Cari aksi bank guild yang dimuat berdasarkan anggota, aksi, atau item',
   'hudChrome.bank.logSearchNoMatch':
     'Tidak ada aksi bank guild yang dimuat yang cocok dengan pencarianmu. Tampilkan baris yang lebih lama untuk memperluasnya.',
   'hudChrome.bank.logSearchPlaceholder': 'Cari riwayat ini',
   'hudChrome.bank.logShowing': 'Menampilkan {count} aksi bank guild, yang terbaru lebih dulu.',
-  'hudChrome.bank.logShowingMatched': 'Menampilkan {matched} dari {count} aksi bank guild yang dimuat.',
-  'hudChrome.finder.mech.binding_sigil': 'Segel Pengikat (seret boss ke segel atau raid akan menanggung akibatnya)',
-  'hudChrome.finder.mech.bone_spike': 'Pancang Tulang (raider yang tertusuk terkuras sampai pancang dihancurkan)',
-  'hudChrome.finder.mech.bone_storm': 'Badai Tulang (dia mengabaikan ancaman, berputar, dan menerjang raid)',
+  'hudChrome.bank.logShowingMatched':
+    'Menampilkan {matched} dari {count} aksi bank guild yang dimuat.',
+  'hudChrome.finder.mech.binding_sigil':
+    'Segel Pengikat (seret boss ke segel atau raid akan menanggung akibatnya)',
+  'hudChrome.finder.mech.bone_spike':
+    'Pancang Tulang (raider yang tertusuk terkuras sampai pancang dihancurkan)',
+  'hudChrome.finder.mech.bone_storm':
+    'Badai Tulang (dia mengabaikan ancaman, berputar, dan menerjang raid)',
   'hudChrome.finder.mech.crown_endures': 'Mahkota Bertahan (enrage keras pada 6:00, heroic 5:00)',
   'hudChrome.finder.mech.deathless_court':
     'Istana Tanpa Kematian (khusus heroic, istana kerajaan bangkit setelah Amarah Tanpa Kematian)',
-  'hudChrome.finder.mech.grave_eruption': 'Erupsi Makam (lingkaran peringatan yang meninggalkan tanah terbakar)',
+  'hudChrome.finder.mech.grave_eruption':
+    'Erupsi Makam (lingkaran peringatan yang meninggalkan tanah terbakar)',
   'hudChrome.finder.mech.gravefire': 'Api Makam (garis api bergerak yang harus disingkirkan)',
-  'hudChrome.finder.mech.kings_wrath': 'Murka Raja (30%: bonus kerusakan permanen, bahaya lantai lebih cepat)',
+  'hudChrome.finder.mech.kings_wrath':
+    'Murka Raja (30%: bonus kerusakan permanen, bahaya lantai lebih cepat)',
   'hudChrome.finder.mech.soulfire': 'Api Jiwa (ledakan Robekan Jiwa meninggalkan kolam terbakar)',
   'hudChrome.fullTransfer.excluded':
     'Tidak pernah disertakan: data login, akun, dompet, atau pembelianmu. Tata letak bilah aksi disimpan ke akunmu dan ikut berpindah bersamanya.',
@@ -15901,7 +15909,8 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.keybindTransfer.apply': 'Terapkan',
   'hudChrome.keybindTransfer.imported': 'Pengaturan tombol pintas diimpor.',
   'hudChrome.keybindTransfer.setup': 'Pengaturan Tombol Pintas',
-  'hudChrome.keybindTransfer.wrongKind': 'Kode itu adalah ekspor pengaturan, bukan pengaturan tombol pintas.',
+  'hudChrome.keybindTransfer.wrongKind':
+    'Kode itu adalah ekspor pengaturan, bukan pengaturan tombol pintas.',
   'hudChrome.keyboardMap.assignHint': 'Pilih aksi untuk diikat ke {key}.',
   'hudChrome.keyboardMap.assignOption': '{category}: {action}',
   'hudChrome.keyboardMap.assignPlaceholder': 'Tetapkan aksi ke {key}',
@@ -15943,7 +15952,8 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.nythraxisCallout.dreadCurseSwap': 'Kutukan Ngeri: tukar tank!',
   'hudChrome.nythraxisCallout.gravefireTarget': 'Api Makam melesat ke arahmu! Minggir!',
   'hudChrome.nythraxisCallout.impaled': 'Pancang Tulang! Bebaskan yang tertusuk!',
-  'hudChrome.nythraxisCallout.kingsWrath': 'Raja bangkit dalam murka! Semua pukulan kini lebih keras!',
+  'hudChrome.nythraxisCallout.kingsWrath':
+    'Raja bangkit dalam murka! Semua pukulan kini lebih keras!',
   'hudChrome.nythraxisCallout.sigilAppears': 'Segel Pengikat menyala! Seret Nythraxis ke atasnya!',
   'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis terikat! Habisi dia!',
   'hudChrome.nythraxisCallout.sigilUnbound': 'Segel memudar tanpa mengikat! Nythraxis makin kuat!',
@@ -15955,14 +15965,17 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Saat ini memakai {backend}. Auto belum mencoba Vulkan pada kartu grafis ini; pilih Vulkan untuk mencobanya.',
   'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
   'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
-  'hudChrome.options.gpuBackendActiveUnavailable': 'Saat ini memakai {backend} (tidak dapat mengaktifkan Vulkan).',
+  'hudChrome.options.gpuBackendActiveUnavailable':
+    'Saat ini memakai {backend} (tidak dapat mengaktifkan Vulkan).',
   'hudChrome.options.gpuBackendAuto': 'Otomatis',
   'hudChrome.options.gpuBackendNote':
     'Auto memilih opsi terbaik untukmu. Vulkan lebih cepat dan direkomendasikan untuk sebagian besar pemain. OpenGL lebih lambat, tetapi dapat membantu jika Vulkan tidak berfungsi baik. Berlaku saat game dimulai berikutnya.',
   'hudChrome.options.gpuBackendOpenGL': 'OpenGL (lambat)',
-  'hudChrome.options.gpuBackendSaveFailed': 'Pilihan tidak dapat disimpan. Start berikutnya tetap memakai {backend}.',
+  'hudChrome.options.gpuBackendSaveFailed':
+    'Pilihan tidak dapat disimpan. Start berikutnya tetap memakai {backend}.',
   'hudChrome.options.gpuBackendVulkan': 'Vulkan',
-  'hudChrome.options.restartFailed': 'Game tidak dapat memulai ulang dirinya sendiri. Keluar dan mulai lagi.',
+  'hudChrome.options.restartFailed':
+    'Game tidak dapat memulai ulang dirinya sendiri. Keluar dan mulai lagi.',
   'hudChrome.options.restartGame': 'Mulai Ulang Game',
   'hudChrome.options.restartInProgress': 'Memulai ulang game...',
   'hudChrome.options.restartPending': 'Beberapa perubahan berlaku setelah mulai ulang.',

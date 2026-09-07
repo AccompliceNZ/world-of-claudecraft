@@ -15962,8 +15962,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'entities.items.stormhymn_chain_treads.name': 'Sturmhymnen-Kettenstiefel',
   'entities.items.thornpeak_moonhide_cowl.name': 'Dorngipfel-Mondhautgugel',
   'entities.items.thornpeak_wardblade.name': 'Dorngipfel-Schutzklinge',
-  'entities.items.votive_ward_of_the_deathless_court.name':
-    'Votivschutz des Todlosen Hofs',
+  'entities.items.votive_ward_of_the_deathless_court.name': 'Votivschutz des Todlosen Hofs',
   'entities.mobs.nythraxis_bone_spike.name': 'Knochenspieß',
   'gpuNotice.bodyRequestedBackend':
     'Das Spiel konnte mit dem gewählten Grafik-Backend nicht starten und läuft deshalb stattdessen mit OpenGL. Alles funktioniert, Laden und die ersten Minuten können stärker ruckeln. Unter Optionen, Grafik, System könnt Ihr wieder ein Backend wählen.',
@@ -16000,8 +15999,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bank.logColMember': 'Mitglied',
   'hudChrome.bank.logColTime': 'Wann',
   'hudChrome.bank.logDetailItem': '{count} {item}',
-  'hudChrome.bank.logEmptyFiltered':
-    'Keine Gildenbankaktionen entsprechen diesem Filter.',
+  'hudChrome.bank.logEmptyFiltered': 'Keine Gildenbankaktionen entsprechen diesem Filter.',
   'hudChrome.bank.logEnd': 'Das ist der vollständige Gildenbankverlauf.',
   'hudChrome.bank.logFilterAll': 'Alle',
   'hudChrome.bank.logFilterAria': 'Gildenbankverlauf filtern',
@@ -16014,8 +16012,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.bank.logSearchNoMatch':
     'Keine geladenen Gildenbankaktionen entsprechen Eurer Suche. Zeigt ältere Zeilen an, um sie zu erweitern.',
   'hudChrome.bank.logSearchPlaceholder': 'Diesen Verlauf durchsuchen',
-  'hudChrome.bank.logShowing':
-    '{count} Gildenbankaktionen werden angezeigt, neueste zuerst.',
+  'hudChrome.bank.logShowing': '{count} Gildenbankaktionen werden angezeigt, neueste zuerst.',
   'hudChrome.bank.logShowingMatched':
     '{matched} von {count} geladenen Gildenbankaktionen werden angezeigt.',
   'hudChrome.finder.mech.binding_sigil':
@@ -16030,8 +16027,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
     'Der Todlose Hof (nur heroisch, der Königshof erhebt sich nach Todloser Raserei)',
   'hudChrome.finder.mech.grave_eruption':
     'Graberuption (Warnkreise, die brennenden Boden hinterlassen)',
-  'hudChrome.finder.mech.gravefire':
-    'Grabfeuer (eine wandernde Feuerlinie zum Ausweichen)',
+  'hudChrome.finder.mech.gravefire': 'Grabfeuer (eine wandernde Feuerlinie zum Ausweichen)',
   'hudChrome.finder.mech.kings_wrath':
     'Zorn des Königs (30%: dauerhafter Schadensbonus, schnellere Bodengefahren)',
   'hudChrome.finder.mech.soulfire':
@@ -16092,16 +16088,12 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.nythraxisCallout.boneStormBegins': 'Knochensturm! Verteilt Euch und lauft!',
   'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis stürmt auf EUCH zu! Lauft!',
   'hudChrome.nythraxisCallout.boneStormEnds': 'Knochensturm vorbei. Tanks, nehmt ihn auf!',
-  'hudChrome.nythraxisCallout.crownEndures':
-    'Die Krone hält stand! Nythraxis ist rasend!',
+  'hudChrome.nythraxisCallout.crownEndures': 'Die Krone hält stand! Nythraxis ist rasend!',
   'hudChrome.nythraxisCallout.crownEndures10': 'Zehn Sekunden! Brennt ihn nieder!',
-  'hudChrome.nythraxisCallout.crownEndures30':
-    'Dreißig Sekunden bis Die Krone hält stand!',
-  'hudChrome.nythraxisCallout.crownEndures60':
-    'Eine Minute bis Die Krone hält stand!',
+  'hudChrome.nythraxisCallout.crownEndures30': 'Dreißig Sekunden bis Die Krone hält stand!',
+  'hudChrome.nythraxisCallout.crownEndures60': 'Eine Minute bis Die Krone hält stand!',
   'hudChrome.nythraxisCallout.dreadCurseSwap': 'Schreckensfluch: Tanks wechseln!',
-  'hudChrome.nythraxisCallout.gravefireTarget':
-    'Grabfeuer rast auf Euch zu! Seitlich ausweichen!',
+  'hudChrome.nythraxisCallout.gravefireTarget': 'Grabfeuer rast auf Euch zu! Seitlich ausweichen!',
   'hudChrome.nythraxisCallout.impaled': 'Knochenspieße! Befreit die Aufgespießten!',
   'hudChrome.nythraxisCallout.kingsWrath':
     'Der König erhebt sich im Zorn! Jetzt trifft alles härter!',
