@@ -207,6 +207,7 @@ describe('live graphics profile architecture', () => {
 // repo-relative for the failure messages.
 const UI_PURE_CORES = [
   'src/ui/interact_prompt_view.ts',
+  'src/ui/pad_hint_strip_view.ts',
   'src/ui/map_entity_disclosure_core.ts',
   'src/ui/map_navigation_landmarks_core.ts',
   'src/ui/map_marker_profile_core.ts',
@@ -2297,6 +2298,7 @@ const UI_DOM_MODULES = [
   'src/ui/hud/quest/quest_strip_controller.ts',
   'src/ui/hud/quest/quest_strip_gesture_controller.ts',
   'src/ui/hud/cross_hotbar/cross_hotbar_controller.ts',
+  'src/ui/pad_hint_strip_controller.ts',
   'src/ui/char_skin_window.ts',
   'src/ui/char_window.ts',
   'src/ui/charselect_news.ts',

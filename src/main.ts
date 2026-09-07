@@ -2175,7 +2175,7 @@ async function startGame(
     });
   }, APM_BEAT_MS);
   const gamepadBindings = new GamepadBindings();
-  const crossHotbar = createCrossHotbar(() => hud, keybindScope);
+  const crossHotbar = createCrossHotbar(() => hud, keybindScope, gamepadBindings);
   const canUseGameKeysNow = () => !gameplayInputBlocked();
   function dispatchGamepadAction(id: string): void {
     // Cancel backs out one step at a time: the top window, then the target. Only

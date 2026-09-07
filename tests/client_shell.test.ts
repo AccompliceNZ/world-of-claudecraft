@@ -7,6 +7,7 @@ import {
 } from '../src/ui/hud/quest/quest_strip_core';
 import { shellStrings } from '../src/ui/i18n.catalog/shell';
 import { es_ES, fr_CA } from '../src/ui/i18n.resolved.generated';
+import { PAD_HINT_ROW_COUNT, PAD_LEGEND_ROW_COUNT } from '../src/ui/pad_hint_strip_view';
 
 const html = readFileSync(new URL('../index.html', import.meta.url), 'utf8').replace(/\r\n/g, '\n');
 // The CSS extraction moved the :root tokens and the reset/base
@@ -461,6 +462,29 @@ describe('client HTML shell', () => {
       expect(skipMain).toBeLessThan(skipChat);
       // The skip targets must be focusable landing points (tabindex=-1).
       expect(entry).toContain('<div id="ui" tabindex="-1">');
+    }
+  });
+
+  it('carries the pad hint strip and the launcher legend in BOTH entries', () => {
+    for (const entry of [html, playHtml]) {
+      // Static markup, minted nowhere: the strip and the legend are standing pad
+      // chrome, so both entries have to agree on them node for node.
+      expect(entry).toContain('<div id="pad-hint-strip" role="group" aria-live="off">');
+      expect(entry).toContain('<div id="pad-legend" role="group" aria-live="off">');
+      const strip = entry.slice(
+        entry.indexOf('id="pad-hint-strip"'),
+        entry.indexOf('id="pad-legend"'),
+      );
+      // Four hint rows and three legend entries, matching the view's fixed row
+      // counts: an unbound action stands its row down rather than shifting the
+      // ones under it, which only works if the markup never changes shape.
+      expect(strip.split('class="pad-hint-row"').length - 1).toBe(PAD_HINT_ROW_COUNT);
+      const legend = entry.slice(entry.indexOf('id="pad-legend"'));
+      expect(legend.split('class="pad-legend-glyph"').length - 1).toBe(PAD_LEGEND_ROW_COUNT);
+      // Every glyph slot ships EMPTY: the button names are written from the live
+      // bindings, so a shipped letter would be a lie on a rebound or non-Xbox pad.
+      expect(entry).not.toContain('class="pad-glyph">A<');
+      expect(entry).not.toContain('class="pad-legend-glyph">Back<');
     }
   });
 
@@ -2928,8 +2952,10 @@ describe('client HTML shell', () => {
     // arm has to re-read it: otherwise turning the setting off leaves the desktop
     // rows hidden behind a cross hotbar no longer driven by anything.
     expect(gamepadSettingsTs).toMatch(/else pad\.stop\(\);[\s\S]{0,100}?syncPadMode\(\);/);
-    // The pad layout is per character, like the keybinds it is scoped alongside.
-    expect(mainTsCode).toContain('createCrossHotbar(() => hud, keybindScope)');
+    // The pad layout is per character, like the keybinds it is scoped alongside,
+    // and the LIVE button layout rides along so the bar's set-swap chip follows a
+    // rebind instead of printing the shipped default forever.
+    expect(mainTsCode).toContain('createCrossHotbar(() => hud, keybindScope, gamepadBindings)');
     expect(mainTs).toContain('const interactionOutcome = handlePickedEntity(');
     expect(mainTs).toContain(
       'isClickMoveButton &&\n        shouldApproachPickedEntity(\n          world.player,\n          e,\n          didInteractImmediately,\n          true,\n          localPartyMemberIds(world.partyInfo),\n        )',

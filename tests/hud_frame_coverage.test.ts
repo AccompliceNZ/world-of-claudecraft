@@ -138,6 +138,9 @@ const FRAME_EXEMPT: Record<string, string> = {
   'perf-overlay': 'dev-only diagnostics readout with its own placing mode (perf_overlay.ts)',
   'click-move-marker': 'transient world-anchored click ping, positioned per click',
   'interact-prompt': 'transient one-at-a-time action cue, fixed above the unit frames',
+  'pad-hint-strip':
+    'pad-mode-only control hints, docked under the minimap cluster and pointer-inert',
+  'pad-legend': 'pad-mode-only launcher legend, tied to the right rail it names',
   'ctx-menu': 'transient right-click menu, positioned at the cursor per open',
   'prompt-stack': 'transient modal prompt host (prompt_dialog.ts), centered by design',
   'cross-hotbar': 'mobile cross-hotbar input cluster; frame editing is desktop-only',

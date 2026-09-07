@@ -18,6 +18,7 @@ import type { ResolvedAbility } from '../../../sim/sim';
 import type { AbilityDef, Entity, ItemDef, PlayerClass } from '../../../sim/types';
 import { formatNumber, t } from '../../i18n';
 import type { PainterHostWriters } from '../../painter_host';
+import { isStanceBarAbilityGroup } from '../../stance_bar_view';
 import type { ActionBarSlotElements } from '../action_bar/action_bar_painter';
 import type {
   ActionBarAbility,
@@ -30,6 +31,7 @@ import {
   CROSS_HOTBAR_CELLS,
   type CrossHotbarCell,
   type CrossHotbarHold,
+  type CrossHotbarOverlayAction,
   type CrossHotbarOverlayState,
   crossHotbarOverlayState,
   HIDDEN_CROSS_HOTBAR,
@@ -74,6 +76,9 @@ const SET_RAIL_CLASS = 'xhb-set-rail';
 const SET_PIP_CLASS = 'xhb-pip';
 const SET_ATTR = 'data-xhb-set';
 const SET_COUNT = 2;
+// The set-swap chip under the pips. The pips say which of the two sets is live;
+// this says how to change it, which nothing on the bar said before.
+const SET_SWAP_CLASS = 'xhb-set-swap';
 
 const FACE_GLYPH_CLASS_BY_POINT: Record<CrossHotbarCell['point'], string> = {
   top: `${GLYPH_CLASS}-face-y`,
@@ -157,6 +162,28 @@ export function crossHotbarResolvers(
   };
 }
 
+/**
+ * What an untouched cross hotbar is filled from: this character's action bar,
+ * plus the abilities a pad needs that the bar does not carry. Attack leads the
+ * extras because it sits on no hotbar slot to copy (the desktop bar draws it as a
+ * fixed button), so a pad player would otherwise have no auto-attack at all; the
+ * stance-style abilities follow, known at level one yet unbound and so
+ * unreachable on a pad. Lives here rather than inline at the call site so
+ * src/ui/hud.ts carries a call, not a shape (the crossHotbarResolvers pattern).
+ */
+export function crossHotbarSeedActions(
+  bar: readonly CrossHotbarOverlayAction[],
+  known: readonly ResolvedAbility[],
+): { bar: CrossHotbarOverlayAction[]; extras: string[] } {
+  return {
+    bar: bar.map((a) => (a ? { type: a.type, id: a.id } : null)),
+    extras: [
+      CROSS_HOTBAR_ATTACK_ID,
+      ...known.filter((k) => isStanceBarAbilityGroup(k.def.exclusiveGroup)).map((k) => k.def.id),
+    ],
+  };
+}
+
 export class CrossHotbarController {
   private readonly painter: CrossHotbarPainter;
   private readonly view: ActionBarView;
@@ -165,6 +192,8 @@ export class CrossHotbarController {
   private readonly root: HTMLElement;
   private readonly triggerLabels = new Map<string, HTMLElement>();
   private readonly hint: HTMLElement;
+  private readonly setSwap: HTMLElement;
+  private readonly setSwapChip: HTMLElement;
   private state: CrossHotbarOverlayState = HIDDEN_CROSS_HOTBAR;
   // The hint the bar shows when it is not being arranged, kept so leaving edit
   // mode puts it back without waiting for the next hold to repaint it.
@@ -231,6 +260,15 @@ export class CrossHotbarController {
       pip.setAttribute(SET_ATTR, String(set));
       setRail.appendChild(pip);
     }
+    const setSwapChip = document.createElement('span');
+    setSwapChip.className = `${SET_SWAP_CLASS} ui-keycap`;
+    setSwapChip.setAttribute('aria-hidden', 'true');
+    // The glyph rides its OWN span: the writer cache holds one entry per element,
+    // so texting and hiding the same node would evict each other every hold.
+    this.setSwap = document.createElement('span');
+    setSwapChip.appendChild(this.setSwap);
+    this.setSwapChip = setSwapChip;
+    setRail.appendChild(setSwapChip);
     root.insertBefore(setRail, halfEls.get('right') ?? null);
     this.hint = document.createElement('div');
     this.hint.className = HINT_CLASS;
@@ -305,6 +343,10 @@ export class CrossHotbarController {
       this.writers.setText(this.glyphs[i], label);
       this.writers.toggleClass(this.glyphs[i], GLYPH_LONG_CLASS, label.length > 1);
     }
+    // Written here rather than per frame, beside the cell glyphs, for the same
+    // reason: it only moves when the pad's brand or the player's binding does.
+    this.writers.setText(this.setSwap, hold.swap);
+    this.writers.setDisplay(this.setSwapChip, hold.swap ? 'inline-flex' : 'none');
     const bothTriggers = t('hudChrome.controller.crossHotbarPosition', {
       trigger: hold.triggers.left,
       button: hold.triggers.right,

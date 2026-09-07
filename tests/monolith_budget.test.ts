@@ -304,7 +304,12 @@ const MONOLITHS: MonolithRow[] = [
     // Lowered 18851 -> 18819 across the interface redesign: the target Discord
     // flair renderer moved to target_discord_controller.ts and the prompt,
     // party frame and mover call sites adopted the shared primitives in place.
-    ceiling: 18819,
+    // Lowered again 18819 -> 18812 by the pad hint strip: the cross-hotbar SEED
+    // (the bar copy, the Attack extra and the stance-group sweep) moved behind
+    // the cross_hotbar seam as crossHotbarSeedActions, which more than paid for
+    // this file's five lines of pad-hint wiring. The ratchet's own rule: an
+    // extraction lowers the ceiling in the same change. Exact count, zero slack.
+    ceiling: 18814,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
