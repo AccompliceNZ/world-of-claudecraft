@@ -4742,9 +4742,6 @@
     background: var(--color-socket-rim);
     border-radius: 4px;
   }
-  #chatlog-frame .chat-ts {
-    color: var(--color-text-faint);
-  }
   #report-window {
     width: 320px;
     z-index: 95;

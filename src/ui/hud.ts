@@ -14373,7 +14373,7 @@ export class Hud {
 
   log(
     text: string,
-    color = '#ccc',
+    color = 'var(--color-accent)',
     decorativeIconUrl?: string,
     channel = ERROR_LOG_CHAN,
     announceWhenFiltered = false,
