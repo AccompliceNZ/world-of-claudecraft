@@ -15642,4 +15642,272 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'yumi.queue.leave': "Yumi'yi Koru kuyruğundan ayrılıyorsun.",
   'yumi.queue.teamLeave': "Takımın Yumi'yi Koru kuyruğundan ayrılıyor.",
   'yumi.respawn.title': 'DÜŞTÜN!',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    "Tamamlanmış Ateşli Çekişten gelen Soğukgörü Okuması, sonraki Düşüş Atışının %75 daha fazla hasar vermesini sağlar. Atışı yapmak Okumayı harcar.",
+  'entities.items.bramblehide_cinch.name': 'Köklerin Dikenpost Kuşağı',
+  'entities.items.bramblehide_crown.name': 'Köklerin Dikenpost Tacı',
+  'entities.items.bramblehide_grips.name': 'Köklerin Dikenpost Tutacakları',
+  'entities.items.bramblehide_harness.name': 'Köklerin Dikenpost Koşumu',
+  'entities.items.bramblehide_legguards.name': 'Köklerin Dikenpost Bacak Muhafızları',
+  'entities.items.bramblehide_mantle.name': 'Köklerin Dikenpost Mantoluğu',
+  'entities.items.bramblehide_treads.name': 'Köklerin Dikenpost Tabanları',
+  'entities.items.courtiers_bonefang.name': 'Saraylının Kemik Dişi',
+  'entities.items.gravecourt_hewer.name': 'Mezar Sarayı Yontucusu',
+  'entities.items.stormhymn_chain_grips.name': 'Fırtına İlahisi Zincir Tutacakları',
+  'entities.items.stormhymn_chain_treads.name': 'Fırtına İlahisi Zincir Tabanları',
+  'entities.items.thornpeak_moonhide_cowl.name': 'Dikentepe Ayderisi Başlığı',
+  'entities.items.thornpeak_wardblade.name': 'Dikentepe Muhafaza Kılıcı',
+  'entities.items.votive_ward_of_the_deathless_court.name': 'Ölümsüz Sarayın Adak Muhafazası',
+  'entities.mobs.nythraxis_bone_spike.name': 'Kemik Dikeni',
+  'gpuNotice.bodyRequestedBackend':
+    'Oyun seçtiğin grafik arka ucunda başlayamadı, bu yüzden OpenGL ile çalışıyor. Her şey çalışır; yükleme ve ilk dakikalar daha fazla takılabilir. Arka ucu tekrar Seçenekler, Grafikler, Sistem altında seçebilirsin.',
+  'hudChrome.auraEffect.coldsightRead':
+    'Sonraki Uzun Çekişin %{longDrawPct} daha fazla hasar verir veya sonraki Düşüş Atışın %{fellShotPct} daha fazla verir',
+  'hudChrome.auraEffect.nythraxisAscension':
+    'Ölümsüz Yükseliş: {stacks} yük, %{pct} daha fazla hasar ve saldırı hızı. Arındırmak için Nythraxis’i Bağlama Mührü üzerine sürükle.',
+  'hudChrome.auraEffect.nythraxisBoneStorm':
+    'Kemik Fırtınası: Nythraxis tehdidi yok sayar, {radius} yd içinde her saniye azami canın %{tick} kadarıyla döner ve akıncılara hücum eder. Dağılın ve koşun.',
+  'hudChrome.auraEffect.nythraxisBound':
+    'Eski muhafazalarla bağlandı: Nythraxis {duration} sn boyunca %{pct} daha fazla hasar alır.',
+  'hudChrome.auraEffect.nythraxisCrownEndures':
+    'Taç Dayanır: {stacks} yük, %{pct} daha fazla hasar ve %{haste} daha hızlı saldırılar. Akının zamanı tükendi.',
+  'hudChrome.auraEffect.nythraxisDreadCurse':
+    'Her yük, Nythraxis’ten alınan hasarı {duration} sn boyunca %{perStack} artırır: şu anda {stacks}/{max} yük, %{pct} daha fazla hasar. Her {every} sn hedefindeki sonraki vuruşu azami canın %{hit} kadarını verir ve bir yük ekler. Tanklar {swap} yükte değişmeli.',
+  'hudChrome.auraEffect.nythraxisImpaled':
+    'Kemik Dikenine saplandın: hareket edemezsin ve akın dikeni yok edene kadar her {interval} sn azami canının %{normal} kadarını kaybedersin (Heroic’te %{heroic}).',
+  'hudChrome.auraEffect.nythraxisKingsWrath':
+    'Kralın Gazabı: Nythraxis savaşın kalanı boyunca %{pct} daha fazla hasar verir.',
+  'hudChrome.auraEffect.nythraxisUnbound':
+    'Bağsız: Bir Bağlama Mührü onu tutana kadar Nythraxis %{pct} daha fazla hasar verir.',
+  'hudChrome.auraEffect.veiledEdgeStrike':
+    'Sonraki Pusucunun Darbesi %{pct} daha fazla silah hasarı verir',
+  'hudChrome.bank.guildHistoryTab': 'Geçmiş',
+  'hudChrome.bank.logActionAdminPurge': 'Kaldırıldı',
+  'hudChrome.bank.logActionBuySlots': 'Genişletme satın aldı',
+  'hudChrome.bank.logActionCharterFee': 'Kuruluş ücretini ödedi',
+  'hudChrome.bank.logActionDeposit': 'Yatırdı',
+  'hudChrome.bank.logActionOpenBank': 'Bankayı açtı',
+  'hudChrome.bank.logActionWithdraw': 'Çekti',
+  'hudChrome.bank.logActorAdmin': 'Bir yönetici',
+  'hudChrome.bank.logColAction': 'Eylem',
+  'hudChrome.bank.logColDetail': 'Ayrıntılar',
+  'hudChrome.bank.logColMember': 'Üye',
+  'hudChrome.bank.logColTime': 'Zaman',
+  'hudChrome.bank.logDetailItem': '{count} {item}',
+  'hudChrome.bank.logEmptyFiltered': 'Bu filtreyle eşleşen lonca bankası eylemi yok.',
+  'hudChrome.bank.logEnd': 'Lonca bankası geçmişinin tamamı bu.',
+  'hudChrome.bank.logFilterAll': 'Tümü',
+  'hudChrome.bank.logFilterAria': 'Lonca bankası geçmişini filtrele',
+  'hudChrome.bank.logFilterItems': 'Eşyalar',
+  'hudChrome.bank.logFilterMoney': 'Para',
+  'hudChrome.bank.logOlder': 'Daha eskileri göster',
+  'hudChrome.bank.logOlderLoading': 'Daha eski eylemler yükleniyor...',
+  'hudChrome.bank.logSearchAria': 'Yüklenen lonca bankası eylemlerinde üyeye, eyleme veya eşyaya göre ara',
+  'hudChrome.bank.logSearchNoMatch':
+    'Yüklenen lonca bankası eylemlerinde aramanla eşleşen yok. Kapsamı genişletmek için daha eski satırları göster.',
+  'hudChrome.bank.logSearchPlaceholder': 'Bu geçmişte ara',
+  'hudChrome.bank.logShowing': 'En yeniler önce olmak üzere {count} lonca bankası eylemi gösteriliyor.',
+  'hudChrome.bank.logShowingMatched': 'Yüklenen {count} lonca bankası eyleminden {matched} tanesi gösteriliyor.',
+  'hudChrome.finder.mech.binding_sigil': 'Bağlama Mührü (bossu mührün üzerine sürükle, yoksa akın bedel öder)',
+  'hudChrome.finder.mech.bone_spike': 'Kemik Dikeni (saplanan akıncılar diken yok edilene kadar tükenir)',
+  'hudChrome.finder.mech.bone_storm': 'Kemik Fırtınası (tehdidi yok sayar, döner ve akına hücum eder)',
+  'hudChrome.finder.mech.crown_endures': 'Taç Dayanır (6:00’da sert öfke, heroic 5:00)',
+  'hudChrome.finder.mech.deathless_court':
+    'Ölümsüz Saray (yalnız heroic, kraliyet sarayı Ölümsüz Öfke’den sonra ayağa kalkar)',
+  'hudChrome.finder.mech.grave_eruption': 'Mezar Patlaması (yanan zemin bırakan uyarı çemberleri)',
+  'hudChrome.finder.mech.gravefire': 'Mezar Ateşi (yana kaçılması gereken ilerleyen ateş çizgisi)',
+  'hudChrome.finder.mech.kings_wrath': 'Kralın Gazabı (30%: kalıcı hasar bonusu, daha hızlı zemin tehlikeleri)',
+  'hudChrome.finder.mech.soulfire': 'Ruh Ateşi (Ruh Yırtma patlamaları yanan havuzlar bırakır)',
+  'hudChrome.fullTransfer.excluded':
+    'Asla dahil edilmez: giriş, hesap, cüzdan veya satın alma verilerin. Eylem çubuğu düzenleri hesabına kaydedilir ve onunla birlikte taşınır.',
+  'hudChrome.fullTransfer.fullSettings': 'Tam Ayarlar',
+  'hudChrome.fullTransfer.intro':
+    'Bu cihazdaki tüm kayıtlı tercihleri tek bir kod olarak dışa aktar ve başka bir cihazda veya tarayıcıda içe aktarmak için yapıştır: grafik, ses, arayüz, tema, çerçeve düzeni, her karakter için tuş atamaları, kontrolcü ve çapraz hotbar atamaları, sohbet, pencere filtreleri, dil ve kapatılmış ipuçları.',
+  'hudChrome.fullTransfer.menu': 'İçe / Dışa Aktar',
+  'hudChrome.fullTransfer.title': 'Ayarları İçe / Dışa Aktar',
+  'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Hasar Ölçer',
+  'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Edim Takipçisi',
+  'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Delve Takipçisi',
+  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Musibet Çubuğu',
+  'hudChrome.interfaceUnlock.frameNames.petBar': 'Evcil Çubuğu',
+  'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Büyü Tetiklenmeleri',
+  'hudChrome.interfaceUnlock.frameNames.questTracker': 'Görev Takipçisi',
+  'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': 'Emanetlik Takipçisi',
+  'hudChrome.interfaceUnlock.frameNames.riftTracker': 'Yarık Takipçisi',
+  'hudChrome.interfaceUnlock.frameNames.swingBarOffhand': 'Sol El',
+  'hudChrome.keybindTransfer.apply': 'Uygula',
+  'hudChrome.keybindTransfer.imported': 'Kısayol düzeni içe aktarıldı.',
+  'hudChrome.keybindTransfer.setup': 'Kısayol Düzeni',
+  'hudChrome.keybindTransfer.wrongKind': 'Bu kod bir ayar dışa aktarımı, kısayol düzeni değil.',
+  'hudChrome.keyboardMap.assignHint': '{key} tuşuna bağlanacak bir eylem seç.',
+  'hudChrome.keyboardMap.assignOption': '{category}: {action}',
+  'hudChrome.keyboardMap.assignPlaceholder': '{key} tuşuna bir eylem ata',
+  'hudChrome.keyboardMap.bindingLine': '{key}: {action}',
+  'hudChrome.keyboardMap.boundTo': '{action}, {key} tuşuna bağlandı.',
+  'hudChrome.keyboardMap.close': 'Klavye genel görünümünü kapat',
+  'hudChrome.keyboardMap.form60': '60%',
+  'hudChrome.keyboardMap.form75': '75%',
+  'hudChrome.keyboardMap.formFull': 'Tam boy',
+  'hudChrome.keyboardMap.formGroup': 'Klavye boyutu',
+  'hudChrome.keyboardMap.formTkl': 'Sayısal tuşsuz',
+  'hudChrome.keyboardMap.hint':
+    'Kullanımdaki tuşlar kategoriye göre renklendirilir. Bir tuşa bağlı her şeyi görmek için üzerine gel veya odaklan.',
+  'hudChrome.keyboardMap.hintInteractive':
+    'Kullanımdaki tuşlar kategoriye göre renklendirilir. Ne yaptığını değiştirmek için bir tuşa tıkla; bağlı her şeyi görmek için üzerine gel veya odaklan.',
+  'hudChrome.keyboardMap.keyDetail': '{key}: {bindings}',
+  'hudChrome.keyboardMap.layerAlt': 'Alt',
+  'hudChrome.keyboardMap.layerCtrl': 'Ctrl',
+  'hudChrome.keyboardMap.layerGroup': 'Değiştirici katmanı',
+  'hudChrome.keyboardMap.layerNone': 'Değiştirici yok',
+  'hudChrome.keyboardMap.layerShift': 'Shift',
+  'hudChrome.keyboardMap.legendGroup': 'Tuş etiketleri',
+  'hudChrome.keyboardMap.legendLayout': 'Düzenin',
+  'hudChrome.keyboardMap.legendQwerty': 'QWERTY',
+  'hudChrome.keyboardMap.notBindable': 'Bu tuş bağlanamaz.',
+  'hudChrome.keyboardMap.notOnLayout': 'Bu klavyede yok: {bindings}',
+  'hudChrome.keyboardMap.otherLayers': 'Değiştiriciyle de bağlı',
+  'hudChrome.keyboardMap.popOut': 'Ayrı Aç',
+  'hudChrome.keyboardMap.pressKey': '{action} için bir tuşa bas. Esc iptal eder.',
+  'hudChrome.keyboardMap.separator': ', ',
+  'hudChrome.keyboardMap.title': 'Klavye Genel Görünümü',
+  'hudChrome.nythraxisCallout.boneStormBegins': 'Kemik Fırtınası! Dağılın ve koşun!',
+  'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis SANA hücum ediyor! Koş!',
+  'hudChrome.nythraxisCallout.boneStormEnds': 'Kemik Fırtınası bitti. Tanklar, onu alın!',
+  'hudChrome.nythraxisCallout.crownEndures': 'Taç Dayanır! Nythraxis öfkelendi!',
+  'hudChrome.nythraxisCallout.crownEndures10': 'On saniye! Yakın onu!',
+  'hudChrome.nythraxisCallout.crownEndures30': 'Taç Dayanır’a otuz saniye!',
+  'hudChrome.nythraxisCallout.crownEndures60': 'Taç Dayanır’a bir dakika!',
+  'hudChrome.nythraxisCallout.dreadCurseSwap': 'Dehşet Laneti: tank değişin!',
+  'hudChrome.nythraxisCallout.gravefireTarget': 'Mezar Ateşi sana doğru geliyor! Yana kaç!',
+  'hudChrome.nythraxisCallout.impaled': 'Kemik Dikenleri! Saplananları kurtarın!',
+  'hudChrome.nythraxisCallout.kingsWrath': 'Kral gazapla yükseliyor! Artık her şey daha sert vuruyor!',
+  'hudChrome.nythraxisCallout.sigilAppears': 'Bağlama Mührü parladı! Nythraxis’i üzerine sürükle!',
+  'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis bağlandı! Yakın onu!',
+  'hudChrome.nythraxisCallout.sigilUnbound': 'Mühür bağlamadan sönüyor! Nythraxis güçleniyor!',
+  'hudChrome.nythraxisCallout.spikeBroken': 'Diken parçalandı!',
+  'hudChrome.nythraxisCallout.youAreImpaled': 'Saplandın! Dayan!',
+  'hudChrome.options.gpuBackend': 'Grafik Arka Ucu',
+  'hudChrome.options.gpuBackendActive': 'Şu anda {backend} kullanılıyor.',
+  'hudChrome.options.gpuBackendActiveAutoCapped':
+    'Şu anda {backend} kullanılıyor. Otomatik seçenek bu grafik kartında Vulkan’ı henüz denemiyor; denemek için Vulkan’ı seç.',
+  'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
+  'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
+  'hudChrome.options.gpuBackendActiveUnavailable': 'Şu anda {backend} kullanılıyor (Vulkan etkinleştirilemedi).',
+  'hudChrome.options.gpuBackendAuto': 'Otomatik',
+  'hudChrome.options.gpuBackendNote':
+    'Otomatik seçenek senin için en iyi seçeneği seçer. Vulkan daha hızlıdır ve çoğu oyuncu için önerilir. OpenGL daha yavaştır, ancak Vulkan düzgün çalışmazsa yardımcı olabilir. Oyunun bir sonraki başlangıcında geçerli olur.',
+  'hudChrome.options.gpuBackendOpenGL': 'OpenGL (yavaş)',
+  'hudChrome.options.gpuBackendSaveFailed': 'Seçim kaydedilemedi. Bir sonraki başlangıç {backend} kullanmayı sürdürür.',
+  'hudChrome.options.gpuBackendVulkan': 'Vulkan',
+  'hudChrome.options.restartFailed': 'Oyun kendini yeniden başlatamadı. Çık ve yeniden başlat.',
+  'hudChrome.options.restartGame': 'Oyunu Yeniden Başlat',
+  'hudChrome.options.restartInProgress': 'Oyun yeniden başlatılıyor...',
+  'hudChrome.options.restartPending': 'Bazı değişiklikler yeniden başlatmadan sonra geçerli olur.',
+  'hudChrome.options.shaderWarm': 'Shader Isıtma İşçisi',
+  'hudChrome.options.shaderWarmAuto': 'Otomatik',
+  'hudChrome.options.shaderWarmNote':
+    'Oyun içi takılmaları önlemek için shader önbelleğini arka planda önceden ısıtır. Otomatik: Yalnızca grafik sistemin desteklediğinde etkin. (Önerilir). Açık: Her yerde zorlanır. Bazı kurulumlarda performansı kötüleştirebilir. Kapalı: Devre dışı.',
+  'hudChrome.options.shaderWarmOff': 'Kapalı',
+  'hudChrome.options.shaderWarmOn': 'Açık',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilHeroicSummary':
+    'Her {everyHeroic} sn, Nythraxis’ten {minDist} ile {maxDist} yd uzaktaki zeminde eski muhafazaların mührü parlar ve Nythraxis Ölümsüz Yükseliş’e başlar; her {ascensionEvery} sn {ascensionHeroic} hasar ve saldırı hızı kazanır. {bindHeroic} sn içinde mührün üzerinde durursa Bağlanır: Yükseliş arındırılır, {stunHeroic} sn sersemletilir ve {boundHeroic} sn boyunca {vulnerability} daha fazla hasar alır. Aksi halde her akıncı azami canın {unboundHitHeroic} kadarı kadar Gölge hasarı alır ve Nythraxis sonraki bağlamaya kadar {unboundBonusHeroic} daha fazla hasarı korur.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilName': 'Bağlama Mührü',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilResponse':
+    'Tank, akının geride bıraktığı ateş ne olursa olsun Nythraxis’i hemen mührün üzerine sürükler. Yakın dövüş sürüklemeyi takip eder, menzilliler yeni Mezarparçalayan konisinin dışında kalır. O Bağlıyken herkes onu yakar.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilSummary':
+    'Her {everyNormal} sn, Nythraxis’ten {minDist} ile {maxDist} yd uzaktaki zeminde eski muhafazaların mührü parlar ve Nythraxis Ölümsüz Yükseliş’e başlar; her {ascensionEvery} sn {ascensionNormal} hasar ve saldırı hızı kazanır. {bindNormal} sn içinde mührün üzerinde durursa Bağlanır: Yükseliş arındırılır, {stunNormal} sn sersemletilir ve {boundNormal} sn boyunca {vulnerability} daha fazla hasar alır. Aksi halde her akıncı azami canın {unboundHitNormal} kadarı kadar Gölge hasarı alır ve Nythraxis sonraki bağlamaya kadar {unboundBonusNormal} daha fazla hasarı korur.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeHeroicSummary':
+    'Her {everyHeroic} sn, Nythraxis mevcut hedefi dışındaki {victimsHeroic} akıncıyı Kemik Dikenlerine saplar. Saplanan akıncı hareket edemez ve dikeni yok edilene kadar her saniye azami canının {drainHeroic} kadarını kaybeder.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeName': 'Kemik Dikeni',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeResponse':
+    'Hasar verenler hemen Kemik Dikenlerine geçer ve saplanan akıncıları kurtarmak için onları yok eder. Şifacılar dikenler düşene kadar saplananları hayatta tutar.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
+    'Her {everyNormal} sn, Nythraxis mevcut hedefi dışındaki {victimsNormal} akıncıyı Kemik Dikenlerine saplar. Saplanan akıncı hareket edemez ve dikeni yok edilene kadar her saniye azami canının {drainNormal} kadarını kaybeder.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
+    'Kralın Gazabı başladıktan {first} sn sonra ve ardından her {everyHeroic} sn, Nythraxis {duration} sn süren Kemik Fırtınası başlatır. Tehdidi yok sayar, normal hızın {speed} katıyla hareket eder ve her biri {chargeSeconds} sn süren {charges} hücum yapar. Girdabı {radius} yd içinde her saniye azami canın {whirlHeroic} kadarını verir. Her hücum aynı yarıçapta azami canın {slamHeroic} kadarıyla Kemik Çarpmasıyla biter. Fırtınanın {spikeAt} sn sonrasında Kemik Dikeni kullanır, bittikten {rearm} sn sonra Mezarparçalayan yeniden hazır olur.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Kemik Fırtınası',
+  'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
+    'Dağılın ve Nythraxis’ten koşmayı sürdürün. Hedef alınan akıncı kaçar, diğer herkes hücum yolunun çevresinde boşluk bırakır; fırtına bitince tanklar onu geri alır.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
+    'Kralın Gazabı başladıktan {first} sn sonra ve ardından her {everyNormal} sn, Nythraxis {duration} sn süren Kemik Fırtınası başlatır. Tehdidi yok sayar, normal hızın {speed} katıyla hareket eder ve her biri {chargeSeconds} sn süren {charges} hücum yapar. Girdabı {radius} yd içinde her saniye azami canın {whirlNormal} kadarını verir. Her hücum aynı yarıçapta azami canın {slamNormal} kadarıyla Kemik Çarpmasıyla biter. Fırtınanın {spikeAt} sn sonrasında Kemik Dikeni kullanır, bittikten {rearm} sn sonra Mezarparçalayan yeniden hazır olur.',
+  'hudChrome.raidBossGuide.nythraxis.courtName': 'Ölümsüz Saray',
+  'hudChrome.raidBossGuide.nythraxis.courtResponse':
+    'Tanklar Aldren’i alır ve yarma saldırısını akından uzağa çevirir. Malric’in İyileştirmesi başlar başlamaz Malric’i sersemletin veya susturun ve önce onu öldürün; sonra kışkırtılamadığı için Voss’u şifacılardan uzakta kökleyin veya sersemletin ve ardından onu bitirin.',
+  'hudChrome.raidBossGuide.nythraxis.courtSummary':
+    'Heroic’te Nythraxis, önceki saray düştüğünde her Ölümsüz Öfke’den sonra, kesilmiş olsun olmasın, sarayını ayağa kaldırır. Aldren’in Ruhu, Kraliyet Yarmasıyla hedefinin yakınındaki her şeyi yarar. Malric’in Ruhu Malric’in İyileştirmesini kanalize eder ve her kullanışta Nythraxis’i daha fazla iyileştirir. Voss’un Ruhu kışkırtmaları yok sayar ve akını avlar.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresHeroicSummary':
+    'Çekişten {enrageHeroic} sn sonra (Birader Aldric 70%’te girerken saat durur), Taç Dayanır sert öfke olarak tetiklenir. Nythraxis {damage} daha fazla hasar ve %{haste} daha hızlı saldırılar kazanır, sonra her {rampEveryHeroic} sn ek {rampStep} hasar alır. Zamanlayıcı çubuğu yoktur. Uyarılar kalan {warn60}, {warn30} ve {warn10} sn’de bağırış olarak gelir.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresName': 'Taç Dayanır',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresResponse':
+    'İlk uyarıyı son yakma olarak kabul edin. Kalan mekanikler için hareket ve savunma bekleme sürelerini saklayın, ardından Nythraxis’i öfkeden önce yenin.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresSummary':
+    'Çekişten {enrageNormal} sn sonra (Birader Aldric 70%’te girerken saat durur), Taç Dayanır sert öfke olarak tetiklenir. Nythraxis {damage} daha fazla hasar ve %{haste} daha hızlı saldırılar kazanır, sonra her {rampEveryNormal} sn ek {rampStep} hasar alır. Zamanlayıcı çubuğu yoktur. Uyarılar kalan {warn60}, {warn30} ve {warn10} sn’de bağırış olarak gelir.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageHeroicSummary':
+    'Her {every} sn, Nythraxis {cast} sn boyunca Ölümsüz Öfke kullanır. Kullanırken, yanan her muhafaza taşı bir akıncı tarafından {channel} sn kanalize edilebilir. Üç farklı akıncı kullanım bitmeden birer muhafaza taşını tamamlarsa Öfke kesilir ve Nythraxis {stun} sn sersemletilir. Aksi halde her akıncı azami canın {damageHeroic} kadarı kadar Gölge hasarı alır; hiçbir can havuzu bunu sağ çıkarmaz.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageName': 'Ölümsüz Öfke',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageResponse':
+    'Çekişten önce her muhafaza taşına bir akıncı atayın. Kullanım başladığında herkes kendi taşına koşar ve tamamlanana kadar kanalize eder. Sersemletmeler, uzaklaşmak ve ölüm kanalı keser; bu yüzden kanal yapanları güvende tutun ve saplanmış bir akıncıyı asla atamayın.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageSummary':
+    'Her {every} sn, Nythraxis {cast} sn boyunca Ölümsüz Öfke kullanır. Kullanırken, yanan her muhafaza taşı bir akıncı tarafından {channel} sn kanalize edilebilir. Üç farklı akıncı kullanım bitmeden birer muhafaza taşını tamamlarsa Öfke kesilir ve Nythraxis {stun} sn sersemletilir. Aksi halde her akıncı azami canın {damageNormal} kadarı kadar Gölge hasarı alır.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseHeroicSummary':
+    'Her {every} sn, Nythraxis mevcut tankına azami canın {hitHeroic} kadarı kadar Gölge hasarı vurur ve bir Dehşet Laneti yükü ekler. {duration} sn boyunca her yük, o tankın Nythraxis’ten aldığı hasarı {perStackHeroic} artırır, en fazla {max} yüke kadar.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseName': 'Dehşet Laneti',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseResponse':
+    'Tanklar {stacks} yükte değişir: diğer tank kışkırtır ve lanetli tank yükler kaybolurken Mezarparçalayan konisinin dışında kalır. Şifacılar değişimden önce gelen tankı hazırlar.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseSummary':
+    'Her {every} sn, Nythraxis mevcut tankına azami canın {hitNormal} kadarı kadar Gölge hasarı vurur ve bir Dehşet Laneti yükü ekler. {duration} sn boyunca her yük, o tankın Nythraxis’ten aldığı hasarı {perStackNormal} artırır, en fazla {max} yüke kadar.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionHeroicSummary':
+    'Her {everyHeroic} sn, iskelet eller akıncıların altında {radius} yd yarıçaplı {countHeroic} çember işaretler. {warning} sn sonra her çember azami canın {burstHeroic} kadarı kadar Gölge hasarıyla patlar, ardından {flameHeroic} sn boyunca Mezar Alevi olarak yanar ve içinde duran herkese her saniye azami canın {tickHeroic} kadarını verir.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionName': 'Mezar Patlaması',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionResponse':
+    'Her uyarı çemberi patlamadan önce dışına çıkın ve yanan zeminden uzak durun. Tanklar Nythraxis’i alevlerden uzaklaştırır, böylece yakın dövüşün çalışacak alanı kalır.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionSummary':
+    'Her {everyNormal} sn, iskelet eller akıncıların altında {radius} yd yarıçaplı {countNormal} çember işaretler. {warning} sn sonra her çember azami canın {burstNormal} kadarı kadar Gölge hasarıyla patlar, ardından {flameNormal} sn boyunca Mezar Alevi olarak yanar ve içinde duran herkese her saniye azami canın {tickNormal} kadarını verir.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerName': 'Mezarparçalayan',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerResponse':
+    'Tanklar Nythraxis’in yüzünü akından uzağa tutar. Diğer herkes arkasında veya yanında kalır ve koninin içinden asla geçmez.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerSummary':
+    'Her {seconds} sn, Nythraxis bir sonraki isabet eden savuruşunu yükler. Hedefi yalnızca savuruşun kendisini alır, ama önündeki {arc} derecelik koni içinde {range} yd mesafedeki herkes bu savuruşun {splash} kadarını kendi zırhlarıyla azaltılan Fiziksel hasar olarak alır.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireHeroicSummary':
+    'Her {everyHeroic} sn, Nythraxis’ten bir akıncıya doğru mor bir mezar ateşi çizgisi ilerler, her saniye {speed} yd büyüyerek {length} yd olur. Her yard {burnHeroic} sn yanar ve içinde duran herkese her saniye azami canın {tickHeroic} kadarını verir.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireName': 'Mezar Ateşi',
+  'hudChrome.raidBossGuide.nythraxis.gravefireResponse':
+    'Çizgi gelirken yana kaç: dardır ve asla dönmez. Menzilli akıncılar tek yerde durmak yerine hareket etmeyi sürdürür.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireSummary':
+    'Her {everyNormal} sn, Nythraxis’ten bir akıncıya doğru mor bir mezar ateşi çizgisi ilerler, her saniye {speed} yd büyüyerek {length} yd olur. Her yard {burnNormal} sn yanar ve içinde duran herkese her saniye azami canın {tickNormal} kadarını verir.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathName': 'Kralın Gazabı',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathResponse':
+    'Kaçınılmaz hasar için kalan savunma bekleme sürelerini kullanın. Akın savaşı bitirirken önceki her mekaniği temiz tutun.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathSummary':
+    'Nythraxis savaşın kalanı boyunca Normal’de {bonusNormal}, Heroic’te {bonusHeroic} daha fazla hasar verir. Mezar Patlaması her {eruptionEveryNormal} sn ({eruptionEveryHeroic} Heroic’te), Mezar Ateşi her {gravefireEveryNormal} sn ({gravefireEveryHeroic} Heroic’te) olur.',
+  'hudChrome.raidBossGuide.nythraxis.overview':
+    'Başrahip Malric kralının ölmesine izin vermeyi reddetti ve Nythraxis’i ayağa kaldıran ayin tüm sarayı mahzene bağladı. Karşılaşma disiplinli tank değişimini, Kemik Dikenlerine hızlı geçişleri, yanan zeminden uzak hareketi ve Taht düştüğünde koordineli muhafaza taşı kanalını sınar.',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathName': 'Kralın Gazabı',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathSummary':
+    '{health} canda Nythraxis Kralın Gazabıyla kükrer ve savaşın kalanı boyunca Normal’de {bonusNormal}, Heroic’te {bonusHeroic} hasar kazanır. Mezar Patlaması her {eruptionEveryNormal} sn’ye ({eruptionEveryHeroic} Heroic’te), Mezar Ateşi her {gravefireEveryNormal} sn’ye ({gravefireEveryHeroic} Heroic’te) sıklaşır. Diğer her mekanik ritmini korur.',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneName': 'Taht',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneSummary':
+    'Nythraxis taht odasını yüklü önden yarma, Dehşet Laneti tank değişimi, akıncıları saplayan Kemik Dikenleri ve yanan zemin bırakan Mezar Patlamalarıyla tutar.',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesName': 'Muhafaza Taşları',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesSummary':
+    '{health} canda Sarsan Ezme akını yerinde tutarken Birader Aldric gelir ve muhafaza taşlarını yakar. Her diken parçalanır ve zemin yanmayı bırakır; ardından Ruh Yırtma ve Ölümsüz Öfke Taht mekaniklerine katılır.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenName': 'Düşenleri Kaldır',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenResponse':
+    'Off-tank her dalgayı yükseldiği anda alır. Hasar verenler Kemik Dikenleri arasında muhafızları temizler, böylece Taht düşmeden önce dalgalar asla birikmez.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenSummary':
+    'Taht sırasında her {every} sn Nythraxis arkasında Yükselmiş Kraliyet Muhafızları kaldırır. Mevcut hedefine koşarlar ve yok edilene kadar savaşırlar.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendHeroicSummary':
+    'Nythraxis mevcut hedefi dışındaki {marksHeroic} akıncıyı Ruh Yırtma ile işaretler. {fuse} sn sonra her işaret, taşıyıcısının azami canının {damageHeroic} kadarını Gölge hasarı olarak verir ve yakınlarındaki {range} yd içindeki işaretli akıncı sayısına bölünür. Tek başına çözülen işaret ölümcüldür.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendName': 'Ruh Yırtma',
+  'hudChrome.raidBossGuide.nythraxis.soulRendResponse':
+    'Her işaretli akıncı tek bir toplanma noktasına koşar ve {fuse} sn fitil bitmeden diğer işaretlerin {range} yd içinde durur. Şifacılar işaretler çözülürken grubun canını tamamlar.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendSummary':
+    'Nythraxis mevcut hedefi dışındaki {marksNormal} akıncıyı Ruh Yırtma ile işaretler. {fuse} sn sonra her işaret, taşıyıcısının tam azami canını Gölge hasarı olarak verir ve yakınlarındaki {range} yd içindeki işaretli akıncı sayısına bölünür.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireHeroicSummary':
+    'Her Ruh Yırtma patlaması, üst üste duran işaret grubu başına {radius} yd yarıçaplı bir mor ateş havuzu bırakır; {secondsHeroic} sn boyunca yanar ve her saniye azami canın {tickHeroic} kadarını verir. Havuzların çakıştığı yerde durmak yalnızca bir tik alır, asla üst üste kopyalar değil. Havuzlar bir muhafaza taşının {clearance} yd içinde asla oluşmaz.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireName': 'Ruh Ateşi',
+  'hudChrome.raidBossGuide.nythraxis.soulfireResponse':
+    'İşaretler patlar patlamaz mor havuzdan çıkın. Sonraki toplanma noktasını aktif ateşten temiz tutun.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
+    'Her Ruh Yırtma patlaması, her işaretin durduğu yerde {radius} yd yarıçaplı mor ateş havuzu bırakır; {seconds} sn boyunca yanar ve her saniye azami canın {tickNormal} kadarını verir. Havuzların çakıştığı yerde durmak her birinden tik alır. Havuzlar bir muhafaza taşının {clearance} yd içinde asla oluşmaz.',
 };

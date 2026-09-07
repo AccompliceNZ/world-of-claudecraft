@@ -15700,4 +15700,272 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'yumi.queue.leave': 'Bạn rời hàng chờ Bảo Vệ Yumi.',
   'yumi.queue.teamLeave': 'Đội của bạn rời hàng chờ Bảo Vệ Yumi.',
   'yumi.respawn.title': 'GỤC NGÃ!',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    'Lĩnh Hội Mắt Lạnh từ một lần Kéo Cung Cuồng Nhiệt hoàn tất khiến Đòn Bắn Sa Ngã tiếp theo của bạn gây thêm 75% sát thương. Bắn phát đó sẽ tiêu hao Lĩnh Hội.',
+  'entities.items.bramblehide_cinch.name': 'Đai Da Gai Góc Của Rễ',
+  'entities.items.bramblehide_crown.name': 'Vương Miện Da Gai Góc Của Rễ',
+  'entities.items.bramblehide_grips.name': 'Găng Da Gai Góc Của Rễ',
+  'entities.items.bramblehide_harness.name': 'Áo Giáp Da Gai Góc Của Rễ',
+  'entities.items.bramblehide_legguards.name': 'Giáp Chân Da Gai Góc Của Rễ',
+  'entities.items.bramblehide_mantle.name': 'Áo Choàng Vai Da Gai Góc Của Rễ',
+  'entities.items.bramblehide_treads.name': 'Ủng Da Gai Góc Của Rễ',
+  'entities.items.courtiers_bonefang.name': 'Nanh Xương Của Cận Thần',
+  'entities.items.gravecourt_hewer.name': 'Rìu Chém Triều Đình Mộ',
+  'entities.items.stormhymn_chain_grips.name': 'Găng Xích Thánh Ca Bão',
+  'entities.items.stormhymn_chain_treads.name': 'Ủng Xích Thánh Ca Bão',
+  'entities.items.thornpeak_moonhide_cowl.name': 'Mũ Trùm Da Trăng Đỉnh Gai',
+  'entities.items.thornpeak_wardblade.name': 'Kiếm Hộ Vệ Đỉnh Gai',
+  'entities.items.votive_ward_of_the_deathless_court.name': 'Hộ Phù Hiến Tế Của Triều Đình Bất Tử',
+  'entities.mobs.nythraxis_bone_spike.name': 'Cọc Xương',
+  'gpuNotice.bodyRequestedBackend':
+    'Trò chơi không thể khởi động trên backend đồ họa bạn chọn, nên đang chạy bằng OpenGL. Mọi thứ vẫn hoạt động; quá trình tải và vài phút đầu có thể khựng nhiều hơn. Bạn có thể chọn lại backend trong Tùy chọn, Đồ họa, Hệ thống.',
+  'hudChrome.auraEffect.coldsightRead':
+    'Kéo Cung Dài tiếp theo của bạn gây thêm {longDrawPct}% sát thương, hoặc Đòn Bắn Sa Ngã tiếp theo của bạn gây thêm {fellShotPct}%',
+  'hudChrome.auraEffect.nythraxisAscension':
+    'Thăng Hoa Bất Tử: {stacks} cộng dồn, thêm {pct}% sát thương và tốc độ đánh. Kéo Nythraxis lên Phù Ấn Trói Buộc để thanh tẩy.',
+  'hudChrome.auraEffect.nythraxisBoneStorm':
+    'Bão Xương: Nythraxis bỏ qua thù hận, xoáy gây {tick}% máu tối đa mỗi giây trong phạm vi {radius} yd, và lao vào các raider. Tản ra và chạy.',
+  'hudChrome.auraEffect.nythraxisBound':
+    'Bị trói bởi các hộ ấn cổ: Nythraxis nhận thêm {pct}% sát thương trong {duration} giây.',
+  'hudChrome.auraEffect.nythraxisCrownEndures':
+    'Vương Miện Trường Tồn: {stacks} cộng dồn, thêm {pct}% sát thương và đòn đánh nhanh hơn {haste}%. Raid đã hết thời gian.',
+  'hudChrome.auraEffect.nythraxisDreadCurse':
+    'Mỗi cộng dồn tăng sát thương nhận từ Nythraxis thêm {perStack}% trong {duration} giây: hiện {stacks} trên {max} cộng dồn, thêm {pct}% sát thương. Mỗi {every} giây, đòn đánh tiếp theo của hắn lên mục tiêu gây {hit}% máu tối đa và thêm một cộng dồn. Tank nên đổi ở {swap} cộng dồn.',
+  'hudChrome.auraEffect.nythraxisImpaled':
+    'Bị Cọc Xương xuyên thủng: bạn không thể hành động và mất {normal}% máu tối đa mỗi {interval} giây ({heroic}% ở Heroic) cho đến khi raid phá hủy cọc.',
+  'hudChrome.auraEffect.nythraxisKingsWrath':
+    'Cơn Thịnh Nộ Của Vua: Nythraxis gây thêm {pct}% sát thương trong phần còn lại của trận đấu.',
+  'hudChrome.auraEffect.nythraxisUnbound':
+    'Được giải trói: Nythraxis gây thêm {pct}% sát thương cho đến khi một Phù Ấn Trói Buộc giữ được hắn.',
+  'hudChrome.auraEffect.veiledEdgeStrike':
+    'Đòn Tấn Công Ẩn Nhận tiếp theo của bạn gây thêm {pct}% sát thương vũ khí',
+  'hudChrome.bank.guildHistoryTab': 'Lịch sử',
+  'hudChrome.bank.logActionAdminPurge': 'Đã xóa',
+  'hudChrome.bank.logActionBuySlots': 'Đã mua mở rộng',
+  'hudChrome.bank.logActionCharterFee': 'Đã trả phí điều lệ',
+  'hudChrome.bank.logActionDeposit': 'Đã gửi',
+  'hudChrome.bank.logActionOpenBank': 'Đã mở ngân hàng',
+  'hudChrome.bank.logActionWithdraw': 'Đã rút',
+  'hudChrome.bank.logActorAdmin': 'Một quản trị viên',
+  'hudChrome.bank.logColAction': 'Hành động',
+  'hudChrome.bank.logColDetail': 'Chi tiết',
+  'hudChrome.bank.logColMember': 'Thành viên',
+  'hudChrome.bank.logColTime': 'Thời điểm',
+  'hudChrome.bank.logDetailItem': '{count} {item}',
+  'hudChrome.bank.logEmptyFiltered': 'Không có hành động ngân hàng guild nào khớp bộ lọc này.',
+  'hudChrome.bank.logEnd': 'Đó là toàn bộ lịch sử ngân hàng guild.',
+  'hudChrome.bank.logFilterAll': 'Tất cả',
+  'hudChrome.bank.logFilterAria': 'Lọc lịch sử ngân hàng guild',
+  'hudChrome.bank.logFilterItems': 'Vật phẩm',
+  'hudChrome.bank.logFilterMoney': 'Tiền',
+  'hudChrome.bank.logOlder': 'Hiển thị cũ hơn',
+  'hudChrome.bank.logOlderLoading': 'Đang tải hành động cũ hơn...',
+  'hudChrome.bank.logSearchAria': 'Tìm trong các hành động ngân hàng guild đã tải theo thành viên, hành động hoặc vật phẩm',
+  'hudChrome.bank.logSearchNoMatch':
+    'Không có hành động ngân hàng guild đã tải nào khớp tìm kiếm của bạn. Hiển thị các dòng cũ hơn để mở rộng phạm vi.',
+  'hudChrome.bank.logSearchPlaceholder': 'Tìm trong lịch sử này',
+  'hudChrome.bank.logShowing': 'Đang hiển thị {count} hành động ngân hàng guild, mới nhất trước.',
+  'hudChrome.bank.logShowingMatched': 'Đang hiển thị {matched} trong {count} hành động ngân hàng guild đã tải.',
+  'hudChrome.finder.mech.binding_sigil': 'Phù Ấn Trói Buộc (kéo boss lên phù ấn, nếu không raid sẽ trả giá)',
+  'hudChrome.finder.mech.bone_spike': 'Cọc Xương (raider bị xuyên bị rút máu cho đến khi cọc bị phá)',
+  'hudChrome.finder.mech.bone_storm': 'Bão Xương (hắn bỏ qua thù hận, xoáy và lao vào raid)',
+  'hudChrome.finder.mech.crown_endures': 'Vương Miện Trường Tồn (cuồng nộ cứng ở 6:00, heroic 5:00)',
+  'hudChrome.finder.mech.deathless_court':
+    'Triều Đình Bất Tử (chỉ heroic, triều đình hoàng gia trỗi dậy sau Cơn Thịnh Nộ Bất Tử)',
+  'hudChrome.finder.mech.grave_eruption': 'Mộ Phần Phun Trào (vòng cảnh báo để lại mặt đất bốc cháy)',
+  'hudChrome.finder.mech.gravefire': 'Lửa Mộ (một vệt lửa di chuyển cần né sang bên)',
+  'hudChrome.finder.mech.kings_wrath': 'Cơn Thịnh Nộ Của Vua (30%: cộng sát thương vĩnh viễn, bẫy sàn nhanh hơn)',
+  'hudChrome.finder.mech.soulfire': 'Lửa Linh Hồn (vụ nổ Xé Linh Hồn để lại vũng lửa)',
+  'hudChrome.fullTransfer.excluded':
+    'Không bao giờ bao gồm: dữ liệu đăng nhập, tài khoản, ví hoặc mua hàng của bạn. Bố cục thanh hành động được lưu vào tài khoản và đi cùng tài khoản đó.',
+  'hudChrome.fullTransfer.fullSettings': 'Cài đặt đầy đủ',
+  'hudChrome.fullTransfer.intro':
+    'Xuất mọi tùy chọn đã lưu trên thiết bị này thành một mã, rồi dán mã đó trên thiết bị hoặc trình duyệt khác để nhập: đồ họa, âm thanh, giao diện, chủ đề, bố cục khung, phím tắt cho từng nhân vật, gán nút tay cầm và cross hotbar, chat, bộ lọc cửa sổ, ngôn ngữ và các gợi ý đã bỏ qua.',
+  'hudChrome.fullTransfer.menu': 'Nhập / Xuất',
+  'hudChrome.fullTransfer.title': 'Nhập / Xuất Cài Đặt',
+  'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Đồng Hồ Sát Thương',
+  'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Theo Dõi Chiến Công',
+  'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Theo Dõi Delve',
+  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Thanh Tai Ương',
+  'hudChrome.interfaceUnlock.frameNames.petBar': 'Thanh Linh Thú',
+  'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Kích Hoạt Phép',
+  'hudChrome.interfaceUnlock.frameNames.questTracker': 'Theo Dõi Nhiệm Vụ',
+  'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': 'Theo Dõi Hộp Thánh Tích',
+  'hudChrome.interfaceUnlock.frameNames.riftTracker': 'Theo Dõi Khe Nứt',
+  'hudChrome.interfaceUnlock.frameNames.swingBarOffhand': 'Tay Phụ',
+  'hudChrome.keybindTransfer.apply': 'Áp dụng',
+  'hudChrome.keybindTransfer.imported': 'Đã nhập thiết lập phím tắt.',
+  'hudChrome.keybindTransfer.setup': 'Thiết Lập Phím Tắt',
+  'hudChrome.keybindTransfer.wrongKind': 'Mã đó là bản xuất cài đặt, không phải thiết lập phím tắt.',
+  'hudChrome.keyboardMap.assignHint': 'Chọn hành động để gán cho {key}.',
+  'hudChrome.keyboardMap.assignOption': '{category}: {action}',
+  'hudChrome.keyboardMap.assignPlaceholder': 'Gán một hành động cho {key}',
+  'hudChrome.keyboardMap.bindingLine': '{key}: {action}',
+  'hudChrome.keyboardMap.boundTo': 'Đã gán {action} cho {key}.',
+  'hudChrome.keyboardMap.close': 'Đóng tổng quan bàn phím',
+  'hudChrome.keyboardMap.form60': '60%',
+  'hudChrome.keyboardMap.form75': '75%',
+  'hudChrome.keyboardMap.formFull': 'Kích thước đầy đủ',
+  'hudChrome.keyboardMap.formGroup': 'Kích thước bàn phím',
+  'hudChrome.keyboardMap.formTkl': 'Không phím số',
+  'hudChrome.keyboardMap.hint':
+    'Các phím đang dùng được tô màu theo danh mục. Di chuột hoặc focus vào một phím để xem mọi thứ được gán cho phím đó.',
+  'hudChrome.keyboardMap.hintInteractive':
+    'Các phím đang dùng được tô màu theo danh mục. Nhấp một phím để đổi chức năng của nó; di chuột hoặc focus vào một phím để xem mọi thứ được gán cho phím đó.',
+  'hudChrome.keyboardMap.keyDetail': '{key}: {bindings}',
+  'hudChrome.keyboardMap.layerAlt': 'Alt',
+  'hudChrome.keyboardMap.layerCtrl': 'Ctrl',
+  'hudChrome.keyboardMap.layerGroup': 'Lớp phím bổ trợ',
+  'hudChrome.keyboardMap.layerNone': 'Không phím bổ trợ',
+  'hudChrome.keyboardMap.layerShift': 'Shift',
+  'hudChrome.keyboardMap.legendGroup': 'Nhãn phím',
+  'hudChrome.keyboardMap.legendLayout': 'Bố cục của bạn',
+  'hudChrome.keyboardMap.legendQwerty': 'QWERTY',
+  'hudChrome.keyboardMap.notBindable': 'Không thể gán phím đó.',
+  'hudChrome.keyboardMap.notOnLayout': 'Không có trên bàn phím này: {bindings}',
+  'hudChrome.keyboardMap.otherLayers': 'Cũng được gán với phím bổ trợ',
+  'hudChrome.keyboardMap.popOut': 'Bật Ra',
+  'hudChrome.keyboardMap.pressKey': 'Nhấn một phím cho {action}. Esc để hủy.',
+  'hudChrome.keyboardMap.separator': ', ',
+  'hudChrome.keyboardMap.title': 'Tổng Quan Bàn Phím',
+  'hudChrome.nythraxisCallout.boneStormBegins': 'Bão Xương! Tản ra và chạy!',
+  'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis đang lao vào BẠN! Chạy!',
+  'hudChrome.nythraxisCallout.boneStormEnds': 'Bão Xương kết thúc. Tank, kéo hắn lại!',
+  'hudChrome.nythraxisCallout.crownEndures': 'Vương Miện Trường Tồn! Nythraxis đã cuồng nộ!',
+  'hudChrome.nythraxisCallout.crownEndures10': 'Mười giây! Dồn sát thương hắn!',
+  'hudChrome.nythraxisCallout.crownEndures30': 'Ba mươi giây đến Vương Miện Trường Tồn!',
+  'hudChrome.nythraxisCallout.crownEndures60': 'Một phút đến Vương Miện Trường Tồn!',
+  'hudChrome.nythraxisCallout.dreadCurseSwap': 'Lời Nguyền Kinh Hoàng: đổi tank!',
+  'hudChrome.nythraxisCallout.gravefireTarget': 'Lửa Mộ lao về phía bạn! Né sang bên!',
+  'hudChrome.nythraxisCallout.impaled': 'Cọc Xương! Giải cứu người bị xuyên!',
+  'hudChrome.nythraxisCallout.kingsWrath': 'Nhà vua trỗi dậy trong thịnh nộ! Mọi thứ giờ đánh đau hơn!',
+  'hudChrome.nythraxisCallout.sigilAppears': 'Phù Ấn Trói Buộc bùng sáng! Kéo Nythraxis lên đó!',
+  'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis bị trói! Dồn sát thương hắn!',
+  'hudChrome.nythraxisCallout.sigilUnbound': 'Phù ấn mờ đi mà không trói được! Nythraxis mạnh hơn!',
+  'hudChrome.nythraxisCallout.spikeBroken': 'Cọc đã vỡ!',
+  'hudChrome.nythraxisCallout.youAreImpaled': 'Bạn bị xuyên thủng! Cố chịu!',
+  'hudChrome.options.gpuBackend': 'Backend đồ họa',
+  'hudChrome.options.gpuBackendActive': 'Hiện đang dùng {backend}.',
+  'hudChrome.options.gpuBackendActiveAutoCapped':
+    'Hiện đang dùng {backend}. Tự động chưa thử Vulkan trên card đồ họa này; hãy chọn Vulkan để thử.',
+  'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
+  'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
+  'hudChrome.options.gpuBackendActiveUnavailable': 'Hiện đang dùng {backend} (không thể bật Vulkan).',
+  'hudChrome.options.gpuBackendAuto': 'Tự động',
+  'hudChrome.options.gpuBackendNote':
+    'Tự động chọn tùy chọn tốt nhất cho bạn. Vulkan nhanh hơn và được khuyến nghị cho hầu hết người chơi. OpenGL chậm hơn, nhưng có thể giúp nếu Vulkan không hoạt động đúng. Có hiệu lực vào lần khởi động trò chơi tiếp theo.',
+  'hudChrome.options.gpuBackendOpenGL': 'OpenGL (chậm)',
+  'hudChrome.options.gpuBackendSaveFailed': 'Không thể lưu lựa chọn. Lần khởi động tiếp theo vẫn giữ {backend}.',
+  'hudChrome.options.gpuBackendVulkan': 'Vulkan',
+  'hudChrome.options.restartFailed': 'Trò chơi không thể tự khởi động lại. Hãy thoát và mở lại.',
+  'hudChrome.options.restartGame': 'Khởi Động Lại Trò Chơi',
+  'hudChrome.options.restartInProgress': 'Đang khởi động lại trò chơi...',
+  'hudChrome.options.restartPending': 'Một số thay đổi có hiệu lực sau khi khởi động lại.',
+  'hudChrome.options.shaderWarm': 'Tiến Trình Làm Nóng Shader',
+  'hudChrome.options.shaderWarmAuto': 'Tự động',
+  'hudChrome.options.shaderWarmNote':
+    'Làm nóng trước bộ nhớ đệm shader trong nền để tránh khựng trong trò chơi. Tự động: Chỉ bật khi hệ thống đồ họa hỗ trợ. (Khuyến nghị). Bật: Bắt buộc ở mọi nơi. Có thể làm giảm hiệu năng trên một số cấu hình. Tắt: Vô hiệu hóa.',
+  'hudChrome.options.shaderWarmOff': 'Tắt',
+  'hudChrome.options.shaderWarmOn': 'Bật',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilHeroicSummary':
+    'Mỗi {everyHeroic} giây, một phù ấn của các hộ ấn cổ bùng sáng trên sàn cách Nythraxis {minDist} đến {maxDist} yd và hắn bắt đầu Thăng Hoa Bất Tử, nhận thêm {ascensionHeroic} sát thương và tốc độ đánh mỗi {ascensionEvery} giây. Nếu hắn đứng trên phù ấn trong {bindHeroic} giây, hắn bị Trói Buộc: Thăng Hoa được thanh tẩy, hắn bị choáng trong {stunHeroic} giây, và nhận thêm {vulnerability} sát thương trong {boundHeroic} giây. Nếu không, mỗi raider nhận {unboundHitHeroic} máu tối đa dưới dạng sát thương Bóng Tối và hắn giữ thêm {unboundBonusHeroic} sát thương cho đến lần trói tiếp theo.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilName': 'Phù Ấn Trói Buộc',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilResponse':
+    'Tank kéo Nythraxis lên phù ấn ngay lập tức, đi xuyên qua bất kỳ lửa nào raid đã để lại. Cận chiến đi theo đường kéo và tầm xa tránh khỏi hình nón Phá Mộ mới. Mọi người dồn sát thương khi hắn bị Trói Buộc.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilSummary':
+    'Mỗi {everyNormal} giây, một phù ấn của các hộ ấn cổ bùng sáng trên sàn cách Nythraxis {minDist} đến {maxDist} yd và hắn bắt đầu Thăng Hoa Bất Tử, nhận thêm {ascensionNormal} sát thương và tốc độ đánh mỗi {ascensionEvery} giây. Nếu hắn đứng trên phù ấn trong {bindNormal} giây, hắn bị Trói Buộc: Thăng Hoa được thanh tẩy, hắn bị choáng trong {stunNormal} giây, và nhận thêm {vulnerability} sát thương trong {boundNormal} giây. Nếu không, mỗi raider nhận {unboundHitNormal} máu tối đa dưới dạng sát thương Bóng Tối và hắn giữ thêm {unboundBonusNormal} sát thương cho đến lần trói tiếp theo.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeHeroicSummary':
+    'Mỗi {everyHeroic} giây, Nythraxis xuyên {victimsHeroic} raider không phải mục tiêu hiện tại của hắn lên Cọc Xương. Raider bị xuyên không thể hành động và mất {drainHeroic} máu tối đa mỗi giây cho đến khi cọc của họ bị phá hủy.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeName': 'Cọc Xương',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeResponse':
+    'Người gây sát thương lập tức chuyển sang Cọc Xương và phá hủy chúng để giải cứu các raider bị xuyên. Người hồi máu giữ họ sống sót trong lúc các cọc bị hạ.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
+    'Mỗi {everyNormal} giây, Nythraxis xuyên {victimsNormal} raider không phải mục tiêu hiện tại của hắn lên Cọc Xương. Raider bị xuyên không thể hành động và mất {drainNormal} máu tối đa mỗi giây cho đến khi cọc của họ bị phá hủy.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
+    'Bắt đầu {first} giây sau Cơn Thịnh Nộ Của Vua và mỗi {everyHeroic} giây sau đó, Nythraxis bắt đầu Bão Xương trong {duration} giây. Hắn bỏ qua thù hận, di chuyển nhanh gấp {speed} lần tốc độ thường, và thực hiện {charges} lần lao, mỗi lần kéo dài {chargeSeconds} giây. Vòng xoáy của hắn gây {whirlHeroic} máu tối đa mỗi giây trong phạm vi {radius} yd. Mỗi lần lao kết thúc bằng Cú Nện Xương trong cùng phạm vi, gây {slamHeroic} máu tối đa. Hắn niệm Cọc Xương vào {spikeAt} giây sau khi bão bắt đầu, rồi Phá Mộ tái kích hoạt {rearm} giây sau khi bão kết thúc.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Bão Xương',
+  'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
+    'Tản ra và tiếp tục chạy khỏi Nythraxis. Raider bị lao vào chạy đi xa trong khi những người khác chừa chỗ quanh đường lao, rồi tank kéo hắn lại khi bão kết thúc.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
+    'Bắt đầu {first} giây sau Cơn Thịnh Nộ Của Vua và mỗi {everyNormal} giây sau đó, Nythraxis bắt đầu Bão Xương trong {duration} giây. Hắn bỏ qua thù hận, di chuyển nhanh gấp {speed} lần tốc độ thường, và thực hiện {charges} lần lao, mỗi lần kéo dài {chargeSeconds} giây. Vòng xoáy của hắn gây {whirlNormal} máu tối đa mỗi giây trong phạm vi {radius} yd. Mỗi lần lao kết thúc bằng Cú Nện Xương trong cùng phạm vi, gây {slamNormal} máu tối đa. Hắn niệm Cọc Xương vào {spikeAt} giây sau khi bão bắt đầu, rồi Phá Mộ tái kích hoạt {rearm} giây sau khi bão kết thúc.',
+  'hudChrome.raidBossGuide.nythraxis.courtName': 'Triều Đình Bất Tử',
+  'hudChrome.raidBossGuide.nythraxis.courtResponse':
+    'Tank kéo Aldren và xoay đòn chém lan của hắn khỏi raid. Làm choáng hoặc câm lặng Malric ngay khi Hồi Phục Của Malric bắt đầu và giết hắn trước, rồi trói chân hoặc làm choáng Voss xa khỏi người hồi máu, vì hắn không thể bị khiêu khích, và kết liễu hắn tiếp theo.',
+  'hudChrome.raidBossGuide.nythraxis.courtSummary':
+    'Ở Heroic, Nythraxis dựng lại triều đình của hắn sau mỗi Cơn Thịnh Nộ Bất Tử, dù bị ngắt hay không, một khi triều đình trước đã gục. Linh Hồn Aldren chém lan mọi thứ gần mục tiêu bằng Chém Hoàng Gia. Linh Hồn Malric niệm Hồi Phục Của Malric, hồi máu cho Nythraxis nhiều hơn sau mỗi lần niệm. Linh Hồn Voss bỏ qua khiêu khích và săn đuổi raid.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresHeroicSummary':
+    'Ở {enrageHeroic} giây tính từ lúc kéo boss (đồng hồ tạm dừng khi Tu Huynh Aldric bước vào ở 70%), Vương Miện Trường Tồn kích hoạt như một cuồng nộ cứng. Nythraxis nhận thêm {damage} sát thương và đòn đánh nhanh hơn {haste}, rồi thêm {rampStep} sát thương mỗi {rampEveryHeroic} giây. Không có thanh hẹn giờ. Cảnh báo đến dưới dạng tiếng hét khi còn {warn60}, {warn30}, và {warn10} giây.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresName': 'Vương Miện Trường Tồn',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresResponse':
+    'Hãy xem cảnh báo đầu tiên là đợt dồn sát thương cuối. Giữ kỹ năng di chuyển và phòng thủ cho các cơ chế còn lại, rồi hạ Nythraxis trước khi hắn cuồng nộ.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresSummary':
+    'Ở {enrageNormal} giây tính từ lúc kéo boss (đồng hồ tạm dừng khi Tu Huynh Aldric bước vào ở 70%), Vương Miện Trường Tồn kích hoạt như một cuồng nộ cứng. Nythraxis nhận thêm {damage} sát thương và đòn đánh nhanh hơn {haste}, rồi thêm {rampStep} sát thương mỗi {rampEveryNormal} giây. Không có thanh hẹn giờ. Cảnh báo đến dưới dạng tiếng hét khi còn {warn60}, {warn30}, và {warn10} giây.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageHeroicSummary':
+    'Mỗi {every} giây, Nythraxis niệm Cơn Thịnh Nộ Bất Tử trong {cast} giây. Trong lúc hắn niệm, mỗi đá hộ vệ đang sáng có thể được một raider dẫn truyền trong {channel} giây. Nếu ba raider khác nhau mỗi người hoàn tất một đá hộ vệ trước khi phép kết thúc, Cơn Thịnh Nộ bị ngắt và Nythraxis bị choáng trong {stun} giây. Nếu không, mỗi raider nhận {damageHeroic} máu tối đa dưới dạng sát thương Bóng Tối, không lượng máu nào sống sót nổi.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageName': 'Cơn Thịnh Nộ Bất Tử',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageResponse':
+    'Phân công một raider cho mỗi đá hộ vệ trước khi kéo boss. Khi phép bắt đầu, mỗi người chạy tới đá của mình và dẫn truyền cho đến khi hoàn tất. Choáng, bước ra xa và chết sẽ ngắt dẫn truyền, nên hãy giữ người dẫn truyền an toàn và đừng bao giờ phân công raider đang bị xuyên.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageSummary':
+    'Mỗi {every} giây, Nythraxis niệm Cơn Thịnh Nộ Bất Tử trong {cast} giây. Trong lúc hắn niệm, mỗi đá hộ vệ đang sáng có thể được một raider dẫn truyền trong {channel} giây. Nếu ba raider khác nhau mỗi người hoàn tất một đá hộ vệ trước khi phép kết thúc, Cơn Thịnh Nộ bị ngắt và Nythraxis bị choáng trong {stun} giây. Nếu không, mỗi raider nhận {damageNormal} máu tối đa dưới dạng sát thương Bóng Tối.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseHeroicSummary':
+    'Mỗi {every} giây, Nythraxis đánh tank hiện tại của hắn gây {hitHeroic} máu tối đa dưới dạng sát thương Bóng Tối và thêm một cộng dồn Lời Nguyền Kinh Hoàng. Trong {duration} giây, mỗi cộng dồn tăng sát thương tank đó nhận từ Nythraxis thêm {perStackHeroic}, tối đa {max} cộng dồn.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseName': 'Lời Nguyền Kinh Hoàng',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseResponse':
+    'Tank đổi ở {stacks} cộng dồn: tank kia khiêu khích và tank bị nguyền rủa đứng ngoài hình nón Phá Mộ trong lúc cộng dồn phai đi. Người hồi máu chuẩn bị cho tank sắp nhận boss trước khi đổi.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseSummary':
+    'Mỗi {every} giây, Nythraxis đánh tank hiện tại của hắn gây {hitNormal} máu tối đa dưới dạng sát thương Bóng Tối và thêm một cộng dồn Lời Nguyền Kinh Hoàng. Trong {duration} giây, mỗi cộng dồn tăng sát thương tank đó nhận từ Nythraxis thêm {perStackNormal}, tối đa {max} cộng dồn.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionHeroicSummary':
+    'Mỗi {everyHeroic} giây, bàn tay xương đánh dấu {countHeroic} vòng tròn bán kính {radius} yd dưới chân raider. Sau {warning} giây, mỗi vòng phun trào gây {burstHeroic} máu tối đa dưới dạng sát thương Bóng Tối, rồi cháy thành Lửa Mộ trong {flameHeroic} giây, gây {tickHeroic} máu tối đa mỗi giây cho bất kỳ ai đứng trong đó.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionName': 'Mộ Phần Phun Trào',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionResponse':
+    'Bước ra khỏi mọi vòng cảnh báo trước khi chúng phun trào và tránh mặt đất đang cháy. Tank kéo Nythraxis ra khỏi lửa để cận chiến có chỗ đánh.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionSummary':
+    'Mỗi {everyNormal} giây, bàn tay xương đánh dấu {countNormal} vòng tròn bán kính {radius} yd dưới chân raider. Sau {warning} giây, mỗi vòng phun trào gây {burstNormal} máu tối đa dưới dạng sát thương Bóng Tối, rồi cháy thành Lửa Mộ trong {flameNormal} giây, gây {tickNormal} máu tối đa mỗi giây cho bất kỳ ai đứng trong đó.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerName': 'Phá Mộ',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerResponse':
+    'Tank giữ Nythraxis quay mặt khỏi raid. Mọi người khác đứng sau hoặc bên cạnh hắn và không bao giờ băng qua hình nón.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerSummary':
+    'Mỗi {seconds} giây, Nythraxis nạp sức cho cú vung trúng tiếp theo. Mục tiêu của hắn chỉ nhận chính cú vung, nhưng mọi người khác trong phạm vi {range} yd bên trong hình nón {arc} độ trước mặt hắn nhận {splash} của cú vung đó dưới dạng sát thương Vật Lý, giảm bởi giáp của chính họ.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireHeroicSummary':
+    'Mỗi {everyHeroic} giây, một vệt lửa mộ tím chạy từ Nythraxis về phía một raider, dài thêm {speed} yd mỗi giây đến {length} yd. Mỗi yard cháy trong {burnHeroic} giây và gây {tickHeroic} máu tối đa mỗi giây cho bất kỳ ai đứng trong đó.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireName': 'Lửa Mộ',
+  'hudChrome.raidBossGuide.nythraxis.gravefireResponse':
+    'Né sang bên khi vệt lửa tới: nó hẹp và không bao giờ rẽ. Raider tầm xa tiếp tục di chuyển thay vì đứng yên một chỗ.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireSummary':
+    'Mỗi {everyNormal} giây, một vệt lửa mộ tím chạy từ Nythraxis về phía một raider, dài thêm {speed} yd mỗi giây đến {length} yd. Mỗi yard cháy trong {burnNormal} giây và gây {tickNormal} máu tối đa mỗi giây cho bất kỳ ai đứng trong đó.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathName': 'Cơn Thịnh Nộ Của Vua',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathResponse':
+    'Dùng các cooldown phòng thủ còn lại cho sát thương không thể tránh. Giữ mọi cơ chế trước đó thật sạch trong khi raid kết thúc trận đấu.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathSummary':
+    'Nythraxis gây thêm {bonusNormal} sát thương ở Normal hoặc {bonusHeroic} ở Heroic trong phần còn lại của trận đấu. Mộ Phần Phun Trào xảy ra mỗi {eruptionEveryNormal} giây ({eruptionEveryHeroic} ở Heroic) và Lửa Mộ mỗi {gravefireEveryNormal} giây ({gravefireEveryHeroic} ở Heroic).',
+  'hudChrome.raidBossGuide.nythraxis.overview':
+    'Đại tư tế Malric không chịu để vị vua của mình chết, và nghi lễ dựng Nythraxis dậy đã trói cả triều đình vào hầm mộ. Cuộc chạm trán kiểm tra việc đổi tank kỷ luật, chuyển mục tiêu nhanh sang Cọc Xương, di chuyển khỏi mặt đất bốc cháy, và dẫn truyền đá hộ vệ phối hợp khi Ngai Vàng sụp đổ.',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathName': 'Cơn Thịnh Nộ Của Vua',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathSummary':
+    'Ở {health} máu, Nythraxis gầm lên trong Cơn Thịnh Nộ Của Vua và nhận thêm {bonusNormal} sát thương ở Normal hoặc {bonusHeroic} ở Heroic trong phần còn lại của trận đấu. Mộ Phần Phun Trào rút xuống mỗi {eruptionEveryNormal} giây ({eruptionEveryHeroic} ở Heroic) và Lửa Mộ rút xuống mỗi {gravefireEveryNormal} giây ({gravefireEveryHeroic} ở Heroic). Mọi cơ chế khác giữ nguyên nhịp.',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneName': 'Ngai Vàng',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneSummary':
+    'Nythraxis giữ phòng ngai bằng đòn chém trước mặt được nạp sức, lượt đổi tank vì Lời Nguyền Kinh Hoàng, Cọc Xương xuyên thủng raider, và Mộ Phần Phun Trào để lại mặt đất bốc cháy.',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesName': 'Đá Hộ Vệ',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesSummary':
+    'Ở {health} máu, Cú Dậm Chấn Động giữ raid đứng yên trong khi Tu Huynh Aldric đến và thắp sáng các đá hộ vệ. Mọi cọc vỡ tan và sàn ngừng cháy, rồi Xé Linh Hồn và Cơn Thịnh Nộ Bất Tử nhập vào các cơ chế Ngai Vàng.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenName': 'Dựng Dậy Kẻ Ngã Xuống',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenResponse':
+    'Off-tank kéo từng đợt khi chúng trỗi dậy. Người gây sát thương dọn lính gác giữa các Cọc Xương để các đợt không bao giờ dồn đống trước khi Ngai Vàng sụp đổ.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenSummary':
+    'Mỗi {every} giây trong Ngai Vàng, Nythraxis dựng các Vệ Binh Hoàng Gia Trỗi Dậy phía sau hắn. Chúng lao vào mục tiêu hiện tại của hắn và chiến đấu cho đến khi bị tiêu diệt.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendHeroicSummary':
+    'Nythraxis đánh dấu {marksHeroic} raider không phải mục tiêu hiện tại của hắn bằng Xé Linh Hồn. Sau {fuse} giây, mỗi dấu gây {damageHeroic} máu tối đa của người mang dưới dạng sát thương Bóng Tối, chia theo số raider bị đánh dấu trong phạm vi {range} yd quanh họ. Một dấu tự kích nổ một mình sẽ chí mạng.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendName': 'Xé Linh Hồn',
+  'hudChrome.raidBossGuide.nythraxis.soulRendResponse':
+    'Mỗi raider bị đánh dấu chạy tới một điểm tụ và đứng trong phạm vi {range} yd của các dấu khác trước khi ngòi {fuse} giây kết thúc. Người hồi máu hồi đầy nhóm khi các dấu kích nổ.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendSummary':
+    'Nythraxis đánh dấu {marksNormal} raider không phải mục tiêu hiện tại của hắn bằng Xé Linh Hồn. Sau {fuse} giây, mỗi dấu gây toàn bộ máu tối đa của người mang dưới dạng sát thương Bóng Tối, chia theo số raider bị đánh dấu trong phạm vi {range} yd quanh họ.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireHeroicSummary':
+    'Mỗi vụ nổ Xé Linh Hồn để lại một vũng lửa tím bán kính {radius} yd cho mỗi nhóm dấu đã tụ lại, cháy trong {secondsHeroic} giây với {tickHeroic} máu tối đa mỗi giây. Đứng nơi các vũng chồng lên nhau chỉ nhận một tick, không bao giờ nhận các bản sao cộng dồn. Vũng không bao giờ xuất hiện trong phạm vi {clearance} yd quanh đá hộ vệ.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireName': 'Lửa Linh Hồn',
+  'hudChrome.raidBossGuide.nythraxis.soulfireResponse':
+    'Rời khỏi vũng tím ngay khi các dấu phát nổ. Giữ điểm tụ tiếp theo sạch khỏi lửa đang hoạt động.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
+    'Mỗi vụ nổ Xé Linh Hồn để lại một vũng lửa tím bán kính {radius} yd tại nơi từng dấu đứng, cháy trong {seconds} giây với {tickNormal} máu tối đa mỗi giây. Đứng nơi các vũng chồng lên nhau nhận tick từ từng vũng. Vũng không bao giờ xuất hiện trong phạm vi {clearance} yd quanh đá hộ vệ.',
 };

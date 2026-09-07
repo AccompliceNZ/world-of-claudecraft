@@ -15805,4 +15805,272 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'yumi.queue.leave': 'Kau keluar dari antrean Lindungi Yumi.',
   'yumi.queue.teamLeave': 'Timmu keluar dari antrean Lindungi Yumi.',
   'yumi.respawn.title': 'TUMBANG!',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    'Bacaan Pandang-Dingin dari Tarikan Membara yang selesai membuat Tembakan Jatuhmu berikutnya menghasilkan 75% lebih banyak kerusakan. Menembakkan tembakan itu menghabiskan Bacaan.',
+  'entities.items.bramblehide_cinch.name': 'Ikat pinggang Kulit Duri Akar',
+  'entities.items.bramblehide_crown.name': 'Mahkota Kulit Duri Akar',
+  'entities.items.bramblehide_grips.name': 'Genggaman Kulit Duri Akar',
+  'entities.items.bramblehide_harness.name': 'Tali dada Kulit Duri Akar',
+  'entities.items.bramblehide_legguards.name': 'Pelindung kaki Kulit Duri Akar',
+  'entities.items.bramblehide_mantle.name': 'Mantel Kulit Duri Akar',
+  'entities.items.bramblehide_treads.name': 'Tapak Kulit Duri Akar',
+  'entities.items.courtiers_bonefang.name': 'Taring Tulang Bangsawan Istana',
+  'entities.items.gravecourt_hewer.name': 'Penebas Istana Makam',
+  'entities.items.stormhymn_chain_grips.name': 'Genggaman Rantai Himne Badai',
+  'entities.items.stormhymn_chain_treads.name': 'Tapak Rantai Himne Badai',
+  'entities.items.thornpeak_moonhide_cowl.name': 'Tudung Kulit Rembulan Puncak Duri',
+  'entities.items.thornpeak_wardblade.name': 'Pedang Pelindung Puncak Duri',
+  'entities.items.votive_ward_of_the_deathless_court.name': 'Pelindung Persembahan Istana Tanpa Kematian',
+  'entities.mobs.nythraxis_bone_spike.name': 'Pancang Tulang',
+  'gpuNotice.bodyRequestedBackend':
+    'Game tidak dapat dimulai dengan backend grafis yang Anda pilih, jadi kini berjalan dengan OpenGL. Semuanya tetap berfungsi; pemuatan dan menit-menit pertama mungkin lebih tersendat. Anda dapat memilih backend lagi di Opsi, Grafis, Sistem.',
+  'hudChrome.auraEffect.coldsightRead':
+    'Tarikan Panjangmu berikutnya menghasilkan {longDrawPct}% lebih banyak kerusakan, atau Tembakan Jatuhmu berikutnya menghasilkan {fellShotPct}% lebih banyak',
+  'hudChrome.auraEffect.nythraxisAscension':
+    'Kenaikan Tanpa Kematian: {stacks} tumpukan, {pct}% lebih banyak kerusakan dan kecepatan serangan. Seret Nythraxis ke Segel Pengikat untuk memurnikannya.',
+  'hudChrome.auraEffect.nythraxisBoneStorm':
+    'Badai Tulang: Nythraxis mengabaikan ancaman, berputar untuk {tick}% kesehatan maksimum setiap detik dalam {radius} yd, dan menerjang para raider. Menyebar dan lari.',
+  'hudChrome.auraEffect.nythraxisBound':
+    'Terikat oleh pelindung lama: Nythraxis menerima {pct}% lebih banyak kerusakan selama {duration} dtk.',
+  'hudChrome.auraEffect.nythraxisCrownEndures':
+    'Mahkota Bertahan: {stacks} tumpukan, {pct}% lebih banyak kerusakan dan serangan {haste}% lebih cepat. Raid kehabisan waktu.',
+  'hudChrome.auraEffect.nythraxisDreadCurse':
+    'Setiap tumpukan meningkatkan kerusakan yang diterima dari Nythraxis sebesar {perStack}% selama {duration} dtk: sekarang {stacks} dari {max} tumpukan, {pct}% lebih banyak kerusakan. Setiap {every} dtk, pukulan berikutnya pada targetnya menghasilkan {hit}% kesehatan maksimum dan menambah satu tumpukan. Tank sebaiknya bertukar pada {swap} tumpukan.',
+  'hudChrome.auraEffect.nythraxisImpaled':
+    'Tertusuk Pancang Tulang: kamu tidak bisa bertindak dan kehilangan {normal}% kesehatan maksimummu setiap {interval} dtk ({heroic}% pada Heroic) sampai raid menghancurkan pancang itu.',
+  'hudChrome.auraEffect.nythraxisKingsWrath':
+    'Murka Raja: Nythraxis menghasilkan {pct}% lebih banyak kerusakan selama sisa pertarungan.',
+  'hudChrome.auraEffect.nythraxisUnbound':
+    'Tak Terikat: Nythraxis menghasilkan {pct}% lebih banyak kerusakan sampai Segel Pengikat menahannya.',
+  'hudChrome.auraEffect.veiledEdgeStrike':
+    'Serangan Tepi Terselubungmu berikutnya menghasilkan {pct}% lebih banyak kerusakan senjata',
+  'hudChrome.bank.guildHistoryTab': 'Riwayat',
+  'hudChrome.bank.logActionAdminPurge': 'Dihapus',
+  'hudChrome.bank.logActionBuySlots': 'Membeli perluasan',
+  'hudChrome.bank.logActionCharterFee': 'Membayar biaya piagam',
+  'hudChrome.bank.logActionDeposit': 'Disetorkan',
+  'hudChrome.bank.logActionOpenBank': 'Membuka bank',
+  'hudChrome.bank.logActionWithdraw': 'Ditarik',
+  'hudChrome.bank.logActorAdmin': 'Administrator',
+  'hudChrome.bank.logColAction': 'Aksi',
+  'hudChrome.bank.logColDetail': 'Rincian',
+  'hudChrome.bank.logColMember': 'Anggota',
+  'hudChrome.bank.logColTime': 'Kapan',
+  'hudChrome.bank.logDetailItem': '{count} {item}',
+  'hudChrome.bank.logEmptyFiltered': 'Tidak ada aksi bank guild yang cocok dengan filter ini.',
+  'hudChrome.bank.logEnd': 'Itulah seluruh riwayat bank guild.',
+  'hudChrome.bank.logFilterAll': 'Semua',
+  'hudChrome.bank.logFilterAria': 'Filter riwayat bank guild',
+  'hudChrome.bank.logFilterItems': 'Item',
+  'hudChrome.bank.logFilterMoney': 'Uang',
+  'hudChrome.bank.logOlder': 'Tampilkan yang lebih lama',
+  'hudChrome.bank.logOlderLoading': 'Memuat aksi yang lebih lama...',
+  'hudChrome.bank.logSearchAria': 'Cari aksi bank guild yang dimuat berdasarkan anggota, aksi, atau item',
+  'hudChrome.bank.logSearchNoMatch':
+    'Tidak ada aksi bank guild yang dimuat yang cocok dengan pencarianmu. Tampilkan baris yang lebih lama untuk memperluasnya.',
+  'hudChrome.bank.logSearchPlaceholder': 'Cari riwayat ini',
+  'hudChrome.bank.logShowing': 'Menampilkan {count} aksi bank guild, yang terbaru lebih dulu.',
+  'hudChrome.bank.logShowingMatched': 'Menampilkan {matched} dari {count} aksi bank guild yang dimuat.',
+  'hudChrome.finder.mech.binding_sigil': 'Segel Pengikat (seret boss ke segel atau raid akan menanggung akibatnya)',
+  'hudChrome.finder.mech.bone_spike': 'Pancang Tulang (raider yang tertusuk terkuras sampai pancang dihancurkan)',
+  'hudChrome.finder.mech.bone_storm': 'Badai Tulang (dia mengabaikan ancaman, berputar, dan menerjang raid)',
+  'hudChrome.finder.mech.crown_endures': 'Mahkota Bertahan (enrage keras pada 6:00, heroic 5:00)',
+  'hudChrome.finder.mech.deathless_court':
+    'Istana Tanpa Kematian (khusus heroic, istana kerajaan bangkit setelah Amarah Tanpa Kematian)',
+  'hudChrome.finder.mech.grave_eruption': 'Erupsi Makam (lingkaran peringatan yang meninggalkan tanah terbakar)',
+  'hudChrome.finder.mech.gravefire': 'Api Makam (garis api bergerak yang harus disingkirkan)',
+  'hudChrome.finder.mech.kings_wrath': 'Murka Raja (30%: bonus kerusakan permanen, bahaya lantai lebih cepat)',
+  'hudChrome.finder.mech.soulfire': 'Api Jiwa (ledakan Robekan Jiwa meninggalkan kolam terbakar)',
+  'hudChrome.fullTransfer.excluded':
+    'Tidak pernah disertakan: data login, akun, dompet, atau pembelianmu. Tata letak bilah aksi disimpan ke akunmu dan ikut berpindah bersamanya.',
+  'hudChrome.fullTransfer.fullSettings': 'Pengaturan Lengkap',
+  'hudChrome.fullTransfer.intro':
+    'Ekspor setiap preferensi yang tersimpan di perangkat ini sebagai satu kode, lalu tempelkan di perangkat atau peramban lain untuk mengimpornya: grafis, audio, antarmuka, tema, tata letak frame, key binding untuk setiap karakter, binding kontroler dan cross hotbar, chat, filter jendela, bahasa, dan petunjuk yang telah ditutup.',
+  'hudChrome.fullTransfer.menu': 'Impor / Ekspor',
+  'hudChrome.fullTransfer.title': 'Impor / Ekspor Pengaturan',
+  'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Meter Kerusakan',
+  'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Pelacak Perbuatan',
+  'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Pelacak Delve',
+  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Bilah Derita',
+  'hudChrome.interfaceUnlock.frameNames.petBar': 'Bilah Peliharaan',
+  'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Proc Mantra',
+  'hudChrome.interfaceUnlock.frameNames.questTracker': 'Pelacak Quest',
+  'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': 'Pelacak Relikuari',
+  'hudChrome.interfaceUnlock.frameNames.riftTracker': 'Pelacak Rift',
+  'hudChrome.interfaceUnlock.frameNames.swingBarOffhand': 'Tangan Kiri',
+  'hudChrome.keybindTransfer.apply': 'Terapkan',
+  'hudChrome.keybindTransfer.imported': 'Pengaturan tombol pintas diimpor.',
+  'hudChrome.keybindTransfer.setup': 'Pengaturan Tombol Pintas',
+  'hudChrome.keybindTransfer.wrongKind': 'Kode itu adalah ekspor pengaturan, bukan pengaturan tombol pintas.',
+  'hudChrome.keyboardMap.assignHint': 'Pilih aksi untuk diikat ke {key}.',
+  'hudChrome.keyboardMap.assignOption': '{category}: {action}',
+  'hudChrome.keyboardMap.assignPlaceholder': 'Tetapkan aksi ke {key}',
+  'hudChrome.keyboardMap.bindingLine': '{key}: {action}',
+  'hudChrome.keyboardMap.boundTo': '{action} diikat ke {key}.',
+  'hudChrome.keyboardMap.close': 'Tutup ikhtisar keyboard',
+  'hudChrome.keyboardMap.form60': '60%',
+  'hudChrome.keyboardMap.form75': '75%',
+  'hudChrome.keyboardMap.formFull': 'Ukuran penuh',
+  'hudChrome.keyboardMap.formGroup': 'Ukuran keyboard',
+  'hudChrome.keyboardMap.formTkl': 'Tanpa numpad',
+  'hudChrome.keyboardMap.hint':
+    'Tombol yang digunakan diberi warna menurut kategori. Arahkan atau fokuskan tombol untuk melihat semua yang terikat padanya.',
+  'hudChrome.keyboardMap.hintInteractive':
+    'Tombol yang digunakan diberi warna menurut kategori. Klik tombol untuk mengubah fungsinya; arahkan atau fokuskan tombol untuk melihat semua yang terikat padanya.',
+  'hudChrome.keyboardMap.keyDetail': '{key}: {bindings}',
+  'hudChrome.keyboardMap.layerAlt': 'Alt',
+  'hudChrome.keyboardMap.layerCtrl': 'Ctrl',
+  'hudChrome.keyboardMap.layerGroup': 'Lapisan modifier',
+  'hudChrome.keyboardMap.layerNone': 'Tanpa modifier',
+  'hudChrome.keyboardMap.layerShift': 'Shift',
+  'hudChrome.keyboardMap.legendGroup': 'Label tombol',
+  'hudChrome.keyboardMap.legendLayout': 'Tata letakmu',
+  'hudChrome.keyboardMap.legendQwerty': 'QWERTY',
+  'hudChrome.keyboardMap.notBindable': 'Tombol itu tidak dapat diikat.',
+  'hudChrome.keyboardMap.notOnLayout': 'Tidak ada di keyboard ini: {bindings}',
+  'hudChrome.keyboardMap.otherLayers': 'Juga terikat dengan modifier',
+  'hudChrome.keyboardMap.popOut': 'Buka Terpisah',
+  'hudChrome.keyboardMap.pressKey': 'Tekan tombol untuk {action}. Esc membatalkan.',
+  'hudChrome.keyboardMap.separator': ', ',
+  'hudChrome.keyboardMap.title': 'Ikhtisar Keyboard',
+  'hudChrome.nythraxisCallout.boneStormBegins': 'Badai Tulang! Menyebar dan lari!',
+  'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis menerjang KAMU! Lari!',
+  'hudChrome.nythraxisCallout.boneStormEnds': 'Badai Tulang selesai. Tank, ambil dia!',
+  'hudChrome.nythraxisCallout.crownEndures': 'Mahkota Bertahan! Nythraxis mengamuk!',
+  'hudChrome.nythraxisCallout.crownEndures10': 'Sepuluh detik! Habisi dia!',
+  'hudChrome.nythraxisCallout.crownEndures30': 'Tiga puluh detik sampai Mahkota Bertahan!',
+  'hudChrome.nythraxisCallout.crownEndures60': 'Satu menit sampai Mahkota Bertahan!',
+  'hudChrome.nythraxisCallout.dreadCurseSwap': 'Kutukan Ngeri: tukar tank!',
+  'hudChrome.nythraxisCallout.gravefireTarget': 'Api Makam melesat ke arahmu! Minggir!',
+  'hudChrome.nythraxisCallout.impaled': 'Pancang Tulang! Bebaskan yang tertusuk!',
+  'hudChrome.nythraxisCallout.kingsWrath': 'Raja bangkit dalam murka! Semua pukulan kini lebih keras!',
+  'hudChrome.nythraxisCallout.sigilAppears': 'Segel Pengikat menyala! Seret Nythraxis ke atasnya!',
+  'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis terikat! Habisi dia!',
+  'hudChrome.nythraxisCallout.sigilUnbound': 'Segel memudar tanpa mengikat! Nythraxis makin kuat!',
+  'hudChrome.nythraxisCallout.spikeBroken': 'Pancang hancur!',
+  'hudChrome.nythraxisCallout.youAreImpaled': 'Kamu tertusuk! Bertahan!',
+  'hudChrome.options.gpuBackend': 'Backend Grafis',
+  'hudChrome.options.gpuBackendActive': 'Saat ini memakai {backend}.',
+  'hudChrome.options.gpuBackendActiveAutoCapped':
+    'Saat ini memakai {backend}. Auto belum mencoba Vulkan pada kartu grafis ini; pilih Vulkan untuk mencobanya.',
+  'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
+  'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
+  'hudChrome.options.gpuBackendActiveUnavailable': 'Saat ini memakai {backend} (tidak dapat mengaktifkan Vulkan).',
+  'hudChrome.options.gpuBackendAuto': 'Otomatis',
+  'hudChrome.options.gpuBackendNote':
+    'Auto memilih opsi terbaik untukmu. Vulkan lebih cepat dan direkomendasikan untuk sebagian besar pemain. OpenGL lebih lambat, tetapi dapat membantu jika Vulkan tidak berfungsi baik. Berlaku saat game dimulai berikutnya.',
+  'hudChrome.options.gpuBackendOpenGL': 'OpenGL (lambat)',
+  'hudChrome.options.gpuBackendSaveFailed': 'Pilihan tidak dapat disimpan. Start berikutnya tetap memakai {backend}.',
+  'hudChrome.options.gpuBackendVulkan': 'Vulkan',
+  'hudChrome.options.restartFailed': 'Game tidak dapat memulai ulang dirinya sendiri. Keluar dan mulai lagi.',
+  'hudChrome.options.restartGame': 'Mulai Ulang Game',
+  'hudChrome.options.restartInProgress': 'Memulai ulang game...',
+  'hudChrome.options.restartPending': 'Beberapa perubahan berlaku setelah mulai ulang.',
+  'hudChrome.options.shaderWarm': 'Pekerja Pemanasan Shader',
+  'hudChrome.options.shaderWarmAuto': 'Otomatis',
+  'hudChrome.options.shaderWarmNote':
+    'Panaskan cache shader di latar belakang untuk mencegah tersendat dalam game. Auto: Aktif hanya saat didukung sistem grafismu. (Direkomendasikan). Aktif: Dipaksa di semua tempat. Dapat memperburuk performa pada beberapa konfigurasi. Nonaktif: Dimatikan.',
+  'hudChrome.options.shaderWarmOff': 'Nonaktif',
+  'hudChrome.options.shaderWarmOn': 'Aktif',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilHeroicSummary':
+    'Setiap {everyHeroic} dtk, segel pelindung lama menyala di lantai {minDist} sampai {maxDist} yd dari Nythraxis dan ia memulai Kenaikan Tanpa Kematian, mendapat {ascensionHeroic} kerusakan dan kecepatan serangan setiap {ascensionEvery} dtk. Jika ia berdiri di segel dalam {bindHeroic} dtk, ia Terikat: Kenaikan dipurnikan, ia terkena stun selama {stunHeroic} dtk, dan ia menerima {vulnerability} lebih banyak kerusakan selama {boundHeroic} dtk. Jika tidak, setiap raider menerima {unboundHitHeroic} kesehatan maksimum sebagai kerusakan Bayangan dan ia mempertahankan {unboundBonusHeroic} lebih banyak kerusakan sampai pengikatan berikutnya.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilName': 'Segel Pengikat',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilResponse':
+    'Tank segera menyeret Nythraxis ke segel, melewati api apa pun yang ditinggalkan raid. Petarung jarak dekat mengikuti seretan dan pemain jarak jauh menjauh dari kerucut Penghancur Makam yang baru. Semua orang menghajarnya saat ia Terikat.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilSummary':
+    'Setiap {everyNormal} dtk, segel pelindung lama menyala di lantai {minDist} sampai {maxDist} yd dari Nythraxis dan ia memulai Kenaikan Tanpa Kematian, mendapat {ascensionNormal} kerusakan dan kecepatan serangan setiap {ascensionEvery} dtk. Jika ia berdiri di segel dalam {bindNormal} dtk, ia Terikat: Kenaikan dipurnikan, ia terkena stun selama {stunNormal} dtk, dan ia menerima {vulnerability} lebih banyak kerusakan selama {boundNormal} dtk. Jika tidak, setiap raider menerima {unboundHitNormal} kesehatan maksimum sebagai kerusakan Bayangan dan ia mempertahankan {unboundBonusNormal} lebih banyak kerusakan sampai pengikatan berikutnya.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeHeroicSummary':
+    'Setiap {everyHeroic} dtk, Nythraxis menusuk {victimsHeroic} raider selain targetnya saat ini pada Pancang Tulang. Raider yang tertusuk tidak dapat bertindak dan kehilangan {drainHeroic} kesehatan maksimum setiap detik sampai pancangnya dihancurkan.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeName': 'Pancang Tulang',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeResponse':
+    'Para penyerang segera beralih ke Pancang Tulang dan menghancurkannya untuk membebaskan raider yang tertusuk. Penyembuh menjaga yang tertusuk tetap hidup sampai pancang runtuh.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
+    'Setiap {everyNormal} dtk, Nythraxis menusuk {victimsNormal} raider selain targetnya saat ini pada Pancang Tulang. Raider yang tertusuk tidak dapat bertindak dan kehilangan {drainNormal} kesehatan maksimum setiap detik sampai pancangnya dihancurkan.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
+    'Mulai {first} dtk setelah Murka Raja dan setiap {everyHeroic} dtk sesudahnya, Nythraxis memulai Badai Tulang selama {duration} dtk. Ia mengabaikan ancaman, bergerak {speed} kali kecepatan normal, dan melakukan {charges} terjangan masing-masing selama {chargeSeconds} dtk. Pusarannya menghasilkan {whirlHeroic} kesehatan maksimum setiap detik dalam {radius} yd. Setiap terjangan berakhir dengan Hantaman Tulang dalam radius yang sama sebesar {slamHeroic} kesehatan maksimum. Ia merapal Pancang Tulang {spikeAt} dtk setelah badai dimulai, lalu Penghancur Makam siap lagi {rearm} dtk setelah berakhir.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Badai Tulang',
+  'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
+    'Menyebarlah dan terus lari dari Nythraxis. Raider yang diterjang berlari menjauh sementara semua orang memberi ruang di sekitar jalur terjangan, lalu tank mengambilnya kembali saat badai berakhir.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
+    'Mulai {first} dtk setelah Murka Raja dan setiap {everyNormal} dtk sesudahnya, Nythraxis memulai Badai Tulang selama {duration} dtk. Ia mengabaikan ancaman, bergerak {speed} kali kecepatan normal, dan melakukan {charges} terjangan masing-masing selama {chargeSeconds} dtk. Pusarannya menghasilkan {whirlNormal} kesehatan maksimum setiap detik dalam {radius} yd. Setiap terjangan berakhir dengan Hantaman Tulang dalam radius yang sama sebesar {slamNormal} kesehatan maksimum. Ia merapal Pancang Tulang {spikeAt} dtk setelah badai dimulai, lalu Penghancur Makam siap lagi {rearm} dtk setelah berakhir.',
+  'hudChrome.raidBossGuide.nythraxis.courtName': 'Istana Tanpa Kematian',
+  'hudChrome.raidBossGuide.nythraxis.courtResponse':
+    'Tank mengambil Aldren dan memutar cleave-nya menjauh dari raid. Stun atau silence Malric begitu Penyembuhan Malric dimulai dan bunuh dia dulu, lalu root atau stun Voss jauh dari penyembuh karena ia tidak dapat ditaunt, dan habisi dia berikutnya.',
+  'hudChrome.raidBossGuide.nythraxis.courtSummary':
+    'Pada Heroic, Nythraxis membangkitkan istananya setelah setiap Amarah Tanpa Kematian, terputus atau tidak, begitu istana sebelumnya telah tumbang. Roh Aldren membelah semua yang dekat targetnya dengan Belahan Kerajaan. Roh Malric menyalurkan Penyembuhan Malric, menyembuhkan Nythraxis lebih besar pada setiap cast. Roh Voss mengabaikan taunt dan memburu raid.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresHeroicSummary':
+    'Pada {enrageHeroic} dtk sejak pull (jam berhenti saat Bruder Aldric masuk pada 70%), Mahkota Bertahan terpicu sebagai enrage keras. Nythraxis mendapat {damage} lebih banyak kerusakan dan serangan {haste} lebih cepat, lalu tambahan {rampStep} kerusakan setiap {rampEveryHeroic} dtk. Tidak ada bilah timer. Peringatan datang sebagai teriakan pada sisa {warn60}, {warn30}, dan {warn10} dtk.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresName': 'Mahkota Bertahan',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresResponse':
+    'Anggap peringatan pertama sebagai burn terakhir. Simpan cooldown gerak dan defensif untuk mekanik yang tersisa, lalu kalahkan Nythraxis sebelum enrage.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresSummary':
+    'Pada {enrageNormal} dtk sejak pull (jam berhenti saat Bruder Aldric masuk pada 70%), Mahkota Bertahan terpicu sebagai enrage keras. Nythraxis mendapat {damage} lebih banyak kerusakan dan serangan {haste} lebih cepat, lalu tambahan {rampStep} kerusakan setiap {rampEveryNormal} dtk. Tidak ada bilah timer. Peringatan datang sebagai teriakan pada sisa {warn60}, {warn30}, dan {warn10} dtk.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageHeroicSummary':
+    'Setiap {every} dtk, Nythraxis merapal Amarah Tanpa Kematian selama {cast} dtk. Saat ia merapal, setiap batu pelindung yang menyala dapat disalurkan oleh satu raider selama {channel} dtk. Jika tiga raider berbeda masing-masing menyelesaikan satu batu pelindung sebelum cast berakhir, Amarah itu terputus dan Nythraxis terkena stun selama {stun} dtk. Jika tidak, setiap raider menerima {damageHeroic} kesehatan maksimum sebagai kerusakan Bayangan, yang tidak akan diselamatkan oleh jumlah kesehatan apa pun.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageName': 'Amarah Tanpa Kematian',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageResponse':
+    'Tugaskan satu raider ke setiap batu pelindung sebelum pull. Saat cast dimulai, masing-masing berlari ke batunya dan menyalurkannya sampai selesai. Stun, menjauh, dan kematian memutus channel, jadi jaga para penyalur tetap aman dan jangan pernah menugaskan raider yang tertusuk.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageSummary':
+    'Setiap {every} dtk, Nythraxis merapal Amarah Tanpa Kematian selama {cast} dtk. Saat ia merapal, setiap batu pelindung yang menyala dapat disalurkan oleh satu raider selama {channel} dtk. Jika tiga raider berbeda masing-masing menyelesaikan satu batu pelindung sebelum cast berakhir, Amarah itu terputus dan Nythraxis terkena stun selama {stun} dtk. Jika tidak, setiap raider menerima {damageNormal} kesehatan maksimum sebagai kerusakan Bayangan.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseHeroicSummary':
+    'Setiap {every} dtk, Nythraxis menghantam tank saat ini sebesar {hitHeroic} kesehatan maksimum sebagai kerusakan Bayangan dan menambah satu tumpukan Kutukan Ngeri. Selama {duration} dtk, setiap tumpukan meningkatkan kerusakan yang diterima tank itu dari Nythraxis sebesar {perStackHeroic}, hingga {max} tumpukan.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseName': 'Kutukan Ngeri',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseResponse':
+    'Tank bertukar pada {stacks} tumpukan: tank lain melakukan taunt dan tank terkutuk tetap di luar kerucut Penghancur Makam sampai tumpukan memudar. Penyembuh menyiapkan tank yang masuk sebelum pertukaran.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseSummary':
+    'Setiap {every} dtk, Nythraxis menghantam tank saat ini sebesar {hitNormal} kesehatan maksimum sebagai kerusakan Bayangan dan menambah satu tumpukan Kutukan Ngeri. Selama {duration} dtk, setiap tumpukan meningkatkan kerusakan yang diterima tank itu dari Nythraxis sebesar {perStackNormal}, hingga {max} tumpukan.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionHeroicSummary':
+    'Setiap {everyHeroic} dtk, tangan kerangka menandai {countHeroic} lingkaran {radius} yd di bawah raider. Setelah {warning} dtk, setiap lingkaran meletus sebesar {burstHeroic} kesehatan maksimum sebagai kerusakan Bayangan, lalu terbakar sebagai Api Makam selama {flameHeroic} dtk, menghasilkan {tickHeroic} kesehatan maksimum setiap detik kepada siapa pun yang berdiri di dalamnya.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionName': 'Erupsi Makam',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionResponse':
+    'Keluarlah dari setiap lingkaran peringatan sebelum meletus dan jauhi tanah yang terbakar. Tank menarik Nythraxis menjauh dari api agar petarung jarak dekat punya ruang untuk bergerak.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionSummary':
+    'Setiap {everyNormal} dtk, tangan kerangka menandai {countNormal} lingkaran {radius} yd di bawah raider. Setelah {warning} dtk, setiap lingkaran meletus sebesar {burstNormal} kesehatan maksimum sebagai kerusakan Bayangan, lalu terbakar sebagai Api Makam selama {flameNormal} dtk, menghasilkan {tickNormal} kesehatan maksimum setiap detik kepada siapa pun yang berdiri di dalamnya.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerName': 'Penghancur Makam',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerResponse':
+    'Tank menjaga Nythraxis menghadap menjauh dari raid. Semua orang lain tetap di belakang atau di sampingnya dan tidak pernah melintasi kerucut.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerSummary':
+    'Setiap {seconds} dtk, Nythraxis mengisi ayunan berikutnya yang mendarat. Targetnya hanya menerima ayunan itu sendiri, tetapi semua orang lain dalam {range} yd di dalam kerucut {arc} derajat di depannya menerima {splash} dari ayunan itu sebagai kerusakan Fisik, dikurangi oleh armor mereka sendiri.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireHeroicSummary':
+    'Setiap {everyHeroic} dtk, garis api makam ungu bergerak dari Nythraxis menuju seorang raider, memanjang {speed} yd setiap detik hingga {length} yd. Setiap yard terbakar selama {burnHeroic} dtk dan menghasilkan {tickHeroic} kesehatan maksimum setiap detik kepada siapa pun yang berdiri di dalamnya.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireName': 'Api Makam',
+  'hudChrome.raidBossGuide.nythraxis.gravefireResponse':
+    'Minggirilah saat garis itu datang: garisnya sempit dan tidak pernah berbelok. Raider jarak jauh terus bergerak, bukan berdiri di satu tempat.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireSummary':
+    'Setiap {everyNormal} dtk, garis api makam ungu bergerak dari Nythraxis menuju seorang raider, memanjang {speed} yd setiap detik hingga {length} yd. Setiap yard terbakar selama {burnNormal} dtk dan menghasilkan {tickNormal} kesehatan maksimum setiap detik kepada siapa pun yang berdiri di dalamnya.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathName': 'Murka Raja',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathResponse':
+    'Gunakan cooldown defensif yang tersisa untuk kerusakan yang tidak bisa dihindari. Jaga semua mekanik sebelumnya tetap bersih sementara raid menyelesaikan pertarungan.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathSummary':
+    'Nythraxis menghasilkan {bonusNormal} lebih banyak kerusakan pada Normal atau {bonusHeroic} pada Heroic selama sisa pertarungan. Erupsi Makam terjadi setiap {eruptionEveryNormal} dtk ({eruptionEveryHeroic} pada Heroic) dan Api Makam setiap {gravefireEveryNormal} dtk ({gravefireEveryHeroic} pada Heroic).',
+  'hudChrome.raidBossGuide.nythraxis.overview':
+    'Imam Besar Malric menolak membiarkan rajanya mati, dan ritus yang membangkitkan Nythraxis mengikat seluruh istana ke kripta. Pertemuan ini menguji pertukaran tank yang disiplin, peralihan cepat ke Pancang Tulang, gerakan keluar dari tanah terbakar, dan channel batu pelindung yang terkoordinasi begitu Takhta tumbang.',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathName': 'Murka Raja',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathSummary':
+    'Pada {health} kesehatan, Nythraxis mengaum dalam Murka Raja dan mendapat {bonusNormal} kerusakan pada Normal atau {bonusHeroic} pada Heroic selama sisa pertarungan. Erupsi Makam menjadi setiap {eruptionEveryNormal} dtk ({eruptionEveryHeroic} pada Heroic) dan Api Makam menjadi setiap {gravefireEveryNormal} dtk ({gravefireEveryHeroic} pada Heroic). Setiap mekanik lain mempertahankan iramanya.',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneName': 'Takhta',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneSummary':
+    'Nythraxis mempertahankan ruang takhtanya dengan cleave depan yang terisi, pertukaran tank Kutukan Ngeri, Pancang Tulang yang menusuk raider, dan Erupsi Makam yang meninggalkan tanah terbakar.',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesName': 'Batu Pelindung',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesSummary':
+    'Pada {health} kesehatan, Hentakan Menggetarkan menahan raid di tempat sementara Bruder Aldric datang dan menyalakan batu pelindung. Setiap pancang hancur dan lantai berhenti terbakar, lalu Robekan Jiwa dan Amarah Tanpa Kematian bergabung dengan mekanik Takhta.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenName': 'Bangkitkan yang Gugur',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenResponse':
+    'Off-tank mengambil setiap gelombang saat bangkit. Para penyerang membersihkan penjaga di antara Pancang Tulang agar gelombang tidak pernah menumpuk sebelum Takhta tumbang.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenSummary':
+    'Setiap {every} dtk selama Takhta, Nythraxis membangkitkan Penjaga Kerajaan Bangkit di belakangnya. Mereka menyerbu targetnya saat ini dan bertarung sampai dihancurkan.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendHeroicSummary':
+    'Nythraxis menandai {marksHeroic} raider selain targetnya saat ini dengan Robekan Jiwa. Setelah {fuse} dtk, setiap tanda menghasilkan {damageHeroic} kesehatan maksimum pembawanya sebagai kerusakan Bayangan, dibagi oleh jumlah raider bertanda dalam {range} yd dari mereka. Tanda yang selesai sendirian mematikan.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendName': 'Robekan Jiwa',
+  'hudChrome.raidBossGuide.nythraxis.soulRendResponse':
+    'Setiap raider bertanda berlari ke satu titik tumpuk dan berdiri dalam {range} yd dari tanda lain sebelum sumbu {fuse} dtk berakhir. Penyembuh mengisi kesehatan grup saat tanda selesai.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendSummary':
+    'Nythraxis menandai {marksNormal} raider selain targetnya saat ini dengan Robekan Jiwa. Setelah {fuse} dtk, setiap tanda menghasilkan kesehatan maksimum penuh pembawanya sebagai kerusakan Bayangan, dibagi oleh jumlah raider bertanda dalam {range} yd dari mereka.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireHeroicSummary':
+    'Setiap ledakan Robekan Jiwa meninggalkan satu kolam api ungu dengan radius {radius} yd per grup tanda yang bertumpuk, terbakar selama {secondsHeroic} dtk sebesar {tickHeroic} kesehatan maksimum setiap detik. Berdiri di tempat kolam bertumpang tindih hanya menerima satu tick, bukan salinan bertumpuk. Kolam tidak pernah muncul dalam {clearance} yd dari batu pelindung.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireName': 'Api Jiwa',
+  'hudChrome.raidBossGuide.nythraxis.soulfireResponse':
+    'Keluar dari kolam ungu segera setelah tanda meledak. Jaga titik tumpuk berikutnya bebas dari api aktif.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
+    'Setiap ledakan Robekan Jiwa meninggalkan kolam api ungu dengan radius {radius} yd di tempat setiap tanda berdiri, terbakar selama {seconds} dtk sebesar {tickNormal} kesehatan maksimum setiap detik. Berdiri di tempat kolam bertumpang tindih menerima tick dari masing-masing. Kolam tidak pernah muncul dalam {clearance} yd dari batu pelindung.',
 };

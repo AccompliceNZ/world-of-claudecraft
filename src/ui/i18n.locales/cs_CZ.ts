@@ -15537,4 +15537,272 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'yumi.queue.leave': 'Opouštíš frontu Ochraňte Yumi.',
   'yumi.queue.teamLeave': 'Tvůj tým opouští frontu Ochraňte Yumi.',
   'yumi.respawn.title': 'K ZEMI!',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    'Čtení chladného zraku z dokončeného Horečného nátahu způsobí, že tvůj příští Padlý výstřel udělí o 75% vyšší poškození. Výstřel Čtení spotřebuje.',
+  'entities.items.bramblehide_cinch.name': 'Kořenový pás z trnité kůže',
+  'entities.items.bramblehide_crown.name': 'Kořenová koruna z trnité kůže',
+  'entities.items.bramblehide_grips.name': 'Kořenové rukavice z trnité kůže',
+  'entities.items.bramblehide_harness.name': 'Kořenový postroj z trnité kůže',
+  'entities.items.bramblehide_legguards.name': 'Kořenové chrániče nohou z trnité kůže',
+  'entities.items.bramblehide_mantle.name': 'Kořenový plášť z trnité kůže',
+  'entities.items.bramblehide_treads.name': 'Kořenové boty z trnité kůže',
+  'entities.items.courtiers_bonefang.name': 'Dvořanův kostěný tesák',
+  'entities.items.gravecourt_hewer.name': 'Sekáč hrobového dvora',
+  'entities.items.stormhymn_chain_grips.name': 'Kroužkové rukavice Písně bouře',
+  'entities.items.stormhymn_chain_treads.name': 'Kroužkové boty Písně bouře',
+  'entities.items.thornpeak_moonhide_cowl.name': 'Kápě z měsíční kůže Thornpeaku',
+  'entities.items.thornpeak_wardblade.name': 'Ochranná čepel Thornpeaku',
+  'entities.items.votive_ward_of_the_deathless_court.name': 'Zaslíbená ochrana Nesmrtelného dvora',
+  'entities.mobs.nythraxis_bone_spike.name': 'Kostěný bodec',
+  'gpuNotice.bodyRequestedBackend':
+    'Hru se nepodařilo spustit na grafickém rozhraní, které sis vybral, proto běží místo toho na OpenGL. Všechno funguje; načítání a první minuty se mohou víc zasekávat. Rozhraní můžeš znovu vybrat v Možnostech v části Grafika a Systém.',
+  'hudChrome.auraEffect.coldsightRead':
+    'Tvůj příští Dlouhý nátah způsobí o {longDrawPct}% vyšší poškození, nebo tvůj příští Padlý výstřel o {fellShotPct}% vyšší',
+  'hudChrome.auraEffect.nythraxisAscension':
+    'Nesmrtelný vzestup: {stacks} sad, o {pct}% vyšší poškození a rychlost útoku. Přetáhni Nythraxise na Vazebnou pečeť, aby se efekt očistil.',
+  'hudChrome.auraEffect.nythraxisBoneStorm':
+    'Kostěná bouře: Nythraxis ignoruje hrozbu, víří za {tick}% maximálního zdraví každou sekundu v dosahu {radius} yardů a vyráží proti raiderům. Rozestupte se a utíkejte.',
+  'hudChrome.auraEffect.nythraxisBound':
+    'Spoután starými ochranami: Nythraxis utrpí o {pct}% vyšší poškození po dobu {duration} s.',
+  'hudChrome.auraEffect.nythraxisCrownEndures':
+    'Koruna vytrvá: {stacks} sad, o {pct}% vyšší poškození a o {haste}% rychlejší útoky. Raidu došel čas.',
+  'hudChrome.auraEffect.nythraxisDreadCurse':
+    'Každá sada zvyšuje poškození utržené od Nythraxise o {perStack}% po dobu {duration} s: nyní {stacks} z {max} sad, o {pct}% vyšší poškození. Každých {every} s jeho další zásah do cíle způsobí {hit}% maximálního zdraví a přidá sadu. Tankové by se měli vystřídat při {swap} sadách.',
+  'hudChrome.auraEffect.nythraxisImpaled':
+    'Nabodnut na kostěný bodec: nemůžeš jednat a ztrácíš {normal}% svého maximálního zdraví každých {interval} s ({heroic}% na Heroic), dokud raid bodec nezničí.',
+  'hudChrome.auraEffect.nythraxisKingsWrath':
+    'Králův hněv: Nythraxis způsobuje o {pct}% vyšší poškození po zbytek boje.',
+  'hudChrome.auraEffect.nythraxisUnbound':
+    'Nespoutaný: Nythraxis způsobuje o {pct}% vyšší poškození, dokud ho neudrží Vazebná pečeť.',
+  'hudChrome.auraEffect.veiledEdgeStrike':
+    'Tvůj příští Úder číhajícího způsobí o {pct}% vyšší poškození zbraní',
+  'hudChrome.bank.guildHistoryTab': 'Historie',
+  'hudChrome.bank.logActionAdminPurge': 'Odstraněno',
+  'hudChrome.bank.logActionBuySlots': 'Koupeno rozšíření',
+  'hudChrome.bank.logActionCharterFee': 'Zaplacen zakládací poplatek',
+  'hudChrome.bank.logActionDeposit': 'Vloženo',
+  'hudChrome.bank.logActionOpenBank': 'Otevřena banka',
+  'hudChrome.bank.logActionWithdraw': 'Vybráno',
+  'hudChrome.bank.logActorAdmin': 'Administrátor',
+  'hudChrome.bank.logColAction': 'Akce',
+  'hudChrome.bank.logColDetail': 'Podrobnosti',
+  'hudChrome.bank.logColMember': 'Člen',
+  'hudChrome.bank.logColTime': 'Kdy',
+  'hudChrome.bank.logDetailItem': '{count} {item}',
+  'hudChrome.bank.logEmptyFiltered': 'Tomuto filtru neodpovídají žádné akce cechovní banky.',
+  'hudChrome.bank.logEnd': 'To je celá historie cechovní banky.',
+  'hudChrome.bank.logFilterAll': 'Vše',
+  'hudChrome.bank.logFilterAria': 'Filtrovat historii cechovní banky',
+  'hudChrome.bank.logFilterItems': 'Předměty',
+  'hudChrome.bank.logFilterMoney': 'Peníze',
+  'hudChrome.bank.logOlder': 'Zobrazit starší',
+  'hudChrome.bank.logOlderLoading': 'Načítají se starší akce...',
+  'hudChrome.bank.logSearchAria': 'Hledat v načtených akcích cechovní banky podle člena, akce nebo předmětu',
+  'hudChrome.bank.logSearchNoMatch':
+    'Žádná načtená akce cechovní banky neodpovídá hledání. Zobraz starší řádky, aby se záběr rozšířil.',
+  'hudChrome.bank.logSearchPlaceholder': 'Hledat v historii',
+  'hudChrome.bank.logShowing': 'Zobrazuje se {count} akcí cechovní banky, nejnovější první.',
+  'hudChrome.bank.logShowingMatched': 'Zobrazuje se {matched} z {count} načtených akcí cechovní banky.',
+  'hudChrome.finder.mech.binding_sigil': 'Vazebná pečeť (přetáhni bosse na pečeť, jinak raid zaplatí)',
+  'hudChrome.finder.mech.bone_spike': 'Kostěný bodec (nabodnutí raideři slábnou, dokud není bodec zničen)',
+  'hudChrome.finder.mech.bone_storm': 'Kostěná bouře (ignoruje hrozbu, víří a útočí na raid)',
+  'hudChrome.finder.mech.crown_endures': 'Koruna vytrvá (tvrdé rozzuření v 6:00, heroic 5:00)',
+  'hudChrome.finder.mech.deathless_court':
+    'Nesmrtelný dvůr (jen heroic, královský dvůr povstane po Nesmrtelném běsnění)',
+  'hudChrome.finder.mech.grave_eruption': 'Hrobová erupce (varovné kruhy, které zanechají hořící zem)',
+  'hudChrome.finder.mech.gravefire': 'Hrobový oheň (pohyblivá ohnivá linie, které je třeba uhnout)',
+  'hudChrome.finder.mech.kings_wrath': 'Králův hněv (30%: trvalý bonus k poškození, rychlejší nebezpečí na podlaze)',
+  'hudChrome.finder.mech.soulfire': 'Oheň duší (výbuchy Trhání duše zanechají hořící kaluže)',
+  'hudChrome.fullTransfer.excluded':
+    'Nikdy se nezahrnuje: tvoje přihlášení, účet, peněženka ani údaje o nákupech. Rozložení akčních lišt se ukládá k účtu a cestuje s ním.',
+  'hudChrome.fullTransfer.fullSettings': 'Úplná nastavení',
+  'hudChrome.fullTransfer.intro':
+    'Exportuj všechny uložené předvolby na tomto zařízení jako jeden kód a vlož ho na jiném zařízení nebo v jiném prohlížeči pro import: grafiku, zvuk, rozhraní, motiv, rozložení oken, klávesové zkratky pro každou postavu, ovladač a křížové hotbary, chat, filtry oken, jazyk a skryté rady.',
+  'hudChrome.fullTransfer.menu': 'Import / export',
+  'hudChrome.fullTransfer.title': 'Import / export nastavení',
+  'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Měřič poškození',
+  'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Sledování skutků',
+  'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Sledování výprav do hlubin',
+  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Lišta utrpení',
+  'hudChrome.interfaceUnlock.frameNames.petBar': 'Lišta mazlíčka',
+  'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Aktivace kouzel',
+  'hudChrome.interfaceUnlock.frameNames.questTracker': 'Sledování úkolů',
+  'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': 'Sledování relikviáře',
+  'hudChrome.interfaceUnlock.frameNames.riftTracker': 'Sledování trhlin',
+  'hudChrome.interfaceUnlock.frameNames.swingBarOffhand': 'Levá ruka',
+  'hudChrome.keybindTransfer.apply': 'Použít',
+  'hudChrome.keybindTransfer.imported': 'Nastavení klávesových zkratek importováno.',
+  'hudChrome.keybindTransfer.setup': 'Nastavení zkratek',
+  'hudChrome.keybindTransfer.wrongKind': 'Tento kód je export nastavení, ne nastavení zkratek.',
+  'hudChrome.keyboardMap.assignHint': 'Vyber akci, kterou navážeš na {key}.',
+  'hudChrome.keyboardMap.assignOption': '{category}: {action}',
+  'hudChrome.keyboardMap.assignPlaceholder': 'Přiřadit akci ke klávese {key}',
+  'hudChrome.keyboardMap.bindingLine': '{key}: {action}',
+  'hudChrome.keyboardMap.boundTo': 'Akce {action} navázána na {key}.',
+  'hudChrome.keyboardMap.close': 'Zavřít přehled klávesnice',
+  'hudChrome.keyboardMap.form60': '60%',
+  'hudChrome.keyboardMap.form75': '75%',
+  'hudChrome.keyboardMap.formFull': 'Plná velikost',
+  'hudChrome.keyboardMap.formGroup': 'Velikost klávesnice',
+  'hudChrome.keyboardMap.formTkl': 'Bez numerického bloku',
+  'hudChrome.keyboardMap.hint':
+    'Používané klávesy jsou vybarvené podle kategorie. Najeď na klávesu nebo ji zaměř, aby se zobrazilo vše, co je na ni navázané.',
+  'hudChrome.keyboardMap.hintInteractive':
+    'Používané klávesy jsou vybarvené podle kategorie. Kliknutím na klávesu změníš její akci; najetím nebo zaměřením zobrazíš vše, co je na ni navázané.',
+  'hudChrome.keyboardMap.keyDetail': '{key}: {bindings}',
+  'hudChrome.keyboardMap.layerAlt': 'Alt',
+  'hudChrome.keyboardMap.layerCtrl': 'Ctrl',
+  'hudChrome.keyboardMap.layerGroup': 'Vrstva modifikátoru',
+  'hudChrome.keyboardMap.layerNone': 'Bez modifikátoru',
+  'hudChrome.keyboardMap.layerShift': 'Shift',
+  'hudChrome.keyboardMap.legendGroup': 'Popisky kláves',
+  'hudChrome.keyboardMap.legendLayout': 'Tvoje rozložení',
+  'hudChrome.keyboardMap.legendQwerty': 'QWERTY',
+  'hudChrome.keyboardMap.notBindable': 'Tuto klávesu nelze navázat.',
+  'hudChrome.keyboardMap.notOnLayout': 'Není na této klávesnici: {bindings}',
+  'hudChrome.keyboardMap.otherLayers': 'Také navázáno s modifikátorem',
+  'hudChrome.keyboardMap.popOut': 'Otevřít zvlášť',
+  'hudChrome.keyboardMap.pressKey': 'Stiskni klávesu pro {action}. Esc zruší.',
+  'hudChrome.keyboardMap.separator': ', ',
+  'hudChrome.keyboardMap.title': 'Přehled klávesnice',
+  'hudChrome.nythraxisCallout.boneStormBegins': 'Kostěná bouře! Rozestupte se a utíkejte!',
+  'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis útočí na TEBE! Utíkej!',
+  'hudChrome.nythraxisCallout.boneStormEnds': 'Kostěná bouře skončila. Tankové, převezměte ho!',
+  'hudChrome.nythraxisCallout.crownEndures': 'Koruna vytrvá! Nythraxis zuří!',
+  'hudChrome.nythraxisCallout.crownEndures10': 'Deset sekund! Dorazte ho!',
+  'hudChrome.nythraxisCallout.crownEndures30': 'Třicet sekund do Koruna vytrvá!',
+  'hudChrome.nythraxisCallout.crownEndures60': 'Jedna minuta do Koruna vytrvá!',
+  'hudChrome.nythraxisCallout.dreadCurseSwap': 'Děsivá kletba: vyměnit tanky!',
+  'hudChrome.nythraxisCallout.gravefireTarget': 'Hrobový oheň se žene k tobě! Uhnout stranou!',
+  'hudChrome.nythraxisCallout.impaled': 'Kostěné bodce! Osvoboďte nabodnuté!',
+  'hudChrome.nythraxisCallout.kingsWrath': 'Král povstává v hněvu! Všechno teď zasahuje tvrději!',
+  'hudChrome.nythraxisCallout.sigilAppears': 'Vazebná pečeť vzplála! Přetáhni na ni Nythraxise!',
+  'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis je spoután! Spalte ho!',
+  'hudChrome.nythraxisCallout.sigilUnbound': 'Pečeť vyhasíná bez spoutání! Nythraxis sílí!',
+  'hudChrome.nythraxisCallout.spikeBroken': 'Bodec roztříštěn!',
+  'hudChrome.nythraxisCallout.youAreImpaled': 'Jsi nabodnut! Vydrž!',
+  'hudChrome.options.gpuBackend': 'Grafické rozhraní',
+  'hudChrome.options.gpuBackendActive': 'Právě se používá {backend}.',
+  'hudChrome.options.gpuBackendActiveAutoCapped':
+    'Právě se používá {backend}. Automatika zatím na této grafické kartě Vulkan nezkouší; vyber Vulkan ručně, pokud ho chceš zkusit.',
+  'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
+  'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
+  'hudChrome.options.gpuBackendActiveUnavailable': 'Právě se používá {backend} (Vulkan se nepodařilo zapnout).',
+  'hudChrome.options.gpuBackendAuto': 'Automaticky',
+  'hudChrome.options.gpuBackendNote':
+    'Automatika vybere nejlepší možnost. Vulkan je rychlejší a doporučený pro většinu hráčů. OpenGL je pomalejší, ale může pomoct, když Vulkan nefunguje správně. Projeví se při příštím spuštění hry.',
+  'hudChrome.options.gpuBackendOpenGL': 'OpenGL (pomalé)',
+  'hudChrome.options.gpuBackendSaveFailed': 'Volbu se nepodařilo uložit. Příští spuštění ponechá {backend}.',
+  'hudChrome.options.gpuBackendVulkan': 'Vulkan',
+  'hudChrome.options.restartFailed': 'Hra se nedokázala sama restartovat. Ukonči ji a spusť znovu.',
+  'hudChrome.options.restartGame': 'Restartovat hru',
+  'hudChrome.options.restartInProgress': 'Hra se restartuje...',
+  'hudChrome.options.restartPending': 'Některé změny se projeví až po restartu.',
+  'hudChrome.options.shaderWarm': 'Pracovní proces zahřívání shaderů',
+  'hudChrome.options.shaderWarmAuto': 'Automaticky',
+  'hudChrome.options.shaderWarmNote':
+    'Předem zahřívá mezipaměť shaderů na pozadí, aby se zabránilo zasekávání ve hře. Automaticky: zapnuto jen při podpoře grafickým systémem. (Doporučeno). Zapnuto: vynuceno všude. Na některých sestavách může zhoršit výkon. Vypnuto: zakázáno.',
+  'hudChrome.options.shaderWarmOff': 'Vypnuto',
+  'hudChrome.options.shaderWarmOn': 'Zapnuto',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilHeroicSummary':
+    'Každých {everyHeroic} s vzplane na podlaze {minDist} až {maxDist} yardů od Nythraxise pečeť starých ochran a on začne Nesmrtelný vzestup, který mu každých {ascensionEvery} s přidá {ascensionHeroic} poškození a rychlost útoku. Pokud do {bindHeroic} s stojí na pečeti, je spoután: Vzestup se očistí, je omráčen na {stunHeroic} s a po dobu {boundHeroic} s utrpí o {vulnerability} vyšší poškození. Jinak každý raider utrpí {unboundHitHeroic} maximálního zdraví jako stínové poškození a on si ponechá o {unboundBonusHeroic} vyšší poškození až do dalšího spoutání.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilName': 'Vazebná pečeť',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilResponse':
+    'Tank okamžitě přetáhne Nythraxise na pečeť, i přes oheň, který raid zanechal. Bojovníci nablízko sledují přesun a bojovníci na dálku zůstávají mimo nový kužel Hrobobijce. Všichni do něj pálí, dokud je spoután.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilSummary':
+    'Každých {everyNormal} s vzplane na podlaze {minDist} až {maxDist} yardů od Nythraxise pečeť starých ochran a on začne Nesmrtelný vzestup, který mu každých {ascensionEvery} s přidá {ascensionNormal} poškození a rychlost útoku. Pokud do {bindNormal} s stojí na pečeti, je spoután: Vzestup se očistí, je omráčen na {stunNormal} s a po dobu {boundNormal} s utrpí o {vulnerability} vyšší poškození. Jinak každý raider utrpí {unboundHitNormal} maximálního zdraví jako stínové poškození a on si ponechá o {unboundBonusNormal} vyšší poškození až do dalšího spoutání.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeHeroicSummary':
+    'Každých {everyHeroic} s Nythraxis nabodne {victimsHeroic} raiderů mimo svůj aktuální cíl na kostěné bodce. Nabodnutý raider nemůže jednat a každou sekundu ztrácí {drainHeroic} maximálního zdraví, dokud není jeho bodec zničen.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeName': 'Kostěný bodec',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeResponse':
+    'Útočníci se okamžitě přepnou na kostěné bodce a zničí je, aby osvobodili nabodnuté raidery. Léčitelé drží nabodnuté naživu, než bodce padnou.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
+    'Každých {everyNormal} s Nythraxis nabodne {victimsNormal} raiderů mimo svůj aktuální cíl na kostěné bodce. Nabodnutý raider nemůže jednat a každou sekundu ztrácí {drainNormal} maximálního zdraví, dokud není jeho bodec zničen.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
+    'Počínaje {first} s po začátku Králova hněvu a pak každých {everyHeroic} s Nythraxis zahájí Kostěnou bouři na {duration} s. Ignoruje hrozbu, pohybuje se {speed}násobkem běžné rychlosti a provede {charges} výpadů, každý v trvání {chargeSeconds} s. Jeho vír způsobí každou sekundu v dosahu {radius} yardů {whirlHeroic} maximálního zdraví. Každý výpad končí Kostěným úderem ve stejném dosahu za {slamHeroic} maximálního zdraví. {spikeAt} s po začátku bouře sesílá Kostěný bodec a Hrobobijec se znovu připraví {rearm} s po jejím konci.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Kostěná bouře',
+  'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
+    'Rozestupte se a nepřestávejte před Nythraxisem utíkat. Označený raider běží pryč, zatímco všichni ostatní nechají kolem trasy výpadu místo; tankové ho po konci bouře znovu převezmou.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
+    'Počínaje {first} s po začátku Králova hněvu a pak každých {everyNormal} s Nythraxis zahájí Kostěnou bouři na {duration} s. Ignoruje hrozbu, pohybuje se {speed}násobkem běžné rychlosti a provede {charges} výpadů, každý v trvání {chargeSeconds} s. Jeho vír způsobí každou sekundu v dosahu {radius} yardů {whirlNormal} maximálního zdraví. Každý výpad končí Kostěným úderem ve stejném dosahu za {slamNormal} maximálního zdraví. {spikeAt} s po začátku bouře sesílá Kostěný bodec a Hrobobijec se znovu připraví {rearm} s po jejím konci.',
+  'hudChrome.raidBossGuide.nythraxis.courtName': 'Nesmrtelný dvůr',
+  'hudChrome.raidBossGuide.nythraxis.courtResponse':
+    'Tankové převezmou Aldrena a otočí jeho štěpný útok pryč od raidu. Omračte nebo umlčte Malrica hned, jak začne Malricovo léčení, a zabijte ho jako prvního; potom zakořeňte nebo omračte Vosse mimo léčitele, protože se nedá vyprovokovat, a dorazte ho jako dalšího.',
+  'hudChrome.raidBossGuide.nythraxis.courtSummary':
+    'Na Heroic Nythraxis po každém Nesmrtelném běsnění, přerušeném i nepřerušeném, pozvedne svůj dvůr, jakmile předchozí dvůr padl. Duch Aldrena zasáhne Královským sekem vše poblíž svého cíle. Duch Malrica sesílá Malricovo léčení, které každým sesláním léčí Nythraxise víc. Duch Vosse ignoruje provokace a loví raid.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresHeroicSummary':
+    'V {enrageHeroic} s od začátku boje (hodiny se zastaví, když bratr Aldric vstoupí při 70%) se Koruna vytrvá spustí jako tvrdé rozzuření. Nythraxis získá o {damage} vyšší poškození a o {haste} rychlejší útoky, poté každých {rampEveryHeroic} s další {rampStep} poškození. Není zde žádná časová lišta. Varování přicházejí jako výkřiky při {warn60}, {warn30} a {warn10} s do konce.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresName': 'Koruna vytrvá',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresResponse':
+    'První varování berte jako závěrečný nápor. Šetřete pohybové a obranné cooldowny na zbývající mechaniky a porazte Nythraxise před rozzuřením.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresSummary':
+    'V {enrageNormal} s od začátku boje (hodiny se zastaví, když bratr Aldric vstoupí při 70%) se Koruna vytrvá spustí jako tvrdé rozzuření. Nythraxis získá o {damage} vyšší poškození a o {haste} rychlejší útoky, poté každých {rampEveryNormal} s další {rampStep} poškození. Není zde žádná časová lišta. Varování přicházejí jako výkřiky při {warn60}, {warn30} a {warn10} s do konce.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageHeroicSummary':
+    'Každých {every} s Nythraxis sesílá Nesmrtelné běsnění po dobu {cast} s. Během sesílání může každý rozsvícený ochranný kámen kanalizovat jeden raider po dobu {channel} s. Pokud tři různí raideři každý dokončí svůj ochranný kámen před koncem sesílání, běsnění se přeruší a Nythraxis je omráčen na {stun} s. Jinak každý raider utrpí {damageHeroic} maximálního zdraví jako stínové poškození, což žádný fond zdraví nepřežije.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageName': 'Nesmrtelné běsnění',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageResponse':
+    'Před začátkem boje přiřaďte ke každému ochrannému kameni jednoho raidera. Když sesílání začne, každý běží ke svému kameni a kanalizuje ho až do dokončení. Omráčení, odstoupení a smrt kanál přeruší, proto udržte kanalizující hráče v bezpečí a nikdy nepřiřazujte nabodnutého raidera.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageSummary':
+    'Každých {every} s Nythraxis sesílá Nesmrtelné běsnění po dobu {cast} s. Během sesílání může každý rozsvícený ochranný kámen kanalizovat jeden raider po dobu {channel} s. Pokud tři různí raideři každý dokončí svůj ochranný kámen před koncem sesílání, běsnění se přeruší a Nythraxis je omráčen na {stun} s. Jinak každý raider utrpí {damageNormal} maximálního zdraví jako stínové poškození.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseHeroicSummary':
+    'Každých {every} s Nythraxis zasáhne svého aktuálního tanka za {hitHeroic} maximálního zdraví jako stínové poškození a přidá sadu Děsivé kletby. Po dobu {duration} s každá sada zvyšuje poškození, které tank utrpí od Nythraxise, o {perStackHeroic}, až do {max} sad.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseName': 'Děsivá kletba',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseResponse':
+    'Tankové se střídají při {stacks} sadách: druhý tank provokuje a prokletý tank zůstává mimo kužel Hrobobijce, než sady vyprchají. Léčitelé připraví přebírajícího tanka před výměnou.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseSummary':
+    'Každých {every} s Nythraxis zasáhne svého aktuálního tanka za {hitNormal} maximálního zdraví jako stínové poškození a přidá sadu Děsivé kletby. Po dobu {duration} s každá sada zvyšuje poškození, které tank utrpí od Nythraxise, o {perStackNormal}, až do {max} sad.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionHeroicSummary':
+    'Každých {everyHeroic} s kostlivé ruce označí {countHeroic} kruhů o poloměru {radius} yardů pod raidery. Po {warning} s každý kruh vybuchne za {burstHeroic} maximálního zdraví jako stínové poškození, potom hoří jako hrobový plamen po dobu {flameHeroic} s a každou sekundu způsobuje {tickHeroic} maximálního zdraví každému, kdo v něm stojí.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionName': 'Hrobová erupce',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionResponse':
+    'Ustupte z každého varovného kruhu, než vybuchne, a nestůjte na hořící zemi. Tankové odtáhnou Nythraxise od plamenů, aby měli bojovníci nablízko prostor.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionSummary':
+    'Každých {everyNormal} s kostlivé ruce označí {countNormal} kruhů o poloměru {radius} yardů pod raidery. Po {warning} s každý kruh vybuchne za {burstNormal} maximálního zdraví jako stínové poškození, potom hoří jako hrobový plamen po dobu {flameNormal} s a každou sekundu způsobuje {tickNormal} maximálního zdraví každému, kdo v něm stojí.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerName': 'Hrobobijec',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerResponse':
+    'Tankové drží Nythraxise otočeného pryč od raidu. Všichni ostatní stojí za ním nebo vedle něj a nikdy nekříží kužel.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerSummary':
+    'Každých {seconds} s Nythraxis nabije svůj další dopadlý úder. Jeho cíl utrpí jen samotný úder, ale všichni ostatní v dosahu {range} yardů v kuželu {arc} stupňů před ním utrpí {splash} tohoto úderu jako fyzické poškození, snížené jejich vlastním brněním.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireHeroicSummary':
+    'Každých {everyHeroic} s vyběhne od Nythraxise k raiderovi linie fialového hrobového ohně, která každou sekundu roste o {speed} yardů až na {length} yardů. Každý yard hoří {burnHeroic} s a každou sekundu způsobuje {tickHeroic} maximálního zdraví každému, kdo v něm stojí.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireName': 'Hrobový oheň',
+  'hudChrome.raidBossGuide.nythraxis.gravefireResponse':
+    'Ustup stranou, jak linie přichází: je úzká a nikdy nezatáčí. Raideři na dálku se drží v pohybu místo stání na místě.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireSummary':
+    'Každých {everyNormal} s vyběhne od Nythraxise k raiderovi linie fialového hrobového ohně, která každou sekundu roste o {speed} yardů až na {length} yardů. Každý yard hoří {burnNormal} s a každou sekundu způsobuje {tickNormal} maximálního zdraví každému, kdo v něm stojí.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathName': 'Králův hněv',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathResponse':
+    'Použijte zbývající obranné cooldowny na nevyhnutelné poškození. Udržte všechny dřívější mechaniky čisté, zatímco raid dokončuje boj.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathSummary':
+    'Nythraxis způsobuje o {bonusNormal} vyšší poškození na Normal nebo o {bonusHeroic} na Heroic po zbytek boje. Hrobová erupce nastává každých {eruptionEveryNormal} s ({eruptionEveryHeroic} na Heroic) a Hrobový oheň každých {gravefireEveryNormal} s ({gravefireEveryHeroic} na Heroic).',
+  'hudChrome.raidBossGuide.nythraxis.overview':
+    'Velekněz Malric odmítl nechat svého krále zemřít a rituál, který Nythraxise pozvedl, připoutal celý dvůr ke kryptě. Střet prověří ukázněné střídání tanků, rychlé přepínání na kostěné bodce, pohyb mimo hořící zem a koordinované kanalizování ochranných kamenů, jakmile trůn padne.',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathName': 'Králův hněv',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathSummary':
+    'Při {health} zdraví Nythraxis zařve v Králově hněvu a získá o {bonusNormal} vyšší poškození na Normal nebo o {bonusHeroic} na Heroic po zbytek boje. Hrobová erupce se zrychlí na každých {eruptionEveryNormal} s ({eruptionEveryHeroic} na Heroic) a Hrobový oheň na každých {gravefireEveryNormal} s ({gravefireEveryHeroic} na Heroic). Všechny ostatní mechaniky drží své tempo.',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneName': 'Trůn',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneSummary':
+    'Nythraxis drží svůj trůnní sál nabitým čelním sekem, střídáním tanků kvůli Děsivé kletbě, kostěnými bodci, které nabodávají raidery, a Hrobovými erupcemi zanechávajícími hořící zem.',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesName': 'Ochranné kameny',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesSummary':
+    'Při {health} zdraví Rozechvělý dupot zadrží raid na místě, zatímco dorazí bratr Aldric a rozsvítí ochranné kameny. Každý bodec se roztříští a podlaha přestane hořet, potom se k mechanikám Trůnu přidají Trhání duše a Nesmrtelné běsnění.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenName': 'Pozvednutí padlých',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenResponse':
+    'Off-tank převezme každou vlnu, jakmile povstane. Útočníci čistí stráže mezi kostěnými bodci, aby se vlny před pádem Trůnu nikdy nenahromadily.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenSummary':
+    'Každých {every} s během Trůnu Nythraxis pozvedá za sebou Povstalé královské stráže. Vrhají se na jeho aktuální cíl a bojují, dokud nejsou zničeny.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendHeroicSummary':
+    'Nythraxis označí {marksHeroic} raiderů mimo svůj aktuální cíl Trháním duše. Po {fuse} s každá značka způsobí {damageHeroic} maximálního zdraví svého nositele jako stínové poškození, rozdělené počtem označených raiderů v dosahu {range} yardů od něj. Značka, která se vyhodnotí o samotě, je smrtící.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendName': 'Trhání duše',
+  'hudChrome.raidBossGuide.nythraxis.soulRendResponse':
+    'Každý označený raider běží na jedno místo ke shromáždění a postaví se do {range} yardů od ostatních značek před koncem odpočtu {fuse} s. Léčitelé doléčí skupinu, než se značky vyhodnotí.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendSummary':
+    'Nythraxis označí {marksNormal} raiderů mimo svůj aktuální cíl Trháním duše. Po {fuse} s každá značka způsobí plné maximální zdraví svého nositele jako stínové poškození, rozdělené počtem označených raiderů v dosahu {range} yardů od něj.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireHeroicSummary':
+    'Každý výbuch Trhání duše zanechá jednu kaluž fialového ohně s poloměrem {radius} yardů za každou seskupenou skupinu značek, která hoří {secondsHeroic} s a každou sekundu způsobuje {tickHeroic} maximálního zdraví. Stání v překryvu kaluží způsobí jen jeden tik, nikdy nasčítané kopie. Kaluže nikdy nevzniknou do {clearance} yardů od ochranného kamene.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireName': 'Oheň duší',
+  'hudChrome.raidBossGuide.nythraxis.soulfireResponse':
+    'Jakmile značky vybuchnou, odejdi z fialové kaluže. Udrž další místo shromáždění čisté od aktivního ohně.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
+    'Každý výbuch Trhání duše zanechá fialovou ohnivou kaluž s poloměrem {radius} yardů na místě, kde stála každá značka, která hoří {seconds} s a každou sekundu způsobuje {tickNormal} maximálního zdraví. Stání v překryvu kaluží způsobí tik z každé z nich. Kaluže nikdy nevzniknou do {clearance} yardů od ochranného kamene.',
 };

@@ -15725,4 +15725,272 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'yumi.queue.leave': 'Opuszczasz kolejkę Ochrony Yumi.',
   'yumi.queue.teamLeave': 'Twoja drużyna opuszcza kolejkę Ochrony Yumi.',
   'yumi.respawn.title': 'POWALONY!',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    'Odczyt Zimnowidzenia z ukończonego Gorączkowego Naciągu sprawia, że twój następny Plugawy strzał zadaje o 75% więcej obrażeń. Oddanie strzału zużywa Odczyt.',
+  'entities.items.bramblehide_cinch.name': 'Korzeniowy pas z ciernistej skóry',
+  'entities.items.bramblehide_crown.name': 'Korzeniowa korona z ciernistej skóry',
+  'entities.items.bramblehide_grips.name': 'Korzeniowe rękawice z ciernistej skóry',
+  'entities.items.bramblehide_harness.name': 'Korzeniowa uprząż z ciernistej skóry',
+  'entities.items.bramblehide_legguards.name': 'Korzeniowe nagolenniki z ciernistej skóry',
+  'entities.items.bramblehide_mantle.name': 'Korzeniowy płaszcz z ciernistej skóry',
+  'entities.items.bramblehide_treads.name': 'Korzeniowe trzewiki z ciernistej skóry',
+  'entities.items.courtiers_bonefang.name': 'Kościany kieł dworzanina',
+  'entities.items.gravecourt_hewer.name': 'Topór Cmentarnego Dworu',
+  'entities.items.stormhymn_chain_grips.name': 'Kolcze rękawice Hymnu Burzy',
+  'entities.items.stormhymn_chain_treads.name': 'Kolcze trzewiki Hymnu Burzy',
+  'entities.items.thornpeak_moonhide_cowl.name': 'Kaptur z księżycowej skóry Ciernistego Szczytu',
+  'entities.items.thornpeak_wardblade.name': 'Ostrze ochronne Ciernistego Szczytu',
+  'entities.items.votive_ward_of_the_deathless_court.name': 'Wotywna ochrona Nieśmiertelnego Dworu',
+  'entities.mobs.nythraxis_bone_spike.name': 'Kościany kolec',
+  'gpuNotice.bodyRequestedBackend':
+    'Gra nie mogła uruchomić się na wybranym zapleczu graficznym, więc działa zamiast tego na OpenGL. Wszystko działa; wczytywanie i pierwsze minuty mogą bardziej przycinać. Zaplecze możesz wybrać ponownie w Opcjach, w sekcji Grafika i System.',
+  'hudChrome.auraEffect.coldsightRead':
+    'Twój następny Długi naciąg zadaje o {longDrawPct}% więcej obrażeń albo twój następny Plugawy strzał zadaje o {fellShotPct}% więcej',
+  'hudChrome.auraEffect.nythraxisAscension':
+    'Nieśmiertelne Wniebowstąpienie: {stacks} ładunków, o {pct}% więcej obrażeń i szybkości ataku. Przeciągnij Nythraxis na Pieczęć Wiążącą, aby je oczyścić.',
+  'hudChrome.auraEffect.nythraxisBoneStorm':
+    'Kościana Burza: Nythraxis ignoruje zagrożenie, wiruje za {tick}% maksymalnego zdrowia co sekundę w zasięgu {radius} jardów i szarżuje na rajderów. Rozproszcie się i uciekajcie.',
+  'hudChrome.auraEffect.nythraxisBound':
+    'Spętany dawnymi ochronami: Nythraxis otrzymuje o {pct}% więcej obrażeń przez {duration} sek.',
+  'hudChrome.auraEffect.nythraxisCrownEndures':
+    'Korona Trwa: {stacks} ładunków, o {pct}% więcej obrażeń i o {haste}% szybsze ataki. Rajdowi skończył się czas.',
+  'hudChrome.auraEffect.nythraxisDreadCurse':
+    'Każdy ładunek zwiększa obrażenia otrzymywane od Nythraxis o {perStack}% przez {duration} sek.: teraz {stacks} z {max} ładunków, o {pct}% więcej obrażeń. Co {every} sek. jego następne trafienie w cel zadaje {hit}% maksymalnego zdrowia i dodaje ładunek. Tankowie powinni zmienić się przy {swap} ładunkach.',
+  'hudChrome.auraEffect.nythraxisImpaled':
+    'Nadziany na kościany kolec: nie możesz działać i tracisz {normal}% swojego maksymalnego zdrowia co {interval} sek. ({heroic}% na Heroic), dopóki rajd nie zniszczy kolca.',
+  'hudChrome.auraEffect.nythraxisKingsWrath':
+    'Gniew Króla: Nythraxis zadaje o {pct}% więcej obrażeń do końca walki.',
+  'hudChrome.auraEffect.nythraxisUnbound':
+    'Uwolniony: Nythraxis zadaje o {pct}% więcej obrażeń, dopóki Pieczęć Wiążąca go nie utrzyma.',
+  'hudChrome.auraEffect.veiledEdgeStrike':
+    'Twój następny Cios Skrytobójcy zadaje o {pct}% więcej obrażeń od broni',
+  'hudChrome.bank.guildHistoryTab': 'Historia',
+  'hudChrome.bank.logActionAdminPurge': 'Usunięto',
+  'hudChrome.bank.logActionBuySlots': 'Kupiono rozszerzenie',
+  'hudChrome.bank.logActionCharterFee': 'Opłacono wpisowe statutowe',
+  'hudChrome.bank.logActionDeposit': 'Wpłacono',
+  'hudChrome.bank.logActionOpenBank': 'Otwarto bank',
+  'hudChrome.bank.logActionWithdraw': 'Wypłacono',
+  'hudChrome.bank.logActorAdmin': 'Administrator',
+  'hudChrome.bank.logColAction': 'Akcja',
+  'hudChrome.bank.logColDetail': 'Szczegóły',
+  'hudChrome.bank.logColMember': 'Członek',
+  'hudChrome.bank.logColTime': 'Kiedy',
+  'hudChrome.bank.logDetailItem': '{count} {item}',
+  'hudChrome.bank.logEmptyFiltered': 'Żadne działania banku gildii nie pasują do tego filtra.',
+  'hudChrome.bank.logEnd': 'To cała historia banku gildii.',
+  'hudChrome.bank.logFilterAll': 'Wszystko',
+  'hudChrome.bank.logFilterAria': 'Filtruj historię banku gildii',
+  'hudChrome.bank.logFilterItems': 'Przedmioty',
+  'hudChrome.bank.logFilterMoney': 'Pieniądze',
+  'hudChrome.bank.logOlder': 'Pokaż starsze',
+  'hudChrome.bank.logOlderLoading': 'Wczytywanie starszych działań...',
+  'hudChrome.bank.logSearchAria': 'Szukaj w załadowanych działaniach banku gildii według członka, akcji lub przedmiotu',
+  'hudChrome.bank.logSearchNoMatch':
+    'Żadne załadowane działania banku gildii nie pasują do wyszukiwania. Pokaż starsze wiersze, aby rozszerzyć zakres.',
+  'hudChrome.bank.logSearchPlaceholder': 'Szukaj w historii',
+  'hudChrome.bank.logShowing': 'Pokazano {count} działań banku gildii, od najnowszych.',
+  'hudChrome.bank.logShowingMatched': 'Pokazano {matched} z {count} załadowanych działań banku gildii.',
+  'hudChrome.finder.mech.binding_sigil': 'Pieczęć Wiążąca (przeciągnij bossa na pieczęć albo rajd zapłaci)',
+  'hudChrome.finder.mech.bone_spike': 'Kościany kolec (nadziani rajderzy słabną, dopóki kolec nie zostanie zniszczony)',
+  'hudChrome.finder.mech.bone_storm': 'Kościana Burza (ignoruje zagrożenie, wiruje i szarżuje na rajd)',
+  'hudChrome.finder.mech.crown_endures': 'Korona Trwa (twardy enrage o 6:00, Heroic 5:00)',
+  'hudChrome.finder.mech.deathless_court':
+    'Nieśmiertelny Dwór (tylko Heroic, królewski dwór powstaje po Nieśmiertelnym Szału)',
+  'hudChrome.finder.mech.grave_eruption': 'Grobowa Erupcja (kręgi ostrzegawcze zostawiające płonącą ziemię)',
+  'hudChrome.finder.mech.gravefire': 'Grobowy Ogień (wędrująca linia ognia, której trzeba zejść z drogi)',
+  'hudChrome.finder.mech.kings_wrath': 'Gniew Króla (30%: stały bonus obrażeń, szybsze zagrożenia na podłodze)',
+  'hudChrome.finder.mech.soulfire': 'Ogień Dusz (detonacje Rozdarcia Duszy zostawiają płonące kałuże)',
+  'hudChrome.fullTransfer.excluded':
+    'Nigdy nie obejmuje: danych logowania, konta, portfela ani zakupów. Układy pasków akcji są zapisywane na koncie i przenoszą się razem z nim.',
+  'hudChrome.fullTransfer.fullSettings': 'Pełne ustawienia',
+  'hudChrome.fullTransfer.intro':
+    'Wyeksportuj wszystkie preferencje zapisane na tym urządzeniu jako jeden kod i wklej go na innym urządzeniu lub w innej przeglądarce, aby je zaimportować: grafikę, dźwięk, interfejs, motyw, układ ramek, skróty klawiszowe każdej postaci, przypisania kontrolera i krzyżowych pasków skrótów, czat, filtry okien, język oraz odrzucone wskazówki.',
+  'hudChrome.fullTransfer.menu': 'Import / eksport',
+  'hudChrome.fullTransfer.title': 'Import / eksport ustawień',
+  'hudChrome.interfaceUnlock.frameNames.damageMeter': 'Miernik obrażeń',
+  'hudChrome.interfaceUnlock.frameNames.deedTracker': 'Śledzenie czynów',
+  'hudChrome.interfaceUnlock.frameNames.delveTracker': 'Śledzenie wypraw',
+  'hudChrome.interfaceUnlock.frameNames.doomMeter': 'Pasek Udręki',
+  'hudChrome.interfaceUnlock.frameNames.petBar': 'Pasek chowańca',
+  'hudChrome.interfaceUnlock.frameNames.procOverlay': 'Aktywacje zaklęć',
+  'hudChrome.interfaceUnlock.frameNames.questTracker': 'Śledzenie zadań',
+  'hudChrome.interfaceUnlock.frameNames.reliquaryTracker': 'Śledzenie relikwiarza',
+  'hudChrome.interfaceUnlock.frameNames.riftTracker': 'Śledzenie szczeliny',
+  'hudChrome.interfaceUnlock.frameNames.swingBarOffhand': 'Lewa ręka',
+  'hudChrome.keybindTransfer.apply': 'Zastosuj',
+  'hudChrome.keybindTransfer.imported': 'Układ skrótów zaimportowany.',
+  'hudChrome.keybindTransfer.setup': 'Układ skrótów',
+  'hudChrome.keybindTransfer.wrongKind': 'Ten kod jest eksportem ustawień, a nie układem skrótów.',
+  'hudChrome.keyboardMap.assignHint': 'Wybierz akcję do przypisania do {key}.',
+  'hudChrome.keyboardMap.assignOption': '{category}: {action}',
+  'hudChrome.keyboardMap.assignPlaceholder': 'Przypisz akcję do {key}',
+  'hudChrome.keyboardMap.bindingLine': '{key}: {action}',
+  'hudChrome.keyboardMap.boundTo': 'Przypisano {action} do {key}.',
+  'hudChrome.keyboardMap.close': 'Zamknij przegląd klawiatury',
+  'hudChrome.keyboardMap.form60': '60%',
+  'hudChrome.keyboardMap.form75': '75%',
+  'hudChrome.keyboardMap.formFull': 'Pełny rozmiar',
+  'hudChrome.keyboardMap.formGroup': 'Rozmiar klawiatury',
+  'hudChrome.keyboardMap.formTkl': 'Bez bloku numerycznego',
+  'hudChrome.keyboardMap.hint':
+    'Używane klawisze są pokolorowane według kategorii. Najedź na klawisz lub ustaw na nim fokus, aby zobaczyć wszystko, co jest do niego przypisane.',
+  'hudChrome.keyboardMap.hintInteractive':
+    'Używane klawisze są pokolorowane według kategorii. Kliknij klawisz, aby zmienić jego działanie; najedź lub ustaw fokus, aby zobaczyć wszystkie przypisania.',
+  'hudChrome.keyboardMap.keyDetail': '{key}: {bindings}',
+  'hudChrome.keyboardMap.layerAlt': 'Alt',
+  'hudChrome.keyboardMap.layerCtrl': 'Ctrl',
+  'hudChrome.keyboardMap.layerGroup': 'Warstwa modyfikatora',
+  'hudChrome.keyboardMap.layerNone': 'Bez modyfikatora',
+  'hudChrome.keyboardMap.layerShift': 'Shift',
+  'hudChrome.keyboardMap.legendGroup': 'Etykiety klawiszy',
+  'hudChrome.keyboardMap.legendLayout': 'Twój układ',
+  'hudChrome.keyboardMap.legendQwerty': 'QWERTY',
+  'hudChrome.keyboardMap.notBindable': 'Tego klawisza nie można przypisać.',
+  'hudChrome.keyboardMap.notOnLayout': 'Nie ma na tej klawiaturze: {bindings}',
+  'hudChrome.keyboardMap.otherLayers': 'Także przypisane z modyfikatorem',
+  'hudChrome.keyboardMap.popOut': 'Otwórz osobno',
+  'hudChrome.keyboardMap.pressKey': 'Naciśnij klawisz dla {action}. Esc anuluje.',
+  'hudChrome.keyboardMap.separator': ', ',
+  'hudChrome.keyboardMap.title': 'Przegląd klawiatury',
+  'hudChrome.nythraxisCallout.boneStormBegins': 'Kościana Burza! Rozproszcie się i uciekajcie!',
+  'hudChrome.nythraxisCallout.boneStormCharge': 'Nythraxis szarżuje na CIEBIE! Uciekaj!',
+  'hudChrome.nythraxisCallout.boneStormEnds': 'Kościana Burza skończona. Tankowie, przejmijcie go!',
+  'hudChrome.nythraxisCallout.crownEndures': 'Korona Trwa! Nythraxis wpadł w szał!',
+  'hudChrome.nythraxisCallout.crownEndures10': 'Dziesięć sekund! Spalcie go!',
+  'hudChrome.nythraxisCallout.crownEndures30': 'Trzydzieści sekund do Korona Trwa!',
+  'hudChrome.nythraxisCallout.crownEndures60': 'Minuta do Korona Trwa!',
+  'hudChrome.nythraxisCallout.dreadCurseSwap': 'Straszliwa Klątwa: zmienić tanków!',
+  'hudChrome.nythraxisCallout.gravefireTarget': 'Grobowy Ogień pędzi ku tobie! Zejdź w bok!',
+  'hudChrome.nythraxisCallout.impaled': 'Kościane kolce! Uwolnijcie nadzianych!',
+  'hudChrome.nythraxisCallout.kingsWrath': 'Król powstaje w gniewie! Wszystko uderza teraz mocniej!',
+  'hudChrome.nythraxisCallout.sigilAppears': 'Pieczęć Wiążąca rozbłyska! Przeciągnij na nią Nythraxis!',
+  'hudChrome.nythraxisCallout.sigilBound': 'Nythraxis spętany! Spalcie go!',
+  'hudChrome.nythraxisCallout.sigilUnbound': 'Pieczęć gaśnie bez spętania! Nythraxis rośnie w siłę!',
+  'hudChrome.nythraxisCallout.spikeBroken': 'Kolec roztrzaskany!',
+  'hudChrome.nythraxisCallout.youAreImpaled': 'Jesteś nadziany! Wytrzymaj!',
+  'hudChrome.options.gpuBackend': 'Zaplecze graficzne',
+  'hudChrome.options.gpuBackendActive': 'Obecnie używane: {backend}.',
+  'hudChrome.options.gpuBackendActiveAutoCapped':
+    'Obecnie używane: {backend}. Auto jeszcze nie próbuje Vulkan na tej karcie graficznej; wybierz Vulkan, aby go sprawdzić.',
+  'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
+  'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
+  'hudChrome.options.gpuBackendActiveUnavailable': 'Obecnie używane: {backend} (nie udało się włączyć Vulkan).',
+  'hudChrome.options.gpuBackendAuto': 'Automatycznie',
+  'hudChrome.options.gpuBackendNote':
+    'Auto wybiera najlepszą opcję. Vulkan jest szybszy i zalecany dla większości graczy. OpenGL jest wolniejszy, ale może pomóc, jeśli Vulkan nie działa poprawnie. Zmiana zacznie działać przy następnym uruchomieniu gry.',
+  'hudChrome.options.gpuBackendOpenGL': 'OpenGL (wolne)',
+  'hudChrome.options.gpuBackendSaveFailed': 'Nie udało się zapisać wyboru. Następny start zachowa {backend}.',
+  'hudChrome.options.gpuBackendVulkan': 'Vulkan',
+  'hudChrome.options.restartFailed': 'Gra nie mogła uruchomić się ponownie sama. Zamknij ją i włącz jeszcze raz.',
+  'hudChrome.options.restartGame': 'Uruchom grę ponownie',
+  'hudChrome.options.restartInProgress': 'Ponowne uruchamianie gry...',
+  'hudChrome.options.restartPending': 'Niektóre zmiany zaczną działać po ponownym uruchomieniu.',
+  'hudChrome.options.shaderWarm': 'Proces rozgrzewania shaderów',
+  'hudChrome.options.shaderWarmAuto': 'Automatycznie',
+  'hudChrome.options.shaderWarmNote':
+    'Wstępnie rozgrzewa pamięć podręczną shaderów w tle, aby zapobiegać przycięciom w grze. Auto: włączone tylko, gdy obsługuje to system graficzny. (Zalecane). Włączone: wymuszone wszędzie. Na niektórych konfiguracjach może pogorszyć wydajność. Wyłączone: nieaktywne.',
+  'hudChrome.options.shaderWarmOff': 'Wył.',
+  'hudChrome.options.shaderWarmOn': 'Wł.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilHeroicSummary':
+    'Co {everyHeroic} sek. na podłodze od {minDist} do {maxDist} jardów od Nythraxis rozbłyska pieczęć dawnych ochron, a on rozpoczyna Nieśmiertelne Wniebowstąpienie, zyskując {ascensionHeroic} obrażeń i szybkości ataku co {ascensionEvery} sek. Jeśli stanie na pieczęci w ciągu {bindHeroic} sek., zostaje Spętany: Wniebowstąpienie zostaje oczyszczone, on jest ogłuszony na {stunHeroic} sek. i otrzymuje o {vulnerability} więcej obrażeń przez {boundHeroic} sek. W przeciwnym razie każdy rajder otrzymuje {unboundHitHeroic} maksymalnego zdrowia jako obrażenia Cienia, a on zachowuje o {unboundBonusHeroic} więcej obrażeń do następnego wiązania.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilName': 'Pieczęć Wiążąca',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilResponse':
+    'Tank natychmiast przeciąga Nythraxis na pieczęć, przez każdy ogień zostawiony przez rajd. Walczący wręcz podążają za przeciągnięciem, a dystansowi trzymają się poza nowym stożkiem Grobołamacza. Wszyscy spalają go, gdy jest Spętany.',
+  'hudChrome.raidBossGuide.nythraxis.bindingSigilSummary':
+    'Co {everyNormal} sek. na podłodze od {minDist} do {maxDist} jardów od Nythraxis rozbłyska pieczęć dawnych ochron, a on rozpoczyna Nieśmiertelne Wniebowstąpienie, zyskując {ascensionNormal} obrażeń i szybkości ataku co {ascensionEvery} sek. Jeśli stanie na pieczęci w ciągu {bindNormal} sek., zostaje Spętany: Wniebowstąpienie zostaje oczyszczone, on jest ogłuszony na {stunNormal} sek. i otrzymuje o {vulnerability} więcej obrażeń przez {boundNormal} sek. W przeciwnym razie każdy rajder otrzymuje {unboundHitNormal} maksymalnego zdrowia jako obrażenia Cienia, a on zachowuje o {unboundBonusNormal} więcej obrażeń do następnego wiązania.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeHeroicSummary':
+    'Co {everyHeroic} sek. Nythraxis nadziewa {victimsHeroic} rajderów innych niż jego obecny cel na Kościane Kolce. Nadziany rajder nie może działać i traci {drainHeroic} maksymalnego zdrowia co sekundę, dopóki jego kolec nie zostanie zniszczony.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeName': 'Kościany kolec',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeResponse':
+    'Zadający obrażenia natychmiast przełączają się na Kościane Kolce i niszczą je, aby uwolnić nadzianych rajderów. Uzdrowiciele utrzymują nadzianych przy życiu, dopóki kolce nie padną.',
+  'hudChrome.raidBossGuide.nythraxis.boneSpikeSummary':
+    'Co {everyNormal} sek. Nythraxis nadziewa {victimsNormal} rajderów innych niż jego obecny cel na Kościane Kolce. Nadziany rajder nie może działać i traci {drainNormal} maksymalnego zdrowia co sekundę, dopóki jego kolec nie zostanie zniszczony.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormHeroicSummary':
+    'Zaczynając {first} sek. po wejściu Gniewu Króla, a potem co {everyHeroic} sek., Nythraxis rozpoczyna Kościaną Burzę na {duration} sek. Ignoruje zagrożenie, porusza się {speed} razy szybciej niż normalnie i wykonuje {charges} szarż trwających po {chargeSeconds} sek. Jego wir zadaje {whirlHeroic} maksymalnego zdrowia co sekundę w promieniu {radius} jardów. Każda szarża kończy się Kościanym Uderzeniem w tym samym promieniu za {slamHeroic} maksymalnego zdrowia. Rzuca Kościany Kolec {spikeAt} sek. po rozpoczęciu burzy, a Grobołamacz uzbraja się ponownie {rearm} sek. po jej końcu.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormName': 'Kościana Burza',
+  'hudChrome.raidBossGuide.nythraxis.boneStormResponse':
+    'Rozproszcie się i stale uciekajcie przed Nythraxis. Szarżowany rajder ucieka, a wszyscy inni zostawiają miejsce wokół trasy szarży; potem tankowie przejmują go, gdy burza się skończy.',
+  'hudChrome.raidBossGuide.nythraxis.boneStormSummary':
+    'Zaczynając {first} sek. po wejściu Gniewu Króla, a potem co {everyNormal} sek., Nythraxis rozpoczyna Kościaną Burzę na {duration} sek. Ignoruje zagrożenie, porusza się {speed} razy szybciej niż normalnie i wykonuje {charges} szarż trwających po {chargeSeconds} sek. Jego wir zadaje {whirlNormal} maksymalnego zdrowia co sekundę w promieniu {radius} jardów. Każda szarża kończy się Kościanym Uderzeniem w tym samym promieniu za {slamNormal} maksymalnego zdrowia. Rzuca Kościany Kolec {spikeAt} sek. po rozpoczęciu burzy, a Grobołamacz uzbraja się ponownie {rearm} sek. po jej końcu.',
+  'hudChrome.raidBossGuide.nythraxis.courtName': 'Nieśmiertelny Dwór',
+  'hudChrome.raidBossGuide.nythraxis.courtResponse':
+    'Tankowie przejmują Aldrena i odwracają jego rozłupanie od rajdu. Ogłuszcie lub uciszcie Malrica, gdy tylko zacznie Leczenie Malrica, i zabijcie go jako pierwszego; potem unieruchomcie lub ogłuszcie Vossa z dala od uzdrowicieli, bo nie można go sprowokować, i wykończcie go następnego.',
+  'hudChrome.raidBossGuide.nythraxis.courtSummary':
+    'Na Heroic Nythraxis podnosi swój dwór po każdym Nieśmiertelnym Szału, przerwanym lub nie, gdy poprzedni dwór upadnie. Duch Aldrena rozcina wszystko przy swoim celu Królewskim Rozłupaniem. Duch Malrica kanałuje Leczenie Malrica, lecząc Nythraxis coraz mocniej z każdym rzuceniem. Duch Vossa ignoruje prowokacje i poluje na rajd.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresHeroicSummary':
+    'Po {enrageHeroic} sek. od rozpoczęcia walki (zegar zatrzymuje się, gdy brat Aldric wchodzi przy 70%) Korona Trwa uruchamia twardy enrage. Nythraxis zyskuje o {damage} więcej obrażeń i o {haste} szybsze ataki, a potem kolejne {rampStep} obrażeń co {rampEveryHeroic} sek. Nie ma paska czasu. Ostrzeżenia przychodzą jako okrzyki przy {warn60}, {warn30} i {warn10} sek. do końca.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresName': 'Korona Trwa',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresResponse':
+    'Pierwsze ostrzeżenie traktujcie jak ostatni burn. Zachowajcie ruch i defensywne cooldowny na pozostałe mechaniki, a potem pokonajcie Nythraxis przed enrage.',
+  'hudChrome.raidBossGuide.nythraxis.crownEnduresSummary':
+    'Po {enrageNormal} sek. od rozpoczęcia walki (zegar zatrzymuje się, gdy brat Aldric wchodzi przy 70%) Korona Trwa uruchamia twardy enrage. Nythraxis zyskuje o {damage} więcej obrażeń i o {haste} szybsze ataki, a potem kolejne {rampStep} obrażeń co {rampEveryNormal} sek. Nie ma paska czasu. Ostrzeżenia przychodzą jako okrzyki przy {warn60}, {warn30} i {warn10} sek. do końca.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageHeroicSummary':
+    'Co {every} sek. Nythraxis rzuca Nieśmiertelny Szał przez {cast} sek. Podczas rzucania każdy zapalony kamień ochronny może być kanałowany przez jednego rajdera przez {channel} sek. Jeśli trzech różnych rajderów ukończy po jednym kamieniu ochronnym przed końcem rzucania, Szał zostaje przerwany, a Nythraxis ogłuszony na {stun} sek. W przeciwnym razie każdy rajder otrzymuje {damageHeroic} maksymalnego zdrowia jako obrażenia Cienia, czego żadna pula zdrowia nie przeżyje.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageName': 'Nieśmiertelny Szał',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageResponse':
+    'Przydzielcie po jednym rajderze do każdego kamienia ochronnego przed pullem. Gdy zacznie się rzucanie, każdy biegnie do swojego kamienia i kanałuje go do końca. Ogłuszenia, odejście i śmierć przerywają kanałowanie, więc chrońcie kanałujących i nigdy nie przydzielajcie nadzianego rajdera.',
+  'hudChrome.raidBossGuide.nythraxis.deathlessRageSummary':
+    'Co {every} sek. Nythraxis rzuca Nieśmiertelny Szał przez {cast} sek. Podczas rzucania każdy zapalony kamień ochronny może być kanałowany przez jednego rajdera przez {channel} sek. Jeśli trzech różnych rajderów ukończy po jednym kamieniu ochronnym przed końcem rzucania, Szał zostaje przerwany, a Nythraxis ogłuszony na {stun} sek. W przeciwnym razie każdy rajder otrzymuje {damageNormal} maksymalnego zdrowia jako obrażenia Cienia.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseHeroicSummary':
+    'Co {every} sek. Nythraxis uderza obecnego tanka za {hitHeroic} maksymalnego zdrowia jako obrażenia Cienia i dodaje ładunek Straszliwej Klątwy. Przez {duration} sek. każdy ładunek zwiększa obrażenia, które ten tank otrzymuje od Nythraxis, o {perStackHeroic}, do {max} ładunków.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseName': 'Straszliwa Klątwa',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseResponse':
+    'Tankowie zmieniają się przy {stacks} ładunkach: drugi tank prowokuje, a przeklęty tank zostaje poza stożkiem Grobołamacza, aż ładunki znikną. Uzdrowiciele przygotowują wchodzącego tanka przed zmianą.',
+  'hudChrome.raidBossGuide.nythraxis.dreadCurseSummary':
+    'Co {every} sek. Nythraxis uderza obecnego tanka za {hitNormal} maksymalnego zdrowia jako obrażenia Cienia i dodaje ładunek Straszliwej Klątwy. Przez {duration} sek. każdy ładunek zwiększa obrażenia, które ten tank otrzymuje od Nythraxis, o {perStackNormal}, do {max} ładunków.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionHeroicSummary':
+    'Co {everyHeroic} sek. szkieletowe dłonie oznaczają pod rajderami {countHeroic} kręgów o promieniu {radius} jardów. Po {warning} sek. każdy krąg wybucha za {burstHeroic} maksymalnego zdrowia jako obrażenia Cienia, potem płonie jako Grobowy Płomień przez {flameHeroic} sek., zadając {tickHeroic} maksymalnego zdrowia co sekundę każdemu, kto w nim stoi.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionName': 'Grobowa Erupcja',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionResponse':
+    'Wyjdźcie z każdego kręgu ostrzegawczego, zanim wybuchnie, i trzymajcie się z dala od płonącej ziemi. Tankowie odciągają Nythraxis od płomieni, aby walczący wręcz mieli miejsce do pracy.',
+  'hudChrome.raidBossGuide.nythraxis.graveEruptionSummary':
+    'Co {everyNormal} sek. szkieletowe dłonie oznaczają pod rajderami {countNormal} kręgów o promieniu {radius} jardów. Po {warning} sek. każdy krąg wybucha za {burstNormal} maksymalnego zdrowia jako obrażenia Cienia, potem płonie jako Grobowy Płomień przez {flameNormal} sek., zadając {tickNormal} maksymalnego zdrowia co sekundę każdemu, kto w nim stoi.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerName': 'Grobołamacz',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerResponse':
+    'Tankowie trzymają Nythraxis twarzą odwróconą od rajdu. Wszyscy inni stoją za nim lub obok niego i nigdy nie przecinają stożka.',
+  'hudChrome.raidBossGuide.nythraxis.gravebreakerSummary':
+    'Co {seconds} sek. Nythraxis ładuje następny trafiający zamach. Jego cel otrzymuje tylko sam zamach, ale wszyscy inni w promieniu {range} jardów w stożku {arc} stopni przed nim otrzymują {splash} tego zamachu jako obrażenia Fizyczne, zmniejszone przez własny pancerz.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireHeroicSummary':
+    'Co {everyHeroic} sek. linia fioletowego grobowego ognia biegnie od Nythraxis ku rajderowi, rosnąc o {speed} jardów co sekundę do {length} jardów. Każdy jard płonie przez {burnHeroic} sek. i zadaje {tickHeroic} maksymalnego zdrowia co sekundę każdemu, kto w nim stoi.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireName': 'Grobowy Ogień',
+  'hudChrome.raidBossGuide.nythraxis.gravefireResponse':
+    'Zejdź w bok, gdy linia nadchodzi: jest wąska i nigdy nie skręca. Rajderzy dystansowi pozostają w ruchu zamiast stać w jednym miejscu.',
+  'hudChrome.raidBossGuide.nythraxis.gravefireSummary':
+    'Co {everyNormal} sek. linia fioletowego grobowego ognia biegnie od Nythraxis ku rajderowi, rosnąc o {speed} jardów co sekundę do {length} jardów. Każdy jard płonie przez {burnNormal} sek. i zadaje {tickNormal} maksymalnego zdrowia co sekundę każdemu, kto w nim stoi.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathName': 'Gniew Króla',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathResponse':
+    'Użyjcie pozostałych defensywnych cooldownów na nieuniknione obrażenia. Utrzymujcie każdą wcześniejszą mechanikę czysto, gdy rajd kończy walkę.',
+  'hudChrome.raidBossGuide.nythraxis.kingsWrathSummary':
+    'Nythraxis zadaje o {bonusNormal} więcej obrażeń na Normal albo o {bonusHeroic} na Heroic do końca walki. Grobowa Erupcja następuje co {eruptionEveryNormal} sek. ({eruptionEveryHeroic} na Heroic), a Grobowy Ogień co {gravefireEveryNormal} sek. ({gravefireEveryHeroic} na Heroic).',
+  'hudChrome.raidBossGuide.nythraxis.overview':
+    'Arcykapłan Malric odmówił pozwolenia, by jego król umarł, a rytuał, który podniósł Nythraxis, związał cały dwór z kryptą. Starcie sprawdza zdyscyplinowaną zmianę tanków, szybkie przełączanie się na Kościane Kolce, ruch poza płonącą ziemią i skoordynowane kanałowanie kamieni ochronnych, gdy Tron upadnie.',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathName': 'Gniew Króla',
+  'hudChrome.raidBossGuide.nythraxis.phaseKingsWrathSummary':
+    'Przy {health} zdrowia Nythraxis ryczy w Gniewie Króla i zyskuje o {bonusNormal} więcej obrażeń na Normal albo o {bonusHeroic} na Heroic do końca walki. Grobowa Erupcja przyspiesza do co {eruptionEveryNormal} sek. ({eruptionEveryHeroic} na Heroic), a Grobowy Ogień do co {gravefireEveryNormal} sek. ({gravefireEveryHeroic} na Heroic). Każda inna mechanika zachowuje swoje tempo.',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneName': 'Tron',
+  'hudChrome.raidBossGuide.nythraxis.phaseThroneSummary':
+    'Nythraxis utrzymuje salę tronową naładowanym czołowym rozłupaniem, zmianą tanków pod Straszliwą Klątwę, Kościanymi Kolcami nadziewającymi rajderów i Grobowymi Erupcjami zostawiającymi płonącą ziemię.',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesName': 'Kamienie ochronne',
+  'hudChrome.raidBossGuide.nythraxis.phaseWardstonesSummary':
+    'Przy {health} zdrowia Drżące Tupnięcie unieruchamia rajd, gdy brat Aldric przybywa i zapala kamienie ochronne. Każdy kolec pęka, podłoga przestaje płonąć, a potem Rozdarcie Duszy i Nieśmiertelny Szał dołączają do mechanik Tronu.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenName': 'Wskrzeszenie Poległych',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenResponse':
+    'Off-tank przejmuje każdą falę, gdy powstaje. Zadający obrażenia czyszczą strażników między Kościanymi Kolcami, aby fale nigdy nie spiętrzyły się przed upadkiem Tronu.',
+  'hudChrome.raidBossGuide.nythraxis.raiseFallenSummary':
+    'Co {every} sek. podczas Tronu Nythraxis podnosi za sobą Wskrzeszonych Królewskich Strażników. Pędzą na jego obecny cel i walczą, dopóki nie zostaną zniszczeni.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendHeroicSummary':
+    'Nythraxis oznacza {marksHeroic} rajderów innych niż jego obecny cel Rozdarciem Duszy. Po {fuse} sek. każdy znak zadaje {damageHeroic} maksymalnego zdrowia swojego nosiciela jako obrażenia Cienia, podzielone przez liczbę oznaczonych rajderów w promieniu {range} jardów od niego. Znak, który rozwiąże się samotnie, jest śmiertelny.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendName': 'Rozdarcie Duszy',
+  'hudChrome.raidBossGuide.nythraxis.soulRendResponse':
+    'Każdy oznaczony rajder biegnie do jednego punktu zbiórki i staje w promieniu {range} jardów od innych znaków, zanim skończy się bezpiecznik {fuse} sek. Uzdrowiciele dolecza grupę, gdy znaki się rozwiązują.',
+  'hudChrome.raidBossGuide.nythraxis.soulRendSummary':
+    'Nythraxis oznacza {marksNormal} rajderów innych niż jego obecny cel Rozdarciem Duszy. Po {fuse} sek. każdy znak zadaje pełne maksymalne zdrowie swojego nosiciela jako obrażenia Cienia, podzielone przez liczbę oznaczonych rajderów w promieniu {range} jardów od niego.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireHeroicSummary':
+    'Każda detonacja Rozdarcia Duszy zostawia jedną kałużę fioletowego ognia o promieniu {radius} jardów na każdą skupioną grupę znaków, płonącą przez {secondsHeroic} sek. za {tickHeroic} maksymalnego zdrowia co sekundę. Stanie tam, gdzie kałuże się nakładają, daje tylko jeden tik, nigdy zsumowane kopie. Kałuże nigdy nie powstają w promieniu {clearance} jardów od kamienia ochronnego.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireName': 'Ogień Dusz',
+  'hudChrome.raidBossGuide.nythraxis.soulfireResponse':
+    'Wyjdźcie z fioletowej kałuży, gdy tylko znaki zdetonują. Utrzymujcie kolejny punkt zbiórki wolny od aktywnego ognia.',
+  'hudChrome.raidBossGuide.nythraxis.soulfireSummary':
+    'Każda detonacja Rozdarcia Duszy zostawia kałużę fioletowego ognia o promieniu {radius} jardów tam, gdzie stał każdy znak, płonącą przez {seconds} sek. za {tickNormal} maksymalnego zdrowia co sekundę. Stanie tam, gdzie kałuże się nakładają, zadaje tik z każdej z nich. Kałuże nigdy nie powstają w promieniu {clearance} jardów od kamienia ochronnego.',
 };
