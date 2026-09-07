@@ -8838,10 +8838,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Spela i liggande helskärm för bästa mobila upplevelse.',
   'mobilePreflight.rotateTitle': 'Rotera till liggande läge',
   'mobilePreflight.title': 'Spela i liggande helskärm',
-  'mode.caCopyAria': 'Kopiera kontraktsadress',
-  'mode.caLabel': '$WOC Kontraktsadress',
-  'mode.caNote':
-    'WOC är vår community-token. Den behövs inte för att spela. Gå med i Discord för att diskutera WOC:s nytta och svänghjul.',
   'mode.offlineAria': 'Spela offline: starta en omedelbar lokal enspelarsession',
   'mode.offlineDesc':
     'Omedelbar enspelarvärld i din webbläsare. Inget sparas: perfekt för en snabb drabbning eller testning.',
@@ -12752,7 +12748,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Skyddar en allierad i 30 sek. Den första träffen som för denne under 35% hälsa förbrukar Vakan och läker denne för {buff}. (Välsignelsesignatur)',
   'entities.abilities.scouring_mercy.description':
-    'Gör 72 till 84 helig skada på en fiende eller läker ett vänligt mål för 130 till 155. Båda beloppen ökar med besvärjelsekraft. Skadan läker även varje läroförbunden allierad för 30%, eller gruppmedlemmen med lägst hälsa för 15% om ingen allierad är förbunden. (Lärosignatur)',
+    'Orsakar {damage} helig skada på en fiende eller läker ett vänligt mål med {healing}. Skadan ökar med besvärjelsekraft; läkningen ökar med läkekraft. Läran omvandlar denna skada till läkning genom dina band. Om ingen bunden skadad gruppmedlem finns inom 30 meter, läks gruppmedlemmen med lägst hälsa inom 30 meter för 15% av skadan. Att läka en gruppmedlem läker även upp till 2 andra skadade gruppmedlemmar inom 10 meter från det målet och inom din siktlinje, var och en för 50% av den återställda hälsan. Denna extra läkning kan varken bli kritisk eller skapa Läro-band. (Lärosignatur)',
   'entities.abilities.solar_invocation.description':
     'Läker omedelbart en allierad för {damage} eller gör måttlig helig skada på en fiende. Båda användningarna genererar 1 hängivenhet. Under Upphöjelse läker en läkande kastning även allierade spelare inom 10 m av målet för hälften.',
   'entities.abilities.solar_step.description': 'Ökar din förflyttningshastighet med 150% i 2 sek.',
@@ -13435,8 +13431,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Själfragment',
   'hudChrome.warlock.doomEmptyStatus': '{value} av {max} Fördömelse.',
   'hudChrome.warlock.doomLabel': 'Fördömelse',
-  'hudChrome.warlock.doomMeterLock': 'Lås resurspanelen för Vånda',
-  'hudChrome.warlock.doomMeterUnlock': 'Flytta resurspanelen för Vånda',
   'hudChrome.warlock.doomStatus': '{value} av {max} Fördömelse; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tre Ödestrådar: Förtär kan väva in dem till ytterligare Fördömelse.',
@@ -14194,6 +14188,10 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Långdrags kritiska träffar förlänger Kallfokus med 2 sek, upp till 6 sek per aktivering.',
   'entities.itemSets.coldsight_trackers.name': 'Kallsynernas spårare',
   'entities.itemSets.crownforged.bonus6': 'Ökar attack- och kastningshastigheten med 4 procent och träffsäkerheten med 3 procent. Dina vapens kritiska träffar splittrar målet med Bensplitter och får det att blöda 5 skada varannan sek i 12 sek. Staplas upp till 3 gånger.',
+  'entities.itemSets.bramblehide.name': "Roots' Törnehud",
+  'entities.itemSets.bramblehide.bonus2': 'Ökar attackkraft med 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Dina kritiska vapenträffar splittrar målet med Benflisa och får det att blöda för 8 skada var 2:e sek i 12 sek. Staplas upp till 3 gånger.',
+  'entities.itemSets.bramblehide.bonus6': 'Ökar attack- och kastningshastigheten med 4 procent och träffsäkerheten med 3 procent. Dina vapens kritiska träffar splittrar målet med Bensplitter och får det att blöda 5 skada varannan sek i 12 sek. Staplas upp till 3 gånger.',
   'entities.itemSets.dawnforged.bonus2': 'Ljusets fyr kopierar 55 procent av dina direkta läkningseffekter. Skada du tar fördröjer inte längre dina besvärjelser.',
   'entities.itemSets.dawnforged.bonus4': 'Strålande resonans förstärkta Gryningens omfamning är omedelbar.',
   'entities.itemSets.dawnforged.name': 'Gryningssmidda klädnader',

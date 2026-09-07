@@ -21,6 +21,7 @@ import {
   abilityDurationValue,
   abilityOverTimeEffect,
   abilityPrimaryEffect,
+  abilityPrimaryHealingTotal,
   abilitySecondaryEffect,
   abilityTemporalHourglassValues,
   auraBuffDisplayValue,
@@ -50,8 +51,6 @@ export function abilityEffectText(res: ResolvedAbility, scaling?: AbilityScaling
     switch (primary.type) {
       case 'directDamage':
       case 'aoeDamage':
-      case 'aoeHeal':
-      case 'chainHeal':
       case 'aoeRoot':
       case 'chainDamage':
       case 'groundAoE':
@@ -59,10 +58,27 @@ export function abilityEffectText(res: ResolvedAbility, scaling?: AbilityScaling
       case 'valkyrsCalling':
       case 'hunterStampede':
         return abilityAmountRange(primary.min, primary.max) + suffix(primary);
-      case 'heal':
-        return primary.casterMaxHpPct === undefined
-          ? abilityAmountRange(primary.min, primary.max) + suffix(primary)
-          : formatAbilityNumber(primary.casterMaxHpPct * 100);
+      case 'aoeHeal':
+      case 'chainHeal': {
+        // v0.42 (docs/design/class-balance-v042.md): a Spiritmend/Sunmender/
+        // Groveheart primary-healing factor scales the WHOLE completed
+        // packet, so it cannot be shown as a separate "(+N)" badge on top of
+        // the unscaled base range without double-counting; show the
+        // combined range instead when the factor is live.
+        const combined = scaling ? abilityPrimaryHealingTotal(res, primary, scaling) : null;
+        return combined
+          ? abilityAmountRange(combined.min, combined.max)
+          : abilityAmountRange(primary.min, primary.max) + suffix(primary);
+      }
+      case 'heal': {
+        if (primary.casterMaxHpPct !== undefined) {
+          return formatAbilityNumber(primary.casterMaxHpPct * 100);
+        }
+        const combined = scaling ? abilityPrimaryHealingTotal(res, primary, scaling) : null;
+        return combined
+          ? abilityAmountRange(combined.min, combined.max)
+          : abilityAmountRange(primary.min, primary.max) + suffix(primary);
+      }
       case 'repositionToAim':
         return primary.landingAoe
           ? abilityAmountRange(primary.landingAoe.min, primary.landingAoe.max)
@@ -72,7 +88,10 @@ export function abilityEffectText(res: ResolvedAbility, scaling?: AbilityScaling
           return abilityAmountRange(primary.deal.min, primary.deal.max) + suffix(primary);
         }
         if (primary.heal) {
-          return abilityAmountRange(primary.heal.min, primary.heal.max) + suffix(primary);
+          const combined = scaling ? abilityPrimaryHealingTotal(res, primary, scaling) : null;
+          return combined
+            ? abilityAmountRange(combined.min, combined.max)
+            : abilityAmountRange(primary.heal.min, primary.heal.max) + suffix(primary);
         }
         return '';
       case 'weaponDamage':
@@ -116,9 +135,26 @@ export function abilityEffectText(res: ResolvedAbility, scaling?: AbilityScaling
           }) + suffix(secondary)
         );
       }
+      if (
+        secondary.perComboTotal === undefined &&
+        secondary.perComboDuration === undefined &&
+        secondary.directPct === undefined &&
+        secondary.interval > 0
+      ) {
+        const ticks = secondary.duration / secondary.interval;
+        const total = Math.max(1, Math.round(secondary.total / ticks)) * ticks;
+        return formatAbilityNumber(total) + suffix(secondary);
+      }
       return formatAbilityNumber(secondary.total) + suffix(secondary);
-    case 'hot':
-      return formatAbilityNumber(secondary.total) + suffix(secondary);
+    case 'hot': {
+      // v0.42 (docs/design/class-balance-v042.md): a pure-HoT $d (Wildbloom
+      // has no primary hit, so its total renders here, not in the primary
+      // switch above) takes the same combined-total treatment as $o.
+      const combined = scaling ? abilityPrimaryHealingTotal(res, secondary, scaling) : null;
+      return combined
+        ? formatAbilityNumber(combined.min)
+        : formatAbilityNumber(secondary.total) + suffix(secondary);
+    }
     case 'absorb':
       return secondary.casterMaxHpPct === undefined
         ? formatAbilityNumber(secondary.amount) + suffix(secondary)
@@ -158,6 +194,14 @@ export function abilityEffectAuraInput(effect: AbilityEffect): AuraEffectInput |
 function abilityOverTimeText(res: ResolvedAbility, scaling?: AbilityScaling): string {
   const eff = abilityOverTimeEffect(res);
   if (!eff) return '';
+  // v0.42 (docs/design/class-balance-v042.md): a live Groveheart/Spiritmend
+  // HoT snapshot factor scales the whole per-tick amount before it is
+  // multiplied out to the total, so it replaces the total outright rather
+  // than layering the ordinary "(+N)" bonus badge on the unscaled figure.
+  if (eff.type === 'hot' && scaling) {
+    const combined = abilityPrimaryHealingTotal(res, eff, scaling);
+    if (combined) return formatAbilityNumber(combined.min);
+  }
   const b = scaling ? abilityDamageBonus(res, eff, scaling) : 0;
   const bonus =
     b > 0 ? ` ${t('hudChrome.abilityScaling.bonus', { value: formatAbilityNumber(b) })}` : '';
@@ -204,6 +248,12 @@ export function abilityDisplayDescription(
   const buff = auraOverride ? auraBuffDisplayValue(auraOverride) : abilityBuffValue(res);
   const duration = abilityDurationValue(res);
   const hourglass = abilityTemporalHourglassValues(res);
+  const directHeal = res.effects.find((effect) => effect.type === 'heal');
+  const healingText = hourglass
+    ? formatAbilityNumber(hourglass.healing)
+    : directHeal
+      ? abilityEffectText({ ...res, effects: [directHeal] }, scaling)
+      : '';
   // {rage} splices the RESOLVED gainResource total, so a talent that raises the
   // granted amount (Blood Offering on Blood Toll) shows in the tooltip.
   const rageGained = res.effects.reduce(
@@ -234,7 +284,7 @@ export function abilityDisplayDescription(
     overTime: abilityOverTimeText(res, scaling),
     buff: buff === null ? '' : formatAbilityNumber(buff),
     duration: duration === null ? '' : formatAbilityNumber(duration),
-    healing: hourglass === null ? '' : formatAbilityNumber(hourglass.healing),
+    healing: healingText,
     selfCooldownRecovery:
       hourglass === null ? '' : formatAbilityNumber(hourglass.selfCooldownRecovery),
     allyCooldownRecovery:

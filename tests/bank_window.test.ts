@@ -503,9 +503,11 @@ describe('bank_window: search / sort / deposit-all', () => {
       painter.indexOf('render(): void {'),
       painter.indexOf('refreshIfChanged(): void {'),
     );
-    expect(body).toContain('active === searchEl');
-    expect(body).toContain('searchEl.selectionStart');
-    expect(body).toContain('fresh.setSelectionRange(searchFocus.start, searchFocus.end)');
+    // The carry itself lives in bank_search_focus.ts (captureSearchCaret /
+    // restoreSearchCaret, unit-tested there); render() must capture before the
+    // wipe and restore on BOTH pane arms (the guild history has a search box too).
+    expect(body).toContain('const searchFocus = captureSearchCaret(el, active);');
+    expect(body.split('restoreSearchCaret(el, searchFocus)').length).toBe(3);
     // Non-search focus re-lands via the key ladder (the focused control by its
     // data-focus-key, else [data-close]), never a blanket close-button yank.
     expect(body).toContain('} else if (hadFocus) {');

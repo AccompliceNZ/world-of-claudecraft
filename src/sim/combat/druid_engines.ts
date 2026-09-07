@@ -8,9 +8,11 @@ import {
   CINDERBARK_2PC_EXTRA_OLD_BLOOD_CHANCE,
   GROVESPRING_4PC_VERDANCE_BANK,
 } from '../content/ignivar_set_bonuses';
+import { scalePrimaryHealing } from '../primary_healing';
 import type { PlayerMeta } from '../sim';
 import type { SimContext } from '../sim_context';
 import { duelJustEndedBetween } from '../social/duel';
+import { primaryHealingMultiplier } from '../spec_output_tuning';
 import { abilityScalingPower, dotTickBonus, hotTickBonus } from '../spell_scaling';
 import { resolveTalentHitMult } from '../talent_hit_mult';
 import type { Aura, AuraKind, Entity } from '../types';
@@ -328,9 +330,25 @@ function replantWildbloom(ctx: SimContext, player: Entity, target: Entity): void
   const resolved = ctx.resolvedAbility('rejuvenation', player.id);
   const hot = resolved?.effects.find((effect) => effect.type === 'hot');
   if (!resolved || !hot || hot.type !== 'hot') return;
-  const tickValue =
-    Math.max(1, Math.round(hot.total / (hot.duration / hot.interval))) +
-    hotTickBonus(player.healPower, hot.duration, hot.interval);
+  const meta = player.kind === 'player' ? ctx.players.get(player.id) : undefined;
+  if (!meta) return;
+  const mods = ctx.playerMods(meta);
+  // The replant historically passed no talent/HoT multiplier on its Healing
+  // Power rider, unlike a real Rejuvenation cast (effect_dispatch.ts 'hot'
+  // case). Resolve the same multiplier here so the two applications agree,
+  // then scale the complete tick once for the Groveheart primary factor.
+  const talentHealMult = resolveTalentHitMult(resolved.def, mods).healMult;
+  const hotBase = Math.max(1, Math.round(hot.total / (hot.duration / hot.interval)));
+  const hotSp = hotTickBonus(
+    player.healPower,
+    hot.duration,
+    hot.interval,
+    talentHealMult * (1 + mods.global.hotHealPct),
+  );
+  const tickValue = scalePrimaryHealing(
+    hotBase + hotSp,
+    primaryHealingMultiplier(meta.cls, mods.spec),
+  );
   ctx.applyAura(target, {
     id: 'rejuvenation',
     name: resolved.def.name,

@@ -212,6 +212,8 @@ describe('item set tooltip model (lineage-aware)', () => {
     expect(memberCounts.necromancers).toBe(7);
     expect(memberCounts.soulflame).toBe(7);
     expect(memberCounts.stormcallers).toBe(7);
+    // Roots' Bramblehide, the eighth family (Strength lineage, feral leather).
+    expect(memberCounts.bramblehide).toBe(7);
     // Leveling haste kits stay per-family: 3 pieces each.
     expect(memberCounts.vale_arcanist).toBe(3);
     expect(memberCounts.boundstone_vanguard).toBe(3);

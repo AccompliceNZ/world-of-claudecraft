@@ -14,6 +14,19 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 // 500ms. Some windows (crafting: several icon-bearing rows) settle their layout
 // noticeably slower than others in headless swiftshader; a fixed wait is either
 // too short (flaky) or wastefully long, so this returns as soon as it is ready.
+// The tutorial island's one-shot arrival greeting (#tutorial-greeting) spawns a
+// beat after the reveal and sits over every window; a panel shot taken under it
+// shows the greeting, not the panel. Wait for it briefly and dismiss it.
+async function dismissArrivalGreeting(page) {
+  if (await pollForSize(page, '#tutorial-greeting', 4, 500)) {
+    await page.evaluate(() => {
+      document.querySelector('#tutorial-greeting button')?.click();
+      document.querySelector('#tutorial-greeting')?.remove();
+    });
+    await wait(200);
+  }
+}
+
 async function pollForSize(page, selector, attempts = 20, intervalMs = 500) {
   for (let i = 0; i < attempts; i++) {
     await wait(intervalMs);
@@ -349,13 +362,14 @@ async function openMarketBrowse(page) {
   return pollForSize(page, '#market-window');
 }
 
-// Open Esc options -> Interface -> Combat by CLICKING the rendered controls rather
+// Open Esc options -> Interface -> Frames by CLICKING the rendered controls rather
 // than reaching past them, so the shot proves the row is reachable the way a player
 // reaches it. Interface is the 4th main-menu row (buildOptionsMenu; the optional Bug
-// Report row is appended AFTER it, so the index is stable) and Combat the 4th tab of
-// the Interface panel (INTERFACE_TAB_ORDER). The window is force-hidden first so the
+// Report row is appended AFTER it, so the index is stable) and Frames the 2nd tab of
+// the Interface panel (INTERFACE_TAB_ORDER; the Edit Frames entry row moved there
+// when the tab was minted). The window is force-hidden first so the
 // toggle is deterministic regardless of prior state, the same trick the bags target uses.
-async function openInterfaceCombatTab(page) {
+async function openInterfaceFramesTab(page) {
   await page.evaluate(() => {
     const el = document.querySelector('#options-menu');
     if (el) el.style.display = 'none';
@@ -367,16 +381,16 @@ async function openInterfaceCombatTab(page) {
   });
   await wait(400);
   await page.evaluate(() => {
-    document.querySelectorAll('#options-menu .opt-tab')[3]?.click();
+    document.querySelectorAll('#options-menu .opt-tab')[1]?.click();
   });
   return pollForSize(page, '#options-menu');
 }
 
-// Press the real "Unlock interface" button (the first row of the Combat tabpanel,
+// Press the real "Unlock interface" button (the first row of the Frames tabpanel,
 // which interfaceUnlockRow appends ahead of the declarative list), then close the
 // menu so the loosened HUD is what the camera sees.
 async function unlockInterfaceThroughTheOption(page) {
-  await openInterfaceCombatTab(page);
+  await openInterfaceFramesTab(page);
   await page.evaluate(() => {
     document.querySelector('#interface-tabpanel .set-row button')?.click();
   });
@@ -2392,13 +2406,14 @@ export const TARGETS = [
   },
   {
     key: 'interface-unlock-option',
-    label: 'Interface options, Combat tab: the Unlock interface row',
+    label: 'Interface options, Frames tab: the Edit Frames entry row',
     when: ['ui/interface_unlock', 'ui/options_window', 'ui/options_view'],
-    // Desktop and mobile: the row is an ordinary options control on both, and the
-    // template asks for the mobile arm of any options-panel change.
+    // Desktop and mobile: the tab is an ordinary options panel on both (the entry
+    // row itself is desktop-only), and the template asks for the mobile arm of any
+    // options-panel change.
     variants: [{ key: 'desktop' }, { key: 'mobile', mobile: true }],
     async capture(page) {
-      await openInterfaceCombatTab(page);
+      await openInterfaceFramesTab(page);
       return { clip: '#options-menu' };
     },
   },
@@ -7151,6 +7166,151 @@ export const TARGETS = [
     },
   },
   {
+    // The Key Bindings panel's keyboard overview: the live board coloured by
+    // category, the option rows under it, and the Hotkey Setup export row at
+    // the foot. Falls back to the plain panel on a base without the board, so
+    // a before shot still frames the same window.
+    key: 'keybinds-keyboard-overview',
+    label: 'Key Bindings panel: keyboard overview, options and Hotkey Setup row',
+    when: ['ui/keyboard_map', 'ui/keybind_transfer', 'ui/keyboard_layout_pref'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        // Key Bindings is the first row on the main options menu.
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .kb-actionbar-edit');
+      const board = await pollForSize(page, '#options-menu .kbm-key', 6);
+      await dismissArrivalGreeting(page);
+      // The panel outgrows the capture viewport, so clip the overview section
+      // itself (the board, its legend and option rows); a base without the
+      // board frames the whole panel instead.
+      if (!open) return {};
+      return board ? { clip: '#options-menu .kbm' } : { clip: '#options-menu' };
+    },
+  },
+  {
+    // The Hotkey Setup export pane open on the Key Bindings panel: the code box
+    // with its Copy button (text based, no file).
+    key: 'keybinds-hotkey-setup-export',
+    label: 'Key Bindings panel: Hotkey Setup export code',
+    when: ['ui/keybind_transfer'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .kb-transfer .set-toggle');
+      if (!open) return {};
+      await page.evaluate(() => {
+        document.querySelector('#options-menu .kb-transfer .set-toggle')?.click();
+      });
+      await pollForSize(page, '#options-menu .kb-transfer .transfer-code');
+      await dismissArrivalGreeting(page);
+      // The row sits at the foot of a panel taller than the viewport: clip it.
+      return { clip: '#options-menu .kb-transfer' };
+    },
+  },
+  {
+    // The keyboard overview popped out into its own movable window over the
+    // world (the menu closes).
+    key: 'keybinds-keyboard-popout',
+    label: 'Keyboard overview pop-out window',
+    when: ['ui/keyboard_map_window'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      const ready = await pollForSize(page, '#options-menu .kbm-popout');
+      if (!ready) return {};
+      await page.evaluate(() => document.querySelector('#options-menu .kbm-popout')?.click());
+      const open = await pollForSize(page, '#keyboard-map-window .kbm-key');
+      await dismissArrivalGreeting(page);
+      return open ? { clip: '#keyboard-map-window' } : {};
+    },
+  },
+  {
+    // The Game Menu's Import / Export sub-panel: the Full Settings row with its
+    // export code open.
+    key: 'options-import-export',
+    label: 'Game Menu: Import / Export Settings panel with the full settings code',
+    when: ['ui/settings_transfer'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        // The entry sits between Performance Overlay and Wiki; find it by its
+        // transfer panel rather than a fixed index.
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        const entry = buttons.find((b) => /Import/.test(b.textContent ?? ''));
+        entry?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .transfer-body .set-toggle', 6);
+      if (!open) return {};
+      await page.evaluate(() =>
+        document.querySelector('#options-menu .transfer-body .set-toggle')?.click(),
+      );
+      await pollForSize(page, '#options-menu .transfer-body .transfer-code');
+      await dismissArrivalGreeting(page);
+      return { clip: '#options-menu' };
+    },
+  },
+  {
+    // The on-bar key-binding mode's conflict prompt: a slot selected, a key
+    // another action already holds pressed, the are-you-sure dialog up.
+    key: 'actionbar-keybind-conflict',
+    label: 'On-bar key-binding mode: key already bound prompt',
+    when: ['ui/hud/action_bar/action_bar_bind_controller'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      await pollForSize(page, '#options-menu .kb-actionbar-edit');
+      await page.evaluate(() => document.querySelector('.kb-actionbar-edit')?.click());
+      const open = await pollForSize(page, '#actionbar-bind-banner');
+      if (!open) return {};
+      await page.evaluate(() => {
+        document.querySelectorAll('#actionbar .action-btn')[3]?.click();
+      });
+      await wait(300);
+      // W is Move Forward by default: pressing it for a bar slot raises the prompt.
+      await page.keyboard.press('KeyW');
+      const prompt = await pollForSize(page, '#confirm-dialog', 6);
+      await dismissArrivalGreeting(page);
+      return prompt ? { clip: '#confirm-dialog' } : {};
+    },
+  },
+  {
     // The Key Bindings panel with the per-slot action-bar rows replaced by a
     // single "Edit action bar keys" entry (issue #1238).
     key: 'actionbar-keybind-menu-entry',
@@ -10862,6 +11022,30 @@ export const TARGETS = [
     },
   },
   {
+    key: 'landing-play-console',
+    label: 'Landing page play console (world picker, Play button, tip) on the web shell',
+    // The pre-game home page: any index.html or shell.css change can move what a
+    // first-time visitor sees before they log in, so shoot the console itself.
+    // Web only: the native and desktop shells hide parts of the console (see the
+    // body.native-app / desktop-app rules in hud.css); the phone variant shows the
+    // trimmed mode-select layout hud.mobile.css owns.
+    when: ['index.html', 'styles/shell.css'],
+    variants: [
+      { key: 'desktop-web', landing: true, beforeLoad: lowGraphicsSeed },
+      { key: 'mobile-web', landing: true, mobile: true, beforeLoad: lowGraphicsSeed },
+    ],
+    async capture(page) {
+      if (!(await pollForSize(page, '#mode-select'))) {
+        throw new Error('landing play console did not render');
+      }
+      await page.evaluate(() => {
+        document.querySelector('#mode-select')?.scrollIntoView({ block: 'center' });
+      });
+      await wait(300);
+      return { clip: '#mode-select' };
+    },
+  },
+  {
     key: 'steam-wishlist',
     label: 'Steam wishlist reminder on the landing shell and desktop/mobile chrome',
     when: ['src/ui/steam_wishlist'],
@@ -12217,6 +12401,231 @@ export const TARGETS = [
       }
       await wait(800);
       return { clip: '#ui' };
+    },
+  },
+  {
+    key: 'nythraxis-hazards',
+    label:
+      'Nythraxis arena: ground hazards (Grave Flame, Soulfire, Gravefire, Grave Eruption ' +
+      'warning), the blue Binding Sigil, and Soul Rend markers (red solo, green stacked)',
+    when: [
+      'nythraxis_soul_rend_marker',
+      'nythraxis_grave_flame_visual',
+      'nythraxis_gravefire_visual',
+      'nythraxis_sigil_visual',
+      'nythraxis_mechanic_visuals',
+      'nythraxis_grave_core',
+      'nythraxis_gravefire_core',
+      'nythraxis_sigil_core',
+      'sim/nythraxis_',
+      'sim/encounters/nythraxis',
+    ],
+    // A staged fixture, not a live pull: the real /dev practice raid spawns the
+    // boss and nine invulnerable bots, then the tick is frozen and the four
+    // ground-hazard readouts plus two bots' auras are overwritten directly so
+    // every mechanic this PR touches is visible in one frame, never waiting on
+    // the encounter's own cadence. See docs/screenshots/nythraxis-playtest-tuning.
+    variants: [
+      { key: 'desktop', beforeLoad: seedLowGraphicsPreset },
+      { key: 'mobile', mobile: true, beforeLoad: seedLowGraphicsPreset },
+    ],
+    async capture(page) {
+      await page.waitForFunction(() => window.__game?.sim?.player, { timeout: 90000 });
+      await dismissEntryOverlays(page);
+      let staged = { ok: false, reason: 'world is unavailable' };
+      for (let i = 0; i < 20 && !staged.ok; i++) {
+        staged = await page.evaluate(() => {
+          const game = window.__game;
+          const sim = game?.sim;
+          if (!sim?.player) return { ok: false, reason: 'offline world is unavailable' };
+          document.querySelector('#gpu-notice')?.remove();
+          document.querySelector('.camera-prompt-confirm')?.click();
+          const banner = document.querySelector('#banner');
+          if (banner) banner.style.opacity = '0';
+          // A freshly-created character spawns into the New Adventurer tutorial
+          // zone (the Proving Shore) and a nearby NPC auto-greets: neither is
+          // dismissed by the shared entry flow's dismissEntryOverlays (that
+          // only covers the intro cinematic, the FIRST tutorial overlay, and
+          // the camera prompt), and both persist after /dev nythraxisraid
+          // teleports the party into the arena. Becoming a raid leader also
+          // auto-opens Loot Settings (see the party-pets target above).
+          document.querySelector('.tut-card')?.remove();
+          document.getElementById('tutorial-greeting')?.remove();
+          const loot = document.querySelector('#loot-settings-window');
+          if (loot) loot.style.display = 'none';
+          // Unconditional and idempotent: setupNythraxisDevRaid reuses an
+          // existing matching roster, so calling it again is a no-op. Never
+          // skip it on the presence of SOME Nythraxis mob: an unclaimed
+          // instance from an earlier claim in this same world would then be
+          // mistaken for our player's own raid, and no bots would ever spawn.
+          sim.chat('/dev nythraxisraid heroic');
+          const player = sim.player;
+          const bossCandidates = [...sim.entities.values()].filter(
+            (e) => e.templateId === 'nythraxis_scourge_of_thornpeak' && !e.dead,
+          );
+          if (bossCandidates.length === 0) return { ok: false, reason: 'Nythraxis did not spawn' };
+          // The boss in OUR player's own claimed instance: nearest to the
+          // player, who /dev nythraxisraid just zoned in beside him.
+          const boss = bossCandidates.reduce((closest, candidate) => {
+            const d = (a) => (a.pos.x - player.pos.x) ** 2 + (a.pos.z - player.pos.z) ** 2;
+            return d(candidate) < d(closest) ? candidate : closest;
+          });
+          const bots = [...sim.players.values()]
+            .filter((meta) => meta.isDevBot && /^NythraxisBot\d$/.test(meta.name))
+            .map((meta) => sim.entities.get(meta.entityId))
+            .filter((e) => e && !e.dead);
+          if (bots.length < 3) return { ok: false, reason: 'practice bots did not spawn' };
+
+          // Freeze the encounter driver so the injected fixture below survives
+          // to the screenshot instead of being overwritten by the next tick.
+          sim.tick = () => [];
+
+          const bx = boss.pos.x;
+          const bz = boss.pos.z;
+
+          // Two Soul Rend marks: one isolated (reads red), two close together
+          // (reads green, the stack-range rule the redo introduced).
+          const soulRendAura = (sourceId) => ({
+            id: 'nythraxis_soul_rend',
+            name: 'Soul Rend',
+            kind: 'vulnerability',
+            remaining: 8,
+            duration: 8,
+            value: 0,
+            sourceId,
+            school: 'shadow',
+            encounterOwned: true,
+          });
+          const solo = bots[0];
+          solo.pos = { x: bx - 14, y: solo.pos.y, z: bz + 6 };
+          solo.prevPos = { ...solo.pos };
+          solo.auras = [
+            ...solo.auras.filter((a) => a.id !== 'nythraxis_soul_rend'),
+            soulRendAura(boss.id),
+          ];
+          const [stackedA, stackedB] = [bots[1], bots[2]];
+          stackedA.pos = { x: bx + 12, y: stackedA.pos.y, z: bz + 6 };
+          stackedA.prevPos = { ...stackedA.pos };
+          stackedB.pos = { x: bx + 14, y: stackedB.pos.y, z: bz + 8 };
+          stackedB.prevPos = { ...stackedB.pos };
+          for (const e of [stackedA, stackedB])
+            e.auras = [
+              ...e.auras.filter((a) => a.id !== 'nythraxis_soul_rend'),
+              soulRendAura(boss.id),
+            ];
+          for (const e of [solo, stackedA, stackedB]) sim.rebucket(e);
+
+          // Ground hazards, staged directly on the readout getters the
+          // renderer consumes (IWorld combat facet), around the boss. Radius
+          // and duration mirror the real heroic constants (grave flame radius 3
+          // / duration 8s, Soulfire radius 4 / duration 12s) so this staged
+          // fixture cannot be misread as a balance change.
+          Object.defineProperty(sim, 'activeNythraxisGraveFlames', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:grave-flame',
+                sourceId: boss.id,
+                kind: 'grave',
+                x: bx - 6,
+                z: bz - 4,
+                radius: 3,
+                duration: 8,
+                remaining: 5,
+              },
+              {
+                id: 'shot:soul-flame',
+                sourceId: boss.id,
+                kind: 'soul',
+                x: bx + 6,
+                z: bz - 4,
+                radius: 4,
+                duration: 12,
+                remaining: 8,
+              },
+            ],
+          });
+          Object.defineProperty(sim, 'activeNythraxisGraveEruptions', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:eruption',
+                x: bx,
+                z: bz + 10,
+                radius: 3,
+                duration: 2.5,
+                remaining: 1.5,
+                warningLead: 0.75,
+              },
+            ],
+          });
+          Object.defineProperty(sim, 'activeNythraxisGravefires', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:gravefire',
+                sourceId: boss.id,
+                x: bx,
+                z: bz,
+                dirX: 0,
+                dirZ: 1,
+                tail: 0,
+                head: 11,
+                halfWidth: 1.5,
+                remaining: 4,
+              },
+            ],
+          });
+          Object.defineProperty(sim, 'activeNythraxisBindingSigils', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:sigil',
+                sourceId: boss.id,
+                x: bx,
+                z: bz,
+                radius: 6,
+                duration: 20,
+                remaining: 12,
+              },
+            ],
+          });
+
+          // In front of the boss, inside the hall: the arena room spans z
+          // 16..116 with the boss dais near z 96, so +22 here would put the
+          // player z 118, outside the back wall (the wall-blocked shot this
+          // replaces). -22 keeps the player and camera inside the room.
+          player.pos = { x: bx, y: player.pos.y, z: bz - 22 };
+          player.prevPos = { ...player.pos };
+          player.facing = Math.atan2(bx - player.pos.x, bz - player.pos.z);
+          sim.rebucket(player);
+          game.input.camYaw = player.facing;
+          // Wide and raised: the two side bots sit +/-12 to 14 yd off the
+          // boss, and a low angle hides the sigil's floor ring behind his
+          // own model.
+          game.input.camDist = 28;
+          game.input.camPitch = 0.42;
+          return { ok: true };
+        });
+        if (!staged.ok) await wait(300);
+      }
+      if (!staged.ok) throw new Error(staged.reason);
+      // Let the frozen fixture's meshes build and the loading veil clear
+      // before the shot (the arena door teleport re-raises it briefly).
+      await awaitWorldPainted(page);
+      await wait(1200);
+      // A second pass: becoming raid leader / the arena teleport can pop the
+      // tutorial banner, the greeting NPC, or Loot Settings back up after the
+      // staging above ran, and any of the three would obscure the hazards.
+      await page.evaluate(() => {
+        document.querySelector('.camera-prompt-confirm')?.click();
+        document.querySelector('.tut-card')?.remove();
+        document.getElementById('tutorial-greeting')?.remove();
+        const loot = document.querySelector('#loot-settings-window');
+        if (loot) loot.style.display = 'none';
+      });
+      await wait(300);
+      return {};
     },
   },
   {

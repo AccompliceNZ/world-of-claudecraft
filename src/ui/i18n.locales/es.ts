@@ -7659,10 +7659,6 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hud.errors.silenced': '¡Estás silenciado!',
   'hud.pet.noPetFood': 'No tienes comida para alimentar a tu mascota.',
   'hud.pet.petEatsFoodOnly': 'Tu mascota solo puede comer comida.',
-  'mode.caCopyAria': 'Copiar dirección del contrato',
-  'mode.caLabel': 'Dirección del contrato de $WOC',
-  'mode.caNote':
-    'WOC es nuestro token comunitario. No es necesario para jugar. Únete a Discord para hablar sobre la utilidad y el círculo virtuoso de WOC.',
   'mode.play': 'Jugar',
   'mode.playAria': 'Jugar World of ClaudeCraft',
   'mode.serverAria': 'Selecciona el mundo: En Línea o Desconectado',
@@ -13233,7 +13229,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Protege a un aliado durante 30 s. El primer golpe que lo deje por debajo del 35% de salud consume la Vigilia y lo sana por {buff}. (Distintivo de Bendición)',
   'entities.abilities.scouring_mercy.description':
-    'Inflige de 72 a 84 de daño Sagrado a un enemigo o sana a un objetivo amistoso de 130 a 155. Ambas cantidades aumentan con el poder con hechizos. El daño también sana un 30% a cada aliado vinculado por Doctrina, o un 15% al miembro del grupo con menos salud si no hay ninguno vinculado. (Distintivo de Doctrina)',
+    'Inflige {damage} de daño Sagrado a un enemigo o sana a un objetivo amistoso por {healing}. El daño aumenta con el poder con hechizos; la sanación aumenta con el poder de sanación. La Doctrina convierte este daño en sanación a través de tus vínculos. Si ningún miembro del grupo vinculado y herido está a 30 metros, sana al miembro del grupo herido con menos salud a 30 metros por el 15% del daño. Sanar a un miembro del grupo también sana hasta a otros 2 miembros del grupo heridos a 10 metros de ese objetivo y dentro de tu línea de visión, cada uno por el 50% de la salud restaurada. Estas sanaciones adicionales no pueden ser críticas ni crear vínculos de Doctrina. (Distintivo de Doctrina)',
   'entities.abilities.solar_invocation.description':
     'Sana al instante a un aliado por {damage} o inflige daño Sagrado moderado a un enemigo. Cualquiera de los dos usos genera 1 de Devoción. Durante la Ascensión, un lanzamiento de sanación también sana a los jugadores aliados a menos de 10 m del objetivo por la mitad.',
   'entities.abilities.solar_step.description':
@@ -13635,8 +13631,6 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.resourceCount': '{value} de {max}',
   'hudChrome.procOverlay.ruinMeter': 'Ruina',
   'hudChrome.procOverlay.ruinStatus': '{value} de {max} de Ruina',
-  'hudChrome.warlock.doomMeterLock': 'Bloquear la barra de recursos de Aflicción',
-  'hudChrome.warlock.doomMeterUnlock': 'Mover la barra de recursos de Aflicción',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tres Hilos del destino: Consumir puede tejerlos en Condena adicional.',
   'hudChrome.warlock.fateThreadsSentenceReady':
@@ -14375,6 +14369,10 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Los golpes críticos de Tiro Largo prolongan Concentración Fría 2 s, hasta 6 s por activación.',
   'entities.itemSets.coldsight_trackers.name': 'Rastreadores de Vista Fría',
   'entities.itemSets.crownforged.bonus6': 'Aumenta la velocidad de ataque y lanzamiento un 4% y el Golpe un 3%. Los golpes críticos de tu arma astillan al objetivo con Astillahuesos, causándole 5 de daño cada 2 s durante 12 s. Se acumula hasta 3 veces.',
+  'entities.itemSets.bramblehide.name': 'Piel de Zarza de Roots',
+  'entities.itemSets.bramblehide.bonus2': 'Aumenta el poder de ataque en 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Tus golpes críticos con el arma astillan al objetivo con Astilla de Hueso, haciéndolo sangrar 8 de daño cada 2 s durante 12 s. Se acumula hasta 3 veces.',
+  'entities.itemSets.bramblehide.bonus6': 'Aumenta la velocidad de ataque y lanzamiento un 4% y el Golpe un 3%. Los golpes críticos de tu arma astillan al objetivo con Astillahuesos, causándole 5 de daño cada 2 s durante 12 s. Se acumula hasta 3 veces.',
   'entities.itemSets.dawnforged.bonus2': 'Faro de Luz copia el 55% de tus sanaciones directas. El daño recibido ya no retrasa tus hechizos.',
   'entities.itemSets.dawnforged.bonus4': 'El Abrazo del Alba potenciado de Resonancia Radiante es instantáneo.',
   'entities.itemSets.dawnforged.name': 'Vestimentas Forjadas por el Alba',

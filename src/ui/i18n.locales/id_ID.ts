@@ -9654,10 +9654,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Mainkan dalam layar penuh posisi lanskap untuk pengalaman seluler terbaik.',
   'mobilePreflight.rotateTitle': 'Putar ke Lanskap',
   'mobilePreflight.title': 'Mainkan dalam Layar Penuh Lanskap',
-  'mode.caCopyAria': 'Salin alamat kontrak',
-  'mode.caLabel': 'Alamat Kontrak $WOC',
-  'mode.caNote':
-    'WOC adalah token komunitas kami. Token ini tidak diperlukan untuk bermain. Gabung Discord untuk membahas utilitas dan flywheel WOC.',
   'mode.offlineAria': 'Main Luring: mulai sesi pemain-tunggal lokal seketika',
   'mode.offlineDesc':
     'Dunia pemain-tunggal seketika di peramban kamu. Tidak ada yang disimpan: sempurna untuk pertarungan singkat atau pengujian.',
@@ -12804,7 +12800,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Melindungi satu sekutu selama 30 dtk. Pukulan pertama yang membuatnya turun di bawah 35% nyawa menghabiskan Jaga dan menyembuhkannya sebesar {buff}. (Ciri khas Berkat)',
   'entities.abilities.scouring_mercy.description':
-    'Memberi 72 sampai 84 kerusakan Suci kepada musuh atau menyembuhkan sasaran sekutu sebesar 130 sampai 155. Kedua nilai meningkat dengan kekuatan mantra. Kerusakan juga menyembuhkan setiap sekutu yang terikat Doktrin sebesar 30%, atau anggota kelompok bernyawa terendah sebesar 15% bila tidak ada yang terikat. (Ciri khas Doktrin)',
+    'Memberi {damage} kerusakan Suci kepada musuh atau menyembuhkan sasaran sekutu sebesar {healing}. Kerusakan meningkat dengan kekuatan mantra; penyembuhan meningkat dengan kekuatan penyembuhan. Doktrin mengubah kerusakan ini menjadi penyembuhan lewat ikatanmu. Jika tidak ada anggota kelompok terikat yang terluka dalam 30 meter, sembuhkan anggota kelompok terluka dengan nyawa terendah dalam 30 meter sebesar 15% dari kerusakan. Menyembuhkan anggota kelompok juga menyembuhkan hingga 2 anggota kelompok terluka lainnya dalam 10 meter dari sasaran tersebut dan dalam garis pandangmu, masing-masing sebesar 50% dari nyawa yang dipulihkan. Penyembuhan tambahan ini tidak bisa kritis atau membuat ikatan Doktrin. (Ciri khas Doktrin)',
   'entities.abilities.solar_invocation.description':
     'Seketika menyembuhkan sekutu sebesar {damage} atau memberi kerusakan Suci sedang kepada musuh. Kedua penggunaan menghasilkan 1 Pengabdian. Selama Kenaikan, rapalan penyembuhan juga menyembuhkan pemain sekutu dalam 10 m dari sasaran sebesar separuhnya.',
   'entities.abilities.solar_step.description': 'Menambah kecepatan gerakmu 150% selama 2 dtk.',
@@ -13557,8 +13553,6 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Serpihan Jiwa',
   'hudChrome.warlock.doomEmptyStatus': '{value} dari {max} Kecaman.',
   'hudChrome.warlock.doomLabel': 'Kecaman',
-  'hudChrome.warlock.doomMeterLock': 'Kunci bilah sumber daya Penderitaan',
-  'hudChrome.warlock.doomMeterUnlock': 'Pindahkan bilah sumber daya Penderitaan',
   'hudChrome.warlock.doomStatus': '{value} dari {max} Kecaman; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tiga Benang Takdir: Melahap dapat menganyamnya menjadi Kecaman tambahan.',
@@ -14308,6 +14302,10 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Serangan kritis Tarikan Panjang memperpanjang Fokus Dingin 2 detik, hingga 6 detik per aktivasi.',
   'entities.itemSets.coldsight_trackers.name': 'Pelacak Pandangan Dingin',
   'entities.itemSets.crownforged.bonus6': 'Meningkatkan kecepatan serangan dan perapalan sebesar 4% serta Hit sebesar 3%. Serangan kritis senjata Anda memecah target dengan Pecah Tulang, menyebabkan pendarahan 5 kerusakan tiap 2 detik selama 12 detik. Menumpuk hingga 3 kali.',
+  'entities.itemSets.bramblehide.name': 'Kulit Semak Duri Roots',
+  'entities.itemSets.bramblehide.bonus2': 'Meningkatkan daya serang sebesar 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Serangan kritis senjatamu menyerpihkan target dengan Serpih Tulang, membuatnya berdarah sebesar 8 kerusakan setiap 2 detik selama 12 detik. Menumpuk hingga 3 kali.',
+  'entities.itemSets.bramblehide.bonus6': 'Meningkatkan kecepatan serangan dan perapalan sebesar 4% serta Hit sebesar 3%. Serangan kritis senjata Anda memecah target dengan Pecah Tulang, menyebabkan pendarahan 5 kerusakan tiap 2 detik selama 12 detik. Menumpuk hingga 3 kali.',
   'entities.itemSets.dawnforged.bonus2': 'Mercusuar Cahaya menyalin 55 persen penyembuhan langsung Anda. Kerusakan yang diterima tidak lagi menunda perapalan mantra Anda.',
   'entities.itemSets.dawnforged.bonus4': 'Pelukan Fajar yang diperkuat oleh Resonansi Cahaya bersifat instan.',
   'entities.itemSets.dawnforged.name': 'Busana Tempa Fajar',

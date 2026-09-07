@@ -324,8 +324,6 @@ export const ja_JP: EnTranslations = {
     "warlock": {
       "doomLabel": "断罪",
       "fateThreadsLabel": "運命の糸",
-      "doomMeterUnlock": "苦痛リソースバーを移動",
-      "doomMeterLock": "苦痛リソースバーを固定",
       "doomEmptyStatus": "断罪 {value}/{max}。",
       "doomStatus": "断罪 {value}/{max}、残り {remaining}。",
       "fateThreadsStatus": "運命の糸 {value}/{max}。",
@@ -1572,6 +1570,26 @@ export const ja_JP: EnTranslations = {
       "showPlaytime": "キャラクター画面にプレイ時間を表示",
       "forceHighPerfGpu": "専用ゲーミングGPUを使用",
       "forceHighPerfGpuNote": "既定でオン：デスクトップ版はこのコンピューターの専用ゲーミングGPUを要求します。ゲームが起動しない、起動後に画面が真っ暗になる、またはノートパソコンの画面が映らない場合はオフにしてください。この設定は次回ゲームを起動したときに反映されます。",
+      "shaderWarm": "シェーダー事前ウォームアップ ワーカー",
+      "shaderWarmAuto": "自動",
+      "shaderWarmOff": "オフ",
+      "shaderWarmOn": "オン",
+      "shaderWarmNote": "ゲーム中のカクつきを防ぐため、バックグラウンドでシェーダーキャッシュを事前に温めます。自動：グラフィックス環境が対応している場合のみ有効になります（推奨）。オン：どの環境でも強制的に有効にします。環境によっては動作が重くなることがあります。オフ：無効にします。",
+      "gpuBackend": "グラフィックスバックエンド",
+      "gpuBackendAuto": "自動",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL（低速）",
+      "gpuBackendNote": "自動はあなたに最適な選択肢を選びます。Vulkanのほうが高速で、ほとんどのプレイヤーにおすすめです。OpenGLは低速ですが、Vulkanが正しく動作しない場合に役立つことがあります。次回のゲーム起動時に反映されます。",
+      "gpuBackendActive": "現在は {backend} を使用しています。",
+      "gpuBackendActiveUnavailable": "現在は {backend} を使用しています（Vulkan を有効にできませんでした）。",
+      "gpuBackendActiveAutoCapped": "現在 {backend} を使用中です。このグラフィックカードでは自動はまだVulkanを試しません。試すにはVulkanを選んでください。",
+      "gpuBackendSaveFailed": "この選択を保存できませんでした。次回の起動でも {backend} が使用されます。",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "一部の変更は再起動後に反映されます。",
+      "restartGame": "ゲームを再起動",
+      "restartInProgress": "ゲームを再起動しています...",
+      "restartFailed": "ゲームを自動で再起動できませんでした。終了してからもう一度起動してください。",
       "discordPresence": "Discord リッチプレゼンス",
       "discordPresenceNote": "プレイ中、現在いるゾーンとこのセッションのプレイ時間をDiscordのアクティビティとして表示します。あなたのDiscordプロフィールを見られる人は誰でもその両方を見られます。共有されるのはゾーン名、このセッションのプレイ時間、ゲーム名だけで、キャラクターやアカウント、一緒に遊んでいる相手が共有されることはありません。このコンピューターでDiscordアプリが起動している必要があります。",
       "showDevBadges": "開発者バッジを表示",
@@ -2536,6 +2554,24 @@ export const ja_JP: EnTranslations = {
       "worldfireClosing": "世界炎が迫っている。中央へ移動せよ！",
       "worldfireConsumed": "るつぼ全体が炎に包まれた！"
     },
+    "nythraxisCallout": {
+      "impaled": "骨の棘だ！串刺しにされた仲間を解放しろ！",
+      "youAreImpaled": "串刺しにされた！持ちこたえろ！",
+      "spikeBroken": "棘が砕けた！",
+      "dreadCurseSwap": "ドレッドカース！タンク交代！",
+      "sigilAppears": "拘束の印が光った！その上へナイスラクシスを引きずり込め！",
+      "sigilBound": "ナイスラクシスが拘束された！一気に叩け！",
+      "sigilUnbound": "印が未拘束のまま消えた！ナイスラクシスが強くなる！",
+      "gravefireTarget": "紫炎があなたに迫る！横に避けろ！",
+      "kingsWrath": "王が怒りに目覚めた！すべての攻撃が激しさを増す！",
+      "boneStormBegins": "骨の嵐だ！散開して走れ！",
+      "boneStormCharge": "ナイスラクシスがあなたに突進する！逃げろ！",
+      "boneStormEnds": "骨の嵐が終わった。タンクは確保しろ！",
+      "crownEndures60": "王冠不滅まで残り1分！",
+      "crownEndures30": "王冠不滅まで残り30秒！",
+      "crownEndures10": "残り10秒！一気に叩け！",
+      "crownEndures": "王冠不滅！ナイスラクシスが激怒した！"
+    },
     "varkhulWaveStatus": "ウェーブ {wave}/{waves} | 敵: {remaining}",
     "raidBossGuide": {
       "title": "ボス攻略",
@@ -2684,6 +2720,67 @@ export const ja_JP: EnTranslations = {
         "assembly": "師匠の組立: 両方の炉光線を遮り、全ポータル波を倒し、るつぼの地震を中断し、灰の技工士の回復を止める。",
         "worldfire": "世界炎: 英雄の最終段階では炎の外周が中央へ迫る。るつぼ全体が燃える前にヴァークルを倒す。",
         "heroic": "英雄: 炉の熱は下がらず、金床の布告に隕石が加わり、最終段階は世界炎に集中する。"
+      },
+      "nythraxis": {
+        "overview": "大司祭マルリックは己の王を死なせることを拒み、ナイスラクシスを甦らせた儀式は宮廷ごと地下墓所に縛りつけた。この戦闘では、規律あるタンク交代、骨の棘への素早い切り替え、燃える地面を避ける立ち回り、そして玉座の段階を終えた後の連携したウォードストーン詠唱が試される。",
+        "phaseThroneName": "玉座",
+        "phaseThroneSummary": "ナイスラクシスは玉座の間を、溜めた前方クリーブ、ドレッドカースによるタンク交代、レイドを串刺しにする骨の棘、そして燃える地面を残す墓所の噴出で守り抜く。",
+        "phaseWardstonesName": "ウォードストーン",
+        "phaseWardstonesSummary": "体力{health}で、身震いの踏みつけがレイドを足止めしている間にアルドリック修道士が到着し、ウォードストーンに火を灯す。すべての棘が砕け、床の炎も鎮まる。その後、ソウルレンドと不死の憤怒が玉座のメカニクスに加わる。",
+        "phaseKingsWrathName": "王の怒り",
+        "phaseKingsWrathSummary": "体力{health}で、ナイスラクシスは王の怒りとともに咆哮し、以後戦闘終了まで通常で{bonusNormal}、英雄で{bonusHeroic}のダメージを得る。墓所の噴出は{eruptionEveryNormal}秒ごと（英雄は{eruptionEveryHeroic}秒ごと）に、紫炎は{gravefireEveryNormal}秒ごと（英雄は{gravefireEveryHeroic}秒ごと）に短縮される。他のメカニクスの周期は変わらない。",
+        "gravebreakerName": "グレイブブレイカー",
+        "gravebreakerSummary": "{seconds}秒ごとに、ナイスラクシスは次の一撃を溜める。対象はその一撃のみを受けるが、彼の前方{arc}度・{range}ヤード以内にいる他の全員は、その一撃の{splash}を物理ダメージとして受ける（各自の防御力により軽減される）。",
+        "gravebreakerResponse": "タンクはナイスラクシスをレイドに向けさせないよう位置取りする。それ以外の全員は彼の後方か側面に留まり、扇形範囲を横切らない。",
+        "dreadCurseName": "ドレッドカース",
+        "dreadCurseSummary": "{every}秒ごとに、ナイスラクシスは現在のタンクへ最大体力の{hitNormal}を闇ダメージとして与え、ドレッドカースを1スタック追加する。{duration}秒間、スタックごとにそのタンクがナイスラクシスから受けるダメージが{perStackNormal}増加し、最大{max}スタックまで蓄積する。",
+        "dreadCurseHeroicSummary": "{every}秒ごとに、ナイスラクシスは現在のタンクへ最大体力の{hitHeroic}を闇ダメージとして与え、ドレッドカースを1スタック追加する。{duration}秒間、スタックごとにそのタンクがナイスラクシスから受けるダメージが{perStackHeroic}増加し、最大{max}スタックまで蓄積する。",
+        "dreadCurseResponse": "タンクは{stacks}スタックで交代する：もう一方のタンクが挑発し、呪われたタンクはスタックが消えるまでグレイブブレイカーの扇形範囲外に留まる。ヒーラーは交代前に次のタンクへ備える。",
+        "boneSpikeName": "骨の棘",
+        "boneSpikeSummary": "{everyNormal}秒ごとに、ナイスラクシスは現在の対象以外のレイドメンバー{victimsNormal}人を骨の棘で串刺しにする。串刺しにされたレイドメンバーは行動不能になり、棘が破壊されるまで毎秒最大体力の{drainNormal}を失う。",
+        "boneSpikeHeroicSummary": "{everyHeroic}秒ごとに、ナイスラクシスは現在の対象以外のレイドメンバー{victimsHeroic}人を骨の棘で串刺しにする。串刺しにされたレイドメンバーは行動不能になり、棘が破壊されるまで毎秒最大体力の{drainHeroic}を失う。",
+        "boneSpikeResponse": "ダメージディーラーは直ちに骨の棘へ切り替え、破壊して串刺しにされたレイドメンバーを解放する。ヒーラーは棘が壊されるまで串刺しにされた者を生かし続ける。",
+        "graveEruptionName": "墓所の噴出",
+        "graveEruptionSummary": "{everyNormal}秒ごとに、骸骨の手がレイドメンバーの足元に{radius}ヤードの円を{countNormal}個描く。{warning}秒後、各円は最大体力の{burstNormal}を闇ダメージとして噴出させ、その後{flameNormal}秒間墓炎として燃え続け、中に立つ者へ毎秒最大体力の{tickNormal}を与える。",
+        "graveEruptionHeroicSummary": "{everyHeroic}秒ごとに、骸骨の手がレイドメンバーの足元に{radius}ヤードの円を{countHeroic}個描く。{warning}秒後、各円は最大体力の{burstHeroic}を闇ダメージとして噴出させ、その後{flameHeroic}秒間墓炎として燃え続け、中に立つ者へ毎秒最大体力の{tickHeroic}を与える。",
+        "graveEruptionResponse": "噴出する前にすべての警告円から外へ出て、燃える地面を避け続ける。タンクはナイスラクシスを炎から引き離し、近接が動ける余地を確保する。",
+        "bindingSigilName": "拘束の印",
+        "bindingSigilSummary": "{everyNormal}秒ごとに、旧き結界の印がナイスラクシスから{minDist}から{maxDist}ヤードの床に光り、彼は不死の高揚を開始し、{ascensionEvery}秒ごとにダメージと攻撃速度が{ascensionNormal}上昇していく。{bindNormal}秒以内に印の上に立てば拘束状態になる：高揚は解除され、{stunNormal}秒間スタンし、{boundNormal}秒間受けるダメージが{vulnerability}増加する。立たなければレイド全員が最大体力の{unboundHitNormal}を闇ダメージとして受け、彼は次の拘束まで{unboundBonusNormal}多いダメージを保つ。",
+        "bindingSigilHeroicSummary": "{everyHeroic}秒ごとに、旧き結界の印がナイスラクシスから{minDist}から{maxDist}ヤードの床に光り、彼は不死の高揚を開始し、{ascensionEvery}秒ごとにダメージと攻撃速度が{ascensionHeroic}上昇していく。{bindHeroic}秒以内に印の上に立てば拘束状態になる：高揚は解除され、{stunHeroic}秒間スタンし、{boundHeroic}秒間受けるダメージが{vulnerability}増加する。立たなければレイド全員が最大体力の{unboundHitHeroic}を闇ダメージとして受け、彼は次の拘束まで{unboundBonusHeroic}多いダメージを保つ。",
+        "bindingSigilResponse": "タンクはレイドが残した炎の中であっても、直ちにナイスラクシスを印の上へ引きずり込む。近接はその移動に追従し、遠隔は新しいグレイブブレイカーの扇形範囲を避ける。拘束されている間は全員で総攻撃を加える。",
+        "raiseFallenName": "死者蘇生",
+        "raiseFallenSummary": "玉座の段階では、{every}秒ごとにナイスラクシスは背後で蘇った王家の衛兵を呼び起こす。彼らは現在の対象へ突進し、倒されるまで戦い続ける。",
+        "raiseFallenResponse": "オフタンクは湧いた衛兵を都度確保する。ダメージディーラーは骨の棘の合間に衛兵を掃討し、玉座の段階が終わる前に波が積み重ならないようにする。",
+        "soulRendName": "Soul Rend",
+        "soulRendSummary": "ナイスラクシスは現在の対象以外のレイドメンバー{marksNormal}人にソウルレンドの印を付ける。{fuse}秒後、各印は対象者の最大体力の全量を闇ダメージとして与え、その者から{range}ヤード以内にいる印を受けたレイドメンバーの人数で分割される。",
+        "soulRendHeroicSummary": "ナイスラクシスは現在の対象以外のレイドメンバー{marksHeroic}人にソウルレンドの印を付ける。{fuse}秒後、各印は対象者の最大体力の{damageHeroic}を闇ダメージとして与え、その者から{range}ヤード以内にいる印を受けたレイドメンバーの人数で分割される。単独で発動した印は致命的となる。",
+        "soulRendResponse": "印を受けたレイドメンバーは全員、{fuse}秒の導火線が尽きる前に集合地点へ走り、他の印から{range}ヤード以内に立つ。ヒーラーは印が発動する際にグループの体力を満たしておく。",
+        "soulfireName": "ソウルファイア",
+        "soulfireSummary": "ソウルレンドが発動するたびに、各印があった場所に半径{radius}ヤードの紫色の炎の水たまりが残り、{seconds}秒間、毎秒最大体力の{tickNormal}のダメージを与えながら燃え続ける。水たまりが重なる場所ではそれぞれから1回ずつダメージを受ける。水たまりはウォードストーンから{clearance}ヤード以内には出現しない。",
+        "soulfireHeroicSummary": "ソウルレンドが発動するたびに、重なり合った印の集団ごとに半径{radius}ヤードの紫色の炎の水たまりが1つだけ残り、{secondsHeroic}秒間、毎秒最大体力の{tickHeroic}のダメージを与えながら燃え続ける。水たまりが重なっても受けるダメージは1回分だけで、重複しない。水たまりはウォードストーンから{clearance}ヤード以内には出現しない。",
+        "soulfireResponse": "印が発動したらすぐに紫色の水たまりから離れる。次の集合地点は燃えている炎から離れた場所を選ぶこと。",
+        "gravefireName": "紫炎",
+        "gravefireSummary": "{everyNormal}秒ごとに、ナイスラクシスからレイドメンバーへ向けて紫炎の線が伸びていき、毎秒{speed}ヤードずつ{length}ヤードまで伸びる。伸びた地点はそれぞれ{burnNormal}秒間燃え続け、中に立つ者へ毎秒最大体力の{tickNormal}を与える。",
+        "gravefireHeroicSummary": "{everyHeroic}秒ごとに、ナイスラクシスからレイドメンバーへ向けて紫炎の線が伸びていき、毎秒{speed}ヤードずつ{length}ヤードまで伸びる。伸びた地点はそれぞれ{burnHeroic}秒間燃え続け、中に立つ者へ毎秒最大体力の{tickHeroic}を与える。",
+        "gravefireResponse": "線が迫ってきたら横に避ける：幅は狭く、曲がることはない。遠隔レイドメンバーは一箇所に留まらず動き続ける。",
+        "deathlessRageName": "不死の憤怒",
+        "deathlessRageSummary": "{every}秒ごとに、ナイスラクシスは{cast}秒かけて不死の憤怒を詠唱する。詠唱中、点火された各ウォードストーンは1人のレイドメンバーが{channel}秒かけて詠唱できる。詠唱終了前に3人がそれぞれ別のウォードストーンを完了させれば、憤怒は中断され、ナイスラクシスは{stun}秒間スタンする。完了しなければレイド全員が最大体力の{damageNormal}を闇ダメージとして受ける。",
+        "deathlessRageHeroicSummary": "{every}秒ごとに、ナイスラクシスは{cast}秒かけて不死の憤怒を詠唱する。詠唱中、点火された各ウォードストーンは1人のレイドメンバーが{channel}秒かけて詠唱できる。詠唱終了前に3人がそれぞれ別のウォードストーンを完了させれば、憤怒は中断され、ナイスラクシスは{stun}秒間スタンする。完了しなければレイド全員が最大体力の{damageHeroic}を闇ダメージとして受け、これに耐えられる体力は存在しない。",
+        "deathlessRageResponse": "開始前に各ウォードストーンへ担当者を1人ずつ割り当てる。詠唱が始まったら、各担当者は自分の石へ走り、完了するまで詠唱を続ける。スタン、石から離れること、死亡は詠唱を中断させるため、担当者を安全に保ち、串刺しにされているレイドメンバーを割り当てないこと。",
+        "courtName": "不死の宮廷",
+        "courtSummary": "英雄では、前回の不死の宮廷が倒れていれば、中断の有無にかかわらず不死の憤怒のたびにナイスラクシスは新たな廷臣たちを呼び起こす。オルドレンの魂は王家の斬撃で対象付近の全員を斬りつける。マルリックの魂はマルリックの治癒を詠唱し、詠唱するたびにナイスラクシスの回復量を増やしていく。ヴォスの魂は挑発を無視してレイドを狩る。",
+        "courtResponse": "タンクはオルドレンを確保し、斬撃をレイドから逸らす。マルリックの治癒が始まった瞬間にマルリックをスタンかサイレンスで止め、最優先で倒す。続いて、挑発が効かないヴォスをヒーラーから引き離すよう根縛りかスタンで止め、次に倒す。",
+        "kingsWrathName": "王の怒り",
+        "kingsWrathSummary": "ナイスラクシスは以後戦闘終了まで、通常で{bonusNormal}、英雄で{bonusHeroic}多いダメージを与える。墓所の噴出は{eruptionEveryNormal}秒ごと（英雄は{eruptionEveryHeroic}秒ごと）、紫炎は{gravefireEveryNormal}秒ごと（英雄は{gravefireEveryHeroic}秒ごと）に発生する。",
+        "kingsWrathResponse": "回避できないダメージには残っている防御クールダウンを使う。戦闘を終えるまで、それまでのメカニクスを引き続き丁寧に処理する。",
+        "boneStormName": "骨の嵐",
+        "boneStormSummary": "王の怒りの開始から{first}秒後、以降{everyNormal}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlNormal}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamNormal}を与える。嵐が始まってから{spikeAt}秒後に骨の棘を詠唱し、嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。",
+        "boneStormHeroicSummary": "王の怒りの開始から{first}秒後、以降{everyHeroic}秒ごとに、ナイスラクシスは{duration}秒間骨の嵐を始める。彼はヘイトを無視し、通常の{speed}倍の速度で移動し、それぞれ{chargeSeconds}秒続く突進を{charges}回行う。彼の旋風は{radius}ヤード以内へ毎秒最大体力の{whirlHeroic}を与える。各突進の終わりには同じ範囲内で骨の一撃が発生し、最大体力の{slamHeroic}を与える。嵐が始まってから{spikeAt}秒後に骨の棘を詠唱し、嵐が終わってから{rearm}秒後にグレイブブレイカーが再び使用可能になる。",
+        "boneStormResponse": "散開し、ナイスラクシスから走って逃げ続ける。突進の対象になったレイドメンバーは走って逃げ、他の全員は突進経路の周囲に空間を空ける。嵐が終わったらタンクが確保する。",
+        "crownEnduresName": "王冠不滅",
+        "crownEnduresSummary": "開始から{enrageNormal}秒で（体力70%でアルドリック修道士が登場する間は時間が止まる）、王冠不滅がハードエンレイジとして発動する。ナイスラクシスは{damage}多いダメージと{haste}速い攻撃速度を得て、その後は{rampEveryNormal}秒ごとにさらに{rampStep}のダメージを得ていく。タイマーバーは表示されない。警告は残り{warn60}秒、{warn30}秒、{warn10}秒の時点で叫びとして発せられる。",
+        "crownEnduresHeroicSummary": "開始から{enrageHeroic}秒で（体力70%でアルドリック修道士が登場する間は時間が止まる）、王冠不滅がハードエンレイジとして発動する。ナイスラクシスは{damage}多いダメージと{haste}速い攻撃速度を得て、その後は{rampEveryHeroic}秒ごとにさらに{rampStep}のダメージを得ていく。タイマーバーは表示されない。警告は残り{warn60}秒、{warn30}秒、{warn10}秒の時点で叫びとして発せられる。",
+        "crownEnduresResponse": "最初の警告を最後の全力攻撃の合図として扱う。残りのメカニクスに備えて移動と防御のクールダウンを温存し、エンレイジ前にナイスラクシスを倒す。"
       }
     },
     "auraEffect": {
@@ -2694,6 +2791,14 @@ export const ja_JP: EnTranslations = {
       "varkhulMoltenCore": "このコアを炉へ運ぶ。溶融の重荷は{interval}秒ごとに最大体力の{min}%から{max}%まで増加するダメージを与える。",
       "varkhulForgeLink": "作動中の柱の光線が鍛冶炉に届く前に遮断する。未遮断の光線は1秒ごとに熱を6%上昇させる。ノーマルでは遮断中と柱の停止中に冷却されるが、ヒロイックでは熱は下がらない。100%で致命的な鍛冶炉メルトダウンが発生する。",
       "varkhulCrucibleExposure": "るつぼの光線を遮断すると、1秒ごとに最大体力基準のダメージが増加する。スタックはノーマルでは光線を離れて10秒後、ヒロイックでは60秒後にリセットされる。",
+      "nythraxisDreadCurse": "スタックごとにナイスラクシスから受けるダメージが{duration}秒間{perStack}%増加する：{stacks}/{max}スタック、ダメージ増加{pct}%。{every}秒ごとに対象への次の一撃が最大体力の{hit}%を与え、スタックを追加する。タンクは{swap}スタックで交代すべき。",
+      "nythraxisImpaled": "骨の棘に串刺しにされている：行動不能になり、レイドが棘を破壊するまで{interval}秒ごとに最大体力の{normal}%を失う（英雄で{heroic}%）。",
+      "nythraxisAscension": "不死の高揚：{stacks}スタック、ダメージと攻撃速度が{pct}%上昇。拘束の印の上へナイスラクシスを引きずり込めば解除できる。",
+      "nythraxisBound": "旧き結界に拘束されている：ナイスラクシスは{duration}秒間、受けるダメージが{pct}%増加する。",
+      "nythraxisUnbound": "未拘束：拘束の印に捕らえられるまで、ナイスラクシスの与えるダメージが{pct}%増加する。",
+      "nythraxisKingsWrath": "王の怒り：ナイスラクシスの与えるダメージが、以後戦闘終了まで{pct}%増加する。",
+      "nythraxisBoneStorm": "骨の嵐：ナイスラクシスはヘイトを無視し、{radius}ヤード以内へ毎秒最大体力の{tick}%の旋風ダメージを与えながらレイドに突進する。散開して走れ。",
+      "nythraxisCrownEndures": "王冠不滅：{stacks}スタック、ダメージが{pct}%、攻撃速度が{haste}%上昇。レイドに残された時間はない。",
       "dot": "{interval}秒ごとに{value}の{school}ダメージを与える",
       "hot": "{interval}秒ごとに体力を{value}回復する",
       "mendingCurrent": "{value}の回復量を蓄え、時間経過または流転の癒しで消費して解放する",
@@ -2764,6 +2869,8 @@ export const ja_JP: EnTranslations = {
       "redline": "レッドライン:{stacks}/{max}ピップ。「ヘイメーカー」ごとにピップが1増える。「消灯」はピップごとに{pct}%強化され、レッドラインを終了させる。先に時間切れになるとノックアウトは失われる",
       "veilstrikeWindow": "影に包まれている:ダスクヴェール専用の先制技をどの角度からでも使用でき、与ダメージが{pct}%増加する",
       "veiledEdge": "次に放つ「潜伏者の一撃」は2倍のダメージを与える",
+      "veiledEdgeStrike": "次に放つ「潜伏者の一撃」の武器ダメージが{pct}%増加する",
+      "coldsightRead": "次に放つ「引き絞り」のダメージが{longDrawPct}%増加するか、次に放つ「凶弾」のダメージが{fellShotPct}%増加する",
       "duskEconomy": "アビリティの消費エナジーが{pct}%減少する",
       "moontide": "月潮：{stacks}/{max}段階。月翼形態での野生の稲妻・天墜・月の種の詠唱ごとに1段階進む。{max}段階で月の種はムーンサージに、天墜は陽醒に変化し、どちらを使っても3段階すべてを消費する",
       "oldBlood": "古き血：{stacks}/{max}段階。裂き爪・皮剥ぎ・血の亀裂・血噛み・薙ぎ払う爪・骨砕きの命中ごとに1段階蓄える。{max}段階で、ウルフフォームでは血噛みが血の収穫に、ブルーインフォームでは骨砕きが骨髄砕きに変化する",
@@ -2994,7 +3101,17 @@ export const ja_JP: EnTranslations = {
         "targetFrame": "ターゲット",
         "partyFrames": "パーティ",
         "swingBar": "オートアタック",
-        "targetDots": "ターゲットデバフ"
+        "targetDots": "ターゲットデバフ",
+        "questTracker": "クエストトラッカー",
+        "reliquaryTracker": "聖遺物庫トラッカー",
+        "petBar": "Pet Bar",
+        "procOverlay": "スペル発動",
+        "procOverlayFrost": "アイシクル",
+        "damageMeter": "ダメージメーター",
+        "deedTracker": "功績トラッカー",
+        "delveTracker": "デルヴトラッカー",
+        "riftTracker": "リフトトラッカー",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "フレーム設定",
       "framesMenuTitle": "各フレームの表示・非表示を切り替えます。チェックを外したフレームは、再度チェックするか初期設定に戻すまで非表示のままです。",
@@ -3025,6 +3142,50 @@ export const ja_JP: EnTranslations = {
       "pastePlaceholder": "エクスポートしたコードをここに貼り付けてください。",
       "invalid": "有効なエクスポートコードではありません。",
       "wrongKind": "このコードは別の種類のエクスポートです。"
+    },
+    "keybindTransfer": {
+      "setup": "ホットキー設定",
+      "apply": "適用",
+      "imported": "ホットキー設定をインポートしました。",
+      "wrongKind": "このコードは設定のエクスポートで、ホットキー設定ではありません。"
+    },
+    "keyboardMap": {
+      "title": "キーボード一覧",
+      "hint": "使用中のキーはカテゴリ別に色分けされています。キーにカーソルを合わせるかフォーカスすると、そのキーの割り当てがすべて表示されます。",
+      "hintInteractive": "使用中のキーはカテゴリ別に色分けされています。キーをクリックすると割り当てを変更できます。カーソルを合わせるかフォーカスすると、そのキーの割り当てがすべて表示されます。",
+      "popOut": "Pop Out",
+      "close": "キーボード一覧を閉じる",
+      "pressKey": "{action} に割り当てるキーを押してください。Esc でキャンセルします。",
+      "boundTo": "{action} を {key} に割り当てました。",
+      "notBindable": "そのキーは割り当てできません。",
+      "assignHint": "{key} に割り当てるアクションを選んでください。",
+      "assignPlaceholder": "{key} にアクションを割り当てる",
+      "layerGroup": "修飾キーレイヤー",
+      "formGroup": "キーボードのサイズ",
+      "formFull": "フルサイズ",
+      "formTkl": "テンキーレス",
+      "form75": "75%",
+      "form60": "60%",
+      "notOnLayout": "このキーボードにないキー: {bindings}",
+      "legendGroup": "キーの表記",
+      "legendLayout": "使用中の配列",
+      "legendQwerty": "QWERTY",
+      "layerNone": "修飾キーなし",
+      "layerShift": "Shift キー",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
+      "otherLayers": "修飾キーとの組み合わせでも割り当て済み"
+    },
+    "fullTransfer": {
+      "menu": "インポート / エクスポート",
+      "title": "設定のインポート / エクスポート",
+      "fullSettings": "すべての設定",
+      "intro": "この端末に保存されたすべての設定を1つのコードとしてエクスポートし、別の端末やブラウザに貼り付けてインポートできます。対象: グラフィック、オーディオ、インターフェース、テーマ、フレーム配置、全キャラクターのキー設定、コントローラーとクロスホットバーの設定、チャット、ウィンドウのフィルター、言語、閉じたヒント。",
+      "excluded": "含まれないもの: ログイン、アカウント、ウォレット、購入データ。アクションバーの配置はアカウントに保存され、アカウントと共に引き継がれます。"
     },
     "riftForge": {
       "title": "リフトの炉",
@@ -3478,8 +3639,34 @@ export const ja_JP: EnTranslations = {
       "guildViewsAria": "ギルド銀行の表示",
       "guildContentsTab": "内容",
       "guildLogTab": "ログ",
+      "guildHistoryTab": "履歴",
       "logAria": "ギルド銀行の活動ログ",
       "logNote": "直近{count}件のギルド銀行の操作です。",
+      "logShowing": "ギルド銀行の操作 {count} 件を新しい順に表示しています。",
+      "logFilterAria": "ギルド銀行の履歴を絞り込む",
+      "logFilterAll": "すべて",
+      "logFilterItems": "アイテム",
+      "logFilterMoney": "お金",
+      "logOlder": "以前の履歴を表示",
+      "logOlderLoading": "以前の操作を読み込んでいます...",
+      "logEnd": "これがギルド銀行の全履歴です。",
+      "logEmptyFiltered": "この絞り込みに一致するギルド銀行の操作はありません。",
+      "logColTime": "日時",
+      "logColMember": "メンバー",
+      "logColAction": "操作",
+      "logColDetail": "詳細",
+      "logActionDeposit": "預けた",
+      "logActionWithdraw": "引き出した",
+      "logActionBuySlots": "拡張を購入した",
+      "logActionOpenBank": "銀行を開設した",
+      "logActionCharterFee": "設立費用を支払った",
+      "logActionAdminPurge": "削除した",
+      "logActorAdmin": "管理者",
+      "logDetailItem": "{item} x{count}",
+      "logSearchPlaceholder": "この履歴を検索",
+      "logSearchAria": "読み込み済みのギルド銀行の操作をメンバー、操作、アイテムで検索",
+      "logShowingMatched": "読み込み済みのギルド銀行の操作 {count} 件のうち {matched} 件を表示しています。",
+      "logSearchNoMatch": "検索に一致する読み込み済みの操作はありません。以前の履歴を表示して範囲を広げてください。",
       "logLoading": "ギルド銀行のログを読み込んでいます...",
       "logEmpty": "ギルド銀行にはまだ何も出し入れされていません。",
       "logUnavailable": "現在、ギルド銀行のログを閲覧できません。",
@@ -4224,10 +4411,19 @@ export const ja_JP: EnTranslations = {
         "sealbreak_shockwave": "封印破りの衝撃波（範囲バースト）",
         "gravebreaker": "グレイブブレイカー（前方扇形、レイドに向けない）",
         "raise_fallen": "死者蘇生（周期的な増援ウェーブ）",
-        "soul_rend": "ソウルレンド（対象は散開して回復を受ける）",
+        "soul_rend": "ソウルレンド（対象は集合して炎から離れる）",
         "deathless_rage": "不死の憤怒（ウォードストーンで妨害）",
         "wardstones": "ウォードストーンの詠唱（フェーズ移行）",
-        "dread_curse": "ドレッドカース（ヒロイック限定、タンク交代用の累積デバフ）"
+        "dread_curse": "ドレッドカース（タンク交代用の累積デバフ、2スタックで交代）",
+        "bone_spike": "骨の棘（串刺しにされた者は棘が壊れるまで体力を失う）",
+        "grave_eruption": "墓所の噴出（燃える地面を残す警告円）",
+        "binding_sigil": "拘束の印（ボスを印の上へ引きずり込まないとレイドが代償を払う）",
+        "gravefire": "紫炎（避けて進む炎の直線）",
+        "soulfire": "ソウルファイア（ソウルレンドの爆発が燃える水たまりを残す）",
+        "kings_wrath": "王の怒り（体力30%：永続ダメージ増加、床の脅威が加速）",
+        "bone_storm": "骨の嵐（ヘイトを無視して旋風攻撃を行い、レイドに突進する）",
+        "crown_endures": "王冠不滅（6:00でハードエンレイジ、英雄は5:00）",
+        "deathless_court": "不死の宮廷（英雄限定、不死の憤怒の後に王家の廷臣が蘇る）"
       }
     },
     "reliquary": {
@@ -7444,10 +7640,7 @@ export const ja_JP: EnTranslations = {
     "playAria": "World of ClaudeCraftをプレイ",
     "serverLabel": "ワールドを選択",
     "serverAria": "ワールドを選択：オンラインまたはオフライン",
-    "serverOfflineSub": "即座にローカルの世界へ",
-    "caLabel": "$WOC コントラクトアドレス",
-    "caCopyAria": "コントラクトアドレスをコピー",
-    "caNote": "WOCはコミュニティトークンです。プレイには必要ありません。Discordに参加して、WOCのユーティリティとフライホイールについて語り合いましょう。"
+    "serverOfflineSub": "即座にローカルの世界へ"
   },
   "auth": {
     "enterRealm": "ワールドに入る",
@@ -8742,6 +8935,7 @@ export const ja_JP: EnTranslations = {
     "bodyWeb": "ゲームがGPUアクセラレーションなしで動作しているため、非常に重くなります。ブラウザーの設定でハードウェアアクセラレーションを有効にし、グラフィックドライバーを更新してから、ブラウザーを再起動してください。",
     "hybridBodyWindows": "このセッションは統合（省電力）GPUで描画しています。このパソコンにディスクリート（専用）ゲーミングGPUも搭載されている場合は、設定 > システム > ディスプレイ > グラフィックス でブラウザを「高パフォーマンス」に設定してから再起動してください。デスクトップアプリでは自動的にディスクリートGPUが選択されます。",
     "hybridBodyLinux": "このセッションは統合（省電力）GPUで描画しています。このパソコンにディスクリート（専用）ゲーミングGPUも搭載されている場合は、ブラウザやグラフィックスドライバに独自のGPU選択設定があるか、お使いのディストリビューションにGPU切り替えツール（PRIMEやoptimus-managerなど）が用意されている場合があります。デスクトップアプリでは自動的にディスクリートGPUが選択されます。",
+    "bodyRequestedBackend": "選択したグラフィックスバックエンドでゲームを起動できなかったため、OpenGL で動作しています。動作に問題はありませんが、読み込みと最初の数分は引っかかりが増えることがあります。バックエンドはオプション > グラフィック > システムで選び直せます。",
     "hybridBodyOther": "このセッションは統合（省電力）GPUで描画しています。このパソコンにディスクリート（専用）ゲーミングGPUも搭載されている場合は、ブラウザやオペレーティングシステムのグラフィックス設定を確認して有効にしてください。デスクトップアプリでは自動的にディスクリートGPUが選択されます。",
     "dismiss": "閉じる"
   },
@@ -10703,7 +10897,8 @@ export const ja_JP: EnTranslations = {
       },
       "arcane_shot": {
         "name": "凶弾",
-        "description": "対象を撃ち、{damage}の秘術ダメージを与えます。ダメージは遠隔攻撃力とともに上がります。"
+        "description": "対象を撃ち、{damage}の秘術ダメージを与えます。ダメージは遠隔攻撃力とともに上がります。",
+        "specNote_marksmanship": "「熱狂の速射」を完了して得たコールドサイト・リードは、次に放つ「凶弾」のダメージを75%増加させる。ショットを放つとリードを消費する。"
       },
       "concussive_shot": {
         "name": "動揺の射撃",
@@ -11734,7 +11929,7 @@ export const ja_JP: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "浄罪の慈悲",
-        "description": "敵を聖なる力で浄化するか、味方1体を即座に癒す。ドクトリン固有能力。"
+        "description": "敵に{damage}の聖なるダメージを与えるか、味方1体を{healing}回復する。ダメージは魔力で、回復量は治癒力で上昇する。ドクトリンは絆を通じてこのダメージを回復に変換する。30メートル以内に絆を結んだ負傷パーティメンバーがいない場合、30メートル以内で体力が最も低い負傷パーティメンバーをダメージの15%分回復する。パーティメンバーを回復すると、その対象から10メートル以内かつ視界内にいる負傷パーティメンバーを最大2人まで追加で回復し、それぞれ回復量の50%分を回復する。この追加回復はクリティカルにならず、ドクトリンの絆も生成しない。（ドクトリン固有能力）"
       },
       "seraphic_vigil": {
         "name": "熾天使の見守り",
@@ -13977,6 +14172,48 @@ export const ja_JP: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "消えた火花のワンド"
       },
+      "bramblehide_crown": {
+        "name": "ルーツのブランブルハイドの冠"
+      },
+      "bramblehide_mantle": {
+        "name": "ルーツのブランブルハイドの肩当て"
+      },
+      "bramblehide_harness": {
+        "name": "ルーツのブランブルハイドの胴当て"
+      },
+      "bramblehide_cinch": {
+        "name": "ルーツのブランブルハイドの帯"
+      },
+      "bramblehide_legguards": {
+        "name": "ルーツのブランブルハイドの脚甲"
+      },
+      "bramblehide_grips": {
+        "name": "ルーツのブランブルハイドの握り"
+      },
+      "bramblehide_treads": {
+        "name": "ルーツのブランブルハイドの靴"
+      },
+      "courtiers_bonefang": {
+        "name": "廷臣の骨牙"
+      },
+      "thornpeak_wardblade": {
+        "name": "ソーンピークの守護刃"
+      },
+      "gravecourt_hewer": {
+        "name": "墓廷の斬斧"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "不死の宮廷の奉納の盾"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "ソーンピークの月皮のフード"
+      },
+      "stormhymn_chain_grips": {
+        "name": "嵐の賛歌の鎖の握り"
+      },
+      "stormhymn_chain_treads": {
+        "name": "嵐の賛歌の鎖の靴"
+      },
       "conjured_water4": {
         "name": "魔法の湧き水"
       },
@@ -14953,6 +15190,9 @@ export const ja_JP: EnTranslations = {
       },
       "nythraxis_scourge_of_thornpeak": {
         "name": "ナイスラクシス、ソーンピークの災厄"
+      },
+      "nythraxis_bone_spike": {
+        "name": "骨の棘"
       },
       "ignivar_herald_of_the_last_flame": {
         "name": "イグニヴァル、最後の炎の先触れ"
@@ -18982,6 +19222,12 @@ export const ja_JP: EnTranslations = {
       "boundstone_vanguard": {
         "name": "束縛石の前衛",
         "bonus3": "攻撃速度と詠唱速度が15%上昇します。"
+      },
+      "bramblehide": {
+        "name": "ルーツのブランブルハイド",
+        "bonus2": "筋力が10、スタミナが10上昇します。",
+        "bonus4": "攻撃力が25上昇します。武器のクリティカルヒット時に50%の確率で「グレイブマイト」が発動し、攻撃力が10秒間40上昇します。",
+        "bonus6": "攻撃速度と詠唱速度が4%、命中が3%上昇します。武器のクリティカルヒットで対象に「ボーンスプリンター」を刻み、2秒ごとに5ダメージの出血を12秒間与えます。最大3回まで累積します。"
       },
       "chronoweave": {
         "name": "エーテルウィーブの祭服",

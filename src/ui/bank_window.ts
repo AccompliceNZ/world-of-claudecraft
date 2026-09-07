@@ -41,6 +41,7 @@ import { bankBonusSectionHtml } from './bank_bonus_view';
 import { showBuyConfirmPrompt } from './bank_buy_prompt';
 import { type BankScrollOffsets, planBankScrollRestore } from './bank_chrome_layout_core';
 import { filterBankSlots } from './bank_filter';
+import { annotateGuildFocusKeys, annotateVaultFocusKeys } from './bank_focus_keys';
 import { bankMeterAriaLabel, bankMeterTooltipHtml } from './bank_meter_view';
 import { showQuantityPrompt } from './bank_quantity_prompt';
 import { BankRungPurchase } from './bank_rung_purchase_core';
@@ -51,6 +52,7 @@ import {
   bankRungTopUpCopy,
   claudiumAmountText,
 } from './bank_rung_view';
+import { captureSearchCaret, restoreSearchCaret } from './bank_search_focus';
 import { BankSocketPurchaseController } from './bank_socket_purchase_controller';
 import {
   type BankBuySlotsModel,
@@ -72,7 +74,7 @@ import { markDialogRoot } from './dialog_root';
 import { itemDisplayName } from './entity_i18n';
 import { esc } from './esc';
 import { captureFocusKey, findFocusKey, focusedWithin, restoreFirstEnabled } from './focus_restore';
-import { type GuildBankViewModel, guildBankSlotFocusKeys } from './guild_bank_view';
+import type { GuildBankViewModel } from './guild_bank_view';
 import {
   GUILD_PANEL_ID,
   GUILD_TAB_ID,
@@ -573,16 +575,9 @@ export class BankWindow {
     // drop parks pointer focus on this root, and the parked root is not a control
     // to re-land on (it resolves no key and would take the close-button fallback).
     const hadFocus = focusedWithin(el) !== null || active?.closest(BANK_PROMPT_SELECTOR) != null;
-    // Search focus survives a FULL rebuild too: the slow-band refreshIfChanged can
-    // land a data repaint (a deposit's echo) moments after the player focused the
-    // search box, and stealing focus to the close button mid-typing was a live bug
-    // (proven by the online browser smoke probe). The fresh input's value is restored from
-    // this.filter.search, so only focus + caret need carrying across.
-    const searchEl = el.querySelector('.bag-search') as HTMLInputElement | null;
-    const searchFocus =
-      searchEl !== null && active === searchEl
-        ? { start: searchEl.selectionStart, end: searchEl.selectionEnd }
-        : null;
+    // Search focus survives a FULL rebuild too (bank_search_focus.ts owns the
+    // why): captured before the wipe, restored onto the fresh input after.
+    const searchFocus = captureSearchCaret(el, active);
     // The focused control's identity (data-focus-key), captured BEFORE the wipe:
     // the guild refresh arm repaints on ANY officer's op, so an external echo
     // must not yank a keyboard user off the tab, cell, or button they were on.
@@ -703,7 +698,7 @@ export class BankWindow {
       if (vaultTab && el.querySelector(`#${VAULT_PANEL_ID}`)) {
         vaultTab.setAttribute('aria-controls', VAULT_PANEL_ID);
       }
-      this.annotateVaultFocusKeys(el);
+      annotateVaultFocusKeys(el);
       this.restoreScroll(el, prevScroll);
       if (hadFocus) this.restoreControlFocus(el, focusKey);
       return;
@@ -717,11 +712,11 @@ export class BankWindow {
       if (guildTab && el.querySelector(`#${GUILD_PANEL_ID}`)) {
         guildTab.setAttribute('aria-controls', GUILD_PANEL_ID);
       }
-      this.annotateGuildFocusKeys(el, guildModel);
+      annotateGuildFocusKeys(el, guildModel);
       this.restoreScroll(el, prevScroll);
-      // The guild pane has no search box, so a searchFocus capture degrades
-      // through the key ladder to the close button, never to <body>.
-      if (hadFocus) this.restoreControlFocus(el, focusKey);
+      // The history view's search box shares `.bag-search`: every keystroke
+      // rebuilds the pane, and the caret must land where it was.
+      if (!restoreSearchCaret(el, searchFocus) && hadFocus) this.restoreControlFocus(el, focusKey);
       return;
     }
     if (model.kind === 'away') {
@@ -776,58 +771,14 @@ export class BankWindow {
     // AFTER the footer: in the compact regime the window is the scroller, and a
     // write against a pane one band short clamps to that height and stays.
     this.restoreScroll(el, prevScroll);
-    if (searchFocus) {
-      const fresh = el.querySelector('.bag-search') as HTMLInputElement | null;
-      if (fresh) {
-        // preventScroll: the offset was just restored and on a short phone this
-        // box can sit far above the fold (focus_restore.ts records the why).
-        fresh.focus({ preventScroll: true });
-        fresh.setSelectionRange(searchFocus.start, searchFocus.end);
-      } else if (hadFocus) {
-        // The rebuild dropped the search box (the bank emptied): fall back to the
-        // close button rather than dropping focus to <body>.
-        (el.querySelector('[data-close]') as HTMLElement | null)?.focus();
-      }
+    if (restoreSearchCaret(el, searchFocus)) return;
+    if (searchFocus !== null && hadFocus) {
+      // The rebuild dropped the search box (the bank emptied): fall back to the
+      // close button rather than dropping focus to <body>.
+      (el.querySelector('[data-close]') as HTMLElement | null)?.focus();
     } else if (hadFocus) {
       this.restoreControlFocus(el, focusKey);
     }
-  }
-
-  // Stamp the guild pane's controls with their focus keys AFTER renderInto
-  // returned: the shared data-focus-key namespace stays inside this module,
-  // the one that imports focus_restore (the single-reader guard in
-  // tests/focus_restore.test.ts), and the pane stays focus-agnostic. Cells are
-  // keyed by semantic item/copy identity. Duplicate-group cardinality is part
-  // of that key, so an ambiguous disappearing twin safely falls back instead
-  // of transferring focus to a different physical copy.
-  private annotateGuildFocusKeys(el: HTMLElement, model: GuildBankViewModel): void {
-    // The Contents / Log sub-strip first: the log repaints on ANY officer's op
-    // (its cache busts and the response lands), so a keyboard user reading it
-    // must not be thrown off the strip by somebody else's deposit.
-    for (const tab of el.querySelectorAll<HTMLElement>('.gbank-view-tab')) {
-      tab.dataset.focusKey = `gbank:view:${tab.dataset.tab}`;
-    }
-    const slotKeys = model.kind === 'guild' ? guildBankSlotFocusKeys(model.slots) : [];
-    // A key miss stamps NOTHING: '' would still satisfy the restore ladder.
-    el.querySelectorAll<HTMLElement>('.bank-grid .bank-item:not(.empty)').forEach((cell, i) => {
-      if (slotKeys[i] !== undefined) cell.dataset.focusKey = slotKeys[i];
-    });
-    const [deposit, withdraw] = Array.from(el.querySelectorAll<HTMLElement>('.gbank-gold-btn'));
-    if (deposit) deposit.dataset.focusKey = 'gbank:deposit-gold';
-    if (withdraw) withdraw.dataset.focusKey = 'gbank:withdraw-gold';
-    const buy = el.querySelector<HTMLElement>('.bank-buy-btn');
-    if (buy) buy.dataset.focusKey = 'gbank:buy';
-  }
-
-  // VaultTab owns semantic row/action keys because it has the row model in
-  // hand. This window adds only its fixed footer controls after renderInto.
-  private annotateVaultFocusKeys(el: HTMLElement): void {
-    const deposit = el.querySelector<HTMLElement>('.vault-deposit-all');
-    if (deposit) deposit.dataset.focusKey = 'vault:deposit-all';
-    const unlock = el.querySelector<HTMLElement>('.vault-unlock-btn');
-    if (unlock) unlock.dataset.focusKey = 'vault:unlock';
-    const upgrade = el.querySelector<HTMLElement>('.vault-upgrade-btn');
-    if (upgrade) upgrade.dataset.focusKey = 'vault:upgrade';
   }
 
   // Re-land focus after a full rebuild: the control the user was on (resolved

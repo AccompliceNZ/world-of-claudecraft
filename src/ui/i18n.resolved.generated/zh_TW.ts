@@ -324,8 +324,6 @@ export const zh_TW: EnTranslations = {
     "warlock": {
       "doomLabel": "譴罪",
       "fateThreadsLabel": "命運絲線",
-      "doomMeterUnlock": "移動痛苦資源條",
-      "doomMeterLock": "鎖定痛苦資源條",
       "doomEmptyStatus": "{value}/{max} 譴罪。",
       "doomStatus": "{value}/{max} 譴罪；剩餘 {remaining}。",
       "fateThreadsStatus": "{value}/{max} 命運絲線。",
@@ -1572,6 +1570,26 @@ export const zh_TW: EnTranslations = {
       "showPlaytime": "在角色畫面顯示遊戲時長",
       "forceHighPerfGpu": "使用獨立遊戲顯示卡",
       "forceHighPerfGpuNote": "預設開啟：桌面版會向本機要求使用獨立遊戲顯示卡。若遊戲無法啟動、啟動後黑屏，或筆記型電腦螢幕沒有畫面，請關閉此選項。此設定會在下次啟動遊戲時生效。",
+      "shaderWarm": "著色器預熱工作執行緒",
+      "shaderWarmAuto": "自動",
+      "shaderWarmOff": "關閉",
+      "shaderWarmOn": "開啟",
+      "shaderWarmNote": "在背景預先預熱著色器快取，以避免遊戲中出現卡頓。自動：僅在你的圖形系統支援時啟用（建議）。開啟：在所有環境中強制啟用，在部分配置上可能會讓效能變差。關閉：不啟用。",
+      "gpuBackend": "圖形後端",
+      "gpuBackendAuto": "自動",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL（較慢）",
+      "gpuBackendNote": "自動會為你選擇最合適的選項。Vulkan 較快，建議大多數玩家使用。OpenGL 較慢，但在 Vulkan 無法正常運作時可能會有幫助。下次啟動遊戲時生效。",
+      "gpuBackendActive": "目前使用 {backend}。",
+      "gpuBackendActiveUnavailable": "目前使用 {backend}（無法啟用 Vulkan）。",
+      "gpuBackendActiveAutoCapped": "目前使用 {backend}。自動模式暫時不會在此顯示卡上嘗試 Vulkan；如要嘗試，請選擇 Vulkan。",
+      "gpuBackendSaveFailed": "無法儲存此選擇。下次啟動仍會使用 {backend}。",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "部分變更將在重新啟動後生效。",
+      "restartGame": "重新啟動遊戲",
+      "restartInProgress": "正在重新啟動遊戲...",
+      "restartFailed": "遊戲無法自行重新啟動。請結束後重新啟動。",
       "discordPresence": "Discord 遊戲狀態",
       "discordPresenceNote": "遊玩時將你目前所在的區域以及本次遊戲時長顯示為你的 Discord 活動狀態，任何能看到你 Discord 個人資料的人都能看到這兩項。只會分享區域名稱、本次遊戲時長和遊戲名稱，絕不會分享你的角色、帳號或與你同行的人。需要本機正在執行 Discord 應用程式。",
       "showDevBadges": "顯示開發者徽章",
@@ -2536,6 +2554,24 @@ export const zh_TW: EnTranslations = {
       "worldfireClosing": "世界之火正在逼近，往中央移動！",
       "worldfireConsumed": "整座熔爐大廳都在燃燒！"
     },
+    "nythraxisCallout": {
+      "impaled": "骨刺出現！解救被穿刺者！",
+      "youAreImpaled": "你被穿刺了！撐住！",
+      "spikeBroken": "尖刺破碎！",
+      "dreadCurseSwap": "恐懼詛咒：換坦！",
+      "sigilAppears": "束縛印記浮現！把尼思拉克西斯拖上去！",
+      "sigilBound": "尼思拉克西斯被束縛了！全力集火！",
+      "sigilUnbound": "印記未束縛便消散！尼思拉克西斯變得更強！",
+      "gravefireTarget": "墓火朝你襲來！閃避！",
+      "kingsWrath": "國王暴怒而起！此後所有攻擊都更猛烈！",
+      "boneStormBegins": "骨風暴來襲！分散並奔跑！",
+      "boneStormCharge": "尼思拉克西斯正衝向你！快跑！",
+      "boneStormEnds": "骨風暴結束。坦克，接怪！",
+      "crownEndures60": "距離王冠永存還有一分鐘！",
+      "crownEndures30": "距離王冠永存還有三十秒！",
+      "crownEndures10": "十秒！全力集火！",
+      "crownEndures": "王冠永存！尼思拉克西斯狂暴了！"
+    },
     "varkhulWaveStatus": "波次 {wave}/{waves} | 敵人: {remaining}",
     "raidBossGuide": {
       "title": "首領指南",
@@ -2684,6 +2720,67 @@ export const zh_TW: EnTranslations = {
         "assembly": "大師組裝: 阻擋兩道熔爐射線，擊殺所有傳送門波次，打斷坩堝震擊，並阻止燼火工匠治療瓦爾庫爾。",
         "worldfire": "世界之火: 英雄最終階段的燃燒邊緣會向中央收縮。在整個坩堝燃燒前擊敗瓦爾庫爾。",
         "heroic": "英雄: 熔爐熱量不會下降，鐵砧敕令會增加隕石，最終階段會集中應對世界之火。"
+      },
+      "nythraxis": {
+        "overview": "大祭司馬爾里克不願讓他的國王死去，而喚起尼思拉克西斯的儀式將整個王庭都束縛在墓穴之中。這場戰鬥考驗嚴謹的坦克輪換、迅速轉火骨刺、遠離燃燒地面的走位，以及王座陷落後協同引導護符石。",
+        "phaseThroneName": "王座",
+        "phaseThroneSummary": "尼思拉克西斯坐鎮王座廳，施展蓄力正面順劈、恐懼詛咒坦克輪換、穿刺團隊的骨刺，以及留下燃燒地面的墓穴爆發。",
+        "phaseWardstonesName": "護符石",
+        "phaseWardstonesSummary": "生命值降至{health}時，震顫踐踏會定住全團，此時奧德里克修士抵達並點燃護符石。所有尖刺隨即碎裂，地面停止燃燒，接著靈魂撕裂與不死之怒將加入王座階段的機制。",
+        "phaseKingsWrathName": "國王之怒",
+        "phaseKingsWrathSummary": "生命值降至{health}時，尼思拉克西斯咆哮著進入國王之怒，此後在普通難度獲得{bonusNormal}傷害，英雄難度則為{bonusHeroic}，直到戰鬥結束。墓穴爆發的間隔縮短至每{eruptionEveryNormal}秒一次（英雄難度{eruptionEveryHeroic}秒），墓火則縮短至每{gravefireEveryNormal}秒一次（英雄難度{gravefireEveryHeroic}秒）。其餘機制節奏不變。",
+        "gravebreakerName": "碎墓打擊",
+        "gravebreakerSummary": "每{seconds}秒，尼思拉克西斯會蓄力下一次命中的揮擊。他的目標只承受揮擊本身的傷害，但站在他正面{arc}度扇形範圍{range}碼內的其他人，都會承受該次揮擊{splash}的物理傷害，並依自身護甲減免。",
+        "gravebreakerResponse": "坦克讓尼思拉克西斯始終背對團隊。其餘人留在他的側面或背後，絕不進入扇形範圍。",
+        "dreadCurseName": "恐懼詛咒",
+        "dreadCurseSummary": "每{every}秒，尼思拉克西斯會對目前的坦克造成相當於最大生命值{hitNormal}的暗影傷害，並疊加一層恐懼詛咒。在{duration}秒內，每層都會使該坦克受到尼思拉克西斯的傷害提高{perStackNormal}，最多疊加{max}層。",
+        "dreadCurseHeroicSummary": "每{every}秒，尼思拉克西斯會對目前的坦克造成相當於最大生命值{hitHeroic}的暗影傷害，並疊加一層恐懼詛咒。在{duration}秒內，每層都會使該坦克受到尼思拉克西斯的傷害提高{perStackHeroic}，最多疊加{max}層。",
+        "dreadCurseResponse": "坦克在{stacks}層時換坦：另一名坦克嘲諷仇恨，受詛咒的坦克則留在碎墓打擊扇形範圍外，直到層數消退。治療應在換坦前為即將接怪的坦克做好準備。",
+        "boneSpikeName": "骨刺",
+        "boneSpikeSummary": "每{everyNormal}秒，尼思拉克西斯會將{victimsNormal}名非目前目標的團員穿刺在骨刺上。被穿刺的團員無法行動，並且每秒流失相當於最大生命值{drainNormal}的生命，直到該尖刺被摧毀。",
+        "boneSpikeHeroicSummary": "每{everyHeroic}秒，尼思拉克西斯會將{victimsHeroic}名非目前目標的團員穿刺在骨刺上。被穿刺的團員無法行動，並且每秒流失相當於最大生命值{drainHeroic}的生命，直到該尖刺被摧毀。",
+        "boneSpikeResponse": "輸出職業應立即轉火骨刺並將其摧毀，以解救被穿刺的團員。治療則在尖刺被擊破前維持被穿刺者的生命。",
+        "graveEruptionName": "墓穴爆發",
+        "graveEruptionSummary": "每{everyNormal}秒，骸骨之手會在{countNormal}名團員腳下標記半徑{radius}碼的圓圈。{warning}秒後，每個圓圈都會爆發，造成相當於最大生命值{burstNormal}的暗影傷害，隨後化為墓焰燃燒{flameNormal}秒，對站在其中的人每秒造成相當於最大生命值{tickNormal}的傷害。",
+        "graveEruptionHeroicSummary": "每{everyHeroic}秒，骸骨之手會在{countHeroic}名團員腳下標記半徑{radius}碼的圓圈。{warning}秒後，每個圓圈都會爆發，造成相當於最大生命值{burstHeroic}的暗影傷害，隨後化為墓焰燃燒{flameHeroic}秒，對站在其中的人每秒造成相當於最大生命值{tickHeroic}的傷害。",
+        "graveEruptionResponse": "在每個警示圈爆發前離開範圍，並遠離燃燒地面。坦克應將尼思拉克西斯拉離火場，讓近戰保有輸出空間。",
+        "bindingSigilName": "束縛印記",
+        "bindingSigilSummary": "每{everyNormal}秒，一枚承載古老守印的印記會在尼思拉克西斯周圍{minDist}至{maxDist}碼的地面上浮現，同時他開始不死昇華，每{ascensionEvery}秒獲得{ascensionNormal}傷害與攻擊速度。若他在{bindNormal}秒內站上印記，便會被束縛：不死昇華遭淨化，他被暈眩{stunNormal}秒，並在{boundNormal}秒內多承受{vulnerability}傷害。否則每名團員都會承受相當於最大生命值{unboundHitNormal}的暗影傷害，且他會保有{unboundBonusNormal}傷害提升，直到下一次束縛為止。",
+        "bindingSigilHeroicSummary": "每{everyHeroic}秒，一枚承載古老守印的印記會在尼思拉克西斯周圍{minDist}至{maxDist}碼的地面上浮現，同時他開始不死昇華，每{ascensionEvery}秒獲得{ascensionHeroic}傷害與攻擊速度。若他在{bindHeroic}秒內站上印記，便會被束縛：不死昇華遭淨化，他被暈眩{stunHeroic}秒，並在{boundHeroic}秒內多承受{vulnerability}傷害。否則每名團員都會承受相當於最大生命值{unboundHitHeroic}的暗影傷害，且他會保有{unboundBonusHeroic}傷害提升，直到下一次束縛為止。",
+        "bindingSigilResponse": "坦克應立即將尼思拉克西斯拖上印記，即使得穿過團隊留下的火焰也在所不惜。近戰跟隨拖行路線，遠程則避開新的碎墓打擊扇形範圍。他被束縛期間，全員集火。",
+        "raiseFallenName": "亡者復生",
+        "raiseFallenSummary": "在王座階段中，尼思拉克西斯每{every}秒會在他身後喚起復甦王室衛兵。牠們會衝向他目前的目標，戰鬥至被摧毀為止。",
+        "raiseFallenResponse": "副坦應在每一波衛兵出現時接怪。輸出職業應在骨刺間隙清理衛兵，避免波次在王座階段結束前堆積。",
+        "soulRendName": "Soul Rend",
+        "soulRendSummary": "尼思拉克西斯會為{marksNormal}名非目前目標的團員標記靈魂撕裂。{fuse}秒後，每個標記都會對其承載者造成相當於其全部最大生命值的暗影傷害，並依{range}碼內被標記團員的人數分攤。",
+        "soulRendHeroicSummary": "尼思拉克西斯會為{marksHeroic}名非目前目標的團員標記靈魂撕裂。{fuse}秒後，每個標記都會對其承載者造成相當於其最大生命值{damageHeroic}的暗影傷害，並依{range}碼內被標記團員的人數分攤。若標記單獨引爆，將必定致命。",
+        "soulRendResponse": "每名被標記的團員都應在{fuse}秒的引爆倒數結束前，跑到集合點並站在其他標記{range}碼內。治療應在標記引爆時將團隊生命補滿。",
+        "soulfireName": "魂火",
+        "soulfireSummary": "每次靈魂撕裂引爆，都會在每個標記所在處留下一灘半徑{radius}碼的紫色烈焰，燃燒{seconds}秒，每秒造成相當於最大生命值{tickNormal}的傷害。火池重疊時，站在裡面會分別承受各灘火池的傷害。火池絕不會在護符石{clearance}碼內形成。",
+        "soulfireHeroicSummary": "每次靈魂撕裂引爆，每一組聚集的標記只會留下一灘半徑{radius}碼的紫色烈焰，燃燒{secondsHeroic}秒，每秒造成相當於最大生命值{tickHeroic}的傷害。火池重疊時只會承受一次傷害，不會疊加。火池絕不會在護符石{clearance}碼內形成。",
+        "soulfireResponse": "標記引爆後應立刻離開紫色火池。選擇下一個集合點時，務必避開仍在燃燒的火焰。",
+        "gravefireName": "墓火",
+        "gravefireSummary": "每{everyNormal}秒，一道紫色墓火會從尼思拉克西斯朝一名團員延伸，每秒延長{speed}碼，最長至{length}碼。每一碼都會燃燒{burnNormal}秒，對站在其中的人每秒造成相當於最大生命值{tickNormal}的傷害。",
+        "gravefireHeroicSummary": "每{everyHeroic}秒，一道紫色墓火會從尼思拉克西斯朝一名團員延伸，每秒延長{speed}碼，最長至{length}碼。每一碼都會燃燒{burnHeroic}秒，對站在其中的人每秒造成相當於最大生命值{tickHeroic}的傷害。",
+        "gravefireResponse": "看到火線逼近時側身閃避：它很窄且不會轉向。遠程團員應持續移動，而非停在原地。",
+        "deathlessRageName": "不死之怒",
+        "deathlessRageSummary": "每{every}秒，尼思拉克西斯會施展{cast}秒的不死之怒。施法期間，每座已點亮的護符石都能由一名團員引導{channel}秒。若在施法結束前，有三名不同的團員各自完成一座護符石的引導，此次狂怒便會被打斷，尼思拉克西斯將被暈眩{stun}秒。否則每名團員都會承受相當於最大生命值{damageNormal}的暗影傷害。",
+        "deathlessRageHeroicSummary": "每{every}秒，尼思拉克西斯會施展{cast}秒的不死之怒。施法期間，每座已點亮的護符石都能由一名團員引導{channel}秒。若在施法結束前，有三名不同的團員各自完成一座護符石的引導，此次狂怒便會被打斷，尼思拉克西斯將被暈眩{stun}秒。否則每名團員都會承受相當於最大生命值{damageHeroic}的暗影傷害，沒有任何生命值能撐過這一擊。",
+        "deathlessRageResponse": "開戰前為每座護符石指派一名團員。施法開始時，各自跑向自己的護符石並持續引導直到完成。暈眩、離開範圍或死亡都會中斷引導，因此務必保護引導者安全，且絕不可指派正被穿刺的團員負責引導。",
+        "courtName": "不死宮廷",
+        "courtSummary": "在英雄難度中，只要前一批王庭已被擊敗，尼思拉克西斯便會在每次不死之怒後（無論是否被打斷）喚起他的王庭。奧德倫的亡魂會以王室順劈橫掃其目標附近的所有人。馬爾里克的亡魂會引導馬爾里克的修復，每次施放都能為尼思拉克西斯恢復更多生命。沃斯的亡魂無視嘲諷，並專門獵殺團隊。",
+        "courtResponse": "坦克應接下奧德倫，並讓他的順劈背對團隊。馬爾里克的修復一開始施放，就立即暈眩或沉默他，並優先將他擊殺；接著使用定身或暈眩把沃斯拉離治療，因為他無法被嘲諷，隨後將他解決。",
+        "kingsWrathName": "國王之怒",
+        "kingsWrathSummary": "尼思拉克西斯此後在普通難度造成{bonusNormal}更多傷害，英雄難度則為{bonusHeroic}，直到戰鬥結束。墓穴爆發每{eruptionEveryNormal}秒發生一次（英雄難度{eruptionEveryHeroic}秒），墓火每{gravefireEveryNormal}秒發生一次（英雄難度{gravefireEveryHeroic}秒）。",
+        "kingsWrathResponse": "為無法避免的傷害使用剩餘的防禦技能冷卻。在團隊結束這場戰鬥前，持續乾淨地應對先前所有機制。",
+        "boneStormName": "骨風暴",
+        "boneStormSummary": "自國王之怒開始後{first}秒，以及此後每{everyNormal}秒，尼思拉克西斯都會展開持續{duration}秒的骨風暴。他會無視仇恨，以{speed}倍的正常速度移動，並進行{charges}次各持續{chargeSeconds}秒的衝撞。他的橫掃每秒對{radius}碼內造成相當於最大生命值{whirlNormal}的傷害。每次衝撞結束時都會在同樣範圍內施展骨擊，造成相當於最大生命值{slamNormal}的傷害。他會在風暴開始後{spikeAt}秒施放骨刺，並在風暴結束{rearm}秒後重新啟用碎墓打擊。",
+        "boneStormHeroicSummary": "自國王之怒開始後{first}秒，以及此後每{everyHeroic}秒，尼思拉克西斯都會展開持續{duration}秒的骨風暴。他會無視仇恨，以{speed}倍的正常速度移動，並進行{charges}次各持續{chargeSeconds}秒的衝撞。他的橫掃每秒對{radius}碼內造成相當於最大生命值{whirlHeroic}的傷害。每次衝撞結束時都會在同樣範圍內施展骨擊，造成相當於最大生命值{slamHeroic}的傷害。他會在風暴開始後{spikeAt}秒施放骨刺，並在風暴結束{rearm}秒後重新啟用碎墓打擊。",
+        "boneStormResponse": "分散站位並持續遠離尼思拉克西斯。被鎖定衝撞的團員應遠離逃跑，其餘人則在衝撞路徑周圍留出空間，風暴結束後由坦克接回仇恨。",
+        "crownEnduresName": "王冠永存",
+        "crownEnduresSummary": "從開戰起算{enrageNormal}秒後（在奧德里克修士於70%生命值進場期間，計時會暫停），王冠永存會觸發成硬狂暴。尼思拉克西斯獲得{damage}更多傷害與{haste}更快的攻擊速度，此後每{rampEveryNormal}秒再增加{rampStep}傷害。畫面上沒有計時條，警告會以喊話形式在剩餘{warn60}、{warn30}與{warn10}秒時發出。",
+        "crownEnduresHeroicSummary": "從開戰起算{enrageHeroic}秒後（在奧德里克修士於70%生命值進場期間，計時會暫停），王冠永存會觸發成硬狂暴。尼思拉克西斯獲得{damage}更多傷害與{haste}更快的攻擊速度，此後每{rampEveryHeroic}秒再增加{rampStep}傷害。畫面上沒有計時條，警告會以喊話形式在剩餘{warn60}、{warn30}與{warn10}秒時發出。",
+        "crownEnduresResponse": "將第一次警告視為最終爆發階段的開始。保留走位與防禦技能冷卻應對剩餘機制，並在狂暴前擊敗尼思拉克西斯。"
       }
     },
     "auraEffect": {
@@ -2694,6 +2791,14 @@ export const zh_TW: EnTranslations = {
       "varkhulMoltenCore": "將核心運到鍛爐。熔融重壓每 {interval} 秒造成不斷提高的傷害，從最大生命值的 {min}% 增至 {max}%。",
       "varkhulForgeLink": "在啟動的立柱光束抵達鍛爐前將其攔截。未攔截的光束每秒增加6%熱量。普通難度下，已攔截的光束和關閉的立柱會讓鍛爐冷卻；英雄難度下熱量永不降低。達到100%時會觸發致命的鍛爐熔毀。",
       "varkhulCrucibleExposure": "攔截坩堝光束時，每秒受到的最大生命值傷害都會提高。離開光束後，普通難度10秒、英雄難度60秒後重置層數。",
+      "nythraxisDreadCurse": "每層都會使受到尼思拉克西斯的傷害提高{perStack}%，持續{duration}秒：目前{stacks}/{max}層，傷害提高{pct}%。每{every}秒，他對目標的下一次攻擊會造成相當於最大生命值{hit}%的傷害並疊加一層。坦克應在{swap}層時換坦。",
+      "nythraxisImpaled": "被骨刺穿刺：你無法行動，且每{interval}秒流失{normal}%最大生命值（英雄難度為{heroic}%），直到團隊摧毀該尖刺。",
+      "nythraxisAscension": "不死昇華：{stacks}層，傷害與攻擊速度提高{pct}%。將尼思拉克西斯拖上束縛印記即可淨化此效果。",
+      "nythraxisBound": "受古老守印束縛：尼思拉克西斯在{duration}秒內多承受{pct}%傷害。",
+      "nythraxisUnbound": "未束縛：尼思拉克西斯造成的傷害提高{pct}%，直到被束縛印記困住為止。",
+      "nythraxisKingsWrath": "國王之怒：尼思拉克西斯此後造成的傷害提高{pct}%，直到戰鬥結束。",
+      "nythraxisBoneStorm": "骨風暴：尼思拉克西斯無視仇恨，每秒對{radius}碼內造成相當於最大生命值{tick}%的橫掃傷害，並衝撞團員。請分散並奔跑。",
+      "nythraxisCrownEndures": "王冠永存：{stacks}層，傷害提高{pct}%，攻擊速度提高{haste}%。團隊已經沒有時間了。",
       "dot": "每 {interval} 秒造成 {value} 點{school}傷害",
       "hot": "每 {interval} 秒恢復 {value} 點生命值",
       "mendingCurrent": "儲存 {value} 點治療量，隨時間釋放或由湧流癒合消耗",
@@ -2764,6 +2869,8 @@ export const zh_TW: EnTranslations = {
       "redline": "紅線：第{stacks}/{max}格。每次重磅擺拳加深一格；眼前一黑每格傷害提高{pct}%，並結束紅線。時限一到則擊倒作廢",
       "veilstrikeWindow": "暗影纏身：你的暮紗先制技可在明處以任意角度使用，造成的傷害提高{pct}%",
       "veiledEdge": "你的下一次潛伏者一擊造成雙倍傷害",
+      "veiledEdgeStrike": "你的下一次潛伏者一擊造成的武器傷害提高{pct}%",
+      "coldsightRead": "你的下一次長弓引射造成的傷害提高{longDrawPct}%，或你的下一次凶厲射擊造成的傷害提高{fellShotPct}%",
       "duskEconomy": "技能的能量消耗降低{pct}%",
       "moontide": "月潮：第{stacks}/{max}層。月翼形態下，狂野奔雷、隕天術與月種的施法各累積1層。達到{max}層時，月種變為月湧、隕天術變為日醒，使用任一個都會耗盡全部3層",
       "oldBlood": "古血：第{stacks}/{max}層。裂爪、剮擊、血裂、血噬、橫掃利爪與碎骨擊的命中各累積1層。達到{max}層時：狼形態下血噬變為血收，巨熊形態下碎骨擊變為碎髓",
@@ -2994,7 +3101,17 @@ export const zh_TW: EnTranslations = {
         "targetFrame": "目標",
         "partyFrames": "隊伍",
         "swingBar": "自動攻擊",
-        "targetDots": "目標減益"
+        "targetDots": "目標減益",
+        "questTracker": "任務追蹤器",
+        "reliquaryTracker": "聖物庫追蹤器",
+        "petBar": "Pet Bar",
+        "procOverlay": "法術觸發",
+        "procOverlayFrost": "冰柱",
+        "damageMeter": "傷害統計",
+        "deedTracker": "功績追蹤器",
+        "delveTracker": "秘探追蹤器",
+        "riftTracker": "裂隙追蹤器",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "框體設定",
       "framesMenuTitle": "顯示或隱藏各個框體。取消勾選的框體會一直隱藏，直到你重新勾選或還原預設值。",
@@ -3025,6 +3142,50 @@ export const zh_TW: EnTranslations = {
       "pastePlaceholder": "在此貼上匯出的代碼。",
       "invalid": "這不是有效的匯出代碼。",
       "wrongKind": "該代碼屬於另一種匯出類型。"
+    },
+    "keybindTransfer": {
+      "setup": "快捷鍵配置",
+      "apply": "套用",
+      "imported": "快捷鍵配置已匯入。",
+      "wrongKind": "該代碼是設定匯出，不是快捷鍵配置。"
+    },
+    "keyboardMap": {
+      "title": "鍵盤總覽",
+      "hint": "正在使用的按鍵依類別著色。將滑鼠懸停或聚焦到某個按鍵即可查看其全部綁定。",
+      "hintInteractive": "正在使用的按鍵依類別著色。點擊某個按鍵可更改其功能；將滑鼠懸停或聚焦到按鍵上可查看其全部綁定。",
+      "popOut": "Pop Out",
+      "close": "關閉鍵盤總覽",
+      "pressKey": "按下一個鍵以綁定到 {action}。按 Esc 取消。",
+      "boundTo": "已將 {action} 綁定到 {key}。",
+      "notBindable": "該鍵無法綁定。",
+      "assignHint": "選擇一個動作綁定到 {key}。",
+      "assignPlaceholder": "為 {key} 指定一個動作",
+      "layerGroup": "修飾鍵層",
+      "formGroup": "鍵盤尺寸",
+      "formFull": "全尺寸",
+      "formTkl": "無數字鍵區",
+      "form75": "75%",
+      "form60": "60%",
+      "notOnLayout": "不在此鍵盤上：{bindings}",
+      "legendGroup": "按鍵標籤",
+      "legendLayout": "您的配置",
+      "legendQwerty": "QWERTY",
+      "layerNone": "無修飾鍵",
+      "layerShift": "Shift 鍵",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
+      "otherLayers": "也與修飾鍵組合綁定"
+    },
+    "fullTransfer": {
+      "menu": "匯入 / 匯出",
+      "title": "匯入 / 匯出設定",
+      "fullSettings": "全部設定",
+      "intro": "將此裝置上儲存的全部偏好匯出為一段代碼，並在其他裝置或瀏覽器上貼上匯入：圖形、音訊、介面、主題、框體配置、每個角色的按鍵綁定、控制器與十字快捷列綁定、聊天、視窗篩選、語言以及已關閉的提示。",
+      "excluded": "絕不包含：您的登入、帳號、錢包或購買資料。動作列配置儲存在您的帳號中，會隨帳號同步。"
     },
     "riftForge": {
       "title": "裂隙熔爐",
@@ -3478,8 +3639,34 @@ export const zh_TW: EnTranslations = {
       "guildViewsAria": "公會銀行檢視",
       "guildContentsTab": "內容",
       "guildLogTab": "日誌",
+      "guildHistoryTab": "歷史",
       "logAria": "公會銀行活動日誌",
       "logNote": "最近 {count} 筆公會銀行操作。",
+      "logShowing": "正在顯示 {count} 筆公會銀行操作，最新的在前。",
+      "logFilterAria": "篩選公會銀行歷史",
+      "logFilterAll": "全部",
+      "logFilterItems": "物品",
+      "logFilterMoney": "金錢",
+      "logOlder": "顯示更早",
+      "logOlderLoading": "正在載入更早的操作...",
+      "logEnd": "這是公會銀行的全部歷史。",
+      "logEmptyFiltered": "沒有符合此篩選條件的公會銀行操作。",
+      "logColTime": "時間",
+      "logColMember": "成員",
+      "logColAction": "操作",
+      "logColDetail": "詳情",
+      "logActionDeposit": "存入",
+      "logActionWithdraw": "取出",
+      "logActionBuySlots": "購買了擴充",
+      "logActionOpenBank": "開設了銀行",
+      "logActionCharterFee": "支付了創建費",
+      "logActionAdminPurge": "移除",
+      "logActorAdmin": "管理員",
+      "logDetailItem": "{item} x{count}",
+      "logSearchPlaceholder": "搜尋此歷史",
+      "logSearchAria": "依成員、操作或物品搜尋已載入的公會銀行操作",
+      "logShowingMatched": "正在顯示已載入的 {count} 筆公會銀行操作中的 {matched} 筆。",
+      "logSearchNoMatch": "已載入的公會銀行操作中沒有符合搜尋的結果。顯示更早的紀錄以擴大範圍。",
       "logLoading": "正在載入公會銀行日誌...",
       "logEmpty": "公會銀行中尚未存入或取出任何物品。",
       "logUnavailable": "目前無法讀取公會銀行日誌。",
@@ -4224,10 +4411,19 @@ export const zh_TW: EnTranslations = {
         "sealbreak_shockwave": "破印衝擊波（範圍爆發）",
         "gravebreaker": "碎墓打擊（正面扇形，背對團隊）",
         "raise_fallen": "亡者復生（週期性召喚小怪）",
-        "soul_rend": "靈魂撕裂（被標記者需分散並接受治療）",
+        "soul_rend": "靈魂撕裂（被標記者應集合，然後離開火焰）",
         "deathless_rage": "不死之怒（需在護符石處打斷）",
         "wardstones": "護符石引導（階段轉換）",
-        "dread_curse": "恐懼詛咒（僅英雄難度，累加坦克輪換減益）"
+        "dread_curse": "恐懼詛咒（累加坦克輪換減益，2層後輪換）",
+        "bone_spike": "骨刺（被穿刺者持續流失生命，直到尖刺被摧毀）",
+        "grave_eruption": "墓穴爆發（警示圈會留下燃燒地面）",
+        "binding_sigil": "束縛印記（把首領拖上印記，否則團隊受懲）",
+        "gravefire": "墓火（需要側身閃避的移動火線）",
+        "soulfire": "魂火（靈魂撕裂引爆後留下的燃燒火池）",
+        "kings_wrath": "國王之怒（30%：永久傷害加成，地面威脅加速）",
+        "bone_storm": "骨風暴（無視仇恨，橫掃並衝撞團隊）",
+        "crown_endures": "王冠永存（6:00 硬狂暴，英雄難度 5:00）",
+        "deathless_court": "不死宮廷（僅英雄難度，不死之怒後王庭崛起）"
       }
     },
     "reliquary": {
@@ -7444,10 +7640,7 @@ export const zh_TW: EnTranslations = {
     "playAria": "遊玩 World of ClaudeCraft",
     "serverLabel": "選擇你的世界",
     "serverAria": "選擇世界：線上或離線",
-    "serverOfflineSub": "即時本地世界",
-    "caLabel": "$WOC 合約地址",
-    "caCopyAria": "複製合約地址",
-    "caNote": "WOC 是我們的社群代幣，並非遊玩所需。加入 Discord 一起討論 WOC 的用途與飛輪效應。"
+    "serverOfflineSub": "即時本地世界"
   },
   "auth": {
     "enterRealm": "進入世界",
@@ -8742,6 +8935,7 @@ export const zh_TW: EnTranslations = {
     "bodyWeb": "遊戲目前在沒有 GPU 加速的情況下執行，會非常緩慢。請在瀏覽器設定中啟用硬體加速，更新顯示卡驅動程式，然後重新啟動瀏覽器。",
     "hybridBodyWindows": "本次工作階段正在集成（省電）顯示卡上算圖。如果這台電腦還配有獨立遊戲顯示卡，請在 設定 > 系統 > 顯示 > 圖形 中將瀏覽器設為「高效能」，然後重新啟動瀏覽器。桌面版會自動選擇獨立顯示卡。",
     "hybridBodyLinux": "本次工作階段正在集成（省電）顯示卡上算圖。如果這台電腦還配有獨立遊戲顯示卡，您的瀏覽器或顯示卡驅動程式可能提供自己的顯示卡選擇設定，或您的發行版可能提供顯示卡切換工具（例如 PRIME 或 optimus-manager）。桌面版會自動選擇獨立顯示卡。",
+    "bodyRequestedBackend": "遊戲無法在你選擇的圖形後端上啟動，因此正在使用 OpenGL 執行。一切功能正常，但載入和最初幾分鐘可能更卡頓。你可以在「選項 > 圖形 > 系統」中重新選擇後端。",
     "hybridBodyOther": "本次工作階段正在集成（省電）顯示卡上算圖。如果這台電腦還配有獨立遊戲顯示卡，請檢查瀏覽器與作業系統的顯示卡設定以啟用它。桌面版會自動選擇獨立顯示卡。",
     "dismiss": "關閉"
   },
@@ -10703,7 +10897,8 @@ export const zh_TW: EnTranslations = {
       },
       "arcane_shot": {
         "name": "凶厲射擊",
-        "description": "射擊目標，造成 {damage} 點秘法傷害。傷害隨遠程攻擊強度提升。"
+        "description": "射擊目標，造成 {damage} 點秘法傷害。傷害隨遠程攻擊強度提升。",
+        "specNote_marksmanship": "完成一次狂熱連射獲得的冷目預判，會使你的下一次凶厲射擊造成的傷害提高75%。發射該技能會消耗冷目預判。"
       },
       "concussive_shot": {
         "name": "震顫射擊",
@@ -11734,7 +11929,7 @@ export const zh_TW: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "滌罪慈悲",
-        "description": "以神聖之力淨化一名敵人，或立即救治一名友方目標。教義專屬技能。"
+        "description": "對敵人造成{damage}點神聖傷害，或為一名友方目標治療{healing}點生命值。傷害隨法術強度提高，治療隨治療強度提高。教義會透過你的羈絆將此傷害轉化為治療。若30公尺內沒有已建立羈絆且受傷的隊伍成員，則治療30公尺內生命值最低的受傷隊伍成員，治療量為傷害的15%。治療一名隊伍成員時，還會為該目標10公尺內、且在你視野中的至多2名其他受傷隊伍成員治療，每人恢復量為已恢復生命值的50%。這些額外治療不會觸發暴擊，也不會建立教義羈絆。（教義專屬技能）"
       },
       "seraphic_vigil": {
         "name": "熾天使守望",
@@ -13977,6 +14172,48 @@ export const zh_TW: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "熄火花魔杖"
       },
+      "bramblehide_crown": {
+        "name": "魯茨的荊棘皮甲頭冠"
+      },
+      "bramblehide_mantle": {
+        "name": "魯茨的荊棘皮甲護肩"
+      },
+      "bramblehide_harness": {
+        "name": "魯茨的荊棘皮甲胸甲"
+      },
+      "bramblehide_cinch": {
+        "name": "魯茨的荊棘皮甲腰帶"
+      },
+      "bramblehide_legguards": {
+        "name": "魯茨的荊棘皮甲護腿"
+      },
+      "bramblehide_grips": {
+        "name": "魯茨的荊棘皮甲手套"
+      },
+      "bramblehide_treads": {
+        "name": "魯茨的荊棘皮甲之靴"
+      },
+      "courtiers_bonefang": {
+        "name": "廷臣骨牙"
+      },
+      "thornpeak_wardblade": {
+        "name": "荊峰守護之刃"
+      },
+      "gravecourt_hewer": {
+        "name": "墓庭劈斧"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "不死王庭的許願護盾"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "荊峰月皮兜帽"
+      },
+      "stormhymn_chain_grips": {
+        "name": "風暴頌歌鏈甲手套"
+      },
+      "stormhymn_chain_treads": {
+        "name": "風暴頌歌鏈甲之靴"
+      },
       "conjured_water4": {
         "name": "魔法泉水"
       },
@@ -14953,6 +15190,9 @@ export const zh_TW: EnTranslations = {
       },
       "nythraxis_scourge_of_thornpeak": {
         "name": "尼思拉克西斯，荊峰之災"
+      },
+      "nythraxis_bone_spike": {
+        "name": "骨刺"
       },
       "ignivar_herald_of_the_last_flame": {
         "name": "伊格尼瓦，末焰使者"
@@ -18982,6 +19222,12 @@ export const zh_TW: EnTranslations = {
       "boundstone_vanguard": {
         "name": "縛石先鋒",
         "bonus3": "攻擊速度和施法速度提高 15%。"
+      },
+      "bramblehide": {
+        "name": "魯茨的荊棘皮甲",
+        "bonus2": "力量提高 10 點，耐力提高 10 點。",
+        "bonus4": "攻擊強度提高 25 點。你的武器致命一擊有 50% 的機率觸發「墓塚之力」，使攻擊強度提高 40 點，持續 10 秒。",
+        "bonus6": "攻擊與施法速度提高 4%，命中提高 3%。你的武器致命一擊會使目標產生「骨刺」，每 2 秒流血 5 點傷害，持續 12 秒。最多疊加 3 層。"
       },
       "chronoweave": {
         "name": "以太織法衣",

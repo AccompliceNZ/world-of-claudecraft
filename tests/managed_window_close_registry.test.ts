@@ -44,6 +44,7 @@ const CODE_BUILT: Record<string, string> = {
   'profession-tutorial': 'src/ui/profession_tutorial_window.ts',
   'tutorial-greeting': 'src/ui/tutorial_greeting_window.ts',
   'dev-command-window': 'src/ui/dev_command_window.ts',
+  'keyboard-map-window': 'src/ui/keyboard_map_window.ts',
 };
 
 /**
@@ -333,6 +334,7 @@ describe('closeManagedWindow case registry', () => {
     // EXACT, not a floor: a floor cannot notice a new module joining.
     expect(sites).toEqual({
       'ui/dev_command_window.ts': 1,
+      'ui/keyboard_map_window.ts': 1,
       // Two build sites, one element id: the two-choice greeting and its
       // single-button note variant (decline follow-up, bell homecoming) both
       // mint #tutorial-greeting, and one closeTutorialGreeting covers both.

@@ -8117,10 +8117,6 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hud.errors.silenced': 'Vous êtes réduit au silence !',
   'hud.pet.noPetFood': "Vous n'avez aucune nourriture pour votre familier.",
   'hud.pet.petEatsFoodOnly': 'Votre familier ne peut manger que de la nourriture.',
-  'mode.caCopyAria': "Copier l'adresse du contrat",
-  'mode.caLabel': 'Adresse du contrat $WOC',
-  'mode.caNote':
-    "WOC est notre jeton communautaire. Il n'est pas nécessaire pour jouer. Rejoignez le Discord pour discuter de l'utilité et de la dynamique du WOC.",
   'mode.play': 'Jouer',
   'mode.playAria': 'Jouer à World of ClaudeCraft',
   'mode.serverAria': 'Choisir le monde : En ligne ou Hors ligne',
@@ -13217,7 +13213,7 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Protège un allié pendant 30 s. Le premier coup qui le fait descendre sous 35% de points de vie consomme la Veille et le soigne de {buff}. (Signature de Bénison)',
   'entities.abilities.scouring_mercy.description':
-    "Inflige 72 à 84 points de dégâts Sacrés à un ennemi ou soigne une cible alliée de 130 à 155. Les deux montants augmentent avec la puissance des sorts. Les dégâts soignent aussi chaque allié lié par la Doctrine de 30%, ou le membre du groupe le plus blessé de 15% si aucun allié n'est lié. (Signature de Doctrine)",
+    "Inflige {damage} dégâts Sacrés à un ennemi ou soigne une cible alliée de {healing}. Les dégâts augmentent avec la puissance des sorts ; les soins augmentent avec la puissance de soin. La Doctrine convertit ces dégâts en soins à travers vos liens. Si aucun allié lié blessé du groupe ne se trouve à moins de 30 mètres, soigne le membre du groupe blessé ayant le moins de vie à moins de 30 mètres pour 15% des dégâts. Soigner un membre du groupe soigne aussi jusqu'à 2 autres membres du groupe blessés à moins de 10 mètres de cette cible et dans votre ligne de vue, chacun pour 50% des soins prodigués. Ces soins supplémentaires ne peuvent ni être critiques ni créer de liens de Doctrine. (Signature de Doctrine)",
   'entities.abilities.solar_invocation.description':
     "Soigne instantanément un allié de {damage} ou inflige des dégâts Sacrés modérés à un ennemi. Les deux usages génèrent 1 Dévotion. Pendant l'Ascension, une incantation de soin soigne aussi de moitié les joueurs alliés à moins de 10 m de la cible.",
   'entities.abilities.solar_step.description':
@@ -13692,8 +13688,6 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': "Fragments d'âme",
   'hudChrome.warlock.doomEmptyStatus': '{value} sur {max} Condamnation.',
   'hudChrome.warlock.doomLabel': 'Condamnation',
-  'hudChrome.warlock.doomMeterLock': 'Verrouiller la barre de ressource Affliction',
-  'hudChrome.warlock.doomMeterUnlock': 'Déplacer la barre de ressource Affliction',
   'hudChrome.warlock.doomStatus': '{value} sur {max} Condamnation ; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady': 'Trois Fils du destin : Consumer peut les tisser en Condamnation supplémentaire.',
   'hudChrome.warlock.fateThreadsLabel': 'Fils du destin',
@@ -14310,6 +14304,10 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Les coups critiques de Longue tension prolongent Concentration froide de 2 s, jusqu’à 6 s par activation.',
   'entities.itemSets.coldsight_trackers.name': 'Traqueurs de vision froide',
   'entities.itemSets.crownforged.bonus6': 'Augmente la vitesse d’attaque et d’incantation de 4 % et le Toucher de 3 %. Vos coups critiques d’arme fendent la cible avec Fendos, lui infligeant 5 points de dégâts toutes les 2 s pendant 12 s. Cumulable jusqu’à 3 fois.',
+  'entities.itemSets.bramblehide.name': 'Peau de Ronces de Roots',
+  'entities.itemSets.bramblehide.bonus2': "Augmente la puissance d'attaque de 40.",
+  'entities.itemSets.bramblehide.bonus4': "Vos coups critiques d'arme lacèrent la cible avec Éclat d'os, lui infligeant 8 points de dégâts de saignement toutes les 2 s pendant 12 s. Se cumule jusqu'à 3 fois.",
+  'entities.itemSets.bramblehide.bonus6': 'Augmente la vitesse d’attaque et d’incantation de 4 % et le Toucher de 3 %. Vos coups critiques d’arme fendent la cible avec Fendos, lui infligeant 5 points de dégâts toutes les 2 s pendant 12 s. Cumulable jusqu’à 3 fois.',
   'entities.itemSets.dawnforged.bonus2': 'Le Phare de lumière copie 55 % de vos soins directs. Les dégâts subis ne retardent plus vos incantations.',
   'entities.itemSets.dawnforged.bonus4': 'L’Étreinte de l’aube renforcée par Résonance radieuse est instantanée.',
   'entities.itemSets.dawnforged.name': 'Vêtements forgés à l’aube',

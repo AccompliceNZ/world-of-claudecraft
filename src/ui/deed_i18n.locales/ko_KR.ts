@@ -989,4 +989,8 @@ export const table: DeedLocaleTable = {
     desc: '공격대원이 단 한 명도 죽지 않고 영웅 난이도에서 마지막 불꽃의 대장장이 발쿨을 처치하십시오.',
     title: '그을리지 않은 자',
   },
+  col_set_bramblehide: {
+    name: '루츠의 가시덤불가죽',
+    desc: '루츠의 가시덤불가죽의 모든 부위를 발견하십시오.',
+  },
 };

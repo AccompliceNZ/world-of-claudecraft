@@ -36,7 +36,7 @@ export const PRIEST_ABILITIES: Record<string, AbilityDef> = {
       { type: 'heal', min: 130, max: 155 },
     ],
     description:
-      'Deal 72 to 84 Holy damage to an enemy or heal a friendly target for 130 to 155. Both amounts increase with Spell Power. Damage also heals each Doctrine-linked ally for 30%, or the lowest-health party member for 15% if no ally is linked. (Doctrine signature)',
+      'Deal $d Holy damage to an enemy or heal a friendly target for $h. Damage increases with Spell Power; healing increases with Healing Power. Doctrine converts this damage into healing through your links. If no injured linked group member is within 30 yards, heal the lowest-health injured group member within 30 yards for 15% of the damage. Healing a group member also heals up to 2 other injured group members within 10 yards of that target and in your line of sight, each for 50% of the health restored. These extra heals cannot critically heal or create Doctrine links. (Doctrine signature)',
   },
   seraphic_vigil: {
     id: 'seraphic_vigil',

@@ -8,8 +8,9 @@
 
 import type { ClientSession, GameServer } from '../../server/game';
 import { ActionBarLayoutUploader } from '../../src/net/action_bar_upload';
+import { GuildBankLogMirror } from '../../src/net/guild_bank_log_mirror';
 import { ClientWorld } from '../../src/net/online';
-import { emptyAllocation } from '../../src/sim/content/talents';
+import { emptyAllocation, emptyModifiers } from '../../src/sim/content/talents';
 import { ALL_RECIPES } from '../../src/sim/data';
 import { freshDeedStats } from '../../src/sim/deeds';
 import { emptyCraftSkills } from '../../src/sim/professions/wheel';
@@ -88,6 +89,7 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   c.playtimeSeconds = 0;
   c.unlockedMilestones = [];
   c.talents = emptyAllocation();
+  c.talentMods = emptyModifiers();
   c.talentSpec = null;
   c.talentRole = null;
   c.loadouts = [];
@@ -184,6 +186,10 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   c.eventQueue = [];
   c.activeFrostRings = [];
   c.activeIgnivarMeteors = [];
+  c.activeNythraxisGraveEruptions = [];
+  c.activeNythraxisGraveFlames = [];
+  c.activeNythraxisGravefires = [];
+  c.activeNythraxisBindingSigils = [];
   c.activeVarkhulForgestormWarnings = [];
   c.activeVarkhulCinderFires = [];
   c.activeVarkhulCinderOrbProjectiles = [];
@@ -220,9 +226,7 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   // class initializers exactly; guildBankInfo in particular is read through
   // `!== null` gates, where undefined would behave differently.
   c.guildBankInfo = null;
-  c.guildBankLogEntries = [];
-  c.guildBankLogState = 'idle';
-  c.guildBankLogAt = 0;
+  c.guildBankLogMirror = new GuildBankLogMirror();
   c.toolEffectSlots = [];
   c.commissionOrders = [];
   c.socialDirty = false;

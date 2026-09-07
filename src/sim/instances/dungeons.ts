@@ -15,6 +15,7 @@
 // and the seam exposes instanceKeyFor/instanceOriginOf/enterDungeon/leaveDungeon for
 // the N1/quest/delve code that reaches them through `ctx`.
 
+import { supportHeightAt } from '../colliders';
 import { HEROIC_DUNGEON_TUNING, HEROIC_MARK_ITEM_ID } from '../content/dungeon_difficulty';
 import { DUNGEON_X_THRESHOLD, DUNGEONS, dungeonAt, instanceOrigin, MOBS, NPCS } from '../data';
 import { clearIgnivarEncounterAuras } from '../encounters/ignivar';
@@ -37,6 +38,7 @@ import {
   takeCombatExit,
 } from '../instance_exit_memory';
 import { retargetMob } from '../mob/targeting';
+import { PLAYER_BODY_RADIUS } from '../pathfind';
 import { cancelProfessionSessionOnDisplacement } from '../professions/session_teardown';
 import type { InstanceSlot, PlayerMeta } from '../sim';
 import type { SimContext } from '../sim_context';
@@ -754,7 +756,7 @@ function finalBossAlive(ctx: SimContext, inst: InstanceSlot): boolean {
 
 // The royal door seals once Nythraxis is engaged (pulled, alive, pre-death).
 // It reopens on his death or a full raid wipe (handled in the encounter loop).
-function nythraxisInstanceSealed(ctx: SimContext, inst: InstanceSlot): boolean {
+export function nythraxisInstanceSealed(ctx: SimContext, inst: InstanceSlot): boolean {
   for (const id of inst.mobIds) {
     const e = ctx.entities.get(id);
     if (
@@ -854,6 +856,18 @@ export function leaveDungeon(ctx: SimContext, pid?: number): boolean {
   const door = detachFromDungeon(ctx, p);
   if (!door) return false; // unreachable: dungeonAt already answered above
   p.pos = ctx.groundPos(door.x, door.z);
+  // Seat the exit on the real STANDING surface: a placed deck plate at the
+  // drop point (the Last Keep's terrace over its stair band) stands proud of
+  // the walk-lift ground, and a body set down under its top is embedded in
+  // the plate, to be depenetrated straight back into the door trigger (the
+  // exit-then-instantly-re-enter loop). A standable top within a couple of
+  // yards of the ground IS the walking surface there; anything higher is a
+  // deck the drop point legitimately sits beneath. Deliberately global (every
+  // dungeon exit, not a keep special case): a drop point under a deck is a
+  // data fact any door can acquire, and on open ground the query finds no
+  // support and changes nothing.
+  const exitDeck = supportHeightAt(ctx.cfg.seed, door.x, door.z, PLAYER_BODY_RADIUS, p.pos.y + 2);
+  if (exitDeck > p.pos.y) p.pos.y = exitDeck;
   p.prevPos = { ...p.pos };
   ctx.rebucket(p);
   settleTeleportArrival(p);
@@ -1056,7 +1070,10 @@ function claimInstance(
   // the entrance (see enterDungeon / spirit.ts ghostGraveyard).
 }
 
-function freeInstance(ctx: SimContext, inst: InstanceSlot): void {
+// Exported for the dev practice raids only (nythraxis_dev_raid.ts switches a
+// claim's difficulty by releasing it); live play frees claims through the
+// reaper and the reset paths above.
+export function freeInstance(ctx: SimContext, inst: InstanceSlot): void {
   const claimId = inst.exitId;
   for (const id of inst.mobIds) {
     if (!ctx.entities.has(id)) continue;

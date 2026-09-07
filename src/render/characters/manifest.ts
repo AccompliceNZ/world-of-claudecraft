@@ -20,6 +20,7 @@ import {
 } from '../../sim/ignivar_raid_ids';
 import { DUNGEON_MINIBOSS_STOMP_ABILITY_ID } from '../../sim/mob/dungeon_miniboss_stomp';
 import { VARKHUL_CRUCIBLE_QUAKE_CAST_ID } from '../../sim/mob/healer_channel';
+import { NYTHRAXIS_BONE_SPIKE_ID } from '../../sim/nythraxis_bone_spike';
 import {
   ALL_CLASSES,
   type Entity,
@@ -1061,6 +1062,7 @@ const MODULAR = 'models/chars/modular';
 const ENEMIES = 'models/chars/enemies';
 const FORMS = 'models/chars/forms';
 const CREATURES = 'models/creatures';
+const PROPS = 'models/props';
 const WEAPONS = 'models/weapons';
 const MOUNTS_DIR = 'models/mounts';
 
@@ -1075,6 +1077,7 @@ export const ITEM_OFFHAND_MODELS: Readonly<Record<string, string>> = {
   // Crucible raid shields (content/ignivar_loot.ts): tank wall + healer barrier.
   bulwark_of_the_inner_crucible: 'shield_square',
   ember_wardens_barrier: 'shield_round',
+  votive_ward_of_the_deathless_court: 'shield_round', // Nythraxis gap-fill healer shield
   varkhul_emberward: 'varkhul_emberward', // Ignivar raid legendary (Varkhul drop)
 };
 
@@ -3481,6 +3484,21 @@ export const VISUALS: Record<string, VisualDef> = {
       death: 'Idle',
     },
   },
+  // Bone Spike (the Nythraxis raid, src/sim/nythraxis_bone_spike.ts): the
+  // Tripo cluster of bone spikes erupting from cracked flagstones with violet
+  // tips that pins an impaled raider until the raid shatters it. A stationary
+  // prop mob: the GLB ships NO clips (registered in CLIPLESS_RIGS,
+  // tests/character_clipmaps.test.ts), so STATIC_PROP parks every action on
+  // the nominal 'Idle' and the mesh just stands. Authored upright and
+  // front-facing (footprint radius 0.88); shown at 2.6 world units so the
+  // spike reads as the thing pinning a raider from across the hall (owner
+  // playtest 2026-09-04: 1.6 was too small).
+  mob_nythraxis_bone_spike: {
+    url: `${PROPS}/nythraxis_bone_spike.glb`,
+    height: 2.6,
+    yaw: 0,
+    clips: STATIC_PROP,
+  },
 };
 
 // ---------------------------------------------------------------------------
@@ -3693,6 +3711,7 @@ const MOB_KEYS: Record<string, string> = {
   nythraxis_heroic_warrior_add: 'skel_warrior',
   nythraxis_heroic_priest_add: 'skel_necromancer',
   nythraxis_heroic_rogue_add: 'skel_rogue',
+  [NYTHRAXIS_BONE_SPIKE_ID]: 'mob_nythraxis_bone_spike',
   graveguard: 'skel_warrior',
   necromancy_skeletal_warrior: 'skel_minion',
   necromancy_bone_mage: 'skel_mage',

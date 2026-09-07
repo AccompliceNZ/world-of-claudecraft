@@ -9565,10 +9565,6 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Hãy chơi ở chế độ ngang toàn màn hình để có trải nghiệm di động tốt nhất.',
   'mobilePreflight.rotateTitle': 'Xoay Sang Ngang',
   'mobilePreflight.title': 'Chơi Toàn Màn Hình Ngang',
-  'mode.caCopyAria': 'Sao chép địa chỉ hợp đồng',
-  'mode.caLabel': 'Địa Chỉ Hợp Đồng $WOC',
-  'mode.caNote':
-    'WOC là token cộng đồng của chúng tôi. Không cần nó để chơi. Hãy tham gia Discord để thảo luận về tiện ích và vòng xoáy tăng trưởng của WOC.',
   'mode.offlineAria': 'Chơi Ngoại Tuyến: bắt đầu phiên chơi đơn cục bộ tức thì',
   'mode.offlineDesc':
     'Thế giới chơi đơn tức thì ngay trong trình duyệt. Không lưu lại gì: hoàn hảo cho một trận đánh nhanh hoặc để thử nghiệm.',
@@ -12608,7 +12604,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Bảo vệ một đồng minh trong 30 giây. Đòn đánh đầu tiên khiến họ xuống dưới 35% máu sẽ tiêu Canh Thức và hồi cho họ {buff}. (Dấu ấn Phúc Lành)',
   'entities.abilities.scouring_mercy.description':
-    'Gây 72 đến 84 sát thương Thánh lên kẻ địch hoặc hồi 130 đến 155 máu cho mục tiêu đồng minh. Cả hai đều tăng theo sức mạnh phép thuật. Sát thương cũng hồi 30% cho mỗi đồng minh liên kết bằng Giáo Lý, hoặc 15% cho thành viên nhóm có ít máu nhất nếu không ai được liên kết. (Dấu ấn Giáo Lý)',
+    'Gây {damage} sát thương Thánh lên kẻ địch hoặc hồi {healing} máu cho mục tiêu đồng minh. Sát thương tăng theo sức mạnh phép thuật; lượng hồi máu tăng theo sức mạnh trị liệu. Giáo Lý biến sát thương này thành hồi máu qua các liên kết của bạn. Nếu không có thành viên nhóm bị liên kết và bị thương trong phạm vi 30 mét, hồi máu cho thành viên nhóm bị thương có ít máu nhất trong phạm vi 30 mét bằng 15% sát thương. Hồi máu cho một thành viên nhóm cũng hồi máu cho tối đa 2 thành viên nhóm bị thương khác trong phạm vi 10 mét quanh mục tiêu đó và trong tầm nhìn thẳng của bạn, mỗi người bằng 50% lượng máu đã hồi. Những lượt hồi máu thêm này không thể chí mạng hay tạo liên kết Giáo Lý. (Dấu ấn Giáo Lý)',
   'entities.abilities.solar_invocation.description':
     'Tức thời hồi {damage} máu cho một đồng minh hoặc gây sát thương Thánh vừa phải lên kẻ địch. Cả hai cách dùng đều tạo 1 Sùng Tín. Trong Thăng Thiên, một lần niệm hồi máu cũng hồi một nửa cho các người chơi đồng minh trong 10 m quanh mục tiêu.',
   'entities.abilities.solar_step.description': 'Tăng 150% tốc độ di chuyển của bạn trong 2 giây.',
@@ -13227,8 +13223,6 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Mảnh Linh Hồn',
   'hudChrome.warlock.doomEmptyStatus': '{value} trên {max} Kết Án.',
   'hudChrome.warlock.doomLabel': 'Kết Án',
-  'hudChrome.warlock.doomMeterLock': 'Khóa thanh tài nguyên Affliction',
-  'hudChrome.warlock.doomMeterUnlock': 'Di chuyển thanh tài nguyên Affliction',
   'hudChrome.warlock.doomStatus': '{value} trên {max} Kết Án; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady': 'Ba Sợi Định Mệnh: Nuốt Chửng có thể dệt chúng thành Kết Án bổ sung.',
   'hudChrome.warlock.fateThreadsLabel': 'Sợi Định Mệnh',
@@ -14019,6 +14013,10 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Đòn chí mạng của Long Draw kéo dài Cold Focus thêm 2 giây, tối đa 6 giây mỗi lần kích hoạt.',
   'entities.itemSets.coldsight_trackers.name': 'Thợ Săn Coldsight',
   'entities.itemSets.crownforged.bonus6': 'Tăng 4% tốc độ tấn công và thi triển, cùng 3% Hit. Đòn chí mạng bằng vũ khí của bạn khiến mục tiêu bị Bonesplinter, gây chảy máu 5 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần.',
+  'entities.itemSets.bramblehide.name': 'Da Gai Của Roots',
+  'entities.itemSets.bramblehide.bonus2': 'Tăng sức mạnh tấn công thêm 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Các đòn chí mạng bằng vũ khí của bạn găm Dằm Xương vào mục tiêu, khiến nó chảy máu nhận 8 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần.',
+  'entities.itemSets.bramblehide.bonus6': 'Tăng 4% tốc độ tấn công và thi triển, cùng 3% Hit. Đòn chí mạng bằng vũ khí của bạn khiến mục tiêu bị Bonesplinter, gây chảy máu 5 sát thương mỗi 2 giây trong 12 giây. Cộng dồn tối đa 3 lần.',
   'entities.itemSets.dawnforged.bonus2': 'Beacon of Light sao chép 55% lượng hồi máu trực tiếp của bạn. Sát thương phải chịu không còn làm chậm việc thi triển phép.',
   'entities.itemSets.dawnforged.bonus4': 'Dawn\'s Embrace được Radiant Resonance cường hóa sẽ được thi triển ngay lập tức.',
   'entities.itemSets.dawnforged.name': 'Lễ Phục Rèn Bình Minh',

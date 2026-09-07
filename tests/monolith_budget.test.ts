@@ -301,8 +301,26 @@ const MONOLITHS: MonolithRow[] = [
     // captured home and the dead body class left applyAuraAnchor for
     // restoreFrameHome (src/ui/interface_unlock.ts), and Reset Frame Positions
     // re-applies the anchor in one line. Exact merged count.
-    ceiling: 18851,
+    // Lowered 18851 -> 18728 by the on-bar key-binding mode extraction: the
+    // mode's controller (slot select, capture, the conflict warning prompt,
+    // Reset confirm) moved to
+    // src/ui/hud/action_bar/action_bar_bind_controller.ts and its banner DOM to
+    // action_bar_bind_banner.ts; the HUD keeps one deps object and the slot
+    // click intercept. Then 18728 -> 18725 once the review pass tightened
+    // that deps object. Exact count.
+    // Re-measured at the release/v0.42.0 sync that brought in the Nythraxis redo (PR #3848):
+    // 18725 less the 2 lines that PR trimmed from hud.ts. Exact merged count.
+    ceiling: 18723,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
+  },
+  {
+    // The Esc options window: joined the ratchet at the keyboard-overview /
+    // import-export round (review request on PR #3926) so the next feature
+    // there lands as a sibling module the window composes, not another
+    // inline sub-panel. Exact count at the time of joining.
+    file: 'src/ui/options_window.ts',
+    ceiling: 2813,
+    seam: 'a pure view model (src/ui/options_view.ts) painted with the shared settings_controls.ts builders; sub-panels as sibling modules',
   },
   {
     file: 'src/render/renderer.ts',
@@ -371,6 +389,25 @@ const MONOLITHS: MonolithRow[] = [
     // that arm's entry-horizon cull and this branch's ground-aim reticle
     // pass-through both land in the merged file. Measured on the merged tree,
     // never reconciled by arithmetic. Exact merged count, zero headroom.
+    // LOWERED at the 2026-08-29 v0.41.0 sync: this branch's extractions
+    // (compile_arms.ts, prewarm_resume_runner.ts, self_spirit_warm.ts,
+    // corpse_beacon.ts, battleground_views.ts) pay for the release arm's
+    // battleground compile-gate wiring and then some, and the field
+    // construction PR 3706 added inline left the file with the view module.
+    // Measured on the merged tree. Exact merged count, zero headroom.
+    // Lowered by the unused import the cast_vfx_prewarm.ts extraction left
+    // behind (its removal collapsed the import block). Exact count.
+    // Re-pinned at the 2026-08-31 v0.41.0 sync: the release arm's raid
+    // consolidation and set-proc extraction (set_proc_fx.ts) land alongside
+    // this branch's extractions; neither parent pin fits the combined file.
+    // Measured on the merged tree. Exact merged count, zero headroom.
+    // Lowered again after the battleground view drive (the per-frame ward-state
+    // push, and the release of a copy the session is done with) moved into
+    // src/render/battleground_views.ts beside the build it belongs to.
+    // Lowered again after the scene census's child adapter (the renderCategory
+    // read and the visibility accessors) moved to sceneCensusChild in
+    // src/render/scene_census_core.ts, which paid for the census burst's new
+    // shader-warm-audit hook. Exact count.
     // the raid consolidation paid its additions by moving the fog scene chain (fog_scene_state.ts), the spellfxAt dispatch arms, the boss facing lock, and the raid anchor/rig syncs out; exact count.
     // Lowered 13265 -> 13243: the set-proc swirl table and both resolution
     // walks moved to src/render/set_proc_fx.ts (the Crucible engine-proc arm
@@ -386,13 +423,24 @@ const MONOLITHS: MonolithRow[] = [
     // and the release arm's rickshaw hooks moved with it, so the merged file
     // lands below both prior pins. Measured on the merged tree. Exact merged
     // count, zero headroom.
+    // Re-pinned at the 2026-09-04 release/v0.42.0 sync into the shader-warm
+    // branch: the release arm's mount lifecycle and stride audio moves land
+    // beside this branch's extractions, so the merged file sits below both
+    // parent pins. Measured on the merged tree. Exact merged count, zero headroom.
     // The Realm Builder monument (PR #3695) adds 12 lines here: one import,
     // the one-line setRealmBuilderHonouree delegation, and the entity arm
     // that returns the monument's pick volume (matched on the template-id
     // literal like the noticeboard arm beside it; tests/realm_builder_monument
     // pins the literal to the constant). They land exactly on the pin above,
     // so the ceiling does not move but the slack is now zero.
-    ceiling: 13214,
+    // Re-pinned at the 2026-09-05 release/v0.42.0 sync into the shader-warm
+    // branch: the release arm's Realm Builder monument lines (PR #3695) land
+    // beside this branch's extractions, so the merged file sits below both
+    // parent pins. Measured on the merged tree. Exact merged count, zero headroom.
+    // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
+    // map-improvements epic (PR #3746): the Last Keep castle assembly's build/attach arm left the ember zone case. Measured with wc -l on the
+    // merged tree. Exact merged count, zero headroom.
+    ceiling: 13073,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
@@ -498,7 +546,20 @@ const MONOLITHS: MonolithRow[] = [
     // Plus 2 for the Phase B set-bonus seam: the set_bonus_mods import and
     // the setPlayerLevel writer routing through computeCharacterModifiers
     // (the resolver itself is the extracted module). Exact count, zero slack.
-    ceiling: 12465,
+    // Lowered to the measured size after extracting 28 lines of cost
+    // resolution and closing 224 lines of existing headroom (PR 3917).
+    // The resolved ability cost tail
+    // (the Measured Fury discount, the draining-curse cost_tax read, Aether
+    // Surge's per-charge ramp) moved into applyAbilityCostTail in
+    // combat/ability_resolution.ts, shared with ClientWorld.resolvedAbility
+    // (src/net/online.ts, unchanged at its own exact ceiling); the now-dead
+    // private costTaxMult helper and the aetherSurgeCostMult import went with
+    // it. Exact count, zero slack.
+    // Threat calculation moved to combat/threat_modifiers.ts after the
+    // Nythraxis release merge. Exact merged count remains below both parents.
+    // The Drakelands sandbox extraction and dev-freeze additions preserve
+    // this exact count after the next release integration.
+    ceiling: 12212,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -539,12 +600,28 @@ const MONOLITHS: MonolithRow[] = [
     // extraction pays 2 more under the entry-fade row above. Measured on the
     // merged tree, never reconciled by arithmetic. Exact merged count, zero
     // headroom.
-    // Re-pinned after the /daynight dev-command extraction to
-    // src/game/daynight_dev_command.ts (net of the Ignivar placer dispatch).
-    // Re-pinned to the exact merged count of the v0.41.0 base sync into the
-    // raid branch: both arms extracted and added independently, so neither
-    // parent pin fits the combined file; the merged count is the honest bound.
-    ceiling: 11551,
+    // LOWERED at the 2026-08-29 v0.41.0 sync: this branch's
+    // desktop_shell_settings.ts extraction lands with the release arm's own
+    // rows. Measured on the merged tree. Exact merged count, zero headroom.
+    // Re-pinned at the 2026-08-31 v0.41.0 sync: the release arm's /daynight
+    // dev-command extraction and Discord login-choice rows land alongside this
+    // branch's extractions; the merged count is the honest bound. Measured on
+    // the merged tree. Exact merged count, zero headroom.
+    // Re-pinned 11501 -> 11503 at the 2026-09-05 release/v0.42.0 sync (PR #3695,
+    // the Realm Builder monument): release-side growth only; the branch's own
+    // helpers are unchanged and the merged file stays under the release's own
+    // 11551 row. Exact merged count, zero headroom.
+    // Re-pinned 11503 -> 11516 at the 2026-09-06 release/v0.42.0 sync: both arms
+    // added and extracted independently, so neither parent pin fits the combined
+    // file. Measured with wc -l on the merged tree, never reconciled by
+    // arithmetic. Exact merged count, zero headroom.
+    // Ratcheted 11516 -> 11462 when the landing page $WOC contract address box
+    // and its click-to-copy wiring (wireContractAddressCopy) were removed.
+    // Measured with wc -l. Exact count, zero headroom.
+    // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
+    // map-improvements epic (PR #3746): the dev chat interceptors moved to src/game/dev_chat_hooks.ts. Measured with wc -l on the
+    // merged tree. Exact merged count, zero headroom.
+    ceiling: 11448,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
@@ -706,7 +783,15 @@ const MONOLITHS: MonolithRow[] = [
     // Down 5898 -> 5873 for the per-surface action-bar profiles: the
     // debounced upload moved to src/net/action_bar_upload.ts
     // (ActionBarLayoutUploader). Exact count.
-    ceiling: 5873,
+    // Down 5873 -> 5856 for the guild bank transaction history: the log
+    // mirror's fields, the gbanklog install, and the request gate moved to
+    // src/net/guild_bank_log_mirror.ts (GuildBankLogMirror); what stays is
+    // the two one-line IWorld arms that put its requests on the wire. Exact
+    // count.
+    // The class-balance ability presentation and release Nythraxis ground
+    // telegraph extractions both survive the merge. The combined file is
+    // measured at 5842 lines, below both parent pins (5855 and 5843).
+    ceiling: 5842,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -733,7 +818,13 @@ const MONOLITHS: MonolithRow[] = [
     // stair ramps fold in there), then EMBER_LAVA_POOLS moved home to
     // ember_lava_layout.ts beside its flat-pool sibling (paying for the
     // fortress scatter screen); exact count.
-    ceiling: 5275,
+    // Lowered with the Last Keep castle removal: the castle pad chain and
+    // the Last Spring's authored bank left the pad chain (keep_site.ts is
+    // the pad's new leaf home). Exact count, zero slack.
+    // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
+    // map-improvements epic (PR #3746): the castle pad chain and the Last Spring bank left with the castle (keep_site.ts holds the new pad). Measured with wc -l on the
+    // merged tree. Exact merged count, zero headroom.
+    ceiling: 5216,
     seam: 'zone/terrain data as content records; logic as sim sibling modules',
   },
   {
@@ -758,13 +849,29 @@ const MONOLITHS: MonolithRow[] = [
     // Re-pinned to the exact merged count of the OSSBrain v0.41.0 base
     // merge: both parents had already ratcheted for their own work, so
     // the composite is the honest size. Exact count, zero slack.
+    // Lowered 5145 -> 5095 when the two shader-warm perf-report columns needed
+    // room: rather than raise the ceiling for four unavoidable lines (an insert
+    // list, a row-type field), the whole client_perf_reports DDL moved to
+    // client_perf_reports_schema.ts, a dependency-free CLIENT_PERF_REPORTS_SCHEMA
+    // ensureSchema applies after SCHEMA (the admin_guilds_schema.ts shape, which
+    // is also what keeps a db.ts -> schema -> db.ts cycle impossible). Exact
+    // count, zero slack. The next candidate behind the same seam is the table's
+    // accessors (insert, prune, row type).
     // Up 5145 -> 5151 for the Realm Builder of the Month roll (PR #3695, at
     // its release/v0.42.0 base merge): the table and its SQL live in
     // server/realm_builder_db.ts; the residue here is the schema import and
     // the one ensureSchema() apply line with its ordering note, the same
     // shape every other domain *_SCHEMA takes. Exact merged count, zero
     // slack; maintainer-review item.
-    ceiling: 5151,
+    // Re-pinned at the 2026-09-05 release/v0.42.0 sync into the shader-warm
+    // branch: the release arm's realm_builder_db.ts schema residue (PR #3695)
+    // lands beside this branch's client_perf_reports_schema.ts extraction, so the
+    // merged file sits below both parent pins. Exact merged count, zero slack.
+    // Down 5101 -> 5003 for the guild bank transaction history: the activity
+    // log statement (loadGuildBankLogRows, its row shape and its lowered
+    // statement timeout) moved to server/guild_bank_log_db.ts when it grew a
+    // page cursor and a `more` probe. Exact count.
+    ceiling: 5003,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {
@@ -856,7 +963,16 @@ const MONOLITHS: MonolithRow[] = [
     // colliders). Exact count, zero slack.
     // the dungeon-door jamb block extracted to dungeon_door_jambs.ts; the
     // fortress collider hook rode the freed room
-    ceiling: 2587,
+    // Lowered with the Last Keep castle removal: the keep's wall-ledge and
+    // parapet collider loops retired (Dawnhold keeps its own). Exact
+    // count, zero slack.
+    // Lowered again with the Wildheart static-set assembly moved beside its
+    // field data (wildheart_field.ts); the pass-under balcony clause rode
+    // the freed room. Exact count, zero slack.
+    // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
+    // map-improvements epic (PR #3746): the keep wall-ledge and parapet loops retired and the Wildheart static set moved beside its field data. Measured with wc -l on the
+    // merged tree. Exact merged count, zero headroom.
+    ceiling: 2548,
     seam: 'per-zone collider data beside the zone content; shared logic stays here',
   },
   {
@@ -1028,7 +1144,15 @@ const MONOLITHS: MonolithRow[] = [
     // LOWERED 1941 -> 1928 after the socket prompt's consent/echo state and
     // DOM feedback moved behind bank_socket_purchase_core/controller, with the
     // family live-region mechanics shared through bank_status_line.ts.
-    ceiling: 1928,
+    // Down 1928 -> 1915 for the guild bank history search: the search-box
+    // focus + caret carry (capture before the wipe, restore after) moved to
+    // src/ui/bank_search_focus.ts so the personal and guild arms share one
+    // rule. Exact count, zero slack.
+    // Down 1915 -> 1879 at the history review: the guild and vault focus-key
+    // annotators moved to src/ui/bank_focus_keys.ts (a focus_restore importer,
+    // so the single-reader family holds) when the history's chips and Show
+    // older button gained keys. Exact count, zero slack.
+    ceiling: 1879,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/CLAUDE.md)',
   },
 ];

@@ -64,13 +64,13 @@
     touch-action: none;
   }
   /* The shared Fire, Chronomancy and Frost phoenix keeps its desktop artwork
-     proportions while taking less of the phone battlefield. The root is
-     already draggable, and scale composes with its independent translate. */
+     proportions while taking less of the phone battlefield. Scale composes
+     with the root's independent translate. */
   body.mobile-touch #proc-overlay {
     scale: 0.2;
   }
   /* The Soul Fragment bank is a persistent resource readout, not a transient
-     proc silhouette. Keep its crystals legible and draggable on touch screens. */
+     proc silhouette. Keep its crystals legible on touch screens. */
   body.mobile-touch #proc-overlay.necromancy {
     scale: 0.55;
   }
@@ -5844,7 +5844,9 @@
      the treasury gold buttons are primary tap targets on the phone pairing. */
   body.mobile-touch #bank-window .bank-tab,
   body.mobile-touch #bank-window .gbank-view-tab,
-  body.mobile-touch #bank-window .gbank-gold-btn {
+  body.mobile-touch #bank-window .gbank-gold-btn,
+  body.mobile-touch #bank-window .gbank-log-filter,
+  body.mobile-touch #bank-window .gbank-log-older {
     min-height: 40px;
   }
   /* The gold prompt's three coin fields hold the same touch floor as the
@@ -5887,6 +5889,18 @@
     body.mobile-touch #bank-window .gbank-log-note {
       margin: 0 0 2px;
       font-size: 10px;
+    }
+    /* The history table on a phone: tighter cells, and the two prose columns
+       may wrap; the pinned header keeps the columns readable regardless. */
+    body.mobile-touch #bank-window .gbank-log-list {
+      font-size: 11px;
+    }
+    body.mobile-touch #bank-window .gbank-log-list th,
+    body.mobile-touch #bank-window .gbank-log-list td {
+      padding: 3px 5px;
+    }
+    body.mobile-touch #bank-window .gbank-log-action {
+      white-space: normal;
     }
   }
   /* Short landscape phones: the 50/50 pairing box (viewport minus the 10px top
@@ -6476,6 +6490,16 @@
     flex-basis: 100%;
     order: -1;
     text-align: left;
+  }
+  /* The restart strip is the same row shape one block above the action row, so
+     it wraps the same way: its status takes a full leading line and the Restart
+     button keeps its comfortable target instead of squeezing the text beside a
+     132px button. The status already leads in DOM order, so no re-ordering. */
+  body.mobile-touch .restart-strip {
+    flex-wrap: wrap;
+  }
+  body.mobile-touch .restart-strip-status {
+    flex-basis: 100%;
   }
   /* Options/settings row heights (Phase 4, presentation only): every touch-gated
      settings row (graphics/audio/interface panels via settingsViewShell's bare
@@ -7454,7 +7478,6 @@
       max-width: none;
       padding: 14px;
     }
-    body.mobile-touch[data-start-panel="mode-select"] #token-ca,
     body.mobile-touch[data-start-panel="mode-select"] .play-tip,
     body.mobile-touch[data-start-panel="mode-select"] .official-site-copy {
       display: none;
@@ -8463,8 +8486,7 @@
   body.mobile-touch #interface-edit-controls,
   body.mobile-touch #interface-frames-menu,
   body.mobile-touch .tf-frame-label,
-  body.mobile-touch .tf-preview-unit,
-  body.mobile-touch .tf-preview-bars,
+  body.mobile-touch .tf-preview,
   body.mobile-touch .tf-edge-glow,
   body.mobile-touch #interface-grid-overlay,
   body.mobile-touch .chat-move-btn {

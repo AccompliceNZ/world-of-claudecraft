@@ -112,6 +112,8 @@ const MOBILE_WINDOW_EXCEPTIONS: Record<string, string> = {
     'small centered modal (dynamic, the tutorial island spawn greeting); centered and clamped by its own base #tutorial-greeting rule plus the shared .window viewport clamp, with its z-index floored above the mobile sheet (96) in JS, the profession-tutorial precedent',
   'delve-rite-panel': 'in-run gameplay overlay, not a menu window that docks to a sheet',
   'lockpick-panel': 'in-run gameplay overlay, not a menu window that docks to a sheet',
+  'keyboard-map-window':
+    'desktop-only keyboard overview pop-out (dynamic): the Key Bindings panel paints the board and its Pop Out button only off useTouchInterface(), since touch has no physical keyboard, so the window never opens on mobile',
 };
 
 // A src/styles/*.css module contains a positioning/floor rule for #id on touch when
@@ -239,12 +241,14 @@ describe('mobile window coverage (Phase 5 parity)', () => {
     expect(dyn.windowClassFiles).toEqual([
       'dev_command_window.ts',
       'hud.ts',
+      'keyboard_map_window.ts',
       'profession_tutorial_window.ts',
       'tutorial_greeting_window.ts',
     ]);
     expect([...dyn.ids].sort()).toEqual([
       'confirm-dialog',
       'dev-command-window',
+      'keyboard-map-window',
       'profession-tutorial',
       'tutorial-greeting',
     ]);
