@@ -26,6 +26,7 @@ import {
   ZONES,
 } from '../src/sim/data';
 import { EASTBROOK_LAYOUT } from '../src/sim/eastbrook_layout';
+import { KIT_BUILDINGS } from '../src/sim/kit_buildings';
 import type { QuestObjectiveRef } from '../src/sim/quest_targets';
 import {
   emptyZoneProps,
@@ -1922,5 +1923,46 @@ describe('zone-map crafting stations', () => {
       );
       expect(nearest).toBeGreaterThanOrEqual(MAP_STATION_NPC_SEPARATION - 1e-6);
     }
+  });
+});
+
+describe('placed-kit silhouettes', () => {
+  it('draws the Drakelands rebuild kit buildings from the derived footprints', () => {
+    // The rebuilt Wyrmwatch draws through the env-prop pipeline, never through
+    // props.buildings, so the map takes its silhouettes from the derived kit
+    // footprints (sim/kit_buildings.ts): the tavern reads as the inn, the
+    // stables and halls as houses, and the church as a chapel.
+    const world = makeOverworldWorld('sim') as unknown as {
+      player: { pos: { x: number; z: number } };
+    };
+    const inn = KIT_BUILDINGS.find((b) => b.kind === 'inn');
+    expect(inn).toBeDefined();
+    if (!inn) return;
+    world.player.pos.x = inn.x;
+    world.player.pos.z = inn.z;
+    // the fixture zone is ZONES[0]; the kit stands in the Drakelands
+    const drakelands = ZONES.find((z) => z.pois.some((poi) => poi.id === 'wyrmwatch'));
+    expect(drakelands).toBeDefined();
+    if (!drakelands) return;
+    const detail = buildOverworldMapModel({
+      ...input(world as unknown as IWorld, MAP_MAX_ZOOM),
+      zone: drakelands,
+    }).detail;
+    expect(detail).not.toBeNull();
+    const kit = detail?.buildings.filter((b) => b.id?.startsWith('kit:')) ?? [];
+    expect(kit.map((b) => b.kind)).toContain('inn');
+    expect(kit.map((b) => b.kind)).toContain('house');
+    expect(kit.find((b) => b.kind === 'inn')?.id).toBe(inn.id);
+    for (const b of kit) expect(b.points).toHaveLength(4);
+    const chapel = KIT_BUILDINGS.find((b) => b.kind === 'chapel');
+    expect(chapel).toBeDefined();
+    if (!chapel) return;
+    world.player.pos.x = chapel.x;
+    world.player.pos.z = chapel.z;
+    const keep = buildOverworldMapModel({
+      ...input(world as unknown as IWorld, MAP_MAX_ZOOM),
+      zone: drakelands,
+    }).detail;
+    expect(keep?.buildings.some((b) => b.kind === 'chapel' && b.id === chapel.id)).toBe(true);
   });
 });

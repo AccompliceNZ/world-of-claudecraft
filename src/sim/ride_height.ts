@@ -71,9 +71,17 @@ export function rideSteepnessAt(x: number, z: number, seed: number): number {
 // read there walled descents whose real walking surface is a gentle ramp
 // (the Last Keep stair flights over the court stamps' rims). On a lift, the
 // gradient of the ridden ground itself is measured instead, exactly.
-export function walkedSteepnessAt(x: number, z: number, seed: number): number {
-  if (groundHeight(x, z, seed) <= terrainHeight(x, z, seed) + 1e-6)
-    return rideSteepnessAt(x, z, seed);
+// `ground` is the caller's own groundHeight sample at (x, z) when it already
+// holds one (the movement gates always do): this runs on the authoritative
+// server for every player's move, so the lift check must not re-sample the
+// heightfield the caller just read.
+export function walkedSteepnessAt(
+  x: number,
+  z: number,
+  seed: number,
+  ground: number = groundHeight(x, z, seed),
+): number {
+  if (ground <= terrainHeight(x, z, seed) + 1e-6) return rideSteepnessAt(x, z, seed);
   const e = STEEPNESS_SAMPLE;
   const hx = (rideHeightAt(x + e, z, seed) - rideHeightAt(x - e, z, seed)) / (2 * e);
   const hz = (rideHeightAt(x, z + e, seed) - rideHeightAt(x, z - e, seed)) / (2 * e);

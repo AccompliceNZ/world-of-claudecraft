@@ -26,6 +26,7 @@ import {
   STRIP_MIN_X,
   type ZoneDef,
 } from '../sim/data';
+import { KIT_BUILDINGS } from '../sim/kit_buildings';
 import { NODE_HARVEST_TABLE } from '../sim/professions/gathering';
 import { canGatherTier } from '../sim/professions/tools';
 import {
@@ -1241,6 +1242,13 @@ function buildDetail(
     buildings.push({ id: placement.id ?? null, points, kind });
   };
   for (const building of authoredProps.buildings) {
+    footprint(building, mapBuildingMarkerKind(building));
+  }
+  // The placed-kit architecture (the Drakelands rebuild's keep halls, chapel,
+  // tavern, and stables) draws through the env-prop pipeline, never through
+  // props.buildings, so its silhouettes come from the derived footprints
+  // (sim/kit_buildings.ts): the same OBBs the kit collides with.
+  for (const building of KIT_BUILDINGS) {
     footprint(building, mapBuildingMarkerKind(building));
   }
   // Walls are authored beside the active world's other static props. Treat each

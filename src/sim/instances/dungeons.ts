@@ -862,7 +862,10 @@ export function leaveDungeon(ctx: SimContext, pid?: number): boolean {
   // the plate, to be depenetrated straight back into the door trigger (the
   // exit-then-instantly-re-enter loop). A standable top within a couple of
   // yards of the ground IS the walking surface there; anything higher is a
-  // deck the drop point legitimately sits beneath.
+  // deck the drop point legitimately sits beneath. Deliberately global (every
+  // dungeon exit, not a keep special case): a drop point under a deck is a
+  // data fact any door can acquire, and on open ground the query finds no
+  // support and changes nothing.
   const exitDeck = supportHeightAt(ctx.cfg.seed, door.x, door.z, PLAYER_BODY_RADIUS, p.pos.y + 2);
   if (exitDeck > p.pos.y) p.pos.y = exitDeck;
   p.prevPos = { ...p.pos };

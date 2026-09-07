@@ -413,7 +413,10 @@ export function buildEmberFeatures(seed: number): EmberFeaturesView {
     const FIELDS = [
       { x: 354, z: 2092, r: 22 },
       { x: 300, z: 2176, r: 24 },
-      { x: 452, z: 2112, r: 20 },
+      // the keep-side churchyard: the graveyard moved with the rebuild (the
+      // Pale Keeper's seat south of the placed chapel), and a tight field
+      // keeps the bones on that lawn, off the keep's plazas and plates
+      { x: 451, z: 2134, r: 8 },
       { x: 419, z: 2266, r: 9 },
       { x: 302, z: 2258, r: 9 },
     ];

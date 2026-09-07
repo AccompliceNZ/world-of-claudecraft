@@ -10,7 +10,7 @@
 // Today every authored surface obeys that rule on its own: sheer walkable
 // masses live in the lift fields (walk_lifts.ts), which groundHeight adds and
 // terrainHeight does not, and their render modules draw each one with a
-// visible cap; the remaining authored pads (Dawnhold, the Bulwark, the Last
+// visible cap; the remaining authored pads (Dawnhold's garden, the Last
 // Keep's build site) blend over skirts wider than the lattice. So the mesh
 // height IS terrainHeight. The seam stays because the exception class is
 // real: the Last Keep's old inner-ward terrace baked a 0.7yd retaining blend

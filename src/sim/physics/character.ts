@@ -462,7 +462,7 @@ export function moveCharacter(
     const rise = groundEnd - groundStart;
     const unwalkable =
       (rise / run > params.maxSlope ||
-        (rawEnd >= wls && walkedSteepnessAt(px, pz, params.seed) > params.maxSlope)) &&
+        (rawEnd >= wls && walkedSteepnessAt(px, pz, params.seed, rawEnd) > params.maxSlope)) &&
       !shoreStepOut(x, z, px, pz, params.seed, params.maxSlope);
     // NOTE: step-up deliberately does NOT apply to the heightfield. A per-tick
     // step allowance on terrain is a cliff-climbing ladder: at 20 Hz a body
@@ -507,7 +507,8 @@ export function moveCharacter(
           // step's own slope AND the gradient of the ground it lands on.
           const contourOk =
             (contourRise <= 0 || contourRise / contourRun <= params.maxSlope) &&
-            (contourRaw < contourWls || walkedSteepnessAt(cx, cz, params.seed) <= params.maxSlope);
+            (contourRaw < contourWls ||
+              walkedSteepnessAt(cx, cz, params.seed, contourRaw) <= params.maxSlope);
           if (contourOk && isClear(cx, cz, feetY, params)) {
             px = cx;
             pz = cz;

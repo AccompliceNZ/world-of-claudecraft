@@ -355,18 +355,17 @@ export function stepPlayerMotion(deps: PlayerMotionDeps, p: Entity, inp: MoveInp
   // read came from the raw rim carved yards below the flight. The reference
   // surface is therefore the RAW ridden height, the same surface the dry-land
   // steepness memo and the downhill sampler describe; without lifts it equals
-  // groundHeight, so plain ground walking is untouched.
-  const rawRide = rideHeight(
-    p.pos.x,
-    p.pos.z,
-    terrainHeight(p.pos.x, p.pos.z, deps.seed),
-    deps.seed,
-  );
+  // groundHeight, so plain ground walking is untouched. The memo is read
+  // FIRST: the raw height is a fresh heightfield sample per player per tick
+  // on the authoritative server, so it is taken only on the cells the memo
+  // already calls steep (a rare read on any ground a player can walk).
   const steepFlagged =
     p.onGround &&
     !swimming &&
-    p.pos.y <= rawRide + PLATFORM_CARRY_CLEARANCE &&
-    rideSteepnessAt(p.pos.x, p.pos.z, deps.seed) > MAX_CLIMB_SLOPE;
+    rideSteepnessAt(p.pos.x, p.pos.z, deps.seed) > MAX_CLIMB_SLOPE &&
+    p.pos.y <=
+      rideHeight(p.pos.x, p.pos.z, terrainHeight(p.pos.x, p.pos.z, deps.seed), deps.seed) +
+        PLATFORM_CARRY_CLEARANCE;
   const steepSlide = steepFlagged ? terrainDownhill(p.pos.x, p.pos.z, deps.seed) : null;
   const steepGround = steepSlide !== null;
   // Move-to-cancel: any movement input during a summon channel cancels the cast.
@@ -550,14 +549,7 @@ function stepInstancedRegion(
       // footprint edge into the open sea)
       const wls = stepWaterLevel(p.pos.x, p.pos.z, nx, nz, deps.seed);
       const g1 = groundHeight(nx, nz, deps.seed);
-      // The climb is measured from where the FEET are, not from the ground
-      // buried beneath them: a grounded body on plain terrain has pos.y equal
-      // to groundHeight (the vertical pass settled it there), so this changes
-      // nothing on open ground, while a body standing ON a platform (a
-      // fortress deck, a crate) steps onto an adjacent walk-lift band or
-      // ledge at its own level instead of being refused for a rise its feet
-      // never make (the Last Keep mid-landing to stair-band hand-off).
-      const r0 = Math.max(groundHeight(p.pos.x, p.pos.z, deps.seed), wls, p.pos.y);
+      const r0 = Math.max(groundHeight(p.pos.x, p.pos.z, deps.seed), wls);
       const r1 = Math.max(g1, wls);
       const run = Math.hypot(nx - p.pos.x, nz - p.pos.z);
       if (

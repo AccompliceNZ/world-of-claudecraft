@@ -27,6 +27,57 @@ import { WORLD_SEED } from '../src/sim/world_seed';
 
 const GROUND_STAND_TOLERANCE = 2.5;
 
+/** Drive the live movement kernel from (sx, sz, sy) facing (fx, fz) for a
+ *  fixed tick budget, on foot or mounted, and return the body. */
+function kernelWalk(
+  sim: Sim,
+  sx: number,
+  sz: number,
+  sy: number,
+  fx: number,
+  fz: number,
+  mountKey?: NonNullable<Entity['mountKey']>,
+): Entity {
+  const deps: PlayerMotionDeps = {
+    seed: WORLD_SEED,
+    moveSpeedMult: (e) => moveSpeedMult(e, 0),
+    resolveMove: (fromX, fromZ, nx, nz, r, e, ignoreFences) =>
+      resolveMovement(WORLD_SEED, fromX, fromZ, nx, nz, r, ignoreFences, undefined, moverHeight(e)),
+    resolvedAbility: () => null,
+    cancelCast: () => {},
+    standUp: () => {},
+    dealDamage: () => {},
+  };
+  const input: MoveInput = {
+    forward: true,
+    back: false,
+    turnLeft: false,
+    turnRight: false,
+    strafeLeft: false,
+    strafeRight: false,
+    jump: false,
+    dive: false,
+    surface: false,
+  };
+  const p: Entity = {
+    ...sim.player,
+    pos: { x: sx, y: sy, z: sz },
+    prevPos: { x: sx, y: sy, z: sz },
+  };
+  p.facing = Math.atan2(fx, fz);
+  p.onGround = true;
+  p.vx = 0;
+  p.vz = 0;
+  p.vy = 0;
+  p.fallStartY = sy;
+  if (mountKey !== undefined) p.mountKey = mountKey;
+  for (let i = 0; i < 140; i++) {
+    p.prevPos = { ...p.pos };
+    stepPlayerMotion(deps, p, input);
+  }
+  return p;
+}
+
 describe('forgefather fortress bake', () => {
   it('every placement resolves a registered prop', () => {
     expect(FORGEFATHER_FORTRESS_PLACEMENTS.length).toBe(503);
@@ -174,62 +225,26 @@ describe('forgefather fortress bake', () => {
     // directions; reaching the far end proves every gate now yields to a
     // band-carried walker.
     const sim = new Sim({ seed: WORLD_SEED, playerClass: 'warrior', autoEquip: true });
-    const deps: PlayerMotionDeps = {
-      seed: WORLD_SEED,
-      moveSpeedMult: (e) => moveSpeedMult(e, 0),
-      resolveMove: (fromX, fromZ, nx, nz, r, e, ignoreFences) =>
-        resolveMovement(
-          WORLD_SEED,
-          fromX,
-          fromZ,
-          nx,
-          nz,
-          r,
-          ignoreFences,
-          undefined,
-          moverHeight(e),
-        ),
-      resolvedAbility: () => null,
-      cancelCast: () => {},
-      standUp: () => {},
-      dealDamage: () => {},
-    };
-    const input: MoveInput = {
-      forward: true,
-      back: false,
-      turnLeft: false,
-      turnRight: false,
-      strafeLeft: false,
-      strafeRight: false,
-      jump: false,
-      dive: false,
-      surface: false,
-    };
-    const walk = (sx: number, sz: number, sy: number, fx: number, fz: number): Entity => {
-      const p: Entity = {
-        ...sim.player,
-        pos: { x: sx, y: sy, z: sz },
-        prevPos: { x: sx, y: sy, z: sz },
-      };
-      p.facing = Math.atan2(fx, fz);
-      p.onGround = true;
-      p.vx = 0;
-      p.vz = 0;
-      p.vy = 0;
-      p.fallStartY = sy;
-      for (let i = 0; i < 140; i++) {
-        p.prevPos = { ...p.pos };
-        stepPlayerMotion(deps, p, input);
-      }
-      return p;
-    };
     // temple entrance stair: down to the plaza, up to the court decks
-    expect(walk(477.5, 2168.15, 5.76, -1, 0).pos.x).toBeLessThan(466);
-    expect(walk(464, 2168.15, 2.3, 1, 0).pos.x).toBeGreaterThan(475);
+    expect(kernelWalk(sim, 477.5, 2168.15, 5.76, -1, 0).pos.x).toBeLessThan(466);
+    expect(kernelWalk(sim, 464, 2168.15, 2.3, 1, 0).pos.x).toBeGreaterThan(475);
     // rampart stair A: down from the mid landing to the plaza
-    expect(walk(453.4, 2163.6, 5.5, 1, 0).pos.x).toBeGreaterThan(458);
+    expect(kernelWalk(sim, 453.4, 2163.6, 5.5, 1, 0).pos.x).toBeGreaterThan(458);
     // training yard stair: up from the yard decks onto the court
-    expect(walk(482.6, 2149.8, 3.26, 0, 1).pos.y).toBeCloseTo(5.76, 1);
+    expect(kernelWalk(sim, 482.6, 2149.8, 3.26, 0, 1).pos.y).toBeCloseTo(5.76, 1);
+  });
+
+  it('a mounted rider crosses the strait bridge: the deep-water gate reads the deck, not the seabed', () => {
+    // The mount water-wall used to gate every step on the DROWNED seabed under
+    // the plates, so a rider was walled at the bridge mouth and again on every
+    // plate of the span; a standable deck within a step of the hooves is dry
+    // footing. Ride from the strand mouth onto the decks, then along the span
+    // over open water.
+    const sim = new Sim({ seed: WORLD_SEED, playerClass: 'warrior', autoEquip: true });
+    const mouth = kernelWalk(sim, 444, 2181, 2.0, 0, 1, 'valorsteed');
+    expect(mouth.pos.z, 'the ride reaches the bridge decks').toBeGreaterThan(2192);
+    const span = kernelWalk(sim, 452, 2193, -1.63, 1, 0, 'valorsteed');
+    expect(span.pos.x, 'the ride carries along the span').toBeGreaterThan(470);
   });
 
   it('street lamp rows bake as Drakelands brazier streetlamp sites', () => {

@@ -115,8 +115,8 @@ export const EMBER_BAYS = [
 export const STAIR_LANDING_START = 0.875; // the landing begins at this length fraction
 const RAMP_STEP = 0.75; // stamp spacing along the climb
 
-/** The Forgefather stair ramps: the Last Keep castle's walkable-lift idiom
- *  (castle_layout.ts CASTLE_RAMPS) under the six placed staircases. Each
+/** The Forgefather stair ramps: the walkable-lift idiom the retired Last
+ *  Keep castle introduced (its CASTLE_RAMPS), under the placed staircases. Each
  *  row is an axis-aligned band carrying an ABSOLUTE walk surface: a linear
  *  flight from the lower court's RAW ground level at the stair's bottom
  *  end up to the upper court's at the landing start, then level across the

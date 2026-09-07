@@ -832,6 +832,12 @@ function openPlacer(deps: IgnivarPlacerDeps): void {
     buildPanel();
     applyWorklight();
     sendFreeze(true);
+    // The freeze is sim-wide: on a shared dev realm every mob stops for
+    // everyone connected until this rig closes, so say so where the other
+    // players' "mobs stopped moving" report would otherwise start a hunt.
+    deps.log(
+      '[placer] mobs frozen realm-wide while the rig is open (/dev freezemobs); released on close.',
+    );
     const room = roomForPlayer(deps.getPlayer());
     if (room) enterRoom(room);
     tickStatus();
