@@ -568,6 +568,9 @@ export const tr_TR: EnTranslations = {
       "tabsLabel": "WOC Mağaza bölümleri",
       "storeTab": "Mağaza",
       "rewardsTab": "Günlük Ödüller",
+      "mountsEyebrow": "Account Mounts",
+      "mountsTitle": "Machine Stable",
+      "mountBuyAria": "Purchase {item}",
       "loading": "WOC Mağazası yükleniyor...",
       "error": "WOC Mağazası şu anda kullanılamıyor. Lütfen kısa süre sonra tekrar deneyin.",
       "balance": "Claudium Bakiyesi",
@@ -1302,6 +1305,11 @@ export const tr_TR: EnTranslations = {
       "separate": "Ayır: {meter}",
       "regroup": "Yeniden grupla: {meter}"
     },
+    "targetDots": {
+      "title": "Target Dots",
+      "row": "{aura} on {target}",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Hedef Auraları",
       "keybindLabel": "Hedefin Takviyeleri ve Zayıflatmaları",
@@ -1385,6 +1393,9 @@ export const tr_TR: EnTranslations = {
       "name_thunderstrut_gobbler": "Gürlemeadım, Büyük Hindi",
       "name_terrorspark_groundshaker": "Dehşetkıvılcım, Yer Sarsan",
       "name_drakemaw_raptor": "Ejder Ağzı Raptoru",
+      "name_mech_bird": "Cluckwork Mech Bird",
+      "name_lanternback_troll": "Grumbol the Lanternback",
+      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
       "name_rickshaw_mount": "Kemikbağlı Çekçek",
       "desc_valorsteed": "Gelişmiş seyahat hızı sağlayan, dayanıklı ve sağlam adımlı bir küheylan.",
       "desc_grag_bear": "Gelişmiş seyahat hızı sağlayan, dayanıklı ve sağlam adımlı bir ayı.",
@@ -1395,6 +1406,9 @@ export const tr_TR: EnTranslations = {
       "desc_thunderstrut_gobbler": "Uyanan Zirve'den kabararak inen, kuyruğu bir fırtına bulutu gibi açılmış devasa bir fırtına hindisi.",
       "desc_terrorspark_groundshaker": "Ağır paletleri, büyük çaplı bir topu ve korkusuz pilotlar için yapılmış bir eyeri olan kompakt zırhlı bir makine.",
       "desc_drakemaw_raptor": "Ejder Ağzı Kalderası'ndan gelen, eyere alıştırılmış bir yuva raptoru: tepeden tırnağa kas ve hız, hâlâ hafiften kül kokuyor.",
+      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
+      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
+      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
       "desc_rickshaw_mount": "Sırıklarına kemikleri çıkmış bir avanenin koşulduğu, seni ölümüne bir koşuyla çeken takırdayan kemik arabası."
     },
     "mountTraining": {
@@ -1556,6 +1570,26 @@ export const tr_TR: EnTranslations = {
       "showPlaytime": "Karakter Ekranında Oynama Süresini Göster",
       "forceHighPerfGpu": "Ayrık Oyun GPU'sunu Kullan",
       "forceHighPerfGpuNote": "Varsayılan olarak açık: masaüstü uygulaması bu bilgisayardan ayrık oyun GPU'sunu ister. Oyun başlamıyorsa, siyah bir ekranla açılıyorsa ya da dizüstü bilgisayarın ekranı karararsa bunu kapat. Değişiklik oyunun bir sonraki başlangıcında etkili olur.",
+      "shaderWarm": "Shader Warm-up Worker",
+      "shaderWarmAuto": "Auto",
+      "shaderWarmOff": "Off",
+      "shaderWarmOn": "On",
+      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
+      "gpuBackend": "Graphics Backend",
+      "gpuBackendAuto": "Auto",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL (slow)",
+      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
+      "gpuBackendActive": "Currently using {backend}.",
+      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
+      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
+      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "Some changes take effect after a restart.",
+      "restartGame": "Restart Game",
+      "restartInProgress": "Restarting the game...",
+      "restartFailed": "The game could not restart itself. Quit and start it again.",
       "discordPresence": "Discord Zengin Durumu",
       "discordPresenceNote": "Bulunduğun bölgeyi ve bu oturumda ne kadar süredir oynadığını Discord etkinliğin olarak gösterir, Discord profilini görebilen herkes ikisini de görebilir. Yalnızca bölge adı, oturum süren ve oyun paylaşılır; karakterin, hesabın ya da kiminle oynadığın asla paylaşılmaz. Bu bilgisayarda Discord uygulamasının çalışıyor olması gerekir.",
       "showDevBadges": "Geliştirici Rozetlerini Göster",
@@ -1587,6 +1621,9 @@ export const tr_TR: EnTranslations = {
       "showTargetOfTarget": "Hedefin Hedefini Göster",
       "showTargetSwingTimer": "Hedefin savurma zamanlayıcısını göster",
       "showPetFrame": "Yoldaşını Göster",
+      "showNameplateDots": "Show My Dots on Nameplates",
+      "nameplateDotScale": "Nameplate Dot Size",
+      "showTargetDots": "Show Target Dots",
       "waterRipples": "Su Dalgacıkları (İz Dalgaları)",
       "showAttackButton": "Saldırı Düğmesini Göster",
       "showDailyRewardsChest": "Günlük Ödül Sandığını Göster",
@@ -2975,6 +3012,7 @@ export const tr_TR: EnTranslations = {
         "targetFrame": "Hedef",
         "partyFrames": "Grup",
         "swingBar": "Otomatik Saldırı",
+        "targetDots": "Target Dots",
         "questTracker": "Quest Tracker",
         "reliquaryTracker": "Reliquary Tracker",
         "doomMeter": "Affliction Bar",
@@ -3016,11 +3054,42 @@ export const tr_TR: EnTranslations = {
       "invalid": "Bu geçerli bir dışa aktarma kodu değil.",
       "wrongKind": "Bu kod farklı bir dışa aktarma türüne ait."
     },
+    "riftForge": {
+      "title": "Rift Forge",
+      "subtitle": "Riftbound bands",
+      "currency": "{name}: {count}",
+      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
+      "wornHint": "Worn. Unequip it to forge.",
+      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
+      "upgradeMax": "Fully upgraded",
+      "gemPickAria": "Gem to socket",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
+      "socketBtn": "Socket",
+      "socketsNone": "no gems",
+      "noGems": "No Rift gems in your bags",
+      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "reason": {
+        "notFound": "That band is not in your bags.",
+        "notRiftGear": "Only a Riftbound band can be forged.",
+        "maxUpgrade": "That band is fully upgraded.",
+        "insufficientEssence": "Not enough Rift Essence.",
+        "invalidGem": "You have no such Rift gem.",
+        "dead": "You can't do that while dead.",
+        "tooFar": "You are too far from the Rift Forge."
+      },
+      "done": {
+        "upgrade": "Upgraded {name}.",
+        "socket": "Socketed a gem into {name}.",
+        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "Gereken Seviye {level}",
       "riftTier": "{tier} dereceli Yarık eşyası",
       "riftUpgrade": "Yarık yükseltmesi {level}/{max}",
       "riftSockets": "Yarık mücevherleri {used}/{total}",
+      "riftGemSocket": "Socket bonus for a Riftbound band",
       "statEnchanted": "+{value} {stat} (Büyülü)",
       "enchantedFallback": "Büyülü",
       "partyTradeWindow": "Bu eşyayı, düşüşünü paylaşan oyunculara önümüzdeki {time} boyunca takas edebilirsin. Kuşanmak takas penceresini sona erdirir."
@@ -3301,6 +3370,15 @@ export const tr_TR: EnTranslations = {
       "popupTitle": "Lonca Tabelası",
       "close": "Kapat"
     },
+    "realmBuilder": {
+      "title": "Realm Builder of the Month",
+      "currentLabel": "Honoured this month",
+      "placeholderName": "Your Name Here",
+      "placeholderHint": "This plate is waiting for its first name.",
+      "pastTitle": "Past honourees",
+      "pastEmpty": "No names on the roll yet.",
+      "close": "Close"
+    },
     "bank": {
       "title": "Banka",
       "subtitle": "Yaldızlı Kasa",
@@ -3527,6 +3605,20 @@ export const tr_TR: EnTranslations = {
         "result": {
           "set": "Lonca panosu güncellendi.",
           "notOfficer": "Panoyu yalnızca subaylar ve Lonca Üstadı düzenleyebilir."
+        }
+      },
+      "roster": {
+        "seats": "{count} of {cap} seats",
+        "expand": "Expand roster (+{seats} seats for {price})",
+        "maxed": "The roster is at its largest size",
+        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
+        "confirmAction": "Expand",
+        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "result": {
+          "notLeader": "Only the Guild Master may expand the guild roster.",
+          "maxed": "The guild roster cannot grow any larger.",
+          "cannotAfford": "You need {price} to expand the guild roster.",
+          "retry": "The guild roster changed while you were buying. Try again."
         }
       }
     },
@@ -3945,6 +4037,7 @@ export const tr_TR: EnTranslations = {
       "yieldLineRange": "{min} ile {max} arası {item}",
       "alreadyEnchanted": "O eşya zaten büyülü.",
       "sameEnchant": "O eşyada zaten bu büyü var.",
+      "riftGear": "Riftbound bands take Rift gems, not enchants.",
       "replaceTag": "{enchant} yerine geçer",
       "sameEnchantTag": "Zaten uygulandı",
       "plainTag": "Büyüsüz",
@@ -6039,6 +6132,8 @@ export const tr_TR: EnTranslations = {
       "raceBody": "Diyardaki her grup aynı Yarığa aynı anda saldırabilir, her biri kendi kopyasında, ve yalnızca diptekini ilk deviren onu mühürler. Bir grup kazandığında diyar onların adlarını ve sürelerini duyar, ve giriş yolu ardlarından kapanır. Yarışı kaybetmek koşunu bitirmez: kopyan açık kalır, diptekini yine de sen devirirsin ve yine de kendi gücünle dışarı yürürsün. Sana mal olan şey, onu temizlemenin ödeyeceği her şeydir. Patron, ikinci gelen grup için hiçbir şey bırakmaz, bu yüzden eve taşıdığın şey yalnızca inişte canavarlardan düşenlerdir, ondan fazlası değil. Yiğitlikler Kitabı temizliği yine de sayar, çünkü diptekini gerçekten sen devirdin. Bu, seni yenen insanların yüzünü hiç görmeden kaybedebileceğin oyundaki tek yarıştır.",
       "rewardsHeading": "Dışarı ne çıkarırsın",
       "rewardsBody": "Ödeyen şey bir Yarığı yalnızca atlatmak değil, onu mühürlemektir. Yarığı ilk sen devirirsen, derecesinin yanında durduğu kopya alanlı içerik gibi öder, bu yüzden daha zor dereceler daha zor koşuya değer. Mühürlemek ayrıca orada bulunan herkesin eline, sınıfının rolüne göre kesilmiş ve sana özel bir Yarık Bağlı halka koyar, çantalarına da üstüne Yarık Özü bırakır, daha zor derecelerde bunun üstüne Yarık Mücevherleri de eklenir. Eve giden yolun yanı sıra, diptekinin bıraktığı mühürlü bir zulayı grubun, mağara sandıklarından bildiğin aynı Maşa Yolu kilit açma yöntemiyle ekstra ganimet için açabilir, bu yüzden temiz ve sabırlı bir iş, acele edilmiş birinden daha iyi öder. Bunların hiçbiri ikinci gelen bir gruba ulaşmaz: kaybedilen bir yarış sana yalnızca inişte canavarlardan düşenleri bırakır. Yiğitlikler Kitabı bir istisnadır ve temizliğini her hâlükârda sayar; ilk Yarığını kapatman için bir yiğitlik, bir S dereceli olanı devirmen için bir başkası vardır.",
+      "forgeHeading": "The Rift Forge",
+      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
       "trackerHeading": "Ekranındaki takipçi",
       "trackerBody": "İçerideyken, ekranındaki küçük bir şerit seni yönlendirir: kaç kattan hangisinde olduğunu ve canlı bir geri sayımı gösterir. O geri sayımı dikkatle oku, çünkü tükenen şey koşun değildir. Tükenen, dünyadaki dönüş girişidir. Bir kez içeri girdikten sonra, grubun Yarığı ne kadar sürerse sürsün kendi hızında oynar, ama o saat sıfıra ulaştığında giriş yolu herkes için kaybolur, bu yüzden süre bitimine yakın dışarı adım atmayı iki kez düşün."
     },
@@ -7930,6 +8025,7 @@ export const tr_TR: EnTranslations = {
       "forgeUpgraded": "{name} için Yarık yükseltmesi tamamlandı.",
       "forgeEnchanted": "{name} için Yarık büyüsü tamamlandı.",
       "forgeSocketed": "{name} için Yarık mücevheri yuvalandı.",
+      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
       "detonateGlacialGrave": "Buzul Mezarı patlıyor!",
       "detonateAbsoluteZero": "Mutlak Sıfır patlıyor!",
       "detonateMagmaWell": "Magma Kuyusu patlıyor!",
@@ -8674,6 +8770,7 @@ export const tr_TR: EnTranslations = {
     "bodyWeb": "Oyun GPU hızlandırması olmadan çalışıyor ve yavaş olacak. Tarayıcı ayarlarından donanım hızlandırmayı etkinleştir, grafik sürücülerini güncelleyip tarayıcını yeniden başlat.",
     "hybridBodyWindows": "Bu oturum, tümleşik (güç tasarruflu) GPU üzerinde çalışıyor. Bu bilgisayarda ayrıca ayrık bir oyun GPU’su varsa tarayıcını Ayarlar > Sistem > Ekran > Grafikler altında Yüksek performans olarak ayarla, ardından yeniden başlat. Masaüstü uygulaması ayrık GPU’yu otomatik olarak seçer.",
     "hybridBodyLinux": "Bu oturum, tümleşik (güç tasarruflu) GPU üzerinde çalışıyor. Bu bilgisayarda ayrıca ayrık bir oyun GPU’su varsa tarayıcın veya grafik sürücün kendi GPU seçim ayarını sunabilir, ya da dağıtımın PRIME veya optimus-manager gibi bir GPU değiştirme aracı sağlayabilir. Masaüstü uygulaması ayrık GPU’yu otomatik olarak seçer.",
+    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
     "hybridBodyOther": "Bu oturum, tümleşik (güç tasarruflu) GPU üzerinde çalışıyor. Bu bilgisayarda ayrıca ayrık bir oyun GPU’su varsa onu etkinleştirmek için tarayıcının ve işletim sisteminin grafik ayarlarını kontrol et. Masaüstü uygulaması ayrık GPU’yu otomatik olarak seçer.",
     "dismiss": "Kapat"
   },
@@ -13213,11 +13310,20 @@ export const tr_TR: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Kontak Anahtarı: Dehşetkıvılcım, Yer Sarsan"
       },
+      "reins_lanternback_troll": {
+        "name": "Fenerci Boyunduruğu: Grumbol"
+      },
+      "reins_chimeglass_tortoise": {
+        "name": "Roadwarden's Bellstrap: Tolliver"
+      },
       "reins_rickshaw_mount": {
         "name": "Bağlı Dizginler: Kemikbağlı Çekçek"
       },
       "reins_drakemaw_raptor": {
         "name": "Ejder Ağzı Raptoru'nun Dizginleri"
+      },
+      "reins_mech_bird": {
+        "name": "Ignition Key: Cluckwork Mech Bird"
       },
       "rimefang": {
         "name": "Kırağı Dişi"
@@ -15842,6 +15948,11 @@ export const tr_TR: EnTranslations = {
         "name": "Korkmuş Nell",
         "title": "Gullhaven Balıkçısı",
         "greeting": "Tam ağların kurutulduğu yerde açıldı. Tam orada, hayatım boyunca her sabah durduğum yerde. Artık kıyıya inmiyorum. Artık pek bir yere gitmiyorum."
+      },
+      "riftwright_maelis": {
+        "name": "Riftwright Maelis",
+        "title": "Rift Forgemaster",
+        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
       },
       "forgemistress_darva": {
         "name": "Dövme Ustası Darva",
@@ -19132,6 +19243,7 @@ export const tr_TR: EnTranslations = {
     "delveRiteShrineReedInteract": "Saz Sunağı: Dokunmak için F'ye bas",
     "delveRiteShrineSkullInteract": "Kafatası Sunağı: Dokunmak için F'ye bas",
     "mailboxName": "Posta Kutusu",
-    "noticeboardName": "İlan Tahtası"
+    "noticeboardName": "İlan Tahtası",
+    "realmBuilderMonumentName": "Realm Builder Monument"
   }
 };

@@ -568,6 +568,9 @@ export const id_ID: EnTranslations = {
       "tabsLabel": "Bagian Toko WOC",
       "storeTab": "Toko",
       "rewardsTab": "Hadiah Harian",
+      "mountsEyebrow": "Account Mounts",
+      "mountsTitle": "Machine Stable",
+      "mountBuyAria": "Purchase {item}",
       "loading": "Memuat Toko WOC...",
       "error": "Toko WOC tidak tersedia saat ini. Silakan coba lagi sebentar lagi.",
       "balance": "Saldo Claudium",
@@ -1302,6 +1305,11 @@ export const id_ID: EnTranslations = {
       "separate": "Pisahkan {meter}",
       "regroup": "Gabungkan kembali {meter}"
     },
+    "targetDots": {
+      "title": "Target Dots",
+      "row": "{aura} on {target}",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Aura Target",
       "keybindLabel": "Buff dan Debuff Target",
@@ -1385,6 +1393,9 @@ export const id_ID: EnTranslations = {
       "name_thunderstrut_gobbler": "Thunderstrut Sang Kalkun Agung",
       "name_terrorspark_groundshaker": "Percik Teror, Pengguncang Bumi",
       "name_drakemaw_raptor": "Raptor Drakemaw",
+      "name_mech_bird": "Cluckwork Mech Bird",
+      "name_lanternback_troll": "Grumbol the Lanternback",
+      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
       "name_rickshaw_mount": "Becak Terikat Tulang",
       "desc_valorsteed": "Kuda tunggangan tangguh berpijakan mantap yang memberikan kecepatan perjalanan tambahan.",
       "desc_grag_bear": "Beruang tangguh berpijakan mantap yang memberikan kecepatan perjalanan tambahan.",
@@ -1395,6 +1406,9 @@ export const id_ID: EnTranslations = {
       "desc_thunderstrut_gobbler": "Kalkun raksasa tetasan badai yang melenggak-lenggok turun dari Puncak yang Terjaga, ekornya terkembang bagai awan guntur.",
       "desc_terrorspark_groundshaker": "Mesin lapis baja ringkas dengan rantai roda berat, meriam berkaliber besar, dan pelana yang dibuat untuk pilot tanpa rasa takut.",
       "desc_drakemaw_raptor": "Seekor raptor sarang dari Kaldera Drakemaw yang telah dijinakkan untuk ditunggangi, seluruhnya otot dan kecepatan, masih samar berbau abu.",
+      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
+      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
+      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
       "desc_rickshaw_mount": "Gerobak tulang yang berderak, dengan serdadu kurus bertulang diikat pada porosnya, menarikmu melaju kencang."
     },
     "mountTraining": {
@@ -1556,6 +1570,26 @@ export const id_ID: EnTranslations = {
       "showPlaytime": "Tampilkan Waktu Bermain di Lembar Karakter",
       "forceHighPerfGpu": "Gunakan GPU Gaming Diskret",
       "forceHighPerfGpuNote": "Aktif secara bawaan: aplikasi desktop meminta GPU gaming diskret dari komputer ini. Nonaktifkan ini jika permainan tidak mau dimulai, terbuka dengan layar hitam, atau layar laptop menjadi kosong. Berlaku mulai lain kali kamu membuka permainan.",
+      "shaderWarm": "Shader Warm-up Worker",
+      "shaderWarmAuto": "Auto",
+      "shaderWarmOff": "Off",
+      "shaderWarmOn": "On",
+      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
+      "gpuBackend": "Graphics Backend",
+      "gpuBackendAuto": "Auto",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL (slow)",
+      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
+      "gpuBackendActive": "Currently using {backend}.",
+      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
+      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
+      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "Some changes take effect after a restart.",
+      "restartGame": "Restart Game",
+      "restartInProgress": "Restarting the game...",
+      "restartFailed": "The game could not restart itself. Quit and start it again.",
       "discordPresence": "Status Aktivitas Discord",
       "discordPresenceNote": "Menampilkan zona tempatmu berada dan sudah berapa lama kamu bermain dalam sesi ini sebagai aktivitas Discord-mu, dan siapa pun yang bisa melihat profil Discord-mu bisa melihat keduanya. Hanya nama zona, waktu sesimu, dan permainan yang dibagikan, tidak pernah karaktermu, akunmu, atau dengan siapa kamu bermain. Membutuhkan aplikasi Discord yang berjalan di komputer ini.",
       "showDevBadges": "Tampilkan Lencana Pengembang",
@@ -1587,6 +1621,9 @@ export const id_ID: EnTranslations = {
       "showTargetOfTarget": "Tampilkan Sasaran dari Sasaran",
       "showTargetSwingTimer": "Tampilkan pengatur waktu ayunan target",
       "showPetFrame": "Tampilkan Peliharaan Anda",
+      "showNameplateDots": "Show My Dots on Nameplates",
+      "nameplateDotScale": "Nameplate Dot Size",
+      "showTargetDots": "Show Target Dots",
       "waterRipples": "Riak Air (Ombak Jejak)",
       "showAttackButton": "Tampilkan Tombol Serang",
       "showDailyRewardsChest": "Tampilkan Peti Hadiah Harian",
@@ -2975,6 +3012,7 @@ export const id_ID: EnTranslations = {
         "targetFrame": "Target",
         "partyFrames": "Party",
         "swingBar": "Serangan Otomatis",
+        "targetDots": "Target Dots",
         "questTracker": "Quest Tracker",
         "reliquaryTracker": "Reliquary Tracker",
         "doomMeter": "Affliction Bar",
@@ -3016,11 +3054,42 @@ export const id_ID: EnTranslations = {
       "invalid": "Itu bukan kode ekspor yang valid.",
       "wrongKind": "Kode itu berjenis ekspor yang berbeda."
     },
+    "riftForge": {
+      "title": "Rift Forge",
+      "subtitle": "Riftbound bands",
+      "currency": "{name}: {count}",
+      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
+      "wornHint": "Worn. Unequip it to forge.",
+      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
+      "upgradeMax": "Fully upgraded",
+      "gemPickAria": "Gem to socket",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
+      "socketBtn": "Socket",
+      "socketsNone": "no gems",
+      "noGems": "No Rift gems in your bags",
+      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "reason": {
+        "notFound": "That band is not in your bags.",
+        "notRiftGear": "Only a Riftbound band can be forged.",
+        "maxUpgrade": "That band is fully upgraded.",
+        "insufficientEssence": "Not enough Rift Essence.",
+        "invalidGem": "You have no such Rift gem.",
+        "dead": "You can't do that while dead.",
+        "tooFar": "You are too far from the Rift Forge."
+      },
+      "done": {
+        "upgrade": "Upgraded {name}.",
+        "socket": "Socketed a gem into {name}.",
+        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "Membutuhkan Level {level}",
       "riftTier": "Barang Rift peringkat {tier}",
       "riftUpgrade": "Peningkatan Rift {level}/{max}",
       "riftSockets": "Permata Rift {used}/{total}",
+      "riftGemSocket": "Socket bonus for a Riftbound band",
       "statEnchanted": "+{value} {stat} (Dimantrai)",
       "enchantedFallback": "Dimantrai",
       "partyTradeWindow": "Kamu dapat memperdagangkan barang ini kepada pemain yang berbagi jarahannya selama {time} berikutnya. Memakainya mengakhiri jendela perdagangan."
@@ -3301,6 +3370,15 @@ export const id_ID: EnTranslations = {
       "popupTitle": "Papan Petunjuk Guild",
       "close": "Tutup"
     },
+    "realmBuilder": {
+      "title": "Realm Builder of the Month",
+      "currentLabel": "Honoured this month",
+      "placeholderName": "Your Name Here",
+      "placeholderHint": "This plate is waiting for its first name.",
+      "pastTitle": "Past honourees",
+      "pastEmpty": "No names on the roll yet.",
+      "close": "Close"
+    },
     "bank": {
       "title": "Bank",
       "subtitle": "Brankas Bersepuh Emas",
@@ -3527,6 +3605,20 @@ export const id_ID: EnTranslations = {
         "result": {
           "set": "Papan pengumuman serikat telah diperbarui.",
           "notOfficer": "Hanya perwira dan Pemimpin Serikat yang boleh mengedit papan pengumuman."
+        }
+      },
+      "roster": {
+        "seats": "{count} of {cap} seats",
+        "expand": "Expand roster (+{seats} seats for {price})",
+        "maxed": "The roster is at its largest size",
+        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
+        "confirmAction": "Expand",
+        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "result": {
+          "notLeader": "Only the Guild Master may expand the guild roster.",
+          "maxed": "The guild roster cannot grow any larger.",
+          "cannotAfford": "You need {price} to expand the guild roster.",
+          "retry": "The guild roster changed while you were buying. Try again."
         }
       }
     },
@@ -3945,6 +4037,7 @@ export const id_ID: EnTranslations = {
       "yieldLineRange": "{min} hingga {max} {item}",
       "alreadyEnchanted": "Barang itu sudah dimantrai.",
       "sameEnchant": "Barang itu sudah memiliki mantra itu.",
+      "riftGear": "Riftbound bands take Rift gems, not enchants.",
       "replaceTag": "Menggantikan {enchant}",
       "sameEnchantTag": "Sudah diterapkan",
       "plainTag": "Belum dimantrai",
@@ -6039,6 +6132,8 @@ export const id_ID: EnTranslations = {
       "raceBody": "Setiap kelompok di realm ini bisa menyerang rift yang sama pada saat bersamaan, masing-masing di salinannya sendiri, dan hanya kelompok pertama yang menjatuhkan sosok di dasarnya yang menyegel rift itu. Ketika sebuah kelompok menang, realm mendengar nama dan catatan waktu mereka, dan jalan masuknya tertutup di belakang mereka. Kalah dalam balapan tidak mengakhiri larimu: salinanmu tetap terbuka, sosok di dasarnya tetap akan tumbang di tanganmu, dan kamu tetap berjalan keluar dengan kekuatanmu sendiri. Yang kamu bayar adalah semua yang seharusnya dibayar oleh sebuah penyegelan. Bos itu tidak meninggalkan apa pun bagi kelompok yang datang kedua, jadi yang kamu bawa pulang hanyalah apa yang dijatuhkan mob-mob di sepanjang jalan turun, dan tidak lebih dari itu. Kitab Jasa tetap menghitung penuntasanmu, karena kamu memang menjatuhkan sosok itu. Ini satu-satunya balapan dalam permainan yang bisa kamu kalah tanpa pernah melihat wajah orang-orang yang mengalahkanmu.",
       "rewardsHeading": "Apa yang kamu bawa pulang",
       "rewardsBody": "Menyegel sebuah rift, bukan sekadar bertahan hidup di dalamnya, adalah yang membayar. Jatuhkan rift itu lebih dulu dan ia membayar setara konten instans yang setingkat dengan peringkatnya, sehingga peringkat yang lebih berat sepadan dengan lari yang lebih berat pula. Menyegelnya juga menyerahkan sebuah Cincin Terikat Rift ke tangan setiap orang yang hadir di sana, disesuaikan dengan peran kelasmu dan pribadi untukmu, serta meninggalkan Sari Rift di dalam tasmu, ditambah permata rift di peringkat yang lebih berat. Selain jalan pulang, sosok di dasarnya juga meninggalkan sebuah peti tersegel yang bisa dibongkar kelompokmu untuk rampasan tambahan, memakai cara membobol kunci Jalur Tumbler yang sama seperti yang kamu kenal dari peti-peti delve, sehingga kerja yang bersih dan sabar membayar lebih baik daripada yang tergesa-gesa. Tak satu pun dari itu sampai ke kelompok yang datang kedua: balapan yang kalah hanya menyisakan apa yang dijatuhkan mob-mob di sepanjang jalan turun. Kitab Jasa adalah pengecualiannya, dan tetap menghitung penuntasanmu apa pun hasilnya, dengan satu jasa untuk menutup rift pertamamu dan satu lagi untuk menjatuhkan rift peringkat S.",
+      "forgeHeading": "The Rift Forge",
+      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
       "trackerHeading": "Pelacak di layarmu",
       "trackerBody": "Selama kamu berada di dalam, sebuah strip kecil di layarmu menjaga arahmu tetap jelas: lantai keberapa yang sedang kamu jalani dari berapa total lantainya, dan sebuah hitung mundur langsung. Bacalah hitung mundur itu baik-baik, sebab itu bukan larimu yang habis waktu. Itu adalah pintu masuk kembali di dunia luar yang sedang menutup. Begitu kamu sudah masuk, kelompokmu menjalani rift itu dengan temponya sendiri, selama apa pun itu, tetapi begitu jam itu mencapai nol, jalan masuknya lenyap bagi semua orang, jadi pikirkan dua kali sebelum melangkah keluar menjelang akhirnya."
     },
@@ -7930,6 +8025,7 @@ export const id_ID: EnTranslations = {
       "forgeUpgraded": "Peningkatan Rift untuk {name} selesai.",
       "forgeEnchanted": "Pemantraan Rift untuk {name} selesai.",
       "forgeSocketed": "Permata Rift terpasang untuk {name}.",
+      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
       "detonateGlacialGrave": "Makam Glasial meledak!",
       "detonateAbsoluteZero": "Nol Mutlak meletus!",
       "detonateMagmaWell": "Sumur Magma meletus!",
@@ -8674,6 +8770,7 @@ export const id_ID: EnTranslations = {
     "bodyWeb": "Permainan berjalan tanpa akselerasi GPU dan akan lambat. Aktifkan akselerasi perangkat keras di pengaturan browsermu, perbarui driver grafismu, lalu nyalakan ulang browsermu.",
     "hybridBodyWindows": "Sesi ini dirender menggunakan GPU terintegrasi (hemat daya). Jika komputer ini juga memiliki GPU gaming diskret, atur browsermu ke Performa tinggi di Pengaturan > Sistem > Tampilan > Grafis, lalu mulai ulang browsernya. Aplikasi desktop memilih GPU diskret secara otomatis.",
     "hybridBodyLinux": "Sesi ini dirender menggunakan GPU terintegrasi (hemat daya). Jika komputer ini juga memiliki GPU gaming diskret, browser atau driver grafismu mungkin punya pengaturan pemilihan GPU sendiri, atau distromu mungkin menyediakan alat pengalihan GPU (seperti PRIME atau optimus-manager). Aplikasi desktop memilih GPU diskret secara otomatis.",
+    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
     "hybridBodyOther": "Sesi ini dirender menggunakan GPU terintegrasi (hemat daya). Jika komputer ini juga memiliki GPU gaming diskret, periksa pengaturan grafis browser dan sistem operasimu untuk mengaktifkannya. Aplikasi desktop memilih GPU diskret secara otomatis.",
     "dismiss": "Tutup"
   },
@@ -13213,11 +13310,20 @@ export const id_ID: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Kunci Kontak: Percik Teror, Pengguncang Bumi"
       },
+      "reins_lanternback_troll": {
+        "name": "Kuk Penyala Lentera: Grumbol"
+      },
+      "reins_chimeglass_tortoise": {
+        "name": "Roadwarden's Bellstrap: Tolliver"
+      },
       "reins_rickshaw_mount": {
         "name": "Kendali Terikat: Becak Terikat Tulang"
       },
       "reins_drakemaw_raptor": {
         "name": "Tali Kekang Raptor Drakemaw"
+      },
+      "reins_mech_bird": {
+        "name": "Ignition Key: Cluckwork Mech Bird"
       },
       "rimefang": {
         "name": "Taring Beku"
@@ -15842,6 +15948,11 @@ export const id_ID: EnTranslations = {
         "name": "Nell yang Ketakutan",
         "title": "Nelayan Gullhaven",
         "greeting": "Ia terbuka tepat di tempat jaring-jaring dikeringkan. Tepat di sana, tempat aku berdiri setiap pagi seumur hidupku. Aku tak lagi turun ke pantai. Aku tak lagi pergi ke mana pun sebenarnya."
+      },
+      "riftwright_maelis": {
+        "name": "Riftwright Maelis",
+        "title": "Rift Forgemaster",
+        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
       },
       "forgemistress_darva": {
         "name": "Empu Tempa Darva",
@@ -19132,6 +19243,7 @@ export const id_ID: EnTranslations = {
     "delveRiteShrineReedInteract": "Altar Buluh: Tekan F untuk menyentuhnya",
     "delveRiteShrineSkullInteract": "Altar Tengkorak: Tekan F untuk menyentuhnya",
     "mailboxName": "Kotak Surat",
-    "noticeboardName": "Papan Pengumuman"
+    "noticeboardName": "Papan Pengumuman",
+    "realmBuilderMonumentName": "Realm Builder Monument"
   }
 };

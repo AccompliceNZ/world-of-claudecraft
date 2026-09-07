@@ -112,6 +112,7 @@ const CONTAINERS: Record<string, string> = {
   'actionbar-row': 'the flex row seating the action-bar stack and the meter panels',
   'actionbar-stack': 'the centered column of bars and the player frame',
   'pet-cluster': 'the one-row pet bar + pet frame pairing; both halves are frames',
+  'aura-stack': 'the flex column seating the buff and debuff rows; the rows are the frames',
   'actionbar-group': 'the combined-bars block, itself the actionBarGroup frame content host',
 };
 
@@ -168,6 +169,7 @@ const UI_ROOT_TOUCHERS: Record<string, string> = {
   'src/ui/bootcamp.ts': 'world-anchored tutorial prompts, transient coachmarks',
   'src/ui/tutorial.ts': 'transient tutorial coachmarks',
   'src/ui/noticeboard_popup.ts': 'transient noticeboard popup card',
+  'src/ui/realm_builder_popup.ts': 'transient Realm Builder honour roll card',
   'src/ui/dev_command_window.ts': 'dev-only command window (a .window, window_drag governs it)',
   'src/ui/hud/fiesta/fiesta_controller.ts': 'match-scoped fiesta strips and confetti',
   'src/ui/hud/loot/loot_roll_controller.ts': 'transient loot roll stack',
