@@ -3412,6 +3412,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.serpent_sting.description': '15秒かけて合計{damage}の自然ダメージを、3秒ごとに1回与えます。ダメージは遠隔攻撃力とともに上がります。',
   'entities.abilities.arcane_shot.name': '凶弾',
   'entities.abilities.arcane_shot.description': '対象を撃ち、{damage}の秘術ダメージを与えます。ダメージは遠隔攻撃力とともに上がります。',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    '「熱狂の速射」を完了して得たコールドサイト・リードは、次に放つ「凶弾」のダメージを75%増加させる。ショットを放つとリードを消費する。',
   'entities.abilities.concussive_shot.name': '動揺の射撃',
   'entities.abilities.concussive_shot.description': '対象を撃って{damage}の物理ダメージを与え、4秒間50%減速させます。ダメージは遠隔攻撃力とともに上がります。',
   'entities.abilities.mongoose_bite.name': '傷裂き',
@@ -13202,7 +13204,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '移動速度が35%上昇しますが、毎秒、最大体力の2%を失います。もう一度使用すると解除されます。体力が20%になると自動的に切れます。',
   'entities.abilities.sacrilegious_march.name': '冒涜の行軍',
   'entities.abilities.scouring_mercy.description':
-    '敵を聖なる力で浄化するか、味方1体を即座に癒す。ドクトリン固有能力。',
+    '敵に{damage}の聖なるダメージを与えるか、味方1体を{healing}回復する。ダメージは魔力で、回復量は治癒力で上昇する。ドクトリンは絆を通じてこのダメージを回復に変換する。30メートル以内に絆を結んだ負傷パーティメンバーがいない場合、30メートル以内で体力が最も低い負傷パーティメンバーをダメージの15%分回復する。パーティメンバーを回復すると、その対象から10メートル以内かつ視界内にいる負傷パーティメンバーを最大2人まで追加で回復し、それぞれ回復量の50%分を回復する。この追加回復はクリティカルにならず、ドクトリンの絆も生成しない。（ドクトリン固有能力）',
   'entities.abilities.scouring_mercy.name': '浄罪の慈悲',
   'entities.abilities.sentence.description':
     '断罪と運命の糸をすべて消費して敵に宣告を下します。糸1本につきダメージが6%増加し、追加効果は断罪20、50、80、100で強化されます。レベル16以降はダメージの伸びが緩やかになります。',
@@ -14013,6 +14015,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.temporalEcho':
     '術者の秘術ダメージのうち、単体なら{singlePct}%、範囲なら{areaPct}%があなたへの回復になる',
   'hudChrome.auraEffect.veiledEdge': '次に放つ「潜伏者の一撃」は2倍のダメージを与える',
+  'hudChrome.auraEffect.veiledEdgeStrike': '次に放つ「潜伏者の一撃」の武器ダメージが{pct}%増加する',
+  'hudChrome.auraEffect.coldsightRead':
+    '次に放つ「引き絞り」のダメージが{longDrawPct}%増加するか、次に放つ「凶弾」のダメージが{fellShotPct}%増加する',
   'hudChrome.auraEffect.veilstrikeWindow':
     '影に包まれている:ダスクヴェール専用の先制技をどの角度からでも使用でき、与ダメージが{pct}%増加する',
   'hudChrome.auraEffect.venomRitual':

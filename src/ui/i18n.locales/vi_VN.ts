@@ -12604,7 +12604,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Bảo vệ một đồng minh trong 30 giây. Đòn đánh đầu tiên khiến họ xuống dưới 35% máu sẽ tiêu Canh Thức và hồi cho họ {buff}. (Dấu ấn Phúc Lành)',
   'entities.abilities.scouring_mercy.description':
-    'Gây 72 đến 84 sát thương Thánh lên kẻ địch hoặc hồi 130 đến 155 máu cho mục tiêu đồng minh. Cả hai đều tăng theo sức mạnh phép thuật. Sát thương cũng hồi 30% cho mỗi đồng minh liên kết bằng Giáo Lý, hoặc 15% cho thành viên nhóm có ít máu nhất nếu không ai được liên kết. (Dấu ấn Giáo Lý)',
+    'Gây {damage} sát thương Thánh lên kẻ địch hoặc hồi {healing} máu cho mục tiêu đồng minh. Sát thương tăng theo sức mạnh phép thuật; lượng hồi máu tăng theo sức mạnh trị liệu. Giáo Lý biến sát thương này thành hồi máu qua các liên kết của bạn. Nếu không có thành viên nhóm bị liên kết và bị thương trong phạm vi 30 mét, hồi máu cho thành viên nhóm bị thương có ít máu nhất trong phạm vi 30 mét bằng 15% sát thương. Hồi máu cho một thành viên nhóm cũng hồi máu cho tối đa 2 thành viên nhóm bị thương khác trong phạm vi 10 mét quanh mục tiêu đó và trong tầm nhìn thẳng của bạn, mỗi người bằng 50% lượng máu đã hồi. Những lượt hồi máu thêm này không thể chí mạng hay tạo liên kết Giáo Lý. (Dấu ấn Giáo Lý)',
   'entities.abilities.solar_invocation.description':
     'Tức thời hồi {damage} máu cho một đồng minh hoặc gây sát thương Thánh vừa phải lên kẻ địch. Cả hai cách dùng đều tạo 1 Sùng Tín. Trong Thăng Thiên, một lần niệm hồi máu cũng hồi một nửa cho các người chơi đồng minh trong 10 m quanh mục tiêu.',
   'entities.abilities.solar_step.description': 'Tăng 150% tốc độ di chuyển của bạn trong 2 giây.',

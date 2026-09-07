@@ -1,3 +1,4 @@
+import { type AbilityOutputScaling, buildAbilityOutputScaling } from '../ability_output_scaling';
 import { resolveTalentHitMult } from '../talent_hit_mult';
 import {
   type AbilityDef,
@@ -3156,7 +3157,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
       'Strike from the shadows for 250% weapon damage plus $d. Must be stealthed and behind the target. Requires a dagger. Awards 1 combo point.',
     specNotes: {
       subtlety:
-        'Used from Duskveil this adds 1 Gloam (max 3). At 3 Gloam you can use it WITHOUT stealth and from any angle: that use costs nothing, spends all 3 Gloam, starts the 6 sec Shadow Veil, and hits for double.',
+        'From Duskveil, double both the weapon damage and flat bonus, and gain 1 Gloam (max 3). Stealth still requires a dagger and attacking from behind. At 3 Gloam, using this without stealth costs nothing, spends all 3 Gloam and starts Shadow Veil for 6 sec. Veiled Edge adds 50% to its weapon damage, without increasing the flat bonus. Veiled Edge does not stack with the stealth bonus.',
     },
   },
   stealth: {
@@ -3992,6 +3993,10 @@ export const ABILITIES: Record<string, AbilityDef> = {
     ],
     description:
       'Shoot the target for $d Arcane damage. Damage increases with Ranged Attack Power.',
+    specNotes: {
+      marksmanship:
+        'Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read.',
+    },
   },
   concussive_shot: {
     id: 'concussive_shot',
@@ -4159,7 +4164,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: true,
     effects: [{ type: 'directDamage', min: 89, max: 109 }],
     description:
-      'Shoot the target for $d Physical damage. Damage increases with Ranged Attack Power.',
+      'Shoot the target for $d Physical damage. Damage increases with Ranged Attack Power. Coldsight Read from a completed Fevered Draw makes your next Long Draw deal 50% more damage. Starting the cast spends Read.',
   },
   rapid_fire: {
     id: 'rapid_fire',
@@ -4180,7 +4185,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: true,
     effects: [{ type: 'directDamage', min: 19, max: 26 }],
     description:
-      'Fire 6 shots over 2.4 sec while moving. Each shot deals $d Physical damage and increases with Ranged Attack Power.',
+      'Fire 6 shots over 2.4 sec while moving. Each shot deals $d Physical damage and increases with Ranged Attack Power. Completing all 6 shots grants Coldsight Read for 10 sec: your next Long Draw deals 50% more damage, or your next Fell Shot deals 75% more. Starting either shot spends Read, even if interrupted.',
   },
   shrapnel_charge: {
     id: 'shrapnel_charge',
@@ -4337,7 +4342,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
       },
     ],
     description:
-      'Deal $d Holy damage. Damage increases with Spell Power. Doctrine: heal each linked ally for 30% of the damage. If no ally is linked, heal the lowest-health party member for 15%.',
+      'Deal $d Holy damage. Damage increases with Spell Power. Doctrine converts this damage into healing through your links. If no injured linked group member is within 30 yards, heal the lowest-health injured group member within 30 yards for 15% of the damage.',
   },
   lesser_heal: {
     id: 'lesser_heal',
@@ -4416,7 +4421,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
       },
     ],
     description:
-      'Deal $d total Shadow damage over 18 sec, once every 3 sec. Damage increases with Spell Power. Vespers: deal 10% more damage, and each tick on your Effigy grants 1 Gloomtithe.',
+      'Deal $d total Shadow damage over 18 sec, once every 3 sec. Damage increases with Spell Power. Vespers already includes 10% more damage and grants 1 Gloomtithe per tick on your Effigy. Reapplying your active Dirge to an enemy mob refreshes your existing Dirges on all living hostile mobs within 30 yards of you and in line of sight. This does not spread Dirge to new targets.',
   },
   power_word_shield: {
     id: 'power_word_shield',
@@ -4452,7 +4457,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
       },
     ],
     description:
-      'Shield a friendly target, absorbing $d damage for 30 sec. Doctrine also links the target to your Holy damage for 30 sec.',
+      'Shield a friendly target, absorbing $d damage for 30 sec. Doctrine also links the target for 30 sec. Your Scouring Hymn and hostile Scouring Mercy heal linked group members while they are within 30 yards of you.',
   },
   renew: {
     id: 'renew',
@@ -8458,6 +8463,7 @@ for (const abilityId of PALADIN_LEGACY_ABILITY_IDS) {
 // sim's ResolvedAbility.
 export interface KnownAbility {
   def: AbilityDef;
+  outputScaling?: AbilityOutputScaling;
   rank: number;
   cost: number;
   castTime: number;
@@ -8518,6 +8524,12 @@ function scaleEffect(
   hotMult: number,
   absorbMult: number,
   flat: number,
+  // v0.42.0 class balance: dmgMult WITHOUT the offense-only spec tuning
+  // (talent_hit_mult.ts's legacyDmgMult), used ONLY by the flat-magnitude
+  // buff branch below so the new offense-only component can never inflate an
+  // armor/stat/spellpower buff riding the same ability. Required, not
+  // defaulted to dmgMult: a future call site must choose explicitly.
+  buffDmgMult: number,
 ): AbilityEffect {
   switch (eff.type) {
     case 'weaponDamage':
@@ -8671,7 +8683,7 @@ function scaleEffect(
     case 'buffTarget':
     case 'selfBuff':
       return SCALABLE_BUFF_KINDS.has(eff.kind)
-        ? { ...eff, value: Math.round(eff.value * dmgMult + flat) }
+        ? { ...eff, value: Math.round(eff.value * buffDmgMult + flat) }
         : eff;
     case 'lifeTap':
       // Same policy as gainResource below: a health-to-mana conversion is
@@ -8721,6 +8733,7 @@ function scaleEffect(
 // melee/spell/heal mults apply to every ability of the right school; per-ability
 // mods stack on top and also tune cost / cast time / cooldown.
 export function applyTalentMods(entry: KnownAbility, mods: TalentModifiers): void {
+  entry.outputScaling = buildAbilityOutputScaling(entry.def, entry.def.class, mods);
   const am = mods.abilities[entry.def.id];
   // dmgMult/healMult come from the shared talent_hit_mult resolver: the SAME
   // function combat sites (effect_dispatch.ts/casting_lifecycle.ts/auto_attack.ts)
@@ -8730,7 +8743,7 @@ export function applyTalentMods(entry: KnownAbility, mods: TalentModifiers): voi
   // magic school: `scalesWith: 'ranged'` is exclusively set on hunter abilities
   // (arcane_shot, serpent_sting, wyvern_sting are non-physical), so Marksmanship's
   // Iron Aim ("ranged ability damage") reaches Arcane Shot, the spec's arcane nuke.)
-  const { dmgMult, healMult } = resolveTalentHitMult(entry.def, mods);
+  const { dmgMult, healMult, legacyDmgMult } = resolveTalentHitMult(entry.def, mods);
   const dotMult = 1 + mods.global.dotDmgPct;
   const hotMult = 1 + mods.global.hotHealPct;
   const absorbMult = 1 + mods.global.absorbPct;
@@ -8749,7 +8762,7 @@ export function applyTalentMods(entry: KnownAbility, mods: TalentModifiers): voi
     flat !== 0
   ) {
     entry.effects = entry.effects.map((e) =>
-      scaleEffect(e, dmgMult, healMult, dotMult, hotMult, absorbMult, flat),
+      scaleEffect(e, dmgMult, healMult, dotMult, hotMult, absorbMult, flat, legacyDmgMult),
     );
   }
   if (am) {

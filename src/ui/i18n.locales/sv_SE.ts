@@ -12748,7 +12748,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Skyddar en allierad i 30 sek. Den första träffen som för denne under 35% hälsa förbrukar Vakan och läker denne för {buff}. (Välsignelsesignatur)',
   'entities.abilities.scouring_mercy.description':
-    'Gör 72 till 84 helig skada på en fiende eller läker ett vänligt mål för 130 till 155. Båda beloppen ökar med besvärjelsekraft. Skadan läker även varje läroförbunden allierad för 30%, eller gruppmedlemmen med lägst hälsa för 15% om ingen allierad är förbunden. (Lärosignatur)',
+    'Orsakar {damage} helig skada på en fiende eller läker ett vänligt mål med {healing}. Skadan ökar med besvärjelsekraft; läkningen ökar med läkekraft. Läran omvandlar denna skada till läkning genom dina band. Om ingen bunden skadad gruppmedlem finns inom 30 meter, läks gruppmedlemmen med lägst hälsa inom 30 meter för 15% av skadan. Att läka en gruppmedlem läker även upp till 2 andra skadade gruppmedlemmar inom 10 meter från det målet och inom din siktlinje, var och en för 50% av den återställda hälsan. Denna extra läkning kan varken bli kritisk eller skapa Läro-band. (Lärosignatur)',
   'entities.abilities.solar_invocation.description':
     'Läker omedelbart en allierad för {damage} eller gör måttlig helig skada på en fiende. Båda användningarna genererar 1 hängivenhet. Under Upphöjelse läker en läkande kastning även allierade spelare inom 10 m av målet för hälften.',
   'entities.abilities.solar_step.description': 'Ökar din förflyttningshastighet med 150% i 2 sek.',

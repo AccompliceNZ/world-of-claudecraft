@@ -13229,7 +13229,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Protege a un aliado durante 30 s. El primer golpe que lo deje por debajo del 35% de salud consume la Vigilia y lo sana por {buff}. (Distintivo de Bendición)',
   'entities.abilities.scouring_mercy.description':
-    'Inflige de 72 a 84 de daño Sagrado a un enemigo o sana a un objetivo amistoso de 130 a 155. Ambas cantidades aumentan con el poder con hechizos. El daño también sana un 30% a cada aliado vinculado por Doctrina, o un 15% al miembro del grupo con menos salud si no hay ninguno vinculado. (Distintivo de Doctrina)',
+    'Inflige {damage} de daño Sagrado a un enemigo o sana a un objetivo amistoso por {healing}. El daño aumenta con el poder con hechizos; la sanación aumenta con el poder de sanación. La Doctrina convierte este daño en sanación a través de tus vínculos. Si ningún miembro del grupo vinculado y herido está a 30 metros, sana al miembro del grupo herido con menos salud a 30 metros por el 15% del daño. Sanar a un miembro del grupo también sana hasta a otros 2 miembros del grupo heridos a 10 metros de ese objetivo y dentro de tu línea de visión, cada uno por el 50% de la salud restaurada. Estas sanaciones adicionales no pueden ser críticas ni crear vínculos de Doctrina. (Distintivo de Doctrina)',
   'entities.abilities.solar_invocation.description':
     'Sana al instante a un aliado por {damage} o inflige daño Sagrado moderado a un enemigo. Cualquiera de los dos usos genera 1 de Devoción. Durante la Ascensión, un lanzamiento de sanación también sana a los jugadores aliados a menos de 10 m del objetivo por la mitad.',
   'entities.abilities.solar_step.description':

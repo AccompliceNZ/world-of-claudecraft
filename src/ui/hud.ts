@@ -51,9 +51,6 @@ import {
 } from '../sim/account_flair';
 import { isOwnAura } from '../sim/aura_classify';
 import { bagPools } from '../sim/bags';
-import { resolveActionReplacement } from '../sim/combat/action_replacement';
-import { resolveColdsightAbilityForSpec } from '../sim/combat/hunter_coldsight';
-import { resolveHunterSharedAbilityForTalents } from '../sim/combat/hunter_shared';
 import { warriorParryChance } from '../sim/combat/warrior_hit_table';
 import { DEEDS } from '../sim/content/deeds';
 import { HEROIC_MARK_ITEM_ID } from '../sim/content/dungeon_difficulty';
@@ -7190,23 +7187,15 @@ export class Hud {
   }
 
   abilityForSlot(barSlot: number): ResolvedAbility | null {
-    // barSlot 1..33 (three desktop rows of eleven configurable slots)
+    // barSlot 1..33 (three desktop rows of eleven configurable slots). The
+    // saved binding keeps the base id while the painted button follows aura
+    // and talent state: IWorld.resolvedAbility runs the same resolution chain
+    // Sim.resolvedAbility does (action-slot replacement, the spec-gated
+    // resolvers, then the post-transform talent-mod bake), so a transformed
+    // or class-tuned ability shows exactly what would actually be cast.
     const action = this.actionForSlot(barSlot);
     if (action?.type !== 'ability') return null;
-    const known = this.sim.known.find((entry) => entry.def.id === action.id) ?? null;
-    if (!known) return null;
-    // Action-slot replacement: the saved binding keeps the base id while the
-    // painted button follows the aura state, the same pure resolution the sim
-    // cast path uses (rogue engine transforms for every class, plus the
-    // hunter-specific resolvers below).
-    const resolved = resolveActionReplacement(known, this.sim.player);
-    if (this.sim.cfg.playerClass !== 'hunter') return resolved;
-    const coldsight = resolveColdsightAbilityForSpec(
-      resolved,
-      this.sim.player,
-      this.sim.talents.spec,
-    );
-    return resolveHunterSharedAbilityForTalents(coldsight, this.sim.player, this.sim.talents);
+    return this.sim.resolvedAbility(action.id);
   }
 
   private itemForSlot(barSlot: number): ItemDef | null {

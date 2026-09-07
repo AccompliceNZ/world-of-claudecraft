@@ -546,13 +546,20 @@ const MONOLITHS: MonolithRow[] = [
     // Plus 2 for the Phase B set-bonus seam: the set_bonus_mods import and
     // the setPlayerLevel writer routing through computeCharacterModifiers
     // (the resolver itself is the extracted module). Exact count, zero slack.
-    // Re-pinned at the 2026-09-07 release/v0.42.0 sync of the Drakelands
-    // map-improvements epic (PR #3746): the /dev freezemobs loop skip and aggro refusal paid for by moving the sandbox scenario data to dev/dev_sandbox_config.ts. Measured with wc -l on the
-    // merged tree. Exact merged count, zero headroom.
-    // Re-pinned 12272 -> 12284 at the Nythraxis redo sync (PR #3848 landed ahead in
-    // the queue; its arms sat under release's slack, so its pin never moved).
-    // Measured with wc -l on the merged tree. Exact merged count, zero headroom.
-    ceiling: 12284,
+    // Lowered to the measured size after extracting 28 lines of cost
+    // resolution and closing 224 lines of existing headroom (PR 3917).
+    // The resolved ability cost tail
+    // (the Measured Fury discount, the draining-curse cost_tax read, Aether
+    // Surge's per-charge ramp) moved into applyAbilityCostTail in
+    // combat/ability_resolution.ts, shared with ClientWorld.resolvedAbility
+    // (src/net/online.ts, unchanged at its own exact ceiling); the now-dead
+    // private costTaxMult helper and the aetherSurgeCostMult import went with
+    // it. Exact count, zero slack.
+    // Threat calculation moved to combat/threat_modifiers.ts after the
+    // Nythraxis release merge. Exact merged count remains below both parents.
+    // The Drakelands sandbox extraction and dev-freeze additions preserve
+    // this exact count after the next release integration.
+    ceiling: 12212,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -776,19 +783,15 @@ const MONOLITHS: MonolithRow[] = [
     // Down 5898 -> 5873 for the per-surface action-bar profiles: the
     // debounced upload moved to src/net/action_bar_upload.ts
     // (ActionBarLayoutUploader). Exact count.
-    // Re-pinned at the PR #3848 release/v0.42.0 sync: this branch's own
-    // ground-telegraph extraction (the decode block for rings, Ignivar
-    // meteors, the Varkhul families, hourglasses and consecrations, plus
-    // the two new Nythraxis families, all moved behind
-    // applyGroundTelegraphSnapshot in src/net/ground_telegraph_wire.ts)
-    // lands alongside the release arm's guild bank transaction history
-    // extraction (the log mirror's fields, the gbanklog install, and the
-    // request gate moved to src/net/guild_bank_log_mirror.ts,
-    // GuildBankLogMirror; what stays here is the two one-line IWorld arms
-    // that put its requests on the wire), so the merged file sits below
-    // both single-arm counts (5860 and 5856). Measured on the merged tree,
-    // never reconciled by arithmetic. Exact merged count, zero slack.
-    ceiling: 5843,
+    // Down 5873 -> 5856 for the guild bank transaction history: the log
+    // mirror's fields, the gbanklog install, and the request gate moved to
+    // src/net/guild_bank_log_mirror.ts (GuildBankLogMirror); what stays is
+    // the two one-line IWorld arms that put its requests on the wire. Exact
+    // count.
+    // The class-balance ability presentation and release Nythraxis ground
+    // telegraph extractions both survive the merge. The combined file is
+    // measured at 5842 lines, below both parent pins (5855 and 5843).
+    ceiling: 5842,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

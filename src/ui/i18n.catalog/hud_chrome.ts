@@ -3812,6 +3812,15 @@ export const hudChromeStrings = {
     veilstrikeWindow:
       'Shadow Veil: your Duskveil openers are usable in the open from any angle, and damage dealt is increased by {pct}%',
     veiledEdge: "Your next Lurker's Strike strikes for double",
+    // v0.42.0 Skulduggery: veiledEdge's bonus is now tuned (halved from the
+    // old flat double) and read live off the aura's real value; a NEW key
+    // rather than reshaping veiledEdge, whose existing translations have no
+    // {pct} token. veiledEdge itself is left as dead English, unreferenced.
+    veiledEdgeStrike: "Your next Lurker's Strike deals {pct}% more weapon damage",
+    // v0.42.0 Coldsight: the choice a completed Fevered Draw banks. Neither
+    // shot is movement-gated (Fell Shot is just the mobile-friendly one).
+    coldsightRead:
+      'Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more',
     duskEconomy: 'Abilities cost {pct}% less energy',
     moontide:
       'Moontide {stacks}/{max}. Wildbolt, Skyfall, and Moonseed casts in Moonwing Form each add 1. At {max}: Moonseed becomes Moonsurge and Skyfall becomes Sunwake, and using either spends all 3',

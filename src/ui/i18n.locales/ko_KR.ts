@@ -3385,6 +3385,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.serpent_sting.description': '15초에 걸쳐 3초마다 한 번씩, 모두 {damage}의 자연 피해를 입힙니다. 피해량은 원거리 전투력에 따라 증가합니다.',
   'entities.abilities.arcane_shot.name': '사악한 사격',
   'entities.abilities.arcane_shot.description': '대상을 쏘아 {damage}의 비전 피해를 입힙니다. 피해량은 원거리 전투력에 따라 증가합니다.',
+  'entities.abilities.arcane_shot.specNote_marksmanship':
+    '열광의 연사를 완료해 얻은 냉정한 시선의 간파는 다음 사악한 사격이 입히는 피해를 75% 증가시킵니다. 사격을 발사하면 간파를 소모합니다.',
   'entities.abilities.concussive_shot.name': '뒤흔드는 사격',
   'entities.abilities.concussive_shot.description': '대상을 쏘아 {damage}의 물리 피해를 입히고 4초 동안 50% 둔화시킵니다. 피해량은 원거리 전투력에 따라 증가합니다.',
   'entities.abilities.mongoose_bite.name': '상처 가르기',
@@ -13180,7 +13182,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '이동 속도가 35% 증가하지만 매초 최대 생명력의 2%를 잃습니다. 다시 시전하면 해제됩니다. 생명력이 20%가 되면 자동으로 꺼집니다.',
   'entities.abilities.sacrilegious_march.name': '신성모독 행군',
   'entities.abilities.scouring_mercy.description':
-    '적을 신성한 힘으로 정화하거나 아군 대상을 즉시 치유합니다. 교리 고유 능력입니다.',
+    '적에게 {damage}의 신성 피해를 입히거나 아군 대상을 {healing}만큼 치유합니다. 피해는 주문력에 비례해 증가하고, 치유는 치유력에 비례해 증가합니다. 교리는 이 피해를 유대를 통해 치유로 전환합니다. 30미터 이내에 유대가 맺어진 부상당한 파티원이 없으면, 30미터 이내에서 생명력이 가장 낮은 부상당한 파티원을 피해량의 15%만큼 치유합니다. 파티원을 치유하면 해당 대상으로부터 10미터 이내에 있고 시야가 확보된 다른 부상당한 파티원 최대 2명도 함께 치유하며, 각각 회복된 생명력의 50%만큼 치유합니다. 이 추가 치유는 치명타가 발생하지 않으며 교리 유대를 생성하지 않습니다. (교리 고유 능력)',
   'entities.abilities.scouring_mercy.name': '정화의 자비',
   'entities.abilities.sentence.description':
     '모든 단죄와 운명의 실을 소모해 적에게 선고를 내립니다. 실 하나당 피해가 6% 증가하고, 추가 효과는 단죄 20, 50, 80, 100에서 강화됩니다. 16레벨 이후 피해 증가폭이 완만해집니다.',
@@ -14001,6 +14003,9 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.temporalEcho':
     '시전자의 비전 피해가 단일 대상 피해의 {singlePct}%, 광역 피해의 {areaPct}%만큼 당신을 치유합니다',
   'hudChrome.auraEffect.veiledEdge': '다음 잠복자의 일격이 두 배의 피해를 입힙니다',
+  'hudChrome.auraEffect.veiledEdgeStrike': '다음 잠복자의 일격이 입히는 무기 피해가 {pct}% 증가합니다',
+  'hudChrome.auraEffect.coldsightRead':
+    '다음 긴 시위가 입히는 피해가 {longDrawPct}% 증가하거나, 다음 사악한 사격이 입히는 피해가 {fellShotPct}% 증가합니다',
   'hudChrome.auraEffect.veilstrikeWindow':
     '그림자에 휩싸임: 황혼장막 전용 선제 기술을 어느 각도에서든 사용할 수 있고, 주는 피해가 {pct}% 증가합니다',
   'hudChrome.auraEffect.venomRitual':

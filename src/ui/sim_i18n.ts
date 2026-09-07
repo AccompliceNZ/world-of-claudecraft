@@ -830,6 +830,8 @@ const baseEnTable = {
   'aura.verdance': 'Verdance',
   'aura.lopingStride': 'Loping Stride',
   'aura.marrowbreak': 'Marrowbreak',
+  // Coldsight's banked Fevered Draw opportunity (combat/hunter_coldsight_read.ts).
+  'aura.coldsightRead': 'Coldsight Read',
   // Card Duel minigame (Card Master NPC, src/sim/social/card_duel.ts).
   'log.cardDuelQueued': 'You queue for a Card Duel.',
   'log.cardDuelLeftQueue': 'You leave the Card Duel queue.',
@@ -9537,6 +9539,7 @@ const AURA_NAME_KEY: Record<string, SimMessageKey> = {
   'Old Blood': 'aura.oldBlood',
   Verdance: 'aura.verdance',
   'Loping Stride': 'aura.lopingStride',
+  'Coldsight Read': 'aura.coldsightRead',
   Marrowbreak: 'aura.marrowbreak',
   // Bladed Gyre's armed echo buff (whirlwind's selfBuff auraName in
   // src/sim/content/classes.ts); shown on the buff bar and combat log.

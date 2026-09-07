@@ -12809,7 +12809,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Chroni sojusznika przez 30 s. Pierwszy cios, który zepchnie go poniżej 35% zdrowia, zużywa Straż i leczy go za {buff}. (Sygnatura Błogosławieństwa)',
   'entities.abilities.scouring_mercy.description':
-    'Zadaje od 72 do 84 obrażeń Świętych wrogowi albo leczy sojuszniczy cel za 130 do 155. Obie wartości rosną wraz z mocą zaklęć. Obrażenia leczą także każdego sojusznika związanego Doktryną za 30% albo członka drużyny o najniższym zdrowiu za 15%, jeśli nikt nie jest związany. (Sygnatura Doktryny)',
+    'Zadaje {damage} obrażeń Świętych wrogowi albo leczy sojuszniczy cel o {healing}. Obrażenia rosną wraz z mocą zaklęć, a leczenie z mocą leczenia. Doktryna zamienia te obrażenia w leczenie poprzez twoje więzi. Jeśli żaden związany ranny członek drużyny nie znajduje się w promieniu 30 metrów, leczy rannego członka drużyny o najniższym zdrowiu w promieniu 30 metrów za 15% obrażeń. Wyleczenie członka drużyny leczy też do 2 innych rannych członków drużyny w promieniu 10 metrów od tego celu i w twojej linii wzroku, każdego za 50% przywróconego zdrowia. Te dodatkowe leczenia nie mogą być krytyczne ani tworzyć więzi Doktryny. (Sygnatura Doktryny)',
   'entities.abilities.solar_invocation.description':
     'Natychmiast leczy sojusznika za {damage} albo zadaje umiarkowane obrażenia Święte wrogowi. Oba zastosowania generują 1 Oddanie. Podczas Wzniesienia rzut leczący leczy także sojuszniczych graczy w promieniu 10 m od celu o połowę.',
   'entities.abilities.solar_step.description': 'Zwiększa twoją prędkość ruchu o 150% na 2 s.',

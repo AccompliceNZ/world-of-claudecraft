@@ -2869,6 +2869,8 @@ export const pt_BR: EnTranslations = {
       "redline": "Linha Vermelha: marca {stacks} de {max}. Golpes no Corpo adicionam marcas; o Golpe de Misericórdia atinge {pct}% mais forte por marca e encerra a janela. Se expirar antes, ela é perdida",
       "veilstrikeWindow": "Véu de Sombras: suas aberturas do Véu Crepuscular podem ser usadas a céu aberto de qualquer ângulo, e o dano causado aumenta {pct}%",
       "veiledEdge": "Seu próximo Golpe do Espreitador atinge em dobro",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "As habilidades custam {pct}% menos energia",
       "moontide": "Maré Lunar: estágio {stacks} de {max}. Lançamentos de Raio Selvagem, Queda Celeste e Semente Lunar a enchem na Forma de Luniscante; com {max}, Semente Lunar vira Onda Lunar e Queda Celeste vira Esteira Solar, e qualquer uma a gasta",
       "oldBlood": "Sangue Antigo: estágio {stacks} de {max}. Golpes conectados de Lobo e Bruin compartilham este banco; com {max}, Mordida Sanguinária ou Esmaga-Ossos se transforma",
@@ -10895,7 +10897,8 @@ export const pt_BR: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Tiro Vil",
-        "description": "Atira no alvo causando {damage} de dano Arcano. O dano aumenta com o poder de ataque à distância."
+        "description": "Atira no alvo causando {damage} de dano Arcano. O dano aumenta com o poder de ataque à distância.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Tiro Desnorteante",
@@ -11926,7 +11929,7 @@ export const pt_BR: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Misericórdia Purificadora",
-        "description": "Causa de 72 a 84 de dano Sagrado a um inimigo ou cura um alvo aliado de 130 a 155. Ambos os valores aumentam com o poder mágico. O dano também cura em 30% cada aliado vinculado pela Doutrina, ou em 15% o membro do grupo com menos vida se nenhum aliado estiver vinculado. (Distintivo de Doutrina)"
+        "description": "Causa {damage} de dano Sagrado a um inimigo ou cura um alvo aliado em {healing}. O dano aumenta com o poder mágico; a cura aumenta com o poder de cura. A Doutrina converte esse dano em cura através dos seus vínculos. Se nenhum aliado vinculado e ferido do grupo estiver a até 30 metros, cura o membro do grupo ferido com menos vida a até 30 metros em 15% do dano. Curar um membro do grupo também cura até 2 outros membros do grupo feridos a até 10 metros desse alvo e na sua linha de visão, cada um em 50% da vida restaurada. Essas curas extras não podem ser críticas nem criar vínculos de Doutrina. (Distintivo de Doutrina)"
       },
       "seraphic_vigil": {
         "name": "Vigília Seráfica",

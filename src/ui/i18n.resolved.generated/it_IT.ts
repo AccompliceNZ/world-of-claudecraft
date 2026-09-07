@@ -2869,6 +2869,8 @@ export const it_IT: EnTranslations = {
       "redline": "Linea Rossa: tacca {stacks} su {max}. I Colpi al Corpo aggiungono tacche; il Colpo di Grazia colpisce il {pct}% più forte per tacca e chiude la finestra. Se scade prima, va persa",
       "veilstrikeWindow": "Velo d'Ombra: le tue aperture del Velo Crepuscolare sono utilizzabili allo scoperto da qualsiasi angolazione, e i danni inflitti aumentano del {pct}%",
       "veiledEdge": "Il tuo prossimo Colpo dell'Agguato colpisce il doppio",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Le abilità costano il {pct}% di energia in meno",
       "moontide": "Marea Lunare: stadio {stacks} di {max}. I lanci di Dardo Silvano, Caduta Celeste e Seme Lunare la riempiono in Forma di Lunagufo; a {max}, Seme Lunare diventa Ondata Lunare e Caduta Celeste diventa Scia Solare, ed entrambe la spendono",
       "oldBlood": "Sangue Antico: stadio {stacks} di {max}. I colpi a segno in Lupo e Bruin condividono questa riserva; a {max}, Morso Cruento o Frantumaossa si trasforma",
@@ -10895,7 +10897,8 @@ export const it_IT: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Tiro Nefasto",
-        "description": "Colpisce il bersaglio per {damage} danni Arcani. Il danno aumenta con la potenza d'attacco a distanza."
+        "description": "Colpisce il bersaglio per {damage} danni Arcani. Il danno aumenta con la potenza d'attacco a distanza.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Tiro Scuotente",
@@ -11926,7 +11929,7 @@ export const it_IT: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Misericordia Purificatrice",
-        "description": "Infligge da 72 a 84 danni Sacri a un nemico oppure cura un bersaglio alleato da 130 a 155. Entrambi gli importi aumentano con la potenza magica. I danni curano inoltre del 30% ogni alleato legato dalla Dottrina, o del 15% il membro del gruppo con meno salute se nessun alleato è legato. (Distintivo di Dottrina)"
+        "description": "Infligge {damage} danni Sacri a un nemico oppure cura un bersaglio alleato di {healing}. I danni aumentano con la potenza magica; le cure aumentano con il potere di guarigione. La Dottrina converte questi danni in cure attraverso i tuoi legami. Se nessun alleato legato e ferito del gruppo si trova entro 30 metri, cura il membro del gruppo ferito con meno salute entro 30 metri per il 15% del danno. Curare un membro del gruppo cura anche fino a 2 altri membri del gruppo feriti entro 10 metri da quel bersaglio e nella tua linea di vista, ciascuno per il 50% della salute ripristinata. Queste cure aggiuntive non possono essere critiche né creare legami di Dottrina. (Distintivo di Dottrina)"
       },
       "seraphic_vigil": {
         "name": "Veglia Serafica",

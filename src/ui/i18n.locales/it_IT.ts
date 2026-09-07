@@ -12977,7 +12977,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Protegge un alleato per 30 s. Il primo colpo che lo porta sotto il 35% di salute consuma la Veglia e lo cura per {buff}. (Distintivo di Benedizione)',
   'entities.abilities.scouring_mercy.description':
-    'Infligge da 72 a 84 danni Sacri a un nemico oppure cura un bersaglio alleato da 130 a 155. Entrambi gli importi aumentano con la potenza magica. I danni curano inoltre del 30% ogni alleato legato dalla Dottrina, o del 15% il membro del gruppo con meno salute se nessun alleato è legato. (Distintivo di Dottrina)',
+    'Infligge {damage} danni Sacri a un nemico oppure cura un bersaglio alleato di {healing}. I danni aumentano con la potenza magica; le cure aumentano con il potere di guarigione. La Dottrina converte questi danni in cure attraverso i tuoi legami. Se nessun alleato legato e ferito del gruppo si trova entro 30 metri, cura il membro del gruppo ferito con meno salute entro 30 metri per il 15% del danno. Curare un membro del gruppo cura anche fino a 2 altri membri del gruppo feriti entro 10 metri da quel bersaglio e nella tua linea di vista, ciascuno per il 50% della salute ripristinata. Queste cure aggiuntive non possono essere critiche né creare legami di Dottrina. (Distintivo di Dottrina)',
   'entities.abilities.solar_invocation.description':
     "Cura all'istante un alleato per {damage} oppure infligge danni Sacri moderati a un nemico. Entrambi gli usi generano 1 Devozione. Durante l'Ascensione, un lancio di cura cura anche i giocatori alleati entro 10 m dal bersaglio per metà.",
   'entities.abilities.solar_step.description':

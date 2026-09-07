@@ -2869,6 +2869,8 @@ export const sv_SE: EnTranslations = {
       "redline": "Röd linje: hack {stacks} av {max}. Kroppsträffar lägger till hack; Nådastöten slår {pct}% hårdare per hack och stänger fönstret. Går det ut först förloras det",
       "veilstrikeWindow": "Skuggslöja: dina skymningsslöjeöppningar kan användas i öppen terräng från valfri vinkel, och skadan du gör ökar med {pct}%",
       "veiledEdge": "Ditt nästa lurarslag slår dubbelt så hårt",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Förmågor kostar {pct}% mindre energi",
       "moontide": "Månflod: steg {stacks} av {max}. Vildbult-, Himlafall- och Månfrö-besvärjelser fyller den i Månugglaform; vid {max} blir Månfrö Månsvall och Himlafall Solspår, och båda tär på den",
       "oldBlood": "Gammalt Blod: steg {stacks} av {max}. Träffande Varg- och Bruin-slag delar detta förråd; vid {max} förvandlas Blodsbett eller Benkross",
@@ -10895,7 +10897,8 @@ export const sv_SE: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Ondskeskott",
-        "description": "Skjuter målet för {damage} Arkan skada. Skadan ökar med anfallskraft på avstånd."
+        "description": "Skjuter målet för {damage} Arkan skada. Skadan ökar med anfallskraft på avstånd.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Skakande skott",
@@ -11926,7 +11929,7 @@ export const sv_SE: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Rensande nåd",
-        "description": "Gör 72 till 84 helig skada på en fiende eller läker ett vänligt mål för 130 till 155. Båda beloppen ökar med besvärjelsekraft. Skadan läker även varje läroförbunden allierad för 30%, eller gruppmedlemmen med lägst hälsa för 15% om ingen allierad är förbunden. (Lärosignatur)"
+        "description": "Orsakar {damage} helig skada på en fiende eller läker ett vänligt mål med {healing}. Skadan ökar med besvärjelsekraft; läkningen ökar med läkekraft. Läran omvandlar denna skada till läkning genom dina band. Om ingen bunden skadad gruppmedlem finns inom 30 meter, läks gruppmedlemmen med lägst hälsa inom 30 meter för 15% av skadan. Att läka en gruppmedlem läker även upp till 2 andra skadade gruppmedlemmar inom 10 meter från det målet och inom din siktlinje, var och en för 50% av den återställda hälsan. Denna extra läkning kan varken bli kritisk eller skapa Läro-band. (Lärosignatur)"
       },
       "seraphic_vigil": {
         "name": "Serafisk vaka",

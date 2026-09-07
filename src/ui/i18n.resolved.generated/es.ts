@@ -2869,6 +2869,8 @@ export const es: EnTranslations = {
       "redline": "Línea Roja: muesca {stacks} de {max}. Los Golpes al Cuerpo suman muescas; el Golpe de Gracia pega un {pct}% más fuerte por muesca y cierra la ventana. Si expira antes, se pierde",
       "veilstrikeWindow": "Velo de Sombras: tus aperturas de Velo Crepuscular pueden usarse a campo abierto desde cualquier ángulo, y el daño infligido aumenta un {pct}%",
       "veiledEdge": "Tu próximo Golpe del Acechador golpea por el doble",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Las habilidades cuestan un {pct}% menos de energía",
       "moontide": "Marea Lunar: fase {stacks} de {max}. Los lanzamientos de Descarga Silvestre, Caída Celeste y Semilla Lunar la llenan en Forma de lechúcico lunar; con {max}, Semilla Lunar se convierte en Oleada Lunar y Caída Celeste en Estela Solar, y cualquiera de las dos la gasta",
       "oldBlood": "Sangre Antigua: fase {stacks} de {max}. Los golpes conectados de lobo y Bruin comparten este banco; con {max}, Mordisco Sangriento o Rompehuesos se transforma",
@@ -10895,7 +10897,8 @@ export const es: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Disparo Funesto",
-        "description": "Dispara al objetivo por {damage} de daño Arcano. El daño aumenta con el poder de ataque a distancia."
+        "description": "Dispara al objetivo por {damage} de daño Arcano. El daño aumenta con el poder de ataque a distancia.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Disparo Aturdidor",
@@ -11926,7 +11929,7 @@ export const es: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Misericordia Purgante",
-        "description": "Inflige de 72 a 84 de daño Sagrado a un enemigo o sana a un objetivo amistoso de 130 a 155. Ambas cantidades aumentan con el poder con hechizos. El daño también sana un 30% a cada aliado vinculado por Doctrina, o un 15% al miembro del grupo con menos salud si no hay ninguno vinculado. (Distintivo de Doctrina)"
+        "description": "Inflige {damage} de daño Sagrado a un enemigo o sana a un objetivo amistoso por {healing}. El daño aumenta con el poder con hechizos; la sanación aumenta con el poder de sanación. La Doctrina convierte este daño en sanación a través de tus vínculos. Si ningún miembro del grupo vinculado y herido está a 30 metros, sana al miembro del grupo herido con menos salud a 30 metros por el 15% del daño. Sanar a un miembro del grupo también sana hasta a otros 2 miembros del grupo heridos a 10 metros de ese objetivo y dentro de tu línea de visión, cada uno por el 50% de la salud restaurada. Estas sanaciones adicionales no pueden ser críticas ni crear vínculos de Doctrina. (Distintivo de Doctrina)"
       },
       "seraphic_vigil": {
         "name": "Vigilia Seráfica",
