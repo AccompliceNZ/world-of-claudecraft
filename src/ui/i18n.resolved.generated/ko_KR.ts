@@ -14024,6 +14024,48 @@ export const ko_KR: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "꺼진 불꽃의 마법봉"
       },
+      "bramblehide_crown": {
+        "name": "루츠의 가시덤불가죽 왕관"
+      },
+      "bramblehide_mantle": {
+        "name": "루츠의 가시덤불가죽 어깨보호구"
+      },
+      "bramblehide_harness": {
+        "name": "루츠의 가시덤불가죽 흉갑"
+      },
+      "bramblehide_cinch": {
+        "name": "루츠의 가시덤불가죽 허리띠"
+      },
+      "bramblehide_legguards": {
+        "name": "루츠의 가시덤불가죽 다리보호구"
+      },
+      "bramblehide_grips": {
+        "name": "루츠의 가시덤불가죽 장갑"
+      },
+      "bramblehide_treads": {
+        "name": "루츠의 가시덤불가죽 장화"
+      },
+      "courtiers_bonefang": {
+        "name": "조신의 뼈송곳니"
+      },
+      "thornpeak_wardblade": {
+        "name": "가시봉우리 수호검"
+      },
+      "gravecourt_hewer": {
+        "name": "무덤궁정 도끼"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "불사 궁정의 봉헌 방패"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "가시봉우리 달가죽 두건"
+      },
+      "stormhymn_chain_grips": {
+        "name": "폭풍찬가 사슬 장갑"
+      },
+      "stormhymn_chain_treads": {
+        "name": "폭풍찬가 사슬 장화"
+      },
       "conjured_water4": {
         "name": "창조된 샘물"
       },
@@ -19029,6 +19071,12 @@ export const ko_KR: EnTranslations = {
       "boundstone_vanguard": {
         "name": "속박석 선봉대",
         "bonus3": "공격 속도와 시전 속도가 15% 증가합니다."
+      },
+      "bramblehide": {
+        "name": "루츠의 가시덤불가죽",
+        "bonus2": "힘이 10, 체력이 10만큼 증가합니다.",
+        "bonus4": "전투력이 25만큼 증가합니다. 무기 치명타 적중 시 50% 확률로 \"무덤의 위력\"이 발동하여 전투력이 40만큼 증가합니다. 10초 동안 지속됩니다.",
+        "bonus6": "공격 및 시전 속도가 4%, 적중이 3% 증가합니다. 무기 치명타 적중 시 대상에게 \"뼈 파편\"을 남겨 12초 동안 2초마다 5의 출혈 피해를 입힙니다. 최대 3번 중첩됩니다."
       },
       "chronoweave": {
         "name": "에테르직조 예복",

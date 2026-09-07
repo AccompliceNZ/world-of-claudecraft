@@ -191,4 +191,8 @@ export const table: ReliquaryLocaleTable = {
     name: '英雄：內環熔爐',
     desc: '末焰鍛父瓦爾庫爾身上僅限英雄難度掉落的盾牌與武器。',
   },
+  conquerors_set_bramblehide: {
+    name: '魯茨的荊棘皮甲',
+    desc: '完整的荊棘皮甲系列。',
+  },
 };

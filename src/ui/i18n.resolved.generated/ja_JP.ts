@@ -14024,6 +14024,48 @@ export const ja_JP: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "消えた火花のワンド"
       },
+      "bramblehide_crown": {
+        "name": "ルーツのブランブルハイドの冠"
+      },
+      "bramblehide_mantle": {
+        "name": "ルーツのブランブルハイドの肩当て"
+      },
+      "bramblehide_harness": {
+        "name": "ルーツのブランブルハイドの胴当て"
+      },
+      "bramblehide_cinch": {
+        "name": "ルーツのブランブルハイドの帯"
+      },
+      "bramblehide_legguards": {
+        "name": "ルーツのブランブルハイドの脚甲"
+      },
+      "bramblehide_grips": {
+        "name": "ルーツのブランブルハイドの握り"
+      },
+      "bramblehide_treads": {
+        "name": "ルーツのブランブルハイドの靴"
+      },
+      "courtiers_bonefang": {
+        "name": "廷臣の骨牙"
+      },
+      "thornpeak_wardblade": {
+        "name": "ソーンピークの守護刃"
+      },
+      "gravecourt_hewer": {
+        "name": "墓廷の斬斧"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "不死の宮廷の奉納の盾"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "ソーンピークの月皮のフード"
+      },
+      "stormhymn_chain_grips": {
+        "name": "嵐の賛歌の鎖の握り"
+      },
+      "stormhymn_chain_treads": {
+        "name": "嵐の賛歌の鎖の靴"
+      },
       "conjured_water4": {
         "name": "魔法の湧き水"
       },
@@ -19029,6 +19071,12 @@ export const ja_JP: EnTranslations = {
       "boundstone_vanguard": {
         "name": "束縛石の前衛",
         "bonus3": "攻撃速度と詠唱速度が15%上昇します。"
+      },
+      "bramblehide": {
+        "name": "ルーツのブランブルハイド",
+        "bonus2": "筋力が10、スタミナが10上昇します。",
+        "bonus4": "攻撃力が25上昇します。武器のクリティカルヒット時に50%の確率で「グレイブマイト」が発動し、攻撃力が10秒間40上昇します。",
+        "bonus6": "攻撃速度と詠唱速度が4%、命中が3%上昇します。武器のクリティカルヒットで対象に「ボーンスプリンター」を刻み、2秒ごとに5ダメージの出血を12秒間与えます。最大3回まで累積します。"
       },
       "chronoweave": {
         "name": "エーテルウィーブの祭服",

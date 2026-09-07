@@ -14024,6 +14024,48 @@ export const zh_TW: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "熄火花魔杖"
       },
+      "bramblehide_crown": {
+        "name": "魯茨的荊棘皮甲頭冠"
+      },
+      "bramblehide_mantle": {
+        "name": "魯茨的荊棘皮甲護肩"
+      },
+      "bramblehide_harness": {
+        "name": "魯茨的荊棘皮甲胸甲"
+      },
+      "bramblehide_cinch": {
+        "name": "魯茨的荊棘皮甲腰帶"
+      },
+      "bramblehide_legguards": {
+        "name": "魯茨的荊棘皮甲護腿"
+      },
+      "bramblehide_grips": {
+        "name": "魯茨的荊棘皮甲手套"
+      },
+      "bramblehide_treads": {
+        "name": "魯茨的荊棘皮甲之靴"
+      },
+      "courtiers_bonefang": {
+        "name": "廷臣骨牙"
+      },
+      "thornpeak_wardblade": {
+        "name": "荊峰守護之刃"
+      },
+      "gravecourt_hewer": {
+        "name": "墓庭劈斧"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "不死王庭的許願護盾"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "荊峰月皮兜帽"
+      },
+      "stormhymn_chain_grips": {
+        "name": "風暴頌歌鏈甲手套"
+      },
+      "stormhymn_chain_treads": {
+        "name": "風暴頌歌鏈甲之靴"
+      },
       "conjured_water4": {
         "name": "魔法泉水"
       },
@@ -19029,6 +19071,12 @@ export const zh_TW: EnTranslations = {
       "boundstone_vanguard": {
         "name": "縛石先鋒",
         "bonus3": "攻擊速度和施法速度提高 15%。"
+      },
+      "bramblehide": {
+        "name": "魯茨的荊棘皮甲",
+        "bonus2": "力量提高 10 點，耐力提高 10 點。",
+        "bonus4": "攻擊強度提高 25 點。你的武器致命一擊有 50% 的機率觸發「墓塚之力」，使攻擊強度提高 40 點，持續 10 秒。",
+        "bonus6": "攻擊與施法速度提高 4%，命中提高 3%。你的武器致命一擊會使目標產生「骨刺」，每 2 秒流血 5 點傷害，持續 12 秒。最多疊加 3 層。"
       },
       "chronoweave": {
         "name": "以太織法衣",

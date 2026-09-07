@@ -14024,6 +14024,48 @@ export const da_DK: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Staven med slukkede gnister"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Fremmanet kildevand"
       },
@@ -19029,6 +19071,12 @@ export const da_DK: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Bundstens-fortrop",
         "bonus3": "Øger angrebs- og magihastighed med 15%."
+      },
+      "bramblehide": {
+        "name": "Roots' Tornehud",
+        "bonus2": "Øger angrebskraft med 40.",
+        "bonus4": "Dine kritiske våbenslag splintrer målet med Bensplint og påfører 8 blødningsskade hvert 2. sek. i 12 sek. Stakker op til 3 gange.",
+        "bonus6": "Øger angrebs- og besværgelseshastigheden med 4% og træfsikkerheden med 3%. Kritiske våbentræffere splintrer målet med Bonesplinter, så det bløder for 5 skade hvert 2. sek. i 12 sek. Stables op til 3 gange."
       },
       "chronoweave": {
         "name": "Aethervævede gevandter",

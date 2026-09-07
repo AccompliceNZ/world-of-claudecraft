@@ -59,8 +59,9 @@ describe('deed_i18n English resolution', () => {
     // five Phase 18 Reliquary completion-ladder titles, the walk-in castle
     // visit pair (no title reward), the Proving Shore graduation deed
     // (no title reward), and the five Crucible raid deeds (the Varkhul
-    // flawless task carries the 43rd title).
-    expect(manifest.length).toBe(281 * 2 + 43);
+    // flawless task carries the 43rd title), and the Roots' Bramblehide set
+    // collection (col_set_bramblehide, no title reward).
+    expect(manifest.length).toBe(282 * 2 + 43);
     expect(manifest.filter((row) => row.field === 'title').length).toBe(43);
     expect(manifest).toContainEqual({
       id: 'prog_veteran',

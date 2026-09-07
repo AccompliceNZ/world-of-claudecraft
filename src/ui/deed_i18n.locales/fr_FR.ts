@@ -1108,6 +1108,10 @@ export const table: DeedLocaleTable = {
     desc: "Vainquez Varkhul, Père de la Forge de la Dernière Flamme, en difficulté héroïque sans qu'un seul membre du raid ne meure.",
     title: "l'Indemne",
   },
+  col_set_bramblehide: {
+    name: 'Peau de Ronces de Roots',
+    desc: 'Découvrir chaque pièce de la Peau de Ronces de Roots.',
+  },
 };
 
 // fr_CA rides this base table plus the delve-vocabulary override layer

@@ -14024,6 +14024,48 @@ export const sv_SE: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "De slocknade gnistornas stav"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Frambesvärjt källvatten"
       },
@@ -19029,6 +19071,12 @@ export const sv_SE: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Bundstens-förtrupp",
         "bonus3": "Ökar attack- och magihastighet med 15%."
+      },
+      "bramblehide": {
+        "name": "Roots' Törnehud",
+        "bonus2": "Ökar attackkraft med 40.",
+        "bonus4": "Dina kritiska vapenträffar splittrar målet med Benflisa och får det att blöda för 8 skada var 2:e sek i 12 sek. Staplas upp till 3 gånger.",
+        "bonus6": "Ökar attack- och kastningshastigheten med 4 procent och träffsäkerheten med 3 procent. Dina vapens kritiska träffar splittrar målet med Bensplitter och får det att blöda 5 skada varannan sek i 12 sek. Staplas upp till 3 gånger."
       },
       "chronoweave": {
         "name": "Etervävda klädnader",

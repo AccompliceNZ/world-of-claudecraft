@@ -14024,6 +14024,48 @@ export const it_IT: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Bacchetta delle Scintille Estinte"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Acqua sorgiva evocata"
       },
@@ -19029,6 +19071,12 @@ export const it_IT: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Avanguardia Pietrvincolo",
         "bonus3": "Aumenta la velocità d'attacco e di lancio del 15%."
+      },
+      "bramblehide": {
+        "name": "Pelle di Rovo di Roots",
+        "bonus2": "Aumenta la potenza d'attacco di 40.",
+        "bonus4": "I colpi critici della tua arma scheggiano il bersaglio con Scheggiaossa, facendolo sanguinare per 8 danni ogni 2 sec per 12 sec. Si accumula fino a 3 volte.",
+        "bonus6": "Aumenta velocità d’attacco e lancio del 4% e Precisione del 3%. I colpi critici dell’arma frantumano il bersaglio con Frantumaossa, causando 5 danni ogni 2 s per 12 s. Si accumula fino a 3 volte."
       },
       "chronoweave": {
         "name": "Vesti della Tessitura Eterea",

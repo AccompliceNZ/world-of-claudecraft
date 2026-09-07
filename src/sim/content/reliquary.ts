@@ -588,6 +588,15 @@ export const RELIQUARY_SET_MEMBERS = {
     'stormcallers_crown',
     'stormcallers_spaulders',
   ],
+  bramblehide: [
+    'bramblehide_crown',
+    'bramblehide_mantle',
+    'bramblehide_harness',
+    'bramblehide_cinch',
+    'bramblehide_legguards',
+    'bramblehide_grips',
+    'bramblehide_treads',
+  ],
 } as const;
 
 // Per-member source for the set pages. A set page cannot take a page default:
@@ -650,6 +659,13 @@ const SET_MEMBER_SOURCES: Readonly<
   stormcallers_waistguard: fromBoss('thunzharr_waking_peak'),
   stormcallers_crown: fromBoss('nythraxis_scourge_of_thornpeak'),
   stormcallers_spaulders: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_crown: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_mantle: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_harness: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_cinch: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_legguards: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_grips: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_treads: fromBoss('nythraxis_scourge_of_thornpeak'),
 };
 
 /** Set-page members carrying their SET_MEMBER_SOURCES hint. A member with no
@@ -1111,6 +1127,20 @@ export const RELIQUARY_PAGES: readonly ReliquaryPageDef[] = freezePageTable([
       'stormcallers_crown',
       'stormcallers_spaulders',
       'direfang_quiver',
+      'bramblehide_crown',
+      'bramblehide_mantle',
+      'bramblehide_harness',
+      'bramblehide_cinch',
+      'bramblehide_legguards',
+      'bramblehide_grips',
+      'bramblehide_treads',
+      'courtiers_bonefang',
+      'thornpeak_wardblade',
+      'gravecourt_hewer',
+      'votive_ward_of_the_deathless_court',
+      'thornpeak_moonhide_cowl',
+      'stormhymn_chain_grips',
+      'stormhymn_chain_treads',
     ),
   },
   {
@@ -1670,6 +1700,19 @@ export const RELIQUARY_PAGES: readonly ReliquaryPageDef[] = freezePageTable([
     clearSource: { kind: 'dungeon', dungeonId: 'ignivar_inner_crucible', difficulty: 'heroic' },
     sourceDefault: fromBoss('varkhul_forgefather_of_the_last_flame'),
     relics: items(...RELIQUARY_HEROIC_GEAR.varkhul_forgefather_of_the_last_flame),
+  },
+  // Roots' Bramblehide (the feral druid's Strength leather family off the
+  // Nythraxis raid). Appended at the END, after the Crucible pages, per the
+  // append-only page order; the family's seven members also sit on the
+  // conquerors_nythraxis page above, and the cross-page agreement pin holds
+  // both authorings equal.
+  {
+    id: 'conquerors_set_bramblehide',
+    shelf: 'conquerors',
+    name: "Roots' Bramblehide",
+    desc: 'The full Bramblehide leather family.',
+    clearSource: { kind: 'none' },
+    relics: items(...setMembers(RELIQUARY_SET_MEMBERS.bramblehide)),
   },
 ]);
 

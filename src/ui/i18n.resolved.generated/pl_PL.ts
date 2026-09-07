@@ -14024,6 +14024,48 @@ export const pl_PL: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Różdżka Wygaszonych Iskier"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Wyczarowana woda źródlana"
       },
@@ -19029,6 +19071,12 @@ export const pl_PL: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Straż przednia spętanego kamienia",
         "bonus3": "Zwiększa szybkość ataku i rzucania zaklęć o 15%."
+      },
+      "bramblehide": {
+        "name": "Cierniowa Skóra Rootsa",
+        "bonus2": "Zwiększa siłę ataku o 40.",
+        "bonus4": "Twoje krytyczne trafienia bronią rozłupują cel Kościaną Drzazgą, zadając 8 obrażeń od krwawienia co 2 s przez 12 s. Kumuluje się do 3 razy.",
+        "bonus6": "Zwiększa szybkość ataku i rzucania zaklęć o 4% oraz trafienie o 3%. Twoje krytyczne trafienia bronią rozłupują cel Kościaną Drzazgą, zadając 5 obrażeń od krwawienia co 2 sek. przez 12 sek. Kumuluje się do 3 razy."
       },
       "chronoweave": {
         "name": "Szaty Eterowej Tkaniny",

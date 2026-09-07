@@ -14024,6 +14024,48 @@ export const cs_CZ: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Hůlka Uhašených jisker"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Vyčarovaná pramenitá voda"
       },
@@ -19029,6 +19071,12 @@ export const cs_CZ: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Předvoj spoutaného kamene",
         "bonus3": "Zvyšuje rychlost útoku a sesílání o 15 %."
+      },
+      "bramblehide": {
+        "name": "Rootsova ostružinová kůže",
+        "bonus2": "Zvyšuje sílu útoku o 40.",
+        "bonus4": "Kritické zásahy tvé zbraně roztříští cíl efektem Kostitříska a způsobí mu krvácení za 8 poškození každé 2 s po dobu 12 s. Nasčítá se až 3krát.",
+        "bonus6": "Zvyšuje rychlost útoků a sesílání o 4 % a zásah o 3 %. Kritické zásahy zbraní způsobí Krvavý střep, který cíl krvácí za 5 poškození každé 2 s po dobu 12 s. Sčítá se až 3krát."
       },
       "chronoweave": {
         "name": "Roucha Éterové tkaniny",

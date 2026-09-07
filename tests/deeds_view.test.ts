@@ -850,10 +850,11 @@ describe('real catalog integration', () => {
     // Proving Shore graduation deed, and the five Crucible raid deeds;
     // col_reliquary_complete is the catalog's one off-prefix feat, so it sits
     // outside the completion denominator like the three feat_ deeds).
-    expect(view.summary.visibleTotal).toBe(268);
+    // + the Roots' Bramblehide set collection deed (col_set_bramblehide): 269.
+    expect(view.summary.visibleTotal).toBe(269);
     // The bucket sum adds the feat-flagged rows back on top (3 on the Feats
-    // shelf plus the off-prefix capstone on Collection).
-    expect(view.categories.reduce((n, c) => n + c.visible, 0)).toBe(272);
+    // shelf plus the off-prefix capstone on Collection): 269 + 4 = 273.
+    expect(view.categories.reduce((n, c) => n + c.visible, 0)).toBe(273);
   });
 
   it('offers exactly the live catalog border deeds once they are earned', () => {

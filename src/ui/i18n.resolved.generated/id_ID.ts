@@ -14024,6 +14024,48 @@ export const id_ID: EnTranslations = {
       "wand_of_quenched_sparks": {
         "name": "Tongkat Percik Padam"
       },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
+      },
       "conjured_water4": {
         "name": "Air Mata Air Sihir"
       },
@@ -19029,6 +19071,12 @@ export const id_ID: EnTranslations = {
       "boundstone_vanguard": {
         "name": "Garda Depan Batu Terikat",
         "bonus3": "Meningkatkan kecepatan serangan dan rapal sebesar 15%."
+      },
+      "bramblehide": {
+        "name": "Kulit Semak Duri Roots",
+        "bonus2": "Meningkatkan daya serang sebesar 40.",
+        "bonus4": "Serangan kritis senjatamu menyerpihkan target dengan Serpih Tulang, membuatnya berdarah sebesar 8 kerusakan setiap 2 detik selama 12 detik. Menumpuk hingga 3 kali.",
+        "bonus6": "Meningkatkan kecepatan serangan dan perapalan sebesar 4% serta Hit sebesar 3%. Serangan kritis senjata Anda memecah target dengan Pecah Tulang, menyebabkan pendarahan 5 kerusakan tiap 2 detik selama 12 detik. Menumpuk hingga 3 kali."
       },
       "chronoweave": {
         "name": "Busana Tenunan Aether",
