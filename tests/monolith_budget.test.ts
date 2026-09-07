@@ -534,7 +534,9 @@ const MONOLITHS: MonolithRow[] = [
     // (src/net/online.ts, unchanged at its own exact ceiling); the now-dead
     // private costTaxMult helper and the aetherSurgeCostMult import went with
     // it. Exact count, zero slack.
-    ceiling: 12213,
+    // Threat calculation moved to combat/threat_modifiers.ts after the
+    // Nythraxis release merge. Exact merged count remains below both parents.
+    ceiling: 12212,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -755,19 +757,15 @@ const MONOLITHS: MonolithRow[] = [
     // Down 5898 -> 5873 for the per-surface action-bar profiles: the
     // debounced upload moved to src/net/action_bar_upload.ts
     // (ActionBarLayoutUploader). Exact count.
-    // Talent snapshot repair and ability reconstruction now live in
-    // src/net/ability_presentation.ts; the existing ceiling is retained.
     // Down 5873 -> 5856 for the guild bank transaction history: the log
     // mirror's fields, the gbanklog install, and the request gate moved to
     // src/net/guild_bank_log_mirror.ts (GuildBankLogMirror); what stays is
     // the two one-line IWorld arms that put its requests on the wire. Exact
     // count.
-    // Re-pinned at the release/v0.42.0 sync into the class-rebalance branch:
-    // both extractions land in the merged tree (the ability_presentation
-    // split above this branch's own 5873 pin, over the release's
-    // guild_bank_log_mirror split at 5856). Measured on the merged tree,
-    // never reconciled by arithmetic. Exact merged count, zero slack.
-    ceiling: 5855,
+    // The class-balance ability presentation and release Nythraxis ground
+    // telegraph extractions both survive the merge. The combined file is
+    // measured at 5842 lines, below both parent pins (5855 and 5843).
+    ceiling: 5842,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {

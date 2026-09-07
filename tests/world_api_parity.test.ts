@@ -113,6 +113,10 @@ export const IWORLD_MEMBERS = [
   { name: 'activeConsecrations', kind: 'data' },
   { name: 'activeFrostRings', kind: 'data' },
   { name: 'activeIgnivarMeteors', kind: 'data' },
+  { name: 'activeNythraxisGraveEruptions', kind: 'data' },
+  { name: 'activeNythraxisGraveFlames', kind: 'data' },
+  { name: 'activeNythraxisGravefires', kind: 'data' },
+  { name: 'activeNythraxisBindingSigils', kind: 'data' },
   { name: 'activeVarkhulCinderFires', kind: 'data' },
   { name: 'activeVarkhulCinderOrbProjectiles', kind: 'data' },
   { name: 'activeVarkhulForgestormWarnings', kind: 'data' },
@@ -671,12 +675,11 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
     // numbers really are; never reconcile them by arithmetic in the diff (the
     // numbers below were set from a suite run, not from this narrative).
     //
-    // Re-pinned at the release/v0.42.0 sync into the class-rebalance branch: this
-    // branch's resolvedAbility and the release's guildBankLogOlder are two
-    // independently added methods, landing 344 -> 345 total / 249 -> 250 methods
-    // on a suite run over the merged tree.
-    expect(IWORLD_MEMBERS.length).toBe(345);
-    expect(DATA_MEMBERS.length).toBe(95);
+    // The merged interface retains resolvedAbility from class balance and
+    // four Nythraxis data readouts from release. Counts and both facet-union
+    // pins are verified against the complete merged contract.
+    expect(IWORLD_MEMBERS.length).toBe(349);
+    expect(DATA_MEMBERS.length).toBe(99);
     expect(METHOD_MEMBERS.length).toBe(250);
   });
   it('has no duplicate member names', () => {
@@ -704,6 +707,10 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'activeLootRolls',
       'activeMasterLootRolls',
       'activeMobileStationCraft',
+      'activeNythraxisBindingSigils',
+      'activeNythraxisGraveEruptions',
+      'activeNythraxisGraveFlames',
+      'activeNythraxisGravefires',
       'activeTemporalHourglasses',
       'activeTitle',
       'activeVarkhulAnvilMeteors',
@@ -1046,6 +1053,10 @@ describe('IWORLD_MEMBERS is the pinned IWorld contract (anti-loosening)', () => 
       'activeIgnivarMeteors',
       'activeLoadout',
       'activeMobileStationCraft',
+      'activeNythraxisBindingSigils',
+      'activeNythraxisGraveEruptions',
+      'activeNythraxisGraveFlames',
+      'activeNythraxisGravefires',
       'activeTemporalHourglasses',
       'activeTitle',
       'activeVarkhulAnvilMeteors',
@@ -1489,6 +1500,10 @@ const FACET_COMBAT = [
   'activeConsecrations',
   'activeFrostRings',
   'activeIgnivarMeteors',
+  'activeNythraxisGraveEruptions',
+  'activeNythraxisGraveFlames',
+  'activeNythraxisGravefires',
+  'activeNythraxisBindingSigils',
   'activeTemporalHourglasses',
   'activeVarkhulForgestormWarnings',
   'activeVarkhulCinderFires',
@@ -2039,11 +2054,10 @@ describe('W1: aggregate IWorld member set equals the disjoint union of the facet
 
   it('the facet union equals the pinned IWORLD_MEMBERS set', () => {
     const union = Object.values(FACET_MEMBER_ARRAYS).flatMap((arr) => [...arr]);
-    // Re-pinned at the release/v0.42.0 sync: resolvedAbility (this branch) and
-    // guildBankLogOlder (release) are two independently added methods, so the
-    // union grows 344 -> 345 alongside the IWORLD_MEMBERS pin above.
-    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(345);
-    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(345);
+    // Both union pins cover the complete merged contract, including the
+    // resolved ability method and four Nythraxis data readouts.
+    expect(union.length, 'union size before dedup (catches a duplicated member)').toBe(349);
+    expect(new Set(union).size, 'union size after dedup (catches a duplicated member)').toBe(349);
     const sortedUnion = [...union].sort();
     const pinned = IWORLD_MEMBERS.map((m) => m.name).sort();
     expect(sortedUnion).toEqual(pinned);
