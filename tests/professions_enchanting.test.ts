@@ -5,6 +5,8 @@
 
 import { describe, expect, it } from 'vitest';
 import { ENCHANTS } from '../src/sim/content/enchants';
+import { STATIONS } from '../src/sim/content/professions';
+import { recipeById } from '../src/sim/content/recipes';
 import { ITEMS } from '../src/sim/data';
 import { characterDerivedStats } from '../src/sim/entity';
 import { canStackInstancePayloads } from '../src/sim/item_instance_merge';
@@ -24,11 +26,18 @@ import {
   resolveApplyEnchant,
   resolveDisenchant,
 } from '../src/sim/professions/enchanting';
+import {
+  PERFECTING_ATTEMPT_COST,
+  PERFECTING_HEADSTART_RANK,
+  PERFECTING_RANKS,
+  PERFECTING_SKILL_REQ,
+} from '../src/sim/professions/perfecting';
+import { type StationType, stationsOfType } from '../src/sim/professions/stations';
 import { createRiftGearInstance } from '../src/sim/rift/progression';
-import { Sim } from '../src/sim/sim';
-import { type InvSlot, xpForLevel } from '../src/sim/types';
+import { type PlayerMeta, Sim } from '../src/sim/sim';
+import { type Entity, type InvSlot, xpForLevel } from '../src/sim/types';
 import { enchantTargets, wornEnchantTargets } from '../src/ui/hud/professions/enchant_apply_view';
-import { completeEnchantFamilyCast } from './helpers/enchant_family_cast';
+import { completeEnchantFamilyCast, runCraft } from './helpers/enchant_family_cast';
 import { EMPTY_TEST_WORLD } from './sim_shared';
 
 // Every case here drives disenchant/applyEnchant directly against items the
@@ -1607,21 +1616,213 @@ describe('replacing an enchant behind explicit confirmation (#2415)', () => {
     }
   });
 
-  it('denies same_enchant on the identical enchant id: no reagents spent, no throttle stamped', () => {
+  it('allows re-applying the identical enchant id (QoL): reagents spent, stats net unchanged, skill still gained', () => {
     const sim = makeSim();
     const pid = sim.playerId;
     sim.ctx.addItemInstance(SWORD, { enchant: MIGHT, rolled: { stats: { str: 2 } } }, pid);
     sim.addItem('arcane_dust', 5, pid);
     const meta = sim.ctx.resolve(pid)!.meta;
-    const stampsBefore = meta.craftThrottle.count;
+    const skillBefore = meta.craftSkills.enchanting;
     const result = resolveApplyEnchant(sim.ctx, pid, SWORD, MIGHT, undefined, true);
-    expect(result.ok).toBe(false);
-    expect(result.reason).toBe('same_enchant');
-    // Pure deny: nothing consumed, nothing stamped, payload untouched.
-    expect(sim.countItem('arcane_dust', pid)).toBe(5);
-    expect(meta.craftThrottle.count).toBe(stampsBefore);
+    expect(result.ok).toBe(true);
+    // Reagents are spent even though the enchant does not actually change.
+    expect(sim.countItem('arcane_dust', pid)).toBe(0);
+    // Old bonus subtracted, the SAME bonus re-added: net byte-identical stats
+    // and marker, so this is purely a reagent-for-skill trade, not a re-roll.
     const slot = meta.inventory.find((s) => s.itemId === SWORD);
+    expect(slot?.instance?.enchant).toBe(MIGHT);
     expect(slot?.instance?.rolled?.stats).toEqual({ str: 2 });
+    // The whole point: a controlled way to burn materials and train
+    // Enchanting on a piece the player intends to keep.
+    expect(meta.craftSkills.enchanting).toBeGreaterThan(skillBefore);
+  });
+
+  // The two cases above prove the same-enchant reapply on a bare
+  // {enchant, rolled.stats} fixture. Neither carries a Perfecting record or
+  // real craft provenance, so neither can catch a regression where the
+  // replace mint drops that metadata (e.g. a shortcut that returns the
+  // victim untouched instead of routing through replacedEnchantPayloadFor,
+  // or a rebuilt payload that forgets craftedRecipeId/perfected/
+  // perfectingBonus/perfectingBound). This describe crafts a REAL Crucible
+  // collection piece (the masterwork proc head start, crafting.ts) and walks
+  // it through the REAL Perfecting rank track to Perfected
+  // (professions/perfecting.ts), so the victim carries every legal field a
+  // live copy would, minted by the shipped pipelines rather than
+  // hand-stamped.
+  describe('same-enchant reapply on a REAL crafted + Perfected copy: Perfecting state and provenance survive', () => {
+    const CRUCIBLE_CHEST = 'crucible_str_mail_chest'; // apex armor, warrior-wearable, chest
+    const CRUCIBLE_CHEST_RECIPE = 'recipe_crucible_str_mail_chest';
+    const CHEST_ENCHANT = 'enchant_chest_stamina'; // itemSlot chest, sta +4, 3 dust + 2 essence
+
+    /** The identity/provenance fields a same-enchant reapply must never
+     *  disturb: the invslot craft marker (bagged) or its payload-carried
+     *  twin (worn), the signer, and the whole Perfecting record. */
+    function provenanceOf(
+      craftedRecipeId: string | undefined,
+      instance: InvSlot['instance'],
+    ): unknown {
+      return {
+        craftedRecipeId,
+        signer: instance?.signer,
+        perfected: instance?.perfected,
+        perfectingBonus: instance?.perfectingBonus,
+        perfectingBound: instance?.perfectingBound,
+        boundTo: instance?.boundTo,
+      };
+    }
+
+    /** Craft one real Crucible chest piece with the masterwork proc forced
+     *  (the head start), then force every Perfecting attempt roll to
+     *  succeed until the copy reaches Perfected. Returns the bag index the
+     *  crafted copy landed in. */
+    function craftPerfectedChest(sim: Sim, pid: number, meta: PlayerMeta): number {
+      const recipe = recipeById(CRUCIBLE_CHEST_RECIPE);
+      if (!recipe) throw new Error('the crucible chest recipe exists');
+      meta.craftSkills.armorcrafting = PERFECTING_SKILL_REQ;
+      // The apex bumped tier is legendary, above the rare ceiling a dormant
+      // craft reads (archetype.ts archetypeCeilingFor): an active major in
+      // this craft is what actually grants the masterwork head start.
+      meta.archetype.activeArchetype = 'armorcrafting';
+      meta.knownRecipes?.add(recipe.id);
+      if (recipe.stationType) {
+        const station = stationsOfType(STATIONS, recipe.stationType as StationType)[0];
+        const e = sim.entities.get(pid) as Entity;
+        e.pos.x = station.pos.x;
+        e.pos.z = station.pos.z;
+        e.prevPos = { ...e.pos };
+      }
+      for (const g of recipe.reagents) sim.addItem(g.itemId, g.count, pid);
+      // Enough Perfecting attempt materials for the whole remaining walk.
+      for (const c of PERFECTING_ATTEMPT_COST) {
+        sim.addItem(c.itemId, c.count * PERFECTING_RANKS, pid);
+      }
+      // Force every rng draw (the proc, then every Perfecting attempt) to
+      // hit: the professions_masterwork/perfecting.ts forced-roll idiom.
+      (sim.rng as unknown as { next: () => number }).next = () => 0;
+      runCraft(sim, recipe.id, false, pid);
+      expect(meta.lastCraftResult?.ok, 'the craft really lands').toBe(true);
+      expect(meta.lastCraftResult?.masterwork, 'the forced proc hits').toBe(true);
+      const bag = meta.inventory.findIndex((s) => s.itemId === CRUCIBLE_CHEST);
+      expect(bag, 'the crafted copy is really in the bags').toBeGreaterThanOrEqual(0);
+      expect(meta.inventory[bag].instance?.perfecting, 'the head-start rank landed').toBe(
+        PERFECTING_HEADSTART_RANK,
+      );
+      for (let i = 0; i < PERFECTING_RANKS - PERFECTING_HEADSTART_RANK; i++) {
+        sim.perfectItemAs(pid, { bag, itemId: CRUCIBLE_CHEST });
+      }
+      const perfectedSlot = meta.inventory[bag];
+      expect(perfectedSlot.itemId, 'the copy is really Perfected before the test body runs').toBe(
+        CRUCIBLE_CHEST,
+      );
+      expect(perfectedSlot.instance?.perfected, 'the fixture is really Perfected').toBe(true);
+      // A Crucible collection copy bakes perfectingBonus (withPerfectingBonus)
+      // and binds on it: both must survive the reapply below untouched.
+      expect(
+        perfectedSlot.instance?.perfectingBonus,
+        'a real Crucible copy carries a baked bonus record',
+      ).toBeTruthy();
+      expect(perfectedSlot.instance?.perfectingBound, 'and the permanent bind').toBe(true);
+      expect(perfectedSlot.instance?.signer, 'and the crafter signature').toBeTruthy();
+      expect(perfectedSlot.craftedRecipeId, 'and the bagged craft marker').toBe(recipe.id);
+      return bag;
+    }
+
+    it('bagged: reapplying the same enchant id leaves Perfecting state, provenance, and net stats byte-identical', () => {
+      const sim = makeSim();
+      const pid = sim.playerId;
+      const meta = sim.players.get(pid)!;
+      craftPerfectedChest(sim, pid, meta);
+      sim.addItem('arcane_dust', 20, pid);
+      sim.addItem('arcane_essence', 20, pid);
+
+      // A fresh (non-replace) apply first, so the copy genuinely carries the
+      // enchant under test: merged additively onto the Perfecting bonus.
+      expect(resolveApplyEnchant(sim.ctx, pid, CRUCIBLE_CHEST, CHEST_ENCHANT).ok).toBe(true);
+      const beforeIdx = meta.inventory.findIndex(
+        (s) => s.itemId === CRUCIBLE_CHEST && s.instance?.enchant === CHEST_ENCHANT,
+      );
+      expect(beforeIdx, 'the enchanted copy is really in the bags').toBeGreaterThanOrEqual(0);
+      const before = meta.inventory[beforeIdx];
+      const provenanceBefore = provenanceOf(before.craftedRecipeId, before.instance);
+      const statsBefore = { ...before.instance?.rolled?.stats };
+      const dustBefore = sim.countItem('arcane_dust', pid);
+      const essenceBefore = sim.countItem('arcane_essence', pid);
+      const skillBefore = meta.craftSkills.enchanting;
+
+      // THE CASE UNDER TEST: confirmed replace with the SAME enchant id.
+      const result = resolveApplyEnchant(
+        sim.ctx,
+        pid,
+        CRUCIBLE_CHEST,
+        CHEST_ENCHANT,
+        undefined,
+        true,
+      );
+      expect(result.ok).toBe(true);
+
+      const after = meta.inventory.find((s) => s.itemId === CRUCIBLE_CHEST);
+      expect(after?.instance?.enchant).toBe(CHEST_ENCHANT);
+      // Would fail if the same-enchant case were shortcut back to a deny, or
+      // if the replace mint dropped/rebuilt the payload without carrying the
+      // Perfecting record and craft provenance through byte-identical.
+      expect(provenanceOf(after?.craftedRecipeId, after?.instance)).toEqual(provenanceBefore);
+      // The old CHEST_ENCHANT bonus subtracted, the identical one re-added:
+      // net byte-identical stats, Perfecting bonus included.
+      expect(after?.instance?.rolled?.stats).toEqual(statsBefore);
+      // The real mechanic cost: the enchant's own reagent bill actually left
+      // the bags (never a reagent-free no-op).
+      expect(sim.countItem('arcane_dust', pid)).toBe(dustBefore - 3);
+      expect(sim.countItem('arcane_essence', pid)).toBe(essenceBefore - 2);
+      expect(meta.craftSkills.enchanting).toBeGreaterThan(skillBefore);
+    });
+
+    it('worn: reapplying the same enchant id leaves Perfecting state, provenance, and net stats byte-identical', () => {
+      const sim = makeSim();
+      const pid = sim.playerId;
+      const meta = sim.players.get(pid)!;
+      sim.setPlayerLevel(20); // the collection piece's requiredLevel
+      craftPerfectedChest(sim, pid, meta);
+      sim.equipItem(CRUCIBLE_CHEST, pid);
+      expect(meta.equipment.chest, 'the crafted copy is really worn').toBe(CRUCIBLE_CHEST);
+      // Equip bridges the bagged craft marker onto the payload's own field
+      // (items.ts equipmentPayloadFor): re-confirm it rode across the move.
+      expect(meta.equipmentInstance.chest?.craftedRecipeId).toBe(CRUCIBLE_CHEST_RECIPE);
+      sim.addItem('arcane_dust', 20, pid);
+      sim.addItem('arcane_essence', 20, pid);
+
+      expect(resolveApplyEnchant(sim.ctx, pid, CRUCIBLE_CHEST, CHEST_ENCHANT, 'chest').ok).toBe(
+        true,
+      );
+      const before = meta.equipmentInstance.chest;
+      expect(before?.perfected, 'still Perfected after the fresh apply').toBe(true);
+      const provenanceBefore = provenanceOf(before?.craftedRecipeId, before);
+      const statsBefore = { ...before?.rolled?.stats };
+      const dustBefore = sim.countItem('arcane_dust', pid);
+      const essenceBefore = sim.countItem('arcane_essence', pid);
+      const skillBefore = meta.craftSkills.enchanting;
+
+      // THE CASE UNDER TEST: confirmed replace with the SAME enchant id, on
+      // the WORN arm (the payload itself carries craftedRecipeId here, so a
+      // clone-and-mutate replace preserves it with no separate re-stamp;
+      // this is the case a payload-reconstruction regression would miss).
+      const result = resolveApplyEnchant(
+        sim.ctx,
+        pid,
+        CRUCIBLE_CHEST,
+        CHEST_ENCHANT,
+        'chest',
+        true,
+      );
+      expect(result.ok).toBe(true);
+
+      const after = meta.equipmentInstance.chest;
+      expect(after?.enchant).toBe(CHEST_ENCHANT);
+      expect(provenanceOf(after?.craftedRecipeId, after)).toEqual(provenanceBefore);
+      expect(after?.rolled?.stats).toEqual(statsBefore);
+      expect(sim.countItem('arcane_dust', pid)).toBe(dustBefore - 3);
+      expect(sim.countItem('arcane_essence', pid)).toBe(essenceBefore - 2);
+      expect(meta.craftSkills.enchanting).toBeGreaterThan(skillBefore);
+    });
   });
 
   it('replaces a LEGACY pre-marker copy wholesale: rolled.stats becomes exactly the new bonus', () => {
@@ -1803,16 +2004,18 @@ describe('replacing an enchant behind explicit confirmation (#2415)', () => {
     expect(sim.countItem(WORN_SWORD, pid)).toBe(0);
   });
 
-  it('denies same_enchant on the WORN arm too, with nothing consumed', () => {
+  it('allows re-applying the identical enchant id on the WORN arm too: reagents spent, stats unchanged', () => {
     const { sim, pid, meta } = wearing('mainhand', WORN_SWORD, {
       dust: 5,
       instance: { enchant: WORN_ENCHANT, rolled: { stats: { str: 2 } } },
     });
+    const skillBefore = meta.craftSkills.enchanting;
     const result = resolveApplyEnchant(sim.ctx, pid, WORN_SWORD, WORN_ENCHANT, 'mainhand', true);
-    expect(result.ok).toBe(false);
-    expect(result.reason).toBe('same_enchant');
+    expect(result.ok).toBe(true);
     expect(meta.equipmentInstance.mainhand?.enchant).toBe(WORN_ENCHANT);
-    expect(sim.countItem('arcane_dust', pid)).toBe(5);
+    expect(meta.equipmentInstance.mainhand?.rolled?.stats).toEqual({ str: 2 });
+    expect(sim.countItem('arcane_dust', pid)).toBe(0);
+    expect(meta.craftSkills.enchanting).toBeGreaterThan(skillBefore);
   });
 
   it('refuses a WORN marker id that no longer resolves (corrupt save): already_enchanted, untouched', () => {

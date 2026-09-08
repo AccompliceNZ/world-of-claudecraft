@@ -45,7 +45,13 @@
 // `src/sim`-pure: no DOM/Three/render-ui-game-net imports, no Math.random/
 // Date.now (enforced by tests/architecture.test.ts). This module draws NO rng.
 
-import { freePoolSlots, type PoolCapacity, poolCapacityOf, totalPoolCapacity } from './bag_pools';
+import {
+  freePoolSlots,
+  type PoolCapacity,
+  poolCapacityOf,
+  poolOccupancyOf,
+  totalPoolCapacity,
+} from './bag_pools';
 import { ITEMS } from './data';
 import {
   consumeSelectedInventorySlot,
@@ -64,6 +70,7 @@ import { materialSourceUnitPayload } from './material_inventory_units';
 import type { MaterialComposition, MaterialSource } from './material_sources';
 import type { MaterialStackSlot } from './material_stack';
 import { materialStackFit, planMaterialStackAdd } from './material_stack_packing';
+import type { PlayerMeta } from './sim';
 import type { SimContext } from './sim_context';
 import {
   cloneItemInstancePayload,
@@ -576,9 +583,32 @@ function spentUnitPayload(plan: MaterialTakePlan): ItemInstancePayload | undefin
   return materialSourceUnitPayload(taken, source);
 }
 
-/** The standard full-bags rejection, shared by every capacity-gated command. */
-export function bagsFullError(ctx: SimContext, pid: number): void {
-  ctx.error(pid, 'Your bags are full.');
+/** The standard full-bags rejection, shared by every capacity-gated command.
+ *  Pool-honest (issue #3795): with a materials-only satchel equipped the
+ *  general pool can be full while the summed counter and the grid still show
+ *  free squares, so "full" would contradict the screen. When the general pool
+ *  has no headroom but the materials pool does, and the refused item is not
+ *  known to be a material (`itemId` omitted, or a non-material), the line
+ *  names the materials-only room instead. Same occupancy read as the fit gate
+ *  (bag_pools.ts poolOccupancyOf under the shared material taxonomy); a
+ *  refused MATERIAL keeps the plain line (the headroom is no help to it). */
+export function bagsFullError(ctx: SimContext, pid: number, itemId?: string): void {
+  ctx.error(pid, bagsFullErrorText(ctx.players.get(pid), itemId));
+}
+
+/** The pure text choice behind bagsFullError: general-pool full plus free
+ *  materials-only room, for a non-material (or unnamed) item, names the
+ *  materials-only room; everything else is the plain line. */
+export function bagsFullErrorText(
+  meta: Pick<PlayerMeta, 'bags' | 'inventory'> | undefined,
+  itemId?: string,
+): string {
+  if (!meta || (itemId !== undefined && isMaterialItemId(itemId))) return 'Your bags are full.';
+  const pools = bagPools(meta.bags);
+  if (pools.materials <= 0) return 'Your bags are full.';
+  const { generalUsed, materialsUsed } = poolOccupancyOf(meta.inventory, pools, isMaterialItemId);
+  if (generalUsed < pools.general || materialsUsed >= pools.materials) return 'Your bags are full.';
+  return 'Only materials fit in the space left in your bags.';
 }
 
 // The bag ladder the pre-bag save migration draws from, ordered by quality

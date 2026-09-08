@@ -197,11 +197,14 @@ const PINS: PoolWiringPin[] = [
     // harvestCorpse itself carries no local capacity gate any more: both real
     // sites moved into src/sim/professions/corpse_harvest_grant.ts's
     // grantCorpseHarvest (below) when that module was extracted from this file.
-    // Kept as a zero-site grantsOnly row rather than dropped, so a NEW local
-    // capacity read added back to harvestCorpse (or the file total drifting off
-    // zero) still reds here instead of silently reintroducing an unpinned site.
+    // lootCorpse now gates personal and shared instance-bearing drops against
+    // their real payload before removing them from the corpse, so both reads
+    // must preserve the general/materials split.
     path: 'src/sim/interaction.ts',
-    sites: [],
+    sites: [
+      { fn: 'lootCorpse', what: 'the personal instance grant capacity gate' },
+      { fn: 'lootCorpse', what: 'the shared instance grant capacity gate' },
+    ],
     grantsOnly: true,
   },
   {

@@ -72,8 +72,11 @@ const SECOND_PASS_RECORD_SHA256 =
   // merged file. The final v0.42 union adds the Lanternback Troll and
   // Chimeglass Tortoise reins, advancing the historical census to 78 / 78.
   // The Cluckwork Mech Bird then advances the final union to 79 / 79.
-  // No capture or asset was retaken.
-  '5dd2110a1f5e4f96ba75d10f90d0b7fcca2acb1d5efa3d55aeb13a397f0d0248';
+  // OSSBrain PR #3781 reconcile: the release's own arm (79) and the OSSBrain
+  // candidate's arm (78, its two disjoint reins items on the shared 76 base)
+  // are additive, so 76 + 3 + 2 = 81. Substituted the two hotbarItems lines
+  // by hand again, never a JSON round trip. No capture or asset was retaken.
+  '59aa41bd783c6a79d16178f3bd3f782b63a3b95e39f0803e7bd94e5343237b40';
 const EVIDENCE = {
   'icon-art-before-after-desktop.png': {
     sha256: '61d19fb321f2b30eb3749e0966f26efea0fa4df53edae4b253cfd70edb82cd7a',
@@ -378,8 +381,10 @@ describe('release v0.39 icon-art second-pass lineage', () => {
         // live (the release's own arm read 72 to 73, without the three role
         // foods).
         // The final union adds the two painted reins from PR #3439 and the
-        // Cluckwork Mech Bird store-mount reins.
-        hotbarItems: { live: 79, painted: 79 },
+        // Cluckwork Mech Bird store-mount reins (79), then the OSSBrain PR
+        // #3781 reconcile's own Goblin Rocket Sled and Rallycart RXT reins
+        // (both committed painted art, kind 'mount') add two more: 81.
+        hotbarItems: { live: 81, painted: 81 },
         fixedActions: { painted: 11 },
         mobAuraRouting: { paintedFamilies: 44, exactRuntimeIds: 89 },
         fiesta: { augments: 20, powerups: 4, painted: 24 },
@@ -479,11 +484,15 @@ describe('release v0.39 icon-art second-pass lineage', () => {
     // The 79 identities in the final historical census plus the 20
     // formerly parked farming, food, rod, and hoe hotbar items, plus
     // field_kit (Intentional Gathering, PR3: use.type 'harvestPreference'
-    // joined the hotbar-eligible set, with committed art from launch).
+    // joined the hotbar-eligible set, with committed art from launch) = 100.
+    // The OSSBrain PR #3781 reconcile's two new mount reins items
+    // (reins_goblin_rocket_sled, reins_rallycart_rxt) each ship committed
+    // painted art and are never ITEM_ART_PENDING, so they join the
+    // art-subject set directly: 102.
     expect(
       artSubjectHotbarItemIds,
       'production isHotbarItemId art-subject inventory (live minus ITEM_ART_PENDING)',
-    ).toHaveLength(100);
+    ).toHaveLength(102);
     expect(pendingHotbarItemIds, 'ITEM_ART_PENDING hotbar items').toHaveLength(0);
     expect(
       pendingHotbarItemIds.filter((id) => shippingImageExists(`/ui/items/${id}.webp`)),
@@ -493,6 +502,6 @@ describe('release v0.39 icon-art second-pass lineage', () => {
       artSubjectHotbarItemIds.filter((id) => !paintedHotbarItemIds.has(id)),
       'every art-subject hotbar item resolves to committed painted art',
     ).toEqual([]);
-    expect(aggregate.runtimeClosure.hotbarItems).toEqual({ live: 79, painted: 79 });
+    expect(aggregate.runtimeClosure.hotbarItems).toEqual({ live: 81, painted: 81 });
   });
 });

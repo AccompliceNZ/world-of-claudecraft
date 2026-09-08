@@ -6617,6 +6617,7 @@ describe('Guide wiki completeness corrections (Phase 20, 2026-09-03)', () => {
     // Every non-overworld map mode is named; MapWindowMode is exhaustive here.
     const modeWords: Record<MapWindowMode, string | null> = {
       overworld: null,
+      castle: 'a castle keep',
       delve: 'a delve',
       dungeon: 'a dungeon',
       rift: 'a rift',

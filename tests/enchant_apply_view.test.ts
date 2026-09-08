@@ -388,7 +388,9 @@ describe('enchant_apply_view: enchantTargets', () => {
     const targets = enchantTargets(inventory, 'enchant_chest_stamina');
     // #2415: the enchanted chest is no longer hidden: it paints as a replace
     // row AFTER the plain family, carrying the doomed enchant's id, and since
-    // the picked enchant IS the one it carries, it is a sameEnchant deny row.
+    // the picked enchant IS the one it carries, it is a sameEnchant row: still
+    // clickable (a QoL re-apply), just tagged "Already applied" rather than
+    // naming a doomed enchant.
     expect(familyRows(targets)).toEqual([
       { itemId: otherChestId, count: 1 },
       {
@@ -648,7 +650,9 @@ describe('enchant_apply_view: wornEnchantTargets', () => {
       WEAPON_ENCHANT,
     );
     // #2415: same slot-order pass, the enchanted hand flagged (and a
-    // sameEnchant deny row here, since the picked enchant is the carried one).
+    // sameEnchant row here, since the picked enchant is the carried one: this
+    // stays a clickable QoL re-apply, never an inert deny, see the thin
+    // consumer's replace: dispatch).
     expect(rows).toEqual([
       {
         itemId: SWORD,

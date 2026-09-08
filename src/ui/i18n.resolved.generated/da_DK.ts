@@ -574,9 +574,9 @@ export const da_DK: EnTranslations = {
       "tabsLabel": "Sektioner i WOC-butikken",
       "storeTab": "Butik",
       "rewardsTab": "Daglige belønninger",
-      "mountsEyebrow": "Account Mounts",
-      "mountsTitle": "Machine Stable",
-      "mountBuyAria": "Purchase {item}",
+      "mountsEyebrow": "Kontomontering",
+      "mountsTitle": "Maskinstabil",
+      "mountBuyAria": "Køb {item}",
       "loading": "Indlæser WOC-butikken...",
       "error": "WOC-butikken er ikke tilgængelig lige nu. Prøv igen om lidt.",
       "balance": "Claudium-saldo",
@@ -982,6 +982,7 @@ export const da_DK: EnTranslations = {
       "mounts": "Ridedyr",
       "professions": "Erhverv",
       "reliquary": "Relikvarium",
+      "lootExplorer": "Bytteoversigt",
       "nameplates": "Navne",
       "haptics": "Haptik",
       "hapticsOff": "Haptik fra",
@@ -1140,6 +1141,9 @@ export const da_DK: EnTranslations = {
       "promptAttack": "Angrib",
       "promptUseAbility": "Brug evne",
       "promptKneel": "Knæl",
+      "promptAccessInterface": "Åbn brugerfladen",
+      "promptMoveToTarget": "Gå til {target}",
+      "promptSelectItem": "Vælg {item}",
       "promptOpenBags": "Åbn dine tasker",
       "promptCharacterSheet": "Åbn dit karakterark",
       "promptLookAround": "Hold højreklik nede, og træk for at se dig omkring",
@@ -1307,9 +1311,9 @@ export const da_DK: EnTranslations = {
       "regroup": "Saml {meter} igen"
     },
     "targetDots": {
-      "title": "Target Dots",
-      "row": "{aura} on {target}",
-      "overflow": "{count} more not shown"
+      "title": "Mål prikker",
+      "row": "{aura} på {target}",
+      "overflow": "{count} mere ikke vist"
     },
     "targetAuras": {
       "title": "Målets auraer",
@@ -1392,11 +1396,13 @@ export const da_DK: EnTranslations = {
       "name_shadowjump_toad": "Kama-Kage Skyggehop-Tudsen",
       "name_stormfeather_griffin": "Himmelrækkende Stormfjer",
       "name_thunderstrut_gobbler": "Tordenspanker den Store Kalkun",
+      "name_goblin_rocket_sled": "Goblin-raketslæde",
+      "name_rallycart_rxt": "Rallycart RXT",
       "name_terrorspark_groundshaker": "Dreadspark Groundshaker",
       "name_drakemaw_raptor": "Dragegabets Raptor",
-      "name_mech_bird": "Cluckwork Mech Bird",
-      "name_lanternback_troll": "Grumbol the Lanternback",
-      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
+      "name_mech_bird": "Cluckwork-mekafugl",
+      "name_lanternback_troll": "Lanternryggen Grumbol",
+      "name_chimeglass_tortoise": "Tolliver kimeglasset",
       "name_rickshaw_mount": "Knogebundet Rickshaw",
       "desc_valorsteed": "En hårdfør, sikker ganger, der giver øget rejsehastighed.",
       "desc_grag_bear": "En hårdfør, sikker bjørn, der giver øget rejsehastighed.",
@@ -1405,11 +1411,13 @@ export const da_DK: EnTranslations = {
       "desc_shadowjump_toad": "En enorm, sikker kæmpetudse, trænet i lynhurtige skyggehop, der dækker ethvert terræn.",
       "desc_stormfeather_griffin": "En kongelig stormgrif, der bevæger sig hen over jorden på runebeslåede kløer, med sammenfoldede vinger.",
       "desc_thunderstrut_gobbler": "En kolossal, stormudklækket kalkun, der spankulerer ned fra Den Opvågnende Tinde, med halen udfoldet som en tordensky.",
+      "desc_goblin_rocket_sled": "En farligt overbygget goblinslæde, drevet af to raketter og fremragende dårlig dømmekraft.",
+      "desc_rallycart_rxt": "En lille rallymaskine, der øger rejsehastigheden.",
       "desc_terrorspark_groundshaker": "En kompakt panseret maskine med tunge larvebånd, en grovkalibret kanon og en saddel bygget til frygtløse førere.",
       "desc_drakemaw_raptor": "En saddelvant yngelraptor fra Dragegabets Caldera, kun sener og spurt, som stadig lugter svagt af aske.",
-      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
-      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
-      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
+      "desc_mech_bird": "En håndbygget urværks-krigskylling, der spurter på knækkende servoer, mens optræksnøglen stadig drejer.",
+      "desc_lanternback_troll": "En bakketrold brækket til åget af lampetændere, der bar en jerntrone over sine skuldre med en stormlanterne brændende på begge arme.",
+      "desc_chimeglass_tortoise": "En salt-flad skildpadde, der har overgået tre generationer af campingvogne. Tindere knuste ham briller af stormglas og hængte en bronzeklokke i halsen på ham, så vejen hører ham længe før den ser ham.",
       "desc_rickshaw_mount": "En raslende knoglekærre med en knoklet håndlanger spændt for skafterne, der trækker dig af sted i fuldt firspring."
     },
     "mountTraining": {
@@ -1571,26 +1579,26 @@ export const da_DK: EnTranslations = {
       "showPlaytime": "Vis spilletid på karakterskærm",
       "forceHighPerfGpu": "Brug den dedikerede gaming-GPU",
       "forceHighPerfGpuNote": "Slået til som standard: skrivebordsappen beder denne computer om dens dedikerede gaming-GPU. Slå dette fra, hvis spillet ikke vil starte, åbner til en sort skærm, eller den bærbares skærm går i sort. Træder i kraft, næste gang spillet starter.",
-      "shaderWarm": "Shader Warm-up Worker",
-      "shaderWarmAuto": "Auto",
-      "shaderWarmOff": "Off",
-      "shaderWarmOn": "On",
-      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
-      "gpuBackend": "Graphics Backend",
-      "gpuBackendAuto": "Auto",
+      "shaderWarm": "Shader-opvarmningsarbejder",
+      "shaderWarmAuto": "Automatisk",
+      "shaderWarmOff": "Fra",
+      "shaderWarmOn": "Til",
+      "shaderWarmNote": "Forvarm shadercachen i baggrunden for at forhindre hakken i spillet. Automatisk: aktiveret kun når dit grafiksystem understøtter det. (Anbefalet). Til: tvunget overalt. Kan forværre ydeevnen på nogle systemer. Fra: deaktiveret.",
+      "gpuBackend": "Grafik-backend",
+      "gpuBackendAuto": "Automatisk",
       "gpuBackendVulkan": "Vulkan",
-      "gpuBackendOpenGL": "OpenGL (slow)",
-      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
-      "gpuBackendActive": "Currently using {backend}.",
-      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
-      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
-      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendOpenGL": "OpenGL (langsom)",
+      "gpuBackendNote": "Automatisk vælger den bedste mulighed for dig. Vulkan er hurtigere og anbefales til de fleste spillere. OpenGL er langsommere, men kan hjælpe, hvis Vulkan ikke fungerer korrekt. Træder i kraft næste gang spillet starter.",
+      "gpuBackendActive": "Bruger i øjeblikket {backend}.",
+      "gpuBackendActiveUnavailable": "Bruger i øjeblikket {backend} (kan ikke aktivere Vulkan).",
+      "gpuBackendActiveAutoCapped": "Bruger i øjeblikket {backend}. Automatisk prøver endnu ikke Vulkan på dette grafikkort. Vælg Vulkan for at prøve.",
+      "gpuBackendSaveFailed": "Valget kunne ikke gemmes. Næste start beholder {backend}.",
       "gpuBackendActiveNameVulkan": "Vulkan",
       "gpuBackendActiveNameOpenGL": "OpenGL",
-      "restartPending": "Some changes take effect after a restart.",
-      "restartGame": "Restart Game",
-      "restartInProgress": "Restarting the game...",
-      "restartFailed": "The game could not restart itself. Quit and start it again.",
+      "restartPending": "Nogle ændringer træder i kraft efter en genstart.",
+      "restartGame": "Genstart spil",
+      "restartInProgress": "Genstarter spillet...",
+      "restartFailed": "Spillet kunne ikke genstarte sig selv. Afslut og start det igen.",
       "discordPresence": "Detaljeret Discord-tilstedeværelse",
       "discordPresenceNote": "Viser den zone, du er i, og hvor længe du har spillet i denne session, som din Discord-aktivitet, og alle, der kan se din Discord-profil, kan se begge dele. Kun zonens navn, din sessionstid og spillet deles, aldrig din karakter, din konto eller hvem du spiller med. Kræver, at Discord-appen kører på denne computer.",
       "showDevBadges": "Vis udviklermærker",
@@ -1599,7 +1607,10 @@ export const da_DK: EnTranslations = {
       "uiScale": "UI-skala",
       "playerFrameScale": "Spillerrammens skala",
       "targetFrameScale": "Målrammens skala",
+      "playerHealthText": "Spillersundhedstekst",
+      "targetHealthText": "Målsundhedstekst",
       "aurasOnPlayerFrame": "Buffs på spillerrammen",
+      "auraBarBelowFrame": "Buffs under spillerrammen",
       "alwaysShowAllBuffs": "Vis altid alle forstærkninger",
       "highContrastBackground": "Baggrund med høj kontrast",
       "startAttackOnAbility": "Autoangreb ved brug af evne",
@@ -1622,9 +1633,9 @@ export const da_DK: EnTranslations = {
       "showTargetOfTarget": "Vis målets mål",
       "showTargetSwingTimer": "Vis målets svingtimer",
       "showPetFrame": "Vis dit kæledyr",
-      "showNameplateDots": "Show My Dots on Nameplates",
-      "nameplateDotScale": "Nameplate Dot Size",
-      "showTargetDots": "Show Target Dots",
+      "showNameplateDots": "Vis mine prikker på navneskiltene",
+      "nameplateDotScale": "Navneskilt Prikstørrelse",
+      "showTargetDots": "Vis målprikker",
       "waterRipples": "Vandkrusninger (kølvand)",
       "showAttackButton": "Vis angrebsknap",
       "showDailyRewardsChest": "Vis kisten med daglige belønninger",
@@ -2640,7 +2651,9 @@ export const da_DK: EnTranslations = {
       "unequipHint": "Klik for at fjerne denne taske",
       "poolGeneral": "Generelt: {used} af {total}",
       "poolMaterials": "Materialer: {used} af {total}",
-      "capacityPoolsAria": "Taskepladser brugt: {used} af {total}. Generelt: {generalUsed} af {generalTotal}. Materialer: {materialsUsed} af {materialsTotal}."
+      "capacityPoolsAria": "Taskepladser brugt: {used} af {total}. Generelt: {generalUsed} af {generalTotal}. Materialer: {materialsUsed} af {materialsTotal}.",
+      "capacityPools": "Genstande {generalUsed}/{generalTotal}, materialer {materialsUsed}/{materialsTotal}",
+      "emptyMaterialsOnly": "Kun materialer"
     },
     "raidConvert": {
       "toPartyDone": "Dit raid er konverteret tilbage til en gruppe.",
@@ -2670,22 +2683,22 @@ export const da_DK: EnTranslations = {
       "worldfireConsumed": "Hele arenaen brænder!"
     },
     "nythraxisCallout": {
-      "impaled": "Bone Spikes! Free the impaled!",
-      "youAreImpaled": "You are impaled! Hold on!",
-      "spikeBroken": "Spike shattered!",
-      "dreadCurseSwap": "Dread Curse: swap tanks!",
-      "sigilAppears": "A Binding Sigil flares! Drag Nythraxis onto it!",
-      "sigilBound": "Nythraxis is bound! Burn him!",
-      "sigilUnbound": "The sigil fades unbound! Nythraxis grows stronger!",
-      "gravefireTarget": "Gravefire races toward you! Sidestep!",
-      "kingsWrath": "The King rises in wrath! Everything hits harder now!",
-      "boneStormBegins": "Bone Storm! Spread out and run!",
-      "boneStormCharge": "Nythraxis is charging YOU! Run!",
-      "boneStormEnds": "Bone Storm over. Tanks, pick him up!",
-      "crownEndures60": "One minute until The Crown Endures!",
-      "crownEndures30": "Thirty seconds until The Crown Endures!",
-      "crownEndures10": "Ten seconds! Burn him!",
-      "crownEndures": "The Crown Endures! Nythraxis is enraged!"
+      "impaled": "Knoglespyd! Befri de spiddede!",
+      "youAreImpaled": "Du er spiddet! Hold ud!",
+      "spikeBroken": "Spyd knust!",
+      "dreadCurseSwap": "Rædselsforbandelse: skift tanks!",
+      "sigilAppears": "Et Bindingssigil flammer op! Træk Nythraxis hen på det!",
+      "sigilBound": "Nythraxis er bundet! Brænd ham ned!",
+      "sigilUnbound": "Sigillet falmer ubundet! Nythraxis bliver stærkere!",
+      "gravefireTarget": "Gravild farer mod dig! Træd til siden!",
+      "kingsWrath": "Kongen rejser sig i vrede! Alt rammer hårdere nu!",
+      "boneStormBegins": "Knoglestorm! Spred jer og løb!",
+      "boneStormCharge": "Nythraxis stormer mod DIG! Løb!",
+      "boneStormEnds": "Knoglestorm ovre. Tanks, saml ham op!",
+      "crownEndures60": "Et minut til Kronen holder stand!",
+      "crownEndures30": "Tredive sekunder til Kronen holder stand!",
+      "crownEndures10": "Ti sekunder! Brænd ham ned!",
+      "crownEndures": "Kronen holder stand! Nythraxis er rasende!"
     },
     "varkhulWaveStatus": "Bølge {wave}/{waves} | Fjender: {remaining}",
     "raidBossGuide": {
@@ -2837,65 +2850,65 @@ export const da_DK: EnTranslations = {
         "heroic": "Heroic: essens varme afkøles aldrig, Amboltens Dekret tilføjer meteorer, og den sidste fase fjerner de fleste mekanikker for at fokusere på Verdensild."
       },
       "nythraxis": {
-        "overview": "High Priest Malric refused to let his king die, and the rite that raised Nythraxis bound the whole court to the crypt. The encounter tests a disciplined tank swap, fast switches onto Bone Spikes, movement off burning ground, and a coordinated wardstone channel once the Throne falls.",
-        "phaseThroneName": "The Throne",
-        "phaseThroneSummary": "Nythraxis holds his throne room with a charged frontal cleave, the Dread Curse tank swap, Bone Spikes that impale raiders, and Grave Eruptions that leave burning ground.",
-        "phaseWardstonesName": "The Wardstones",
-        "phaseWardstonesSummary": "At {health} health, Shuddering Stomp holds the raid still while Brother Aldric arrives and lights the wardstones. Every spike shatters and the floor stops burning, then Soul Rend and Deathless Rage join the Throne mechanics.",
-        "phaseKingsWrathName": "The King's Wrath",
-        "phaseKingsWrathSummary": "At {health} health, Nythraxis roars in The King's Wrath and gains {bonusNormal} damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption tightens to every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire to every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic). Every other mechanic keeps its cadence.",
-        "gravebreakerName": "Gravebreaker",
-        "gravebreakerSummary": "Every {seconds} sec, Nythraxis charges his next landed swing. His target takes only the swing itself, but everyone else within {range} yd inside the {arc} degree cone in front of him takes {splash} of that swing as Physical damage, reduced by their own armor.",
-        "gravebreakerResponse": "Tanks keep Nythraxis facing away from the raid. Everyone else stays behind or beside him and never crosses the cone.",
-        "dreadCurseName": "Dread Curse",
-        "dreadCurseSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitNormal} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackNormal}, up to {max} stacks.",
-        "dreadCurseHeroicSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitHeroic} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackHeroic}, up to {max} stacks.",
-        "dreadCurseResponse": "Tanks swap at {stacks} stacks: the other tank taunts and the cursed tank stays out of the Gravebreaker cone while the stacks fade. Healers prepare the incoming tank before the swap.",
-        "boneSpikeName": "Bone Spike",
-        "boneSpikeSummary": "Every {everyNormal} sec, Nythraxis impales {victimsNormal} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainNormal} of maximum health every second until their spike is destroyed.",
-        "boneSpikeHeroicSummary": "Every {everyHeroic} sec, Nythraxis impales {victimsHeroic} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainHeroic} of maximum health every second until their spike is destroyed.",
-        "boneSpikeResponse": "Damage dealers switch to the Bone Spikes at once and destroy them to free the impaled raiders. Healers keep the impaled alive while the spikes fall.",
-        "graveEruptionName": "Grave Eruption",
-        "graveEruptionSummary": "Every {everyNormal} sec, skeletal hands mark {countNormal} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstNormal} of maximum health as Shadow damage, then burns as Grave Flame for {flameNormal} sec, dealing {tickNormal} of maximum health every second to anyone standing in it.",
-        "graveEruptionHeroicSummary": "Every {everyHeroic} sec, skeletal hands mark {countHeroic} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstHeroic} of maximum health as Shadow damage, then burns as Grave Flame for {flameHeroic} sec, dealing {tickHeroic} of maximum health every second to anyone standing in it.",
-        "graveEruptionResponse": "Step out of every warning circle before it erupts and stay off the burning ground. Tanks pull Nythraxis clear of the flames so melee keeps room to work.",
-        "bindingSigilName": "Binding Sigil",
-        "bindingSigilSummary": "Every {everyNormal} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionNormal} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindNormal} sec he is Bound: the Ascension is purged, he is stunned for {stunNormal} sec, and he takes {vulnerability} more damage for {boundNormal} sec. Otherwise every raider takes {unboundHitNormal} of maximum health as Shadow damage and he keeps {unboundBonusNormal} more damage until the next binding.",
-        "bindingSigilHeroicSummary": "Every {everyHeroic} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionHeroic} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindHeroic} sec he is Bound: the Ascension is purged, he is stunned for {stunHeroic} sec, and he takes {vulnerability} more damage for {boundHeroic} sec. Otherwise every raider takes {unboundHitHeroic} of maximum health as Shadow damage and he keeps {unboundBonusHeroic} more damage until the next binding.",
-        "bindingSigilResponse": "The tank drags Nythraxis onto the sigil at once, through whatever fire the raid left behind. Melee follow the drag and ranged stay out of the new Gravebreaker cone. Everyone burns him while he is Bound.",
-        "raiseFallenName": "Raise Fallen",
-        "raiseFallenSummary": "Every {every} sec during The Throne, Nythraxis raises Risen Royal Guards behind him. They rush his current target and fight until they are destroyed.",
-        "raiseFallenResponse": "The off-tank picks up each wave as it rises. Damage dealers clear the guards between Bone Spikes so the waves never pile up before the Throne falls.",
-        "soulRendName": "Soul Rend",
-        "soulRendSummary": "Nythraxis marks {marksNormal} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals its bearer's full maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them.",
-        "soulRendHeroicSummary": "Nythraxis marks {marksHeroic} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals {damageHeroic} of its bearer's maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them. A mark that resolves alone is lethal.",
-        "soulRendResponse": "Every marked raider runs to one stack point and stands within {range} yd of the other marks before the {fuse} sec fuse ends. Healers top the group off as the marks resolve.",
-        "soulfireName": "Soulfire",
-        "soulfireSummary": "Every Soul Rend detonation leaves a pool of purple fire with a {radius} yd radius where each mark stood, burning for {seconds} sec at {tickNormal} of maximum health every second. Standing where pools overlap takes a tick from each one. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireHeroicSummary": "Every Soul Rend detonation leaves one pool of purple fire with a {radius} yd radius per stacked group of marks, burning for {secondsHeroic} sec at {tickHeroic} of maximum health every second. Standing where pools overlap takes only one tick, never stacked copies. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireResponse": "Move out of the purple pool as soon as the marks detonate. Keep the next stack point clear of active fire.",
-        "gravefireName": "Gravefire",
-        "gravefireSummary": "Every {everyNormal} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnNormal} sec and deals {tickNormal} of maximum health every second to anyone standing in it.",
-        "gravefireHeroicSummary": "Every {everyHeroic} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnHeroic} sec and deals {tickHeroic} of maximum health every second to anyone standing in it.",
-        "gravefireResponse": "Sidestep the line as it comes: it is narrow and never turns. Ranged raiders keep moving instead of standing in one spot.",
-        "deathlessRageName": "Deathless Rage",
-        "deathlessRageSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageNormal} of maximum health as Shadow damage.",
-        "deathlessRageHeroicSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageHeroic} of maximum health as Shadow damage, which no health pool survives.",
-        "deathlessRageResponse": "Assign one raider to each wardstone before the pull. When the cast begins, each runs to their stone and channels it until it completes. Stuns, stepping away, and death break the channel, so keep the channelers safe and never assign an impaled raider.",
-        "courtName": "The Deathless Court",
-        "courtSummary": "On Heroic, Nythraxis raises his court after each Deathless Rage, interrupted or not, once the previous court has fallen. The Spirit of Aldren cleaves everything near his target with Royal Cleave. The Spirit of Malric channels Malric's Mending, healing Nythraxis for more with every cast. The Spirit of Voss ignores taunts and hunts the raid.",
-        "courtResponse": "Tanks pick up Aldren and turn his cleave away from the raid. Stun or silence Malric the moment Malric's Mending begins and kill him first, then root or stun Voss off the healers, since he cannot be taunted, and finish him next.",
-        "kingsWrathName": "King's Wrath",
-        "kingsWrathSummary": "Nythraxis deals {bonusNormal} more damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption occurs every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic).",
-        "kingsWrathResponse": "Use remaining defensive cooldowns for unavoidable damage. Keep every earlier mechanic clean while the raid finishes the fight.",
-        "boneStormName": "Bone Storm",
-        "boneStormSummary": "Starting {first} sec into The King's Wrath and every {everyNormal} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlNormal} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamNormal} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormHeroicSummary": "Starting {first} sec into The King's Wrath and every {everyHeroic} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlHeroic} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamHeroic} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormResponse": "Spread out and keep running from Nythraxis. The charged raider runs away while everyone else leaves room around the charge path, then tanks pick him up when the storm ends.",
-        "crownEnduresName": "The Crown Endures",
-        "crownEnduresSummary": "At {enrageNormal} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryNormal} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresHeroicSummary": "At {enrageHeroic} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryHeroic} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresResponse": "Treat the first warning as the final burn. Save movement and defensive cooldowns for the remaining mechanics, then defeat Nythraxis before the enrage."
+        "overview": "Ypperstepræst Malric nægtede at lade sin konge dø, og riten, der rejste Nythraxis, bandt hele hoffet til krypten. Mødet tester et disciplineret tankskifte, hurtige skift til Knoglespyd, bevægelse væk fra brændende jord og en koordineret værnsten-kanalisering, når Tronen falder.",
+        "phaseThroneName": "Tronen",
+        "phaseThroneSummary": "Nythraxis holder sin tronsal med en opladet frontal kløvning, tankskiftet fra Rædselsforbandelse, Knoglespyd der spidder raiddeltagere, og Gravudbrud der efterlader brændende jord.",
+        "phaseWardstonesName": "Værnstenene",
+        "phaseWardstonesSummary": "Ved {health} sundhed holder Rystende Tramp raidet stille, mens Broder Aldric ankommer og tænder værnstenene. Hvert spyd knuses, og gulvet holder op med at brænde, derefter føjes Sjæleflængen og Dødsløs Rasen til Tronens mekanikker.",
+        "phaseKingsWrathName": "Kongens vrede",
+        "phaseKingsWrathSummary": "Ved {health} sundhed brøler Nythraxis i Kongens vrede og får {bonusNormal} skade på Normal eller {bonusHeroic} på Heroic resten af kampen. Gravudbrud strammes til hvert {eruptionEveryNormal} sek ({eruptionEveryHeroic} på Heroic), og Gravild til hvert {gravefireEveryNormal} sek ({gravefireEveryHeroic} på Heroic). Alle andre mekanikker beholder deres rytme.",
+        "gravebreakerName": "Gravbryder",
+        "gravebreakerSummary": "Hvert {seconds} sek oplader Nythraxis sit næste træffende sving. Hans mål tager kun selve svinget, men alle andre inden for {range} yd i den {arc} graders kegle foran ham tager {splash} af det sving som fysisk skade, reduceret af deres egen rustning.",
+        "gravebreakerResponse": "Tanks holder Nythraxis vendt væk fra raidet. Alle andre står bag eller ved siden af ham og krydser aldrig keglen.",
+        "dreadCurseName": "Rædselsforbandelse",
+        "dreadCurseSummary": "Hvert {every} sek rammer Nythraxis sin nuværende tank for {hitNormal} af maksimal sundhed som Skyggeskade og tilføjer en stak Rædselsforbandelse. I {duration} sek øger hver stak den skade, den tank tager fra Nythraxis, med {perStackNormal}, op til {max} stakke.",
+        "dreadCurseHeroicSummary": "Hvert {every} sek rammer Nythraxis sin nuværende tank for {hitHeroic} af maksimal sundhed som Skyggeskade og tilføjer en stak Rædselsforbandelse. I {duration} sek øger hver stak den skade, den tank tager fra Nythraxis, med {perStackHeroic}, op til {max} stakke.",
+        "dreadCurseResponse": "Tanks skifter ved {stacks} stakke: den anden tank håner, og den forbandede tank bliver ude af Gravbryder-keglen, mens stakkene forsvinder. Helbredere forbereder den indkommende tank før skiftet.",
+        "boneSpikeName": "Knoglespyd",
+        "boneSpikeSummary": "Hvert {everyNormal} sek spidder Nythraxis {victimsNormal} raiddeltagere ud over sit nuværende mål på Knoglespyd. En spiddet raiddeltager kan ikke handle og mister {drainNormal} af maksimal sundhed hvert sekund, indtil spyddet ødelægges.",
+        "boneSpikeHeroicSummary": "Hvert {everyHeroic} sek spidder Nythraxis {victimsHeroic} raiddeltagere ud over sit nuværende mål på Knoglespyd. En spiddet raiddeltager kan ikke handle og mister {drainHeroic} af maksimal sundhed hvert sekund, indtil spyddet ødelægges.",
+        "boneSpikeResponse": "Skadesuddelerne skifter straks til Knoglespyddene og ødelægger dem for at befri de spiddede raiddeltagere. Helbredere holder de spiddede i live, mens spyddene falder.",
+        "graveEruptionName": "Gravudbrud",
+        "graveEruptionSummary": "Hvert {everyNormal} sek markerer skelethænder {countNormal} cirkler på {radius} yd under raiddeltagere. Efter {warning} sek bryder hver cirkel ud for {burstNormal} af maksimal sundhed som Skyggeskade og brænder derefter som Gravflamme i {flameNormal} sek, hvilket giver {tickNormal} af maksimal sundhed hvert sekund til alle, der står i den.",
+        "graveEruptionHeroicSummary": "Hvert {everyHeroic} sek markerer skelethænder {countHeroic} cirkler på {radius} yd under raiddeltagere. Efter {warning} sek bryder hver cirkel ud for {burstHeroic} af maksimal sundhed som Skyggeskade og brænder derefter som Gravflamme i {flameHeroic} sek, hvilket giver {tickHeroic} af maksimal sundhed hvert sekund til alle, der står i den.",
+        "graveEruptionResponse": "Træd ud af hver advarselscirkel, før den bryder ud, og hold jer væk fra brændende jord. Tanks trækker Nythraxis væk fra flammerne, så nærkampsspillere har plads til at arbejde.",
+        "bindingSigilName": "Bindingssigil",
+        "bindingSigilSummary": "Hvert {everyNormal} sek flammer et sigil fra de gamle værn op på gulvet {minDist} til {maxDist} yd fra Nythraxis, og han begynder Dødsløs Opstigning, der giver ham {ascensionNormal} skade og angrebshastighed hvert {ascensionEvery} sek. Hvis han står på sigillet inden for {bindNormal} sek, er han Bundet: Opstigningen renses, han bedøves i {stunNormal} sek, og han tager {vulnerability} mere skade i {boundNormal} sek. Ellers tager hver raiddeltager {unboundHitNormal} af maksimal sundhed som Skyggeskade, og han beholder {unboundBonusNormal} mere skade indtil næste binding.",
+        "bindingSigilHeroicSummary": "Hvert {everyHeroic} sek flammer et sigil fra de gamle værn op på gulvet {minDist} til {maxDist} yd fra Nythraxis, og han begynder Dødsløs Opstigning, der giver ham {ascensionHeroic} skade og angrebshastighed hvert {ascensionEvery} sek. Hvis han står på sigillet inden for {bindHeroic} sek, er han Bundet: Opstigningen renses, han bedøves i {stunHeroic} sek, og han tager {vulnerability} mere skade i {boundHeroic} sek. Ellers tager hver raiddeltager {unboundHitHeroic} af maksimal sundhed som Skyggeskade, og han beholder {unboundBonusHeroic} mere skade indtil næste binding.",
+        "bindingSigilResponse": "Tanken trækker straks Nythraxis hen på sigillet, gennem hvilken ild raidet end har efterladt. Nærkampsspillere følger trækket, og afstandsspillere holder sig ude af den nye Gravbryder-kegle. Alle brænder ham ned, mens han er Bundet.",
+        "raiseFallenName": "Rejs faldne",
+        "raiseFallenSummary": "Hvert {every} sek under Tronen rejser Nythraxis Genopstandne Kongelige Vagter bag sig. De stormer mod hans nuværende mål og kæmper, indtil de ødelægges.",
+        "raiseFallenResponse": "Off-tanken samler hver bølge op, når den rejser sig. Skadesuddelerne rydder vagterne mellem Knoglespyd, så bølgerne aldrig hober sig op, før Tronen falder.",
+        "soulRendName": "Sjæleflængen",
+        "soulRendSummary": "Nythraxis markerer {marksNormal} raiddeltagere ud over sit nuværende mål med Sjæleflængen. Efter {fuse} sek giver hvert mærke bærerens fulde maksimale sundhed som Skyggeskade, delt med antallet af markerede raiddeltagere inden for {range} yd af dem.",
+        "soulRendHeroicSummary": "Nythraxis markerer {marksHeroic} raiddeltagere ud over sit nuværende mål med Sjæleflængen. Efter {fuse} sek giver hvert mærke {damageHeroic} af bærerens maksimale sundhed som Skyggeskade, delt med antallet af markerede raiddeltagere inden for {range} yd af dem. Et mærke, der udløses alene, er dødeligt.",
+        "soulRendResponse": "Hver markeret raiddeltager løber til ét samlingspunkt og står inden for {range} yd af de andre mærker, før lunten på {fuse} sek løber ud. Helbredere fylder gruppen op, når mærkerne udløses.",
+        "soulfireName": "Sjæleild",
+        "soulfireSummary": "Hver Sjæleflængen-detonation efterlader en sø af lilla ild med {radius} yd radius, hvor hvert mærke stod, som brænder i {seconds} sek med {tickNormal} af maksimal sundhed hvert sekund. At stå hvor søer overlapper giver et tick fra hver enkelt. Søer dannes aldrig inden for {clearance} yd af en værnsten.",
+        "soulfireHeroicSummary": "Hver Sjæleflængen-detonation efterlader én sø af lilla ild med {radius} yd radius pr. samlet gruppe af mærker, som brænder i {secondsHeroic} sek med {tickHeroic} af maksimal sundhed hvert sekund. At stå hvor søer overlapper giver kun ét tick, aldrig stakkede kopier. Søer dannes aldrig inden for {clearance} yd af en værnsten.",
+        "soulfireResponse": "Flyt ud af den lilla sø, så snart mærkerne detonerer. Hold det næste samlingspunkt fri for aktiv ild.",
+        "gravefireName": "Gravild",
+        "gravefireSummary": "Hvert {everyNormal} sek løber en linje af violet gravild fra Nythraxis mod en raiddeltager og vokser {speed} yd hvert sekund til {length} yd. Hver yard brænder i {burnNormal} sek og giver {tickNormal} af maksimal sundhed hvert sekund til alle, der står i den.",
+        "gravefireHeroicSummary": "Hvert {everyHeroic} sek løber en linje af violet gravild fra Nythraxis mod en raiddeltager og vokser {speed} yd hvert sekund til {length} yd. Hver yard brænder i {burnHeroic} sek og giver {tickHeroic} af maksimal sundhed hvert sekund til alle, der står i den.",
+        "gravefireResponse": "Træd til siden for linjen, når den kommer: den er smal og drejer aldrig. Afstandsspillere bliver ved med at bevæge sig i stedet for at stå ét sted.",
+        "deathlessRageName": "Dødsløs Rasen",
+        "deathlessRageSummary": "Hvert {every} sek kaster Nythraxis Dødsløs Rasen i {cast} sek. Mens han kaster, kan hver tændt værnsten kanaliseres af én raiddeltager i {channel} sek. Hvis tre forskellige raiddeltagere hver fuldfører en værnsten, før kastet slutter, afbrydes Rasen, og Nythraxis bedøves i {stun} sek. Ellers tager hver raiddeltager {damageNormal} af maksimal sundhed som Skyggeskade.",
+        "deathlessRageHeroicSummary": "Hvert {every} sek kaster Nythraxis Dødsløs Rasen i {cast} sek. Mens han kaster, kan hver tændt værnsten kanaliseres af én raiddeltager i {channel} sek. Hvis tre forskellige raiddeltagere hver fuldfører en værnsten, før kastet slutter, afbrydes Rasen, og Nythraxis bedøves i {stun} sek. Ellers tager hver raiddeltager {damageHeroic} af maksimal sundhed som Skyggeskade, hvilket ingen sundhedspulje overlever.",
+        "deathlessRageResponse": "Tildel én raiddeltager til hver værnsten før pullen. Når kastet begynder, løber hver til sin sten og kanaliserer den, indtil den fuldføres. Bedøvelser, at træde væk og død bryder kanaliseringen, så hold kanalisererne sikre og tildel aldrig en spiddet raiddeltager.",
+        "courtName": "Det Dødsløse Hof",
+        "courtSummary": "På Heroic rejser Nythraxis sit hof efter hver Dødsløs Rasen, afbrudt eller ej, når det forrige hof er faldet. Aldrens Ånd kløver alt nær sit mål med Kongelig Kløvning. Malrics Ånd kanaliserer Malrics Heling, der heler Nythraxis mere for hver kastning. Voss Ånd ignorerer hån og jager raidet.",
+        "courtResponse": "Tanks samler Aldren op og vender hans kløvning væk fra raidet. Bedøv eller tavsgør Malric i det øjeblik Malrics Heling begynder, og dræb ham først. Rodfæst eller bedøv derefter Voss væk fra helbrederne, da han ikke kan hånes, og gør ham færdig bagefter.",
+        "kingsWrathName": "Kongens vrede",
+        "kingsWrathSummary": "Nythraxis giver {bonusNormal} mere skade på Normal eller {bonusHeroic} på Heroic resten af kampen. Gravudbrud sker hvert {eruptionEveryNormal} sek ({eruptionEveryHeroic} på Heroic), og Gravild hvert {gravefireEveryNormal} sek ({gravefireEveryHeroic} på Heroic).",
+        "kingsWrathResponse": "Brug resterende defensive nedkølinger til uundgåelig skade. Hold alle tidligere mekanikker rene, mens raidet afslutter kampen.",
+        "boneStormName": "Knoglestorm",
+        "boneStormSummary": "Fra {first} sek inde i Kongens vrede og hvert {everyNormal} sek derefter begynder Nythraxis Knoglestorm i {duration} sek. Han ignorerer trussel, bevæger sig {speed} gange normal hastighed og laver {charges} stormløb, der varer {chargeSeconds} sek hver. Hans hvirvel giver {whirlNormal} af maksimal sundhed hvert sekund inden for {radius} yd. Hvert stormløb ender i et Knogleslag inden for samme radius for {slamNormal} af maksimal sundhed. Han kaster Knoglespyd {spikeAt} sek inde i stormen, derefter genaktiveres Gravbryder {rearm} sek efter den slutter.",
+        "boneStormHeroicSummary": "Fra {first} sek inde i Kongens vrede og hvert {everyHeroic} sek derefter begynder Nythraxis Knoglestorm i {duration} sek. Han ignorerer trussel, bevæger sig {speed} gange normal hastighed og laver {charges} stormløb, der varer {chargeSeconds} sek hver. Hans hvirvel giver {whirlHeroic} af maksimal sundhed hvert sekund inden for {radius} yd. Hvert stormløb ender i et Knogleslag inden for samme radius for {slamHeroic} af maksimal sundhed. Han kaster Knoglespyd {spikeAt} sek inde i stormen, derefter genaktiveres Gravbryder {rearm} sek efter den slutter.",
+        "boneStormResponse": "Spred jer og bliv ved med at løbe fra Nythraxis. Den jagede raiddeltager løber væk, mens alle andre giver plads omkring stormløbsvejen, og tanks samler ham op, når stormen slutter.",
+        "crownEnduresName": "Kronen holder stand",
+        "crownEnduresSummary": "Ved {enrageNormal} sek fra pullen (uret holder pause, mens Broder Aldric træder ind ved 70%) udløser Kronen holder stand som en hård rasen. Nythraxis får {damage} mere skade og {haste} hurtigere angreb, derefter yderligere {rampStep} skade hvert {rampEveryNormal} sek. Der er ingen timerbjælke. Advarsler kommer som råb ved {warn60}, {warn30} og {warn10} sek tilbage.",
+        "crownEnduresHeroicSummary": "Ved {enrageHeroic} sek fra pullen (uret holder pause, mens Broder Aldric træder ind ved 70%) udløser Kronen holder stand som en hård rasen. Nythraxis får {damage} mere skade og {haste} hurtigere angreb, derefter yderligere {rampStep} skade hvert {rampEveryHeroic} sek. Der er ingen timerbjælke. Advarsler kommer som råb ved {warn60}, {warn30} og {warn10} sek tilbage.",
+        "crownEnduresResponse": "Behandl den første advarsel som det sidste burn. Gem bevægelse og defensive nedkølinger til de resterende mekanikker, og besejr derefter Nythraxis før rasen."
       }
     },
     "auraEffect": {
@@ -2906,14 +2919,14 @@ export const da_DK: EnTranslations = {
       "varkhulMoltenCore": "Bær denne kerne til essen. Smeltet Byrde giver stigende skade hvert {interval}. sek., fra {min}% til {max}% af maksimalt helbred.",
       "varkhulForgeLink": "Opfang en aktiv søjlestråle, før den når essen. Åbne stråler tilføjer 6% varme pr. sekund. I Normal afkøler blokerede stråler og inaktive søjler essen; i Heroic falder varmen aldrig. Ved 100% rammes essen af en dødelig Nedsmeltning.",
       "varkhulCrucibleExposure": "At blokere en Crucible-stråle giver stigende skade i procent af maksimalt helbred hvert sekund. Stakkene nulstilles 10 sekunder efter, du forlader en stråle i Normal, og efter 60 sekunder i Heroic.",
-      "nythraxisDreadCurse": "Each stack increases damage taken from Nythraxis by {perStack}% for {duration} sec: {stacks} of {max} stacks now, {pct}% more damage. Every {every} sec his next hit on his target deals {hit}% of maximum health and adds a stack. Tanks should swap at {swap} stacks.",
-      "nythraxisImpaled": "Impaled on a Bone Spike: you cannot act and lose {normal}% of your maximum health every {interval} sec ({heroic}% on Heroic) until the raid destroys the spike.",
-      "nythraxisAscension": "Deathless Ascension: {stacks} stacks, {pct}% more damage and attack speed. Drag Nythraxis onto the Binding Sigil to purge it.",
-      "nythraxisBound": "Bound by the old wards: Nythraxis takes {pct}% more damage for {duration} sec.",
-      "nythraxisUnbound": "Unbound: Nythraxis deals {pct}% more damage until a Binding Sigil holds him.",
-      "nythraxisKingsWrath": "King's Wrath: Nythraxis deals {pct}% more damage for the rest of the fight.",
-      "nythraxisBoneStorm": "Bone Storm: Nythraxis ignores threat, whirls for {tick}% of maximum health every second within {radius} yd, and charges raiders. Spread out and run.",
-      "nythraxisCrownEndures": "The Crown Endures: {stacks} stacks, {pct}% more damage and {haste}% faster attacks. The raid is out of time.",
+      "nythraxisDreadCurse": "Hver stak øger skaden taget fra Nythraxis med {perStack}% i {duration} sek: {stacks} af {max} stakke nu, {pct}% mere skade. Hvert {every} sek giver hans næste træffer på sit mål {hit}% af maksimal sundhed og tilføjer en stak. Tanks bør skifte ved {swap} stakke.",
+      "nythraxisImpaled": "Spiddet på et Knoglespyd: du kan ikke handle og mister {normal}% af din maksimale sundhed hvert {interval} sek ({heroic}% på Heroic), indtil raidet ødelægger spyddet.",
+      "nythraxisAscension": "Dødsløs Opstigning: {stacks} stakke, {pct}% mere skade og angrebshastighed. Træk Nythraxis hen på Bindingssigillet for at rense det.",
+      "nythraxisBound": "Bundet af de gamle værn: Nythraxis tager {pct}% mere skade i {duration} sek.",
+      "nythraxisUnbound": "Ubundet: Nythraxis giver {pct}% mere skade, indtil et Bindingssigil holder ham.",
+      "nythraxisKingsWrath": "Kongens vrede: Nythraxis giver {pct}% mere skade resten af kampen.",
+      "nythraxisBoneStorm": "Knoglestorm: Nythraxis ignorerer trussel, hvirvler for {tick}% af maksimal sundhed hvert sekund inden for {radius} yd og stormer mod raiddeltagere. Spred jer og løb.",
+      "nythraxisCrownEndures": "Kronen holder stand: {stacks} stakke, {pct}% mere skade og {haste}% hurtigere angreb. Raidet er løbet tør for tid.",
       "dot": "Giver {value} {school}-skade hvert {interval}. sek",
       "hot": "Gendanner {value} helbred hvert {interval}. sek",
       "mendingCurrent": "Opbevarer {value} helbredelse, frigivet over tid eller forbrugt af Kaskadelapning",
@@ -2964,7 +2977,7 @@ export const da_DK: EnTranslations = {
       "suddenDeath": "Din næste Tidlig Grav koster intet Raseri og ignorerer sit helbredskrav",
       "aoeEcho": "{charges} ekkoer tilbage: enkeltmålsevner gør {pct}% skade til op til {targets} nærliggende fjender",
       "sureCrit": "{charges} skadevoldende evnekast er garanteret kritiske slag",
-      "temporalEcho": "Kasterens Arkane skade helbreder dig for {singlePct}% af enkeltmåls- eller {areaPct}% af områdeskade",
+      "temporalEcho": "Kasterens Arkane skade helbreder dig for {singlePct}% af enkeltmåls- eller {areaPct}% af områdeskade. Æterbølge og Æterpile får en x4-bonus på et individuelt Temporal Echo. Gruppeekkoer skaber en tilsvarende helingsreserve, fordelt efter manglende helbred blandt markerede allierede under 60% helbred",
       "arcaneCharge": "{stacks} Arkane Ladninger: Arkan kraft gør {damagePct}% mere skade, kastes {castPct}% hurtigere og koster {costMult}x mana",
       "physicalReduction": "Reducerer Fysisk skade modtaget med {pct}%",
       "temporalHourglass": "Immun og ude af stand til at handle; gendanner helbred og fremskynder nedkølingsgendannelse. Højreklik for at annullere.",
@@ -2984,8 +2997,8 @@ export const da_DK: EnTranslations = {
       "redline": "Rød Linje: hak {stacks} af {max}. Kropsslag tilføjer hak; Nådestødet rammer {pct}% hårdere per hak og lukker vinduet. Udløber det først, mistes det",
       "veilstrikeWindow": "Skyggeslør: dine Tusmørkesløråbninger kan bruges i det åbne fra enhver vinkel, og den gjorte skade øges med {pct}%",
       "veiledEdge": "Dit næste Lurerslag rammer dobbelt så hårdt",
-      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
-      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
+      "veiledEdgeStrike": "Dit næste Lureslag giver {pct}% mere våbenskade",
+      "coldsightRead": "Dit næste Langtræk giver {longDrawPct}% mere skade, eller dit næste Skæbneskud giver {fellShotPct}% mere",
       "duskEconomy": "Evner koster {pct}% mindre energi",
       "moontide": "Måneflod: trin {stacks} af {max}. Vildlyn-, Himmelfald- og Månefrø-besværgelser fylder den i Månekinform; ved {max} bliver Månefrø til Månebølge og Himmelfald til Solspor, og begge tærer på den",
       "oldBlood": "Gammelt Blod: trin {stacks} af {max}. Landede Ulve- og Bruin-slag deler dette forråd; ved {max} forvandles Blodbid eller Knogleknus",
@@ -3179,6 +3192,7 @@ export const da_DK: EnTranslations = {
       "healthPercent": "Procent",
       "healthCurrent": "Nuværende",
       "healthCurrentMax": "Nuværende / maks.",
+      "healthCurrentMaxPercent": "Aktuel/maks. (procent)",
       "sort": "Sortér spillere",
       "sortGroup": "Gruppe",
       "sortRole": "Rolle",
@@ -3218,17 +3232,17 @@ export const da_DK: EnTranslations = {
         "targetFrame": "Mål",
         "partyFrames": "Gruppe",
         "swingBar": "Autoangreb",
-        "targetDots": "Target Dots",
-        "questTracker": "Quest Tracker",
-        "reliquaryTracker": "Reliquary Tracker",
-        "petBar": "Pet Bar",
-        "procOverlay": "Spell Procs",
-        "procOverlayFrost": "Icicles",
-        "damageMeter": "Damage Meter",
-        "deedTracker": "Deed Tracker",
-        "delveTracker": "Delve Tracker",
-        "riftTracker": "Rift Tracker",
-        "swingBarOffhand": "Off Hand"
+        "targetDots": "Mål prikker",
+        "questTracker": "Questsporer",
+        "reliquaryTracker": "Relikviesporer",
+        "petBar": "Kæledyrsbjælke",
+        "procOverlay": "Besværgelsesprocs",
+        "procOverlayFrost": "Istapper",
+        "damageMeter": "Skademåler",
+        "deedTracker": "Bedriftssporer",
+        "delveTracker": "Delve-sporer",
+        "riftTracker": "Riftsporer",
+        "swingBarOffhand": "Venstre hånd"
       },
       "framesMenu": "Rammeindstillinger",
       "framesMenuTitle": "Vis eller skjul enkelte rammer. En fravalgt ramme forbliver skjult, indtil du vælger den igen eller nulstiller til standard.",
@@ -3261,33 +3275,33 @@ export const da_DK: EnTranslations = {
       "wrongKind": "Den kode er en anden eksporttype."
     },
     "keybindTransfer": {
-      "setup": "Hotkey Setup",
-      "apply": "Apply",
-      "imported": "Hotkey setup imported.",
-      "wrongKind": "That code is a settings export, not a hotkey setup."
+      "setup": "Genvejsopsætning",
+      "apply": "Anvend",
+      "imported": "Genvejsopsætning importeret.",
+      "wrongKind": "Den kode er en indstillingseksport, ikke en genvejsopsætning."
     },
     "keyboardMap": {
-      "title": "Keyboard Overview",
-      "hint": "Keys in use are coloured by category. Hover or focus a key to see everything bound to it.",
-      "hintInteractive": "Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.",
-      "popOut": "Pop Out",
-      "close": "Close keyboard overview",
-      "pressKey": "Press a key for {action}. Esc cancels.",
-      "boundTo": "Bound {action} to {key}.",
-      "notBindable": "That key cannot be bound.",
-      "assignHint": "Choose an action to bind to {key}.",
-      "assignPlaceholder": "Assign an action to {key}",
-      "layerGroup": "Modifier layer",
-      "formGroup": "Keyboard size",
-      "formFull": "Full size",
-      "formTkl": "Tenkeyless",
+      "title": "Tastaturoversigt",
+      "hint": "Taster i brug er farvet efter kategori. Hold musen over eller fokusér på en tast for at se alt, der er bundet til den.",
+      "hintInteractive": "Taster i brug er farvet efter kategori. Klik på en tast for at ændre, hvad den gør. Hold musen over eller fokusér på en for at se alt, der er bundet til den.",
+      "popOut": "Åbn separat",
+      "close": "Luk tastaturoversigt",
+      "pressKey": "Tryk på en tast for {action}. Esc annullerer.",
+      "boundTo": "Bandt {action} til {key}.",
+      "notBindable": "Den tast kan ikke bindes.",
+      "assignHint": "Vælg en handling at binde til {key}.",
+      "assignPlaceholder": "Tildel en handling til {key}",
+      "layerGroup": "Modifikatorlag",
+      "formGroup": "Tastaturstørrelse",
+      "formFull": "Fuld størrelse",
+      "formTkl": "Uden numerisk tastatur",
       "form75": "75%",
       "form60": "60%",
-      "notOnLayout": "Not on this keyboard: {bindings}",
-      "legendGroup": "Key labels",
-      "legendLayout": "Your layout",
+      "notOnLayout": "Ikke på dette tastatur: {bindings}",
+      "legendGroup": "Tastetiketter",
+      "legendLayout": "Dit layout",
       "legendQwerty": "QWERTY",
-      "layerNone": "No modifier",
+      "layerNone": "Ingen modifikator",
       "layerShift": "Shift",
       "layerCtrl": "Ctrl",
       "layerAlt": "Alt",
@@ -3295,43 +3309,43 @@ export const da_DK: EnTranslations = {
       "separator": ", ",
       "bindingLine": "{key}: {action}",
       "assignOption": "{category}: {action}",
-      "otherLayers": "Also bound with a modifier"
+      "otherLayers": "Også bundet med en modifikator"
     },
     "fullTransfer": {
-      "menu": "Import / Export",
-      "title": "Import / Export Settings",
-      "fullSettings": "Full Settings",
-      "intro": "Export every saved preference on this device as one code, and paste it on another device or browser to import it: graphics, audio, interface, theme, frame layout, key bindings for every character, controller and cross hotbar bindings, chat, window filters, language, and dismissed hints.",
-      "excluded": "Never included: your login, account, wallet, or purchase data. Action bar layouts are saved to your account and travel with it."
+      "menu": "Importér / eksportér",
+      "title": "Importér / eksportér indstillinger",
+      "fullSettings": "Fuldstændige indstillinger",
+      "intro": "Eksportér hver gemt præference på denne enhed som én kode, og indsæt den på en anden enhed eller i en anden browser for at importere: grafik, lyd, grænseflade, tema, rammelayout, tastebindinger for hver karakter, controller- og cross-hotbar-bindinger, chat, vinduesfiltre, sprog og afviste tips.",
+      "excluded": "Aldrig inkluderet: dit login, din konto, din wallet eller købsdata. Handlingsbjælkelayouts gemmes på din konto og følger med."
     },
     "riftForge": {
-      "title": "Rift Forge",
-      "subtitle": "Riftbound bands",
+      "title": "Kløftsmedjen",
+      "subtitle": "Riftbundne bånd",
       "currency": "{name}: {count}",
-      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
-      "wornHint": "Worn. Unequip it to forge.",
-      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
-      "upgradeMax": "Fully upgraded",
-      "gemPickAria": "Gem to socket",
+      "empty": "Intet Riftbound-bånd i dine tasker. En rangeret Rift-første klar slår en.",
+      "wornHint": "Slidt. Udruste det til at smede.",
+      "upgradeBtn": "Opgrader til vareniveau {level} ({cost} essens)",
+      "upgradeMax": "Fuldt opgraderet",
+      "gemPickAria": "Perle til fatning",
       "gemOption": "{name} ({bonus})",
-      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
-      "socketBtn": "Socket",
-      "socketsNone": "no gems",
-      "noGems": "No Rift gems in your bags",
-      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "socketReplaceHint": "Stikkontakter fulde: den næste perle erstatter den ældste, {gem}.",
+      "socketBtn": "Stikkontakt",
+      "socketsNone": "ingen ædelstene",
+      "noGems": "Ingen Rift ædelstene i dine tasker",
+      "refused": "Smedjen nægtede. Stå ved Riftwright og prøv igen.",
       "reason": {
-        "notFound": "That band is not in your bags.",
-        "notRiftGear": "Only a Riftbound band can be forged.",
-        "maxUpgrade": "That band is fully upgraded.",
-        "insufficientEssence": "Not enough Rift Essence.",
-        "invalidGem": "You have no such Rift gem.",
-        "dead": "You can't do that while dead.",
-        "tooFar": "You are too far from the Rift Forge."
+        "notFound": "Det band er ikke i din taske.",
+        "notRiftGear": "Kun et Riftbound-bånd kan smedes.",
+        "maxUpgrade": "Det band er fuldt opgraderet.",
+        "insufficientEssence": "Ikke nok Rift Essence.",
+        "invalidGem": "Du har ikke sådan en Rift-perle.",
+        "dead": "Du kan ikke gøre det, mens du er død.",
+        "tooFar": "Du er for langt fra Rift Forge."
       },
       "done": {
-        "upgrade": "Upgraded {name}.",
-        "socket": "Socketed a gem into {name}.",
-        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+        "upgrade": "Opgraderet {name}.",
+        "socket": "Socket en perle i {name}.",
+        "socketReplaced": "Socket en perle i {name}; {gem} blev ødelagt."
       }
     },
     "itemTooltip": {
@@ -3339,7 +3353,7 @@ export const da_DK: EnTranslations = {
       "riftTier": "{tier}-rangs Rift-genstand",
       "riftUpgrade": "Rift-opgradering {level}/{max}",
       "riftSockets": "Rift-juveler {used}/{total}",
-      "riftGemSocket": "Socket bonus for a Riftbound band",
+      "riftGemSocket": "Socket bonus for et Riftbound-bånd",
       "statEnchanted": "+{value} {stat} (Fortryllet)",
       "enchantedFallback": "Fortryllet",
       "partyTradeWindow": "Du kan handle denne genstand til spillere, der delte dens bytte, i de næste {time}. Udstyrer du den, afsluttes handelsvinduet.",
@@ -3404,6 +3418,7 @@ export const da_DK: EnTranslations = {
       "close": "Luk",
       "keybind": "Discord-panel",
       "disabled": "Discord-integration er ikke tilgængelig lige nu.",
+      "queuePingsLabel": "Send mig en Discord direkte besked, når min kampplads eller arena-kø dukker op (skal have en tilknyttet Discord-konto)",
       "tiers": {
         "none": "Urangeret",
         "initiate": "Indviet",
@@ -3661,13 +3676,13 @@ export const da_DK: EnTranslations = {
       "close": "Luk"
     },
     "realmBuilder": {
-      "title": "Realm Builder of the Month",
-      "currentLabel": "Honoured this month",
-      "placeholderName": "Your Name Here",
-      "placeholderHint": "This plate is waiting for its first name.",
-      "pastTitle": "Past honourees",
-      "pastEmpty": "No names on the roll yet.",
-      "close": "Close"
+      "title": "Månedens Realm Builder",
+      "currentLabel": "Hædret denne måned",
+      "placeholderName": "Dit navn her",
+      "placeholderHint": "Denne plade venter på sit fornavn.",
+      "pastTitle": "Tidligere hædersmodtagere",
+      "pastEmpty": "Ingen navne på listen endnu.",
+      "close": "Luk"
     },
     "bank": {
       "title": "Bank",
@@ -3724,6 +3739,8 @@ export const da_DK: EnTranslations = {
       "depositAllDone": "Materialer indsat: {count}.",
       "depositAllFull": "Materialer indsat: {count}. Banken er nu fuld.",
       "depositAllNone": "Banken er fuld: intet indsat.",
+      "depositAllNotable": "Materialer deponeret: {count}, inklusive {item}.",
+      "depositAllNotableFull": "Materialer deponeret: {count}, inklusive {item}. Banken er nu fuld.",
       "bonusTitle": "Bonuspladser",
       "bonusEarned": "+{count}",
       "bonusStatusEarned": "+{count}",
@@ -3762,6 +3779,8 @@ export const da_DK: EnTranslations = {
       "vaultDepositAllDone": "Materialer indsat: {count}.",
       "vaultDepositAllFull": "Materialer indsat: {count}. Nogle lofter er fulde.",
       "vaultDepositAllNone": "Hvælvets lofter er fulde: intet blev indsat.",
+      "vaultDepositAllNotable": "Materialer deponeret: {count}, inklusive {item}.",
+      "vaultDepositAllNotableFull": "Materialer deponeret: {count}, inklusive {item}. Nogle lofter er fulde.",
       "vaultWithdrawShort": "Kun {fit} af {count} er der plads til i dine tasker.",
       "vaultDepositHint": "Klik for at indsætte i dit hvælv",
       "vaultCannotDeposit": "Kan ikke lægges i hvælvet",
@@ -3796,34 +3815,34 @@ export const da_DK: EnTranslations = {
       "guildViewsAria": "Laugsbankens visninger",
       "guildContentsTab": "Indhold",
       "guildLogTab": "Log",
-      "guildHistoryTab": "History",
+      "guildHistoryTab": "Historik",
       "logAria": "Laugsbankens aktivitetslog",
       "logNote": "De {count} seneste handlinger i laugsbanken.",
-      "logShowing": "Showing {count} guild bank actions, newest first.",
-      "logFilterAria": "Filter the guild bank history",
-      "logFilterAll": "All",
-      "logFilterItems": "Items",
-      "logFilterMoney": "Money",
-      "logOlder": "Show older",
-      "logOlderLoading": "Loading older actions...",
-      "logEnd": "That is the whole guild bank history.",
-      "logEmptyFiltered": "No guild bank actions match this filter.",
-      "logColTime": "When",
-      "logColMember": "Member",
-      "logColAction": "Action",
-      "logColDetail": "Details",
-      "logActionDeposit": "Deposited",
-      "logActionWithdraw": "Withdrew",
-      "logActionBuySlots": "Bought an expansion",
-      "logActionOpenBank": "Opened the bank",
-      "logActionCharterFee": "Paid the charter fee",
-      "logActionAdminPurge": "Removed",
-      "logActorAdmin": "An administrator",
+      "logShowing": "Viser {count} gildebankhandlinger, nyeste først.",
+      "logFilterAria": "Filtrer gildebankhistorikken",
+      "logFilterAll": "Alle",
+      "logFilterItems": "Genstande",
+      "logFilterMoney": "Penge",
+      "logOlder": "Vis ældre",
+      "logOlderLoading": "Indlæser ældre handlinger...",
+      "logEnd": "Det er hele gildebankhistorikken.",
+      "logEmptyFiltered": "Ingen gildebankhandlinger matcher dette filter.",
+      "logColTime": "Hvornår",
+      "logColMember": "Medlem",
+      "logColAction": "Handling",
+      "logColDetail": "Detaljer",
+      "logActionDeposit": "Indsat",
+      "logActionWithdraw": "Hævet",
+      "logActionBuySlots": "Købte en udvidelse",
+      "logActionOpenBank": "Åbnede banken",
+      "logActionCharterFee": "Betalte chartergebyret",
+      "logActionAdminPurge": "Fjernet",
+      "logActorAdmin": "En administrator",
       "logDetailItem": "{count} {item}",
-      "logSearchPlaceholder": "Search this history",
-      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
-      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
-      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
+      "logSearchPlaceholder": "Søg i denne historik",
+      "logSearchAria": "Søg i de indlæste gildebankhandlinger efter medlem, handling eller genstand",
+      "logShowingMatched": "Viser {matched} af {count} indlæste gildebankhandlinger.",
+      "logSearchNoMatch": "Ingen indlæste gildebankhandlinger matcher din søgning. Vis ældre rækker for at udvide den.",
       "logLoading": "Indlæser laugsbankens log...",
       "logEmpty": "Der er endnu ikke flyttet noget ind i eller ud af laugsbanken.",
       "logUnavailable": "Laugsbankens log kan ikke læses lige nu.",
@@ -3924,17 +3943,17 @@ export const da_DK: EnTranslations = {
         }
       },
       "roster": {
-        "seats": "{count} of {cap} seats",
-        "expand": "Expand roster (+{seats} seats for {price})",
-        "maxed": "The roster is at its largest size",
-        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
-        "confirmAction": "Expand",
-        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "seats": "{count} af {cap} sæder",
+        "expand": "Udvid liste (+{seats} pladser til {price})",
+        "maxed": "Listen er i sin største størrelse",
+        "confirm": "Udvide guildlisten med {seats}-sæder til {price}? Guldet kommer fra din egen pung og refunderes ikke.",
+        "confirmAction": "Udvid",
+        "expandedLine": "{name} har udvidet guildlisten til {cap}-medlemmer.",
         "result": {
-          "notLeader": "Only the Guild Master may expand the guild roster.",
-          "maxed": "The guild roster cannot grow any larger.",
-          "cannotAfford": "You need {price} to expand the guild roster.",
-          "retry": "The guild roster changed while you were buying. Try again."
+          "notLeader": "Kun laugsmesteren må udvide laugslisten.",
+          "maxed": "Lauglisten kan ikke vokse sig større.",
+          "cannotAfford": "Du skal bruge {price} for at udvide guildlisten.",
+          "retry": "Gildelisten ændrede sig, mens du købte. Prøv igen."
         }
       }
     },
@@ -4498,7 +4517,7 @@ export const da_DK: EnTranslations = {
       "sameEnchant": "Den genstand har allerede den fortryllelse.",
       "notPerfected": "Only a Perfected item can bear that enchant.",
       "enchantSkillTooLow": "Your Enchanting skill is too low for that enchant.",
-      "riftGear": "Riftbound bands take Rift gems, not enchants.",
+      "riftGear": "Riftbundne bands tager Rift-perler, ikke fortryllelser.",
       "replaceTag": "Erstatter {enchant}",
       "sameEnchantTag": "Allerede anvendt",
       "plainTag": "Ikke fortryllet",
@@ -4789,15 +4808,15 @@ export const da_DK: EnTranslations = {
         "deathless_rage": "Udødelig Raseri (afbrydes ved vardstene)",
         "wardstones": "Vardstenskanaler (faseovergang)",
         "dread_curse": "Rædselsforbandelse (kun heroisk, stablende svækkelse til tankskifte)",
-        "bone_spike": "Bone Spike (impaled raiders drain until the spike is destroyed)",
-        "grave_eruption": "Grave Eruption (warning circles that leave burning ground)",
-        "binding_sigil": "Binding Sigil (drag the boss onto the sigil or the raid pays)",
-        "gravefire": "Gravefire (a traveling line of fire to sidestep)",
-        "soulfire": "Soulfire (Soul Rend detonations leave burning pools)",
-        "kings_wrath": "King's Wrath (30%: permanent damage bonus, faster floor hazards)",
-        "bone_storm": "Bone Storm (he ignores threat, whirls, and charges the raid)",
-        "crown_endures": "The Crown Endures (hard enrage at 6:00, heroic 5:00)",
-        "deathless_court": "The Deathless Court (heroic only, the royal court rises after Deathless Rage)"
+        "bone_spike": "Knoglespyd (spiddede raiddeltagere drænes, indtil spyddet ødelægges)",
+        "grave_eruption": "Gravudbrud (advarselscirkler, der efterlader brændende jord)",
+        "binding_sigil": "Bindingssigil (træk bossen hen på sigillet, ellers betaler raidet)",
+        "gravefire": "Gravild (en vandrende ildlinje at træde udenom)",
+        "soulfire": "Sjæleild (detonationer fra Sjæleflængen efterlader brændende søer)",
+        "kings_wrath": "Kongens vrede (30%: permanent skadebonus, hurtigere gulvfarer)",
+        "bone_storm": "Knoglestorm (han ignorerer trussel, hvirvler og stormer mod raidet)",
+        "crown_endures": "Kronen holder stand (hård rasen ved 6:00, heroic 5:00)",
+        "deathless_court": "Det Dødsløse Hof (kun heroic, kongehofet rejser sig efter Dødsløs Rasen)"
       }
     },
     "reliquary": {
@@ -4887,6 +4906,7 @@ export const da_DK: EnTranslations = {
       "sourceProfession": "Optjenes gennem {profession}",
       "sourceDeed": "Gives af bedriften {deed}",
       "sourceVendor": "Sælges af {vendor}",
+      "sourceVendorGated": "Sælges af {vendor} ({requirement})",
       "sourceBossZone": "Falder fra {boss} i {zone}",
       "sourceDelve": "Findes i delven {delve}",
       "sourceRift": "Falder fra gennemførsler af Rifter med rang {rank}",
@@ -4906,6 +4926,10 @@ export const da_DK: EnTranslations = {
       "filterAll": "Alle",
       "filterOwned": "Katalogiserede",
       "filterMissing": "Manglende",
+      "filterIlluminated": "Oplyst",
+      "filterRemaining": "Tilbage",
+      "filterEmptyPages": "Ingen sider matcher dette filter.",
+      "filterGroupAriaPages": "Filtrer sider efter, om de er belyst",
       "recentJumpAria": "Åbn siden for {name}",
       "recentEmpty": "Ingen fund endnu. Relikvier, du katalogiserer fra nu af, lander her.",
       "nearlyEmpty": "Sider tæt på fuldførelse samler sig her.",
@@ -5013,6 +5037,7 @@ export const da_DK: EnTranslations = {
       "summary": "Verdenskort. Vælg en zone for at åbne dens kort.",
       "toWorld": "Verdenskort",
       "toZone": "Zonekort",
+      "toInstance": "Forekomst kort",
       "toggleAria": "Skift mellem verdenskortet og zonekortet",
       "levels": "Niveauer {min} til {max}"
     },
@@ -5047,6 +5072,7 @@ export const da_DK: EnTranslations = {
       "walletLinkedConnected": "Din tilknyttede wallet-app er forbundet og klar til $WOC-køb.",
       "walletUsdBalance": "{amount} USD",
       "walletUsdUnknown": "Ukendt",
+      "walletCardDismiss": "Skjul tegnebogskort",
       "rateNote": "Kurs: omkring {tokens} $WOC for 1,00 USD, pr. {time}.",
       "rateNotePaused": "Sidst kendte kurs: omkring {tokens} $WOC for 1,00 USD, pr. {time}.",
       "estimateNote": "Omkring {tokens} $WOC for {usd} til den aktuelle kurs.",
@@ -5238,6 +5264,43 @@ export const da_DK: EnTranslations = {
       "listingStatusCancelled": "Annulleret",
       "listingStatusSuspended": "Suspenderet",
       "listingStatusUnsold": "Usolgt"
+    },
+    "lootExplorer": {
+      "title": "Bytteoversigt",
+      "close": "Luk Loot Explorer",
+      "searchPlaceholder": "Søg varer...",
+      "searchAria": "Søg efter varer",
+      "filterCategoryAria": "Kilde",
+      "filterClassAria": "Klasse",
+      "filterStatAria": "Egenskab",
+      "filterQualityAria": "Kvalitet",
+      "filterAll": "Alle",
+      "tabItems": "Efter vare",
+      "tabEncounters": "Ved møde",
+      "category": {
+        "raid": "Raidgruppe",
+        "dungeon": "Fangehul",
+        "delve": "Dyk",
+        "open_world": "Åben verden",
+        "rift": "Kløft",
+        "vendor": "Sælger",
+        "quest_reward": "Quest belønning",
+        "quest_objective": "Quest mål",
+        "ground_object": "Verdensobjekt",
+        "starting_equipment": "Startudstyr"
+      },
+      "difficulty": {
+        "normal": "Normal sværhedsgrad",
+        "heroic": "Heroisk"
+      },
+      "riftRankLabel": "Kløftrang {rank}",
+      "source": "{category}: {name}",
+      "sourceWithContext": "{category}: {name} ({context})",
+      "chance": "{pct} % chance",
+      "guaranteed": "Garanteret",
+      "gatedByQuest": "Mens du søger: {quest}",
+      "empty": "Intet bytte matcher disse filtre.",
+      "resultCount": "{count} resultater"
     }
   },
   "gatherEvent": {
@@ -5337,7 +5400,8 @@ export const da_DK: EnTranslations = {
       "link_required": "Knyt din Discord-konto først.",
       "swag_claimed": "Du har allerede indløst denne belønning.",
       "swag_tier": "Nå en højere rang for at indløse denne.",
-      "swag_points": "Ikke nok point."
+      "swag_points": "Ikke nok point.",
+      "invalid_input": "Ugyldigt input."
     },
     "deeds": {
       "invalid_input": "Ugyldig indtastning."
@@ -5389,6 +5453,11 @@ export const da_DK: EnTranslations = {
       "reason_required": "Der skal angives en grund.",
       "invalid_duration": "Angiv en markeringsvarighed på mindst ét sekund.",
       "not_marked": "Den konto er ikke markeret."
+    },
+    "kick": {
+      "reason_required": "En grund er påkrævet.",
+      "admin_target": "Operatørkonti kan ikke sparkes.",
+      "target_offline": "Den spiller er ikke længere online i dette rige."
     },
     "woc_market": {
       "invalid_input": "Ugyldigt input.",
@@ -5824,10 +5893,13 @@ export const da_DK: EnTranslations = {
       "ifPlayerFrameScale": "Størrelsen på din egen spillerramme.",
       "ifTargetFrameScale": "Størrelsen på din målramme.",
       "ifPartyStyle": "Gruppens layout: Automatisk følger din gruppestørrelse, Klassisk er den traditionelle stak, og Raid pakker alle sammen i det kompakte gitter.",
+      "ifPlayerHealthText": "Hvad din egen sundhedsbjælke udskriver: intet, en procentdel, nuværende helbred, nuværende og maksimum, eller begge med procentdelen ved siden af.",
+      "ifTargetHealthText": "Hvad target- og target-of-target-sundhedsbjælkerne udskriver, med de samme valgmuligheder som din egen ramme.",
       "ifPartyHealthText": "Hvad gruppebjælkerne viser: ingenting, en procentdel, nuværende helbred, eller nuværende og maksimum.",
       "ifPartySort": "Rækkefølgen, gruppemedlemmer vises i: gruppeorden, rolle, eller navn.",
       "ifPartyShowAuras": "Hvorvidt styrkelser og svækkelser vises på gruppens rammer. Tilsvarende kontakter dækker ressourcebjælker, absorberinger, kæledyr, og hvorvidt du selv optræder på din egen gruppeliste.",
       "ifAurasOnPlayerFrame": "Sætter dine styrkelser og svækkelser på din egen spillerramme, ud over aurabjælken.",
+      "ifAuraBarBelowFrame": "Flytter buffrækken under din enhedsramme i stedet for over den. Betyder kun noget, når buffs vises på spillerrammen.",
       "ifAlwaysShowAllBuffs": "Viser alle aktive forstærkninger, selv med grafikindstillingen Lav, og omgår den normale grænse for forstærkningsikoner.",
       "ifTargetOfTarget": "Viser, hvem dit måls mål er, den klassiske måde at se, om tanken stadig har fat i det.",
       "ifPetFrame": "Viser en ramme til dit kæledyr.",
@@ -5835,6 +5907,7 @@ export const da_DK: EnTranslations = {
       "ifChatOpacity": "Hvor solid chatbaggrunden er.",
       "ifCompactChat": "Strammer chatlinjerne, så flere af dem kan være der.",
       "ifChatTimestamps": "Tilføjer et klokkeslæt til hver chatlinje, i 12-timers eller 24-timers form.",
+      "ifFilterProfanity": "Masker bandeord i chat med stjerner. Til som standard; sluk det her, hvis du hellere vil læse chat ufiltreret.",
       "ifStartAttack": "Hvorvidt brug af en evne også starter dit autoangreb. Til som standard, og den klassiske opførsel, de fleste spillere forventer.",
       "ifStopAutoAttack": "Hvorvidt skift af mål stopper dit sving. Fra som standard, så dit angreb følger med over på det nye mål.",
       "ifShowAttackButton": "Sætter en tydelig Angrib-knap på din handlingsbjælke.",
@@ -6686,8 +6759,8 @@ export const da_DK: EnTranslations = {
       "raceBody": "Enhver gruppe i riget kan angribe den samme rift på samme tid, hver i sin egen kopi, og kun den første til at fælde tingen på bunden forsegler den. Når en gruppe vinder, hører riget deres navne og deres tid, og vejen ind lukker bag dem. At tabe løbet afslutter ikke jeres tur: jeres kopi forbliver åben, tingen på bunden falder stadig for jer, og I går stadig ud for egen kraft. Det, det koster jer, er alt det, en oprydning ville have betalt. Bossen efterlader intet til den gruppe, der kom nummer to, så det, I bærer hjem, er det, der droppede fra mobs på vejen ned, og intet mere. Bedrifternes Bog tæller stadig oprydningen, for I fik faktisk fældet tingen. Det er det eneste løb i spillet, du kan tabe uden nogensinde at se de folk, der slog dig.",
       "rewardsHeading": "Det du bærer ud",
       "rewardsBody": "At forsegle en rift, ikke blot at overleve den, er det, der betaler sig. Fæld riften først, og den betaler som det instansindhold, dens rang står ved siden af, så de hårdere rangeringer er den hårdere tur værd. At forsegle lægger også et Riftbundet Bånd i hænderne på alle, der var der, skåret til din klasses rolle og personligt til dig, og efterlader Rift-Essens i dine tasker oven i det, med Rift-Juveler oven i det igen ved de hårdere rangeringer. Ved siden af vejen hjem efterlader tingen på bunden en forseglet kiste, som din gruppe kan dirke op for ekstra bytte, med den samme Tappens vej-dirkning, du kender fra delve-kister, så et rent, tålmodigt arbejde betaler bedre end et forhastet et. Intet af det når frem til en gruppe, der kom nummer to: et tabt løb efterlader jer kun det, der droppede fra mobs på vejen ned. Bedrifternes Bog er undtagelsen, og den tæller jeres oprydning under alle omstændigheder, med en bedrift for at lukke jeres første rift og endnu en for at fælde en S-rangs rift.",
-      "forgeHeading": "The Rift Forge",
-      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
+      "forgeHeading": "Rift Forge",
+      "forgeBody": "Bandet en rangeret første clear mints er ikke færdig, når du modtager det. Riftwright Maelis, der holder en smedje i Watch Meadow på Farshore, op ad kysten fra Gullhaven ved siden af ​​Breach Scholar, vil hæve sit emneniveau et trin ad gangen og sætte de farvede ædelstene, som riftsene falder i sine sokler, hver farve en kampvurdering. Et fuldt band tager en ny perle i stedet for dens ældste, så du kan genindstille den senere. Alt dette betales i Rift Essence og Rift gems, smedevalutaen, der falder fra rift-bosserne og handler frit, så en ven kan give dig den essens, du mangler. Tag båndet af, før du bringer det til hende: hun arbejder på det, der er i dine tasker, og hun gør slet ikke noget, medmindre du står ved hendes smedje.",
       "trackerHeading": "Sporingen på din skærm",
       "trackerBody": "Mens du er indenfor, holder en lille strimmel på din skærm dig orienteret: hvilken etage du er på ud af hvor mange, og en live nedtælling. Læs den nedtælling omhyggeligt, for det er ikke din tur, der løber ud. Det er indgangen tilbage i verden, der lukker. Når du først er igennem, spiller din gruppe riften færdig i sit eget tempo, hvor lang tid det end tager, men når det ur når nul, er vejen ind væk for alle, så tænk dig om, før du træder udenfor tæt på slutningen af den."
     },
@@ -8682,7 +8755,7 @@ export const da_DK: EnTranslations = {
       "forgeUpgraded": "Rift-opgradering fuldført for {name}.",
       "forgeEnchanted": "Rift-fortryllelse fuldført for {name}.",
       "forgeSocketed": "Rift-juvel indsat for {name}.",
-      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
+      "forgeGemReplaced": "Riftperle udskiftet for {name}: {gem} ødelagt.",
       "detonateGlacialGrave": "Iskold Grav detonerer!",
       "detonateAbsoluteZero": "Absolut Nulpunkt bryder ud!",
       "detonateMagmaWell": "Magmakilde bryder ud!",
@@ -9325,6 +9398,7 @@ export const da_DK: EnTranslations = {
     "connectingRealm": "Forbinder til verdenen...",
     "assetsFailed": "Indlæsning af aktiver mislykkedes: prøv at genindlæse. {error}",
     "rendererFailed": "Kunne ikke starte gengiveren: prøv at genindlæse. {error}",
+    "rendererContextLost": "3D-rendereren mistede sin grafikkontekst og kunne ikke gendanne den. Genindlæs siden.",
     "enterTimeout": "Kunne ikke komme ind i verdenen. Forbindelsen fik timeout. Kører spilserveren?",
     "connectionLost": "Forbindelsen til serveren gik tabt.",
     "reconnectingAttempt": "Forbindelse mistet. Genopretter forbindelse... (forsøg {attempt}/{maxAttempts}, prøver igen om {seconds}s)",
@@ -9335,6 +9409,7 @@ export const da_DK: EnTranslations = {
     "realmFull": "Denne verden er fuld i øjeblikket. Prøv igen om et par minutter.",
     "tooManyConnections": "Der kommer for mange forbindelser til denne verden fra dit netværk. Luk ekstra spilvinduer, eller prøv igen om et par minutter.",
     "messageRateExceeded": "Forbindelsen blev afbrudt, fordi du sendte handlinger for hurtigt. Vent et øjeblik, og log ind igen.",
+    "kickedByModerator": "En moderator har afbrudt dig: {reason}",
     "tips": {
       "classes": "Tip: Hver af de 9 klasser spilles forskelligt. Prøv nogle stykker, før du vælger én.",
       "talents": "Tip: Du kan nulstille dine talenter, når du er ude af kamp, så et tidligt valg er aldrig en fælde.",
@@ -9423,7 +9498,7 @@ export const da_DK: EnTranslations = {
     "bodyWeb": "Spillet kører uden GPU-acceleration og vil være langsomt. Aktiver hardwareacceleration i din browsers indstillinger, opdater dine grafikdrivere og genstart derefter din browser.",
     "hybridBodyWindows": "Denne session kører på den integrerede (strømbesparende) GPU. Hvis denne computer også har en gaming-GPU, skal du indstille din browser til Høj ydeevne under Indstillinger, System, Skærm, Grafik, og derefter genstarte den. Skrivebordsappen vælger selv gaming-GPU'en.",
     "hybridBodyLinux": "Denne session kører på den integrerede (strømbesparende) GPU. Hvis denne computer også har en gaming-GPU, tilbyder din browser eller grafikdriver måske sin egen GPU-valgindstilling, eller din distribution tilbyder måske et GPU-skifteværktøj (såsom PRIME eller optimus-manager). Skrivebordsappen vælger selv gaming-GPU'en.",
-    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
+    "bodyRequestedBackend": "Spillet kunne ikke starte på den grafik-backend, du valgte, så det kører på OpenGL i stedet. Alt fungerer, men indlæsning og de første minutter kan hakke mere. Du kan vælge en backend igen under Indstillinger, Grafik, System.",
     "hybridBodyOther": "Denne session kører på den integrerede (strømbesparende) GPU. Hvis denne computer også har en gaming-GPU, så tjek din browsers og dit styresystems grafikindstillinger for at aktivere den. Skrivebordsappen vælger selv gaming-GPU'en.",
     "dismiss": "Afvis"
   },
@@ -11169,11 +11244,11 @@ export const da_DK: EnTranslations = {
       },
       "melting_acid": {
         "name": "Smeltende syre",
-        "description": "Sprøjter målet med en ætsende gift, giver {damage} naturskade og reducerer dets rustning med 5 % i 12 sek."
+        "description": "Smører dit våben i 30 min. Hvert af dine nærkampshug sprøjter målet med ætsende syre og reducerer dets rustning med 5 % i 12 sek."
       },
       "nightshade_coating": {
         "name": "Natskygge belægning",
-        "description": "Overtrækker målet i natskygge, giver {damage} naturskade og reducerer helingen, den modtager med 25 % i 12 sek."
+        "description": "Smører dit våben i 30 min. Hvert af dine nærkampshug overtrækker målet i natskygge og reducerer den heling, det modtager, med 25 % i 12 sek."
       },
       "expose_armor": {
         "name": "Rustningsbrud",
@@ -11189,11 +11264,11 @@ export const da_DK: EnTranslations = {
       },
       "instant_poison": {
         "name": "Hugormbid",
-        "description": "Smører dit våben i 30 min, så hvert af dine nærkampshug volder 8 ekstra naturskade."
+        "description": "Smører dit våben i 30 min, så hvert af dine nærkampshug volder {damage} ekstra naturskade."
       },
       "deadly_poison": {
         "name": "Betændt Gift",
-        "description": "Smører dit våben i 30 min, så hvert af dine nærkampshug volder 14 ekstra naturskade."
+        "description": "Smører dit våben i 30 min. Hvert af dine nærkampshug lægger et lag gift på målet, op til 5, og fornyer varigheden på 12 sek. Hvert lag volder {damage} naturskade hvert 2. sek."
       },
       "blind": {
         "name": "Jordkast",
@@ -11406,7 +11481,7 @@ export const da_DK: EnTranslations = {
       "arcane_shot": {
         "name": "Grumt Skud",
         "description": "Skyder målet for {damage} Arkan skade. Skaden stiger med angrebsstyrke på afstand.",
-        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
+        "specNote_marksmanship": "Koldsynsberedskab fra et fuldført Febertræk får dit næste Skæbneskud til at give 75% mere skade. At affyre skuddet bruger Beredskab."
       },
       "concussive_shot": {
         "name": "Rystende Skud",
@@ -12292,11 +12367,11 @@ export const da_DK: EnTranslations = {
       },
       "temporal_echo": {
         "name": "Tidsekko",
-        "description": "Mærker en alliert med et ekko af et sundere øjeblik og gendanner {damage} helbred øjeblikkeligt. I {duration} sek. trækkes en del af den Arkane skade du gør tilbage gennem ekkoet for at helbrede dem."
+        "description": "Mærker en allieret med et ekko af et sundere øjeblik og gendanner {damage} helbred øjeblikkeligt. I {duration} sek. helbreder {echoSinglePct}% af din øvrige Arkane enkeltmålsskade og {echoAreaPct}% af din Arkane områdeskade dem. Æterbølge og Æterpile helbreder dem i stedet for {echoDriverPct}% af den skade, de gør."
       },
       "temporal_cascade": {
         "name": "Tidskaskade",
-        "description": "Sender et ekko kaskadevejende gennem din gruppe: målet og op til fire af deres nærmeste allierede helbredes øjeblikkeligt og markeres hver i {duration} sek., og trækker en del af den Arkane skade du gør tilbage gennem deres ekkooer for at helbrede dem. (Kronomantik)"
+        "description": "Sender et ekko kaskadevejende gennem din gruppe: målet og op til fire af deres nærmeste allierede helbredes øjeblikkeligt og markeres hver i {duration} sek., og trækker en del af den Arkane skade du gør tilbage gennem deres ekkoer for at helbrede dem. Æterbølge og Æterpile skaber en tilsvarende helingsreserve fra hvert gruppeekko, fordelt efter manglende helbred blandt markerede allierede under 60% helbred. (Kronomantik)"
       },
       "temporal_reversal": {
         "name": "Tidsvending",
@@ -13984,11 +14059,17 @@ export const da_DK: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Ignition Key: Dreadspark Groundshaker"
       },
+      "reins_goblin_rocket_sled": {
+        "name": "Tændingsnøgle: Goblin-raketslæde"
+      },
+      "reins_rallycart_rxt": {
+        "name": "Tændingsnøgle: Rallycart RXT"
+      },
       "reins_lanternback_troll": {
         "name": "Lygtetænderens åg: Grumbol"
       },
       "reins_chimeglass_tortoise": {
-        "name": "Roadwarden's Bellstrap: Tolliver"
+        "name": "Vejvagts klokkerem: Tolliver"
       },
       "reins_rickshaw_mount": {
         "name": "Bundne tøjler: Knogebundet Rickshaw"
@@ -13997,7 +14078,7 @@ export const da_DK: EnTranslations = {
         "name": "Tøjler til Dragegabets Raptor"
       },
       "reins_mech_bird": {
-        "name": "Ignition Key: Cluckwork Mech Bird"
+        "name": "Tændingsnøgle: Cluckwork Mech Bird"
       },
       "rimefang": {
         "name": "Rimhugtand"
@@ -15308,46 +15389,46 @@ export const da_DK: EnTranslations = {
         "name": "Field Kit"
       },
       "bramblehide_crown": {
-        "name": "Roots' Bramblehide Crown"
+        "name": "Rods Tjørnehudskrone"
       },
       "bramblehide_mantle": {
-        "name": "Roots' Bramblehide Mantle"
+        "name": "Rods Tjørnehudskappe"
       },
       "bramblehide_harness": {
-        "name": "Roots' Bramblehide Harness"
+        "name": "Rods Tjørnehudssele"
       },
       "bramblehide_cinch": {
-        "name": "Roots' Bramblehide Cinch"
+        "name": "Rods Tjørnehudsbælte"
       },
       "bramblehide_legguards": {
-        "name": "Roots' Bramblehide Legguards"
+        "name": "Rods Tjørnehudsbenværn"
       },
       "bramblehide_grips": {
-        "name": "Roots' Bramblehide Grips"
+        "name": "Rods Tjørnehudsgreb"
       },
       "bramblehide_treads": {
-        "name": "Roots' Bramblehide Treads"
+        "name": "Rods Tjørnehudsstøvler"
       },
       "courtiers_bonefang": {
-        "name": "Courtier's Bonefang"
+        "name": "Hoffolkets Knogletand"
       },
       "thornpeak_wardblade": {
-        "name": "Thornpeak Wardblade"
+        "name": "Tjørnetops Værnklinge"
       },
       "gravecourt_hewer": {
-        "name": "Gravecourt Hewer"
+        "name": "Gravgårdens Hugger"
       },
       "votive_ward_of_the_deathless_court": {
-        "name": "Votive Ward of the Deathless Court"
+        "name": "Votivværn fra det Dødsløse Hof"
       },
       "thornpeak_moonhide_cowl": {
-        "name": "Thornpeak Moonhide Cowl"
+        "name": "Tjørnetops Månehudshætte"
       },
       "stormhymn_chain_grips": {
-        "name": "Stormhymn Chain Grips"
+        "name": "Stormhymnens Kædegreb"
       },
       "stormhymn_chain_treads": {
-        "name": "Stormhymn Chain Treads"
+        "name": "Stormhymnens Kædestøvler"
       },
       "conjured_water4": {
         "name": "Fremmanet kildevand"
@@ -16336,7 +16417,7 @@ export const da_DK: EnTranslations = {
         "name": "Nythraxis, Tornetops Svøbe"
       },
       "nythraxis_bone_spike": {
-        "name": "Bone Spike"
+        "name": "Knoglespyd"
       },
       "ignivar_herald_of_the_last_flame": {
         "name": "Ignivar, den Sidste Flammes Herold"
@@ -17305,9 +17386,9 @@ export const da_DK: EnTranslations = {
         "greeting": "Den åbnede sig lige der, hvor nettene tørrer. Lige der, hvor jeg stod hver morgen hele mit liv. Jeg går ikke ned til kysten mere. Jeg går egentlig ikke mange steder mere."
       },
       "riftwright_maelis": {
-        "name": "Riftwright Maelis",
-        "title": "Rift Forgemaster",
-        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
+        "name": "Riftbygger Maelis",
+        "title": "Riftsmedemester",
+        "greeting": "Et Riftbound-band husker pausen, der gjorde det, {className}. Bring mig bandet og essensen af ​​pauserne, og jeg vil lære det at huske mere."
       },
       "forgemistress_darva": {
         "name": "Smedemester Darva",
@@ -20728,6 +20809,6 @@ export const da_DK: EnTranslations = {
     "mailboxName": "Postkasse",
     "noticeboardName": "Opslagstavle",
     "farmPatchName": "Garden Beds",
-    "realmBuilderMonumentName": "Realm Builder Monument"
+    "realmBuilderMonumentName": "Rigsbygger-monument"
   }
 };

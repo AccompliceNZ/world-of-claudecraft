@@ -433,7 +433,9 @@ const MONOLITHS: MonolithRow[] = [
     // `wc -l < src/ui/hud.ts` on the reconciled file measures 18577, below
     // both arms, so the ceiling follows it down. Exact merged count, zero
     // slack: any further growth reds again.
-    ceiling: 18577,
+    // OSSBrain integration: mobile long-press binding and tooltip painting moved to sibling modules.
+    // Measured after formatting; lower the ratchet with the extraction.
+    ceiling: 18574,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -441,8 +443,11 @@ const MONOLITHS: MonolithRow[] = [
     // import-export round (review request on PR #3926) so the next feature
     // there lands as a sibling module the window composes, not another
     // inline sub-panel. Exact count at the time of joining.
+    // Re-pinned at the second v0.42.0 release-base reconcile after the
+    // release-side import/export panel composed with the batch settings rows.
+    // Measured with wc -l on the merged tree. Exact count, zero headroom.
     file: 'src/ui/options_window.ts',
-    ceiling: 2813,
+    ceiling: 2843,
     seam: 'a pure view model (src/ui/options_view.ts) painted with the shared settings_controls.ts builders; sub-panels as sibling modules',
   },
   {
@@ -818,7 +823,9 @@ const MONOLITHS: MonolithRow[] = [
     // resolved tree: `wc -l < src/render/renderer.ts` on the reconciled file
     // measures 12903, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
-    ceiling: 12903,
+    // OSSBrain integration: Fiesta effects moved to render/fiesta_effects.ts.
+    // Measured after formatting; lower the ratchet with the extraction.
+    ceiling: 12879,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
@@ -1181,7 +1188,9 @@ const MONOLITHS: MonolithRow[] = [
     // the resolved tree: `wc -l < src/main.ts` on the reconciled file
     // measures 11385, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
-    ceiling: 11385,
+    // OSSBrain integration: mobile preflight detection and copy moved to game/mobile_preflight.ts.
+    // Measured after formatting; lower the ratchet with the extraction.
+    ceiling: 11366,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
@@ -1534,7 +1543,9 @@ const MONOLITHS: MonolithRow[] = [
     // `wc -l < src/net/online.ts` on the reconciled file measures 5788,
     // below both arms, so the ceiling follows it down. Exact merged count,
     // zero slack: any further growth reds again.
-    ceiling: 5788,
+    // OSSBrain integration: entity flair decoding moved to net/entity_flair_wire.ts.
+    // Measured after formatting; lower the ratchet with the extraction.
+    ceiling: 5765,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
@@ -1671,7 +1682,17 @@ const MONOLITHS: MonolithRow[] = [
     // exact `wc -l < server/db.ts` measurement on the resolved tree.
     // RE-CONFIRMED at the final line-budget reconciliation: still 4977,
     // below both parent pins. Exact merged count, zero slack.
-    ceiling: 4977,
+    // LOWERED 4977 -> 4893 at the OSSBrain v0.42.0 integration database
+    // review: the character-lease CRUD (acquireCharacterLease,
+    // releaseCharacterLease, heartbeatCharacterLeases,
+    // releaseAllCharacterLeases, LEASE_TTL_SECONDS, PROCESS_LEASE_HOLDER)
+    // moved whole to server/character_lease_db.ts, the same split as its
+    // character_create_db.ts/character_delete_db.ts siblings; the
+    // character_leases DDL stays in db.ts's core SCHEMA. PROCESS_LEASE_HOLDER
+    // stays imported at the top of db.ts too (the save-family fence sites
+    // reach it directly), unlike createCharacterCapped's pure re-export.
+    // Exact count, zero slack.
+    ceiling: 4893,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {
@@ -1784,7 +1805,9 @@ const MONOLITHS: MonolithRow[] = [
     // other's, and the union composes below both), so the ratchet follows it
     // down: measured 841 (wc -l < src/render/nameplate_canvas.ts). Exact
     // merged count, zero slack: any further growth reds again.
-    ceiling: 841,
+    // OSSBrain integration: canvas drawing primitives moved to nameplate_paint_primitives.ts.
+    // Measured after formatting; lower the ratchet with the extraction.
+    ceiling: 827,
     seam: 'the pure src/render/nameplate_heraldry_core.ts geometry module',
   },
   {

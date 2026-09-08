@@ -175,6 +175,8 @@ const FANOUT_ARMS: readonly string[] = [
   // The journal's relocalize gates itself (isOpen inside) and additionally
   // clears the standing ready announcement, whose text was minted in the OLD
   // locale and no flip would re-mint (Phase 14).
+  // Rebuilds the open explorer toolbar and results, preserving its focused control.
+  'this.lootExplorerWindow.relocalize|',
   'this.lootWindow.relocalize|',
   'this.harvestJournalWindow.relocalize|',
   // The shared corpse-harvest preference picker's relocalize gates itself
@@ -382,9 +384,9 @@ const ANSWERED: readonly AnsweredSurface[] = [
   },
   {
     file: 'reliquary_window.ts',
-    memos: ['lastAnnounced', 'lastSig'],
+    memos: ['lastAnnounced', 'lastAnnouncedKey', 'lastSig'],
     answer: 'this.reliquaryWindow.render',
-    why: 'catalog progress, Curator rank labels, shelf page lists, and grid chrome; lastAnnounced holds the LOCALIZED live-region line, but the fan-out render is argument-less (the player-driven arm), which recomputes and rewrites the region unconditionally, so the memo cannot pin stale-language text past a switch',
+    why: 'catalog progress, Curator rank labels, shelf page lists, and grid chrome; lastAnnounced holds the LOCALIZED live-region line, but the fan-out render is argument-less (the player-driven arm), which recomputes the line and rewrites the region whenever the text differs, and a language switch always changes the text, so the memo cannot pin stale-language text past a switch; lastAnnouncedKey is language-free (nav, page id, needle, chip id) and only elides a rewrite of BYTE-IDENTICAL text',
   },
   {
     file: 'dungeon_finder_proposal_popup.ts',
@@ -687,6 +689,18 @@ const NOT_A_LANGUAGE_GATE: ReadonlyArray<{
   // fixed by the relocalizeCoordinatorMemos arm, which is pinned behaviorally
   // below rather than only registered. The shipped per-memo LANGUAGE_KEYED
   // reach stood until this ruling and is now one classification among many.
+  {
+    file: 'hud.ts',
+    memos: ['freedAttackSlotAbilityCache'],
+    reason:
+      'Caches the authored ability definition by action id for the freed Attack slot. It contains content identity and mechanical values, not resolved locale strings; the tooltip and action-bar consumers resolve ability display text from that definition when painting.',
+  },
+  {
+    file: 'hud.ts',
+    memos: ['lastPlayerFrameHpMode'],
+    reason:
+      'The health-text setting is one arm of the same OR gate as lastPlayerFrameHp and lastPlayerFrameMaxHp. relocalizeCoordinatorMemos already clears those two values to NaN, forcing unitFrameHealthText to resolve its numbers in the new locale even when the setting is unchanged.',
+  },
   {
     file: 'hud.ts',
     memos: ['lastArenaStatusSig'],
@@ -1556,7 +1570,9 @@ describe('language fan-out: half 2, every signature-gated src/ui surface is clas
       // hover row: movable_frame's `lastHoverCursor` elides an inline CSS
       // cursor-keyword write and can never hold text; the frame's t() labels
       // already ride the interface_unlock relocalize() arm.
-    ).toBe(33);
+      // OSSBrain integration: authored freed-slot ability cache and the health-mode
+      // arm sharing the already-cleared HP gate add two explicit classifications.
+    ).toBe(35);
   });
 
   it('gives every relocalize() in src/ui a caller in the fan-out', () => {
