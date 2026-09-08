@@ -61,26 +61,46 @@ function nodeScansIndex(node: ExplainPlanNode, indexName: string): boolean {
   return false;
 }
 
-/** Extracts the top `Plan` node from a `pool.query('EXPLAIN (FORMAT JSON) ...')` row. */
+function isPlanNode(value: unknown): value is ExplainPlanNode {
+  return (
+    typeof value === 'object' &&
+    value !== null &&
+    !Array.isArray(value) &&
+    typeof (value as Record<string, unknown>)['Node Type'] === 'string'
+  );
+}
+
+// Preserve the concurrent fix's explicit shape validation while using the
+// relation-owned index checks below.
+function collectPlanNodes(root: ExplainPlanNode): ExplainPlanNode[] {
+  const nodes: ExplainPlanNode[] = [];
+  const visit = (node: ExplainPlanNode) => {
+    nodes.push(node);
+    const children = node.Plans;
+    if (children === undefined) return;
+    if (!Array.isArray(children)) throw new Error('EXPLAIN Plan node has non-array Plans');
+    for (const child of children) {
+      if (!isPlanNode(child)) throw new Error('EXPLAIN Plans contained an invalid plan node');
+      visit(child);
+    }
+  };
+  visit(root);
+  return nodes;
+}
+
+/** Extracts the top Plan node from a PostgreSQL EXPLAIN JSON row. */
 export function rootPlanFromExplainRow(row: unknown): ExplainPlanNode {
   const queryPlan = (row as { 'QUERY PLAN'?: unknown })['QUERY PLAN'];
   if (!Array.isArray(queryPlan) || queryPlan.length === 0) {
     throw new Error('EXPLAIN (FORMAT JSON) row has no "QUERY PLAN" array');
   }
-  const plan = (queryPlan[0] as { Plan?: unknown }).Plan;
-  if (!plan || typeof plan !== 'object') {
+  const first: unknown = queryPlan[0];
+  const plan =
+    typeof first === 'object' && first !== null ? (first as { Plan?: unknown }).Plan : undefined;
+  if (!isPlanNode(plan)) {
     throw new Error('EXPLAIN (FORMAT JSON) row has no top-level "Plan" node');
   }
-  return plan as ExplainPlanNode;
-}
-
-function collectRelationNodes(
-  node: ExplainPlanNode,
-  relation: string,
-  out: ExplainPlanNode[],
-): void {
-  if (node['Relation Name'] === relation) out.push(node);
-  for (const child of node.Plans ?? []) collectRelationNodes(child, relation, out);
+  return plan;
 }
 
 /**
@@ -95,8 +115,7 @@ export function checkRelationUsesPartialIndex(
   relation: string,
   indexName: string,
 ): RelationIndexScanResult {
-  const nodes: ExplainPlanNode[] = [];
-  collectRelationNodes(root, relation, nodes);
+  const nodes = collectPlanNodes(root).filter((node) => node['Relation Name'] === relation);
   if (nodes.length === 0) {
     return { ok: false, reason: `no "${relation}" relation node found in the plan` };
   }
