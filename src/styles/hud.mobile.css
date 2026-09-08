@@ -3755,6 +3755,20 @@
   body.mobile-touch #hub-lesson-coach .hlc-replay {
     min-height: 40px;
   }
+  /* The world-anchored echo (hub_lesson_controller.ts updateWorldPrompt)
+     carries its own copy of the same Continue/Done button: the 40px touch
+     target floor applies wherever the control actually renders, not only in
+     the tracker card. */
+  body.mobile-touch .tut-prompt.tut-prompt-hub-lesson .hlc-ack {
+    min-height: 40px;
+  }
+  /* Touch shows ONE coaching copy at a time: while the world bubble is
+     actually on screen (hub_lesson_controller.ts toggles this class), the
+     central card hides so the two never overlap; it reappears once the
+     bubble cannot be shown (missing dummy, off-viewport, replay). */
+  body.mobile-touch #hub-lesson-coach.hlc-bubble-visible {
+    display: none !important;
+  }
   /* The right-anchored tracker is REPLACED on touch by #quest-strip above, not
      restyled: it is fixed-width per tier and unbounded in height, so every extra
      quest grew it down into the action ring. Desktop keeps it untouched, and the

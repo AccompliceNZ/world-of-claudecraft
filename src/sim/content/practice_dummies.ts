@@ -299,8 +299,8 @@ export const HUB_PRACTICE_DUMMY_CAMPS: CampDef[] = [
 //
 // Placed a few yards SOUTH of the dummy (north is the pad's watchtower and
 // crate edge), east of the quay-walk road (centreline x -92, halfWidth 1.5)
-// and clear of Fisherman Brandt (-95, -50), facing north-east across the
-// dummy so a player walking up from the start sees him address it.
+// and clear of Fisherman Brandt (-95, -50), facing the player arrival
+// point at (-94, -58) so newcomers see his face rather than his back.
 // tests/hub_dummy_drill.test.ts pins that findSafePos leaves him on his
 // mark and that nothing else stands within arm's reach.
 export const HUB_SPARRING_MASTER_ID = 'drillmaster_hale';
@@ -312,7 +312,7 @@ export const HUB_PRACTICE_NPCS: Record<string, NpcDef> = {
     name: 'Drillmaster Hale',
     title: 'Quay Sparring Master',
     pos: { ...HUB_SPARRING_MASTER_POS },
-    facing: -0.38,
+    facing: -2.71, // atan2(dx, dz) toward the quay arrival point
     color: 0x7a4a4a,
     questIds: ['q_hub_know_your_numbers', 'q_hub_healing_numbers'],
     // Spawned by sim/hub_practice.ts after the player (trailing ids), not by

@@ -4,48 +4,40 @@
 // coach can never disagree with what the Damage Meters actually show.
 //
 // One control at a time, never a wall-of-text card: a single-line prompt in
-// the #hub-lesson-coach tracker strip (beside the practice DPS tracker),
-// plus the SAME "press this next" glow the Proving Shore coach uses
-// (styles/components.css .qd-coach) applied to the real control the current
-// step names (the Damage/Healing tab button, the player's own meter row,
-// the history "older segment" arrow). Two steps additionally show a small
-// explicit acknowledgment button (read-row, review-comparison): a row
-// merely rendering is not "reading" it, so the pure core requires a real
-// interaction before it latches (hub_lesson_view.ts owns why). The one step
-// with a WORLD anchor (target the dummy) reuses the island coach's own
-// floating keycap-bubble chrome (.tut-prompt, styles/hud.css) rather than a
-// second bubble system.
+// the #hub-lesson-coach tracker strip, plus the SAME "press this next" glow
+// the Proving Shore coach uses (styles/components.css .qd-coach) applied to
+// the real control the current step names. Two steps (read-row,
+// review-comparison) additionally show a small explicit acknowledgment
+// button, since a row merely rendering is not "reading" it (hub_lesson_view.ts
+// owns why). Every guided step but the replay offer ALSO echoes above the
+// correct track's dummy, in the island coach's own floating keycap-bubble
+// chrome (.tut-prompt, styles/hud.css): `render` paints the exact same html
+// both places. On touch, the tracker copy hides itself while the bubble is
+// actually on screen (hud.mobile.css), so the two never overlap.
+//
+// Coaching starts only once Hale's quest is ACCEPTED: `eligible` requires
+// 'active'/'ready'/'done', never 'available' or 'unavailable'. A
+// re-acceptance after an abandon is treated like a reload boundary
+// (`isSafeToKeepAcrossReload`).
 //
 // Progress is small, plain, and persisted per character (the
 // `${playerClass}_${player.name}` key precedent: deeds_window.ts,
-// reliquary_window.ts, hud.ts's emote wheel key), so a reload or an early
-// quest turn-in never erases what has and has not actually been observed.
-// A fresh baseline on first eligibility, and again on an explicit replay,
-// seeds `lastCountedKey` to whatever already qualifies on the ledger, so
-// combat that happened before the lesson began (or before the redo) is
-// never mistaken for this lesson's own attempt (hub_lesson_view.ts owns the
-// exact contract). A track loaded MID-round (not complete, already started)
-// is reset rather than kept: the meters ledger that made that progress real
-// is session-only and gone on reload, so keeping it would let a LATER,
-// unrelated fight silently satisfy the stale round's remaining steps.
+// reliquary_window.ts), so a reload or an early quest turn-in never erases
+// what has and has not actually been observed. A fresh baseline on first
+// eligibility, and again on an explicit replay, seeds `lastCountedKey` to
+// whatever already qualifies on the ledger, so prior combat is never
+// mistaken for this lesson's own attempt. A track loaded MID-round is reset
+// rather than kept: the meters ledger behind it is session-only.
 //
-// Damage counts a qualifying attempt off the SAME rule the practice DPS
-// tracker uses (an Encounter whose mainMobTemplateId is the hub damage
-// dummy, MeterData.onEvent only ever sets that field from a `damage` event).
-// Healing has no such field (MeterData never sets mainMobTemplateId off a
-// `heal2` event), so the healing track instead taps real heal2 SimEvents
-// directly via onEvent(), fed by Meters.onEvent -- no second combat ledger,
-// just a different read of the one MeterData keeps.
+// Damage counts off the SAME rule the practice DPS tracker uses (an
+// Encounter whose mainMobTemplateId is the hub damage dummy). Healing has
+// no such field, so it taps real heal2 SimEvents directly via onEvent().
 //
-// Gated to the Eastbrook hub practice yard, and never on Tutorial Island
-// (which runs its own, separate coach): update() bails out on a cheap
-// planar-distance check against the player's own position before it ever
-// touches the meters port or scans the world, so an inactive lesson costs
-// one Math.hypot per poll, not a world scan.
+// Gated to the Eastbrook hub practice yard, never Tutorial Island: update()
+// bails on a cheap planar-distance check before touching the meters port.
 
 import { currentInputHintMode } from '../../../game/input_hint_mode';
 import type { Keybinds } from '../../../game/keybinds';
-import { isOnProvingShore } from '../../../sim/content/proving_shore';
 import {
   HUB_DUMMY_DRILL_QUEST_ID,
   HUB_HEALING_DRILL_QUEST_ID,
@@ -54,12 +46,13 @@ import {
   HUB_TRAINING_DUMMY_ID,
   HUB_TRAINING_DUMMY_POS,
 } from '../../../sim/content/practice_dummies';
-import { startingAttackFor } from '../../../sim/tutorial/starting_attack';
+import { isOnProvingShore } from '../../../sim/content/proving_shore';
 import { hubHealingAbilityId } from '../../../sim/tutorial/hub_healing_lesson';
+import { startingAttackFor } from '../../../sim/tutorial/starting_attack';
 import type { IWorld } from '../../../world_api';
 import { nearestMob } from '../../coach_prompt_view';
 import { esc } from '../../esc';
-import { t, type TranslationKey } from '../../i18n';
+import { type TranslationKey, t } from '../../i18n';
 import {
   advanceHubLesson,
   HUB_LESSON_START,
@@ -141,6 +134,13 @@ const HISTORY_KEY_PREFIX = 'woc_hub_lesson_progress';
  *  the sim's resolved ground height for that entity, so there is no reason
  *  to re-derive it from `groundHeight`/`WORLD_SEED` here. */
 const HUB_PROMPT_LIFT = 2.5;
+/** Minimum screen-space clearance above the bubble's anchor point (it draws
+ *  UPWARD from the anchor via translate(-50%,-100%)): below this the text
+ *  would clip at the top of the viewport, so the tracker card takes over. */
+const PROMPT_TOP_CLEARANCE_PX = 80;
+/** Marks the tracker card while the world bubble is actually shown on
+ *  screen, so touch CSS can hide the duplicate (hud.mobile.css). */
+const BUBBLE_VISIBLE_CLASS = 'hlc-bubble-visible';
 /** How far from the yard the coach stays live: wide enough to cover talking
  *  to Hale and standing at either dummy, tight enough that ordinary town
  *  play elsewhere (or Tutorial Island, excluded separately) never sees it. */
@@ -176,10 +176,18 @@ const STEP_TEXT_KEY: Readonly<Record<HubLessonStep['kind'], TranslationKey>> = {
  *  track-specific override (damage attacks a dummy and reads DPS; healing
  *  casts a heal on it and reads HPS). Anything not listed here shares one
  *  neutral key across both tracks. */
-const TRACK_STEP_TEXT_KEY: Partial<Record<HubLessonStep['kind'], Record<HubLessonTrack, TranslationKey>>> = {
-  'open-tab': { damage: 'hudChrome.hubLesson.openTabDamage', healing: 'hudChrome.hubLesson.openTabHealing' },
+const TRACK_STEP_TEXT_KEY: Partial<
+  Record<HubLessonStep['kind'], Record<HubLessonTrack, TranslationKey>>
+> = {
+  'open-tab': {
+    damage: 'hudChrome.hubLesson.openTabDamage',
+    healing: 'hudChrome.hubLesson.openTabHealing',
+  },
   act: { damage: 'hudChrome.hubLesson.actDamage', healing: 'hudChrome.hubLesson.actHealing' },
-  'read-row': { damage: 'hudChrome.hubLesson.readRowDamage', healing: 'hudChrome.hubLesson.readRowHealing' },
+  'read-row': {
+    damage: 'hudChrome.hubLesson.readRowDamage',
+    healing: 'hudChrome.hubLesson.readRowHealing',
+  },
 };
 
 /** Which tab a track's steps refer to. */
@@ -209,13 +217,19 @@ export class HubLessonController {
    *  header): the startedAt of the encounter the last qualifying heal2
    *  landed in, or null. */
   private healAttemptKey: number | null = null;
-  private seededEligible: Partial<Record<HubLessonTrack, boolean>> = {};
+  /** Per-track edge state: was this track ELIGIBLE last frame? The false ->
+   *  true transition is what lets a re-acceptance (quest abandoned, then
+   *  taken again) be told apart from an ordinary frame, which is when a
+   *  baseline reseed may safely run (see `eligible`). */
+  private trackWasEligible: Partial<Record<HubLessonTrack, boolean>> = {};
   private disposed = false;
 
-  /** The floating world-anchored "target it" bubble (island coach chrome,
-   *  .tut-prompt), minted once and reused; null once torn down. */
+  /** The floating world-anchored bubble (island coach chrome, .tut-prompt),
+   *  minted once and reused; null once torn down. Mirrors the SAME html the
+   *  tracker card paints (see `render`), so the two can never disagree. */
   private prompt: HTMLElement | null = null;
-  private promptVerbEl: HTMLElement | null = null;
+  private lastPromptHtml: string | null = null;
+  private promptVisible = false;
 
   constructor(private readonly deps: HubLessonControllerDeps) {
     this.progress = this.loadProgress();
@@ -255,12 +269,19 @@ export class HubLessonController {
    *  direct heal landed on the hub healing dummy", since MeterData never
    *  sets mainMobTemplateId off a heal. Cheap: bails before touching the
    *  world unless the event is even a candidate. */
-  onEvent(ev: { type: string; sourceId?: number; targetId?: number; amount?: number; hot?: boolean }): void {
+  onEvent(ev: {
+    type: string;
+    sourceId?: number;
+    targetId?: number;
+    amount?: number;
+    hot?: boolean;
+  }): void {
     if (this.disposed) return;
     if (ev.type !== 'heal2' || ev.hot === true) return;
     if ((ev.amount ?? 0) <= 0) return;
     if (ev.sourceId !== this.deps.world.player.id) return;
-    const target = ev.targetId !== undefined ? this.deps.world.entities.get(ev.targetId) : undefined;
+    const target =
+      ev.targetId !== undefined ? this.deps.world.entities.get(ev.targetId) : undefined;
     if (!target || target.templateId !== HUB_HEALING_DUMMY_ID) return;
     const enc = this.deps.meters.current();
     if (enc) this.healAttemptKey = enc.startedAt;
@@ -288,8 +309,10 @@ export class HubLessonController {
     const damageObs = this.observe('damage');
     const healingObs = this.observe('healing');
     const healingState = this.deps.world.questState(HUB_HEALING_DRILL_QUEST_ID);
-    if (this.targetTemplateId() === HUB_HEALING_DUMMY_ID ||
-      (!damageObs.targeting && (healingState === 'active' || healingState === 'ready'))) {
+    if (
+      this.targetTemplateId() === HUB_HEALING_DUMMY_ID ||
+      (!damageObs.targeting && (healingState === 'active' || healingState === 'ready'))
+    ) {
       damageObs.eligible = false;
     }
     const { progress, step } = advanceHubLesson(this.progress, damageObs, healingObs);
@@ -308,16 +331,42 @@ export class HubLessonController {
   private eligible(track: HubLessonTrack): boolean {
     const questId = track === 'damage' ? HUB_DUMMY_DRILL_QUEST_ID : HUB_HEALING_DRILL_QUEST_ID;
     const state = this.deps.world.questState(questId);
-    const eligible = state !== 'unavailable';
-    // First frame this track becomes reachable: seed the baseline so any
-    // combat that already happened this session (before the quest existed
-    // for this player) is never mistaken for the lesson's own attempt.
-    if (eligible && !this.seededEligible[track] && this.progress[track].attempts === 0) {
-      this.seededEligible[track] = true;
-      const baseline = this.latestQualifyingKey(track);
-      if (baseline !== null && this.progress[track].lastCountedKey === null) {
-        this.progress = { ...this.progress, [track]: resetHubLessonTrack(baseline) };
-      }
+    // Coaching starts only once the quest is actually TAKEN: 'available'
+    // (Hale has offered it, not yet accepted) must read exactly like
+    // 'unavailable' here, or the coach spoke up before the player agreed to
+    // the lesson (playtest). 'ready'/'done' stay eligible so a turn-in, or a
+    // full replay, never cuts off guidance still owed.
+    const eligible = state === 'active' || state === 'ready' || state === 'done';
+    const wasEligible = this.trackWasEligible[track] === true;
+    this.trackWasEligible[track] = eligible;
+    if (!eligible || wasEligible) return eligible;
+    // The moment this track turns eligible: either its very first
+    // acceptance, or a RE-acceptance after an abandon dropped it back to
+    // 'available'. A mid-round track is exactly as stale here as it is
+    // across a reload (the meters ledger that made its progress real belongs
+    // to the acceptance that just ended), so it takes the identical reset
+    // rather than resuming toward an attempt identity the current ledger can
+    // never match again.
+    if (!isSafeToKeepAcrossReload(track, this.progress[track])) {
+      this.progress = {
+        ...this.progress,
+        [track]: resetHubLessonTrack(this.latestQualifyingKey(track)),
+      };
+      return eligible;
+    }
+    // A track with no attempt of its OWN yet: (re)seed the baseline off
+    // whatever qualifies on the ledger RIGHT NOW, unconditionally, even when
+    // that is null (nothing qualifies right now) or unchanged from before.
+    // A stale non-null baseline from a PRIOR acceptance is exactly as wrong
+    // to keep as no baseline at all: combat landed between the abandon and
+    // this re-acceptance must never count as this round's first attempt, so
+    // the baseline has to track "qualifies now", not "qualified once,
+    // whenever that was". A completed track (attempts > 0) is untouched.
+    if (this.progress[track].attempts === 0) {
+      this.progress = {
+        ...this.progress,
+        [track]: resetHubLessonTrack(this.latestQualifyingKey(track)),
+      };
     }
     return eligible;
   }
@@ -397,13 +446,16 @@ export class HubLessonController {
 
     const rowEl = anyWindowOpen && tabOpen ? this.deps.meters.rowElementForPid(tab, pid) : null;
     const progress = this.progress[track];
-    const waitingForSecond = track === 'damage' && progress.attempts === 1 && progress.historyViewed;
-    const trackedKey = progress.attempts === 0 || waitingForSecond ? attemptKey : progress.lastCountedKey;
+    const waitingForSecond =
+      track === 'damage' && progress.attempts === 1 && progress.historyViewed;
+    const trackedKey =
+      progress.attempts === 0 || waitingForSecond ? attemptKey : progress.lastCountedKey;
     const viewed = this.deps.meters.viewedEncounter(tab);
     const correctRow = rowEl !== null && trackedKey !== null && viewed?.startedAt === trackedKey;
     liveNow = trackedKey !== null && this.deps.meters.current()?.startedAt === trackedKey;
     if (track === 'damage') {
-      const historyArrow = anyWindowOpen && tabOpen ? this.deps.meters.historyArrowElement(tab) : null;
+      const historyArrow =
+        anyWindowOpen && tabOpen ? this.deps.meters.historyArrowElement(tab) : null;
       this.bindHistoryListener(historyArrow);
     }
 
@@ -432,7 +484,8 @@ export class HubLessonController {
 
   private bindHistoryListener(el: HTMLElement | null): void {
     if (this.boundHistoryArrow === el) return;
-    if (this.boundHistoryArrow) this.boundHistoryArrow.removeEventListener('click', this.onHistoryInteraction);
+    if (this.boundHistoryArrow)
+      this.boundHistoryArrow.removeEventListener('click', this.onHistoryInteraction);
     this.boundHistoryArrow = el;
     if (el) el.addEventListener('click', this.onHistoryInteraction);
   }
@@ -463,7 +516,7 @@ export class HubLessonController {
     this.hidePrompt();
     if (this.prompt) this.prompt.remove();
     this.prompt = null;
-    this.promptVerbEl = null;
+    this.lastPromptHtml = null;
     if (this.lastHtml !== null) {
       this.lastHtml = null;
       this.deps.element.innerHTML = '';
@@ -491,6 +544,7 @@ export class HubLessonController {
     if (!step) {
       this.clearGlow();
       this.hidePrompt();
+      this.syncBubbleFlag();
       if (this.lastHtml !== null) {
         this.lastHtml = null;
         this.deps.element.innerHTML = '';
@@ -501,9 +555,7 @@ export class HubLessonController {
 
     if (step.kind === 'target') {
       this.clearGlow();
-      this.updateWorldPrompt(step);
     } else {
-      this.hidePrompt();
       this.paintControlGlow(step);
     }
 
@@ -517,6 +569,21 @@ export class HubLessonController {
       const ackBtn = this.deps.element.querySelector<HTMLButtonElement>('.hlc-ack');
       ackBtn?.addEventListener('click', () => this.onAckClick(step.track));
     }
+
+    // Every step but the replay offer also echoes above the dummy (see
+    // `updateWorldPrompt`); replay is a tracker-only affordance.
+    if (step.kind === 'replay') {
+      this.hidePrompt();
+    } else {
+      this.updateWorldPrompt(step, html);
+    }
+    this.syncBubbleFlag();
+  }
+
+  /** Reflects `promptVisible` onto the tracker card so touch CSS can hide
+   *  the duplicate copy while the bubble is on screen (hud.mobile.css). */
+  private syncBubbleFlag(): void {
+    this.deps.element.classList.toggle(BUBBLE_VISIBLE_CLASS, this.promptVisible);
   }
 
   private paintControlGlow(step: HubLessonStep): void {
@@ -535,14 +602,20 @@ export class HubLessonController {
     ) {
       this.glow(this.deps.meters.rowElementForPid(tab, pid));
     } else if (step.kind === 'inspect-history') {
-      this.glow(this.deps.meters.historyArrowElement(tab), this.deps.meters.rowElementForPid(tab, pid));
-    } else if ((step.kind === 'act' || step.kind === 'compare-again') && this.abilitySlot(step.track) === 'missing') {
+      this.glow(
+        this.deps.meters.historyArrowElement(tab),
+        this.deps.meters.rowElementForPid(tab, pid),
+      );
+    } else if (
+      (step.kind === 'act' || step.kind === 'compare-again') &&
+      this.abilitySlot(step.track) === 'missing'
+    ) {
       // The resolved heal isn't on the bar at all: point at the Spellbook,
       // never an unrelated slot (see the module header and healChip()).
       this.glow(this.visibleMobileControl('mobile-menu-spellbook'));
     } else if (step.kind === 'act' || step.kind === 'compare-again') {
       const slot = this.abilitySlot(step.track);
-      this.glow(typeof slot === 'number' ? this.deps.actionButtonForSlot?.(slot) ?? null : null);
+      this.glow(typeof slot === 'number' ? (this.deps.actionButtonForSlot?.(slot) ?? null) : null);
     } else {
       this.clearGlow();
     }
@@ -550,17 +623,23 @@ export class HubLessonController {
 
   private markup(step: HubLessonStep): string {
     const wrongRun = this.needsTrackedRun(step);
-    const text = esc(t(wrongRun ? 'hudChrome.hubLesson.findRun' : this.textKeyFor(step), {
-      menu: t('hudChrome.mobile.quickActionsLabel'),
-      more: t('hud.core.mobileMore'),
-      meters: t('hud.keybinds.actions.meters'),
-    }));
+    const text = esc(
+      t(wrongRun ? 'hudChrome.hubLesson.findRun' : this.textKeyFor(step), {
+        menu: t('hudChrome.mobile.quickActionsLabel'),
+        more: t('hud.core.mobileMore'),
+        meters: t('hud.keybinds.actions.meters'),
+      }),
+    );
     const chip = this.chipFor(step);
     const chipHtml = chip ? `<span class="hlc-chip">${esc(chip)}</span>` : '';
     const ackHtml =
       !wrongRun && (step.kind === 'read-row' || step.kind === 'review-comparison')
         ? `<button type="button" class="hlc-ack btn">${esc(
-            t(step.kind === 'read-row' ? 'hudChrome.hubLesson.ackContinue' : 'hudChrome.hubLesson.ackDone'),
+            t(
+              step.kind === 'read-row'
+                ? 'hudChrome.hubLesson.ackContinue'
+                : 'hudChrome.hubLesson.ackDone',
+            ),
           )}</button>`
         : '';
     const replayHtml =
@@ -571,10 +650,17 @@ export class HubLessonController {
   }
 
   private textKeyFor(step: HubLessonStep): TranslationKey {
-    if (step.kind === 'open-window' && currentInputHintMode() === 'touch') return 'hudChrome.hubLesson.openWindowTouch';
-    if (step.kind === 'end-run' && step.track === 'healing') return 'hudChrome.hubLesson.endHealingRun';
-    if ((step.kind === 'act' || step.kind === 'compare-again') && this.abilitySlot(step.track) === 'missing') {
-      return step.track === 'healing' ? 'hudChrome.hubLesson.addToBar' : 'hudChrome.hubLesson.addAttackToBar';
+    if (step.kind === 'open-window' && currentInputHintMode() === 'touch')
+      return 'hudChrome.hubLesson.openWindowTouch';
+    if (step.kind === 'end-run' && step.track === 'healing')
+      return 'hudChrome.hubLesson.endHealingRun';
+    if (
+      (step.kind === 'act' || step.kind === 'compare-again') &&
+      this.abilitySlot(step.track) === 'missing'
+    ) {
+      return step.track === 'healing'
+        ? 'hudChrome.hubLesson.addToBar'
+        : 'hudChrome.hubLesson.addAttackToBar';
     }
     return TRACK_STEP_TEXT_KEY[step.kind]?.[step.track] ?? STEP_TEXT_KEY[step.kind];
   }
@@ -607,10 +693,13 @@ export class HubLessonController {
     const cls = this.deps.world.cfg.playerClass;
     const attack = startingAttackFor(cls);
     if (track === 'damage' && (attack.isAutoAttack || attack.needsResourceFirst)) return 0;
-    const abilityId = track === 'healing'
-      ? hubHealingAbilityId(cls, this.deps.world.player.level)
-      : attack.abilityId;
-    const slot = (this.deps.actionBarSlots?.() ?? []).findIndex(a => a?.type === 'ability' && a.id === abilityId);
+    const abilityId =
+      track === 'healing'
+        ? hubHealingAbilityId(cls, this.deps.world.player.level)
+        : attack.abilityId;
+    const slot = (this.deps.actionBarSlots?.() ?? []).findIndex(
+      (a) => a?.type === 'ability' && a.id === abilityId,
+    );
     return slot >= 0 ? slot + 1 : 'missing';
   }
 
@@ -630,14 +719,14 @@ export class HubLessonController {
   }
 
   // ---------------------------------------------------------------------
-  // The world-anchored "target it" bubble (target/replay steps only): the
-  // island coach's own floating keycap chrome (.tut-prompt, styles/hud.css)
-  // reused rather than duplicated, minus a chip (a click/Tab-target press
-  // has no single fixed key worth naming, exactly like coach_prompt_view's
-  // 'select' kind).
+  // The world-anchored bubble: island coach chrome (.tut-prompt,
+  // .tut-prompt-hub-lesson), painted with the SAME html as the tracker.
+  // Hidden when the dummy is missing, off-viewport, too close to the top
+  // edge to fit, or (via `render`'s own gates) out of yard/ineligible/torn
+  // down.
   // ---------------------------------------------------------------------
 
-  private updateWorldPrompt(step: HubLessonStep): void {
+  private updateWorldPrompt(step: HubLessonStep, html: string): void {
     const dummyId = this.dummyIdFor(step.track);
     const playerPos = this.deps.world.player.pos;
     const mob = nearestMob(this.deps.world.entities.values(), dummyId, playerPos);
@@ -646,40 +735,56 @@ export class HubLessonController {
       return;
     }
     if (!this.prompt) this.mountPrompt();
-    if (!this.prompt || !this.promptVerbEl) return;
-    this.promptVerbEl.textContent = t('hudChrome.hubLesson.target');
+    if (!this.prompt) return;
+
+    if (html !== this.lastPromptHtml) {
+      this.lastPromptHtml = html;
+      this.prompt.innerHTML = html;
+      // A real, accessible button: this bubble is a visible actionable
+      // surface, not decorative chrome.
+      const ackBtn = this.prompt.querySelector<HTMLButtonElement>('.hlc-ack');
+      ackBtn?.addEventListener('click', () => this.onAckClick(step.track));
+    }
 
     // The dummy's own pos.y is already the sim's resolved ground height for
     // that entity: no reason to re-derive it via groundHeight/WORLD_SEED.
     const full = this.deps.world.entities.get(mob.id);
     const groundY = (full?.pos.y ?? 0) + HUB_PROMPT_LIFT;
     // No renderer to project through in a headless/test host: the DOM
-    // element simply never shows, which is the correct degrade (never a
-    // guessed screen position).
+    // element simply never shows, which is the correct degrade.
     const projected = this.deps.worldToScreen?.(mob.pos.x, groundY, mob.pos.z);
-    if (!projected || projected.behind) {
-      this.prompt.style.display = 'none';
+    // worldToScreen's own `behind` only checks camera-space depth, not
+    // viewport bounds, so an off-screen x/y (or one too close to the top
+    // for the upward-drawing bubble to fit) needs its own check here.
+    if (
+      !projected ||
+      projected.behind ||
+      projected.x < 0 ||
+      projected.x > window.innerWidth ||
+      projected.y < PROMPT_TOP_CLEARANCE_PX ||
+      projected.y > window.innerHeight
+    ) {
+      this.hidePrompt();
       return;
     }
     this.prompt.style.display = 'flex';
     this.prompt.style.left = `${Math.round(projected.x * 2) / 2}px`;
     this.prompt.style.top = `${Math.round(projected.y * 2) / 2}px`;
+    this.promptVisible = true;
   }
 
   private mountPrompt(): void {
     const ui = document.getElementById('ui');
     if (!ui) return;
     const el = document.createElement('div');
-    el.className = 'tut-prompt';
-    const verb = document.createElement('span');
-    verb.className = 'tut-prompt-verb';
-    el.appendChild(verb);
+    // Deliberately NOT aria-hidden: it can carry a real ack button.
+    el.className = 'tut-prompt tut-prompt-hub-lesson';
     ui.appendChild(el);
     this.prompt = el;
-    this.promptVerbEl = verb;
   }
 
   private hidePrompt(): void {
     if (this.prompt) this.prompt.style.display = 'none';
+    this.promptVisible = false;
   }
 }

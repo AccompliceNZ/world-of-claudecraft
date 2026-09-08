@@ -5652,6 +5652,38 @@
     margin-top: 6px;
     pointer-events: auto;
   }
+  /* The world-anchored echo of the card above: hub_lesson_controller.ts
+     paints the SAME hlc-line/hlc-chip/hlc-ack markup into the island coach's
+     own floating .tut-prompt bubble (never the replay offer, kept as a
+     tracker-only affordance), positioned over whichever dummy the current
+     step is about. A modifier on the shared chrome, not a rewrite of it: the
+     base .tut-prompt rules (Tutorial Island's own bubbles) are untouched.
+     Stacked and width-capped with real wrapping, unlike the base bubble's
+     one-line nowrap pill, because a lesson sentence runs longer than an
+     interact verb; the ack button is the one pointer-events exception on an
+     otherwise click-through bubble, so it never blocks re-targeting the
+     world underneath it. */
+  .tut-prompt.tut-prompt-hub-lesson {
+    flex-direction: column;
+    align-items: flex-start;
+    white-space: normal;
+    max-width: 220px;
+    text-align: left;
+  }
+  .tut-prompt.tut-prompt-hub-lesson .hlc-chip {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 0 5px;
+    border: 1px solid var(--gold);
+    border-radius: 3px;
+    color: #fff4c4;
+    font-family: var(--title-font);
+    font-size: 11px;
+  }
+  .tut-prompt.tut-prompt-hub-lesson .hlc-ack {
+    margin-top: 6px;
+    pointer-events: auto;
+  }
 
   /* ---------- combat meters ---------- */
   /* The damage window and the two detachable meters (Healing, Threat) share one

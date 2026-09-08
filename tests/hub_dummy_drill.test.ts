@@ -18,6 +18,7 @@ import {
   HUB_TRAINING_DUMMY_POS,
 } from '../src/sim/content/practice_dummies';
 import { BUILTIN_WORLD, MOBS, NPCS, QUEST_ORDER, QUESTS } from '../src/sim/data';
+import { EASTBROOK_LAYOUT } from '../src/sim/eastbrook_layout';
 import { createMob } from '../src/sim/entity';
 import { Sim } from '../src/sim/sim';
 import {
@@ -97,6 +98,18 @@ describe('the lesson is authored the way the credit arm reads it', () => {
 });
 
 describe('Drillmaster Hale stands beside the hub dummy', () => {
+  it('faces arriving players from the quay instead of the watchtower', () => {
+    const sim = makeSim();
+    const hale = [...sim.entities.values()].find((e) => e.templateId === HUB_SPARRING_MASTER_ID)!;
+    const start = EASTBROOK_LAYOUT.services.playerStart.position;
+    const dx = start.x - hale.pos.x;
+    const dz = start.z - hale.pos.z;
+    const approachDot =
+      (Math.sin(hale.facing) * dx + Math.cos(hale.facing) * dz) / Math.hypot(dx, dz);
+    expect(approachDot).toBeGreaterThan(0.95);
+    expect(hale.prevFacing).toBe(hale.facing);
+  });
+
   it('on his authored mark, on dry ground, within a few yards of the dummy', () => {
     const { x, z } = HUB_SPARRING_MASTER_POS;
     expect(isBlocked(SEED, x, z, 0.5)).toBe(false);
