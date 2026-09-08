@@ -342,4 +342,7 @@ export const fr_CA: Partial<Record<TranslationKey, string>> = {
   'hudChrome.raidBossGuide.varkhul.makersBrandSummary':
     'Varkhul frappe son tank actuel et applique un effet cumulable qui accroît tous les dégâts subis de sa part.',
   'hudChrome.interfaceUnlock.frameNames.chat': 'Clavardage',
+  'hudChrome.bags.capacityPools':
+    'Articles {generalUsed}/{generalTotal}, matériaux {materialsUsed}/{materialsTotal}',
+  'hudChrome.bags.emptyMaterialsOnly': 'Matériaux seulement',
 };

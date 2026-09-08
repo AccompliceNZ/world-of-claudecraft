@@ -118,8 +118,16 @@ const build = await buildItemArtAudit({
   // `node scripts/item_art_audit.mjs --verify-only` run directly on the
   // merged tree, not guessed or derived from either parent.
   expected: {
-    catalogCount: 1281,
-    liveItemCount: 1299,
+    // OSSBrain PR #3781 reconcile: the release's own arm reached 1281 / 1299
+    // (the Masterwrought completion, Field Kit, Crucible professions, and
+    // Nythraxis/Bramblehide waves) and the OSSBrain candidate's arm reached
+    // 1071 / 1089 (its two disjoint reins items, reins_goblin_rocket_sled and
+    // reins_rallycart_rxt, on the shared 1069 / 1087 base); both deltas are
+    // additive over that shared base, so 1069 + 212 + 2 = 1283 and
+    // 1087 + 212 + 2 = 1301. Verified with `node scripts/item_art_audit.mjs
+    // --verify-only` against the merged tree.
+    catalogCount: 1283,
+    liveItemCount: 1301,
     pendingArtCount: 0,
     generatedHeroicDefinitions: 78,
     heroicDefinitionsWithOwnWebp: 59,

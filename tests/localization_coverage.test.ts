@@ -27,6 +27,7 @@ import {
   deedTitleText,
   deedTranslationManifest,
   ensureDeedLocalesLoaded,
+  RETIRED_DEED_DESCRIPTION_FALLBACK_IDS,
 } from '../src/ui/deed_i18n';
 import {
   assertEntityTranslationsReady,
@@ -1349,10 +1350,12 @@ describe('i18n Localization Key Coverage', () => {
 
   it('should provide deed content translations for every supported locale', () => {
     const deedEntries = deedTranslationManifest();
-    // name + desc per deed, plus one title entry per title deed (live count;
-    // tests/deeds_content.test.ts pins the catalog).
+    // name + release-filled desc per deed, plus one title entry per title
+    // deed (live count; tests/deeds_content.test.ts pins the catalog).
     const titleCount = Object.values(DEEDS).filter((d) => d.reward?.kind === 'title').length;
-    expect(deedEntries.length).toBe(Object.keys(DEEDS).length * 2 + titleCount);
+    expect(deedEntries.length).toBe(
+      Object.keys(DEEDS).length * 2 + titleCount - RETIRED_DEED_DESCRIPTION_FALLBACK_IDS.length,
+    );
 
     for (const lang of supportedLanguages) {
       setLanguage(lang);
@@ -1648,7 +1651,16 @@ describe('i18n Localization Key Coverage', () => {
     );
     expect(minimapPainterSource).toContain('this.writers.setText(zoneLabelEl, this.localizeZone(');
     expect(hudSource).toContain('zonePoiLabel');
-    expect(hudSource).toContain('dungeonDisplayNameFromSource');
+    // The dungeon party-size warning's name localization moved with the whole
+    // of localizeSystemText into src/ui/system_text_i18n.ts when hud.ts hit its
+    // monolith ceiling (PR #3925). The helper still renders the dungeon name,
+    // just from the extracted module, the minimap_painter shape above.
+    const systemTextSource = fs.readFileSync(
+      path.resolve(process.cwd(), 'src/ui/system_text_i18n.ts'),
+      'utf8',
+    );
+    expect(systemTextSource).toContain('dungeonDisplayNameFromSource(match[1])');
+    expect(hudSource).not.toContain('dungeonDisplayNameFromSource');
     expect(hudSource).not.toContain('zoneWelcomeText(');
 
     // The per-entity nameplate content (corpse/mob names) moved into the

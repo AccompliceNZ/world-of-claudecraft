@@ -172,6 +172,8 @@ const REGISTRY_ONLY_PARAM_PATHS = new Set([
   '/admin/api/moderation/accounts/:id/lift-cheater-mark',
   // The phase 13 legendary-name strip, same registry-only shape.
   '/admin/api/moderation/characters/:id/clear-item-name',
+  // The admin-panel kick: the same registry-only shape (server/admin_kick_api.ts).
+  '/admin/api/moderation/accounts/:id/kick',
 ]);
 const registryExactPaths = new Set(
   apiRoutes

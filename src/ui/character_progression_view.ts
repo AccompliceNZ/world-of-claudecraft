@@ -86,7 +86,7 @@ export function progressionHtml(sim: IWorld, level: number): string {
       <span>${t('game.progression.totalXp')}: <b>${formatXp(sim.lifetimeXp)}</b></span>
       <span>${t('game.progression.virtualLevel')}: <b>${vlevel}</b></span>`;
   if (sim.prestigeRank > 0)
-    html += `<span>${t('game.progression.prestigeRank')}: <b>★ ${sim.prestigeRank}</b></span>`;
+    html += `<span>${t('game.progression.prestigeRank')}: <b>&#9733; ${sim.prestigeRank}</b></span>`;
   html += `</div>`;
   html += `<div class="cp-milestones ui-card"><span class="cp-ms-label">${t('game.progression.milestones')}:</span> ${badges || `<span class="cp-none">${t('game.progression.none')}</span>`}</div>`;
   // The active Book of Deeds title line; the button opens the Book (its

@@ -21,7 +21,6 @@ import {
   type BucketCount,
   characterProfessionsRow,
   clientPerfRaw,
-  clientPerfSummary,
   type DayPoint,
   dailyRewardPointEvents,
   listAccounts,
@@ -52,9 +51,18 @@ import {
 } from './admin_guilds_read';
 import { parseAdminGuildSort } from './admin_guilds_sort';
 import { cleanIpAssociationLookup } from './admin_ip_association';
+import {
+  adminKickBodySchema,
+  adminKickMessage,
+  KICK_ADMIN_TARGET_CODE,
+  KICK_REASON_REQUIRED_CODE,
+  KICK_TARGET_OFFLINE_CODE,
+  normalizeAdminKickReason,
+} from './admin_kick_api';
 import { readAdminMarketMetrics } from './admin_market_metrics';
 import { readOnlineHistoryCached } from './admin_online_history_cache';
 import { readOverviewCounts } from './admin_overview_cache';
+import { readClientPerfSummaryCached } from './admin_perf_summary_cache';
 import {
   type AdminPermission,
   ASSIGNABLE_ADMIN_ROLES,
@@ -150,6 +158,7 @@ import {
   moderationReportsForAccount,
   muteAccountChat,
   reactivateAccountAudited,
+  recordInGameAction,
   recordItemNameClear,
   recordPasswordReset,
   recordProfessionsRestore,
@@ -244,6 +253,9 @@ const UNSTUCK_DEFAULT_DAYS = 30;
 const UNSTUCK_DEFAULT_LIMIT = 50;
 
 const IP_BLOCK_KICK_MESSAGE = 'Connection to the server was lost.';
+// The admin-panel kick's line is ADMIN_KICK_MESSAGE_PREFIX + the operator's reason
+// (server/admin_kick_api.ts adminKickMessage), a wire contract with the client
+// matcher like the literal above; it lives with its contract module, not here.
 
 // Account-flair validation messages. Named constants so the two dispatch twins (the
 // legacy handleAdminApi arm and the RouteDef handler) can never drift, and so the
@@ -1649,7 +1661,7 @@ export async function handleAdminApi(
     }
     if (path === '/admin/api/perf/summary') {
       const hours = Number(url.searchParams.get('hours') ?? '24');
-      return ok(res, await clientPerfSummary(hours));
+      return ok(res, await readClientPerfSummaryCached(hours));
     }
     if (path === '/admin/api/perf/raw') {
       const hours = Number(url.searchParams.get('hours') ?? '24');
@@ -2115,7 +2127,10 @@ function makeRealAdminDb() {
     // which bypasses the cache and keeps existing fakes exact.
     classDistribution,
     clientPerfRaw,
-    clientPerfSummary,
+    // Cache-backed (the hours-keyed perf-summary memo; both dispatch arms
+    // read it): a setAdminDbForTests override still replaces this member
+    // outright, which bypasses the cache and keeps existing fakes exact.
+    clientPerfSummary: readClientPerfSummaryCached,
     dailyRewardPointEvents,
     levelDistribution,
     listAccounts,
@@ -2198,6 +2213,10 @@ function makeRealAdminDb() {
     // Audited, atomic offline legendary-name moderation.
     clearOfflineItemName,
     recordItemNameClear,
+    // The admin-panel kick's audit row: the SAME writer the in-game /kick uses
+    // (game.ts wires it into the moderation service as recordAction), so a kick
+    // reads identically in moderation history whichever surface issued it.
+    recordInGameAction,
     setDailyRewardsBan,
     setDailyRewardsIpBan,
     // Account flair: the two audited writes plus the read-back the live push sends
@@ -3352,6 +3371,48 @@ async function dailyRewardPointEventsHandler(ctx: Ctx): Promise<void> {
 }
 
 /**
+ * POST /admin/api/moderation/accounts/:id/kick: drop a live player's sessions
+ * from the dashboard, the twin of the in-game /kick (server/moderation_service.ts).
+ *
+ * Registry-only like the Cheater mark pair above, so it follows the same
+ * new-endpoint recipe: withBody plus a typed schema, and every refusal a stable
+ * `kick.*` code through HttpError (server/admin_kick_api.ts). The order is the
+ * in-game kick's and restore-item's: decide every refusal first (a blank reason,
+ * no live session on this realm, an operator target), THEN write the
+ * moderation-history row (action 'kick', actor = the operator, reason), THEN
+ * disconnect through the runtime seam. The audit write precedes the live effect
+ * so a kick can never happen unaudited, and the online check precedes the write
+ * so a player who left between page load and click gets a 409 and no history
+ * row claiming a disconnect that did not happen. The leave-between-check-and-
+ * disconnect window that remains is restore-item's race: the row honestly
+ * records the attempt.
+ */
+async function adminKickHandler(ctx: Ctx): Promise<void> {
+  const rt = useAdminRuntime();
+  const targetAccountId = adminTargetId(ctx);
+  // Cheap-reject-first: the decode and trim are pure CPU, the roster check is
+  // an in-memory read, and the operator-target check is the one db read.
+  const decoded = adminKickBodySchema.decode(ctx.body ?? {});
+  if (!decoded.ok) throw decoded;
+  const reason = normalizeAdminKickReason(decoded.value.reason);
+  if (reason === null) throw new HttpError(400, KICK_REASON_REQUIRED_CODE);
+  if (!rt.liveAccountIds().has(targetAccountId)) {
+    throw new HttpError(409, KICK_TARGET_OFFLINE_CODE);
+  }
+  if (await adminDb().isAdminAccount(targetAccountId)) {
+    throw new HttpError(400, KICK_ADMIN_TARGET_CODE);
+  }
+  await adminDb().recordInGameAction({
+    action: 'kick',
+    accountId: targetAccountId,
+    adminAccountId: ctxAccountId(ctx),
+    reason,
+  });
+  rt.disconnectAccount(targetAccountId, adminKickMessage(reason));
+  ok(ctx.res, { ok: true });
+}
+
+/**
  * POST /admin/api/accounts/:id/reset-password: set a new password on any account.
  * Audit row first (no live effect without its record), then the credential write,
  * then every device is signed out: all tokens revoked plus a live WS disconnect
@@ -4047,6 +4108,17 @@ export const routes: RouteDef[] = [
     middleware: [requireAdmin, requireAdminTarget('account'), withBody()],
     meta: adminTargetMeta('account'),
     handler: liftCheaterMarkHandler,
+  },
+  // The admin-panel kick (server/admin_kick_api.ts): registry-only like the
+  // Cheater mark pair, so the same withBody mount, operator gate pair, and
+  // envelope; the legacy rollback answers 404 for it by design.
+  {
+    method: 'POST',
+    path: '/admin/api/moderation/accounts/:id/kick',
+    surface: 'admin',
+    middleware: [requireAdmin, requireAdminTarget('account'), withBody()],
+    meta: adminTargetMeta('account'),
+    handler: adminKickHandler,
   },
   {
     method: 'POST',

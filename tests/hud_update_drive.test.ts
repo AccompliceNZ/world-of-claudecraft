@@ -534,6 +534,13 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     why: 'the Target dots tracker: its countdowns are what a dot refresh is timed against, so it rides the same band as the aura strips above and is never tier-gated either. Deliberately UNGATED at the call site: the showTargetDots setting rides into the core as input.enabled and the core answers with an empty state, which the painter renders as a hidden frame, so the one place that decides whether the frame exists stays the core rather than a branch here',
   },
   {
+    call: 'this.auraTracks.tick',
+    band: 'frame',
+    gate: '',
+    surface: 'chrome',
+    why: 'the six aura tracks (src/ui/hud/aura_tracks/), ONE call, because AuraTrackFamily owns the loop over the descriptor table and the reused per-frame input, which is why a seventh track adds no row here. Same band and same rule as the two aura rows above: these are countdowns a refresh is timed against, so they are never tier-gated. Deliberately UNGATED at the call site: the family resolves the six switches itself, skips the roster copy and every painter when none is on (the default for every player), and lets each core answer with an empty state when its own switch is off, which keeps the enabled check in one place instead of six gates on this path',
+  },
+  {
     call: 'this.targetReannounce.mark',
     band: 'frame',
     gate: "target && target.kind !== 'object' && target.id !== this.lastAnnouncedTargetId",
@@ -864,7 +871,7 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
   {
     call: 'this.renderer.vistaPan',
     band: 'medium',
-    gate: "!inDungeon && currentZone.id !== this.lastZoneId && this.lastZoneId !== '' && !p.dead && !p.inCombat && !recentCombat",
+    gate: "!inDungeon && currentZone.id !== this.lastZoneId && this.lastZoneId !== '' && !p.dead && !p.inCombat && !recentlyInCombat",
     surface: 'none',
     why: 'the zone-entry camera sweep; a renderer call, not a HUD write',
   },
@@ -1262,8 +1269,12 @@ const HUD_UPDATE_DRIVES: readonly DriveRow[] = [
     band: 'slow',
     gate: 'this.wocMarketWindow.isOpen',
     surface: 'window',
-    guard: { kind: 'module', module: 'woc_market_window.ts', proof: SIG_RETURN },
-    why: 'the $WOC Exchange window; its wocMarketViewSig digest folds second-resolution countdowns in, so open auctions tick on the poll without a self-armed driver. This call ALSO carries the window’s background re-ask (pollFromServer, self-throttled to its own much slower cadence by woc_market_poll_core): a rebuild alone can only repaint data already in hand, and could never show a bond the chain has since confirmed',
+    guard: {
+      kind: 'module',
+      module: 'woc_market_window.ts',
+      proof: 'if (sig === this.lastSig && !this.walletRepaintDue) return;',
+    },
+    why: 'the $WOC Exchange window; its wocMarketViewSig digest folds second-resolution countdowns in, so open auctions tick on the poll without a self-armed driver (walletRepaintDue is the one digest override: a wallet beat skipped under the native-dropdown hold). This call ALSO carries the window’s background re-ask (pollFromServer, self-throttled to its own much slower cadence by woc_market_poll_core): a rebuild alone can only repaint data already in hand, and could never show a bond the chain has since confirmed',
   },
   {
     call: 'this.mailboxWindow.refreshIfChanged',
@@ -1763,15 +1774,14 @@ describe('Hud.update() drives exactly the registered set, on the registered band
       // no open check and therefore no invalidation guard to name.
       // chrome 85 -> 86: the gathering goal tracker's own signature-gated
       // repaint (Intentional Gathering PR4, gatheringGoalController.update).
-      // chrome 86 -> 87: the release arm's proc frame chip relocalizes on a
-      // spec change (interfaceUnlock.relocalize), in step with the art swap.
-      // chrome 87 -> 89: the micro-menu rail's own state paint (the open-window
-      // ring plus the unspent-point badge) beside the talent-glow toggles it
-      // sits with, and the atlas rail's own signature-gated repaint.
-      // Both arms' window and chrome churn lands independently, so this exact
-      // split was RECOUNTED from the merged table rather than reconciled by
-      // arithmetic across the merge.
-    ).toEqual({ window: 48, chrome: 90, none: 17 });
+      // chrome 87 -> 88 on this merged branch: the release arm's proc frame
+      // chip relocalizes on a spec change (interfaceUnlock.relocalize), in
+      // step with the art swap. The branch's window and chrome churn lands
+      // independently, so this exact split was counted from the merged table.
+      // chrome 88 -> 89 at the aura-tracks sync (PR #3925): this branch adds
+      // the aura tracks' one chrome call on top of the release's 88; the
+      // release's window 48 carries over untouched.
+    ).toEqual({ window: 48, chrome: 91, none: 17 });
     const windows = HUD_UPDATE_DRIVES.filter((r) => r.surface === 'window');
     expect(windows.map((r) => r.call)).toContain('this.spellbookWindow.tickOpen');
     expect(windows.map((r) => r.call)).toContain('this.refreshOpenTownFocusIfChanged');
@@ -1875,7 +1885,7 @@ describe('Hud.update() drives exactly the registered set, on the registered band
         // per-frame allocation.
         'spellbook_window.ts: if (this.knownChanged(this.deps.world().known)) {',
         'target_auras_window.ts: if (this.cleared) return;',
-        'woc_market_window.ts: if (sig === this.lastSig) return;',
+        'woc_market_window.ts: if (sig === this.lastSig && !this.walletRepaintDue) return;',
       ].sort(),
     );
     expect(

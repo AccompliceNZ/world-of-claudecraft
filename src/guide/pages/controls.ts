@@ -66,6 +66,7 @@ const GROUPS: Group[] = [
       // key, the way the tile and the keybind options row do.
       { keys: ['Shift+T'], label: 'hudChrome.perfecting.title' },
       { keys: ['O'], label: 'controls.friends' },
+      { keys: ['Shift+O'], label: 'hudChrome.lootExplorer.title' },
       { keys: ['G'], label: 'guide.controls.arena' },
       { keys: ['`'], label: 'guide.controls.mount' },
       { keys: ['K'], label: 'guide.controls.leaderboard' },

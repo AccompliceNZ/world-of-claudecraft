@@ -184,24 +184,27 @@ describe('mobTooltipCornerPlacement', () => {
   });
 });
 
-describe('hud.ts consumes the core (source pins)', () => {
-  const hud = readFileSync(new URL('../src/ui/hud.ts', import.meta.url), 'utf8');
+describe('tooltip_paint.ts consumes the core (source pins)', () => {
+  // Hud.paintTooltipAt / paintMobTooltipBottomRight are now thin wrappers that
+  // delegate to src/ui/tooltip_paint.ts (mechanical extraction, hud.ts monolith
+  // ceiling); the pin moves with the implementation.
+  const paint = readFileSync(new URL('../src/ui/tooltip_paint.ts', import.meta.url), 'utf8');
 
   it('paintTooltipAt caps the height BEFORE the one measure, then places through the core', () => {
-    const start = hud.indexOf('private paintTooltipAt(');
+    const start = paint.indexOf('export function paintTooltipAt(');
     expect(start).toBeGreaterThan(-1);
-    const body = hud.slice(start, hud.indexOf('\n  }', start));
+    const body = paint.slice(start, paint.indexOf('\n}', start));
     expect(body.length).toBeLessThan(1500);
     // biome-ignore lint/suspicious/noTemplateCurlyInString: asserts on source text that contains a template literally.
-    const cap = body.indexOf('this.tooltipEl.style.maxHeight = `${tooltipMaxHeight(viewport)}px`;');
-    const measure = body.indexOf('this.tooltipEl.offsetWidth');
+    const cap = body.indexOf('tooltipEl.style.maxHeight = `${tooltipMaxHeight(viewport)}px`;');
+    const measure = body.indexOf('tooltipEl.offsetWidth');
     expect(cap).toBeGreaterThan(-1);
     expect(measure).toBeGreaterThan(cap);
     expect(body).toContain('const at = tooltipPlacementAt(x, y, box, viewport);');
     // biome-ignore lint/suspicious/noTemplateCurlyInString: asserts on source text that contains a template literally.
-    expect(body).toContain('this.tooltipEl.style.left = `${at.left}px`;');
+    expect(body).toContain('tooltipEl.style.left = `${at.left}px`;');
     // biome-ignore lint/suspicious/noTemplateCurlyInString: asserts on source text that contains a template literally.
-    expect(body).toContain('this.tooltipEl.style.top = `${at.top}px`;');
+    expect(body).toContain('tooltipEl.style.top = `${at.top}px`;');
     // The hand-rolled clamp is gone from the paint path.
     expect(body).not.toContain('Math.min(window.innerWidth');
   });
@@ -214,13 +217,12 @@ describe('hud.ts consumes the core (source pins)', () => {
     // tooltipMaxHeight staleness arm above for the magnitude). Same shape as
     // the paintTooltipAt pin: the cap is written BEFORE the one measure, from
     // the same core, off the same viewport.
-    const start = hud.indexOf('private paintMobTooltipBottomRight(');
+    const start = paint.indexOf('export function paintMobTooltipBottomRight(');
     expect(start).toBeGreaterThan(-1);
-    const body = hud.slice(start, hud.indexOf('\n  }', start));
-    expect(body).toContain('const viewport = this.tooltipViewport();');
+    const body = paint.slice(start, paint.indexOf('\n}', start));
     // biome-ignore lint/suspicious/noTemplateCurlyInString: asserts on source text that contains a template literally.
-    const cap = body.indexOf('this.tooltipEl.style.maxHeight = `${tooltipMaxHeight(viewport)}px`;');
-    const measure = body.indexOf('this.tooltipEl.offsetWidth');
+    const cap = body.indexOf('tooltipEl.style.maxHeight = `${tooltipMaxHeight(viewport)}px`;');
+    const measure = body.indexOf('tooltipEl.offsetWidth');
     expect(cap).toBeGreaterThan(-1);
     expect(measure).toBeGreaterThan(cap);
     // And the corner math is the core's, not a second hand-rolled clamp.
@@ -230,7 +232,23 @@ describe('hud.ts consumes the core (source pins)', () => {
     expect(body).not.toContain('window.innerHeight');
   });
 
+  it('hud.ts delegates both paths to the core instead of reimplementing them', () => {
+    const hud = readFileSync(new URL('../src/ui/hud.ts', import.meta.url), 'utf8');
+    const cursorStart = hud.indexOf('private paintTooltipAt(');
+    expect(cursorStart).toBeGreaterThan(-1);
+    const cursorBody = hud.slice(cursorStart, hud.indexOf('\n  }', cursorStart));
+    expect(cursorBody).toContain('paintTooltipAtCore(');
+    expect(cursorBody).not.toContain('tooltipEl.style.maxHeight');
+
+    const mobStart = hud.indexOf('private paintMobTooltipBottomRight(');
+    expect(mobStart).toBeGreaterThan(-1);
+    const mobBody = hud.slice(mobStart, hud.indexOf('\n  }', mobStart));
+    expect(mobBody).toContain('paintMobTooltipBottomRightCore(');
+    expect(mobBody).not.toContain('tooltipEl.style.maxHeight');
+  });
+
   it('the mousemove reposition path reuses the cached box through the same core', () => {
+    const hud = readFileSync(new URL('../src/ui/hud.ts', import.meta.url), 'utf8');
     const start = hud.indexOf("el.addEventListener('mousemove', (e) => {");
     expect(start).toBeGreaterThan(-1);
     const body = hud.slice(start, hud.indexOf("el.addEventListener('mouseleave'", start));

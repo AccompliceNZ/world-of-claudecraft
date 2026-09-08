@@ -25,6 +25,7 @@ import { Pool } from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { materialSourceConnection } from '../server/material_source_connection';
 import type { GuildBankOpDelta } from '../src/sim/guild_bank';
+import { checkRelationUsesPartialIndex, rootPlanFromExplainRow } from './helpers/pg_plan';
 
 const ADMIN_URL = process.env.TEST_DATABASE_URL;
 const VERIFY_DB = 'wocc_guild_bank_verify';
@@ -1012,10 +1013,13 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
       // statement: the two-text split exists because of plan shape, so the
       // cursor arm and the money arm are the ones that want the pin. The money
       // arm must land on its own partial index (bank_ledger_container_money_recent),
-      // the others on the container index.
+      // the others on the container index. The check is per-relation
+      // (checkRelationUsesPartialIndex), not a flat "no Seq Scan anywhere":
+      // the joined `characters` row set is tiny enough that the planner is
+      // right to Seq Scan IT, and a whole-plan guard would reject that.
       await db.runConcurrentIndexMigrations();
       const explain = async (sql: string, params: unknown[]) =>
-        JSON.stringify((await pool.query(`EXPLAIN (FORMAT JSON) ${sql}`, params)).rows[0]);
+        rootPlanFromExplainRow((await pool.query(`EXPLAIN (FORMAT JSON) ${sql}`, params)).rows[0]);
       const ops = ['deposit', 'withdraw', 'deposit_gold'];
       const moneyOps = ['deposit_gold', 'withdraw_gold', 'buy_slots', 'open_bank', 'create_fee'];
       const head = await explain(logDb.guildBankLogPageSql({ cursor: false, money: false }), [
@@ -1024,8 +1028,9 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
         51,
         realm,
       ]);
-      expect(head).toContain('bank_ledger_container_recent');
-      expect(head).not.toContain('Seq Scan');
+      expect(
+        checkRelationUsesPartialIndex(head, 'bank_ledger', 'bank_ledger_container_recent'),
+      ).toEqual({ ok: true });
       const older = await explain(logDb.guildBankLogPageSql({ cursor: true, money: false }), [
         1,
         ops,
@@ -1033,16 +1038,18 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
         realm,
         400,
       ]);
-      expect(older).toContain('bank_ledger_container_recent');
-      expect(older).not.toContain('Seq Scan');
+      expect(
+        checkRelationUsesPartialIndex(older, 'bank_ledger', 'bank_ledger_container_recent'),
+      ).toEqual({ ok: true });
       const money = await explain(logDb.guildBankLogPageSql({ cursor: true, money: true }), [
         1,
         51,
         realm,
         400,
       ]);
-      expect(money).toContain('bank_ledger_container_money_recent');
-      expect(money).not.toContain('Seq Scan');
+      expect(
+        checkRelationUsesPartialIndex(money, 'bank_ledger', 'bank_ledger_container_money_recent'),
+      ).toEqual({ ok: true });
       // And the reader really takes the money arm for the money slice.
       expect(logDb.isGuildBankMoneySlice(moneyOps)).toBe(true);
     });

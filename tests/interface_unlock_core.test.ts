@@ -5,6 +5,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
+import { AURA_TRACKS } from '../src/ui/hud/aura_tracks';
 import {
   classGatedFrameActive,
   frameRowLabelKey,
@@ -51,6 +52,13 @@ describe('HUD_FRAME_SPECS', () => {
       'riftTracker',
       'gatheringGoalTracker',
       'swingBarOffhand',
+      // The six aura tracks, appended by generating one spec per descriptor.
+      'auraTrack_defensives',
+      'auraTrack_self',
+      'auraTrack_power',
+      'auraTrack_utility',
+      'auraTrack_friendly',
+      'auraTrack_shields',
     ]);
     expect(HUD_FRAME_SPECS.map((s) => s.elementId)).toEqual([
       'actionbar',
@@ -80,6 +88,12 @@ describe('HUD_FRAME_SPECS', () => {
       'rift-tracker',
       'gathering-goal-tracker',
       'swingbar-offhand',
+      'aura-track-defensives',
+      'aura-track-self',
+      'aura-track-power',
+      'aura-track-utility',
+      'aura-track-friendly',
+      'aura-track-shields',
     ]);
     // A duplicated storage key would make two frames overwrite each other's
     // saved box, which is silent and only shows up after a reload.
@@ -134,6 +148,12 @@ describe('HUD_FRAME_SPECS', () => {
       'woc_hud_frame_rift_tracker',
       'woc_hud_frame_gathering_goal_tracker',
       'woc_hud_frame_swingbar_offhand',
+      'woc_hud_frame_track_defensives',
+      'woc_hud_frame_track_self',
+      'woc_hud_frame_track_power',
+      'woc_hud_frame_track_utility',
+      'woc_hud_frame_track_friendly',
+      'woc_hud_frame_track_shields',
     ]);
   });
 
@@ -178,8 +198,18 @@ describe('HUD_FRAME_SPECS', () => {
     // timer bar and more room for the label before it ellipses, which is a real
     // reflow rather than empty space. The meter rows reflow too, and the
     // meters' detached column scrolls inside the box.
+    // The six aura tracks reflow for the same reason: a wider frame is a longer
+    // bar and more room for a spell name before it ellipses. They are generated
+    // from the descriptor table, so this list is also the proof the generator
+    // kept the mode.
     const box = HUD_FRAME_SPECS.filter((s) => s.resizeMode === 'box').map((s) => s.id);
-    expect(box).toEqual(['buffBar', 'debuffBar', 'targetDots', 'damageMeter']);
+    expect(box).toEqual([
+      'buffBar',
+      'debuffBar',
+      'targetDots',
+      'damageMeter',
+      ...AURA_TRACKS.map((t) => `auraTrack_${t.id}`),
+    ]);
   });
 
   it('lifts the zoom ceiling for exactly the wishlist chip', () => {
@@ -304,6 +334,22 @@ describe('frameRowSettingKey', () => {
     for (const id of ['actionBar1', 'questTracker', 'damageMeter', 'petFrame', 'minimap']) {
       expect(frameRowSettingKey(id), `${id} has no master switch`).toBeNull();
     }
+  });
+
+  it('routes every aura track row to that track own master switch', () => {
+    // Six frames, six switches, all shipped off. Pinned by literal on both sides
+    // so neither the generated frame id nor the setting can move on its own,
+    // then against the table so a seventh track is covered without an edit here.
+    expect(frameRowSettingKey('auraTrack_defensives')).toBe('showDefensivesTrack');
+    expect(frameRowSettingKey('auraTrack_self')).toBe('showSelfBuffTrack');
+    expect(frameRowSettingKey('auraTrack_power')).toBe('showOffensiveTrack');
+    expect(frameRowSettingKey('auraTrack_utility')).toBe('showUtilityTrack');
+    expect(frameRowSettingKey('auraTrack_friendly')).toBe('showFriendlyTrack');
+    expect(frameRowSettingKey('auraTrack_shields')).toBe('showShieldTrack');
+    for (const track of AURA_TRACKS) {
+      expect(frameRowSettingKey(`auraTrack_${track.id}`)).toBe(track.settingKey);
+    }
+    expect(frameRowSettingKey('auraTrack_nope')).toBeNull();
   });
 });
 

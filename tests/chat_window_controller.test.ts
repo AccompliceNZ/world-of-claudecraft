@@ -55,6 +55,7 @@ interface Harness {
   sent: string[];
   errors: string[];
   activateContextAction(action: string): void;
+  shownPanes: HTMLElement[];
 }
 
 function makeHarness(
@@ -72,6 +73,7 @@ function makeHarness(
   const storage = new MemoryStorage(initialStorage);
   const sent: string[] = [];
   const errors: string[] = [];
+  const shownPanes: HTMLElement[] = [];
   let opener: HTMLElement | null = null;
   let handleContextAction: (action: string) => void = () => {};
   const contextMenu: ChatContextMenuPort = {
@@ -105,6 +107,7 @@ function makeHarness(
     selectedQuestId: () => selectedQuest,
     hasQuest: (questId) => questId === 'q_wolves' || questId === ODD_QUEST_ID,
     showError: (text) => errors.push(text),
+    afterTabShown: (pane) => shownPanes.push(pane),
   });
   return {
     controller,
@@ -115,6 +118,7 @@ function makeHarness(
     storage,
     sent,
     errors,
+    shownPanes,
     activateContextAction: (action) => handleContextAction(action),
   };
 }
@@ -159,6 +163,7 @@ describe('ChatWindowController', () => {
     expect(partyLine.classList.contains('chat-hidden')).toBe(true);
     expect(harness.chatLog.classList.contains('active')).toBe(true);
     expect(harness.combatLog.classList.contains('active')).toBe(false);
+    expect(harness.shownPanes.at(-1)).toBe(harness.chatLog);
     expect(harness.controller.composeSend('need one tank')).toBe('/world need one tank');
     expect(harness.input.style.color).toBe('#ff9d5c');
   });
@@ -216,6 +221,17 @@ describe('ChatWindowController', () => {
     expect(
       tabButton(harness, 'party').children.some((child) => child.classList.contains('ui-badge')),
     ).toBe(false);
+  });
+
+  it('reports the visible pane after activating a tab', () => {
+    const harness = makeHarness();
+    harness.controller.init();
+
+    tabButton(harness, 'combat').dispatchEvent(new Event('click'));
+
+    expect(harness.chatLog.classList.contains('active')).toBe(false);
+    expect(harness.combatLog.classList.contains('active')).toBe(true);
+    expect(harness.shownPanes.at(-1)).toBe(harness.combatLog);
   });
 
   it('mirrors typed joins without sending a duplicate command or changing the send tab', () => {

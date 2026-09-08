@@ -10,6 +10,7 @@ import {
   partyFrameHealthText,
   partyFrameSignature,
   prioritizePartyFrameAuras,
+  readPartyFrameDisplayConfig,
   resolvePartyFrameStyle,
   selectPartyFrameMembers,
 } from '../src/ui/party_frames';
@@ -203,6 +204,7 @@ describe('party frame health text and tactical information', () => {
     expect(partyFrameHealthText(75, 100, 1, format)).toBe('percent:0.75');
     expect(partyFrameHealthText(75, 100, 2, format)).toBe('number:75');
     expect(partyFrameHealthText(75, 100, 3, format)).toBe('number:75 / number:100');
+    expect(partyFrameHealthText(75, 100, 4, format)).toBe('number:75 / number:100 (percent:0.75)');
   });
 
   it('does not reveal Temporal Cascade target selection on party frames', () => {
@@ -647,5 +649,40 @@ describe('party frame aura summary carries no flask marker', () => {
     // always ride, remaining always rides, and neg/poolPct are conditional on a
     // negative value and on Mending Current respectively (neither applies here).
     expect(Object.keys(summary).sort()).toEqual(['id', 'kind', 'remaining']);
+  });
+});
+
+describe('readPartyFrameDisplayConfig', () => {
+  it('falls back to the defaults before the settings store attaches', () => {
+    expect(readPartyFrameDisplayConfig(undefined)).toEqual(DEFAULT_PARTY_FRAME_DISPLAY);
+  });
+
+  it('keeps every default for a store whose keys are all missing', () => {
+    expect(readPartyFrameDisplayConfig({ get: () => undefined })).toEqual(
+      DEFAULT_PARTY_FRAME_DISPLAY,
+    );
+  });
+
+  it('reads every key from the store, rounding the choice values', () => {
+    const values: Record<string, number | boolean> = {
+      partyFrameShowSelf: true,
+      partyFrameShowResource: false,
+      partyFrameShowAbsorbs: true,
+      partyFrameShowAuras: false,
+      partyFrameShowPets: false,
+      partyFrameStyle: 2,
+      partyFrameHealthText: 4.2,
+      partyFrameSort: 1,
+    };
+    expect(readPartyFrameDisplayConfig({ get: (key) => values[key] })).toEqual({
+      showSelf: true,
+      showResource: false,
+      showAbsorbs: true,
+      showAuras: false,
+      showPets: false,
+      presentation: 2,
+      healthText: 4,
+      sort: 1,
+    });
   });
 });

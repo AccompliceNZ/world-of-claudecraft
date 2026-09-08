@@ -737,6 +737,22 @@ ceiling is ACCEPTED because every craft still pays materials and the
 copper fee, and the enchant-family faucets stay bounded by the items a
 player actually holds.
 
+Replacing an existing enchant, including with itself (#2415): a copy already
+carrying an enchant is never silently overwritten, but any existing enchant on
+it, the identical one included, can be replaced after an explicit confirmation
+naming the old enchant and the new one (`confirmReplace`,
+`resolveApplyEnchant`/`resolveApplyEnchantWorn` in
+`src/sim/professions/enchanting.ts`; the bagged and worn menu confirms in
+`src/ui/bag_item_action_menu.ts`). Declining, or never reaching the confirm,
+spends nothing. Accepting always consumes the full reagent cost and grants
+the same Enchanting skill progress as any other apply; a same-enchant accept
+nets to byte-identical stats rather than stacking the bonus a second time,
+and the swap is surgical (signer, masterwork stats, `boundTo`/`bindOnTrade`,
+and Perfecting rank/provenance all carry through untouched). Pinned in
+`tests/professions_enchanting.test.ts` (the #2415 describe block) and the
+confirm-copy tests in `tests/bag_item_action_menu_paint.test.ts` and
+`tests/enchant_apply_view.test.ts`.
+
 Craft cast band rationale (the ladder in `src/sim/content/professions.ts`,
 `CRAFT_CAST_DURATION_*`): skill bands rather than a flat cast so field
 recipes stay snappy while ladder-top and combo recipes read as deliberate

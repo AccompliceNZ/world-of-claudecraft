@@ -983,6 +983,7 @@ export const en_CA: EnTranslations = {
       "mounts": "Mounts",
       "professions": "Professions",
       "reliquary": "Reliquary",
+      "lootExplorer": "Loot Explorer",
       "nameplates": "Names",
       "haptics": "Haptics",
       "hapticsOff": "Haptics Off",
@@ -1041,7 +1042,7 @@ export const en_CA: EnTranslations = {
     },
     "tutorialGreeting": {
       "bellHomeNote": "Back from the shore already? That was the ferry bell you rang. Its twin hangs just there by the Ravenpost mailbox: ring it any time and the crossing will carry you back to the Proving Shore. No harm done either way.",
-      "islandArrivalNote": "Welcome to the Proving Shore. Warden Tam is waiting just up the strand: go and see him.",
+      "islandArrivalNote": "Welcome to the Proving Shore. Warden Tam is waiting just up the strand: go and see him. When you would rather be off, ring the bell beside my pier and it will carry you across to the vale at any time.",
       "noteClose": "Understood"
     },
     "tutorial": {
@@ -1141,6 +1142,9 @@ export const en_CA: EnTranslations = {
       "promptAttack": "Attack",
       "promptUseAbility": "Use ability",
       "promptKneel": "Kneel",
+      "promptAccessInterface": "Access interface",
+      "promptMoveToTarget": "Move to {target}",
+      "promptSelectItem": "Select {item}",
       "promptOpenBags": "Open your bags",
       "promptCharacterSheet": "Open your character sheet",
       "promptLookAround": "Hold right-click and drag to look around",
@@ -1307,6 +1311,18 @@ export const en_CA: EnTranslations = {
       "separate": "Separate {meter}",
       "regroup": "Regroup {meter}"
     },
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "{count} more not shown"
+    },
     "targetDots": {
       "title": "Target Dots",
       "row": "{aura} on {target}",
@@ -1393,6 +1409,8 @@ export const en_CA: EnTranslations = {
       "name_shadowjump_toad": "Kama-Kage the Shadow-Jump Toad",
       "name_stormfeather_griffin": "Sky-Reach Stormfeather",
       "name_thunderstrut_gobbler": "Thunderstrut the Grand Gobbler",
+      "name_goblin_rocket_sled": "Goblin Rocket Sled",
+      "name_rallycart_rxt": "Rallycart RXT",
       "name_terrorspark_groundshaker": "Dreadspark Groundshaker",
       "name_drakemaw_raptor": "Drakemaw Raptor",
       "name_mech_bird": "Cluckwork Mech Bird",
@@ -1406,6 +1424,8 @@ export const en_CA: EnTranslations = {
       "desc_shadowjump_toad": "A massive, sure-footed giant toad, trained in lightning-fast shadowed bounds that cover any terrain.",
       "desc_stormfeather_griffin": "A regal storm griffin that stalks the ground on rune-shod talons, wings furled.",
       "desc_thunderstrut_gobbler": "A colossal storm-hatched gobbler that struts down from the Waking Peak, tail fanned like a thunderhead.",
+      "desc_goblin_rocket_sled": "A dangerously overbuilt goblin sled propelled by twin rockets and excellent bad judgment.",
+      "desc_rallycart_rxt": "A pint-sized rally machine that provides enhanced travel speed.",
       "desc_terrorspark_groundshaker": "A compact armored engine with heavy tracks, a deep-bore cannon, and a saddle built for fearless pilots.",
       "desc_drakemaw_raptor": "A saddle-broken brood raptor from the Drakemaw Caldera, all sinew and sprint, still smelling faintly of ash.",
       "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
@@ -1600,7 +1620,10 @@ export const en_CA: EnTranslations = {
       "uiScale": "UI Scale",
       "playerFrameScale": "Player Frame Scale",
       "targetFrameScale": "Target Frame Scale",
+      "playerHealthText": "Player Health Text",
+      "targetHealthText": "Target Health Text",
       "aurasOnPlayerFrame": "Buffs on the Player Frame",
+      "auraBarBelowFrame": "Buffs Below the Player Frame",
       "alwaysShowAllBuffs": "Always Show All Buffs",
       "highContrastBackground": "High-Contrast Background",
       "startAttackOnAbility": "Auto-Attack on Ability Use",
@@ -1626,6 +1649,13 @@ export const en_CA: EnTranslations = {
       "showNameplateDots": "Show My Dots on Nameplates",
       "nameplateDotScale": "Nameplate Dot Size",
       "showTargetDots": "Show Target Dots",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Water Ripples (Wakes)",
       "showAttackButton": "Show Attack Button",
       "showDailyRewardsChest": "Show Daily Rewards Chest",
@@ -2669,7 +2699,9 @@ export const en_CA: EnTranslations = {
       "unequipHint": "Click to remove this bag",
       "poolGeneral": "General: {used} of {total}",
       "poolMaterials": "Materials: {used} of {total}",
-      "capacityPoolsAria": "Bag slots used: {used} of {total}. General items: {generalUsed} of {generalTotal}. Materials: {materialsUsed} of {materialsTotal}."
+      "capacityPoolsAria": "Bag slots used: {used} of {total}. General items: {generalUsed} of {generalTotal}. Materials: {materialsUsed} of {materialsTotal}.",
+      "capacityPools": "Items {generalUsed}/{generalTotal}, Materials {materialsUsed}/{materialsTotal}",
+      "emptyMaterialsOnly": "Materials only"
     },
     "raidConvert": {
       "toPartyDone": "Your raid has converted back to a party.",
@@ -2993,7 +3025,7 @@ export const en_CA: EnTranslations = {
       "suddenDeath": "Your next Execute costs no Rage and ignores its health requirement",
       "aoeEcho": "{charges} echoes remain: single-target abilities deal {pct}% damage to up to {targets} nearby enemies",
       "sureCrit": "{charges} damaging ability casts are guaranteed critical strikes",
-      "temporalEcho": "The caster's Arcane damage heals you for {singlePct}% of single-target or {areaPct}% of area damage",
+      "temporalEcho": "The caster's Arcane damage heals you for {singlePct}% of single-target or {areaPct}% of area damage. Aether Surge and Aether Darts use a 4x bonus on an individual Temporal Echo. Group Echoes create an equal healing reserve, shared among marked allies below 60% health according to missing health",
       "arcaneCharge": "{stacks} Arcane Charges: Aether Surge deals {damagePct}% more damage, casts {castPct}% faster, and costs {costMult}x mana",
       "physicalReduction": "Reduces Physical damage taken by {pct}%",
       "temporalHourglass": "Immune and unable to act; restores health and accelerates cooldown recovery. Right-click to cancel.",
@@ -3209,6 +3241,7 @@ export const en_CA: EnTranslations = {
       "healthPercent": "Percent",
       "healthCurrent": "Current",
       "healthCurrentMax": "Current / Max",
+      "healthCurrentMaxPercent": "Current / Max (Percent)",
       "sort": "Sort Players",
       "sortGroup": "Group",
       "sortRole": "Role",
@@ -3434,6 +3467,7 @@ export const en_CA: EnTranslations = {
       "close": "Close",
       "keybind": "Discord Panel",
       "disabled": "Discord integration is not available right now.",
+      "queuePingsLabel": "Send me a Discord direct message when my battleground or arena queue pops (needs a linked Discord account)",
       "tiers": {
         "none": "Unranked",
         "initiate": "Initiate",
@@ -3754,6 +3788,8 @@ export const en_CA: EnTranslations = {
       "depositAllDone": "Materials deposited: {count}.",
       "depositAllFull": "Materials deposited: {count}. Bank now full.",
       "depositAllNone": "Bank full: nothing deposited.",
+      "depositAllNotable": "Materials deposited: {count}, including {item}.",
+      "depositAllNotableFull": "Materials deposited: {count}, including {item}. Bank now full.",
       "bonusTitle": "Bonus slots",
       "bonusEarned": "+{count}",
       "bonusStatusEarned": "+{count}",
@@ -3792,6 +3828,8 @@ export const en_CA: EnTranslations = {
       "vaultDepositAllDone": "Materials deposited: {count}.",
       "vaultDepositAllFull": "Materials deposited: {count}. Some ceilings are full.",
       "vaultDepositAllNone": "Vault ceilings full: nothing deposited.",
+      "vaultDepositAllNotable": "Materials deposited: {count}, including {item}.",
+      "vaultDepositAllNotableFull": "Materials deposited: {count}, including {item}. Some ceilings are full.",
       "vaultWithdrawShort": "Only {fit} of {count} fit in your bags.",
       "vaultDepositHint": "Click to deposit into your vault",
       "vaultCannotDeposit": "Cannot go in the vault",
@@ -4931,6 +4969,7 @@ export const en_CA: EnTranslations = {
       "sourceProfession": "Earned through {profession}",
       "sourceDeed": "Awarded by the deed {deed}",
       "sourceVendor": "Sold by {vendor}",
+      "sourceVendorGated": "Sold by {vendor} ({requirement})",
       "sourceBossZone": "Drops from {boss} in {zone}",
       "sourceDelve": "Found in the delve {delve}",
       "sourceRift": "Drops from {rank}-rank Rift clears",
@@ -4950,6 +4989,10 @@ export const en_CA: EnTranslations = {
       "filterAll": "All",
       "filterOwned": "Catalogued",
       "filterMissing": "Missing",
+      "filterIlluminated": "Illuminated",
+      "filterRemaining": "Remaining",
+      "filterEmptyPages": "No pages match this filter.",
+      "filterGroupAriaPages": "Filter pages by whether they are illuminated",
       "recentJumpAria": "Open the page for {name}",
       "recentEmpty": "No finds yet. Relics you catalogue from now on land here.",
       "nearlyEmpty": "Pages within reach of completion gather here.",
@@ -5057,7 +5100,8 @@ export const en_CA: EnTranslations = {
       "summary": "World map. Choose a zone to open its map.",
       "toWorld": "World map",
       "toZone": "Zone map",
-      "toggleAria": "Switch between the world map and the zone map",
+      "toInstance": "Instance map",
+      "toggleAria": "Switch between the world map, zone map, and instance map",
       "levels": "Levels {min} to {max}"
     },
     "mapAtlas": {
@@ -5117,6 +5161,7 @@ export const en_CA: EnTranslations = {
       "walletLinkedConnected": "Your linked wallet app is connected and ready for $WOC purchases.",
       "walletUsdBalance": "{amount} USD",
       "walletUsdUnknown": "Unknown",
+      "walletCardDismiss": "Hide wallet card",
       "rateNote": "Rate: about {tokens} $WOC per $1.00 USD as of {time}.",
       "rateNotePaused": "Last known rate: about {tokens} $WOC per $1.00 USD as of {time}.",
       "estimateNote": "About {tokens} $WOC for {usd} at the current rate.",
@@ -5308,6 +5353,43 @@ export const en_CA: EnTranslations = {
       "listingStatusCancelled": "Cancelled",
       "listingStatusSuspended": "Suspended",
       "listingStatusUnsold": "Unsold"
+    },
+    "lootExplorer": {
+      "title": "Loot Explorer",
+      "close": "Close Loot Explorer",
+      "searchPlaceholder": "Search items...",
+      "searchAria": "Search items",
+      "filterCategoryAria": "Source",
+      "filterClassAria": "Class",
+      "filterStatAria": "Stat",
+      "filterQualityAria": "Quality",
+      "filterAll": "All",
+      "tabItems": "By Item",
+      "tabEncounters": "By Encounter",
+      "category": {
+        "raid": "Raid",
+        "dungeon": "Dungeon",
+        "delve": "Delve",
+        "open_world": "Open World",
+        "rift": "Rift",
+        "vendor": "Vendor",
+        "quest_reward": "Quest Reward",
+        "quest_objective": "Quest Objective",
+        "ground_object": "World Object",
+        "starting_equipment": "Starting Equipment"
+      },
+      "difficulty": {
+        "normal": "Normal",
+        "heroic": "Heroic"
+      },
+      "riftRankLabel": "Rift Rank {rank}",
+      "source": "{category}: {name}",
+      "sourceWithContext": "{category}: {name} ({context})",
+      "chance": "{pct}% chance",
+      "guaranteed": "Guaranteed",
+      "gatedByQuest": "While questing: {quest}",
+      "empty": "No loot matches these filters.",
+      "resultCount": "{count} results"
     }
   },
   "gatherEvent": {
@@ -5407,7 +5489,8 @@ export const en_CA: EnTranslations = {
       "link_required": "Link your Discord account first.",
       "swag_claimed": "You have already claimed this reward.",
       "swag_tier": "Reach a higher rank to claim this.",
-      "swag_points": "Not enough points."
+      "swag_points": "Not enough points.",
+      "invalid_input": "Invalid input."
     },
     "deeds": {
       "invalid_input": "Invalid input."
@@ -5459,6 +5542,11 @@ export const en_CA: EnTranslations = {
       "reason_required": "A reason is required.",
       "invalid_duration": "Enter a mark duration of at least one second.",
       "not_marked": "That account is not marked."
+    },
+    "kick": {
+      "reason_required": "A reason is required.",
+      "admin_target": "Operator accounts cannot be kicked.",
+      "target_offline": "That player is no longer online on this realm."
     },
     "woc_market": {
       "invalid_input": "Invalid input.",
@@ -5894,10 +5982,13 @@ export const en_CA: EnTranslations = {
       "ifPlayerFrameScale": "The size of your own unit frame.",
       "ifTargetFrameScale": "The size of your target frame.",
       "ifPartyStyle": "The party layout: Automatic follows your group size, Classic is the traditional stack, and Raid packs everyone into the compact grid.",
-      "ifPartyHealthText": "What the party bars print: nothing, a percentage, current health, or current and maximum.",
+      "ifPlayerHealthText": "What your own health bar prints: nothing, a percentage, current health, current and maximum, or both with the percentage beside them.",
+      "ifTargetHealthText": "What the target and target-of-target health bars print, with the same choices as your own frame.",
+      "ifPartyHealthText": "What the party bars print: nothing, a percentage, current health, current and maximum, or both with the percentage beside them.",
       "ifPartySort": "The order party members are listed in: group order, role, or name.",
       "ifPartyShowAuras": "Whether buffs and debuffs show on the party frames. Matching switches cover resource bars, absorbs, pets, and whether you appear in your own party list.",
       "ifAurasOnPlayerFrame": "Puts your buffs and debuffs on your own unit frame as well as the aura bar.",
+      "ifAuraBarBelowFrame": "Moves the buff row below your unit frame instead of above it. Only matters while buffs are on the player frame.",
       "ifAlwaysShowAllBuffs": "Shows every active buff even on the Low graphics preset, bypassing its usual buff-icon cap.",
       "ifTargetOfTarget": "Shows who your target is targeting, the classic way to tell whether the tank still has it.",
       "ifPetFrame": "Shows a frame for your pet.",
@@ -5905,6 +5996,7 @@ export const en_CA: EnTranslations = {
       "ifChatOpacity": "How solid the chat background is.",
       "ifCompactChat": "Tightens the chat lines so more of them fit.",
       "ifChatTimestamps": "Adds a time to each chat line, in 12-hour or 24-hour form.",
+      "ifFilterProfanity": "Masks profanity in chat with asterisks. On by default; switch it off here if you would rather read chat unfiltered.",
       "ifStartAttack": "Whether using an ability also starts your auto-attack. On by default, and the classic behavior most players expect.",
       "ifStopAutoAttack": "Whether switching targets stops your swing. Off by default, so your attack carries over to the new target.",
       "ifShowAttackButton": "Puts an explicit Attack button on your action bar.",
@@ -5917,7 +6009,7 @@ export const en_CA: EnTranslations = {
       "ifHideUnused": "Hides empty action slots so only the buttons you actually use are drawn.",
       "ifLockBars": "Locks your bars so you cannot drag an ability out of a slot by accident.",
       "keybindsHeading": "The Key Bindings panel",
-      "keybindsBody": "The key list is only half of that panel. Above it sit the switches that decide how your mouse drives the game: mouse camera, whether the cursor locks while you rotate, click to move and which mouse button triggers it, attack move, the left-handed touch layout, and the profanity filter for chat.",
+      "keybindsBody": "The key list is only half of that panel. Above it sit the switches that decide how your mouse drives the game: mouse camera, whether the cursor locks while you rotate, click to move and which mouse button triggers it, attack move, and the left-handed touch layout.",
       "keybindsMouseBody": "Two things there are easy to miss. Mouse buttons bind like keys, so the wheel click and the thumb buttons can carry abilities, while left and right click stay reserved for the camera and for clicking on the world. And you can bind straight from the action bar: turn on the on-bar binding mode here, then click a slot and press the key you want."
     },
     "combat": {
@@ -5971,6 +6063,7 @@ export const en_CA: EnTranslations = {
       "framesMoveBody": "Your frame, your target frame, and your party frames can all be moved. Each carries a small move button in its corner: unlock it, drag the frame where you want it, and lock it again so a stray click cannot shift it. If they end up somewhere you regret, Reset Frame Positions in the options snaps them all back to where they started.",
       "framesMoveBodyEditFrames": "Your frame, your target frame, and your party frames can all be moved. Each carries a small move button in its corner: unlock it, drag the frame where you want it, and lock it again so a stray click cannot shift it. Edit Frames, at the top of the Frames tab in the Interface options, loosens the rest of the interface at once, those three frames with it: the action bars, the cast bar, the swing bar, the experience bar, the minimap, the button rail, the pet frame, the stance bar, the buff and debuff rows, and the Wishlist Reminder chip, each wearing a name chip while it is loose. If they end up somewhere you regret, Reset to Defaults at the foot of that same Frames tab snaps them all back to where they started.",
       "framesGovernedExtra": "Edit Frames also loosens the tracker stack below (your tracked quests and their objectives, your deed progress, your Reliquary pages, the delve you are in, any rift you are taking part in, and the recipe or commission you are tracking), the pet action bar beside your pet frame, the Target dots frame for your debuffs across nearby enemies, the paladin's Devotion medallion, the warlock's Affliction Bar, the spell-proc overlay, the off-hand swing timer for dual-wielders, and the tabbed damage meter window, each wearing its own name chip while it is loose.",
+      "framesGovernedAuraTracks": "Edit Frames also loosens the six opt-in aura tracks once you have switched them on from the Combat tab of the same Interface options: the My Buffs track, the Defensive Cooldowns track, the My Shields track, the Offensive Cooldowns track, the Movement and Stealth track, and the My Buffs on Allies track. Every track is off by default, and each wears its own name chip while it is loose.",
       "barsTitle": "Bars, timers, and combat text",
       "barsBody": "Your cast bar appears in the middle of the screen, just above your action bars, whenever you cast or channel, and carries the spell's name and the time left. Your target gets a cast bar of its own on its frame, so you can see what is coming and answer it.\n\nA thin swing bar sits under your cast bar and fills between your weapon swings, so a melee or ranged attacker can see when the next automatic hit lands. Fighting with a weapon in each hand adds a second bar right below it, filling on its own separate clock, so you can time your abilities between BOTH swings instead of just one.\n\nYour experience bar runs the full width under your action bars, ticked into segments, with a lighter stretch showing the rested experience you have banked.\n\nSwim under water and a blue breath bar appears at the top of the screen. It drains while your head is under, flashes red once it runs out and you begin to drown, and refills quickly the moment you surface. Space swims you up, and the Swim Down key, Ctrl by default, takes you deeper.\n\nDamage and healing float up over whatever they landed on as small numbers, so you can read a fight without reading text. The Combat tab in your chat box keeps the full written record.",
       "aurasTitle": "Buffs and debuffs",
@@ -6723,7 +6816,7 @@ export const en_CA: EnTranslations = {
       "heroicRewardsBody": "Heroic bosses drop the loot you know, upgraded and tagged Heroic on the tooltip, and the final boss of each run adds epics found nowhere else. That last kill also leaves Heroic Marks for every participant: a currency spent with Quartermaster Vex in Highwatch, whose counter is a shelf of rings and pendants that nothing but proof of the heroic depths will buy.",
       "heroicLockoutBody": "Normal dungeons can be run all day. Heroic asks patience: the final boss kill locks everyone in the run to one heroic clear of that dungeon per day, and the raid keeps a daily lockout for each difficulty. On a live realm every daily lockout clears together at the realm's own nightly reset hour, so a clear taken just before that hour and one taken just after fall on two different days; play offline in your browser instead and a lockout simply runs out a day after your own kill. A cleared five-player run stays open to its own party for corpse runs and loot, so nobody is locked away from what they earned there. The raid is stricter: once its kill locks you the door stays shut until the reset, and the only way back through it is a corpse run by someone who fell in the very run that locked them, so a living raider who walks out has walked out for the day. Collect your spoils before you leave the arena. Every one of these lockouts belongs to the character that earned it, so a clear on your main leaves your other characters free.",
       "resetTitle": "Resetting your instances",
-      "resetBody": "Switch difficulty while your group still holds claimed runs and the old claims linger for a while before clearing on their own. The party leader can let them go at once instead: choose Reset All Instances on their own portrait menu, or type /dungeon reset. A reset works only after the difficulty has actually been changed, only while nobody, living or fallen, remains inside, only once every corpse in there has been looted clean, and a short cooldown separates one reset from the next. Arrive at the door on the wrong difficulty and the game says so before the run starts. The raid is never reset this way; its own lockout rules stand.",
+      "resetBody": "Switch difficulty while your group still holds claimed runs and the old claims linger for a while before clearing on their own. The party leader can let them go at once instead: choose Reset All Instances on their own portrait menu, or type /dungeon reset. A reset works only after the difficulty has actually been changed, only while nobody, living or fallen, remains inside, only once every corpse in there has been looted clean, and a short cooldown separates one reset from the next. Arrive at the door on the wrong difficulty and the game says so before the run starts. The raid resets the same way, its own lockout and corpse-return rules still standing on top.",
       "templeLoreTitle": "The Drowned Temple, a little deeper",
       "templeLoreBody": "The temple has its own legend, older than the cult you chase elsewhere. On the shore of the Glimmermere, a tarn that drinks the moonlight and gives back the drowned, a lone watcher keeps a gate of pale light. Beneath the surface, a stair of cold stone runs down to it. The folk who sank there did not drown by misadventure: they were the Pale Choir, who went under in worship and never stopped singing. The old wardens scratched a single warning into the rocks before the water took them, a prayer to something they called the Drowned Moon, with a steadier hand adding two words beneath it: it only sleeps.",
       "cryptLeadTitle": "A door the dead were meant to keep shut",
@@ -9395,6 +9488,7 @@ export const en_CA: EnTranslations = {
     "connectingRealm": "Connecting to world...",
     "assetsFailed": "Asset loading failed: try reloading. {error}",
     "rendererFailed": "Could not start the renderer: try reloading. {error}",
+    "rendererContextLost": "The 3D renderer lost its graphics context and could not recover. Please reload.",
     "enterTimeout": "Could not enter world. The connection timed out. Is the game server running?",
     "connectionLost": "Connection to the server was lost.",
     "reconnectingAttempt": "Connection lost. Reconnecting... (attempt {attempt}/{maxAttempts}, retrying in {seconds}s)",
@@ -9405,6 +9499,7 @@ export const en_CA: EnTranslations = {
     "realmFull": "This world is full right now. Please try again in a few minutes.",
     "tooManyConnections": "Too many connections to this world are coming from your network. Please close extra game windows or try again in a few minutes.",
     "messageRateExceeded": "You were disconnected for sending actions too quickly. Please wait a moment and log back in.",
+    "kickedByModerator": "A moderator has disconnected you: {reason}",
     "tips": {
       "classes": "Tip: each of the 9 classes plays differently. Try a few before committing to one.",
       "talents": "Tip: you can reset your talents any time you are out of combat, so an early pick is never a trap.",
@@ -11186,7 +11281,7 @@ export const en_CA: EnTranslations = {
       },
       "gouge": {
         "name": "Eye Jab",
-        "description": "Strikes the target for {damage} damage, incapacitating it for 4 sec. Any damage breaks the effect. Awards 1 combo point."
+        "description": "Strikes the target for {damage} damage, incapacitating it for 4 sec, and resets your own weapon swing timer so your queued auto attack does not break it. Any damage breaks the effect. Awards 1 combo point."
       },
       "evasion": {
         "name": "Ghostfoot",
@@ -11239,11 +11334,11 @@ export const en_CA: EnTranslations = {
       },
       "melting_acid": {
         "name": "Melting Acid",
-        "description": "Splashes the target with a caustic poison, dealing {damage} Nature damage and reducing its armor by 5% for 12 sec."
+        "description": "Coats your weapon for 30 min. Each of your melee swings splashes the target with caustic acid, reducing its armor by 5% for 12 sec."
       },
       "nightshade_coating": {
         "name": "Nightshade Coating",
-        "description": "Coats the target in nightshade, dealing {damage} Nature damage and reducing the healing it receives by 25% for 12 sec."
+        "description": "Coats your weapon for 30 min. Each of your melee swings coats the target in nightshade, reducing the healing it receives by 25% for 12 sec."
       },
       "expose_armor": {
         "name": "Armor Breach",
@@ -11259,11 +11354,11 @@ export const en_CA: EnTranslations = {
       },
       "instant_poison": {
         "name": "Adder's Bite",
-        "description": "Coats your weapon for 30 min, causing each of your melee swings to deal 8 additional Nature damage."
+        "description": "Coats your weapon for 30 min, causing each of your melee swings to deal {damage} additional Nature damage."
       },
       "deadly_poison": {
         "name": "Festering Venom",
-        "description": "Coats your weapon for 30 min, causing each of your melee swings to deal 14 additional Nature damage."
+        "description": "Coats your weapon for 30 min. Each of your melee swings adds a stack of venom to the target, up to 5, and refreshes the 12 sec duration. Each stack deals {damage} Nature damage every 2 sec."
       },
       "blind": {
         "name": "Dirt Toss",
@@ -12362,11 +12457,11 @@ export const en_CA: EnTranslations = {
       },
       "temporal_echo": {
         "name": "Temporal Echo",
-        "description": "Marks an ally with an echo of a healthier moment, mending {damage} health at once. For {duration} sec, part of the Arcane damage you deal is drawn back through the echo to heal them."
+        "description": "Marks an ally with an echo of a healthier moment, mending {damage} health at once. For {duration} sec, {echoSinglePct}% of your other single-target Arcane damage and {echoAreaPct}% of your area Arcane damage heals them. Aether Surge and Aether Darts instead heal them for {echoDriverPct}% of the damage they deal."
       },
       "temporal_cascade": {
         "name": "Temporal Cascade",
-        "description": "Sends an echo cascading through your group: the target and up to four of their nearest allies are mended at once and each marked for {duration} sec, drawing part of the Arcane damage you deal back through their echoes to heal them. (Chronomancy)"
+        "description": "Sends an echo cascading through your group: the target and up to four of their nearest allies are mended at once, healing for more on those who have lost the most health, and each marked for {duration} sec, drawing part of the Arcane damage you deal back through their echoes to heal them. Aether Surge and Aether Darts create an equal healing reserve from every group Echo, shared among marked allies below 60% health according to missing health. (Chronomancy)"
       },
       "temporal_reversal": {
         "name": "Temporal Reversal",
@@ -14053,6 +14148,12 @@ export const en_CA: EnTranslations = {
       },
       "reins_terrorspark_groundshaker": {
         "name": "Ignition Key: Dreadspark Groundshaker"
+      },
+      "reins_goblin_rocket_sled": {
+        "name": "Ignition Key: Goblin Rocket Sled"
+      },
+      "reins_rallycart_rxt": {
+        "name": "Ignition Key: Rallycart RXT"
       },
       "reins_lanternback_troll": {
         "name": "Lamplighter's Yoke: Grumbol"
@@ -20194,7 +20295,7 @@ export const en_CA: EnTranslations = {
       },
       "proving_shore": {
         "name": "The Proving Shore",
-        "welcome": "The Proving Shore asks nothing of you but time. Learn the camp, strike the effigies, walk the wreck line, and when you are ready, Ferryman Odo will see you across to the vale.",
+        "welcome": "The Proving Shore asks nothing of you but time. Learn the camp, strike the effigies, walk the wreck line and, when you are ready, Ferryman Odo will see you across to the vale. You can also ring the bell to go to the vale directly.",
         "pois": {
           "0": {
             "label": "Dawnrest Camp"
@@ -20523,8 +20624,8 @@ export const en_CA: EnTranslations = {
       },
       "chronoweave": {
         "name": "Aetherweave Vestments",
-        "bonus2": "Temporal Echo converts 50 percent of your single-target Arcane damage into healing. Damage taken no longer delays your spellcasting.",
-        "bonus4": "Temporal Cascade's cooldown is reduced by 5 sec."
+        "bonus2": "Temporal Echo converts 50 percent of your other single-target Arcane damage into healing. Aether Surge and Aether Darts instead convert 200 percent of their damage. Damage taken no longer delays your spellcasting.",
+        "bonus4": "Temporal Cascade's cooldown is reduced by 5 sec and its mana cost is reduced by 30 percent."
       },
       "cinderbark": {
         "name": "Cinderbark Ward",

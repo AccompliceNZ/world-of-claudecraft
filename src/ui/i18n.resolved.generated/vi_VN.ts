@@ -574,9 +574,9 @@ export const vi_VN: EnTranslations = {
       "tabsLabel": "Các phần của Cửa hàng WOC",
       "storeTab": "Cửa hàng",
       "rewardsTab": "Phần thưởng hàng ngày",
-      "mountsEyebrow": "Account Mounts",
-      "mountsTitle": "Machine Stable",
-      "mountBuyAria": "Purchase {item}",
+      "mountsEyebrow": "Gắn kết tài khoản",
+      "mountsTitle": "Máy ổn định",
+      "mountBuyAria": "Mua {item}",
       "loading": "Đang tải Cửa hàng WOC...",
       "error": "Cửa hàng WOC hiện không khả dụng. Vui lòng thử lại trong thời gian ngắn.",
       "balance": "Số dư Claudium",
@@ -983,6 +983,7 @@ export const vi_VN: EnTranslations = {
       "mounts": "Thú Cưỡi",
       "professions": "Nghề nghiệp",
       "reliquary": "Kỳ Trân Các",
+      "lootExplorer": "Nhà thám hiểm chiến lợi phẩm",
       "nameplates": "Tên",
       "haptics": "Phản Hồi Rung",
       "hapticsOff": "Tắt Phản Hồi Rung",
@@ -1141,6 +1142,9 @@ export const vi_VN: EnTranslations = {
       "promptAttack": "Tấn Công",
       "promptUseAbility": "Dùng Kỹ Năng",
       "promptKneel": "Quỳ Xuống",
+      "promptAccessInterface": "Truy cập giao diện",
+      "promptMoveToTarget": "Di chuyển đến {target}",
+      "promptSelectItem": "Chọn {item}",
       "promptOpenBags": "Mở túi đồ của bạn",
       "promptCharacterSheet": "Mở bảng nhân vật của bạn",
       "promptLookAround": "Giữ chuột phải và kéo để nhìn quanh",
@@ -1307,10 +1311,22 @@ export const vi_VN: EnTranslations = {
       "separate": "Tách {meter}",
       "regroup": "Ghép lại {meter}"
     },
-    "targetDots": {
-      "title": "Target Dots",
-      "row": "{aura} on {target}",
+    "auraTracks": {
+      "defensives": "Defensive Cooldowns",
+      "self": "My Buffs",
+      "power": "Offensive Cooldowns",
+      "utility": "Movement and Stealth",
+      "friendly": "My Buffs on Allies",
+      "shields": "My Shields",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
       "overflow": "{count} more not shown"
+    },
+    "targetDots": {
+      "title": "Điểm mục tiêu",
+      "row": "{aura} trên {target}",
+      "overflow": "{count} không hiển thị thêm"
     },
     "targetAuras": {
       "title": "Hào Quang Mục Tiêu",
@@ -1393,11 +1409,13 @@ export const vi_VN: EnTranslations = {
       "name_shadowjump_toad": "Kama-Kage, Cóc Nhảy Bóng Tối",
       "name_stormfeather_griffin": "Stormfeather Vươn Trời",
       "name_thunderstrut_gobbler": "Thunderstrut, Gà Tây Vĩ Đại",
+      "name_goblin_rocket_sled": "Xe trượt tên lửa goblin",
+      "name_rallycart_rxt": "Rallycart RXT",
       "name_terrorspark_groundshaker": "Dreadspark Groundshaker",
       "name_drakemaw_raptor": "Cuồng Long Drakemaw",
-      "name_mech_bird": "Cluckwork Mech Bird",
-      "name_lanternback_troll": "Grumbol the Lanternback",
-      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
+      "name_mech_bird": "Chim Mech Cluckwork",
+      "name_lanternback_troll": "Grumbol Lưng Đèn",
+      "name_chimeglass_tortoise": "Tolliver chiếc cốc thủy tinh",
       "name_rickshaw_mount": "Xe kéo Buộc Xương",
       "desc_valorsteed": "Một con chiến mã khỏe mạnh, bước chân vững chãi, giúp tăng tốc độ di chuyển.",
       "desc_grag_bear": "Một chú gấu khỏe mạnh, bước chân vững chãi, giúp tăng tốc độ di chuyển.",
@@ -1406,11 +1424,13 @@ export const vi_VN: EnTranslations = {
       "desc_shadowjump_toad": "Một con cóc khổng lồ, bước chân vững chãi, được huấn luyện những cú nhảy bóng tối nhanh như chớp có thể vượt qua mọi địa hình.",
       "desc_stormfeather_griffin": "Một con sư tử đầu chim bão uy nghi, rảo bước trên mặt đất bằng những móng vuốt được bọc rune, đôi cánh xếp gọn.",
       "desc_thunderstrut_gobbler": "Một con gà tây khổng lồ nở ra từ giông bão, sải bước xuống từ Đỉnh Tỉnh Thức, đuôi xòe rộng như đám mây giông.",
+      "desc_goblin_rocket_sled": "Một chiếc xe trượt goblin được chế tạo quá mức đến nguy hiểm, phóng đi nhờ hai tên lửa và óc phán đoán tồi một cách xuất sắc.",
+      "desc_rallycart_rxt": "Một cỗ máy đua rally nhỏ gọn giúp tăng tốc độ di chuyển.",
       "desc_terrorspark_groundshaker": "Một cỗ máy bọc giáp nhỏ gọn với bánh xích nặng, pháo nòng lớn và yên ngồi dành cho những người lái gan dạ.",
       "desc_drakemaw_raptor": "Một con Cuồng Long thuộc bầy đàn đã được thuần yên cương từ Miệng Núi Lửa Drakemaw, toàn thân gân cốt và tốc lực, vẫn còn phảng phất mùi tro tàn.",
-      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
-      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
-      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
+      "desc_mech_bird": "Một con gà chiến đồng hồ được chế tạo bằng tay chạy nước rút trên các động cơ servo, phím lên dây cót vẫn quay.",
+      "desc_lanternback_troll": "Một con quỷ đồi bị những người đốt đèn bẻ gãy ách, vác một chiếc ngai sắt trên vai với một chiếc đèn bão đang cháy trên hai tay.",
+      "desc_chimeglass_tortoise": "Một con rùa bằng muối đã vượt qua ba thế hệ đoàn lữ hành. Những người thợ hàn mài cho anh ta một cặp kính từ kính bão và treo một chiếc chuông đồng vào cổ anh ta, để con đường nghe thấy anh ta từ rất lâu trước khi nó nhìn thấy anh ta.",
       "desc_rickshaw_mount": "Một cỗ xe xương lọc cọc, với một tên lính xương xẩu bị buộc vào càng xe, kéo bạn lao đi hết tốc lực."
     },
     "mountTraining": {
@@ -1572,26 +1592,26 @@ export const vi_VN: EnTranslations = {
       "showPlaytime": "Hiện Thời Gian Chơi Ở Màn Hình Nhân Vật",
       "forceHighPerfGpu": "Dùng Card Đồ Họa Chơi Game",
       "forceHighPerfGpuNote": "Mặc định bật: ứng dụng máy tính yêu cầu máy này dùng card đồ họa chơi game của nó. Hãy tắt tùy chọn này nếu trò chơi không khởi động được, mở ra màn hình đen, hoặc màn hình laptop bị tối đen. Có hiệu lực vào lần khởi động trò chơi tiếp theo.",
-      "shaderWarm": "Shader Warm-up Worker",
-      "shaderWarmAuto": "Auto",
-      "shaderWarmOff": "Off",
-      "shaderWarmOn": "On",
-      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
-      "gpuBackend": "Graphics Backend",
-      "gpuBackendAuto": "Auto",
+      "shaderWarm": "Tiến Trình Làm Nóng Shader",
+      "shaderWarmAuto": "Tự động",
+      "shaderWarmOff": "Tắt",
+      "shaderWarmOn": "Bật",
+      "shaderWarmNote": "Làm nóng trước bộ nhớ đệm shader trong nền để tránh khựng trong trò chơi. Tự động: Chỉ bật khi hệ thống đồ họa hỗ trợ. (Khuyến nghị). Bật: Bắt buộc ở mọi nơi. Có thể làm giảm hiệu năng trên một số cấu hình. Tắt: Vô hiệu hóa.",
+      "gpuBackend": "Backend đồ họa",
+      "gpuBackendAuto": "Tự động",
       "gpuBackendVulkan": "Vulkan",
-      "gpuBackendOpenGL": "OpenGL (slow)",
-      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
-      "gpuBackendActive": "Currently using {backend}.",
-      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
-      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
-      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendOpenGL": "OpenGL (chậm)",
+      "gpuBackendNote": "Tự động chọn tùy chọn tốt nhất cho bạn. Vulkan nhanh hơn và được khuyến nghị cho hầu hết người chơi. OpenGL chậm hơn, nhưng có thể giúp nếu Vulkan không hoạt động đúng. Có hiệu lực vào lần khởi động trò chơi tiếp theo.",
+      "gpuBackendActive": "Hiện đang dùng {backend}.",
+      "gpuBackendActiveUnavailable": "Hiện đang dùng {backend} (không thể bật Vulkan).",
+      "gpuBackendActiveAutoCapped": "Hiện đang dùng {backend}. Tự động chưa thử Vulkan trên card đồ họa này; hãy chọn Vulkan để thử.",
+      "gpuBackendSaveFailed": "Không thể lưu lựa chọn. Lần khởi động tiếp theo vẫn giữ {backend}.",
       "gpuBackendActiveNameVulkan": "Vulkan",
       "gpuBackendActiveNameOpenGL": "OpenGL",
-      "restartPending": "Some changes take effect after a restart.",
-      "restartGame": "Restart Game",
-      "restartInProgress": "Restarting the game...",
-      "restartFailed": "The game could not restart itself. Quit and start it again.",
+      "restartPending": "Một số thay đổi có hiệu lực sau khi khởi động lại.",
+      "restartGame": "Khởi Động Lại Trò Chơi",
+      "restartInProgress": "Đang khởi động lại trò chơi...",
+      "restartFailed": "Trò chơi không thể tự khởi động lại. Hãy thoát và mở lại.",
       "discordPresence": "Hoạt Động Discord",
       "discordPresenceNote": "Hiển thị vùng bạn đang ở và thời gian bạn đã chơi trong phiên chơi này dưới dạng hoạt động Discord của bạn, và bất kỳ ai xem được hồ sơ Discord của bạn đều thấy được cả hai. Chỉ tên vùng, thời gian phiên chơi của bạn, và tên trò chơi được chia sẻ, không bao giờ là nhân vật, tài khoản, hay những ai bạn đang chơi cùng. Cần ứng dụng Discord đang chạy trên máy tính này.",
       "showDevBadges": "Hiện Huy Hiệu Nhà Phát Triển",
@@ -1600,7 +1620,10 @@ export const vi_VN: EnTranslations = {
       "uiScale": "Tỷ Lệ Giao Diện",
       "playerFrameScale": "Tỷ Lệ Khung Người Chơi",
       "targetFrameScale": "Tỷ Lệ Khung Mục Tiêu",
+      "playerHealthText": "Văn bản về sức khỏe người chơi",
+      "targetHealthText": "Văn bản về sức khỏe mục tiêu",
       "aurasOnPlayerFrame": "Hiệu Ứng Có Lợi Trên Khung Người Chơi",
+      "auraBarBelowFrame": "Hiệu Ứng Có Lợi Bên Dưới Khung Người Chơi",
       "alwaysShowAllBuffs": "Luôn Hiện Mọi Buff",
       "highContrastBackground": "Nền Tương Phản Cao",
       "startAttackOnAbility": "Tự Đánh Khi Dùng Kỹ Năng",
@@ -1623,9 +1646,16 @@ export const vi_VN: EnTranslations = {
       "showTargetOfTarget": "Hiện Mục Tiêu Của Mục Tiêu",
       "showTargetSwingTimer": "Hiển thị bộ đếm vung đòn của mục tiêu",
       "showPetFrame": "Hiện Thú Cưng Của Bạn",
-      "showNameplateDots": "Show My Dots on Nameplates",
-      "nameplateDotScale": "Nameplate Dot Size",
-      "showTargetDots": "Show Target Dots",
+      "showNameplateDots": "Hiển thị dấu chấm của tôi trên bảng tên",
+      "nameplateDotScale": "Kích thước chấm bảng tên",
+      "showTargetDots": "Hiển thị dấu chấm mục tiêu",
+      "showDefensivesTrack": "Show Defensive Cooldowns",
+      "showSelfBuffTrack": "Show My Buffs",
+      "showOffensiveTrack": "Show Offensive Cooldowns",
+      "showUtilityTrack": "Show Movement and Stealth",
+      "showUtilityModes": "Include Stealth and Travel Modes",
+      "showFriendlyTrack": "Show My Buffs on Allies",
+      "showShieldTrack": "Show My Shields",
       "waterRipples": "Gợn nước (sóng rẽ nước)",
       "showAttackButton": "Hiển Thị Nút Tấn Công",
       "showDailyRewardsChest": "Hiện Rương Phần Thưởng Hằng Ngày",
@@ -2669,7 +2699,9 @@ export const vi_VN: EnTranslations = {
       "unequipHint": "Nhấp để tháo chiếc túi này",
       "poolGeneral": "Chung: {used} trên {total}",
       "poolMaterials": "Nguyên liệu: {used} trên {total}",
-      "capacityPoolsAria": "Ô túi đã dùng: {used} trên {total}. Vật phẩm chung: {generalUsed} trên {generalTotal}. Nguyên liệu: {materialsUsed} trên {materialsTotal}."
+      "capacityPoolsAria": "Ô túi đã dùng: {used} trên {total}. Vật phẩm chung: {generalUsed} trên {generalTotal}. Nguyên liệu: {materialsUsed} trên {materialsTotal}.",
+      "capacityPools": "Vật phẩm {generalUsed}/{generalTotal}, nguyên liệu {materialsUsed}/{materialsTotal}",
+      "emptyMaterialsOnly": "Chỉ nguyên liệu"
     },
     "raidConvert": {
       "toPartyDone": "Raid của bạn đã chuyển trở lại thành tổ đội.",
@@ -2699,22 +2731,22 @@ export const vi_VN: EnTranslations = {
       "worldfireConsumed": "Toàn bộ vạc luyện đang bốc cháy!"
     },
     "nythraxisCallout": {
-      "impaled": "Bone Spikes! Free the impaled!",
-      "youAreImpaled": "You are impaled! Hold on!",
-      "spikeBroken": "Spike shattered!",
-      "dreadCurseSwap": "Dread Curse: swap tanks!",
-      "sigilAppears": "A Binding Sigil flares! Drag Nythraxis onto it!",
-      "sigilBound": "Nythraxis is bound! Burn him!",
-      "sigilUnbound": "The sigil fades unbound! Nythraxis grows stronger!",
-      "gravefireTarget": "Gravefire races toward you! Sidestep!",
-      "kingsWrath": "The King rises in wrath! Everything hits harder now!",
-      "boneStormBegins": "Bone Storm! Spread out and run!",
-      "boneStormCharge": "Nythraxis is charging YOU! Run!",
-      "boneStormEnds": "Bone Storm over. Tanks, pick him up!",
-      "crownEndures60": "One minute until The Crown Endures!",
-      "crownEndures30": "Thirty seconds until The Crown Endures!",
-      "crownEndures10": "Ten seconds! Burn him!",
-      "crownEndures": "The Crown Endures! Nythraxis is enraged!"
+      "impaled": "Cọc Xương! Giải cứu người bị xuyên!",
+      "youAreImpaled": "Bạn bị xuyên thủng! Cố chịu!",
+      "spikeBroken": "Cọc đã vỡ!",
+      "dreadCurseSwap": "Lời Nguyền Kinh Hoàng: đổi tank!",
+      "sigilAppears": "Phù Ấn Trói Buộc bùng sáng! Kéo Nythraxis lên đó!",
+      "sigilBound": "Nythraxis bị trói! Dồn sát thương hắn!",
+      "sigilUnbound": "Phù ấn mờ đi mà không trói được! Nythraxis mạnh hơn!",
+      "gravefireTarget": "Lửa Mộ lao về phía bạn! Né sang bên!",
+      "kingsWrath": "Nhà vua trỗi dậy trong thịnh nộ! Mọi thứ giờ đánh đau hơn!",
+      "boneStormBegins": "Bão Xương! Tản ra và chạy!",
+      "boneStormCharge": "Nythraxis đang lao vào BẠN! Chạy!",
+      "boneStormEnds": "Bão Xương kết thúc. Tank, kéo hắn lại!",
+      "crownEndures60": "Một phút đến Vương Miện Trường Tồn!",
+      "crownEndures30": "Ba mươi giây đến Vương Miện Trường Tồn!",
+      "crownEndures10": "Mười giây! Dồn sát thương hắn!",
+      "crownEndures": "Vương Miện Trường Tồn! Nythraxis đã cuồng nộ!"
     },
     "varkhulWaveStatus": "Đợt {wave}/{waves} | Kẻ địch: {remaining}",
     "raidBossGuide": {
@@ -2866,65 +2898,65 @@ export const vi_VN: EnTranslations = {
         "heroic": "Anh Hùng: nhiệt độ lò rèn không bao giờ nguội, Sắc Lệnh Từ Đe có thêm thiên thạch, và giai đoạn cuối loại bỏ phần lớn các cơ chế để tập trung vào Lửa Diệt Thế."
       },
       "nythraxis": {
-        "overview": "High Priest Malric refused to let his king die, and the rite that raised Nythraxis bound the whole court to the crypt. The encounter tests a disciplined tank swap, fast switches onto Bone Spikes, movement off burning ground, and a coordinated wardstone channel once the Throne falls.",
-        "phaseThroneName": "The Throne",
-        "phaseThroneSummary": "Nythraxis holds his throne room with a charged frontal cleave, the Dread Curse tank swap, Bone Spikes that impale raiders, and Grave Eruptions that leave burning ground.",
-        "phaseWardstonesName": "The Wardstones",
-        "phaseWardstonesSummary": "At {health} health, Shuddering Stomp holds the raid still while Brother Aldric arrives and lights the wardstones. Every spike shatters and the floor stops burning, then Soul Rend and Deathless Rage join the Throne mechanics.",
-        "phaseKingsWrathName": "The King's Wrath",
-        "phaseKingsWrathSummary": "At {health} health, Nythraxis roars in The King's Wrath and gains {bonusNormal} damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption tightens to every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire to every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic). Every other mechanic keeps its cadence.",
-        "gravebreakerName": "Gravebreaker",
-        "gravebreakerSummary": "Every {seconds} sec, Nythraxis charges his next landed swing. His target takes only the swing itself, but everyone else within {range} yd inside the {arc} degree cone in front of him takes {splash} of that swing as Physical damage, reduced by their own armor.",
-        "gravebreakerResponse": "Tanks keep Nythraxis facing away from the raid. Everyone else stays behind or beside him and never crosses the cone.",
-        "dreadCurseName": "Dread Curse",
-        "dreadCurseSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitNormal} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackNormal}, up to {max} stacks.",
-        "dreadCurseHeroicSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitHeroic} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackHeroic}, up to {max} stacks.",
-        "dreadCurseResponse": "Tanks swap at {stacks} stacks: the other tank taunts and the cursed tank stays out of the Gravebreaker cone while the stacks fade. Healers prepare the incoming tank before the swap.",
-        "boneSpikeName": "Bone Spike",
-        "boneSpikeSummary": "Every {everyNormal} sec, Nythraxis impales {victimsNormal} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainNormal} of maximum health every second until their spike is destroyed.",
-        "boneSpikeHeroicSummary": "Every {everyHeroic} sec, Nythraxis impales {victimsHeroic} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainHeroic} of maximum health every second until their spike is destroyed.",
-        "boneSpikeResponse": "Damage dealers switch to the Bone Spikes at once and destroy them to free the impaled raiders. Healers keep the impaled alive while the spikes fall.",
-        "graveEruptionName": "Grave Eruption",
-        "graveEruptionSummary": "Every {everyNormal} sec, skeletal hands mark {countNormal} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstNormal} of maximum health as Shadow damage, then burns as Grave Flame for {flameNormal} sec, dealing {tickNormal} of maximum health every second to anyone standing in it.",
-        "graveEruptionHeroicSummary": "Every {everyHeroic} sec, skeletal hands mark {countHeroic} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstHeroic} of maximum health as Shadow damage, then burns as Grave Flame for {flameHeroic} sec, dealing {tickHeroic} of maximum health every second to anyone standing in it.",
-        "graveEruptionResponse": "Step out of every warning circle before it erupts and stay off the burning ground. Tanks pull Nythraxis clear of the flames so melee keeps room to work.",
-        "bindingSigilName": "Binding Sigil",
-        "bindingSigilSummary": "Every {everyNormal} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionNormal} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindNormal} sec he is Bound: the Ascension is purged, he is stunned for {stunNormal} sec, and he takes {vulnerability} more damage for {boundNormal} sec. Otherwise every raider takes {unboundHitNormal} of maximum health as Shadow damage and he keeps {unboundBonusNormal} more damage until the next binding.",
-        "bindingSigilHeroicSummary": "Every {everyHeroic} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionHeroic} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindHeroic} sec he is Bound: the Ascension is purged, he is stunned for {stunHeroic} sec, and he takes {vulnerability} more damage for {boundHeroic} sec. Otherwise every raider takes {unboundHitHeroic} of maximum health as Shadow damage and he keeps {unboundBonusHeroic} more damage until the next binding.",
-        "bindingSigilResponse": "The tank drags Nythraxis onto the sigil at once, through whatever fire the raid left behind. Melee follow the drag and ranged stay out of the new Gravebreaker cone. Everyone burns him while he is Bound.",
-        "raiseFallenName": "Raise Fallen",
-        "raiseFallenSummary": "Every {every} sec during The Throne, Nythraxis raises Risen Royal Guards behind him. They rush his current target and fight until they are destroyed.",
-        "raiseFallenResponse": "The off-tank picks up each wave as it rises. Damage dealers clear the guards between Bone Spikes so the waves never pile up before the Throne falls.",
-        "soulRendName": "Soul Rend",
-        "soulRendSummary": "Nythraxis marks {marksNormal} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals its bearer's full maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them.",
-        "soulRendHeroicSummary": "Nythraxis marks {marksHeroic} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals {damageHeroic} of its bearer's maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them. A mark that resolves alone is lethal.",
-        "soulRendResponse": "Every marked raider runs to one stack point and stands within {range} yd of the other marks before the {fuse} sec fuse ends. Healers top the group off as the marks resolve.",
-        "soulfireName": "Soulfire",
-        "soulfireSummary": "Every Soul Rend detonation leaves a pool of purple fire with a {radius} yd radius where each mark stood, burning for {seconds} sec at {tickNormal} of maximum health every second. Standing where pools overlap takes a tick from each one. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireHeroicSummary": "Every Soul Rend detonation leaves one pool of purple fire with a {radius} yd radius per stacked group of marks, burning for {secondsHeroic} sec at {tickHeroic} of maximum health every second. Standing where pools overlap takes only one tick, never stacked copies. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireResponse": "Move out of the purple pool as soon as the marks detonate. Keep the next stack point clear of active fire.",
-        "gravefireName": "Gravefire",
-        "gravefireSummary": "Every {everyNormal} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnNormal} sec and deals {tickNormal} of maximum health every second to anyone standing in it.",
-        "gravefireHeroicSummary": "Every {everyHeroic} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnHeroic} sec and deals {tickHeroic} of maximum health every second to anyone standing in it.",
-        "gravefireResponse": "Sidestep the line as it comes: it is narrow and never turns. Ranged raiders keep moving instead of standing in one spot.",
-        "deathlessRageName": "Deathless Rage",
-        "deathlessRageSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageNormal} of maximum health as Shadow damage.",
-        "deathlessRageHeroicSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageHeroic} of maximum health as Shadow damage, which no health pool survives.",
-        "deathlessRageResponse": "Assign one raider to each wardstone before the pull. When the cast begins, each runs to their stone and channels it until it completes. Stuns, stepping away, and death break the channel, so keep the channelers safe and never assign an impaled raider.",
-        "courtName": "The Deathless Court",
-        "courtSummary": "On Heroic, Nythraxis raises his court after each Deathless Rage, interrupted or not, once the previous court has fallen. The Spirit of Aldren cleaves everything near his target with Royal Cleave. The Spirit of Malric channels Malric's Mending, healing Nythraxis for more with every cast. The Spirit of Voss ignores taunts and hunts the raid.",
-        "courtResponse": "Tanks pick up Aldren and turn his cleave away from the raid. Stun or silence Malric the moment Malric's Mending begins and kill him first, then root or stun Voss off the healers, since he cannot be taunted, and finish him next.",
-        "kingsWrathName": "King's Wrath",
-        "kingsWrathSummary": "Nythraxis deals {bonusNormal} more damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption occurs every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic).",
-        "kingsWrathResponse": "Use remaining defensive cooldowns for unavoidable damage. Keep every earlier mechanic clean while the raid finishes the fight.",
-        "boneStormName": "Bone Storm",
-        "boneStormSummary": "Starting {first} sec into The King's Wrath and every {everyNormal} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlNormal} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamNormal} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormHeroicSummary": "Starting {first} sec into The King's Wrath and every {everyHeroic} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlHeroic} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamHeroic} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormResponse": "Spread out and keep running from Nythraxis. The charged raider runs away while everyone else leaves room around the charge path, then tanks pick him up when the storm ends.",
-        "crownEnduresName": "The Crown Endures",
-        "crownEnduresSummary": "At {enrageNormal} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryNormal} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresHeroicSummary": "At {enrageHeroic} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryHeroic} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresResponse": "Treat the first warning as the final burn. Save movement and defensive cooldowns for the remaining mechanics, then defeat Nythraxis before the enrage."
+        "overview": "Đại tư tế Malric không chịu để vị vua của mình chết, và nghi lễ dựng Nythraxis dậy đã trói cả triều đình vào hầm mộ. Cuộc chạm trán kiểm tra việc đổi tank kỷ luật, chuyển mục tiêu nhanh sang Cọc Xương, di chuyển khỏi mặt đất bốc cháy, và dẫn truyền đá hộ vệ phối hợp khi Ngai Vàng sụp đổ.",
+        "phaseThroneName": "Ngai Vàng",
+        "phaseThroneSummary": "Nythraxis giữ phòng ngai bằng đòn chém trước mặt được nạp sức, lượt đổi tank vì Lời Nguyền Kinh Hoàng, Cọc Xương xuyên thủng raider, và Mộ Phần Phun Trào để lại mặt đất bốc cháy.",
+        "phaseWardstonesName": "Đá Hộ Vệ",
+        "phaseWardstonesSummary": "Ở {health} máu, Cú Dậm Chấn Động giữ raid đứng yên trong khi Tu Huynh Aldric đến và thắp sáng các đá hộ vệ. Mọi cọc vỡ tan và sàn ngừng cháy, rồi Xé Linh Hồn và Cơn Thịnh Nộ Bất Tử nhập vào các cơ chế Ngai Vàng.",
+        "phaseKingsWrathName": "Cơn Thịnh Nộ Của Vua",
+        "phaseKingsWrathSummary": "Ở {health} máu, Nythraxis gầm lên trong Cơn Thịnh Nộ Của Vua và nhận thêm {bonusNormal} sát thương ở Normal hoặc {bonusHeroic} ở Heroic trong phần còn lại của trận đấu. Mộ Phần Phun Trào rút xuống mỗi {eruptionEveryNormal} giây ({eruptionEveryHeroic} ở Heroic) và Lửa Mộ rút xuống mỗi {gravefireEveryNormal} giây ({gravefireEveryHeroic} ở Heroic). Mọi cơ chế khác giữ nguyên nhịp.",
+        "gravebreakerName": "Phá Mộ",
+        "gravebreakerSummary": "Mỗi {seconds} giây, Nythraxis nạp sức cho cú vung trúng tiếp theo. Mục tiêu của hắn chỉ nhận chính cú vung, nhưng mọi người khác trong phạm vi {range} yd bên trong hình nón {arc} độ trước mặt hắn nhận {splash} của cú vung đó dưới dạng sát thương Vật Lý, giảm bởi giáp của chính họ.",
+        "gravebreakerResponse": "Tank giữ Nythraxis quay mặt khỏi raid. Mọi người khác đứng sau hoặc bên cạnh hắn và không bao giờ băng qua hình nón.",
+        "dreadCurseName": "Lời Nguyền Kinh Hoàng",
+        "dreadCurseSummary": "Mỗi {every} giây, Nythraxis đánh tank hiện tại của hắn gây {hitNormal} máu tối đa dưới dạng sát thương Bóng Tối và thêm một cộng dồn Lời Nguyền Kinh Hoàng. Trong {duration} giây, mỗi cộng dồn tăng sát thương tank đó nhận từ Nythraxis thêm {perStackNormal}, tối đa {max} cộng dồn.",
+        "dreadCurseHeroicSummary": "Mỗi {every} giây, Nythraxis đánh tank hiện tại của hắn gây {hitHeroic} máu tối đa dưới dạng sát thương Bóng Tối và thêm một cộng dồn Lời Nguyền Kinh Hoàng. Trong {duration} giây, mỗi cộng dồn tăng sát thương tank đó nhận từ Nythraxis thêm {perStackHeroic}, tối đa {max} cộng dồn.",
+        "dreadCurseResponse": "Tank đổi ở {stacks} cộng dồn: tank kia khiêu khích và tank bị nguyền rủa đứng ngoài hình nón Phá Mộ trong lúc cộng dồn phai đi. Người hồi máu chuẩn bị cho tank sắp nhận boss trước khi đổi.",
+        "boneSpikeName": "Cọc Xương",
+        "boneSpikeSummary": "Mỗi {everyNormal} giây, Nythraxis xuyên {victimsNormal} raider không phải mục tiêu hiện tại của hắn lên Cọc Xương. Raider bị xuyên không thể hành động và mất {drainNormal} máu tối đa mỗi giây cho đến khi cọc của họ bị phá hủy.",
+        "boneSpikeHeroicSummary": "Mỗi {everyHeroic} giây, Nythraxis xuyên {victimsHeroic} raider không phải mục tiêu hiện tại của hắn lên Cọc Xương. Raider bị xuyên không thể hành động và mất {drainHeroic} máu tối đa mỗi giây cho đến khi cọc của họ bị phá hủy.",
+        "boneSpikeResponse": "Người gây sát thương lập tức chuyển sang Cọc Xương và phá hủy chúng để giải cứu các raider bị xuyên. Người hồi máu giữ họ sống sót trong lúc các cọc bị hạ.",
+        "graveEruptionName": "Mộ Phần Phun Trào",
+        "graveEruptionSummary": "Mỗi {everyNormal} giây, bàn tay xương đánh dấu {countNormal} vòng tròn bán kính {radius} yd dưới chân raider. Sau {warning} giây, mỗi vòng phun trào gây {burstNormal} máu tối đa dưới dạng sát thương Bóng Tối, rồi cháy thành Lửa Mộ trong {flameNormal} giây, gây {tickNormal} máu tối đa mỗi giây cho bất kỳ ai đứng trong đó.",
+        "graveEruptionHeroicSummary": "Mỗi {everyHeroic} giây, bàn tay xương đánh dấu {countHeroic} vòng tròn bán kính {radius} yd dưới chân raider. Sau {warning} giây, mỗi vòng phun trào gây {burstHeroic} máu tối đa dưới dạng sát thương Bóng Tối, rồi cháy thành Lửa Mộ trong {flameHeroic} giây, gây {tickHeroic} máu tối đa mỗi giây cho bất kỳ ai đứng trong đó.",
+        "graveEruptionResponse": "Bước ra khỏi mọi vòng cảnh báo trước khi chúng phun trào và tránh mặt đất đang cháy. Tank kéo Nythraxis ra khỏi lửa để cận chiến có chỗ đánh.",
+        "bindingSigilName": "Phù Ấn Trói Buộc",
+        "bindingSigilSummary": "Mỗi {everyNormal} giây, một phù ấn của các hộ ấn cổ bùng sáng trên sàn cách Nythraxis {minDist} đến {maxDist} yd và hắn bắt đầu Thăng Hoa Bất Tử, nhận thêm {ascensionNormal} sát thương và tốc độ đánh mỗi {ascensionEvery} giây. Nếu hắn đứng trên phù ấn trong {bindNormal} giây, hắn bị Trói Buộc: Thăng Hoa được thanh tẩy, hắn bị choáng trong {stunNormal} giây, và nhận thêm {vulnerability} sát thương trong {boundNormal} giây. Nếu không, mỗi raider nhận {unboundHitNormal} máu tối đa dưới dạng sát thương Bóng Tối và hắn giữ thêm {unboundBonusNormal} sát thương cho đến lần trói tiếp theo.",
+        "bindingSigilHeroicSummary": "Mỗi {everyHeroic} giây, một phù ấn của các hộ ấn cổ bùng sáng trên sàn cách Nythraxis {minDist} đến {maxDist} yd và hắn bắt đầu Thăng Hoa Bất Tử, nhận thêm {ascensionHeroic} sát thương và tốc độ đánh mỗi {ascensionEvery} giây. Nếu hắn đứng trên phù ấn trong {bindHeroic} giây, hắn bị Trói Buộc: Thăng Hoa được thanh tẩy, hắn bị choáng trong {stunHeroic} giây, và nhận thêm {vulnerability} sát thương trong {boundHeroic} giây. Nếu không, mỗi raider nhận {unboundHitHeroic} máu tối đa dưới dạng sát thương Bóng Tối và hắn giữ thêm {unboundBonusHeroic} sát thương cho đến lần trói tiếp theo.",
+        "bindingSigilResponse": "Tank kéo Nythraxis lên phù ấn ngay lập tức, đi xuyên qua bất kỳ lửa nào raid đã để lại. Cận chiến đi theo đường kéo và tầm xa tránh khỏi hình nón Phá Mộ mới. Mọi người dồn sát thương khi hắn bị Trói Buộc.",
+        "raiseFallenName": "Dựng Dậy Kẻ Ngã Xuống",
+        "raiseFallenSummary": "Mỗi {every} giây trong Ngai Vàng, Nythraxis dựng các Vệ Binh Hoàng Gia Trỗi Dậy phía sau hắn. Chúng lao vào mục tiêu hiện tại của hắn và chiến đấu cho đến khi bị tiêu diệt.",
+        "raiseFallenResponse": "Off-tank kéo từng đợt khi chúng trỗi dậy. Người gây sát thương dọn lính gác giữa các Cọc Xương để các đợt không bao giờ dồn đống trước khi Ngai Vàng sụp đổ.",
+        "soulRendName": "Xé Linh Hồn",
+        "soulRendSummary": "Nythraxis đánh dấu {marksNormal} raider không phải mục tiêu hiện tại của hắn bằng Xé Linh Hồn. Sau {fuse} giây, mỗi dấu gây toàn bộ máu tối đa của người mang dưới dạng sát thương Bóng Tối, chia theo số raider bị đánh dấu trong phạm vi {range} yd quanh họ.",
+        "soulRendHeroicSummary": "Nythraxis đánh dấu {marksHeroic} raider không phải mục tiêu hiện tại của hắn bằng Xé Linh Hồn. Sau {fuse} giây, mỗi dấu gây {damageHeroic} máu tối đa của người mang dưới dạng sát thương Bóng Tối, chia theo số raider bị đánh dấu trong phạm vi {range} yd quanh họ. Một dấu tự kích nổ một mình sẽ chí mạng.",
+        "soulRendResponse": "Mỗi raider bị đánh dấu chạy tới một điểm tụ và đứng trong phạm vi {range} yd của các dấu khác trước khi ngòi {fuse} giây kết thúc. Người hồi máu hồi đầy nhóm khi các dấu kích nổ.",
+        "soulfireName": "Lửa Linh Hồn",
+        "soulfireSummary": "Mỗi vụ nổ Xé Linh Hồn để lại một vũng lửa tím bán kính {radius} yd tại nơi từng dấu đứng, cháy trong {seconds} giây với {tickNormal} máu tối đa mỗi giây. Đứng nơi các vũng chồng lên nhau nhận tick từ từng vũng. Vũng không bao giờ xuất hiện trong phạm vi {clearance} yd quanh đá hộ vệ.",
+        "soulfireHeroicSummary": "Mỗi vụ nổ Xé Linh Hồn để lại một vũng lửa tím bán kính {radius} yd cho mỗi nhóm dấu đã tụ lại, cháy trong {secondsHeroic} giây với {tickHeroic} máu tối đa mỗi giây. Đứng nơi các vũng chồng lên nhau chỉ nhận một tick, không bao giờ nhận các bản sao cộng dồn. Vũng không bao giờ xuất hiện trong phạm vi {clearance} yd quanh đá hộ vệ.",
+        "soulfireResponse": "Rời khỏi vũng tím ngay khi các dấu phát nổ. Giữ điểm tụ tiếp theo sạch khỏi lửa đang hoạt động.",
+        "gravefireName": "Lửa Mộ",
+        "gravefireSummary": "Mỗi {everyNormal} giây, một vệt lửa mộ tím chạy từ Nythraxis về phía một raider, dài thêm {speed} yd mỗi giây đến {length} yd. Mỗi yard cháy trong {burnNormal} giây và gây {tickNormal} máu tối đa mỗi giây cho bất kỳ ai đứng trong đó.",
+        "gravefireHeroicSummary": "Mỗi {everyHeroic} giây, một vệt lửa mộ tím chạy từ Nythraxis về phía một raider, dài thêm {speed} yd mỗi giây đến {length} yd. Mỗi yard cháy trong {burnHeroic} giây và gây {tickHeroic} máu tối đa mỗi giây cho bất kỳ ai đứng trong đó.",
+        "gravefireResponse": "Né sang bên khi vệt lửa tới: nó hẹp và không bao giờ rẽ. Raider tầm xa tiếp tục di chuyển thay vì đứng yên một chỗ.",
+        "deathlessRageName": "Cơn Thịnh Nộ Bất Tử",
+        "deathlessRageSummary": "Mỗi {every} giây, Nythraxis niệm Cơn Thịnh Nộ Bất Tử trong {cast} giây. Trong lúc hắn niệm, mỗi đá hộ vệ đang sáng có thể được một raider dẫn truyền trong {channel} giây. Nếu ba raider khác nhau mỗi người hoàn tất một đá hộ vệ trước khi phép kết thúc, Cơn Thịnh Nộ bị ngắt và Nythraxis bị choáng trong {stun} giây. Nếu không, mỗi raider nhận {damageNormal} máu tối đa dưới dạng sát thương Bóng Tối.",
+        "deathlessRageHeroicSummary": "Mỗi {every} giây, Nythraxis niệm Cơn Thịnh Nộ Bất Tử trong {cast} giây. Trong lúc hắn niệm, mỗi đá hộ vệ đang sáng có thể được một raider dẫn truyền trong {channel} giây. Nếu ba raider khác nhau mỗi người hoàn tất một đá hộ vệ trước khi phép kết thúc, Cơn Thịnh Nộ bị ngắt và Nythraxis bị choáng trong {stun} giây. Nếu không, mỗi raider nhận {damageHeroic} máu tối đa dưới dạng sát thương Bóng Tối, không lượng máu nào sống sót nổi.",
+        "deathlessRageResponse": "Phân công một raider cho mỗi đá hộ vệ trước khi kéo boss. Khi phép bắt đầu, mỗi người chạy tới đá của mình và dẫn truyền cho đến khi hoàn tất. Choáng, bước ra xa và chết sẽ ngắt dẫn truyền, nên hãy giữ người dẫn truyền an toàn và đừng bao giờ phân công raider đang bị xuyên.",
+        "courtName": "Triều Đình Bất Tử",
+        "courtSummary": "Ở Heroic, Nythraxis dựng lại triều đình của hắn sau mỗi Cơn Thịnh Nộ Bất Tử, dù bị ngắt hay không, một khi triều đình trước đã gục. Linh Hồn Aldren chém lan mọi thứ gần mục tiêu bằng Chém Hoàng Gia. Linh Hồn Malric niệm Hồi Phục Của Malric, hồi máu cho Nythraxis nhiều hơn sau mỗi lần niệm. Linh Hồn Voss bỏ qua khiêu khích và săn đuổi raid.",
+        "courtResponse": "Tank kéo Aldren và xoay đòn chém lan của hắn khỏi raid. Làm choáng hoặc câm lặng Malric ngay khi Hồi Phục Của Malric bắt đầu và giết hắn trước, rồi trói chân hoặc làm choáng Voss xa khỏi người hồi máu, vì hắn không thể bị khiêu khích, và kết liễu hắn tiếp theo.",
+        "kingsWrathName": "Cơn Thịnh Nộ Của Vua",
+        "kingsWrathSummary": "Nythraxis gây thêm {bonusNormal} sát thương ở Normal hoặc {bonusHeroic} ở Heroic trong phần còn lại của trận đấu. Mộ Phần Phun Trào xảy ra mỗi {eruptionEveryNormal} giây ({eruptionEveryHeroic} ở Heroic) và Lửa Mộ mỗi {gravefireEveryNormal} giây ({gravefireEveryHeroic} ở Heroic).",
+        "kingsWrathResponse": "Dùng các cooldown phòng thủ còn lại cho sát thương không thể tránh. Giữ mọi cơ chế trước đó thật sạch trong khi raid kết thúc trận đấu.",
+        "boneStormName": "Bão Xương",
+        "boneStormSummary": "Bắt đầu {first} giây sau Cơn Thịnh Nộ Của Vua và mỗi {everyNormal} giây sau đó, Nythraxis bắt đầu Bão Xương trong {duration} giây. Hắn bỏ qua thù hận, di chuyển nhanh gấp {speed} lần tốc độ thường, và thực hiện {charges} lần lao, mỗi lần kéo dài {chargeSeconds} giây. Vòng xoáy của hắn gây {whirlNormal} máu tối đa mỗi giây trong phạm vi {radius} yd. Mỗi lần lao kết thúc bằng Cú Nện Xương trong cùng phạm vi, gây {slamNormal} máu tối đa. Hắn niệm Cọc Xương vào {spikeAt} giây sau khi bão bắt đầu, rồi Phá Mộ tái kích hoạt {rearm} giây sau khi bão kết thúc.",
+        "boneStormHeroicSummary": "Bắt đầu {first} giây sau Cơn Thịnh Nộ Của Vua và mỗi {everyHeroic} giây sau đó, Nythraxis bắt đầu Bão Xương trong {duration} giây. Hắn bỏ qua thù hận, di chuyển nhanh gấp {speed} lần tốc độ thường, và thực hiện {charges} lần lao, mỗi lần kéo dài {chargeSeconds} giây. Vòng xoáy của hắn gây {whirlHeroic} máu tối đa mỗi giây trong phạm vi {radius} yd. Mỗi lần lao kết thúc bằng Cú Nện Xương trong cùng phạm vi, gây {slamHeroic} máu tối đa. Hắn niệm Cọc Xương vào {spikeAt} giây sau khi bão bắt đầu, rồi Phá Mộ tái kích hoạt {rearm} giây sau khi bão kết thúc.",
+        "boneStormResponse": "Tản ra và tiếp tục chạy khỏi Nythraxis. Raider bị lao vào chạy đi xa trong khi những người khác chừa chỗ quanh đường lao, rồi tank kéo hắn lại khi bão kết thúc.",
+        "crownEnduresName": "Vương Miện Trường Tồn",
+        "crownEnduresSummary": "Ở {enrageNormal} giây tính từ lúc kéo boss (đồng hồ tạm dừng khi Tu Huynh Aldric bước vào ở 70%), Vương Miện Trường Tồn kích hoạt như một cuồng nộ cứng. Nythraxis nhận thêm {damage} sát thương và đòn đánh nhanh hơn {haste}, rồi thêm {rampStep} sát thương mỗi {rampEveryNormal} giây. Không có thanh hẹn giờ. Cảnh báo đến dưới dạng tiếng hét khi còn {warn60}, {warn30}, và {warn10} giây.",
+        "crownEnduresHeroicSummary": "Ở {enrageHeroic} giây tính từ lúc kéo boss (đồng hồ tạm dừng khi Tu Huynh Aldric bước vào ở 70%), Vương Miện Trường Tồn kích hoạt như một cuồng nộ cứng. Nythraxis nhận thêm {damage} sát thương và đòn đánh nhanh hơn {haste}, rồi thêm {rampStep} sát thương mỗi {rampEveryHeroic} giây. Không có thanh hẹn giờ. Cảnh báo đến dưới dạng tiếng hét khi còn {warn60}, {warn30}, và {warn10} giây.",
+        "crownEnduresResponse": "Hãy xem cảnh báo đầu tiên là đợt dồn sát thương cuối. Giữ kỹ năng di chuyển và phòng thủ cho các cơ chế còn lại, rồi hạ Nythraxis trước khi hắn cuồng nộ."
       }
     },
     "auraEffect": {
@@ -2935,14 +2967,14 @@ export const vi_VN: EnTranslations = {
       "varkhulMoltenCore": "Mang lõi này đến lò rèn. Gánh Nặng Nóng Chảy gây sát thương tăng dần mỗi {interval} giây, từ {min}% đến {max}% máu tối đa.",
       "varkhulForgeLink": "Chặn một tia trụ cột đang hoạt động trước khi nó chạm tới lò rèn. Tia còn mở cộng thêm 6% nhiệt mỗi giây. Ở độ Thường, tia bị chặn và trụ cột không hoạt động sẽ làm nguội lò rèn; ở độ Anh Hùng, nhiệt không bao giờ giảm. Ở mức 100%, lò rèn hứng chịu một cơn Sụp Lò chí mạng.",
       "varkhulCrucibleExposure": "Chặn một Tia Vạc Luyện gây sát thương theo máu tối đa tăng dần mỗi giây. Số tầng cộng dồn được đặt lại 10 giây sau khi rời khỏi tia ở độ Thường và 60 giây ở độ Anh Hùng.",
-      "nythraxisDreadCurse": "Each stack increases damage taken from Nythraxis by {perStack}% for {duration} sec: {stacks} of {max} stacks now, {pct}% more damage. Every {every} sec his next hit on his target deals {hit}% of maximum health and adds a stack. Tanks should swap at {swap} stacks.",
-      "nythraxisImpaled": "Impaled on a Bone Spike: you cannot act and lose {normal}% of your maximum health every {interval} sec ({heroic}% on Heroic) until the raid destroys the spike.",
-      "nythraxisAscension": "Deathless Ascension: {stacks} stacks, {pct}% more damage and attack speed. Drag Nythraxis onto the Binding Sigil to purge it.",
-      "nythraxisBound": "Bound by the old wards: Nythraxis takes {pct}% more damage for {duration} sec.",
-      "nythraxisUnbound": "Unbound: Nythraxis deals {pct}% more damage until a Binding Sigil holds him.",
-      "nythraxisKingsWrath": "King's Wrath: Nythraxis deals {pct}% more damage for the rest of the fight.",
-      "nythraxisBoneStorm": "Bone Storm: Nythraxis ignores threat, whirls for {tick}% of maximum health every second within {radius} yd, and charges raiders. Spread out and run.",
-      "nythraxisCrownEndures": "The Crown Endures: {stacks} stacks, {pct}% more damage and {haste}% faster attacks. The raid is out of time.",
+      "nythraxisDreadCurse": "Mỗi cộng dồn tăng sát thương nhận từ Nythraxis thêm {perStack}% trong {duration} giây: hiện {stacks} trên {max} cộng dồn, thêm {pct}% sát thương. Mỗi {every} giây, đòn đánh tiếp theo của hắn lên mục tiêu gây {hit}% máu tối đa và thêm một cộng dồn. Tank nên đổi ở {swap} cộng dồn.",
+      "nythraxisImpaled": "Bị Cọc Xương xuyên thủng: bạn không thể hành động và mất {normal}% máu tối đa mỗi {interval} giây ({heroic}% ở Heroic) cho đến khi raid phá hủy cọc.",
+      "nythraxisAscension": "Thăng Hoa Bất Tử: {stacks} cộng dồn, thêm {pct}% sát thương và tốc độ đánh. Kéo Nythraxis lên Phù Ấn Trói Buộc để thanh tẩy.",
+      "nythraxisBound": "Bị trói bởi các hộ ấn cổ: Nythraxis nhận thêm {pct}% sát thương trong {duration} giây.",
+      "nythraxisUnbound": "Được giải trói: Nythraxis gây thêm {pct}% sát thương cho đến khi một Phù Ấn Trói Buộc giữ được hắn.",
+      "nythraxisKingsWrath": "Cơn Thịnh Nộ Của Vua: Nythraxis gây thêm {pct}% sát thương trong phần còn lại của trận đấu.",
+      "nythraxisBoneStorm": "Bão Xương: Nythraxis bỏ qua thù hận, xoáy gây {tick}% máu tối đa mỗi giây trong phạm vi {radius} yd, và lao vào các raider. Tản ra và chạy.",
+      "nythraxisCrownEndures": "Vương Miện Trường Tồn: {stacks} cộng dồn, thêm {pct}% sát thương và đòn đánh nhanh hơn {haste}%. Raid đã hết thời gian.",
       "dot": "Gây {value} sát thương {school} mỗi {interval} giây",
       "hot": "Hồi {value} máu mỗi {interval} giây",
       "mendingCurrent": "Tích {value} hồi máu, giải phóng dần theo thời gian hoặc bị Vá Tầng Tầng tiêu thụ",
@@ -3013,8 +3045,8 @@ export const vi_VN: EnTranslations = {
       "redline": "Vạch Đỏ: khấc {stacks} trên {max}. Đòn Thân thêm khấc; Đòn Kết Liễu đánh mạnh hơn {pct}% mỗi khấc và đóng cửa sổ. Hết hạn trước thì mất",
       "veilstrikeWindow": "Màn Bóng Tối: các đòn mở màn Màn Hoàng Hôn của bạn dùng được ngoài trống trải từ mọi góc, và sát thương gây ra tăng {pct}%",
       "veiledEdge": "Đòn Rình Rập kế tiếp của bạn đánh mạnh gấp đôi",
-      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
-      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
+      "veiledEdgeStrike": "Đòn Tấn Công Ẩn Nhận tiếp theo của bạn gây thêm {pct}% sát thương vũ khí",
+      "coldsightRead": "Kéo Cung Dài tiếp theo của bạn gây thêm {longDrawPct}% sát thương, hoặc Đòn Bắn Sa Ngã tiếp theo của bạn gây thêm {fellShotPct}%",
       "duskEconomy": "Kỹ năng tốn ít hơn {pct}% năng lượng",
       "moontide": "Triều Nguyệt: tầng {stacks} trên {max}. Các lần thi triển Tia Hoang Dã, Thiên Giáng và Nguyệt Chủng tích nó trong Dạng Cú Mặt Trăng; ở {max}, Nguyệt Chủng trở thành Nguyệt Trào và Thiên Giáng trở thành Vệt Dương, và đòn nào cũng tiêu nó",
       "oldBlood": "Huyết Cổ: tầng {stacks} trên {max}. Các đòn đánh trúng ở Hình Sói và Hình Bruin dùng chung bể này; ở {max}, Cắn Xé Máu hoặc Nghiền Xương biến đổi",
@@ -3209,6 +3241,7 @@ export const vi_VN: EnTranslations = {
       "healthPercent": "Phần Trăm",
       "healthCurrent": "Hiện Tại",
       "healthCurrentMax": "Hiện Tại / Tối Đa",
+      "healthCurrentMaxPercent": "Hiện tại / Tối đa (Phần trăm)",
       "sort": "Sắp Xếp Người Chơi",
       "sortGroup": "Nhóm",
       "sortRole": "Vai Trò",
@@ -3248,17 +3281,17 @@ export const vi_VN: EnTranslations = {
         "targetFrame": "Mục Tiêu",
         "partyFrames": "Tổ Đội",
         "swingBar": "Tự Đánh",
-        "targetDots": "Target Dots",
-        "questTracker": "Quest Tracker",
-        "reliquaryTracker": "Reliquary Tracker",
-        "petBar": "Pet Bar",
-        "procOverlay": "Spell Procs",
-        "procOverlayFrost": "Icicles",
-        "damageMeter": "Damage Meter",
-        "deedTracker": "Deed Tracker",
-        "delveTracker": "Delve Tracker",
-        "riftTracker": "Rift Tracker",
-        "swingBarOffhand": "Off Hand"
+        "targetDots": "Điểm mục tiêu",
+        "questTracker": "Theo Dõi Nhiệm Vụ",
+        "reliquaryTracker": "Theo Dõi Hộp Thánh Tích",
+        "petBar": "Thanh Linh Thú",
+        "procOverlay": "Kích Hoạt Phép",
+        "procOverlayFrost": "Nhũ băng",
+        "damageMeter": "Đồng Hồ Sát Thương",
+        "deedTracker": "Theo Dõi Chiến Công",
+        "delveTracker": "Theo Dõi Delve",
+        "riftTracker": "Theo Dõi Khe Nứt",
+        "swingBarOffhand": "Tay Phụ"
       },
       "framesMenu": "Cài Đặt Khung",
       "framesMenuTitle": "Hiện hoặc ẩn từng khung riêng lẻ. Một khung chưa được đánh dấu sẽ vẫn ẩn cho đến khi bạn đánh dấu lại hoặc đặt lại về mặc định.",
@@ -3291,33 +3324,33 @@ export const vi_VN: EnTranslations = {
       "wrongKind": "Mã đó thuộc một loại xuất khác."
     },
     "keybindTransfer": {
-      "setup": "Hotkey Setup",
-      "apply": "Apply",
-      "imported": "Hotkey setup imported.",
-      "wrongKind": "That code is a settings export, not a hotkey setup."
+      "setup": "Thiết Lập Phím Tắt",
+      "apply": "Áp dụng",
+      "imported": "Đã nhập thiết lập phím tắt.",
+      "wrongKind": "Mã đó là bản xuất cài đặt, không phải thiết lập phím tắt."
     },
     "keyboardMap": {
-      "title": "Keyboard Overview",
-      "hint": "Keys in use are coloured by category. Hover or focus a key to see everything bound to it.",
-      "hintInteractive": "Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.",
-      "popOut": "Pop Out",
-      "close": "Close keyboard overview",
-      "pressKey": "Press a key for {action}. Esc cancels.",
-      "boundTo": "Bound {action} to {key}.",
-      "notBindable": "That key cannot be bound.",
-      "assignHint": "Choose an action to bind to {key}.",
-      "assignPlaceholder": "Assign an action to {key}",
-      "layerGroup": "Modifier layer",
-      "formGroup": "Keyboard size",
-      "formFull": "Full size",
-      "formTkl": "Tenkeyless",
+      "title": "Tổng Quan Bàn Phím",
+      "hint": "Các phím đang dùng được tô màu theo danh mục. Di chuột hoặc focus vào một phím để xem mọi thứ được gán cho phím đó.",
+      "hintInteractive": "Các phím đang dùng được tô màu theo danh mục. Nhấp một phím để đổi chức năng của nó; di chuột hoặc focus vào một phím để xem mọi thứ được gán cho phím đó.",
+      "popOut": "Bật Ra",
+      "close": "Đóng tổng quan bàn phím",
+      "pressKey": "Nhấn một phím cho {action}. Esc để hủy.",
+      "boundTo": "Đã gán {action} cho {key}.",
+      "notBindable": "Không thể gán phím đó.",
+      "assignHint": "Chọn hành động để gán cho {key}.",
+      "assignPlaceholder": "Gán một hành động cho {key}",
+      "layerGroup": "Lớp phím bổ trợ",
+      "formGroup": "Kích thước bàn phím",
+      "formFull": "Kích thước đầy đủ",
+      "formTkl": "Không phím số",
       "form75": "75%",
       "form60": "60%",
-      "notOnLayout": "Not on this keyboard: {bindings}",
-      "legendGroup": "Key labels",
-      "legendLayout": "Your layout",
+      "notOnLayout": "Không có trên bàn phím này: {bindings}",
+      "legendGroup": "Nhãn phím",
+      "legendLayout": "Bố cục của bạn",
       "legendQwerty": "QWERTY",
-      "layerNone": "No modifier",
+      "layerNone": "Không phím bổ trợ",
       "layerShift": "Shift",
       "layerCtrl": "Ctrl",
       "layerAlt": "Alt",
@@ -3325,43 +3358,43 @@ export const vi_VN: EnTranslations = {
       "separator": ", ",
       "bindingLine": "{key}: {action}",
       "assignOption": "{category}: {action}",
-      "otherLayers": "Also bound with a modifier"
+      "otherLayers": "Cũng được gán với phím bổ trợ"
     },
     "fullTransfer": {
-      "menu": "Import / Export",
-      "title": "Import / Export Settings",
-      "fullSettings": "Full Settings",
-      "intro": "Export every saved preference on this device as one code, and paste it on another device or browser to import it: graphics, audio, interface, theme, frame layout, key bindings for every character, controller and cross hotbar bindings, chat, window filters, language, and dismissed hints.",
-      "excluded": "Never included: your login, account, wallet, or purchase data. Action bar layouts are saved to your account and travel with it."
+      "menu": "Nhập / Xuất",
+      "title": "Nhập / Xuất Cài Đặt",
+      "fullSettings": "Cài đặt đầy đủ",
+      "intro": "Xuất mọi tùy chọn đã lưu trên thiết bị này thành một mã, rồi dán mã đó trên thiết bị hoặc trình duyệt khác để nhập: đồ họa, âm thanh, giao diện, chủ đề, bố cục khung, phím tắt cho từng nhân vật, gán nút tay cầm và cross hotbar, chat, bộ lọc cửa sổ, ngôn ngữ và các gợi ý đã bỏ qua.",
+      "excluded": "Không bao giờ bao gồm: dữ liệu đăng nhập, tài khoản, ví hoặc mua hàng của bạn. Bố cục thanh hành động được lưu vào tài khoản và đi cùng tài khoản đó."
     },
     "riftForge": {
-      "title": "Rift Forge",
-      "subtitle": "Riftbound bands",
+      "title": "Lò rèn rạn nứt",
+      "subtitle": "Các dải rift",
       "currency": "{name}: {count}",
-      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
-      "wornHint": "Worn. Unequip it to forge.",
-      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
-      "upgradeMax": "Fully upgraded",
-      "gemPickAria": "Gem to socket",
+      "empty": "Không có dải Riftbound trong túi của bạn. Một Rift được xếp hạng đầu tiên rõ ràng một.",
+      "wornHint": "Mặc. Tháo nó ra để rèn.",
+      "upgradeBtn": "Nâng cấp lên cấp độ vật phẩm {level} (Bản chất {cost})",
+      "upgradeMax": "Nâng cấp đầy đủ",
+      "gemPickAria": "Đá quý vào ổ cắm",
       "gemOption": "{name} ({bonus})",
-      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
-      "socketBtn": "Socket",
-      "socketsNone": "no gems",
-      "noGems": "No Rift gems in your bags",
-      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "socketReplaceHint": "Ổ cắm đầy: viên ngọc tiếp theo thay thế viên cũ nhất, {gem}.",
+      "socketBtn": "Ổ cắm",
+      "socketsNone": "không có đá quý",
+      "noGems": "Không có đá quý Rift trong túi của bạn",
+      "refused": "Lò rèn đã từ chối. Đứng ở Riftwright và thử lại.",
       "reason": {
-        "notFound": "That band is not in your bags.",
-        "notRiftGear": "Only a Riftbound band can be forged.",
-        "maxUpgrade": "That band is fully upgraded.",
-        "insufficientEssence": "Not enough Rift Essence.",
-        "invalidGem": "You have no such Rift gem.",
-        "dead": "You can't do that while dead.",
-        "tooFar": "You are too far from the Rift Forge."
+        "notFound": "Ban nhạc đó không có trong túi của bạn.",
+        "notRiftGear": "Chỉ có thể giả mạo dải Riftbound.",
+        "maxUpgrade": "Ban nhạc đó đã được nâng cấp đầy đủ.",
+        "insufficientEssence": "Không đủ Tinh chất Rift.",
+        "invalidGem": "Bạn không có viên ngọc Rift như vậy.",
+        "dead": "Bạn không thể làm điều đó khi đã chết.",
+        "tooFar": "Bạn ở quá xa Rift Forge."
       },
       "done": {
-        "upgrade": "Upgraded {name}.",
-        "socket": "Socketed a gem into {name}.",
-        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+        "upgrade": "Đã nâng cấp {name}.",
+        "socket": "Đã gắn một viên đá quý vào {name}.",
+        "socketReplaced": "Gắn một viên đá quý vào {name}; {gem} đã bị phá hủy."
       }
     },
     "itemTooltip": {
@@ -3369,7 +3402,7 @@ export const vi_VN: EnTranslations = {
       "riftTier": "Vật phẩm Rạn Nứt hạng {tier}",
       "riftUpgrade": "Nâng cấp Rạn Nứt {level}/{max}",
       "riftSockets": "Ngọc Rạn Nứt {used}/{total}",
-      "riftGemSocket": "Socket bonus for a Riftbound band",
+      "riftGemSocket": "Phần thưởng ổ cắm cho ban nhạc Riftbound",
       "statEnchanted": "+{value} {stat} (Đã Pháp Khắc)",
       "enchantedFallback": "Đã Pháp Khắc",
       "partyTradeWindow": "Bạn có thể giao dịch vật phẩm này cho những người chơi đã cùng nhận nó rơi ra, trong {time} tới. Trang bị nó sẽ kết thúc khoảng thời gian giao dịch này.",
@@ -3434,6 +3467,7 @@ export const vi_VN: EnTranslations = {
       "close": "Đóng",
       "keybind": "Bảng Discord",
       "disabled": "Tích hợp Discord hiện không khả dụng.",
+      "queuePingsLabel": "Gửi cho tôi tin nhắn trực tiếp Discord khi hàng đợi chiến trường hoặc đấu trường của tôi xuất hiện (cần tài khoản Discord được liên kết)",
       "tiers": {
         "none": "Chưa Xếp Hạng",
         "initiate": "Tân Binh",
@@ -3691,13 +3725,13 @@ export const vi_VN: EnTranslations = {
       "close": "Đóng"
     },
     "realmBuilder": {
-      "title": "Realm Builder of the Month",
-      "currentLabel": "Honoured this month",
-      "placeholderName": "Your Name Here",
-      "placeholderHint": "This plate is waiting for its first name.",
-      "pastTitle": "Past honourees",
-      "pastEmpty": "No names on the roll yet.",
-      "close": "Close"
+      "title": "Người xây dựng vương quốc của tháng",
+      "currentLabel": "Được vinh danh trong tháng này",
+      "placeholderName": "Tên của bạn ở đây",
+      "placeholderHint": "Tấm này đang chờ tên của nó.",
+      "pastTitle": "Những người được vinh danh trong quá khứ",
+      "pastEmpty": "Chưa có tên trong danh sách.",
+      "close": "Đóng"
     },
     "bank": {
       "title": "Ngân Hàng",
@@ -3754,6 +3788,8 @@ export const vi_VN: EnTranslations = {
       "depositAllDone": "Nguyên liệu đã gửi: {count}.",
       "depositAllFull": "Nguyên liệu đã gửi: {count}. Ngân hàng hiện đã đầy.",
       "depositAllNone": "Ngân hàng đầy: không gửi được gì.",
+      "depositAllNotable": "Vật liệu được ký gửi: {count}, bao gồm {item}.",
+      "depositAllNotableFull": "Vật liệu được ký gửi: {count}, bao gồm {item}. Ngân hàng bây giờ đã đầy.",
       "bonusTitle": "Ô Thưởng",
       "bonusEarned": "+{count}",
       "bonusStatusEarned": "+{count}",
@@ -3792,6 +3828,8 @@ export const vi_VN: EnTranslations = {
       "vaultDepositAllDone": "Nguyên liệu đã gửi: {count}.",
       "vaultDepositAllFull": "Nguyên liệu đã gửi: {count}. Một số mức trần đã đầy.",
       "vaultDepositAllNone": "Trần kho đã đầy: không gửi được gì.",
+      "vaultDepositAllNotable": "Vật liệu được ký gửi: {count}, bao gồm {item}.",
+      "vaultDepositAllNotableFull": "Vật liệu được ký gửi: {count}, bao gồm {item}. Một số trần nhà đã đầy.",
       "vaultWithdrawShort": "Chỉ {fit} trên {count} vừa trong túi đồ của bạn.",
       "vaultDepositHint": "Nhấp để gửi vào kho của bạn",
       "vaultCannotDeposit": "Không thể cất vào kho",
@@ -3826,34 +3864,34 @@ export const vi_VN: EnTranslations = {
       "guildViewsAria": "Các chế độ xem ngân hàng bang hội",
       "guildContentsTab": "Nội Dung",
       "guildLogTab": "Nhật Ký",
-      "guildHistoryTab": "History",
+      "guildHistoryTab": "Lịch sử",
       "logAria": "Nhật ký hoạt động ngân hàng bang hội",
       "logNote": "{count} hoạt động ngân hàng bang hội gần đây nhất.",
-      "logShowing": "Showing {count} guild bank actions, newest first.",
-      "logFilterAria": "Filter the guild bank history",
-      "logFilterAll": "All",
-      "logFilterItems": "Items",
-      "logFilterMoney": "Money",
-      "logOlder": "Show older",
-      "logOlderLoading": "Loading older actions...",
-      "logEnd": "That is the whole guild bank history.",
-      "logEmptyFiltered": "No guild bank actions match this filter.",
-      "logColTime": "When",
-      "logColMember": "Member",
-      "logColAction": "Action",
-      "logColDetail": "Details",
-      "logActionDeposit": "Deposited",
-      "logActionWithdraw": "Withdrew",
-      "logActionBuySlots": "Bought an expansion",
-      "logActionOpenBank": "Opened the bank",
-      "logActionCharterFee": "Paid the charter fee",
-      "logActionAdminPurge": "Removed",
-      "logActorAdmin": "An administrator",
+      "logShowing": "Đang hiển thị {count} hành động ngân hàng guild, mới nhất trước.",
+      "logFilterAria": "Lọc lịch sử ngân hàng guild",
+      "logFilterAll": "Tất cả",
+      "logFilterItems": "Vật phẩm",
+      "logFilterMoney": "Tiền",
+      "logOlder": "Hiển thị cũ hơn",
+      "logOlderLoading": "Đang tải hành động cũ hơn...",
+      "logEnd": "Đó là toàn bộ lịch sử ngân hàng guild.",
+      "logEmptyFiltered": "Không có hành động ngân hàng guild nào khớp bộ lọc này.",
+      "logColTime": "Thời điểm",
+      "logColMember": "Thành viên",
+      "logColAction": "Hành động",
+      "logColDetail": "Chi tiết",
+      "logActionDeposit": "Đã gửi",
+      "logActionWithdraw": "Đã rút",
+      "logActionBuySlots": "Đã mua mở rộng",
+      "logActionOpenBank": "Đã mở ngân hàng",
+      "logActionCharterFee": "Đã trả phí điều lệ",
+      "logActionAdminPurge": "Đã xóa",
+      "logActorAdmin": "Một quản trị viên",
       "logDetailItem": "{count} {item}",
-      "logSearchPlaceholder": "Search this history",
-      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
-      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
-      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
+      "logSearchPlaceholder": "Tìm trong lịch sử này",
+      "logSearchAria": "Tìm trong các hành động ngân hàng guild đã tải theo thành viên, hành động hoặc vật phẩm",
+      "logShowingMatched": "Đang hiển thị {matched} trong {count} hành động ngân hàng guild đã tải.",
+      "logSearchNoMatch": "Không có hành động ngân hàng guild đã tải nào khớp tìm kiếm của bạn. Hiển thị các dòng cũ hơn để mở rộng phạm vi.",
       "logLoading": "Đang tải nhật ký ngân hàng bang hội...",
       "logEmpty": "Chưa có gì được chuyển vào hoặc ra khỏi ngân hàng bang hội.",
       "logUnavailable": "Không thể đọc nhật ký ngân hàng bang hội lúc này.",
@@ -3954,17 +3992,17 @@ export const vi_VN: EnTranslations = {
         }
       },
       "roster": {
-        "seats": "{count} of {cap} seats",
-        "expand": "Expand roster (+{seats} seats for {price})",
-        "maxed": "The roster is at its largest size",
-        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
-        "confirmAction": "Expand",
-        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "seats": "{count} của số ghế {cap}",
+        "expand": "Mở rộng danh sách (+ số ghế {seats} cho {price})",
+        "maxed": "Danh sách có kích thước lớn nhất",
+        "confirm": "Mở rộng danh sách bang hội bằng số ghế {seats} cho {price}? Vàng đến từ ví của chính bạn và không được hoàn lại.",
+        "confirmAction": "Mở rộng",
+        "expandedLine": "{name} đã mở rộng danh sách bang hội cho các thành viên {cap}.",
         "result": {
-          "notLeader": "Only the Guild Master may expand the guild roster.",
-          "maxed": "The guild roster cannot grow any larger.",
-          "cannotAfford": "You need {price} to expand the guild roster.",
-          "retry": "The guild roster changed while you were buying. Try again."
+          "notLeader": "Chỉ có Chủ Bang hội mới có thể mở rộng danh sách Bang hội.",
+          "maxed": "Danh sách bang hội không thể phát triển lớn hơn nữa.",
+          "cannotAfford": "Bạn cần {price} để mở rộng danh sách bang hội.",
+          "retry": "Danh sách bang hội đã thay đổi trong khi bạn mua. Hãy thử lại."
         }
       }
     },
@@ -4542,7 +4580,7 @@ export const vi_VN: EnTranslations = {
       "sameEnchant": "Vật phẩm đó đã có phép khắc đó rồi.",
       "notPerfected": "Only a Perfected item can bear that enchant.",
       "enchantSkillTooLow": "Your Enchanting skill is too low for that enchant.",
-      "riftGear": "Riftbound bands take Rift gems, not enchants.",
+      "riftGear": "Các ban nhạc Riftbound lấy đá quý Rift, không phải bùa mê.",
       "replaceTag": "Thay Thế {enchant}",
       "sameEnchantTag": "Đã Áp Dụng",
       "plainTag": "Chưa pháp khắc",
@@ -4833,15 +4871,15 @@ export const vi_VN: EnTranslations = {
         "deathless_rage": "Thịnh Nộ Bất Tử (bị gián đoạn tại các đá hộ mệnh)",
         "wardstones": "Kênh đá hộ mệnh (chuyển giai đoạn)",
         "dread_curse": "Lời Nguyền Kinh Hoàng (chỉ anh hùng, hiệu ứng bất lợi cộng dồn để đổi tank)",
-        "bone_spike": "Bone Spike (impaled raiders drain until the spike is destroyed)",
-        "grave_eruption": "Grave Eruption (warning circles that leave burning ground)",
-        "binding_sigil": "Binding Sigil (drag the boss onto the sigil or the raid pays)",
-        "gravefire": "Gravefire (a traveling line of fire to sidestep)",
-        "soulfire": "Soulfire (Soul Rend detonations leave burning pools)",
-        "kings_wrath": "King's Wrath (30%: permanent damage bonus, faster floor hazards)",
-        "bone_storm": "Bone Storm (he ignores threat, whirls, and charges the raid)",
-        "crown_endures": "The Crown Endures (hard enrage at 6:00, heroic 5:00)",
-        "deathless_court": "The Deathless Court (heroic only, the royal court rises after Deathless Rage)"
+        "bone_spike": "Cọc Xương (raider bị xuyên bị rút máu cho đến khi cọc bị phá)",
+        "grave_eruption": "Mộ Phần Phun Trào (vòng cảnh báo để lại mặt đất bốc cháy)",
+        "binding_sigil": "Phù Ấn Trói Buộc (kéo boss lên phù ấn, nếu không raid sẽ trả giá)",
+        "gravefire": "Lửa Mộ (một vệt lửa di chuyển cần né sang bên)",
+        "soulfire": "Lửa Linh Hồn (vụ nổ Xé Linh Hồn để lại vũng lửa)",
+        "kings_wrath": "Cơn Thịnh Nộ Của Vua (30%: cộng sát thương vĩnh viễn, bẫy sàn nhanh hơn)",
+        "bone_storm": "Bão Xương (hắn bỏ qua thù hận, xoáy và lao vào raid)",
+        "crown_endures": "Vương Miện Trường Tồn (cuồng nộ cứng ở 6:00, heroic 5:00)",
+        "deathless_court": "Triều Đình Bất Tử (chỉ heroic, triều đình hoàng gia trỗi dậy sau Cơn Thịnh Nộ Bất Tử)"
       }
     },
     "reliquary": {
@@ -4931,6 +4969,7 @@ export const vi_VN: EnTranslations = {
       "sourceProfession": "Nhận được nhờ {profession}",
       "sourceDeed": "Được trao bởi kỳ công {deed}",
       "sourceVendor": "Do {vendor} bán",
+      "sourceVendorGated": "Do {vendor} bán ({requirement})",
       "sourceBossZone": "Rơi từ {boss} tại {zone}",
       "sourceDelve": "Tìm thấy trong hang sâu {delve}",
       "sourceRift": "Rơi từ các lượt hoàn thành Rạn Nứt hạng {rank}",
@@ -4950,6 +4989,10 @@ export const vi_VN: EnTranslations = {
       "filterAll": "Tất cả",
       "filterOwned": "Đã biên mục",
       "filterMissing": "Còn thiếu",
+      "filterIlluminated": "Chiếu sáng",
+      "filterRemaining": "Còn lại",
+      "filterEmptyPages": "Không có trang nào phù hợp với bộ lọc này.",
+      "filterGroupAriaPages": "Lọc các trang theo liệu chúng có được chiếu sáng hay không",
       "recentJumpAria": "Mở trang cho {name}",
       "recentEmpty": "Chưa có phát hiện nào. Kỳ trân bạn biên mục từ giờ trở đi sẽ nằm ở đây.",
       "nearlyEmpty": "Những trang sắp hoàn tất sẽ tụ về đây.",
@@ -5057,6 +5100,7 @@ export const vi_VN: EnTranslations = {
       "summary": "Bản đồ thế giới. Chọn một vùng để mở bản đồ của vùng đó.",
       "toWorld": "Bản Đồ Thế Giới",
       "toZone": "Bản Đồ Vùng",
+      "toInstance": "Bản đồ sơ thẩm",
       "toggleAria": "Chuyển đổi giữa bản đồ thế giới và bản đồ vùng",
       "levels": "Cấp {min} đến {max}"
     },
@@ -5117,6 +5161,7 @@ export const vi_VN: EnTranslations = {
       "walletLinkedConnected": "Ứng dụng ví đã liên kết của bạn đang được kết nối và sẵn sàng cho các giao dịch mua $WOC.",
       "walletUsdBalance": "{amount} USD",
       "walletUsdUnknown": "Không xác định",
+      "walletCardDismiss": "Ẩn thẻ ví",
       "rateNote": "Tỷ giá: khoảng {tokens} $WOC cho 1,00 USD, tính đến {time}.",
       "rateNotePaused": "Tỷ giá được biết lần cuối: khoảng {tokens} $WOC cho 1,00 USD, tính đến {time}.",
       "estimateNote": "Khoảng {tokens} $WOC cho {usd} theo tỷ giá hiện tại.",
@@ -5308,6 +5353,43 @@ export const vi_VN: EnTranslations = {
       "listingStatusCancelled": "Đã Hủy",
       "listingStatusSuspended": "Đã Tạm Khóa",
       "listingStatusUnsold": "Chưa Bán Được"
+    },
+    "lootExplorer": {
+      "title": "Nhà thám hiểm chiến lợi phẩm",
+      "close": "Đóng Loot Explorer",
+      "searchPlaceholder": "Tìm kiếm các mục...",
+      "searchAria": "Tìm kiếm các mục",
+      "filterCategoryAria": "Nguồn",
+      "filterClassAria": "lớp học",
+      "filterStatAria": "Thống kê",
+      "filterQualityAria": "chất lượng",
+      "filterAll": "Tất cả",
+      "tabItems": "Theo mục",
+      "tabEncounters": "Bằng cách gặp gỡ",
+      "category": {
+        "raid": "đột kích",
+        "dungeon": "ngục tối",
+        "delve": "Hang sâu",
+        "open_world": "Thế giới mở",
+        "rift": "Rạn nứt",
+        "vendor": "nhà cung cấp",
+        "quest_reward": "Phần thưởng nhiệm vụ",
+        "quest_objective": "Mục tiêu nhiệm vụ",
+        "ground_object": "Đối tượng thế giới",
+        "starting_equipment": "Thiết bị khởi động"
+      },
+      "difficulty": {
+        "normal": "Bình thường",
+        "heroic": "Anh hùng"
+      },
+      "riftRankLabel": "Thứ hạng rạn nứt {rank}",
+      "source": "{category}: {name}",
+      "sourceWithContext": "{category}: {name} ({context})",
+      "chance": "{pct}% cơ hội",
+      "guaranteed": "Đảm bảo",
+      "gatedByQuest": "Trong khi tìm kiếm: {quest}",
+      "empty": "Không có chiến lợi phẩm nào phù hợp với các bộ lọc này.",
+      "resultCount": "Kết quả {count}"
     }
   },
   "gatherEvent": {
@@ -5407,7 +5489,8 @@ export const vi_VN: EnTranslations = {
       "link_required": "Hãy liên kết tài khoản Discord của bạn trước.",
       "swag_claimed": "Bạn đã nhận phần thưởng này rồi.",
       "swag_tier": "Hãy đạt cấp bậc cao hơn để nhận phần thưởng này.",
-      "swag_points": "Không đủ điểm."
+      "swag_points": "Không đủ điểm.",
+      "invalid_input": "Đầu vào không hợp lệ."
     },
     "deeds": {
       "invalid_input": "Dữ liệu nhập không hợp lệ."
@@ -5459,6 +5542,11 @@ export const vi_VN: EnTranslations = {
       "reason_required": "Bắt buộc phải nhập lý do.",
       "invalid_duration": "Nhập thời hạn đánh dấu ít nhất một giây.",
       "not_marked": "Tài khoản đó chưa bị đánh dấu."
+    },
+    "kick": {
+      "reason_required": "Một lý do là cần thiết.",
+      "admin_target": "Tài khoản nhà điều hành không thể bị đá.",
+      "target_offline": "Người chơi đó không còn trực tuyến trên vương quốc này nữa."
     },
     "woc_market": {
       "invalid_input": "Dữ liệu nhập không hợp lệ.",
@@ -5894,10 +5982,13 @@ export const vi_VN: EnTranslations = {
       "ifPlayerFrameScale": "Kích thước khung nhân vật của chính bạn.",
       "ifTargetFrameScale": "Kích thước khung mục tiêu của bạn.",
       "ifPartyStyle": "Bố cục tổ đội: Tự Động thay đổi theo quy mô nhóm của bạn, Cổ Điển là kiểu xếp chồng truyền thống, còn Raid dồn mọi người vào lưới thu gọn.",
+      "ifPlayerHealthText": "Thanh sức khỏe của bạn in ra những gì: không có gì, tỷ lệ phần trăm, sức khỏe hiện tại, hiện tại và mức tối đa hoặc cả hai với tỷ lệ phần trăm bên cạnh.",
+      "ifTargetHealthText": "Thanh sức khỏe mục tiêu và mục tiêu của mục tiêu in ra, với các lựa chọn giống như khung của chính bạn.",
       "ifPartyHealthText": "Các thanh tổ đội hiển thị gì: không gì cả, phần trăm, lượng máu hiện tại, hoặc máu hiện tại và tối đa.",
       "ifPartySort": "Thứ tự liệt kê thành viên tổ đội: theo thứ tự nhóm, vai trò, hoặc tên.",
       "ifPartyShowAuras": "Buff và debuff có hiển thị trên khung tổ đội hay không. Các công tắc tương ứng còn bao gồm thanh tài nguyên, khiên hấp thụ, thú cưng, và việc bạn có xuất hiện trong danh sách tổ đội của chính mình hay không.",
       "ifAurasOnPlayerFrame": "Hiện buff và debuff của bạn trên khung nhân vật của chính bạn, bên cạnh thanh hiệu ứng.",
+      "ifAuraBarBelowFrame": "Di chuyển hàng hiệu ứng có lợi xuống dưới khung đơn vị của bạn thay vì phía trên. Chỉ có tác dụng khi hiệu ứng có lợi đang nằm trên khung người chơi.",
       "ifAlwaysShowAllBuffs": "Hiển thị mọi buff đang hoạt động ngay cả ở cấu hình đồ họa Thấp, bỏ qua giới hạn biểu tượng buff thông thường.",
       "ifTargetOfTarget": "Hiện mục tiêu của mục tiêu bạn đang nhắm, cách cổ điển để biết liệu tank có còn giữ được nó hay không.",
       "ifPetFrame": "Hiện một khung cho thú cưng của bạn.",
@@ -5905,6 +5996,7 @@ export const vi_VN: EnTranslations = {
       "ifChatOpacity": "Nền khung chat đặc đến mức nào.",
       "ifCompactChat": "Thu gọn các dòng chat để hiển thị được nhiều dòng hơn.",
       "ifChatTimestamps": "Thêm giờ vào mỗi dòng chat, theo định dạng 12 giờ hoặc 24 giờ.",
+      "ifFilterProfanity": "Che giấu ngôn từ tục tĩu trong cuộc trò chuyện bằng dấu hoa thị. Bật theo mặc định; hãy tắt nó ở đây nếu bạn muốn đọc cuộc trò chuyện không được lọc.",
       "ifStartAttack": "Việc dùng một kỹ năng có tự động bắt đầu tự đánh hay không. Mặc định bật, và đây là hành vi cổ điển mà hầu hết người chơi mong đợi.",
       "ifStopAutoAttack": "Việc đổi mục tiêu có dừng đòn tự đánh của bạn hay không. Mặc định tắt, nên đòn tấn công của bạn tiếp tục chuyển sang mục tiêu mới.",
       "ifShowAttackButton": "Đặt hẳn một nút Tấn Công lên thanh hành động của bạn.",
@@ -5971,6 +6063,7 @@ export const vi_VN: EnTranslations = {
       "framesMoveBody": "Khung của bạn, khung mục tiêu, và các khung tổ đội đều có thể di chuyển được. Mỗi khung mang một nút di chuyển nhỏ ở góc: mở khóa nó, kéo khung tới vị trí bạn muốn, rồi khóa lại để một cú bấm nhầm không thể làm nó xê dịch. Nếu chúng lỡ nằm ở chỗ bạn không ưng, mục Đặt Lại Vị Trí Các Khung trong phần cài đặt sẽ đưa tất cả về đúng vị trí ban đầu.",
       "framesMoveBodyEditFrames": "Your frame, your target frame, and your party frames can all be moved. Each carries a small move button in its corner: unlock it, drag the frame where you want it, and lock it again so a stray click cannot shift it. Edit Frames, at the top of the Frames tab in the Interface options, loosens the rest of the interface at once, those three frames with it: the action bars, the cast bar, the swing bar, the experience bar, the minimap, the button rail, the pet frame, the stance bar, the buff and debuff rows, and the Wishlist Reminder chip, each wearing a name chip while it is loose. If they end up somewhere you regret, Reset to Defaults at the foot of that same Frames tab snaps them all back to where they started.",
       "framesGovernedExtra": "Edit Frames also loosens the tracker stack below (your tracked quests and their objectives, your deed progress, your Reliquary pages, the delve you are in, any rift you are taking part in, and the recipe or commission you are tracking), the pet action bar beside your pet frame, the Target dots frame for your debuffs across nearby enemies, the paladin's Devotion medallion, the warlock's Affliction Bar, the spell-proc overlay, the off-hand swing timer for dual-wielders, and the tabbed damage meter window, each wearing its own name chip while it is loose.",
+      "framesGovernedAuraTracks": "Edit Frames also loosens the six opt-in aura tracks once you have switched them on from the Combat tab of the same Interface options: the My Buffs track, the Defensive Cooldowns track, the My Shields track, the Offensive Cooldowns track, the Movement and Stealth track, and the My Buffs on Allies track. Every track is off by default, and each wears its own name chip while it is loose.",
       "barsTitle": "Các thanh, bộ đếm giờ, và chữ chiến đấu",
       "barsBody": "Thanh niệm chú của bạn xuất hiện giữa màn hình, ngay phía trên thanh kỹ năng, bất cứ khi nào bạn niệm hoặc duy trì một phép, và hiển thị tên phép cùng thời gian còn lại. Mục tiêu của bạn cũng có thanh niệm chú riêng trên khung của nó, để bạn biết điều gì sắp xảy ra và đối phó kịp thời.\n\nMột thanh vung đòn mảnh nằm dưới thanh niệm chú và đầy dần giữa hai lần vung vũ khí, để một người đánh cận chiến hay tầm xa biết khi nào đòn đánh tự động tiếp theo sẽ trúng.\n\nThanh kinh nghiệm của bạn chạy suốt chiều rộng bên dưới thanh kỹ năng, chia thành từng đoạn, với một dải sáng hơn cho biết lượng kinh nghiệm nghỉ ngơi bạn đã tích lũy.\n\nBơi xuống dưới nước và một thanh hơi thở màu xanh sẽ xuất hiện ở đầu màn hình. Nó cạn dần khi đầu bạn còn ở dưới nước, chớp đỏ khi cạn hết và bạn bắt đầu chết đuối, rồi đầy lại nhanh chóng ngay khi bạn nổi lên mặt nước. Phím Nhảy đưa bạn bơi lên, còn phím Bơi Xuống, mặc định là Ctrl, đưa bạn xuống sâu hơn.\n\nSát thương và hồi máu bay lên trên bất cứ thứ gì chúng vừa tác động, dưới dạng những con số nhỏ, để bạn có thể đọc hiểu một trận đánh mà không cần đọc chữ. Tab Chiến Đấu trong khung trò chuyện của bạn giữ lại toàn bộ ghi chép bằng văn bản.",
       "aurasTitle": "Buff và debuff",
@@ -6756,8 +6849,8 @@ export const vi_VN: EnTranslations = {
       "raceBody": "Mọi nhóm trong vương quốc đều có thể tấn công cùng một Rạn Nứt cùng lúc, mỗi nhóm trong bản sao riêng của mình, và chỉ nhóm đầu tiên hạ được thứ dưới đáy mới niêm phong nó. Khi một nhóm chiến thắng, cả vương quốc nghe được tên và thời gian của họ, và lối vào khép lại sau lưng họ. Thua cuộc đua không có nghĩa lượt chạy của bạn kết thúc: bản sao của bạn vẫn mở, thứ dưới đáy vẫn sẽ gục ngã dưới tay bạn, và bạn vẫn bước ra bằng chính sức mình. Cái giá phải trả là toàn bộ những gì lẽ ra việc dọn sạch nó sẽ chi trả. Trùm không để lại gì cho nhóm về nhì, nên những gì bạn mang về nhà chỉ là những gì rơi ra từ lũ quái trên đường xuống, không hơn không kém. Sách Kỳ Công vẫn tính lượt dọn sạch đó, bởi bạn đã thực sự hạ được nó. Đây là cuộc đua duy nhất trong trò chơi mà bạn có thể thua mà chẳng bao giờ thấy mặt những người đã đánh bại mình.",
       "rewardsHeading": "Những gì bạn mang ra",
       "rewardsBody": "Niêm phong một Rạn Nứt, chứ không chỉ sống sót qua nó, mới là thứ trả công. Hạ Rạn Nứt trước tiên và nó trả công như nội dung instance cùng hạng với nó, nên các hạng khó hơn xứng đáng với lượt chạy khó hơn. Niêm phong cũng đặt một chiếc nhẫn Rạn Nứt vào tay mọi người có mặt ở đó, cắt riêng theo vai trò lớp nhân vật của bạn và là của riêng bạn, đồng thời để lại Tinh Chất Rạn Nứt trong túi đồ, cùng với Đá Quý Rạn Nứt ở các hạng khó hơn. Bên cạnh lối về, thứ dưới đáy còn để lại một chiếc rương niêm phong mà nhóm bạn có thể cạy mở để lấy thêm chiến lợi phẩm, bằng đúng trò cạy khóa Lối Của Ổ Khóa mà bạn đã quen thuộc từ những chiếc rương hang sâu, nên một lần cạy khóa gọn gàng, kiên nhẫn sẽ trả công hậu hĩnh hơn một lần vội vàng. Không điều nào trong số đó đến được với nhóm về nhì: thua cuộc đua chỉ để lại cho bạn những gì rơi ra từ lũ quái trên đường xuống. Sách Kỳ Công là ngoại lệ, nó vẫn tính lượt dọn sạch của bạn dù thắng hay thua cuộc đua, với một kỳ công cho lần niêm phong Rạn Nứt đầu tiên và một kỳ công khác cho việc hạ gục một Rạn Nứt hạng S.",
-      "forgeHeading": "The Rift Forge",
-      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
+      "forgeHeading": "Lò rèn Rift",
+      "forgeBody": "Ban nhạc được xếp hạng bạc hà rõ ràng đầu tiên vẫn chưa kết thúc khi bạn nhận được nó. Riftwright Maelis, người quản lý một lò rèn ở Watch Meadow trên Farshore, ở trên bờ biển từ Gullhaven bên cạnh Breach Scholar, sẽ nâng cấp vật phẩm của mình lên từng bước một và đặt những viên ngọc màu mà súng trường thả vào ổ cắm của nó, mỗi màu một xếp hạng chiến đấu. Một ban nhạc đầy đủ sẽ lấy một viên ngọc mới thay cho viên ngọc cũ nhất để bạn có thể điều chỉnh lại viên ngọc đó sau. Tất cả số tiền đó được thanh toán bằng Rift Essence và đá quý Rift, loại tiền giả mạo rơi ra từ các ông chủ rạn nứt và giao dịch tự do, vì vậy một người bạn có thể trao cho bạn số tinh chất mà bạn đang thiếu. Hãy tháo dây đeo ra trước khi bạn mang nó đến cho cô ấy: cô ấy làm việc với những gì có trong túi của bạn và cô ấy không làm gì cả trừ khi bạn đang đứng trước lò rèn của cô ấy.",
       "trackerHeading": "Bảng theo dõi trên màn hình",
       "trackerBody": "Trong khi bạn ở bên trong, một dải nhỏ trên màn hình giúp bạn định hướng: bạn đang ở tầng nào trên tổng số bao nhiêu tầng, cùng một bộ đếm ngược đang chạy. Hãy đọc kỹ bộ đếm ngược đó, vì nó không phải là thời gian lượt chạy của bạn sắp hết. Đó là lối vào trở lại thế giới đang đóng lại. Một khi đã vào trong, nhóm bạn chơi hết Rạn Nứt theo tốc độ của riêng mình, dù mất bao lâu cũng được, nhưng khi đồng hồ đó về không thì lối vào biến mất với tất cả mọi người, nên hãy suy nghĩ kỹ trước khi bước ra ngoài gần lúc đó."
     },
@@ -8752,7 +8845,7 @@ export const vi_VN: EnTranslations = {
       "forgeUpgraded": "Đã hoàn tất nâng cấp Rạn Nứt cho {name}.",
       "forgeEnchanted": "Đã hoàn tất phù phép Rạn Nứt cho {name}.",
       "forgeSocketed": "Đã gắn ngọc Rạn Nứt cho {name}.",
-      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
+      "forgeGemReplaced": "Đá quý rạn nứt được thay thế cho {name}: {gem} bị phá hủy.",
       "detonateGlacialGrave": "Nấm Mồ Băng Hà phát nổ!",
       "detonateAbsoluteZero": "Độ Không Tuyệt Đối bùng nổ!",
       "detonateMagmaWell": "Giếng Dung Nham bùng nổ!",
@@ -9395,6 +9488,7 @@ export const vi_VN: EnTranslations = {
     "connectingRealm": "Đang kết nối tới thế giới...",
     "assetsFailed": "Tải tài nguyên thất bại: thử tải lại. {error}",
     "rendererFailed": "Không thể khởi động bộ kết xuất: thử tải lại. {error}",
+    "rendererContextLost": "Bộ kết xuất 3D đã mất ngữ cảnh đồ họa và không thể khôi phục. Hãy tải lại.",
     "enterTimeout": "Không thể vào thế giới. Kết nối đã quá thời gian. Máy chủ trò chơi có đang chạy không?",
     "connectionLost": "Đã mất kết nối tới máy chủ.",
     "reconnectingAttempt": "Mất kết nối. Đang kết nối lại... (thử {attempt}/{maxAttempts}, thử lại trong {seconds})",
@@ -9405,6 +9499,7 @@ export const vi_VN: EnTranslations = {
     "realmFull": "Thế giới này đang đầy người chơi. Vui lòng thử lại sau vài phút.",
     "tooManyConnections": "Có quá nhiều kết nối đến thế giới này từ mạng của bạn. Vui lòng đóng bớt cửa sổ trò chơi hoặc thử lại sau vài phút.",
     "messageRateExceeded": "Bạn đã bị ngắt kết nối do gửi thao tác quá nhanh. Vui lòng đợi một lát rồi đăng nhập lại.",
+    "kickedByModerator": "Người điều hành đã ngắt kết nối bạn: {reason}",
     "tips": {
       "classes": "Mẹo: mỗi lớp trong 9 lớp nhân vật có lối chơi khác nhau. Hãy thử vài lớp trước khi quyết định gắn bó.",
       "talents": "Mẹo: bạn có thể đặt lại tài năng bất cứ lúc nào ngoài chiến đấu, nên lựa chọn ban đầu không bao giờ là cái bẫy.",
@@ -9493,7 +9588,7 @@ export const vi_VN: EnTranslations = {
     "bodyWeb": "Trò chơi đang chạy mà không có tăng tốc GPU và sẽ chậm. Hãy bật tăng tốc phần cứng trong cài đặt trình duyệt, cập nhật trình điều khiển đồ họa, sau đó khởi động lại trình duyệt.",
     "hybridBodyWindows": "Phiên chơi này đang hiển thị trên GPU tích hợp (tiết kiệm điện). Nếu máy tính này còn có card đồ họa chơi game, hãy đặt trình duyệt thành Hiệu năng cao trong Cài đặt > Hệ thống > Màn hình > Đồ họa, rồi khởi động lại trình duyệt. Ứng dụng máy tính tự động chọn card đồ họa chơi game.",
     "hybridBodyLinux": "Phiên chơi này đang hiển thị trên GPU tích hợp (tiết kiệm điện). Nếu máy tính này còn có card đồ họa chơi game, trình duyệt hoặc trình điều khiển đồ họa của bạn có thể có tùy chọn chọn GPU riêng, hoặc bản phân phối Linux của bạn có thể cung cấp công cụ chuyển GPU (như PRIME hoặc optimus-manager). Ứng dụng máy tính tự động chọn card đồ họa chơi game.",
-    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
+    "bodyRequestedBackend": "Trò chơi không thể khởi động trên backend đồ họa bạn chọn, nên đang chạy bằng OpenGL. Mọi thứ vẫn hoạt động; quá trình tải và vài phút đầu có thể khựng nhiều hơn. Bạn có thể chọn lại backend trong Tùy chọn, Đồ họa, Hệ thống.",
     "hybridBodyOther": "Phiên chơi này đang hiển thị trên GPU tích hợp (tiết kiệm điện). Nếu máy tính này còn có card đồ họa chơi game, hãy kiểm tra cài đặt đồ họa của trình duyệt và hệ điều hành để bật nó lên. Ứng dụng máy tính tự động chọn card đồ họa chơi game.",
     "dismiss": "Bỏ Qua"
   },
@@ -11239,11 +11334,11 @@ export const vi_VN: EnTranslations = {
       },
       "melting_acid": {
         "name": "Axit nóng chảy",
-        "description": "Tấn công mục tiêu bằng chất độc ăn da, gây {damage} sát thương tự nhiên và giảm 5% giáp của mục tiêu trong 12 giây."
+        "description": "Bôi lên vũ khí trong 30 phút. Mỗi đòn cận chiến tạt axit ăn da lên mục tiêu và giảm 5% giáp của mục tiêu trong 12 giây."
       },
       "nightshade_coating": {
         "name": "Lớp phủ bóng đêm",
-        "description": "Bao phủ mục tiêu trong màn đêm, gây {damage} sát thương tự nhiên và giảm khả năng hồi máu mà mục tiêu nhận được đi 25% trong 12 giây."
+        "description": "Bôi lên vũ khí trong 30 phút. Mỗi đòn cận chiến bao phủ mục tiêu trong màn đêm và giảm khả năng hồi máu mà mục tiêu nhận được đi 25% trong 12 giây."
       },
       "expose_armor": {
         "name": "Xuyên Phá Giáp",
@@ -11259,11 +11354,11 @@ export const vi_VN: EnTranslations = {
       },
       "instant_poison": {
         "name": "Vết Cắn Rắn Độc",
-        "description": "Bôi lên vũ khí trong 30 phút, khiến mỗi đòn cận chiến gây thêm 8 sát thương Tự Nhiên."
+        "description": "Bôi lên vũ khí trong 30 phút, khiến mỗi đòn cận chiến gây thêm {damage} sát thương Tự Nhiên."
       },
       "deadly_poison": {
         "name": "Nọc Độc Ung Mủ",
-        "description": "Bôi lên vũ khí trong 30 phút, khiến mỗi đòn cận chiến gây thêm 14 sát thương Tự Nhiên."
+        "description": "Bôi lên vũ khí trong 30 phút. Mỗi đòn cận chiến cộng thêm một lớp độc lên mục tiêu, tối đa 5, và làm mới thời lượng 12 giây. Mỗi lớp gây {damage} sát thương tự nhiên mỗi 2 giây."
       },
       "blind": {
         "name": "Hất Cát",
@@ -11476,7 +11571,7 @@ export const vi_VN: EnTranslations = {
       "arcane_shot": {
         "name": "Bắn Tà Ác",
         "description": "Bắn mục tiêu, gây {damage} sát thương Bí Thuật. Sát thương tăng theo sức tấn công tầm xa.",
-        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
+        "specNote_marksmanship": "Lĩnh Hội Mắt Lạnh từ một lần Kéo Cung Cuồng Nhiệt hoàn tất khiến Đòn Bắn Sa Ngã tiếp theo của bạn gây thêm 75% sát thương. Bắn phát đó sẽ tiêu hao Lĩnh Hội."
       },
       "concussive_shot": {
         "name": "Bắn Rúng Động",
@@ -12362,11 +12457,11 @@ export const vi_VN: EnTranslations = {
       },
       "temporal_echo": {
         "name": "Vọng Âm Thời Gian",
-        "description": "Đánh dấu một đồng minh bằng tiếng vang của một khoảnh khắc khỏe mạnh hơn, hồi phục {damage} máu ngay lập tức. Trong {duration} giây, một phần sát thương Bí Thuật bạn gây ra sẽ được kéo trở lại qua tiếng vang để chữa lành họ."
+        "description": "Đánh dấu một đồng minh bằng tiếng vang của một khoảnh khắc khỏe mạnh hơn, hồi phục {damage} máu ngay lập tức. Trong {duration} giây, {echoSinglePct}% sát thương Bí Thuật đơn mục tiêu khác và {echoAreaPct}% sát thương Bí Thuật diện rộng của bạn sẽ hồi máu cho họ. Sóng Aether và Phi Tiêu Aether thay vào đó hồi máu bằng {echoDriverPct}% sát thương chúng gây ra."
       },
       "temporal_cascade": {
         "name": "Thác Đổ Thời Gian",
-        "description": "Gửi một tiếng vang lan tỏa qua nhóm của bạn: mục tiêu và tối đa bốn đồng minh gần nhất của họ được chữa lành cùng lúc và mỗi người được đánh dấu trong {duration} giây, kéo một phần sát thương Bí Thuật bạn gây ra trở lại qua những tiếng vang của họ để chữa lành họ. (Thời Thuật)"
+        "description": "Gửi một tiếng vang lan tỏa qua nhóm của bạn: mục tiêu và tối đa bốn đồng minh gần nhất của họ được chữa lành cùng lúc và mỗi người được đánh dấu trong {duration} giây, kéo một phần sát thương Bí Thuật bạn gây ra trở lại qua những tiếng vang của họ để chữa lành họ. Sóng Aether và Phi Tiêu Aether tạo một lượng hồi máu dự trữ tương đương từ mỗi Vọng Âm nhóm, được phân phối theo lượng máu đã mất giữa các đồng minh được đánh dấu còn dưới 60% máu. (Thời Thuật)"
       },
       "temporal_reversal": {
         "name": "Đảo Ngược Thời Gian",
@@ -14054,11 +14149,17 @@ export const vi_VN: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Ignition Key: Dreadspark Groundshaker"
       },
+      "reins_goblin_rocket_sled": {
+        "name": "Khóa khởi động: Xe trượt tên lửa goblin"
+      },
+      "reins_rallycart_rxt": {
+        "name": "Khóa khởi động: Rallycart RXT"
+      },
       "reins_lanternback_troll": {
         "name": "Ách của Người Thắp Đèn: Grumbol"
       },
       "reins_chimeglass_tortoise": {
-        "name": "Roadwarden's Bellstrap: Tolliver"
+        "name": "Dây đeo chuông của Roadwarden: Tolliver"
       },
       "reins_rickshaw_mount": {
         "name": "Dây cương ràng buộc: Xe kéo Buộc Xương"
@@ -14067,7 +14168,7 @@ export const vi_VN: EnTranslations = {
         "name": "Dây Cương Cuồng Long Drakemaw"
       },
       "reins_mech_bird": {
-        "name": "Ignition Key: Cluckwork Mech Bird"
+        "name": "Chìa khóa đánh lửa: Cluckwork Mech Bird"
       },
       "rimefang": {
         "name": "Nanh Băng Giá"
@@ -15378,46 +15479,46 @@ export const vi_VN: EnTranslations = {
         "name": "Field Kit"
       },
       "bramblehide_crown": {
-        "name": "Roots' Bramblehide Crown"
+        "name": "Vương Miện Da Gai Góc Của Rễ"
       },
       "bramblehide_mantle": {
-        "name": "Roots' Bramblehide Mantle"
+        "name": "Áo Choàng Vai Da Gai Góc Của Rễ"
       },
       "bramblehide_harness": {
-        "name": "Roots' Bramblehide Harness"
+        "name": "Áo Giáp Da Gai Góc Của Rễ"
       },
       "bramblehide_cinch": {
-        "name": "Roots' Bramblehide Cinch"
+        "name": "Đai Da Gai Góc Của Rễ"
       },
       "bramblehide_legguards": {
-        "name": "Roots' Bramblehide Legguards"
+        "name": "Giáp Chân Da Gai Góc Của Rễ"
       },
       "bramblehide_grips": {
-        "name": "Roots' Bramblehide Grips"
+        "name": "Găng Da Gai Góc Của Rễ"
       },
       "bramblehide_treads": {
-        "name": "Roots' Bramblehide Treads"
+        "name": "Ủng Da Gai Góc Của Rễ"
       },
       "courtiers_bonefang": {
-        "name": "Courtier's Bonefang"
+        "name": "Nanh Xương Của Cận Thần"
       },
       "thornpeak_wardblade": {
-        "name": "Thornpeak Wardblade"
+        "name": "Kiếm Hộ Vệ Đỉnh Gai"
       },
       "gravecourt_hewer": {
-        "name": "Gravecourt Hewer"
+        "name": "Rìu Chém Triều Đình Mộ"
       },
       "votive_ward_of_the_deathless_court": {
-        "name": "Votive Ward of the Deathless Court"
+        "name": "Hộ Phù Hiến Tế Của Triều Đình Bất Tử"
       },
       "thornpeak_moonhide_cowl": {
-        "name": "Thornpeak Moonhide Cowl"
+        "name": "Mũ Trùm Da Trăng Đỉnh Gai"
       },
       "stormhymn_chain_grips": {
-        "name": "Stormhymn Chain Grips"
+        "name": "Găng Xích Thánh Ca Bão"
       },
       "stormhymn_chain_treads": {
-        "name": "Stormhymn Chain Treads"
+        "name": "Ủng Xích Thánh Ca Bão"
       },
       "conjured_water4": {
         "name": "Nước Suối Được Tạo Phép"
@@ -16406,7 +16507,7 @@ export const vi_VN: EnTranslations = {
         "name": "Nythraxis, Tai Họa Đỉnh Gai"
       },
       "nythraxis_bone_spike": {
-        "name": "Bone Spike"
+        "name": "Cọc Xương"
       },
       "ignivar_herald_of_the_last_flame": {
         "name": "Ignivar, Sứ Giả Ngọn Lửa Cuối Cùng"
@@ -17375,9 +17476,9 @@ export const vi_VN: EnTranslations = {
         "greeting": "Nó mở ra ngay chỗ phơi lưới. Ngay tại đó, nơi tôi từng đứng mỗi sáng suốt cả cuộc đời mình. Tôi không còn xuống bờ biển nữa. Tôi cũng chẳng còn đi đâu nhiều nữa."
       },
       "riftwright_maelis": {
-        "name": "Riftwright Maelis",
-        "title": "Rift Forgemaster",
-        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
+        "name": "Maelis, thợ dệt Khe nứt",
+        "title": "Bậc thầy Lò rèn Khe nứt",
+        "greeting": "Một ban nhạc Riftbound ghi nhớ sự phá vỡ đã tạo nên nó, {className}. Hãy mang cho tôi chiếc ban nhạc và bản chất của những khoảng nghỉ, tôi sẽ dạy nó nhớ nhiều hơn."
       },
       "forgemistress_darva": {
         "name": "Nữ thợ rèn Darva",
@@ -20798,6 +20899,6 @@ export const vi_VN: EnTranslations = {
     "mailboxName": "Hòm Thư",
     "noticeboardName": "Bảng Thông Báo",
     "farmPatchName": "Garden Beds",
-    "realmBuilderMonumentName": "Realm Builder Monument"
+    "realmBuilderMonumentName": "Đài tưởng niệm người xây dựng vương quốc"
   }
 };

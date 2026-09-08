@@ -90,7 +90,10 @@ describe('Renderer lifecycle wiring', () => {
     expect(constructorSource).toContain('options: RendererCreateOptions = {}');
     // The context is created by the game and handed to three
     // (src/render/webgl_context_fallback.ts); a supplied one skips the fallback.
-    expect(constructorSource).toContain('createRendererWebGL(canvas, options.context)');
+    expect(constructorSource).toContain(
+      'const createdContext = options.context ?? createRendererGlContext(canvas) ?? undefined',
+    );
+    expect(constructorSource).toContain('createRendererWebGL(canvas, createdContext)');
     expect(constructorSource).toContain('this.webgl.getContext() !== options.context');
     expect(constructorSource).toContain('if (options.initializeGfx !== false)');
     expect(constructorSource).toContain('initGfxTier(this.webgl)');
@@ -185,6 +188,29 @@ describe('Renderer lifecycle wiring', () => {
     expect(source).toContain('engineReset: () => this.audioSink?.mountEngineReset(e.id)');
   });
 
+  it('resets engine state BEFORE arming the summon, not after', () => {
+    const mountKeyEdge = sliceIn(
+      mountLifecycleSource,
+      'if (x.mountKey !== v.lastMountKey) {',
+      '\n  }\n  return x.mountCasting;',
+    );
+    const resetAt = mountKeyEdge.indexOf('x.engineReset()');
+    const summonAt = mountKeyEdge.indexOf('x.summonCall()');
+    expect(resetAt).toBeGreaterThan(-1);
+    expect(summonAt).toBeGreaterThan(-1);
+    // Order is load-bearing, not cosmetic. mountSummon ARMS the per-entity idle
+    // gate that holds the parked idle loop until the summon take has played;
+    // mountEngineReset CLEARS that gate. With the reset second, both ran on the
+    // one frame and the gate was wiped as soon as it was set, so the idle became
+    // audible the instant the mount appeared. It only reproduced on a RESUMMON:
+    // the first time round the idle's buffer is still decoding, so it arrived
+    // late enough to pass for a handoff.
+    expect(
+      resetAt,
+      "mountEngineReset must run before mountSummon, or the summon's idle gate is cleared on the same frame it is armed",
+    ).toBeLessThan(summonAt);
+  });
+
   it("preloads a new mount's engine clips on the same mountKey-transition edge", () => {
     const mountKeyEdge = sliceIn(
       mountLifecycleSource,
@@ -258,11 +284,15 @@ describe('Renderer lifecycle wiring', () => {
     const mountedStopped = audioBlock.slice(stoppedStart, onFootStart);
 
     expect(mountedMoving).toContain('sink.mountIdle(ax, ay, az, e.mountKey, false, e.id)');
-    expect(mountedMoving).toContain('sink.mountEngine(ax, ay, az, e.mountKey, true, e.id)');
+    expect(mountedMoving).toContain(
+      'sink.mountEngine(ax, ay, az, e.mountKey, true, e.id, st.backwards, false)',
+    );
     expect(mountedMoving).toContain(
       'sink.mountRun(ax, ay, az, e.mountKey, this.surfaceAt(ax, az, ay), isSelf)',
     );
-    expect(mountedStopped).toContain('sink.mountEngine(ax, ay, az, e.mountKey, false, e.id)');
+    expect(mountedStopped).toContain(
+      'sink.mountEngine(ax, ay, az, e.mountKey, false, e.id, false, false, v.mountPivot)',
+    );
     expect(mountedStopped).toContain('sink.mountIdle(ax, ay, az, e.mountKey, true, e.id)');
     expect(audioBlock).toContain(
       "sink.movement('jump', ax, ay, az, isSelf, e.mountKey || undefined)",
@@ -301,8 +331,34 @@ describe('Renderer lifecycle wiring', () => {
     expect(notMovingBranch).toBeGreaterThan(airborneBranch);
     const airborneBranchBody = audioBlock.slice(airborneBranch, notMovingBranch);
     expect(airborneBranchBody).toContain('sink.mountIdle(ax, ay, az, e.mountKey, false, e.id)');
-    expect(airborneBranchBody).not.toContain('sink.mountEngine(');
     expect(airborneBranchBody).not.toContain('sink.mountEngineReset(');
+    // ORDINARY mounts still must not poll: strip the sanctioned exception
+    // first, then assert nothing else calls it. The Goblin Rocket Sled is a
+    // deliberate carve-out, not a regression: its turbine startup continues
+    // through a hop and an active sustain bends pitch upward under no load, so
+    // it needs the poll the hold exists to avoid for everything else.
+    //
+    // A mount that IDLES a loop joined it, deliberately, and is named in the
+    // condition rather than hidden behind the sled's own flag: a parked idle is
+    // audible the whole time the mount is out, so holding its phase through a
+    // hop would leave the loop running against a stale pitch target instead of
+    // tracking the jump. The guard stays an exact-string match on the WHOLE
+    // condition, so a THIRD member still cannot join without editing this line,
+    // which is the property that makes this test worth having.
+    const sledException = airborneBranchBody.indexOf(
+      'if (rocketSledMounted || sink.mountEngineIdles(e.mountKey)) {',
+    );
+    expect(
+      sledException,
+      'the airborne carve-out condition changed; confirm the new member is deliberate, then update this string',
+    ).toBeGreaterThan(-1);
+    const sledExceptionEnd = airborneBranchBody.indexOf(
+      '}',
+      airborneBranchBody.indexOf('sink.mountEngine(', sledException),
+    );
+    const withoutSledException =
+      airborneBranchBody.slice(0, sledException) + airborneBranchBody.slice(sledExceptionEnd);
+    expect(withoutSledException).not.toContain('sink.mountEngine(');
   });
 
   it('tears down a still-active engine-mount loop when the rider exits the move-audio range gate', () => {

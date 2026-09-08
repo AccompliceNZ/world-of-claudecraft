@@ -6534,6 +6534,14 @@ describe('Guide wiki completeness corrections (Phase 20, 2026-09-03)', () => {
       procOverlay: 'the spell-proc overlay',
       swingBarOffhand: 'the off-hand swing timer for dual-wielders',
       damageMeter: 'the tabbed damage meter window',
+      // The six opt-in aura tracks (PR #3925), named by
+      // guide.interfacePage.framesGovernedAuraTracks from the live track names.
+      auraTrack_self: `the ${t('hudChrome.auraTracks.self')} track`,
+      auraTrack_defensives: `the ${t('hudChrome.auraTracks.defensives')} track`,
+      auraTrack_shields: `the ${t('hudChrome.auraTracks.shields')} track`,
+      auraTrack_power: `the ${t('hudChrome.auraTracks.power')} track`,
+      auraTrack_utility: `the ${t('hudChrome.auraTracks.utility')} track`,
+      auraTrack_friendly: `the ${t('hudChrome.auraTracks.friendly')} track`,
     };
     expect(Object.keys(phraseFor).sort()).toEqual(HUD_FRAME_SPECS.map((s) => s.id).sort());
     for (const spec of HUD_FRAME_SPECS) {
@@ -6620,6 +6628,7 @@ describe('Guide wiki completeness corrections (Phase 20, 2026-09-03)', () => {
     // Every non-overworld map mode is named; MapWindowMode is exhaustive here.
     const modeWords: Record<MapWindowMode, string | null> = {
       overworld: null,
+      castle: 'a castle keep',
       delve: 'a delve',
       dungeon: 'a dungeon',
       rift: 'a rift',

@@ -983,6 +983,7 @@ export const zh_CN: EnTranslations = {
       "mounts": "坐骑",
       "professions": "专业",
       "reliquary": "圣物库",
+      "lootExplorer": "战利品浏览器",
       "nameplates": "姓名板",
       "haptics": "震动反馈",
       "hapticsOff": "震动反馈：关",
@@ -1141,6 +1142,9 @@ export const zh_CN: EnTranslations = {
       "promptAttack": "攻击",
       "promptUseAbility": "使用技能",
       "promptKneel": "跪下",
+      "promptAccessInterface": "打开界面",
+      "promptMoveToTarget": "移动到{target}",
+      "promptSelectItem": "选择{item}",
       "promptOpenBags": "打开背包",
       "promptCharacterSheet": "打开角色面板",
       "promptLookAround": "按住右键拖动来环视四周",
@@ -1307,9 +1311,21 @@ export const zh_CN: EnTranslations = {
       "separate": "分离{meter}",
       "regroup": "合并{meter}"
     },
+    "auraTracks": {
+      "defensives": "防御性冷却",
+      "self": "我的增益",
+      "power": "攻击性冷却",
+      "utility": "移动与潜行",
+      "friendly": "我给队友的增益",
+      "shields": "我的护盾",
+      "row": "{aura} on {unit}",
+      "selfRow": "{aura}",
+      "mode": "on",
+      "overflow": "还有{count}项未显示"
+    },
     "targetDots": {
       "title": "目标减益",
-      "row": "{aura} on {target}",
+      "row": "{aura} 上 {target}",
       "overflow": "还有 {count} 个未显示"
     },
     "targetAuras": {
@@ -1393,6 +1409,8 @@ export const zh_CN: EnTranslations = {
       "name_shadowjump_toad": "影跃蟾蜍卡玛影",
       "name_stormfeather_griffin": "凌天风暴之羽",
       "name_thunderstrut_gobbler": "雷霆阔步大火鸡",
+      "name_goblin_rocket_sled": "哥布林火箭雪橇",
+      "name_rallycart_rxt": "拉力卡丁车 RXT",
       "name_terrorspark_groundshaker": "骇雷撼地者",
       "name_drakemaw_raptor": "龙喉迅猛龙",
       "name_mech_bird": "发条机械鸟",
@@ -1406,6 +1424,8 @@ export const zh_CN: EnTranslations = {
       "desc_shadowjump_toad": "一只体型庞大、步伐稳健的巨蟾，受训于闪电般的暗影跳跃，可跨越任何地形。",
       "desc_stormfeather_griffin": "一头威严的风暴狮鹫，收拢双翼，以符文利爪行走于大地。",
       "desc_thunderstrut_gobbler": "一只风暴所生的庞然大火鸡，从觉醒之峰昂首阔步而下，尾羽如雷云般展开。",
+      "desc_goblin_rocket_sled": "一辆结构过剩到危险的哥布林雪橇，靠双发火箭和极差的判断力推进。",
+      "desc_rallycart_rxt": "一辆小巧却地道的拉力赛车，能提升移动速度。",
       "desc_terrorspark_groundshaker": "一台紧凑的装甲机械，配备重型履带、大口径火炮，以及为无畏驾驶员打造的鞍座。",
       "desc_drakemaw_raptor": "来自龙喉火山口的驯服巢生迅猛龙，浑身筋肉、疾若奔雷，身上仍带着淡淡的灰烬气味。",
       "desc_mech_bird": "一只手工打造的发条战斗鸡，伺服关节铿锵疾驰，发条钥匙仍在转动。",
@@ -1600,7 +1620,10 @@ export const zh_CN: EnTranslations = {
       "uiScale": "界面缩放",
       "playerFrameScale": "玩家框缩放",
       "targetFrameScale": "目标框缩放",
+      "playerHealthText": "玩家生命值文字",
+      "targetHealthText": "目标生命值文字",
       "aurasOnPlayerFrame": "增益显示在玩家框",
+      "auraBarBelowFrame": "增益显示在玩家框下方",
       "alwaysShowAllBuffs": "始终显示所有增益",
       "highContrastBackground": "高对比度背景",
       "startAttackOnAbility": "使用技能时自动攻击",
@@ -1626,6 +1649,13 @@ export const zh_CN: EnTranslations = {
       "showNameplateDots": "在姓名板上显示我的减益",
       "nameplateDotScale": "姓名板减益图标大小",
       "showTargetDots": "显示目标减益追踪",
+      "showDefensivesTrack": "显示防御性冷却",
+      "showSelfBuffTrack": "显示我的增益",
+      "showOffensiveTrack": "显示攻击性冷却",
+      "showUtilityTrack": "显示移动与潜行",
+      "showUtilityModes": "包含潜行与旅行形态",
+      "showFriendlyTrack": "显示我给队友的增益",
+      "showShieldTrack": "显示我的护盾",
       "waterRipples": "水面涟漪（尾波）",
       "showAttackButton": "显示攻击按钮",
       "showDailyRewardsChest": "显示每日奖励宝箱",
@@ -1686,7 +1716,7 @@ export const zh_CN: EnTranslations = {
       "crossHotbarHelp": "按住扳机键即可点亮方向键和面板按键上的八个动作条格位。轻按另一个扳机键可切换到第二组。",
       "crossHotbarResetLayout": "重置十字热键栏",
       "crossHotbarPosition": "{trigger} + {button}",
-      "crossHotbarOwnsButtons": "十字热键栏启用时，扳机键用作修饰键。方向键仍可在此编辑，用于菜单和移动。",
+      "crossHotbarOwnsButtons": "十字热键栏启用时，扳机键和方向键归它所有，请在下方设置，而非此处。",
       "cancelAction": "取消 / 返回",
       "subcommandsAction": "子命令 / 地图",
       "cycleHudAction": "切换界面",
@@ -1697,7 +1727,7 @@ export const zh_CN: EnTranslations = {
       "crossHotbarDisplayMinimal": "仅按住时显示",
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "正在拿着{action}：在格子上按确认放置，按取消放回。",
-      "crossHotbarEditHint": "整理中 · 十字键移动 · 确认拿起并放置 · 取消清空格子",
+      "crossHotbarEditHint": "整理中：确认键可从格子或法术书中拿起技能并放到格子上，取消键清空格子。",
       "crossHotbarEditHelp": "按住左肩键并按上方面键，即可用手柄整理十字热键栏。",
       "padHintLabel": "手柄提示",
       "padHintInteract": "互动",
@@ -2669,7 +2699,9 @@ export const zh_CN: EnTranslations = {
       "unequipHint": "点击移除此背包",
       "poolGeneral": "通用：{used}/{total}",
       "poolMaterials": "材料：{used}/{total}",
-      "capacityPoolsAria": "背包格已用：{used}/{total}。通用物品：{generalUsed}/{generalTotal}。材料：{materialsUsed}/{materialsTotal}。"
+      "capacityPoolsAria": "背包格已用：{used}/{total}。通用物品：{generalUsed}/{generalTotal}。材料：{materialsUsed}/{materialsTotal}。",
+      "capacityPools": "物品 {generalUsed}/{generalTotal}，材料 {materialsUsed}/{materialsTotal}",
+      "emptyMaterialsOnly": "仅限材料"
     },
     "raidConvert": {
       "toPartyDone": "你的团队已转换回队伍。",
@@ -2895,7 +2927,7 @@ export const zh_CN: EnTranslations = {
         "raiseFallenName": "亡者复生",
         "raiseFallenSummary": "在王座阶段，每 {every} 秒，尼思拉克西斯会在其身后唤起复苏王室卫兵。它们会冲向他的当前目标，战斗至被摧毁为止。",
         "raiseFallenResponse": "副坦克负责接管每一波苏醒的卫兵。输出职业应在骨刺间隙清理卫兵，确保在王座陷落前，各波卫兵不会持续堆积。",
-        "soulRendName": "Soul Rend",
+        "soulRendName": "灵魂撕裂",
         "soulRendSummary": "尼思拉克西斯会用灵魂撕裂标记除当前目标外的 {marksNormal} 名队员。{fuse} 秒后，每个标记都会对其携带者造成相当于其全部最大生命值的暗影伤害，并按其 {range} 码内被标记队员的数量分摊。",
         "soulRendHeroicSummary": "尼思拉克西斯会用灵魂撕裂标记除当前目标外的 {marksHeroic} 名队员。{fuse} 秒后，每个标记都会对其携带者造成相当于其 {damageHeroic} 最大生命值的暗影伤害，并按其 {range} 码内被标记队员的数量分摊。若某个标记独自结算，将是致命的。",
         "soulRendResponse": "每名被标记的队员都应在 {fuse} 秒的引爆时间结束前跑到集合点，并站在其他标记 {range} 码范围内。治疗应在标记结算时为团队补满生命。",
@@ -3209,6 +3241,7 @@ export const zh_CN: EnTranslations = {
       "healthPercent": "百分比",
       "healthCurrent": "当前值",
       "healthCurrentMax": "当前 / 最大",
+      "healthCurrentMaxPercent": "当前 / 最大（百分比）",
       "sort": "玩家排序",
       "sortGroup": "小队",
       "sortRole": "职责",
@@ -3251,14 +3284,14 @@ export const zh_CN: EnTranslations = {
         "targetDots": "目标减益",
         "questTracker": "任务追踪器",
         "reliquaryTracker": "圣物库追踪器",
-        "petBar": "Pet Bar",
+        "petBar": "宠物栏",
         "procOverlay": "法术触发",
         "procOverlayFrost": "冰刺",
         "damageMeter": "伤害统计",
         "deedTracker": "功绩追踪器",
         "delveTracker": "探秘追踪器",
         "riftTracker": "裂隙追踪器",
-        "swingBarOffhand": "Off Hand"
+        "swingBarOffhand": "副手"
       },
       "framesMenu": "框体设置",
       "framesMenuTitle": "显示或隐藏各个框体。取消勾选的框体会一直隐藏，直到你重新勾选或恢复默认设置。",
@@ -3300,7 +3333,7 @@ export const zh_CN: EnTranslations = {
       "title": "键盘总览",
       "hint": "正在使用的按键按类别着色。将鼠标悬停或聚焦到某个按键即可查看其全部绑定。",
       "hintInteractive": "正在使用的按键按类别着色。点击某个按键可更改其功能；将鼠标悬停或聚焦到按键上可查看其全部绑定。",
-      "popOut": "Pop Out",
+      "popOut": "弹出",
       "close": "关闭键盘总览",
       "pressKey": "按下一个键以绑定到 {action}。按 Esc 取消。",
       "boundTo": "已将 {action} 绑定到 {key}。",
@@ -3319,12 +3352,12 @@ export const zh_CN: EnTranslations = {
       "legendQwerty": "QWERTY",
       "layerNone": "无修饰键",
       "layerShift": "Shift 键",
-      "layerCtrl": "Ctrl",
-      "layerAlt": "Alt",
-      "keyDetail": "{key}: {bindings}",
+      "layerCtrl": "Ctrl 键",
+      "layerAlt": "Alt 键",
+      "keyDetail": "{key}：{bindings}",
       "separator": ", ",
-      "bindingLine": "{key}: {action}",
-      "assignOption": "{category}: {action}",
+      "bindingLine": "{key}：{action}",
+      "assignOption": "{category}：{action}",
       "otherLayers": "也与修饰键组合绑定"
     },
     "fullTransfer": {
@@ -3434,6 +3467,7 @@ export const zh_CN: EnTranslations = {
       "close": "关闭",
       "keybind": "Discord 面板",
       "disabled": "Discord 集成当前不可用。",
+      "queuePingsLabel": "当我的战场或竞技场排队匹配成功时，通过 Discord 私信通知我（需要已关联的 Discord 账号）",
       "tiers": {
         "none": "未入级",
         "initiate": "见习者",
@@ -3754,6 +3788,8 @@ export const zh_CN: EnTranslations = {
       "depositAllDone": "已存入材料：{count}。",
       "depositAllFull": "已存入材料：{count}。银行已满。",
       "depositAllNone": "银行已满：未存入任何物品。",
+      "depositAllNotable": "已存入材料：{count}，其中包括{item}。",
+      "depositAllNotableFull": "已存入材料：{count}，其中包括{item}。银行已满。",
       "bonusTitle": "奖励格子",
       "bonusEarned": "+{count}",
       "bonusStatusEarned": "+{count}",
@@ -3792,6 +3828,8 @@ export const zh_CN: EnTranslations = {
       "vaultDepositAllDone": "已存入材料：{count}。",
       "vaultDepositAllFull": "已存入材料：{count}。部分材料已达上限。",
       "vaultDepositAllNone": "仓库已满：未存入任何材料。",
+      "vaultDepositAllNotable": "已存入材料：{count}，其中包括{item}。",
+      "vaultDepositAllNotableFull": "已存入材料：{count}，其中包括{item}。部分材料已达上限。",
       "vaultWithdrawShort": "背包只装得下{count}个中的{fit}个。",
       "vaultDepositHint": "点击存入材料仓库",
       "vaultCannotDeposit": "无法存入材料仓库",
@@ -4931,6 +4969,7 @@ export const zh_CN: EnTranslations = {
       "sourceProfession": "通过{profession}获得",
       "sourceDeed": "功绩“{deed}”奖励",
       "sourceVendor": "由{vendor}出售",
+      "sourceVendorGated": "由{vendor}出售（{requirement}）",
       "sourceBossZone": "由{zone}的{boss}掉落",
       "sourceDelve": "在探秘“{delve}”中获得",
       "sourceRift": "通关{rank}级裂隙时掉落",
@@ -4950,6 +4989,10 @@ export const zh_CN: EnTranslations = {
       "filterAll": "全部",
       "filterOwned": "已收录",
       "filterMissing": "尚未获得",
+      "filterIlluminated": "已点亮",
+      "filterRemaining": "未点亮",
+      "filterEmptyPages": "没有符合此筛选条件的页面。",
+      "filterGroupAriaPages": "按点亮情况筛选页面",
       "recentJumpAria": "打开{name}所在的页面",
       "recentEmpty": "尚无发现。此后收录的圣物都会出现在这里。",
       "nearlyEmpty": "即将完成的页面会汇集于此。",
@@ -5057,6 +5100,7 @@ export const zh_CN: EnTranslations = {
       "summary": "世界地图。选择一个地区以打开其地图。",
       "toWorld": "世界地图",
       "toZone": "地区地图",
+      "toInstance": "副本地图",
       "toggleAria": "在世界地图和地区地图之间切换",
       "levels": "等级 {min} 到 {max}"
     },
@@ -5117,6 +5161,7 @@ export const zh_CN: EnTranslations = {
       "walletLinkedConnected": "已关联的钱包应用已连接，可用于 $WOC 付款。",
       "walletUsdBalance": "{amount} USD",
       "walletUsdUnknown": "未知",
+      "walletCardDismiss": "隐藏钱包卡片",
       "rateNote": "汇率：截至 {time}，约每美元 {tokens} $WOC。",
       "rateNotePaused": "最近已知汇率：截至 {time}，约每美元 {tokens} $WOC。",
       "estimateNote": "{usd} 按当前汇率约合 {tokens} $WOC。",
@@ -5308,6 +5353,43 @@ export const zh_CN: EnTranslations = {
       "listingStatusCancelled": "已取消",
       "listingStatusSuspended": "已冻结",
       "listingStatusUnsold": "未售出"
+    },
+    "lootExplorer": {
+      "title": "战利品浏览器",
+      "close": "关闭战利品浏览器",
+      "searchPlaceholder": "搜索物品...",
+      "searchAria": "搜索物品",
+      "filterCategoryAria": "来源",
+      "filterClassAria": "职业",
+      "filterStatAria": "统计数据",
+      "filterQualityAria": "品质",
+      "filterAll": "全部",
+      "tabItems": "按项目",
+      "tabEncounters": "按来源",
+      "category": {
+        "raid": "突袭",
+        "dungeon": "地下城",
+        "delve": "探秘",
+        "open_world": "开放世界",
+        "rift": "裂谷",
+        "vendor": "商人",
+        "quest_reward": "任务奖励",
+        "quest_objective": "任务目标",
+        "ground_object": "世界物品",
+        "starting_equipment": "初始装备"
+      },
+      "difficulty": {
+        "normal": "普通",
+        "heroic": "英雄"
+      },
+      "riftRankLabel": "裂谷排名 {rank}",
+      "source": "{category}: {name}",
+      "sourceWithContext": "{category}：{name}（{context}）",
+      "chance": "{pct}% 掉落几率",
+      "guaranteed": "必得",
+      "gatedByQuest": "任务进行中：{quest}",
+      "empty": "没有符合这些筛选条件的战利品。",
+      "resultCount": "{count} 个结果"
     }
   },
   "gatherEvent": {
@@ -5407,7 +5489,8 @@ export const zh_CN: EnTranslations = {
       "link_required": "请先关联你的 Discord 账号。",
       "swag_claimed": "你已经领取过此奖励。",
       "swag_tier": "达到更高段位即可领取。",
-      "swag_points": "积分不足。"
+      "swag_points": "积分不足。",
+      "invalid_input": "输入无效。"
     },
     "deeds": {
       "invalid_input": "输入无效。"
@@ -5459,6 +5542,11 @@ export const zh_CN: EnTranslations = {
       "reason_required": "必须填写原因。",
       "invalid_duration": "标记时长至少需为 1 秒。",
       "not_marked": "该账号未被标记。"
+    },
+    "kick": {
+      "reason_required": "必须填写原因。",
+      "admin_target": "管理员账号无法被踢出。",
+      "target_offline": "该玩家已不在此服务器在线。"
     },
     "woc_market": {
       "invalid_input": "输入无效。",
@@ -5894,10 +5982,13 @@ export const zh_CN: EnTranslations = {
       "ifPlayerFrameScale": "你自己单位框体的大小。",
       "ifTargetFrameScale": "你目标框体的大小。",
       "ifPartyStyle": "队伍布局：“自动”跟随你的队伍规模，“经典”是传统的竖排，“团队”把所有人压进紧凑网格。",
+      "ifPlayerHealthText": "自己的血条上写什么：不显示、百分比、当前生命、当前与最大生命，或两者并附上百分比。",
+      "ifTargetHealthText": "目标和目标的目标血条上写什么，选项与自己的框体相同。",
       "ifPartyHealthText": "队伍血条上写什么：不显示、百分比、当前生命，或当前与最大生命。",
       "ifPartySort": "队伍成员的排列顺序：入队顺序、职责或名字。",
       "ifPartyShowAuras": "队伍框体上是否显示增益和减益。相应的开关还涵盖资源条、吸收盾、宠物，以及你自己是否出现在队伍列表里。",
       "ifAurasOnPlayerFrame": "除了光环条之外，也把你的增益和减益显示在你自己的单位框体上。",
+      "ifAuraBarBelowFrame": "把增益条移到你的单位框体下方，而不是上方。只有在增益显示于玩家框时才有效。",
       "ifAlwaysShowAllBuffs": "即使在低画质预设下也显示所有生效中的增益，绕过该档位平时的增益图标上限。",
       "ifTargetOfTarget": "显示你的目标正在攻击谁，这是判断坦克有没有拉住的经典办法。",
       "ifPetFrame": "为你的宠物显示一个框体。",
@@ -5905,6 +5996,7 @@ export const zh_CN: EnTranslations = {
       "ifChatOpacity": "聊天背景有多实。",
       "ifCompactChat": "收紧聊天行距，让一屏能装下更多内容。",
       "ifChatTimestamps": "为每一行聊天加上时间，可选 12 小时制或 24 小时制。",
+      "ifFilterProfanity": "用星号遮住聊天中的脏话。默认开启；如果你想不加过滤地阅读聊天，可以在这里关闭。",
       "ifStartAttack": "使用技能时是否同时开始自动攻击。默认开启，也是大多数玩家熟悉的经典行为。",
       "ifStopAutoAttack": "切换目标时是否停下你的挥击。默认关闭，因此你的攻击会延续到新目标身上。",
       "ifShowAttackButton": "在你的动作条上放一个明确的“攻击”按钮。",
@@ -5971,6 +6063,7 @@ export const zh_CN: EnTranslations = {
       "framesMoveBody": "你的框体、目标框体和队伍框体都可以移动。每个框体角上都有一个小小的移动按钮：解开它，把框体拖到你想要的位置，再锁上，这样一次误点就挪不动它。如果挪到了让你后悔的地方，选项里的“重置框体位置”会把它们统统弹回最初的位置。",
       "framesMoveBodyEditFrames": "你的框体、目标框体和队伍框体都可以移动。每个框体角上都有一个小小的移动按钮：解开它，把框体拖到你想要的位置，再锁上，这样一次误点就挪不动它。界面选项里“头像框”标签页顶部的“编辑框体”会一次松开界面的其余部分，这三个框体也随之一起松开：动作条、施法条、挥击条、经验条、小地图、按钮栏、宠物框体、姿态条、增益行与减益行，还有“愿望单提醒”小标签，松开期间每一件都挂着自己的名牌。如果挪到了让你后悔的地方，同一个“头像框”标签页底部的“恢复默认”会把它们统统弹回最初的位置。",
       "framesGovernedExtra": "“编辑框体”还会一并松开下方的追踪器堆栈(你追踪的任务及其目标、你的功绩进度、你的圣物库页面、你所在的探秘、你正在参与的任何裂隙，以及你正在追踪的配方或委托)、宠物框体旁的宠物动作条、显示你对附近敌人所施减益的“目标减益”框体、圣骑士的“虔诚”勋章、术士的“痛苦资源条”、法术触发浮层、双持武器时的副手挥击条，以及带标签页的伤害统计窗口，松开期间每一件都挂着自己的名牌。",
+      "framesGovernedAuraTracks": "“编辑框体”还会松开六条可选的光环轨道，前提是你已在同一“界面”选项的“战斗”页中开启它们：“我的增益”轨道、“防御性冷却”轨道、“我的护盾”轨道、“攻击性冷却”轨道、“移动与潜行”轨道，以及“我给队友的增益”轨道。所有轨道默认关闭，松开期间每一条都挂着自己的名牌。",
       "barsTitle": "各类条、计时与战斗文字",
       "barsBody": "你施法或引导时，施法条会出现在屏幕中央、动作条正上方，并带着法术的名称与剩余时间。你的目标在它自己的框体上也有一条施法条，好让你看清接下来会发生什么并作出应对。\n\n施法条下方是一条细细的挥击条，它在你两次武器挥击之间填充，让近战或远程攻击者看清下一次自动攻击何时落下。\n\n你的经验条横贯动作条下方的整个宽度，被刻成一段一段，其中较亮的一截表示你已经存下的休息经验。\n\n潜入水下时，屏幕顶部会出现一条蓝色的呼吸条。头没在水里时它会一直下降，耗尽后会闪红并让你开始溺水，而你一浮出水面它就迅速回满。空格键让你上浮，下潜键（默认为 Ctrl）带你潜得更深。\n\n伤害与治疗会以小小的数字从命中之处向上飘起，让你不必读文字也能看懂一场战斗。聊天框里的“战斗”标签页保留着完整的文字记录。",
       "aurasTitle": "增益与减益",
@@ -9395,6 +9488,7 @@ export const zh_CN: EnTranslations = {
     "connectingRealm": "正在连接服务器...",
     "assetsFailed": "资源加载失败：请尝试刷新。{error}",
     "rendererFailed": "无法启动渲染器：请尝试刷新。{error}",
+    "rendererContextLost": "3D 渲染器丢失了图形上下文，且无法恢复。请尝试刷新。",
     "enterTimeout": "无法进入世界。连接已超时。游戏服务器是否正在运行？",
     "connectionLost": "与服务器的连接已断开。",
     "reconnectingAttempt": "连接已断开。正在重新连接...（第 {attempt}/{maxAttempts} 次尝试，{seconds} 秒后重试）",
@@ -9405,6 +9499,7 @@ export const zh_CN: EnTranslations = {
     "realmFull": "当前服务器已满，请稍后几分钟再试。",
     "tooManyConnections": "您的网络向该服务器发起的连接过多。请关闭多余的游戏窗口，或稍后几分钟再试。",
     "messageRateExceeded": "由于发送操作过快，您已断开连接。请稍等片刻后重新登录。",
+    "kickedByModerator": "管理员已将您断开连接：{reason}",
     "tips": {
       "classes": "提示：9 个职业玩法各不相同，投入之前不妨都试一试。",
       "talents": "提示：你可以在任意脱离战斗的时候重置天赋，因此早期的选择永远不会成为陷阱。",
@@ -11239,11 +11334,11 @@ export const zh_CN: EnTranslations = {
       },
       "melting_acid": {
         "name": "溶解酸",
-        "description": "向目标泼洒腐蚀性毒液，造成 {damage} 点自然伤害，并使其护甲降低 5%，持续 12 秒。"
+        "description": "为你的武器涂覆 30 分钟。你的每次近战挥击都会向目标溅洒腐蚀酸液，使其护甲降低 5%，持续 12 秒。"
       },
       "nightshade_coating": {
         "name": "夜影涂层",
-        "description": "用夜影覆盖目标，造成 {damage} 点自然伤害，并使其受到的治疗降低 25%，持续 12 秒。"
+        "description": "为你的武器涂覆 30 分钟。你的每次近战挥击都会让目标沾染夜影，使其受到的治疗降低 25%，持续 12 秒。"
       },
       "expose_armor": {
         "name": "护甲突破",
@@ -11259,11 +11354,11 @@ export const zh_CN: EnTranslations = {
       },
       "instant_poison": {
         "name": "蝰蛇之咬",
-        "description": "为你的武器淬毒，持续 30 分钟，使你的每次近战攻击额外造成 8 点自然伤害。"
+        "description": "为你的武器淬毒，持续 30 分钟，使你的每次近战攻击额外造成 {damage} 点自然伤害。"
       },
       "deadly_poison": {
         "name": "溃烂毒液",
-        "description": "为你的武器淬毒，持续 30 分钟，使你的每次近战攻击额外造成 14 点自然伤害。"
+        "description": "为你的武器淬毒，持续 30 分钟。你的每次近战攻击都会在目标身上叠加一层毒液，最多 5 层，并刷新 12 秒持续时间。每层每 2 秒造成 {damage} 点自然伤害。"
       },
       "blind": {
         "name": "扬尘",
@@ -12362,7 +12457,7 @@ export const zh_CN: EnTranslations = {
       },
       "temporal_echo": {
         "name": "时光回响",
-        "description": "以更健康时刻的回响标记一名盟友，立即恢复{damage}点生命值。{duration}秒内，你造成的奥术伤害有一部分会通过回响转化为对其的治疗。"
+        "description": "以更健康时刻的回响标记一名盟友，立即恢复{damage}点生命值。{duration}秒内，你其他单体奥术伤害的{echoSinglePct}%和范围奥术伤害的{echoAreaPct}%会治疗该盟友。以太涌动和以太飞镖改为按其造成伤害的{echoDriverPct}%治疗该盟友。"
       },
       "temporal_cascade": {
         "name": "时光奔流",
@@ -14053,6 +14148,12 @@ export const zh_CN: EnTranslations = {
       },
       "reins_terrorspark_groundshaker": {
         "name": "骇雷撼地者点火钥匙"
+      },
+      "reins_goblin_rocket_sled": {
+        "name": "哥布林火箭雪橇点火钥匙"
+      },
+      "reins_rallycart_rxt": {
+        "name": "拉力卡丁车 RXT 点火钥匙"
       },
       "reins_lanternback_troll": {
         "name": "点灯人之轭：格伦博"
