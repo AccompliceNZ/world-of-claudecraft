@@ -72,6 +72,47 @@ function itemDelta(op: 'deposit' | 'withdraw', itemId: string, count: number): G
 const CHAR_STATE = (marker: string) =>
   ({ level: 5, marker, questLog: [], questsDone: [], inventory: [] }) as never;
 
+type ExplainJsonRow = { 'QUERY PLAN': unknown };
+type ExplainPlanNode = Record<string, unknown>;
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function explainPlanRoot(queryPlan: unknown): ExplainPlanNode {
+  if (!Array.isArray(queryPlan)) throw new Error('EXPLAIN returned a non-array QUERY PLAN');
+  const first = queryPlan[0];
+  if (!isRecord(first) || !isRecord(first.Plan)) {
+    throw new Error('EXPLAIN returned no root Plan object');
+  }
+  return first.Plan;
+}
+
+function collectPlanNodes(root: ExplainPlanNode): ExplainPlanNode[] {
+  const nodes: ExplainPlanNode[] = [];
+  const visit = (node: ExplainPlanNode) => {
+    nodes.push(node);
+    const children = node.Plans;
+    if (children === undefined) return;
+    if (!Array.isArray(children)) throw new Error('EXPLAIN Plan node has non-array Plans');
+    for (const child of children) {
+      if (!isRecord(child)) throw new Error('EXPLAIN Plans contained a non-object child');
+      visit(child);
+    }
+  };
+  visit(root);
+  return nodes;
+}
+
+function expectGuildBankStatementPlan(nodes: ExplainPlanNode[], expectedIndex: string): void {
+  expect(nodes.some((node) => node['Index Name'] === expectedIndex)).toBe(true);
+  expect(
+    nodes.filter(
+      (node) => node['Node Type'] === 'Seq Scan' && node['Relation Name'] === 'bank_ledger',
+    ),
+  ).toEqual([]);
+}
+
 describeDb('guild bank persistence (REAL Postgres)', () => {
   let admin: PgPool;
   let pool: PgPool;
@@ -1015,7 +1056,13 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
       // the others on the container index.
       await db.runConcurrentIndexMigrations();
       const explain = async (sql: string, params: unknown[]) =>
-        JSON.stringify((await pool.query(`EXPLAIN (FORMAT JSON) ${sql}`, params)).rows[0]);
+        collectPlanNodes(
+          explainPlanRoot(
+            (await pool.query<ExplainJsonRow>(`EXPLAIN (FORMAT JSON) ${sql}`, params)).rows[0][
+              'QUERY PLAN'
+            ],
+          ),
+        );
       const ops = ['deposit', 'withdraw', 'deposit_gold'];
       const moneyOps = ['deposit_gold', 'withdraw_gold', 'buy_slots', 'open_bank', 'create_fee'];
       const head = await explain(logDb.guildBankLogPageSql({ cursor: false, money: false }), [
@@ -1024,8 +1071,7 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
         51,
         realm,
       ]);
-      expect(head).toContain('bank_ledger_container_recent');
-      expect(head).not.toContain('Seq Scan');
+      expectGuildBankStatementPlan(head, 'bank_ledger_container_recent');
       const older = await explain(logDb.guildBankLogPageSql({ cursor: true, money: false }), [
         1,
         ops,
@@ -1033,16 +1079,14 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
         realm,
         400,
       ]);
-      expect(older).toContain('bank_ledger_container_recent');
-      expect(older).not.toContain('Seq Scan');
+      expectGuildBankStatementPlan(older, 'bank_ledger_container_recent');
       const money = await explain(logDb.guildBankLogPageSql({ cursor: true, money: true }), [
         1,
         51,
         realm,
         400,
       ]);
-      expect(money).toContain('bank_ledger_container_money_recent');
-      expect(money).not.toContain('Seq Scan');
+      expectGuildBankStatementPlan(money, 'bank_ledger_container_money_recent');
       // And the reader really takes the money arm for the money slice.
       expect(logDb.isGuildBankMoneySlice(moneyOps)).toBe(true);
     });
