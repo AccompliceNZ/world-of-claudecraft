@@ -14,7 +14,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 1000,
+      "nextId": 1003,
       "state": "337afca8",
       "events": "741638a5",
       "rng": {
@@ -151,8 +151,8 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 1001,
-      "state": "6c785492",
+      "nextId": 1004,
+      "state": "276d7e37",
       "events": "fa3fe951",
       "rng": {
         "draws": 2,
@@ -162,9 +162,9 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 1001,
-      "state": "8e8093ff",
-      "events": "6b3caede",
+      "nextId": 1004,
+      "state": "7a5e36a9",
+      "events": "bbd59c0d",
       "rng": {
         "draws": 2,
         "digest": "a1c65985"
@@ -173,9 +173,9 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 1001,
-      "state": "b3ff0e63",
-      "events": "ca2fb0c7",
+      "nextId": 1004,
+      "state": "6ee0f888",
+      "events": "b4e973b7",
       "rng": {
         "draws": 136,
         "digest": "e230e6f0"
@@ -184,9 +184,9 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 1001,
-      "state": "92dae7d6",
-      "events": "499bd3f1",
+      "nextId": 1004,
+      "state": "dd9f947d",
+      "events": "86447212",
       "rng": {
         "draws": 304,
         "digest": "1b76d31b"
@@ -195,9 +195,9 @@
     {
       "tick": 100,
       "time": 5,
-      "nextId": 1001,
-      "state": "30c61cab",
-      "events": "26ae2b2e",
+      "nextId": 1004,
+      "state": "19f8a9ab",
+      "events": "39ac453f",
       "rng": {
         "draws": 507,
         "digest": "7cc40d26"
@@ -206,9 +206,9 @@
     {
       "tick": 120,
       "time": 6,
-      "nextId": 1001,
-      "state": "a7f6f8f3",
-      "events": "f608bdb9",
+      "nextId": 1004,
+      "state": "f76ae42c",
+      "events": "d58df910",
       "rng": {
         "draws": 714,
         "digest": "ff11f95b"
@@ -217,8 +217,8 @@
     {
       "tick": 128,
       "time": 6.4,
-      "nextId": 1001,
-      "state": "f785758c",
+      "nextId": 1004,
+      "state": "80e4f51b",
       "events": "741638a5",
       "rng": {
         "draws": 797,
@@ -323,7 +323,7 @@
           "aiState": "idle",
           "attackPower": 10,
           "castRemaining": 1.7,
-          "castTargetId": 1000,
+          "castTargetId": 1003,
           "castTotal": 2.5,
           "castingAbility": "frostbolt",
           "combatTimer": 0.55,
@@ -369,7 +369,7 @@
             "sta": 23,
             "str": 10
           },
-          "targetId": 1000,
+          "targetId": 1003,
           "templateId": "mage",
           "weapon": {
             "max": 6,
@@ -415,7 +415,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 8912,
-          "id": 1000,
+          "id": 1003,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {

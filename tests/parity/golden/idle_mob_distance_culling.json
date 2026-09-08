@@ -15,7 +15,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 1000,
+      "nextId": 1003,
       "state": "df97b569",
       "events": "741638a5",
       "rng": {
@@ -161,8 +161,8 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 1002,
-      "state": "ffd9b935",
+      "nextId": 1005,
+      "state": "a0de1e33",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -312,7 +312,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 96,
-          "id": 1000,
+          "id": 1003,
           "kind": "mob",
           "level": 5,
           "lootFfaTimer": "Infinity",
@@ -351,7 +351,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 96,
-          "id": 1001,
+          "id": 1004,
           "kind": "mob",
           "level": 5,
           "lootFfaTimer": "Infinity",
@@ -384,8 +384,8 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 1002,
-      "state": "6d0afec9",
+      "nextId": 1005,
+      "state": "47644cd2",
       "events": "1fb971b0",
       "rng": {
         "draws": 0,
@@ -395,8 +395,8 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 1002,
-      "state": "cab18aa3",
+      "nextId": 1005,
+      "state": "5e7a8c1a",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -406,8 +406,8 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 1002,
-      "state": "62a27066",
+      "nextId": 1005,
+      "state": "860f6e2f",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -417,8 +417,8 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 1002,
-      "state": "d0d84753",
+      "nextId": 1005,
+      "state": "95da9dd8",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -428,8 +428,8 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 1002,
-      "state": "d0d84753",
+      "nextId": 1005,
+      "state": "95da9dd8",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -575,12 +575,12 @@
           "critChance": 0.05,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
-          "facing": 2.199909,
+          "facing": -0.079314,
           "fallStartY": -3.019823,
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 96,
-          "id": 1000,
+          "id": 1003,
           "kind": "mob",
           "level": 5,
           "lootFfaTimer": "Infinity",
@@ -590,9 +590,9 @@
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 5.320258,
-            "y": -3.051418,
-            "z": 6.128146
+            "x": -0.321677,
+            "y": -2.91084,
+            "z": 14.047237
           },
           "potionCooldownUntil": -1,
           "spawnPos": {
@@ -603,7 +603,7 @@
             "armor": 40
           },
           "templateId": "forest_wolf",
-          "wanderTimer": 4.959747,
+          "wanderTimer": 7.399891,
           "weapon": {
             "max": 12,
             "min": 8,
@@ -621,7 +621,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 96,
-          "id": 1001,
+          "id": 1004,
           "kind": "mob",
           "level": 5,
           "lootFfaTimer": "Infinity",
@@ -654,8 +654,8 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 1002,
-      "state": "d0d84753",
+      "nextId": 1005,
+      "state": "95da9dd8",
       "events": "741638a5",
       "rng": {
         "draws": 0,
@@ -801,12 +801,12 @@
           "critChance": 0.05,
           "detonateTimer": "Infinity",
           "dodgeChance": 0.05,
-          "facing": 2.199909,
+          "facing": -0.079314,
           "fallStartY": -3.019823,
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 96,
-          "id": 1000,
+          "id": 1003,
           "kind": "mob",
           "level": 5,
           "lootFfaTimer": "Infinity",
@@ -816,9 +816,9 @@
           "overpowerUntil": -1,
           "petMode": "defensive",
           "pos": {
-            "x": 5.320258,
-            "y": -3.051418,
-            "z": 6.128146
+            "x": -0.321677,
+            "y": -2.91084,
+            "z": 14.047237
           },
           "potionCooldownUntil": -1,
           "spawnPos": {
@@ -829,7 +829,7 @@
             "armor": 40
           },
           "templateId": "forest_wolf",
-          "wanderTimer": 4.959747,
+          "wanderTimer": 7.399891,
           "weapon": {
             "max": 12,
             "min": 8,
@@ -847,7 +847,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 96,
-          "id": 1001,
+          "id": 1004,
           "kind": "mob",
           "level": 5,
           "lootFfaTimer": "Infinity",

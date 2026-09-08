@@ -13,7 +13,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 1000,
+      "nextId": 1003,
       "state": "6f1833d9",
       "events": "741638a5",
       "rng": {
@@ -149,9 +149,9 @@
     {
       "tick": 10,
       "time": 0.5,
-      "nextId": 1001,
-      "state": "12a5c6f4",
-      "events": "7653752e",
+      "nextId": 1004,
+      "state": "bb47d94b",
+      "events": "343ab02d",
       "rng": {
         "draws": 3,
         "digest": "80e78b7c"
@@ -160,8 +160,8 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 1001,
-      "state": "534b6f6f",
+      "nextId": 1004,
+      "state": "570b65d8",
       "events": "1fb971b0",
       "rng": {
         "draws": 3,
@@ -171,8 +171,8 @@
     {
       "tick": 30,
       "time": 1.5,
-      "nextId": 1001,
-      "state": "3da88fee",
+      "nextId": 1004,
+      "state": "c37fe697",
       "events": "741638a5",
       "rng": {
         "draws": 3,
@@ -182,8 +182,8 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 1001,
-      "state": "90659f9d",
+      "nextId": 1004,
+      "state": "e3598b24",
       "events": "741638a5",
       "rng": {
         "draws": 3,
@@ -193,9 +193,9 @@
     {
       "tick": 50,
       "time": 2.5,
-      "nextId": 1001,
-      "state": "8859457a",
-      "events": "7d4a65f2",
+      "nextId": 1004,
+      "state": "13860975",
+      "events": "1f342051",
       "rng": {
         "draws": 72,
         "digest": "1e25b053"
@@ -204,8 +204,8 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 1001,
-      "state": "38a737d6",
+      "nextId": 1004,
+      "state": "9b376579",
       "events": "741638a5",
       "rng": {
         "draws": 153,
@@ -215,8 +215,8 @@
     {
       "tick": 70,
       "time": 3.5,
-      "nextId": 1001,
-      "state": "732efba3",
+      "nextId": 1004,
+      "state": "9e1fac00",
       "events": "741638a5",
       "rng": {
         "draws": 241,
@@ -226,9 +226,9 @@
     {
       "tick": 80,
       "time": 4,
-      "nextId": 1001,
-      "state": "c421d53a",
-      "events": "6b3caede",
+      "nextId": 1004,
+      "state": "0159643a",
+      "events": "bbd59c0d",
       "rng": {
         "draws": 329,
         "digest": "fe735496"
@@ -237,9 +237,9 @@
     {
       "tick": 90,
       "time": 4.5,
-      "nextId": 1001,
-      "state": "30325977",
-      "events": "d183ae7f",
+      "nextId": 1004,
+      "state": "3c6c03f7",
+      "events": "39516944",
       "rng": {
         "draws": 414,
         "digest": "00a5eee7"
@@ -248,8 +248,8 @@
     {
       "tick": 100,
       "time": 5,
-      "nextId": 1001,
-      "state": "aa66cc2c",
+      "nextId": 1004,
+      "state": "fac0a2c4",
       "events": "741638a5",
       "rng": {
         "draws": 507,
@@ -259,8 +259,8 @@
     {
       "tick": 110,
       "time": 5.5,
-      "nextId": 1001,
-      "state": "d27c117b",
+      "nextId": 1004,
+      "state": "2ce83073",
       "events": "741638a5",
       "rng": {
         "draws": 605,
@@ -270,8 +270,8 @@
     {
       "tick": 120,
       "time": 6,
-      "nextId": 1001,
-      "state": "f0032365",
+      "nextId": 1004,
+      "state": "7c60fd15",
       "events": "741638a5",
       "rng": {
         "draws": 688,
@@ -281,8 +281,8 @@
     {
       "tick": 120,
       "time": 6,
-      "nextId": 1001,
-      "state": "f0032365",
+      "nextId": 1004,
+      "state": "7c60fd15",
       "events": "741638a5",
       "rng": {
         "draws": 688,
@@ -443,7 +443,7 @@
             "sta": 33,
             "str": 10
           },
-          "targetId": 1000,
+          "targetId": 1003,
           "templateId": "mage",
           "weapon": {
             "max": 6,
@@ -479,7 +479,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 49889,
-          "id": 1000,
+          "id": 1003,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -528,8 +528,8 @@
     {
       "tick": 120,
       "time": 6,
-      "nextId": 1001,
-      "state": "f0032365",
+      "nextId": 1004,
+      "state": "7c60fd15",
       "events": "741638a5",
       "rng": {
         "draws": 688,
@@ -690,7 +690,7 @@
             "sta": 33,
             "str": 10
           },
-          "targetId": 1000,
+          "targetId": 1003,
           "templateId": "mage",
           "weapon": {
             "max": 6,
@@ -726,7 +726,7 @@
           "fiveSecondRule": 99,
           "hostile": true,
           "hp": 49889,
-          "id": 1000,
+          "id": 1003,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {

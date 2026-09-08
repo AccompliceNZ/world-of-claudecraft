@@ -16,7 +16,7 @@
     {
       "tick": 0,
       "time": 0,
-      "nextId": 1000,
+      "nextId": 1003,
       "state": "ee61cb40",
       "events": "741638a5",
       "rng": {
@@ -163,9 +163,9 @@
     {
       "tick": 20,
       "time": 1,
-      "nextId": 1001,
-      "state": "ca082903",
-      "events": "651a2037",
+      "nextId": 1004,
+      "state": "7f59f07f",
+      "events": "afaf52c1",
       "rng": {
         "draws": 7,
         "digest": "4f9a2cfb"
@@ -174,8 +174,8 @@
     {
       "tick": 40,
       "time": 2,
-      "nextId": 1001,
-      "state": "f900547f",
+      "nextId": 1004,
+      "state": "36bff003",
       "events": "741638a5",
       "rng": {
         "draws": 7,
@@ -185,9 +185,9 @@
     {
       "tick": 60,
       "time": 3,
-      "nextId": 1001,
-      "state": "8c52f799",
-      "events": "61ef78dd",
+      "nextId": 1004,
+      "state": "a64cf483",
+      "events": "8961bd33",
       "rng": {
         "draws": 174,
         "digest": "847684f0"
@@ -196,9 +196,9 @@
     {
       "tick": 72,
       "time": 3.6,
-      "nextId": 1001,
-      "state": "8cad8e99",
-      "events": "8cdb9ad0",
+      "nextId": 1004,
+      "state": "b5ad295d",
+      "events": "2299e478",
       "rng": {
         "draws": 263,
         "digest": "d3f0124f"
@@ -360,7 +360,7 @@
             "str": 41
           },
           "swingTimer": 0.45,
-          "targetId": 1000,
+          "targetId": 1003,
           "templateId": "warrior",
           "weapon": {
             "max": 5,
@@ -381,7 +381,7 @@
           "fallStartY": -2,
           "fiveSecondRule": 99,
           "hostile": true,
-          "id": 1000,
+          "id": 1003,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
@@ -439,8 +439,8 @@
     {
       "tick": 76,
       "time": 3.8,
-      "nextId": 1001,
-      "state": "f6420ccf",
+      "nextId": 1004,
+      "state": "70c209b3",
       "events": "135a7e61",
       "rng": {
         "draws": 309,
@@ -608,7 +608,7 @@
             "str": 41
           },
           "swingTimer": 0.25,
-          "targetId": 1000,
+          "targetId": 1003,
           "templateId": "warrior",
           "weapon": {
             "max": 5,
@@ -629,7 +629,7 @@
           "fallStartY": -2,
           "fiveSecondRule": 99,
           "hostile": true,
-          "id": 1000,
+          "id": 1003,
           "inCombat": true,
           "kind": "mob",
           "leashAnchor": {
