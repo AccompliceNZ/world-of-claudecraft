@@ -10,7 +10,7 @@
 
 import { afterEach, beforeAll, describe, expect, it } from 'vitest';
 import { DUNGEON_LIST } from '../src/sim/data';
-import { dungeonText } from '../src/ui/entity_display_labels';
+import { dungeonText } from '../src/ui/entity_display_core';
 import { ensureLocaleLoaded, formatNumber, setLanguage, t } from '../src/ui/i18n';
 import { localizeSystemText } from '../src/ui/system_text_i18n';
 

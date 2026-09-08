@@ -339,6 +339,7 @@ describe('guild-bank op coordinator', () => {
         count: null,
         instance: null,
         craftedRecipeId: null,
+        materialSources: null,
         copperDelta: -900,
         purchasedSlotsBefore: 1,
         purchasedSlotsAfter: 24,
@@ -445,11 +446,15 @@ describe('guild-bank op coordinator', () => {
       op: 'deposit',
       itemId: 'copper_ore',
       count: 2,
-      instance: { signer: 'Ada', charges: { temper: 3 } },
+      // The signer moves off the instance and into the exact per-unit
+      // composition (material_stack.ts normalizeMaterialStack); charges is a
+      // different axis and stays on the instance.
+      instance: { charges: { temper: 3 } },
       craftedRecipeId: 'smelt_copper',
       copperDelta: 0,
       purchasedSlotsBefore: 24,
       purchasedSlotsAfter: 24,
+      materialSources: [{ count: 2, source: { signer: 'Ada' } }],
     });
     const [rows, sidecar] = rig.commit.mock.calls[0] ?? [];
     expect(rows).toEqual([

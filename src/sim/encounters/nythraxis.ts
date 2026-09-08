@@ -34,7 +34,11 @@ import * as deedsMod from '../deeds';
 import { dungeonInstanceAt } from '../dungeon_floor';
 import { createMob, createNpc } from '../entity';
 import { applyDungeonMobTuning, mobTemplateForDungeonDifficulty } from '../instances/difficulty';
-import { heroicLockoutId, instanceLockoutMetas } from '../instances/dungeons';
+import {
+  claimedInstanceForMob,
+  heroicLockoutId,
+  instanceLockoutMetas,
+} from '../instances/dungeons';
 import {
   NYTHRAXIS_ASCENSION_AURA_ID,
   NYTHRAXIS_ASCENSION_AURA_NAME,
@@ -900,7 +904,7 @@ export function grantNythraxisLockout(ctx: SimContext, boss: Entity): void {
   const roomMetas = nythraxisRoomMetas(ctx, boss);
   const lockoutMetas = new Map<number, PlayerMeta>();
   for (const meta of roomMetas) lockoutMetas.set(meta.entityId, meta);
-  const inst = ctx.instances.find((i) => i.partyKey !== null && i.mobIds.includes(boss.id));
+  const inst = claimedInstanceForMob(ctx, boss.id);
   if (inst) {
     for (const meta of instanceLockoutMetas(ctx, inst)) lockoutMetas.set(meta.entityId, meta);
   }

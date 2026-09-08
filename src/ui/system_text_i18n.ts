@@ -20,11 +20,11 @@
 import { DELVE_LIST, DUNGEON_LIST } from '../sim/data';
 import {
   delveText,
+  dungeonDisplayNameFromSource,
   dungeonText,
   itemDisplayNameFromSource,
   questTitleFromSource,
-} from './entity_display_labels';
-import { dungeonDisplayNameFromSource } from './error_text_i18n_core';
+} from './entity_display_core';
 import { formatNumber, t } from './i18n';
 import type { TranslationKey } from './i18n.catalog';
 import { localizeServerText } from './server_i18n';
@@ -53,6 +53,26 @@ export function localizeSystemText(text: string): string {
   };
   const key = exact[text];
   if (key) return t(key);
+  // The DEPLOY-WINDOW alias for the one wire-carried reword this packet makes
+  // (Masterwrought phase 18 QA, the Drowned Temple enterText de-dash). The sim
+  // emits enterText as RAW ENGLISH and this loop matches it by exact bytes, so
+  // the CONTENT copy is the match key: a server that has not restarted yet still
+  // sends the pre-reword sentence, which the new client would fail to match and
+  // render raw, em dash and all, which is the very thing the reword removed.
+  // Same practice as the phase 03 wire-carried renames (pinned in
+  // tests/localization_fixes.test.ts, as is this arm) and the same shape as the
+  // arena queue line's ellipsis twin in the exact map above. RULED
+  // qr-19-drowned-temple-entertext-deploy-alias (2026-09-02): ratified; retire
+  // this arm and its pin once the release carrying this branch's reword
+  // (release/v0.42.0 at the time of writing) is fully deployed. The old separator
+  // is spelled as an ESCAPE, never as the byte: the repo forbids an em dash in
+  // source (a raw-NUL guard once made git classify this whole file as binary).
+  if (
+    text ===
+    `You step through the moongate \u2014 the air turns to cold water and pale light, and the singing closes over your head.`
+  ) {
+    return dungeonText('drowned_temple', 'enterText');
+  }
   for (const dungeon of DUNGEON_LIST) {
     if (text === dungeon.enterText) return dungeonText(dungeon.id, 'enterText');
     if (text === dungeon.leaveText) return dungeonText(dungeon.id, 'leaveText');

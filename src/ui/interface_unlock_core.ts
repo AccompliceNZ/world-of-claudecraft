@@ -320,9 +320,10 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
     resizeMode: 'box',
   },
   // The remaining right-stack trackers (the deed watch list, the delve run
-  // tracker, the rift floor tracker), re-homed like the quest and Reliquary
-  // rows. The delve and rift controllers rebuild their paint target's HTML,
-  // so each paints an inner body element (#delve-body / #rift-body) and the
+  // tracker, the rift floor tracker, the gathering goal tracker), re-homed
+  // like the quest and Reliquary rows. The delve, rift and gathering goal
+  // controllers rebuild their paint target's HTML, so each paints an inner
+  // body element (#delve-body / #rift-body / #gathering-goal-body) and the
   // frame chrome lives beside it on the root; the deed painter builds its
   // skeleton once, so its root is safe as-is.
   {
@@ -347,6 +348,20 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
     storageKey: 'woc_hud_frame_rift_tracker',
     labelKey: 'hudChrome.interfaceUnlock.frameNames.riftTracker',
     fallbackSize: { w: 240, h: 100 },
+    detachToUiRoot: true,
+  },
+  // The gathering goal tracker (Intentional Gathering PR4). It sits in the
+  // same #right-tracker-stack column as the three rows above and repaints on
+  // its own signature gate (gathering_goal_controller.ts); reuses the
+  // existing, previously-unwired `hudChrome.gatheringGoal.title` key
+  // ("Gathering Goal") as the mover chrome's name chip rather than minting a
+  // new frameNames.* string, since that key already names exactly this panel.
+  {
+    id: 'gatheringGoalTracker',
+    elementId: 'gathering-goal-tracker',
+    storageKey: 'woc_hud_frame_gathering_goal_tracker',
+    labelKey: 'hudChrome.gatheringGoal.title',
+    fallbackSize: { w: 240, h: 140 },
     detachToUiRoot: true,
   },
   // The off-hand swing timer, the main-hand row's dual-wield sibling: same

@@ -1,3 +1,4 @@
+import type { MaterialSourceTransferSelection } from '../sim/material_source_transfer_selection';
 import type { InvSlot } from '../sim/types';
 
 // ---------------------------------------------------------------------------
@@ -201,7 +202,15 @@ export interface IWorldGuildBank {
   guildBankLogOlder(): void;
   guildBankDepositGold(amount: number): void;
   guildBankWithdrawGold(amount: number): void;
-  guildBankDeposit(slotIndex: number, count?: number): void;
-  guildBankWithdraw(slotIndex: number, count?: number): void;
+  guildBankDeposit(
+    slotIndex: number,
+    count?: number,
+    selection?: MaterialSourceTransferSelection,
+  ): void;
+  guildBankWithdraw(
+    slotIndex: number,
+    count?: number,
+    selection?: MaterialSourceTransferSelection,
+  ): void;
   guildBankBuySlots(): void;
 }

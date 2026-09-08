@@ -50,6 +50,7 @@ describe('HUD_FRAME_SPECS', () => {
       'deedTracker',
       'delveTracker',
       'riftTracker',
+      'gatheringGoalTracker',
       'swingBarOffhand',
       // The six aura tracks, appended by generating one spec per descriptor.
       'auraTrack_defensives',
@@ -85,6 +86,7 @@ describe('HUD_FRAME_SPECS', () => {
       'deed-tracker',
       'delve-tracker',
       'rift-tracker',
+      'gathering-goal-tracker',
       'swingbar-offhand',
       'aura-track-defensives',
       'aura-track-self',
@@ -129,6 +131,7 @@ describe('HUD_FRAME_SPECS', () => {
       'woc_hud_frame_deed_tracker',
       'woc_hud_frame_delve_tracker',
       'woc_hud_frame_rift_tracker',
+      'woc_hud_frame_gathering_goal_tracker',
       'woc_hud_frame_swingbar_offhand',
       'woc_hud_frame_track_defensives',
       'woc_hud_frame_track_self',
@@ -169,6 +172,7 @@ describe('HUD_FRAME_SPECS', () => {
       'deedTracker',
       'delveTracker',
       'riftTracker',
+      'gatheringGoalTracker',
     ]);
   });
 
