@@ -3,7 +3,8 @@ import {
   GRAPHICS_REBUILD_KEYS,
   normalizeGraphicsSettingsSnapshot,
 } from '../src/game/graphics_rebuild_core';
-import { SETTING_RANGES } from '../src/game/settings';
+import { BOOL_SETTINGS, SETTING_RANGES } from '../src/game/settings';
+import { AURA_TRACKS } from '../src/ui/hud/aura_tracks';
 import {
   boolToggleNextValue,
   buildAudioControls,
@@ -811,6 +812,15 @@ const COMBAT_KEYS = [
   'showNameplateDots',
   'nameplateDotScale',
   'showTargetDots',
+  // The six aura tracks, in the order the descriptor table declares them, plus
+  // the mode sub-option that rides with the utility track.
+  'showDefensivesTrack',
+  'showSelfBuffTrack',
+  'showOffensiveTrack',
+  'showUtilityTrack',
+  'showUtilityModes',
+  'showFriendlyTrack',
+  'showShieldTrack',
   'fctScale',
 ];
 const INTERFACE_KEYS_BY_TAB: Record<InterfaceTab, string[]> = {
@@ -865,6 +875,29 @@ describe('options_view: interface dispatch matrix (cluster 5)', () => {
       category: 'combat',
       labelKey: 'hudChrome.options.stickyTarget',
     });
+  });
+
+  it('renders one Combat toggle per aura track, each labelled by its own key', () => {
+    // Six frames need six independent opt-ins: a single "show aura tracks"
+    // switch would put roughly twenty rows on a healer at once, which is the
+    // thing the per-track defaults exist to prevent. Pinned by KEY rather than
+    // by count so a track that loses its row fails here, and pinned against the
+    // descriptor table so the two can never drift.
+    const controls = buildInterfaceControls(makeSource());
+    for (const track of AURA_TRACKS) {
+      expect(find(controls, track.settingKey)).toMatchObject({
+        control: 'boolToggle',
+        category: 'combat',
+        labelKey: `hudChrome.options.${track.settingKey}`,
+      });
+    }
+    // Every track is OFF until asked for, and the mode sub-option rides on.
+    for (const track of AURA_TRACKS) {
+      expect(BOOL_SETTINGS[track.settingKey as keyof typeof BOOL_SETTINGS]).toEqual({
+        def: false,
+      });
+    }
+    expect(BOOL_SETTINGS.showUtilityModes).toEqual({ def: true });
   });
 
   it('renders NO menu rows for the optional action bars (the on-bar toggle owns them)', () => {

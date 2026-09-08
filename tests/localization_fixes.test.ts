@@ -50,6 +50,7 @@ import {
   localizeSimText,
   DICT as simDICT,
 } from '../src/ui/sim_i18n';
+import { localizeSystemText } from '../src/ui/system_text_i18n';
 import {
   hasTalentTitleOverride,
   renderTalentManifestEntry,
@@ -147,11 +148,12 @@ const ALLOW_V07_SLASH: ReadonlySet<string> = new Set<string>(
 const RELEASE_TIER = process.env.I18N_RELEASE_TIER === '1';
 
 // The three client-side matchers that re-localize the English src/sim and server
-// emit. They no longer share one file: localizeErrorText was extracted to its own
-// registered pure core (src/ui/error_text_i18n_core.ts) when hud.ts hit its
-// monolith ceiling, while localizeSystemText and localizeLootText are still Hud
-// methods. Every source-text guard below anchors on this table rather than
-// assuming hud.ts, so the next extraction is a one-line move here.
+// emit. They no longer share one file: localizeErrorText and now localizeSystemText
+// were each extracted to their own module when hud.ts hit its monolith ceiling,
+// while localizeLootText is still a Hud method (it reaches this.localizeSimMoney,
+// so it cannot move until that does). Every source-text guard below anchors on
+// this table rather than assuming hud.ts, which is what made each extraction a
+// one-line move here.
 const MATCHER_ARMS = [
   {
     fn: 'localizeErrorText',
@@ -160,8 +162,8 @@ const MATCHER_ARMS = [
   },
   {
     fn: 'localizeSystemText',
-    file: 'src/ui/hud.ts',
-    signature: 'private localizeSystemText(text: string): string {',
+    file: 'src/ui/system_text_i18n.ts',
+    signature: 'export function localizeSystemText(text: string): string {',
   },
   {
     fn: 'localizeLootText',
@@ -2056,18 +2058,14 @@ describe('deploy-window aliases for wire-carried renames', () => {
     // carries the three-dot spelling a not-yet-restarted server still sends.
     // Nothing pinned the legacy row until the D150 review found it, so a
     // merge could have dropped it in silence.
-    interface SystemTextHarness {
-      localizeSystemText(text: string): string;
-    }
-    const harness = Object.create(Hud.prototype) as unknown as SystemTextHarness;
     const legacy = 'You join the Ashen Coliseum queue. Stand by for a worthy opponent...';
     const live = 'You join the Ashen Coliseum queue. Stand by for a worthy opponent…';
     try {
       for (const lang of supportedLanguages) {
         setLanguage(lang);
-        const canonical = harness.localizeSystemText(live);
+        const canonical = localizeSystemText(live);
         expect(canonical, lang).toBe(t('hud.logs.arenaJoin'));
-        expect(harness.localizeSystemText(legacy), lang).toBe(canonical);
+        expect(localizeSystemText(legacy), lang).toBe(canonical);
       }
     } finally {
       setLanguage('en');
@@ -2077,23 +2075,19 @@ describe('deploy-window aliases for wire-carried renames', () => {
   it('the Drowned Temple enterText reword keeps its deploy-window alias (D150)', () => {
     // The Drowned Temple's enterText de-dash (masterwrought Phase 18 QA) is
     // WIRE-CARRIED: src/sim/instances/dungeons.ts emits DungeonDef.enterText as
-    // raw English and Hud.localizeSystemText matches it by exact bytes, so a
+    // raw English and localizeSystemText matches it by exact bytes, so a
     // server that has not restarted past the reword still sends the pre-reword
     // sentence. The alias arm in localizeSystemText resolves that legacy
     // sentence to the same catalog text as the live one; this pin keeps a
     // future merge from dropping the arm in silence (ruled
-    // qr-19-drowned-temple-entertext-deploy-alias, 2026-09-02). Driven through a
-    // bare Hud prototype (the localizeLootText harness below) because the
-    // method is private and reads no instance state on this path; the S3
+    // qr-19-drowned-temple-entertext-deploy-alias, 2026-09-02). Driven through
+    // the exported function (the arm lives in src/ui/system_text_i18n.ts since
+    // the aura-tracks extraction, PR #3925); the S3
     // parsers above cannot see a template-literal arm, so a source-text pin
     // would not do. The old separator is spelled as an ESCAPE, never the byte.
     // Retire this pin together with the arm once the release carrying this
     // branch's reword (release/v0.42.0 at the time of writing) is fully
     // deployed.
-    interface SystemTextHarness {
-      localizeSystemText(text: string): string;
-    }
-    const harness = Object.create(Hud.prototype) as unknown as SystemTextHarness;
     const live = DUNGEON_LIST.find((d) => d.id === 'drowned_temple')?.enterText;
     expect(live, 'the Drowned Temple ships').toBeDefined();
     if (!live) throw new Error('the Drowned Temple left DUNGEON_LIST');
@@ -2121,10 +2115,10 @@ describe('deploy-window aliases for wire-carried renames', () => {
     try {
       for (const lang of supportedLanguages) {
         setLanguage(lang);
-        const canonical = harness.localizeSystemText(live);
+        const canonical = localizeSystemText(live);
         expect(canonical, lang).toBe(dungeonText('drowned_temple', 'enterText'));
-        expect(harness.localizeSystemText(legacy), lang).toBe(canonical);
-        expect(harness.localizeSystemText(legacy), lang).not.toBe(legacy);
+        expect(localizeSystemText(legacy), lang).toBe(canonical);
+        expect(localizeSystemText(legacy), lang).not.toBe(legacy);
       }
     } finally {
       setLanguage('en');

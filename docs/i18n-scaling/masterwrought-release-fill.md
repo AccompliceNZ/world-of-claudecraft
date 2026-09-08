@@ -24,9 +24,9 @@ maintainer's STEP 1 decisions are collected at the end.
 
 ## OSSBrain integration inventory, 2026-09-08
 
-The integration of candidate `09ffd281f4` with release `6111e6d206` regenerated
-the registry and worklist. The combined inventory has **18,880 pending rows**
-across 20 locales: 11,506 auto-fillable and 7,374 requiring human review.
+The integration of candidate `09ffd281f4` with release `186dd8fe7f` regenerated
+the registry and worklist. The combined inventory has **19,165 pending rows**
+across 20 locales: 11,776 auto-fillable and 7,389 requiring human review.
 The registry covers main, sim, server, and admin together; the admin generator's
 738 pending rows are included, not an additional backlog. There are also 458
 blocked rows and 114 blocked source keys.
@@ -35,7 +35,7 @@ The candidate's earlier pending-zero result does not establish release-tier
 readiness for this combined tree. Complete the canonical translation workflow,
 including the stale-text and side-channel checks below, before release-tier
 approval. The refreshed worklist is derived from universe hash
-`dce95d08abe98ea99ea60c0abd99eee654bc418a5e36816049ee914b5d04b725`.
+`2aa828c57399abb60fa60426519be480b9c02815822098ee2f34e04f7bcd2b59`.
 Regenerate it again if source text changes.
 
 The historical inventory below remains evidence of the original audit, not the

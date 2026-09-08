@@ -433,9 +433,10 @@ const MONOLITHS: MonolithRow[] = [
     // `wc -l < src/ui/hud.ts` on the reconciled file measures 18577, below
     // both arms, so the ceiling follows it down. Exact merged count, zero
     // slack: any further growth reds again.
-    // OSSBrain integration: mobile long-press binding and tooltip painting moved to sibling modules.
-    // Measured after formatting; lower the ratchet with the extraction.
-    ceiling: 18574,
+    // The aura-tracks release sync (186dd8fe7f) composes its system-text
+    // extraction with the OSSBrain long-press and tooltip modules. The
+    // measured combined count is below both parent pins (18574 / 18489).
+    ceiling: 18486,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

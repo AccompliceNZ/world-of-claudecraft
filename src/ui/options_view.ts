@@ -944,6 +944,15 @@ export function buildInterfaceControls(
       // the default slider format, so the readout says "150%".
       slider(s, 'nameplateDotScale', 'hudChrome.options.nameplateDotScale'),
       boolToggle(s, 'showTargetDots', 'hudChrome.options.showTargetDots'),
+      // The six aura tracks: bars of the auras YOU have out, each its own
+      // movable frame and each opted into individually (all default off).
+      boolToggle(s, 'showDefensivesTrack', 'hudChrome.options.showDefensivesTrack'),
+      boolToggle(s, 'showSelfBuffTrack', 'hudChrome.options.showSelfBuffTrack'),
+      boolToggle(s, 'showOffensiveTrack', 'hudChrome.options.showOffensiveTrack'),
+      boolToggle(s, 'showUtilityTrack', 'hudChrome.options.showUtilityTrack'),
+      boolToggle(s, 'showUtilityModes', 'hudChrome.options.showUtilityModes'),
+      boolToggle(s, 'showFriendlyTrack', 'hudChrome.options.showFriendlyTrack'),
+      boolToggle(s, 'showShieldTrack', 'hudChrome.options.showShieldTrack'),
       slider(s, 'fctScale', 'hud.options.fctScale'),
       // The secondary/third bar toggles deliberately have NO menu rows: the
       // plus/minus buttons on the primary action bar are the one control for

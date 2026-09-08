@@ -389,9 +389,12 @@ async function openInterfaceTab(page, tabIndex) {
   return pollForSize(page, '#options-menu');
 }
 
+// Frames is the 2nd tab (the Edit Frames entry row moved there when the tab was
+// minted); Combat the 4th, where the aura-track and Target dots toggles live; Chat
+// the 3rd, where the profanity filter row lives.
 const openInterfaceFramesTab = (page) => openInterfaceTab(page, 1);
-const openInterfaceCombatTab = (page) => openInterfaceTab(page, 3);
 const openInterfaceChatTab = (page) => openInterfaceTab(page, 2);
+const openInterfaceCombatTab = (page) => openInterfaceTab(page, 3);
 
 // Press the real "Unlock interface" button (the first row of the Frames tabpanel,
 // which interfaceUnlockRow appends ahead of the declarative list), then close the
@@ -2448,6 +2451,256 @@ export const TARGETS = [
         clip: { x, y, width, height },
       });
       return {};
+    },
+  },
+  {
+    key: 'aura-tracks',
+    label: 'Aura tracks: the six bars of the buffs you have out, and their Combat toggles',
+    // Output lands in docs/screenshots/aura-tracks/, the subtree the ci.yml
+    // sparse-checkout cone carries; this entry is what references it.
+    when: ['ui/hud/aura_tracks', 'hud/aura_tracks'],
+    // TWO CLASSES, because between them they cover all three ROW SHAPES and no
+    // single class does. The druid shows the two timer tracks and the MODE row
+    // (Travel Form, a toggle drawn with no countdown); the priest shows the
+    // POINTS row, since an absorb bar drains with damage rather than with the
+    // clock, and the ally row that carries a unit name.
+    //
+    // Offensive Cooldowns is deliberately not staged. It is a plain timer row,
+    // identical in shape to the two the druid already shows, and reaching it
+    // would need a third class for no new information.
+    //
+    // Every spell here is castable in caster form and lands where it is aimed:
+    // an earlier cut reached for Dash and Tigers Fury (cat-form only) and shot
+    // two empty frames, then for Power Infusion, which lands nowhere at all.
+    variants: [
+      // The frames on both layouts (the mobile seat is its own stylesheet rule,
+      // so it is a real second surface rather than a resize), then the options
+      // rows that turn them on, which is where a player meets the feature at all
+      // given every track ships off.
+      { key: 'frames-desktop', shot: 'frames', charClass: 'druid', charName: 'Morphalo' },
+      {
+        key: 'frames-mobile',
+        shot: 'frames',
+        mobile: true,
+        charClass: 'druid',
+        charName: 'Morphalo',
+      },
+      { key: 'shields-desktop', shot: 'frames', charClass: 'priest', charName: 'Elowen' },
+      { key: 'options-desktop', shot: 'options' },
+      { key: 'options-mobile', shot: 'options', mobile: true },
+    ],
+    async capture(page, variant) {
+      // Turn every track on through the SETTINGS STORE the option rows write, not
+      // by poking the frames: what is being shot has to be the state a player can
+      // actually reach, and all six ship off.
+      await page.evaluate(() => {
+        const settings = window.__game?.hud?.optionsHooks?.settings;
+        if (!settings) return;
+        for (const key of [
+          'showDefensivesTrack',
+          'showSelfBuffTrack',
+          'showOffensiveTrack',
+          'showUtilityTrack',
+          'showFriendlyTrack',
+          'showShieldTrack',
+        ]) {
+          // Per-key try/catch so this target can also run against a tree where
+          // these settings do not exist yet, which is what a BEFORE capture is.
+          // Without it the whole recipe throws on the first unknown key and the
+          // before/after pair has to come from two different targets shot under
+          // two different recipes, which is not a comparison.
+          try {
+            settings.set(key, true);
+          } catch {}
+        }
+      });
+      // Clear the two windows the entry flow leaves behind. They are NOT the ids a
+      // reader would guess: the greeter is #tutorial-greeting (there is a
+      // #quest-dialog, and it is a different window that is not up here), and the
+      // tutorial step is .tut-card behind button.tut-skip. dismissEntryOverlays
+      // ran before entry and cannot see either, since the tutorial only advances
+      // to this step once the world is live.
+      //
+      // This runs for BOTH shot kinds, ahead of the options branch: the greeter
+      // sits centre-screen, so it lands squarely across the options panel too,
+      // and an earlier cut cleared it only on the world plates and shipped an
+      // options plate with two of the new rows hidden behind it.
+      for (let attempt = 0; attempt < 4; attempt++) {
+        const cleared = await page.evaluate(() => {
+          document.querySelector('button.tut-skip')?.click();
+          for (const btn of document.querySelectorAll('#tutorial-greeting button')) btn.click();
+          const up = (sel) => {
+            const el = document.querySelector(sel);
+            return !!el && getComputedStyle(el).display !== 'none';
+          };
+          return !up('#tutorial-greeting') && !up('.tut-card');
+        });
+        if (cleared) break;
+        await wait(600);
+      }
+      if (variant.shot === 'options') {
+        await openInterfaceCombatTab(page);
+        return { clip: '#options-menu' };
+      }
+      // The shared entry flow's overlays (the loading veil, the intro cards).
+      await dismissEntryOverlays(page);
+      // MOVE OFF THE BEACH FIRST. The spawn point puts the camera on the Proving
+      // Shore greeter, whose dialog and the first-login deed banner then sit over
+      // the world for the rest of the session; neither can be dismissed by a
+      // style write (the Hud repaints it next frame) or by clicking its confirm.
+      // The practice ground is the answer: it is ~670 units away, has no greeter,
+      // and is where the ally being healed already stands, so one teleport buys a
+      // clean plate AND puts the friendly track's subject in frame. Nudging a few
+      // paces along the beach is NOT enough and puts the camera over open water.
+      await page.evaluate(() => {
+        const sim = window.__game?.sim;
+        const player = sim?.player;
+        if (!sim || !player) return;
+        if (
+          ![...sim.entities.values()].some(
+            (e) => e.friendlyPracticeTarget || e.name === 'Healing Dummy',
+          )
+        ) {
+          sim.spawnHealerPracticeDummy?.();
+        }
+        const dummy = [...sim.entities.values()].find(
+          (e) => e.friendlyPracticeTarget || e.name === 'Healing Dummy',
+        );
+        if (!dummy) return;
+        player.pos.x = dummy.pos.x - 5;
+        player.pos.y = dummy.pos.y;
+        player.pos.z = dummy.pos.z - 3;
+        player.prevPos = { ...player.pos };
+        sim.rebucket?.(player);
+      });
+      // A teleport across the map raises the zone-streaming veil again; let that
+      // transition start, then wait for the world the player would actually see.
+      await wait(1200);
+      await awaitWorldPainted(page);
+      // The teleport can advance the tutorial a step, so sweep once more.
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const cleared = await page.evaluate(() => {
+          document.querySelector('button.tut-skip')?.click();
+          for (const btn of document.querySelectorAll('#tutorial-greeting button')) btn.click();
+          const up = (sel) => {
+            const el = document.querySelector(sel);
+            return !!el && getComputedStyle(el).display !== 'none';
+          };
+          return !up('#tutorial-greeting') && !up('.tut-card');
+        });
+        if (cleared) break;
+        await wait(600);
+      }
+      // Cast real abilities rather than injecting auras: a tracker shot whose rows
+      // came from a harness write proves the painter and nothing else, and the
+      // whole claim of this change is that the SIM's auras reach the right track.
+      await page.evaluate(() => {
+        const game = window.__game;
+        const sim = game?.sim;
+        const player = sim?.player;
+        if (!sim || !player) return;
+        sim.setPlayerLevel?.(30, player.id);
+        player.resource = player.maxResource;
+        if (
+          ![...sim.entities.values()].some(
+            (e) => e.friendlyPracticeTarget || e.name === 'Healing Dummy',
+          )
+        ) {
+          sim.spawnHealerPracticeDummy?.();
+        }
+      });
+      await wait(600);
+      // The level bump above grants the ranks; every spell here is learned well
+      // under the cap. The GCD is cleared between casts because the recipe stages
+      // a STATE rather than simulating a rotation, and the resource is topped up
+      // for the same reason.
+      const staged = await page.evaluate((cls) => {
+        const game = window.__game;
+        const sim = game?.sim;
+        const player = sim?.player;
+        if (!sim || !player) return { ok: false, reason: 'offline world is unavailable' };
+        const ally = [...sim.entities.values()].find(
+          (e) => e.friendlyPracticeTarget || e.name === 'Healing Dummy',
+        );
+        const cast = (id) => {
+          player.gcdRemaining = 0;
+          player.resource = player.maxResource;
+          sim.castAbility?.(id, player.id);
+        };
+        if (cls === 'priest') {
+          // The POINTS row, then an ally row. The target is set BEFORE the heal,
+          // not after: a priest heal with no target lands on the priest, which is
+          // how an earlier cut put Renew in the self track and left the friendly
+          // one empty while claiming to have filled it.
+          cast('power_word_shield');
+          if (ally) {
+            sim.targetEntity?.(ally.id, player.id);
+            cast('renew');
+          }
+        } else {
+          // A long-cooldown guard, a self HoT, and a toggle: the two timer tracks
+          // and the MODE row.
+          //
+          // NO ALLY CAST HERE, and that is game behaviour rather than an
+          // oversight: casting drops Travel Form, so a druid cannot hold the
+          // toggle and a heal-on-someone-else in the same frame. The ally row is
+          // the priest's plate to show; this one shows the mode.
+          cast('barkskin');
+          cast('rejuvenation');
+          cast('travel_form');
+        }
+        return { ok: true, allyId: ally?.id ?? 0 };
+      }, variant.charClass);
+      if (!staged.ok) throw new Error(staged.reason);
+      // Prove the rows exist before shooting. An empty track renders as a HIDDEN
+      // frame, so a capture that staged nothing looks exactly like a clean HUD:
+      // without this the rig would happily ship a screenshot as evidence of a
+      // feature that never appeared in it, which is what the first cut did.
+      // Wait for the tracks THIS variant is supposed to fill, by name, not for a
+      // count. A count is satisfied the moment the two fastest casts land, which
+      // is how an earlier plate shipped with the ally heal still on its cast bar
+      // and the toggle absent: two tracks were up, so the rig called it staged.
+      const expected =
+        variant.charClass === 'priest'
+          ? ['#aura-track-shields', '#aura-track-friendly']
+          : ['#aura-track-defensives', '#aura-track-self', '#aura-track-utility'];
+      await page.waitForFunction(
+        (sels) =>
+          sels.every((sel) => {
+            const el = document.querySelector(sel);
+            return el && getComputedStyle(el).display !== 'none';
+          }),
+        { timeout: 25000, polling: 250 },
+        expected,
+      );
+      // CLEAN PLATE, asserted on the selectors that are ACTUALLY up rather than
+      // the ones a reader would guess. Two earlier cuts of this check got it
+      // wrong in both directions and each mistake is worth naming:
+      //   - it first listed #quest-dialog and #banner. Neither is the greeter
+      //     (that is #tutorial-greeting; #quest-dialog is a different window that
+      //     is not up here), so the guard passed on a plate with a dialog parked
+      //     across the middle. A guard naming the wrong element is worse than no
+      //     guard, because it reads as proof.
+      //   - it then added .banner-copy, which is not an overlay at all: it is the
+      //     PERSISTENT subzone label, part of the HUD every player sees. Waiting
+      //     for it to clear timed out forever and shot nothing.
+      // Every selector below was read off the live DOM and watched for 30s.
+      await page.waitForFunction(
+        () =>
+          ['#tutorial-greeting', '.tut-card', '#prompt-stack'].every((sel) => {
+            const el = document.querySelector(sel);
+            if (!el) return true;
+            const st = getComputedStyle(el);
+            return (
+              st.display === 'none' ||
+              st.visibility === 'hidden' ||
+              st.opacity === '0' ||
+              !el.textContent.trim()
+            );
+          }),
+        { timeout: 30000, polling: 300 },
+      );
+      return { clip: '#ui' };
     },
   },
   {
