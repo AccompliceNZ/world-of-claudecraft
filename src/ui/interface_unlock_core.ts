@@ -10,6 +10,15 @@
 // tests/architecture.test.ts UI_PURE_CORES.
 
 import { isPetClass, type PlayerClass } from '../sim/types';
+// The descriptor MODULE, not the domain barrel: the barrel re-exports the
+// painter and the host, and a pure core must not reach a DOM-owning painter
+// even one hop removed (tests/architecture.test.ts forbiddenUiCoreImport).
+import {
+  AURA_TRACK_FRAME_PREFIX,
+  AURA_TRACKS,
+  type AuraTrackSettingKey,
+  auraTrackForFrameId,
+} from './hud/aura_tracks/aura_track_descriptors';
 import type { TranslationKey } from './i18n.catalog';
 
 /** One movable HUD frame under the global unlock toggle. */
@@ -366,6 +375,25 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
     fallbackSize: { w: 220, h: 12 },
     detachToUiRoot: false,
   },
+  // The six aura tracks (src/ui/hud/aura_tracks/). Generated from the descriptor
+  // table rather than written out six times: the table already names each
+  // track's element, storage key and label, and a seventh track should not mean
+  // a seventh row here. All REFLOW (a wider frame is a longer bar and more room
+  // for a name before it ellipses), so their side edges resize the real box, the
+  // same choice the two aura rows above make. Already #ui children, so none
+  // detaches. Their menu rows drive the track's own setting (frameRowSettingKey
+  // below), the Target dots shape.
+  ...AURA_TRACKS.map(
+    (track): HudFrameSpec => ({
+      id: `${AURA_TRACK_FRAME_PREFIX}${track.id}`,
+      elementId: track.elementId,
+      storageKey: track.storageKey,
+      labelKey: track.labelKey,
+      fallbackSize: { w: 236, h: 120 },
+      detachToUiRoot: false,
+      resizeMode: 'box',
+    }),
+  ),
 ] as const;
 
 /** Every storage key the option owns, so a reset can clear the whole set. */
@@ -413,6 +441,7 @@ export function frameRowSettingKey(
   | 'showThirdActionBar'
   | 'showReliquaryTracker'
   | 'showTargetDots'
+  | AuraTrackSettingKey
   | null {
   if (id === 'actionBar2') return 'showSecondaryActionBar';
   if (id === 'actionBar3') return 'showThirdActionBar';
@@ -422,6 +451,11 @@ export function frameRowSettingKey(
   // switch for the same reason: two checkboxes over one tracker must be one
   // state.
   if (id === 'targetDots') return 'showTargetDots';
+  // Each aura track has its own master switch as well (all six ship off), so
+  // the same rule holds: the row is generated from the descriptor table and
+  // resolves back to it here, which is why a seventh track needs no arm.
+  const auraTrack = auraTrackForFrameId(id);
+  if (auraTrack) return auraTrack.settingKey;
   return null;
 }
 

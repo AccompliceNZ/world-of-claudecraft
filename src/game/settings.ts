@@ -413,6 +413,24 @@ export const BOOL_SETTINGS = {
   // bar row each with a live countdown. Hidden entirely while you have no dots
   // out, so the default costs a player who never uses it nothing.
   showTargetDots: { def: true },
+  // The six aura tracks (src/ui/hud/aura_tracks/): bars listing the player's OWN
+  // beneficial auras, one frame per question. ALL OFF BY DEFAULT and opted into
+  // individually: six frames on at once would put roughly twenty rows on screen
+  // for a healer in a raid, on a first login, for a player who asked for none of
+  // it. The options panel is the discovery surface. None is graphics-tier gated:
+  // these are timers a player acts on, so the setting is the only switch.
+  showDefensivesTrack: { def: false },
+  showSelfBuffTrack: { def: false },
+  showOffensiveTrack: { def: false },
+  showUtilityTrack: { def: false },
+  showFriendlyTrack: { def: false },
+  showShieldTrack: { def: false },
+  // A sub-option of the Movement and Stealth track, the only track that carries
+  // MODE rows: the utility modes (stealth, travel form, Ghost Wolf) are steady
+  // chips rather than timers, so a player who wants Dash timed may not want a
+  // permanent stealth row parked in the bar. It is a plain row in the Combat
+  // tab (not nested); it simply has no effect while that track is off.
+  showUtilityModes: { def: true },
   // off by default: invert the vertical axis of mouselook (push mouse forward
   // to look down), the classic flight-sim preference.
   invertLookY: { def: false },

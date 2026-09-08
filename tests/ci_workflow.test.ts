@@ -319,6 +319,7 @@ describe('CI workflow parity', () => {
       '            !/docs/screenshots/*/',
       '            /docs/screenshots/admin-cheater-mark/',
       '            /docs/screenshots/admin-guild-bank-panel/',
+      '            /docs/screenshots/aura-tracks/',
       '            /docs/screenshots/bank-storage-charters/',
       '            /docs/screenshots/bank-vault-tab/',
       '            /docs/screenshots/deed-border-cartouche/',

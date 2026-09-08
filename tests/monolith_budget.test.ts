@@ -433,7 +433,12 @@ const MONOLITHS: MonolithRow[] = [
     // `wc -l < src/ui/hud.ts` on the reconciled file measures 18577, below
     // both arms, so the ceiling follows it down. Exact merged count, zero
     // slack: any further growth reds again.
-    ceiling: 18577,
+    // Re-measured at the aura-tracks sync (PR #3925): the release's 18577
+    // less the net 88 lines that branch takes out of hud.ts by moving
+    // localizeSystemText to src/ui/system_text_i18n.ts (its six-frame wiring
+    // costs about 45 of the lines it removes) and by dropping the imports the
+    // move orphaned. Exact merged count, zero slack.
+    ceiling: 18489,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

@@ -11635,6 +11635,13 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.showTargetOfTarget': 'ターゲットのターゲットを表示',
   'hudChrome.options.showTargetSwingTimer': 'ターゲットの攻撃タイマーを表示',
   'hudChrome.options.showPetFrame': '自分のペットを表示',
+  'hudChrome.options.showDefensivesTrack': '防御クールダウンを表示',
+  'hudChrome.options.showSelfBuffTrack': '自分のバフを表示',
+  'hudChrome.options.showOffensiveTrack': '攻撃クールダウンを表示',
+  'hudChrome.options.showUtilityTrack': '移動とステルスを表示',
+  'hudChrome.options.showUtilityModes': 'ステルスと移動形態を含める',
+  'hudChrome.options.showFriendlyTrack': '味方へのバフを表示',
+  'hudChrome.options.showShieldTrack': '自分のシールドを表示',
   'hudChrome.options.stickyTarget': '地面クリックでターゲットを維持',
   'hudChrome.options.showNameplateDots': 'ネームプレートに自分のデバフを表示',
   'hudChrome.options.nameplateDotScale': 'ネームプレートのデバフ表示サイズ',
@@ -13311,6 +13318,13 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.continentMap.toZone': 'ゾーンマップ',
   'hudChrome.enchanting.wornTagIndexed': '装備中 ({slot}{index})',
   'hudChrome.targetAuras.title': 'ターゲットのオーラ',
+  'hudChrome.auraTracks.defensives': '防御クールダウン',
+  'hudChrome.auraTracks.self': '自分のバフ',
+  'hudChrome.auraTracks.power': '攻撃クールダウン',
+  'hudChrome.auraTracks.utility': '移動とステルス',
+  'hudChrome.auraTracks.friendly': '味方へのバフ',
+  'hudChrome.auraTracks.shields': '自分のシールド',
+  'hudChrome.auraTracks.overflow': '他{count}件は非表示',
   'hudChrome.targetAuras.keybindLabel': 'ターゲットのバフとデバフ',
   'hudChrome.targetAuras.debuffs': 'デバフ',
   'hudChrome.targetAuras.buffs': 'バフ',
@@ -15726,6 +15740,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     '自分のフレーム、ターゲットフレーム、パーティフレームは、いずれも移動できます。どれも隅に小さな移動ボタンを備えているので、固定を外し、好きな位置へドラッグし、もう一度固定すれば、うっかりクリックしてもずれません。オプションの「インターフェース」にある「フレーム」タブの先頭の「フレーム編集」を使うと、インターフェースの残りの部分もいっせいに動かせるようになり、この3つのフレームもそれに含まれます。アクションバー、キャストバー、スイングバー、経験値バー、ミニマップ、ボタンレール、ペットフレーム、スタンスバー、バフとデバフの列、そして「ウィッシュリストの通知」のチップが対象で、動かせる間はそれぞれに名前のチップが付きます。置き場所を悔やむことになったら、同じ「フレーム」タブの末尾にある「初期設定に戻す」で、すべて元の場所へ戻せます。',
   'guide.interfacePage.framesGovernedExtra':
     '「フレーム編集」は、その下に積み重なるトラッカー群(追跡中のクエストとその目標、功績の進み具合、聖遺物庫のページ、潜っているデルヴ、参加中のリフト、そして追跡中のレシピまたは依頼)、ペットフレーム脇のペットアクションバー、周囲の敵にかけた継続的なデバフをまとめて表示する「ターゲットデバフ」フレーム、パラディンの「献身」の記章、ウォーロックの「苦痛リソースバー」、スペル発動オーバーレイ、二刀流時のオフハンド用スイングバー、そしてタブ式のダメージメーターウィンドウも緩めます。緩んでいる間はそれぞれに名前のチップが付きます。',
+  'guide.interfacePage.framesGovernedAuraTracks':
+    '「フレーム編集」は、同じ「インターフェース」オプションの「戦闘」タブでオンにした任意の6つのオーラトラック、すなわち「自分のバフ」トラック、「防御クールダウン」トラック、「自分のシールド」トラック、「攻撃クールダウン」トラック、「移動とステルス」トラック、「味方へのバフ」トラックも緩めます。どのトラックも初期状態ではオフで、緩んでいる間はそれぞれに名前のチップが付きます。',
   'guide.interfacePage.mapBodyZoneFirst':
     'Mを押すと、今立っているゾーンのワールドマップが開きます。自分の矢印、周囲の名所、印を掲げたクエストの依頼人と目標のあるエリア、作業場、メールボックス、掲示板、菜園、ダンジョン入口、そしてそのゾーンにあるすべての採集ノードが載り、ノードは再生を待つ間は灰色になり、手持ちの道具では採れないものには印が付きます。パーティの位置も表示されます。マップを右クリックするか「ワールドマップ」ボタンを押すと大陸全体まで引き、すべてのゾーンが名前とともに描かれ、ゾーンをクリックするとそのゾーンのマップが開きます。デルヴ、ダンジョン、リフト、城砦に足を踏み入れると、マップは今いる場所の見取り図に切り替わり、ソーンホロウ平原の戦場には専用の戦場マップがあります。\n\n画面の右側、ミニマップの下には、何も開かなくても今の用事が見えるようにトラッカーが積み重なります。追跡中のクエストとその目標、功績の進み具合、聖遺物庫のページ、潜っているデルヴ、そして参加中のリフトです。クエストトラッカーは、画面を広く使いたいときに折りたためます。',
   'guide.interfacePage.gatheringGoalTrackerBody':

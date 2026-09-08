@@ -93,7 +93,17 @@ const uiSources = uiTsFiles.map(({ file, full }) => ({
   source: stripComments(readFileSync(full, 'utf8')),
 }));
 const hudFieldsByClass = new Map<string, string[]>();
-for (const [, field, constructed] of strippedHudSource.matchAll(/(\w+)\s*=\s*new (\w+)\(/g)) {
+// The optional type-argument group is load-bearing: a GENERIC field
+// (`x = new Family<Entity>({...})`) has a `<` where the bare form has its `(`,
+// so without it the class never enters this map and every relocalize() it owns
+// reads as uncalled, which is the exact failure this half exists to catch.
+// Parens and newlines are excluded from the type arguments, so a match can never
+// run past the constructor call it is looking for. wrapperOwnedClasses asks the
+// same question of ONE named field and carries the same group; keep the two in
+// step (they cannot share a literal, one being a regex and one a RegExp string).
+for (const [, field, constructed] of strippedHudSource.matchAll(
+  /(\w+)\s*=\s*new (\w+)(?:<[^()\n]*>)?\s*\(/g,
+)) {
   const fields = hudFieldsByClass.get(constructed) ?? [];
   fields.push(field);
   hudFieldsByClass.set(constructed, fields);
@@ -156,6 +166,11 @@ const FANOUT_ARMS: readonly string[] = [
   // The Target dots frame: only its aria-label is constructor-written, so this
   // arm is what keeps that one string from sticking in the previous locale.
   'this.targetDotsPainter.relocalize|',
+  // One arm for all six aura tracks: AuraTrackFamily forwards to each track's
+  // painter, the same shape interfaceUnlock uses for the movable frames. Every
+  // track caches its accessible name, its seconds suffix, its mode chip and each
+  // row label, which is exactly the debt a language switch collects.
+  'this.auraTracks.relocalize|',
   // The chat box's geometry chrome (the tab strip's move label, the resize
   // grip's name, the arrange-mode name chip, the mobile handle) is written
   // once at init by ChatGeometryController; its relocalize() rewrites them.
@@ -1637,7 +1652,13 @@ function builderOwnedClasses(armCall: string): Set<string> {
 function wrapperOwnedClasses(armCall: string): Set<string> {
   const owned = new Set<string>();
   const field = armCall.slice('this.'.length, -'.relocalize'.length);
-  const constructed = new RegExp(`\\b${field}\\s*=\\s*new (\\w+)\\(`).exec(strippedHudSource);
+  // The optional `<...>` mirrors the sweep's own group above: a generic field
+  // (`this.auraTracks = new AuraTrackFamily<Entity>({...})`) has a `<` where the
+  // bare form has its `(`, and without it the wrapper is never identified, so
+  // every class it owns reads as having no caller.
+  const constructed = new RegExp(`\\b${field}\\s*=\\s*new (\\w+)(?:<[^()\\n]*>)?\\s*\\(`).exec(
+    strippedHudSource,
+  );
   if (!constructed) return owned;
   for (const { source } of uiSources) {
     if (!new RegExp(`export class ${constructed[1]}\\b`).test(source)) continue;

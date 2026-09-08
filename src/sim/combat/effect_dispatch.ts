@@ -94,6 +94,7 @@ import {
   hasSweepingStrikes,
   sweepStrikeDamage,
 } from './area_echo';
+import { absorbAuraId, buffTargetAuraId, selfBuffAuraId } from './aura_ids';
 import {
   damageBreakThreshold,
   hasUnbreakableMovementLock,
@@ -1546,11 +1547,8 @@ export function runEffects(
       }
       case 'absorb': {
         const shieldTarget = target ?? p;
-        const hasStasisSelfBuff = ability.effects.some(
-          (effect) => effect.type === 'selfBuff' && effect.kind === 'stasis',
-        );
         ctx.applyAura(shieldTarget, {
-          id: eff.auraId ?? (hasStasisSelfBuff ? `${ability.id}_absorb` : ability.id),
+          id: absorbAuraId(ability, eff),
           name: ability.name,
           kind: 'absorb',
           remaining: eff.duration,
@@ -1881,8 +1879,7 @@ export function runEffects(
       case 'drainTick':
         break; // handled per channel tick
       case 'buffTarget': {
-        const auraId =
-          targetBuffIndex === 0 ? ability.id : `${ability.id}_${eff.kind}_${targetBuffIndex}`;
+        const auraId = buffTargetAuraId(ability, eff, targetBuffIndex);
         targetBuffIndex += 1;
         const applyBuff = (e: Entity) => {
           const lifetime = eff.permanent ? Number.POSITIVE_INFINITY : eff.duration;
@@ -3668,16 +3665,12 @@ export function runEffects(
         }
         // An ability can grant SEVERAL self-buffs at once (Arcane Power: spell damage AND
         // haste; Metamorphosis: damage AND haste). applyAura dedups by (id, sourceId), so
-        // every companion buff needs a distinct id or the last would evict the rest. The
-        // PRIMARY self-buff (the first kind on the DEF) keeps the bare ability id (so its
-        // icon/name resolve and the form/aspect toggle-off still finds it by id); companions
-        // get a kind-suffixed id. Compare by KIND, not object identity: applyTalentMods may
-        // have replaced the resolved effect objects, so a reference check would misfire.
-        const firstSelfBuffKind = ability.effects.find((e) => e.type === 'selfBuff')?.kind;
-        const isPrimarySelfBuff = eff.kind === firstSelfBuffKind;
+        // every companion buff needs a distinct id or the last would evict the rest; the
+        // rule (primary keeps the bare id, companions are kind-suffixed, an explicit
+        // auraId wins) lives in ./aura_ids.ts, shared with the HUD's aura-track catalog.
         const lifetime = eff.permanent ? Number.POSITIVE_INFINITY : eff.duration;
         ctx.applyAura(p, {
-          id: eff.auraId ?? (isPrimarySelfBuff ? ability.id : `${ability.id}_${eff.kind}`),
+          id: selfBuffAuraId(ability, eff),
           name: eff.auraName ?? ability.name,
           kind: eff.kind,
           remaining: lifetime,
