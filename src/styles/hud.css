@@ -1377,11 +1377,18 @@
      default; a persisted position writes inline left/top that outranks this, and
      resetting the layout clears those and lands back here. */
   #target-frame {
-    left: calc(50% + var(--action-rail-w) / 2 - var(--target-frame-width, var(--unit-frame-w)));
+    /* The box carries the Target Frame Scale like the player frame's box, so
+       zoomed children never overflow it outward; the seat then keeps the scaled
+       right edge on the action bar's right edge. */
+    --target-frame-box-w: calc(
+      var(--target-frame-width, var(--unit-frame-w)) *
+      var(--target-frame-scale, 1)
+    );
+    left: calc(50% + var(--action-rail-w) / 2 - var(--target-frame-box-w));
     top: calc(100% - var(--unit-frame-seat-offset));
     display: none;
     z-index: 6;
-    width: var(--target-frame-width, var(--unit-frame-w));
+    width: var(--target-frame-box-w);
     /* Bar thickness for this frame's bars (targetFrameHeight): the nested
        target-of-target frame inherits the var, so its strip thickens in step. */
     --uf-bar-height: var(--target-frame-height, var(--bar-h-hp));

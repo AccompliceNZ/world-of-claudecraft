@@ -138,7 +138,7 @@ describe('the Harvest Journal rail tile (the tile half over the existing Shift+K
       expect(col.indexOf('id="mm-harvest-journal"'), name).toBeGreaterThan(
         col.indexOf('id="mm-professions"'),
       );
-      expect(col.indexOf('id="mm-harvest-journal"'), name).toBeLessThan(col.indexOf('id="mm-map"'));
+      expect(col.indexOf('id="mm-harvest-journal"'), name).toBeLessThan(col.indexOf('id="mm-bag"'));
       expect(col, name).toMatch(
         /id="mm-harvest-journal"[^>]*><span class="keybind[^"]*">s-k<\/span>/,
       );
@@ -204,10 +204,8 @@ describe('both tiles hydrate and stay under the rail height budget', () => {
       'mm-quest',
       'mm-deeds',
       'mm-reliquary',
-      'mm-loot-explorer',
       'mm-professions',
       'mm-harvest-journal',
-      'mm-map',
       'mm-bag',
       'mm-crafting',
       'mm-perfecting',
