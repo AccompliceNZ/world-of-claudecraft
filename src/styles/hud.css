@@ -3532,9 +3532,18 @@
     bottom: 6px;
     text-align: center;
   }
+  /* Aligned to the action row, not to the stack: the rail and the twelve
+     sockets are both --action-rail-w wide, but the stack is as wide as the pet
+     row, so auto margins used to centre the rail eight pixels right of the
+     sockets it belongs to. Zero side margins put both on the stack's left edge.
+     The combined block is its own centred box, so the rail centres with it. */
   #xpbar {
-    margin: var(--socket-row-gap) auto 0;
+    margin: var(--socket-row-gap) 0 0;
     overflow: visible;
+  }
+  body.combined-action-bars #xpbar {
+    margin-right: auto;
+    margin-left: auto;
   }
   #xpbar .fill {
     /* The root keeps numeric --xp-fill for the mobile portrait ring. Scope the

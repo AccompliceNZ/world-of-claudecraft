@@ -657,17 +657,42 @@
     flex: 1;
     border-right: 1px solid color-mix(in srgb, var(--color-keyline) 40%, transparent);
   }
+  /* Inside the rail, centred: the readout rides the bar itself rather than
+     hanging above it, so it never competes with the action row for the band
+     between them. The outline shadow keeps it legible over both the fill and
+     the empty well. */
   .ui-rail-label {
     position: absolute;
-    right: 0;
-    /* Above the rail: the XP rail sits on the viewport edge, so a label hung
-       below it would be clipped. */
-    bottom: calc(100% + 2px);
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-family: var(--font-ui);
     font-size: 10px;
-    color: var(--color-text-secondary);
-    text-shadow: var(--title-shadow);
+    line-height: 1;
+    color: var(--color-text-light);
+    text-shadow: var(--outline-shadow);
     font-variant-numeric: tabular-nums;
+  }
+  /* The detail form (current / total, plus rested) the rail swaps to on hover or
+     keyboard focus. Hiding the label and revealing only this pseudo keeps ONE
+     labelled element for assistive tech and costs no second painter write. */
+  .ui-rail-label::after {
+    content: attr(data-total);
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    visibility: hidden;
+  }
+  .ui-rail:hover .ui-rail-label,
+  .ui-rail:focus-within .ui-rail-label {
+    visibility: hidden;
+  }
+  .ui-rail:hover .ui-rail-label::after,
+  .ui-rail:focus-within .ui-rail-label::after {
+    visibility: visible;
   }
 
   /* Sockets: the forged action cell. Species set --ui-socket-size; states are

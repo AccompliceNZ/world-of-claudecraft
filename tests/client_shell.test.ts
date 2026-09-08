@@ -3590,9 +3590,8 @@ describe('the stock unit-frame seats sit side by side above the action bar', () 
 
   it('declares the seat tokens the two rules share', () => {
     expect(tokensCss).toContain('--unit-frame-pair-gap: 12px;');
-    expect(tokensCss).toContain(
-      'var(--xp-rail-h) + var(--socket-row-gap) + var(--socket-size) + 78px',
-    );
+    expect(tokensCss).toContain('--unit-frame-seat-offset: calc(');
+    expect(tokensCss).toContain('var(--socket-size) +\n      78px');
   });
 
   it('holds the docked player frame just left of centre', () => {

@@ -96,7 +96,8 @@ describe('HUD_FRAME_SPECS', () => {
       actionBar2: { w: 596, h: 46 },
       actionBar3: { w: 596, h: 46 },
       actionBarGroup: { w: 596, h: 150 },
-      xpBar: { w: 596, h: 10 },
+      // 14px: the XP rail was thickened so its in-rail percent readout fits.
+      xpBar: { w: 596, h: 14 },
     });
     // The FULL key list, pinned as literals in spec order: these are persisted
     // player data (localStorage), so renaming any one of them orphans every

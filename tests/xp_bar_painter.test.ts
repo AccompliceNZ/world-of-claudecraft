@@ -69,7 +69,10 @@ describe('XpBarPainter: routes every write through the elided writers', () => {
       { m: 'setStyleProp', args: [PF, '--xp-fill', '0.5000'] },
       { m: 'setStyleProp', args: [RESTED, 'left', '50.0%'] },
       { m: 'setStyleProp', args: [RESTED, 'width', '10.0%'] },
-      { m: 'setText', args: [LABEL, 'XP 1 / 2'] },
+      // The label carries the always-visible percent INSIDE the rail; the hover
+      // form (current / total) rides data-total, which the ::after content reads.
+      { m: 'setText', args: [LABEL, '50%'] },
+      { m: 'setAttr', args: [LABEL, 'data-total', 'XP 1 / 2'] },
       { m: 'setAttr', args: [BAR, 'data-percent', '50%'] },
       { m: 'setAttr', args: [PF, 'data-percent', '50%'] },
       { m: 'toggleClass', args: [BAR, 'overflow', false] },
@@ -91,7 +94,8 @@ describe('XpBarPainter: routes every write through the elided writers', () => {
       { m: 'setStyleProp', args: [PF, '--xp-fill', '1.0000'] },
       { m: 'setStyleProp', args: [RESTED, 'left', '100.0%'] },
       { m: 'setStyleProp', args: [RESTED, 'width', '0.0%'] },
-      { m: 'setText', args: [LABEL, 'Lv 20 (+7)'] },
+      { m: 'setText', args: [LABEL, '100%'] },
+      { m: 'setAttr', args: [LABEL, 'data-total', 'Lv 20 (+7)'] },
       { m: 'setAttr', args: [BAR, 'data-percent', '100%'] },
       { m: 'setAttr', args: [PF, 'data-percent', '100%'] },
       { m: 'toggleClass', args: [BAR, 'overflow', true] },
