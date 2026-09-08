@@ -5483,10 +5483,10 @@
     top: max(10px, env(safe-area-inset-top));
     bottom: max(10px, env(safe-area-inset-bottom));
     width: auto;
-    /* The desktop sheet carries a FIXED height now. With opposing edges both
-       pinned here, a non-auto height over-constrains the box and the browser
-       drops `bottom`, so the sheet would run off a landscape phone with no way
-       to scroll to its footer. The edge pin IS the height on touch. */
+    /* With opposing edges both pinned here, a non-auto height would
+       over-constrain the box and the browser would drop `bottom`, so the sheet
+       ran off a landscape phone with no way to scroll to its footer. The edge
+       pin IS the height on touch. */
     height: auto;
     transform: none;
     max-height: none;

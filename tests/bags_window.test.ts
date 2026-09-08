@@ -971,6 +971,16 @@ describe('bags_window: the grid fills the window it lives in (W24)', () => {
     expect(tokens).toContain('--socket-size-bag: 40px;');
   });
 
+  it('sizes the window to its content from the bottom anchor, capped for full bags', () => {
+    // Review round 2: a fixed 560px sheet left a small bag with a tall empty
+    // grid; the window is bottom-anchored, so an auto height grows upward with
+    // the slots and the cap keeps a full bag scrolling inside the viewport.
+    const bags = /\n {2}#bags \{([^}]*)\}/.exec(components)?.[1] ?? '';
+    expect(bags).toContain('height: auto;');
+    expect(bags).toContain('max-height: min(560px, calc(100vh - 18px));');
+    expect(bags).not.toContain('height: 560px;');
+  });
+
   it('keeps every chrome row at its natural height so the grid is the one scroller', () => {
     for (const row of ['#bags .panel-title', '#bags .bag-bar', '#bags .bag-filter-bar']) {
       expect(components).toContain(`${row} {\n    flex: none;\n  }`);

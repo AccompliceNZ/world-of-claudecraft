@@ -7180,9 +7180,11 @@
     bottom: 6px;
     top: auto;
     width: min(400px, var(--bags-slot-w));
-    height: 560px;
+    /* Content-sized from the bottom anchor: a small bag gets a short window
+       instead of an empty grid tail; a full bag caps and scrolls. */
+    height: auto;
     transform: translateX(-50%);
-    max-height: calc(100vh - 18px);
+    max-height: min(560px, calc(100vh - 18px));
     overflow: hidden;
     flex-direction: column;
   }
