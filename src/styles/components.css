@@ -16490,7 +16490,10 @@
   /* ---------- The Ravenpost (mailbox) ---------- */
   #mailbox-window {
     width: 460px;
-    height: min(560px, calc(85vh - 24px));
+    /* Content-sized: a short inbox gets a short window; a full one caps and
+       scrolls its list. */
+    height: auto;
+    max-height: min(560px, calc(85vh - 24px));
     display: none;
     flex-direction: column;
     overflow: hidden;

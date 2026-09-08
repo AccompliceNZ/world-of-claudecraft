@@ -8522,9 +8522,10 @@
     z-index: 30;
     pointer-events: none;
   }
+  /* Bare buttons in the world, no plate: a ghost reads the scene through them. */
   .ghost-panel {
-    padding: 12px;
-    gap: 8px;
+    padding: 0;
+    gap: 10px;
   }
   #ghost-prompt .btn {
     pointer-events: auto;
