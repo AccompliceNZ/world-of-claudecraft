@@ -96,7 +96,9 @@ const MONOLITHS: MonolithRow[] = [
     // keying moved to the view core (WocMarketScrollKeys and friends) and the
     // dropdown-hold heuristic landed as its own module
     // (src/ui/native_select_hold.ts), together paying exactly for the hold
-    // wiring, the wallet re-arm, and the scroll-after-focus ordering.
+    // wiring, the wallet re-arm, and the scroll-after-focus ordering. The
+    // review round (the hold's lazy first-render attach, the no-rung scroll
+    // carve-out) fits inside the same count. Exact count, zero slack.
     ceiling: 2475,
     seam: 'a pure view-core module beside it (src/ui/woc_market_view.ts) that this window renders from',
   },

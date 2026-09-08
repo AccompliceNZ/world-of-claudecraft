@@ -164,17 +164,29 @@ describe('woc_market_window: cold-window contract', () => {
     // poll and the wallet fan-out.
     // betweenCode, not between: a commented-out guard must not satisfy this.
     const refresh = betweenCode('refreshIfChanged(): void {', 'private pollFromServer');
-    const hold = 'if (this.selectHold.holdRepaints()) return;';
+    const hold = 'if (this.selectHold?.holdRepaints()) return;';
     expect(refresh).toContain(hold);
     // The hold sits AFTER the poll: only the PAINT waits, the data stays
     // fresh, so releasing the hold repaints current state immediately.
     expect(refresh.indexOf('this.pollFromServer();')).toBeLessThan(refresh.indexOf(hold));
     const wallet = betweenCode('onWalletChanged(): void {', 'private buildModel');
-    expect(wallet).toContain('if (this.selectHold.holdRepaints()) {');
+    expect(wallet).toContain('if (this.selectHold?.holdRepaints()) {');
     // A skipped wallet beat re-arms: the beat is event-driven with no retry,
     // so without this flag an empty static page strands the card stale.
     expect(wallet).toContain('this.walletRepaintDue = true;');
     expect(refresh).toContain('if (sig === this.lastSig && !this.walletRepaintDue) return;');
+    // The hold attaches on the FIRST render, ahead of the window's own delegated
+    // listeners (its change disarm must run while the select is still attached,
+    // before onChange rebuilds the subtree), and never in the constructor: the
+    // deps contract is lazy closures, and hud.ts builds these painters as field
+    // initializers over a bare root cast.
+    const built = betweenCode('if (!this.built) {', 'const model = this.buildModel();');
+    const attach = 'this.selectHold = createNativeSelectHold(root);';
+    expect(built).toContain(attach);
+    expect(built.indexOf(attach)).toBeLessThan(built.indexOf("root.addEventListener('change'"));
+    expect(betweenCode('constructor(private readonly deps', 'get isOpen()')).not.toContain(
+      'createNativeSelectHold',
+    );
   });
 
   it('keeps the wocMarketViewSig repaint guard the hud_update_drive registry names', () => {

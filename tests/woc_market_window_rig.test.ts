@@ -913,6 +913,74 @@ describe('WocMarketWindow live rig: tabs, rebuild, focus and scroll', () => {
     expect(q<HTMLElement>(r.root, '.wm-body').scrollTop).toBe(0);
   });
 
+  it('keeps the body offset when the focused row itself leaves the list (no rung to land on)', async () => {
+    // The live case behind this pin: every row's Open button carries its own
+    // focus key (wm-row-<id>), so a player reading a scrolled list with a row
+    // focused, whose listing then sells or ends, has the poll rebuild the
+    // table WITHOUT that row. No rung exists to focus, so no focus() ran and
+    // nothing scrolled the pane: the kept offset must come back. Spelling the
+    // degrade as "landed anywhere else" read this as degraded too and dropped
+    // the offset, a jump to the top the base never had.
+    const r = rig({ rows: [listing(1), listing(2)] });
+    r.win.open();
+    await flush();
+    q<HTMLButtonElement>(r.root, '[data-focus-key="wm-row-1"]').focus();
+    q<HTMLElement>(r.root, '.wm-body').scrollTop = 120;
+    r.fake.answers.browse = async () => ({
+      ok: true,
+      hasMore: false,
+      page: 0,
+      listings: [listing(2)],
+    });
+    // Step past the poll's cadence throttle, then two ticks: the poll only
+    // MUTATES on the first, the second's digest compare is the rebuild.
+    (r.win as unknown as { pollStartedMs: number }).pollStartedMs = 0;
+    r.win.refreshIfChanged();
+    await flush();
+    r.win.refreshIfChanged();
+    await flush();
+    // The positive control: the table really was rebuilt without the row.
+    expect(r.root.querySelector('[data-focus-key="wm-row-1"]')).toBeNull();
+    expect(r.root.querySelectorAll('.wm-row').length).toBe(1);
+    expect(q<HTMLElement>(r.root, '.wm-body').scrollTop).toBe(120);
+  });
+
+  it('drops the kept offset only when the focus ladder degrades to another rung', async () => {
+    // The order-independent half of the scroll-after-focus contract. A
+    // page-next that lands on the last page rebuilds its own button disabled
+    // and the ladder falls to prev, a control the player may not be looking
+    // at: its bare focus() scroll (real browsers; happy-dom models none) has
+    // to stay visible (WCAG 2.4.11), so the write-back skips itself. The
+    // same-rung page turn before it is the control: there the offset survives.
+    const r = rig();
+    r.fake.answers.browse = async () => ({
+      ok: true,
+      hasMore: true,
+      page: 0,
+      listings: [listing(1)],
+    });
+    r.win.open();
+    await flush();
+    const next = q<HTMLButtonElement>(r.root, 'button[data-action="page-next"]');
+    next.focus();
+    q<HTMLElement>(r.root, '.wm-body').scrollTop = 120;
+    next.click();
+    await flush();
+    const rebuiltNext = q<HTMLButtonElement>(r.root, 'button[data-action="page-next"]');
+    expect(document.activeElement).toBe(rebuiltNext);
+    expect(q<HTMLElement>(r.root, '.wm-body').scrollTop).toBe(120);
+    r.fake.answers.browse = async () => ({
+      ok: true,
+      hasMore: false,
+      page: 1,
+      listings: [listing(1)],
+    });
+    rebuiltNext.click();
+    await flush();
+    expect(document.activeElement).toBe(q(r.root, 'button[data-action="page-prev"]'));
+    expect(q<HTMLElement>(r.root, '.wm-body').scrollTop).toBe(0);
+  });
+
   it('relocalize() repaints the window in the new language (a stored state, not a stored sentence)', async () => {
     const r = rig();
     r.fake.answers.browse = async () => ({

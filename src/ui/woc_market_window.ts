@@ -226,9 +226,9 @@ export class WocMarketWindow {
   /** True for the duration of render(). Any focus movement inside that window is
    *  the rebuild tearing down its own nodes, never the user leaving the control. */
   private rendering = false;
-  /** The native-dropdown repaint hold; wired in the constructor, ahead of
-   *  this window's own listeners (native_select_hold.ts has the rules). */
-  private readonly selectHold: NativeSelectHold;
+  /** The native-dropdown repaint hold (native_select_hold.ts has the rules), attached
+   *  on the first render rather than in the constructor: the deps are lazy closures. */
+  private selectHold: NativeSelectHold | null = null;
   /** A wallet beat skipped under the hold; the next unheld poll tick repaints. */
   private walletRepaintDue = false;
   /** What the kept scroll positions referred to; a restore is skipped once it
@@ -295,9 +295,7 @@ export class WocMarketWindow {
   private sellFeeWanted: number | null = null;
   private sellFeeInFlight = false;
 
-  constructor(private readonly deps: WocMarketWindowDeps) {
-    this.selectHold = createNativeSelectHold(deps.root());
-  }
+  constructor(private readonly deps: WocMarketWindowDeps) {}
 
   get isOpen(): boolean {
     return this.deps.root().style.display === 'flex';
@@ -476,7 +474,7 @@ export class WocMarketWindow {
     // Same no-rebuild rule for every NATIVE select here: a rebuild replaces
     // the element and closes its open dropdown out from under the pointer.
     // Held AFTER the poll, so only the PAINT waits (native_select_hold.ts).
-    if (this.selectHold.holdRepaints()) return;
+    if (this.selectHold?.holdRepaints()) return;
     const sig = `${wocMarketViewSig(this.buildModel())}|${this.quoteCountdownSig()}`;
     if (sig === this.lastSig && !this.walletRepaintDue) return;
     this.render();
@@ -561,7 +559,7 @@ export class WocMarketWindow {
     // A balance beat is background work like the poll: never rebuild under
     // an open dropdown. The beat has no retry, so a skipped one arms
     // walletRepaintDue and the poll's first unheld tick repaints.
-    if (this.selectHold.holdRepaints()) {
+    if (this.selectHold?.holdRepaints()) {
       this.walletRepaintDue = true;
       return;
     }
@@ -601,6 +599,8 @@ export class WocMarketWindow {
     const root = this.deps.root();
     if (!this.built) {
       this.built = true;
+      // FIRST, so its change disarm runs before onChange's rebuild of the subtree.
+      this.selectHold = createNativeSelectHold(root);
       markDialogRoot(root, { labelledBy: 'woc-market-title' });
       root.addEventListener('click', (e) => this.onClick(e));
       root.addEventListener('change', (e) => this.onChange(e));
@@ -676,13 +676,13 @@ export class WocMarketWindow {
     }
     // The scroll write-back runs LAST: after wire() (so it lands on the fresh
     // container) AND after the focus restore, whose bare focus() scrolls the
-    // control into view in real browsers (focus_restore.ts; happy-dom does
-    // not model it). That yank pulled the browse pane back to the top on
-    // every slow-band rebuild while the filter bar held focus; written back
-    // afterwards, the kept offsets reproduce the exact pre-rebuild viewport.
-    // The carve-out is the seam's degrade contract: a ladder that landed on a
-    // DIFFERENT rung keeps the focus scroll, visible focus (WCAG 2.4.11).
-    const degraded = focusKey !== null && captureFocusKey(root) !== focusKey;
+    // control into view in real browsers (focus_restore.ts; happy-dom models
+    // none): that yank pulled the browse pane to the top on every slow-band
+    // rebuild while the filter bar held focus. The carve-out is the seam's
+    // degrade contract: a ladder that landed on a DIFFERENT rung keeps the
+    // focus scroll, visible focus (WCAG 2.4.11); one that landed NOWHERE (the
+    // focused row sold or ended) ran no focus() and keeps the offset.
+    const degraded = focusKey !== null && (captureFocusKey(root) ?? focusKey) !== focusKey;
     if (!degraded) {
       for (const [selector, top] of keptScroll) {
         const el = root.querySelector<HTMLElement>(selector);

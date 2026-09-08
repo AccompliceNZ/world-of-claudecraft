@@ -72,6 +72,33 @@ describe('createNativeSelectHold', () => {
     expect(hold.holdRepaints()).toBe(false);
   });
 
+  it('a touch arms through pointerdown, with no compatibility mousedown', () => {
+    // iOS and Android open the picker sheet from a tap: the pointer event is
+    // the one the tap delivers directly, the mousedown after it is the
+    // browser's to send or skip, and the hold must not depend on the latter.
+    const { hold, sel, outside } = rig();
+    sel.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerType: 'touch' }));
+    sel.focus();
+    expect(hold.holdRepaints()).toBe(true);
+    outside.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, pointerType: 'touch' }));
+    expect(hold.holdRepaints()).toBe(false);
+  });
+
+  it('a wheel reaching the page releases it, focus or not', () => {
+    // A dropdown dismissed WITHOUT a pick (an outside click the popup
+    // swallowed, Escape, re-picking the current value) leaves the watch armed
+    // while the select keeps focus, and the reader then wheel-scrolling the
+    // list is exactly who a frozen countdown would punish. A wheel that
+    // reaches the page means no native popup is capturing input.
+    const { hold, sel } = rig();
+    sel.dispatchEvent(new MouseEvent('mousedown', { bubbles: true }));
+    sel.focus();
+    expect(hold.holdRepaints()).toBe(true);
+    sel.dispatchEvent(new WheelEvent('wheel', { bubbles: true }));
+    expect(document.activeElement).toBe(sel);
+    expect(hold.holdRepaints()).toBe(false);
+  });
+
   it('non-select interactions never arm it', () => {
     const { hold, sel, outside } = rig();
     outside.dispatchEvent(new KeyboardEvent('keydown', { key: ' ', bubbles: true }));
