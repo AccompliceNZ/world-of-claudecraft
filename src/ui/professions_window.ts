@@ -90,6 +90,9 @@ export interface ProfessionsWindowDeps extends PainterHostPresentation {
   consumePeek(): boolean;
   captureFocus(): HTMLElement | null;
   restoreFocus(target: HTMLElement | null): void;
+  /** Hud's confirm-first external hop (src/ui/wiki_link.ts), the same one
+   *  #mm-wiki and the Esc-menu row use. */
+  openWiki(): void;
 }
 
 export class ProfessionsWindow {
@@ -209,7 +212,7 @@ export class ProfessionsWindow {
     el.innerHTML =
       `<div class="panel-title ui-win-head"><span class="ui-win-title">${esc(t('hudChrome.professions.title'))}</span>` +
       `<button type="button" class="x-btn ui-x-btn" data-close aria-label="${esc(t('hudChrome.professions.close'))}">${svgIcon('close')}</button></div>` +
-      `<div class="prof-scroll">${body}</div><div class="prof-footer"><span class="ui-muted">${esc(t('hudChrome.professions.retentionFooter'))}</span><a href="/wiki/professions" target="_blank" rel="noopener noreferrer">${esc(t('hudChrome.professions.tutorialLink'))}</a></div>`;
+      `<div class="prof-scroll">${body}</div><div class="prof-footer"><span class="ui-muted">${esc(t('hudChrome.professions.retentionFooter'))}</span><button type="button" class="prof-wiki-link ui-btn" data-wiki-link>${esc(t('hudChrome.professions.tutorialLink'))}</button></div>`;
 
     this.wire(el);
     const scroll = el.querySelector('.prof-scroll');
@@ -646,6 +649,14 @@ export class ProfessionsWindow {
     el.querySelector('[data-close]')?.addEventListener('click', () => {
       this.close();
       audio.click();
+    });
+    // The wiki hop is a BUTTON on the shared confirm-first launcher, never a raw
+    // anchor: the desktop shell serves the client from app:// and denies any
+    // non-http navigation, so an anchor is a silent no-op there, and an anchor
+    // also hands the player a ctrl-click straight past the confirm.
+    el.querySelector('[data-wiki-link]')?.addEventListener('click', () => {
+      audio.click();
+      this.deps.openWiki();
     });
     // Slot/recharge senders: command only, never predicted, and NO repaint
     // here. The pid-scoped toolEffectResult event is the one repaint path

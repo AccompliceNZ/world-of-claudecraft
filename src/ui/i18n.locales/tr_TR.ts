@@ -3388,7 +3388,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.townFocus.townOnlyHint': 'Odak yalnızca kasabadayken değiştirilebilir.',
   'hudChrome.townFocus.saveButton': 'Odağı Kaydet',
   'hudChrome.townFocus.title': 'Kasaba Odağı',
-  'hudChrome.archetypeTitle.label': 'Unvan',
   'hudChrome.archetypeTitle.none': 'Yok',
   'entities.itemSets.crownforged.bonus4':
     "Silah kritik vuruşların hedefi Kemikkıymık ile parçalar, 12 sn boyunca her 2 sn'de 8 kanama hasarı verir. 3 kata kadar üst üste binebilir.",
@@ -10365,7 +10364,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gathering.herbalism': 'Bitkicilik',
   'hudChrome.gathering.logging': 'Ağaç kesme',
   'hudChrome.gathering.mining': 'Madencilik',
-  'hudChrome.gathering.title': 'Toplama',
   'errors.api.accountSessionLimit': 'Bu hesaba ait çok fazla karakter zaten dünyada.',
   'errors.api.crossSiteOrigin': 'Güvenlik nedeniyle istek engellendi.',
   'errors.api.unsupportedMediaType': 'Desteklenmeyen istek biçimi.',
@@ -10600,7 +10598,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Hedefin zırhını parçalar, her uygulamada %{damage} azaltır. 5 kez istiflenir. Yüksek miktarda tehdit üretir.',
   'entities.mobs.training_dummy.name': 'Antrenman Kuklası',
   'entities.mobs.yumi_cat.name': 'Yumi',
-  'hudChrome.archetypeTitle.hobbyLabel': 'Hobi',
   'hudChrome.auraEffect.armorPct': 'Zırhı %{pct} azaltır',
   'hudChrome.auraEffect.armorPctStacks': 'Zırhı %{pct} azaltır ({stacks} istif)',
   'hudChrome.auraEffect.increasePct.allStats': 'Tüm nitelikleri %{pct} artırır',

@@ -138,6 +138,7 @@ function makeWindow(
     consumePeek: () => false,
     captureFocus: () => null,
     restoreFocus: () => {},
+    openWiki: () => {},
     itemIcon: () => '',
     moneyHtml: () => '',
     itemTooltip: () => '',

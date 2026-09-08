@@ -5180,7 +5180,6 @@ export const hudChromeStrings = {
   // Gathering proficiency section on the character sheet (#1124). Profession
   // display names mirror src/sim/content/professions.ts (GatheringProfessionId).
   gathering: {
-    title: 'Gathering',
     mining: 'Mining',
     logging: 'Logging',
     herbalism: 'Herbalism',
@@ -5368,9 +5367,7 @@ export const hudChromeStrings = {
   // fallback, just untitled), and `hobbyLabel` heads the hobby line (#1294).
   // The title NAMES live under archetypePair below, keyed by canonical pair id.
   archetypeTitle: {
-    label: 'Title',
     none: 'None',
-    hobbyLabel: 'Hobby',
   },
   // Pair-named archetype titles (Professions 2.0): one named title per
   // selectable adjacent-pair attunement, keyed by the CANONICAL PAIR ID from

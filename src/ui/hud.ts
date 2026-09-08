@@ -5321,6 +5321,7 @@ export class Hud {
     closeOthers: () => this.closeOtherWindows('#professions-window'),
     hideTooltip: () => this.hideTooltip(),
     consumePeek: () => this.peekGuard.consume(),
+    openWiki: () => this.openWiki(),
     ...this.windowFocus('#professions-window'),
   });
   // The Reliquary window painter (reliquary_view.ts core + reliquary_window.ts

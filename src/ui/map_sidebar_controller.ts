@@ -9,7 +9,9 @@
 // repaints only when the map redraw path runs or the player clicks a chip, a
 // quest row, Show Route or Untrack. It is never on the frame band, so there is
 // no per-frame write budget to blow and no skip-rate to hold. `lastHtml` below
-// is the write elision that keeps an unchanged rail free (it is registered in
+// is the write elision that keeps an unchanged rail free, and `lastSig` (the
+// bucketed view plus the i18n revision) stops an unchanged rail from paying the
+// markup mint at all (it is registered in
 // tests/language_fanout_registry.test.ts as a write-elision memo, not a data
 // signature, because the compared string is the freshly BUILT html with every
 // t() value already resolved). What the swap DOES cost is the focused node, so
@@ -23,14 +25,16 @@ import type { IWorld } from '../world_api';
 import { questObjectiveLabel, questTitle } from './entity_display_labels';
 import { zoneDisplayName } from './entity_i18n';
 import { esc } from './esc';
-import { formatNumber, type TranslationKey, t } from './i18n';
+import { formatNumber, getI18nRevision, type TranslationKey, t } from './i18n';
 import { ownEntry } from './known_item';
 import {
+  bucketMapAtlasDistance,
   buildMapSidebarView,
   DEFAULT_MAP_ATLAS_FILTERS,
   type MapAtlasFilterId,
   type MapAtlasFilters,
   type MapAtlasRoute,
+  mapSidebarSignature,
   toggleMapAtlasFilter,
 } from './map_sidebar_view';
 
@@ -97,6 +101,11 @@ export class MapSidebarController {
   // BUILT html with every t() value already resolved, so a language switch
   // moves it and the rail repaints itself (see language_fanout_registry).
   private lastHtml = '';
+  // The same elision one step earlier, so a walking player does not pay the
+  // whole markup mint (dozens of t() and Intl formatNumber calls) per update
+  // just to throw the result away. It carries getI18nRevision(), so a locale
+  // switch moves it exactly like lastHtml does.
+  private lastSig = '';
 
   constructor(private readonly deps: MapSidebarControllerDeps) {}
 
@@ -163,6 +172,12 @@ export class MapSidebarController {
     if (this.route !== null) {
       this.route = model.route?.questId === this.route.questId ? model.route : null;
     }
+    const signature = mapSidebarSignature(model, {
+      shownRouteQuestId: this.route?.questId ?? null,
+      i18nRevision: getI18nRevision(),
+    });
+    if (signature === this.lastSig) return;
+    this.lastSig = signature;
     const levelRange = t('hudChrome.continentMap.levels', {
       min: formatNumber(model.levelRange[0], { maximumFractionDigits: 0 }),
       max: formatNumber(model.levelRange[1], { maximumFractionDigits: 0 }),
@@ -193,7 +208,7 @@ export class MapSidebarController {
           quest.minLevel === null
             ? ''
             : ` · ${esc(t('hudChrome.mapAtlas.level', { level: formatNumber(quest.minLevel, { maximumFractionDigits: 0 }) }))}`;
-        return `<div class="map-atlas-nearby-row"><span>${esc(mapQuestTitle(quest.questId))}</span><span>${esc(zoneDisplayName(quest.zoneId))}${level} · ${esc(t('hudChrome.mapAtlas.distance', { distance: formatNumber(Math.round(quest.distance), { maximumFractionDigits: 0 }) }))}</span></div>`;
+        return `<div class="map-atlas-nearby-row"><span>${esc(mapQuestTitle(quest.questId))}</span><span>${esc(zoneDisplayName(quest.zoneId))}${level} · ${esc(t('hudChrome.mapAtlas.distance', { distance: formatNumber(bucketMapAtlasDistance(quest.distance), { maximumFractionDigits: 0 }) }))}</span></div>`;
       })
       .join('');
     const root = this.mount();

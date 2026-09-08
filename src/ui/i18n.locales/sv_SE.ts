@@ -3287,7 +3287,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.townFocus.notInTownHint': 'Du måste vara i staden för att ställa in ditt fokus.',
   'hudChrome.townFocus.saveButton': 'Spara fokus',
   'hudChrome.townFocus.title': 'Stadsfokus',
-  'hudChrome.archetypeTitle.label': 'Titel',
   'hudChrome.archetypeTitle.none': 'Ingen',
   'entities.itemSets.crownforged.bonus4':
     'Dina kritiska vapenträffar splittrar målet med Benflisa och får det att blöda för 8 skada var 2:e sek i 12 sek. Staplas upp till 3 gånger.',
@@ -9632,7 +9631,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gathering.herbalism': 'Örtkunskap',
   'hudChrome.gathering.logging': 'Skogsavverkning',
   'hudChrome.gathering.mining': 'Gruvdrift',
-  'hudChrome.gathering.title': 'Insamling',
   'hudChrome.corpseHarvest.alreadyHarvested': 'Det här kadavret har redan skördats.',
   'hudChrome.corpseHarvest.nothingSelectedYields':
     'Inget du valt kan skördas från det här kadavret.',
@@ -9886,7 +9884,6 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Klyver målets rustning och sänker den med {damage}% per applicering. Stackas upp till 5 gånger. Vållar en stor mängd hot.',
   'entities.mobs.training_dummy.name': 'Träningsdocka',
   'entities.mobs.yumi_cat.name': 'Yumi',
-  'hudChrome.archetypeTitle.hobbyLabel': 'Fritidssyssla',
   'hudChrome.auraEffect.armorPct': 'Minskar rustningen med {pct}%',
   'hudChrome.auraEffect.armorPctStacks': 'Minskar rustningen med {pct}% ({stacks} stackar)',
   'hudChrome.auraEffect.increasePct.allStats': 'Ökar alla attribut med {pct}%',

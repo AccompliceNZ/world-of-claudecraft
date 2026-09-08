@@ -117,6 +117,7 @@ function makeWindow(
     consumePeek: () => false,
     captureFocus: () => null,
     restoreFocus: () => {},
+    openWiki: () => {},
     itemIcon: () => '',
     moneyHtml: () => '',
     itemTooltip: () => '',
@@ -197,7 +198,8 @@ describe('ProfessionsWindow: focus and scroll survive rebuilds', () => {
     // The acquisition craft's buttons are the inner controls the old version
     // of this pin predicted; their own refocus behavior is the two arms
     // below.
-    const { el } = makeWindow(baseState());
+    const openWiki = vi.fn();
+    const { el } = makeWindow(baseState(), { openWiki });
     const focusables = [
       ...el.querySelectorAll<HTMLElement>(
         'button, a[href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
@@ -205,7 +207,16 @@ describe('ProfessionsWindow: focus and scroll survive rebuilds', () => {
     ];
     expect(focusables).toHaveLength(2);
     expect(focusables[0].hasAttribute('data-close')).toBe(true);
-    expect(focusables[1].matches('a[href="/wiki/professions"]')).toBe(true);
+    // Pin moved: the tutorial disclosure was a raw <a href="/wiki/professions"
+    // target="_blank">, which the desktop shell silently drops (the client is
+    // served from app:// and non-http navigation is denied) and which also
+    // offers a ctrl-click past the confirm-first wiki hop. It is now a button on
+    // the shared launcher.
+    expect(focusables[1].matches('button[data-wiki-link]')).toBe(true);
+    expect(el.querySelector('a[href]')).toBeNull();
+
+    focusables[1].click();
+    expect(openWiki).toHaveBeenCalledOnce();
   });
 
   it('carries focus across a rebuild to the SAME action button by its key', () => {

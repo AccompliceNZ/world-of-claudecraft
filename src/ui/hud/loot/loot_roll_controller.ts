@@ -493,9 +493,9 @@ export class LootRollController {
         <div class="loot-roll-timer ui-bar" aria-hidden="true"><span class="ui-bar-fill"></span></div>
         ${status ? this.votesHtml(status) : ''}
         <div class="loot-roll-actions">
-          <button type="button" class="loot-roll-btn need ui-btn ui-btn--red" data-choice="need">${esc(t('itemUi.lootRoll.need'))}</button>
-          <button type="button" class="loot-roll-btn greed ui-btn" data-choice="greed">${esc(t('itemUi.lootRoll.greed'))}</button>
-          <button type="button" class="loot-roll-btn pass ui-btn" data-choice="pass">${esc(t('itemUi.lootRoll.pass'))}</button>
+          <button type="button" class="loot-roll-btn loot-roll-btn--need need ui-btn" data-choice="need">${esc(t('itemUi.lootRoll.need'))}</button>
+          <button type="button" class="loot-roll-btn greed ui-btn ui-btn--gold" data-choice="greed">${esc(t('itemUi.lootRoll.greed'))}</button>
+          <button type="button" class="loot-roll-btn pass ui-btn ui-btn--red" data-choice="pass">${esc(t('itemUi.lootRoll.pass'))}</button>
         </div>`;
       const itemElement = row.querySelector<HTMLElement>('.loot-roll-item');
       if (item && itemElement) {

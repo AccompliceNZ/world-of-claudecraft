@@ -3107,6 +3107,14 @@
     background-position: center;
     background-repeat: no-repeat;
   }
+  /* A plain buff keeps its semantic rim. The library aura paints the neutral
+     socket rim, which reads the same as every other socket on the HUD, while
+     the debuff rims below and the own-aura gold above it stayed semantic; this
+     restores the third member of that language. Deliberately below .buff so the
+     debuff, own and cancelable-hover rims that follow still win. */
+  .buff:not(.debuff):not(.own) {
+    border-color: var(--color-buff);
+  }
   /* QoL: an aura in its final seconds (auras_view isAuraExpiring) blinks so an
      expiring DoT/buff reads at a glance on the status panels. Opacity floors at
      0.45 so the icon identity stays readable mid-blink; under reduced motion the

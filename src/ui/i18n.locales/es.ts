@@ -3455,7 +3455,6 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.townFocus.notInTownHint': 'Debes estar en el pueblo para fijar tu enfoque.',
   'hudChrome.townFocus.saveButton': 'Guardar enfoque',
   'hudChrome.townFocus.title': 'Enfoque del pueblo',
-  'hudChrome.archetypeTitle.label': 'Título',
   'hudChrome.archetypeTitle.none': 'Ninguno',
   'entities.itemSets.crownforged.bonus4':
     'Tus golpes críticos con el arma astillan al objetivo con Astilla de Hueso, haciéndolo sangrar 8 de daño cada 2 s durante 12 s. Se acumula hasta 3 veces.',
@@ -9978,7 +9977,6 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.gathering.herbalism': 'Herboristería',
   'hudChrome.gathering.logging': 'Tala',
   'hudChrome.gathering.mining': 'Minería',
-  'hudChrome.gathering.title': 'Recolección',
   'errors.api.accountSessionLimit': 'Demasiados personajes de esta cuenta ya están en el mundo.',
   'errors.api.crossSiteOrigin': 'Solicitud bloqueada por motivos de seguridad.',
   'errors.api.unsupportedMediaType': 'Formato de solicitud no compatible.',
@@ -10326,7 +10324,6 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.willow_sprite.name': 'Duende del Sauce',
   'entities.mobs.wood_wraith.name': 'Aparecido del Bosque',
   'entities.mobs.wreck_thief.name': 'Ladrón de Wreckfield',
-  'hudChrome.archetypeTitle.hobbyLabel': 'Pasatiempo',
   'hudChrome.auraEffect.armorPct': 'Reduce la armadura un {pct}%',
   'hudChrome.auraEffect.armorPctStacks': 'Reduce la armadura un {pct}% ({stacks} acumulaciones)',
   'hudChrome.auraEffect.increasePct.allStats': 'Aumenta todos los atributos un {pct}%',
