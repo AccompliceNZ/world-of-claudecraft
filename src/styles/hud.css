@@ -5618,6 +5618,41 @@
     color: #7ee08a;
   }
 
+  /* ---------- hub lesson coach ---------- */
+  /* Drillmaster Hale's guided Meters coaching (src/ui/hud/practice/), beside
+     the practice DPS tracker above: one line naming the next real control,
+     an optional keybind chip, and (for read-row/review-comparison) a small
+     explicit acknowledgment button. Actionable tutorial guidance, so it
+     stays visible on every graphics tier like the tracker above it. */
+  #hub-lesson-coach {
+    width: 100%;
+    font-size: 12px;
+    color: var(--gold);
+    text-shadow: 1px 1px 2px #000;
+    margin-top: 8px;
+    display: none;
+  }
+  #hub-lesson-coach .hlc-line {
+    color: #e8e0c8;
+    line-height: 1.35;
+  }
+  #hub-lesson-coach .hlc-chip {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 0 5px;
+    border: 1px solid var(--gold);
+    border-radius: 3px;
+    color: #fff4c4;
+    font-family: var(--title-font);
+    font-size: 11px;
+  }
+  #hub-lesson-coach .hlc-ack,
+  #hub-lesson-coach .hlc-replay {
+    display: block;
+    margin-top: 6px;
+    pointer-events: auto;
+  }
+
   /* ---------- combat meters ---------- */
   /* The damage window and the two detachable meters (Healing, Threat) share one
      panel shape. Undisturbed they sit in the bottom-right HUD stack exactly as

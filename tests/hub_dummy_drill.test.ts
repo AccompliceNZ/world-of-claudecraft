@@ -1,9 +1,10 @@
 // The hub dummy lesson (q_hub_know_your_numbers): Drillmaster Hale on the
 // Eastbrook quay introduces the training dummy and the Damage Meters. Credit
-// rides every blow that lands on a dummy (tutorial/dummy_drill.ts), autoattacks
-// included, because the lesson is the readout and not the button; and Hale
-// himself has to stand on his authored mark beside the dummy, clear of the
-// quay's other NPCs and props, or the pointer points at nothing.
+// rides every blow that lands on the HUB's OWN dummy (tutorial/dummy_drill.ts),
+// autoattacks included, because the lesson is the readout and not the button;
+// an unrelated island/Highwatch dummy must not advance it. Hale himself has
+// to stand on his authored mark beside the dummy, clear of the quay's other
+// NPCs and props, or the pointer points at nothing.
 
 import { describe, expect, it } from 'vitest';
 import { isBlocked } from '../src/sim/colliders';
@@ -13,6 +14,7 @@ import {
   HUB_PRACTICE_QUESTS,
   HUB_SPARRING_MASTER_ID,
   HUB_SPARRING_MASTER_POS,
+  HUB_TRAINING_DUMMY_ID,
   HUB_TRAINING_DUMMY_POS,
 } from '../src/sim/content/practice_dummies';
 import { BUILTIN_WORLD, MOBS, NPCS, QUEST_ORDER, QUESTS } from '../src/sim/data';
@@ -41,19 +43,20 @@ function seedActiveDrill(sim: Sim): QuestProgress {
 }
 
 /** A stand-in dummy: only the fields the credit guard reads. */
-function dummy(templateId = 'training_dummy'): Entity {
+function dummy(templateId: string = HUB_TRAINING_DUMMY_ID): Entity {
   return { templateId, kind: 'mob' } as unknown as Entity;
 }
 
-/** A REAL level-20 dummy in the world beside the player, for the live-damage
- *  wiring. The player is raised to the cap too: a level-1 swing at a level-20
- *  target mostly misses, which would make the credit test flaky for the wrong
- *  reason (the hub dummy is the same level-20 template as Highwatch's). */
+/** A REAL level-5 hub dummy in the world beside the player, for the
+ *  live-damage wiring. The player is left at its fresh, LOW starting level
+ *  on purpose: the hub is a level-1 character's very first lesson, and a
+ *  low-level attack (or a low-level spell) must still be able to complete it
+ *  against the hub's own level-5 target. */
 function spawnDummyBesidePlayer(sim: Sim, id: number): Entity {
-  sim.setPlayerLevel(20, sim.playerId);
   const p = sim.entities.get(sim.playerId)!;
   p.prevPos = { ...p.pos };
-  const mob = createMob(id, MOBS.training_dummy, 20, sim.groundPos(p.pos.x + 1, p.pos.z));
+  const template = MOBS[HUB_TRAINING_DUMMY_ID];
+  const mob = createMob(id, template, template.maxLevel, sim.groundPos(p.pos.x + 1, p.pos.z));
   sim.entities.set(id, mob);
   return mob;
 }
@@ -79,13 +82,16 @@ describe('the lesson is authored the way the credit arm reads it', () => {
     expect(objective.count).toBe(10);
   });
 
-  it('names the Damage Meters and their keybind in the text a player reads', () => {
+  it('names the Damage Meters without hardcoding a keybind: coaching owns that', () => {
     const npc = NPCS[HUB_SPARRING_MASTER_ID];
     const quest = QUESTS[HUB_DUMMY_DRILL_QUEST_ID];
     for (const text of [npc.greeting, quest.text]) {
       expect(text).toMatch(/Damage Meters/);
-      expect(text).toMatch(/Shift/);
-      expect(text).toMatch(/\bH\b/);
+      // No hardcoded control: the UI coach shows the real keyboard/touch/pad
+      // binding, so the sim-authored text must never bake one in.
+      expect(text).not.toMatch(/Shift/i);
+      expect(text).not.toMatch(/left-click/i);
+      expect(text).not.toMatch(/\bpress\b/i);
     }
   });
 });
@@ -123,12 +129,16 @@ describe('Drillmaster Hale stands beside the hub dummy', () => {
 });
 
 describe('isTrainingDummy', () => {
-  it('is every authored dummy template and nothing else', () => {
-    expect(isTrainingDummy(dummy('training_dummy'))).toBe(true);
-    expect(isTrainingDummy(dummy('training_effigy'))).toBe(true);
+  it('is scoped to the hub`s own dummy and nothing else', () => {
+    expect(isTrainingDummy(dummy(HUB_TRAINING_DUMMY_ID))).toBe(true);
+    // The shared Highwatch/zone3 dummy and the tutorial-island effigy must
+    // NOT advance the hub's own quest: a blow on an unrelated dummy is not
+    // this lesson.
+    expect(isTrainingDummy(dummy('training_dummy'))).toBe(false);
+    expect(isTrainingDummy(dummy('training_effigy'))).toBe(false);
     expect(isTrainingDummy(dummy('wolf'))).toBe(false);
     expect(
-      isTrainingDummy({ templateId: 'training_dummy', kind: 'npc' } as unknown as Entity),
+      isTrainingDummy({ templateId: HUB_TRAINING_DUMMY_ID, kind: 'npc' } as unknown as Entity),
     ).toBe(false);
   });
 });
@@ -169,11 +179,15 @@ describe('creditDummyDrill', () => {
     expect(qp.counts[0]).toBe(need);
   });
 
-  it('ignores blows on anything that is not a dummy', () => {
+  it('ignores blows on anything that is not the hub`s own dummy', () => {
     const sim = makeSim();
     const qp = seedActiveDrill(sim);
     const p = sim.entities.get(sim.playerId)!;
     creditDummyDrill(sim.ctx, p, dummy('wolf'));
+    expect(qp.counts[0]).toBe(0);
+    // The shared Highwatch dummy specifically: an unrelated island/Highwatch
+    // dummy must never advance the hub's own quest.
+    creditDummyDrill(sim.ctx, p, dummy('training_dummy'));
     expect(qp.counts[0]).toBe(0);
   });
 
@@ -192,15 +206,17 @@ describe('creditDummyDrill', () => {
   });
 });
 
-describe('the live damage path credits the drill', () => {
-  it('a plain autoattack on a real dummy moves the count (the button is not the lesson)', () => {
+describe('the live damage path credits the drill at a fresh, low character level', () => {
+  it('a plain autoattack on the real hub dummy moves the count (the button is not the lesson)', () => {
     const sim = makeSim('warrior');
+    expect(sim.player.level).toBe(1); // the hub is a level-1 character's first lesson
     const qp = seedActiveDrill(sim);
     const target = spawnDummyBesidePlayer(sim, 90301);
+    expect(target.level).toBe(5);
     sim.targetEntity(target.id);
     sim.startAutoAttack();
     let swings = 0;
-    for (let i = 0; i < 300 && qp.state === 'active'; i++) {
+    for (let i = 0; i < 600 && qp.state === 'active'; i++) {
       for (const ev of sim.tick()) {
         if (ev.type === 'damage' && ev.sourceId === sim.playerId && ev.targetId === target.id)
           swings++;
@@ -212,13 +228,21 @@ describe('the live damage path credits the drill', () => {
     expect(qp.counts[0]).toBeLessThanOrEqual(swings);
   });
 
-  it('a cast on a real dummy credits too', () => {
+  it('a low-level mage cast on the real hub dummy credits too', () => {
     const sim = makeSim('mage');
+    expect(sim.player.level).toBe(1);
     const qp = seedActiveDrill(sim);
     const target = spawnDummyBesidePlayer(sim, 90302);
     sim.targetEntity(target.id);
     sim.castAbility(startingAttackFor('mage').abilityId!);
-    for (let i = 0; i < 200 && qp.counts[0] === 0; i++) sim.tick();
+    for (let i = 0; i < 400 && qp.counts[0] === 0; i++) {
+      sim.tick();
+      // Keep re-casting: a level-1 mage's starting bolt has a cast time, and
+      // a single cast attempt can whiff at the +4 level gap.
+      if (!sim.player.castingAbility && qp.counts[0] === 0) {
+        sim.castAbility(startingAttackFor('mage').abilityId!);
+      }
+    }
     expect(qp.counts[0]).toBeGreaterThan(0);
   });
 });

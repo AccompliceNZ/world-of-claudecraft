@@ -2179,6 +2179,25 @@ export class Hud {
           bindActions: (onActivate) => this.bindContextMenuActions(onActivate),
           isMobileLayout: () => this.isMobileLayout(),
         }),
+      // The hub practice coach's own deps (src/ui/hud/practice/): the SAME
+      // keybinds instance the action bar reads, the bar's LIVE slot array (so
+      // the healing lesson resolves where the heal actually sits right now,
+      // never a hardcoded slot), and the renderer's raw worldToScreen (screen
+      // px; no separate uiScale division, exactly like bootcamp.ts's own
+      // .tut-prompt bubble). No gamepad-binding seam is threaded through yet
+      // (see meters.ts MetersDeps.padLabel): the coach's pad chip stays
+      // honestly absent until that plumbing exists elsewhere too.
+      keybinds: this.keybinds,
+      actionBarSlots: () => this.hotbarActions,
+      actionButtonForSlot: (slot) => {
+        if (!this.isMobileLayout()) return this.abilityButtons[slot]?.btn ?? null;
+        if (slot === 0) return this.mobileRingAttackBtn;
+        return this.mobileRingSlotBtns.find((_, index) =>
+          RADIAL_DIRECTIONS.some(direction => this.mobileSourceSlotForButton(index, direction) === slot)
+        ) ?? document.getElementById('mobile-action-page-toggle');
+      },
+      tooltipVisibleFor: (el) => this.tooltipOwner.current() === el && this.tooltipEl.style.display !== 'none',
+      worldToScreen: (x, y, z) => this.renderer.worldToScreen(x, y, z),
     });
     this.targetAurasWindow = new TargetAurasWindow({
       root: $('#target-auras-window'),

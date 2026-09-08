@@ -3734,6 +3734,27 @@
   body.mobile-touch #practice-tracker .pt-run-sum {
     display: none;
   }
+  /* Keep lesson prose clear of the touch combat ring and readable against
+     the world. The centre lane also leaves the meter row and its history
+     arrows reachable below; buttons retain a 40px touch target. */
+  body.mobile-touch #hub-lesson-coach {
+    position: fixed;
+    top: max(96px, env(safe-area-inset-top));
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: min(280px, calc(100vw - 360px));
+    padding: 8px;
+    margin: 0;
+    border: 1px solid #776344;
+    border-radius: 6px;
+    background: #100d09e8;
+    font-size: 11px;
+  }
+  body.mobile-touch #hub-lesson-coach .hlc-ack,
+  body.mobile-touch #hub-lesson-coach .hlc-replay {
+    min-height: 40px;
+  }
   /* The right-anchored tracker is REPLACED on touch by #quest-strip above, not
      restyled: it is fixed-width per tier and unbounded in height, so every extra
      quest grew it down into the action ring. Desktop keeps it untouched, and the
@@ -7958,7 +7979,7 @@
       bottom: calc(26px + env(safe-area-inset-bottom));
       width: min(190px, calc(50vw - 142px));
       min-width: 128px;
-      max-height: min(135px, calc(var(--app-vh) / var(--ui-scale, 1) - 112px));
+      max-height: min(170px, calc(var(--app-vh) / var(--ui-scale, 1) - 112px));
       transform: none;
     }
     /* The centre-top lane is clear of the target/party stack on the left and

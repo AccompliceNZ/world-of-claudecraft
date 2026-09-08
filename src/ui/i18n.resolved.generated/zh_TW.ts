@@ -1261,6 +1261,34 @@ export const zh_TW: EnTranslations = {
       "runLabel": "Run {index}",
       "runSummary": "{total} in {time}"
     },
+    "hubLesson": {
+      "target": "先將假人設為目標。",
+      "openWindow": "打開{meters}。",
+      "openWindowTouch": "打開{menu} → {more} → {meters}。",
+      "openTab": "切換到正確的頁籤。",
+      "openTabDamage": "切換到傷害頁籤。",
+      "openTabHealing": "切換到治療頁籤。",
+      "act": "打出一擊以開始測量。",
+      "actDamage": "攻擊假人以開始測量。",
+      "actHealing": "對假人施放一次治療以開始測量。",
+      "addToBar": "從你的法術書把治療技能放上快捷列，然後對假人施放它。",
+      "readRow": "讀一下你的那一列，然後按繼續。",
+      "readRowDamage": "總計是本輪你造成的全部傷害，DPS是本輪的每秒傷害。看看你的那一列，然後按繼續。",
+      "readRowHealing": "總計是恢復的生命值；超過滿血的治療計為零。HPS是本輪每秒恢復的生命值。讀一下你的那一列，然後按繼續。",
+      "findRun": "用統計視窗的箭頭回到你的練習紀錄。",
+      "addAttackToBar": "從你的法術書把攻擊技能放上快捷列，然後對假人使用它。",
+      "ackContinue": "繼續",
+      "viewBreakdown": "懸停、聚焦或長按你的那一列，查看逐技能明細。",
+      "endRun": "關閉攻擊，停止施法。5秒無命中後，這一輪就會結束。",
+      "endHealingRun": "停止治療5秒以結束這一輪，之後就能重新練習這一課。",
+      "inspectHistory": "用歷史箭頭回看那已經結束的一輪。",
+      "compareAgain": "用右箭頭回到目前，再對同一具假人打大約相同的時長。",
+      "reviewComparison": "用箭頭比較總計、DPS和時長與你第一輪的差別。回到這一輪，然後按完成。",
+      "ackDone": "完成",
+      "replay": "這一課已經學完。隨意練習，或重新播放這些說明。",
+      "replayAction": "再練一次",
+      "replayTarget": "再次將它設為目標"
+    },
     "riftTracker": {
       "title": "裂隙",
       "floor": "第 {current} 層，共 {total} 層",
@@ -15085,6 +15113,12 @@ export const zh_TW: EnTranslations = {
       "heroic_boss_dummy": {
         "name": "英雄首領假人"
       },
+      "hub_training_dummy": {
+        "name": "訓練假人"
+      },
+      "hub_healing_dummy": {
+        "name": "治療假人"
+      },
       "ridge_stalker": {
         "name": "山脊潛獵者"
       },
@@ -16254,7 +16288,7 @@ export const zh_TW: EnTranslations = {
       "drillmaster_hale": {
         "name": "操練官黑爾",
         "title": "碼頭陪練師",
-        "greeting": "我身後那根樁子是訓練假人，{className}：想打多重、打多久都隨你，它不會還手，也永遠倒不下。它真正的用處，是那本帳。按住 Shift 再按 H 打開你的傷害統計：你落在它身上的每一擊都會記在那裡，有每秒的，也有總計的，旁邊的練習條還會記住你最好的一輪，這樣你就能看出一件新武器、一個新天賦或一套新循環到底有沒有讓你變強。"
+        "greeting": "我身後那具假人從不還手，也永遠打不倒，{className}。真正重要的是帳目：你的傷害統計會記下你落在它身上的每一擊。把它設為目標，打開傷害統計視窗，剩下的交給我來教你。"
       },
       "tidewatcher_ondrel": {
         "name": "翁德瑞爾·韋恩",
@@ -18453,11 +18487,21 @@ export const zh_TW: EnTranslations = {
       },
       "q_hub_know_your_numbers": {
         "title": "認清你的數字",
-        "text": "量不出的力量就是提不高的力量，{playerName}。左鍵點擊我身後的訓練假人把它設為目標，然後在揮出第一擊之前按住 Shift 再按 H 打開你的傷害統計。接著往它身上落十擊，揮砍或法術都行，邊打邊盯著那扇視窗：它會統計你每秒和總共造成的傷害，旁邊的練習條會記住你最好的一輪。十擊打滿，回來把那個數字告訴我。",
+        "text": "量不出的力量，就是提不高的力量，{playerName}。把訓練假人設為目標，打開你的傷害統計，往它身上打滿十擊，揮砍或施法都算，邊打邊看著視窗記錄你造成的傷害。打滿十擊後回來，把那個數字告訴我。",
         "completion": "十擊打完，現在你知道它們值多少了。以後每拿到一件新武器、一個新天賦或一個新想法，{playerName}，就回到這根樁子前，給它記上一個數字。山谷未必誠實，統計永遠誠實。",
         "objectives": {
           "0": {
             "label": "命中訓練假人"
+          }
+        }
+      },
+      "q_hub_healing_numbers": {
+        "title": "能治癒的數字",
+        "text": "值得衡量的不只是拳頭，{playerName}。把旁邊的治療假人設為目標，打開你的傷害統計，切換到治療頁籤。往它身上打出三次真正恢復生命值的治療，邊治邊看著視窗像數拳頭一樣數著它們。",
+        "completion": "治癒的數字，不是打傷的數字，但終究都是數字，{playerName}。從不看那些統計的治療者，是在瞎猜自己的價值。",
+        "objectives": {
+          "0": {
+            "label": "在治療假人身上打出一次有效治療"
           }
         }
       },

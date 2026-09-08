@@ -66,10 +66,10 @@ export interface PracticeDpsInput {
   targetTemplateId: string | null;
 }
 
-/** True for every inert practice target (the Highwatch row, the hub dummy, the
- *  proving-shore post): the single `dummy` template flag the sim itself reads. */
+/** Damage practice targets: friendly healing fixtures never ask for attacks. */
 export function isPracticeDummy(templateId: string | null | undefined): boolean {
-  return templateId !== null && templateId !== undefined && MOBS[templateId]?.dummy === true;
+  const template = templateId ? MOBS[templateId] : undefined;
+  return template?.dummy === true && template.friendlyPracticeTarget !== true;
 }
 
 /** The local player's run on one encounter, or null when the encounter was not
@@ -95,6 +95,9 @@ export function practiceRunOf(enc: PracticeEncounter, playerId: number): Practic
  * targeted, which is exactly when a comparison is being made.
  */
 export function practiceDpsModel(input: PracticeDpsInput): PracticeDpsModel | null {
+  // A just-finished damage attempt can share the healing encounter ledger.
+  // Keep its DPS readout out of the way while the player practices healing.
+  if (input.targetTemplateId && MOBS[input.targetTemplateId]?.friendlyPracticeTarget) return null;
   const live = input.current ? practiceRunOf(input.current, input.playerId) : null;
   const targetDummyId = isPracticeDummy(input.targetTemplateId) ? input.targetTemplateId : null;
   if (!live && targetDummyId === null) return null;

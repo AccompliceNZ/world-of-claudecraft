@@ -3978,6 +3978,8 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.friendly_player_dummy.name': '아군 플레이어 허수아비',
   'entities.mobs.normal_boss_dummy.name': '일반 보스 허수아비',
   'entities.mobs.heroic_boss_dummy.name': '영웅 보스 허수아비',
+  'entities.mobs.hub_training_dummy.name': '훈련용 허수아비',
+  'entities.mobs.hub_healing_dummy.name': '치유용 허수아비',
   'entities.mobs.ridge_stalker.name': '산등성이 추적자',
   'entities.mobs.deeprock_kobold.name': '깊은바위 굴꾼',
   'entities.mobs.thornpeak_ogre.name': '쏜피크 오우거',
@@ -5452,7 +5454,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'entities.quests.q_gc_the_wreck_warden.objectives.0.label': '난파선 감시자 처치',
   'entities.quests.q_hub_know_your_numbers.title': '네 숫자를 알아라',
   'entities.quests.q_hub_know_your_numbers.text':
-    '잴 수 없는 힘은 키울 수 없는 힘이다, {playerName}. 내 뒤의 훈련용 허수아비를 왼쪽 클릭해서 대상으로 삼아라. 그다음 휘두르기 전에 Shift를 누른 채 H를 눌러 피해량 미터를 열어라. 이제 열 번 맞혀라. 베기든 주문이든 상관없다. 치는 동안 창을 지켜봐라. 초당 피해와 총 피해를 세어 주고, 옆의 연습 표시줄이 최고 기록을 기억해 준다. 열 번을 채우면 돌아와서 그 숫자를 말해라.',
+    '잴 수 없는 힘은 키울 수 없는 힘이다, {playerName}. 훈련용 허수아비를 대상으로 삼고 피해량 미터를 열어라. 그다음 열 번 맞혀라, 베기든 주문이든 상관없다. 치는 동안 창을 지켜봐라, 네가 입힌 피해를 세어 준다. 열 번을 채우면 돌아와서 그 숫자를 말해라.',
   'entities.quests.q_hub_know_your_numbers.completion':
     '열 번을 쳤으니 이제 그 값어치를 알겠지. 새 무기, 새 특성, 새 생각을 얻을 때마다, {playerName}, 이 기둥 앞으로 돌아와서 숫자를 매겨라. 골짜기는 거짓말을 해도 미터는 정직하다.',
   'entities.quests.q_hub_know_your_numbers.objectives.0.label': '훈련용 허수아비에 일격 명중',
@@ -14412,7 +14414,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'entities.npcs.drillmaster_hale.name': '교관 헤일',
   'entities.npcs.drillmaster_hale.title': '부두 대련 사범',
   'entities.npcs.drillmaster_hale.greeting':
-    '내 뒤에 있는 기둥은 훈련용 허수아비다, {className}. 원하는 만큼 세게, 원하는 만큼 오래 쳐도 된다. 되받아치지도 않고 쓰러지지도 않으니까. 저놈의 진짜 쓸모는 장부다. Shift를 누른 채 H를 눌러 피해량 미터를 열어 봐라. 네가 저기에 꽂은 일격은 하나도 빠짐없이 거기 기록된다. 초당 수치도, 합계도. 옆의 연습 표시줄은 네 최고 기록을 기억해 두니, 새 무기나 새 특성이나 새 순환이 정말로 널 강하게 만들었는지 알 수 있지.',
+    '내 뒤에 있는 허수아비는 되받아치지도, 쓰러지지도 않는다, {className}. 중요한 건 장부다. 네가 저기에 꽂은 일격은 하나도 빠짐없이 피해량 미터가 세어 준다. 저것을 대상으로 삼고 미터를 열어라, 나머지는 내가 알려주마.',
   'entities.quests.q_ps_the_gauntlet.title': '건틀릿 완주',
   'entities.quests.q_ps_the_gauntlet.text':
     '골짜기가 인정하는 다리는 모두 이 길부터 달렸습니다, {playerName}. 첫 번째 길을 서쪽 깃발까지 걷고, 몸을 빙 돌려 남쪽 길을 두 번째 깃발까지 걸은 다음, 마지막 길은 옆걸음으로 붉은 깃발까지 가세요. 깃발은 순서대로 지나야 합니다. 화면 위의 카드가 그때그때 필요한 버튼을 보여 줄 거예요. 감독관 펠이 길 끝에서 모든 완주를 재고 있습니다. 붉은 깃발을 지나면 바로 그 자리에 서서 당신의 완주를 받아 줄 겁니다.',
@@ -14910,4 +14912,39 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.realmBuilder.pastEmpty': '아직 명단에 이름이 없습니다.',
   'hudChrome.realmBuilder.close': '닫기',
   'worldContent.realmBuilderMonumentName': '왕국 건설자 기념비',
+  'hudChrome.hubLesson.target': '먼저 허수아비를 대상으로 삼으세요.',
+  'hudChrome.hubLesson.openWindow': '{meters}을(를) 여세요.',
+  'hudChrome.hubLesson.openWindowTouch': '{menu} → {more} → {meters}을(를) 여세요.',
+  'hudChrome.hubLesson.openTab': '올바른 탭으로 전환하세요.',
+  'hudChrome.hubLesson.openTabDamage': '피해량 탭으로 전환하세요.',
+  'hudChrome.hubLesson.openTabHealing': '치유 탭으로 전환하세요.',
+  'hudChrome.hubLesson.act': '한 번 명중시켜 측정을 시작하세요.',
+  'hudChrome.hubLesson.actDamage': '허수아비를 공격해 측정을 시작하세요.',
+  'hudChrome.hubLesson.actHealing': '허수아비에게 치유를 걸어 측정을 시작하세요.',
+  'hudChrome.hubLesson.addToBar': '주문서에서 치유 마법을 액션바에 추가한 다음, 허수아비에게 사용하세요.',
+  'hudChrome.hubLesson.readRow': '내 행을 확인한 다음 계속을 누르세요.',
+  'hudChrome.hubLesson.readRowDamage':
+    '합계는 이번 판에서 입힌 전체 피해량이고, DPS는 이번 판의 초당 피해량입니다. 내 행을 지켜본 다음 계속을 누르세요.',
+  'hudChrome.hubLesson.readRowHealing':
+    '합계는 회복시킨 체력이며, 최대 체력을 넘는 치유는 0으로 계산됩니다. HPS는 이번 판의 초당 회복량입니다. 내 행을 확인한 다음 계속을 누르세요.',
+  'hudChrome.hubLesson.findRun': '미터의 화살표를 사용해 연습 기록으로 돌아가세요.',
+  'hudChrome.hubLesson.addAttackToBar': '주문서에서 공격을 액션바에 추가한 다음, 허수아비에게 사용하세요.',
+  'hudChrome.hubLesson.ackContinue': '계속',
+  'hudChrome.hubLesson.viewBreakdown': '내 행에 마우스를 올리거나 포커스하거나 길게 눌러 기술별 내역을 확인하세요.',
+  'hudChrome.hubLesson.endRun': '공격을 끄고 시전을 멈추세요. 5초 동안 명중이 없으면 이번 판이 끝납니다.',
+  'hudChrome.hubLesson.endHealingRun': '5초 동안 치유를 멈춰 이번 판을 끝내면, 이 레슨을 다시 연습할 수 있습니다.',
+  'hudChrome.hubLesson.inspectHistory': '기록 화살표를 사용해 방금 끝난 판을 되돌아보세요.',
+  'hudChrome.hubLesson.compareAgain': '오른쪽 화살표로 현재로 돌아간 다음, 같은 허수아비를 비슷한 시간 동안 공격하세요.',
+  'hudChrome.hubLesson.reviewComparison':
+    '화살표로 합계, DPS, 지속 시간을 첫 판과 비교하세요. 이 판으로 돌아온 다음 완료를 누르세요.',
+  'hudChrome.hubLesson.ackDone': '완료',
+  'hudChrome.hubLesson.replay': '레슨을 마쳤습니다. 자유롭게 연습하거나, 이 설명을 다시 재생하세요.',
+  'hudChrome.hubLesson.replayAction': '다시 연습하기',
+  'hudChrome.hubLesson.replayTarget': '다시 대상으로 삼기',
+  'entities.quests.q_hub_healing_numbers.title': '치유하는 숫자',
+  'entities.quests.q_hub_healing_numbers.text':
+    '잴 가치가 있는 건 주먹만이 아닙니다, {playerName}. 옆에 있는 치유용 허수아비를 대상으로 삼고, 피해량 미터를 열어 치유 탭으로 전환하세요. 실제로 체력을 회복시키는 치유를 세 번 명중시키세요, 주먹을 셌던 것과 같은 방식으로 창이 세어 줄 겁니다.',
+  'entities.quests.q_hub_healing_numbers.completion':
+    '때린 숫자가 아니라 치유한 숫자지만, 숫자인 건 매한가지입니다, {playerName}. 그 미터를 보지 않는 치유사는 자기 가치를 추측만 하고 있는 겁니다.',
+  'entities.quests.q_hub_healing_numbers.objectives.0.label': '치유용 허수아비에게 유효한 치유 명중',
 };

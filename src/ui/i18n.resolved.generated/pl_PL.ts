@@ -1261,6 +1261,34 @@ export const pl_PL: EnTranslations = {
       "runLabel": "Run {index}",
       "runSummary": "{total} in {time}"
     },
+    "hubLesson": {
+      "target": "Target the dummy to begin.",
+      "openWindow": "Open {meters}.",
+      "openWindowTouch": "Open {menu} → {more} → {meters}.",
+      "openTab": "Switch to the right tab.",
+      "openTabDamage": "Switch to the Damage tab.",
+      "openTabHealing": "Switch to the Healing tab.",
+      "act": "Land a hit to start the measurement.",
+      "actDamage": "Attack the dummy to start the measurement.",
+      "actHealing": "Cast a heal on the dummy to start the measurement.",
+      "addToBar": "Add your heal to your action bar from your Spellbook, then cast it on the dummy.",
+      "readRow": "Read your row, then press Continue.",
+      "readRowDamage": "Total is all your damage this run. DPS is damage per second over the run. Watch your row, then Continue.",
+      "readRowHealing": "Total counts health restored; healing past full health adds zero. HPS is health restored per second over the run. Read your row, then Continue.",
+      "findRun": "Use the meter arrows to return to your practice run.",
+      "addAttackToBar": "Add your attack from your Spellbook to the action bar, then use it on the dummy.",
+      "ackContinue": "Continue",
+      "viewBreakdown": "Hover, focus, or hold your row for the per-ability split.",
+      "endRun": "Turn off Attack and stop casting. After 5 seconds without a hit, this run ends.",
+      "endHealingRun": "Stop healing for 5 seconds to finish this run, then you can replay the lesson.",
+      "inspectHistory": "Use the history arrow to look back at that finished run.",
+      "compareAgain": "Return to Current with the right arrow, then attack the same dummy for about the same time.",
+      "reviewComparison": "Use the arrows to compare Total, DPS, and duration with your first run. Return to this run, then Done.",
+      "ackDone": "Done",
+      "replay": "Lesson complete. Practice freely, or replay these instructions.",
+      "replayAction": "Practice again",
+      "replayTarget": "Target it again"
+    },
     "riftTracker": {
       "title": "Szczelina",
       "floor": "Piętro {current} z {total}",
@@ -15085,6 +15113,12 @@ export const pl_PL: EnTranslations = {
       "heroic_boss_dummy": {
         "name": "Manekin heroicznego bossa"
       },
+      "hub_training_dummy": {
+        "name": "Training Dummy"
+      },
+      "hub_healing_dummy": {
+        "name": "Healing Dummy"
+      },
       "ridge_stalker": {
         "name": "Grzbietowy Tropiciel"
       },
@@ -16254,7 +16288,7 @@ export const pl_PL: EnTranslations = {
       "drillmaster_hale": {
         "name": "Drillmaster Hale",
         "title": "Quay Sparring Master",
-        "greeting": "That post behind me is a training dummy, {className}: hit it as hard and as often as you like, it never swings back and it never goes down. What it is FOR is the tally. Hold Shift and press H to open your Damage Meters: every blow you land on it is counted there, per second and in total, and the practice strip beside it keeps your best run so you can tell whether a new weapon, a new talent or a new rotation actually made you stronger."
+        "greeting": "That dummy behind me never swings back and never goes down, {className}. What matters is the tally: your Damage Meters count every blow you land on it. Target it and open the meters, and I will walk you through the rest."
       },
       "tidewatcher_ondrel": {
         "name": "Ondrel Vane",
@@ -18453,11 +18487,21 @@ export const pl_PL: EnTranslations = {
       },
       "q_hub_know_your_numbers": {
         "title": "Know Your Numbers",
-        "text": "Strength you cannot measure is strength you cannot improve, {playerName}. Left-click the training dummy behind me to make it your target, then hold Shift and press H to open your Damage Meters before you swing. Now land ten blows on it, swings or spells, and watch the window while you do: it counts what you deal per second and in total, and the practice strip beside it remembers your best run. When the ten are in, come back and tell me the number.",
+        "text": "Strength you cannot measure is strength you cannot improve, {playerName}. Target the training dummy, open your Damage Meters, and land ten blows on it, swings or spells, while you watch the window count what you deal. When the ten are in, come back and tell me the number.",
         "completion": "Ten blows, and now you know what they are worth. Every time you take a new weapon, a new talent or a new idea, {playerName}, come back to this post and put a number on it. The meters are honest even when the vale is not.",
         "objectives": {
           "0": {
             "label": "Blow landed on the Training Dummy"
+          }
+        }
+      },
+      "q_hub_healing_numbers": {
+        "title": "Numbers That Heal",
+        "text": "A post is not the only thing worth measuring, {playerName}. Target the Healing Dummy beside it, open your Damage Meters, and switch to the Healing tab. Land three heals that actually restore health while you watch the window count them the same way it counted blows.",
+        "completion": "Healed numbers, not hurt ones, but numbers all the same, {playerName}. A healer who never watches those meters is guessing at their own worth.",
+        "objectives": {
+          "0": {
+            "label": "Effective heal landed on the Healing Dummy"
           }
         }
       },

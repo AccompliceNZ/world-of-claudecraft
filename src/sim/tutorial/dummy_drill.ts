@@ -4,8 +4,12 @@
 // The Proving Shore teaches the swing and the button. Nothing teaches the
 // Damage Meters window, and a training dummy standing alone on the quay tells
 // a newcomer nothing about what it is for. This drill is the pointer: Hale's
-// text names the meters keybind, and the objective is "land ten blows on the
+// text points at the meters, and the objective is "land ten blows on the
 // dummy", which is exactly the run the meters and the practice strip count.
+//
+// Scoped to the HUB's own dummy (HUB_TRAINING_DUMMY_ID) specifically, never
+// the shared zone3.ts `training_dummy` the Highwatch row uses: a blow on an
+// unrelated island/Highwatch dummy must not advance this quest.
 //
 // Unlike the island's ability drill (ability_drill.ts), a plain autoattack
 // COUNTS here: the lesson is the readout, not the press. The objective is a
@@ -20,8 +24,9 @@
 import {
   HUB_DUMMY_DRILL_OBJECT_ITEM_ID,
   HUB_DUMMY_DRILL_QUEST_ID,
+  HUB_TRAINING_DUMMY_ID,
 } from '../content/practice_dummies';
-import { MOBS, QUESTS } from '../data';
+import { QUESTS } from '../data';
 import { emitQuestProgress } from '../quests/quest_credit';
 import type { SimContext } from '../sim_context';
 import type { Entity } from '../types';
@@ -29,18 +34,18 @@ import type { Entity } from '../types';
 export const DUMMY_DRILL_QUEST_ID = HUB_DUMMY_DRILL_QUEST_ID;
 export const DUMMY_DRILL_OBJECT_ITEM_ID = HUB_DUMMY_DRILL_OBJECT_ITEM_ID;
 
-/** Any practice dummy counts (the hub one, the Highwatch row): the lesson is
- *  about the meters, and the meters count every one of them the same way. */
+/** The hub's own damage dummy, and nothing else: not the shared training_dummy
+ *  the Highwatch row uses, not training_effigy, not any other practice target. */
 export function isTrainingDummy(target: Entity): boolean {
-  return target.kind === 'mob' && MOBS[target.templateId]?.dummy === true;
+  return target.kind === 'mob' && target.templateId === HUB_TRAINING_DUMMY_ID;
 }
 
 /**
  * Credit one landed blow, called from dealDamage once damage has actually
  * been applied. Guards in the order that keeps the common case cheapest:
- * the target has to be a dummy, the source a player (a pet's bite is its
- * owner's number on the meters, but the lesson asks the player to swing),
- * and the lesson active.
+ * the target has to be the hub's own dummy, the source a player (a pet's
+ * bite is its owner's number on the meters, but the lesson asks the player
+ * to swing), and the lesson active.
  */
 export function creditDummyDrill(ctx: SimContext, source: Entity, target: Entity): void {
   if (!isTrainingDummy(target)) return;

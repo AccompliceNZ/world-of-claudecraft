@@ -25,7 +25,7 @@ function enc(
 }
 
 describe('isPracticeDummy', () => {
-  it('is the single dummy template flag: every inert practice target, nothing else', () => {
+  it('recognizes attackable practice targets', () => {
     expect(isPracticeDummy('training_dummy')).toBe(true);
     expect(isPracticeDummy(NORMAL_BOSS_DUMMY_ID)).toBe(true);
     expect(isPracticeDummy(HEROIC_BOSS_DUMMY_ID)).toBe(true);
@@ -56,6 +56,18 @@ describe('practiceRunOf', () => {
 });
 
 describe('practiceDpsModel', () => {
+  it.each(['hub_healing_dummy', 'friendly_player_dummy'])(
+    'does not prompt attacks or show a previous damage run while targeting %s',
+    (targetTemplateId) => {
+      for (const current of [null, enc('hub_training_dummy', 5, { [ME]: 100 })]) {
+        expect(practiceDpsModel({ current, history: [], playerId: ME, targetTemplateId })).toBe(
+          null,
+        );
+      }
+      expect(isPracticeDummy(targetTemplateId)).toBe(false);
+    },
+  );
+
   it('is null with no live run and no dummy targeted, whatever the history holds', () => {
     const model = practiceDpsModel({
       current: enc('boar', 5, { [ME]: 100 }),

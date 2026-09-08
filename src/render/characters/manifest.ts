@@ -3649,6 +3649,14 @@ const MOB_KEYS: Record<string, string> = {
   friendly_player_dummy: 'mob_training_dummy',
   normal_boss_dummy: 'mob_training_dummy',
   heroic_boss_dummy: 'mob_training_dummy',
+  // The Eastbrook hub's two level-5 practice targets (sim/content/
+  // practice_dummies.ts): the same shared body again, told apart the same
+  // way as the row above (tint: 'entity' on mob_training_dummy). The healing
+  // dummy carries a friendly ally color from its template, exactly like
+  // friendly_player_dummy above; nothing here decides friend or foe, that is
+  // the template's `hostile`/`friendlyPracticeTarget` fields.
+  hub_training_dummy: 'mob_training_dummy',
+  hub_healing_dummy: 'mob_training_dummy',
   emberkin: 'mob_emberkin',
   gloomshade: 'mob_gloomshade',
   pyre_colossus: 'mob_pyre_colossus',

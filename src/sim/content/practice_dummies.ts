@@ -29,7 +29,7 @@
 // carry zero damage, zero move speed and zero aggro radius on top of that, so the
 // inertness holds even for a code path that reads the template numbers directly.
 
-import type { CampDef, MobTemplate, NpcDef, QuestDef } from '../types';
+import type { CampDef, MobTemplate, NpcDef, PlayerClass, QuestDef } from '../types';
 import { HEROIC_DUNGEON_TUNING } from './dungeon_difficulty';
 import { DUNGEON_MOBS } from './dungeons';
 import { NYTHRAXIS_RAID_BOSS_ID } from './heroic_loot';
@@ -52,6 +52,46 @@ const DUMMY_HP = 999999;
 export const FRIENDLY_PLAYER_DUMMY_ID = 'friendly_player_dummy';
 export const NORMAL_BOSS_DUMMY_ID = 'normal_boss_dummy';
 export const HEROIC_BOSS_DUMMY_ID = 'heroic_boss_dummy';
+
+// The hub's second lesson, optional: a level-5 friendly healing target beside
+// Hale's damage dummy, for the four classes that carry a genuine direct heal
+// in their base kit. NEVER mage, even a build leaning into support tools
+// (sim/tutorial/hub_healing_lesson.ts hubHealingAbilityId resolves the exact
+// spell; this list is its single source of truth, imported from there rather
+// than re-typed, since content/ is data and tutorial/ is the consumer).
+export const HUB_HEALING_ELIGIBLE_CLASSES: readonly PlayerClass[] = [
+  'druid',
+  'shaman',
+  'paladin',
+  'priest',
+];
+
+// It begins injured and sheds healed HP back toward its resting mark on the
+// SAME mechanics as this row's own friendly_player_dummy (mob/practice_dummies.ts,
+// friendlyPracticeTarget): rest fraction and shed rate are read straight off
+// that shared logic in sim/hub_practice.ts. What differs is the vitals
+// themselves: this teaches the meter to a FRESH character, not a geared one,
+// so it carries a plain level-5 pool of its own rather than borrowing the
+// level-20 best-in-slot reference kit.
+export const HUB_HEALING_DUMMY_ID = 'hub_healing_dummy';
+
+// A level-5 humanoid's ordinary pool (comparable to a levelled zone mob at
+// this level, e.g. zone1.ts's mogger_lackey at 44 + 18*4 = 116), not the
+// dummy row's inert 999,999: a healer needs a pool small enough that a real
+// cast is a meaningful fraction of it.
+const HUB_HEALING_DUMMY_HP_BASE = 60;
+const HUB_HEALING_DUMMY_HP_PER_LEVEL = 15;
+
+// The hub's OWN damage dummy: a dedicated level-5 template, never the shared
+// zone3.ts `training_dummy` (level 20, the Highwatch row's own body). Two
+// reasons this is a separate id rather than a reuse: the hub is meant to be a
+// fresh character's very first lesson, so its target should read as their
+// own level, not the level-20 endgame measuring post; and dummy_drill.ts
+// credit is scoped to THIS id specifically, so hitting the unrelated
+// Highwatch row (which shares the family but not the id) never advances the
+// hub quest. Same inert 999,999 pool as every dummy here: never felled for
+// real regardless of its level.
+export const HUB_TRAINING_DUMMY_ID = 'hub_training_dummy';
 
 // Fields every dummy in the row shares: inert, undroppable, and wearing the same
 // body as the original training dummy (render/characters/manifest.ts points all
@@ -120,6 +160,34 @@ export const PRACTICE_DUMMY_MOBS: Record<string, MobTemplate> = {
     attackSpeed: NYTHRAXIS.attackSpeed,
     armorPerLevel: NYTHRAXIS.armorPerLevel * NYTHRAXIS_HEROIC.armorMultiplier,
     color: 0xc8503c, // heroic crimson
+  },
+  // The hub's own friendly target, at a plain level-5 pool (never the
+  // level-20 best-in-slot stamp above): sim/hub_practice.ts starts it injured
+  // and the shared friendlyPracticeTarget mechanic sheds it back toward rest.
+  [HUB_HEALING_DUMMY_ID]: {
+    ...DUMMY_BASE,
+    id: HUB_HEALING_DUMMY_ID,
+    name: 'Healing Dummy',
+    minLevel: 5,
+    maxLevel: 5,
+    hpBase: HUB_HEALING_DUMMY_HP_BASE,
+    hpPerLevel: HUB_HEALING_DUMMY_HP_PER_LEVEL,
+    attackSpeed: 2.0,
+    armorPerLevel: 0, // never hit; armor is inert here
+    color: 0x74c476, // ally green, the same family as the row's own ally
+    friendlyPracticeTarget: true,
+  },
+  // The hub's own damage dummy: same inert body as the shared training_dummy,
+  // stamped at the hub's own level-5 instead of that one's level-20.
+  [HUB_TRAINING_DUMMY_ID]: {
+    ...DUMMY_BASE,
+    id: HUB_TRAINING_DUMMY_ID,
+    name: 'Training Dummy',
+    minLevel: 5,
+    maxLevel: 5,
+    attackSpeed: 2.0,
+    armorPerLevel: 0,
+    color: 0xb8924a, // same wood tan as the shared training_dummy
   },
 };
 
@@ -207,12 +275,20 @@ export const PRACTICE_ROW_CAMPFIRE: [number, number] = [
 // (tests/training_dummy.test.ts pins that it lands on its authored mark).
 export const HUB_TRAINING_DUMMY_POS = { x: -86, z: -50 } as const;
 
-// NOT a CAMPS entry: the hub yard (dummy + sparring master) spawns after the
-// player in sim/hub_practice.ts so it consumes only trailing entity ids;
-// a camp appended here shifted the player's id and re-minted every parity
-// golden. The def stays as data for the spawn hook and its tests.
+// East of Hale, mirroring the damage dummy on his other side: a few yards
+// off, clear of the quay road (centreline x -92, halfWidth 1.5), Fisherman
+// Brandt (-95, -50) and the pad's watchtower/crate cluster to the north (the
+// same clearance rule as HUB_TRAINING_DUMMY_POS above).
+// tests/hub_healing_dummy.test.ts pins the clearance and that findSafePos
+// leaves it exactly here.
+export const HUB_HEALING_DUMMY_POS = { x: -85, z: -44 } as const;
+
+// NOT a CAMPS entry: the hub yard (both dummies + sparring master) spawns
+// after the player in sim/hub_practice.ts so it consumes only trailing entity
+// ids; a camp appended here shifted the player's id and re-minted every
+// parity golden. The def stays as data for the spawn hook and its tests.
 export const HUB_PRACTICE_DUMMY_CAMPS: CampDef[] = [
-  { mobId: 'training_dummy', center: { ...HUB_TRAINING_DUMMY_POS }, radius: 0, count: 1 },
+  { mobId: HUB_TRAINING_DUMMY_ID, center: { ...HUB_TRAINING_DUMMY_POS }, radius: 0, count: 1 },
 ];
 
 // The quay's sparring master: the hub dummy's one-line tutorial, on the model
@@ -238,13 +314,13 @@ export const HUB_PRACTICE_NPCS: Record<string, NpcDef> = {
     pos: { ...HUB_SPARRING_MASTER_POS },
     facing: -0.38,
     color: 0x7a4a4a,
-    questIds: ['q_hub_know_your_numbers'],
+    questIds: ['q_hub_know_your_numbers', 'q_hub_healing_numbers'],
     // Spawned by sim/hub_practice.ts after the player (trailing ids), not by
     // the surface-placement loop; the def stays in NPCS so the online client
     // resolves his questIds and world_entity_i18n his strings.
     dynamic: true,
     greeting:
-      'That post behind me is a training dummy, $C: hit it as hard and as often as you like, it never swings back and it never goes down. What it is FOR is the tally. Hold Shift and press H to open your Damage Meters: every blow you land on it is counted there, per second and in total, and the practice strip beside it keeps your best run so you can tell whether a new weapon, a new talent or a new rotation actually made you stronger.',
+      'That dummy behind me never swings back and never goes down, $C. What matters is the tally: your Damage Meters count every blow you land on it. Target it and open the meters, and I will walk you through the rest.',
   },
 };
 
@@ -255,13 +331,20 @@ export const HUB_PRACTICE_NPCS: Record<string, NpcDef> = {
 export const HUB_DUMMY_DRILL_OBJECT_ITEM_ID = 'hub_dummy_drill';
 export const HUB_DUMMY_DRILL_QUEST_ID = 'q_hub_know_your_numbers';
 
+// The optional second lesson's own sentinel objective, on the same idiom:
+// tutorial/hub_healing_drill.ts credits it off every EFFECTIVE heal that
+// lands on the hub healing dummy, because this lesson's meter is Healing, not
+// Damage, and the button pressed to get there does not matter.
+export const HUB_HEALING_DRILL_OBJECT_ITEM_ID = 'hub_healing_drill';
+export const HUB_HEALING_DRILL_QUEST_ID = 'q_hub_healing_numbers';
+
 export const HUB_PRACTICE_QUESTS: Record<string, QuestDef> = {
   [HUB_DUMMY_DRILL_QUEST_ID]: {
     id: HUB_DUMMY_DRILL_QUEST_ID,
     name: 'Know Your Numbers',
     giverNpcId: HUB_SPARRING_MASTER_ID,
     turnInNpcId: HUB_SPARRING_MASTER_ID,
-    text: 'Strength you cannot measure is strength you cannot improve, $N. Left-click the training dummy behind me to make it your target, then hold Shift and press H to open your Damage Meters before you swing. Now land ten blows on it, swings or spells, and watch the window while you do: it counts what you deal per second and in total, and the practice strip beside it remembers your best run. When the ten are in, come back and tell me the number.',
+    text: 'Strength you cannot measure is strength you cannot improve, $N. Target the training dummy, open your Damage Meters, and land ten blows on it, swings or spells, while you watch the window count what you deal. When the ten are in, come back and tell me the number.',
     completionText:
       'Ten blows, and now you know what they are worth. Every time you take a new weapon, a new talent or a new idea, $N, come back to this post and put a number on it. The meters are honest even when the vale is not.',
     objectives: [
@@ -278,6 +361,38 @@ export const HUB_PRACTICE_QUESTS: Record<string, QuestDef> = {
     copperReward: 40,
     itemRewards: {},
   },
+  // Optional: only offered once Know Your Numbers is done, and only to the
+  // four classes carrying a real direct heal (requiredClass) that they have
+  // actually learned by their current level (requiresUsableHealAbility,
+  // resolved the same way the credit arm and the UI coach resolve it, via
+  // sim/tutorial/hub_healing_lesson.ts hubHealingAbilityId). A mage never
+  // sees this quest: it has nothing in its kit that qualifies.
+  [HUB_HEALING_DRILL_QUEST_ID]: {
+    id: HUB_HEALING_DRILL_QUEST_ID,
+    name: 'Numbers That Heal',
+    giverNpcId: HUB_SPARRING_MASTER_ID,
+    turnInNpcId: HUB_SPARRING_MASTER_ID,
+    requiresQuest: HUB_DUMMY_DRILL_QUEST_ID,
+    requiredClass: [...HUB_HEALING_ELIGIBLE_CLASSES],
+    requiresUsableHealAbility: true,
+    text: 'A post is not the only thing worth measuring, $N. Target the Healing Dummy beside it, open your Damage Meters, and switch to the Healing tab. Land three heals that actually restore health while you watch the window count them the same way it counted blows.',
+    completionText:
+      'Healed numbers, not hurt ones, but numbers all the same, $N. A healer who never watches those meters is guessing at their own worth.',
+    objectives: [
+      {
+        type: 'interact',
+        targetObjectItemId: HUB_HEALING_DRILL_OBJECT_ITEM_ID,
+        count: 3,
+        label: 'Effective heal landed on the Healing Dummy',
+      },
+    ],
+    xpReward: 60,
+    copperReward: 40,
+    itemRewards: {},
+  },
 };
 
-export const HUB_PRACTICE_QUEST_ORDER: string[] = [HUB_DUMMY_DRILL_QUEST_ID];
+export const HUB_PRACTICE_QUEST_ORDER: string[] = [
+  HUB_DUMMY_DRILL_QUEST_ID,
+  HUB_HEALING_DRILL_QUEST_ID,
+];

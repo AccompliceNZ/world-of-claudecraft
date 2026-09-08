@@ -3870,6 +3870,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.friendly_player_dummy.name': '友方玩家假人',
   'entities.mobs.normal_boss_dummy.name': '普通首領假人',
   'entities.mobs.heroic_boss_dummy.name': '英雄首領假人',
+  'entities.mobs.hub_training_dummy.name': '訓練假人',
+  'entities.mobs.hub_healing_dummy.name': '治療假人',
   'entities.mobs.ridge_stalker.name': '山脊潛獵者',
   'entities.mobs.deeprock_kobold.name': '深岩鑿道者',
   'entities.mobs.thornpeak_ogre.name': '荊峰食人魔',
@@ -5312,7 +5314,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.quests.q_gc_the_wreck_warden.objectives.0.label': '已擊倒沉船守衛',
   'entities.quests.q_hub_know_your_numbers.title': '認清你的數字',
   'entities.quests.q_hub_know_your_numbers.text':
-    '量不出的力量就是提不高的力量，{playerName}。左鍵點擊我身後的訓練假人把它設為目標，然後在揮出第一擊之前按住 Shift 再按 H 打開你的傷害統計。接著往它身上落十擊，揮砍或法術都行，邊打邊盯著那扇視窗：它會統計你每秒和總共造成的傷害，旁邊的練習條會記住你最好的一輪。十擊打滿，回來把那個數字告訴我。',
+    '量不出的力量，就是提不高的力量，{playerName}。把訓練假人設為目標，打開你的傷害統計，往它身上打滿十擊，揮砍或施法都算，邊打邊看著視窗記錄你造成的傷害。打滿十擊後回來，把那個數字告訴我。',
   'entities.quests.q_hub_know_your_numbers.completion':
     '十擊打完，現在你知道它們值多少了。以後每拿到一件新武器、一個新天賦或一個新想法，{playerName}，就回到這根樁子前，給它記上一個數字。山谷未必誠實，統計永遠誠實。',
   'entities.quests.q_hub_know_your_numbers.objectives.0.label': '命中訓練假人',
@@ -14117,7 +14119,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.npcs.drillmaster_hale.name': '操練官黑爾',
   'entities.npcs.drillmaster_hale.title': '碼頭陪練師',
   'entities.npcs.drillmaster_hale.greeting':
-    '我身後那根樁子是訓練假人，{className}：想打多重、打多久都隨你，它不會還手，也永遠倒不下。它真正的用處，是那本帳。按住 Shift 再按 H 打開你的傷害統計：你落在它身上的每一擊都會記在那裡，有每秒的，也有總計的，旁邊的練習條還會記住你最好的一輪，這樣你就能看出一件新武器、一個新天賦或一套新循環到底有沒有讓你變強。',
+    '我身後那具假人從不還手，也永遠打不倒，{className}。真正重要的是帳目：你的傷害統計會記下你落在它身上的每一擊。把它設為目標，打開傷害統計視窗，剩下的交給我來教你。',
   'entities.quests.q_ps_the_gauntlet.title': '跑過試煉跑道',
   'entities.quests.q_ps_the_gauntlet.text':
     '谷地敬重的每一雙腿，都是先從這幾條跑道跑出來的，{playerName}。沿第一條跑道向西走到旗幟處，原地轉過身來，沿南邊的跑道走到第二面旗，最後沿末尾的跑道橫移到紅旗處。旗幟要按順序經過；螢幕上方的卡片會隨時告訴你該按哪個鍵。監工佩爾在跑道盡頭掐著每一趟的錶：等紅旗被你甩在身後，他就站在那裡等著收你的成績。',
@@ -14603,4 +14605,39 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.realmBuilder.pastEmpty': '榮譽榜上還沒有名字。',
   'hudChrome.realmBuilder.close': '關閉',
   'worldContent.realmBuilderMonumentName': '王國建造者紀念碑',
+  'hudChrome.hubLesson.target': '先將假人設為目標。',
+  'hudChrome.hubLesson.openWindow': '打開{meters}。',
+  'hudChrome.hubLesson.openWindowTouch': '打開{menu} → {more} → {meters}。',
+  'hudChrome.hubLesson.openTab': '切換到正確的頁籤。',
+  'hudChrome.hubLesson.openTabDamage': '切換到傷害頁籤。',
+  'hudChrome.hubLesson.openTabHealing': '切換到治療頁籤。',
+  'hudChrome.hubLesson.act': '打出一擊以開始測量。',
+  'hudChrome.hubLesson.actDamage': '攻擊假人以開始測量。',
+  'hudChrome.hubLesson.actHealing': '對假人施放一次治療以開始測量。',
+  'hudChrome.hubLesson.addToBar': '從你的法術書把治療技能放上快捷列，然後對假人施放它。',
+  'hudChrome.hubLesson.readRow': '讀一下你的那一列，然後按繼續。',
+  'hudChrome.hubLesson.readRowDamage':
+    '總計是本輪你造成的全部傷害，DPS是本輪的每秒傷害。看看你的那一列，然後按繼續。',
+  'hudChrome.hubLesson.readRowHealing':
+    '總計是恢復的生命值；超過滿血的治療計為零。HPS是本輪每秒恢復的生命值。讀一下你的那一列，然後按繼續。',
+  'hudChrome.hubLesson.findRun': '用統計視窗的箭頭回到你的練習紀錄。',
+  'hudChrome.hubLesson.addAttackToBar': '從你的法術書把攻擊技能放上快捷列，然後對假人使用它。',
+  'hudChrome.hubLesson.ackContinue': '繼續',
+  'hudChrome.hubLesson.viewBreakdown': '懸停、聚焦或長按你的那一列，查看逐技能明細。',
+  'hudChrome.hubLesson.endRun': '關閉攻擊，停止施法。5秒無命中後，這一輪就會結束。',
+  'hudChrome.hubLesson.endHealingRun': '停止治療5秒以結束這一輪，之後就能重新練習這一課。',
+  'hudChrome.hubLesson.inspectHistory': '用歷史箭頭回看那已經結束的一輪。',
+  'hudChrome.hubLesson.compareAgain': '用右箭頭回到目前，再對同一具假人打大約相同的時長。',
+  'hudChrome.hubLesson.reviewComparison':
+    '用箭頭比較總計、DPS和時長與你第一輪的差別。回到這一輪，然後按完成。',
+  'hudChrome.hubLesson.ackDone': '完成',
+  'hudChrome.hubLesson.replay': '這一課已經學完。隨意練習，或重新播放這些說明。',
+  'hudChrome.hubLesson.replayAction': '再練一次',
+  'hudChrome.hubLesson.replayTarget': '再次將它設為目標',
+  'entities.quests.q_hub_healing_numbers.title': '能治癒的數字',
+  'entities.quests.q_hub_healing_numbers.text':
+    '值得衡量的不只是拳頭，{playerName}。把旁邊的治療假人設為目標，打開你的傷害統計，切換到治療頁籤。往它身上打出三次真正恢復生命值的治療，邊治邊看著視窗像數拳頭一樣數著它們。',
+  'entities.quests.q_hub_healing_numbers.completion':
+    '治癒的數字，不是打傷的數字，但終究都是數字，{playerName}。從不看那些統計的治療者，是在瞎猜自己的價值。',
+  'entities.quests.q_hub_healing_numbers.objectives.0.label': '在治療假人身上打出一次有效治療',
 };

@@ -4035,6 +4035,8 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.friendly_player_dummy.name': 'Дружественный манекен игрока',
   'entities.mobs.normal_boss_dummy.name': 'Обычный манекен босса',
   'entities.mobs.heroic_boss_dummy.name': 'Героический манекен босса',
+  'entities.mobs.hub_training_dummy.name': 'Тренировочный манекен',
+  'entities.mobs.hub_healing_dummy.name': 'Лечебный манекен',
   'entities.mobs.ridge_stalker.name': 'Хребтовый охотник',
   'entities.mobs.deeprock_kobold.name': 'Глубокоскальный туннельщик',
   'entities.mobs.thornpeak_ogre.name': 'Огр Терновых Пиков',
@@ -5531,7 +5533,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.quests.q_gc_the_wreck_warden.objectives.0.label': 'Страж Кораблекрушений повержен',
   'entities.quests.q_hub_know_your_numbers.title': 'Знай свои числа',
   'entities.quests.q_hub_know_your_numbers.text':
-    'Сила, которую нельзя измерить, это сила, которую нельзя улучшить, {playerName}. Щелкни левой кнопкой по тренировочному манекену у меня за спиной, чтобы взять его в цель, а потом, прежде чем замахнуться, зажми Shift и нажми H: откроются счетчики урона. Теперь нанеси по нему десять ударов, оружием или заклинаниями, и следи за окном, пока бьешь: оно считает твой урон в секунду и всего, а полоса тренировки рядом запоминает лучший заход. Когда все десять будут нанесены, возвращайся и назови мне число.',
+    'Сила, которую нельзя измерить, это сила, которую нельзя улучшить, {playerName}. Возьми в цель тренировочный манекен, открой счетчики урона и нанеси по нему десять ударов, оружием или заклинаниями, следя за тем, как окно считает нанесенный урон. Когда все десять будут нанесены, возвращайся и назови мне число.',
   'entities.quests.q_hub_know_your_numbers.completion':
     'Десять ударов, и теперь ты знаешь, чего они стоят. Всякий раз, как возьмешь новое оружие, новый талант или новую задумку, {playerName}, возвращайся к этому столбу и ставь на них число. Счетчики честны даже тогда, когда долина нет.',
   'entities.quests.q_hub_know_your_numbers.objectives.0.label': 'Удар нанесен по тренировочному манекену',
@@ -14620,7 +14622,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.npcs.drillmaster_hale.name': 'Наставник Хейл',
   'entities.npcs.drillmaster_hale.title': 'Мастер боя на пристани',
   'entities.npcs.drillmaster_hale.greeting':
-    'Столб у меня за спиной, {className}, это тренировочный манекен: бей по нему сколько угодно сильно и сколько угодно долго, он не ответит и не упадет. Нужен он ради счета. Зажми Shift и нажми H, чтобы открыть счетчики урона: каждый удар, что ты по нему нанесешь, будет там учтен, и в секунду, и всего, а полоса тренировки рядом запомнит твой лучший заход. Так ты поймешь, сделало ли тебя сильнее новое оружие, новый талант или новая последовательность приемов.',
+    'Манекен у меня за спиной не отвечает ударом на удар и никогда не падает, {className}. Важен счет: твои счетчики урона запоминают каждый удар, что ты по нему нанесешь. Возьми его в цель и открой счетчики, а остальное я тебе покажу.',
   'entities.quests.q_ps_the_gauntlet.title': 'Пробеги Полосу',
   'entities.quests.q_ps_the_gauntlet.text':
     'Каждая пара ног, которую уважает долина, сперва пробегала эти дорожки, {playerName}. Пройди первую дорожку на запад до флага, развернись на месте, пройди южную дорожку до второго флага, а последнюю дорожку пройди приставным шагом до красного флага. Флаги проходи по порядку: карточка вверху экрана покажет тебе каждую нужную кнопку по ходу дела. Надзиратель Пелл засекает каждый забег с дальнего конца: когда красный флаг останется позади, он будет стоять прямо там, чтобы принять твой забег.',
@@ -15116,4 +15118,45 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.realmBuilder.pastEmpty': 'В списке пока нет имён.',
   'hudChrome.realmBuilder.close': 'Закрыть',
   'worldContent.realmBuilderMonumentName': 'Памятник зодчим королевства',
+  'hudChrome.hubLesson.target': 'Сначала возьми манекен в цель.',
+  'hudChrome.hubLesson.openWindow': 'Открой {meters}.',
+  'hudChrome.hubLesson.openWindowTouch': 'Открой {menu} → {more} → {meters}.',
+  'hudChrome.hubLesson.openTab': 'Переключись на нужную вкладку.',
+  'hudChrome.hubLesson.openTabDamage': 'Переключись на вкладку Урон.',
+  'hudChrome.hubLesson.openTabHealing': 'Переключись на вкладку Лечение.',
+  'hudChrome.hubLesson.act': 'Нанеси удар, чтобы начать замер.',
+  'hudChrome.hubLesson.actDamage': 'Атакуй манекен, чтобы начать замер.',
+  'hudChrome.hubLesson.actHealing': 'Наложи лечение на манекен, чтобы начать замер.',
+  'hudChrome.hubLesson.addToBar':
+    'Добавь лечение на панель действий из книги заклинаний, затем накладывай его на манекен.',
+  'hudChrome.hubLesson.readRow': 'Прочти свою строку, затем нажми Продолжить.',
+  'hudChrome.hubLesson.readRowDamage':
+    'Итог — весь твой урон за этот заход, DPS — урон в секунду за заход. Понаблюдай за своей строкой, затем нажми Продолжить.',
+  'hudChrome.hubLesson.readRowHealing':
+    'Итог считает восстановленное здоровье; лечение сверх полного здоровья не засчитывается. HPS — восстановление здоровья в секунду за заход. Прочти свою строку, затем нажми Продолжить.',
+  'hudChrome.hubLesson.findRun': 'Используй стрелки счетчика, чтобы вернуться к своему заходу.',
+  'hudChrome.hubLesson.addAttackToBar':
+    'Добавь атаку на панель действий из книги заклинаний и используй ее на манекене.',
+  'hudChrome.hubLesson.ackContinue': 'Продолжить',
+  'hudChrome.hubLesson.viewBreakdown':
+    'Наведи курсор, сфокусируйся на строке или удерживай ее, чтобы увидеть разбивку по способностям.',
+  'hudChrome.hubLesson.endRun':
+    'Выключи атаку и прекрати колдовать. Через 5 секунд без попадания этот заход завершится.',
+  'hudChrome.hubLesson.endHealingRun':
+    'Прекрати лечить на 5 секунд, чтобы завершить этот заход, тогда сможешь повторить урок.',
+  'hudChrome.hubLesson.inspectHistory': 'Используй стрелку истории, чтобы просмотреть тот завершенный заход.',
+  'hudChrome.hubLesson.compareAgain':
+    'Вернись к текущему правой стрелкой, затем атакуй тот же манекен примерно столько же времени.',
+  'hudChrome.hubLesson.reviewComparison':
+    'Сравни стрелками итог, DPS и длительность с первым заходом. Вернись к этому заходу и нажми Готово.',
+  'hudChrome.hubLesson.ackDone': 'Готово',
+  'hudChrome.hubLesson.replay': 'Урок пройден. Практикуйся свободно или проиграй эти указания заново.',
+  'hudChrome.hubLesson.replayAction': 'Потренироваться снова',
+  'hudChrome.hubLesson.replayTarget': 'Снова взять его в цель',
+  'entities.quests.q_hub_healing_numbers.title': 'Числа, которые лечат',
+  'entities.quests.q_hub_healing_numbers.text':
+    'Измерить стоит не только удары, {playerName}. Возьми в цель стоящий рядом Лечебный манекен, открой счетчики урона и переключись на вкладку Лечение. Нанеси три исцеления, которые действительно восстанавливают здоровье, и следи, как окно считает их так же, как считало удары.',
+  'entities.quests.q_hub_healing_numbers.completion':
+    'Числа исцеления, а не боли, но все равно числа, {playerName}. Целитель, который никогда не смотрит на эти счетчики, лишь гадает о собственной пользе.',
+  'entities.quests.q_hub_healing_numbers.objectives.0.label': 'Эффективное исцеление нанесено Лечебному манекену',
 };

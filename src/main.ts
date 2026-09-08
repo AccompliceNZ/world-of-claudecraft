@@ -2067,6 +2067,7 @@ async function startGame(
       syncCharacterOpenDiagnostics();
     },
     onBags: () => hud.toggleBags(),
+    onMeters: () => hud.toggleMeters(),
     onCrafting: () => hud.toggleCrafting(),
     onSpellbook: () => hud.toggleSpellbook(),
     onBarEditor: () => hud.toggleBarEditor(),

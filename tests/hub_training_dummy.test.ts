@@ -1,18 +1,20 @@
 // The Eastbrook hub training dummy (content/practice_dummies.ts
-// HUB_PRACTICE_DUMMY_CAMPS): a second `training_dummy` camp on the quay pad
-// where every new character first stands, so a build can be measured in town
-// without the ride to the hill above Highwatch. Same template, same inert
-// behavior; what this suite pins is the PLACEMENT (on its authored mark, a few
-// yards from the player start, on ground the sim can spawn on) and the
+// HUB_PRACTICE_DUMMY_CAMPS): a DEDICATED level-5 `hub_training_dummy` on the
+// quay pad where every new character first stands, so a build can be
+// measured in town without the ride to the hill above Highwatch. What this
+// suite pins is the PLACEMENT (on its authored mark, a few yards from the
+// player start, on ground the sim can spawn on), its own level-5 body
+// (never the shared level-20 zone3.ts `training_dummy`), and the
 // append-last contract that keeps every earlier entity id untouched.
 import { describe, expect, it } from 'vitest';
 import { isBlocked } from '../src/sim/colliders';
 import {
   HUB_PRACTICE_DUMMY_CAMPS,
   HUB_PRACTICE_NPCS,
+  HUB_TRAINING_DUMMY_ID,
   HUB_TRAINING_DUMMY_POS,
 } from '../src/sim/content/practice_dummies';
-import { BUILTIN_WORLD, CAMPS, PLAYER_START } from '../src/sim/data';
+import { BUILTIN_WORLD, CAMPS, MOBS, PLAYER_START } from '../src/sim/data';
 import { Sim } from '../src/sim/sim';
 import type { Entity, WorldContent } from '../src/sim/types';
 import { groundHeight, waterLevelAt } from '../src/sim/world';
@@ -37,18 +39,32 @@ function makeWorld(): Sim {
 function dummyOf(sim: Sim): Entity {
   const { x, z } = HUB_TRAINING_DUMMY_POS;
   const d = [...sim.entities.values()].find(
-    (e) => e.templateId === 'training_dummy' && !e.dead && Math.hypot(e.pos.x - x, e.pos.z - z) < 5,
+    (e) =>
+      e.templateId === HUB_TRAINING_DUMMY_ID && !e.dead && Math.hypot(e.pos.x - x, e.pos.z - z) < 5,
   );
   if (!d) throw new Error('hub training dummy not spawned');
   return d;
 }
 
 describe('Eastbrook hub training dummy', () => {
+  it('is a dedicated level-5 template, never the shared level-20 training_dummy', () => {
+    expect(HUB_TRAINING_DUMMY_ID).not.toBe('training_dummy');
+    const template = MOBS[HUB_TRAINING_DUMMY_ID];
+    expect(template.minLevel).toBe(5);
+    expect(template.maxLevel).toBe(5);
+    expect(template.dummy).toBe(true);
+    expect(template.dmgBase).toBe(0);
+    expect(template.loot).toEqual([]);
+    // The Highwatch row's own body is untouched by this addition.
+    expect(MOBS.training_dummy.minLevel).toBe(20);
+    expect(MOBS.training_dummy.maxLevel).toBe(20);
+  });
+
   it('is NOT a camp: it spawns after the player so no construction-time id or rng draw moves', () => {
     expect(CAMPS.some((camp) => camp.center.z === HUB_TRAINING_DUMMY_POS.z)).toBe(false);
-    expect(HUB_PRACTICE_DUMMY_CAMPS[0].mobId).toBe('training_dummy');
+    expect(HUB_PRACTICE_DUMMY_CAMPS[0].mobId).toBe(HUB_TRAINING_DUMMY_ID);
     // With the yard and without it, the player and every earlier entity keep
-    // their ids; the yard's own two entities trail the player.
+    // their ids; the yard's own three entities trail the player.
     const withYard = new Sim({ seed: SEED, playerClass: 'warrior', world: BUILTIN_WORLD });
     const { drillmaster_hale: _hale, ...npcsWithoutHale } = BUILTIN_WORLD.npcs;
     const withoutYard = new Sim({
@@ -57,7 +73,7 @@ describe('Eastbrook hub training dummy', () => {
       world: { ...BUILTIN_WORLD, npcs: npcsWithoutHale },
     });
     expect(withYard.playerId).toBe(withoutYard.playerId);
-    expect(withYard.entities.size).toBe(withoutYard.entities.size + 2);
+    expect(withYard.entities.size).toBe(withoutYard.entities.size + 3);
     expect(dummyOf(withYard).id).toBeGreaterThan(withYard.playerId);
     expect(
       [...withoutYard.entities.values()].some((e) => e.templateId === 'drillmaster_hale'),
@@ -86,9 +102,10 @@ describe('Eastbrook hub training dummy', () => {
     expect(dist).toBeLessThan(15); // in sight of a fresh character
   });
 
-  it('is the same inert practice target as the Highwatch one: hit it, it never fights back', () => {
+  it('spawns at literal level 5, inert like the Highwatch dummy: hit it, it never fights back', () => {
     const sim = makeWorld();
     const d = dummyOf(sim);
+    expect(d.level).toBe(5);
     expect(d.hostile).toBe(true);
     expect(d.maxHp).toBeGreaterThan(100000);
     const player = sim.player;

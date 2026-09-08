@@ -4004,6 +4004,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.mobs.friendly_player_dummy.name': '味方プレイヤーダミー',
   'entities.mobs.normal_boss_dummy.name': 'ノーマルボスダミー',
   'entities.mobs.heroic_boss_dummy.name': 'ヒロイックボスダミー',
+  'entities.mobs.hub_training_dummy.name': '訓練用ダミー',
+  'entities.mobs.hub_healing_dummy.name': '治療用ダミー',
   'entities.mobs.ridge_stalker.name': '尾根の追跡者',
   'entities.mobs.deeprock_kobold.name': 'ディープロックの坑夫',
   'entities.mobs.thornpeak_ogre.name': 'ソーンピーク・オーガ',
@@ -5476,7 +5478,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.quests.q_gc_the_wreck_warden.objectives.0.label': 'レックウォーデンを打ち倒した',
   'entities.quests.q_hub_know_your_numbers.title': '己の数字を知れ',
   'entities.quests.q_hub_know_your_numbers.text':
-    '測れない力は伸ばせない力だ、{playerName}。後ろの訓練用人形を左クリックして標的にしろ。それから振る前に Shift を押しながら H でダメージメーターを開け。次に十回当てろ、剣でも呪文でも構わん。打ちながら窓を見ていろ。毎秒と合計の与ダメージを数えてくれるし、横の練習欄が最高記録を覚えていてくれる。十回入ったら戻ってきて、その数字を教えろ。',
+    '測れない力は伸ばせない力だ、{playerName}。訓練用人形を標的にして、ダメージメーターを開け。それから十回当てろ、剣でも呪文でも構わん。打ちながら窓を見ていろ、与えたダメージを数えてくれる。十回入ったら戻ってきて、その数字を教えろ。',
   'entities.quests.q_hub_know_your_numbers.completion':
     '十発、これでそれぞれの値打ちが分かったな。新しい武器、新しい才能、新しい思いつきを手にするたびに、{playerName}、この柱の前に戻って数字を付けろ。谷は嘘をつくこともあるが、メーターは嘘をつかない。',
   'entities.quests.q_hub_know_your_numbers.objectives.0.label': '訓練用人形に一撃を当てた',
@@ -14408,7 +14410,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.npcs.drillmaster_hale.name': '教練官ヘイル',
   'entities.npcs.drillmaster_hale.title': '波止場の稽古師範',
   'entities.npcs.drillmaster_hale.greeting':
-    '後ろの柱は訓練用の人形だ、{className}。好きなだけ強く、好きなだけ何度でも打て。打ち返しては来ないし、倒れもしない。あれの本当の役目は勘定だ。Shift を押しながら H でダメージメーターを開け。お前が当てた一撃は残らずそこに記録される、毎秒の値も合計もな。横の練習欄はお前の最高記録を覚えているから、新しい武器や才能、新しい手順で本当に強くなったかどうかが分かる。',
+    '後ろのダミーは打ち返しもしなければ倒れもしない、{className}。大事なのは記録だ。お前が当てた一撃は残らずダメージメーターが数えてくれる。あれを標的にしてメーターを開け、あとは俺が教えてやる。',
   'entities.quests.q_ps_the_gauntlet.title': 'ガントレットを走れ',
   'entities.quests.q_ps_the_gauntlet.text':
     '渓谷に名を知られた者は皆、まずこのレーンを走った、{playerName}。最初のレーンを西へ旗まで歩き、その場で向きを変え、南のレーンを二本目の旗まで歩き、それから最後のレーンを赤い旗まで横歩きで進むんだ。旗は順番どおりに通ること。画面上部のカードが、そのつど必要なボタンを見せてくれる。監督官ペルがレーンの先で走りをすべて計っている。赤い旗を越えれば、彼がすぐそこに立って走りを受け取ってくれるよ。',
@@ -14906,4 +14908,39 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.realmBuilder.pastEmpty': 'まだ名前が刻まれていません。',
   'hudChrome.realmBuilder.close': '閉じる',
   'worldContent.realmBuilderMonumentName': '王国建設者の記念碑',
+  'hudChrome.hubLesson.target': 'まずダミーを標的にしよう。',
+  'hudChrome.hubLesson.openWindow': '{meters}を開こう。',
+  'hudChrome.hubLesson.openWindowTouch': '{menu} → {more} → {meters}を開こう。',
+  'hudChrome.hubLesson.openTab': '正しいタブに切り替えよう。',
+  'hudChrome.hubLesson.openTabDamage': 'ダメージタブに切り替えよう。',
+  'hudChrome.hubLesson.openTabHealing': 'ヒーリングタブに切り替えよう。',
+  'hudChrome.hubLesson.act': '一撃当てて計測を始めよう。',
+  'hudChrome.hubLesson.actDamage': 'ダミーを攻撃して計測を始めよう。',
+  'hudChrome.hubLesson.actHealing': 'ダミーに回復魔法をかけて計測を始めよう。',
+  'hudChrome.hubLesson.addToBar': '呪文書から回復魔法をアクションバーに追加し、ダミーにかけよう。',
+  'hudChrome.hubLesson.readRow': '自分の行を確認して、続けるを押そう。',
+  'hudChrome.hubLesson.readRowDamage':
+    '合計はこの回で与えた総ダメージ、DPSはこの回の秒間ダメージだ。自分の行を見て、続けるを押そう。',
+  'hudChrome.hubLesson.readRowHealing':
+    '合計は回復した体力の量で、満タンを超える回復は0として数える。HPSはこの回の秒間回復量だ。自分の行を確認して、続けるを押そう。',
+  'hudChrome.hubLesson.findRun': 'メーターの矢印を使って練習の記録に戻ろう。',
+  'hudChrome.hubLesson.addAttackToBar': '呪文書から攻撃をアクションバーに追加し、ダミーに使おう。',
+  'hudChrome.hubLesson.ackContinue': '続ける',
+  'hudChrome.hubLesson.viewBreakdown': '自分の行にカーソルを合わせる、フォーカスする、または長押しして技能ごとの内訳を見よう。',
+  'hudChrome.hubLesson.endRun': '攻撃を止めて詠唱もやめよう。5秒間命中がなければ、この回は終わる。',
+  'hudChrome.hubLesson.endHealingRun': '5秒間回復を止めてこの回を終えれば、レッスンをやり直せるようになる。',
+  'hudChrome.hubLesson.inspectHistory': '履歴の矢印を使って、終わったその回を振り返ろう。',
+  'hudChrome.hubLesson.compareAgain': '右矢印で現在に戻り、同じダミーにだいたい同じ時間だけ攻撃しよう。',
+  'hudChrome.hubLesson.reviewComparison':
+    '矢印で合計、DPS、時間を最初の回と比べよう。この回に戻ったら、完了を押そう。',
+  'hudChrome.hubLesson.ackDone': '完了',
+  'hudChrome.hubLesson.replay': 'このレッスンは完了だ。自由に練習するか、この説明をもう一度再生しよう。',
+  'hudChrome.hubLesson.replayAction': 'もう一度練習する',
+  'hudChrome.hubLesson.replayTarget': 'もう一度これを標的にしよう',
+  'entities.quests.q_hub_healing_numbers.title': '癒やしの数字',
+  'entities.quests.q_hub_healing_numbers.text':
+    '測るべきは殴った数字だけじゃない、{playerName}。すぐそばの治療用ダミーを標的にして、ダメージメーターを開き、ヒーリングタブに切り替えろ。実際に体力を回復させる治療を三回当てろ、殴った数を数えたときと同じように窓がそれを数えてくれる。',
+  'entities.quests.q_hub_healing_numbers.completion':
+    '殴った数字じゃなく、癒やした数字だが、数字であることに変わりはない、{playerName}。あのメーターを見ない治療役は、自分の値打ちを当てずっぽうで測っているだけだ。',
+  'entities.quests.q_hub_healing_numbers.objectives.0.label': '治療用ダミーに有効な治療が当たった',
 };
