@@ -388,10 +388,9 @@ export class OptionsWindow {
   // The element to refocus when the window closes (WCAG 2.2 AA focus return).
   private returnFocus: HTMLElement | null = null;
   // Tracked separately from the root's inline `display` (rather than reading
-  // it back, the char-window precedent): the Performance sub-view needs
-  // `display: flex` (its scroll wrapper needs a flex column, issue 2569)
-  // while every other sub-view stays `block`, so no single string value means
-  // "open" any more (the deeds/bank-window precedent for the same reason).
+  // it back, the char-window precedent): the window is a flex-column shell in
+  // every sub-view, so its `display` says nothing about which view is open (the
+  // deeds/bank-window precedent for the same reason).
   private opened = false;
   // Renderer-bound graphics values are edited locally. Closing the Options
   // window discards these fields without touching Settings or the live renderer.
@@ -560,14 +559,12 @@ export class OptionsWindow {
     // buildTitle (it rerender()s internally, which would drop a listener added
     // here).
     el.querySelector('[data-back]')?.addEventListener('click', () => this.goBack());
-    // Performance is the one sub-view whose scroll wrapper needs a flex column
-    // (`.perf-scroll`, components.css, issue 2569); every other sub-view stays
-    // the plain block card. render() re-runs on every navigation (goBack, a
-    // menu entry), so this always reflects the CURRENT view, not just the one
-    // active when the window first opened. A perf control's own self-rerender
-    // (perf_overlay_settings.ts) rebuilds only its own subtree and never
-    // touches this display value, which is already correct while that view stays open.
-    if (this.opened) el.style.display = this.view === 'performance' ? 'flex' : 'block';
+    // Every sub-view is a window shell now (head, one scrolling .ui-win-body,
+    // an optional pinned foot), and a shell needs the inline flex: no stylesheet
+    // display can outrank the inline one a `.window` is opened with, so the
+    // column comes from here. render() re-runs on every navigation, so a control's
+    // own self-rerender never has to restate it.
+    if (this.opened) el.style.display = 'flex';
   }
 
   // The desktop shell's backend verdict lands on its own schedule, so the
@@ -619,7 +616,7 @@ export class OptionsWindow {
 
   private renderMain(): void {
     const el = this.deps.root();
-    el.innerHTML = this.panelTitle(t('hud.options.gameMenu'));
+    const scroll = this.viewShell(t('hud.options.gameMenu'));
     const list = document.createElement('div');
     list.className = 'opt-list';
     for (const entry of buildOptionsMenu({ bugReportAvailable: this.deps.bugReport() !== null })) {
@@ -663,14 +660,14 @@ export class OptionsWindow {
       });
       list.appendChild(b);
     }
-    el.appendChild(list);
+    scroll.appendChild(list);
     // Running build, as small secondary text at the foot of the menu, so players can
     // confirm their version without leaving the settings window (issue 1541).
     const { version, build } = appVersionInfo();
     const ver = document.createElement('div');
     ver.className = 'opt-version';
     ver.textContent = t('hudChrome.options.version', { version, build });
-    el.appendChild(ver);
+    scroll.appendChild(ver);
     el.querySelector('[data-close]')?.addEventListener('click', () => this.close());
   }
 
@@ -1014,13 +1011,21 @@ export class OptionsWindow {
     parent.appendChild(row);
   }
 
-  private settingsViewShell(title: string): HTMLElement {
+  // The window shell (library.css): the head, then the ONE scrolling body a
+  // sub-view fills. Anything appended to the root AFTER this body is a SIBLING
+  // of the scroller, so an action or confirm row stays pinned in view however
+  // long the body runs (maintainer finding: Graphics Apply scrolled out of reach).
+  private viewShell(title: string, bodyClass?: string): HTMLElement {
     const el = this.deps.root();
     el.innerHTML = this.panelTitle(title);
     const body = document.createElement('div');
-    body.className = 'set-rows';
+    body.className = bodyClass ? `${bodyClass} ui-win-body` : 'ui-win-body';
     el.appendChild(body);
     return body;
+  }
+
+  private settingsViewShell(title: string): HTMLElement {
+    return this.viewShell(title, 'set-rows');
   }
 
   // Restore exactly these keys, re-apply them to their subsystem, then redraw.
@@ -1046,7 +1051,7 @@ export class OptionsWindow {
     const keys = optionsControlKeys(controls) as (keyof GameSettings)[];
     const reset = document.createElement('button');
     const footer = document.createElement('div');
-    footer.className = 'options-footer';
+    footer.className = 'options-footer ui-win-foot';
     reset.className = 'btn ui-btn ui-btn--red';
     reset.textContent = t('hud.options.resetToDefaults');
     reset.disabled = resetDisabled;
@@ -1255,7 +1260,7 @@ export class OptionsWindow {
   // gating, the fatal Reload arm, and the reset scoped to this view's keys.
   private graphicsFooter(controls: OptionsControl[], unavailable: boolean): HTMLElement {
     const footer = document.createElement('div');
-    footer.className = 'gfx-footer';
+    footer.className = 'gfx-footer ui-win-foot';
     footer.setAttribute('aria-busy', String(this.graphicsBusy));
 
     const back = document.createElement('button');
@@ -1323,10 +1328,10 @@ export class OptionsWindow {
     // The wide two-column card layout (the kb-wide/perf-wide widening family);
     // the render() dispatcher clears the class when the view changes.
     el.classList.add('gfx-wide');
-    el.innerHTML = this.panelTitle(t('hud.options.graphics'));
+    const scroll = this.viewShell(t('hud.options.graphics'));
     const body = document.createElement('div');
     body.className = 'gfx-cols';
-    el.appendChild(body);
+    scroll.appendChild(body);
     const draft = hooks ? this.ensureGraphicsDraft(hooks) : null;
     // The dial rows read DISPLAY values: the staged draft under Advanced, the
     // active preset's seeded levels otherwise (graphicsDisplaySnapshot).
@@ -1397,12 +1402,12 @@ export class OptionsWindow {
     const note = document.createElement('div');
     note.className = 'set-note';
     note.textContent = t('hud.options.graphicsNote');
-    el.appendChild(note);
+    scroll.appendChild(note);
     // A next-launch change (the Linux backend row here, the GPU force under
     // Interface) is applied by a restart, not by Apply: the strip offers it
     // once the in-page draft is settled.
     const restartStrip = this.restartStrip(this.graphicsDirty(), this.graphicsBusy);
-    if (restartStrip) el.appendChild(restartStrip);
+    if (restartStrip) scroll.appendChild(restartStrip);
     el.appendChild(this.graphicsFooter(controls, unavailable));
     // The generic settingsViewFooter is not used here (the inline action row
     // replaces it), so wire the title-bar close control directly.
@@ -2172,8 +2177,10 @@ export class OptionsWindow {
     error.setAttribute('role', 'alert');
     body.appendChild(error);
 
+    // Pinned under the scroller, not inside it: a long description must never
+    // push Submit out of reach (the window-shell rule, library.css).
     const actions = document.createElement('div');
-    actions.className = 'report-actions';
+    actions.className = 'options-footer ui-win-foot';
     const submit = document.createElement('button');
     submit.className = 'btn ui-btn ui-btn--gold';
     submit.type = 'button';
@@ -2184,7 +2191,7 @@ export class OptionsWindow {
     back.textContent = t('hud.options.back');
     back.addEventListener('click', () => this.goBack());
     actions.append(submit, back);
-    body.appendChild(actions);
+    this.deps.root().appendChild(actions);
 
     submit.addEventListener('click', () => {
       const description = desc.value.trim();
@@ -2650,11 +2657,11 @@ export class OptionsWindow {
   // reloads, since every family it writes is read at boot.
   private renderTransfer(): void {
     const el = this.deps.root();
-    el.innerHTML = this.panelTitle(t('hudChrome.fullTransfer.title'));
+    const scroll = this.viewShell(t('hudChrome.fullTransfer.title'));
     const intro = document.createElement('div');
     intro.className = 'set-note';
     intro.textContent = t('hudChrome.fullTransfer.intro');
-    el.appendChild(intro);
+    scroll.appendChild(intro);
     const body = document.createElement('div');
     body.className = 'transfer-body';
     this.transferControls(body, t('hudChrome.fullTransfer.fullSettings'), {
@@ -2671,16 +2678,19 @@ export class OptionsWindow {
         );
       },
     });
-    el.appendChild(body);
+    scroll.appendChild(body);
     const excluded = document.createElement('div');
     excluded.className = 'set-note';
     excluded.textContent = t('hudChrome.fullTransfer.excluded');
-    el.appendChild(excluded);
+    scroll.appendChild(excluded);
+    const footer = document.createElement('div');
+    footer.className = 'options-footer ui-win-foot';
     const back = document.createElement('button');
-    back.className = 'btn';
+    back.className = 'btn ui-btn';
     back.textContent = t('hud.options.back');
     back.addEventListener('click', () => this.goBack());
-    el.appendChild(back);
+    footer.appendChild(back);
+    el.appendChild(footer);
     el.querySelector('[data-close]')?.addEventListener('click', () => this.close());
   }
 
@@ -2690,7 +2700,7 @@ export class OptionsWindow {
     // Wide, multi-column layout for the key-binding view only; each sibling
     // sub-view keeps its own board-specific width.
     el.classList.add('kb-wide');
-    el.innerHTML = this.panelTitle(t('hud.options.keyBindings'));
+    const scroll = this.viewShell(t('hud.options.keyBindings'));
     const rail = document.createElement('div');
     rail.className = 'kb-options-rail';
     this.settingToggleKeybind(rail, t('hud.options.mouseCamera'), 'mouseCamera');
@@ -2705,11 +2715,11 @@ export class OptionsWindow {
     this.settingToggleKeybind(rail, t('hud.keybinds.actions.attackMove'), 'attackMove');
     this.settingToggleKeybind(rail, t('hud.options.leftHandedTouch'), 'leftHandedTouch');
     this.settingToggleKeybind(rail, t('hud.options.filterProfanity'), 'filterProfanity');
-    el.appendChild(rail);
+    scroll.appendChild(rail);
     const note = document.createElement('div');
     note.className = 'kb-note';
     note.textContent = this.keybindNote || t('hud.options.keybindHelpMouseCamera');
-    el.appendChild(note);
+    scroll.appendChild(note);
     // Mouse buttons bind like keys (src/game/mouse_binds.ts); say so once here
     // rather than rewording every capture prompt. Pointless on touch, which has
     // no mouse, so it follows the same useTouchInterface() gate the rest of the
@@ -2718,7 +2728,7 @@ export class OptionsWindow {
       const mouseNote = document.createElement('div');
       mouseNote.className = 'kb-note';
       mouseNote.textContent = t('hudChrome.keybinds.mouseHint');
-      el.appendChild(mouseNote);
+      scroll.appendChild(mouseNote);
     }
     // The Attack Move key is only meaningful (and only rebindable) while its mode
     // is on; otherwise hide its row so it can't shadow Turn Left's A in the list.
@@ -2728,7 +2738,7 @@ export class OptionsWindow {
     // (touch has no keyboard); it hides the same Attack Move row the list does.
     this.keyboardBoard?.dispose();
     this.keyboardBoard = null;
-    if (!useTouchInterface()) this.paintKeyboardOverview(el);
+    if (!useTouchInterface()) this.paintKeyboardOverview(scroll);
     const cols = document.createElement('div');
     cols.className = 'kb-cols';
     for (const category of BIND_CATEGORIES) {
@@ -2821,12 +2831,12 @@ export class OptionsWindow {
       col.appendChild(rows);
       cols.appendChild(col);
     }
-    el.appendChild(cols);
+    scroll.appendChild(cols);
     // Export / import this character's whole key map as a shareable code
     // (another character, another device, a friend's layout).
-    this.keybindTransferRows(el);
+    this.keybindTransferRows(scroll);
     const footer = document.createElement('div');
-    footer.className = 'options-footer';
+    footer.className = 'options-footer ui-win-foot';
     const reset = document.createElement('button');
     reset.className = 'btn ui-btn ui-btn--red';
     reset.textContent = t('hud.options.resetToDefaults');

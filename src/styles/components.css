@@ -14245,7 +14245,6 @@
   #options-menu {
     width: 320px;
     z-index: 40;
-    overflow-y: auto;
   }
   #options-menu:has(> .audio-options) {
     width: min(520px, calc(100vw - 32px));
@@ -14868,25 +14867,16 @@
     font-size: 12px;
     height: auto;
   }
-  .options-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 10px;
-    padding-top: 8px;
-    border-top: 1px solid var(--color-border-showcase);
-  }
+  /* Geometry only: the row itself is the .ui-win-foot primitive (pinned below
+     the scrolling body, its own top hairline and gutter padding). */
   .options-footer .ui-btn {
     min-width: 128px;
   }
   /* The graphics panel's one inline action row: Back, the stretching status,
      then Reset (a quiet text button) beside the primary Apply at the end. */
   .gfx-footer {
-    display: flex;
-    align-items: center;
     gap: 10px;
     min-height: 40px;
-    margin-top: 8px;
   }
   .gfx-footer .btn {
     margin: 0;
@@ -15234,9 +15224,8 @@
        non-scrolling: options_window.ts sets its `display` to `flex` only while
        this sub-view is open (mirroring #deeds-window), so flex-direction here
        takes effect exactly then. The .perf-scroll wrapper below owns the
-       actual scroll instead. */
-    overflow: hidden;
-    flex-direction: column;
+       actual scroll instead. Both now come from the shared window shell
+       (.ui-window:has(> .ui-win-body), library.css), which .perf-scroll joins. */
   }
   #options-menu.aura-wide {
     width: min(780px, calc(100vw - 32px));
@@ -15562,18 +15551,18 @@
     }
   }
   /* Streamlined title bar for the perf panel (less bulky than the default chrome). */
-  #options-menu.perf-wide .panel-title {
+  #options-menu.perf-wide > .panel-title {
     font-size: 14px;
-    padding-bottom: 5px;
-    margin-bottom: 7px;
+    position: relative;
+    top: auto;
+    margin: 0;
+    border-radius: 0;
+    padding: 7px var(--window-pad);
   }
   /* The one child that actually scrolls. Bottom padding reserves room for the
      corner motif's ink reach past the footer buttons (moved off
      #options-menu.perf-wide itself, which no longer scrolls; see above). */
   #options-menu.perf-wide .perf-scroll {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-y: auto;
     padding-bottom: 64px;
   }
   .perf-panel {
@@ -15702,9 +15691,7 @@
     grid-column: 1 / -1;
   }
   .perf-footer {
-    display: flex;
     gap: 12px;
-    margin-top: 9px;
   }
   .perf-footer .btn {
     flex: 1;

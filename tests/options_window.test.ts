@@ -95,7 +95,9 @@ describe('options_window: keyboard overview', () => {
       painter.indexOf('private renderKeybinds(): void {'),
       painter.indexOf('private beginCapture('),
     );
-    expect(keybinds).toContain('if (!useTouchInterface()) this.paintKeyboardOverview(el);');
+    // Pinned against the shell's scrolling body, not the window root: the panel
+    // fills .ui-win-body so Reset / Back stay pinned under it (W25).
+    expect(keybinds).toContain('if (!useTouchInterface()) this.paintKeyboardOverview(scroll);');
     const deps = painter.slice(painter.indexOf('private keyboardMapDeps('));
     expect(deps.slice(0, deps.indexOf('\n  }\n'))).toContain('delete snapshot.attackMove;');
     // The pop-out closes the menu first so the board floats over the world.
@@ -122,8 +124,11 @@ describe('options_window: hotkey setup row', () => {
     expect(rows).toContain('this.dropKeyCapture();');
     expect(rows).toContain('this.renderKeybinds();');
     expect(rows).not.toContain('window.location.reload()');
-    // The row sits at the foot of the panel, right before Reset / Back.
-    expect(painter).toMatch(/el\.appendChild\(cols\);[\s\S]*?this\.keybindTransferRows\(el\);/);
+    // The row sits at the foot of the SCROLLING body, right before the pinned
+    // Reset / Back foot (W25: both moved from the window root into .ui-win-body).
+    expect(painter).toMatch(
+      /scroll\.appendChild\(cols\);[\s\S]*?this\.keybindTransferRows\(scroll\);/,
+    );
   });
 
   it('never leaves a key capture armed behind a closed or rebuilt panel', () => {
@@ -659,9 +664,9 @@ describe('options_window: viewport resync on open (PR #1118)', () => {
     const render = painter.slice(painter.indexOf('private render(): void {'));
     const renderEnd = render.indexOf('\n  }\n');
     const renderBody = render.slice(0, renderEnd);
-    expect(renderBody).toContain(
-      "el.style.display = this.view === 'performance' ? 'flex' : 'block'",
-    );
+    // Every sub-view is a flex-column window shell now (W25), so the one display
+    // value is 'flex'; Performance is no longer the exception.
+    expect(renderBody).toContain("el.style.display = 'flex'");
   });
 });
 

@@ -35,6 +35,7 @@ a `*_view.ts` / `*_core.ts` decides, a `*_painter.ts` / `*_window.ts` paints thr
 | Type helpers | `.ui-cin` `.ui-num` `.ui-outline` `.ui-h` `.ui-meta` `.ui-muted` `.ui-faint` `.ui-soft` | `--font-display` `--title-shadow` `--outline-shadow` `--color-accent` `--color-text-muted` `--color-text-faint` `--color-text-secondary` | |
 | Surfaces | `.ui-panel` `.ui-panel-soft` `.ui-panel-strong` `.ui-window` `.ui-well` `.ui-card` `.ui-card-tile` `.ui-divider` `.ui-pill` | `--panel-bg` `--panel-bg-soft` `--panel-bg-strong` `--border` `--color-keyline` `--radius-panel` `--radius-window` `--radius-card` `--shadow-panel` `--shadow-window` `--shadow-well` `--color-bg-input` `--color-card-hi` `--color-card-lo` `--color-ink-deep` | `button.ui-card:hover` / `.ui-card[role="button"]:hover` (an actionable card only) |
 | Window head | `.ui-win-head` `.ui-win-title` `.ui-win-sub` `.ui-win-art` `.ui-win-actions` `.ui-x-btn` | `--win-head-h` `--color-panel-hi` `--panel-base` `--color-border-showcase` `--color-glint` `--color-chrome-glyph` `--color-chrome-ground` `--radius-xs` | `:hover` `:focus-visible` |
+| Window shell | `.ui-win-body` `.ui-win-foot` | `--window-pad` `--spacing-sm` `--color-border-showcase` | `.ui-window:has(> .ui-win-body)` (the window becomes a column: head, optional tabs, ONE scrolling body, optional pinned foot; its open path sets `display: flex`) |
 | Buttons | `.ui-btn` `.ui-icon-btn` `.ui-disc` | `--btn-h` `--btn-h-lg` `--icon-btn-w` `--icon-btn-h` `--micro-btn-w` `--micro-btn-h` `--disc-size` `--socket-fill` `--color-socket-rim` `--btn-fill-gold` `--btn-fill-red` `--btn-fill-selected` `--color-btn-red-border` `--color-control-border` `--shadow-lift` `--glow-gold-soft` `--radius-card` | `.ui-btn--lg` `.ui-btn--gold` `.ui-btn--red` `.ui-btn--on` `.ui-btn--dis` `.ui-btn--plate` (+ `.is-off`) `[aria-pressed="true"]` `:disabled` `.ui-icon-btn--micro` `.ui-icon-btn.is-on` |
 | Keycap and badge | `.ui-keycap` `.ui-badge` | `--keycap-h` `--keycap-min-w` `--badge-size` `--color-ink` `--color-danger` `--color-glint` `--radius-xs` | `.ui-keycap--round` `.ui-badge--corner` |
 | Bars | `.ui-bar` `.ui-bar-fill` `.ui-bar-text` | `--bar-h` `--color-bar-track` `--bar-gloss` `--radius-2xs` `--bar-color` | `.ui-bar--hp` `.ui-bar--mana` `.ui-bar--rage` `.ui-bar--energy` `.ui-bar--focus` |
@@ -214,6 +215,8 @@ as written in the sheet.
 .ui-well
 .ui-win-actions
 .ui-win-art
+.ui-win-body
+.ui-win-foot
 .ui-win-head
 .ui-win-sub
 .ui-win-title
