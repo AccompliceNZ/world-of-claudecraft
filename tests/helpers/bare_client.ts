@@ -8,9 +8,11 @@
 
 import type { ClientSession, GameServer } from '../../server/game';
 import { ActionBarLayoutUploader } from '../../src/net/action_bar_upload';
+import { EMPTY_MST_CRAFTS } from '../../src/net/crafting_wire';
 import { GuildBankLogMirror } from '../../src/net/guild_bank_log_mirror';
 import { ClientWorld } from '../../src/net/online';
-import { emptyAllocation } from '../../src/sim/content/talents';
+import { FARM_PATCHES } from '../../src/sim/content/farm_patches';
+import { emptyAllocation, emptyModifiers } from '../../src/sim/content/talents';
 import { ALL_RECIPES } from '../../src/sim/data';
 import { freshDeedStats } from '../../src/sim/deeds';
 import { emptyCraftSkills } from '../../src/sim/professions/wheel';
@@ -89,6 +91,7 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   c.playtimeSeconds = 0;
   c.unlockedMilestones = [];
   c.talents = emptyAllocation();
+  c.talentMods = emptyModifiers();
   c.talentSpec = null;
   c.talentRole = null;
   c.loadouts = [];
@@ -107,10 +110,6 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   c.honor = 0;
   c.lifetimeHonor = 0;
   c.cardMinigameInfo = { queued: false, available: true, match: null };
-  c.lastVcupRemainder = null;
-  c.lastVcupShared = null;
-  c.cupInfo = null;
-  c.sportRole = null;
   c.socialInfo = null;
   c.marketInfo = null;
   c.marketCollectPending = false;
@@ -157,6 +156,21 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
     cadenceBlockedQuests: [],
   };
   c.gatheringProficiency = {};
+  // The remembered corpse-harvest preference (Intentional Gathering PR3):
+  // null until the first `hpref` snapshot decodes, matching the class field
+  // default (src/net/online.ts).
+  c.harvestPreference = null;
+  // The tracked recipe/commission gathering goal (Intentional Gathering PR4):
+  // null until the first `ggoal` snapshot decodes, matching the class field
+  // default (src/net/online.ts).
+  c.gatheringGoal = null;
+  // The tslot/fplot self-delta mirrors and the static patch table, matching
+  // the class's own static defaults (src/net/online.ts): a consumer test
+  // reading IWorldFarming or the tool slots through this fixture must see
+  // what a freshly constructed online client sees, not undefined.
+  c.toolEffectSlots = [];
+  c.farmPatches = FARM_PATCHES;
+  c.myFarmPlots = [];
   c.delveClears = {};
   c.delveDaily = { date: '', firstClearXp: [], markClears: 0 };
   c.professionsState = { skills: [] };
@@ -171,7 +185,9 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   c.lastDisenchantResult = null;
   c.lastEnchantResult = null;
   c.lastSalvageResult = null;
-  c.activeMobileStationCraft = null;
+  // The class default is the shared frozen empty, contract and identity both.
+  c.activeMobileStationCrafts = EMPTY_MST_CRAFTS;
+  c.activeMobileStationCraftsRaw = null;
   c.markers = {};
   c.lastSnapAt = 0;
   c.snapInterval = 50;
@@ -243,8 +259,11 @@ export function bareClient(pid: number, overrides: BareClientOverrides = {}): Cl
   c.actionBarUploader = new ActionBarLayoutUploader((command) => c.cmd(command));
   c.profanityDirty = false;
   c.pendingTargetEcho = null;
-  c.nextCommandOutcomeId = 1;
-  c.pendingCommandOutcomes = new Map();
+  // The lazy WorldInteractionRequests holder (src/net/world_interaction_requests.ts):
+  // undefined until the first cmdWithOutcome/corpseHarvestInfo/onMessage call,
+  // matching a freshly constructed online ClientWorld before it ever sends or
+  // routes such a request.
+  c.worldInteractionRequests = undefined;
   c.selfLockouts = {};
   c.selfOwnedMounts = [];
   c.selfRidingTrained = false;

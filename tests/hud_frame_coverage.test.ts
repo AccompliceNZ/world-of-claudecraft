@@ -152,6 +152,8 @@ const FRAME_EXEMPT: Record<string, string> = {
   'subzone-banner': 'transient subzone name fade',
   'death-overlay': 'death veil with the Release Spirit prompt, modal by design',
   'ghost-prompt': 'transient ghost-state prompt',
+  'interact-affordance':
+    'transient nearby-interaction press-to-act prompt (farm_press_affordance_controller.ts drives its .is-shown class); positioned near the reticle, never standing chrome',
   'mount-race-strip': 'event-scoped race timer strip, hidden outside a race',
   'race-start-btn': 'event-scoped race control, hidden outside a race',
   'race-countdown': 'event-scoped race countdown, hidden outside a race',
@@ -175,6 +177,10 @@ const UI_ROOT_TOUCHERS: Record<string, string> = {
   'src/ui/noticeboard_popup.ts': 'transient noticeboard popup card',
   'src/ui/realm_builder_popup.ts': 'transient Realm Builder honour roll card',
   'src/ui/dev_command_window.ts': 'dev-only command window (a .window, window_drag governs it)',
+  'src/ui/hud/professions/perfecting_window.ts':
+    'the Perfecting window (a .window.panel, window_drag governs it), minted at runtime like dev_command_window.ts since no markup entry ships it',
+  'src/ui/keyboard_map_window.ts':
+    'the keyboard overview pop-out (a .window, window_drag governs it; closeManagedWindow closes it)',
   'src/ui/hud/fiesta/fiesta_controller.ts': 'match-scoped fiesta strips and confetti',
   'src/ui/hud/loot/loot_roll_controller.ts': 'transient loot roll stack',
 };
@@ -337,5 +343,49 @@ describe('hud_frame_coverage (standing HUD surfaces are movable frames)', () => 
 
   it('scans only through the shared walkers', () => {
     expectScansOnlyThroughSharedWalkers(import.meta.url, ['ts_files_under']);
+  });
+});
+
+// The gathering-goal panel is the one persistent tracker whose OWN root relied
+// on flex `gap` for its vertical rhythm (the sibling trackers' roots are not
+// `display: flex` at all, so they need no equivalent rule). Wrapping its
+// children in `#gathering-goal-body` (the `#qt-body` / `#delve-body` mover-
+// chrome pattern, src/ui/CLAUDE.md) moved those children out of that flex
+// context, so both halves of the fix get a literal, source-level pin here:
+// the production markup really carries the wrapper (the painter's standalone
+// fallback for a caller with no such child must never stand in as proof of
+// that), and the CSS really re-declares the layout on it.
+describe('gathering goal panel inner-body markup + spacing', () => {
+  const GATHERING_GOAL_CSS = 'src/styles/hud.gathering-goal.css';
+
+  /** The `<div id="gathering-goal-tracker">` root's direct children, via the
+   *  same harvest primitives the frame sweep above uses. */
+  function gatheringGoalTrackerChildren(html: string): HarvestedChild[] {
+    const template = gameUiTemplate(html);
+    const openAt = template.indexOf('<div id="gathering-goal-tracker"');
+    if (openAt < 0) throw new Error('#gathering-goal-tracker not found in the game-ui template');
+    return directChildren(template, openAt);
+  }
+
+  it("both entries mount #gathering-goal-body as the tracker root's only child", () => {
+    for (const entry of HTML_ENTRIES) {
+      const children = gatheringGoalTrackerChildren(read(entry));
+      expect(
+        children.map((c) => c.id),
+        `${entry}: #gathering-goal-tracker children`,
+      ).toEqual(['gathering-goal-body']);
+    }
+  });
+
+  it("the CSS re-declares the panel's flex column + gap on #gathering-goal-body", () => {
+    const css = readFileSync(new URL(`../${GATHERING_GOAL_CSS}`, import.meta.url), 'utf8');
+    const bodyRule = /#gathering-goal-body\s*\{([^}]*)\}/.exec(css);
+    expect(bodyRule, `${GATHERING_GOAL_CSS}: no #gathering-goal-body rule`).not.toBeNull();
+    const decls = bodyRule![1];
+    expect(decls, `${GATHERING_GOAL_CSS}: #gathering-goal-body declarations`).toMatch(
+      /display:\s*flex;/,
+    );
+    expect(decls).toMatch(/flex-direction:\s*column;/);
+    expect(decls).toMatch(/gap:\s*4px;/);
   });
 });

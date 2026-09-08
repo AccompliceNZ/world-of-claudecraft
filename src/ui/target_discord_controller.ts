@@ -1,11 +1,20 @@
-import { specialRoleColor } from '../sim/discord_roles';
+// Cold DOM adapter for the target frame's linked-account flair line.
+//
+// The three DECISIONS the line makes (is there anything to show, has anything
+// changed, what markup) live in the pure src/ui/target_flair_line_view.ts core
+// and are unit-tested there without a DOM; this controller owns only the
+// element handling the core cannot do: the class toggle, the innerHTML write,
+// and the avatar fallback wiring. One implementation, two hosts.
+
 import type { Entity } from '../sim/types';
 import { attachAvatarFallback } from './avatar_fallback';
-import { devTierByIndex, devTierDisplayName } from './dev_tier';
-import { discordRoleTagLabel } from './discord_role_tag';
-import { discordStatusDisplayName } from './discord_tier';
-import { esc } from './esc';
-import { getLanguage, t } from './i18n';
+import { getLanguage } from './i18n';
+import {
+  type TargetFlairLineInput,
+  targetFlairLineHtml,
+  targetFlairLineVisible,
+  targetFlairSignature,
+} from './target_flair_line_view';
 
 /** Signature-gated owner for the target frame's linked-account flair line. */
 export class TargetDiscordController {
@@ -17,13 +26,18 @@ export class TargetDiscordController {
   ) {}
 
   update(target: Entity): void {
-    const tier = target.discordTier ?? 0;
-    const devIdx = this.showDevBadges() ? (target.devTier ?? 0) : 0;
-    const isAi = target.aiAccount === true;
-    if (
-      target.kind !== 'player' ||
-      (!tier && !target.discordName && !target.discordRole && !devIdx && !isAi)
-    ) {
+    // The language LEADS the signature (the core's own contract): four of the
+    // line's faces are localized, so a locale switch must move the gate.
+    const flair: TargetFlairLineInput = {
+      language: getLanguage(),
+      tier: target.discordTier ?? 0,
+      name: target.discordName ?? '',
+      role: target.discordRole ?? '',
+      avatar: target.discordAvatar ?? '',
+      devIndex: this.showDevBadges() ? (target.devTier ?? 0) : 0,
+      isAi: target.aiAccount === true,
+    };
+    if (target.kind !== 'player' || !targetFlairLineVisible(flair)) {
       if (this.signature !== '') {
         this.signature = '';
         this.root.classList.remove('show');
@@ -31,36 +45,10 @@ export class TargetDiscordController {
       }
       return;
     }
-    const signature = `${getLanguage()}|${tier}|${target.discordName ?? ''}|${target.discordRole ?? ''}|${target.discordAvatar ?? ''}|${devIdx}|${isAi ? 1 : 0}`;
+    const signature = targetFlairSignature(flair);
     if (signature === this.signature) return;
     this.signature = signature;
-    const parts: string[] = [];
-    const nameInner = target.discordAvatar
-      ? `<img src="${esc(target.discordAvatar)}" referrerpolicy="no-referrer" alt="" draggable="false">${esc(target.discordName ?? '')}`
-      : esc(target.discordName ?? '');
-    if (target.discordName || target.discordAvatar) {
-      parts.push(`<span class="uf-dc-name">${nameInner}</span>`);
-    }
-    const roleLabel = discordRoleTagLabel(target.discordRole);
-    if (roleLabel) {
-      parts.push(
-        `<span class="uf-dc-chip role" style="--role:${specialRoleColor(target.discordRole) ?? 'var(--color-text-muted)'}">${esc(roleLabel)}</span>`,
-      );
-    }
-    if (tier > 0) {
-      parts.push(`<span class="uf-dc-chip rank">${esc(discordStatusDisplayName(tier))}</span>`);
-    }
-    const devDef = devTierByIndex(devIdx);
-    if (devDef) {
-      parts.push(`<span class="uf-dc-chip dev">${esc(devTierDisplayName(devDef))}</span>`);
-    }
-    if (isAi) {
-      const title = esc(t('hudChrome.playerMenu.aiTagTitle'));
-      parts.push(
-        `<span class="ai-tag" role="img" aria-label="${title}" title="${title}">${esc(t('hudChrome.playerMenu.aiTag'))}</span>`,
-      );
-    }
-    this.root.innerHTML = parts.join('');
+    this.root.innerHTML = targetFlairLineHtml(flair);
     const avatar = this.root.querySelector<HTMLImageElement>('.uf-dc-name img');
     if (avatar) attachAvatarFallback(avatar);
     this.root.classList.add('show');

@@ -80,6 +80,7 @@ const CALLBACK_KEYS = [
   'onMobKilledForQuests',
   'onRecipeCraftedForQuests',
   'onNodeGatheredForQuests',
+  'onCropFarmedForQuests',
   'onInventoryChangedForQuests',
   'checkQuestReady',
   'countItem',
@@ -158,6 +159,8 @@ const CALLBACK_KEYS = [
   'dungeonDifficulty',
   'setDungeonDifficulty',
   'awardHeroicMarks',
+  // Masterwrought phase 04 materials surface (professions/masterwrought_materials).
+  'awardWyrmfallCores',
   // M3 mob-swing affix cascade surface.
   'effectiveArmor',
   'recalcPlayer',
@@ -203,6 +206,7 @@ const CALLBACK_KEYS = [
   'completeDisenchantCast',
   'completeApplyEnchantCast',
   'completeSalvageCast',
+  'completeSunderCast',
   'completeRechargeCast',
   'applyDemonHealTick',
   'awardCombo',
@@ -221,6 +225,7 @@ const CALLBACK_KEYS = [
   'spawnDevVendor',
   'startCascadePlaytest',
   'startDevSandbox',
+  'setDevMobsFrozen',
   'seedDungeonFinderDev',
   // L2 inventory/vendor (W2): the four still-on-Sim helpers the moved useItem dispatches to.
   'startFishing',
@@ -237,6 +242,7 @@ const CALLBACK_KEYS = [
   // Ravenpost mail: the quest turn-in letter hook.
   'queueQuestLetter',
   'mailHeroicMarks',
+  'mailWyrmfallCores',
   'mailAuthoredLetter',
   'mailboxHoldsItem',
   // Commission order board change signal (professions/commission_order.ts
@@ -285,6 +291,7 @@ function makeFakeHost() {
     primaryId: -1,
     tradeInvites: new Map(),
     duelInvites: new Map(),
+    feasts: new Map(),
     nextId: 1,
     grid: new SpatialGrid(),
     playerGrid: new SpatialGrid(),
@@ -331,6 +338,7 @@ function makeFakeHost() {
     utcDay: '',
     resetDay: '',
     eventLeadDay: '',
+    dailyResetRemainingSec: 0,
     pendingMobRespawns: [],
     partyInvites: new Map(),
     readyChecks: new Map(),
@@ -418,6 +426,7 @@ function makeFakeHost() {
     onMobKilledForQuests: vi.fn(),
     onRecipeCraftedForQuests: vi.fn(),
     onNodeGatheredForQuests: vi.fn(),
+    onCropFarmedForQuests: vi.fn(),
     onInventoryChangedForQuests: vi.fn(),
     checkQuestReady: vi.fn(),
     countItem: vi.fn(() => 0),
@@ -442,6 +451,7 @@ function makeFakeHost() {
     dungeonDifficulty: vi.fn(() => 'normal' as const),
     setDungeonDifficulty: vi.fn(),
     awardHeroicMarks: vi.fn(),
+    awardWyrmfallCores: vi.fn(),
     addEntity: vi.fn(),
     dropEntity: vi.fn(),
     rebucket: vi.fn(),
@@ -545,6 +555,7 @@ function makeFakeHost() {
     completeDisenchantCast: vi.fn(),
     completeApplyEnchantCast: vi.fn(),
     completeSalvageCast: vi.fn(),
+    completeSunderCast: vi.fn(),
     completeRechargeCast: vi.fn(),
     applyDemonHealTick: vi.fn(),
     awardCombo: vi.fn(),
@@ -563,6 +574,7 @@ function makeFakeHost() {
     spawnDevVendor: vi.fn(),
     startCascadePlaytest: vi.fn(),
     startDevSandbox: vi.fn(),
+    setDevMobsFrozen: vi.fn(() => false),
     seedDungeonFinderDev: vi.fn(() => ({ spawned: 0, note: 'ok' as const })),
     // L2 inventory/vendor (W2): the four still-on-Sim helpers the moved useItem dispatches to.
     startFishing: vi.fn(),
@@ -579,6 +591,7 @@ function makeFakeHost() {
     // Ravenpost mail: the quest turn-in letter hook.
     queueQuestLetter: vi.fn(),
     mailHeroicMarks: vi.fn(),
+    mailWyrmfallCores: vi.fn(),
     mailAuthoredLetter: vi.fn(),
     mailboxHoldsItem: vi.fn(() => false),
     applySetProcs: vi.fn(),

@@ -384,9 +384,33 @@ describe('Necromancy Soul Fragment visual progression', () => {
     // rules made the always-on bank eat world clicks; movement belongs to
     // the Unlock Interface registry frame now. The POSITIVE control below
     // proves the regex shape can match at all (the edit-mode rule really
-    // hands pointer events back), so the negative cannot rot silently.
+    // hands pointer events back), so the negative cannot rot silently. The
+    // negatives exclude .tf-unlocked: the edit mode's own state-qualified
+    // hand-back (the test below) is the one sanctioned auto, and BOTH
+    // always-on warlock states hold the same click-through contract, so both
+    // carry the same pin.
     expect(css).toMatch(/#proc-overlay\.tf-unlocked[^{}]*\{[^}]*pointer-events: auto/);
-    expect(css).not.toMatch(/#proc-overlay\.necromancy[^{}]*\{[^}]*pointer-events: auto/);
+    for (const state of ['necromancy', 'destruction']) {
+      expect(css, `${state} stays click-through outside the unlock`).not.toMatch(
+        new RegExp(`#proc-overlay\\.${state}(?!\\.tf-unlocked)[^{}]*\\{[^}]*pointer-events: auto`),
+      );
+    }
+  });
+
+  it('the unlock mode hands pointer events back on the warlock states too', () => {
+    // #proc-overlay.necromancy and #proc-overlay.destruction re-assert
+    // pointer-events: none at the same id+class specificity LATER in the
+    // sheet, so the plain #proc-overlay.tf-unlocked hand-back loses the order
+    // tie for exactly the two specs whose art is always on. Without these
+    // state-qualified (higher-specificity) selectors a demonology or
+    // destruction warlock cannot drag the frame at all: the root swallows the
+    // pointerdown the mover listens for (the reported Soul Fragments bug).
+    const css = readFileSync(new URL('../src/styles/hud.css', import.meta.url), 'utf8');
+    for (const state of ['necromancy', 'destruction']) {
+      expect(css, `${state} unlock hand-back`).toMatch(
+        new RegExp(`#proc-overlay\\.${state}\\.tf-unlocked[^{}]*\\{[^}]*pointer-events: auto`),
+      );
+    }
   });
 
   it('adds a stronger persistent full-bank glow at five fragments', () => {

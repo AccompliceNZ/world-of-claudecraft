@@ -15,6 +15,7 @@
 // and the seam exposes instanceKeyFor/instanceOriginOf/enterDungeon/leaveDungeon for
 // the N1/quest/delve code that reaches them through `ctx`.
 
+import { supportHeightAt } from '../colliders';
 import { HEROIC_DUNGEON_TUNING, HEROIC_MARK_ITEM_ID } from '../content/dungeon_difficulty';
 import { DUNGEON_X_THRESHOLD, DUNGEONS, dungeonAt, instanceOrigin, MOBS, NPCS } from '../data';
 import { clearIgnivarEncounterAuras } from '../encounters/ignivar';
@@ -37,6 +38,7 @@ import {
   takeCombatExit,
 } from '../instance_exit_memory';
 import { retargetMob } from '../mob/targeting';
+import { PLAYER_BODY_RADIUS } from '../pathfind';
 import { cancelProfessionSessionOnDisplacement } from '../professions/session_teardown';
 import type { InstanceSlot, PlayerMeta } from '../sim';
 import type { SimContext } from '../sim_context';
@@ -141,7 +143,7 @@ function clearResetLocksForClaim(ctx: SimContext, claimId: number): void {
 }
 
 export function lockNormalDungeonResetOnBossKill(ctx: SimContext, mob: Entity): void {
-  const inst = ctx.instances.find((i) => i.partyKey !== null && i.mobIds.includes(mob.id));
+  const inst = claimedInstanceForMob(ctx, mob.id);
   if (inst?.difficulty !== 'normal' || RAID_ALLOWED_DUNGEON_IDS.has(inst.dungeonId)) return;
   const finalBossId = HEROIC_DUNGEON_TUNING[inst.dungeonId]?.finalBossId;
   if (mob.templateId !== finalBossId || inst.exitId === null) return;
@@ -163,7 +165,7 @@ export function lockNormalDungeonResetOnBossKill(ctx: SimContext, mob: Entity): 
  * claim. Draws no rng.
  */
 export function spawnBossExitPortal(ctx: SimContext, mob: Entity): void {
-  const inst = ctx.instances.find((i) => i.partyKey !== null && i.mobIds.includes(mob.id));
+  const inst = claimedInstanceForMob(ctx, mob.id);
   if (!inst || inst.bossExitId !== null) return;
   const dungeon = DUNGEONS[inst.dungeonId];
   const portal = dungeon?.bossExitPortal;
@@ -854,6 +856,18 @@ export function leaveDungeon(ctx: SimContext, pid?: number): boolean {
   const door = detachFromDungeon(ctx, p);
   if (!door) return false; // unreachable: dungeonAt already answered above
   p.pos = ctx.groundPos(door.x, door.z);
+  // Seat the exit on the real STANDING surface: a placed deck plate at the
+  // drop point (the Last Keep's terrace over its stair band) stands proud of
+  // the walk-lift ground, and a body set down under its top is embedded in
+  // the plate, to be depenetrated straight back into the door trigger (the
+  // exit-then-instantly-re-enter loop). A standable top within a couple of
+  // yards of the ground IS the walking surface there; anything higher is a
+  // deck the drop point legitimately sits beneath. Deliberately global (every
+  // dungeon exit, not a keep special case): a drop point under a deck is a
+  // data fact any door can acquire, and on open ground the query finds no
+  // support and changes nothing.
+  const exitDeck = supportHeightAt(ctx.cfg.seed, door.x, door.z, PLAYER_BODY_RADIUS, p.pos.y + 2);
+  if (exitDeck > p.pos.y) p.pos.y = exitDeck;
   p.prevPos = { ...p.pos };
   ctx.rebucket(p);
   settleTeleportArrival(p);
@@ -1271,6 +1285,33 @@ function heroicRewardWindowToken(lockedUntil: number): string {
   return `reset:${Math.floor(lockedUntil / HEROIC_REWARD_WINDOW_MS)}`;
 }
 
+/** The claimed-instance-for-a-mob predicate (masterwrought Phase 18): the
+ *  slot whose claim holds this mob, or null. The death hub resolves it once
+ *  per death and hands the result to awardHeroicMarks AND awardWyrmfallCores
+ *  through their optional claimed parameter, so a final-boss kill no longer
+ *  pays the mobIds scan twice; both callees fall back to this same predicate
+ *  when a foreign caller omits the argument. These death-window readers
+ *  resolve through it too: spawnBossExitPortal and
+ *  lockNormalDungeonResetOnBossKill here, the death hub's rewardInstance
+ *  resolution (combat/damage.ts), and the Nythraxis lockout sweep
+ *  (encounters/nythraxis.ts).
+ *
+ *  ELEVEN verbatim inline copies of the predicate still survive, and this
+ *  header does NOT claim they are all elsewhere in the tick: deeds.ts
+ *  (instanceForMob, reached from onMobKillCreditForDeeds), sim.ts
+ *  (preparePlayerLeave), six in encounters/nythraxis.ts, ignivar_raid_lore.ts,
+ *  mob/ignivar_trash_automata.ts, and mob/dungeon_miniboss_stomp.ts. At least
+ *  three of them run inside the death window as well: deeds.ts's kill-credit
+ *  read, ignivar_raid_lore.ts's narrative arm (handleDeath calls it directly),
+ *  and nythraxis.ts's nythraxisRoomMetas under grantNythraxisLockout. They
+ *  were left alone because routing each one needs its own behavior-identity
+ *  read (the undefined-to-null return change is only free where the caller
+ *  cannot tell the two apart), which is a later chore, deliberately out of
+ *  the Phase 18 fix round's scope. */
+export function claimedInstanceForMob(ctx: SimContext, mobId: number): InstanceSlot | null {
+  return ctx.instances.find((i) => i.partyKey !== null && i.mobIds.includes(mobId)) ?? null;
+}
+
 // Settle a heroic final-boss kill in one synchronous mutation. Every player who
 // takes the realm-reset lockout for this kill (the whole group owning the claim,
 // plus anyone still inside) also earns the configured marks, provided they took
@@ -1285,9 +1326,17 @@ function heroicRewardWindowToken(lockedUntil: number): string {
 // in town) takes the lockout with no pay: roster membership alone is not income.
 // An uncredited death (no tap and no killer credit resolves, so the death-time
 // snapshot is empty) pays nobody, bags or mail, while the lockout still strikes.
-export function awardHeroicMarks(ctx: SimContext, mob: Entity, recipients: PlayerMeta[]): void {
-  const inst = ctx.instances.find((i) => i.partyKey !== null && i.mobIds.includes(mob.id));
-  if (inst === undefined) return;
+export function awardHeroicMarks(
+  ctx: SimContext,
+  mob: Entity,
+  recipients: PlayerMeta[],
+  // The death hub's pre-resolved claim (claimedInstanceForMob above): null
+  // means the hub scanned and found none; undefined (a foreign caller, the
+  // pre-widening shape) means resolve it here. Behavior-identical either way.
+  claimed?: InstanceSlot | null,
+): void {
+  const inst = claimed === undefined ? claimedInstanceForMob(ctx, mob.id) : claimed;
+  if (inst === null) return;
   // The raid rooms' NORMAL kills settle a weekly lockout of their own (no
   // marks: marks are heroic pay). One lock per difficulty, so a normal clear
   // never consumes the week's heroic run or vice versa.
@@ -1336,6 +1385,20 @@ export function awardHeroicMarks(ctx: SimContext, mob: Entity, recipients: Playe
 
   for (const meta of lockoutRecipients.values()) {
     const alreadyLocked = isRaidLocked(ctx, meta, heroicLockoutId(inst.dungeonId));
+    // THE GATE FIRST, then the pay. The mail arm below is the one DURABLE half
+    // of this payout that does not live on the character: a parcel persists in
+    // the realm's mail book, while the lockout that prices it persists only in
+    // the character's own save. Stamping first means no failure between the two
+    // can leave a participant holding marks with the gate that paid for them
+    // unset, which is a second payout from one kill. Behavior-identical: the
+    // payment reads `alreadyLocked`, captured above, and lockToHeroicClaim's
+    // own clearedBy test reads the same pre-stamp value, so only the ORDER of
+    // two independent writes moves. Whether the stamp reaches the DATABASE is a
+    // separate question, answered upstream: instanceLockoutMetas and the death
+    // hub's participation snapshot both drop a meta.leaving character, so a
+    // departing one is never mailed at all (tests/heroic_marks_mail.test.ts
+    // pins both halves, and the second-payout consequence).
+    lockToHeroicClaim(ctx, inst, meta, lockedUntil);
     if (!alreadyLocked && credited) {
       let paid = false;
       if (presentIds.has(meta.entityId)) {
@@ -1355,7 +1418,6 @@ export function awardHeroicMarks(ctx: SimContext, mob: Entity, recipients: Playe
         ctx.markDeedsDirty(meta.entityId);
       }
     }
-    lockToHeroicClaim(ctx, inst, meta, lockedUntil);
   }
 }
 

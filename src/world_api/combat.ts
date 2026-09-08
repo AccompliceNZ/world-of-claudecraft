@@ -65,6 +65,16 @@ export interface GroundAimPointXZ {
 
 export interface IWorldCombat {
   known: ResolvedAbility[];
+  /** The local player's own known ability with every presentation-layer
+   *  transform folded in (action-slot replacement, spec-gated resolvers, the
+   *  post-transform talent-mod bake, Ascension/Radiant Resonance, and the
+   *  resource-cost tail: the draining-curse cost_tax read, the Measured Fury
+   *  discount, Aether Surge's per-charge ramp) - the same ResolvedAbility
+   *  Sim.resolvedAbility would produce for this client's own pid
+   *  (docs/design/class-balance-v042.md). Display only: the server stays the
+   *  sole spend authority regardless of who shows this cost. Null when the
+   *  id names nothing this player currently knows. */
+  resolvedAbility(abilityId: string): ResolvedAbility | null;
   /** Server-authored persistent traps currently visible to this world view. */
   activeFrostRings: ActiveFrostRing[];
   activeIgnivarMeteors: ActiveIgnivarMeteorWarning[];

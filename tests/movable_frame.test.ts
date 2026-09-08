@@ -114,6 +114,7 @@ class FakeEl {
   title = '';
   type = '';
   className = '';
+  textContent = '';
   hidden = false;
   rect = { left: 40, top: 500, width: 612, height: 84 };
   private listeners = new Map<string, Listener[]>();
@@ -158,6 +159,16 @@ class FakeEl {
 const docListeners: Array<[string, Listener]> = [];
 const fakeDocument = {
   body: new FakeEl(),
+  // getUiScale caches, and its per-call cache key is the INLINE `--ui-scale` on
+  // the document element (the one thing main.ts's applySetting ever writes; no
+  // stylesheet declares the property). So the fake has to move BOTH reads off
+  // the one uiScaleStub, or flipping the stub would move the computed value
+  // that this fake alone can move and leave the cache holding.
+  documentElement: {
+    style: {
+      getPropertyValue: (p: string) => (p === '--ui-scale' ? String(uiScaleStub) : ''),
+    },
+  },
   createElement: () => new FakeEl(),
   addEventListener: (type: string, fn: Listener) => {
     docListeners.push([type, fn]);
@@ -629,6 +640,41 @@ describe('MovableFrame resize grip', () => {
     for (let i = 0; i < 60; i++) grip.dispatch('keydown', key('ArrowRight'));
     expect(scaleOf(frame)).toBeGreaterThan(FRAME_SCALE_MAX);
     expect(JSON.parse(store.get(KEY) ?? '{}').scale).toBeGreaterThan(FRAME_SCALE_MAX);
+  });
+
+  it('a function-form frameLabelKey re-resolves the chip per unlock flip', () => {
+    // The proc overlay's chip names the ACTIVE spec's mechanic, so its key is
+    // a resolver over live state; the chip and the frames-menu name must both
+    // follow it, re-read on the same refresh cadence as the static form.
+    let key = 'hudChrome.interfaceUnlock.frameNames.procOverlay';
+    const frame = new FakeEl();
+    const mover = new MovableFrame({
+      frame,
+      storageKey: KEY,
+      unlockLabelKey: 'hudChrome.interfaceUnlock.unlockFrame',
+      lockLabelKey: 'hudChrome.interfaceUnlock.lockFrame',
+      resizeLabelKey: 'hudChrome.interfaceUnlock.resizeFrame',
+      frameLabelKey: () => key as never,
+      draggingBodyClass: 'hud-frame-dragging',
+      fallbackSize: { w: 260, h: 84 },
+      isMobileLayout: () => false,
+      snapToGrid: () => snapOn,
+      scalable: true,
+      buttonOnlyWhenUnlocked: true,
+    });
+    const btn = frame.children[0];
+    const label = frame.children.find((child: FakeEl) => child.className === 'tf-frame-label');
+    btn.dispatch('click', pointer());
+    const first = label?.textContent ?? '';
+    expect(first.length).toBeGreaterThan(0);
+    expect(mover.labelText()).toBe(first);
+
+    // The resolver's state moved (a respec): the next unlock re-reads it.
+    key = 'hudChrome.procOverlay.ruinMeter';
+    btn.dispatch('click', pointer()); // lock
+    btn.dispatch('click', pointer()); // unlock again
+    expect(label?.textContent).not.toBe(first);
+    expect(mover.labelText()).toBe(label?.textContent);
   });
 
   it('relocalize() re-resolves the grip name, not only the move button', () => {

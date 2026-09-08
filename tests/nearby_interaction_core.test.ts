@@ -1,6 +1,21 @@
 import { describe, expect, it } from 'vitest';
 import { resolveNearbyInteractionCandidate } from '../src/game/nearby_interaction_core';
-import type { Entity, GatherNodeDef, QuestProgress } from '../src/sim/types';
+import { feastTemplateIds } from '../src/sim/professions/feast';
+import type { Entity, QuestProgress } from '../src/sim/types';
+import type { FarmPatchDef } from '../src/world_api/farming';
+
+const FEAST_TEMPLATE_ID = feastTemplateIds()[0];
+
+const BED_PATCH: readonly FarmPatchDef[] = [
+  {
+    id: 'patch_test',
+    zoneId: 'zone',
+    tier: 1,
+    x: 0,
+    z: 0,
+    beds: [{ id: 'bed_test_1', x: 1, z: 0 }],
+  },
+];
 
 function entity(overrides: Partial<Entity> & Pick<Entity, 'id' | 'kind'>): Entity {
   return {
@@ -17,7 +32,7 @@ function entity(overrides: Partial<Entity> & Pick<Entity, 'id' | 'kind'>): Entit
   } as Entity;
 }
 
-function scan(targets: Entity[] = [], nodes: GatherNodeDef[] = []) {
+function scan(targets: Entity[] = [], farmPatches: readonly FarmPatchDef[] = []) {
   const player = entity({ id: 1, kind: 'player', name: 'Adventurer' });
   return {
     world: {
@@ -28,13 +43,17 @@ function scan(targets: Entity[] = [], nodes: GatherNodeDef[] = []) {
         ...targets.map((target): [number, Entity] => [target.id, target]),
       ]),
       questLog: new Map<string, QuestProgress>(),
+      farmPatches,
     },
-    nodes,
   };
 }
 
 describe('resolveNearbyInteractionCandidate', () => {
-  it('returns the same stable corpse, delve, object, npc, gather priority used by dispatch', () => {
+  // The ladder IS the press ladder in nearby_interaction.ts, arm for arm. Note
+  // what is absent: intentional gathering made the generic press ordinary
+  // interaction only, so no gather node and no corpse harvest ever resolves
+  // here.
+  it('returns the same stable corpse, delve, object, npc, feast, bed priority used by dispatch', () => {
     const corpse = entity({
       id: 2,
       kind: 'mob',
@@ -53,27 +72,26 @@ describe('resolveNearbyInteractionCandidate', () => {
     });
     const object = entity({ id: 4, kind: 'object', name: 'Supply Crate', lootable: true });
     const npc = entity({ id: 5, kind: 'npc', templateId: 'elder_maren', name: 'Elder Maren' });
-    const node = {
-      id: 'ore_1',
-      zoneId: 'zone',
-      type: 'ore',
-      pos: { x: 1, z: 0 },
-      level: 1,
-      tier: 1,
-    } as const;
+    const feast = entity({
+      id: 6,
+      kind: 'object',
+      templateId: FEAST_TEMPLATE_ID,
+      name: 'Harvest Feast',
+    });
 
     const cases = [
-      { targets: [corpse, delve, object, npc], kind: 'corpse', id: 2, verb: 'loot' },
-      { targets: [delve, object, npc], kind: 'delve', id: 3, verb: 'open' },
-      { targets: [object, npc], kind: 'object', id: 4, verb: 'use' },
-      { targets: [npc], kind: 'npc', id: 5, verb: 'talk' },
-      { targets: [], kind: 'gather', id: 'ore_1', verb: 'gather' },
+      { targets: [corpse, delve, object, npc, feast], kind: 'corpse', id: 2, verb: 'loot' },
+      { targets: [delve, object, npc, feast], kind: 'delve', id: 3, verb: 'open' },
+      { targets: [object, npc, feast], kind: 'object', id: 4, verb: 'use' },
+      { targets: [npc, feast], kind: 'npc', id: 5, verb: 'talk' },
+      { targets: [feast], kind: 'feast', id: 6, verb: 'use' },
+      { targets: [], kind: 'bed', id: 'bed_test_1', verb: 'open' },
     ] as const;
 
     for (const expected of cases) {
       const { targets, ...match } = expected;
-      const { world } = scan([...targets], [node]);
-      expect(resolveNearbyInteractionCandidate(world, [node])).toMatchObject(match);
+      const { world } = scan([...targets], BED_PATCH);
+      expect(resolveNearbyInteractionCandidate(world)).toMatchObject(match);
     }
   });
 
@@ -87,7 +105,7 @@ describe('resolveNearbyInteractionCandidate', () => {
     });
     const { world } = scan([mailbox]);
 
-    expect(resolveNearbyInteractionCandidate(world, [])).toMatchObject({
+    expect(resolveNearbyInteractionCandidate(world)).toMatchObject({
       kind: 'object',
       id: 2,
       verb: 'mail',
@@ -96,7 +114,19 @@ describe('resolveNearbyInteractionCandidate', () => {
     });
   });
 
-  it('distinguishes harvestable corpses and bankers', () => {
+  it('names the bed family rather than a wire name, since a bed is content', () => {
+    const { world } = scan([], BED_PATCH);
+    expect(resolveNearbyInteractionCandidate(world)).toMatchObject({
+      kind: 'bed',
+      targetKind: 'bed',
+      targetId: 'bed_test_1',
+      targetName: '',
+    });
+  });
+
+  it('ignores a harvest-only corpse entirely, and still reads a banker as bank', () => {
+    // hasLoot, never canOpen: a corpse with nothing this viewer may loot is no
+    // candidate at all, so it cannot swallow an interaction standing behind it.
     const corpse = entity({
       id: 2,
       kind: 'mob',
@@ -113,10 +143,9 @@ describe('resolveNearbyInteractionCandidate', () => {
       name: 'Bursar Wick',
     });
 
-    expect(resolveNearbyInteractionCandidate(scan([corpse]).world, [])).toMatchObject({
-      verb: 'harvest',
-    });
-    expect(resolveNearbyInteractionCandidate(scan([banker]).world, [])).toMatchObject({
+    expect(resolveNearbyInteractionCandidate(scan([corpse]).world)).toBeNull();
+    expect(resolveNearbyInteractionCandidate(scan([corpse, banker]).world)).toMatchObject({
+      kind: 'npc',
       verb: 'bank',
     });
   });

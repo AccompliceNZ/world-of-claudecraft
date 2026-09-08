@@ -20,7 +20,13 @@
 import { ITEMS, NPCS } from '../../../sim/data';
 import type { IWorld } from '../../../world_api';
 import { markDialogRoot } from '../../dialog_root';
-import { itemDisplayName, tEntity, zoneDisplayName } from '../../entity_i18n';
+import {
+  npcDisplayName,
+  questNarrative,
+  questObjectiveLabel,
+  questTitle,
+} from '../../entity_display_core';
+import { itemDisplayName, zoneDisplayName } from '../../entity_i18n';
 import { esc } from '../../esc';
 import { formatNumber, t } from '../../i18n';
 import { itemNameColor } from '../../item_name_color';
@@ -183,10 +189,12 @@ export class QuestLogWindow {
       if (!group.collapsed) {
         for (const item of group.items) {
           const status = item.ready ? t('questUi.log.readyStatus') : t('questUi.log.activeStatus');
-          const title = this.questTitle(item.questId);
+          const title = questTitle(item.questId);
           const button = document.createElement('button');
           button.type = 'button';
           button.className = `ql-item ui-btn${item.selected ? ' sel' : ''}${item.ready ? ' is-complete' : ''}`;
+          // Row identity for the island coach's press-this-next glow (the
+          // bootcamp overlay toggles .qd-coach by this attribute).
           button.dataset.quest = item.questId;
           button.setAttribute('aria-pressed', item.selected ? 'true' : 'false');
           if (item.selected) button.setAttribute('aria-current', 'true');
@@ -226,14 +234,14 @@ export class QuestLogWindow {
   }
 
   private renderDetail(detail: HTMLElement, d: QuestDetailModel, playerName: string): void {
-    let html = `<div class="qd-sub ql-detail-title">${esc(this.questTitle(d.questId))}${this.questSuggestedPlayersHtml(d.suggestedPlayers)}</div>`;
+    let html = `<div class="qd-sub ql-detail-title">${esc(questTitle(d.questId))}${this.questSuggestedPlayersHtml(d.suggestedPlayers)}</div>`;
     html += d.objectives
       .map(
         (o) =>
-          `<div class="qd-obj${o.done ? ' done' : ''}"><span>${esc(this.questProgressText(this.questObjectiveLabel(d.questId, o.index), o.count, o.required))}</span><span class="ui-bar qd-progress"><span class="ui-bar-fill" style="width:${Math.min(100, (o.count / o.required) * 100)}%"></span></span></div>`,
+          `<div class="qd-obj${o.done ? ' done' : ''}"><span>${esc(this.questProgressText(questObjectiveLabel(d.questId, o.index), o.count, o.required))}</span><span class="ui-bar qd-progress"><span class="ui-bar-fill" style="width:${Math.min(100, (o.count / o.required) * 100)}%"></span></span></div>`,
       )
       .join('');
-    html += `<div class="qd-text ql-detail-text">${esc(this.questNarrative(d.questId, playerName))}</div>`;
+    html += `<div class="qd-text ql-detail-text">${esc(questNarrative(d.questId, 'text', playerName))}</div>`;
     html += `<div class="qd-sub">${esc(t('questUi.detail.rewards'))}</div><div class="ui-divider"></div><div class="qd-obj qd-reward-currency">${esc(t('questUi.detail.xpReward', { xp: this.questNumber(d.xpReward) }))}<span class="ui-money">${this.deps.moneyHtml(d.copperReward)}</span></div>`;
     if (d.rewardItemId) {
       const item = ITEMS[d.rewardItemId];
@@ -243,7 +251,7 @@ export class QuestLogWindow {
       html += `<div class="qd-reward-row ui-card" data-reward><span class="qd-reward-label">${esc(t('questUi.detail.itemReward'))}</span><span class="qd-reward-socket ui-socket ui-socket--bag">${this.deps.itemIcon(item)}</span><span class="qd-reward-name q-${item.quality ?? 'common'}" style="color:${itemNameColor(item)}">${esc(itemDisplayName(item))}</span></div>`;
     }
     const giver = NPCS[d.turnInNpcId];
-    html += `<div class="qd-obj quest-return">${esc(t('questUi.log.returnTo', { name: giver ? this.npcDisplayName(giver.id) : '?' }))}</div>`;
+    html += `<div class="qd-obj quest-return">${esc(t('questUi.log.returnTo', { name: giver ? npcDisplayName(giver.id) : '?' }))}</div>`;
     const body = document.createElement('div');
     body.className = 'ql-detail-body';
     body.innerHTML = html;
@@ -269,7 +277,7 @@ export class QuestLogWindow {
       if (!questId) return;
       this.deps.confirmDialog(
         t('questUi.log.abandonConfirmTitle'),
-        t('questUi.log.abandonConfirmBody', { name: this.questTitle(questId) }),
+        t('questUi.log.abandonConfirmBody', { name: questTitle(questId) }),
         t('questUi.log.abandonConfirm'),
         t('questUi.log.abandonCancel'),
         () => {
@@ -283,24 +291,11 @@ export class QuestLogWindow {
     detail.appendChild(actions);
   }
 
-  // ---- localized helpers (the trivial Hud free-function wrappers, reimplemented
-  // locally over tEntity / t / formatNumber so the painter holds no Hud reference) -
-
-  private questTitle(questId: string): string {
-    return tEntity({ kind: 'quest', id: questId, field: 'title' });
-  }
-
-  private questNarrative(questId: string, playerName: string): string {
-    return tEntity({ kind: 'quest', id: questId, field: 'text', values: { playerName } });
-  }
-
-  private questObjectiveLabel(questId: string, objectiveIndex: number): string {
-    return tEntity({ kind: 'questObjective', questId, objectiveIndex, field: 'label' });
-  }
-
-  private npcDisplayName(npcId: string): string {
-    return tEntity({ kind: 'npc', id: npcId, field: 'name' });
-  }
+  // ---- localized helpers. The display-name resolvers (questTitle,
+  // questNarrative, questObjectiveLabel, npcDisplayName) come from the shared
+  // entity_display_core pure core, the one home of the HUD's id-to-text
+  // rules; what stays here is the number / progress composition this window
+  // alone renders. -----------------------------------------------------------
 
   private questNumber(value: number): string {
     return formatNumber(value, { maximumFractionDigits: 0 });

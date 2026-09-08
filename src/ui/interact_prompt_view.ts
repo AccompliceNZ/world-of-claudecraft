@@ -21,7 +21,7 @@ export interface InteractPromptGamepadBinding {
 
 export interface InteractPromptCandidateInput {
   verb: InteractionPromptVerb | null;
-  targetKind: 'mob' | 'npc' | 'gather' | 'raw' | null;
+  targetKind: 'mob' | 'npc' | 'gather' | 'bed' | 'raw' | null;
   targetId: string;
   targetName: string;
   holdProgress: number | null;
@@ -82,6 +82,9 @@ function targetName(candidate: InteractPromptCandidateInput): string {
   if (candidate.targetKind === 'npc') {
     return tEntity({ kind: 'npc', id: candidate.targetId, field: 'name' });
   }
+  // A garden bed is content, not an entity, so it has no wire name to print:
+  // the family's own word stands in.
+  if (candidate.targetKind === 'bed') return t('hudChrome.interactPrompt.gardenBed');
   if (candidate.targetKind === 'gather') {
     const key = GATHER_TARGET_KEYS[candidate.targetId];
     return key ? t(key) : candidate.targetName;

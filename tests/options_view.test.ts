@@ -1175,6 +1175,7 @@ describe('options_view: main menu routing', () => {
       'hudChrome.auraOverlay.title',
       'hud.options.audio',
       'hudChrome.perf.title',
+      'hudChrome.fullTransfer.menu',
       'nav.wiki',
       'hudChrome.unstuck.menuButton',
       'hud.options.logout',
@@ -1196,6 +1197,11 @@ describe('options_view: main menu routing', () => {
     const wikiRows = offline.filter((e) => e.labelKey === 'nav.wiki');
     expect(wikiRows).toHaveLength(1);
     expect(wikiRows[0].action).toEqual({ kind: 'wiki' });
+    // The full-settings Import / Export row routes to its own sub-view.
+    expect(offline.find((e) => e.labelKey === 'hudChrome.fullTransfer.menu')?.action).toEqual({
+      kind: 'goto',
+      view: 'transfer',
+    });
   });
 
   it('adds the online-only Report a Bug row when bug reporting is available', () => {

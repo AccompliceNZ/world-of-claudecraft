@@ -32,6 +32,48 @@ describe('interaction prompt view', () => {
     });
   });
 
+  // The two arms intentional gathering left the generic press: a placed feast
+  // is an entity and prints its own name, a garden bed is CONTENT and has no
+  // wire name at all, so the family's own word stands in for it.
+  it('names the feast from the entity and the bed from its own family word', () => {
+    const view = createInteractPromptView(
+      (label) => label,
+      () => null,
+    );
+
+    expect(
+      view.tick(
+        {
+          verb: 'use',
+          targetKind: 'raw',
+          targetId: 'harvest_feast_placed',
+          targetName: 'Harvest Feast',
+          holdProgress: null,
+        },
+        false,
+        'KeyE',
+        null,
+        'generic',
+      ),
+    ).toMatchObject({ visible: true, verb: 'Use', targetName: 'Harvest Feast' });
+
+    expect(
+      view.tick(
+        {
+          verb: 'open',
+          targetKind: 'bed',
+          targetId: 'bed_eastbrook_1',
+          targetName: '',
+          holdProgress: null,
+        },
+        false,
+        'KeyE',
+        null,
+        'generic',
+      ),
+    ).toMatchObject({ visible: true, verb: 'Open', targetName: 'Garden Bed' });
+  });
+
   it('uses the default confirm glyph, falls back to interact, and clamps hold progress', () => {
     const view = createInteractPromptView(
       (label) => label,

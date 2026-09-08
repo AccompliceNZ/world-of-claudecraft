@@ -273,12 +273,14 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
   // The doom meter docks beside the player frame inside the transformed
   // #actionbar-stack, so it detaches like the action bars. Its storage key is
   // the one its pre-registry MovableFrame persisted under, so every saved
-  // spot survives the move into this table.
+  // spot survives the move into this table. The chip reuses the resource's
+  // own in-game name (Condemnation, hudChrome.warlock.doomLabel): mechanic
+  // frames name themselves the way the game names the mechanic.
   {
     id: 'doomMeter',
     elementId: 'warlock-doom-frame',
     storageKey: 'woc_warlock_doom_frame_pos',
-    labelKey: 'hudChrome.interfaceUnlock.frameNames.doomMeter',
+    labelKey: 'hudChrome.warlock.doomLabel',
     fallbackSize: { w: 300, h: 48 },
     detachToUiRoot: true,
   },
@@ -309,9 +311,10 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
     resizeMode: 'box',
   },
   // The remaining right-stack trackers (the deed watch list, the delve run
-  // tracker, the rift floor tracker), re-homed like the quest and Reliquary
-  // rows. The delve and rift controllers rebuild their paint target's HTML,
-  // so each paints an inner body element (#delve-body / #rift-body) and the
+  // tracker, the rift floor tracker, the gathering goal tracker), re-homed
+  // like the quest and Reliquary rows. The delve, rift and gathering goal
+  // controllers rebuild their paint target's HTML, so each paints an inner
+  // body element (#delve-body / #rift-body / #gathering-goal-body) and the
   // frame chrome lives beside it on the root; the deed painter builds its
   // skeleton once, so its root is safe as-is.
   {
@@ -336,6 +339,20 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
     storageKey: 'woc_hud_frame_rift_tracker',
     labelKey: 'hudChrome.interfaceUnlock.frameNames.riftTracker',
     fallbackSize: { w: 240, h: 100 },
+    detachToUiRoot: true,
+  },
+  // The gathering goal tracker (Intentional Gathering PR4). It sits in the
+  // same #right-tracker-stack column as the three rows above and repaints on
+  // its own signature gate (gathering_goal_controller.ts); reuses the
+  // existing, previously-unwired `hudChrome.gatheringGoal.title` key
+  // ("Gathering Goal") as the mover chrome's name chip rather than minting a
+  // new frameNames.* string, since that key already names exactly this panel.
+  {
+    id: 'gatheringGoalTracker',
+    elementId: 'gathering-goal-tracker',
+    storageKey: 'woc_hud_frame_gathering_goal_tracker',
+    labelKey: 'hudChrome.gatheringGoal.title',
+    fallbackSize: { w: 240, h: 140 },
     detachToUiRoot: true,
   },
   // The off-hand swing timer, the main-hand row's dual-wield sibling: same
@@ -406,6 +423,40 @@ export function frameRowSettingKey(
   // state.
   if (id === 'targetDots') return 'showTargetDots';
   return null;
+}
+
+/**
+ * The name chip a frame row wears, resolved per CHARACTER: mechanic frames
+ * name themselves the way the game names the mechanic, so the proc overlay
+ * chips the active spec's own meter (Soul Fragments for a demonology warlock,
+ * Wrack for destruction, Hot Streak / Aether Surge / Icicles for the mage
+ * specs) instead of the generic "Spell Procs", which stays the fallback for a
+ * character whose spec never lights it (an affliction warlock's placeholder).
+ * Every other row keeps its static labelKey. The keys reuse the mechanics'
+ * existing names wherever one exists (the meter aria labels, the ability
+ * names), so no second copy of an in-game term is minted.
+ */
+export function frameRowLabelKey(
+  spec: HudFrameSpec,
+  playerClass: PlayerClass,
+  talentSpec: string | null,
+): TranslationKey {
+  if (spec.id !== 'procOverlay') return spec.labelKey;
+  if (playerClass === 'warlock') {
+    if (talentSpec === 'demonology') return 'hudChrome.procOverlay.soulFragmentsMeter';
+    if (talentSpec === 'destruction') return 'hudChrome.procOverlay.ruinMeter';
+    return spec.labelKey;
+  }
+  if (playerClass === 'mage') {
+    if (talentSpec === 'arcane') return 'entities.abilities.arcane_surge.name';
+    if (talentSpec === 'frost') return 'hudChrome.interfaceUnlock.frameNames.procOverlayFrost';
+    if (talentSpec === 'fire') return 'entities.abilities.hot_streak.name';
+    // An unspecced mage falls through: Hot Streak is a fire talent, so naming
+    // the frame after it before any points are spent would name a mechanic
+    // they do not have (the same rule as the affliction fallback above); the
+    // bird they see in edit mode is only the borrowed unlit preview.
+  }
+  return spec.labelKey;
 }
 
 /** Label the Interface option row shows: it names the ACTION the press performs,

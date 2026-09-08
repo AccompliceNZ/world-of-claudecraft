@@ -6,7 +6,7 @@ import {
   type TalentModifiers,
 } from '../src/sim/content/talents';
 import { MAX_LEVEL } from '../src/sim/types';
-import { abilityDisplayDescription } from '../src/ui/ability_description';
+import { abilityDisplayDescription, abilityEffectText } from '../src/ui/ability_description';
 
 function known(id: string, mods?: TalentModifiers) {
   const ability = abilitiesKnownAt('warlock', MAX_LEVEL, mods).find((k) => k.def.id === id);
@@ -42,5 +42,36 @@ describe('abilityDisplayDescription buff value override', () => {
     expect(withoutOverride).toContain('80');
     expect(withOverride).toContain('160');
     expect(withOverride).not.toContain('80');
+  });
+});
+
+describe('Scouring Mercy damage and healing values', () => {
+  it('renders the healing half with Healing Power independently of its damage buff', () => {
+    const mods = computeTalentModifiers('priest', { ...emptyAllocation(), spec: 'discipline' });
+    const mercy = abilitiesKnownAt('priest', MAX_LEVEL, mods).find(
+      (k) => k.def.id === 'scouring_mercy',
+    );
+    if (!mercy) throw new Error('missing Scouring Mercy');
+    const scaling = { spellPower: 80, healPower: 200, attackPower: 0, rangedPower: 0 };
+    const text = abilityDisplayDescription(mercy, abilityEffectText(mercy, scaling), scaling);
+    // Healing: rank base 130-155 plus round(200 * 2 * 1.5 / 3.5) = 171.
+    expect(text).toContain('130 to 155 (+171)');
+    const unscaled = abilityDisplayDescription(mercy, abilityEffectText(mercy));
+    expect(unscaled).toContain('130 to 155');
+    expect(unscaled).not.toContain('(+171)');
+  });
+});
+
+describe('periodic total rounding', () => {
+  it('shows six rounded Dirge ticks rather than an impossible fractional tick total', () => {
+    const dirge = abilitiesKnownAt('priest', MAX_LEVEL).find(
+      (k) => k.def.id === 'shadow_word_pain',
+    );
+    if (!dirge) throw new Error('missing Dirge');
+    const resolved = {
+      ...dirge,
+      effects: [{ type: 'dot' as const, total: 154, duration: 18, interval: 3 }],
+    };
+    expect(abilityEffectText(resolved)).toBe('156');
   });
 });

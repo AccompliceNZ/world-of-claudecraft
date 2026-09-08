@@ -22,7 +22,7 @@
 
 import { QUESTS, type ZoneDef } from '../sim/data';
 import type { IWorld } from '../world_api';
-import { questObjectiveLabel, questTitle } from './entity_display_labels';
+import { questObjectiveLabel, questTitle } from './entity_display_core';
 import { zoneDisplayName } from './entity_i18n';
 import { esc } from './esc';
 import { formatNumber, getI18nRevision, type TranslationKey, t } from './i18n';

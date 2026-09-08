@@ -144,8 +144,15 @@ const CEILINGS: Record<string, number> = {
   'base.css': 23,
   // W19: 454, not 453, since the counter learned to read named colors and found a
   // pre-existing `white` inside a color-mix in the item-quality section.
-  'components.css': 453,
+  // 453 -> 463 at the release/v0.42.0 merge: the release arm's own sections
+  // (the harvest journal, the plant sheet, the perfecting window and the apex
+  // treatment) arrive carrying literals the redesign has not migrated yet.
+  // Re-counted on the merged sheet, never reconciled by arithmetic.
+  'components.css': 463,
   'hud.css': 423,
+  // New sheet from the release arm (the gathering goal tracker), tokenized as
+  // authored: it joins the ratchet pinned at zero.
+  'hud.gathering-goal.css': 0,
   'hud.mobile.css': 29,
   'index.css': 0,
   'index.extra.css': 43,

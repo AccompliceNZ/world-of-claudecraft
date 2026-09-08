@@ -125,7 +125,16 @@ Sibling families (one line each; extraction targets, never re-grow `visual.ts`):
 - Weapons/props: `weapon_grip.ts`, `held_item_grips.ts`, `back_grips.ts`,
   `stow_transition.ts`, `skin_attack.ts`, `weapon_skin_materials.ts`, and
   `weapon_attack_style_core.ts`, a CROSS-SUBSYSTEM seam
-  (`ability_vfx/painter.ts` imports `attackAbilityId` from it).
+  (`ability_vfx/painter.ts` imports `attackAbilityId` from it). Authored
+  surfaces: `manifest.ts` `AUTHORED_HELD_MODELS` (a held GLB that keeps its
+  shipped response instead of `assets.ts` `applyWeaponMaterialPolish`) and
+  `VisualDef.authoredAtlas` (a creature atlas that takes the low-tier
+  readability floor through its map); both opt-in per model. **Every new
+  Tripo or Blender creature, mount, or held item declares one of them** (the
+  asset pipeline's `visualDefSnippet` emits the flag for a creature, and its
+  `registerWeapon` returns the held-model decision as a follow-up action);
+  `tests/authored_surfaces.test.ts` scans the shipped GLBs and fails any
+  authored atlas that is neither flagged nor on its explicit legacy list.
 - Perf cores: `skeleton_update_cache.ts`/`skeleton_update_core.ts` (skeleton
   palette update elision), `skin_gpu_layout.ts` (bone-texture compaction
   without changing weights, matrices, draws, or shader math),

@@ -1,30 +1,36 @@
-import { corpseLootAvailability, localPartyMemberIds } from './corpse_loot_availability';
+import type { FarmPlotView } from '../world_api/farming';
 import { handleEscortPress } from './escort_interact';
-import {
-  type GatherEffectConfirmGate,
-  type GatherNodeToolGate,
-  handleGatherNodeInteract,
-} from './gather_node_interact';
 import type { InteractionOutcome } from './interaction_autorun';
 import {
-  type NearbyGatherNode,
   type NearbyInteractionScanWorld,
   resolveNearbyInteractionCandidate,
 } from './nearby_interaction_core';
 
+// Intentional gathering: the generic nearby press is ORDINARY interaction
+// only. It never sends harvestCorpse, harvestNode, or harvestCrop; those are
+// explicit actions (node/tool/crop click, the corpse picker) with their own
+// entry points. The world slice below therefore names no gathering command.
+// The scan half (player, party roster, entities, quest log, garden beds) is
+// the shared candidate-resolver slice, so the prompt and the press can never
+// read a different world.
 export interface NearbyInteractionWorld extends NearbyInteractionScanWorld {
   targetEntity(id: number | null): void;
   interact(): void;
   lootCorpse(id: number): InteractionOutcome;
-  // Fire-and-forget half of the unified corpse press; omitting the
-  // components argument selects the caller's town-focus default server-side.
-  harvestCorpse(id: number): void;
   delveInteract(id: number): InteractionOutcome;
   enterDungeon(dungeonId: string): InteractionOutcome;
   leaveDungeon(): InteractionOutcome;
   pickUpObject(id: number): InteractionOutcome;
-  nodeHarvestableByMe(nodeId: string): boolean;
-  harvestNode(nodeId: string, confirmEffectUse?: boolean): InteractionOutcome;
+  // The garden-bed arm (Phase 9b). The static bed content rides the scan slice
+  // above; this half is the caller's own plots. IWorld satisfies both
+  // structurally, so the live call site (main.ts interactKey passing the world
+  // object whole) needs no change.
+  myFarmPlots: readonly FarmPlotView[];
+  // The shared-feast arm (Phase 12). Required, not optional, the questLog
+  // precedent: IWorld satisfies it structurally (main.ts passes the world
+  // whole), and a placed feast has NO other client entry point, so a silently
+  // unwired arm would strand the eat verb entirely (the (bn) gap class).
+  consumeFeast(feastId: number): void;
 }
 
 export interface NearbyInteractionHud {
@@ -33,27 +39,24 @@ export interface NearbyInteractionHud {
   openDelveBoard(npcId: number): void;
   showError(text: string): void;
   requestSpiritHealerResurrect(): void;
+  // A garden bed in reach opens the bed sheet (Phase 9b, widened by
+  // intentional gathering PR1): a free bed paints the seed-and-knobs planting
+  // choice, a bed holding my plot paints harvest mode. Opening a window is
+  // ordinary interaction; the sheet's own explicit Harvest control is the
+  // ONLY thing that ever sends harvestCrop.
+  openPlantSheet(bedId: string): void;
 }
 
 /** Find and dispatch one eligible nearby interaction in stable priority order.
- *  `nodeToolGateFor` (Professions 2.0) resolves the tool-tier access
- *  gate + localized denial line for the node about to be harvested; it sits
- *  with the node list (not trailing) so the live call site (main.ts
- *  interactKey) still closes on the nothing-to-interact string, as pinned by
- *  tests/client_shell.test.ts. `escortAwayText` sits before that same string
- *  for the same reason. */
+ *  `escortAwayText` sits before the nothing-to-interact string so the live
+ *  call site (main.ts interactKey) still closes on that string, as pinned by
+ *  tests/client_shell.test.ts. */
 export function tryNearbyInteraction(
   world: NearbyInteractionWorld,
   hud: NearbyInteractionHud,
-  gatherNodes: readonly NearbyGatherNode[],
-  nodeToolGateFor: ((node: NearbyGatherNode) => GatherNodeToolGate) | null,
-  tooFarText: string,
-  notReadyText: string,
   escortAwayText: string,
   nothingToInteractText: string,
   harvestStateReliable = true,
-  // The R40 per-use effect confirm gate, threaded to the node dispatch.
-  effectConfirm?: GatherEffectConfirmGate,
   // The npc the caller means, when it has one in mind. The scan is otherwise
   // nearest-wins, which is right for a keypress aimed by walking up to someone and
   // wrong for a pad, where the player SELECTS an npc and then presses talk: without
@@ -61,25 +64,11 @@ export function tryNearbyInteraction(
   // promotes an npc the scan would already have accepted, so no rule is bypassed.
   preferNpcId?: number | null,
 ): InteractionOutcome {
-  const candidate = resolveNearbyInteractionCandidate(
-    world,
-    gatherNodes,
-    harvestStateReliable,
-    preferNpcId,
-  );
+  const candidate = resolveNearbyInteractionCandidate(world, harvestStateReliable, preferNpcId);
   if (candidate?.kind === 'corpse') {
-    const corpse = candidate.entity;
-    const playerId = world.playerId ?? world.player.id;
-    const partyIds = localPartyMemberIds(world.partyInfo);
-    // Unified press: harvest first, then loot, as two separate
-    // commands (processed in receipt order in the same server tick batch).
-    // Each half is gated on the availability predicate so a claimed or
-    // emptied half is never dispatched (no denial-toast spam); the server
-    // still revalidates both authoritatively.
-    const availability = corpseLootAvailability(corpse, playerId, harvestStateReliable, partyIds);
-    if (availability.harvestable) world.harvestCorpse(candidate.id);
-    if (availability.hasLoot) return world.lootCorpse(candidate.id);
-    return availability.harvestable;
+    // Ordinary loot only. Harvesting a corpse is an explicit action with its
+    // own entry point (the corpse picker), never a side effect of this press.
+    return world.lootCorpse(candidate.id);
   }
   if (candidate?.kind === 'delve') {
     return world.delveInteract(candidate.id);
@@ -112,28 +101,43 @@ export function tryNearbyInteraction(
     return true;
   }
   // STARTING an escort sits below the npc arm (an escortee is mob-kind, so the
-  // two can never compete) and above gather nodes: an escortee standing in
-  // front of you beats the node you happen to be over. Corpses still win, so
-  // looting the ambush wave is never swallowed.
+  // two can never compete). Corpses still win, so looting the ambush wave is
+  // never swallowed.
   if (candidate?.kind === 'escort') {
     return handleEscortPress(world, hud, { kind: 'start', entityId: candidate.id }, escortAwayText);
   }
-  if (candidate?.kind === 'gather') {
-    return handleGatherNodeInteract(
-      world,
-      hud,
-      world.player.pos,
-      candidate.node.id,
-      candidate.node.pos,
-      tooFarText,
-      notReadyText,
-      nodeToolGateFor?.(candidate.node),
-      effectConfirm,
-    );
+  // The feast arm sits ABOVE the garden-bed arm (ruling 11b-R3c-1: a PLACED
+  // TRANSIENT wins over permanent world furniture; a feast despawns on a
+  // timer and is what the player just walked to, so it outranks the bed that
+  // is always there). The press just sends the entity id: an already-fed
+  // player's press near a feast answers through the sim's own farmDenied
+  // feast_eaten line (the (bp) doctrine: the sim is the refusing authority,
+  // the client never reads the ledger, which never crosses the wire anyway).
+  // Mobile crafting stations are OUTSIDE this ordering by construction: they
+  // take no interact press at all (proximity-activated via
+  // inRangeStationTypes), so the ruling's station-over-bed half has no arm to
+  // order until a station gains a press.
+  if (candidate?.kind === 'feast') {
+    world.consumeFeast(candidate.id);
+    return true;
+  }
+  // The garden-bed arm (Phase 9b) sits immediately below the placed feast
+  // (11b-R3c-1) and above the escort-away last resort. ANY bed in reach takes
+  // the press by OPENING the bed sheet (intentional gathering PR1): a free bed
+  // paints the planting choice, a bed holding my plot paints harvest mode with
+  // its status and an explicit Harvest control. The press itself never sends
+  // harvestCrop, whatever the plot's status, however stale the snapshot, or
+  // however many times the key repeats: only that control does, after its own
+  // live revalidation (farming_plant_sheet_window.ts). A same-bed re-press
+  // while the sheet is up is a repaint that keeps the player's picks and any
+  // in-flight send.
+  if (candidate?.kind === 'bed') {
+    hud.openPlantSheet(candidate.id);
+    return true;
   }
   // The away line is a LAST resort that only replaces the generic
   // nothing-to-interact message: an absent escortee must never eat a press that
-  // some other arm above could have used (a node underfoot at an empty post).
+  // some other arm above could have used.
   if (candidate?.kind === 'escortAway') {
     return handleEscortPress(world, hud, { kind: 'away' }, escortAwayText);
   }
