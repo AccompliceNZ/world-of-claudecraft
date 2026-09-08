@@ -763,7 +763,7 @@ import {
 import { questProgressEventText } from './quest_progress_text';
 import { RaidBossGuideWindow, raidBossGuideContextFallback } from './raid_boss_guide_window';
 import { raidCalloutKey } from './raid_callout';
-import { lockoutParts, lockoutShape } from './raid_lockout';
+import { formatLockoutDuration } from './raid_lockout_format';
 import { type RaidLockoutI18n, raidLockoutPanelHtml } from './raid_lockout_view';
 import { presentRealmBuilder, RealmBuilderPopup } from './realm_builder_popup';
 import {
@@ -9949,32 +9949,9 @@ export class Hud {
         }
         return dungeonDisplayName(id);
       },
-      duration: (ms) => this.formatLockoutDuration(ms),
+      duration: formatLockoutDuration,
     };
     return raidLockoutPanelHtml(this.sim.raidLockouts(), i18n);
-  }
-
-  // Localized "Xd Yh" / "Xh Ym" / "Xm" / "<1m" for a remaining-ms span; the
-  // digits run through formatNumber and the units reorder via the t() template.
-  private formatLockoutDuration(ms: number): string {
-    const { days, hours, minutes } = lockoutParts(ms);
-    const n = (v: number) => formatNumber(v, { maximumFractionDigits: 0, useGrouping: false });
-    switch (lockoutShape(ms)) {
-      case 'daysHours':
-        return t('hudChrome.raidLockout.daysHours', {
-          d: n(days),
-          h: n(hours),
-        });
-      case 'hoursMinutes':
-        return t('hudChrome.raidLockout.hoursMinutes', {
-          h: n(hours),
-          m: n(minutes),
-        });
-      case 'minutes':
-        return t('hudChrome.raidLockout.minutes', { m: n(minutes) });
-      default:
-        return t('hudChrome.raidLockout.lessThanMinute');
-    }
   }
 
   private updateQuestTracker(now: number): void {
@@ -14384,7 +14361,7 @@ export class Hud {
   // panel is its other consumer).
   private readonly errorTextDeps: ErrorTextLockoutDeps = {
     raidLockouts: () => this.sim.raidLockouts(),
-    formatLockoutDuration: (ms) => this.formatLockoutDuration(ms),
+    formatLockoutDuration,
   };
 
   private localizeErrorText(text: string): string {

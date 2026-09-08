@@ -433,24 +433,18 @@ const MONOLITHS: MonolithRow[] = [
     // `wc -l < src/ui/hud.ts` on the reconciled file measures 18577, below
     // both arms, so the ceiling follows it down. Exact merged count, zero
     // slack: any further growth reds again.
-    // RE-PINNED for the merge of release/v0.42.0 (tip 6111e6d206, PR #3872
-    // feature/masterwrought) into feature/hub-training-dummy-dps (merge-base
-    // d28d1c69e9, base ceiling 18577). The branch's own arm carries the hub
-    // practice coach's Meters deps (keybinds, the live hotbar slot array so
-    // the healing lesson resolves the heal's current slot rather than a
-    // hardcoded one, and the renderer's raw worldToScreen); the mobile-ring
-    // button lookup for the coach's glow anchor now shares
-    // mobileRingButtonForSlot with flashActionSlot's used-flash mirror
-    // instead of a second copy of the search loop. That wiring cannot move
-    // further out: every value it touches (abilityButtons, the mobile ring
-    // button arrays, tooltipOwner, tooltipEl, renderer) is private Hud state,
-    // so a sibling module could not read it without widening Hud's surface
-    // for a single caller. `wc -l < src/ui/hud.ts` on the reconciled,
-    // biome-formatted file measures 18592, 15 over the merge-base ceiling;
-    // flagged for maintainer attention as a ceiling raise rather than a
-    // further extraction. Exact merged count, zero slack: any further growth
-    // reds again.
-    ceiling: 18592,
+    // LOWERED on feature/hub-training-dummy-dps after the masterwrought sync
+    // (merge-base d28d1c69e9, base ceiling 18577). The branch's own arm
+    // carries the hub practice coach's Meters deps (keybinds, the live
+    // hotbar slot array, the ring-button glow anchor, tooltip visibility and
+    // the renderer's raw worldToScreen: dependency-injection glue over
+    // private Hud state, 15 lines). Rather than raise the ceiling for it, the
+    // branch pays by moving formatLockoutDuration, the localized raid-lockout
+    // countdown, out to src/ui/raid_lockout_format.ts beside its pure core
+    // (23 lines out). `wc -l < src/ui/hud.ts` measures 18569, under the
+    // base ceiling, so the ceiling follows it down. Exact count, zero slack:
+    // any further growth reds again.
+    ceiling: 18569,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -1198,16 +1192,19 @@ const MONOLITHS: MonolithRow[] = [
     // the resolved tree: `wc -l < src/main.ts` on the reconciled file
     // measures 11385, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
-    // RE-PINNED for the merge of release/v0.42.0 (tip 6111e6d206, PR #3872
-    // feature/masterwrought) into feature/hub-training-dummy-dps (merge-base
-    // d28d1c69e9, base ceiling 11385). The branch's own arm carries the
-    // touch More-tray Damage Meters entry (onMeters: one delegating callback
-    // beside every other toggle in the same options object, so a touch
-    // player without the Shift+H bind can still reach the meters the hub
-    // practice coach teaches). `wc -l < src/main.ts` measures 11386, one over
-    // the merge-base ceiling; flagged for maintainer attention. Exact merged
-    // count, zero slack: any further growth reds again.
-    ceiling: 11386,
+    // LOWERED on feature/hub-training-dummy-dps after the masterwrought sync
+    // (merge-base d28d1c69e9, base ceiling 11385). The branch's own arm
+    // carries the touch More-tray Damage Meters entry (onMeters: one
+    // delegating callback beside every other toggle in the same options
+    // object, so a touch player without the Shift+H bind can still reach the
+    // meters the hub practice coach teaches). Rather than raise the ceiling
+    // for that line, the branch moves normalizeDeleteConfirmation, the
+    // delete-character confirm-name normalizer, out to
+    // src/ui/char_delete_button.ts beside the control it guards.
+    // `wc -l < src/main.ts` measures 11382, under the base ceiling, so
+    // the ceiling follows it down. Exact count, zero slack: any further
+    // growth reds again.
+    ceiling: 11382,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
