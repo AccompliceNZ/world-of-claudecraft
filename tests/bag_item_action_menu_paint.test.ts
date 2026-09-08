@@ -773,8 +773,22 @@ describe('BagItemActionMenu target step: worn rows', () => {
     expect(rows.map((row) => row.act)).toEqual(['worn:mainhand']);
     expect(rows[0].text).toContain('Already applied');
     h.click('worn:mainhand');
+    // The click opens the confirm and sends NOTHING yet, same as any other
+    // replace row: the design decision (any existing enchant, including the
+    // identical one, gates on the SAME confirmation) buys no fast path.
+    expect(h.applied).toEqual([]);
     expect(h.confirms).toHaveLength(1);
-    h.confirms[0].onOk();
+    const dialog = h.confirms[0];
+    // The confirm names old and new by the SAME label, in order, since the
+    // replacement enchant is the one already worn: a player asking to
+    // reapply is told exactly that, not a generic "replace" line that
+    // happens to look identical on both sides by coincidence.
+    const lines = dialog.body.split('\n');
+    expect(lines[0]).toBe(
+      'This replaces Weapon Etching: Might on Eastbrook Arming Sword with Weapon Etching: Might.',
+    );
+    expect(lines[lines.length - 1]).toBe('Cost: Chime Dust x5');
+    dialog.onOk();
     expect(h.applied).toEqual([
       { itemId: SWORD, enchantId: WEAPON_ENCHANT, slot: 'mainhand', confirmReplace: true },
     ]);
@@ -972,8 +986,21 @@ describe('BagItemActionMenu target step: replace rows (#2415)', () => {
     expect(rows.map((row) => row.act)).toEqual([`replace:${SWORD}`]);
     expect(rows[0].text).toContain('Already applied');
     h.click(`replace:${SWORD}`);
+    // The click opens the confirm and sends NOTHING yet: the bagged same-
+    // enchant row gets the identical gate as any other replace row, never a
+    // silent apply just because old and new happen to match.
+    expect(h.applied).toEqual([]);
     expect(h.confirms).toHaveLength(1);
-    h.confirms[0].onOk();
+    const dialog = h.confirms[0];
+    // Old and new print as the SAME label, in order, plus the reagent cost:
+    // the player sees exactly what a same-enchant reapply spends, not a
+    // dialog worded as if two different enchants were involved.
+    const lines = dialog.body.split('\n');
+    expect(lines[0]).toBe(
+      'This replaces Weapon Etching: Might on Eastbrook Arming Sword with Weapon Etching: Might.',
+    );
+    expect(lines[lines.length - 1]).toBe('Cost: Chime Dust x5');
+    dialog.onOk();
     expect(h.applied).toEqual([
       { itemId: SWORD, enchantId: WEAPON_ENCHANT, slot: undefined, confirmReplace: true },
     ]);

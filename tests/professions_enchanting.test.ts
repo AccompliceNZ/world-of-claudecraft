@@ -1432,7 +1432,10 @@ describe('apply enchant to WORN gear (in place)', () => {
 // settled rulings under test: one-step replace gated on the confirmReplace
 // flag; the old enchant destroyed outright with NO material refund; the swap
 // surgical (signer, masterwork stats, boundTo, bindOnTrade byte-identical);
-// the identical-enchant-id re-apply denied with its own reason on every arm;
+// the identical-enchant-id re-apply is a NORMAL replace with confirmReplace
+// set, on every arm (a player-requested QoL: reagents spent, stats net
+// unchanged, skill still gained), and stays denied with its own reason ONLY
+// when confirmReplace is absent, same as any other already-enchanted target;
 // no new gates (same shared throttle, reagents only); and no code path that
 // silently overwrites.
 // ---------------------------------------------------------------------------
