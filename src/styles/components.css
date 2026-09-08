@@ -16368,6 +16368,37 @@
     flex: 1;
     overflow-y: auto;
   }
+  /* The inbox list scrolls as the pane's own content, but the reading pane and
+     the send form each own an action row (Reply / Return / Delete, Send). Those
+     rows are pinned the way a window foot is (library.css): the pane stops
+     scrolling and the letter body / the field stack takes the leftover height,
+     so a long letter or a full form can never push the buttons out of reach. */
+  #mailbox-body:has(> .mail-reading),
+  #mailbox-body:has(> .mail-send-form) {
+    overflow: hidden;
+  }
+  #mailbox-body > .mail-reading,
+  #mailbox-body > .mail-send-form {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .mail-reading-body,
+  .mail-send-fields {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .mail-send-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    overflow-y: auto;
+  }
+  #mailbox-body > .mail-actions,
+  .mail-send-actions {
+    flex: none;
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border-showcase);
+  }
   .mail-tabs {
     display: flex;
     gap: 4px;
@@ -16881,6 +16912,14 @@
     font-size: 12px;
     font-style: italic;
     padding: 6px 2px;
+  }
+  /* The composer's own pinned band under the scrolling day pane. */
+  .cal-day-foot {
+    flex: none;
+    margin-top: var(--spacing-sm);
+  }
+  .cal-day-foot:empty {
+    display: none;
   }
   .cal-form {
     display: flex;

@@ -243,7 +243,10 @@ export class CalendarWindow {
     el.innerHTML =
       header +
       `<div class="cal-grid" role="grid">${heads}${cells}</div>` +
-      `<div class="cal-day-pane" id="cal-day-pane"></div>`;
+      `<div class="cal-day-pane" id="cal-day-pane"></div>` +
+      // The composer sits BELOW the scrolling day pane, not at the end of it: a
+      // busy day used to push Add out of sight (the window-shell rule, library.css).
+      `<div class="cal-day-foot" id="cal-day-foot"></div>`;
     el.querySelector('[data-close]')?.addEventListener('click', () => this.close());
     el.querySelectorAll<HTMLButtonElement>('[data-cal-nav]').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -270,10 +273,12 @@ export class CalendarWindow {
 
   private renderDayPane(cells: CalendarCell[]): void {
     const pane = this.deps.root().querySelector<HTMLElement>('#cal-day-pane');
-    if (!pane) return;
+    const foot = this.deps.root().querySelector<HTMLElement>('#cal-day-foot');
+    if (!pane || !foot) return;
     const cell = cells.find((c) => c.iso === this.selectedIso) ?? null;
     if (!cell) {
       pane.innerHTML = '';
+      foot.innerHTML = '';
       return;
     }
     const guild = this.deps.world().socialInfo?.guild ?? null;
@@ -332,17 +337,23 @@ export class CalendarWindow {
         : guild === null
           ? `<div class="cal-empty">${esc(t('hudChrome.calendar.guildOnlyNote'))}</div>`
           : '';
-    pane.innerHTML = `<div class="cal-day-title">${esc(dayLabel)}</div>${rows.join('')}${empty}${form}`;
+    // The composer is the ONE pinned row; the guild-only note is prose and scrolls
+    // with the day's events.
+    const composing = manage && !cell.isPast;
+    pane.innerHTML =
+      `<div class="cal-day-title">${esc(dayLabel)}</div>${rows.join('')}${empty}` +
+      (composing ? '' : form);
+    foot.innerHTML = composing ? form : '';
     pane.querySelectorAll<HTMLButtonElement>('[data-cal-del]').forEach((btn) => {
       btn.addEventListener('click', () => {
         this.deps.world().guildEventRemove(Number(btn.dataset.calDel));
         audio.click();
       });
     });
-    pane.querySelector('#cal-ev-add')?.addEventListener('click', () => {
-      const title = pane.querySelector<HTMLInputElement>('#cal-ev-title')?.value.trim() ?? '';
-      const note = pane.querySelector<HTMLInputElement>('#cal-ev-note')?.value.trim() ?? '';
-      const hourRaw = pane.querySelector<HTMLInputElement>('#cal-ev-hour')?.value ?? '';
+    foot.querySelector('#cal-ev-add')?.addEventListener('click', () => {
+      const title = foot.querySelector<HTMLInputElement>('#cal-ev-title')?.value.trim() ?? '';
+      const note = foot.querySelector<HTMLInputElement>('#cal-ev-note')?.value.trim() ?? '';
+      const hourRaw = foot.querySelector<HTMLInputElement>('#cal-ev-hour')?.value ?? '';
       const hour = hourRaw === '' ? null : Math.max(0, Math.min(23, parseInt(hourRaw, 10) || 0));
       if (!title || !cell.iso) {
         this.deps.showError(t('hudChrome.calendar.result.badInput'));
