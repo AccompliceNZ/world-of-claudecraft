@@ -64,7 +64,7 @@ export interface PeriodicSaveWrites {
   /** Heartbeat this process's character load leases so none lapses under a peer. */
   heartbeatLeases(): Promise<void>;
   /** Drop idle bank-vault ledger guard state. Synchronous, and not a write. */
-  pruneIdleGuards(): void;
+  pruneIdleGuards(): void | number;
 }
 
 /**
@@ -126,8 +126,11 @@ export function runPeriodicSaveFlush(
     try {
       // The synchronous member returns void; the rest return a promise this
       // deliberately does not await (see the header).
-      const started: void | Promise<void> = writes[name]();
-      if (started !== undefined) started.catch((err: unknown) => report(name, err));
+      const started = writes[name]();
+      const maybePromise = started as { catch?: (onRejected: (err: unknown) => void) => unknown };
+      if (started && typeof maybePromise.catch === 'function') {
+        maybePromise.catch((err: unknown) => report(name, err));
+      }
     } catch (err) {
       report(name, err);
     }
