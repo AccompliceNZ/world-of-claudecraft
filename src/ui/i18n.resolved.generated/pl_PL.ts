@@ -16259,7 +16259,7 @@ export const pl_PL: EnTranslations = {
         "name": "Manekin heroicznego bossa"
       },
       "hub_training_dummy": {
-        "name": "Training Dummy"
+        "name": "Manekin treningowy"
       },
       "hub_healing_dummy": {
         "name": "Healing Dummy"

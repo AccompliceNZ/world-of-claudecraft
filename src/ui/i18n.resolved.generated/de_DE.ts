@@ -16259,7 +16259,7 @@ export const de_DE: EnTranslations = {
         "name": "Heroische Bosspuppe"
       },
       "hub_training_dummy": {
-        "name": "Training Dummy"
+        "name": "Trainingspuppe"
       },
       "hub_healing_dummy": {
         "name": "Healing Dummy"

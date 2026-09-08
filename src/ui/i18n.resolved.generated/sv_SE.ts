@@ -16259,7 +16259,7 @@ export const sv_SE: EnTranslations = {
         "name": "Heroisk bossdocka"
       },
       "hub_training_dummy": {
-        "name": "Training Dummy"
+        "name": "Träningsdocka"
       },
       "hub_healing_dummy": {
         "name": "Healing Dummy"

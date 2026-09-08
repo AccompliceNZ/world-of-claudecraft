@@ -16259,7 +16259,7 @@ export const es: EnTranslations = {
         "name": "Muñeco de jefe heroico"
       },
       "hub_training_dummy": {
-        "name": "Training Dummy"
+        "name": "Muñeco de entrenamiento"
       },
       "hub_healing_dummy": {
         "name": "Healing Dummy"

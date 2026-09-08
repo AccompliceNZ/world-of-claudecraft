@@ -16259,7 +16259,7 @@ export const nl_NL: EnTranslations = {
         "name": "Heroïsche bosspop"
       },
       "hub_training_dummy": {
-        "name": "Training Dummy"
+        "name": "Oefenpop"
       },
       "hub_healing_dummy": {
         "name": "Healing Dummy"

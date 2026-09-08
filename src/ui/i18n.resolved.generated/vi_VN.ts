@@ -16259,7 +16259,7 @@ export const vi_VN: EnTranslations = {
         "name": "Hình Nộm Trùm Anh Hùng"
       },
       "hub_training_dummy": {
-        "name": "Training Dummy"
+        "name": "Hình Nộm Tập Luyện"
       },
       "hub_healing_dummy": {
         "name": "Healing Dummy"

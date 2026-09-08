@@ -16259,7 +16259,7 @@ export const da_DK: EnTranslations = {
         "name": "Heroisk bossdukke"
       },
       "hub_training_dummy": {
-        "name": "Training Dummy"
+        "name": "Træningsdukke"
       },
       "hub_healing_dummy": {
         "name": "Healing Dummy"

@@ -16259,7 +16259,7 @@ export const tr_TR: EnTranslations = {
         "name": "Kahramanca Boss Kuklası"
       },
       "hub_training_dummy": {
-        "name": "Training Dummy"
+        "name": "Antrenman Kuklası"
       },
       "hub_healing_dummy": {
         "name": "Healing Dummy"

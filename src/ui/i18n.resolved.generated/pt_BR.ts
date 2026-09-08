@@ -16259,7 +16259,7 @@ export const pt_BR: EnTranslations = {
         "name": "Boneco de Chefe Heroico"
       },
       "hub_training_dummy": {
-        "name": "Training Dummy"
+        "name": "Boneco de Treino"
       },
       "hub_healing_dummy": {
         "name": "Healing Dummy"

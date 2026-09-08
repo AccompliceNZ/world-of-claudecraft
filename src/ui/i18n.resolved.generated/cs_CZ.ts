@@ -16259,7 +16259,7 @@ export const cs_CZ: EnTranslations = {
         "name": "Panák hrdinského bosse"
       },
       "hub_training_dummy": {
-        "name": "Training Dummy"
+        "name": "Cvičný panák"
       },
       "hub_healing_dummy": {
         "name": "Healing Dummy"

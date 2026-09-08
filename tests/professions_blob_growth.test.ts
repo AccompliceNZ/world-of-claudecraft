@@ -2273,8 +2273,12 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
     );
     expect(bramblehideDelta).toEqual({ deeds: 35, deedStats: 742, reliquary: 771 });
     expect(Object.values(bramblehideDelta).reduce((sum, value) => sum + value, 0)).toBe(1548);
+    // Plus 50 for the two Eastbrook hub practice quests (q_hub_know_your_numbers,
+    // q_hub_healing_numbers) joining questsDone in this maximal fixture: 23 and
+    // 21 characters as `"<id>",` in the sorted array (26 + 24 bytes). MEASURED,
+    // not inferred, same as every other row this equation names.
     expect(counterfactualBytes - 156144).toBe(
-      Object.values(fixtureDelta).reduce((sum, value) => sum + value, 0) + 183 + 1548,
+      Object.values(fixtureDelta).reduce((sum, value) => sum + value, 0) + 183 + 1548 + 50,
     );
     const forgeBaseline = {
       questsDone: 4606,
@@ -2293,24 +2297,30 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
           ) - previous,
         ]),
       ),
-    ).toEqual({ questsDone: 50, knownRecipes: 30, deeds: 32, deedStats: 21, reliquary: 80 });
+      // questsDone moved from 50 to 100 against the SAME forgeBaseline reference
+      // point: the +50 hub practice quest delta above, on top of the prior +50
+      // this row already carried.
+    ).toEqual({ questsDone: 100, knownRecipes: 30, deeds: 32, deedStats: 21, reliquary: 80 });
     // Removing field_kit AND the Bramblehide release content reproduces the
     // pre-field-kit, pre-Bramblehide baseline WITH the hammer content still
     // applied: 3884 alone measured 209,261 here (hammer content absent); the
     // hammer content adds its own +213 on top (composed, not inferred: 3885
     // alone recorded that same +213 against its pre-field-kit tree). MEASURED
-    // after the real merge settle: 209,474.
+    // after the real merge settle: 209,474. RE-MEASURED at 209,524 once the
+    // hub training dummy and hub healing dummy PRs landed their two guided
+    // practice quests (+50, attributed above; neither dummy nor its NPC touches
+    // any other field this fixture tracks).
     expect(
       Buffer.byteLength(JSON.stringify(preReleaseCounterfactual), 'utf8'),
       'field_kit and the Bramblehide release content removed, must reproduce the recorded pre-field-kit Crucible+hammer baseline',
-    ).toBe(209474);
+    ).toBe(209524);
     // Removing ONLY field_kit (the Bramblehide release content still
-    // present, current staged tree) reproduces 209,474 plus the 1,548-byte
-    // Bramblehide delta attributed above: 211,022.
+    // present, current staged tree) reproduces 209,524 plus the 1,548-byte
+    // Bramblehide delta attributed above: 211,072.
     expect(
       counterfactualBytes,
       'field_kit removed, must reproduce the current staged Crucible+hammer+Bramblehide baseline',
-    ).toBe(211022);
+    ).toBe(211072);
     const priorContent = withoutCrucibleContent(s2);
     const contentDelta = Object.fromEntries(
       (['knownRecipes', 'deedStats', 'reliquary'] as const).map((key) => [
@@ -2339,11 +2349,12 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
     // 0ca3d01a60), measured after this release merge's settle: 211,034
     // bytes (f73615a511, the last test-ledger commit, measured 209,486; the
     // Bramblehide content attributed above accounts for the full +1,548
-    // difference). Re-based per the standing rule (floor measurement minus
-    // 380, edge measurement plus one, band width unchanged at 381):
-    // 210,654..211,035.
-    expect(bytes, reMint).toBeGreaterThan(210654);
-    expect(bytes, reMint).toBeLessThan(211035);
+    // difference). RE-MEASURED at 211,084 once the two hub practice quests
+    // landed (+50, attributed above). Re-based per the standing rule (floor
+    // measurement minus 380, edge measurement plus one, band width
+    // unchanged at 381): 210,704..211,085.
+    expect(bytes, reMint).toBeGreaterThan(210704);
+    expect(bytes, reMint).toBeLessThan(211085);
 
     // The Crucible database review approved 229,376 bytes (224 KiB), the first
     // 32-KiB step above the corrected 209,261-byte pre-field-kit fixture it was
@@ -2351,8 +2362,9 @@ describe('the whole-character gear-heavy maximal blob (Phase 18 U-MEASURE)', () 
     // step was derived from, not this arm's measurement). The previous
     // 163,840-byte threshold warned on this legal modeled state. Measured here,
     // after this release merge's settle: this combined fixture (hammer
-    // content, field_kit, and the Bramblehide release content) is 211,034
-    // bytes, 18,342 bytes of headroom below the threshold. Pin the measured
+    // content, field_kit, the Bramblehide release content, and the two hub
+    // practice quests) is 211,084 bytes, 18,292 bytes of headroom below the
+    // threshold. Pin the measured
     // relation: a lower threshold or further content growth crossing it
     // requires re-measuring and reviewing both sides together, never silently
     // widening this test's narrow tracking band or the warn threshold itself.
