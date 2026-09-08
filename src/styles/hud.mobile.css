@@ -8271,6 +8271,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  /* Touch has no key to press: the ring's Interact button is the affordance, so the
+     pill keeps only the verb and the target name. */
+  body.mobile-touch #interact-prompt-keycap {
+    display: none;
+  }
   /* The pad's own desktop lift (bottom: 352px) is taller than a landscape phone,
      so the cross hotbar's measured lift is added to the mobile seat instead. */
   body.mobile-touch.xhb-mode #interact-prompt {

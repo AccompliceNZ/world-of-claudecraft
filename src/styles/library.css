@@ -660,7 +660,9 @@
   .ui-rail-label {
     position: absolute;
     right: 0;
-    bottom: -14px;
+    /* Above the rail: the XP rail sits on the viewport edge, so a label hung
+       below it would be clipped. */
+    bottom: calc(100% + 2px);
     font-family: var(--font-ui);
     font-size: 10px;
     color: var(--color-text-secondary);

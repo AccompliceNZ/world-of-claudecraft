@@ -58,6 +58,11 @@ describe('ui library: sheet and manifest agree', () => {
   const declared = declaredSelectors(library);
   const manifest = manifestSelectors(doc);
 
+  it('hangs the rail label above the rail so the viewport edge never clips it', () => {
+    expect(library).toMatch(/\.ui-rail-label \{[^}]*bottom: calc\(100% \+ 2px\);/);
+    expect(library).not.toMatch(/\.ui-rail-label \{[^}]*bottom: -14px;/);
+  });
+
   it('keeps the window head at its authored height inside a flex column window', () => {
     expect(library).toMatch(/\.ui-win-head \{\s*display: flex;\s*flex: none;/);
   });
