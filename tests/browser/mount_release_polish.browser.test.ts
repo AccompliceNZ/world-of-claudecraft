@@ -69,7 +69,7 @@ describe.each(['index.html', 'play.html'])('%s release UI', (entry) => {
     document.body.append(store);
     await Promise.all([...document.images].map((img) => img.decode().catch(() => {})));
     await page.screenshot({
-      path: `../../docs/screenshots/v042-mount-sidebar/${entry}-desktop.png`,
+      path: `../../docs/screenshots/cosmetics-window/v042-polish/${entry}-desktop.png`,
     });
     const [a, b] = bounds(root);
     expect(Math.abs(a.height - b.height)).toBeLessThanOrEqual(38);
@@ -97,7 +97,7 @@ describe.each(['index.html', 'play.html'])('%s release UI', (entry) => {
       }
     }
     await page.screenshot({
-      path: `../../docs/screenshots/v042-mount-sidebar/${entry}-mobile-pad.png`,
+      path: `../../docs/screenshots/cosmetics-window/v042-polish/${entry}-mobile-pad.png`,
     });
     document.body.classList.remove('xhb-mode');
     expect(getComputedStyle(root).display).toBe('none');
