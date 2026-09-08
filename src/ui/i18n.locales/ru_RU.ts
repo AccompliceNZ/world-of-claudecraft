@@ -1523,6 +1523,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.charSheet.hidePlaytimeAria': 'Скрыть время в игре',
   'hudChrome.charSidebar.label': 'Сведения о персонаже',
   'hudChrome.charSidebar.subtitle': 'Уровень {level} {className} . {archetype} . Увлечение: {hobby}',
+  'hudChrome.charSidebar.subtitleNoHobby': 'Уровень {level} {className} . {archetype}',
   'hudChrome.charSidebar.stats': 'Характеристики',
   'hudChrome.charSidebar.progression': 'Прогресс',
   'hudChrome.charSidebar.skills': 'Навыки',

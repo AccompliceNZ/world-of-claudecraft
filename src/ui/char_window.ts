@@ -292,12 +292,19 @@ export class CharWindow {
     const hobbyCraft = hobbyCraftText(world.hobbyCraft);
     const sidebar = buildCharacterSidebarView(this.sidebarTab);
     this.sidebarTab = sidebar.selected;
-    const subtitle = t('hudChrome.charSidebar.subtitle', {
-      level,
-      className,
-      archetype: archetypeTitle,
-      hobby: hobbyCraft,
-    });
+    const subtitle =
+      world.hobbyCraft === null
+        ? t('hudChrome.charSidebar.subtitleNoHobby', {
+            level,
+            className,
+            archetype: archetypeTitle,
+          })
+        : t('hudChrome.charSidebar.subtitle', {
+            level,
+            className,
+            archetype: archetypeTitle,
+            hobby: hobbyCraft,
+          });
     let html = `<div class="panel-title char-title-portrait ui-win-head">${portraitChipHtml({ cls: world.cfg.playerClass, skin: p.skin ?? 0, name: p.name, variant: 'sm', catalog: p.skinCatalog, look: isMechWearer(world.player) ? null : modularLookFor(world.player) })}<span class="char-title-text ui-win-title" id="char-title">${esc(p.name)}<span class="ui-win-sub char-title-sub">${archetypeCrest}${esc(subtitle)}</span></span><span class="char-honor-balance">${currencyIconHtml('honor')}${esc(t('hudChrome.warfare.balance', { amount: formatNumber(world.honor, { maximumFractionDigits: 0 }) }))}</span><button type="button" class="x-btn ui-x-btn" data-close aria-label="${esc(t('hud.options.returnToGame'))}">${svgIcon('close')}</button></div>`;
     html += `<div class="char-body"><section class="char-equipment-pane"><div class="paperdoll">
         <div class="equip-col" id="equip-col-left"></div>

@@ -238,7 +238,7 @@ export class QuestLogWindow {
     html += d.objectives
       .map(
         (o) =>
-          `<div class="qd-obj${o.done ? ' done' : ''}"><span>${esc(this.questProgressText(questObjectiveLabel(d.questId, o.index), o.count, o.required))}</span><span class="ui-bar qd-progress"><span class="ui-bar-fill" style="width:${Math.min(100, (o.count / o.required) * 100)}%"></span></span></div>`,
+          `<div class="qd-obj${o.done ? ' done' : ''}"><span>${esc(this.questProgressText(questObjectiveLabel(d.questId, o.index), o.count, o.required))}</span><span class="ui-bar qd-progress"><span class="ui-bar-fill" style="width:${o.required > 0 ? Math.min(100, (o.count / o.required) * 100) : o.done ? 100 : 0}%"></span></span></div>`,
       )
       .join('');
     html += `<div class="qd-text ql-detail-text">${esc(questNarrative(d.questId, 'text', playerName))}</div>`;

@@ -230,7 +230,7 @@ export class ProfessionsWindow {
     el.innerHTML =
       `<div class="panel-title ui-win-head"><span class="ui-win-title">${esc(t('hudChrome.professions.title'))}</span>` +
       `<button type="button" class="x-btn ui-x-btn" data-close aria-label="${esc(t('hudChrome.professions.close'))}">${svgIcon('close')}</button></div>` +
-      `<div class="prof-scroll">${harvestBodyEntryHtml(this.deps.harvestBody !== undefined)}${harvestPreferenceEntryHtml(this.deps.world().harvestPreference, this.deps.openHarvestPreference !== undefined)}${body}</div><div class="prof-footer"><span class="ui-muted">${esc(t('hudChrome.professions.retentionFooter'))}</span><button type="button" class="prof-wiki-link ui-btn" data-wiki-link>${esc(t('hudChrome.professions.tutorialLink'))}</button></div>`;
+      `<div class="prof-scroll">${harvestBodyEntryHtml(this.deps.harvestBody !== undefined)}${harvestPreferenceEntryHtml(this.deps.world().harvestPreference, this.deps.openHarvestPreference !== undefined)}${body}</div><div class="prof-footer"><span class="ui-muted">${esc(t('hudChrome.professions.retentionFooter'))}</span><button type="button" class="prof-wiki-link ui-btn" data-wiki-link data-focus-key="prof:wiki">${esc(t('hudChrome.professions.tutorialLink'))}</button></div>`;
 
     this.wire(el);
     const scroll = el.querySelector('.prof-scroll');

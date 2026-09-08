@@ -1510,6 +1510,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.charSheet.hidePlaytimeAria': 'プレイ時間を非表示',
   'hudChrome.charSidebar.label': 'キャラクター詳細',
   'hudChrome.charSidebar.subtitle': 'レベル{level} {className} . {archetype} . 趣味：{hobby}',
+  'hudChrome.charSidebar.subtitleNoHobby': 'レベル{level} {className} . {archetype}',
   'hudChrome.charSidebar.stats': '能力値',
   'hudChrome.charSidebar.progression': '進行状況',
   'hudChrome.charSidebar.skills': 'スキル',

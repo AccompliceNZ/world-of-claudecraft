@@ -2059,6 +2059,7 @@ export const ru_RU: EnTranslations = {
     "charSidebar": {
       "label": "Сведения о персонаже",
       "subtitle": "Уровень {level} {className} . {archetype} . Увлечение: {hobby}",
+      "subtitleNoHobby": "Уровень {level} {className} . {archetype}",
       "stats": "Характеристики",
       "progression": "Прогресс",
       "skills": "Навыки",

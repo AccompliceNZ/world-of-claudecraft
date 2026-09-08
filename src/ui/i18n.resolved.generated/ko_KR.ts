@@ -2059,6 +2059,7 @@ export const ko_KR: EnTranslations = {
     "charSidebar": {
       "label": "캐릭터 세부 정보",
       "subtitle": "레벨 {level} {className} . {archetype} . 취미: {hobby}",
+      "subtitleNoHobby": "레벨 {level} {className} . {archetype}",
       "stats": "능력치",
       "progression": "진행도",
       "skills": "기술",

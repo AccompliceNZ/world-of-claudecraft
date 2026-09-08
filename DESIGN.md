@@ -785,6 +785,10 @@ Every window adopts the grammar; these carry specific intent:
   (`docs/prd/talents-2.0.md`) and the Encounter UI draft
   (`docs/prd/dungeon-mechanic-primitives.md`) inherit this language when built.
 
+The harvest journal, plant sheet, harvest preference and perfecting windows landed from the
+release branch during this delivery; they carry the shared window shell (`ui-window`) and the
+scoped legacy button look, and their bodies adopt the primitives in a follow-up.
+
 ## 9. HUD states by context
 
 Fixed anchors; context changes emphasis, never position:

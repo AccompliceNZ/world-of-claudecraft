@@ -2059,6 +2059,7 @@ export const zh_TW: EnTranslations = {
     "charSidebar": {
       "label": "角色詳情",
       "subtitle": "{level}級 {className} . {archetype} . 興趣：{hobby}",
+      "subtitleNoHobby": "{level}級 {className} . {archetype}",
       "stats": "屬性",
       "progression": "進度",
       "skills": "技能",

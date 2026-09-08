@@ -2059,6 +2059,7 @@ export const fr_CA: EnTranslations = {
     "charSidebar": {
       "label": "Character details",
       "subtitle": "Level {level} {className} . {archetype} . Hobby: {hobby}",
+      "subtitleNoHobby": "Level {level} {className} . {archetype}",
       "stats": "Stats",
       "progression": "Progression",
       "skills": "Skills",

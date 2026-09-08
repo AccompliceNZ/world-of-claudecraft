@@ -1503,6 +1503,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.charSheet.hidePlaytimeAria': '플레이 시간 숨기기',
   'hudChrome.charSidebar.label': '캐릭터 세부 정보',
   'hudChrome.charSidebar.subtitle': '레벨 {level} {className} . {archetype} . 취미: {hobby}',
+  'hudChrome.charSidebar.subtitleNoHobby': '레벨 {level} {className} . {archetype}',
   'hudChrome.charSidebar.stats': '능력치',
   'hudChrome.charSidebar.progression': '진행도',
   'hudChrome.charSidebar.skills': '기술',

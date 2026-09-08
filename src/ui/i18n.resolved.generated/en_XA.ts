@@ -2059,6 +2059,7 @@ export const en_XA: EnTranslations = {
     "charSidebar": {
       "label": "[Çĥáŕáçţéŕ ðéţáíļš]",
       "subtitle": "[Ļéʋéļ {level} {className} . {archetype} . Ĥóƀƀý: {hobby}]",
+      "subtitleNoHobby": "[Ļéʋéļ {level} {className} . {archetype}]",
       "stats": "[Šţáţš]",
       "progression": "[Þŕóĝŕéššíóñ]",
       "skills": "[Šķíļļš]",

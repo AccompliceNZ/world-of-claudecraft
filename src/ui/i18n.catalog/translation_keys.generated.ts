@@ -9055,6 +9055,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.charSidebar.skills'
   | 'hudChrome.charSidebar.stats'
   | 'hudChrome.charSidebar.subtitle'
+  | 'hudChrome.charSidebar.subtitleNoHobby'
   | 'hudChrome.character.modelPreview'
   | 'hudChrome.chatQuota.limitReached'
   | 'hudChrome.chatQuota.pending'

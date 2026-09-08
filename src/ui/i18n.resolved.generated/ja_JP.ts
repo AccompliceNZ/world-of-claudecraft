@@ -2059,6 +2059,7 @@ export const ja_JP: EnTranslations = {
     "charSidebar": {
       "label": "キャラクター詳細",
       "subtitle": "レベル{level} {className} . {archetype} . 趣味：{hobby}",
+      "subtitleNoHobby": "レベル{level} {className} . {archetype}",
       "stats": "能力値",
       "progression": "進行状況",
       "skills": "スキル",

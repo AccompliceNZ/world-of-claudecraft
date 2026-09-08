@@ -1471,6 +1471,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.charSheet.hidePlaytimeAria': '隐藏游戏时长',
   'hudChrome.charSidebar.label': '角色详情',
   'hudChrome.charSidebar.subtitle': '{level}级 {className} . {archetype} . 爱好：{hobby}',
+  'hudChrome.charSidebar.subtitleNoHobby': '{level}级 {className} . {archetype}',
   'hudChrome.charSidebar.stats': '属性',
   'hudChrome.charSidebar.progression': '进度',
   'hudChrome.charSidebar.skills': '技能',
