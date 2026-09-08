@@ -7090,7 +7090,13 @@
     overflow: hidden;
     flex-direction: column;
   }
+  /* The window body is one flex column: title, bag sockets and the filter/search
+     chrome hold their natural height, the grid takes every remaining pixel as the
+     single scroller, and the money footer stays pinned to the bottom edge. */
   #bags .panel-title {
+    flex: none;
+  }
+  #bags .bag-bar {
     flex: none;
   }
   #bags .bag-filter-bar {
@@ -7104,11 +7110,16 @@
     -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
   }
+  /* The purse is a real footer row seated on the window's bottom edge, ruled off
+     from the grid above it, not a block floating in the empty tail of the list. */
   #bags .money {
     flex: none;
     display: flex;
     align-items: center;
     gap: 10px;
+    border-top: 1px solid var(--color-border-showcase);
+    padding-top: var(--spacing-sm);
+    margin-top: var(--spacing-xs);
   }
   /* coins stay right-aligned whether or not the $WOC chip is present */
   #bags .money .money-inline {
@@ -7164,10 +7175,14 @@
   /* WoW-style slot grid: square cells, the item icon fills the cell, quality
      drives the cell border (the .q-* classes below), the stack count sits as a
      badge in the bottom-right corner, and free capacity paints as empty sockets. */
+  /* Fluid columns: as many socket-wide tracks as the host body holds, each no
+     narrower than the bag socket species, so the grid fills the width of
+     whatever window it sits in instead of centring a fixed count between two
+     dead bands. */
   .bag-grid {
     display: grid;
-    grid-template-columns: repeat(6, 40px);
-    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(var(--socket-size-bag), 1fr));
+    justify-content: stretch;
     gap: 4px;
     padding: 2px;
     align-content: start;
