@@ -7826,6 +7826,9 @@
     transition: opacity 0.4s;
     pointer-events: none;
   }
+  /* Floating world text: the level-up banner is bare gold type over the world
+     with the outline shadow, never a plate. Only the deed and skill variants
+     below carry the strong plate. */
   #banner {
     --color-text-light: var(--gold);
     position: absolute;
@@ -7835,11 +7838,14 @@
     width: max-content;
     max-width: calc(100vw - 48px);
     box-sizing: border-box;
+    color: var(--color-text-light);
     font-size: 38px;
     font-weight: bold;
     line-height: 1.15;
     text-align: center;
-    padding: 10px 22px;
+    text-shadow:
+      0 0 18px color-mix(in srgb, var(--color-keyline) 53%, transparent),
+      2px 2px 6px var(--color-keyline);
     opacity: 0;
     transition: opacity 1.2s;
     pointer-events: none;
@@ -7912,6 +7918,17 @@
     letter-spacing: 0.5px;
     padding: 8px 22px;
   }
+  /* The two plated variants compose the strong panel recipe themselves; the
+     bare level banner above never does. */
+  #banner.banner-deed,
+  #banner.banner-skill {
+    background: var(--panel-bg-strong);
+    border: 1px solid var(--border);
+    outline: 1px solid var(--color-keyline);
+    border-radius: var(--radius-panel);
+    box-shadow: var(--shadow-panel);
+    text-shadow: none;
+  }
   /* Gathering skill milestone plate (hud.ts showBanner variant='skill').
      Framed copper craft card with the profession crest: distinct from the
      bare gold character level-up AND the parchment deed plate, so a Mining
@@ -7962,9 +7979,12 @@
   }
   .quest-banner-line {
     --color-text-light: var(--gold);
-    padding: 6px 14px;
+    color: var(--color-text-light);
     font-size: 20px;
     font-weight: bold;
+    text-shadow:
+      0 0 10px color-mix(in srgb, var(--color-keyline) 53%, transparent),
+      1px 1px 3px var(--color-keyline);
     white-space: nowrap;
     opacity: 1;
     transition: opacity 0.4s ease;
@@ -7978,9 +7998,12 @@
     left: 50%;
     top: 35%;
     transform: translateX(-50%);
-    padding: 8px 22px;
+    color: var(--color-text-light);
     font-size: 22px;
     font-weight: bold;
+    text-shadow:
+      0 0 14px color-mix(in srgb, var(--color-keyline) 53%, transparent),
+      1px 1px 4px var(--color-keyline);
     opacity: 0;
     transition: opacity 1.2s;
     pointer-events: none;
