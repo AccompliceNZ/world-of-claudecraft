@@ -1267,6 +1267,9 @@ export const ru_RU: EnTranslations = {
       "runLabel": "Run {index}",
       "runSummary": "{total} in {time}"
     },
+    "talkingHead": {
+      "label": "Диалог"
+    },
     "hubLesson": {
       "target": "Сначала возьми манекен в цель.",
       "openWindow": "Открой {meters}.",

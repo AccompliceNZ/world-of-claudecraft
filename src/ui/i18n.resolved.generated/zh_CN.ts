@@ -1267,6 +1267,9 @@ export const zh_CN: EnTranslations = {
       "runLabel": "Run {index}",
       "runSummary": "{total} in {time}"
     },
+    "talkingHead": {
+      "label": "对话"
+    },
     "hubLesson": {
       "target": "先将假人设为目标。",
       "openWindow": "打开{meters}。",

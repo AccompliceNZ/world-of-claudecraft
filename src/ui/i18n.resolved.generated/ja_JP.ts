@@ -1267,6 +1267,9 @@ export const ja_JP: EnTranslations = {
       "runLabel": "Run {index}",
       "runSummary": "{total} in {time}"
     },
+    "talkingHead": {
+      "label": "会話"
+    },
     "hubLesson": {
       "target": "まずダミーを標的にしよう。",
       "openWindow": "{meters}を開こう。",

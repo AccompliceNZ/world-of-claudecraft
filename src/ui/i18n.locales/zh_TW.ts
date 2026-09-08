@@ -15771,6 +15771,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.realmBuilder.pastEmpty': '榮譽榜上還沒有名字。',
   'hudChrome.realmBuilder.close': '關閉',
   'worldContent.realmBuilderMonumentName': '王國建造者紀念碑',
+  'hudChrome.talkingHead.label': '對話',
   'hudChrome.hubLesson.target': '先將假人設為目標。',
   'hudChrome.hubLesson.openWindow': '打開{meters}。',
   'hudChrome.hubLesson.openWindowTouch': '打開{menu} → {more} → {meters}。',

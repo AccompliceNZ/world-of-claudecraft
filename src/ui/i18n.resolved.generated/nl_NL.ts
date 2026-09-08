@@ -1267,6 +1267,9 @@ export const nl_NL: EnTranslations = {
       "runLabel": "Run {index}",
       "runSummary": "{total} in {time}"
     },
+    "talkingHead": {
+      "label": "Dialogue"
+    },
     "hubLesson": {
       "target": "Target the dummy to begin.",
       "openWindow": "Open {meters}.",

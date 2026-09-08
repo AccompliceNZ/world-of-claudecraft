@@ -16588,6 +16588,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.realmBuilder.pastEmpty': 'まだ名前が刻まれていません。',
   'hudChrome.realmBuilder.close': '閉じる',
   'worldContent.realmBuilderMonumentName': '王国建設者の記念碑',
+  'hudChrome.talkingHead.label': '会話',
   'hudChrome.hubLesson.target': 'まずダミーを標的にしよう。',
   'hudChrome.hubLesson.openWindow': '{meters}を開こう。',
   'hudChrome.hubLesson.openWindowTouch': '{menu} → {more} → {meters}を開こう。',

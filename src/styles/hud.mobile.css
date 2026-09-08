@@ -2509,6 +2509,17 @@
   body.mobile-touch #pet-cluster {
     display: contents;
   }
+  /* The touch stack has no seat above the frames, so the panel takes the
+     quest-banner lane under the top edge, clear of the sticks and the ring. */
+  body.mobile-touch .talking-head {
+    position: fixed;
+    left: 50%;
+    top: max(56px, env(safe-area-inset-top));
+    transform: translateX(-50%);
+    width: min(520px, calc(100vw - 120px));
+    margin: 0;
+    z-index: 20;
+  }
   /* Issue: on a narrow landscape phone the true-centered pet bar can reach far
      enough left to sit on top of the #mobile-combat-controls row (Chat/Social/
      Quests/Settings/More) or the #mobile-consumables-toggle chip docked right

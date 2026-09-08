@@ -11959,6 +11959,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.talents.gearRestored'
   | 'hudChrome.talents.gearTakenByOtherSlot'
   | 'hudChrome.talents.newBuildWithGear'
+  | 'hudChrome.talkingHead.label'
   | 'hudChrome.targetAuras.all'
   | 'hudChrome.targetAuras.buffs'
   | 'hudChrome.targetAuras.configureRows'

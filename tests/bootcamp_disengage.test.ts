@@ -31,7 +31,8 @@ describe('BootcampOverlay.disengage', () => {
     expect(document.getElementById('ui'), '#ui survives graduation').not.toBeNull();
     expect(document.getElementById('petbar'), 'HUD siblings survive graduation').not.toBeNull();
     expect(
-      document.querySelectorAll('#ui .tut-prompt, #ui .tut-glow, #ui .tut-voice').length,
+      document.querySelectorAll('#ui .tut-prompt, #ui .tut-glow, #talking-head:not([hidden])')
+        .length,
       'the coach cleans up every node it minted',
     ).toBe(0);
   });

@@ -1267,6 +1267,9 @@ export const en_XA: EnTranslations = {
       "runLabel": "[Ŕúñ {index}]",
       "runSummary": "[{total} íñ {time}]"
     },
+    "talkingHead": {
+      "label": "[Ðíáļóĝúé]"
+    },
     "hubLesson": {
       "target": "[Ţáŕĝéţ ţĥé ðúɱɱý ţó ƀéĝíñ.]",
       "openWindow": "[Óþéñ {meters}.]",

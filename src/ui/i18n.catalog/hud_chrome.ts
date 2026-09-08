@@ -1396,6 +1396,9 @@ export const hudChromeStrings = {
   // time, beside a real control (a keybind, a tab, a row, the history
   // arrow), never a wall of text. Wordy (M16): the five non-Latin fills
   // land in this same change.
+  talkingHead: {
+    label: 'Dialogue',
+  },
   hubLesson: {
     target: 'Target the dummy to begin.',
     openWindow: 'Open {meters}.',

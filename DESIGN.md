@@ -765,6 +765,13 @@ Every window adopts the grammar; these carry specific intent:
   unchanged; the touch sheet keeps the stacked paperdoll (the weapons row wraps under it),
   so the stage rules are scoped away from `body.mobile-touch`. The inspect window shares
   the split and spreads its columns beside the taller inspect stage the same way.
+- **Talking Head** (`src/ui/hud/talking_head/`): an NPC line spoken to the player while the
+  speaker is off screen. NPC speech is a world chat bubble over the speaker whenever the player
+  can see them (`speakerInView`, the same on-screen and range rule the bubbles are culled by);
+  only when they cannot does the line land on this panel: portrait chip, speaker name in the
+  accent, the line in the light body tone on the strong panel surface, seated at the top of the
+  bottom stack above the unit frames (the quest-banner lane on touch). Cold and click-through,
+  it replaces the bare italic caption the Proving Shore coach used to float mid-screen.
 - **Quest log** (`src/ui/hud/quest/questlog_window.ts`): quests group by zone. Each zone
   shows its count and has a collapse control; the detail pane keeps tracked state and
   reward sockets.

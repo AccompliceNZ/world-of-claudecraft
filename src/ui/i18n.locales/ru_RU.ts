@@ -16039,6 +16039,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.realmBuilder.pastEmpty': 'В списке пока нет имён.',
   'hudChrome.realmBuilder.close': 'Закрыть',
   'worldContent.realmBuilderMonumentName': 'Памятник зодчим королевства',
+  'hudChrome.talkingHead.label': 'Диалог',
   'hudChrome.hubLesson.target': 'Сначала возьми манекен в цель.',
   'hudChrome.hubLesson.openWindow': 'Открой {meters}.',
   'hudChrome.hubLesson.openWindowTouch': 'Открой {menu} → {more} → {meters}.',

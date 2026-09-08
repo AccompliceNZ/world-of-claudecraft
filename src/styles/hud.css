@@ -485,23 +485,47 @@
      and landed in the top-left corner (CX: "why is the narrator's voice up in
      the top left lol"). It is a subtitle, so it sits where subtitles sit:
      low-center, above the movement bubble, clear of the unit frames. */
-  .tut-voice {
-    position: absolute;
-    left: 50%;
-    bottom: 33%;
-    transform: translateX(-50%);
-    max-width: min(46rem, 76vw);
-    text-align: center;
-    text-wrap: balance;
+  /* Talking Head (src/ui/hud/talking_head/): an NPC line spoken to the player
+     while the speaker is off screen, where a world bubble would go unseen. It
+     rides the top of the bottom stack, so it sits above the unit frames and
+     grows the stack upward like the pet cluster. */
+  .talking-head {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+    margin-bottom: var(--unit-frame-bar-gap);
+    padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) var(--spacing-sm);
     pointer-events: none;
-    font-size: 15px;
-    font-style: italic;
-    line-height: 1.45;
-    color: var(--gold-dim);
-    text-shadow:
-      0 2px 6px #000,
-      0 0 14px #000c;
-    z-index: 20;
+    text-align: left;
+  }
+  .talking-head[hidden] {
+    display: none;
+  }
+  .talking-head .th-portrait-wrap {
+    width: 54px;
+    height: 54px;
+    margin-right: 0;
+  }
+  .talking-head .th-body {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+  .talking-head .th-name {
+    font-size: 14px;
+    color: var(--color-accent);
+    margin-bottom: 2px;
+  }
+  .talking-head .th-text {
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--color-text-light);
+    overflow-wrap: break-word;
+  }
+  /* The interact prompt seats in the same band above the frames; while a line
+     is up it climbs one panel height so the two never overprint. */
+  #ui:has(.talking-head:not([hidden])) #interact-prompt {
+    bottom: calc(210px + 90px);
   }
   /* The bootcamp card's on-screen keycap chips (bootcamp.ts): the physical
      keys the current lesson asks for, drawn as caps under the body copy. */
@@ -907,15 +931,6 @@
     }
     50% {
       opacity: 1;
-    }
-  }
-  /* Phones: the caption rides higher, clear of the touch sticks and the
-     movement bubble, and gives up a little width to the narrower screen. */
-  @media (max-width: 720px) {
-    .tut-voice {
-      bottom: 42%;
-      max-width: 86vw;
-      font-size: 13px;
     }
   }
   @media (prefers-reduced-motion: reduce) {

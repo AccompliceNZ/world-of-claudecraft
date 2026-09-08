@@ -1267,6 +1267,9 @@ export const ko_KR: EnTranslations = {
       "runLabel": "Run {index}",
       "runSummary": "{total} in {time}"
     },
+    "talkingHead": {
+      "label": "대화"
+    },
     "hubLesson": {
       "target": "먼저 허수아비를 대상으로 삼으세요.",
       "openWindow": "{meters}을(를) 여세요.",
