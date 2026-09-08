@@ -96,3 +96,31 @@ describe('snap-to-grid alignment overlay', () => {
     );
   });
 });
+
+describe('unit frame bar fills', () => {
+  // The review finding: the player health bar read as a striped fill. hud.css must
+  // leave the fill's LOOK to the library bevel gradient (only --bar-color per power
+  // type), and the hatched absorb overlay must start collapsed so a unit with no
+  // shield shows plain health.
+  it('gives the fills only their power color and no look of their own', () => {
+    const fill = ruleBlock('\n  .bar-fill {');
+    expect(fill).not.toContain('background');
+    for (const [cls, token] of [
+      ['.hp', '--color-hp'],
+      ['.mana', '--color-mana'],
+      ['.rage', '--color-rage'],
+      ['.energy', '--color-energy'],
+      ['.focus', '--color-focus'],
+    ]) {
+      const block = ruleBlock(`\n  ${cls} {`);
+      expect(block).toContain(`--bar-color: var(${token});`);
+      expect(block).not.toContain('background');
+    }
+  });
+
+  it('keeps the absorb hatch collapsed until a shield exists', () => {
+    const absorb = ruleBlock('\n  .bar-absorb {');
+    expect(absorb).toContain('transform: scaleX(0);');
+    expect(absorb).toContain('transform-origin: left;');
+  });
+});

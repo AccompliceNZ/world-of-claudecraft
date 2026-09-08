@@ -185,7 +185,7 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
     elementId: 'xpbar',
     storageKey: 'woc_hud_frame_xpbar',
     labelKey: 'hudChrome.interfaceUnlock.frameNames.xpBar',
-    fallbackSize: { w: 596, h: 10 },
+    fallbackSize: { w: 596, h: 14 },
     detachToUiRoot: true,
   },
   // The buff and debuff rows are independent frames (each placed on its own).

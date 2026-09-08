@@ -58,9 +58,20 @@ describe('ui library: sheet and manifest agree', () => {
   const declared = declaredSelectors(library);
   const manifest = manifestSelectors(doc);
 
-  it('hangs the rail label above the rail so the viewport edge never clips it', () => {
-    expect(library).toMatch(/\.ui-rail-label \{[^}]*bottom: calc\(100% \+ 2px\);/);
-    expect(library).not.toMatch(/\.ui-rail-label \{[^}]*bottom: -14px;/);
+  it('lets a heading minted as a button inherit its host colour', () => {
+    // The review finding: the quest tracker's QUESTS heading is a <button> and
+    // neither type helper sets a colour, so it took the UA's black button text.
+    expect(library).toMatch(/button\.ui-cin,\s*\n\s*button\.ui-outline \{\s*\n\s*color: inherit;/);
+  });
+
+  it('centres the rail label INSIDE the rail and swaps it on hover or focus', () => {
+    // Pin moved with the review finding: the readout now rides the rail itself
+    // (percent centred inside it) instead of hanging above it, and the detail
+    // form arrives through the ::after content on hover / keyboard focus.
+    expect(library).toMatch(/\.ui-rail-label \{[^}]*justify-content: center;/);
+    expect(library).not.toMatch(/\.ui-rail-label \{[^}]*bottom: calc\(100% \+ 2px\);/);
+    expect(library).toMatch(/\.ui-rail-label::after \{[^}]*content: attr\(data-total\);/);
+    expect(library).toContain('.ui-rail:focus-within .ui-rail-label::after {');
   });
 
   it('keeps the window head at its authored height inside a flex column window', () => {

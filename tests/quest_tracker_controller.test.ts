@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { QUESTS } from '../src/sim/data';
 import type { QuestProgress } from '../src/sim/types';
@@ -5,6 +6,8 @@ import { QuestTrackerController } from '../src/ui/hud/quest/quest_tracker_contro
 import { makeWriterFacet } from '../src/ui/painter_host';
 import { dropPointerFocus } from '../src/ui/pointer_blur';
 import type { IWorld } from '../src/world_api';
+
+const hudCss = readFileSync(new URL('../src/styles/hud.css', import.meta.url), 'utf8');
 
 /** A private facet per rig: the controller takes Hud's shared one in production,
  *  and a test needs only the elision behaviour. */
@@ -105,6 +108,9 @@ describe('QuestTrackerController', () => {
     expect(test.html()).toContain('objective:q_wolves:0');
     expect(test.html()).toContain('quest-complete');
     expect(test.html()).toContain('class="qt-header ui-cin"');
+    // A <button> takes no colour from #quest-tracker, so the heading names the
+    // gold accent itself (the review finding: it rendered black).
+    expect(hudCss).toMatch(/#quest-tracker \.qt-header \{\s*\n\s*color: var\(--color-accent\);/);
     expect(test.html()).toContain('class="qt-num ui-badge ui-num"');
     // The right-rail board separates the objective label from its live numeric column.
     expect(test.html()).toContain('class="qt-obj ui-meta counted"');

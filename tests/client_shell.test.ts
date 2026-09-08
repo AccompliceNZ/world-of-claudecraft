@@ -3580,6 +3580,37 @@ describe('client HTML shell', () => {
 // under the thumb at the top, health strip in the bottom-centre column). Both halves
 // are pinned because either one alone silently changes the layout: the markup that
 // puts the two in one wrapper, and the mobile rule that dissolves it.
+describe('the stock unit-frame seats sit side by side above the action bar', () => {
+  // The review finding: an uncustomized interface had the target frame in the
+  // top-left corner while the player frame sat over the hotbar. Both stock seats
+  // now mirror each other around the screen centre, half the pair gap apart. Only
+  // the DEFAULT: MovableFrame writes inline left/top for a saved position, which
+  // outranks the sheet, and reset clears those and lands back here.
+  const tokensCss = readFileSync(new URL('../src/styles/tokens.css', import.meta.url), 'utf8');
+
+  it('declares the seat tokens the two rules share', () => {
+    expect(tokensCss).toContain('--unit-frame-pair-gap: 12px;');
+    expect(tokensCss).toContain('--unit-frame-seat-offset: calc(');
+    expect(tokensCss).toContain('var(--socket-size) +\n      78px');
+  });
+
+  it('holds the docked player frame just left of centre', () => {
+    expect(hudCss).toContain('margin: 0 calc(50% + var(--unit-frame-pair-gap) / 2) 8px auto;');
+    expect(hudCss).not.toContain('margin: 0 auto 8px;');
+  });
+
+  it('mirrors the target frame right of centre and level with it', () => {
+    expect(hudCss).toContain('left: calc(50% + var(--unit-frame-pair-gap) / 2);');
+    expect(hudCss).toContain('top: calc(100% - var(--unit-frame-seat-offset));');
+    expect(hudCss).not.toContain('#target-frame {\n    left: 12px;\n    top: 12px;');
+  });
+
+  it('lifts the mirrored seat by one socket row per extra action row', () => {
+    expect(hudCss).toContain('body.show-actionbar2 #target-frame,');
+    expect(hudCss).toContain('body.show-actionbar2.show-actionbar3 #target-frame {');
+  });
+});
+
 describe('pet cluster layout', () => {
   const hudCssSrc = readFileSync(new URL('../src/styles/hud.css', import.meta.url), 'utf8');
   const hudMobileSrc = readFileSync(

@@ -801,7 +801,7 @@
     --castbar-w: 300px;
     --castbar-h: 20px;
     --castbar-point: 6px;
-    --xp-rail-h: 10px;
+    --xp-rail-h: 14px;
     --win-head-h: 44px;
     --btn-h: 32px;
     --btn-h-lg: 38px;
@@ -1081,15 +1081,30 @@
     /* The Claudium store hero's cool wash over its coin artwork. */
     --color-woc-store-hero-hi: #030a10;
     --color-woc-store-hero-lo: #04111b;
-    /* W18 additions (target size) */
+    /* target size */
     /* Stance disc on a coarse pointer: the 40x40 box the shipped desktop
        stance button carried, so a touch device keeps the WCAG 2.5.5 floor the
        30px board disc would lose. */
     --socket-size-stance-coarse: 40px;
-    /* W24 additions (character window stage) */
+    /* character window stage */
     /* Scrim under the paperdoll socket columns where they float over the live 3D
        stage, so slot names and item names stay legible against a lit model. */
     --color-stage-overlay-scrim: color-mix(in srgb, var(--color-keyline) 66%, transparent);
+
+    /* unit frames */
+    /* Gap between the two stock unit frames, which mirror each other around the
+       screen centre directly above the action bar. */
+    --unit-frame-pair-gap: 12px;
+    /* Distance from the bottom of #ui to the TOP of that stock seat: the 6px
+       bottom-bar inset, the XP rail, the action row and its gap, then the docked
+       player frame's own 8px margin and 64px height, so the stock target frame
+       lands level with the player frame. */
+    --unit-frame-seat-offset: calc(
+      var(--xp-rail-h) +
+      var(--socket-row-gap) +
+      var(--socket-size) +
+      78px
+    );
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal
