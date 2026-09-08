@@ -87,8 +87,8 @@ describe('Ignivar raid lore content', () => {
         shareable: false,
         minLevel: 20,
         suggestedPlayers: 10,
-        xpReward: 0,
-        copperReward: 0,
+        xpReward: 5300,
+        copperReward: 25000,
         itemRewards: {},
       });
     }

@@ -18447,8 +18447,8 @@ export const id_ID: EnTranslations = {
       },
       "q_forgefathers_requiem": {
         "title": "The Forgefather's Requiem",
-        "text": "Varkhul kept an ember of the Last Spring at his heart. Recover it from him and bring it to me. With Weaponcrafting skill 125, you can learn to shape Forgebreaker yourself. His defeat on either difficulty will yield the ember while this task is active.",
-        "completion": "It still sings. Keep the ember: your hammer will need its voice. I have taught you one shaping of Forgebreaker. The ember and the shaping are spent only when your craft succeeds.",
+        "text": "Varkhul kept an ember of the Last Spring at his heart. Recover it from him and use it to learn the shaping of Forgebreaker and begin Requiem at the Forge. This requires Weaponcrafting skill 125. You can also bring the ember to me to learn the shaping. His defeat on either difficulty will yield the ember while this task is active.",
+        "completion": "It still sings. Keep the ember: your hammer will need its voice. I have taught you one shaping of Forgebreaker. Use the ember to begin Requiem at the Forge. The ember and the shaping are spent only when your craft succeeds.",
         "objectives": {
           "0": {
             "label": "Forgefather's Ember recovered"
@@ -18457,7 +18457,7 @@ export const id_ID: EnTranslations = {
       },
       "q_requiem_at_the_forge": {
         "title": "Requiem at the Forge",
-        "text": "Take the ember, fifteen Cores of the Last Flame, Fine Osmium Ore and Fine Highpine Logs to a forge. Shape Forgebreaker yourself, then return to me with it in your bags or equipped. You keep the hammer, and it binds to you. This shaping can create only one hammer.",
+        "text": "Take the ember, fifteen Cores of the Last Flame, Fine Osmium Ore and Fine Highpine Logs to a forge. Shape Forgebreaker yourself to complete this quest immediately and receive your rewards. You keep the hammer, and it binds to you. If you already forged it, you can bring it to me in your bags or equipped. This shaping can create only one hammer.",
         "completion": "The spring's voice carries through the iron. What Varkhul chained, your hands have set free. Carry Forgebreaker well, smith.",
         "objectives": {
           "0": {
