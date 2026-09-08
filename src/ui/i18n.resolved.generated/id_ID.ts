@@ -574,9 +574,9 @@ export const id_ID: EnTranslations = {
       "tabsLabel": "Bagian Toko WOC",
       "storeTab": "Toko",
       "rewardsTab": "Hadiah Harian",
-      "mountsEyebrow": "Account Mounts",
-      "mountsTitle": "Machine Stable",
-      "mountBuyAria": "Purchase {item}",
+      "mountsEyebrow": "Pemasangan Akun",
+      "mountsTitle": "Mesin Stabil",
+      "mountBuyAria": "Beli {item}",
       "loading": "Memuat Toko WOC...",
       "error": "Toko WOC tidak tersedia saat ini. Silakan coba lagi sebentar lagi.",
       "balance": "Saldo Claudium",
@@ -982,6 +982,7 @@ export const id_ID: EnTranslations = {
       "mounts": "Tunggangan",
       "professions": "Profesi",
       "reliquary": "Relikuari",
+      "lootExplorer": "Penjelajah Penjarahan",
       "nameplates": "Nama",
       "haptics": "Haptik",
       "hapticsOff": "Haptik Nonaktif",
@@ -1140,6 +1141,9 @@ export const id_ID: EnTranslations = {
       "promptAttack": "Serang",
       "promptUseAbility": "Gunakan kemampuan",
       "promptKneel": "Berlutut",
+      "promptAccessInterface": "Akses antarmuka",
+      "promptMoveToTarget": "Pindah ke {target}",
+      "promptSelectItem": "Pilih {item}",
       "promptOpenBags": "Buka tasmu",
       "promptCharacterSheet": "Buka lembar karaktermu",
       "promptLookAround": "Tahan klik kanan dan seret untuk melihat sekeliling",
@@ -1358,9 +1362,9 @@ export const id_ID: EnTranslations = {
       "overflow": "{count} more not shown"
     },
     "targetDots": {
-      "title": "Target Dots",
-      "row": "{aura} on {target}",
-      "overflow": "{count} more not shown"
+      "title": "Titik Sasaran",
+      "row": "{aura} di {target}",
+      "overflow": "{count} lebih banyak tidak ditampilkan"
     },
     "targetAuras": {
       "title": "Aura Target",
@@ -1443,11 +1447,13 @@ export const id_ID: EnTranslations = {
       "name_shadowjump_toad": "Kama-Kage Sang Kodok Lompat-Bayangan",
       "name_stormfeather_griffin": "Stormfeather Penjelajah Langit",
       "name_thunderstrut_gobbler": "Thunderstrut Sang Kalkun Agung",
+      "name_goblin_rocket_sled": "Kereta Luncur Roket Goblin",
+      "name_rallycart_rxt": "Rallycart RXT",
       "name_terrorspark_groundshaker": "Dreadspark Groundshaker",
       "name_drakemaw_raptor": "Raptor Drakemaw",
-      "name_mech_bird": "Cluckwork Mech Bird",
-      "name_lanternback_troll": "Grumbol the Lanternback",
-      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
+      "name_mech_bird": "Burung Mekanik Cluckwork",
+      "name_lanternback_troll": "Grumbol si Punggung Lentera",
+      "name_chimeglass_tortoise": "Tolliver si Kaca Cerobong Asap",
       "name_rickshaw_mount": "Becak Terikat Tulang",
       "desc_valorsteed": "Kuda tunggangan tangguh berpijakan mantap yang memberikan kecepatan perjalanan tambahan.",
       "desc_grag_bear": "Beruang tangguh berpijakan mantap yang memberikan kecepatan perjalanan tambahan.",
@@ -1456,11 +1462,13 @@ export const id_ID: EnTranslations = {
       "desc_shadowjump_toad": "Kodok raksasa masif berpijakan mantap, terlatih dalam lompatan bayangan secepat kilat yang mampu menjangkau medan apa pun.",
       "desc_stormfeather_griffin": "Griffin badai yang anggun, melangkah di tanah dengan cakar bersepatu rune, sayap terlipat rapat.",
       "desc_thunderstrut_gobbler": "Kalkun raksasa tetasan badai yang melenggak-lenggok turun dari Puncak yang Terjaga, ekornya terkembang bagai awan guntur.",
+      "desc_goblin_rocket_sled": "Kereta luncur goblin yang sangat berlebihan dan berbahaya, didorong dua roket serta penilaian buruk yang luar biasa.",
+      "desc_rallycart_rxt": "Mesin reli mungil yang meningkatkan kecepatan perjalanan.",
       "desc_terrorspark_groundshaker": "Mesin lapis baja ringkas dengan rantai roda berat, meriam berkaliber besar, dan pelana yang dibuat untuk pilot tanpa rasa takut.",
       "desc_drakemaw_raptor": "Seekor raptor sarang dari Kaldera Drakemaw yang telah dijinakkan untuk ditunggangi, seluruhnya otot dan kecepatan, masih samar berbau abu.",
-      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
-      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
-      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
+      "desc_mech_bird": "Ayam perang jarum jam buatan tangan yang berlari dengan kecepatan servo, kunci putaran masih berputar.",
+      "desc_lanternback_troll": "Troll bukit dipatahkan oleh penyala lampu, membawa singgasana besi di bahunya dengan lentera badai menyala di kedua lengannya.",
+      "desc_chimeglass_tortoise": "Kura-kura dataran garam yang telah melampaui tiga generasi karavan. Tinker memberinya kacamata dari kaca badai dan menggantungkan lonceng perunggu di tenggorokannya, sehingga jalan mendengarnya jauh sebelum jalan melihatnya.",
       "desc_rickshaw_mount": "Gerobak tulang yang berderak, dengan serdadu kurus bertulang diikat pada porosnya, menarikmu melaju kencang."
     },
     "mountTraining": {
@@ -1622,26 +1630,26 @@ export const id_ID: EnTranslations = {
       "showPlaytime": "Tampilkan Waktu Bermain di Lembar Karakter",
       "forceHighPerfGpu": "Gunakan GPU Gaming Diskret",
       "forceHighPerfGpuNote": "Aktif secara bawaan: aplikasi desktop meminta GPU gaming diskret dari komputer ini. Nonaktifkan ini jika permainan tidak mau dimulai, terbuka dengan layar hitam, atau layar laptop menjadi kosong. Berlaku mulai lain kali kamu membuka permainan.",
-      "shaderWarm": "Shader Warm-up Worker",
-      "shaderWarmAuto": "Auto",
-      "shaderWarmOff": "Off",
-      "shaderWarmOn": "On",
-      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
-      "gpuBackend": "Graphics Backend",
-      "gpuBackendAuto": "Auto",
+      "shaderWarm": "Pekerja Pemanasan Shader",
+      "shaderWarmAuto": "Otomatis",
+      "shaderWarmOff": "Nonaktif",
+      "shaderWarmOn": "Aktif",
+      "shaderWarmNote": "Panaskan cache shader di latar belakang untuk mencegah tersendat dalam game. Auto: Aktif hanya saat didukung sistem grafismu. (Direkomendasikan). Aktif: Dipaksa di semua tempat. Dapat memperburuk performa pada beberapa konfigurasi. Nonaktif: Dimatikan.",
+      "gpuBackend": "Backend Grafis",
+      "gpuBackendAuto": "Otomatis",
       "gpuBackendVulkan": "Vulkan",
-      "gpuBackendOpenGL": "OpenGL (slow)",
-      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
-      "gpuBackendActive": "Currently using {backend}.",
-      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
-      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
-      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendOpenGL": "OpenGL (lambat)",
+      "gpuBackendNote": "Auto memilih opsi terbaik untukmu. Vulkan lebih cepat dan direkomendasikan untuk sebagian besar pemain. OpenGL lebih lambat, tetapi dapat membantu jika Vulkan tidak berfungsi baik. Berlaku saat game dimulai berikutnya.",
+      "gpuBackendActive": "Saat ini memakai {backend}.",
+      "gpuBackendActiveUnavailable": "Saat ini memakai {backend} (tidak dapat mengaktifkan Vulkan).",
+      "gpuBackendActiveAutoCapped": "Saat ini memakai {backend}. Auto belum mencoba Vulkan pada kartu grafis ini; pilih Vulkan untuk mencobanya.",
+      "gpuBackendSaveFailed": "Pilihan tidak dapat disimpan. Start berikutnya tetap memakai {backend}.",
       "gpuBackendActiveNameVulkan": "Vulkan",
       "gpuBackendActiveNameOpenGL": "OpenGL",
-      "restartPending": "Some changes take effect after a restart.",
-      "restartGame": "Restart Game",
-      "restartInProgress": "Restarting the game...",
-      "restartFailed": "The game could not restart itself. Quit and start it again.",
+      "restartPending": "Beberapa perubahan berlaku setelah mulai ulang.",
+      "restartGame": "Mulai Ulang Game",
+      "restartInProgress": "Memulai ulang game...",
+      "restartFailed": "Game tidak dapat memulai ulang dirinya sendiri. Keluar dan mulai lagi.",
       "discordPresence": "Status Aktivitas Discord",
       "discordPresenceNote": "Menampilkan zona tempatmu berada dan sudah berapa lama kamu bermain dalam sesi ini sebagai aktivitas Discord-mu, dan siapa pun yang bisa melihat profil Discord-mu bisa melihat keduanya. Hanya nama zona, waktu sesimu, dan permainan yang dibagikan, tidak pernah karaktermu, akunmu, atau dengan siapa kamu bermain. Membutuhkan aplikasi Discord yang berjalan di komputer ini.",
       "showDevBadges": "Tampilkan Lencana Pengembang",
@@ -1650,7 +1658,10 @@ export const id_ID: EnTranslations = {
       "uiScale": "Skala UI",
       "playerFrameScale": "Skala Bingkai Pemain",
       "targetFrameScale": "Skala Bingkai Sasaran",
+      "playerHealthText": "Teks Kesehatan Pemain",
+      "targetHealthText": "Teks Kesehatan Sasaran",
       "aurasOnPlayerFrame": "Buff pada Bingkai Pemain",
+      "auraBarBelowFrame": "Buff di bawah Bingkai Pemain",
       "alwaysShowAllBuffs": "Selalu Tampilkan Semua Buff",
       "highContrastBackground": "Latar Kontras Tinggi",
       "startAttackOnAbility": "Serangan Otomatis Saat Memakai Kemampuan",
@@ -1673,9 +1684,9 @@ export const id_ID: EnTranslations = {
       "showTargetOfTarget": "Tampilkan Sasaran dari Sasaran",
       "showTargetSwingTimer": "Tampilkan pengatur waktu ayunan target",
       "showPetFrame": "Tampilkan Peliharaan Anda",
-      "showNameplateDots": "Show My Dots on Nameplates",
-      "nameplateDotScale": "Nameplate Dot Size",
-      "showTargetDots": "Show Target Dots",
+      "showNameplateDots": "Tunjukkan Titik Saya di Papan Nama",
+      "nameplateDotScale": "Ukuran Titik Papan Nama",
+      "showTargetDots": "Tampilkan Titik Target",
       "showDefensivesTrack": "Show Defensive Cooldowns",
       "showSelfBuffTrack": "Show My Buffs",
       "showOffensiveTrack": "Show Offensive Cooldowns",
@@ -2698,7 +2709,9 @@ export const id_ID: EnTranslations = {
       "unequipHint": "Klik untuk melepas tas ini",
       "poolGeneral": "Umum: {used} dari {total}",
       "poolMaterials": "Material: {used} dari {total}",
-      "capacityPoolsAria": "Slot tas terpakai: {used} dari {total}. Barang umum: {generalUsed} dari {generalTotal}. Material: {materialsUsed} dari {materialsTotal}."
+      "capacityPoolsAria": "Slot tas terpakai: {used} dari {total}. Barang umum: {generalUsed} dari {generalTotal}. Material: {materialsUsed} dari {materialsTotal}.",
+      "capacityPools": "Barang {generalUsed}/{generalTotal}, material {materialsUsed}/{materialsTotal}",
+      "emptyMaterialsOnly": "Khusus material"
     },
     "raidConvert": {
       "toPartyDone": "Raid Anda telah diubah kembali menjadi rombongan.",
@@ -2728,22 +2741,22 @@ export const id_ID: EnTranslations = {
       "worldfireConsumed": "Seluruh crucible terbakar!"
     },
     "nythraxisCallout": {
-      "impaled": "Bone Spikes! Free the impaled!",
-      "youAreImpaled": "You are impaled! Hold on!",
-      "spikeBroken": "Spike shattered!",
-      "dreadCurseSwap": "Dread Curse: swap tanks!",
-      "sigilAppears": "A Binding Sigil flares! Drag Nythraxis onto it!",
-      "sigilBound": "Nythraxis is bound! Burn him!",
-      "sigilUnbound": "The sigil fades unbound! Nythraxis grows stronger!",
-      "gravefireTarget": "Gravefire races toward you! Sidestep!",
-      "kingsWrath": "The King rises in wrath! Everything hits harder now!",
-      "boneStormBegins": "Bone Storm! Spread out and run!",
-      "boneStormCharge": "Nythraxis is charging YOU! Run!",
-      "boneStormEnds": "Bone Storm over. Tanks, pick him up!",
-      "crownEndures60": "One minute until The Crown Endures!",
-      "crownEndures30": "Thirty seconds until The Crown Endures!",
-      "crownEndures10": "Ten seconds! Burn him!",
-      "crownEndures": "The Crown Endures! Nythraxis is enraged!"
+      "impaled": "Pancang Tulang! Bebaskan yang tertusuk!",
+      "youAreImpaled": "Kamu tertusuk! Bertahan!",
+      "spikeBroken": "Pancang hancur!",
+      "dreadCurseSwap": "Kutukan Ngeri: tukar tank!",
+      "sigilAppears": "Segel Pengikat menyala! Seret Nythraxis ke atasnya!",
+      "sigilBound": "Nythraxis terikat! Habisi dia!",
+      "sigilUnbound": "Segel memudar tanpa mengikat! Nythraxis makin kuat!",
+      "gravefireTarget": "Api Makam melesat ke arahmu! Minggir!",
+      "kingsWrath": "Raja bangkit dalam murka! Semua pukulan kini lebih keras!",
+      "boneStormBegins": "Badai Tulang! Menyebar dan lari!",
+      "boneStormCharge": "Nythraxis menerjang KAMU! Lari!",
+      "boneStormEnds": "Badai Tulang selesai. Tank, ambil dia!",
+      "crownEndures60": "Satu menit sampai Mahkota Bertahan!",
+      "crownEndures30": "Tiga puluh detik sampai Mahkota Bertahan!",
+      "crownEndures10": "Sepuluh detik! Habisi dia!",
+      "crownEndures": "Mahkota Bertahan! Nythraxis mengamuk!"
     },
     "varkhulWaveStatus": "Gelombang {wave}/{waves} | Musuh: {remaining}",
     "raidBossGuide": {
@@ -2895,65 +2908,65 @@ export const id_ID: EnTranslations = {
         "heroic": "Heroik: panas tungku tidak pernah mendingin, Anvil's Decree menambahkan meteor, dan fase akhir menghilangkan sebagian besar mekanik untuk berfokus pada Worldfire."
       },
       "nythraxis": {
-        "overview": "High Priest Malric refused to let his king die, and the rite that raised Nythraxis bound the whole court to the crypt. The encounter tests a disciplined tank swap, fast switches onto Bone Spikes, movement off burning ground, and a coordinated wardstone channel once the Throne falls.",
-        "phaseThroneName": "The Throne",
-        "phaseThroneSummary": "Nythraxis holds his throne room with a charged frontal cleave, the Dread Curse tank swap, Bone Spikes that impale raiders, and Grave Eruptions that leave burning ground.",
-        "phaseWardstonesName": "The Wardstones",
-        "phaseWardstonesSummary": "At {health} health, Shuddering Stomp holds the raid still while Brother Aldric arrives and lights the wardstones. Every spike shatters and the floor stops burning, then Soul Rend and Deathless Rage join the Throne mechanics.",
-        "phaseKingsWrathName": "The King's Wrath",
-        "phaseKingsWrathSummary": "At {health} health, Nythraxis roars in The King's Wrath and gains {bonusNormal} damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption tightens to every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire to every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic). Every other mechanic keeps its cadence.",
-        "gravebreakerName": "Gravebreaker",
-        "gravebreakerSummary": "Every {seconds} sec, Nythraxis charges his next landed swing. His target takes only the swing itself, but everyone else within {range} yd inside the {arc} degree cone in front of him takes {splash} of that swing as Physical damage, reduced by their own armor.",
-        "gravebreakerResponse": "Tanks keep Nythraxis facing away from the raid. Everyone else stays behind or beside him and never crosses the cone.",
-        "dreadCurseName": "Dread Curse",
-        "dreadCurseSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitNormal} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackNormal}, up to {max} stacks.",
-        "dreadCurseHeroicSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitHeroic} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackHeroic}, up to {max} stacks.",
-        "dreadCurseResponse": "Tanks swap at {stacks} stacks: the other tank taunts and the cursed tank stays out of the Gravebreaker cone while the stacks fade. Healers prepare the incoming tank before the swap.",
-        "boneSpikeName": "Bone Spike",
-        "boneSpikeSummary": "Every {everyNormal} sec, Nythraxis impales {victimsNormal} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainNormal} of maximum health every second until their spike is destroyed.",
-        "boneSpikeHeroicSummary": "Every {everyHeroic} sec, Nythraxis impales {victimsHeroic} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainHeroic} of maximum health every second until their spike is destroyed.",
-        "boneSpikeResponse": "Damage dealers switch to the Bone Spikes at once and destroy them to free the impaled raiders. Healers keep the impaled alive while the spikes fall.",
-        "graveEruptionName": "Grave Eruption",
-        "graveEruptionSummary": "Every {everyNormal} sec, skeletal hands mark {countNormal} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstNormal} of maximum health as Shadow damage, then burns as Grave Flame for {flameNormal} sec, dealing {tickNormal} of maximum health every second to anyone standing in it.",
-        "graveEruptionHeroicSummary": "Every {everyHeroic} sec, skeletal hands mark {countHeroic} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstHeroic} of maximum health as Shadow damage, then burns as Grave Flame for {flameHeroic} sec, dealing {tickHeroic} of maximum health every second to anyone standing in it.",
-        "graveEruptionResponse": "Step out of every warning circle before it erupts and stay off the burning ground. Tanks pull Nythraxis clear of the flames so melee keeps room to work.",
-        "bindingSigilName": "Binding Sigil",
-        "bindingSigilSummary": "Every {everyNormal} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionNormal} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindNormal} sec he is Bound: the Ascension is purged, he is stunned for {stunNormal} sec, and he takes {vulnerability} more damage for {boundNormal} sec. Otherwise every raider takes {unboundHitNormal} of maximum health as Shadow damage and he keeps {unboundBonusNormal} more damage until the next binding.",
-        "bindingSigilHeroicSummary": "Every {everyHeroic} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionHeroic} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindHeroic} sec he is Bound: the Ascension is purged, he is stunned for {stunHeroic} sec, and he takes {vulnerability} more damage for {boundHeroic} sec. Otherwise every raider takes {unboundHitHeroic} of maximum health as Shadow damage and he keeps {unboundBonusHeroic} more damage until the next binding.",
-        "bindingSigilResponse": "The tank drags Nythraxis onto the sigil at once, through whatever fire the raid left behind. Melee follow the drag and ranged stay out of the new Gravebreaker cone. Everyone burns him while he is Bound.",
-        "raiseFallenName": "Raise Fallen",
-        "raiseFallenSummary": "Every {every} sec during The Throne, Nythraxis raises Risen Royal Guards behind him. They rush his current target and fight until they are destroyed.",
-        "raiseFallenResponse": "The off-tank picks up each wave as it rises. Damage dealers clear the guards between Bone Spikes so the waves never pile up before the Throne falls.",
-        "soulRendName": "Soul Rend",
-        "soulRendSummary": "Nythraxis marks {marksNormal} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals its bearer's full maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them.",
-        "soulRendHeroicSummary": "Nythraxis marks {marksHeroic} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals {damageHeroic} of its bearer's maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them. A mark that resolves alone is lethal.",
-        "soulRendResponse": "Every marked raider runs to one stack point and stands within {range} yd of the other marks before the {fuse} sec fuse ends. Healers top the group off as the marks resolve.",
-        "soulfireName": "Soulfire",
-        "soulfireSummary": "Every Soul Rend detonation leaves a pool of purple fire with a {radius} yd radius where each mark stood, burning for {seconds} sec at {tickNormal} of maximum health every second. Standing where pools overlap takes a tick from each one. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireHeroicSummary": "Every Soul Rend detonation leaves one pool of purple fire with a {radius} yd radius per stacked group of marks, burning for {secondsHeroic} sec at {tickHeroic} of maximum health every second. Standing where pools overlap takes only one tick, never stacked copies. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireResponse": "Move out of the purple pool as soon as the marks detonate. Keep the next stack point clear of active fire.",
-        "gravefireName": "Gravefire",
-        "gravefireSummary": "Every {everyNormal} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnNormal} sec and deals {tickNormal} of maximum health every second to anyone standing in it.",
-        "gravefireHeroicSummary": "Every {everyHeroic} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnHeroic} sec and deals {tickHeroic} of maximum health every second to anyone standing in it.",
-        "gravefireResponse": "Sidestep the line as it comes: it is narrow and never turns. Ranged raiders keep moving instead of standing in one spot.",
-        "deathlessRageName": "Deathless Rage",
-        "deathlessRageSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageNormal} of maximum health as Shadow damage.",
-        "deathlessRageHeroicSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageHeroic} of maximum health as Shadow damage, which no health pool survives.",
-        "deathlessRageResponse": "Assign one raider to each wardstone before the pull. When the cast begins, each runs to their stone and channels it until it completes. Stuns, stepping away, and death break the channel, so keep the channelers safe and never assign an impaled raider.",
-        "courtName": "The Deathless Court",
-        "courtSummary": "On Heroic, Nythraxis raises his court after each Deathless Rage, interrupted or not, once the previous court has fallen. The Spirit of Aldren cleaves everything near his target with Royal Cleave. The Spirit of Malric channels Malric's Mending, healing Nythraxis for more with every cast. The Spirit of Voss ignores taunts and hunts the raid.",
-        "courtResponse": "Tanks pick up Aldren and turn his cleave away from the raid. Stun or silence Malric the moment Malric's Mending begins and kill him first, then root or stun Voss off the healers, since he cannot be taunted, and finish him next.",
-        "kingsWrathName": "King's Wrath",
-        "kingsWrathSummary": "Nythraxis deals {bonusNormal} more damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption occurs every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic).",
-        "kingsWrathResponse": "Use remaining defensive cooldowns for unavoidable damage. Keep every earlier mechanic clean while the raid finishes the fight.",
-        "boneStormName": "Bone Storm",
-        "boneStormSummary": "Starting {first} sec into The King's Wrath and every {everyNormal} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlNormal} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamNormal} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormHeroicSummary": "Starting {first} sec into The King's Wrath and every {everyHeroic} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlHeroic} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamHeroic} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormResponse": "Spread out and keep running from Nythraxis. The charged raider runs away while everyone else leaves room around the charge path, then tanks pick him up when the storm ends.",
-        "crownEnduresName": "The Crown Endures",
-        "crownEnduresSummary": "At {enrageNormal} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryNormal} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresHeroicSummary": "At {enrageHeroic} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryHeroic} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresResponse": "Treat the first warning as the final burn. Save movement and defensive cooldowns for the remaining mechanics, then defeat Nythraxis before the enrage."
+        "overview": "Imam Besar Malric menolak membiarkan rajanya mati, dan ritus yang membangkitkan Nythraxis mengikat seluruh istana ke kripta. Pertemuan ini menguji pertukaran tank yang disiplin, peralihan cepat ke Pancang Tulang, gerakan keluar dari tanah terbakar, dan channel batu pelindung yang terkoordinasi begitu Takhta tumbang.",
+        "phaseThroneName": "Takhta",
+        "phaseThroneSummary": "Nythraxis mempertahankan ruang takhtanya dengan cleave depan yang terisi, pertukaran tank Kutukan Ngeri, Pancang Tulang yang menusuk raider, dan Erupsi Makam yang meninggalkan tanah terbakar.",
+        "phaseWardstonesName": "Batu Pelindung",
+        "phaseWardstonesSummary": "Pada {health} kesehatan, Hentakan Menggetarkan menahan raid di tempat sementara Bruder Aldric datang dan menyalakan batu pelindung. Setiap pancang hancur dan lantai berhenti terbakar, lalu Robekan Jiwa dan Amarah Tanpa Kematian bergabung dengan mekanik Takhta.",
+        "phaseKingsWrathName": "Murka Raja",
+        "phaseKingsWrathSummary": "Pada {health} kesehatan, Nythraxis mengaum dalam Murka Raja dan mendapat {bonusNormal} kerusakan pada Normal atau {bonusHeroic} pada Heroic selama sisa pertarungan. Erupsi Makam menjadi setiap {eruptionEveryNormal} dtk ({eruptionEveryHeroic} pada Heroic) dan Api Makam menjadi setiap {gravefireEveryNormal} dtk ({gravefireEveryHeroic} pada Heroic). Setiap mekanik lain mempertahankan iramanya.",
+        "gravebreakerName": "Penghancur Makam",
+        "gravebreakerSummary": "Setiap {seconds} dtk, Nythraxis mengisi ayunan berikutnya yang mendarat. Targetnya hanya menerima ayunan itu sendiri, tetapi semua orang lain dalam {range} yd di dalam kerucut {arc} derajat di depannya menerima {splash} dari ayunan itu sebagai kerusakan Fisik, dikurangi oleh armor mereka sendiri.",
+        "gravebreakerResponse": "Tank menjaga Nythraxis menghadap menjauh dari raid. Semua orang lain tetap di belakang atau di sampingnya dan tidak pernah melintasi kerucut.",
+        "dreadCurseName": "Kutukan Ngeri",
+        "dreadCurseSummary": "Setiap {every} dtk, Nythraxis menghantam tank saat ini sebesar {hitNormal} kesehatan maksimum sebagai kerusakan Bayangan dan menambah satu tumpukan Kutukan Ngeri. Selama {duration} dtk, setiap tumpukan meningkatkan kerusakan yang diterima tank itu dari Nythraxis sebesar {perStackNormal}, hingga {max} tumpukan.",
+        "dreadCurseHeroicSummary": "Setiap {every} dtk, Nythraxis menghantam tank saat ini sebesar {hitHeroic} kesehatan maksimum sebagai kerusakan Bayangan dan menambah satu tumpukan Kutukan Ngeri. Selama {duration} dtk, setiap tumpukan meningkatkan kerusakan yang diterima tank itu dari Nythraxis sebesar {perStackHeroic}, hingga {max} tumpukan.",
+        "dreadCurseResponse": "Tank bertukar pada {stacks} tumpukan: tank lain melakukan taunt dan tank terkutuk tetap di luar kerucut Penghancur Makam sampai tumpukan memudar. Penyembuh menyiapkan tank yang masuk sebelum pertukaran.",
+        "boneSpikeName": "Pancang Tulang",
+        "boneSpikeSummary": "Setiap {everyNormal} dtk, Nythraxis menusuk {victimsNormal} raider selain targetnya saat ini pada Pancang Tulang. Raider yang tertusuk tidak dapat bertindak dan kehilangan {drainNormal} kesehatan maksimum setiap detik sampai pancangnya dihancurkan.",
+        "boneSpikeHeroicSummary": "Setiap {everyHeroic} dtk, Nythraxis menusuk {victimsHeroic} raider selain targetnya saat ini pada Pancang Tulang. Raider yang tertusuk tidak dapat bertindak dan kehilangan {drainHeroic} kesehatan maksimum setiap detik sampai pancangnya dihancurkan.",
+        "boneSpikeResponse": "Para penyerang segera beralih ke Pancang Tulang dan menghancurkannya untuk membebaskan raider yang tertusuk. Penyembuh menjaga yang tertusuk tetap hidup sampai pancang runtuh.",
+        "graveEruptionName": "Erupsi Makam",
+        "graveEruptionSummary": "Setiap {everyNormal} dtk, tangan kerangka menandai {countNormal} lingkaran {radius} yd di bawah raider. Setelah {warning} dtk, setiap lingkaran meletus sebesar {burstNormal} kesehatan maksimum sebagai kerusakan Bayangan, lalu terbakar sebagai Api Makam selama {flameNormal} dtk, menghasilkan {tickNormal} kesehatan maksimum setiap detik kepada siapa pun yang berdiri di dalamnya.",
+        "graveEruptionHeroicSummary": "Setiap {everyHeroic} dtk, tangan kerangka menandai {countHeroic} lingkaran {radius} yd di bawah raider. Setelah {warning} dtk, setiap lingkaran meletus sebesar {burstHeroic} kesehatan maksimum sebagai kerusakan Bayangan, lalu terbakar sebagai Api Makam selama {flameHeroic} dtk, menghasilkan {tickHeroic} kesehatan maksimum setiap detik kepada siapa pun yang berdiri di dalamnya.",
+        "graveEruptionResponse": "Keluarlah dari setiap lingkaran peringatan sebelum meletus dan jauhi tanah yang terbakar. Tank menarik Nythraxis menjauh dari api agar petarung jarak dekat punya ruang untuk bergerak.",
+        "bindingSigilName": "Segel Pengikat",
+        "bindingSigilSummary": "Setiap {everyNormal} dtk, segel pelindung lama menyala di lantai {minDist} sampai {maxDist} yd dari Nythraxis dan ia memulai Kenaikan Tanpa Kematian, mendapat {ascensionNormal} kerusakan dan kecepatan serangan setiap {ascensionEvery} dtk. Jika ia berdiri di segel dalam {bindNormal} dtk, ia Terikat: Kenaikan dipurnikan, ia terkena stun selama {stunNormal} dtk, dan ia menerima {vulnerability} lebih banyak kerusakan selama {boundNormal} dtk. Jika tidak, setiap raider menerima {unboundHitNormal} kesehatan maksimum sebagai kerusakan Bayangan dan ia mempertahankan {unboundBonusNormal} lebih banyak kerusakan sampai pengikatan berikutnya.",
+        "bindingSigilHeroicSummary": "Setiap {everyHeroic} dtk, segel pelindung lama menyala di lantai {minDist} sampai {maxDist} yd dari Nythraxis dan ia memulai Kenaikan Tanpa Kematian, mendapat {ascensionHeroic} kerusakan dan kecepatan serangan setiap {ascensionEvery} dtk. Jika ia berdiri di segel dalam {bindHeroic} dtk, ia Terikat: Kenaikan dipurnikan, ia terkena stun selama {stunHeroic} dtk, dan ia menerima {vulnerability} lebih banyak kerusakan selama {boundHeroic} dtk. Jika tidak, setiap raider menerima {unboundHitHeroic} kesehatan maksimum sebagai kerusakan Bayangan dan ia mempertahankan {unboundBonusHeroic} lebih banyak kerusakan sampai pengikatan berikutnya.",
+        "bindingSigilResponse": "Tank segera menyeret Nythraxis ke segel, melewati api apa pun yang ditinggalkan raid. Petarung jarak dekat mengikuti seretan dan pemain jarak jauh menjauh dari kerucut Penghancur Makam yang baru. Semua orang menghajarnya saat ia Terikat.",
+        "raiseFallenName": "Bangkitkan yang Gugur",
+        "raiseFallenSummary": "Setiap {every} dtk selama Takhta, Nythraxis membangkitkan Penjaga Kerajaan Bangkit di belakangnya. Mereka menyerbu targetnya saat ini dan bertarung sampai dihancurkan.",
+        "raiseFallenResponse": "Off-tank mengambil setiap gelombang saat bangkit. Para penyerang membersihkan penjaga di antara Pancang Tulang agar gelombang tidak pernah menumpuk sebelum Takhta tumbang.",
+        "soulRendName": "Robekan Jiwa",
+        "soulRendSummary": "Nythraxis menandai {marksNormal} raider selain targetnya saat ini dengan Robekan Jiwa. Setelah {fuse} dtk, setiap tanda menghasilkan kesehatan maksimum penuh pembawanya sebagai kerusakan Bayangan, dibagi oleh jumlah raider bertanda dalam {range} yd dari mereka.",
+        "soulRendHeroicSummary": "Nythraxis menandai {marksHeroic} raider selain targetnya saat ini dengan Robekan Jiwa. Setelah {fuse} dtk, setiap tanda menghasilkan {damageHeroic} kesehatan maksimum pembawanya sebagai kerusakan Bayangan, dibagi oleh jumlah raider bertanda dalam {range} yd dari mereka. Tanda yang selesai sendirian mematikan.",
+        "soulRendResponse": "Setiap raider bertanda berlari ke satu titik tumpuk dan berdiri dalam {range} yd dari tanda lain sebelum sumbu {fuse} dtk berakhir. Penyembuh mengisi kesehatan grup saat tanda selesai.",
+        "soulfireName": "Api Jiwa",
+        "soulfireSummary": "Setiap ledakan Robekan Jiwa meninggalkan kolam api ungu dengan radius {radius} yd di tempat setiap tanda berdiri, terbakar selama {seconds} dtk sebesar {tickNormal} kesehatan maksimum setiap detik. Berdiri di tempat kolam bertumpang tindih menerima tick dari masing-masing. Kolam tidak pernah muncul dalam {clearance} yd dari batu pelindung.",
+        "soulfireHeroicSummary": "Setiap ledakan Robekan Jiwa meninggalkan satu kolam api ungu dengan radius {radius} yd per grup tanda yang bertumpuk, terbakar selama {secondsHeroic} dtk sebesar {tickHeroic} kesehatan maksimum setiap detik. Berdiri di tempat kolam bertumpang tindih hanya menerima satu tick, bukan salinan bertumpuk. Kolam tidak pernah muncul dalam {clearance} yd dari batu pelindung.",
+        "soulfireResponse": "Keluar dari kolam ungu segera setelah tanda meledak. Jaga titik tumpuk berikutnya bebas dari api aktif.",
+        "gravefireName": "Api Makam",
+        "gravefireSummary": "Setiap {everyNormal} dtk, garis api makam ungu bergerak dari Nythraxis menuju seorang raider, memanjang {speed} yd setiap detik hingga {length} yd. Setiap yard terbakar selama {burnNormal} dtk dan menghasilkan {tickNormal} kesehatan maksimum setiap detik kepada siapa pun yang berdiri di dalamnya.",
+        "gravefireHeroicSummary": "Setiap {everyHeroic} dtk, garis api makam ungu bergerak dari Nythraxis menuju seorang raider, memanjang {speed} yd setiap detik hingga {length} yd. Setiap yard terbakar selama {burnHeroic} dtk dan menghasilkan {tickHeroic} kesehatan maksimum setiap detik kepada siapa pun yang berdiri di dalamnya.",
+        "gravefireResponse": "Minggirilah saat garis itu datang: garisnya sempit dan tidak pernah berbelok. Raider jarak jauh terus bergerak, bukan berdiri di satu tempat.",
+        "deathlessRageName": "Amarah Tanpa Kematian",
+        "deathlessRageSummary": "Setiap {every} dtk, Nythraxis merapal Amarah Tanpa Kematian selama {cast} dtk. Saat ia merapal, setiap batu pelindung yang menyala dapat disalurkan oleh satu raider selama {channel} dtk. Jika tiga raider berbeda masing-masing menyelesaikan satu batu pelindung sebelum cast berakhir, Amarah itu terputus dan Nythraxis terkena stun selama {stun} dtk. Jika tidak, setiap raider menerima {damageNormal} kesehatan maksimum sebagai kerusakan Bayangan.",
+        "deathlessRageHeroicSummary": "Setiap {every} dtk, Nythraxis merapal Amarah Tanpa Kematian selama {cast} dtk. Saat ia merapal, setiap batu pelindung yang menyala dapat disalurkan oleh satu raider selama {channel} dtk. Jika tiga raider berbeda masing-masing menyelesaikan satu batu pelindung sebelum cast berakhir, Amarah itu terputus dan Nythraxis terkena stun selama {stun} dtk. Jika tidak, setiap raider menerima {damageHeroic} kesehatan maksimum sebagai kerusakan Bayangan, yang tidak akan diselamatkan oleh jumlah kesehatan apa pun.",
+        "deathlessRageResponse": "Tugaskan satu raider ke setiap batu pelindung sebelum pull. Saat cast dimulai, masing-masing berlari ke batunya dan menyalurkannya sampai selesai. Stun, menjauh, dan kematian memutus channel, jadi jaga para penyalur tetap aman dan jangan pernah menugaskan raider yang tertusuk.",
+        "courtName": "Istana Tanpa Kematian",
+        "courtSummary": "Pada Heroic, Nythraxis membangkitkan istananya setelah setiap Amarah Tanpa Kematian, terputus atau tidak, begitu istana sebelumnya telah tumbang. Roh Aldren membelah semua yang dekat targetnya dengan Belahan Kerajaan. Roh Malric menyalurkan Penyembuhan Malric, menyembuhkan Nythraxis lebih besar pada setiap cast. Roh Voss mengabaikan taunt dan memburu raid.",
+        "courtResponse": "Tank mengambil Aldren dan memutar cleave-nya menjauh dari raid. Stun atau silence Malric begitu Penyembuhan Malric dimulai dan bunuh dia dulu, lalu root atau stun Voss jauh dari penyembuh karena ia tidak dapat ditaunt, dan habisi dia berikutnya.",
+        "kingsWrathName": "Murka Raja",
+        "kingsWrathSummary": "Nythraxis menghasilkan {bonusNormal} lebih banyak kerusakan pada Normal atau {bonusHeroic} pada Heroic selama sisa pertarungan. Erupsi Makam terjadi setiap {eruptionEveryNormal} dtk ({eruptionEveryHeroic} pada Heroic) dan Api Makam setiap {gravefireEveryNormal} dtk ({gravefireEveryHeroic} pada Heroic).",
+        "kingsWrathResponse": "Gunakan cooldown defensif yang tersisa untuk kerusakan yang tidak bisa dihindari. Jaga semua mekanik sebelumnya tetap bersih sementara raid menyelesaikan pertarungan.",
+        "boneStormName": "Badai Tulang",
+        "boneStormSummary": "Mulai {first} dtk setelah Murka Raja dan setiap {everyNormal} dtk sesudahnya, Nythraxis memulai Badai Tulang selama {duration} dtk. Ia mengabaikan ancaman, bergerak {speed} kali kecepatan normal, dan melakukan {charges} terjangan masing-masing selama {chargeSeconds} dtk. Pusarannya menghasilkan {whirlNormal} kesehatan maksimum setiap detik dalam {radius} yd. Setiap terjangan berakhir dengan Hantaman Tulang dalam radius yang sama sebesar {slamNormal} kesehatan maksimum. Ia merapal Pancang Tulang {spikeAt} dtk setelah badai dimulai, lalu Penghancur Makam siap lagi {rearm} dtk setelah berakhir.",
+        "boneStormHeroicSummary": "Mulai {first} dtk setelah Murka Raja dan setiap {everyHeroic} dtk sesudahnya, Nythraxis memulai Badai Tulang selama {duration} dtk. Ia mengabaikan ancaman, bergerak {speed} kali kecepatan normal, dan melakukan {charges} terjangan masing-masing selama {chargeSeconds} dtk. Pusarannya menghasilkan {whirlHeroic} kesehatan maksimum setiap detik dalam {radius} yd. Setiap terjangan berakhir dengan Hantaman Tulang dalam radius yang sama sebesar {slamHeroic} kesehatan maksimum. Ia merapal Pancang Tulang {spikeAt} dtk setelah badai dimulai, lalu Penghancur Makam siap lagi {rearm} dtk setelah berakhir.",
+        "boneStormResponse": "Menyebarlah dan terus lari dari Nythraxis. Raider yang diterjang berlari menjauh sementara semua orang memberi ruang di sekitar jalur terjangan, lalu tank mengambilnya kembali saat badai berakhir.",
+        "crownEnduresName": "Mahkota Bertahan",
+        "crownEnduresSummary": "Pada {enrageNormal} dtk sejak pull (jam berhenti saat Bruder Aldric masuk pada 70%), Mahkota Bertahan terpicu sebagai enrage keras. Nythraxis mendapat {damage} lebih banyak kerusakan dan serangan {haste} lebih cepat, lalu tambahan {rampStep} kerusakan setiap {rampEveryNormal} dtk. Tidak ada bilah timer. Peringatan datang sebagai teriakan pada sisa {warn60}, {warn30}, dan {warn10} dtk.",
+        "crownEnduresHeroicSummary": "Pada {enrageHeroic} dtk sejak pull (jam berhenti saat Bruder Aldric masuk pada 70%), Mahkota Bertahan terpicu sebagai enrage keras. Nythraxis mendapat {damage} lebih banyak kerusakan dan serangan {haste} lebih cepat, lalu tambahan {rampStep} kerusakan setiap {rampEveryHeroic} dtk. Tidak ada bilah timer. Peringatan datang sebagai teriakan pada sisa {warn60}, {warn30}, dan {warn10} dtk.",
+        "crownEnduresResponse": "Anggap peringatan pertama sebagai burn terakhir. Simpan cooldown gerak dan defensif untuk mekanik yang tersisa, lalu kalahkan Nythraxis sebelum enrage."
       }
     },
     "auraEffect": {
@@ -2964,14 +2977,14 @@ export const id_ID: EnTranslations = {
       "varkhulMoltenCore": "Bawa inti ini ke tungku. Molten Burden memberikan kerusakan yang terus meningkat setiap {interval} dtk, dari {min}% hingga {max}% kesehatan maksimum.",
       "varkhulForgeLink": "Cegat sinar pilar yang aktif sebelum mencapai tungku. Sinar yang terbuka menambah 6% panas setiap detik. Di Normal, sinar yang diblokir dan pilar yang tidak aktif mendinginkan tungku; di Heroik, panas tidak pernah turun. Pada 100%, tungku mengalami Forge Meltdown yang mematikan.",
       "varkhulCrucibleExposure": "Memblokir Crucible Beam memberikan kerusakan kesehatan maksimum yang terus meningkat setiap detik. Tumpukannya tereset 10 detik setelah meninggalkan sinar di Normal dan setelah 60 detik di Heroik.",
-      "nythraxisDreadCurse": "Each stack increases damage taken from Nythraxis by {perStack}% for {duration} sec: {stacks} of {max} stacks now, {pct}% more damage. Every {every} sec his next hit on his target deals {hit}% of maximum health and adds a stack. Tanks should swap at {swap} stacks.",
-      "nythraxisImpaled": "Impaled on a Bone Spike: you cannot act and lose {normal}% of your maximum health every {interval} sec ({heroic}% on Heroic) until the raid destroys the spike.",
-      "nythraxisAscension": "Deathless Ascension: {stacks} stacks, {pct}% more damage and attack speed. Drag Nythraxis onto the Binding Sigil to purge it.",
-      "nythraxisBound": "Bound by the old wards: Nythraxis takes {pct}% more damage for {duration} sec.",
-      "nythraxisUnbound": "Unbound: Nythraxis deals {pct}% more damage until a Binding Sigil holds him.",
-      "nythraxisKingsWrath": "King's Wrath: Nythraxis deals {pct}% more damage for the rest of the fight.",
-      "nythraxisBoneStorm": "Bone Storm: Nythraxis ignores threat, whirls for {tick}% of maximum health every second within {radius} yd, and charges raiders. Spread out and run.",
-      "nythraxisCrownEndures": "The Crown Endures: {stacks} stacks, {pct}% more damage and {haste}% faster attacks. The raid is out of time.",
+      "nythraxisDreadCurse": "Setiap tumpukan meningkatkan kerusakan yang diterima dari Nythraxis sebesar {perStack}% selama {duration} dtk: sekarang {stacks} dari {max} tumpukan, {pct}% lebih banyak kerusakan. Setiap {every} dtk, pukulan berikutnya pada targetnya menghasilkan {hit}% kesehatan maksimum dan menambah satu tumpukan. Tank sebaiknya bertukar pada {swap} tumpukan.",
+      "nythraxisImpaled": "Tertusuk Pancang Tulang: kamu tidak bisa bertindak dan kehilangan {normal}% kesehatan maksimummu setiap {interval} dtk ({heroic}% pada Heroic) sampai raid menghancurkan pancang itu.",
+      "nythraxisAscension": "Kenaikan Tanpa Kematian: {stacks} tumpukan, {pct}% lebih banyak kerusakan dan kecepatan serangan. Seret Nythraxis ke Segel Pengikat untuk memurnikannya.",
+      "nythraxisBound": "Terikat oleh pelindung lama: Nythraxis menerima {pct}% lebih banyak kerusakan selama {duration} dtk.",
+      "nythraxisUnbound": "Tak Terikat: Nythraxis menghasilkan {pct}% lebih banyak kerusakan sampai Segel Pengikat menahannya.",
+      "nythraxisKingsWrath": "Murka Raja: Nythraxis menghasilkan {pct}% lebih banyak kerusakan selama sisa pertarungan.",
+      "nythraxisBoneStorm": "Badai Tulang: Nythraxis mengabaikan ancaman, berputar untuk {tick}% kesehatan maksimum setiap detik dalam {radius} yd, dan menerjang para raider. Menyebar dan lari.",
+      "nythraxisCrownEndures": "Mahkota Bertahan: {stacks} tumpukan, {pct}% lebih banyak kerusakan dan serangan {haste}% lebih cepat. Raid kehabisan waktu.",
       "dot": "Memberikan {value} kerusakan {school} setiap {interval} dtk",
       "hot": "Memulihkan {value} kesehatan setiap {interval} dtk",
       "mendingCurrent": "Menyimpan {value} penyembuhan, dilepaskan seiring waktu atau dihabiskan oleh Tambalan Bertingkat",
@@ -3022,7 +3035,7 @@ export const id_ID: EnTranslations = {
       "suddenDeath": "Ajal Dini berikutnya tidak memakan Amarah dan mengabaikan syarat nyawanya",
       "aoeEcho": "{charges} gema tersisa: kemampuan bertarget tunggal memberikan {pct}% kerusakan kepada hingga {targets} musuh terdekat",
       "sureCrit": "{charges} rapalan kemampuan yang merusak dijamin menjadi pukulan kritis",
-      "temporalEcho": "Kerusakan Arkana dari perapal menyembuhkanmu sebesar {singlePct}% dari kerusakan bertarget tunggal atau {areaPct}% dari kerusakan area",
+      "temporalEcho": "Kerusakan Arkana dari perapal menyembuhkanmu sebesar {singlePct}% dari kerusakan bertarget tunggal atau {areaPct}% dari kerusakan area. Gelombang Aether dan Panah Aether mendapat bonus x4 pada Gema Temporal individual. Gema grup membuat cadangan penyembuhan yang sama, dibagikan menurut kesehatan yang hilang di antara sekutu bertanda dengan kesehatan di bawah 60%",
       "arcaneCharge": "{stacks} Muatan Arkana: Kekuatan Arkan memberikan {damagePct}% kerusakan lebih besar, dirapal {castPct}% lebih cepat, dan menghabiskan {costMult}x mana",
       "physicalReduction": "Mengurangi kerusakan Fisik yang diterima sebesar {pct}%",
       "temporalHourglass": "Kebal dan tidak dapat bertindak; memulihkan kesehatan dan mempercepat pemulihan jeda. Klik kanan untuk membatalkan.",
@@ -3042,8 +3055,8 @@ export const id_ID: EnTranslations = {
       "redline": "Garis Merah: takik {stacks} dari {max}. Pukulan Badan menambah takik; Pukulan Penghabisan menghantam {pct}% lebih keras per takik dan menutup jendela. Habis lebih dulu berarti hilang",
       "veilstrikeWindow": "Tabir Bayangan: pembuka Tabir Senjamu dapat dipakai di area terbuka dari sudut mana pun, dan kerusakan yang kamu beri meningkat {pct}%",
       "veiledEdge": "Serangan Pengintai berikutnya menghantam dua kali lipat",
-      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
-      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
+      "veiledEdgeStrike": "Serangan Tepi Terselubungmu berikutnya menghasilkan {pct}% lebih banyak kerusakan senjata",
+      "coldsightRead": "Tarikan Panjangmu berikutnya menghasilkan {longDrawPct}% lebih banyak kerusakan, atau Tembakan Jatuhmu berikutnya menghasilkan {fellShotPct}% lebih banyak",
       "duskEconomy": "Kemampuan menghabiskan {pct}% lebih sedikit energi",
       "moontide": "Pasang Rembulan: tahap {stacks} dari {max}. Rapalan Panah Liar, Langit Runtuh, dan Benih Rembulan mengisinya dalam Wujud Burung Bulan; pada {max}, Benih Rembulan menjadi Gelombang Rembulan dan Langit Runtuh menjadi Jejak Surya, dan keduanya memakainya",
       "oldBlood": "Darah Tua: tahap {stacks} dari {max}. Serangan Serigala dan Bruin yang kena berbagi simpanan ini; pada {max}, Gigitan Berdarah atau Remuk Tulang bertransformasi",
@@ -3237,6 +3250,7 @@ export const id_ID: EnTranslations = {
       "healthPercent": "Persen",
       "healthCurrent": "Saat Ini",
       "healthCurrentMax": "Saat Ini / Maksimum",
+      "healthCurrentMaxPercent": "Saat Ini / Maks (Persen)",
       "sort": "Urutkan Pemain",
       "sortGroup": "Grup",
       "sortRole": "Peran",
@@ -3276,17 +3290,17 @@ export const id_ID: EnTranslations = {
         "targetFrame": "Target",
         "partyFrames": "Party",
         "swingBar": "Serangan Otomatis",
-        "targetDots": "Target Dots",
-        "questTracker": "Quest Tracker",
-        "reliquaryTracker": "Reliquary Tracker",
-        "petBar": "Pet Bar",
-        "procOverlay": "Spell Procs",
-        "procOverlayFrost": "Icicles",
-        "damageMeter": "Damage Meter",
-        "deedTracker": "Deed Tracker",
-        "delveTracker": "Delve Tracker",
-        "riftTracker": "Rift Tracker",
-        "swingBarOffhand": "Off Hand"
+        "targetDots": "Titik Sasaran",
+        "questTracker": "Pelacak Quest",
+        "reliquaryTracker": "Pelacak Relikuari",
+        "petBar": "Bilah Peliharaan",
+        "procOverlay": "Proc Mantra",
+        "procOverlayFrost": "Es runcing",
+        "damageMeter": "Meter Kerusakan",
+        "deedTracker": "Pelacak Perbuatan",
+        "delveTracker": "Pelacak Delve",
+        "riftTracker": "Pelacak Rift",
+        "swingBarOffhand": "Tangan Kiri"
       },
       "framesMenu": "Pengaturan Bingkai",
       "framesMenuTitle": "Tampilkan atau sembunyikan bingkai satu per satu. Bingkai yang tidak dicentang tetap tersembunyi sampai kamu mencentangnya lagi atau mengatur ulang ke bawaan.",
@@ -3319,33 +3333,33 @@ export const id_ID: EnTranslations = {
       "wrongKind": "Kode itu berjenis ekspor yang berbeda."
     },
     "keybindTransfer": {
-      "setup": "Hotkey Setup",
-      "apply": "Apply",
-      "imported": "Hotkey setup imported.",
-      "wrongKind": "That code is a settings export, not a hotkey setup."
+      "setup": "Pengaturan Tombol Pintas",
+      "apply": "Terapkan",
+      "imported": "Pengaturan tombol pintas diimpor.",
+      "wrongKind": "Kode itu adalah ekspor pengaturan, bukan pengaturan tombol pintas."
     },
     "keyboardMap": {
-      "title": "Keyboard Overview",
-      "hint": "Keys in use are coloured by category. Hover or focus a key to see everything bound to it.",
-      "hintInteractive": "Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.",
-      "popOut": "Pop Out",
-      "close": "Close keyboard overview",
-      "pressKey": "Press a key for {action}. Esc cancels.",
-      "boundTo": "Bound {action} to {key}.",
-      "notBindable": "That key cannot be bound.",
-      "assignHint": "Choose an action to bind to {key}.",
-      "assignPlaceholder": "Assign an action to {key}",
-      "layerGroup": "Modifier layer",
-      "formGroup": "Keyboard size",
-      "formFull": "Full size",
-      "formTkl": "Tenkeyless",
+      "title": "Ikhtisar Keyboard",
+      "hint": "Tombol yang digunakan diberi warna menurut kategori. Arahkan atau fokuskan tombol untuk melihat semua yang terikat padanya.",
+      "hintInteractive": "Tombol yang digunakan diberi warna menurut kategori. Klik tombol untuk mengubah fungsinya; arahkan atau fokuskan tombol untuk melihat semua yang terikat padanya.",
+      "popOut": "Buka Terpisah",
+      "close": "Tutup ikhtisar keyboard",
+      "pressKey": "Tekan tombol untuk {action}. Esc membatalkan.",
+      "boundTo": "{action} diikat ke {key}.",
+      "notBindable": "Tombol itu tidak dapat diikat.",
+      "assignHint": "Pilih aksi untuk diikat ke {key}.",
+      "assignPlaceholder": "Tetapkan aksi ke {key}",
+      "layerGroup": "Lapisan modifier",
+      "formGroup": "Ukuran keyboard",
+      "formFull": "Ukuran penuh",
+      "formTkl": "Tanpa numpad",
       "form75": "75%",
       "form60": "60%",
-      "notOnLayout": "Not on this keyboard: {bindings}",
-      "legendGroup": "Key labels",
-      "legendLayout": "Your layout",
+      "notOnLayout": "Tidak ada di keyboard ini: {bindings}",
+      "legendGroup": "Label tombol",
+      "legendLayout": "Tata letakmu",
       "legendQwerty": "QWERTY",
-      "layerNone": "No modifier",
+      "layerNone": "Tanpa modifier",
       "layerShift": "Shift",
       "layerCtrl": "Ctrl",
       "layerAlt": "Alt",
@@ -3353,43 +3367,43 @@ export const id_ID: EnTranslations = {
       "separator": ", ",
       "bindingLine": "{key}: {action}",
       "assignOption": "{category}: {action}",
-      "otherLayers": "Also bound with a modifier"
+      "otherLayers": "Juga terikat dengan modifier"
     },
     "fullTransfer": {
-      "menu": "Import / Export",
-      "title": "Import / Export Settings",
-      "fullSettings": "Full Settings",
-      "intro": "Export every saved preference on this device as one code, and paste it on another device or browser to import it: graphics, audio, interface, theme, frame layout, key bindings for every character, controller and cross hotbar bindings, chat, window filters, language, and dismissed hints.",
-      "excluded": "Never included: your login, account, wallet, or purchase data. Action bar layouts are saved to your account and travel with it."
+      "menu": "Impor / Ekspor",
+      "title": "Impor / Ekspor Pengaturan",
+      "fullSettings": "Pengaturan Lengkap",
+      "intro": "Ekspor setiap preferensi yang tersimpan di perangkat ini sebagai satu kode, lalu tempelkan di perangkat atau peramban lain untuk mengimpornya: grafis, audio, antarmuka, tema, tata letak frame, key binding untuk setiap karakter, binding kontroler dan cross hotbar, chat, filter jendela, bahasa, dan petunjuk yang telah ditutup.",
+      "excluded": "Tidak pernah disertakan: data login, akun, dompet, atau pembelianmu. Tata letak bilah aksi disimpan ke akunmu dan ikut berpindah bersamanya."
     },
     "riftForge": {
-      "title": "Rift Forge",
-      "subtitle": "Riftbound bands",
+      "title": "Penempaan Keretakan",
+      "subtitle": "Band yang terikat erat",
       "currency": "{name}: {count}",
-      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
-      "wornHint": "Worn. Unequip it to forge.",
-      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
-      "upgradeMax": "Fully upgraded",
-      "gemPickAria": "Gem to socket",
+      "empty": "Tidak ada tali Riftbound di tas Anda. Mint bening pertama di Rift yang diberi peringkat.",
+      "wornHint": "Dipakai. Lepaskan perlengkapannya untuk menempa.",
+      "upgradeBtn": "Tingkatkan ke level item {level} (esensi {cost})",
+      "upgradeMax": "Ditingkatkan sepenuhnya",
+      "gemPickAria": "Permata ke soket",
       "gemOption": "{name} ({bonus})",
-      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
-      "socketBtn": "Socket",
-      "socketsNone": "no gems",
-      "noGems": "No Rift gems in your bags",
-      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "socketReplaceHint": "Soket penuh: permata berikutnya menggantikan yang terlama, {gem}.",
+      "socketBtn": "Soket",
+      "socketsNone": "tidak ada permata",
+      "noGems": "Tidak ada permata Rift di tas Anda",
+      "refused": "Bengkel itu menolak. Berdirilah di Riftwright dan coba lagi.",
       "reason": {
-        "notFound": "That band is not in your bags.",
-        "notRiftGear": "Only a Riftbound band can be forged.",
-        "maxUpgrade": "That band is fully upgraded.",
-        "insufficientEssence": "Not enough Rift Essence.",
-        "invalidGem": "You have no such Rift gem.",
-        "dead": "You can't do that while dead.",
-        "tooFar": "You are too far from the Rift Forge."
+        "notFound": "Band itu tidak ada di tasmu.",
+        "notRiftGear": "Hanya pita Riftbound yang dapat ditempa.",
+        "maxUpgrade": "Band itu telah ditingkatkan sepenuhnya.",
+        "insufficientEssence": "Esensi Rift tidak cukup.",
+        "invalidGem": "Anda tidak memiliki permata Rift seperti itu.",
+        "dead": "Anda tidak dapat melakukan itu saat mati.",
+        "tooFar": "Anda terlalu jauh dari Rift Forge."
       },
       "done": {
-        "upgrade": "Upgraded {name}.",
-        "socket": "Socketed a gem into {name}.",
-        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+        "upgrade": "{name} yang ditingkatkan.",
+        "socket": "Memasang permata ke {name}.",
+        "socketReplaced": "Memasang permata ke {name}; {gem} hancur."
       }
     },
     "itemTooltip": {
@@ -3397,7 +3411,7 @@ export const id_ID: EnTranslations = {
       "riftTier": "Barang Rift peringkat {tier}",
       "riftUpgrade": "Peningkatan Rift {level}/{max}",
       "riftSockets": "Permata Rift {used}/{total}",
-      "riftGemSocket": "Socket bonus for a Riftbound band",
+      "riftGemSocket": "Bonus soket untuk band Riftbound",
       "statEnchanted": "+{value} {stat} (Dimantrai)",
       "enchantedFallback": "Dimantrai",
       "partyTradeWindow": "Kamu dapat memperdagangkan barang ini kepada pemain yang berbagi jarahannya selama {time} berikutnya. Memakainya mengakhiri jendela perdagangan.",
@@ -3462,6 +3476,7 @@ export const id_ID: EnTranslations = {
       "close": "Tutup",
       "keybind": "Panel Discord",
       "disabled": "Integrasi Discord sedang tidak tersedia saat ini.",
+      "queuePingsLabel": "Kirimi saya pesan langsung Discord ketika antrian medan pertempuran atau arena saya muncul (membutuhkan akun Discord yang tertaut)",
       "tiers": {
         "none": "Tanpa Peringkat",
         "initiate": "Inisiat",
@@ -3719,13 +3734,13 @@ export const id_ID: EnTranslations = {
       "close": "Tutup"
     },
     "realmBuilder": {
-      "title": "Realm Builder of the Month",
-      "currentLabel": "Honoured this month",
-      "placeholderName": "Your Name Here",
-      "placeholderHint": "This plate is waiting for its first name.",
-      "pastTitle": "Past honourees",
-      "pastEmpty": "No names on the roll yet.",
-      "close": "Close"
+      "title": "Pembangun Alam Bulan Ini",
+      "currentLabel": "Dihormati bulan ini",
+      "placeholderName": "Nama Anda Di Sini",
+      "placeholderHint": "Piring ini sedang menunggu nama depannya.",
+      "pastTitle": "Penerima penghargaan sebelumnya",
+      "pastEmpty": "Belum ada nama yang masuk dalam daftar.",
+      "close": "Tutup"
     },
     "bank": {
       "title": "Bank",
@@ -3782,6 +3797,8 @@ export const id_ID: EnTranslations = {
       "depositAllDone": "Bahan disetor: {count}.",
       "depositAllFull": "Bahan disetor: {count}. Bank kini penuh.",
       "depositAllNone": "Bank penuh: tidak ada yang disetor.",
+      "depositAllNotable": "Bahan yang disimpan: {count}, termasuk {item}.",
+      "depositAllNotableFull": "Bahan yang disimpan: {count}, termasuk {item}. Bank sekarang penuh.",
       "bonusTitle": "Slot bonus",
       "bonusEarned": "+{count}",
       "bonusStatusEarned": "+{count}",
@@ -3820,6 +3837,8 @@ export const id_ID: EnTranslations = {
       "vaultDepositAllDone": "Material disetorkan: {count}.",
       "vaultDepositAllFull": "Material disetorkan: {count}. Beberapa batas maksimum sudah penuh.",
       "vaultDepositAllNone": "Batas maksimum brankas penuh: tidak ada yang disetorkan.",
+      "vaultDepositAllNotable": "Bahan yang disimpan: {count}, termasuk {item}.",
+      "vaultDepositAllNotableFull": "Bahan yang disimpan: {count}, termasuk {item}. Beberapa langit-langit penuh.",
       "vaultWithdrawShort": "Hanya {fit} dari {count} yang muat di tasmu.",
       "vaultDepositHint": "Klik untuk menyetor ke brankasmu",
       "vaultCannotDeposit": "Tidak dapat masuk ke brankas",
@@ -3854,34 +3873,34 @@ export const id_ID: EnTranslations = {
       "guildViewsAria": "Tampilan bank guild",
       "guildContentsTab": "Isi",
       "guildLogTab": "Log",
-      "guildHistoryTab": "History",
+      "guildHistoryTab": "Riwayat",
       "logAria": "Log aktivitas bank guild",
       "logNote": "{count} tindakan bank guild terbaru.",
-      "logShowing": "Showing {count} guild bank actions, newest first.",
-      "logFilterAria": "Filter the guild bank history",
-      "logFilterAll": "All",
-      "logFilterItems": "Items",
-      "logFilterMoney": "Money",
-      "logOlder": "Show older",
-      "logOlderLoading": "Loading older actions...",
-      "logEnd": "That is the whole guild bank history.",
-      "logEmptyFiltered": "No guild bank actions match this filter.",
-      "logColTime": "When",
-      "logColMember": "Member",
-      "logColAction": "Action",
-      "logColDetail": "Details",
-      "logActionDeposit": "Deposited",
-      "logActionWithdraw": "Withdrew",
-      "logActionBuySlots": "Bought an expansion",
-      "logActionOpenBank": "Opened the bank",
-      "logActionCharterFee": "Paid the charter fee",
-      "logActionAdminPurge": "Removed",
-      "logActorAdmin": "An administrator",
+      "logShowing": "Menampilkan {count} aksi bank guild, yang terbaru lebih dulu.",
+      "logFilterAria": "Filter riwayat bank guild",
+      "logFilterAll": "Semua",
+      "logFilterItems": "Item",
+      "logFilterMoney": "Uang",
+      "logOlder": "Tampilkan yang lebih lama",
+      "logOlderLoading": "Memuat aksi yang lebih lama...",
+      "logEnd": "Itulah seluruh riwayat bank guild.",
+      "logEmptyFiltered": "Tidak ada aksi bank guild yang cocok dengan filter ini.",
+      "logColTime": "Kapan",
+      "logColMember": "Anggota",
+      "logColAction": "Aksi",
+      "logColDetail": "Rincian",
+      "logActionDeposit": "Disetorkan",
+      "logActionWithdraw": "Ditarik",
+      "logActionBuySlots": "Membeli perluasan",
+      "logActionOpenBank": "Membuka bank",
+      "logActionCharterFee": "Membayar biaya piagam",
+      "logActionAdminPurge": "Dihapus",
+      "logActorAdmin": "Administrator",
       "logDetailItem": "{count} {item}",
-      "logSearchPlaceholder": "Search this history",
-      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
-      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
-      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
+      "logSearchPlaceholder": "Cari riwayat ini",
+      "logSearchAria": "Cari aksi bank guild yang dimuat berdasarkan anggota, aksi, atau item",
+      "logShowingMatched": "Menampilkan {matched} dari {count} aksi bank guild yang dimuat.",
+      "logSearchNoMatch": "Tidak ada aksi bank guild yang dimuat yang cocok dengan pencarianmu. Tampilkan baris yang lebih lama untuk memperluasnya.",
       "logLoading": "Memuat log bank guild...",
       "logEmpty": "Belum ada yang keluar masuk bank guild.",
       "logUnavailable": "Log bank guild tidak dapat dibaca saat ini.",
@@ -3982,17 +4001,17 @@ export const id_ID: EnTranslations = {
         }
       },
       "roster": {
-        "seats": "{count} of {cap} seats",
-        "expand": "Expand roster (+{seats} seats for {price})",
-        "maxed": "The roster is at its largest size",
-        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
-        "confirmAction": "Expand",
-        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "seats": "Kursi {count} dari {cap}",
+        "expand": "Perluas daftar pemain (+kursi {seats} untuk {price})",
+        "maxed": "Daftar tersebut berada pada ukuran terbesarnya",
+        "confirm": "Perluas daftar guild dengan kursi {seats} untuk {price}? Emas tersebut berasal dari dompet Anda sendiri dan tidak dapat dikembalikan.",
+        "confirmAction": "Perluas",
+        "expandedLine": "{name} telah memperluas daftar guild menjadi anggota {cap}.",
         "result": {
-          "notLeader": "Only the Guild Master may expand the guild roster.",
-          "maxed": "The guild roster cannot grow any larger.",
-          "cannotAfford": "You need {price} to expand the guild roster.",
-          "retry": "The guild roster changed while you were buying. Try again."
+          "notLeader": "Hanya Guild Master yang dapat memperluas daftar guild.",
+          "maxed": "Daftar guild tidak bisa bertambah besar lagi.",
+          "cannotAfford": "Anda memerlukan {price} untuk memperluas daftar guild.",
+          "retry": "Daftar guild berubah saat Anda membeli. Coba lagi."
         }
       }
     },
@@ -4556,7 +4575,7 @@ export const id_ID: EnTranslations = {
       "sameEnchant": "Barang itu sudah memiliki mantra itu.",
       "notPerfected": "Only a Perfected item can bear that enchant.",
       "enchantSkillTooLow": "Your Enchanting skill is too low for that enchant.",
-      "riftGear": "Riftbound bands take Rift gems, not enchants.",
+      "riftGear": "Band Riftbound mengambil permata Rift, bukan pesona.",
       "replaceTag": "Menggantikan {enchant}",
       "sameEnchantTag": "Sudah diterapkan",
       "plainTag": "Belum dimantrai",
@@ -4847,15 +4866,15 @@ export const id_ID: EnTranslations = {
         "deathless_rage": "Murka Abadi (diputus di wardstone)",
         "wardstones": "Saluran Wardstone (transisi fase)",
         "dread_curse": "Kutukan Kengerian (khusus heroik, debuff bertumpuk untuk pergantian tank)",
-        "bone_spike": "Bone Spike (impaled raiders drain until the spike is destroyed)",
-        "grave_eruption": "Grave Eruption (warning circles that leave burning ground)",
-        "binding_sigil": "Binding Sigil (drag the boss onto the sigil or the raid pays)",
-        "gravefire": "Gravefire (a traveling line of fire to sidestep)",
-        "soulfire": "Soulfire (Soul Rend detonations leave burning pools)",
-        "kings_wrath": "King's Wrath (30%: permanent damage bonus, faster floor hazards)",
-        "bone_storm": "Bone Storm (he ignores threat, whirls, and charges the raid)",
-        "crown_endures": "The Crown Endures (hard enrage at 6:00, heroic 5:00)",
-        "deathless_court": "The Deathless Court (heroic only, the royal court rises after Deathless Rage)"
+        "bone_spike": "Pancang Tulang (raider yang tertusuk terkuras sampai pancang dihancurkan)",
+        "grave_eruption": "Erupsi Makam (lingkaran peringatan yang meninggalkan tanah terbakar)",
+        "binding_sigil": "Segel Pengikat (seret boss ke segel atau raid akan menanggung akibatnya)",
+        "gravefire": "Api Makam (garis api bergerak yang harus disingkirkan)",
+        "soulfire": "Api Jiwa (ledakan Robekan Jiwa meninggalkan kolam terbakar)",
+        "kings_wrath": "Murka Raja (30%: bonus kerusakan permanen, bahaya lantai lebih cepat)",
+        "bone_storm": "Badai Tulang (dia mengabaikan ancaman, berputar, dan menerjang raid)",
+        "crown_endures": "Mahkota Bertahan (enrage keras pada 6:00, heroic 5:00)",
+        "deathless_court": "Istana Tanpa Kematian (khusus heroic, istana kerajaan bangkit setelah Amarah Tanpa Kematian)"
       }
     },
     "reliquary": {
@@ -4945,6 +4964,7 @@ export const id_ID: EnTranslations = {
       "sourceProfession": "Diraih melalui {profession}",
       "sourceDeed": "Diberikan oleh jasa {deed}",
       "sourceVendor": "Dijual oleh {vendor}",
+      "sourceVendorGated": "Dijual oleh {vendor} ({requirement})",
       "sourceBossZone": "Jatuh dari {boss} di {zone}",
       "sourceDelve": "Ditemukan di delve {delve}",
       "sourceRift": "Jatuh dari penyelesaian Rift peringkat {rank}",
@@ -4964,6 +4984,10 @@ export const id_ID: EnTranslations = {
       "filterAll": "Semua",
       "filterOwned": "Terkatalog",
       "filterMissing": "Belum ada",
+      "filterIlluminated": "Diterangi",
+      "filterRemaining": "Tersisa",
+      "filterEmptyPages": "Tidak ada halaman yang cocok dengan filter ini.",
+      "filterGroupAriaPages": "Filter halaman berdasarkan apakah halaman tersebut menyala",
       "recentJumpAria": "Buka halaman untuk {name}",
       "recentEmpty": "Belum ada temuan. Relik yang kamu katalogkan mulai sekarang akan muncul di sini.",
       "nearlyEmpty": "Halaman yang hampir tuntas berkumpul di sini.",
@@ -5071,6 +5095,7 @@ export const id_ID: EnTranslations = {
       "summary": "Peta dunia. Pilih zona untuk membuka petanya.",
       "toWorld": "Peta dunia",
       "toZone": "Peta zona",
+      "toInstance": "Peta contoh",
       "toggleAria": "Beralih antara peta dunia dan peta zona",
       "levels": "Level {min} hingga {max}"
     },
@@ -5105,6 +5130,7 @@ export const id_ID: EnTranslations = {
       "walletLinkedConnected": "Aplikasi dompet tertautmu sudah terhubung dan siap untuk pembelian $WOC.",
       "walletUsdBalance": "{amount} USD",
       "walletUsdUnknown": "Tidak diketahui",
+      "walletCardDismiss": "Sembunyikan kartu dompet",
       "rateNote": "Kurs: sekitar {tokens} $WOC per $1,00 USD per {time}.",
       "rateNotePaused": "Kurs terakhir yang diketahui: sekitar {tokens} $WOC per $1,00 USD per {time}.",
       "estimateNote": "Sekitar {tokens} $WOC untuk {usd} pada kurs saat ini.",
@@ -5296,6 +5322,43 @@ export const id_ID: EnTranslations = {
       "listingStatusCancelled": "Dibatalkan",
       "listingStatusSuspended": "Ditangguhkan",
       "listingStatusUnsold": "Tidak Terjual"
+    },
+    "lootExplorer": {
+      "title": "Penjelajah Penjarahan",
+      "close": "Tutup Penjelajah Penjarahan",
+      "searchPlaceholder": "Cari item...",
+      "searchAria": "Cari item",
+      "filterCategoryAria": "Sumber",
+      "filterClassAria": "Kelas",
+      "filterStatAria": "Statistik",
+      "filterQualityAria": "Kualitas",
+      "filterAll": "Semua",
+      "tabItems": "Berdasarkan Barang",
+      "tabEncounters": "Oleh Pertemuan",
+      "category": {
+        "raid": "Serangan",
+        "dungeon": "penjara bawah tanah",
+        "delve": "Menyelidiki",
+        "open_world": "Dunia Terbuka",
+        "rift": "Keretakan",
+        "vendor": "Penjual",
+        "quest_reward": "Hadiah Pencarian",
+        "quest_objective": "Tujuan Pencarian",
+        "ground_object": "Objek Dunia",
+        "starting_equipment": "Peralatan Awal"
+      },
+      "difficulty": {
+        "normal": "Biasa",
+        "heroic": "Heroik"
+      },
+      "riftRankLabel": "Peringkat Keretakan {rank}",
+      "source": "{category}: {name}",
+      "sourceWithContext": "{category}: {name} ({context})",
+      "chance": "Peluang {pct}%.",
+      "guaranteed": "Dijamin",
+      "gatedByQuest": "Saat mencari: {quest}",
+      "empty": "Tidak ada jarahan yang cocok dengan filter ini.",
+      "resultCount": "Hasil {count}"
     }
   },
   "gatherEvent": {
@@ -5395,7 +5458,8 @@ export const id_ID: EnTranslations = {
       "link_required": "Tautkan akun Discord Anda terlebih dahulu.",
       "swag_claimed": "Anda sudah mengklaim hadiah ini.",
       "swag_tier": "Capai peringkat yang lebih tinggi untuk mengklaim ini.",
-      "swag_points": "Poin tidak cukup."
+      "swag_points": "Poin tidak cukup.",
+      "invalid_input": "Masukan tidak valid."
     },
     "deeds": {
       "invalid_input": "Masukan tidak valid."
@@ -5447,6 +5511,11 @@ export const id_ID: EnTranslations = {
       "reason_required": "Alasan wajib diisi.",
       "invalid_duration": "Masukkan durasi tanda setidaknya satu detik.",
       "not_marked": "Akun tersebut tidak diberi tanda."
+    },
+    "kick": {
+      "reason_required": "Diperlukan suatu alasan.",
+      "admin_target": "Akun operator tidak dapat ditendang.",
+      "target_offline": "Pemain itu tidak lagi online di ranah ini."
     },
     "woc_market": {
       "invalid_input": "Masukan tidak valid.",
@@ -5882,10 +5951,13 @@ export const id_ID: EnTranslations = {
       "ifPlayerFrameScale": "Ukuran bingkai unit Anda sendiri.",
       "ifTargetFrameScale": "Ukuran bingkai sasaran Anda.",
       "ifPartyStyle": "Tata letak party: Otomatis mengikuti ukuran kelompok Anda, Klasik adalah susunan tradisional, dan Raid memadatkan semua orang ke dalam kisi ringkas.",
+      "ifPlayerHealthText": "Apa yang dicetak oleh bilah kesehatan Anda: tidak ada, persentase, kesehatan saat ini, saat ini dan maksimum, atau keduanya dengan persentase di sampingnya.",
+      "ifTargetHealthText": "Apa yang dicetak oleh bilah kesehatan target dan target-target, dengan pilihan yang sama dengan bingkai Anda sendiri.",
       "ifPartyHealthText": "Apa yang dicetak pada bilah party: tidak ada, persentase, nyawa saat ini, atau nyawa saat ini dan maksimum.",
       "ifPartySort": "Urutan anggota party dicantumkan: urutan grup, peran, atau nama.",
       "ifPartyShowAuras": "Apakah buff dan debuff ditampilkan pada bingkai party. Sakelar serupa mencakup bilah sumber daya, penyerapan, peliharaan, dan apakah Anda muncul pada daftar party Anda sendiri.",
       "ifAurasOnPlayerFrame": "Menampilkan buff dan debuff Anda pada bingkai unit Anda sendiri selain di bilah aura.",
+      "ifAuraBarBelowFrame": "Memindahkan baris buff ke bawah bingkai unitmu alih-alih di atasnya. Hanya berpengaruh saat buff ditampilkan pada bingkai pemain.",
       "ifAlwaysShowAllBuffs": "Menampilkan setiap buff aktif bahkan pada preset grafis Rendah, melewati batas ikon buff yang biasanya berlaku.",
       "ifTargetOfTarget": "Menampilkan siapa yang sedang disasar oleh sasaran Anda, cara klasik untuk mengetahui apakah tank masih memegangnya.",
       "ifPetFrame": "Menampilkan bingkai untuk peliharaan Anda.",
@@ -5893,6 +5965,7 @@ export const id_ID: EnTranslations = {
       "ifChatOpacity": "Seberapa pekat latar belakang obrolan.",
       "ifCompactChat": "Merapatkan baris obrolan agar lebih banyak yang muat.",
       "ifChatTimestamps": "Menambahkan waktu pada setiap baris obrolan, dalam format 12 jam atau 24 jam.",
+      "ifFilterProfanity": "Menyamarkan kata-kata kotor dalam obrolan dengan tanda bintang. Aktif secara default; matikan di sini jika Anda lebih suka membaca obrolan tanpa filter.",
       "ifStartAttack": "Apakah memakai sebuah kemampuan juga memulai serangan otomatis Anda. Aktif secara bawaan, dan inilah perilaku klasik yang diharapkan sebagian besar pemain.",
       "ifStopAutoAttack": "Apakah berganti sasaran menghentikan ayunan Anda. Nonaktif secara bawaan, sehingga serangan Anda berlanjut ke sasaran yang baru.",
       "ifShowAttackButton": "Menampilkan tombol Serang secara eksplisit pada bilah aksi Anda.",
@@ -6746,8 +6819,8 @@ export const id_ID: EnTranslations = {
       "raceBody": "Setiap kelompok di realm ini bisa menyerang rift yang sama pada saat bersamaan, masing-masing di salinannya sendiri, dan hanya kelompok pertama yang menjatuhkan sosok di dasarnya yang menyegel rift itu. Ketika sebuah kelompok menang, realm mendengar nama dan catatan waktu mereka, dan jalan masuknya tertutup di belakang mereka. Kalah dalam balapan tidak mengakhiri larimu: salinanmu tetap terbuka, sosok di dasarnya tetap akan tumbang di tanganmu, dan kamu tetap berjalan keluar dengan kekuatanmu sendiri. Yang kamu bayar adalah semua yang seharusnya dibayar oleh sebuah penyegelan. Bos itu tidak meninggalkan apa pun bagi kelompok yang datang kedua, jadi yang kamu bawa pulang hanyalah apa yang dijatuhkan mob-mob di sepanjang jalan turun, dan tidak lebih dari itu. Kitab Jasa tetap menghitung penuntasanmu, karena kamu memang menjatuhkan sosok itu. Ini satu-satunya balapan dalam permainan yang bisa kamu kalah tanpa pernah melihat wajah orang-orang yang mengalahkanmu.",
       "rewardsHeading": "Apa yang kamu bawa pulang",
       "rewardsBody": "Menyegel sebuah rift, bukan sekadar bertahan hidup di dalamnya, adalah yang membayar. Jatuhkan rift itu lebih dulu dan ia membayar setara konten instans yang setingkat dengan peringkatnya, sehingga peringkat yang lebih berat sepadan dengan lari yang lebih berat pula. Menyegelnya juga menyerahkan sebuah Cincin Terikat Rift ke tangan setiap orang yang hadir di sana, disesuaikan dengan peran kelasmu dan pribadi untukmu, serta meninggalkan Sari Rift di dalam tasmu, ditambah permata rift di peringkat yang lebih berat. Selain jalan pulang, sosok di dasarnya juga meninggalkan sebuah peti tersegel yang bisa dibongkar kelompokmu untuk rampasan tambahan, memakai cara membobol kunci Jalur Tumbler yang sama seperti yang kamu kenal dari peti-peti delve, sehingga kerja yang bersih dan sabar membayar lebih baik daripada yang tergesa-gesa. Tak satu pun dari itu sampai ke kelompok yang datang kedua: balapan yang kalah hanya menyisakan apa yang dijatuhkan mob-mob di sepanjang jalan turun. Kitab Jasa adalah pengecualiannya, dan tetap menghitung penuntasanmu apa pun hasilnya, dengan satu jasa untuk menutup rift pertamamu dan satu lagi untuk menjatuhkan rift peringkat S.",
-      "forgeHeading": "The Rift Forge",
-      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
+      "forgeHeading": "Penempaan Keretakan",
+      "forgeBody": "Band yang menduduki peringkat pertama permen bening belum habis saat Anda menerimanya. Riftwright Maelis, yang menyimpan bengkel di Watch Meadow di Farshore, di tepi pantai Gullhaven di samping Breach Scholar, akan menaikkan level itemnya selangkah demi selangkah dan mengatur permata berwarna yang dijatuhkan oleh celah tersebut ke dalam soketnya, masing-masing memiliki satu peringkat pertempuran. Sebuah band penuh mengambil permata baru sebagai pengganti yang tertua, sehingga Anda dapat menyetelnya kembali nanti. Semua itu dibayar dalam Rift Essence dan permata Rift, mata uang palsu yang jatuh dari bos rift dan diperdagangkan secara bebas, sehingga seorang teman dapat memberikan esensi yang Anda miliki. Lepaskan talinya sebelum Anda membawanya: dia mengerjakan apa yang ada di tas Anda, dan dia tidak melakukan apa pun kecuali Anda berdiri di depan bengkelnya.",
       "trackerHeading": "Pelacak di layarmu",
       "trackerBody": "Selama kamu berada di dalam, sebuah strip kecil di layarmu menjaga arahmu tetap jelas: lantai keberapa yang sedang kamu jalani dari berapa total lantainya, dan sebuah hitung mundur langsung. Bacalah hitung mundur itu baik-baik, sebab itu bukan larimu yang habis waktu. Itu adalah pintu masuk kembali di dunia luar yang sedang menutup. Begitu kamu sudah masuk, kelompokmu menjalani rift itu dengan temponya sendiri, selama apa pun itu, tetapi begitu jam itu mencapai nol, jalan masuknya lenyap bagi semua orang, jadi pikirkan dua kali sebelum melangkah keluar menjelang akhirnya."
     },
@@ -8742,7 +8815,7 @@ export const id_ID: EnTranslations = {
       "forgeUpgraded": "Peningkatan Rift untuk {name} selesai.",
       "forgeEnchanted": "Pemantraan Rift untuk {name} selesai.",
       "forgeSocketed": "Permata Rift terpasang untuk {name}.",
-      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
+      "forgeGemReplaced": "Permata celah diganti untuk {name}: {gem} hancur.",
       "detonateGlacialGrave": "Makam Glasial meledak!",
       "detonateAbsoluteZero": "Nol Mutlak meletus!",
       "detonateMagmaWell": "Sumur Magma meletus!",
@@ -9385,6 +9458,7 @@ export const id_ID: EnTranslations = {
     "connectingRealm": "Menyambung ke dunia...",
     "assetsFailed": "Pemuatan aset gagal: coba muat ulang. {error}",
     "rendererFailed": "Tidak bisa memulai perender: coba muat ulang. {error}",
+    "rendererContextLost": "Perender 3D kehilangan konteks grafisnya dan tidak dapat pulih. Muat ulang.",
     "enterTimeout": "Tidak bisa masuk dunia. Koneksi kehabisan waktu. Apakah server gim berjalan?",
     "connectionLost": "Koneksi ke server terputus.",
     "reconnectingAttempt": "Koneksi terputus. Menyambungkan kembali... (coba {attempt}/{maxAttempts}, coba lagi di {seconds}s)",
@@ -9395,6 +9469,7 @@ export const id_ID: EnTranslations = {
     "realmFull": "Dunia ini sedang penuh. Coba lagi dalam beberapa menit.",
     "tooManyConnections": "Terlalu banyak koneksi ke dunia ini dari jaringanmu. Tutup jendela permainan ekstra atau coba lagi dalam beberapa menit.",
     "messageRateExceeded": "Kamu terputus karena mengirim tindakan terlalu cepat. Tunggu sebentar, lalu masuk kembali.",
+    "kickedByModerator": "Moderator telah memutus koneksi Anda: {reason}",
     "tips": {
       "classes": "Kiat: masing-masing dari 9 kelas memiliki gaya bermain berbeda. Cobalah beberapa sebelum menetapkan pilihan.",
       "talents": "Kiat: kamu dapat mengatur ulang talenta kapan saja saat tidak bertarung, jadi pilihan awal tidak akan menjadi jebakan.",
@@ -9483,7 +9558,7 @@ export const id_ID: EnTranslations = {
     "bodyWeb": "Permainan berjalan tanpa akselerasi GPU dan akan lambat. Aktifkan akselerasi perangkat keras di pengaturan browsermu, perbarui driver grafismu, lalu nyalakan ulang browsermu.",
     "hybridBodyWindows": "Sesi ini dirender menggunakan GPU terintegrasi (hemat daya). Jika komputer ini juga memiliki GPU gaming diskret, atur browsermu ke Performa tinggi di Pengaturan > Sistem > Tampilan > Grafis, lalu mulai ulang browsernya. Aplikasi desktop memilih GPU diskret secara otomatis.",
     "hybridBodyLinux": "Sesi ini dirender menggunakan GPU terintegrasi (hemat daya). Jika komputer ini juga memiliki GPU gaming diskret, browser atau driver grafismu mungkin punya pengaturan pemilihan GPU sendiri, atau distromu mungkin menyediakan alat pengalihan GPU (seperti PRIME atau optimus-manager). Aplikasi desktop memilih GPU diskret secara otomatis.",
-    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
+    "bodyRequestedBackend": "Game tidak dapat dimulai dengan backend grafis yang Anda pilih, jadi kini berjalan dengan OpenGL. Semuanya tetap berfungsi; pemuatan dan menit-menit pertama mungkin lebih tersendat. Anda dapat memilih backend lagi di Opsi, Grafis, Sistem.",
     "hybridBodyOther": "Sesi ini dirender menggunakan GPU terintegrasi (hemat daya). Jika komputer ini juga memiliki GPU gaming diskret, periksa pengaturan grafis browser dan sistem operasimu untuk mengaktifkannya. Aplikasi desktop memilih GPU diskret secara otomatis.",
     "dismiss": "Tutup"
   },
@@ -11229,11 +11304,11 @@ export const id_ID: EnTranslations = {
       },
       "melting_acid": {
         "name": "Asam Meleleh",
-        "description": "Mencipratkan racun kaustik ke target, menimbulkan {damage} Kerusakan alam dan mengurangi armornya sebesar 5% selama 12 detik."
+        "description": "Melapisi senjatamu selama 30 menit. Setiap ayunan jarak dekat memercikkan asam kaustik ke target dan mengurangi armornya sebesar 5% selama 12 detik."
       },
       "nightshade_coating": {
         "name": "Lapisan Nightshade",
-        "description": "Melapisi target dalam nightshade, menimbulkan {damage} Kerusakan alam dan mengurangi penyembuhan yang diterimanya sebesar 25% selama 12 detik."
+        "description": "Melapisi senjatamu selama 30 menit. Setiap ayunan jarak dekat melapisi target dengan nightshade dan mengurangi penyembuhan yang diterimanya sebesar 25% selama 12 detik."
       },
       "expose_armor": {
         "name": "Tembus Zirah",
@@ -11249,11 +11324,11 @@ export const id_ID: EnTranslations = {
       },
       "instant_poison": {
         "name": "Gigitan Beludak",
-        "description": "Melapisi senjatamu selama 30 menit, membuat setiap ayunan jarak dekatmu memberi 8 kerusakan Alam tambahan."
+        "description": "Melapisi senjatamu selama 30 menit, membuat setiap ayunan jarak dekatmu memberi {damage} kerusakan Alam tambahan."
       },
       "deadly_poison": {
         "name": "Bisa Membusuk",
-        "description": "Melapisi senjatamu selama 30 menit, membuat setiap ayunan jarak dekatmu memberi 14 kerusakan Alam tambahan."
+        "description": "Melapisi senjatamu selama 30 menit. Setiap ayunan jarak dekatmu menambah satu tumpukan racun pada target, hingga 5, dan menyegarkan durasi 12 detik. Setiap tumpukan memberi {damage} Kerusakan alam setiap 2 detik."
       },
       "blind": {
         "name": "Lemparan Tanah",
@@ -11466,7 +11541,7 @@ export const id_ID: EnTranslations = {
       "arcane_shot": {
         "name": "Tembakan Bengis",
         "description": "Menembak sasaran sebesar {damage} kerusakan Arkana. Kerusakan meningkat dengan daya serang jarak jauh.",
-        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
+        "specNote_marksmanship": "Bacaan Pandang-Dingin dari Tarikan Membara yang selesai membuat Tembakan Jatuhmu berikutnya menghasilkan 75% lebih banyak kerusakan. Menembakkan tembakan itu menghabiskan Bacaan."
       },
       "concussive_shot": {
         "name": "Tembakan Pengguncang",
@@ -12352,11 +12427,11 @@ export const id_ID: EnTranslations = {
       },
       "temporal_echo": {
         "name": "Gema Waktu",
-        "description": "Menandai sekutu dengan gema dari momen yang lebih sehat, memulihkan {damage} kesehatan sekaligus. Selama {duration} dtk, sebagian kerusakan Arkan yang kamu berikan ditarik kembali melalui gema untuk menyembuhkan mereka."
+        "description": "Menandai sekutu dengan gema dari momen yang lebih sehat, memulihkan {damage} kesehatan sekaligus. Selama {duration} dtk, {echoSinglePct}% kerusakan Arkan satu target lainnya dan {echoAreaPct}% kerusakan Arkan areamu menyembuhkan mereka. Gelombang Aether dan Panah Aether sebagai gantinya menyembuhkan sebesar {echoDriverPct}% dari kerusakan yang dihasilkan."
       },
       "temporal_cascade": {
         "name": "Riam Waktu",
-        "description": "Mengirim gema berjenjang melalui grupmu: target dan hingga empat sekutu terdekatnya dipulihkan sekaligus dan masing-masing ditandai selama {duration} dtk, menarik sebagian kerusakan Arkan yang kamu berikan kembali melalui gema mereka untuk menyembuhkan mereka. (Kronomansi)"
+        "description": "Mengirim gema berjenjang melalui grupmu: target dan hingga empat sekutu terdekatnya dipulihkan sekaligus dan masing-masing ditandai selama {duration} dtk, menarik sebagian kerusakan Arkan yang kamu berikan kembali melalui gema mereka untuk menyembuhkan mereka. Gelombang Aether dan Panah Aether membuat cadangan penyembuhan yang sama dari setiap Gema grup, dibagikan menurut kesehatan yang hilang di antara sekutu bertanda dengan kesehatan di bawah 60%. (Kronomansi)"
       },
       "temporal_reversal": {
         "name": "Pembalikan Waktu",
@@ -14044,11 +14119,17 @@ export const id_ID: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Ignition Key: Dreadspark Groundshaker"
       },
+      "reins_goblin_rocket_sled": {
+        "name": "Kunci kontak: Kereta Luncur Roket Goblin"
+      },
+      "reins_rallycart_rxt": {
+        "name": "Kunci kontak: Rallycart RXT"
+      },
       "reins_lanternback_troll": {
         "name": "Kuk Penyala Lentera: Grumbol"
       },
       "reins_chimeglass_tortoise": {
-        "name": "Roadwarden's Bellstrap: Tolliver"
+        "name": "Tali Lonceng Penjaga Jalan: Tolliver"
       },
       "reins_rickshaw_mount": {
         "name": "Kendali Terikat: Becak Terikat Tulang"
@@ -14057,7 +14138,7 @@ export const id_ID: EnTranslations = {
         "name": "Tali Kekang Raptor Drakemaw"
       },
       "reins_mech_bird": {
-        "name": "Ignition Key: Cluckwork Mech Bird"
+        "name": "Kunci Pengapian: Burung Mech Cluckwork"
       },
       "rimefang": {
         "name": "Taring Beku"
@@ -15368,46 +15449,46 @@ export const id_ID: EnTranslations = {
         "name": "Field Kit"
       },
       "bramblehide_crown": {
-        "name": "Roots' Bramblehide Crown"
+        "name": "Mahkota Kulit Duri Akar"
       },
       "bramblehide_mantle": {
-        "name": "Roots' Bramblehide Mantle"
+        "name": "Mantel Kulit Duri Akar"
       },
       "bramblehide_harness": {
-        "name": "Roots' Bramblehide Harness"
+        "name": "Tali dada Kulit Duri Akar"
       },
       "bramblehide_cinch": {
-        "name": "Roots' Bramblehide Cinch"
+        "name": "Ikat pinggang Kulit Duri Akar"
       },
       "bramblehide_legguards": {
-        "name": "Roots' Bramblehide Legguards"
+        "name": "Pelindung kaki Kulit Duri Akar"
       },
       "bramblehide_grips": {
-        "name": "Roots' Bramblehide Grips"
+        "name": "Genggaman Kulit Duri Akar"
       },
       "bramblehide_treads": {
-        "name": "Roots' Bramblehide Treads"
+        "name": "Tapak Kulit Duri Akar"
       },
       "courtiers_bonefang": {
-        "name": "Courtier's Bonefang"
+        "name": "Taring Tulang Bangsawan Istana"
       },
       "thornpeak_wardblade": {
-        "name": "Thornpeak Wardblade"
+        "name": "Pedang Pelindung Puncak Duri"
       },
       "gravecourt_hewer": {
-        "name": "Gravecourt Hewer"
+        "name": "Penebas Istana Makam"
       },
       "votive_ward_of_the_deathless_court": {
-        "name": "Votive Ward of the Deathless Court"
+        "name": "Pelindung Persembahan Istana Tanpa Kematian"
       },
       "thornpeak_moonhide_cowl": {
-        "name": "Thornpeak Moonhide Cowl"
+        "name": "Tudung Kulit Rembulan Puncak Duri"
       },
       "stormhymn_chain_grips": {
-        "name": "Stormhymn Chain Grips"
+        "name": "Genggaman Rantai Himne Badai"
       },
       "stormhymn_chain_treads": {
-        "name": "Stormhymn Chain Treads"
+        "name": "Tapak Rantai Himne Badai"
       },
       "conjured_water4": {
         "name": "Air Mata Air Sihir"
@@ -16402,7 +16483,7 @@ export const id_ID: EnTranslations = {
         "name": "Nythraxis, Bencana Thornpeak"
       },
       "nythraxis_bone_spike": {
-        "name": "Bone Spike"
+        "name": "Pancang Tulang"
       },
       "ignivar_herald_of_the_last_flame": {
         "name": "Ignivar, Pewarta Api Terakhir"
@@ -17371,9 +17452,9 @@ export const id_ID: EnTranslations = {
         "greeting": "Ia terbuka tepat di tempat jaring-jaring dikeringkan. Tepat di sana, tempat aku berdiri setiap pagi seumur hidupku. Aku tak lagi turun ke pantai. Aku tak lagi pergi ke mana pun sebenarnya."
       },
       "riftwright_maelis": {
-        "name": "Riftwright Maelis",
-        "title": "Rift Forgemaster",
-        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
+        "name": "Penulis Riftwright Maelis",
+        "title": "Ahli Tempa Retakan",
+        "greeting": "Sebuah band Riftbound mengingat terobosan yang membuatnya, {className}. Bawakan saya bandnya, dan inti dari jeda tersebut, dan saya akan mengajarinya untuk mengingat lebih banyak."
       },
       "forgemistress_darva": {
         "name": "Empu Tempa Darva",
@@ -20819,6 +20900,6 @@ export const id_ID: EnTranslations = {
     "mailboxName": "Kotak Surat",
     "noticeboardName": "Papan Pengumuman",
     "farmPatchName": "Garden Beds",
-    "realmBuilderMonumentName": "Realm Builder Monument"
+    "realmBuilderMonumentName": "Monumen Pembangun Alam"
   }
 };

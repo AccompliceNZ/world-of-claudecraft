@@ -272,6 +272,7 @@ describe('mount transition effects', () => {
       summonGlow: vi.fn(),
       summonCall: vi.fn(),
       engineReset: vi.fn(),
+      preloadSummon: vi.fn(),
       preloadEngine: vi.fn(),
       ...overrides,
     };
@@ -290,12 +291,15 @@ describe('mount transition effects', () => {
     expect(summon.playCallPose).toHaveBeenCalledWith(2.75);
     expect(summon.preloadEngine).toHaveBeenCalledOnce();
     expect(summon.preloadEngine).toHaveBeenCalledWith('mech_bird');
+    expect(summon.preloadSummon).toHaveBeenCalledOnce();
+    expect(summon.preloadSummon).toHaveBeenCalledWith('mech_bird');
     state.wasMountCasting = syncMountTransitionFx(state, summon);
     expect(summon.playCallPose).toHaveBeenCalledOnce();
     expect(summon.preloadEngine).toHaveBeenCalledOnce();
+    expect(summon.preloadSummon).toHaveBeenCalledOnce();
   });
 
-  it('preloads a summon when the current body cannot play the optional call pose', () => {
+  it('preloads the engine and the summon take when the current body cannot play the optional call pose', () => {
     const state = { lastMountKey: '', wasMountCasting: false };
     const summon = transitionInputs({
       mountCasting: true,
@@ -308,6 +312,8 @@ describe('mount transition effects', () => {
     expect(summon.playCallPose).not.toHaveBeenCalled();
     expect(summon.preloadEngine).toHaveBeenCalledOnce();
     expect(summon.preloadEngine).toHaveBeenCalledWith('mech_bird');
+    expect(summon.preloadSummon).toHaveBeenCalledOnce();
+    expect(summon.preloadSummon).toHaveBeenCalledWith('mech_bird');
   });
 
   it.each([
@@ -324,6 +330,7 @@ describe('mount transition effects', () => {
 
       expect(input.playCallPose).not.toHaveBeenCalled();
       expect(input.preloadEngine).not.toHaveBeenCalled();
+      expect(input.preloadSummon).not.toHaveBeenCalled();
     },
   );
 
@@ -334,6 +341,7 @@ describe('mount transition effects', () => {
     expect(syncMountTransitionFx(state, input)).toBe(false);
     expect(input.playCallPose).not.toHaveBeenCalled();
     expect(input.preloadEngine).not.toHaveBeenCalled();
+    expect(input.preloadSummon).not.toHaveBeenCalled();
   });
 
   it('fires appearance, swap, and dismount effects exactly on mount-key edges', () => {

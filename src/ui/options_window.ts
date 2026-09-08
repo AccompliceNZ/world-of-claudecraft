@@ -57,7 +57,6 @@ import {
   stageGraphicsDraftChange,
 } from '../game/graphics_rebuild_core';
 import {
-  ACTION_BAR_SLOTS,
   BIND_ACTIONS,
   BIND_CATEGORIES,
   isReservedCode,
@@ -167,12 +166,13 @@ interface NumericChoiceBinding {
   set(key: NumericSettingKey, value: number): void;
 }
 
-// The seven GameSettings the Key Bindings panel renders alongside the
+// The six GameSettings the Key Bindings panel renders alongside the
 // rebindable keys (the settingToggleKeybind + clickMoveMouseButtonRow calls in
 // renderKeybinds below). Its Reset to Defaults must restore these too, not just
 // the key-code map: without this list, a player's custom mouse-camera,
-// click-to-move (and its mouse button), attack-move, left-handed-touch, or
-// profanity-filter choice silently survived a "reset everything" click.
+// click-to-move (and its mouse button), attack-move, or left-handed-touch
+// choice silently survived a "reset everything" click. (The profanity filter
+// is a chat setting: it renders in Interface > Chat, whose own footer resets it.)
 const KEYBIND_PANEL_SETTING_KEYS: (keyof GameSettings)[] = [
   'mouseCamera',
   'lockCursorOnRotate',
@@ -180,7 +180,6 @@ const KEYBIND_PANEL_SETTING_KEYS: (keyof GameSettings)[] = [
   'clickToMoveButton',
   'attackMove',
   'leftHandedTouch',
-  'filterProfanity',
 ];
 // Every action id the registry knows: a pasted hotkey code naming none of them
 // would import as a full reset, so parseKeybindCode refuses it as hollow.
@@ -291,34 +290,65 @@ export interface OptionsWindowDeps {
   setChatClock(clock: ChatClock): void;
 }
 
-/** The online account seam behind the deed-broadcast row (OptionsHooks.deedBroadcasts). */
-export interface DeedBroadcastSeam {
+/**
+ * The online account seam behind an account-toggle row (OptionsHooks.deedBroadcasts,
+ * OptionsHooks.discordQueuePings): a read/write pair over one boolean account setting.
+ */
+export interface AccountToggleSeam {
   get(): Promise<boolean>;
   set(enabled: boolean): Promise<boolean>;
 }
 
+/** The deed-broadcast row's seam, the first of the family (kept under its own name). */
+export type DeedBroadcastSeam = AccountToggleSeam;
+
 /**
- * The account deed-broadcast opt-out row (accounts.deed_broadcasts): an ASYNC
- * account setting, not a local Settings key, so it lives outside the settings
- * row family and renders in the classic set-row grammar beside the chat rows.
- * Painted only when main.ts wired the online seam (an offline character has
- * no account). The toggle disables (aria-busy) until the persisted state
- * loads; a click flips optimistically, the server echo wins, and a failed
- * write reverts to the last known state. Exported standalone so the
- * round-trip is jsdom-driven directly (tests/deed_broadcast_row.test.ts).
+ * The account deed-broadcast opt-out row (accounts.deed_broadcasts). The column
+ * defaults TRUE, so an unreadable state renders enabled.
  */
 export function buildDeedBroadcastRow(parent: HTMLElement, seam: DeedBroadcastSeam): void {
+  buildAccountToggleRow(parent, seam, t('hudChrome.deeds.broadcastsLabel'), true);
+}
+
+/**
+ * The queue-pop Discord DM opt-in row (accounts.discord_queue_pings): a direct
+ * message from the official bot when the player's battleground or arena queue
+ * pops. The column defaults FALSE (a DM is asked for, never assumed), so an
+ * unreadable state renders disabled. The row needs a linked Discord account to
+ * do anything, which the label says; the server drops pops for unlinked accounts.
+ */
+export function buildDiscordQueuePingRow(parent: HTMLElement, seam: AccountToggleSeam): void {
+  buildAccountToggleRow(parent, seam, t('hudChrome.discord.queuePingsLabel'), false);
+}
+
+/**
+ * One account-toggle row: an ASYNC account setting, not a local Settings key,
+ * so it lives outside the settings row family and renders in the classic
+ * set-row grammar beside the chat rows. Painted only when main.ts wired the
+ * online seam (an offline character has no account). The toggle disables
+ * (aria-busy) until the persisted state loads; a click flips optimistically,
+ * the server echo wins, and a failed write reverts to the last known state.
+ * `fallback` is the column default an unreadable state renders. Exported
+ * standalone so the round-trip is jsdom-driven directly
+ * (tests/deed_broadcast_row.test.ts).
+ */
+export function buildAccountToggleRow(
+  parent: HTMLElement,
+  seam: AccountToggleSeam,
+  label: string,
+  fallback: boolean,
+): void {
   const row = document.createElement('div');
   row.className = 'set-row';
   const name = document.createElement('span');
   name.className = 'set-name';
-  name.textContent = t('hudChrome.deeds.broadcastsLabel');
+  name.textContent = label;
   const toggle = document.createElement('button');
   toggle.className = 'btn set-toggle';
   toggle.disabled = true;
-  toggle.setAttribute('aria-label', t('hudChrome.deeds.broadcastsLabel'));
+  toggle.setAttribute('aria-label', label);
   toggle.setAttribute('aria-busy', 'true');
-  let on = true;
+  let on = fallback;
   const sync = () => {
     toggle.textContent = on ? t('hud.options.on') : t('hud.options.off');
     toggle.classList.toggle('off', !on);
@@ -327,9 +357,9 @@ export function buildDeedBroadcastRow(parent: HTMLElement, seam: DeedBroadcastSe
   sync();
   void seam
     .get()
-    // Unreadable state renders the column default (TRUE); the first write
-    // still round-trips the truth.
-    .catch(() => true)
+    // Unreadable state renders the column default; the first write still
+    // round-trips the truth.
+    .catch(() => fallback)
     .then((enabled) => {
       on = enabled;
       toggle.disabled = false;
@@ -1640,6 +1670,7 @@ export class OptionsWindow {
       // is a bespoke row; the seam is the final truth (main.ts wires it only when
       // an authenticated account exists, so an offline character never sees it).
       if (hooks?.deedBroadcasts) buildDeedBroadcastRow(body, hooks.deedBroadcasts);
+      if (hooks?.discordQueuePings) buildDiscordQueuePingRow(body, hooks.discordQueuePings);
       for (const noteKey of [
         'hudChrome.chatTimestamps.note',
         'hudChrome.chatWindow.note',
@@ -2602,7 +2633,6 @@ export class OptionsWindow {
     this.clickMoveMouseButtonRow(el);
     this.settingToggleKeybind(el, t('hud.keybinds.actions.attackMove'), 'attackMove');
     this.settingToggleKeybind(el, t('hud.options.leftHandedTouch'), 'leftHandedTouch');
-    this.settingToggleKeybind(el, t('hud.options.filterProfanity'), 'filterProfanity');
     const note = document.createElement('div');
     note.className = 'kb-note';
     note.textContent = this.keybindNote || t('hud.options.keybindHelpMouseCamera');

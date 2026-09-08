@@ -192,11 +192,10 @@ export interface ApplyEnchantResultView {
     | 'insufficient_materials'
     | 'throttled'
     | 'no_bag_space'
-    // #2415: the honest denies for an already-enchanted target: no
-    // confirmReplace flag on the command, and the identical-enchant-id
-    // re-apply whose accept would be pure reagent loss.
+    // #2415: the honest deny for an already-enchanted target with no
+    // confirmReplace flag on the command. A confirmed identical-enchant-id
+    // re-apply is a normal replace, not a deny.
     | 'already_enchanted'
-    | 'same_enchant'
     // Masterwrought phase 10, the Lucent tier: a requiresPerfected enchant on
     // a copy carrying no Perfected marker, and an enchant whose skillReq is
     // above the applier's flat Enchanting skill.

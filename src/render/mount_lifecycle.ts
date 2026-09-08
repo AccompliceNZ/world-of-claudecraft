@@ -263,6 +263,8 @@ export interface MountTransitionInputs {
    *  no authored take. */
   summonCall(): void;
   engineReset(): void;
+  /** Warm the mount's own summon take on the channel start edge. */
+  preloadSummon(mountKey: string): void;
   preloadEngine(mountKey: string): void;
 }
 
@@ -282,10 +284,12 @@ export function syncMountTransitionFx(
   // ~the transition window. A dismount (mountCastKey === '') gets no pose; its
   // effect is the completion glow below.
   if (x.mountCasting && !v.wasMountCasting && x.mountCastKey !== '') {
-    // Start decoding the authored movement set at the CAST edge, not after the
-    // mount appears. Presentation shedding may suppress the cosmetic call pose,
-    // but it must not also throw away the only useful preload window.
+    // Start decoding the authored movement set and the mount's own summon
+    // take at the CAST edge, not after the mount appears. Presentation
+    // shedding may suppress the cosmetic call pose, but it must not also
+    // throw away the only useful preload window.
     x.preloadEngine(x.mountCastKey);
+    x.preloadSummon(x.mountCastKey);
     if (x.poseAllowed) x.playCallPose(x.mountCastRemaining);
   }
   // mountKey change = summon completed, dismount completed, or a live swap: fire
@@ -300,7 +304,6 @@ export function syncMountTransitionFx(
     // mount's call. lastMountKey is seeded from the entity's current state at
     // view creation, so a rider already mounted when they enter interest range
     // (or at login) never reaches this edge and stays silent.
-    if (x.mountKey !== '') x.summonCall();
     // A mountKey change (dismount, a live mount swap, or a fresh summon reusing
     // this entity id) must drop any engine mount's windup/loop state; otherwise
     // the old loop node stays connected forever once logicallyMounted goes false
@@ -308,6 +311,7 @@ export function syncMountTransitionFx(
     // or dismount), and a swap would carry the old moving state into the new
     // mount, skipping its windup.
     x.engineReset();
+    if (x.mountKey !== '') x.summonCall();
     // Warm the new mount's movement clips right away too (the cast-edge call
     // above may not have run for a live swap): a cold first ride otherwise
     // plays the windup through

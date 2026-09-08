@@ -574,9 +574,9 @@ export const sv_SE: EnTranslations = {
       "tabsLabel": "Delar av WOC-butiken",
       "storeTab": "Butik",
       "rewardsTab": "Dagliga belöningar",
-      "mountsEyebrow": "Account Mounts",
-      "mountsTitle": "Machine Stable",
-      "mountBuyAria": "Purchase {item}",
+      "mountsEyebrow": "Kontomontering",
+      "mountsTitle": "Maskinstabil",
+      "mountBuyAria": "Köp {item}",
       "loading": "Laddar WOC-butiken...",
       "error": "WOC-butiken är inte tillgänglig just nu. Försök igen om en stund.",
       "balance": "Claudium-saldo",
@@ -982,6 +982,7 @@ export const sv_SE: EnTranslations = {
       "mounts": "Riddjur",
       "professions": "Yrken",
       "reliquary": "Relikvarium",
+      "lootExplorer": "Bytesöversikt",
       "nameplates": "Namn",
       "haptics": "Haptik",
       "hapticsOff": "Haptik av",
@@ -1140,6 +1141,9 @@ export const sv_SE: EnTranslations = {
       "promptAttack": "Anfall",
       "promptUseAbility": "Använd förmåga",
       "promptKneel": "Knäböj",
+      "promptAccessInterface": "Öppna gränssnittet",
+      "promptMoveToTarget": "Gå till {target}",
+      "promptSelectItem": "Välj {item}",
       "promptOpenBags": "Öppna dina väskor",
       "promptCharacterSheet": "Öppna ditt karaktärsblad",
       "promptLookAround": "Håll högerklick nedtryckt och dra för att se dig omkring",
@@ -1358,9 +1362,9 @@ export const sv_SE: EnTranslations = {
       "overflow": "{count} more not shown"
     },
     "targetDots": {
-      "title": "Target Dots",
-      "row": "{aura} on {target}",
-      "overflow": "{count} more not shown"
+      "title": "Målprickar",
+      "row": "{aura} på {target}",
+      "overflow": "{count} mer visas inte"
     },
     "targetAuras": {
       "title": "Målets auror",
@@ -1443,11 +1447,13 @@ export const sv_SE: EnTranslations = {
       "name_shadowjump_toad": "Kama-Kage, Skuggsprångspaddan",
       "name_stormfeather_griffin": "Himmelsvidd Stormfjäder",
       "name_thunderstrut_gobbler": "Åskstoltsern, Den stora kalkonen",
+      "name_goblin_rocket_sled": "Goblinraketsläde",
+      "name_rallycart_rxt": "Rallycart RXT",
       "name_terrorspark_groundshaker": "Dreadspark Groundshaker",
       "name_drakemaw_raptor": "Drakgapsraptor",
-      "name_mech_bird": "Cluckwork Mech Bird",
-      "name_lanternback_troll": "Grumbol the Lanternback",
-      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
+      "name_mech_bird": "Cluckwork-mekafågel",
+      "name_lanternback_troll": "Lanternbacken Grumbol",
+      "name_chimeglass_tortoise": "Tolliver klockglaset",
       "name_rickshaw_mount": "Benbunden Rickshaw",
       "desc_valorsteed": "En uthållig, säkerfotad stridshäst som ger ökad reshastighet.",
       "desc_grag_bear": "En uthållig, säkerfotad björn som ger ökad reshastighet.",
@@ -1456,11 +1462,13 @@ export const sv_SE: EnTranslations = {
       "desc_shadowjump_toad": "En massiv, säkerfotad jättepadda, tränad i blixtsnabba skuggsprång som täcker all terräng.",
       "desc_stormfeather_griffin": "En kunglig stormgrip som smyger fram på runskodda klor, med vingarna hopfällda.",
       "desc_thunderstrut_gobbler": "En kolossal stormkläckt kalkon som stoltserar ner från Den vaknande toppen, med stjärten spretande som ett åskmoln.",
+      "desc_goblin_rocket_sled": "En farligt överbyggd goblinsläde, driven av två raketer och utsökt dåligt omdöme.",
+      "desc_rallycart_rxt": "En liten rallymaskin som ökar färdhastigheten.",
       "desc_terrorspark_groundshaker": "En kompakt bepansrad maskin med tunga larvband, en grovkalibrig kanon och en sadel byggd för orädda förare.",
       "desc_drakemaw_raptor": "En sadeltämjd kullraptor från Drakgapets kaldera, ren sena och sprint, som fortfarande doftar svagt av aska.",
-      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
-      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
-      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
+      "desc_mech_bird": "En handbyggd urverkshöna som sprintar på knäppande servon medan upprullningsnyckeln fortfarande vrider sig.",
+      "desc_lanternback_troll": "Ett kulletroll bröts till oket av lamptändare, bärande en järntron över sina axlar med en stormlykta som brinner på vardera arm.",
+      "desc_chimeglass_tortoise": "En saltplattsköldpadda som har gått ur tre generationer husvagnar. Tinkers malde honom glasögon från stormglas och hängde en bronsklocka i hans hals, så vägen hör honom långt innan den ser honom.",
       "desc_rickshaw_mount": "En skramlande benkärra med en benig hantlangare fastspänd vid skalmarna, som drar dig fram i språngmarsch."
     },
     "mountTraining": {
@@ -1622,26 +1630,26 @@ export const sv_SE: EnTranslations = {
       "showPlaytime": "Visa tid spelad på karaktärsskärmen",
       "forceHighPerfGpu": "Använd det separata spelgrafikkortet",
       "forceHighPerfGpuNote": "På som standard: skrivbordsappen begär datorns separata spelgrafikkort. Stäng av det här om spelet inte startar, öppnas med en svart skärm, eller om den bärbara datorns skärm blir svart. Träder i kraft nästa gång spelet startar.",
-      "shaderWarm": "Shader Warm-up Worker",
-      "shaderWarmAuto": "Auto",
-      "shaderWarmOff": "Off",
-      "shaderWarmOn": "On",
-      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
-      "gpuBackend": "Graphics Backend",
-      "gpuBackendAuto": "Auto",
+      "shaderWarm": "Shader-uppvärmningsarbetare",
+      "shaderWarmAuto": "Automatiskt",
+      "shaderWarmOff": "Av",
+      "shaderWarmOn": "På",
+      "shaderWarmNote": "Förvärm shadercachen i bakgrunden för att förhindra hack i spelet. Automatiskt: aktiveras bara när ditt grafiksystem stöder det. (Rekommenderas). På: tvingas överallt. Kan försämra prestanda på vissa system. Av: inaktiverat.",
+      "gpuBackend": "Grafikbakände",
+      "gpuBackendAuto": "Automatiskt",
       "gpuBackendVulkan": "Vulkan",
-      "gpuBackendOpenGL": "OpenGL (slow)",
-      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
-      "gpuBackendActive": "Currently using {backend}.",
-      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
-      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
-      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendOpenGL": "OpenGL (långsamt)",
+      "gpuBackendNote": "Automatiskt väljer det bästa alternativet åt dig. Vulkan är snabbare och rekommenderas för de flesta spelare. OpenGL är långsammare, men kan hjälpa om Vulkan inte fungerar korrekt. Börjar gälla nästa gång spelet startar.",
+      "gpuBackendActive": "Använder {backend} just nu.",
+      "gpuBackendActiveUnavailable": "Använder {backend} just nu (kan inte aktivera Vulkan).",
+      "gpuBackendActiveAutoCapped": "Använder {backend} just nu. Automatiskt försöker inte Vulkan på det här grafikkortet än. Välj Vulkan för att prova.",
+      "gpuBackendSaveFailed": "Valet kunde inte sparas. Nästa start behåller {backend}.",
       "gpuBackendActiveNameVulkan": "Vulkan",
       "gpuBackendActiveNameOpenGL": "OpenGL",
-      "restartPending": "Some changes take effect after a restart.",
-      "restartGame": "Restart Game",
-      "restartInProgress": "Restarting the game...",
-      "restartFailed": "The game could not restart itself. Quit and start it again.",
+      "restartPending": "Vissa ändringar börjar gälla efter en omstart.",
+      "restartGame": "Starta om spelet",
+      "restartInProgress": "Startar om spelet...",
+      "restartFailed": "Spelet kunde inte starta om sig självt. Avsluta och starta det igen.",
       "discordPresence": "Discord-aktivitet",
       "discordPresenceNote": "Visar zonen du befinner dig i och hur länge du har spelat den här sessionen som din Discord-aktivitet, och alla som kan se din Discord-profil kan se båda. Endast zonnamnet, din sessionstid och spelet delas, aldrig din karaktär, ditt konto eller vem du spelar med. Kräver att Discord-appen körs på den här datorn.",
       "showDevBadges": "Visa utvecklarmärken",
@@ -1650,7 +1658,10 @@ export const sv_SE: EnTranslations = {
       "uiScale": "Gränssnittsskala",
       "playerFrameScale": "Spelarramens skala",
       "targetFrameScale": "Målramens skala",
+      "playerHealthText": "Spelarens hälsa Text",
+      "targetHealthText": "Målhälsotext",
       "aurasOnPlayerFrame": "Förstärkningar på spelarramen",
+      "auraBarBelowFrame": "Förstärkningar under spelarramen",
       "alwaysShowAllBuffs": "Visa alltid alla förstärkningar",
       "highContrastBackground": "Bakgrund med hög kontrast",
       "startAttackOnAbility": "Automatisk attack vid förmågeanvändning",
@@ -1673,9 +1684,9 @@ export const sv_SE: EnTranslations = {
       "showTargetOfTarget": "Visa målets mål",
       "showTargetSwingTimer": "Visa målets svingtimer",
       "showPetFrame": "Visa ditt djur",
-      "showNameplateDots": "Show My Dots on Nameplates",
-      "nameplateDotScale": "Nameplate Dot Size",
-      "showTargetDots": "Show Target Dots",
+      "showNameplateDots": "Visa mina prickar på namnskyltar",
+      "nameplateDotScale": "Namnskylt Punktstorlek",
+      "showTargetDots": "Visa målprickar",
       "showDefensivesTrack": "Show Defensive Cooldowns",
       "showSelfBuffTrack": "Show My Buffs",
       "showOffensiveTrack": "Show Offensive Cooldowns",
@@ -2698,7 +2709,9 @@ export const sv_SE: EnTranslations = {
       "unequipHint": "Klicka för att ta bort den här väskan",
       "poolGeneral": "Allmänt: {used} av {total}",
       "poolMaterials": "Material: {used} av {total}",
-      "capacityPoolsAria": "Använda väskplatser: {used} av {total}. Allmänna föremål: {generalUsed} av {generalTotal}. Material: {materialsUsed} av {materialsTotal}."
+      "capacityPoolsAria": "Använda väskplatser: {used} av {total}. Allmänna föremål: {generalUsed} av {generalTotal}. Material: {materialsUsed} av {materialsTotal}.",
+      "capacityPools": "Föremål {generalUsed}/{generalTotal}, material {materialsUsed}/{materialsTotal}",
+      "emptyMaterialsOnly": "Endast material"
     },
     "raidConvert": {
       "toPartyDone": "Din raid har omvandlats tillbaka till en grupp.",
@@ -2728,22 +2741,22 @@ export const sv_SE: EnTranslations = {
       "worldfireConsumed": "Hela degeln brinner!"
     },
     "nythraxisCallout": {
-      "impaled": "Bone Spikes! Free the impaled!",
-      "youAreImpaled": "You are impaled! Hold on!",
-      "spikeBroken": "Spike shattered!",
-      "dreadCurseSwap": "Dread Curse: swap tanks!",
-      "sigilAppears": "A Binding Sigil flares! Drag Nythraxis onto it!",
-      "sigilBound": "Nythraxis is bound! Burn him!",
-      "sigilUnbound": "The sigil fades unbound! Nythraxis grows stronger!",
-      "gravefireTarget": "Gravefire races toward you! Sidestep!",
-      "kingsWrath": "The King rises in wrath! Everything hits harder now!",
-      "boneStormBegins": "Bone Storm! Spread out and run!",
-      "boneStormCharge": "Nythraxis is charging YOU! Run!",
-      "boneStormEnds": "Bone Storm over. Tanks, pick him up!",
-      "crownEndures60": "One minute until The Crown Endures!",
-      "crownEndures30": "Thirty seconds until The Crown Endures!",
-      "crownEndures10": "Ten seconds! Burn him!",
-      "crownEndures": "The Crown Endures! Nythraxis is enraged!"
+      "impaled": "Benspett! Befria de spetsade!",
+      "youAreImpaled": "Du är spetsad! Håll ut!",
+      "spikeBroken": "Spettet krossat!",
+      "dreadCurseSwap": "Skräckförbannelse: byt tankar!",
+      "sigilAppears": "Ett Bindningssigill flammar upp! Dra Nythraxis till det!",
+      "sigilBound": "Nythraxis är bunden! Bränn ner honom!",
+      "sigilUnbound": "Sigillet bleknar obundet! Nythraxis blir starkare!",
+      "gravefireTarget": "Graveld rusar mot dig! Sidostega!",
+      "kingsWrath": "Kungen reser sig i vrede! Allt slår hårdare nu!",
+      "boneStormBegins": "Benstorm! Sprid ut er och spring!",
+      "boneStormCharge": "Nythraxis rusar mot DIG! Spring!",
+      "boneStormEnds": "Benstorm över. Tankar, ta upp honom!",
+      "crownEndures60": "En minut till Kronan består!",
+      "crownEndures30": "Trettio sekunder till Kronan består!",
+      "crownEndures10": "Tio sekunder! Bränn ner honom!",
+      "crownEndures": "Kronan består! Nythraxis är rasande!"
     },
     "varkhulWaveStatus": "Våg {wave}/{waves} | Fiender: {remaining}",
     "raidBossGuide": {
@@ -2895,65 +2908,65 @@ export const sv_SE: EnTranslations = {
         "heroic": "Heroisk: smedjans hetta svalnar aldrig, Städets påbud lägger till meteorer, och den sista fasen tar bort de flesta mekanikerna för att fokusera på Världsbrand."
       },
       "nythraxis": {
-        "overview": "High Priest Malric refused to let his king die, and the rite that raised Nythraxis bound the whole court to the crypt. The encounter tests a disciplined tank swap, fast switches onto Bone Spikes, movement off burning ground, and a coordinated wardstone channel once the Throne falls.",
-        "phaseThroneName": "The Throne",
-        "phaseThroneSummary": "Nythraxis holds his throne room with a charged frontal cleave, the Dread Curse tank swap, Bone Spikes that impale raiders, and Grave Eruptions that leave burning ground.",
-        "phaseWardstonesName": "The Wardstones",
-        "phaseWardstonesSummary": "At {health} health, Shuddering Stomp holds the raid still while Brother Aldric arrives and lights the wardstones. Every spike shatters and the floor stops burning, then Soul Rend and Deathless Rage join the Throne mechanics.",
-        "phaseKingsWrathName": "The King's Wrath",
-        "phaseKingsWrathSummary": "At {health} health, Nythraxis roars in The King's Wrath and gains {bonusNormal} damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption tightens to every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire to every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic). Every other mechanic keeps its cadence.",
-        "gravebreakerName": "Gravebreaker",
-        "gravebreakerSummary": "Every {seconds} sec, Nythraxis charges his next landed swing. His target takes only the swing itself, but everyone else within {range} yd inside the {arc} degree cone in front of him takes {splash} of that swing as Physical damage, reduced by their own armor.",
-        "gravebreakerResponse": "Tanks keep Nythraxis facing away from the raid. Everyone else stays behind or beside him and never crosses the cone.",
-        "dreadCurseName": "Dread Curse",
-        "dreadCurseSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitNormal} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackNormal}, up to {max} stacks.",
-        "dreadCurseHeroicSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitHeroic} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackHeroic}, up to {max} stacks.",
-        "dreadCurseResponse": "Tanks swap at {stacks} stacks: the other tank taunts and the cursed tank stays out of the Gravebreaker cone while the stacks fade. Healers prepare the incoming tank before the swap.",
-        "boneSpikeName": "Bone Spike",
-        "boneSpikeSummary": "Every {everyNormal} sec, Nythraxis impales {victimsNormal} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainNormal} of maximum health every second until their spike is destroyed.",
-        "boneSpikeHeroicSummary": "Every {everyHeroic} sec, Nythraxis impales {victimsHeroic} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainHeroic} of maximum health every second until their spike is destroyed.",
-        "boneSpikeResponse": "Damage dealers switch to the Bone Spikes at once and destroy them to free the impaled raiders. Healers keep the impaled alive while the spikes fall.",
-        "graveEruptionName": "Grave Eruption",
-        "graveEruptionSummary": "Every {everyNormal} sec, skeletal hands mark {countNormal} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstNormal} of maximum health as Shadow damage, then burns as Grave Flame for {flameNormal} sec, dealing {tickNormal} of maximum health every second to anyone standing in it.",
-        "graveEruptionHeroicSummary": "Every {everyHeroic} sec, skeletal hands mark {countHeroic} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstHeroic} of maximum health as Shadow damage, then burns as Grave Flame for {flameHeroic} sec, dealing {tickHeroic} of maximum health every second to anyone standing in it.",
-        "graveEruptionResponse": "Step out of every warning circle before it erupts and stay off the burning ground. Tanks pull Nythraxis clear of the flames so melee keeps room to work.",
-        "bindingSigilName": "Binding Sigil",
-        "bindingSigilSummary": "Every {everyNormal} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionNormal} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindNormal} sec he is Bound: the Ascension is purged, he is stunned for {stunNormal} sec, and he takes {vulnerability} more damage for {boundNormal} sec. Otherwise every raider takes {unboundHitNormal} of maximum health as Shadow damage and he keeps {unboundBonusNormal} more damage until the next binding.",
-        "bindingSigilHeroicSummary": "Every {everyHeroic} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionHeroic} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindHeroic} sec he is Bound: the Ascension is purged, he is stunned for {stunHeroic} sec, and he takes {vulnerability} more damage for {boundHeroic} sec. Otherwise every raider takes {unboundHitHeroic} of maximum health as Shadow damage and he keeps {unboundBonusHeroic} more damage until the next binding.",
-        "bindingSigilResponse": "The tank drags Nythraxis onto the sigil at once, through whatever fire the raid left behind. Melee follow the drag and ranged stay out of the new Gravebreaker cone. Everyone burns him while he is Bound.",
-        "raiseFallenName": "Raise Fallen",
-        "raiseFallenSummary": "Every {every} sec during The Throne, Nythraxis raises Risen Royal Guards behind him. They rush his current target and fight until they are destroyed.",
-        "raiseFallenResponse": "The off-tank picks up each wave as it rises. Damage dealers clear the guards between Bone Spikes so the waves never pile up before the Throne falls.",
-        "soulRendName": "Soul Rend",
-        "soulRendSummary": "Nythraxis marks {marksNormal} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals its bearer's full maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them.",
-        "soulRendHeroicSummary": "Nythraxis marks {marksHeroic} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals {damageHeroic} of its bearer's maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them. A mark that resolves alone is lethal.",
-        "soulRendResponse": "Every marked raider runs to one stack point and stands within {range} yd of the other marks before the {fuse} sec fuse ends. Healers top the group off as the marks resolve.",
-        "soulfireName": "Soulfire",
-        "soulfireSummary": "Every Soul Rend detonation leaves a pool of purple fire with a {radius} yd radius where each mark stood, burning for {seconds} sec at {tickNormal} of maximum health every second. Standing where pools overlap takes a tick from each one. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireHeroicSummary": "Every Soul Rend detonation leaves one pool of purple fire with a {radius} yd radius per stacked group of marks, burning for {secondsHeroic} sec at {tickHeroic} of maximum health every second. Standing where pools overlap takes only one tick, never stacked copies. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireResponse": "Move out of the purple pool as soon as the marks detonate. Keep the next stack point clear of active fire.",
-        "gravefireName": "Gravefire",
-        "gravefireSummary": "Every {everyNormal} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnNormal} sec and deals {tickNormal} of maximum health every second to anyone standing in it.",
-        "gravefireHeroicSummary": "Every {everyHeroic} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnHeroic} sec and deals {tickHeroic} of maximum health every second to anyone standing in it.",
-        "gravefireResponse": "Sidestep the line as it comes: it is narrow and never turns. Ranged raiders keep moving instead of standing in one spot.",
-        "deathlessRageName": "Deathless Rage",
-        "deathlessRageSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageNormal} of maximum health as Shadow damage.",
-        "deathlessRageHeroicSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageHeroic} of maximum health as Shadow damage, which no health pool survives.",
-        "deathlessRageResponse": "Assign one raider to each wardstone before the pull. When the cast begins, each runs to their stone and channels it until it completes. Stuns, stepping away, and death break the channel, so keep the channelers safe and never assign an impaled raider.",
-        "courtName": "The Deathless Court",
-        "courtSummary": "On Heroic, Nythraxis raises his court after each Deathless Rage, interrupted or not, once the previous court has fallen. The Spirit of Aldren cleaves everything near his target with Royal Cleave. The Spirit of Malric channels Malric's Mending, healing Nythraxis for more with every cast. The Spirit of Voss ignores taunts and hunts the raid.",
-        "courtResponse": "Tanks pick up Aldren and turn his cleave away from the raid. Stun or silence Malric the moment Malric's Mending begins and kill him first, then root or stun Voss off the healers, since he cannot be taunted, and finish him next.",
-        "kingsWrathName": "King's Wrath",
-        "kingsWrathSummary": "Nythraxis deals {bonusNormal} more damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption occurs every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic).",
-        "kingsWrathResponse": "Use remaining defensive cooldowns for unavoidable damage. Keep every earlier mechanic clean while the raid finishes the fight.",
-        "boneStormName": "Bone Storm",
-        "boneStormSummary": "Starting {first} sec into The King's Wrath and every {everyNormal} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlNormal} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamNormal} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormHeroicSummary": "Starting {first} sec into The King's Wrath and every {everyHeroic} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlHeroic} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamHeroic} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormResponse": "Spread out and keep running from Nythraxis. The charged raider runs away while everyone else leaves room around the charge path, then tanks pick him up when the storm ends.",
-        "crownEnduresName": "The Crown Endures",
-        "crownEnduresSummary": "At {enrageNormal} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryNormal} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresHeroicSummary": "At {enrageHeroic} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryHeroic} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresResponse": "Treat the first warning as the final burn. Save movement and defensive cooldowns for the remaining mechanics, then defeat Nythraxis before the enrage."
+        "overview": "Överstepräst Malric vägrade låta sin kung dö, och riten som reste Nythraxis band hela hovet till kryptan. Mötet prövar ett disciplinerat tankbyte, snabba byten till Benspett, rörelse bort från brinnande mark och samordnad kanalisering av värnstenar när Tronen faller.",
+        "phaseThroneName": "Tronen",
+        "phaseThroneSummary": "Nythraxis håller sin tronsal med en laddad frontal klyvning, tankbytet för Skräckförbannelse, Benspett som spetsar raiddeltagare och Gravutbrott som lämnar brinnande mark.",
+        "phaseWardstonesName": "Värnstenarna",
+        "phaseWardstonesSummary": "Vid {health} hälsa håller Skakande Stamp raiden stilla medan Broder Aldric anländer och tänder värnstenarna. Varje spett krossas och golvet slutar brinna, sedan ansluter Själsslitning och Dödslöst Raseri till Tronens mekaniker.",
+        "phaseKingsWrathName": "Kungens Vrede",
+        "phaseKingsWrathSummary": "Vid {health} hälsa ryter Nythraxis i Kungens Vrede och får {bonusNormal} skada på Normal eller {bonusHeroic} på Heroic resten av striden. Gravutbrott tätnar till var {eruptionEveryNormal} sek ({eruptionEveryHeroic} på Heroic) och Graveld till var {gravefireEveryNormal} sek ({gravefireEveryHeroic} på Heroic). Varje annan mekanik behåller sin rytm.",
+        "gravebreakerName": "Gravbrytare",
+        "gravebreakerSummary": "Var {seconds} sek laddar Nythraxis sin nästa träffade sving. Hans mål tar bara själva svingen, men alla andra inom {range} yd i den {arc} grader breda konen framför honom tar {splash} av den svingen som fysisk skada, minskad av deras egen rustning.",
+        "gravebreakerResponse": "Tankar håller Nythraxis vänd bort från raiden. Alla andra står bakom eller bredvid honom och korsar aldrig konen.",
+        "dreadCurseName": "Skräckförbannelse",
+        "dreadCurseSummary": "Var {every} sek träffar Nythraxis sin nuvarande tank för {hitNormal} av maximal hälsa som Skuggskada och lägger till en stapel Skräckförbannelse. I {duration} sek ökar varje stapel skadan den tanken tar från Nythraxis med {perStackNormal}, upp till {max} staplar.",
+        "dreadCurseHeroicSummary": "Var {every} sek träffar Nythraxis sin nuvarande tank för {hitHeroic} av maximal hälsa som Skuggskada och lägger till en stapel Skräckförbannelse. I {duration} sek ökar varje stapel skadan den tanken tar från Nythraxis med {perStackHeroic}, upp till {max} staplar.",
+        "dreadCurseResponse": "Tankar byter vid {stacks} staplar: den andra tanken hånar och den förbannade tanken håller sig utanför Gravbrytarkonen medan staplarna bleknar. Helare förbereder den inkommande tanken före bytet.",
+        "boneSpikeName": "Benspett",
+        "boneSpikeSummary": "Var {everyNormal} sek spetsar Nythraxis {victimsNormal} raiddeltagare utom sitt nuvarande mål på Benspett. En spetsad raiddeltagare kan inte agera och förlorar {drainNormal} av maximal hälsa varje sekund tills spettet förstörs.",
+        "boneSpikeHeroicSummary": "Var {everyHeroic} sek spetsar Nythraxis {victimsHeroic} raiddeltagare utom sitt nuvarande mål på Benspett. En spetsad raiddeltagare kan inte agera och förlorar {drainHeroic} av maximal hälsa varje sekund tills spettet förstörs.",
+        "boneSpikeResponse": "Skadegörare byter direkt till Benspetten och förstör dem för att befria de spetsade raiddeltagarna. Helare håller de spetsade vid liv medan spetten faller.",
+        "graveEruptionName": "Gravutbrott",
+        "graveEruptionSummary": "Var {everyNormal} sek markerar skeletthänder {countNormal} cirklar på {radius} yd under raiddeltagare. Efter {warning} sek bryter varje cirkel ut för {burstNormal} av maximal hälsa som Skuggskada och brinner sedan som Gravflamma i {flameNormal} sek, vilket orsakar {tickNormal} av maximal hälsa varje sekund för alla som står i den.",
+        "graveEruptionHeroicSummary": "Var {everyHeroic} sek markerar skeletthänder {countHeroic} cirklar på {radius} yd under raiddeltagare. Efter {warning} sek bryter varje cirkel ut för {burstHeroic} av maximal hälsa som Skuggskada och brinner sedan som Gravflamma i {flameHeroic} sek, vilket orsakar {tickHeroic} av maximal hälsa varje sekund för alla som står i den.",
+        "graveEruptionResponse": "Kliv ut ur varje varningscirkel innan den bryter ut och håll er borta från brinnande mark. Tankar drar Nythraxis bort från lågorna så att närstrid har plats att arbeta.",
+        "bindingSigilName": "Bindningssigill",
+        "bindingSigilSummary": "Var {everyNormal} sek flammar ett sigill från de gamla värnen upp på golvet {minDist} till {maxDist} yd från Nythraxis, och han börjar Dödslös Uppstigning, vilket ger honom {ascensionNormal} skada och anfallshastighet var {ascensionEvery} sek. Om han står på sigillet inom {bindNormal} sek blir han Bunden: Uppstigningen renas, han bedövas i {stunNormal} sek och han tar {vulnerability} mer skada i {boundNormal} sek. Annars tar varje raiddeltagare {unboundHitNormal} av maximal hälsa som Skuggskada och han behåller {unboundBonusNormal} mer skada tills nästa bindning.",
+        "bindingSigilHeroicSummary": "Var {everyHeroic} sek flammar ett sigill från de gamla värnen upp på golvet {minDist} till {maxDist} yd från Nythraxis, och han börjar Dödslös Uppstigning, vilket ger honom {ascensionHeroic} skada och anfallshastighet var {ascensionEvery} sek. Om han står på sigillet inom {bindHeroic} sek blir han Bunden: Uppstigningen renas, han bedövas i {stunHeroic} sek och han tar {vulnerability} mer skada i {boundHeroic} sek. Annars tar varje raiddeltagare {unboundHitHeroic} av maximal hälsa som Skuggskada och han behåller {unboundBonusHeroic} mer skada tills nästa bindning.",
+        "bindingSigilResponse": "Tanken drar Nythraxis till sigillet direkt, genom vilken eld raiden än har lämnat. Närstrid följer dragningen och distansspelare håller sig borta från den nya Gravbrytarkonen. Alla bränner ner honom medan han är Bunden.",
+        "raiseFallenName": "Res fallna",
+        "raiseFallenSummary": "Var {every} sek under Tronen reser Nythraxis Uppståndna Kungliga Vakter bakom sig. De rusar mot hans nuvarande mål och slåss tills de förstörs.",
+        "raiseFallenResponse": "Den andra tanken tar upp varje våg när den reser sig. Skadegörare rensar vakterna mellan Benspett så att vågorna aldrig staplas innan Tronen faller.",
+        "soulRendName": "Själsslitning",
+        "soulRendSummary": "Nythraxis markerar {marksNormal} raiddeltagare utom sitt nuvarande mål med Själsslitning. Efter {fuse} sek orsakar varje markering bärarens fulla maximala hälsa som Skuggskada, delat med antalet markerade raiddeltagare inom {range} yd från dem.",
+        "soulRendHeroicSummary": "Nythraxis markerar {marksHeroic} raiddeltagare utom sitt nuvarande mål med Själsslitning. Efter {fuse} sek orsakar varje markering {damageHeroic} av bärarens maximala hälsa som Skuggskada, delat med antalet markerade raiddeltagare inom {range} yd från dem. En markering som löses ensam är dödlig.",
+        "soulRendResponse": "Varje markerad raiddeltagare springer till en samlingspunkt och står inom {range} yd från de andra markeringarna innan stubinen på {fuse} sek tar slut. Helare fyller upp gruppen när markeringarna löses.",
+        "soulfireName": "Själseld",
+        "soulfireSummary": "Varje Själsslitningsdetonation lämnar en pöl av lila eld med {radius} yd radie där varje markering stod, som brinner i {seconds} sek med {tickNormal} av maximal hälsa varje sekund. Att stå där pölar överlappar ger en tick från varje pöl. Pölar bildas aldrig inom {clearance} yd från en värnsten.",
+        "soulfireHeroicSummary": "Varje Själsslitningsdetonation lämnar en pöl av lila eld med {radius} yd radie per samlad markeringsgrupp, som brinner i {secondsHeroic} sek med {tickHeroic} av maximal hälsa varje sekund. Att stå där pölar överlappar ger bara en tick, aldrig staplade kopior. Pölar bildas aldrig inom {clearance} yd från en värnsten.",
+        "soulfireResponse": "Flytta ut ur den lila pölen så snart markeringarna detonerar. Håll nästa samlingspunkt fri från aktiv eld.",
+        "gravefireName": "Graveld",
+        "gravefireSummary": "Var {everyNormal} sek löper en linje av violett graveld från Nythraxis mot en raiddeltagare och växer {speed} yd varje sekund till {length} yd. Varje yard brinner i {burnNormal} sek och orsakar {tickNormal} av maximal hälsa varje sekund för alla som står i den.",
+        "gravefireHeroicSummary": "Var {everyHeroic} sek löper en linje av violett graveld från Nythraxis mot en raiddeltagare och växer {speed} yd varje sekund till {length} yd. Varje yard brinner i {burnHeroic} sek och orsakar {tickHeroic} av maximal hälsa varje sekund för alla som står i den.",
+        "gravefireResponse": "Sidostega linjen när den kommer: den är smal och svänger aldrig. Distansspelare fortsätter röra sig i stället för att stå på samma plats.",
+        "deathlessRageName": "Dödslöst Raseri",
+        "deathlessRageSummary": "Var {every} sek kastar Nythraxis Dödslöst Raseri i {cast} sek. Medan han kastar kan varje tänt värnsten kanaliseras av en raiddeltagare i {channel} sek. Om tre olika raiddeltagare var slutför en värnsten innan kastet slutar avbryts Raseriet och Nythraxis bedövas i {stun} sek. Annars tar varje raiddeltagare {damageNormal} av maximal hälsa som Skuggskada.",
+        "deathlessRageHeroicSummary": "Var {every} sek kastar Nythraxis Dödslöst Raseri i {cast} sek. Medan han kastar kan varje tänt värnsten kanaliseras av en raiddeltagare i {channel} sek. Om tre olika raiddeltagare var slutför en värnsten innan kastet slutar avbryts Raseriet och Nythraxis bedövas i {stun} sek. Annars tar varje raiddeltagare {damageHeroic} av maximal hälsa som Skuggskada, vilket ingen hälsopool överlever.",
+        "deathlessRageResponse": "Tilldela en raiddeltagare till varje värnsten före stridsstarten. När kastet börjar springer var och en till sin sten och kanaliserar den tills den fullbordas. Bedövningar, att kliva bort och död bryter kanaliseringen, så håll kanaliserarna säkra och tilldela aldrig en spetsad raiddeltagare.",
+        "courtName": "Det Dödslösa Hovet",
+        "courtSummary": "På Heroic reser Nythraxis sitt hov efter varje Dödslöst Raseri, avbrutet eller inte, när det föregående hovet har fallit. Aldrens ande klyver allt nära sitt mål med Kunglig Klyvning. Malrics ande kanaliserar Malrics Läkning, som läker Nythraxis mer för varje kast. Voss ande ignorerar hån och jagar raiden.",
+        "courtResponse": "Tankar tar upp Aldren och vänder hans klyvning bort från raiden. Bedöva eller tysta Malric i samma ögonblick som Malrics Läkning börjar och döda honom först, rota eller bedöva sedan Voss bort från helarna, eftersom han inte kan hånas, och avsluta honom därefter.",
+        "kingsWrathName": "Kungens Vrede",
+        "kingsWrathSummary": "Nythraxis orsakar {bonusNormal} mer skada på Normal eller {bonusHeroic} på Heroic resten av striden. Gravutbrott sker var {eruptionEveryNormal} sek ({eruptionEveryHeroic} på Heroic) och Graveld var {gravefireEveryNormal} sek ({gravefireEveryHeroic} på Heroic).",
+        "kingsWrathResponse": "Använd återstående defensiva nedkylningar för oundviklig skada. Håll varje tidigare mekanik ren medan raiden avslutar striden.",
+        "boneStormName": "Benstorm",
+        "boneStormSummary": "Från {first} sek in i Kungens Vrede och var {everyNormal} sek därefter börjar Nythraxis Benstorm i {duration} sek. Han ignorerar hot, rör sig {speed} gånger normal hastighet och gör {charges} rusningar som varar {chargeSeconds} sek var. Hans virvel orsakar {whirlNormal} av maximal hälsa varje sekund inom {radius} yd. Varje rusning slutar i en Bensmäll inom samma radie för {slamNormal} av maximal hälsa. Han kastar Benspett {spikeAt} sek in i stormen, sedan återaktiveras Gravbrytare {rearm} sek efter att den slutar.",
+        "boneStormHeroicSummary": "Från {first} sek in i Kungens Vrede och var {everyHeroic} sek därefter börjar Nythraxis Benstorm i {duration} sek. Han ignorerar hot, rör sig {speed} gånger normal hastighet och gör {charges} rusningar som varar {chargeSeconds} sek var. Hans virvel orsakar {whirlHeroic} av maximal hälsa varje sekund inom {radius} yd. Varje rusning slutar i en Bensmäll inom samma radie för {slamHeroic} av maximal hälsa. Han kastar Benspett {spikeAt} sek in i stormen, sedan återaktiveras Gravbrytare {rearm} sek efter att den slutar.",
+        "boneStormResponse": "Sprid ut er och fortsätt springa från Nythraxis. Den jagade raiddeltagaren springer bort medan alla andra lämnar utrymme runt rusningsvägen, sedan tar tankarna upp honom när stormen slutar.",
+        "crownEnduresName": "Kronan består",
+        "crownEnduresSummary": "Vid {enrageNormal} sek från stridsstarten (klockan pausar medan Broder Aldric kommer in vid 70%) utlöser Kronan består en hård raseri. Nythraxis får {damage} mer skada och {haste} snabbare anfall, sedan ytterligare {rampStep} skada var {rampEveryNormal} sek. Det finns ingen timerstapel. Varningar kommer som rop vid {warn60}, {warn30} och {warn10} sek kvar.",
+        "crownEnduresHeroicSummary": "Vid {enrageHeroic} sek från stridsstarten (klockan pausar medan Broder Aldric kommer in vid 70%) utlöser Kronan består en hård raseri. Nythraxis får {damage} mer skada och {haste} snabbare anfall, sedan ytterligare {rampStep} skada var {rampEveryHeroic} sek. Det finns ingen timerstapel. Varningar kommer som rop vid {warn60}, {warn30} och {warn10} sek kvar.",
+        "crownEnduresResponse": "Behandla den första varningen som den sista skadefasen. Spara rörelse och defensiva nedkylningar för de återstående mekanikerna och besegra sedan Nythraxis före raseriet."
       }
     },
     "auraEffect": {
@@ -2964,14 +2977,14 @@ export const sv_SE: EnTranslations = {
       "varkhulMoltenCore": "Bär den här kärnan till smedjan. Smält börda ger stigande skada var {interval}:e sekund, från {min}% till {max}% av maximal hälsa.",
       "varkhulForgeLink": "Avled en aktiv pelarstråle innan den når smedjan. Öppna strålar lägger till 6% hetta per sekund. I Normal svalnar smedjan av blockerade strålar och inaktiva pelare; i Heroisk sjunker hettan aldrig. Vid 100% drabbas smedjan av en dödlig Smedjekollaps.",
       "varkhulCrucibleExposure": "Att blockera en Degelstråle ger stigande skada baserad på maximal hälsa varje sekund. Staplarna återställs 10 sekunder efter att du lämnat en stråle i Normal, och efter 60 sekunder i Heroisk.",
-      "nythraxisDreadCurse": "Each stack increases damage taken from Nythraxis by {perStack}% for {duration} sec: {stacks} of {max} stacks now, {pct}% more damage. Every {every} sec his next hit on his target deals {hit}% of maximum health and adds a stack. Tanks should swap at {swap} stacks.",
-      "nythraxisImpaled": "Impaled on a Bone Spike: you cannot act and lose {normal}% of your maximum health every {interval} sec ({heroic}% on Heroic) until the raid destroys the spike.",
-      "nythraxisAscension": "Deathless Ascension: {stacks} stacks, {pct}% more damage and attack speed. Drag Nythraxis onto the Binding Sigil to purge it.",
-      "nythraxisBound": "Bound by the old wards: Nythraxis takes {pct}% more damage for {duration} sec.",
-      "nythraxisUnbound": "Unbound: Nythraxis deals {pct}% more damage until a Binding Sigil holds him.",
-      "nythraxisKingsWrath": "King's Wrath: Nythraxis deals {pct}% more damage for the rest of the fight.",
-      "nythraxisBoneStorm": "Bone Storm: Nythraxis ignores threat, whirls for {tick}% of maximum health every second within {radius} yd, and charges raiders. Spread out and run.",
-      "nythraxisCrownEndures": "The Crown Endures: {stacks} stacks, {pct}% more damage and {haste}% faster attacks. The raid is out of time.",
+      "nythraxisDreadCurse": "Varje stapel ökar skadan från Nythraxis med {perStack}% i {duration} sek: {stacks} av {max} staplar nu, {pct}% mer skada. Varje {every} sek orsakar hans nästa träff på sitt mål {hit}% av maximal hälsa och lägger till en stapel. Tankar bör byta vid {swap} staplar.",
+      "nythraxisImpaled": "Spetsad på ett Benspett: du kan inte agera och förlorar {normal}% av din maximala hälsa var {interval} sek ({heroic}% på Heroic) tills raiden förstör spettet.",
+      "nythraxisAscension": "Dödslös Uppstigning: {stacks} staplar, {pct}% mer skada och anfallshastighet. Dra Nythraxis till Bindningssigillet för att rena det.",
+      "nythraxisBound": "Bunden av de gamla värnen: Nythraxis tar {pct}% mer skada i {duration} sek.",
+      "nythraxisUnbound": "Obunden: Nythraxis orsakar {pct}% mer skada tills ett Bindningssigill håller honom.",
+      "nythraxisKingsWrath": "Kungens Vrede: Nythraxis orsakar {pct}% mer skada resten av striden.",
+      "nythraxisBoneStorm": "Benstorm: Nythraxis ignorerar hot, virvlar för {tick}% av maximal hälsa varje sekund inom {radius} yd och rusar mot raiddeltagare. Sprid ut er och spring.",
+      "nythraxisCrownEndures": "Kronan består: {stacks} staplar, {pct}% mer skada och {haste}% snabbare anfall. Raiden har slut på tid.",
       "dot": "Gör {value} {school}-skada var {interval}:e s",
       "hot": "Återställer {value} hälsa var {interval}:e s",
       "mendingCurrent": "Lagrar {value} läkning, frisläppt över tid eller förbrukad av Kaskadlagning",
@@ -3022,7 +3035,7 @@ export const sv_SE: EnTranslations = {
       "suddenDeath": "Din nästa Tidig grav kostar inget raseri och ignorerar sitt hälsokrav",
       "aoeEcho": "{charges} ekon återstår: förmågor mot ett enda mål vållar {pct}% skada till upp till {targets} närliggande fiender",
       "sureCrit": "{charges} kastningar av skadeförmågor är garanterat kritiska träffar",
-      "temporalEcho": "Kastarens arkanskada läker dig för {singlePct}% av enmålsskada eller {areaPct}% av områdesskada",
+      "temporalEcho": "Kastarens arkanskada läker dig för {singlePct}% av enmålsskada eller {areaPct}% av områdesskada. Etervåg och Eterpilar får en x4-bonus på ett individuellt Tidsmässigt eko. Gruppekona skapar en lika stor läkningsreserv, fördelad efter saknad hälsa bland märkta allierade under 60% hälsa",
       "arcaneCharge": "{stacks} Arkanladdningar: Etersvall gör {damagePct}% mer skada, kastas {castPct}% snabbare och kostar {costMult}x mana",
       "physicalReduction": "Minskar mottagen fysisk skada med {pct}%",
       "temporalHourglass": "Immun och oförmögen att handla; återställer hälsa och accelererar nedkylningsåterhämtning. Högerklicka för att avbryta.",
@@ -3042,8 +3055,8 @@ export const sv_SE: EnTranslations = {
       "redline": "Röd linje: hack {stacks} av {max}. Kroppsträffar lägger till hack; Nådastöten slår {pct}% hårdare per hack och stänger fönstret. Går det ut först förloras det",
       "veilstrikeWindow": "Skuggslöja: dina skymningsslöjeöppningar kan användas i öppen terräng från valfri vinkel, och skadan du gör ökar med {pct}%",
       "veiledEdge": "Ditt nästa lurarslag slår dubbelt så hårt",
-      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
-      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
+      "veiledEdgeStrike": "Ditt nästa Smygarslag orsakar {pct}% mer vapenskada",
+      "coldsightRead": "Ditt nästa Långdrag orsakar {longDrawPct}% mer skada, eller ditt nästa Olycksskott orsakar {fellShotPct}% mer",
       "duskEconomy": "Förmågor kostar {pct}% mindre energi",
       "moontide": "Månflod: steg {stacks} av {max}. Vildbult-, Himlafall- och Månfrö-besvärjelser fyller den i Månugglaform; vid {max} blir Månfrö Månsvall och Himlafall Solspår, och båda tär på den",
       "oldBlood": "Gammalt Blod: steg {stacks} av {max}. Träffande Varg- och Bruin-slag delar detta förråd; vid {max} förvandlas Blodsbett eller Benkross",
@@ -3237,6 +3250,7 @@ export const sv_SE: EnTranslations = {
       "healthPercent": "Procent",
       "healthCurrent": "Nuvarande",
       "healthCurrentMax": "Nuvarande / max",
+      "healthCurrentMaxPercent": "Aktuell/max (procent)",
       "sort": "Sortera spelare",
       "sortGroup": "Grupp",
       "sortRole": "Roll",
@@ -3276,17 +3290,17 @@ export const sv_SE: EnTranslations = {
         "targetFrame": "Mål",
         "partyFrames": "Grupp",
         "swingBar": "Autoattack",
-        "targetDots": "Target Dots",
-        "questTracker": "Quest Tracker",
-        "reliquaryTracker": "Reliquary Tracker",
-        "petBar": "Pet Bar",
-        "procOverlay": "Spell Procs",
-        "procOverlayFrost": "Icicles",
-        "damageMeter": "Damage Meter",
-        "deedTracker": "Deed Tracker",
-        "delveTracker": "Delve Tracker",
-        "riftTracker": "Rift Tracker",
-        "swingBarOffhand": "Off Hand"
+        "targetDots": "Målprickar",
+        "questTracker": "Uppdragsspårare",
+        "reliquaryTracker": "Relikvariespårare",
+        "petBar": "Husdjursfält",
+        "procOverlay": "Besvärjelseproccar",
+        "procOverlayFrost": "Istappar",
+        "damageMeter": "Skademätare",
+        "deedTracker": "Dådspårare",
+        "delveTracker": "Delve-spårare",
+        "riftTracker": "Revspårare",
+        "swingBarOffhand": "Avhand"
       },
       "framesMenu": "Raminställningar",
       "framesMenuTitle": "Visa eller göm enskilda ramar. En avbockad ram förblir dold tills du bockar för den igen eller återställer till standard.",
@@ -3319,33 +3333,33 @@ export const sv_SE: EnTranslations = {
       "wrongKind": "Den koden är av en annan exporttyp."
     },
     "keybindTransfer": {
-      "setup": "Hotkey Setup",
-      "apply": "Apply",
-      "imported": "Hotkey setup imported.",
-      "wrongKind": "That code is a settings export, not a hotkey setup."
+      "setup": "Snabbtangentsinställning",
+      "apply": "Tillämpa",
+      "imported": "Snabbtangentsinställning importerad.",
+      "wrongKind": "Den koden är en inställningsexport, inte en snabbtangentsinställning."
     },
     "keyboardMap": {
-      "title": "Keyboard Overview",
-      "hint": "Keys in use are coloured by category. Hover or focus a key to see everything bound to it.",
-      "hintInteractive": "Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.",
-      "popOut": "Pop Out",
-      "close": "Close keyboard overview",
-      "pressKey": "Press a key for {action}. Esc cancels.",
-      "boundTo": "Bound {action} to {key}.",
-      "notBindable": "That key cannot be bound.",
-      "assignHint": "Choose an action to bind to {key}.",
-      "assignPlaceholder": "Assign an action to {key}",
-      "layerGroup": "Modifier layer",
-      "formGroup": "Keyboard size",
-      "formFull": "Full size",
-      "formTkl": "Tenkeyless",
+      "title": "Tangentbordsöversikt",
+      "hint": "Tangenter som används är färgade efter kategori. Hovra över eller fokusera en tangent för att se allt som är bundet till den.",
+      "hintInteractive": "Tangenter som används är färgade efter kategori. Klicka på en tangent för att ändra vad den gör. Hovra över eller fokusera en tangent för att se allt som är bundet till den.",
+      "popOut": "Öppna separat",
+      "close": "Stäng tangentbordsöversikt",
+      "pressKey": "Tryck på en tangent för {action}. Esc avbryter.",
+      "boundTo": "Band {action} till {key}.",
+      "notBindable": "Den tangenten kan inte bindas.",
+      "assignHint": "Välj en handling att binda till {key}.",
+      "assignPlaceholder": "Tilldela en handling till {key}",
+      "layerGroup": "Modifierarlager",
+      "formGroup": "Tangentbordsstorlek",
+      "formFull": "Fullstorlek",
+      "formTkl": "Utan numeriskt tangentbord",
       "form75": "75%",
       "form60": "60%",
-      "notOnLayout": "Not on this keyboard: {bindings}",
-      "legendGroup": "Key labels",
-      "legendLayout": "Your layout",
+      "notOnLayout": "Inte på det här tangentbordet: {bindings}",
+      "legendGroup": "Tangentetiketter",
+      "legendLayout": "Din layout",
       "legendQwerty": "QWERTY",
-      "layerNone": "No modifier",
+      "layerNone": "Ingen modifierare",
       "layerShift": "Shift",
       "layerCtrl": "Ctrl",
       "layerAlt": "Alt",
@@ -3353,43 +3367,43 @@ export const sv_SE: EnTranslations = {
       "separator": ", ",
       "bindingLine": "{key}: {action}",
       "assignOption": "{category}: {action}",
-      "otherLayers": "Also bound with a modifier"
+      "otherLayers": "Också bunden med en modifierare"
     },
     "fullTransfer": {
-      "menu": "Import / Export",
-      "title": "Import / Export Settings",
-      "fullSettings": "Full Settings",
-      "intro": "Export every saved preference on this device as one code, and paste it on another device or browser to import it: graphics, audio, interface, theme, frame layout, key bindings for every character, controller and cross hotbar bindings, chat, window filters, language, and dismissed hints.",
-      "excluded": "Never included: your login, account, wallet, or purchase data. Action bar layouts are saved to your account and travel with it."
+      "menu": "Importera / exportera",
+      "title": "Importera / exportera inställningar",
+      "fullSettings": "Fullständiga inställningar",
+      "intro": "Exportera varje sparad inställning på den här enheten som en kod och klistra in den på en annan enhet eller i en annan webbläsare för att importera: grafik, ljud, gränssnitt, tema, ramlayout, tangentbindningar för varje karaktär, handkontroll- och cross-hotbar-bindningar, chatt, fönsterfilter, språk och avfärdade tips.",
+      "excluded": "Ingår aldrig: din inloggning, ditt konto, din wallet eller köpdata. Handlingsfältslayouter sparas på ditt konto och följer med."
     },
     "riftForge": {
-      "title": "Rift Forge",
-      "subtitle": "Riftbound bands",
+      "title": "Spricksmedjan",
+      "subtitle": "Riftbundna band",
       "currency": "{name}: {count}",
-      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
-      "wornHint": "Worn. Unequip it to forge.",
-      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
-      "upgradeMax": "Fully upgraded",
-      "gemPickAria": "Gem to socket",
+      "empty": "Inget Riftbound-band i dina väskor. En rankad Rift först klarar ett.",
+      "wornHint": "Sliten. Utrusta den för att smida.",
+      "upgradeBtn": "Uppgradera till artikelnivå {level} ({cost} essens)",
+      "upgradeMax": "Helt uppgraderad",
+      "gemPickAria": "Gem till uttag",
       "gemOption": "{name} ({bonus})",
-      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
-      "socketBtn": "Socket",
-      "socketsNone": "no gems",
-      "noGems": "No Rift gems in your bags",
-      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "socketReplaceHint": "Uttag fulla: nästa pärla ersätter den äldsta, {gem}.",
+      "socketBtn": "Uttag",
+      "socketsNone": "inga pärlor",
+      "noGems": "Inga Rift-ädelstenar i dina väskor",
+      "refused": "Smedjan vägrade. Stå vid Riftwright och försök igen.",
       "reason": {
-        "notFound": "That band is not in your bags.",
-        "notRiftGear": "Only a Riftbound band can be forged.",
-        "maxUpgrade": "That band is fully upgraded.",
-        "insufficientEssence": "Not enough Rift Essence.",
-        "invalidGem": "You have no such Rift gem.",
-        "dead": "You can't do that while dead.",
-        "tooFar": "You are too far from the Rift Forge."
+        "notFound": "Det bandet finns inte i dina väskor.",
+        "notRiftGear": "Endast ett Riftbound-band kan smidas.",
+        "maxUpgrade": "Det bandet är helt uppgraderat.",
+        "insufficientEssence": "Inte tillräckligt med Rift Essence.",
+        "invalidGem": "Du har ingen sådan Rift-pärla.",
+        "dead": "Du kan inte göra det när du är död.",
+        "tooFar": "Du är för långt från Rift Forge."
       },
       "done": {
-        "upgrade": "Upgraded {name}.",
-        "socket": "Socketed a gem into {name}.",
-        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+        "upgrade": "Uppgraderad {name}.",
+        "socket": "Socket en pärla i {name}.",
+        "socketReplaced": "Socket en pärla i {name}; {gem} förstördes."
       }
     },
     "itemTooltip": {
@@ -3397,7 +3411,7 @@ export const sv_SE: EnTranslations = {
       "riftTier": "Revföremål av grad {tier}",
       "riftUpgrade": "Revuppgradering {level}/{max}",
       "riftSockets": "Revstenar {used}/{total}",
-      "riftGemSocket": "Socket bonus for a Riftbound band",
+      "riftGemSocket": "Socketbonus för ett Riftbound-band",
       "statEnchanted": "+{value} {stat} (Förtrollad)",
       "enchantedFallback": "Förtrollad",
       "partyTradeWindow": "Du kan överlåta det här föremålet till spelare som delade bytet i {time} till. Att ta på det avslutar handelsfönstret.",
@@ -3462,6 +3476,7 @@ export const sv_SE: EnTranslations = {
       "close": "Stäng",
       "keybind": "Discord-panel",
       "disabled": "Discord-integrationen är inte tillgänglig just nu.",
+      "queuePingsLabel": "Skicka mig ett Discord direktmeddelande när min slagfält eller arena kö dyker upp (behöver ett länkat Discord-konto)",
       "tiers": {
         "none": "Orankad",
         "initiate": "Novis",
@@ -3719,13 +3734,13 @@ export const sv_SE: EnTranslations = {
       "close": "Stäng"
     },
     "realmBuilder": {
-      "title": "Realm Builder of the Month",
-      "currentLabel": "Honoured this month",
-      "placeholderName": "Your Name Here",
-      "placeholderHint": "This plate is waiting for its first name.",
-      "pastTitle": "Past honourees",
-      "pastEmpty": "No names on the roll yet.",
-      "close": "Close"
+      "title": "Månadens Realm Builder",
+      "currentLabel": "Hedrades denna månad",
+      "placeholderName": "Ditt namn här",
+      "placeholderHint": "Denna tallrik väntar på sitt förnamn.",
+      "pastTitle": "Tidigare hederstagare",
+      "pastEmpty": "Inga namn på listan ännu.",
+      "close": "Stäng"
     },
     "bank": {
       "title": "Bank",
@@ -3782,6 +3797,8 @@ export const sv_SE: EnTranslations = {
       "depositAllDone": "Material insatta: {count}.",
       "depositAllFull": "Material insatta: {count}. Banken är nu full.",
       "depositAllNone": "Banken är full: inget sattes in.",
+      "depositAllNotable": "Material deponerat: {count}, inklusive {item}.",
+      "depositAllNotableFull": "Material deponerat: {count}, inklusive {item}. Banken är nu full.",
       "bonusTitle": "Bonusfack",
       "bonusEarned": "+{count}",
       "bonusStatusEarned": "+{count}",
@@ -3820,6 +3837,8 @@ export const sv_SE: EnTranslations = {
       "vaultDepositAllDone": "Material insatta: {count}.",
       "vaultDepositAllFull": "Material insatta: {count}. Vissa tak är fulla.",
       "vaultDepositAllNone": "Valvets tak är fulla: inget sattes in.",
+      "vaultDepositAllNotable": "Material deponerat: {count}, inklusive {item}.",
+      "vaultDepositAllNotableFull": "Material deponerat: {count}, inklusive {item}. Vissa tak är fulla.",
       "vaultWithdrawShort": "Bara {fit} av {count} får plats i dina väskor.",
       "vaultDepositHint": "Klicka för att sätta in i ditt valv",
       "vaultCannotDeposit": "Kan inte förvaras i valvet",
@@ -3854,34 +3873,34 @@ export const sv_SE: EnTranslations = {
       "guildViewsAria": "Vyer för gillesbanken",
       "guildContentsTab": "Innehåll",
       "guildLogTab": "Logg",
-      "guildHistoryTab": "History",
+      "guildHistoryTab": "Historik",
       "logAria": "Aktivitetslogg för gillesbanken",
       "logNote": "De {count} senaste händelserna i gillesbanken.",
-      "logShowing": "Showing {count} guild bank actions, newest first.",
-      "logFilterAria": "Filter the guild bank history",
-      "logFilterAll": "All",
-      "logFilterItems": "Items",
-      "logFilterMoney": "Money",
-      "logOlder": "Show older",
-      "logOlderLoading": "Loading older actions...",
-      "logEnd": "That is the whole guild bank history.",
-      "logEmptyFiltered": "No guild bank actions match this filter.",
-      "logColTime": "When",
-      "logColMember": "Member",
-      "logColAction": "Action",
-      "logColDetail": "Details",
-      "logActionDeposit": "Deposited",
-      "logActionWithdraw": "Withdrew",
-      "logActionBuySlots": "Bought an expansion",
-      "logActionOpenBank": "Opened the bank",
-      "logActionCharterFee": "Paid the charter fee",
-      "logActionAdminPurge": "Removed",
-      "logActorAdmin": "An administrator",
+      "logShowing": "Visar {count} gillesbanksåtgärder, nyaste först.",
+      "logFilterAria": "Filtrera gillesbankhistoriken",
+      "logFilterAll": "Alla",
+      "logFilterItems": "Föremål",
+      "logFilterMoney": "Pengar",
+      "logOlder": "Visa äldre",
+      "logOlderLoading": "Läser in äldre åtgärder...",
+      "logEnd": "Det är hela gillesbankhistoriken.",
+      "logEmptyFiltered": "Inga gillesbanksåtgärder matchar filtret.",
+      "logColTime": "När",
+      "logColMember": "Medlem",
+      "logColAction": "Åtgärd",
+      "logColDetail": "Detaljer",
+      "logActionDeposit": "Satte in",
+      "logActionWithdraw": "Tog ut",
+      "logActionBuySlots": "Köpte en utökning",
+      "logActionOpenBank": "Öppnade banken",
+      "logActionCharterFee": "Betalade stadgeavgiften",
+      "logActionAdminPurge": "Togs bort",
+      "logActorAdmin": "En administratör",
       "logDetailItem": "{count} {item}",
-      "logSearchPlaceholder": "Search this history",
-      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
-      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
-      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
+      "logSearchPlaceholder": "Sök i historiken",
+      "logSearchAria": "Sök bland inlästa gillesbanksåtgärder efter medlem, åtgärd eller föremål",
+      "logShowingMatched": "Visar {matched} av {count} inlästa gillesbanksåtgärder.",
+      "logSearchNoMatch": "Inga inlästa gillesbanksåtgärder matchar din sökning. Visa äldre rader för att bredda sökningen.",
       "logLoading": "Laddar gillesbankens logg...",
       "logEmpty": "Inget har flyttats in i eller ut ur gillesbanken ännu.",
       "logUnavailable": "Gillesbankens logg kan inte läsas just nu.",
@@ -3982,17 +4001,17 @@ export const sv_SE: EnTranslations = {
         }
       },
       "roster": {
-        "seats": "{count} of {cap} seats",
-        "expand": "Expand roster (+{seats} seats for {price})",
-        "maxed": "The roster is at its largest size",
-        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
-        "confirmAction": "Expand",
-        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "seats": "{count} av {cap} säten",
+        "expand": "Utöka förteckningen (+{seats} platser för {price})",
+        "maxed": "Listan är i sin största storlek",
+        "confirm": "Utöka guildlistan med {seats}-platser för {price}? Guldet kommer från din egen handväska och återbetalas inte.",
+        "confirmAction": "Expandera",
+        "expandedLine": "{name} har utökat guildlistan till {cap}-medlemmar.",
         "result": {
-          "notLeader": "Only the Guild Master may expand the guild roster.",
-          "maxed": "The guild roster cannot grow any larger.",
-          "cannotAfford": "You need {price} to expand the guild roster.",
-          "retry": "The guild roster changed while you were buying. Try again."
+          "notLeader": "Endast Guild Master får utöka guildlistan.",
+          "maxed": "Skrålistan kan inte växa sig större.",
+          "cannotAfford": "Du behöver {price} för att utöka guildlistan.",
+          "retry": "Guildlistan ändrades medan du köpte. Försök igen."
         }
       }
     },
@@ -4556,7 +4575,7 @@ export const sv_SE: EnTranslations = {
       "sameEnchant": "Det föremålet har redan den förtrollningen.",
       "notPerfected": "Only a Perfected item can bear that enchant.",
       "enchantSkillTooLow": "Your Enchanting skill is too low for that enchant.",
-      "riftGear": "Riftbound bands take Rift gems, not enchants.",
+      "riftGear": "Riftbundna band tar Rift-ädelstenar, inte förtrollningar.",
       "replaceTag": "Ersätter {enchant}",
       "sameEnchantTag": "Redan applicerad",
       "plainTag": "Inte förtrollad",
@@ -4847,15 +4866,15 @@ export const sv_SE: EnTranslations = {
         "deathless_rage": "Dödsfri vrede (avbryts vid väktarstenarna)",
         "wardstones": "Väktarstenarnas kanaler (fasövergång)",
         "dread_curse": "Skräckförbannelse (endast heroisk, staplande försvagning för tankbyte)",
-        "bone_spike": "Bone Spike (impaled raiders drain until the spike is destroyed)",
-        "grave_eruption": "Grave Eruption (warning circles that leave burning ground)",
-        "binding_sigil": "Binding Sigil (drag the boss onto the sigil or the raid pays)",
-        "gravefire": "Gravefire (a traveling line of fire to sidestep)",
-        "soulfire": "Soulfire (Soul Rend detonations leave burning pools)",
-        "kings_wrath": "King's Wrath (30%: permanent damage bonus, faster floor hazards)",
-        "bone_storm": "Bone Storm (he ignores threat, whirls, and charges the raid)",
-        "crown_endures": "The Crown Endures (hard enrage at 6:00, heroic 5:00)",
-        "deathless_court": "The Deathless Court (heroic only, the royal court rises after Deathless Rage)"
+        "bone_spike": "Benspett (spetsade raiddeltagare dräneras tills spettet förstörs)",
+        "grave_eruption": "Gravutbrott (varningscirklar som lämnar brinnande mark)",
+        "binding_sigil": "Bindningssigill (dra bossen till sigillet, annars får raiden betala)",
+        "gravefire": "Graveld (en rörlig eldlinje att sidostega)",
+        "soulfire": "Själseld (detonationer av Själsslitning lämnar brinnande pölar)",
+        "kings_wrath": "Kungens Vrede (30%: permanent skadebonus, snabbare golvfaror)",
+        "bone_storm": "Benstorm (han ignorerar hot, virvlar och rusar mot raiden)",
+        "crown_endures": "Kronan består (hård raseri vid 6:00, heroic 5:00)",
+        "deathless_court": "Det Dödslösa Hovet (endast heroic, kungahovet reser sig efter Dödslöst Raseri)"
       }
     },
     "reliquary": {
@@ -4945,6 +4964,7 @@ export const sv_SE: EnTranslations = {
       "sourceProfession": "Förtjänas genom {profession}",
       "sourceDeed": "Ges av bedriften {deed}",
       "sourceVendor": "Säljs av {vendor}",
+      "sourceVendorGated": "Säljs av {vendor} ({requirement})",
       "sourceBossZone": "Fälls av {boss} i {zone}",
       "sourceDelve": "Hittas i delven {delve}",
       "sourceRift": "Fälls vid klarningar av Revor med rang {rank}",
@@ -4964,6 +4984,10 @@ export const sv_SE: EnTranslations = {
       "filterAll": "Alla",
       "filterOwned": "Katalogiserade",
       "filterMissing": "Saknade",
+      "filterIlluminated": "Upplyst",
+      "filterRemaining": "Kvar",
+      "filterEmptyPages": "Inga sidor matchar detta filter.",
+      "filterGroupAriaPages": "Filtrera sidor efter om de är upplysta",
       "recentJumpAria": "Öppna sidan för {name}",
       "recentEmpty": "Inga fynd än. Reliker du katalogiserar från och med nu hamnar här.",
       "nearlyEmpty": "Sidor som närmar sig fullbordan samlas här.",
@@ -5071,6 +5095,7 @@ export const sv_SE: EnTranslations = {
       "summary": "Världskarta. Välj en zon för att öppna dess karta.",
       "toWorld": "Världskarta",
       "toZone": "Zonkarta",
+      "toInstance": "Instanskarta",
       "toggleAria": "Växla mellan världskartan och zonkartan",
       "levels": "Nivåer {min} till {max}"
     },
@@ -5105,6 +5130,7 @@ export const sv_SE: EnTranslations = {
       "walletLinkedConnected": "Din länkade plånboksapp är ansluten och redo för $WOC-köp.",
       "walletUsdBalance": "{amount} USD",
       "walletUsdUnknown": "Okänt",
+      "walletCardDismiss": "Dölj plånbokskort",
       "rateNote": "Kurs: ungefär {tokens} $WOC per 1 USD, per {time}.",
       "rateNotePaused": "Senast kända kurs: ungefär {tokens} $WOC per 1 USD, per {time}.",
       "estimateNote": "Ungefär {tokens} $WOC för {usd} till aktuell kurs.",
@@ -5296,6 +5322,43 @@ export const sv_SE: EnTranslations = {
       "listingStatusCancelled": "Avbruten",
       "listingStatusSuspended": "Avstängd",
       "listingStatusUnsold": "Osåld"
+    },
+    "lootExplorer": {
+      "title": "Bytesöversikt",
+      "close": "Stäng Loot Explorer",
+      "searchPlaceholder": "Sök efter objekt...",
+      "searchAria": "Sök föremål",
+      "filterCategoryAria": "Källa",
+      "filterClassAria": "Klass",
+      "filterStatAria": "Attribut",
+      "filterQualityAria": "Kvalitet",
+      "filterAll": "Alla",
+      "tabItems": "Efter artikel",
+      "tabEncounters": "Genom möte",
+      "category": {
+        "raid": "Räd",
+        "dungeon": "Instans",
+        "delve": "Fördjupa",
+        "open_world": "Öppen värld",
+        "rift": "Spricka",
+        "vendor": "Försäljare",
+        "quest_reward": "Quest Belöning",
+        "quest_objective": "Quest mål",
+        "ground_object": "Världsobjekt",
+        "starting_equipment": "Startutrustning"
+      },
+      "difficulty": {
+        "normal": "Normal svårighet",
+        "heroic": "Heroisk"
+      },
+      "riftRankLabel": "Sprickrang {rank}",
+      "source": "{category}: {name}",
+      "sourceWithContext": "{category}: {name} ({context})",
+      "chance": "{pct} % chans",
+      "guaranteed": "Garanterat",
+      "gatedByQuest": "Medan du söker: {quest}",
+      "empty": "Inget byte matchar dessa filter.",
+      "resultCount": "{count} resultat"
     }
   },
   "gatherEvent": {
@@ -5395,7 +5458,8 @@ export const sv_SE: EnTranslations = {
       "link_required": "Koppla ditt Discord-konto först.",
       "swag_claimed": "Du har redan hämtat den här belöningen.",
       "swag_tier": "Nå en högre rang för att hämta den här.",
-      "swag_points": "Inte tillräckligt med poäng."
+      "swag_points": "Inte tillräckligt med poäng.",
+      "invalid_input": "Ogiltig inmatning."
     },
     "deeds": {
       "invalid_input": "Ogiltig indata."
@@ -5447,6 +5511,11 @@ export const sv_SE: EnTranslations = {
       "reason_required": "En anledning krävs.",
       "invalid_duration": "Ange en märkningslängd på minst en sekund.",
       "not_marked": "Det kontot är inte märkt."
+    },
+    "kick": {
+      "reason_required": "En anledning krävs.",
+      "admin_target": "Operatörskonton kan inte sparkas.",
+      "target_offline": "Den spelaren är inte längre online i denna värld."
     },
     "woc_market": {
       "invalid_input": "Ogiltig inmatning.",
@@ -5882,10 +5951,13 @@ export const sv_SE: EnTranslations = {
       "ifPlayerFrameScale": "Storleken på din egen ram.",
       "ifTargetFrameScale": "Storleken på din målram.",
       "ifPartyStyle": "Gruppens layout: Automatisk följer gruppens storlek, Klassisk är den traditionella stapeln, och Raid packar alla i det kompakta rutnätet.",
+      "ifPlayerHealthText": "Vad ditt eget hälsofält skriver ut: ingenting, en procentsats, aktuell hälsa, aktuell och maximal, eller båda med procenten bredvid.",
+      "ifTargetHealthText": "Vad mål- och mål-av-mål-hälsofälten skriver ut, med samma val som din egen ram.",
       "ifPartyHealthText": "Vad gruppfälten visar: inget, en procentsats, nuvarande hälsa, eller nuvarande och maximal.",
       "ifPartySort": "Ordningen gruppmedlemmarna listas i: gruppordning, roll eller namn.",
       "ifPartyShowAuras": "Om buffar och debuffar visas på gruppramarna. Motsvarande brytare täcker resursfält, absorptioner, djur och om du själv syns i din egen grupplista.",
       "ifAurasOnPlayerFrame": "Lägger dina buffar och debuffar på din egen ram, utöver aurafältet.",
+      "ifAuraBarBelowFrame": "Flyttar buffraden under din enhetsram i stället för ovanför den. Spelar bara roll när förstärkningar visas på spelarramen.",
       "ifAlwaysShowAllBuffs": "Visar alla aktiva förstärkningar även med grafikförinställningen Låg och kringgår den vanliga gränsen för förstärkningsikoner.",
       "ifTargetOfTarget": "Visar vem ditt mål siktar på, det klassiska sättet att se om tanken fortfarande har aggro.",
       "ifPetFrame": "Visar en ram för ditt djur.",
@@ -5893,6 +5965,7 @@ export const sv_SE: EnTranslations = {
       "ifChatOpacity": "Hur solid chattens bakgrund är.",
       "ifCompactChat": "Gör chattraderna tätare så att fler ryms.",
       "ifChatTimestamps": "Lägger till en tid på varje chattrad, i 12- eller 24-timmarsformat.",
+      "ifFilterProfanity": "Maskerar svordomar i chatt med asterisker. På som standard; stäng av den här om du hellre vill läsa chatten ofiltrerad.",
       "ifStartAttack": "Om det att använda en förmåga även startar ditt automatiska anfall. Aktiverat som standard, och det klassiska beteendet de flesta spelare förväntar sig.",
       "ifStopAutoAttack": "Om målbyte stoppar ditt anfall. Avstängt som standard, så ditt anfall fortsätter över till det nya målet.",
       "ifShowAttackButton": "Lägger en tydlig Anfall-knapp på ditt handlingsfält.",
@@ -6746,8 +6819,8 @@ export const sv_SE: EnTranslations = {
       "raceBody": "Varje grupp i riket kan anfalla samma reva samtidigt, var och en i sin egen kopia, och bara den första som fäller det som väntar längst ner förseglar den. När en grupp vinner hör riket deras namn och deras tid, och vägen in stängs bakom dem. Att förlora kapplöpningen avslutar inte er kopia: den står kvar öppen, det som väntar längst ner faller ändå för er, och ni går ut på egna ben ändå. Vad det kostar er är allt det som en riktig rensning skulle ha betalat. Bossen lämnar ingenting efter sig åt gruppen som kom tvåa, så det ni bär hem är bara det som föll från de andra fienderna på vägen ner, och inget mer. Bedrifternas bok räknar rensningen ändå, för ni fällde faktiskt det som väntade. Det är den enda kapplöpningen i spelet ni kan förlora utan att någonsin se de som slog er.",
       "rewardsHeading": "Vad ni bär ut",
       "rewardsBody": "Det är att försegla en reva, inte bara att överleva en, som lönar sig. Fäller ni revan först betalar den som det instansinnehåll dess grad står bredvid, så de hårdare graderna är värda den hårdare körningen. Att försegla lägger också en Revbunden ring i händerna på alla som var där, var och en skuren efter den egna klassens roll och personlig för den spelaren, och lämnar Revessens i era väskor därtill, med revstenar ovanpå det på de hårdare graderna. Vid sidan av vägen hem lämnar det som väntar längst ner ett förseglat förråd er grupp kan dyrka upp för extra byte, med samma Tappens väg-dyrkning ni känner från delve-kistor, så ett rent, tålmodigt arbete lönar sig bättre än ett hastigt. Inget av detta når en grupp som kom tvåa: en förlorad kapplöpning lämnar er bara det som föll från fienderna på vägen ner. Bedrifternas bok är undantaget, och den räknar er rensning oavsett, med en bedrift för att försegla er första reva och en till för att fälla en av grad S.",
-      "forgeHeading": "The Rift Forge",
-      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
+      "forgeHeading": "Rift Forge",
+      "forgeBody": "Bandet en rankad första klara mints är inte färdig när du får den. Riftwright Maelis, som håller en smedja i Watch Meadow på Farshore, upp längs stranden från Gullhaven bredvid Breach Scholar, kommer att höja sin objektnivå ett steg i taget och sätta de färgade ädelstenarna som klyftorna faller i sina hylsor, varje färg ett stridsbetyg. Ett helt band tar en ny pärla i stället för sin äldsta, så du kan stämma om den senare. Allt detta betalas i Rift Essence och Rift gems, smidesvalutan som faller från riftbossarna och handlar fritt, så en vän kan ge dig essensen som du är kort. Ta av bandet innan du tar med det till henne: hon jobbar med det som finns i dina väskor, och hon gör ingenting alls om du inte står vid hennes smedja.",
       "trackerHeading": "Spåraren på din skärm",
       "trackerBody": "Medan ni är därinne håller en liten rad på skärmen er orienterade: vilken våning ni är på av hur många, och en levande nedräkning. Läs den nedräkningen noga, för det är inte er kopia som rinner ut. Det är ingången tillbaka ut i världen som stängs. När ni väl är igenom spelar er grupp ut revan i sin egen takt, hur lång tid det än tar, men när klockan når noll är vägen in borta för alla, så tänk er för innan ni kliver ut nära slutet av den."
     },
@@ -8742,7 +8815,7 @@ export const sv_SE: EnTranslations = {
       "forgeUpgraded": "Revuppgradering slutförd för {name}.",
       "forgeEnchanted": "Revförtrollning slutförd för {name}.",
       "forgeSocketed": "Revsten monterad för {name}.",
-      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
+      "forgeGemReplaced": "Riftpärla ersatt för {name}: {gem} förstört.",
       "detonateGlacialGrave": "Glaciärgraven detonerar!",
       "detonateAbsoluteZero": "Absoluta nollpunkten bryter ut!",
       "detonateMagmaWell": "Magmakällan bryter ut!",
@@ -9385,6 +9458,7 @@ export const sv_SE: EnTranslations = {
     "connectingRealm": "Ansluter till världen...",
     "assetsFailed": "Inläsning av tillgångar misslyckades: försök läsa om sidan. {error}",
     "rendererFailed": "Kunde inte starta renderaren: försök läsa om sidan. {error}",
+    "rendererContextLost": "3D-renderaren förlorade sin grafikkontext och kunde inte återställa den. Läs om sidan.",
     "enterTimeout": "Kunde inte gå in i världen. Anslutningen tog för lång tid. Körs spelservern?",
     "connectionLost": "Anslutningen till servern bröts.",
     "reconnectingAttempt": "Anslutning förlorad. Återansluter... (försök {attempt}/{maxAttempts}, försöker igen om {seconds}s)",
@@ -9395,6 +9469,7 @@ export const sv_SE: EnTranslations = {
     "realmFull": "Denna värld är full just nu. Försök igen om några minuter.",
     "tooManyConnections": "För många anslutningar till denna värld kommer från ditt nätverk. Stäng extra spelfönster eller försök igen om några minuter.",
     "messageRateExceeded": "Du kopplades från för att du skickade handlingar för snabbt. Vänta en stund och logga in igen.",
+    "kickedByModerator": "En moderator har kopplat bort dig: {reason}",
     "tips": {
       "classes": "Tips: var och en av de 9 klasserna spelas på sitt eget sätt. Prova några innan du bestämmer dig för en.",
       "talents": "Tips: du kan återställa dina talanger när du inte strider, så ett tidigt val blir aldrig en fälla.",
@@ -9483,7 +9558,7 @@ export const sv_SE: EnTranslations = {
     "bodyWeb": "Spelet körs utan GPU-acceleration och kommer att vara långsamt. Aktivera hårdvaruacceleration i din webbläsares inställningar, uppdatera dina grafikdrivrutiner och starta sedan om din webbläsare.",
     "hybridBodyWindows": "Den här sessionen renderas på det integrerade (strömsparande) grafikkortet. Om den här datorn även har ett separat spelgrafikkort, ställ in din webbläsare på Höga prestanda under Inställningar > System > Bildskärm > Grafik, och starta sedan om den. Skrivbordsappen väljer det separata grafikkortet automatiskt.",
     "hybridBodyLinux": "Den här sessionen renderas på det integrerade (strömsparande) grafikkortet. Om den här datorn även har ett separat spelgrafikkort kan din webbläsare eller grafikdrivrutin erbjuda en egen inställning för val av grafikkort, eller så kan din distribution erbjuda ett verktyg för att växla grafikkort (till exempel PRIME eller optimus-manager). Skrivbordsappen väljer det separata grafikkortet automatiskt.",
-    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
+    "bodyRequestedBackend": "Spelet kunde inte starta med grafikbakänden du valde, så det körs på OpenGL i stället. Allt fungerar, men laddning och de första minuterna kan hacka mer. Du kan välja en bakände igen under Alternativ, Grafik, System.",
     "hybridBodyOther": "Den här sessionen renderas på det integrerade (strömsparande) grafikkortet. Om den här datorn även har ett separat spelgrafikkort, kontrollera din webbläsares och ditt operativsystems grafikinställningar för att aktivera det. Skrivbordsappen väljer det separata grafikkortet automatiskt.",
     "dismiss": "Stäng"
   },
@@ -11229,11 +11304,11 @@ export const sv_SE: EnTranslations = {
       },
       "melting_acid": {
         "name": "Smältande syra",
-        "description": "Stänker målet med ett frätande gift, gör {damage} naturskada och minskar dess rustning med 5 % i 12 sekunder."
+        "description": "Bestryker ditt vapen i 30 min. Vart och ett av dina närstridshugg stänker frätande syra på målet och minskar dess rustning med 5 % i 12 sekunder."
       },
       "nightshade_coating": {
         "name": "Nightshade beläggning",
-        "description": "Belägger målet i nattskugga, gör {damage} naturskada och minskar läkningen den får med 25 % under 12 sek."
+        "description": "Bestryker ditt vapen i 30 min. Vart och ett av dina närstridshugg belägger målet i nattskugga och minskar läkningen det får med 25 % i 12 sekunder."
       },
       "expose_armor": {
         "name": "Rustningsbräsch",
@@ -11249,11 +11324,11 @@ export const sv_SE: EnTranslations = {
       },
       "instant_poison": {
         "name": "Huggormens bett",
-        "description": "Bestryker ditt vapen i 30 min så att vart och ett av dina närstridshugg vållar 8 extra naturskada."
+        "description": "Bestryker ditt vapen i 30 min så att vart och ett av dina närstridshugg vållar {damage} extra naturskada."
       },
       "deadly_poison": {
         "name": "Varande gift",
-        "description": "Bestryker ditt vapen i 30 min så att vart och ett av dina närstridshugg vållar 14 extra naturskada."
+        "description": "Bestryker ditt vapen i 30 min. Vart och ett av dina närstridshugg lägger till en giftstapling på målet, upp till 5, och förnyar varaktigheten på 12 sekunder. Varje stapling vållar {damage} naturskada varannan sekund."
       },
       "blind": {
         "name": "Gruskast",
@@ -11466,7 +11541,7 @@ export const sv_SE: EnTranslations = {
       "arcane_shot": {
         "name": "Ondskeskott",
         "description": "Skjuter målet för {damage} Arkan skada. Skadan ökar med anfallskraft på avstånd.",
-        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
+        "specNote_marksmanship": "Köldsynsberedskap från ett fullbordat Feberdrag gör att ditt nästa Olycksskott orsakar 75% mer skada. Skottet förbrukar Beredskap."
       },
       "concussive_shot": {
         "name": "Skakande skott",
@@ -12352,11 +12427,11 @@ export const sv_SE: EnTranslations = {
       },
       "temporal_echo": {
         "name": "Tidseko",
-        "description": "Märker en allierad med ett eko av ett friskare ögonblick och läker {damage} hälsa på en gång. Under {duration} sek dras en del av den Arkan skada du gör tillbaka genom ekoet för att läka dem."
+        "description": "Märker en allierad med ett eko av ett friskare ögonblick och läker {damage} hälsa på en gång. Under {duration} sek läker {echoSinglePct}% av din övriga Arkana enmålsskada och {echoAreaPct}% av din Arkana områdesskada dem. Etervåg och Eterpilar läker dem i stället för {echoDriverPct}% av skadan de gör."
       },
       "temporal_cascade": {
         "name": "Tidskaskad",
-        "description": "Skickar ett eko kaskaderande genom din grupp: målet och upp till fyra av deras närmaste allierade läks på en gång och märks var och en i {duration} sek, och drar en del av den Arkan skada du ger tillbaka genom deras ekon för att läka dem. (Kronomantik)"
+        "description": "Skickar ett eko kaskaderande genom din grupp: målet och upp till fyra av deras närmaste allierade läks på en gång och märks var och en i {duration} sek, och drar en del av den Arkana skada du gör tillbaka genom deras ekon för att läka dem. Etervåg och Eterpilar skapar en lika stor läkningsreserv från varje gruppseko, fördelad efter saknad hälsa bland märkta allierade under 60% hälsa. (Kronomantik)"
       },
       "temporal_reversal": {
         "name": "Tidsåtergång",
@@ -14044,11 +14119,17 @@ export const sv_SE: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Ignition Key: Dreadspark Groundshaker"
       },
+      "reins_goblin_rocket_sled": {
+        "name": "Tändningsnyckel: Goblinraketsläde"
+      },
+      "reins_rallycart_rxt": {
+        "name": "Tändningsnyckel: Rallycart RXT"
+      },
       "reins_lanternback_troll": {
         "name": "Lykttändarens ok: Grumbol"
       },
       "reins_chimeglass_tortoise": {
-        "name": "Roadwarden's Bellstrap: Tolliver"
+        "name": "Vägvaktarens klockrem: Tolliver"
       },
       "reins_rickshaw_mount": {
         "name": "Bundna tyglar: Benbunden Rickshaw"
@@ -14057,7 +14138,7 @@ export const sv_SE: EnTranslations = {
         "name": "Tyglar till Drakgapsraptorn"
       },
       "reins_mech_bird": {
-        "name": "Ignition Key: Cluckwork Mech Bird"
+        "name": "Tändningsnyckel: Cluckwork Mech Bird"
       },
       "rimefang": {
         "name": "Rimtand"
@@ -15368,46 +15449,46 @@ export const sv_SE: EnTranslations = {
         "name": "Field Kit"
       },
       "bramblehide_crown": {
-        "name": "Roots' Bramblehide Crown"
+        "name": "Rotens Törnhudskrona"
       },
       "bramblehide_mantle": {
-        "name": "Roots' Bramblehide Mantle"
+        "name": "Rotens Törnhudsmantel"
       },
       "bramblehide_harness": {
-        "name": "Roots' Bramblehide Harness"
+        "name": "Rotens Törnhudssele"
       },
       "bramblehide_cinch": {
-        "name": "Roots' Bramblehide Cinch"
+        "name": "Rotens Törnhudsgjord"
       },
       "bramblehide_legguards": {
-        "name": "Roots' Bramblehide Legguards"
+        "name": "Rotens Törnhudsbenskydd"
       },
       "bramblehide_grips": {
-        "name": "Roots' Bramblehide Grips"
+        "name": "Rotens Törnhudsgrepp"
       },
       "bramblehide_treads": {
-        "name": "Roots' Bramblehide Treads"
+        "name": "Rotens Törnhudsstövlar"
       },
       "courtiers_bonefang": {
-        "name": "Courtier's Bonefang"
+        "name": "Hovmannens Bentand"
       },
       "thornpeak_wardblade": {
-        "name": "Thornpeak Wardblade"
+        "name": "Törntoppens Värnklinga"
       },
       "gravecourt_hewer": {
-        "name": "Gravecourt Hewer"
+        "name": "Gravgårdens Huggare"
       },
       "votive_ward_of_the_deathless_court": {
-        "name": "Votive Ward of the Deathless Court"
+        "name": "Votivvärn från det Dödslösa Hovet"
       },
       "thornpeak_moonhide_cowl": {
-        "name": "Thornpeak Moonhide Cowl"
+        "name": "Törntoppens Månhudskåpa"
       },
       "stormhymn_chain_grips": {
-        "name": "Stormhymn Chain Grips"
+        "name": "Stormhymnens Kedjegrepp"
       },
       "stormhymn_chain_treads": {
-        "name": "Stormhymn Chain Treads"
+        "name": "Stormhymnens Kedjestövlar"
       },
       "conjured_water4": {
         "name": "Frambesvärjt källvatten"
@@ -16402,7 +16483,7 @@ export const sv_SE: EnTranslations = {
         "name": "Nythraxis, Törntoppens gissel"
       },
       "nythraxis_bone_spike": {
-        "name": "Bone Spike"
+        "name": "Benspett"
       },
       "ignivar_herald_of_the_last_flame": {
         "name": "Ignivar, den sista lågans härold"
@@ -17371,9 +17452,9 @@ export const sv_SE: EnTranslations = {
         "greeting": "Den öppnades precis där näten torkar. Precis där, där jag stod varje morgon i mitt liv. Jag går inte ner till stranden längre. Jag går inte till så mycket alls längre."
       },
       "riftwright_maelis": {
-        "name": "Riftwright Maelis",
-        "title": "Rift Forgemaster",
-        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
+        "name": "Riftsmed Maelis",
+        "title": "Riftsmedmästare",
+        "greeting": "Ett Riftbound-band minns pausen som gjorde det, {className}. Ta med mig bandet och essensen som rasterna fäller, så ska jag lära det att komma ihåg mer."
       },
       "forgemistress_darva": {
         "name": "Smedmästarinnan Darva",
@@ -20819,6 +20900,6 @@ export const sv_SE: EnTranslations = {
     "mailboxName": "Brevlåda",
     "noticeboardName": "Anslagstavla",
     "farmPatchName": "Garden Beds",
-    "realmBuilderMonumentName": "Realm Builder Monument"
+    "realmBuilderMonumentName": "Riksbyggarmonument"
   }
 };

@@ -13,6 +13,7 @@ import { MAX_LEVEL, type SimEvent } from '../src/sim/types';
 import { emitCraftActivityCard } from './craft_activity';
 import { dailyRewardService } from './daily_rewards';
 import { enqueueActivity } from './discord_activity';
+import { duelActivityCard } from './discord_activity_pvp';
 import { REALM } from './realm';
 
 // The session slice the chain reads. GameServer's ClientSession satisfies it
@@ -123,31 +124,16 @@ export function detectActivityEvent<S extends ActivityDetectSession>(
       profileUrlFor: (n) => deps.profileUrlFor(n),
     });
   } else if (ev.type === 'duelEnd') {
-    const w = deps.sessionByName(ev.winnerName);
-    const l = deps.sessionByName(ev.loserName);
-    const accountIds: number[] = [];
-    const names: string[] = [];
-    if (w) {
-      accountIds.push(w.accountId);
-      names.push(w.name);
-    }
-    if (l) {
-      accountIds.push(l.accountId);
-      names.push(l.name);
-    }
-    enqueueActivity(
-      {
-        kind: 'duel',
-        accountIds,
-        names,
-        realm: REALM,
-        profileUrl: deps.profileUrlFor(ev.winnerName),
-        winnerName: ev.winnerName,
-        loserName: ev.loserName,
-      },
-      `duel:${ev.winnerName}:${ev.loserName}`,
-      now,
+    // The card shape lives in discord_activity_pvp.ts; only the session
+    // lookups the module cannot do stay here.
+    const card = duelActivityCard(
+      ev,
+      deps.sessionByName(ev.winnerName),
+      deps.sessionByName(ev.loserName),
+      REALM,
+      deps.profileUrlFor(ev.winnerName),
     );
+    enqueueActivity(card.item, card.key, now);
   } else if (ev.type === 'arenaEnd' && !ev.draw && ev.pid !== undefined) {
     const s = deps.clients.get(ev.pid);
     if (!s) return;

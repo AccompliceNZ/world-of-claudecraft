@@ -64,7 +64,6 @@ import {
   clearCountForSource,
   curatorRankFromOwned,
   pageCompletion,
-  RELIQUARY_OBTAIN_COUNT_CAP,
   RELIQUARY_PAGES_BY_ID,
   reliquaryOwnershipOpts,
   restoreReliquaryState,
@@ -208,6 +207,8 @@ import {
   parseDesktopWalletHandoffStatus,
 } from './desktop_wallet_handoff';
 import { dungeonEntrySnapshotFacing } from './dungeon_entry_facing';
+import { decodeEntityFlairWire } from './entity_flair_wire';
+import { reanchorDecision } from './entity_reanchor';
 import { applyGroundTelegraphSnapshot } from './ground_telegraph_wire';
 import { GuildBankLogMirror } from './guild_bank_log_mirror';
 import { foldInputAck } from './input_ack';
@@ -306,21 +307,6 @@ export interface CharacterSummary {
    *  redesign (created before the modular creator shipped, token unspent).
    *  Drives the roster's reroll button; flips false after a successful spend. */
   appearanceRerollAvailable?: boolean;
-}
-
-/** Bounded positive-integer wire read for cosmetic counts. NEVER trust the
- *  wire: a fractional value floors (3.5 reads as 3, and anything below 1
- *  floors to 0 and reads ABSENT, which loses no legitimate value since the
- *  server only stamps counts of 1 and up); a zero, negative, non-finite, or
- *  non-number value reads as absent; and a huge one clamps to the sim's
- *  obtain-count ceiling, so a misbehaving server can degrade a badge but
- *  never throw a render or print a 300-digit count. Deliberately NO upper
- *  clamp to today's rank ladder: a newer server's rank 6 must keep reading
- *  as at-least-rank-5 on this client (the crt mixed-version rule). */
-function wireCount(value: unknown): number | undefined {
-  if (typeof value !== 'number' || !Number.isFinite(value)) return undefined;
-  const n = Math.floor(value);
-  return n > 0 ? Math.min(n, RELIQUARY_OBTAIN_COUNT_CAP) : undefined;
 }
 
 export function buildWebSocketUrl(protocol: string, host: string): string {
@@ -714,18 +700,18 @@ export class Api {
     await this.post('/api/account/deactivate', { username, password });
   }
 
-  // The account's deed-broadcast setting (accounts.deed_broadcasts): whether a
-  // marquee unlock fans out to guildmates and followers, and whether the
-  // Discord activity feed posts the account's deed and masterwork cards (R58).
-  // Read/write pair for the options toggle; both need the signed-in bearer. A
-  // malformed read body conservatively reads as enabled (the column default).
-  async deedBroadcasts(): Promise<boolean> {
-    const data = await this.get('/api/deeds/broadcasts');
-    return data.enabled !== false;
+  // An account boolean setting behind a `{ enabled }` read/write route pair:
+  // the deed-broadcast opt-out (/api/deeds/broadcasts, accounts.deed_broadcasts,
+  // R58) and the queue-pop Discord DM opt-in (/api/discord/queue-pings). Both
+  // need the signed-in bearer; main.ts binds the path per options row. A
+  // malformed read body conservatively reads as the route's column default.
+  async accountToggle(path: string, fallback: boolean): Promise<boolean> {
+    const data = await this.get(path);
+    return typeof data.enabled === 'boolean' ? data.enabled : fallback;
   }
 
-  async setDeedBroadcasts(enabled: boolean): Promise<boolean> {
-    const data = await this.post('/api/deeds/broadcasts', { enabled });
+  async setAccountToggle(path: string, enabled: boolean): Promise<boolean> {
+    const data = await this.post(path, { enabled });
     return data.enabled === true;
   }
 
@@ -1194,11 +1180,6 @@ export class Api {
 // ---------------------------------------------------------------------------
 // World mirror
 // ---------------------------------------------------------------------------
-
-// A single position update never moves an entity more than a few yards by
-// walking; anything past this is a teleport (arena pit, dungeon portal,
-// graveyard release). Those are snapped, not interpolated — see applyWire.
-const TELEPORT_SNAP_DIST_SQ = 40 * 40;
 
 // Despawn grace (anti-flicker, entity-map churn). The server keeps known
 // entities in interest out to a drop radius (100yd players / 130yd npcs) that is
@@ -3009,44 +2990,34 @@ export class ClientWorld extends ReconWireState implements IWorld {
           e.modularAppearance =
             w.app && typeof w.app === 'object' && !Array.isArray(w.app) ? w.app : null;
         }
-        e.holderTier = w.ht ?? 0; // $WOC holder-tier flair (cosmetic, server-set)
-        e.holderBalance = typeof w.hb === 'number' ? w.hb : undefined; // exact $WOC, for inspect
-        e.discordTier = w.dt ?? 0; // Discord status-tier flair (cosmetic, server-set)
-        e.discordAvatar = typeof w.dav === 'string' ? w.dav : undefined; // Discord PFP (linked)
-        e.discordName = typeof w.dnm === 'string' ? w.dnm : undefined; // Discord handle/nickname
-        e.discordJoined = typeof w.dj === 'number' ? w.dj : undefined; // Discord join epoch ms
-        e.discordRole = typeof w.dr === 'string' ? w.dr : undefined; // top staff/special role key
-        e.devTier = w.dvt ?? 0; // developer-badge tier (cosmetic, server-set)
-        e.devMergedPrs = typeof w.dvc === 'number' ? w.dvc : undefined; // merged-PR count
-        e.githubLogin = typeof w.dgl === 'string' ? w.dgl : undefined; // GitHub login
-        // Curator standing (cosmetic, server-computed): rank plus the
-        // character-scoped completion pair. Same split as ht/hb above: the rank
-        // defaults to 0 (unranked) and the pair stays undefined, so an identity
-        // record that omits them RESETS a previously ranked mirror. wireCount
-        // bounds each read: the sibling decodes tolerate loose numbers, but the
-        // rank INDEXES a key table downstream, so a fractional or huge value
-        // must degrade instead of throwing out of the inspect painter.
-        e.curatorRank = wireCount(w.crk) ?? 0; // Curator rank 1-5
-        e.relicsOwned = wireCount(w.cro); // character-scoped relics owned
-        e.relicsTotal = wireCount(w.crt); // character-scoped relic total
-        // Account flair (cosmetic, operator-set): the AI-operated mark and, for a
-        // flagged streamer, their platform links. NEVER trust the wire: the links are
-        // re-sanitized here (they end up in a window.open), and stay sparse/undefined
-        // when there is nothing to show, like the discord/dev fields above.
-        e.aiAccount = w.ai === 1;
-        const streamerLinks = normalizeStreamerLinks(w.slk);
-        e.streamerLinks = hasStreamerLink(streamerLinks) ? streamerLinks : undefined;
+        // Cosmetic status flair ($WOC holder tier, linked-Discord, dev badge,
+        // Curator standing, the AI-operated mark plus streamer links, and the
+        // Cheater tag): decode idiom shared by every full identity record,
+        // extracted to entity_flair_wire.ts (src/net/CLAUDE.md). Every field
+        // resets to its "no flair" default when the record omits it, since an
+        // identity record is authoritative and complete.
+        const flair = decodeEntityFlairWire(w);
+        e.holderTier = flair.holderTier;
+        e.holderBalance = flair.holderBalance;
+        e.discordTier = flair.discordTier;
+        e.discordAvatar = flair.discordAvatar;
+        e.discordName = flair.discordName;
+        e.discordJoined = flair.discordJoined;
+        e.discordRole = flair.discordRole;
+        e.devTier = flair.devTier;
+        e.devMergedPrs = flair.devMergedPrs;
+        e.githubLogin = flair.githubLogin;
+        e.curatorRank = flair.curatorRank;
+        e.relicsOwned = flair.relicsOwned;
+        e.relicsTotal = flair.relicsTotal;
+        e.aiAccount = flair.aiAccount;
+        e.streamerLinks = flair.streamerLinks;
         // Feed the by-name flair cache. Players only: flair is an ACCOUNT property, so
-        // a mob or NPC sharing a player's name must never poison it. An identity record
-        // is authoritative and complete (the server re-sends one whenever flair
-        // changes), so this both sets and CLEARS.
-        if (e.kind === 'player') this.rememberFlair(e.name, e.aiAccount, streamerLinks);
-        // Operator-applied Cheater tag (src/sim/moderation/). A bare flag: the wire
-        // carries no budget, because only the wearer needs the countdown and the
-        // wearer already has it on the mark's own aura. Written as a strict boolean
-        // like aiAccount above so an identity record WITHOUT `chm` clears a mirror
-        // whose sanction was just lifted, matching Sim.setCheaterMark's own write.
-        e.cheaterMark = w.chm === 1;
+        // a mob or NPC sharing a player's name must never poison it.
+        if (e.kind === 'player') {
+          this.rememberFlair(e.name, flair.aiAccount, flair.streamerLinks ?? {});
+        }
+        e.cheaterMark = flair.cheaterMark;
         e.scale = w.sc ?? 1;
         e.color = w.c ?? 0xffffff;
         e.dungeonId = w.dgn ?? null;
@@ -3076,15 +3047,13 @@ export class ClientWorld extends ReconWireState implements IWorld {
             )
           : contAlpha;
       const entFacingAlpha = Math.min(1, entAlpha);
-      // Distant entities interpolate on measured cadence. Ignore idle gaps,
-      // which would smear their next movement into slow motion.
-      if (prevUpdatedAt !== undefined) {
-        const gap = now - prevUpdatedAt;
-        if (gap > 5 && gap < 450) {
-          e.netInterval = prevInterval === undefined ? gap : prevInterval * 0.7 + gap * 0.3;
-        }
-      }
-      e.netUpdatedAt = now;
+      // Snap-vs-glide and per-entity update-clock learning both live in
+      // entity_reanchor.ts (reanchorDecision): a distance/gap combination no
+      // real movement could explain still snaps (a teleport: arena pit,
+      // dungeon portal, graveyard release); everything else glides on the
+      // entity's own measured cadence, now gap-aware so a legitimately fast
+      // mover crossing the old flat distance during a network stall is not
+      // mistaken for a teleport.
       const teleDx = w.x - e.pos.x,
         teleDz = w.z - e.pos.z;
       if (selfDelta) {
@@ -3107,7 +3076,15 @@ export class ClientWorld extends ReconWireState implements IWorld {
       }
       const wasDead = e.dead;
       const nowDead = !!w.dead;
-      if ((wasDead && !nowDead) || teleDx * teleDx + teleDz * teleDz > TELEPORT_SNAP_DIST_SQ) {
+      const { snap, netInterval: learnedInterval } = reanchorDecision({
+        gapMs: prevUpdatedAt !== undefined ? now - prevUpdatedAt : undefined,
+        deltaSq: teleDx * teleDx + teleDz * teleDz,
+        prevInterval,
+        reviveEdge: wasDead && !nowDead,
+      });
+      if (learnedInterval !== undefined) e.netInterval = learnedInterval;
+      e.netUpdatedAt = now;
+      if (snap) {
         e.prevPos = { x: w.x, y: w.y, z: w.z };
         e.prevFacing = w.f;
       } else {
@@ -4244,7 +4221,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // `confirm` (#2415) rides ONLY when confirmReplace is exactly true (the
   // craftItem `commission` idiom), so every non-replace apply stays
   // byte-identical to the pre-feature form; the sim re-validates the target
-  // and denies already_enchanted/same_enchant itself, never the client.
+  // and denies already_enchanted itself, never the client.
   applyEnchant(
     itemId: string,
     enchantId: string,

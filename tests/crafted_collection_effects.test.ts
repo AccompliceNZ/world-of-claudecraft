@@ -1,6 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
 import { updateAuras } from '../src/sim/combat/auras';
+import { ARCANE_SURGE_ID, ECHO_ROTATION_CONVERSION_MULT } from '../src/sim/combat/chronomancy';
 import {
+  CRAFTED_OVERHEAL_CAP_FRACTION,
+  CRAFTED_OVERHEAL_FRACTION,
+  CRAFTED_WINDOW_SECONDS,
   cleanupCraftedCollectionAuras,
   craftedPetDamageMultiplier,
   onCraftedCollectionDamage,
@@ -407,6 +411,210 @@ describe('crafted signatures through the real shared combat hubs', () => {
       expect(ally.auras.find((aura) => aura.id.endsWith('_heal_ward'))?.value).toBe(8);
     },
   );
+
+  it('caps a rotation-driven Aether Surge/Darts Echo overheal ward at 5% max HP with a fresh expiry', () => {
+    // The it.each above always passes abilityId null for the mage/temporal_echo
+    // row, so it never engages chronomancy.ts's x4 rotation multiplier
+    // (isEchoRotationDriver only fires for arcane_surge/arcane_missiles). This
+    // exercises the REAL driver id, which pushes the individual mark's 0.4 rate
+    // to 1.6 (ECHO_ROTATION_CONVERSION_MULT), so the resulting overheal is large
+    // enough to prove the crafted-collection ward clamps at the collection's 5%
+    // max-HP cap rather than scaling unbounded with the rotation-boosted heal.
+    // NOTE: this saturating case alone cannot catch a LOST x4 multiplier: even
+    // at the un-multiplied 0.4 rate, 10x maxHp damage still overheals past the
+    // 5% cap, so the assertions below would pass identically either way. The
+    // below-cap tests further down are what actually pin the x4 rate.
+    const { sim, source, ctx, target } = liveCollection('crucible_healer_cloth', 'mage');
+    const allyId = sim.addPlayer('warrior', 'Ally');
+    sim.setPlayerLevel(20, allyId);
+    const ally = sim.entities.get(allyId)!;
+    ally.inCombat = true;
+    sim.partyInvite(allyId, source.id);
+    sim.partyAccept(allyId);
+    ally.auras.push({
+      id: 'temporal_echo',
+      name: 'Temporal Echo',
+      kind: 'temporal_echo',
+      remaining: 15,
+      duration: 15,
+      value: 0.4,
+      echoGroup: false,
+      echoConvertRate: 0.4,
+      sourceId: source.id,
+      school: 'arcane',
+    });
+    // Nearly full: almost the whole rotation-boosted conversion heal has to
+    // spill into overheal rather than real HP.
+    ally.hp = ally.maxHp - 1;
+    expect(ally.auras.find((aura) => aura.id.endsWith('_heal_ward'))).toBeUndefined();
+    dealDamage(
+      ctx,
+      source,
+      target,
+      // Deliberately huge relative to maxHp: even with the x4 rotation
+      // multiplier converting most of it to healing, the ward must clamp at
+      // the collection's cap rather than growing with the hit size.
+      ally.maxHp * 10,
+      false,
+      'arcane',
+      'Aether Surge',
+      'hit',
+      true,
+      undefined,
+      true,
+      false,
+      false,
+      'arcane_surge',
+    );
+    expect(ally.hp).toBe(ally.maxHp);
+    const ward = ally.auras.find((aura) => aura.id.endsWith('_heal_ward'));
+    expect(ward?.value).toBe(Math.floor(ally.maxHp * CRAFTED_OVERHEAL_CAP_FRACTION));
+    expect(ward?.remaining).toBe(CRAFTED_WINDOW_SECONDS);
+    expect(ward?.duration).toBe(CRAFTED_WINDOW_SECONDS);
+  });
+
+  it.each([
+    ['arcane_surge', ARCANE_SURGE_ID, 100],
+    ['arcane_missiles', 'arcane_missiles', 70],
+  ] as const)(
+    'converts %s Echo healing at the exact x4 rotation rate, below the overheal cap',
+    (_label, abilityId, dealt) => {
+      // A damage size deliberately small enough that the resulting ward stays
+      // UNDER the collection's 5% max-HP cap: with the x4 rotation multiplier
+      // lost, the same dealt amount converts to a materially SMALLER ward
+      // (base 0.4 rate instead of 1.6), so this fails loudly on that
+      // regression instead of clamping to the same cap either way (contrast
+      // the saturating case above).
+      const { sim, source, ctx, target } = liveCollection('crucible_healer_cloth', 'mage');
+      const allyId = sim.addPlayer('warrior', 'Ally');
+      sim.setPlayerLevel(20, allyId);
+      const ally = sim.entities.get(allyId)!;
+      ally.inCombat = true;
+      const baseRate = 0.4;
+      ally.auras.push({
+        id: 'temporal_echo',
+        name: 'Temporal Echo',
+        kind: 'temporal_echo',
+        remaining: 15,
+        duration: 15,
+        value: baseRate,
+        echoGroup: false,
+        echoConvertRate: baseRate,
+        sourceId: source.id,
+        school: 'arcane',
+      });
+      const missing = 2;
+      ally.hp = ally.maxHp - missing;
+      const preClamp = Math.round(dealt * baseRate * ECHO_ROTATION_CONVERSION_MULT);
+      const expectedAdded = Math.floor((preClamp - missing) * CRAFTED_OVERHEAL_FRACTION);
+      const cap = Math.floor(ally.maxHp * CRAFTED_OVERHEAL_CAP_FRACTION);
+      // Confirms the scenario is actually below-cap (would be vacuous otherwise).
+      expect(expectedAdded).toBeLessThan(cap);
+      dealDamage(
+        ctx,
+        source,
+        target,
+        dealt,
+        false,
+        'arcane',
+        'Rotation Hit',
+        'hit',
+        true,
+        undefined,
+        true,
+        false,
+        false,
+        abilityId,
+      );
+      expect(ally.hp).toBe(ally.maxHp);
+      const ward = ally.auras.find((aura) => aura.id.endsWith('_heal_ward'));
+      expect(ward?.value).toBe(expectedAdded);
+      expect(ward?.remaining).toBe(CRAFTED_WINDOW_SECONDS);
+    },
+  );
+
+  it("does not renew a repeated rotation hit's own ward age, only its banked value", () => {
+    // Per crafted_collection_effects.ts onCraftedCollectionHeal: "Additional
+    // healing may fill the original reserve, but cannot renew its age." Two
+    // Aether Surge casts from the SAME mage, three seconds apart, must leave
+    // the ward's countdown at 3 seconds remaining (never reset to a fresh 6),
+    // even though the second cast is itself amplified by the x4 rotation rate
+    // and banks more value into the same ward.
+    const { sim, source, ctx, target } = liveCollection('crucible_healer_cloth', 'mage');
+    const allyId = sim.addPlayer('warrior', 'Ally');
+    sim.setPlayerLevel(20, allyId);
+    const ally = sim.entities.get(allyId)!;
+    ally.inCombat = true;
+    const baseRate = 0.4;
+    ally.auras.push({
+      id: 'temporal_echo',
+      name: 'Temporal Echo',
+      kind: 'temporal_echo',
+      remaining: 15,
+      duration: 15,
+      value: baseRate,
+      echoGroup: false,
+      echoConvertRate: baseRate,
+      sourceId: source.id,
+      school: 'arcane',
+    });
+    const missing = 2;
+    ally.hp = ally.maxHp - missing;
+    const firstDealt = 100;
+    const firstPreClamp = Math.round(firstDealt * baseRate * ECHO_ROTATION_CONVERSION_MULT);
+    const firstAdded = Math.floor((firstPreClamp - missing) * CRAFTED_OVERHEAL_FRACTION);
+    dealDamage(
+      ctx,
+      source,
+      target,
+      firstDealt,
+      false,
+      'arcane',
+      'Aether Surge',
+      'hit',
+      true,
+      undefined,
+      true,
+      false,
+      false,
+      ARCANE_SURGE_ID,
+    );
+    expect(ally.hp).toBe(ally.maxHp);
+    expect(ally.auras.find((aura) => aura.id.endsWith('_heal_ward'))).toMatchObject({
+      value: firstAdded,
+      remaining: CRAFTED_WINDOW_SECONDS,
+    });
+
+    advance(ctx, 3);
+
+    const cap = Math.floor(ally.maxHp * CRAFTED_OVERHEAL_CAP_FRACTION);
+    const room = cap - firstAdded;
+    const secondDealt = 50;
+    const secondPreClamp = Math.round(secondDealt * baseRate * ECHO_ROTATION_CONVERSION_MULT);
+    const secondAdded = Math.min(Math.floor(secondPreClamp * CRAFTED_OVERHEAL_FRACTION), room);
+    // Confirms the second cast really contributes (would be vacuous otherwise).
+    expect(secondAdded).toBeGreaterThan(0);
+    dealDamage(
+      ctx,
+      source,
+      target,
+      secondDealt,
+      false,
+      'arcane',
+      'Aether Surge',
+      'hit',
+      true,
+      undefined,
+      true,
+      false,
+      false,
+      ARCANE_SURGE_ID,
+    );
+    expect(ally.auras.find((aura) => aura.id.endsWith('_heal_ward'))).toMatchObject({
+      value: firstAdded + secondAdded,
+      remaining: CRAFTED_WINDOW_SECONDS - 3,
+    });
+  });
 
   it('includes Temporal Hourglass reserve healing without another healing action', () => {
     const { sim, source, ctx } = liveCollection('crucible_healer_cloth', 'mage');

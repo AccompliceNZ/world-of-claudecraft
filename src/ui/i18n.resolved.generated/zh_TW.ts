@@ -982,6 +982,7 @@ export const zh_TW: EnTranslations = {
       "mounts": "坐騎",
       "professions": "專業",
       "reliquary": "聖物庫",
+      "lootExplorer": "戰利品瀏覽器",
       "nameplates": "名條",
       "haptics": "觸覺回饋",
       "hapticsOff": "觸覺回饋已關閉",
@@ -1140,6 +1141,9 @@ export const zh_TW: EnTranslations = {
       "promptAttack": "攻擊",
       "promptUseAbility": "使用技能",
       "promptKneel": "跪下",
+      "promptAccessInterface": "開啟介面",
+      "promptMoveToTarget": "移動到{target}",
+      "promptSelectItem": "選擇{item}",
       "promptOpenBags": "打開背包",
       "promptCharacterSheet": "打開角色面板",
       "promptLookAround": "按住右鍵拖曳來環視四周",
@@ -1359,7 +1363,7 @@ export const zh_TW: EnTranslations = {
     },
     "targetDots": {
       "title": "目標減益",
-      "row": "{aura} on {target}",
+      "row": "{aura} 上 {target}",
       "overflow": "另有 {count} 個未顯示"
     },
     "targetAuras": {
@@ -1443,6 +1447,8 @@ export const zh_TW: EnTranslations = {
       "name_shadowjump_toad": "影躍蟾蜍卡瑪影",
       "name_stormfeather_griffin": "凌天風暴之羽",
       "name_thunderstrut_gobbler": "雷霆闊步大火雞",
+      "name_goblin_rocket_sled": "哥布林火箭雪橇",
+      "name_rallycart_rxt": "拉力卡丁車 RXT",
       "name_terrorspark_groundshaker": "駭雷撼地者",
       "name_drakemaw_raptor": "龍喉迅猛龍",
       "name_mech_bird": "發條機械鳥",
@@ -1456,6 +1462,8 @@ export const zh_TW: EnTranslations = {
       "desc_shadowjump_toad": "一隻體型龐大、步伐穩健的巨蟾，受訓於閃電般的暗影跳躍，可跨越任何地形。",
       "desc_stormfeather_griffin": "一頭威嚴的風暴獅鷲，收攏雙翼，以符文利爪行走於大地。",
       "desc_thunderstrut_gobbler": "一隻風暴所生的龐然大火雞，從覺醒之峰昂首闊步而下，尾羽如雷雲般展開。",
+      "desc_goblin_rocket_sled": "一輛結構過剩到危險的哥布林雪橇，靠雙發火箭和極差的判斷力推進。",
+      "desc_rallycart_rxt": "一輛小巧卻道地的拉力賽車，能提升移動速度。",
       "desc_terrorspark_groundshaker": "一台緊湊的裝甲機械，配備重型履帶、大口徑火炮，以及為無畏駕駛員打造的鞍座。",
       "desc_drakemaw_raptor": "來自龍喉火山口的馴服巢生迅猛龍，渾身筋肉、疾若奔雷，身上仍帶著淡淡的灰燼氣味。",
       "desc_mech_bird": "一隻手工打造的發條戰鬥雞，伺服關節鏗鏘疾馳，發條鑰匙仍在轉動。",
@@ -1650,7 +1658,10 @@ export const zh_TW: EnTranslations = {
       "uiScale": "介面縮放",
       "playerFrameScale": "玩家框縮放",
       "targetFrameScale": "目標框縮放",
+      "playerHealthText": "玩家生命值文字",
+      "targetHealthText": "目標生命值文字",
       "aurasOnPlayerFrame": "增益顯示在玩家框",
+      "auraBarBelowFrame": "增益顯示在玩家框下方",
       "alwaysShowAllBuffs": "始終顯示所有增益",
       "highContrastBackground": "高對比度背景",
       "startAttackOnAbility": "使用技能時自動攻擊",
@@ -2698,7 +2709,9 @@ export const zh_TW: EnTranslations = {
       "unequipHint": "點擊移除此背包",
       "poolGeneral": "一般：{used}/{total}",
       "poolMaterials": "材料：{used}/{total}",
-      "capacityPoolsAria": "背包格已用：{used}/{total}。一般物品：{generalUsed}/{generalTotal}。材料：{materialsUsed}/{materialsTotal}。"
+      "capacityPoolsAria": "背包格已用：{used}/{total}。一般物品：{generalUsed}/{generalTotal}。材料：{materialsUsed}/{materialsTotal}。",
+      "capacityPools": "物品 {generalUsed}/{generalTotal}，材料 {materialsUsed}/{materialsTotal}",
+      "emptyMaterialsOnly": "僅限材料"
     },
     "raidConvert": {
       "toPartyDone": "你的團隊已轉換回隊伍。",
@@ -2924,7 +2937,7 @@ export const zh_TW: EnTranslations = {
         "raiseFallenName": "亡者復生",
         "raiseFallenSummary": "在王座階段中，尼思拉克西斯每{every}秒會在他身後喚起復甦王室衛兵。牠們會衝向他目前的目標，戰鬥至被摧毀為止。",
         "raiseFallenResponse": "副坦應在每一波衛兵出現時接怪。輸出職業應在骨刺間隙清理衛兵，避免波次在王座階段結束前堆積。",
-        "soulRendName": "Soul Rend",
+        "soulRendName": "靈魂撕裂",
         "soulRendSummary": "尼思拉克西斯會為{marksNormal}名非目前目標的團員標記靈魂撕裂。{fuse}秒後，每個標記都會對其承載者造成相當於其全部最大生命值的暗影傷害，並依{range}碼內被標記團員的人數分攤。",
         "soulRendHeroicSummary": "尼思拉克西斯會為{marksHeroic}名非目前目標的團員標記靈魂撕裂。{fuse}秒後，每個標記都會對其承載者造成相當於其最大生命值{damageHeroic}的暗影傷害，並依{range}碼內被標記團員的人數分攤。若標記單獨引爆，將必定致命。",
         "soulRendResponse": "每名被標記的團員都應在{fuse}秒的引爆倒數結束前，跑到集合點並站在其他標記{range}碼內。治療應在標記引爆時將團隊生命補滿。",
@@ -3237,6 +3250,7 @@ export const zh_TW: EnTranslations = {
       "healthPercent": "百分比",
       "healthCurrent": "目前值",
       "healthCurrentMax": "目前 / 最大",
+      "healthCurrentMaxPercent": "目前 / 最大（百分比）",
       "sort": "玩家排序",
       "sortGroup": "小隊",
       "sortRole": "職責",
@@ -3279,14 +3293,14 @@ export const zh_TW: EnTranslations = {
         "targetDots": "目標減益",
         "questTracker": "任務追蹤器",
         "reliquaryTracker": "聖物庫追蹤器",
-        "petBar": "Pet Bar",
+        "petBar": "寵物列",
         "procOverlay": "法術觸發",
         "procOverlayFrost": "冰柱",
         "damageMeter": "傷害統計",
         "deedTracker": "功績追蹤器",
         "delveTracker": "秘探追蹤器",
         "riftTracker": "裂隙追蹤器",
-        "swingBarOffhand": "Off Hand"
+        "swingBarOffhand": "副手"
       },
       "framesMenu": "框體設定",
       "framesMenuTitle": "顯示或隱藏各個框體。取消勾選的框體會一直隱藏，直到你重新勾選或還原預設值。",
@@ -3328,7 +3342,7 @@ export const zh_TW: EnTranslations = {
       "title": "鍵盤總覽",
       "hint": "正在使用的按鍵依類別著色。將滑鼠懸停或聚焦到某個按鍵即可查看其全部綁定。",
       "hintInteractive": "正在使用的按鍵依類別著色。點擊某個按鍵可更改其功能；將滑鼠懸停或聚焦到按鍵上可查看其全部綁定。",
-      "popOut": "Pop Out",
+      "popOut": "彈出",
       "close": "關閉鍵盤總覽",
       "pressKey": "按下一個鍵以綁定到 {action}。按 Esc 取消。",
       "boundTo": "已將 {action} 綁定到 {key}。",
@@ -3347,12 +3361,12 @@ export const zh_TW: EnTranslations = {
       "legendQwerty": "QWERTY",
       "layerNone": "無修飾鍵",
       "layerShift": "Shift 鍵",
-      "layerCtrl": "Ctrl",
-      "layerAlt": "Alt",
-      "keyDetail": "{key}: {bindings}",
+      "layerCtrl": "Ctrl 鍵",
+      "layerAlt": "Alt 鍵",
+      "keyDetail": "{key}：{bindings}",
       "separator": ", ",
-      "bindingLine": "{key}: {action}",
-      "assignOption": "{category}: {action}",
+      "bindingLine": "{key}：{action}",
+      "assignOption": "{category}：{action}",
       "otherLayers": "也與修飾鍵組合綁定"
     },
     "fullTransfer": {
@@ -3462,6 +3476,7 @@ export const zh_TW: EnTranslations = {
       "close": "關閉",
       "keybind": "Discord 面板",
       "disabled": "Discord 整合目前無法使用。",
+      "queuePingsLabel": "當我的戰場或競技場排隊配對成功時，透過 Discord 私訊通知我（需要已連結的 Discord 帳號）",
       "tiers": {
         "none": "未定級",
         "initiate": "新兵",
@@ -3782,6 +3797,8 @@ export const zh_TW: EnTranslations = {
       "depositAllDone": "已存入材料：{count}。",
       "depositAllFull": "已存入材料：{count}。銀行已滿。",
       "depositAllNone": "銀行已滿：未存入任何物品。",
+      "depositAllNotable": "已存入材料：{count}，其中包括{item}。",
+      "depositAllNotableFull": "已存入材料：{count}，其中包括{item}。銀行已滿。",
       "bonusTitle": "獎勵格子",
       "bonusEarned": "+{count}",
       "bonusStatusEarned": "+{count}",
@@ -3820,6 +3837,8 @@ export const zh_TW: EnTranslations = {
       "vaultDepositAllDone": "已存入材料：{count}。",
       "vaultDepositAllFull": "已存入材料：{count}。部分材料已達上限。",
       "vaultDepositAllNone": "倉庫已滿：未存入任何材料。",
+      "vaultDepositAllNotable": "已存入材料：{count}，其中包括{item}。",
+      "vaultDepositAllNotableFull": "已存入材料：{count}，其中包括{item}。部分材料已達上限。",
       "vaultWithdrawShort": "背包只裝得下{count}個中的{fit}個。",
       "vaultDepositHint": "點擊存入材料倉庫",
       "vaultCannotDeposit": "無法存入材料倉庫",
@@ -4945,6 +4964,7 @@ export const zh_TW: EnTranslations = {
       "sourceProfession": "透過{profession}獲得",
       "sourceDeed": "功績「{deed}」獎勵",
       "sourceVendor": "由{vendor}販售",
+      "sourceVendorGated": "由{vendor}販售（{requirement}）",
       "sourceBossZone": "由{zone}的{boss}掉落",
       "sourceDelve": "在秘探「{delve}」中獲得",
       "sourceRift": "通關{rank}級裂隙時掉落",
@@ -4964,6 +4984,10 @@ export const zh_TW: EnTranslations = {
       "filterAll": "全部",
       "filterOwned": "已收錄",
       "filterMissing": "尚未獲得",
+      "filterIlluminated": "已點亮",
+      "filterRemaining": "未點亮",
+      "filterEmptyPages": "沒有符合此篩選條件的頁面。",
+      "filterGroupAriaPages": "依點亮狀況篩選頁面",
       "recentJumpAria": "開啟{name}所在的頁面",
       "recentEmpty": "尚無發現。此後收錄的聖物都會出現在這裡。",
       "nearlyEmpty": "即將完成的頁面會匯集於此。",
@@ -5071,6 +5095,7 @@ export const zh_TW: EnTranslations = {
       "summary": "世界地圖。選擇一個地區以開啟其地圖。",
       "toWorld": "世界地圖",
       "toZone": "地區地圖",
+      "toInstance": "副本地圖",
       "toggleAria": "在世界地圖與地區地圖之間切換",
       "levels": "等級 {min} 至 {max}"
     },
@@ -5105,6 +5130,7 @@ export const zh_TW: EnTranslations = {
       "walletLinkedConnected": "已連結的錢包應用程式已連接，可用於 $WOC 付款。",
       "walletUsdBalance": "{amount} USD",
       "walletUsdUnknown": "未知",
+      "walletCardDismiss": "隱藏錢包卡片",
       "rateNote": "匯率：截至 {time}，約每美元 {tokens} $WOC。",
       "rateNotePaused": "最近已知匯率：截至 {time}，約每美元 {tokens} $WOC。",
       "estimateNote": "{usd} 按目前匯率約合 {tokens} $WOC。",
@@ -5296,6 +5322,43 @@ export const zh_TW: EnTranslations = {
       "listingStatusCancelled": "已取消",
       "listingStatusSuspended": "已凍結",
       "listingStatusUnsold": "未售出"
+    },
+    "lootExplorer": {
+      "title": "戰利品瀏覽器",
+      "close": "關閉戰利品瀏覽器",
+      "searchPlaceholder": "搜尋物品...",
+      "searchAria": "搜尋物品",
+      "filterCategoryAria": "來源",
+      "filterClassAria": "職業",
+      "filterStatAria": "統計數據",
+      "filterQualityAria": "品質",
+      "filterAll": "全部",
+      "tabItems": "按項目",
+      "tabEncounters": "依來源",
+      "category": {
+        "raid": "突襲",
+        "dungeon": "地城",
+        "delve": "秘探",
+        "open_world": "開放世界",
+        "rift": "裂谷",
+        "vendor": "商人",
+        "quest_reward": "任務獎勵",
+        "quest_objective": "任務目標",
+        "ground_object": "世界物件",
+        "starting_equipment": "初始裝備"
+      },
+      "difficulty": {
+        "normal": "普通",
+        "heroic": "英雄"
+      },
+      "riftRankLabel": "裂谷排名 {rank}",
+      "source": "{category}: {name}",
+      "sourceWithContext": "{category}：{name}（{context}）",
+      "chance": "{pct}% 掉落機率",
+      "guaranteed": "必得",
+      "gatedByQuest": "任務進行中：{quest}",
+      "empty": "沒有符合這些篩選條件的戰利品。",
+      "resultCount": "{count} 個結果"
     }
   },
   "gatherEvent": {
@@ -5395,7 +5458,8 @@ export const zh_TW: EnTranslations = {
       "link_required": "請先連結你的 Discord 帳號。",
       "swag_claimed": "你已經領取過此獎勵。",
       "swag_tier": "達到更高階級才能領取此項目。",
-      "swag_points": "點數不足。"
+      "swag_points": "點數不足。",
+      "invalid_input": "輸入無效。"
     },
     "deeds": {
       "invalid_input": "輸入無效。"
@@ -5447,6 +5511,11 @@ export const zh_TW: EnTranslations = {
       "reason_required": "必須填寫原因。",
       "invalid_duration": "標記時長至少須為 1 秒。",
       "not_marked": "該帳號未被標記。"
+    },
+    "kick": {
+      "reason_required": "必須填寫原因。",
+      "admin_target": "管理員帳號無法被踢出。",
+      "target_offline": "該玩家已不在此伺服器上線。"
     },
     "woc_market": {
       "invalid_input": "輸入無效。",
@@ -5882,10 +5951,13 @@ export const zh_TW: EnTranslations = {
       "ifPlayerFrameScale": "你自己那個單位框的大小。",
       "ifTargetFrameScale": "你的目標框的大小。",
       "ifPartyStyle": "隊伍的排列方式：「自動」會依你的隊伍人數調整，「經典」是傳統的直列堆疊，「團隊」則把所有人塞進緊湊的格線。",
+      "ifPlayerHealthText": "自己的血條上寫什麼：不顯示、百分比、目前生命、目前與最大生命，或兩者並附上百分比。",
+      "ifTargetHealthText": "目標和目標的目標血條上寫什麼，選項與自己的框體相同。",
       "ifPartyHealthText": "隊伍血條上印出什麼：不顯示、百分比、目前生命，或目前與最大生命。",
       "ifPartySort": "隊伍成員的排列順序：入隊順序、定位，或名字。",
       "ifPartyShowAuras": "隊伍框上是否顯示增益與減益。另有對應的開關管理資源條、吸收護盾、寵物，以及你自己是否出現在自己的隊伍清單裡。",
       "ifAurasOnPlayerFrame": "除了光環列之外，也把你的增益與減益顯示在你自己的單位框上。",
+      "ifAuraBarBelowFrame": "把增益列移到你的單位框下方，而不是上方。只有在增益顯示於玩家框時才有效。",
       "ifAlwaysShowAllBuffs": "即使在低畫質預設下也顯示所有生效中的增益，繞過該檔位平時的增益圖示上限。",
       "ifTargetOfTarget": "顯示你的目標正在攻擊誰，這是判斷坦克有沒有拉穩的經典方式。",
       "ifPetFrame": "為你的寵物顯示一個框。",
@@ -5893,6 +5965,7 @@ export const zh_TW: EnTranslations = {
       "ifChatOpacity": "聊天背景有多不透明。",
       "ifCompactChat": "收緊聊天行距，讓畫面裝得下更多行。",
       "ifChatTimestamps": "替每一行聊天加上時間，可選 12 小時制或 24 小時制。",
+      "ifFilterProfanity": "用星號遮住聊天中的髒話。預設開啟；如果你想不加過濾地閱讀聊天，可以在這裡關閉。",
       "ifStartAttack": "使用技能時是否同時開始自動攻擊。預設開啟，也是多數玩家預期的經典行為。",
       "ifStopAutoAttack": "切換目標時是否停下你的揮擊。預設關閉，因此你的攻擊會延續到新目標身上。",
       "ifShowAttackButton": "在你的動作列上放一個明確的「攻擊」按鈕。",
@@ -9385,6 +9458,7 @@ export const zh_TW: EnTranslations = {
     "connectingRealm": "正在連線至世界...",
     "assetsFailed": "資源載入失敗：請嘗試重新整理。{error}",
     "rendererFailed": "無法啟動渲染器：請嘗試重新整理。{error}",
+    "rendererContextLost": "3D 渲染器遺失了圖形內容，且無法恢復。請嘗試重新整理。",
     "enterTimeout": "無法進入世界。連線已逾時。遊戲伺服器是否正在執行？",
     "connectionLost": "與伺服器的連線已中斷。",
     "reconnectingAttempt": "連線已中斷。正在重新連線...（第 {attempt}/{maxAttempts} 次嘗試，{seconds} 秒後重試）",
@@ -9395,6 +9469,7 @@ export const zh_TW: EnTranslations = {
     "realmFull": "這個世界目前已滿，請於幾分鐘後再試。",
     "tooManyConnections": "您的網路對這個世界建立的連線過多。請關閉多餘的遊戲視窗，或於幾分鐘後再試。",
     "messageRateExceeded": "由於發送操作過快，您已中斷連線。請稍候片刻後重新登入。",
+    "kickedByModerator": "管理員已將您中斷連線：{reason}",
     "tips": {
       "classes": "提示：9 個職業玩法各不相同，投入之前不妨都試一試。",
       "talents": "提示：只要不在戰鬥中，隨時都能重置天賦，因此早期的選擇不會成為陷阱。",
@@ -11229,11 +11304,11 @@ export const zh_TW: EnTranslations = {
       },
       "melting_acid": {
         "name": "溶解酸",
-        "description": "向目標潑灑腐蝕性毒液，造成 {damage} 點自然傷害，並使其護甲降低 5%，持續 12 秒。"
+        "description": "為你的武器塗覆 30 分鐘。你的每次近戰揮擊都會向目標濺灑腐蝕酸液，使其護甲降低 5%，持續 12 秒。"
       },
       "nightshade_coating": {
         "name": "夜影塗層",
-        "description": "用夜影覆蓋目標，造成 {damage} 點自然傷害，並使其受到的治療降低 25%，持續 12 秒。"
+        "description": "為你的武器塗覆 30 分鐘。你的每次近戰揮擊都會讓目標沾染夜影，使其受到的治療降低 25%，持續 12 秒。"
       },
       "expose_armor": {
         "name": "裂甲",
@@ -11249,11 +11324,11 @@ export const zh_TW: EnTranslations = {
       },
       "instant_poison": {
         "name": "蝰蛇之咬",
-        "description": "在你的武器上塗抹毒藥，持續 30 分鐘，使你的每次近戰揮擊額外造成 8 點自然傷害。"
+        "description": "在你的武器上塗抹毒藥，持續 30 分鐘，使你的每次近戰揮擊額外造成 {damage} 點自然傷害。"
       },
       "deadly_poison": {
         "name": "潰爛之毒",
-        "description": "在你的武器上塗抹毒藥，持續 30 分鐘，使你的每次近戰揮擊額外造成 14 點自然傷害。"
+        "description": "在你的武器上塗抹毒藥，持續 30 分鐘。你的每次近戰揮擊都會在目標身上疊加一層毒液，最多 5 層，並刷新 12 秒持續時間。每層每 2 秒造成 {damage} 點自然傷害。"
       },
       "blind": {
         "name": "揚塵",
@@ -12352,7 +12427,7 @@ export const zh_TW: EnTranslations = {
       },
       "temporal_echo": {
         "name": "時光迴響",
-        "description": "以更健康時刻的迴響標記一名盟友，立即恢復{damage}點生命值。{duration}秒內，你造成的秘法傷害有一部分會透過迴響轉化為對其的治療。"
+        "description": "以更健康時刻的迴響標記一名盟友，立即恢復{damage}點生命值。{duration}秒內，你其他單體秘法傷害的{echoSinglePct}%和範圍秘法傷害的{echoAreaPct}%會治療該盟友。乙太湧動和乙太飛鏢改為按其造成傷害的{echoDriverPct}%治療該盟友。"
       },
       "temporal_cascade": {
         "name": "時光奔流",
@@ -14043,6 +14118,12 @@ export const zh_TW: EnTranslations = {
       },
       "reins_terrorspark_groundshaker": {
         "name": "駭雷撼地者點火鑰匙"
+      },
+      "reins_goblin_rocket_sled": {
+        "name": "哥布林火箭雪橇點火鑰匙"
+      },
+      "reins_rallycart_rxt": {
+        "name": "拉力卡丁車 RXT 點火鑰匙"
       },
       "reins_lanternback_troll": {
         "name": "點燈人之軛：格倫博"

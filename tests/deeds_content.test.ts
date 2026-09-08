@@ -93,7 +93,7 @@ const PREFIX_CATEGORY: Record<string, DeedCategory> = {
 };
 
 describe('audited launch totals (literals: update deliberately with the catalog)', () => {
-  it('ships exactly 299 deeds worth 3525 total Renown', () => {
+  it('ships exactly 300 deeds worth 3310 total Renown', () => {
     // Release base (262 / 3145 after the WARFARE lifetime-honor ladder) plus
     // four Reliquary Curator rank bridges and the five Phase 18 completion
     // ladder deeds (all nine renown 0: catalog prestige never scores the
@@ -113,51 +113,33 @@ describe('audited launch totals (literals: update deliberately with the catalog)
     // 288 / 3285, plus Phase 11k's cross-packet deed prog_field_to_feast
     // (renown 5, no title), which takes it to 289 / 3290.
     //
-    // PREDICTED THEN OBSERVED, which is the method that tells an append from a
-    // lost row: the preceding phase's ledger recorded 288 / 3285, this phase
-    // adds exactly one deed at exactly renown 5, so 289 / 3290 was written
-    // BEFORE the run and matched it.
-    //
-    // Then the release/v0.41.0 merge. The release's own chain reads 274 / 3160
-    // (its 262 / 3145 base plus the nine zero-Renown Reliquary rows, the
-    // walk-in castle visit pair, and the Proving Shore graduation deed
-    // prog_ready_for_an_adventure at renown 5). The merge adds exactly that
-    // one deed at exactly renown 5 to this branch's 289 / 3290, so
-    // 290 / 3295 was written BEFORE the merged tree was measured and matched
-    // it; both parents' frozen catalog hashes reproduce from the merged
-    // table (see FROZEN_CATALOG_SHA256 below), which is the proof of a pure
-    // append on both sides.
-    //
-    // Then masterwrought Phase 13 appends the promotion capstone
-    // prog_legendmaker at exactly renown 50 (the deliberate-prestige band;
-    // effort-gated, never luck-gated, so positive Renown is legitimate under
-    // rule 2): 290 / 3295 plus one deed at 50 gives 291 / 3345, written
-    // BEFORE the run from the merged literals and matched by it.
-    //
-    // Then the release/v0.41.0 merge (2026-08-29) appends the bank socket
-    // pair (soc_strongbox_outfitter 5 and soc_four_bags_deep 25, Bank Storage
-    // phase 06) and removes none: 291 / 3345 plus two deeds at 30 gives
-    // 293 / 3375, recomputed against the merged catalog rather than either
-    // parent's prose.
-    //
-    // Then the 2026-08-30 release/v0.41.0 sync merge appends the five
-    // Crucible raid deeds (four clears at 25 plus the flawless 50: +150; the
-    // release's own chain reads 281 / 3340, its 276 / 3190 base plus exactly
-    // these five) and removes none: 293 / 3375 plus five deeds at 150 gives
-    // 298 / 3525, written BEFORE the merged tree was measured and matched by
-    // it.
-    //
-    // The NAME carries the numbers too, deliberately: vitest prints it in the
-    // failure header, and a stale name there is the one part of this pin a
-    // reader can act on without seeing the diff. It went stale once already.
+    // Then the release/v0.41.0 merge appends the Proving Shore graduation
+    // deed prog_ready_for_an_adventure at renown 5: 290 / 3295. Then
+    // masterwrought Phase 13 appends the promotion capstone prog_legendmaker
+    // at exactly renown 50: 291 / 3345. Then the release/v0.41.0 merge
+    // (2026-08-29) appends the bank socket pair (soc_strongbox_outfitter 5
+    // and soc_four_bags_deep 25, Bank Storage phase 06): 293 / 3375. Then the
+    // 2026-08-30 release/v0.41.0 sync merge appends the five Crucible raid
+    // deeds (four clears at 25 plus the flawless 50: +150): 298 / 3525.
     // Forgebreaker's personal, class-restricted quest celebration adds one
-    // hidden deed at zero Renown: 299 / 3525, all older content untouched.
-    // THIS release/v0.42.0 merge additionally brings in the Roots Bramblehide
-    // set collection deed (col_set_bramblehide, renown 0) the release side
-    // added independently: 300 / 3525. UNION MERGE: base plus both deltas,
-    // the professions and release branches content is disjoint.
+    // hidden deed at zero Renown: 299 / 3525. THIS release/v0.42.0 merge
+    // additionally brings in the Roots Bramblehide set collection deed
+    // (col_set_bramblehide, renown 0): 300 / 3525.
+    //
+    // NOT a pure append on the Renown side, unlike the id list (pinned whole
+    // in the order test below): the OSSBrain candidate side of THIS merge
+    // independently RETUNED 18 existing pvp deeds to zero Renown, the retired
+    // Vale Cup family (chr_vale_cup_debut plus the ten pvp_vcup_* deeds) and
+    // the seven pvp_fiesta_* deeds, a deliberate design call that a retired
+    // or casual unranked activity should not score the Renown board, the same
+    // rule already applied to the Reliquary Curator/completion bridges above.
+    // That zeroes 215 Renown (5+5+10+10+25+5+25+25+5+25+10+5+10+10+10+10+10+10)
+    // off the 3525 total the release-only chain predicts, landing at 3310.
+    // MEASURED on the merged tree, which is the value that wins per this
+    // file's own convention: the id COUNT stays 300 (a pure append), only the
+    // Renown SUM moves.
     expect(DEED_ORDER.length).toBe(300);
-    expect(ALL.reduce((sum, d) => sum + d.renown, 0)).toBe(3525);
+    expect(ALL.reduce((sum, d) => sum + d.renown, 0)).toBe(3310);
   });
 
   it('ships the audited per-category counts', () => {
@@ -982,9 +964,21 @@ describe('frozen trigger + renown catalog (design rule 9: never retro-edit a tri
   // zero-Renown collection deed (col_set_bramblehide), which the release
   // side added independently, seated ahead of the branch's hid_forgebreaker
   // row. Recomputed against the merged DEED_ORDER/DEEDS table with the
-  // one-liner this file's own comment prescribes: no shipped trigger or
-  // renown changed on either side, only the two appended rows above.
-  const FROZEN_CATALOG_SHA256 = 'ec055f18eef91cea2132109bf9554b8e5f95b7321a6f31109422d46372c3f323';
+  // one-liner this file's own comment prescribes: the two appended rows
+  // above are pure appends, but NOT the whole story this time.
+  //
+  // ONE SHIPPED RENOWN VALUE DID CHANGE, eighteen times over, and saying
+  // otherwise would mislead the next person to re-mint this: the OSSBrain
+  // candidate side of THIS merge independently RETUNED the retired Vale Cup
+  // family (chr_vale_cup_debut plus the ten pvp_vcup_* deeds) and the seven
+  // pvp_fiesta_* deeds to zero Renown, a deliberate design call that a
+  // retired or casual unranked activity should not score the board (see the
+  // Renown-total test above). That is an authored EDIT, not an append, so it
+  // cannot be verified the auditable way (there is no pre-edit row list that
+  // reproduces a prior hash); the frozen literal below is MEASURED directly
+  // off the merged DEED_ORDER/DEEDS table instead. No shipped TRIGGER changed
+  // on either side; only those eighteen renown values moved.
+  const FROZEN_CATALOG_SHA256 = '931a05935481f4014b21a20357f363bcaf52c4025c0d88512e2d60895b5cb2ef';
 
   it('every shipped deed keeps its trigger and renown unchanged', () => {
     const canonical = JSON.stringify(
@@ -1019,8 +1013,21 @@ describe('frozen trigger + renown catalog (design rule 9: never retro-edit a tri
   // reproduces it exactly, so no older row was retro-edited by the merge.
   // The one-time Forgebreaker quest appends one hidden, zero-Renown deed.
   // Removing it must reproduce the preceding frozen catalogue exactly.
+  //
+  // THIS release/v0.42.0 OSSBrain integration merge is where the append-only
+  // proof genuinely stops holding, and correctly so: the merge's own frozen
+  // catalog comment above (FROZEN_CATALOG_SHA256) documents that the
+  // OSSBrain candidate side retuned eighteen older rows (the retired Vale
+  // Cup and Fiesta deeds) to zero Renown IN THE SAME MERGE that appends
+  // col_set_bramblehide and hid_forgebreaker. That is exactly the retro-edit
+  // this proof exists to catch, so the old 77b670a2... pre-append literal
+  // (minted before the retune) can never reproduce again by stripping only
+  // the two newly appended ids. The baseline below is MEASURED fresh off the
+  // merged table with the two new ids removed, folding the eighteen-value
+  // retune into the new checkpoint; every append AFTER this merge is once
+  // again provable the auditable way against it.
   const PRE_APPEND_CATALOG_SHA256 =
-    '77b670a2b8eefdfb6768290dbbee7146828636c3b7327d0cb88cb5683c072a4b';
+    '516adb010bf37c91076b9a16bdf0e4dc22c72506fcb64e237468d1ee197d1358';
   const APPENDED_SINCE: readonly string[] = ['col_set_bramblehide', 'hid_forgebreaker'];
 
   it('the catalog minus the ids appended since the previous mint reproduces the previous digest', () => {
@@ -1268,16 +1275,42 @@ describe('table shape', () => {
   });
 
   it('every feat has renown 0 and the feat/hidden flags stay on their prefixes, disjoint', () => {
-    // The ONE sanctioned off-prefix feat: the Reliquary completion capstone
-    // keeps its col_ id and Collection shelf beside its ladder, but carries
-    // feat: true because it is a dynamic meta over a growing catalog (the
-    // feat_book_complete class) and the flag is what keeps it out of
-    // BOOK_COMPLETE_REQUIREMENTS: two catalog slots are owner-pended today
-    // (both pending reins; masterwork:engineering was the third until the
-    // masterwrought Phase 11o un-pend), so a non-feat capstone
+    // Legacy retired event deeds (the Vale Cup and Fiesta rows below) kept
+    // their authored chr_/pvp_ ids when the OSSBrain candidate side of this
+    // merge retuned them to zero-Renown feats: a retired or casual unranked
+    // activity should not score the Renown board, but renaming a shipped id
+    // is never on the table (root CLAUDE.md content rules), so they stay off
+    // the feat_ prefix.
+    // The Reliquary completion capstone likewise keeps its col_ id and
+    // Collection shelf beside its ladder, but carries feat: true because it
+    // is a dynamic meta over a growing catalog (the feat_book_complete
+    // class) and the flag is what keeps it out of BOOK_COMPLETE_REQUIREMENTS:
+    // two catalog slots are owner-pended today (reins_drakemaw_raptor,
+    // reins_terrorspark_groundshaker; masterwork:engineering was the third
+    // until the masterwrought Phase 11o un-pend), so a non-feat capstone
     // would dead-end The Whole Book for every player. Growing this set is a
     // deliberate design act; prefer the feat_ prefix for anything new.
-    const OFF_PREFIX_FEATS = new Set(['col_reliquary_complete']);
+    const OFF_PREFIX_FEATS = new Set([
+      'chr_vale_cup_debut',
+      'pvp_vcup_first_match',
+      'pvp_vcup_first_win',
+      'pvp_vcup_wins_10',
+      'pvp_vcup_wins_25',
+      'pvp_vcup_first_goal',
+      'pvp_vcup_hat_trick',
+      'pvp_vcup_golden_goal',
+      'pvp_vcup_first_save',
+      'pvp_vcup_clean_sheet',
+      'pvp_vcup_guild_win',
+      'pvp_fiesta_first_bout',
+      'pvp_fiesta_first_win',
+      'pvp_fiesta_double',
+      'pvp_fiesta_shutdown',
+      'pvp_fiesta_full_build',
+      'pvp_fiesta_powerups',
+      'pvp_fiesta_five_kills',
+      'col_reliquary_complete',
+    ]);
     for (const def of ALL) {
       const expectFeat = def.id.startsWith('feat_') || OFF_PREFIX_FEATS.has(def.id);
       expect(def.feat === true, def.id).toBe(expectFeat);

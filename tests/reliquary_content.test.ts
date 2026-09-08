@@ -453,9 +453,12 @@ describe('Reliquary Conqueror catalog structure', () => {
     // Eleven Crucible collections add 33 distinct crafted item relics: 429.
     // Roots Bramblehide adds its seven FERAL-locked raid pieces (each on the
     // Nythraxis page and its own set page, one relic apiece) and the seven
-    // Nythraxis gap-fill drops one relic apiece: 443. UNION MERGE: base plus
-    // both deltas, the professions and release branches content is disjoint.
-    expect(full).toEqual({ owned: 443, total: 443 });
+    // Nythraxis gap-fill drops one relic apiece: 443. The OSSBrain candidate
+    // side of THIS merge independently adds two more SOURCE_PENDING_RULING
+    // horizons_mounts rows (goblin_rocket_sled, rallycart_rxt): 445, MEASURED
+    // on the merged tree. UNION MERGE: base plus both deltas, the professions
+    // and release branches content is disjoint.
+    expect(full).toEqual({ owned: 445, total: 445 });
     const character = catalogCharacterCompletion({
       itemsDiscovered: allOwned,
       marks: allOwned,
@@ -478,9 +481,12 @@ describe('Reliquary Conqueror catalog structure', () => {
     // Cluckwork Mech Bird is another character-scoped mount slot: 367. Eleven
     // Crucible collections (character-scoped items) add 33: 400. Roots
     // Bramblehide seven pieces plus the seven Nythraxis gap-fill drops (all
-    // character-scoped items) add 14: 414. UNION MERGE: base plus both
+    // character-scoped items) add 14: 414. The OSSBrain candidate side of
+    // THIS merge independently adds its own two character-scoped mount slots
+    // (goblin_rocket_sled, rallycart_rxt), the same +2 as the overview pair
+    // above: 416, MEASURED on the merged tree. UNION MERGE: base plus both
     // deltas, see the overview pair's note above.
-    expect(character).toEqual({ owned: 414, total: 414 });
+    expect(character).toEqual({ owned: 416, total: 416 });
   });
 
   it('pins the final measured catalog shape: total slots and distinct marks', () => {
@@ -525,19 +531,22 @@ describe('Reliquary Conqueror catalog structure', () => {
     // Forgebreaker quest adds one personal slot beside 33 Crucible crafts,
     // taking the total to 465. Roots Bramblehide adds 14 slots (seven on the
     // Nythraxis page, seven on its own set page) and the seven Nythraxis
-    // gap-fill drops add seven more slots on the Nythraxis page: 486. UNION
-    // MERGE: base plus both deltas, see the completion pair note above.
+    // gap-fill drops add seven more slots on the Nythraxis page: 486. The
+    // OSSBrain candidate side of THIS merge independently adds its own two
+    // horizons_mounts slots (goblin_rocket_sled, rallycart_rxt): 488,
+    // MEASURED on the merged tree. UNION MERGE: base plus both deltas, see
+    // the completion pair note above.
     expect(
       slots,
       `slot total moved; per page: ${RELIQUARY_PAGES.map((p) => `${p.id}=${p.relics.length}`).join(', ')}`,
-    ).toBe(486);
+    ).toBe(488);
     // Distinct mark ids: the 10 shipped before Phase 21, the 19 rare-slain
     // proofs of conquerors_rares_of_the_realm, the two craft masterwork
     // marks (masterwork:jewelcrafting, masterwork:inscription), and the
     // masterwrought Phase 18 gather_event:golden_harvest field note. Neither
     // branch's new content (Crucible/Forgebreaker items, Roots' Bramblehide
-    // set, the Nythraxis gap-fill drops) is a mark, so this total is
-    // unchanged by the merge.
+    // set, the Nythraxis gap-fill drops, the two new pending mounts) is a
+    // mark, so this total is unchanged by the merge.
     expect(
       RELIQUARY_MARK_IDS.size,
       `mark total moved; by namespace: ${[
@@ -2915,7 +2924,9 @@ const SOURCE_PENDING_RULING: Readonly<Record<string, readonly string[]>> = {
   horizons_mounts: [
     'chimeglass_tortoise',
     'drakemaw_raptor',
+    'goblin_rocket_sled',
     'lanternback_troll',
+    'rallycart_rxt',
     'rickshaw_mount',
     'terrorspark_groundshaker',
   ],
@@ -4015,7 +4026,9 @@ describe('Reliquary source hint coverage', () => {
     expect(SOURCE_PENDING_RULING.horizons_mounts).toEqual([
       'chimeglass_tortoise',
       'drakemaw_raptor',
+      'goblin_rocket_sled',
       'lanternback_troll',
+      'rallycart_rxt',
       'rickshaw_mount',
       'terrorspark_groundshaker',
     ]);

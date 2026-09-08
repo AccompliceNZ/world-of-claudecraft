@@ -184,18 +184,50 @@ describe('both tiles hydrate and stay under the rail height budget', () => {
     }
   });
 
-  it('col-a carries at most 12 visible tiles, the count the crafting_launcher budget was re-checked at', () => {
-    // tests/crafting_launcher.test.ts derives the height budget from the live
-    // markup; this pins the assumption the two additions were sized against
-    // (12 x 34px + 74px anchor = 482px under the 660px laptop budget), so a
-    // thirteenth tile re-opens the question deliberately.
+  it('pins the 13 default tiles and fits the height budget with Town Focus visible', () => {
+    // Loot Explorer joins the release's 12 default tiles. Town Focus is
+    // hidden in markup but the HUD reveals it in town, so budget for that
+    // extra tile too: 14 x 34px + 74px = 550px uncompacted, and
+    // 14 x 25px + 74px = 424px compacted. The authored pixel ceilings
+    // remain those guarded against CSS in crafting_launcher.test.ts.
+    const UNCOMPACTED_MICRO_PLUS_GAP_PX = 34;
+    const COMPACT_MICRO_PLUS_GAP_PX = 25;
+    const BOTTOM_ANCHOR_PX = 74;
+    const UNCOMPACTED_BUDGET_PX = 660;
+    const COMPACT_BUDGET_PX = 600;
+    const EXPECTED_IDS = [
+      'mm-char',
+      'mm-spell',
+      'mm-talents',
+      'mm-quest',
+      'mm-deeds',
+      'mm-reliquary',
+      'mm-loot-explorer',
+      'mm-professions',
+      'mm-harvest-journal',
+      'mm-map',
+      'mm-bag',
+      'mm-crafting',
+      'mm-perfecting',
+    ];
     for (const [name, html] of entries) {
       const buttons = colA(html).match(/<button[^>]*class="micro-btn"[^>]*>/g) ?? [];
       const visible = buttons.filter(
         (b) => !/display:\s*none/.test(b) && !/\shidden(?=[\s>=])/.test(b),
       );
-      expect(visible.length, name).toBeLessThanOrEqual(12);
-      expect(visible.length, name).toBeGreaterThanOrEqual(12);
+      const ids = visible.map((b) => /id="([^"]+)"/.exec(b)?.[1]);
+      expect(ids, name).toEqual(EXPECTED_IDS);
+      const townFocus = buttons.filter((b) => /id="mm-town-focus"/.test(b));
+      expect(townFocus, name).toHaveLength(1);
+      const townVisibleCount = visible.length + townFocus.length;
+      expect(
+        townVisibleCount * UNCOMPACTED_MICRO_PLUS_GAP_PX + BOTTOM_ANCHOR_PX,
+        name,
+      ).toBeLessThanOrEqual(UNCOMPACTED_BUDGET_PX);
+      expect(
+        townVisibleCount * COMPACT_MICRO_PLUS_GAP_PX + BOTTOM_ANCHOR_PX,
+        name,
+      ).toBeLessThanOrEqual(COMPACT_BUDGET_PX);
     }
   });
 });

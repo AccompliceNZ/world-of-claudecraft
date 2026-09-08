@@ -13,7 +13,6 @@
 import type { TranslationKey } from '../i18n.catalog';
 
 export const ru_RU: Partial<Record<TranslationKey, string>> = {
-  // Raid collection guide prose, including the M16 non-Latin fills.
   'guide.professions.endgameBodyRaidCollections':
     'Ковка мастера объединяет вещи с меткой «Уникальный (экипируется): Ковка мастера». Прежняя вершина ремесла по-прежнему использует найденные схемы, промежуточные изделия с суточным ограничением и общие материалы финального этапа. Комплекты Горнила представляют отдельный путь с рейдовыми материалами, а не дополнительные расходы поверх прежней цепочки. Обе группы делят один предел ношения в две вещи, поэтому конкурируют за одни и те же два места в вашей сборке. Готовые вещи свободно продаются, пока доведение до совершенства или заказное изготовление не привяжет конкретный экземпляр.',
   'guide.professions.endgamePatternsBodyCollections':
@@ -3544,10 +3543,10 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'Исчезает из виду, входя в Сумеречную завесу даже в бою. Пока вы скрыты, вы двигаетесь на 50% медленнее. Длится до 10 сек.',
   'entities.abilities.instant_poison.name': 'Укус гадюки',
   'entities.abilities.instant_poison.description':
-    'Покрывает ваше оружие ядом на 30 мин, заставляя каждый ваш удар в ближнем бою наносить 8 дополнительных ед. урона от сил природы.',
+    'Покрывает ваше оружие ядом на 30 мин, заставляя каждый ваш удар в ближнем бою наносить {damage} дополнительных ед. урона от сил природы.',
   'entities.abilities.deadly_poison.name': 'Гнойный яд',
   'entities.abilities.deadly_poison.description':
-    'Покрывает ваше оружие ядом на 30 мин, заставляя каждый ваш удар в ближнем бою наносить 14 дополнительных ед. урона от сил природы.',
+    'Покрывает ваше оружие ядом на 30 мин. Каждый ваш удар в ближнем бою добавляет на цель заряд яда, до 5 зарядов, и обновляет время действия 12 сек. Каждый заряд наносит {damage} ед. урона от сил природы раз в 2 сек.',
   'entities.abilities.blind.name': 'Горсть земли',
   'entities.abilities.blind.description':
     'Ослепляет цель, заставляя ее дезориентированно бродить в течение 8 сек. Любой урон прерывает эффект.',
@@ -11547,7 +11546,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
     'Смещает цель на мгновение из настоящего: временная оболочка поглощает {damage} урона в течение 10 сек, после чего линия времени возвращается на место.',
   'entities.abilities.temporal_echo.name': 'Временное эхо',
   'entities.abilities.temporal_echo.description':
-    'Отмечает союзника эхом более здорового мгновения, мгновенно восполняя {damage} здоровья. В течение {duration} сек часть наносимого вами урона от тайной магии возвращается через эхо, исцеляя его.',
+    'Отмечает союзника эхом более здорового мгновения, мгновенно восполняя {damage} здоровья. В течение {duration} сек {echoSinglePct}% прочего вашего урона от тайной магии по одной цели и {echoAreaPct}% урона от тайной магии по области исцеляют его. «Выброс эфира» и «Эфирные дротики» вместо этого исцеляют его на {echoDriverPct}% от наносимого ими урона.',
   'entities.abilities.aspect_of_the_wild.description':
     'Воодушевляет союзников в радиусе 30 м дикой силой, повышая их силу атаки на 45 и скорость атаки на 5% на 5 мин. (талант охотника)',
   'entities.abilities.avenging_wrath.description': 'Расправляет телесные крылья из золотой светлой мощи, получая 10 Преданности и удваивая Преданность, создаваемую вашими способностями, на 15 сек. Также повышает наносимый урон и исцеление на 20%. Жнец рассвета: позволяет применять Молот гнева к любой цели.',
@@ -15668,10 +15667,10 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'abilityUi.tooltip.anyTarget': 'Вражеская или дружественная цель',
   'entities.abilities.melting_acid.name': 'Плавящая кислота',
   'entities.abilities.melting_acid.description':
-    'Обливает цель едким ядом, нанося {damage} ед. урона от сил природы и снижая её броню на 5% на 12 сек.',
+    'Покрывает ваше оружие на 30 мин. Каждый ваш удар в ближнем бою обрызгивает цель едкой кислотой, снижая её броню на 5% на 12 сек.',
   'entities.abilities.nightshade_coating.name': 'Покрытие паслёном',
   'entities.abilities.nightshade_coating.description':
-    'Покрывает цель паслёном, нанося {damage} ед. урона от сил природы и снижая получаемое ею исцеление на 25% на 12 сек.',
+    'Покрывает ваше оружие на 30 мин. Каждый ваш удар в ближнем бою покрывает цель паслёном, снижая получаемое ею исцеление на 25% на 12 сек.',
   // v0.41 release i18n fill.
   'hudChrome.itemMenu.sell': 'Продать',
   'hudChrome.itemMenu.sellAll': 'Продать все ({count})',
@@ -16084,4 +16083,102 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.quests.q_hub_healing_numbers.completion':
     'Числа исцеления, а не боли, но все равно числа, {playerName}. Целитель, который никогда не смотрит на эти счетчики, лишь гадает о собственной пользе.',
   'entities.quests.q_hub_healing_numbers.objectives.0.label': 'Эффективное исцеление нанесено Лечебному манекену',
+  'apiError.discord.invalid_input': 'Недопустимые данные.',
+  'apiError.kick.admin_target': 'Учетные записи операторов нельзя отключить.',
+  'apiError.kick.reason_required': 'Необходимо указать причину.',
+  'apiError.kick.target_offline': 'Этот игрок больше не в сети на этом мире.',
+  'entities.items.reins_goblin_rocket_sled.name': 'Ключ зажигания гоблинских ракетных саней',
+  'entities.items.reins_rallycart_rxt.name': 'Ключ зажигания ралликарта RXT',
+  'guide.settingsPage.ifAuraBarBelowFrame':
+    'Перемещает полосу усилений под рамку персонажа вместо над ней. Действует, только когда усиления отображаются на рамке игрока.',
+  'guide.settingsPage.ifFilterProfanity':
+    'Скрывает нецензурные слова в чате звёздочками. Включено по умолчанию; отключите здесь, если хотите читать чат без фильтра.',
+  'guide.settingsPage.ifPlayerHealthText':
+    'Что пишет ваша полоска здоровья: ничего, проценты, текущее здоровье, текущее и максимальное или оба значения с процентами рядом.',
+  'guide.settingsPage.ifTargetHealthText':
+    'Что пишут полоски здоровья цели и цели цели, с теми же вариантами, что и у вашей рамки.',
+  'hudChrome.bags.capacityPools':
+    'Предметы {generalUsed}/{generalTotal}, материалы {materialsUsed}/{materialsTotal}',
+  'hudChrome.bags.emptyMaterialsOnly': 'Только материалы',
+  'hudChrome.bank.depositAllNotable': 'Материалов положено: {count}, включая {item}.',
+  'hudChrome.bank.depositAllNotableFull':
+    'Материалов положено: {count}, включая {item}. Банк заполнен.',
+  'hudChrome.bank.vaultDepositAllNotable': 'Сложено материалов: {count}, включая {item}.',
+  'hudChrome.bank.vaultDepositAllNotableFull':
+    'Сложено материалов: {count}, включая {item}. Часть пределов заполнена.',
+  'hudChrome.bootcamp.promptAccessInterface': 'Открой интерфейс',
+  'hudChrome.bootcamp.promptMoveToTarget': 'Перейди к: {target}',
+  'hudChrome.bootcamp.promptSelectItem': 'Выбери: {item}',
+  'hudChrome.continentMap.toInstance': 'Карта подземелья',
+  'hudChrome.discord.queuePingsLabel':
+    'Присылать мне личное сообщение в Discord, когда очередь на поле боя или арену сработает (нужен привязанный аккаунт Discord)',
+  'hudChrome.interfaceUnlock.frameNames.petBar': 'Панель питомца',
+  'hudChrome.interfaceUnlock.frameNames.swingBarOffhand': 'Левая рука',
+  'hudChrome.keyboardMap.assignOption': '{category}: {action}',
+  'hudChrome.keyboardMap.bindingLine': '{key}: {action}',
+  'hudChrome.keyboardMap.form60': '60%',
+  'hudChrome.keyboardMap.form75': '75%',
+  'hudChrome.keyboardMap.keyDetail': '{key}: {bindings}',
+  'hudChrome.keyboardMap.layerAlt': 'Клавиша Alt',
+  'hudChrome.keyboardMap.layerCtrl': 'Клавиша Ctrl',
+  'hudChrome.keyboardMap.legendQwerty': 'QWERTY',
+  'hudChrome.keyboardMap.popOut': 'Открыть отдельно',
+  'hudChrome.keyboardMap.separator': ', ',
+  'hudChrome.lootExplorer.category.delve': 'Вылазка',
+  'hudChrome.lootExplorer.category.dungeon': 'Подземелье',
+  'hudChrome.lootExplorer.category.ground_object': 'Мировой объект',
+  'hudChrome.lootExplorer.category.open_world': 'Открытый мир',
+  'hudChrome.lootExplorer.category.quest_objective': 'Цель задания',
+  'hudChrome.lootExplorer.category.quest_reward': 'Награда за задание',
+  'hudChrome.lootExplorer.category.raid': 'Рейд',
+  'hudChrome.lootExplorer.category.rift': 'Рифт',
+  'hudChrome.lootExplorer.category.starting_equipment': 'Начальное снаряжение',
+  'hudChrome.lootExplorer.category.vendor': 'Торговец',
+  'hudChrome.lootExplorer.chance': 'Шанс {pct}%',
+  'hudChrome.lootExplorer.close': 'Закрыть обозреватель добычи',
+  'hudChrome.lootExplorer.difficulty.heroic': 'Героическая',
+  'hudChrome.lootExplorer.difficulty.normal': 'Обычная',
+  'hudChrome.lootExplorer.empty': 'Нет добычи, соответствующей этим фильтрам.',
+  'hudChrome.lootExplorer.filterAll': 'Все',
+  'hudChrome.lootExplorer.filterCategoryAria': 'Источник',
+  'hudChrome.lootExplorer.filterClassAria': 'Класс',
+  'hudChrome.lootExplorer.filterQualityAria': 'Качество',
+  'hudChrome.lootExplorer.filterStatAria': 'Стат',
+  'hudChrome.lootExplorer.gatedByQuest': 'Во время задания: {quest}',
+  'hudChrome.lootExplorer.guaranteed': 'Гарантированно',
+  'hudChrome.lootExplorer.resultCount': 'Результатов: {count}',
+  'hudChrome.lootExplorer.riftRankLabel': 'Ранг Разлома {rank}',
+  'hudChrome.lootExplorer.searchAria': 'Поиск предметов',
+  'hudChrome.lootExplorer.searchPlaceholder': 'Поиск предметов...',
+  'hudChrome.lootExplorer.source': '{category}: {name}',
+  'hudChrome.lootExplorer.sourceWithContext': '{category}: {name} ({context})',
+  'hudChrome.lootExplorer.tabEncounters': 'По источникам',
+  'hudChrome.lootExplorer.tabItems': 'По товару',
+  'hudChrome.lootExplorer.title': 'Обозреватель добычи',
+  'hudChrome.mobile.lootExplorer': 'Обозреватель добычи',
+  'hudChrome.mounts.desc_goblin_rocket_sled':
+    'Опасно переусложнённые гоблинские сани на двух ракетах и полном отсутствии здравого смысла.',
+  'hudChrome.mounts.desc_rallycart_rxt':
+    'Компактная, но самая настоящая раллийная машина, повышающая скорость передвижения.',
+  'hudChrome.mounts.name_goblin_rocket_sled': 'Гоблинские ракетные сани',
+  'hudChrome.mounts.name_rallycart_rxt': 'Ралликарт RXT',
+  'hudChrome.options.auraBarBelowFrame': 'Баффы под рамкой игрока',
+  'hudChrome.options.gpuBackendActiveNameOpenGL': 'OpenGL',
+  'hudChrome.options.gpuBackendActiveNameVulkan': 'Vulkan',
+  'hudChrome.options.playerHealthText': 'Текст здоровья игрока',
+  'hudChrome.options.targetHealthText': 'Текст здоровья цели',
+  'hudChrome.partyFrames.healthCurrentMaxPercent': 'Текущее / максимум (проценты)',
+  'hudChrome.raidBossGuide.nythraxis.soulRendName': 'Разрыв души',
+  'hudChrome.reliquary.filterEmptyPages': 'По этому фильтру страниц нет.',
+  'hudChrome.reliquary.filterGroupAriaPages': 'Фильтр страниц по тому, озарены ли они',
+  'hudChrome.reliquary.filterIlluminated': 'Озарено',
+  'hudChrome.reliquary.filterRemaining': 'Осталось',
+  'hudChrome.reliquary.sourceVendorGated': 'Продаёт {vendor} ({requirement})',
+  'hudChrome.riftForge.currency': '{name}: {count}',
+  'hudChrome.riftForge.gemOption': '{name} ({bonus})',
+  'hudChrome.targetDots.row': '{aura} на {target}',
+  'hudChrome.wocMarket.walletCardDismiss': 'Скрыть карточку кошелька',
+  'loading.kickedByModerator': 'Модератор отключил вас: {reason}',
+  'loading.rendererContextLost':
+    '3D-рендерер потерял графический контекст и не смог восстановиться. Попробуйте обновить страницу.',
 };

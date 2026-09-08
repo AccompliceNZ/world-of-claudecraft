@@ -22,6 +22,25 @@ registry AND from every source the registry cannot see. Counts are measured at t
 named above; every list below is the mechanical output, not a remembered figure. The
 maintainer's STEP 1 decisions are collected at the end.
 
+## OSSBrain integration inventory, 2026-09-08
+
+The integration of candidate `09ffd281f4` with release `186dd8fe7f` regenerated
+the registry and worklist. The combined inventory has **19,165 pending rows**
+across 20 locales: 11,776 auto-fillable and 7,389 requiring human review.
+The registry covers main, sim, server, and admin together; the admin generator's
+738 pending rows are included, not an additional backlog. There are also 458
+blocked rows and 114 blocked source keys.
+
+The candidate's earlier pending-zero result does not establish release-tier
+readiness for this combined tree. Complete the canonical translation workflow,
+including the stale-text and side-channel checks below, before release-tier
+approval. The refreshed worklist is derived from universe hash
+`2aa828c57399abb60fa60426519be480b9c02815822098ee2f34e04f7bcd2b59`.
+Regenerate it again if source text changes.
+
+The historical inventory below remains evidence of the original audit, not the
+current executable row count.
+
 ## How it was derived
 
 - The registry: `TURBO_FORCE=1 npm run i18n:gen` then `npm run i18n:worklist` at the tip,

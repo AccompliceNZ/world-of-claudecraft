@@ -74,11 +74,11 @@ export interface ApplyEnchantResultEvent {
     | 'insufficient_materials'
     | 'throttled'
     | 'no_bag_space'
-    // #2415: the honest already-enchanted deny (no confirm flag), and the
-    // identical-enchant-id re-apply denied on every arm.
+    // #2415: the honest already-enchanted deny (no confirm flag). A
+    // confirmed identical-enchant-id re-apply is a normal replace, not a
+    // deny (professions/enchanting.ts).
     | 'already_enchanted'
     | 'rift_gear'
-    | 'same_enchant'
     // Masterwrought phase 10, the Lucent tier's two gates: the Perfected-only
     // enchant aimed at an ordinary copy, and an enchant above the applier's
     // Enchanting skill.
@@ -179,12 +179,10 @@ export function applyEnchantResultToast(ev: ApplyEnchantResultEvent): Enchanting
       return { key: 'hudChrome.enchanting.enchantInsufficient', sink: 'error' };
     case 'no_bag_space':
       return { key: 'hudChrome.enchanting.enchantNoSpace', sink: 'error' };
-    // #2415: the two dedicated already-enchanted denies, each naming the real
-    // cause instead of the old misleading "You do not have that item.".
+    // #2415: the dedicated already-enchanted deny, naming the real cause
+    // instead of the old misleading "You do not have that item.".
     case 'already_enchanted':
       return { key: 'hudChrome.enchanting.alreadyEnchanted', sink: 'error' };
-    case 'same_enchant':
-      return { key: 'hudChrome.enchanting.sameEnchant', sink: 'error' };
     // The Lucent tier's two gates, each naming its own cause: neither is a
     // "you do not have that" problem, and both are things the player can act
     // on (Perfect the piece, or raise the craft).
