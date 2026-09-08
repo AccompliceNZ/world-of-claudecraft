@@ -1580,11 +1580,18 @@
   .attrs-tiles .sp-title {
     display: none;
   }
+  /* The tile is a stretched flex item, so its height is the row's, not its
+     content's: without a floor the row collapses to the label line and the big
+     numeral spills out of the top of the tile (under the sidebar tab strip on
+     the character sheet). The floor is the numeral plus the label plus the
+     padding, the same shape the touch sheet already states for its 16px tiles. */
   .attrs-tiles .stat-cell {
     flex: 1;
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
+    justify-content: center;
+    min-height: 56px;
     gap: 1px;
     padding: 8px 4px 7px;
     font-size: 10px;
@@ -1698,6 +1705,59 @@
   }
   #char-window .equip-slot > div {
     flex-basis: 70px;
+  }
+  /* Stage-and-overlay paperdoll (the accepted deviation, DESIGN.md 8.2): on
+     pointer form factors the model preview IS the left pane, filling whatever
+     height the window has, and the two socket columns float over its outer
+     edges with the skin row along its bottom. Desktop-scoped so the touch sheet
+     keeps its own stacked flow, which needs the columns in normal flow. */
+  body:not(.mobile-touch) #char-window .paperdoll {
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  body:not(.mobile-touch) #char-window .char-model-panel {
+    position: absolute;
+    inset: 0;
+    flex: none;
+    min-height: 0;
+  }
+  /* Absolutely positioned with one inline edge only, so each column still
+     shrink-wraps its 114px row unit (40px socket + gap + 70px text box). */
+  body:not(.mobile-touch) #char-window .equip-col {
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    flex: none;
+    width: auto;
+    padding: var(--spacing-xs);
+    border-radius: var(--radius-window);
+  }
+  /* Inset by the chip radius so the outer corner chips still land on the stage
+     rather than hanging over the window's own padding. */
+  body:not(.mobile-touch) #char-window .equip-col:not(.equip-col-right) {
+    left: var(--spacing-sm);
+    background: linear-gradient(to right, var(--color-stage-overlay-scrim), transparent);
+  }
+  body:not(.mobile-touch) #char-window .equip-col-right {
+    right: var(--spacing-sm);
+    background: linear-gradient(to left, var(--color-stage-overlay-scrim), transparent);
+  }
+  /* The corner chips anchor off the row unit, which the base rules size for the
+     wide flow column (154px); over the stage the unit is 114px, so the offset is
+     half of that plus the chip's own radius. */
+  body:not(.mobile-touch) #char-window
+    .equip-col:not(.equip-col-right)
+    .equip-slot
+    :is(.equip-unequip-btn, .equip-helm-eye) {
+    left: calc(50% - 68px);
+  }
+  body:not(.mobile-touch)
+    #char-window
+    .equip-col-right
+    .equip-slot
+    :is(.equip-unequip-btn, .equip-helm-eye) {
+    right: calc(50% - 68px);
   }
   #char-window .char-sidebar {
     display: flex;

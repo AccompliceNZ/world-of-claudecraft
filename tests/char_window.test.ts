@@ -1267,3 +1267,58 @@ describe('char_window: production worn-tooltip wiring', () => {
     );
   });
 });
+
+describe('char_window: the model is the stage and the sockets overlay it (W24)', () => {
+  const css = readFileSync(join(__dirname, '../src/styles/components.css'), 'utf8');
+
+  it('flexes the paperdoll into the pane height as a positioning context', () => {
+    // The review finding: a 350px stage in a 634px pane left the sheet with a
+    // dead band under the sockets. The paperdoll now takes the leftover height
+    // and the model panel fills it edge to edge.
+    expect(css).toContain(
+      'body:not(.mobile-touch) #char-window .paperdoll {\n    position: relative;\n    flex: 1 1 auto;\n    min-height: 0;\n  }',
+    );
+    expect(css).toContain(
+      'body:not(.mobile-touch) #char-window .char-model-panel {\n    position: absolute;\n    inset: 0;',
+    );
+  });
+
+  it('floats both socket columns over the stage, one on each outer edge', () => {
+    expect(css).toContain(
+      'body:not(.mobile-touch) #char-window .equip-col {\n    position: absolute;\n    top: 0;',
+    );
+    expect(css).toMatch(
+      /body:not\(\.mobile-touch\) #char-window \.equip-col:not\(\.equip-col-right\) \{\s*left: var\(--spacing-sm\);/,
+    );
+    expect(css).toMatch(
+      /body:not\(\.mobile-touch\) #char-window \.equip-col-right \{\s*right: var\(--spacing-sm\);/,
+    );
+    // The overlay needs its own scrim token: slot names sit over a lit model.
+    expect(css).toContain('var(--color-stage-overlay-scrim)');
+  });
+
+  it('re-anchors the unequip and helm-eye chips to the narrower overlay row unit', () => {
+    // The base anchors assume the 154px flow unit; over the stage the unit is
+    // 114px, so an un-rescoped chip would hang outside the window edge.
+    expect(css).toContain('left: calc(50% - 68px);');
+    expect(css).toContain('right: calc(50% - 68px);');
+  });
+
+  it('leaves the touch sheet in normal flow (the overlay is pointer-only)', () => {
+    // Every stage rule is scoped away from body.mobile-touch: the phone sheet
+    // stacks its paperdoll and would lose the columns entirely out of flow.
+    for (const decl of ['.paperdoll {\n    position: relative;', '.equip-col {\n    position:']) {
+      const at = css.indexOf(decl);
+      expect(at).toBeGreaterThan(-1);
+      expect(css.slice(Math.max(0, at - 60), at)).toContain('body:not(.mobile-touch)');
+    }
+  });
+
+  it('floors the attribute tile so its numeral cannot spill under the tab strip', () => {
+    // The tiles are stretched flex items, so their height is the row's, not
+    // their content's; without the floor the row collapsed to the label line
+    // and the 21px numeral rendered above the tile, over the sidebar tabs.
+    expect(css).toMatch(/\.attrs-tiles \.stat-cell \{[^}]*min-height: 56px;/);
+    expect(css).toMatch(/\.attrs-tiles \.stat-cell \{[^}]*justify-content: center;/);
+  });
+});

@@ -3832,3 +3832,33 @@ function tagDepth(fragment: string, tag: string): number {
   }
   return depth === 0 ? min : depth;
 }
+
+describe('window bodies flex into their own height (W24 review findings)', () => {
+  it('gives the bags grid fluid tracks and a ruled footer under it', () => {
+    // The grid is the ONE scroller in the bags column, so the chrome rows above
+    // it and the money footer below it both stay out of the flex give-and-take.
+    expect(componentsCss).toContain(
+      'grid-template-columns: repeat(auto-fill, minmax(var(--socket-size-bag), 1fr));',
+    );
+    expect(componentsCss).toContain('#bags .bag-bar {\n    flex: none;\n  }');
+    expect(componentsCss).toMatch(
+      /#bags \.money \{[^}]*border-top: 1px solid var\(--color-border-showcase\);/,
+    );
+  });
+
+  it('makes the character model the full-height stage with the sockets over it', () => {
+    // The accepted deviation (DESIGN.md 8.2): stage-and-overlay on pointer form
+    // factors, the stacked touch sheet untouched.
+    expect(componentsCss).toContain(
+      'body:not(.mobile-touch) #char-window .char-model-panel {\n    position: absolute;\n    inset: 0;',
+    );
+    expect(componentsCss).toContain(
+      'body:not(.mobile-touch) #char-window .paperdoll {\n    position: relative;\n    flex: 1 1 auto;',
+    );
+    // The phone sheet keeps the columns in flow, so every out-of-flow rule
+    // carries the pointer scope: no unscoped `#char-window .equip-col` variant.
+    const at = componentsCss.indexOf('#char-window .equip-col {\n    position: absolute;');
+    expect(at).toBeGreaterThan(-1);
+    expect(componentsCss.slice(at - 24, at)).toBe('body:not(.mobile-touch) ');
+  });
+});
