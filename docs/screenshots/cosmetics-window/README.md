@@ -76,3 +76,46 @@ passed all five tasks, including client/server builds and admin/bot typechecks.
 `pnpm audit --json` again reported zero unignored advisories, retaining the same
 three existing exceptions. Full release/CI and live-device acceptance remain
 outstanding; this synchronization is not merge or deployment approval.
+
+
+## PR3941 review fixes (2026-09-08)
+
+Both P2 findings in review 5140870713 are addressed. Cosmetics now captures and
+restores stable card-action focus through the shared helpers when its HTML is
+rebuilt. Wear/Take off and live ownership refresh keep the same card focused;
+a removed or disabled control falls back to the selected tab. Close/tab focus,
+external focus and parked dialog focus are also covered. Mobile tabs now measure
+at least 40px high; their strip can grow around that minimum.
+
+[Keyboard focus after Wear](review-keyboard-focus.png) and
+[844x390 mobile tabs](review-mobile-tabs.png) were captured from the real painter
+and shipped styles in Chromium. These supersede the earlier captures for those
+two details; they do not claim physical-device acceptance. The earlier statement
+that the core painters match PR3859 describes the pre-review checkpoint.
+
+Focused validation:
+
+- `npx vitest run tests/cosmetics_window.test.ts tests/cosmetics_view.test.ts tests/focus_restore.test.ts tests/professions_rail_tiles.test.ts tests/collection_actions_core.test.ts tests/architecture.test.ts tests/focus_visible_guard.test.ts tests/mobile_window_layout.test.ts --maxWorkers=2`: 216 passed across eight files.
+- `npm run test:browser -- tests/browser/cosmetics.browser.test.ts`: five passed, including real Enter/Space activation, refresh focus, axe and measured mobile tab/action targets. New focus and tab-height regressions failed before their fixes.
+- `npx vitest run tests/bag_filter.test.ts tests/material_taxonomy.test.ts tests/item_copy_refusal.test.ts tests/release_v039_icon_art.test.ts tests/pad_reel.test.ts tests/guide.test.ts tests/ci_shard_partition.test.ts tests/item_art_audit_builder.test.ts tests/eastbrook_polish_capture_contract.test.ts tests/eastbrook_polish_artifact_integrity.test.ts --maxWorkers=2`: eight files passed initially; the two remaining metadata/provenance suites passed after corrections using individual reruns. Final union: 299 tests across ten files, all passed.
+- `node_modules/.bin/turbo run check:types build:bundle --ui=stream`: all four tasks passed, including admin/bot typechecks and client bundle. Turbo reported a disk-space warning after task completion; no task failed.
+- `npm run ci:changed`: passed with existing warnings; explicit Biome checks over every additionally edited source/test file and `git diff --check` also passed.
+- `pnpm audit --json`: zero unignored advisories, retaining the existing two moderate and one high exceptions. Dependencies and audit exceptions are unchanged.
+
+CI34217836954 on the prior head found feature-related stale references. This
+follow-up updates the rail/controller assertions for the shared dispatcher,
+documents Shift+Y in the controls guide, pins the five retired reins as inert
+non-material items, and uses a vendor-eligible item in the copy-refusal fixture.
+The live hotbar art count is 97 after retiring five reins; historical art totals
+remain unchanged. The removed mount-grant test leaves the measured shard table;
+its replacement uses the existing duration heuristic until measured.
+
+`node scripts/item_art_audit.mjs --verify-only` supplied the new catalogue hash
+and byte count. `node scripts/assets/eastbrook_grand_armoury/remint_polish_provenance.mjs`
+updated runtime-input provenance for the renderer prewarm change and supplied the
+composite, metadata and performance digest pins. All fingerprinted inputs matched
+HEAD at mint time. This is a source-only reseal: historical capture pixels, scores,
+GLBs and the frozen capture identity did not change.
+
+Full CI must rerun on the pushed fixes. This receipt does not claim a green full
+Gate or release/deployment approval.

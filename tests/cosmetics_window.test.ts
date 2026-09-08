@@ -186,6 +186,56 @@ describe('CosmeticsWindow', () => {
     expect(el.innerHTML).toBe(before);
   });
 
+  it('retains the same card action through wear, takeoff and account refresh', () => {
+    const world = fakeWorld();
+    const { w, el } = makeWindow(world);
+    w.open();
+    action(el, 'wear-mount', 'mech_bird')!.focus();
+    action(el, 'wear-mount', 'mech_bird')!.click();
+    expect(document.activeElement).toBe(action(el, 'takeoff-mount', 'mech_bird'));
+    world.accountCosmetics.mountSkinIds.push('rickshaw_mount');
+    w.refreshIfChanged();
+    expect(document.activeElement).toBe(action(el, 'takeoff-mount', 'mech_bird'));
+    action(el, 'takeoff-mount', 'mech_bird')!.click();
+    expect(document.activeElement).toBe(action(el, 'wear-mount', 'mech_bird'));
+  });
+
+  it('falls back to the selected tab when a refreshed action is disabled or removed', () => {
+    const world = fakeWorld();
+    const { w, el } = makeWindow(world);
+    w.open('skins');
+    action(el, 'apply-skin', 'ice_fang_sword')!.focus();
+    world.player.mainhandItemId = null;
+    w.refreshIfChanged();
+    expect(action(el, 'apply-skin', 'ice_fang_sword')!.disabled).toBe(true);
+    expect(document.activeElement).toBe(el.querySelector('.cos-tab.on'));
+    w.open('mounts');
+    action(el, 'wear-mount', 'mech_bird')!.focus();
+    world.accountCosmetics.mountSkinIds = [];
+    w.refreshIfChanged();
+    expect(document.activeElement).toBe(el.querySelector('.cos-tab.on'));
+  });
+
+  it('preserves close and tab focus on relocalize without stealing outside or parked focus', () => {
+    const world = fakeWorld();
+    const { w, el } = makeWindow(world);
+    w.open();
+    for (const selector of ['[data-close]', '.cos-tab.on']) {
+      el.querySelector<HTMLElement>(selector)!.focus();
+      w.relocalize();
+      expect(document.activeElement).toBe(el.querySelector(selector));
+    }
+    const outside = document.createElement('button');
+    document.body.appendChild(outside);
+    outside.focus();
+    w.relocalize();
+    expect(document.activeElement).toBe(outside);
+    el.tabIndex = -1;
+    el.focus();
+    w.relocalize();
+    expect(document.activeElement).toBe(el);
+  });
+
   it('closes through the corner button and returns focus', () => {
     const world = fakeWorld();
     const { w, el } = makeWindow(world);

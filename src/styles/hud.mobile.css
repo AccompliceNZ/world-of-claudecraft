@@ -6544,6 +6544,12 @@
     max-height: none;
     z-index: 95;
   }
+  body.mobile-touch #cosmetics-window .cos-tabs {
+    height: auto;
+  }
+  body.mobile-touch #cosmetics-window .cos-tab {
+    min-height: 40px;
+  }
   body.mobile-touch #cosmetics-window .cos-grid {
     grid-template-columns: 1fr;
   }

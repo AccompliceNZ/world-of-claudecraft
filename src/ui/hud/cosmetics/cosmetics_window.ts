@@ -14,6 +14,13 @@ import { skinnableWeaponTypesFor } from '../../../sim/content/weapon_skin_rules'
 import type { IWorld } from '../../../world_api';
 import { markDialogRoot } from '../../dialog_root';
 import { esc } from '../../esc';
+import {
+  captureFocusKey,
+  findFocusKey,
+  focusedWithin,
+  focusKeyAttr,
+  restoreFirstEnabled,
+} from '../../focus_restore';
 import { t } from '../../i18n';
 import { focusActiveTab, wireTabStrip } from '../../tab_strip_painter';
 import { tabStripHtml } from '../../tab_strip_view';
@@ -128,6 +135,8 @@ export class CosmeticsWindow {
     // WCAG 2.2 AA: name the focus-trapped root so AT users entering the trap
     // land on a labeled dialog (the sibling cold windows all set this).
     markDialogRoot(el, { label: t('hudChrome.cosmetics.title') });
+    const hadFocus = focusedWithin(el) !== null;
+    const focusKey = captureFocusKey(el);
     const s = this.snapshot();
     this.lastSig = cosmeticsSig(s);
     const strip = cosmeticsTabStrip(
@@ -141,12 +150,22 @@ export class CosmeticsWindow {
     );
     el.innerHTML =
       `<div class="panel-title"><span>${esc(t('hudChrome.cosmetics.title'))}</span>` +
-      `<button type="button" class="x-btn" data-close aria-label="${esc(t('hudChrome.cosmetics.close'))}">${svgIcon('close')}</button></div>` +
+      `<button type="button" class="x-btn" data-close${focusKeyAttr('cosmetics-close')} aria-label="${esc(t('hudChrome.cosmetics.close'))}">${svgIcon('close')}</button></div>` +
       `<p class="cos-legend">${esc(t('hudChrome.cosmetics.legend'))}</p>` +
       tabStripHtml(strip) +
       `<div class="cos-body" id="cosmetics-panel" role="tabpanel">${cosmeticsPanelHtml(s)}</div>`;
     wireTabStrip(el, TAB_CLASS, (id, focusFollow) => this.selectTab(id, focusFollow));
     if (focusTab) focusActiveTab(el, TAB_CLASS, SELECTED_CLASS);
+    else if (hadFocus) {
+      // The card id survives Wear/Take off and Apply/Detach label changes.
+      // A revoked or disabled action falls back inside the dialog. Focus on
+      // another window or the pointer-parked root is deliberately left alone.
+      restoreFirstEnabled([
+        focusKey === null ? null : findFocusKey(el, focusKey),
+        el.querySelector<HTMLButtonElement>('.cos-tab.on'),
+        el.querySelector<HTMLButtonElement>('[data-close]'),
+      ]);
+    }
     this.wire(el);
   }
 

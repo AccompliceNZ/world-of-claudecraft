@@ -12,6 +12,7 @@ import { WEAPON_SKINS } from '../../../sim/content/weapon_skins';
 import type { WeaponSkinType } from '../../../sim/types';
 import { localizeWeaponSkin, rarityLabel, weaponTypeLabel } from '../../armory_labels';
 import { esc } from '../../esc';
+import { focusKeyAttr } from '../../focus_restore';
 import { t } from '../../i18n';
 import { mountSkinDescription, mountSkinDisplayName } from '../../mount_labels';
 import {
@@ -55,7 +56,7 @@ function actionButton(
   disabled = false,
 ): string {
   return (
-    `<button type="button" class="cos-action" data-act="${esc(act)}" data-id="${esc(id)}"${extra}` +
+    `<button type="button" class="cos-action" data-act="${esc(act)}" data-id="${esc(id)}"${focusKeyAttr(`cosmetic:${id}`)}${extra}` +
     `${disabled ? ' disabled aria-disabled="true"' : ''}>${esc(label)}</button>`
   );
 }
