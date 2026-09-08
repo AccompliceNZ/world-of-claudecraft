@@ -2215,9 +2215,7 @@ describe('dungeons: heroic Nythraxis raid arena', () => {
     expect(boss.maxHp).toBe(pins.maxHp);
     expect(boss.weapon.min).toBe(pins.weaponMin);
     expect(boss.weapon.max).toBe(pins.weaponMax);
-    expect(boss.mechanicDamageMult).toBe(
-      HEROIC_DUNGEON_TUNING.nythraxis_boss_arena.damageMultiplier,
-    );
+    expect(boss.mechanicDamageMult).toBe(1.488);
 
     // The encounter's scripted add waves inherit the instance difficulty.
     spawnNythraxisAdds(sim.ctx, boss);
@@ -2241,10 +2239,10 @@ describe('dungeons: heroic Nythraxis raid arena', () => {
   it('a normal raid claim carries the normal retune; a heroic kill pays marks to every raider', () => {
     const normal = raidSetup('normal');
     const nBoss = mobInInstance(normal.sim, normal.inst, NYTHRAXIS_BOSS_ID);
-    // Normal Nythraxis rides NORMAL_DUNGEON_TUNING (economy retune): doubled
-    // health (was 60000) and the 5x per-mob multiplier stamped for mechanics.
+    // The boss keeps the 120k health pool and its new melee factor;
+    // skeletons retain their separate 5x tuning.
     expect(nBoss.maxHp).toBe(120000);
-    expect(nBoss.mechanicDamageMult).toBe(5);
+    expect(nBoss.mechanicDamageMult).toBe(1.132);
     spawnNythraxisAdds(normal.sim.ctx, nBoss);
     const nAdd = normal.sim.entities.get((nBoss.summonedIds as number[])[0]) as AnyEntity;
     expect(nAdd.mechanicDamageMult).toBe(5);
@@ -2634,16 +2632,14 @@ describe('dungeons: heroic Nythraxis raid arena', () => {
     expect(sim.countItem(HEROIC_MARK_ITEM_ID, fallen)).toBe(0);
   });
 
-  it('the empty-instance reaper never frees the arena while raiders stand in its wide outer floor', () => {
+  it('the empty-instance reaper never frees the arena while raiders stand in its far corner', () => {
     const { sim, raiders, inst } = raidSetup('normal');
     const origin = instanceOriginOf(inst);
-    // NYTHRAXIS_LAYOUT (dungeon_layout.ts) authors tomb alcoves at local
-    // x = +/-210, legitimately inside the wide wallX:230/floorHalfX:228 raid
-    // room (and within instanceClaimContains's NYTHRAXIS_ROOM_RADIUS carve-out),
-    // but outside the generic 120yd box that instanceContains checks. Standing
-    // there is a real, in-fight position, not an edge case.
-    const tombX = origin.x + 210;
-    const tombZ = origin.z + 20;
+    // NYTHRAXIS_LAYOUT (dungeon_layout.ts) is one hall about 100 by 100 yd; its
+    // far front corner is a real, in-fight position that must stay inside
+    // instanceClaimContains's NYTHRAXIS_ROOM_RADIUS carve-out.
+    const tombX = origin.x + 48;
+    const tombZ = origin.z + 18;
     raiders.forEach((pid) => {
       teleport(sim, sim.entities.get(pid) as AnyEntity, tombX, tombZ);
     });

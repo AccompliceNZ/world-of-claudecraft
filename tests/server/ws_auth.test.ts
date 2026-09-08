@@ -95,6 +95,9 @@ function setup() {
     beginChatModerationHydration: vi.fn((accountId: number) =>
       chatModerationLiveState.beginHydration(accountId),
     ),
+    // The fresh-join arm asks the action-bar store for a still-queued document
+    // before its post-lease reload; this file has nothing queued.
+    hotbarLayouts: { pending: () => null },
   };
   const deps: WsAuthDeps = {
     game: game as unknown as WsAuthDeps['game'],
@@ -249,13 +252,13 @@ describe('createWsAuth: authenticateWebSocket reject paths', () => {
     expectNoAdmissionWork(fixture);
   });
 
-  it('2c. rejects an auth-world-24 client on the auth-world-25 server before all admission work', async () => {
+  it('2c. rejects an auth-world-25 client on the auth-world-26 server before all admission work', async () => {
     const fixture = setup();
     const { ws, deps, req } = fixture;
 
     await createWsAuth(deps).authenticateWebSocket(
       asWs(ws),
-      JSON.stringify({ t: 'auth-world-24', token: 'tok', character: 7 }),
+      JSON.stringify({ t: 'auth-world-25', token: 'tok', character: 7 }),
       req,
     );
 
@@ -266,7 +269,16 @@ describe('createWsAuth: authenticateWebSocket reject paths', () => {
     expectNoAdmissionWork(fixture);
   });
 
-  it.each(['auth-world', 'auth-world-26', 'auth-world-next', 'auth-world-01', 'auth-world-1.0'])(
+  it.each([
+    'auth-world',
+    // one epoch AHEAD of the live discriminator, derived so a layout-version
+    // bump can never turn this row into the current epoch by accident (the
+    // hardcoded 'auth-world-21' row did exactly that when 20 became 21)
+    ONLINE_WORLD_AUTH_TYPE.replace(/\d+$/, (n) => String(Number(n) + 1)),
+    'auth-world-next',
+    'auth-world-01',
+    'auth-world-1.0',
+  ])(
     '2d. rejects the non-current world auth discriminator %s before all admission work',
     async (authType) => {
       const fixture = setup();

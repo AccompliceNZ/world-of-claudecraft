@@ -324,8 +324,6 @@ export const zh_CN: EnTranslations = {
     "warlock": {
       "doomLabel": "谴罪",
       "fateThreadsLabel": "命运丝线",
-      "doomMeterUnlock": "移动痛苦资源条",
-      "doomMeterLock": "锁定痛苦资源条",
       "doomEmptyStatus": "{value}/{max} 谴罪。",
       "doomStatus": "{value}/{max} 谴罪；剩余 {remaining}。",
       "fateThreadsStatus": "{value}/{max} 命运丝线。",
@@ -570,6 +568,9 @@ export const zh_CN: EnTranslations = {
       "tabsLabel": "WOC 商店分区",
       "storeTab": "商店",
       "rewardsTab": "每日奖励",
+      "mountsEyebrow": "账号坐骑",
+      "mountsTitle": "机械马厩",
+      "mountBuyAria": "购买{item}",
       "loading": "正在加载 WOC 商店…",
       "error": "WOC 商店暂时不可用，请稍后再试。",
       "balance": "Claudium 余额",
@@ -1315,6 +1316,11 @@ export const zh_CN: EnTranslations = {
       "separate": "分离{meter}",
       "regroup": "合并{meter}"
     },
+    "targetDots": {
+      "title": "目标减益",
+      "row": "{aura} on {target}",
+      "overflow": "还有 {count} 个未显示"
+    },
     "targetAuras": {
       "title": "目标光环",
       "keybindLabel": "目标增益和减益效果",
@@ -1398,6 +1404,9 @@ export const zh_CN: EnTranslations = {
       "name_thunderstrut_gobbler": "雷霆阔步大火鸡",
       "name_terrorspark_groundshaker": "惊雷撼地者",
       "name_drakemaw_raptor": "龙喉迅猛龙",
+      "name_mech_bird": "发条机械鸟",
+      "name_lanternback_troll": "提灯背者格伦博",
+      "name_chimeglass_tortoise": "钟晶的托利弗",
       "name_rickshaw_mount": "白骨人力车",
       "desc_valorsteed": "一匹坚韧稳健的骏马，可提升旅行速度。",
       "desc_grag_bear": "一头坚韧稳健的巨熊，可提升旅行速度。",
@@ -1408,6 +1417,9 @@ export const zh_CN: EnTranslations = {
       "desc_thunderstrut_gobbler": "一只风暴所生的庞然大火鸡，从觉醒之峰昂首阔步而下，尾羽如雷云般展开。",
       "desc_terrorspark_groundshaker": "一台紧凑的装甲机械，配备重型履带、大口径火炮，以及为无畏驾驶员打造的鞍座。",
       "desc_drakemaw_raptor": "来自龙喉火山口的驯服巢生迅猛龙，浑身筋肉、疾若奔雷，身上仍带着淡淡的灰烬气味。",
+      "desc_mech_bird": "一只手工打造的发条战斗鸡，伺服关节铿锵疾驰，发条钥匙仍在转动。",
+      "desc_lanternback_troll": "被点灯人驯服的山地巨魔，肩上扛着一把铁王座，两侧扶手各挂一盏燃烧的风灯。",
+      "desc_chimeglass_tortoise": "盐原上的陆龟，走过了三代商队。收留他的补锅匠用暴风晶磨成眼镜，又在他喉前挂上一枚青铜铃——道路总是先听见他，才看见他。",
       "desc_rickshaw_mount": "一辆嘎吱作响的骸骨货车，一具瘦骨嶙峋的杂兵被套在辕木间，拖着你狂奔向前。"
     },
     "mountTraining": {
@@ -1569,6 +1581,26 @@ export const zh_CN: EnTranslations = {
       "showPlaytime": "在角色界面显示游戏时长",
       "forceHighPerfGpu": "使用独立游戏显卡",
       "forceHighPerfGpuNote": "默认开启：桌面版会向本机申请使用独立游戏显卡。如果游戏无法启动、启动后黑屏，或笔记本屏幕没有画面，请关闭此选项。该设置将在下次启动游戏时生效。",
+      "shaderWarm": "着色器预热工作线程",
+      "shaderWarmAuto": "自动",
+      "shaderWarmOff": "关闭",
+      "shaderWarmOn": "开启",
+      "shaderWarmNote": "在后台预热着色器缓存，以避免游戏中出现卡顿。自动：仅在你的图形系统支持时启用（推荐）。开启：在所有环境中强制启用，在部分配置上可能会让性能变差。关闭：不启用。",
+      "gpuBackend": "图形后端",
+      "gpuBackendAuto": "自动",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL（较慢）",
+      "gpuBackendNote": "自动会为你选择最合适的选项。Vulkan 更快，推荐大多数玩家使用。OpenGL 较慢，但在 Vulkan 无法正常工作时可能会有帮助。下次启动游戏时生效。",
+      "gpuBackendActive": "当前使用 {backend}。",
+      "gpuBackendActiveUnavailable": "当前使用 {backend}（无法启用 Vulkan）。",
+      "gpuBackendActiveAutoCapped": "当前使用 {backend}。自动模式暂不会在此显卡上尝试 Vulkan；如需尝试，请选择 Vulkan。",
+      "gpuBackendSaveFailed": "无法保存该选择。下次启动仍将使用 {backend}。",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "部分更改将在重启后生效。",
+      "restartGame": "重启游戏",
+      "restartInProgress": "正在重启游戏...",
+      "restartFailed": "游戏无法自行重启。请退出后重新启动。",
       "discordPresence": "Discord 游戏状态",
       "discordPresenceNote": "游戏时将你当前所在的区域以及本次游戏时长显示为你的 Discord 活动状态，任何能看到你 Discord 个人资料的人都能看到这两项。只会分享区域名称、本次游戏时长和游戏名称，绝不会分享你的角色、账号或与你同行的人。需要本机正在运行 Discord 应用。",
       "showDevBadges": "显示开发者徽章",
@@ -1600,6 +1632,9 @@ export const zh_CN: EnTranslations = {
       "showTargetOfTarget": "显示目标的目标",
       "showTargetSwingTimer": "显示目标的挥击计时器",
       "showPetFrame": "显示你的宠物",
+      "showNameplateDots": "在姓名板上显示我的减益",
+      "nameplateDotScale": "姓名板减益图标大小",
+      "showTargetDots": "显示目标减益追踪",
       "waterRipples": "水面涟漪（尾波）",
       "showAttackButton": "显示攻击按钮",
       "showDailyRewardsChest": "显示每日奖励宝箱",
@@ -2530,6 +2565,24 @@ export const zh_CN: EnTranslations = {
       "worldfireClosing": "世界之火正在逼近，向中央移动！",
       "worldfireConsumed": "整个熔炉大厅都在燃烧！"
     },
+    "nythraxisCallout": {
+      "impaled": "骨刺出现！解救被穿刺的队员！",
+      "youAreImpaled": "你被穿刺了！坚持住！",
+      "spikeBroken": "骨刺已粉碎！",
+      "dreadCurseSwap": "恐惧诅咒：更换坦克！",
+      "sigilAppears": "束缚法阵浮现！把尼思拉克西斯拖上去！",
+      "sigilBound": "尼思拉克西斯已受缚！全力输出！",
+      "sigilUnbound": "法阵消散，尼思拉克西斯未受缚！他变得更强了！",
+      "gravefireTarget": "墓火正朝你袭来！快闪避！",
+      "kingsWrath": "国王勃然大怒！此后所有攻击伤害更高！",
+      "boneStormBegins": "白骨风暴！分散并逃跑！",
+      "boneStormCharge": "尼思拉克西斯正在冲向你！快跑！",
+      "boneStormEnds": "白骨风暴结束。坦克，接回仇恨！",
+      "crownEndures60": "距王冠不朽还有一分钟！",
+      "crownEndures30": "距王冠不朽还有三十秒！",
+      "crownEndures10": "还剩十秒！全力输出！",
+      "crownEndures": "王冠不朽！尼思拉克西斯已狂暴！"
+    },
     "varkhulWaveStatus": "波次 {wave}/{waves} | 敌人: {remaining}",
     "raidBossGuide": {
       "title": "首领指南",
@@ -2678,6 +2731,67 @@ export const zh_CN: EnTranslations = {
         "assembly": "大师组装: 阻挡两道熔炉射线，击杀所有传送门波次，打断坩埚震击，并阻止烬火工匠治疗瓦尔库尔。",
         "worldfire": "世界之火: 英雄最终阶段的燃烧边缘会向中央收缩。在整个坩埚燃烧前击败瓦尔库尔。",
         "heroic": "英雄: 熔炉热量不会下降，铁砧敕令会增加陨石，最终阶段会集中应对世界之火。"
+      },
+      "nythraxis": {
+        "overview": "大祭司马尔里克不愿让他的国王死去，而复活尼思拉克西斯的仪式将整个王庭都束缚在了墓穴之中。这场战斗考验严谨的坦克轮换、对骨刺的快速集火、远离燃烧地面的走位，以及王座陷落后对护符石的团队协同引导。",
+        "phaseThroneName": "王座",
+        "phaseThroneSummary": "尼思拉克西斯据守王座厅，反复施放蓄力正面劈砍、恐惧诅咒坦克轮换、穿刺队员的骨刺，以及留下燃烧地面的坟场爆裂。",
+        "phaseWardstonesName": "护符石",
+        "phaseWardstonesSummary": "生命值降至{health}时，震颤践踏使团队定身，奥德里克修士随后赶到并点亮护符石。所有骨刺随即粉碎，地面停止燃烧，接着灵魂撕裂和不死之怒会加入王座阶段的机制。",
+        "phaseKingsWrathName": "国王之怒",
+        "phaseKingsWrathSummary": "生命值降至{health}时，尼思拉克西斯怒吼着进入国王之怒，此后在战斗剩余时间内获得 {bonusNormal} 伤害加成（英雄难度为 {bonusHeroic}）。坟场爆裂的间隔缩短为每 {eruptionEveryNormal} 秒（英雄难度为 {eruptionEveryHeroic} 秒），墓火的间隔缩短为每 {gravefireEveryNormal} 秒（英雄难度为 {gravefireEveryHeroic} 秒）。其余机制的节奏保持不变。",
+        "gravebreakerName": "碎墓打击",
+        "gravebreakerSummary": "每 {seconds} 秒，尼思拉克西斯蓄力下一次命中的挥击。他的目标只承受挥击本身的伤害，但站在他正面 {arc} 度扇形范围内 {range} 码内的其他所有人，都会承受该次挥击 {splash} 的物理伤害，并按自身护甲减免。",
+        "gravebreakerResponse": "坦克始终让尼思拉克西斯背对团队。其余所有人站在他身后或侧面，绝不进入扇形范围。",
+        "dreadCurseName": "恐惧诅咒",
+        "dreadCurseSummary": "每 {every} 秒，尼思拉克西斯打击当前坦克，造成 {hitNormal} 最大生命值的暗影伤害，并叠加一层恐惧诅咒。持续 {duration} 秒内，每层都会使该坦克受到尼思拉克西斯的伤害提高 {perStackNormal}，最多叠加 {max} 层。",
+        "dreadCurseHeroicSummary": "每 {every} 秒，尼思拉克西斯打击当前坦克，造成 {hitHeroic} 最大生命值的暗影伤害，并叠加一层恐惧诅咒。持续 {duration} 秒内，每层都会使该坦克受到尼思拉克西斯的伤害提高 {perStackHeroic}，最多叠加 {max} 层。",
+        "dreadCurseResponse": "坦克应在 {stacks} 层时轮换：另一名坦克嘲讽接怪，被诅咒的坦克则远离碎墓打击的扇形范围，直到层数消退。治疗在轮换前为即将接怪的坦克做好准备。",
+        "boneSpikeName": "骨刺",
+        "boneSpikeSummary": "每 {everyNormal} 秒，尼思拉克西斯会用骨刺穿刺除当前目标外的 {victimsNormal} 名队员。被穿刺的队员无法行动，每秒损失 {drainNormal} 最大生命值，直到骨刺被摧毁。",
+        "boneSpikeHeroicSummary": "每 {everyHeroic} 秒，尼思拉克西斯会用骨刺穿刺除当前目标外的 {victimsHeroic} 名队员。被穿刺的队员无法行动，每秒损失 {drainHeroic} 最大生命值，直到骨刺被摧毁。",
+        "boneSpikeResponse": "输出职业立即转火骨刺并将其摧毁，以解救被穿刺的队员。治疗在骨刺被摧毁前为被穿刺者续命。",
+        "graveEruptionName": "坟场爆裂",
+        "graveEruptionSummary": "每 {everyNormal} 秒，森森白骨之手会在队员脚下标记 {countNormal} 个半径 {radius} 码的圆圈。{warning} 秒后，每个圆圈都会爆裂，造成 {burstNormal} 最大生命值的暗影伤害，随后化为坟场烈焰燃烧 {flameNormal} 秒，对站在其中的任何人每秒造成 {tickNormal} 最大生命值的伤害。",
+        "graveEruptionHeroicSummary": "每 {everyHeroic} 秒，森森白骨之手会在队员脚下标记 {countHeroic} 个半径 {radius} 码的圆圈。{warning} 秒后，每个圆圈都会爆裂，造成 {burstHeroic} 最大生命值的暗影伤害，随后化为坟场烈焰燃烧 {flameHeroic} 秒，对站在其中的任何人每秒造成 {tickHeroic} 最大生命值的伤害。",
+        "graveEruptionResponse": "在每个预警圆圈爆裂前离开，并远离燃烧地面。坦克应将尼思拉克西斯拉离火焰区域，为近战输出留出空间。",
+        "bindingSigilName": "束缚法阵",
+        "bindingSigilSummary": "每 {everyNormal} 秒，一座古老结界的法阵会在距尼思拉克西斯 {minDist} 至 {maxDist} 码处的地面浮现，同时他开始不死飞升，每 {ascensionEvery} 秒获得 {ascensionNormal} 伤害与攻击速度加成。若他在 {bindNormal} 秒内站上法阵，便会受缚：不死飞升被清除，他被眩晕 {stunNormal} 秒，并在接下来的 {boundNormal} 秒内受到的伤害提高 {vulnerability}。否则每名队员都会受到 {unboundHitNormal} 最大生命值的暗影伤害，且他会一直保持 {unboundBonusNormal} 的伤害加成，直到下一次束缚。",
+        "bindingSigilHeroicSummary": "每 {everyHeroic} 秒，一座古老结界的法阵会在距尼思拉克西斯 {minDist} 至 {maxDist} 码处的地面浮现，同时他开始不死飞升，每 {ascensionEvery} 秒获得 {ascensionHeroic} 伤害与攻击速度加成。若他在 {bindHeroic} 秒内站上法阵，便会受缚：不死飞升被清除，他被眩晕 {stunHeroic} 秒，并在接下来的 {boundHeroic} 秒内受到的伤害提高 {vulnerability}。否则每名队员都会受到 {unboundHitHeroic} 最大生命值的暗影伤害，且他会一直保持 {unboundBonusHeroic} 的伤害加成，直到下一次束缚。",
+        "bindingSigilResponse": "坦克应立即将尼思拉克西斯拖上法阵，无视团队留下的任何燃烧地面。近战跟随拖拽路线，远程则避开新的碎墓打击扇形范围。他受缚期间，全队火力全开。",
+        "raiseFallenName": "亡者复生",
+        "raiseFallenSummary": "在王座阶段，每 {every} 秒，尼思拉克西斯会在其身后唤起复苏王室卫兵。它们会冲向他的当前目标，战斗至被摧毁为止。",
+        "raiseFallenResponse": "副坦克负责接管每一波苏醒的卫兵。输出职业应在骨刺间隙清理卫兵，确保在王座陷落前，各波卫兵不会持续堆积。",
+        "soulRendName": "Soul Rend",
+        "soulRendSummary": "尼思拉克西斯会用灵魂撕裂标记除当前目标外的 {marksNormal} 名队员。{fuse} 秒后，每个标记都会对其携带者造成相当于其全部最大生命值的暗影伤害，并按其 {range} 码内被标记队员的数量分摊。",
+        "soulRendHeroicSummary": "尼思拉克西斯会用灵魂撕裂标记除当前目标外的 {marksHeroic} 名队员。{fuse} 秒后，每个标记都会对其携带者造成相当于其 {damageHeroic} 最大生命值的暗影伤害，并按其 {range} 码内被标记队员的数量分摊。若某个标记独自结算，将是致命的。",
+        "soulRendResponse": "每名被标记的队员都应在 {fuse} 秒的引爆时间结束前跑到集合点，并站在其他标记 {range} 码范围内。治疗应在标记结算时为团队补满生命。",
+        "soulfireName": "魂火",
+        "soulfireSummary": "每次灵魂撕裂引爆都会在每个标记所在位置留下一片半径 {radius} 码的紫色火池，燃烧 {seconds} 秒，每秒造成 {tickNormal} 最大生命值的伤害。若多个火池重叠，站在其中会承受每个火池各自的伤害。火池不会在护符石 {clearance} 码范围内形成。",
+        "soulfireHeroicSummary": "每次灵魂撕裂引爆，每一组聚集的标记只会留下一片半径 {radius} 码的紫色火池，燃烧 {secondsHeroic} 秒，每秒造成 {tickHeroic} 最大生命值的伤害。若多个火池重叠，只会承受一次伤害，而非叠加。火池不会在护符石 {clearance} 码范围内形成。",
+        "soulfireResponse": "标记引爆后应立刻离开紫色火池。选择下一个集合点时，务必避开仍在燃烧的火焰。",
+        "gravefireName": "墓火",
+        "gravefireSummary": "每 {everyNormal} 秒，一道幽紫色的墓火线会从尼思拉克西斯延伸向一名队员，每秒延长 {speed} 码，直至 {length} 码。每一码火线都会燃烧 {burnNormal} 秒，对站在其中的任何人每秒造成 {tickNormal} 最大生命值的伤害。",
+        "gravefireHeroicSummary": "每 {everyHeroic} 秒，一道幽紫色的墓火线会从尼思拉克西斯延伸向一名队员，每秒延长 {speed} 码，直至 {length} 码。每一码火线都会燃烧 {burnHeroic} 秒，对站在其中的任何人每秒造成 {tickHeroic} 最大生命值的伤害。",
+        "gravefireResponse": "火线袭来时侧身闪避即可：它很窄且从不转向。远程队员应持续走动，而非站在原地。",
+        "deathlessRageName": "不死之怒",
+        "deathlessRageSummary": "每 {every} 秒，尼思拉克西斯会施放持续 {cast} 秒的不死之怒。施法期间，每座已点亮的护符石都可由一名队员引导 {channel} 秒。若在施法结束前，三名不同的队员各自完成一座护符石的引导，不死之怒便会被打断，尼思拉克西斯将被眩晕 {stun} 秒。否则每名队员都会受到 {damageNormal} 最大生命值的暗影伤害。",
+        "deathlessRageHeroicSummary": "每 {every} 秒，尼思拉克西斯会施放持续 {cast} 秒的不死之怒。施法期间，每座已点亮的护符石都可由一名队员引导 {channel} 秒。若在施法结束前，三名不同的队员各自完成一座护符石的引导，不死之怒便会被打断，尼思拉克西斯将被眩晕 {stun} 秒。否则每名队员都会受到 {damageHeroic} 最大生命值的暗影伤害，没有任何生命值能够承受这一击。",
+        "deathlessRageResponse": "开战前为每座护符石指定一名队员。施法开始后，各自跑向自己的护符石并引导至完成。眩晕、离开范围和死亡都会中断引导，因此务必保护好引导者，并且绝不能指定被穿刺的队员。",
+        "courtName": "不死王庭",
+        "courtSummary": "英雄难度下，每次不死之怒结算后（无论是否被打断），只要上一批王庭众魂已被消灭，尼思拉克西斯就会唤起新的王庭众魂：奥德伦，亡魂战卫会用王室劈砍横扫其目标附近的所有人；马尔里克，亡魂大祭司会引导马尔里克的治疗，每次施法都为尼思拉克西斯恢复更多生命；沃斯，亡魂之刃无视嘲讽，专注猎杀团队成员。",
+        "courtResponse": "坦克接管奥德伦并使其劈砍背对团队。马尔里克的治疗一旦开始引导，立即眩晕或沉默他并优先将其击杀；随后用定身或眩晕将沃斯从治疗身边引开（他无法被嘲讽），并第二个将其击杀。",
+        "kingsWrathName": "国王之怒",
+        "kingsWrathSummary": "尼思拉克西斯在本场战斗剩余时间内，普通难度造成 {bonusNormal} 更多伤害，英雄难度为 {bonusHeroic}。坟场爆裂每 {eruptionEveryNormal} 秒发生一次（英雄难度为 {eruptionEveryHeroic} 秒），墓火每 {gravefireEveryNormal} 秒发生一次（英雄难度为 {gravefireEveryHeroic} 秒）。",
+        "kingsWrathResponse": "使用剩余的防御技能应对无法躲避的伤害。在团队结束战斗前，继续干净地应对此前的所有机制。",
+        "boneStormName": "白骨风暴",
+        "boneStormSummary": "国王之怒开始后 {first} 秒，以及此后每隔 {everyNormal} 秒，尼思拉克西斯都会开始持续 {duration} 秒的白骨风暴。此时他无视仇恨，以 {speed} 倍常速移动，并发起 {charges} 次冲锋，每次持续 {chargeSeconds} 秒。他的旋转攻击会在 {radius} 码内每秒造成 {whirlNormal} 最大生命值的伤害。每次冲锋都会以一次白骨重击结束，在相同范围内造成 {slamNormal} 最大生命值的伤害。风暴开始 {spikeAt} 秒后他会施放骨刺，随后碎墓打击会在风暴结束 {rearm} 秒后重新启用。",
+        "boneStormHeroicSummary": "国王之怒开始后 {first} 秒，以及此后每隔 {everyHeroic} 秒，尼思拉克西斯都会开始持续 {duration} 秒的白骨风暴。此时他无视仇恨，以 {speed} 倍常速移动，并发起 {charges} 次冲锋，每次持续 {chargeSeconds} 秒。他的旋转攻击会在 {radius} 码内每秒造成 {whirlHeroic} 最大生命值的伤害。每次冲锋都会以一次白骨重击结束，在相同范围内造成 {slamHeroic} 最大生命值的伤害。风暴开始 {spikeAt} 秒后他会施放骨刺，随后碎墓打击会在风暴结束 {rearm} 秒后重新启用。",
+        "boneStormResponse": "分散站位并持续远离尼思拉克西斯。被冲锋锁定的队员应逃离，其他人则为冲锋路径留出空间，风暴结束后由坦克重新接回仇恨。",
+        "crownEnduresName": "王冠不朽",
+        "crownEnduresSummary": "从开战起 {enrageNormal} 秒后（奥德里克修士在生命值70%时登场的期间计时会暂停），王冠不朽将触发强制狂暴。尼思拉克西斯获得 {damage} 更多伤害和 {haste} 更快的攻击速度，此后每 {rampEveryNormal} 秒再获得 {rampStep} 伤害提升。此机制没有计时条，警告会在剩余 {warn60}、{warn30} 和 {warn10} 秒时以呐喊形式出现。",
+        "crownEnduresHeroicSummary": "从开战起 {enrageHeroic} 秒后（奥德里克修士在生命值70%时登场的期间计时会暂停），王冠不朽将触发强制狂暴。尼思拉克西斯获得 {damage} 更多伤害和 {haste} 更快的攻击速度，此后每 {rampEveryHeroic} 秒再获得 {rampStep} 伤害提升。此机制没有计时条，警告会在剩余 {warn60}、{warn30} 和 {warn10} 秒时以呐喊形式出现。",
+        "crownEnduresResponse": "将第一次警告视为最后爆发的信号。为剩余机制保留走位与防御技能，并在狂暴前击败尼思拉克西斯。"
       }
     },
     "auraEffect": {
@@ -2688,6 +2802,14 @@ export const zh_CN: EnTranslations = {
       "varkhulMoltenCore": "将核心运到锻炉。熔融重压每 {interval} 秒造成不断提高的伤害，从最大生命值的 {min}% 增至 {max}%。",
       "varkhulForgeLink": "在激活的立柱光束抵达锻炉前将其拦截。未拦截的光束每秒增加6%热量。普通难度下，已拦截的光束和关闭的立柱会让锻炉冷却；英雄难度下热量永不降低。达到100%时会触发致命的锻炉熔毁。",
       "varkhulCrucibleExposure": "拦截坩埚光束时，每秒受到的最大生命值伤害都会提高。离开光束后，普通难度10秒、英雄难度60秒后重置层数。",
+      "nythraxisDreadCurse": "每层使受到尼思拉克西斯的伤害提高 {perStack}%，持续 {duration} 秒：当前 {stacks}/{max} 层，伤害提高 {pct}%。每 {every} 秒，他对目标的下一次打击造成 {hit}% 最大生命值的伤害并叠加一层。坦克应在 {swap} 层时更换。",
+      "nythraxisImpaled": "被骨刺穿刺：你无法行动，每 {interval} 秒损失 {normal}% 最大生命值（英雄难度为 {heroic}%），直到团队摧毁骨刺。",
+      "nythraxisAscension": "不死飞升：{stacks} 层，伤害与攻击速度提高 {pct}%。把尼思拉克西斯拖上束缚法阵可清除此效果。",
+      "nythraxisBound": "受缚于古老结界：尼思拉克西斯受到的伤害提高 {pct}%，持续 {duration} 秒。",
+      "nythraxisUnbound": "未受缚：尼思拉克西斯造成的伤害提高 {pct}%，直到被束缚法阵制住。",
+      "nythraxisKingsWrath": "国王之怒：尼思拉克西斯在本场战斗剩余时间内造成的伤害提高 {pct}%。",
+      "nythraxisBoneStorm": "白骨风暴：尼思拉克西斯无视仇恨，在 {radius} 码内每秒旋转造成 {tick}% 最大生命值的伤害，并冲向队员。请分散并逃跑。",
+      "nythraxisCrownEndures": "王冠不朽：{stacks} 层，伤害提高 {pct}%，攻击速度提高 {haste}%。团队已没有时间了。",
       "dot": "每 {interval} 秒造成 {value} 点{school}伤害",
       "hot": "每 {interval} 秒恢复 {value} 点生命值",
       "mendingCurrent": "储存 {value} 点治疗量，随时间释放或由湍流愈合消耗",
@@ -2758,6 +2880,8 @@ export const zh_CN: EnTranslations = {
       "redline": "红线：第{stacks}/{max}格。每次大摆拳增加1格。眼前一黑每格伤害提高{pct}%，使用后结束红线。若计时先行结束，这记击倒就会作废",
       "veilstrikeWindow": "暗影缠身：你的暮帷先制技可在明处以任意角度使用，造成的伤害提高{pct}%",
       "veiledEdge": "你的下一次潜伏突袭造成双倍伤害",
+      "veiledEdgeStrike": "你的下一次潜伏突袭造成的武器伤害提高{pct}%",
+      "coldsightRead": "你的下一次引弓长射造成的伤害提高{longDrawPct}%，或你的下一次凶邪射击造成的伤害提高{fellShotPct}%",
       "duskEconomy": "技能的能量消耗降低{pct}%",
       "moontide": "月潮：第{stacks}/{max}层。月翼形态下，野性弹、天陨与月种的施法各累积1层。达到{max}层时：月种变为月涌，天陨变为日醒，使用任意一个都会消耗全部3层",
       "oldBlood": "古血：第{stacks}/{max}层。裂爪、剐削、血裂、血噬、横扫利爪与碎骨击的命中各累积1层。达到{max}层时：狼形态下血噬变为血收，巨熊形态下碎骨击变为碎髓",
@@ -2987,7 +3111,18 @@ export const zh_CN: EnTranslations = {
         "playerFrame": "玩家",
         "targetFrame": "目标",
         "partyFrames": "队伍",
-        "swingBar": "自动攻击"
+        "swingBar": "自动攻击",
+        "targetDots": "目标减益",
+        "questTracker": "任务追踪器",
+        "reliquaryTracker": "圣物库追踪器",
+        "petBar": "Pet Bar",
+        "procOverlay": "法术触发",
+        "procOverlayFrost": "冰刺",
+        "damageMeter": "伤害统计",
+        "deedTracker": "功绩追踪器",
+        "delveTracker": "探秘追踪器",
+        "riftTracker": "裂隙追踪器",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "框体设置",
       "framesMenuTitle": "显示或隐藏各个框体。取消勾选的框体会一直隐藏，直到你重新勾选或恢复默认设置。",
@@ -3019,11 +3154,86 @@ export const zh_CN: EnTranslations = {
       "invalid": "这不是有效的导出代码。",
       "wrongKind": "该代码属于另一种导出类型。"
     },
+    "keybindTransfer": {
+      "setup": "快捷键配置",
+      "apply": "应用",
+      "imported": "快捷键配置已导入。",
+      "wrongKind": "该代码是设置导出，不是快捷键配置。"
+    },
+    "keyboardMap": {
+      "title": "键盘总览",
+      "hint": "正在使用的按键按类别着色。将鼠标悬停或聚焦到某个按键即可查看其全部绑定。",
+      "hintInteractive": "正在使用的按键按类别着色。点击某个按键可更改其功能；将鼠标悬停或聚焦到按键上可查看其全部绑定。",
+      "popOut": "Pop Out",
+      "close": "关闭键盘总览",
+      "pressKey": "按下一个键以绑定到 {action}。按 Esc 取消。",
+      "boundTo": "已将 {action} 绑定到 {key}。",
+      "notBindable": "该键无法绑定。",
+      "assignHint": "选择一个动作绑定到 {key}。",
+      "assignPlaceholder": "为 {key} 指定一个动作",
+      "layerGroup": "修饰键层",
+      "formGroup": "键盘尺寸",
+      "formFull": "全尺寸",
+      "formTkl": "无数字键区",
+      "form75": "75%",
+      "form60": "60%",
+      "notOnLayout": "不在此键盘上：{bindings}",
+      "legendGroup": "按键标签",
+      "legendLayout": "您的布局",
+      "legendQwerty": "QWERTY",
+      "layerNone": "无修饰键",
+      "layerShift": "Shift 键",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
+      "otherLayers": "也与修饰键组合绑定"
+    },
+    "fullTransfer": {
+      "menu": "导入 / 导出",
+      "title": "导入 / 导出设置",
+      "fullSettings": "全部设置",
+      "intro": "将此设备上保存的全部偏好导出为一段代码，并在其他设备或浏览器上粘贴导入：图形、音频、界面、主题、框体布局、每个角色的按键绑定、手柄与十字热键栏绑定、聊天、窗口筛选、语言以及已关闭的提示。",
+      "excluded": "绝不包含：您的登录、账号、钱包或购买数据。动作条布局保存在您的账号中，会随账号同步。"
+    },
+    "riftForge": {
+      "title": "裂隙熔炉",
+      "subtitle": "裂隙之戒",
+      "currency": "{name}: {count}",
+      "empty": "背包里没有裂隙之戒。首次通关排位裂隙会铸造一枚。",
+      "wornHint": "已装备。卸下后才能锻造。",
+      "upgradeBtn": "强化至物品等级 {level}（{cost} 精华）",
+      "upgradeMax": "已强化至满级",
+      "gemPickAria": "要镶嵌的宝石",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "插槽已满：下一颗宝石将替换最早镶嵌的 {gem}。",
+      "socketBtn": "镶嵌",
+      "socketsNone": "没有宝石",
+      "noGems": "背包里没有裂隙宝石",
+      "refused": "熔炉拒绝了。请站在裂隙锻匠身旁再试。",
+      "reason": {
+        "notFound": "那枚戒指不在你的背包里。",
+        "notRiftGear": "只有裂隙之戒才能锻造。",
+        "maxUpgrade": "那枚戒指已强化至满级。",
+        "insufficientEssence": "裂隙精华不足。",
+        "invalidGem": "你没有那种裂隙宝石。",
+        "dead": "死亡时无法这么做。",
+        "tooFar": "你离裂隙熔炉太远了。"
+      },
+      "done": {
+        "upgrade": "已强化{name}。",
+        "socket": "已为{name}镶嵌一颗宝石。",
+        "socketReplaced": "已将宝石镶入{name}；{gem}已被摧毁。"
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "需要等级 {level}",
       "riftTier": "{tier}级裂隙物品",
       "riftUpgrade": "裂隙强化 {level}/{max}",
       "riftSockets": "裂隙宝石 {used}/{total}",
+      "riftGemSocket": "裂隙之戒的镶嵌加成",
       "statEnchanted": "+{value} {stat}（附魔）",
       "enchantedFallback": "已附魔",
       "partyTradeWindow": "在接下来的{time}内，你可以将此物品交易给共同获得该掉落的玩家。装备后交易期限即告结束。"
@@ -3304,6 +3514,15 @@ export const zh_CN: EnTranslations = {
       "popupTitle": "公会告示柱",
       "close": "关闭"
     },
+    "realmBuilder": {
+      "title": "本月王国建造者",
+      "currentLabel": "本月荣誉获得者",
+      "placeholderName": "你的名字",
+      "placeholderHint": "这块铭牌还在等待它的第一个名字。",
+      "pastTitle": "历届荣誉获得者",
+      "pastEmpty": "荣誉榜上还没有名字。",
+      "close": "关闭"
+    },
     "bank": {
       "title": "银行",
       "subtitle": "镀金保险箱",
@@ -3431,8 +3650,34 @@ export const zh_CN: EnTranslations = {
       "guildViewsAria": "公会银行视图",
       "guildContentsTab": "内容",
       "guildLogTab": "日志",
+      "guildHistoryTab": "历史",
       "logAria": "公会银行活动日志",
       "logNote": "最近 {count} 条公会银行操作。",
+      "logShowing": "正在显示 {count} 条公会银行操作，最新的在前。",
+      "logFilterAria": "筛选公会银行历史",
+      "logFilterAll": "全部",
+      "logFilterItems": "物品",
+      "logFilterMoney": "金钱",
+      "logOlder": "显示更早",
+      "logOlderLoading": "正在加载更早的操作...",
+      "logEnd": "这是公会银行的全部历史。",
+      "logEmptyFiltered": "没有符合此筛选条件的公会银行操作。",
+      "logColTime": "时间",
+      "logColMember": "成员",
+      "logColAction": "操作",
+      "logColDetail": "详情",
+      "logActionDeposit": "存入",
+      "logActionWithdraw": "取出",
+      "logActionBuySlots": "购买了扩展",
+      "logActionOpenBank": "开设了银行",
+      "logActionCharterFee": "支付了创建费",
+      "logActionAdminPurge": "移除",
+      "logActorAdmin": "管理员",
+      "logDetailItem": "{item} x{count}",
+      "logSearchPlaceholder": "搜索此历史",
+      "logSearchAria": "按成员、操作或物品搜索已加载的公会银行操作",
+      "logShowingMatched": "正在显示已加载的 {count} 条公会银行操作中的 {matched} 条。",
+      "logSearchNoMatch": "已加载的公会银行操作中没有符合搜索的结果。显示更早的记录以扩大范围。",
       "logLoading": "正在加载公会银行日志...",
       "logEmpty": "公会银行中尚未存入或取出任何物品。",
       "logUnavailable": "目前无法读取公会银行日志。",
@@ -3530,6 +3775,20 @@ export const zh_CN: EnTranslations = {
         "result": {
           "set": "公会公告板已更新。",
           "notOfficer": "只有官员和会长可以编辑公告板。"
+        }
+      },
+      "roster": {
+        "seats": "{count} / {cap} 席位",
+        "expand": "扩充名册（+{seats} 席位，{price}）",
+        "maxed": "名册已达最大规模",
+        "confirm": "花费 {price} 为公会名册扩充 {seats} 个席位？金币从你自己的钱包扣除，不予退还。",
+        "confirmAction": "扩充",
+        "expandedLine": "{name} 已将公会名册扩充至 {cap} 名成员。",
+        "result": {
+          "notLeader": "只有会长可以扩充公会名册。",
+          "maxed": "公会名册无法再扩充。",
+          "cannotAfford": "扩充公会名册需要 {price}。",
+          "retry": "购买期间公会名册已发生变化，请重试。"
         }
       }
     },
@@ -3948,6 +4207,7 @@ export const zh_CN: EnTranslations = {
       "yieldLineRange": "{item} {min} 至 {max} 个",
       "alreadyEnchanted": "那件物品已经附魔。",
       "sameEnchant": "那件物品已经拥有该附魔。",
+      "riftGear": "裂隙之戒只能镶嵌裂隙宝石，无法附魔。",
       "replaceTag": "替换{enchant}",
       "sameEnchantTag": "已施加",
       "plainTag": "未附魔",
@@ -4162,10 +4422,19 @@ export const zh_CN: EnTranslations = {
         "sealbreak_shockwave": "破印冲击波（范围爆发）",
         "gravebreaker": "碎墓打击（正面扇形，背对团队）",
         "raise_fallen": "亡者复生（周期性召唤小怪）",
-        "soul_rend": "灵魂撕裂（被标记者需分散并接受治疗）",
+        "soul_rend": "灵魂撕裂（被标记者应集合，然后离开火焰）",
         "deathless_rage": "不死之怒（需在护符石处打断）",
         "wardstones": "护符石引导（阶段转换）",
-        "dread_curse": "恐惧诅咒（仅英雄难度，累加坦克轮换减益）"
+        "dread_curse": "恐惧诅咒（累加坦克轮换减益，2层后轮换）",
+        "bone_spike": "骨刺（被穿刺者会持续掉血，直到骨刺被摧毁）",
+        "grave_eruption": "坟场爆裂（预警圆圈会留下燃烧地面）",
+        "binding_sigil": "束缚法阵（把首领拖上法阵，否则全团遭殃）",
+        "gravefire": "墓火（需要闪避的移动火线）",
+        "soulfire": "魂火（灵魂撕裂引爆后留下燃烧的火池）",
+        "kings_wrath": "国王之怒（30%时触发：永久伤害加成，地面机制加快）",
+        "bone_storm": "白骨风暴（他无视仇恨，旋转攻击并冲向团队）",
+        "crown_endures": "王冠不朽（6:00时触发强制狂暴，英雄难度为5:00）",
+        "deathless_court": "不死王庭（仅英雄难度，不死之怒后王庭众魂会苏醒）"
       }
     },
     "reliquary": {
@@ -6042,6 +6311,8 @@ export const zh_CN: EnTranslations = {
       "raceBody": "王国里的每一支队伍都可以同时攻打同一道裂隙，各打各的那一份副本，但只有第一个把最底下那个东西放倒的队伍才能封印它。有队伍获胜时，全王国都会听到他们的名字和用时，入口也随之在他们身后关闭。输掉这场竞速并不会结束你的这一趟：你的副本仍然开着，最底下那个东西照样会倒在你手上，你也照样能靠自己走出来。你失去的，是通关本该带来的一切。首领不会为第二名留下任何东西，所以你带回家的，只有一路向下时从小怪身上掉出来的东西，再无其他。功绩之书仍然会记下这次通关，因为那东西确实是你放倒的。这是游戏里唯一一场你可能输掉、却连赢家的面都见不着的竞速。",
       "rewardsHeading": "你能带走什么",
       "rewardsBody": "真正给报酬的，是封印一道裂隙，而不只是活着从里面出来。抢先把裂隙打下来，它的报酬就对得起与它等级相当的副本内容，所以更高的等级值得你跑更难的一趟。封印还会把一枚裂隙之戒交到在场每个人手里，按你职业的定位裁剪打造，并且专属于你，同时在你的背包里留下裂隙精华和裂隙宝石。除了归途之外，最底下那个东西还会留下一口封着的储藏，你的队伍可以撬开它取走额外的战利品，用的正是你在探秘宝箱那里熟悉的锁簧之径撬锁，所以干净沉稳地撬，比慌乱赶工赚得更多。这些第二名的队伍一样都拿不到：输掉的竞速只留给你一路向下时从小怪身上掉出来的东西。功绩之书是唯一的例外，无论输赢它都会记下你的通关，其中一个功绩为封闭你的第一道裂隙，另一个为放倒一道 S 级裂隙。",
+      "forgeHeading": "裂隙熔炉",
+      "forgeBody": "首次通关排位裂隙铸造的戒指，在你拿到手时还没有完工。裂隙锻匠梅莉丝在远滩的守望草甸、沿岸上行离开鸥港后的破裂学者身旁守着一座熔炉，她会一步步提升戒指的物品等级，并把裂隙掉落的彩色宝石镶进插槽，每种颜色对应一项战斗评级。插槽已满的戒指会用新宝石替换最早镶嵌的那颗，所以日后还能重新调整。这一切都以裂隙精华和裂隙宝石支付，它们是裂隙首领掉落、可自由交易的熔炉货币，所以缺的精华可以请朋友递给你。带去之前先把戒指卸下：她只处理背包里的东西，而且除非你站在她的熔炉旁，否则她什么都不会做。",
       "trackerHeading": "屏幕上的追踪条",
       "trackerBody": "在里面时，屏幕上的一小条会帮你保持方向：你在第几层、总共几层，以及一个实时倒计时。这个倒计时要看仔细，因为它数的不是你这一趟剩下的时间，而是外面世界里的入口对新队伍关闭的时间。只要你已经进来了，你的小队就能按自己的节奏把这道裂隙打完，花多久都行。"
     },
@@ -7380,10 +7651,7 @@ export const zh_CN: EnTranslations = {
     "playAria": "开始游玩 World of ClaudeCraft",
     "serverLabel": "选择你的世界",
     "serverAria": "选择世界：在线或离线",
-    "serverOfflineSub": "即时本地世界",
-    "caLabel": "$WOC 合约地址",
-    "caCopyAria": "复制合约地址",
-    "caNote": "WOC 是我们的社区代币。游玩游戏并不需要它。加入 Discord 一起讨论 WOC 的用途与飞轮效应。"
+    "serverOfflineSub": "即时本地世界"
   },
   "auth": {
     "enterRealm": "进入服务器",
@@ -7933,6 +8201,7 @@ export const zh_CN: EnTranslations = {
       "forgeUpgraded": "{name} 的裂隙强化已完成。",
       "forgeEnchanted": "{name} 的裂隙附魔已完成。",
       "forgeSocketed": "已为 {name} 镶嵌裂隙宝石。",
+      "forgeGemReplaced": "已为 {name} 更换裂隙宝石：{gem} 已被摧毁。",
       "detonateGlacialGrave": "冰川之墓引爆！",
       "detonateAbsoluteZero": "绝对零度爆发！",
       "detonateMagmaWell": "岩浆泉喷涌！",
@@ -8677,6 +8946,7 @@ export const zh_CN: EnTranslations = {
     "bodyWeb": "游戏正在没有 GPU 加速的情况下运行，会非常缓慢。请在浏览器设置中启用硬件加速，更新显卡驱动，然后重启浏览器。",
     "hybridBodyWindows": "本次会话正在集成（节能）显卡上渲染。如果这台电脑还配有独立游戏显卡，请在 设置 > 系统 > 显示 > 显示卡 中将浏览器设为“高性能”，然后重启浏览器。桌面版会自动选择独立显卡。",
     "hybridBodyLinux": "本次会话正在集成（节能）显卡上渲染。如果这台电脑还配有独立游戏显卡，您的浏览器或显卡驱动可能提供了自己的显卡选择设置，或者您的发行版可能提供了显卡切换工具（例如 PRIME 或 optimus-manager）。桌面版会自动选择独立显卡。",
+    "bodyRequestedBackend": "游戏无法在你选择的图形后端上启动，因此正在使用 OpenGL 运行。一切功能正常，但加载和最初几分钟可能更卡顿。你可以在「选项 > 图形 > 系统」中重新选择后端。",
     "hybridBodyOther": "本次会话正在集成（节能）显卡上渲染。如果这台电脑还配有独立游戏显卡，请检查浏览器和操作系统的显卡设置以启用它。桌面版会自动选择独立显卡。",
     "dismiss": "关闭"
   },
@@ -10638,7 +10908,8 @@ export const zh_CN: EnTranslations = {
       },
       "arcane_shot": {
         "name": "凶邪射击",
-        "description": "射击目标，造成 {damage} 点奥术伤害。伤害随远程攻击强度提升。"
+        "description": "射击目标，造成 {damage} 点奥术伤害。伤害随远程攻击强度提升。",
+        "specNote_marksmanship": "完成一次狂热引弓获得的冷目预判，会使你的下一次凶邪射击造成的伤害提高75%。发射该技能会消耗冷目预判。"
       },
       "concussive_shot": {
         "name": "震颤射击",
@@ -11669,7 +11940,7 @@ export const zh_CN: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "涤罪慈悲",
-        "description": "以神圣之力净化一名敌人，或立即救治一名友方目标。教义专属技能。"
+        "description": "对敌人造成{damage}点神圣伤害，或为一名友方目标治疗{healing}点生命值。伤害随法术强度提高，治疗随治疗强度提高。教义会通过你的纽带将此伤害转化为治疗。若30米内没有已建立纽带且受伤的队伍成员，则治疗30米内生命值最低的受伤队伍成员，治疗量为伤害的15%。治疗一名队伍成员时，还会为该目标10米内、且处于你视野中的至多2名其他受伤队伍成员治疗，每人恢复量为已恢复生命值的50%。这些额外治疗不会触发暴击，也不会建立教义纽带。（教义专属技能）"
       },
       "seraphic_vigil": {
         "name": "炽天使守望",
@@ -13216,11 +13487,20 @@ export const zh_CN: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "惊雷撼地者点火钥匙"
       },
+      "reins_lanternback_troll": {
+        "name": "点灯人之轭：格伦博"
+      },
+      "reins_chimeglass_tortoise": {
+        "name": "守道人的铃带：托利弗"
+      },
       "reins_rickshaw_mount": {
         "name": "白骨人力车缚绳"
       },
       "reins_drakemaw_raptor": {
         "name": "龙喉迅猛龙的缰绳"
+      },
+      "reins_mech_bird": {
+        "name": "发条机械鸟点火钥匙"
       },
       "rimefang": {
         "name": "霜牙"
@@ -13902,6 +14182,48 @@ export const zh_CN: EnTranslations = {
       },
       "wand_of_quenched_sparks": {
         "name": "熄火花魔杖"
+      },
+      "bramblehide_crown": {
+        "name": "鲁茨的荆棘皮甲头冠"
+      },
+      "bramblehide_mantle": {
+        "name": "鲁茨的荆棘皮甲护肩"
+      },
+      "bramblehide_harness": {
+        "name": "鲁茨的荆棘皮甲胸甲"
+      },
+      "bramblehide_cinch": {
+        "name": "鲁茨的荆棘皮甲腰带"
+      },
+      "bramblehide_legguards": {
+        "name": "鲁茨的荆棘皮甲护腿"
+      },
+      "bramblehide_grips": {
+        "name": "鲁茨的荆棘皮甲手套"
+      },
+      "bramblehide_treads": {
+        "name": "鲁茨的荆棘皮甲之靴"
+      },
+      "courtiers_bonefang": {
+        "name": "廷臣骨牙"
+      },
+      "thornpeak_wardblade": {
+        "name": "荆峰守护之刃"
+      },
+      "gravecourt_hewer": {
+        "name": "墓庭劈斧"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "不死王庭的许愿护盾"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "荆峰月皮兜帽"
+      },
+      "stormhymn_chain_grips": {
+        "name": "风暴颂歌链甲手套"
+      },
+      "stormhymn_chain_treads": {
+        "name": "风暴颂歌链甲之靴"
       },
       "conjured_water4": {
         "name": "魔法泉水"
@@ -14880,6 +15202,9 @@ export const zh_CN: EnTranslations = {
       "nythraxis_scourge_of_thornpeak": {
         "name": "尼思拉克西斯，荆峰之灾"
       },
+      "nythraxis_bone_spike": {
+        "name": "骨刺"
+      },
       "ignivar_herald_of_the_last_flame": {
         "name": "伊格尼瓦，末焰使者"
       },
@@ -15845,6 +16170,11 @@ export const zh_CN: EnTranslations = {
         "name": "受惊的奈尔",
         "title": "鸥港渔民",
         "greeting": "它就在晾网的地方裂开了。就在那儿，我这辈子每天清晨都站着的地方。我再也不下到海岸去了。如今我哪儿都不太去了。"
+      },
+      "riftwright_maelis": {
+        "name": "裂隙锻匠梅莉丝",
+        "title": "裂隙熔炉大师",
+        "greeting": "裂隙之戒记得造就它的那道裂隙，{className}。把戒指和裂隙散落的精华带来，我会教它记住更多。"
       },
       "forgemistress_darva": {
         "name": "达尔瓦锻造师",
@@ -18919,6 +19249,12 @@ export const zh_CN: EnTranslations = {
         "name": "缚石先锋",
         "bonus3": "攻击速度和施法速度提高 15%。"
       },
+      "bramblehide": {
+        "name": "鲁茨的荆棘皮甲",
+        "bonus2": "力量提高 10 点，耐力提高 10 点。",
+        "bonus4": "攻击强度提高 25 点。你的武器致命一击有 50% 的几率触发“墓冢之力”，使攻击强度提高 40 点，持续 10 秒。",
+        "bonus6": "攻击与施法速度提高 4%，命中提高 3%。你的武器致命一击会使目标产生“骨刺”，每 2 秒流血 5 点伤害，持续 12 秒。最多叠加 3 层。"
+      },
       "chronoweave": {
         "name": "以太织法衣",
         "bonus2": "时光回响将你 50% 的单体奥术伤害转化为治疗。受到伤害不再延迟你的施法。",
@@ -19150,6 +19486,7 @@ export const zh_CN: EnTranslations = {
     "delveRiteShrineReedInteract": "芦苇神龛：按 F 触碰",
     "delveRiteShrineSkullInteract": "骷髅神龛：按 F 触碰",
     "mailboxName": "邮箱",
-    "noticeboardName": "告示板"
+    "noticeboardName": "告示板",
+    "realmBuilderMonumentName": "王国建造者纪念碑"
   }
 };

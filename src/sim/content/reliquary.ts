@@ -263,9 +263,12 @@ export const RELIQUARY_HORIZON_MOUNTS = [
   'shadowjump_toad',
   'grag_bear',
   'stalkglider_snail',
+  'mech_bird',
   'aether_hover_cycle',
   'thunderstrut_gobbler',
   'drakemaw_raptor',
+  'lanternback_troll',
+  'chimeglass_tortoise',
   'terrorspark_groundshaker',
   'rickshaw_mount',
 ] as const;
@@ -283,12 +286,12 @@ export const RELIQUARY_HORIZON_MOUNTS = [
 // def in content/zone3.ts), so a quest hint there would name a door that hands
 // out nothing.
 //
-// drakemaw_raptor, terrorspark_groundshaker, and rickshaw_mount are absent,
-// and that absence IS the answer: no live table awards any of them
-// (drakemaw_raptor has no acquisition path, terrorspark_groundshaker and
-// rickshaw_mount are dev-grant only). They are the catalog's three
-// SOURCE_PENDING_RULING mounts; masterwork:engineering on the professions
-// shelf is a fourth pending slot (QA ruling 2026-08-07).
+// drakemaw_raptor, lanternback_troll, chimeglass_tortoise,
+// terrorspark_groundshaker and rickshaw_mount are absent, and that absence IS
+// the answer: no live table awards any of them (drakemaw_raptor has no
+// acquisition path; the other four are DEVELOPER_MOUNTS, dev-grant only). They
+// are the catalog's five SOURCE_PENDING_RULING mounts; masterwork:engineering
+// on the professions shelf is the sixth pending slot (QA ruling 2026-08-07).
 //
 // Keys are typed against the live mount ladder so a misspelled or renamed key
 // fails tsc at the authoring site instead of falling through to the pending
@@ -324,6 +327,9 @@ const MOUNT_SOURCES: Readonly<
   ],
   aether_hover_cycle: fromRift('S'),
   thunderstrut_gobbler: fromRift('S'),
+  // The store mount: sold for Claudium (content/store_mounts.ts). The 'store'
+  // kind is the whole answer, the same one door the Armory skins point at.
+  mech_bird: fromStore(),
 };
 
 /** Mount slots carrying their MOUNT_SOURCES hints, with RELIQUARY_HORIZON_MOUNTS
@@ -582,6 +588,15 @@ export const RELIQUARY_SET_MEMBERS = {
     'stormcallers_crown',
     'stormcallers_spaulders',
   ],
+  bramblehide: [
+    'bramblehide_crown',
+    'bramblehide_mantle',
+    'bramblehide_harness',
+    'bramblehide_cinch',
+    'bramblehide_legguards',
+    'bramblehide_grips',
+    'bramblehide_treads',
+  ],
 } as const;
 
 // Per-member source for the set pages. A set page cannot take a page default:
@@ -644,6 +659,13 @@ const SET_MEMBER_SOURCES: Readonly<
   stormcallers_waistguard: fromBoss('thunzharr_waking_peak'),
   stormcallers_crown: fromBoss('nythraxis_scourge_of_thornpeak'),
   stormcallers_spaulders: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_crown: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_mantle: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_harness: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_cinch: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_legguards: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_grips: fromBoss('nythraxis_scourge_of_thornpeak'),
+  bramblehide_treads: fromBoss('nythraxis_scourge_of_thornpeak'),
 };
 
 /** Set-page members carrying their SET_MEMBER_SOURCES hint. A member with no
@@ -1105,6 +1127,20 @@ export const RELIQUARY_PAGES: readonly ReliquaryPageDef[] = freezePageTable([
       'stormcallers_crown',
       'stormcallers_spaulders',
       'direfang_quiver',
+      'bramblehide_crown',
+      'bramblehide_mantle',
+      'bramblehide_harness',
+      'bramblehide_cinch',
+      'bramblehide_legguards',
+      'bramblehide_grips',
+      'bramblehide_treads',
+      'courtiers_bonefang',
+      'thornpeak_wardblade',
+      'gravecourt_hewer',
+      'votive_ward_of_the_deathless_court',
+      'thornpeak_moonhide_cowl',
+      'stormhymn_chain_grips',
+      'stormhymn_chain_treads',
     ),
   },
   {
@@ -1254,7 +1290,7 @@ export const RELIQUARY_PAGES: readonly ReliquaryPageDef[] = freezePageTable([
       // masterwork:engineering stays a BARE entry (no hint): no engineering
       // recipe can proc a masterwork (see the masterworkByCraft comment), so
       // a profession hint here would name a door that awards nothing. The
-      // slot rides SOURCE_PENDING_RULING with the two gap mounts; the
+      // slot rides SOURCE_PENDING_RULING with the five gap mounts; the
       // gear-capability pin in tests/reliquary_content.test.ts derives the
       // eligible set from masterworkBonusStats and reds if either side moves.
       ...RELIQUARY_PROFESSION_MARKS.masterworkByCraft.map((markId) =>
@@ -1331,13 +1367,13 @@ export const RELIQUARY_PAGES: readonly ReliquaryPageDef[] = freezePageTable([
     name: 'Mounts',
     desc: 'Rideable mounts from the stable, heroic reins, Rift epics, and rarer saddles. Ownership follows the live reins seam (bags and bank).',
     clearSource: { kind: 'none' },
-    // Seven of the nine mounts name every door that awards their reins (see
+    // Seven of the twelve mounts name every door that awards their reins (see
     // MOUNT_SOURCES above): the four heroic reins each drop from two or three
     // HEROIC_BOSS_LOOT bosses AND from their Rift rank's ladder, the two epic
     // reins are Rift-only, and valorsteed is Marla's counter. The page-wide
-    // pending ruling that used to cover all nine is executed; the two that
-    // remain (drakemaw_raptor, terrorspark_groundshaker) are content gaps, not
-    // vocabulary gaps, and stay hand-listed in SOURCE_PENDING_RULING.
+    // pending ruling that used to cover all nine is executed; the three that
+    // remain (drakemaw_raptor and the four DEVELOPER_MOUNTS) are content gaps,
+    // not vocabulary gaps, and stay hand-listed in SOURCE_PENDING_RULING.
     relics: mounts(...mountEntries(RELIQUARY_HORIZON_MOUNTS)),
   },
   {
@@ -1664,6 +1700,19 @@ export const RELIQUARY_PAGES: readonly ReliquaryPageDef[] = freezePageTable([
     clearSource: { kind: 'dungeon', dungeonId: 'ignivar_inner_crucible', difficulty: 'heroic' },
     sourceDefault: fromBoss('varkhul_forgefather_of_the_last_flame'),
     relics: items(...RELIQUARY_HEROIC_GEAR.varkhul_forgefather_of_the_last_flame),
+  },
+  // Roots' Bramblehide (the feral druid's Strength leather family off the
+  // Nythraxis raid). Appended at the END, after the Crucible pages, per the
+  // append-only page order; the family's seven members also sit on the
+  // conquerors_nythraxis page above, and the cross-page agreement pin holds
+  // both authorings equal.
+  {
+    id: 'conquerors_set_bramblehide',
+    shelf: 'conquerors',
+    name: "Roots' Bramblehide",
+    desc: 'The full Bramblehide leather family.',
+    clearSource: { kind: 'none' },
+    relics: items(...setMembers(RELIQUARY_SET_MEMBERS.bramblehide)),
   },
 ]);
 

@@ -220,16 +220,19 @@ describe('Moongrove engine', () => {
 });
 
 describe('Wildfang engine', () => {
-  it('preserves the original Wolf Form attack-power formula', () => {
+  it('applies Wildfang AP tuning to the Wolf Form bonus', () => {
     const { sim, player } = rig('feral');
     const meta = sim.meta(player.id);
     expect(meta).toBeDefined();
     if (!meta) throw new Error('missing Druid metadata');
+    // Remove only the new AP factor to recover the unrounded caster base.
+    const baselineMods = { ...meta.talentMods, stats: { ...meta.talentMods.stats, apPct: 0 } };
+    recalcPlayerStats(player, meta.cls, meta.equipment, baselineMods, meta.equipmentInstance);
     const casterAttackPower = player.attackPower;
     player.auras.push(formAura(player, 'form_cat'));
     recalcPlayerStats(player, meta.cls, meta.equipment, meta.talentMods, meta.equipmentInstance);
 
-    expect(player.attackPower - casterAttackPower).toBe(8 + player.level * 2);
+    expect(player.attackPower).toBe(Math.round((casterAttackPower + 8 + player.level * 2) * 1.1));
   });
 
   it('shares three landed stages across forms, spends through the live button, and clears after combat', () => {
@@ -301,8 +304,8 @@ describe('Wildfang engine', () => {
     const replacement = sim.resolvedAbility('maul');
     expect(replacement?.def.id).toBe('marrowbreak');
     expect(replacement?.effects.find((effect) => effect.type === 'directDamage')).toMatchObject({
-      min: Math.round(78 * 1.5),
-      max: Math.round(96 * 1.5),
+      min: Math.round(78 * 1.65),
+      max: Math.round(96 * 1.65),
     });
     sim.castAbility('maul');
 

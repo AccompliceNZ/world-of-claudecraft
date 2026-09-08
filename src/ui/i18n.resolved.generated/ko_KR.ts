@@ -324,8 +324,6 @@ export const ko_KR: EnTranslations = {
     "warlock": {
       "doomLabel": "단죄",
       "fateThreadsLabel": "운명의 실타래",
-      "doomMeterUnlock": "고통 자원 막대 이동",
-      "doomMeterLock": "고통 자원 막대 고정",
       "doomEmptyStatus": "단죄 {value}/{max}.",
       "doomStatus": "단죄 {value}/{max}, 남은 시간 {remaining}.",
       "fateThreadsStatus": "운명의 실타래 {value}/{max}.",
@@ -570,6 +568,9 @@ export const ko_KR: EnTranslations = {
       "tabsLabel": "WOC 상점 구역",
       "storeTab": "상점",
       "rewardsTab": "일일 보상",
+      "mountsEyebrow": "계정 탈것",
+      "mountsTitle": "기계 마구간",
+      "mountBuyAria": "{item} 구매",
       "loading": "WOC 상점 불러오는 중…",
       "error": "현재 WOC 상점을 이용할 수 없습니다. 잠시 후 다시 시도해 주세요.",
       "balance": "Claudium 잔액",
@@ -1315,6 +1316,11 @@ export const ko_KR: EnTranslations = {
       "separate": "{meter} 분리",
       "regroup": "{meter} 통합"
     },
+    "targetDots": {
+      "title": "대상 디버프",
+      "row": "{aura} on {target}",
+      "overflow": "{count}개 더 있음, 표시되지 않음"
+    },
     "targetAuras": {
       "title": "대상 오라",
       "keybindLabel": "대상 강화 및 약화 효과",
@@ -1398,6 +1404,9 @@ export const ko_KR: EnTranslations = {
       "name_thunderstrut_gobbler": "천둥활보 대왕 칠면조",
       "name_terrorspark_groundshaker": "대지를 뒤흔드는 테러스파크",
       "name_drakemaw_raptor": "화산구 랩터",
+      "name_mech_bird": "태엽 기계새",
+      "name_lanternback_troll": "등불지기 그룸볼",
+      "name_chimeglass_tortoise": "종유리의 톨리버",
       "name_rickshaw_mount": "뼈에 묶인 인력거",
       "desc_valorsteed": "여행 속도를 높여 주는 튼튼하고 발이 안정된 군마입니다.",
       "desc_grag_bear": "여행 속도를 높여 주는 튼튼하고 발이 안정된 곰입니다.",
@@ -1408,6 +1417,9 @@ export const ko_KR: EnTranslations = {
       "desc_thunderstrut_gobbler": "깨어나는 봉우리에서 꼬리깃을 뇌운처럼 펼친 채 활보하며 내려오는, 폭풍이 낳은 거대한 칠면조입니다.",
       "desc_terrorspark_groundshaker": "묵직한 궤도와 대구경 포, 겁 없는 조종사를 위한 안장을 갖춘 소형 장갑 기계입니다.",
       "desc_drakemaw_raptor": "화산구 칼데라에서 길들여진 둥지 태생 랩터. 온몸이 힘줄과 질주로 이루어졌으며, 아직도 희미한 재 냄새가 난다.",
+      "desc_mech_bird": "수제 태엽 전투 닭. 서보 관절을 튕기며 질주하고, 태엽 열쇠는 지금도 돌아가고 있다.",
+      "desc_lanternback_troll": "점등인들이 멍에로 길들인 언덕 트롤. 어깨에 무쇠 왕좌를 지고, 양쪽 팔걸이마다 폭풍 등불이 타오른다.",
+      "desc_chimeglass_tortoise": "소금 평원의 육지거북. 대상 세 세대를 앞질러 걸었다. 그를 거둔 땜장이들이 폭풍유리를 갈아 안경을 만들고 목에 청동 종을 달아, 길은 그를 보기 전에 먼저 듣는다.",
       "desc_rickshaw_mount": "덜컹거리는 뼈 수레입니다. 뼈만 앙상한 잡졸이 채에 매인 채 전속력으로 당신을 끌고 달립니다."
     },
     "mountTraining": {
@@ -1569,6 +1581,26 @@ export const ko_KR: EnTranslations = {
       "showPlaytime": "캐릭터 화면에 플레이 시간 표시",
       "forceHighPerfGpu": "전용 게이밍 GPU 사용",
       "forceHighPerfGpuNote": "기본값 켜짐: 데스크톱 앱이 이 컴퓨터의 전용 게이밍 GPU를 요청합니다. 게임이 시작되지 않거나, 시작 후 검은 화면만 보이거나, 노트북 화면이 나오지 않으면 끄세요. 이 설정은 다음에 게임을 시작할 때 적용됩니다.",
+      "shaderWarm": "셰이더 사전 워밍업 워커",
+      "shaderWarmAuto": "자동",
+      "shaderWarmOff": "끄기",
+      "shaderWarmOn": "켜기",
+      "shaderWarmNote": "게임 중 끊김을 막기 위해 백그라운드에서 셰이더 캐시를 미리 준비합니다. 자동: 그래픽 시스템이 지원하는 경우에만 켜집니다(권장). 켜기: 모든 환경에서 강제로 사용하며, 일부 환경에서는 성능이 나빠질 수 있습니다. 끄기: 사용하지 않습니다.",
+      "gpuBackend": "그래픽 백엔드",
+      "gpuBackendAuto": "자동",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL(느림)",
+      "gpuBackendNote": "자동은 가장 알맞은 옵션을 대신 선택합니다. Vulkan이 더 빠르며 대부분의 플레이어에게 권장됩니다. OpenGL은 더 느리지만 Vulkan이 제대로 작동하지 않을 때 도움이 될 수 있습니다. 다음에 게임을 시작할 때 적용됩니다.",
+      "gpuBackendActive": "현재 {backend}을(를) 사용 중입니다.",
+      "gpuBackendActiveUnavailable": "현재 {backend}을(를) 사용 중입니다(Vulkan을 활성화할 수 없음).",
+      "gpuBackendActiveAutoCapped": "현재 {backend}을(를) 사용 중입니다. 이 그래픽 카드에서는 자동이 아직 Vulkan을 시도하지 않습니다. 시도하려면 Vulkan을 선택하세요.",
+      "gpuBackendSaveFailed": "선택을 저장하지 못했습니다. 다음 실행에서도 {backend}을(를) 사용합니다.",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "일부 변경 사항은 재시작 후에 적용됩니다.",
+      "restartGame": "게임 재시작",
+      "restartInProgress": "게임을 재시작하는 중...",
+      "restartFailed": "게임을 자동으로 재시작할 수 없습니다. 종료한 뒤 다시 실행하세요.",
       "discordPresence": "Discord 리치 프레즌스",
       "discordPresenceNote": "플레이하는 동안 현재 있는 지역과 이번 세션의 플레이 시간을 Discord 활동으로 표시하며, 당신의 Discord 프로필을 볼 수 있는 사람은 누구나 둘 다 볼 수 있습니다. 공유되는 것은 지역 이름, 이번 세션의 플레이 시간, 게임뿐이며, 캐릭터나 계정, 함께 플레이하는 사람은 절대 공유되지 않습니다. 이 컴퓨터에서 Discord 앱이 실행 중이어야 합니다.",
       "showDevBadges": "개발자 배지 표시",
@@ -1600,6 +1632,9 @@ export const ko_KR: EnTranslations = {
       "showTargetOfTarget": "대상의 대상 표시",
       "showTargetSwingTimer": "대상의 공격 타이머 표시",
       "showPetFrame": "내 펫 표시",
+      "showNameplateDots": "이름표에 내 디버프 표시",
+      "nameplateDotScale": "이름표 디버프 아이콘 크기",
+      "showTargetDots": "대상 디버프 목록 표시",
       "waterRipples": "수면 물결 (물살)",
       "showAttackButton": "공격 버튼 표시",
       "showDailyRewardsChest": "일일 보상 보물상자 표시",
@@ -2530,6 +2565,24 @@ export const ko_KR: EnTranslations = {
       "worldfireClosing": "세계불꽃이 다가옵니다. 중앙으로 이동하세요!",
       "worldfireConsumed": "도가니 전체가 불타고 있습니다!"
     },
+    "nythraxisCallout": {
+      "impaled": "뼈가시! 꿰뚫린 아군을 구하세요!",
+      "youAreImpaled": "뼈가시에 꿰뚫렸습니다! 버티세요!",
+      "spikeBroken": "가시가 부서졌습니다!",
+      "dreadCurseSwap": "공포의 저주: 방어 담당을 교대하세요!",
+      "sigilAppears": "결속의 인장이 나타났습니다! 나이트락시스를 그 위로 끌고 가세요!",
+      "sigilBound": "나이트락시스가 결속되었습니다! 화력을 집중하세요!",
+      "sigilUnbound": "인장이 결속하지 못한 채 사라집니다! 나이트락시스가 강해집니다!",
+      "gravefireTarget": "무덤불길이 당신을 향해 돌진합니다! 옆으로 피하세요!",
+      "kingsWrath": "왕이 분노하여 일어섭니다! 이제 모든 공격이 더 강해집니다!",
+      "boneStormBegins": "뼈 폭풍! 흩어져서 도망치세요!",
+      "boneStormCharge": "나이트락시스가 당신에게 돌진합니다! 도망치세요!",
+      "boneStormEnds": "뼈 폭풍이 끝났습니다. 방어 담당은 대상을 확보하세요!",
+      "crownEndures60": "굴하지 않는 왕관까지 1분!",
+      "crownEndures30": "굴하지 않는 왕관까지 30초!",
+      "crownEndures10": "10초 남았습니다! 화력을 집중하세요!",
+      "crownEndures": "굴하지 않는 왕관! 나이트락시스가 격노합니다!"
+    },
     "varkhulWaveStatus": "공세 {wave}/{waves} | 적: {remaining}",
     "raidBossGuide": {
       "title": "우두머리 공략",
@@ -2678,6 +2731,67 @@ export const ko_KR: EnTranslations = {
         "assembly": "거장의 조립: 두 광선을 막고 모든 차원문 웨이브를 처치하며 도가니 지진을 차단하고 잿불 기술자의 치유를 막습니다.",
         "worldfire": "세계불꽃: 영웅의 마지막 단계에서 불타는 가장자리가 중앙으로 좁혀집니다. 도가니 전체가 타기 전에 바르쿨을 처치합니다.",
         "heroic": "영웅: 대장간 열기는 식지 않고 모루의 칙령에 운석이 추가되며 마지막 단계는 세계불꽃에 집중합니다."
+      },
+      "nythraxis": {
+        "overview": "대사제 말릭은 자신의 왕이 죽는 것을 용납하지 않았고, 나이트락시스를 되살린 의식은 궁정 전체를 묘실에 묶어 놓았습니다. 이 전투는 절제된 방어 담당 교대, 뼈가시로의 신속한 전환, 불타는 바닥을 피하는 이동, 그리고 왕좌가 무너진 뒤 이루어지는 수호석 정신집중의 협동을 시험합니다.",
+        "phaseThroneName": "왕좌",
+        "phaseThroneSummary": "나이트락시스는 충전되는 전방 참격, 방어 담당을 교대시키는 공포의 저주, 플레이어를 꿰뚫는 뼈가시, 그리고 바닥을 불태우는 무덤 분출로 왕좌의 방을 지킵니다.",
+        "phaseWardstonesName": "수호석",
+        "phaseWardstonesSummary": "생명력이{health}가 되면 전율의 발구르기가 공격대를 그 자리에 묶어 두는 동안 알드릭 수사가 도착해 수호석에 불을 밝힙니다. 모든 가시가 부서지고 바닥의 불길이 꺼지며, 이후 영혼 가르기와 불사의 격노가 왕좌의 메커니즘에 더해집니다.",
+        "phaseKingsWrathName": "왕의 분노",
+        "phaseKingsWrathSummary": "생명력이{health}가 되면 나이트락시스가 왕의 분노로 포효하며, 이후 전투가 끝날 때까지 일반 난이도에서 {bonusNormal}, 영웅 난이도에서 {bonusHeroic}의 피해를 추가로 입힙니다. 무덤 분출 주기가 {eruptionEveryNormal}초(영웅 {eruptionEveryHeroic}초)로, 무덤불길 주기가 {gravefireEveryNormal}초(영웅 {gravefireEveryHeroic}초)로 짧아집니다. 다른 모든 메커니즘의 주기는 그대로 유지됩니다.",
+        "gravebreakerName": "무덤파괴자",
+        "gravebreakerSummary": "{seconds}초마다 나이트락시스가 다음 공격을 충전합니다. 대상은 그 공격만 받지만, 그의 전방 {arc}도 부채꼴 안 {range}야드 이내에 있는 다른 모든 플레이어는 그 공격의 {splash}만큼을 각자의 방어도로 감소한 물리 피해로 받습니다.",
+        "gravebreakerResponse": "방어 담당은 나이트락시스가 계속 공격대 반대쪽을 향하게 합니다. 나머지 인원은 그의 뒤나 옆에 머물며 절대 부채꼴 범위를 가로지르지 않습니다.",
+        "dreadCurseName": "공포의 저주",
+        "dreadCurseSummary": "{every}초마다 나이트락시스가 현재 방어 담당을 공격해 최대 생명력의 {hitNormal}만큼 암흑 피해를 입히고 공포의 저주를 1중첩 추가합니다. {duration}초 동안 중첩당 그 방어 담당이 나이트락시스에게 받는 피해가 {perStackNormal}만큼 증가하며, 최대 {max}중첩까지 쌓입니다.",
+        "dreadCurseHeroicSummary": "{every}초마다 나이트락시스가 현재 방어 담당을 공격해 최대 생명력의 {hitHeroic}만큼 암흑 피해를 입히고 공포의 저주를 1중첩 추가합니다. {duration}초 동안 중첩당 그 방어 담당이 나이트락시스에게 받는 피해가 {perStackHeroic}만큼 증가하며, 최대 {max}중첩까지 쌓입니다.",
+        "dreadCurseResponse": "방어 담당은 {stacks}중첩에서 교대합니다: 다른 방어 담당이 도발하고, 저주에 걸린 방어 담당은 중첩이 사라질 때까지 무덤파괴자의 부채꼴 밖에 머뭅니다. 치유 담당은 교대 전에 새로 들어올 방어 담당의 생명력을 채워 둡니다.",
+        "boneSpikeName": "뼈가시",
+        "boneSpikeSummary": "{everyNormal}초마다 나이트락시스가 현재 대상을 제외한 플레이어 {victimsNormal}명을 뼈가시에 꿰뚫습니다. 꿰뚫린 플레이어는 행동할 수 없으며 자신의 가시가 파괴될 때까지 매초 최대 생명력의 {drainNormal}만큼 잃습니다.",
+        "boneSpikeHeroicSummary": "{everyHeroic}초마다 나이트락시스가 현재 대상을 제외한 플레이어 {victimsHeroic}명을 뼈가시에 꿰뚫습니다. 꿰뚫린 플레이어는 행동할 수 없으며 자신의 가시가 파괴될 때까지 매초 최대 생명력의 {drainHeroic}만큼 잃습니다.",
+        "boneSpikeResponse": "공격 담당은 즉시 뼈가시로 전환해 파괴하고 꿰뚫린 플레이어를 구합니다. 치유 담당은 가시가 파괴되는 동안 꿰뚫린 플레이어를 살려 둡니다.",
+        "graveEruptionName": "무덤 분출",
+        "graveEruptionSummary": "{everyNormal}초마다 해골 손이 플레이어 발밑에 반경 {radius}야드의 원 {countNormal}개를 표시합니다. {warning}초 후 각 원이 폭발해 최대 생명력의 {burstNormal}만큼 암흑 피해를 입힌 뒤, {flameNormal}초 동안 무덤 화염으로 타올라 그 안에 서 있는 대상에게 매초 최대 생명력의 {tickNormal}만큼 피해를 입힙니다.",
+        "graveEruptionHeroicSummary": "{everyHeroic}초마다 해골 손이 플레이어 발밑에 반경 {radius}야드의 원 {countHeroic}개를 표시합니다. {warning}초 후 각 원이 폭발해 최대 생명력의 {burstHeroic}만큼 암흑 피해를 입힌 뒤, {flameHeroic}초 동안 무덤 화염으로 타오르며 그 안에 서 있는 대상에게 매초 최대 생명력의 {tickHeroic}만큼 피해를 입힙니다.",
+        "graveEruptionResponse": "폭발하기 전에 모든 경고 원 밖으로 나가고 불타는 바닥을 피하세요. 방어 담당은 근접 딜러가 움직일 공간을 확보할 수 있도록 나이트락시스를 화염에서 멀리 끌어냅니다.",
+        "bindingSigilName": "결속의 인장",
+        "bindingSigilSummary": "{everyNormal}초마다 나이트락시스로부터 {minDist}에서 {maxDist}야드 떨어진 바닥에 옛 결계의 인장이 타오르며, 그가 불사의 상승을 시작해 {ascensionEvery}초마다 피해량과 공격 속도가 {ascensionNormal}씩 증가합니다. {bindNormal}초 안에 그가 인장 위에 서면 결속됩니다: 상승 효과가 정화되고 {stunNormal}초 동안 기절하며, {boundNormal}초 동안 {vulnerability}만큼 더 큰 피해를 받습니다. 그러지 못하면 모든 플레이어가 최대 생명력의 {unboundHitNormal}만큼 암흑 피해를 입고, 그는 다음 결속까지 {unboundBonusNormal}만큼 더 큰 피해를 유지합니다.",
+        "bindingSigilHeroicSummary": "{everyHeroic}초마다 나이트락시스로부터 {minDist}에서 {maxDist}야드 떨어진 바닥에 옛 결계의 인장이 타오르며, 그가 불사의 상승을 시작해 {ascensionEvery}초마다 피해량과 공격 속도가 {ascensionHeroic}씩 증가합니다. {bindHeroic}초 안에 그가 인장 위에 서면 결속됩니다: 상승 효과가 정화되고 {stunHeroic}초 동안 기절하며, {boundHeroic}초 동안 {vulnerability}만큼 더 큰 피해를 받습니다. 그러지 못하면 모든 플레이어가 최대 생명력의 {unboundHitHeroic}만큼 암흑 피해를 입고, 그는 다음 결속까지 {unboundBonusHeroic}만큼 더 큰 피해를 유지합니다.",
+        "bindingSigilResponse": "방어 담당은 공격대가 남긴 불길이 있더라도 즉시 나이트락시스를 인장 위로 끌고 갑니다. 근접 딜러는 끌려가는 경로를 따라가고 원거리 딜러는 새로 생긴 무덤파괴자의 부채꼴을 피합니다. 그가 결속된 동안 모두 화력을 집중합니다.",
+        "raiseFallenName": "망자 소생",
+        "raiseFallenSummary": "왕좌 단계 동안 {every}초마다 나이트락시스가 자신의 뒤에서 되살아난 왕실 근위병을 일으킵니다. 그들은 현재 대상에게 돌진해 파괴될 때까지 싸웁니다.",
+        "raiseFallenResponse": "보조 방어 담당이 일어나는 웨이브마다 대상을 확보합니다. 공격 담당은 뼈가시 사이사이에 근위병을 처리해 왕좌 단계가 끝나기 전에 웨이브가 쌓이지 않게 합니다.",
+        "soulRendName": "Soul Rend",
+        "soulRendSummary": "나이트락시스가 현재 대상을 제외한 플레이어 {marksNormal}명에게 영혼 가르기 표식을 남깁니다. {fuse}초 후 각 표식은 대상자의 최대 생명력 전체에 해당하는 암흑 피해를 입히며, 이 피해는 그 대상자로부터 {range}야드 이내에 있는 표식 보유자 수만큼 나뉩니다.",
+        "soulRendHeroicSummary": "나이트락시스가 현재 대상을 제외한 플레이어 {marksHeroic}명에게 영혼 가르기 표식을 남깁니다. {fuse}초 후 각 표식은 대상자의 최대 생명력의 {damageHeroic}만큼 암흑 피해를 입히며, 이 피해는 그 대상자로부터 {range}야드 이내에 있는 표식 보유자 수만큼 나뉩니다. 표식이 혼자 터지면 치명적입니다.",
+        "soulRendResponse": "표식을 받은 모든 플레이어는 {fuse}초의 시간이 끝나기 전에 한 집결 지점으로 달려가 다른 표식 보유자로부터 {range}야드 이내에 섭니다. 치유 담당은 표식이 터지는 동안 그룹의 생명력을 채웁니다.",
+        "soulfireName": "영혼불길",
+        "soulfireSummary": "영혼 가르기가 터질 때마다 각 표식이 있던 자리에 반경 {radius}야드의 보라색 불웅덩이가 남아 {seconds}초 동안 타오르며 매초 최대 생명력의 {tickNormal}만큼 피해를 입힙니다. 웅덩이가 겹치는 곳에서는 각 웅덩이의 피해를 모두 받습니다. 웅덩이는 수호석 {clearance}야드 이내에는 절대 생기지 않습니다.",
+        "soulfireHeroicSummary": "영혼 가르기가 터질 때마다 겹쳐진 표식 무리마다 반경 {radius}야드의 보라색 불웅덩이가 하나만 남아 {secondsHeroic}초 동안 타오르며 매초 최대 생명력의 {tickHeroic}만큼 피해를 입힙니다. 웅덩이가 겹쳐도 피해는 한 번만 적용되며 중첩되지 않습니다. 웅덩이는 수호석 {clearance}야드 이내에는 절대 생기지 않습니다.",
+        "soulfireResponse": "표식이 터지면 곧바로 보라색 웅덩이에서 벗어나세요. 다음 집결 지점은 불타는 곳과 겹치지 않게 정하세요.",
+        "gravefireName": "무덤불길",
+        "gravefireSummary": "{everyNormal}초마다 보랏빛 무덤불길이 나이트락시스에게서 플레이어 한 명을 향해 뻗어나가며, 매초 {speed}야드씩 자라 최대 {length}야드까지 이어집니다. 지나간 자리마다 {burnNormal}초 동안 타오르며 그 안에 서 있는 대상에게 매초 최대 생명력의 {tickNormal}만큼 피해를 입힙니다.",
+        "gravefireHeroicSummary": "{everyHeroic}초마다 보랏빛 무덤불길이 나이트락시스에게서 플레이어 한 명을 향해 뻗어나가며, 매초 {speed}야드씩 자라 최대 {length}야드까지 이어집니다. 지나간 자리마다 {burnHeroic}초 동안 타오르며 그 안에 서 있는 대상에게 매초 최대 생명력의 {tickHeroic}만큼 피해를 입힙니다.",
+        "gravefireResponse": "다가오는 줄기를 옆으로 피하세요: 폭이 좁고 절대 방향을 바꾸지 않습니다. 원거리 플레이어는 한 자리에 머물지 말고 계속 움직입니다.",
+        "deathlessRageName": "불사의 격노",
+        "deathlessRageSummary": "{every}초마다 나이트락시스가 {cast}초에 걸쳐 불사의 격노를 시전합니다. 시전하는 동안 불이 켜진 수호석마다 플레이어 한 명이 {channel}초 동안 정신을 집중할 수 있습니다. 시전이 끝나기 전에 서로 다른 플레이어 셋이 각자 수호석을 완료하면 격노가 차단되고 나이트락시스가 {stun}초 동안 기절합니다. 그러지 못하면 모든 플레이어가 최대 생명력의 {damageNormal}만큼 암흑 피해를 입습니다.",
+        "deathlessRageHeroicSummary": "{every}초마다 나이트락시스가 {cast}초에 걸쳐 불사의 격노를 시전합니다. 시전하는 동안 불이 켜진 수호석마다 플레이어 한 명이 {channel}초 동안 정신을 집중할 수 있습니다. 시전이 끝나기 전에 서로 다른 플레이어 셋이 각자 수호석을 완료하면 격노가 차단되고 나이트락시스가 {stun}초 동안 기절합니다. 그러지 못하면 모든 플레이어가 최대 생명력의 {damageHeroic}만큼 암흑 피해를 입으며, 이는 어떤 생명력으로도 버틸 수 없습니다.",
+        "deathlessRageResponse": "전투 시작 전에 수호석마다 플레이어를 한 명씩 배정하세요. 시전이 시작되면 각자 자신의 수호석으로 달려가 완료될 때까지 정신을 집중합니다. 기절하거나 자리를 벗어나거나 사망하면 집중이 깨지므로 담당 플레이어를 안전하게 지키고 꿰뚫린 플레이어는 절대 배정하지 마세요.",
+        "courtName": "불사의 궁정",
+        "courtSummary": "영웅 난이도에서는 이전 궁정이 쓰러지고 나면 불사의 격노가 차단되었든 아니든 매번 나이트락시스가 자신의 궁정을 새로 일으킵니다. 알드렌의 영혼은 왕실 참격으로 자신의 대상 근처에 있는 모두를 베어냅니다. 말릭의 영혼은 말릭의 치유를 정신 집중으로 시전하며, 시전할 때마다 나이트락시스를 더 많이 치유합니다. 보스의 영혼은 도발을 무시하고 공격대를 사냥합니다.",
+        "courtResponse": "방어 담당은 알드렌의 대상을 확보해 참격이 공격대 반대편을 향하게 합니다. 말릭의 치유가 시작되는 순간 말릭을 기절시키거나 침묵시켜 가장 먼저 처치하고, 도발이 통하지 않는 보스는 치유 담당에게서 떼어 내도록 속박하거나 기절시켜 그다음으로 처치합니다.",
+        "kingsWrathName": "왕의 분노",
+        "kingsWrathSummary": "나이트락시스가 이후 전투가 끝날 때까지 일반 난이도에서 {bonusNormal}, 영웅 난이도에서 {bonusHeroic}의 피해를 추가로 입힙니다. 무덤 분출이 {eruptionEveryNormal}초(영웅 {eruptionEveryHeroic}초)마다, 무덤불길이 {gravefireEveryNormal}초(영웅 {gravefireEveryHeroic}초)마다 발생합니다.",
+        "kingsWrathResponse": "피할 수 없는 피해에 남은 방어 재사용 기술을 사용하세요. 공격대가 전투를 마무리하는 동안 앞선 모든 메커니즘을 깔끔하게 처리하세요.",
+        "boneStormName": "뼈 폭풍",
+        "boneStormSummary": "왕의 분노 시작 {first}초 후부터 이후 {everyNormal}초마다 나이트락시스가 {duration}초 동안 뼈 폭풍을 시작합니다. 그는 위협 수준을 무시하고 평소의 {speed}배 속도로 이동하며, 각각 {chargeSeconds}초씩 지속되는 돌진을 {charges}회 합니다. 회전 공격은 {radius}야드 이내에 매초 최대 생명력의 {whirlNormal}만큼 피해를 입힙니다. 각 돌진은 같은 범위 안에서 뼈 강타로 끝나 최대 생명력의 {slamNormal}만큼 피해를 입힙니다. 폭풍이 시작되고 {spikeAt}초 후 뼈가시를 시전하며, 폭풍이 끝난 {rearm}초 후 무덤파괴자가 다시 준비됩니다.",
+        "boneStormHeroicSummary": "왕의 분노 시작 {first}초 후부터 이후 {everyHeroic}초마다 나이트락시스가 {duration}초 동안 뼈 폭풍을 시작합니다. 그는 위협 수준을 무시하고 평소의 {speed}배 속도로 이동하며, 각각 {chargeSeconds}초씩 지속되는 돌진을 {charges}회 합니다. 회전 공격은 {radius}야드 이내에 매초 최대 생명력의 {whirlHeroic}만큼 피해를 입힙니다. 각 돌진은 같은 범위 안에서 뼈 강타로 끝나 최대 생명력의 {slamHeroic}만큼 피해를 입힙니다. 폭풍이 시작되고 {spikeAt}초 후 뼈가시를 시전하며, 폭풍이 끝난 {rearm}초 후 무덤파괴자가 다시 준비됩니다.",
+        "boneStormResponse": "흩어져서 나이트락시스로부터 계속 도망치세요. 돌진 대상으로 지목된 플레이어는 멀리 달아나고 나머지는 돌진 경로 주변에 공간을 남겨 두며, 폭풍이 끝나면 방어 담당이 대상을 확보합니다.",
+        "crownEnduresName": "굴하지 않는 왕관",
+        "crownEnduresSummary": "전투 시작 {enrageNormal}초 후(생명력 70%에서 알드릭 수사가 등장하는 동안 시간이 멈춥니다) 굴하지 않는 왕관이 강제 격노로 발동합니다. 나이트락시스는 피해량이 {damage}, 공격 속도가 {haste} 늘어나며, 이후 {rampEveryNormal}초마다 피해량이 {rampStep}씩 더 늘어납니다. 타이머 표시줄은 없습니다. 남은 시간이 {warn60}초, {warn30}초, {warn10}초일 때 외침으로 경고합니다.",
+        "crownEnduresHeroicSummary": "전투 시작 {enrageHeroic}초 후(생명력 70%에서 알드릭 수사가 등장하는 동안 시간이 멈춥니다) 굴하지 않는 왕관이 강제 격노로 발동합니다. 나이트락시스는 피해량이 {damage}, 공격 속도가 {haste} 늘어나며, 이후 {rampEveryHeroic}초마다 피해량이 {rampStep}씩 더 늘어납니다. 타이머 표시줄은 없습니다. 남은 시간이 {warn60}초, {warn30}초, {warn10}초일 때 외침으로 경고합니다.",
+        "crownEnduresResponse": "첫 경고를 마지막 화력 집중 구간으로 여기세요. 이동기와 방어 재사용 기술은 남은 메커니즘을 위해 아껴 두었다가 격노가 오기 전에 나이트락시스를 처치하세요."
       }
     },
     "auraEffect": {
@@ -2688,6 +2802,14 @@ export const ko_KR: EnTranslations = {
       "varkhulMoltenCore": "이 핵을 용광로로 운반하세요. 용융물의 무게는 {interval}초마다 최대 생명력의 {min}%에서 {max}%까지 증가하는 피해를 입힙니다.",
       "varkhulForgeLink": "활성화된 기둥의 광선이 용광로에 닿기 전에 가로막으세요. 열린 광선은 초당 열기를 6% 올립니다. 일반에서는 차단된 광선과 꺼진 기둥이 용광로를 식히지만, 영웅에서는 열기가 절대 감소하지 않습니다. 100%가 되면 치명적인 용광로 용융이 발생합니다.",
       "varkhulCrucibleExposure": "도가니 광선을 막으면 매초 최대 생명력 기반 피해가 증가합니다. 광선을 벗어난 뒤 일반에서는 10초, 영웅에서는 60초 후 중첩이 초기화됩니다.",
+      "nythraxisDreadCurse": "중첩당 나이트락시스에게 받는 피해가 {duration}초 동안 {perStack}% 증가합니다: 현재 {stacks}/{max}중첩, 피해 {pct}% 증가 중. {every}초마다 대상에게 가하는 다음 일격이 최대 생명력의 {hit}%를 입히고 중첩을 추가합니다. 탱커는 {swap}중첩에서 교대하세요.",
+      "nythraxisImpaled": "뼈가시에 꿰뚫림: 행동할 수 없으며 공격대가 가시를 파괴할 때까지 {interval}초마다 최대 생명력의 {normal}%(영웅 {heroic}%)를 잃습니다.",
+      "nythraxisAscension": "불사의 상승: {stacks}중첩, 피해량과 공격 속도가 {pct}% 증가. 결속의 인장 위로 나이트락시스를 끌고 가면 정화됩니다.",
+      "nythraxisBound": "옛 결계에 결속됨: 나이트락시스가 {duration}초 동안 {pct}% 더 큰 피해를 받습니다.",
+      "nythraxisUnbound": "결속 해제: 결속의 인장이 그를 붙잡을 때까지 나이트락시스가 {pct}% 더 큰 피해를 입힙니다.",
+      "nythraxisKingsWrath": "왕의 분노: 나이트락시스가 이후 전투가 끝날 때까지 {pct}% 더 큰 피해를 입힙니다.",
+      "nythraxisBoneStorm": "뼈 폭풍: 나이트락시스가 위협 수준을 무시하고 {radius}야드 이내에서 매초 최대 생명력의 {tick}%만큼 회전 피해를 입히며 플레이어에게 돌진합니다. 흩어져서 도망치세요.",
+      "nythraxisCrownEndures": "굴하지 않는 왕관: {stacks}중첩, 피해량 {pct}%, 공격 속도 {haste}% 증가. 공격대에게 남은 시간이 없습니다.",
       "dot": "{interval}초마다 {value}의 {school} 피해를 입힙니다",
       "hot": "{interval}초마다 생명력을 {value} 회복합니다",
       "mendingCurrent": "치유량 {value}를 저장하여 시간에 따라 방출하거나 쇄도하는 치유로 소모합니다",
@@ -2758,6 +2880,8 @@ export const ko_KR: EnTranslations = {
       "redline": "레드라인: {stacks}/{max} 단계. 헤이메이커가 각각 1단계를 쌓습니다. 소등은 단계마다 {pct}% 더 강해지며 레드라인을 끝냅니다. 시간이 먼저 다 되면 녹아웃 기회는 사라집니다",
       "veilstrikeWindow": "그림자에 휩싸임: 황혼장막 전용 선제 기술을 어느 각도에서든 사용할 수 있고, 주는 피해가 {pct}% 증가합니다",
       "veiledEdge": "다음 잠복자의 일격이 두 배의 피해를 입힙니다",
+      "veiledEdgeStrike": "다음 잠복자의 일격이 입히는 무기 피해가 {pct}% 증가합니다",
+      "coldsightRead": "다음 긴 시위가 입히는 피해가 {longDrawPct}% 증가하거나, 다음 사악한 사격이 입히는 피해가 {fellShotPct}% 증가합니다",
       "duskEconomy": "기술의 기력 소모가 {pct}% 감소합니다",
       "moontide": "달물결: {stacks}/{max}단계. 달날개 형상에서 야생 벼락, 창공 낙하, 달씨앗 시전이 각각 1단계를 쌓습니다. {max}단계에서 달씨앗이 달의 격동으로, 창공 낙하가 해돋움으로 변하며, 어느 쪽을 써도 3단계를 모두 소모합니다",
       "oldBlood": "오랜 피: {stacks}/{max}단계. 가르는 발톱, 저미기, 피의 균열, 유혈 물어뜯기, 휩쓰는 발톱, 뼈 분쇄의 적중한 공격이 각각 1단계를 쌓습니다. {max}단계에서 늑대 변신의 유혈 물어뜯기는 피의 수확으로, 큰곰 변신의 뼈 분쇄는 골수분쇄로 변합니다",
@@ -2987,7 +3111,18 @@ export const ko_KR: EnTranslations = {
         "playerFrame": "플레이어",
         "targetFrame": "대상",
         "partyFrames": "파티",
-        "swingBar": "자동 공격"
+        "swingBar": "자동 공격",
+        "targetDots": "대상 디버프",
+        "questTracker": "퀘스트 추적기",
+        "reliquaryTracker": "성물고 추적기",
+        "petBar": "Pet Bar",
+        "procOverlay": "주문 발동",
+        "procOverlayFrost": "고드름",
+        "damageMeter": "피해 측정기",
+        "deedTracker": "업적 추적기",
+        "delveTracker": "탐굴 추적기",
+        "riftTracker": "균열 추적기",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "프레임 설정",
       "framesMenuTitle": "각 프레임을 표시하거나 숨깁니다. 선택을 해제한 프레임은 다시 선택하거나 기본값으로 초기화할 때까지 숨겨진 상태로 유지됩니다.",
@@ -3019,11 +3154,86 @@ export const ko_KR: EnTranslations = {
       "invalid": "유효한 내보내기 코드가 아닙니다.",
       "wrongKind": "이 코드는 다른 종류의 내보내기입니다."
     },
+    "keybindTransfer": {
+      "setup": "단축키 설정",
+      "apply": "적용",
+      "imported": "단축키 설정을 가져왔습니다.",
+      "wrongKind": "이 코드는 설정 내보내기이며 단축키 설정이 아닙니다."
+    },
+    "keyboardMap": {
+      "title": "키보드 개요",
+      "hint": "사용 중인 키는 범주별로 색이 칠해집니다. 키에 마우스를 올리거나 포커스하면 그 키의 모든 지정을 볼 수 있습니다.",
+      "hintInteractive": "사용 중인 키는 범주별로 색이 칠해집니다. 키를 클릭하면 기능을 바꿀 수 있고, 마우스를 올리거나 포커스하면 그 키의 모든 지정을 볼 수 있습니다.",
+      "popOut": "Pop Out",
+      "close": "키보드 개요 닫기",
+      "pressKey": "{action}에 지정할 키를 누르세요. Esc 키로 취소합니다.",
+      "boundTo": "{action}을(를) {key} 키에 지정했습니다.",
+      "notBindable": "그 키는 지정할 수 없습니다.",
+      "assignHint": "{key} 키에 지정할 행동을 선택하세요.",
+      "assignPlaceholder": "{key} 키에 행동 지정",
+      "layerGroup": "보조키 레이어",
+      "formGroup": "키보드 크기",
+      "formFull": "풀 사이즈",
+      "formTkl": "텐키리스",
+      "form75": "75%",
+      "form60": "60%",
+      "notOnLayout": "이 키보드에 없는 키: {bindings}",
+      "legendGroup": "키 표기",
+      "legendLayout": "내 배열",
+      "legendQwerty": "QWERTY",
+      "layerNone": "보조키 없음",
+      "layerShift": "Shift 키",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
+      "otherLayers": "보조키 조합으로도 지정됨"
+    },
+    "fullTransfer": {
+      "menu": "가져오기 / 내보내기",
+      "title": "설정 가져오기 / 내보내기",
+      "fullSettings": "전체 설정",
+      "intro": "이 기기에 저장된 모든 설정을 하나의 코드로 내보내고 다른 기기나 브라우저에 붙여넣어 가져올 수 있습니다: 그래픽, 오디오, 인터페이스, 테마, 프레임 배치, 모든 캐릭터의 단축키, 컨트롤러와 크로스 핫바 설정, 채팅, 창 필터, 언어, 닫은 안내.",
+      "excluded": "포함되지 않는 항목: 로그인, 계정, 지갑, 구매 데이터. 행동 단축바 배치는 계정에 저장되어 계정과 함께 이동합니다."
+    },
+    "riftForge": {
+      "title": "균열의 화로",
+      "subtitle": "균열결속 반지",
+      "currency": "{name}: {count}",
+      "empty": "가방에 균열결속 반지가 없습니다. 등급 균열의 첫 완파가 하나를 만들어 냅니다.",
+      "wornHint": "착용 중입니다. 화로에 올리려면 벗으세요.",
+      "upgradeBtn": "아이템 레벨 {level}(으)로 강화 (정수 {cost})",
+      "upgradeMax": "강화 완료",
+      "gemPickAria": "박을 보석",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "소켓이 가득 찼습니다. 다음 보석은 가장 오래된 {gem}을(를) 대체합니다.",
+      "socketBtn": "박기",
+      "socketsNone": "보석 없음",
+      "noGems": "가방에 균열 보석이 없습니다",
+      "refused": "화로가 거부했습니다. 균열장인 곁에 서서 다시 시도하세요.",
+      "reason": {
+        "notFound": "그 반지는 가방에 없습니다.",
+        "notRiftGear": "균열결속 반지만 화로에 올릴 수 있습니다.",
+        "maxUpgrade": "그 반지는 이미 최대로 강화되었습니다.",
+        "insufficientEssence": "균열의 정수가 부족합니다.",
+        "invalidGem": "그런 균열 보석이 없습니다.",
+        "dead": "죽은 상태에서는 할 수 없습니다.",
+        "tooFar": "균열의 화로에서 너무 멀리 떨어져 있습니다."
+      },
+      "done": {
+        "upgrade": "{name}을(를) 강화했습니다.",
+        "socket": "{name}에 보석을 박았습니다.",
+        "socketReplaced": "{name}에 보석을 박았습니다. {gem}은(는) 파괴되었습니다."
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "필요 레벨 {level}",
       "riftTier": "{tier} 등급 균열 아이템",
       "riftUpgrade": "균열 강화 {level}/{max}",
       "riftSockets": "균열 보석 {used}/{total}",
+      "riftGemSocket": "균열결속 반지 소켓 보너스",
       "statEnchanted": "+{value} {stat} (마법부여)",
       "enchantedFallback": "마법부여됨",
       "partyTradeWindow": "앞으로 {time} 동안 이 아이템을 같은 전리품을 함께 획득한 플레이어와 거래할 수 있습니다. 착용하면 거래 기간이 끝납니다."
@@ -3304,6 +3514,15 @@ export const ko_KR: EnTranslations = {
       "popupTitle": "길드 게시 기둥",
       "close": "닫기"
     },
+    "realmBuilder": {
+      "title": "이달의 왕국 건설자",
+      "currentLabel": "이달의 수상자",
+      "placeholderName": "당신의 이름",
+      "placeholderHint": "이 명판은 첫 번째 이름을 기다리고 있습니다.",
+      "pastTitle": "역대 수상자",
+      "pastEmpty": "아직 명단에 이름이 없습니다.",
+      "close": "닫기"
+    },
     "bank": {
       "title": "은행",
       "subtitle": "도금 금고",
@@ -3431,8 +3650,34 @@ export const ko_KR: EnTranslations = {
       "guildViewsAria": "길드 은행 보기",
       "guildContentsTab": "내용물",
       "guildLogTab": "기록",
+      "guildHistoryTab": "기록",
       "logAria": "길드 은행 활동 기록",
       "logNote": "최근 길드 은행 활동 {count}건입니다.",
+      "logShowing": "길드 은행 활동 {count}건을 최신순으로 표시합니다.",
+      "logFilterAria": "길드 은행 기록 필터",
+      "logFilterAll": "전체",
+      "logFilterItems": "아이템",
+      "logFilterMoney": "골드",
+      "logOlder": "이전 기록 보기",
+      "logOlderLoading": "이전 활동을 불러오는 중...",
+      "logEnd": "길드 은행의 전체 기록입니다.",
+      "logEmptyFiltered": "이 필터와 일치하는 길드 은행 활동이 없습니다.",
+      "logColTime": "시간",
+      "logColMember": "구성원",
+      "logColAction": "활동",
+      "logColDetail": "내용",
+      "logActionDeposit": "입금",
+      "logActionWithdraw": "출금",
+      "logActionBuySlots": "확장 구매",
+      "logActionOpenBank": "은행 개설",
+      "logActionCharterFee": "창설 수수료 지불",
+      "logActionAdminPurge": "삭제",
+      "logActorAdmin": "관리자",
+      "logDetailItem": "{item} {count}개",
+      "logSearchPlaceholder": "이 기록 검색",
+      "logSearchAria": "불러온 길드 은행 활동을 구성원, 활동, 아이템으로 검색",
+      "logShowingMatched": "불러온 길드 은행 활동 {count}건 중 {matched}건을 표시합니다.",
+      "logSearchNoMatch": "검색과 일치하는 활동이 없습니다. 이전 기록을 불러와 범위를 넓히세요.",
       "logLoading": "길드 은행 기록을 불러오는 중...",
       "logEmpty": "아직 길드 은행에 넣거나 뺀 것이 없습니다.",
       "logUnavailable": "지금은 길드 은행 기록을 볼 수 없습니다.",
@@ -3530,6 +3775,20 @@ export const ko_KR: EnTranslations = {
         "result": {
           "set": "길드 게시판이 업데이트되었습니다.",
           "notOfficer": "게시판은 임원과 길드 마스터만 수정할 수 있습니다."
+        }
+      },
+      "roster": {
+        "seats": "{count} / {cap} 자리",
+        "expand": "명단 확장 (+{seats}자리, {price})",
+        "maxed": "명단이 이미 최대 규모입니다",
+        "confirm": "{price}(으)로 길드 명단을 {seats}자리 확장하시겠습니까? 골드는 본인의 소지금에서 차감되며 환불되지 않습니다.",
+        "confirmAction": "확장",
+        "expandedLine": "{name}님이 길드 명단을 {cap}명으로 확장했습니다.",
+        "result": {
+          "notLeader": "길드 명단은 길드 마스터만 확장할 수 있습니다.",
+          "maxed": "길드 명단은 더 이상 확장할 수 없습니다.",
+          "cannotAfford": "길드 명단을 확장하려면 {price}이(가) 필요합니다.",
+          "retry": "구매 중에 길드 명단이 변경되었습니다. 다시 시도하세요."
         }
       }
     },
@@ -3948,6 +4207,7 @@ export const ko_KR: EnTranslations = {
       "yieldLineRange": "{item} {min}~{max}개",
       "alreadyEnchanted": "해당 아이템에는 이미 마법부여가 되어 있습니다.",
       "sameEnchant": "해당 아이템에는 이미 같은 마법부여가 되어 있습니다.",
+      "riftGear": "균열결속 반지는 균열 보석만 장착할 수 있으며 마법부여는 불가능합니다.",
       "replaceTag": "{enchant} 대체",
       "sameEnchantTag": "이미 적용됨",
       "plainTag": "마법부여 없음",
@@ -4162,10 +4422,19 @@ export const ko_KR: EnTranslations = {
         "sealbreak_shockwave": "봉인 파괴 충격파(광역 폭발)",
         "gravebreaker": "무덤파괴자(전방 부채꼴, 공격대 반대편으로)",
         "raise_fallen": "망자 소생(주기적 증원)",
-        "soul_rend": "영혼 가르기(표식 대상은 산개 후 치유 필요)",
+        "soul_rend": "영혼 가르기(표식 대상은 뭉쳤다가 불을 벗어남)",
         "deathless_rage": "불사의 격노(수호석에서 저지)",
         "wardstones": "수호석 정신집중(단계 전환)",
-        "dread_curse": "공포의 저주(영웅 전용, 누적되는 탱커 교대 디버프)"
+        "dread_curse": "공포의 저주(누적되는 탱커 교대 디버프, 2중첩에서 교대)",
+        "bone_spike": "뼈가시(꿰뚫린 대상은 가시가 파괴될 때까지 생명력 소모)",
+        "grave_eruption": "무덤 분출(불타는 바닥을 남기는 경고 원)",
+        "binding_sigil": "결속의 인장(나이트락시스를 인장 위로 끌지 못하면 공격대가 대가를 치름)",
+        "gravefire": "무덤불길(옆으로 피해야 하는 이동하는 불줄기)",
+        "soulfire": "영혼불길(영혼 가르기가 터지며 남기는 불웅덩이)",
+        "kings_wrath": "왕의 분노(30%: 영구 피해 증가, 바닥 위험 요소 가속)",
+        "bone_storm": "뼈 폭풍(위협 수준 무시, 회전 공격, 공격대에게 돌진)",
+        "crown_endures": "굴하지 않는 왕관(6:00에 강제 격노, 영웅 5:00)",
+        "deathless_court": "불사의 궁정(영웅 전용, 불사의 격노 이후 왕실 궁정이 일어남)"
       }
     },
     "reliquary": {
@@ -6042,6 +6311,8 @@ export const ko_KR: EnTranslations = {
       "raceBody": "왕국의 모든 파티가 같은 균열에 동시에 도전할 수 있고 각자 자기 사본에서 싸우지만, 맨 아래의 존재를 가장 먼저 쓰러뜨린 파티만이 균열을 봉인합니다. 한 파티가 이기면 왕국이 그들의 이름과 기록을 듣고, 들어가는 길은 그들 뒤에서 닫힙니다. 경쟁에서 진다고 공략이 끝나지는 않습니다. 당신의 사본은 그대로 열려 있고, 맨 아래의 존재도 당신 손에 쓰러지며, 당신은 제 발로 걸어 나옵니다. 다만 잃는 것은 봉인이 주었을 보상 전부입니다. 우두머리는 두 번째로 도착한 파티에게 아무것도 남기지 않으므로, 집으로 가져가는 것은 내려오는 길에 적들이 떨어뜨린 것뿐이고 그 이상은 없습니다. 그래도 업적의 서는 공략을 인정합니다. 어쨌든 당신이 그것을 쓰러뜨렸으니까요. 자신을 이긴 사람의 얼굴을 한 번도 보지 못한 채 질 수 있는, 이 게임 유일한 경쟁입니다.",
       "rewardsHeading": "무엇을 들고 나오나",
       "rewardsBody": "보상을 주는 것은 균열에서 살아남는 일이 아니라 균열을 봉인하는 일입니다. 균열을 가장 먼저 무너뜨리면 그 등급에 견주는 인스턴스 콘텐츠만큼의 보상이 나오므로, 높은 등급일수록 험한 공략의 값어치를 합니다. 봉인은 또한 그 자리에 있던 모두의 손에 균열결속 반지를 쥐여 줍니다. 직업의 역할에 맞게 재단된, 당신만의 것입니다. 그 밖에 균열 정수와 균열 보석도 가방에 남습니다. 귀환의 길 옆에는 맨 아래의 존재가 봉인된 상자를 남기며, 탐굴 상자에서 익힌 것과 같은 열쇠공의 길 자물쇠 따기로 파티가 열어 추가 전리품을 챙길 수 있으니, 서두른 손보다 깔끔하고 참을성 있는 손이 더 많이 가져갑니다. 두 번째로 도착한 파티에게는 그중 무엇도 돌아가지 않습니다. 경쟁에서 지면 내려오는 길에 적들이 떨어뜨린 것만 남습니다. 업적의 서만이 예외로, 어느 쪽이든 당신의 공략을 인정하며, 첫 균열을 닫는 업적과 S등급 균열을 쓰러뜨리는 업적이 준비되어 있습니다.",
+      "forgeHeading": "균열의 화로",
+      "forgeBody": "등급 균열의 첫 완파가 만들어 내는 반지는 받은 순간에 완성된 것이 아닙니다. 파샤 해안의 감시 초원, 갈매기항에서 해안을 따라 올라간 곳의 파열 학자 곁에서 화로를 지키는 균열장인 마엘리스가 반지의 아이템 레벨을 한 단계씩 끌어올리고, 균열이 떨어뜨리는 색색의 보석을 홈에 박아 줍니다. 보석의 색은 각각 하나의 전투 능력치입니다. 홈이 가득 찬 반지는 새 보석이 가장 오래된 보석을 대체하므로 나중에 다시 조정할 수 있습니다. 그 대가는 모두 균열의 정수와 균열 보석입니다. 균열 우두머리에게서 떨어지고 자유롭게 거래되는 화로 통화이니, 모자란 정수는 친구가 건네줄 수 있습니다. 가져가기 전에 반지를 벗으세요. 그녀는 가방 안에 있는 것만 다루며, 당신이 화로 곁에 서 있지 않으면 아무것도 하지 않습니다.",
       "trackerHeading": "화면의 추적기",
       "trackerBody": "안에 있는 동안 화면 한쪽의 작은 띠가 길잡이가 되어 줍니다. 전체 몇 층 가운데 지금 몇 층인지, 그리고 실시간 카운트다운이 표시됩니다. 그 카운트다운은 주의해서 읽으세요. 당신의 공략 시간이 끝나 가는 것이 아니라, 바깥 세계의 입구가 새 파티에게 닫히는 시간이니까요. 일단 들어온 뒤에는 파티가 원하는 만큼 시간을 들여 균열을 끝까지 풀어 갈 수 있습니다."
     },
@@ -7380,10 +7651,7 @@ export const ko_KR: EnTranslations = {
     "playAria": "World of ClaudeCraft 플레이",
     "serverLabel": "월드를 선택하세요",
     "serverAria": "월드 선택: 온라인 또는 오프라인",
-    "serverOfflineSub": "즉시 시작하는 로컬 세상",
-    "caLabel": "$WOC 계약 주소",
-    "caCopyAria": "계약 주소 복사",
-    "caNote": "WOC는 커뮤니티 토큰입니다. 플레이에는 필요하지 않습니다. WOC의 활용과 선순환 구조에 관해 이야기하려면 Discord에 참여하세요."
+    "serverOfflineSub": "즉시 시작하는 로컬 세상"
   },
   "auth": {
     "enterRealm": "월드 입장",
@@ -7933,6 +8201,7 @@ export const ko_KR: EnTranslations = {
       "forgeUpgraded": "{name}의 균열 강화가 완료되었습니다.",
       "forgeEnchanted": "{name}의 균열 마법부여가 완료되었습니다.",
       "forgeSocketed": "{name}에 균열 보석을 장착했습니다.",
+      "forgeGemReplaced": "{name}의 균열 보석을 교체했습니다. {gem}은(는) 파괴되었습니다.",
       "detonateGlacialGrave": "빙하의 무덤이 폭발합니다!",
       "detonateAbsoluteZero": "절대 영도가 폭발합니다!",
       "detonateMagmaWell": "마그마 우물이 분출합니다!",
@@ -8677,6 +8946,7 @@ export const ko_KR: EnTranslations = {
     "bodyWeb": "게임이 GPU 가속 없이 실행되고 있어 매우 느립니다. 브라우저 설정에서 하드웨어 가속을 켜고 그래픽 드라이버를 업데이트한 뒤 브라우저를 다시 시작하세요.",
     "hybridBodyWindows": "이 세션은 통합(절전형) GPU에서 렌더링되고 있습니다. 이 컴퓨터에 별도의 게이밍 GPU도 있다면, 설정 > 시스템 > 디스플레이 > 그래픽에서 브라우저를 고성능으로 설정한 다음 다시 시작하세요. 데스크톱 앱은 자동으로 전용 GPU를 선택합니다.",
     "hybridBodyLinux": "이 세션은 통합(절전형) GPU에서 렌더링되고 있습니다. 이 컴퓨터에 별도의 게이밍 GPU도 있다면, 브라우저나 그래픽 드라이버에 자체 GPU 선택 설정이 있거나 배포판에 GPU 전환 도구(PRIME 또는 optimus-manager 등)가 있을 수 있습니다. 데스크톱 앱은 자동으로 전용 GPU를 선택합니다.",
+    "bodyRequestedBackend": "선택한 그래픽 백엔드로 게임을 시작할 수 없어 OpenGL로 실행 중입니다. 정상적으로 작동하지만 로딩과 처음 몇 분 동안 더 끊길 수 있습니다. 옵션 > 그래픽 > 시스템에서 백엔드를 다시 선택할 수 있습니다.",
     "hybridBodyOther": "이 세션은 통합(절전형) GPU에서 렌더링되고 있습니다. 이 컴퓨터에 별도의 게이밍 GPU도 있다면, 브라우저와 운영체제의 그래픽 설정을 확인하여 활성화하세요. 데스크톱 앱은 자동으로 전용 GPU를 선택합니다.",
     "dismiss": "닫기"
   },
@@ -10638,7 +10908,8 @@ export const ko_KR: EnTranslations = {
       },
       "arcane_shot": {
         "name": "사악한 사격",
-        "description": "대상을 쏘아 {damage}의 비전 피해를 입힙니다. 피해량은 원거리 전투력에 따라 증가합니다."
+        "description": "대상을 쏘아 {damage}의 비전 피해를 입힙니다. 피해량은 원거리 전투력에 따라 증가합니다.",
+        "specNote_marksmanship": "열광의 연사를 완료해 얻은 냉정한 시선의 간파는 다음 사악한 사격이 입히는 피해를 75% 증가시킵니다. 사격을 발사하면 간파를 소모합니다."
       },
       "concussive_shot": {
         "name": "뒤흔드는 사격",
@@ -11669,7 +11940,7 @@ export const ko_KR: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "정화의 자비",
-        "description": "적을 신성한 힘으로 정화하거나 아군 대상을 즉시 치유합니다. 교리 고유 능력입니다."
+        "description": "적에게 {damage}의 신성 피해를 입히거나 아군 대상을 {healing}만큼 치유합니다. 피해는 주문력에 비례해 증가하고, 치유는 치유력에 비례해 증가합니다. 교리는 이 피해를 유대를 통해 치유로 전환합니다. 30미터 이내에 유대가 맺어진 부상당한 파티원이 없으면, 30미터 이내에서 생명력이 가장 낮은 부상당한 파티원을 피해량의 15%만큼 치유합니다. 파티원을 치유하면 해당 대상으로부터 10미터 이내에 있고 시야가 확보된 다른 부상당한 파티원 최대 2명도 함께 치유하며, 각각 회복된 생명력의 50%만큼 치유합니다. 이 추가 치유는 치명타가 발생하지 않으며 교리 유대를 생성하지 않습니다. (교리 고유 능력)"
       },
       "seraphic_vigil": {
         "name": "치천사의 수호",
@@ -13216,11 +13487,20 @@ export const ko_KR: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "테러스파크 시동 열쇠"
       },
+      "reins_lanternback_troll": {
+        "name": "점등인의 멍에: 그룸볼"
+      },
+      "reins_chimeglass_tortoise": {
+        "name": "길지기의 종끈: 톨리버"
+      },
       "reins_rickshaw_mount": {
         "name": "결속된 고삐: 뼈에 묶인 인력거"
       },
       "reins_drakemaw_raptor": {
         "name": "화산구 랩터의 고삐"
+      },
+      "reins_mech_bird": {
+        "name": "태엽 기계새 시동 열쇠"
       },
       "rimefang": {
         "name": "서리엄니"
@@ -13902,6 +14182,48 @@ export const ko_KR: EnTranslations = {
       },
       "wand_of_quenched_sparks": {
         "name": "꺼진 불꽃의 마법봉"
+      },
+      "bramblehide_crown": {
+        "name": "루츠의 가시덤불가죽 왕관"
+      },
+      "bramblehide_mantle": {
+        "name": "루츠의 가시덤불가죽 어깨보호구"
+      },
+      "bramblehide_harness": {
+        "name": "루츠의 가시덤불가죽 흉갑"
+      },
+      "bramblehide_cinch": {
+        "name": "루츠의 가시덤불가죽 허리띠"
+      },
+      "bramblehide_legguards": {
+        "name": "루츠의 가시덤불가죽 다리보호구"
+      },
+      "bramblehide_grips": {
+        "name": "루츠의 가시덤불가죽 장갑"
+      },
+      "bramblehide_treads": {
+        "name": "루츠의 가시덤불가죽 장화"
+      },
+      "courtiers_bonefang": {
+        "name": "조신의 뼈송곳니"
+      },
+      "thornpeak_wardblade": {
+        "name": "가시봉우리 수호검"
+      },
+      "gravecourt_hewer": {
+        "name": "무덤궁정 도끼"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "불사 궁정의 봉헌 방패"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "가시봉우리 달가죽 두건"
+      },
+      "stormhymn_chain_grips": {
+        "name": "폭풍찬가 사슬 장갑"
+      },
+      "stormhymn_chain_treads": {
+        "name": "폭풍찬가 사슬 장화"
       },
       "conjured_water4": {
         "name": "창조된 샘물"
@@ -14880,6 +15202,9 @@ export const ko_KR: EnTranslations = {
       "nythraxis_scourge_of_thornpeak": {
         "name": "나이트락시스, 손피크의 재앙"
       },
+      "nythraxis_bone_spike": {
+        "name": "뼈가시"
+      },
       "ignivar_herald_of_the_last_flame": {
         "name": "이그니바르, 마지막 불꽃의 전령"
       },
@@ -15845,6 +16170,11 @@ export const ko_KR: EnTranslations = {
         "name": "겁먹은 넬",
         "title": "걸헤이븐 어부",
         "greeting": "그물을 말리던 바로 그 자리에서 열렸어요. 바로 거기, 제가 평생 매일 아침 서 있던 그 자리에서요. 이제 저는 해안으로 내려가지 않아요. 이제는 어디로도 잘 가지 않는답니다."
+      },
+      "riftwright_maelis": {
+        "name": "균열장인 마엘리스",
+        "title": "균열 화로장",
+        "greeting": "균열결속 반지는 자신을 만든 균열을 기억한다네, {className}. 반지와 균열이 흘린 정수를 가져오게. 더 많은 것을 기억하도록 가르쳐 주지."
       },
       "forgemistress_darva": {
         "name": "단조사 다르바",
@@ -18919,6 +19249,12 @@ export const ko_KR: EnTranslations = {
         "name": "속박석 선봉대",
         "bonus3": "공격 속도와 시전 속도가 15% 증가합니다."
       },
+      "bramblehide": {
+        "name": "루츠의 가시덤불가죽",
+        "bonus2": "힘이 10, 체력이 10만큼 증가합니다.",
+        "bonus4": "전투력이 25만큼 증가합니다. 무기 치명타 적중 시 50% 확률로 \"무덤의 위력\"이 발동하여 전투력이 40만큼 증가합니다. 10초 동안 지속됩니다.",
+        "bonus6": "공격 및 시전 속도가 4%, 적중이 3% 증가합니다. 무기 치명타 적중 시 대상에게 \"뼈 파편\"을 남겨 12초 동안 2초마다 5의 출혈 피해를 입힙니다. 최대 3번 중첩됩니다."
+      },
       "chronoweave": {
         "name": "에테르직조 예복",
         "bonus2": "시간의 메아리가 단일 대상 비전 피해의 50%를 치유로 전환합니다. 피해를 입어도 주문 시전이 더 이상 지연되지 않습니다.",
@@ -19150,6 +19486,7 @@ export const ko_KR: EnTranslations = {
     "delveRiteShrineReedInteract": "갈대 제단: F를 눌러 만지기",
     "delveRiteShrineSkullInteract": "해골 제단: F를 눌러 만지기",
     "mailboxName": "우편함",
-    "noticeboardName": "게시판"
+    "noticeboardName": "게시판",
+    "realmBuilderMonumentName": "왕국 건설자 기념비"
   }
 };

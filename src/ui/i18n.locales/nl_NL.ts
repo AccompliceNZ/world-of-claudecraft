@@ -2234,6 +2234,8 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'entities.items.artisans_eye.name': 'Oog van de Ambachtsman',
   'entities.items.reins_terrorspark_groundshaker.name':
     'Contactsleutel: Schrikvonk, de Grondschudder',
+  'entities.items.reins_lanternback_troll.name':
+    'Juk van de lantaarnopsteker: Grumbol',
   'hud.options.graphicsPresetInsane': 'Extreem',
   'hud.options.surfaceDetail': 'Oppervlaktedetail',
   'hud.options.surfaceDetailBasic': 'Basis',
@@ -9041,10 +9043,6 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Speel in liggend volledig scherm voor de beste mobiele ervaring.',
   'mobilePreflight.rotateTitle': 'Draai naar Liggend',
   'mobilePreflight.title': 'Speel in Liggend Volledig Scherm',
-  'mode.caCopyAria': 'Contractadres kopiëren',
-  'mode.caLabel': '$WOC Contractadres',
-  'mode.caNote':
-    'WOC is onze communitytoken. Het is niet nodig om te spelen. Word lid van Discord om de WOC-toepassing en het vliegwiel te bespreken.',
   'mode.offlineAria': 'Offline Spelen: start direct een lokale singleplayer-sessie',
   'mode.offlineDesc':
     'Direct een singleplayer-wereld in je browser. Er wordt niets opgeslagen: perfect voor een snel gevecht of om te testen.',
@@ -12708,7 +12706,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Beschermt een bondgenoot 30 sec. De eerste treffer die hem onder 35% gezondheid brengt verbruikt de Wake en geneest hem voor {buff}. (Zegen-kenmerk)',
   'entities.abilities.scouring_mercy.description':
-    'Richt 72 tot 84 Heilige schade aan bij een vijand of geneest een bevriend doelwit voor 130 tot 155. Beide bedragen stijgen met spreukkracht. De schade geneest ook elke via de Leer verbonden bondgenoot voor 30%, of het groepslid met de laagste gezondheid voor 15% als geen bondgenoot verbonden is. (Leer-kenmerk)',
+    'Richt {damage} Heilige schade aan bij een vijand of geneest een bevriend doelwit voor {healing}. Schade stijgt met spreukkracht; genezing stijgt met genezingskracht. De Leer zet deze schade om in genezing via je verbindingen. Als er geen verbonden gewond groepslid binnen 30 meter is, geneest het gewonde groepslid met de laagste gezondheid binnen 30 meter voor 15% van de schade. Het genezen van een groepslid geneest ook tot 2 andere gewonde groepsleden binnen 10 meter van dat doelwit en binnen je gezichtslijn, elk voor 50% van de herstelde gezondheid. Deze extra genezingen kunnen niet kritiek zijn of Leer-verbindingen creëren. (Leer-kenmerk)',
   'entities.abilities.solar_invocation.description':
     'Geneest direct een bondgenoot voor {damage} of richt matige Heilige schade aan bij een vijand. Beide toepassingen genereren 1 Toewijding. Tijdens Verheffing geneest een genezende spreuk ook bevriende spelers binnen 10 m van het doelwit voor de helft.',
   'entities.abilities.solar_step.description': 'Verhoogt je loopsnelheid 2 sec. lang met 150%.',
@@ -13558,8 +13556,6 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Zielfragmenten',
   'hudChrome.warlock.doomEmptyStatus': '{value} van {max} Verdoemenis.',
   'hudChrome.warlock.doomLabel': 'Verdoemenis',
-  'hudChrome.warlock.doomMeterLock': 'Vergrendel de Kwelling-hulpbronbalk',
-  'hudChrome.warlock.doomMeterUnlock': 'Verplaats de Kwelling-hulpbronbalk',
   'hudChrome.warlock.doomStatus': '{value} van {max} Verdoemenis; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Drie Lotsdraden: Verteren kan ze verweven tot extra Verdoemenis.',
@@ -14277,6 +14273,10 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Kritieke treffers van Long Draw verlengen Cold Focus met 2 sec., tot maximaal 6 sec. per activering.',
   'entities.itemSets.coldsight_trackers.name': 'Koudzicht-Verkenners',
   'entities.itemSets.crownforged.bonus6': 'Verhoogt aanvals- en spreuksnelheid met 4% en Trefferkans met 3%. Kritieke treffers van je wapen splijten het doel met Bonesplinter, waardoor het 12 sec. lang elke 2 sec. 5 schade oploopt. Stapelt tot 3 keer.',
+  'entities.itemSets.bramblehide.name': "Roots' Doornhuid",
+  'entities.itemSets.bramblehide.bonus2': 'Verhoogt aanvalskracht met 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Je kritieke wapentreffers splinteren het doelwit met Beensplinter, waardoor het 8 schade bloedt elke 2 sec gedurende 12 sec. Stapelt tot 3 keer.',
+  'entities.itemSets.bramblehide.bonus6': 'Verhoogt aanvals- en spreuksnelheid met 4% en Trefferkans met 3%. Kritieke treffers van je wapen splijten het doel met Bonesplinter, waardoor het 12 sec. lang elke 2 sec. 5 schade oploopt. Stapelt tot 3 keer.',
   'entities.itemSets.dawnforged.bonus2': 'Beacon of Light kopieert 55 procent van je directe genezingen. Opgelopen schade vertraagt het uitspreken van je spreuken niet meer.',
   'entities.itemSets.dawnforged.bonus4': 'De versterkte Dawn’s Embrace van Radiant Resonance is onmiddellijk.',
   'entities.itemSets.dawnforged.name': 'Dageraadgesmede Gewaden',

@@ -7,6 +7,7 @@ import { describe, expect, it } from 'vitest';
 import { auditIconAssets, validateAcceptedArtManifest } from '../scripts/lib/icon_asset_audit.mjs';
 import { ITEM_ART_AUDIT_RENDERER_FINGERPRINT } from '../scripts/lib/item_art_audit.mjs';
 import { ITEMS } from '../src/sim/data';
+import { ITEM_ART_PENDING } from '../src/ui/icons';
 
 const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const evidenceDir = 'docs/achievements/item-art-consistency-2026-08-09';
@@ -342,8 +343,8 @@ describe('item-art consistency accepted-art provenance', () => {
       },
       {
         path: `${evidenceDir}/final-item-art-audit-verdict.json`,
-        acceptedSha256: '551f582e7189528275759142cf0a98da2a7bd8ec0e6ff37ab80423af31d7498f',
-        acceptedBytes: 120_959,
+        acceptedSha256: 'a2857e832c3ad15ec66a70277d813949d19ff5d134e76d1754ba2e560f2c6e46',
+        acceptedBytes: 124_848,
       },
     ]);
     for (const evidence of [...value.sourceEvidence, ...value.generationReports]) {
@@ -458,9 +459,9 @@ describe('item-art consistency accepted-art provenance', () => {
     expect(readme).toContain('node scripts/item_art_audit.mjs\n');
     expect(readme).toContain('node scripts/item_art_audit.mjs --refresh-verdict');
     const verdictBytes = readFileSync(path.join(repoRoot, verdictPath));
-    expect(verdictBytes.length).toBe(120_959);
+    expect(verdictBytes.length).toBe(124_848);
     expect(sha256(verdictBytes)).toBe(
-      '551f582e7189528275759142cf0a98da2a7bd8ec0e6ff37ab80423af31d7498f',
+      'a2857e832c3ad15ec66a70277d813949d19ff5d134e76d1754ba2e560f2c6e46',
     );
     const verdict = JSON.parse(verdictBytes.toString('utf8')) as FinalAuditVerdict;
 
@@ -470,46 +471,43 @@ describe('item-art consistency accepted-art provenance', () => {
       baselineCommit: 'aee195551b5aef628eb7a72192117d7e3079818e',
       branch: 'feature/placeholder-art-completion-v036',
       shippingDirectory: 'public/ui/items',
-      itemArtFilesReviewed: 1041,
-      liveItemDefinitions: 1056,
-      generatedHeroicDefinitions: 64,
-      heroicDefinitionsWithOwnWebp: 48,
-      heroicWeaponArtAliases: 16,
+      // Hand-carried for the two Nythraxis waves, the way the Varkhul renders
+      // were: the three gap-fill weapon renders (three base files, three heroic
+      // aliases) and the roots-bramblehide-icons-2026-09-07 paintings (22
+      // files, 11 of them heroic variants): 1044 + 3 + 22 files.
+      itemArtFilesReviewed: 1069,
+      liveItemDefinitions: 1087,
+      generatedHeroicDefinitions: 78,
+      heroicDefinitionsWithOwnWebp: 59,
+      heroicWeaponArtAliases: 19,
       modifiedItemArtCount: 274,
     });
     expect(verdict.auditScope.modifiedItemArtPaths).toEqual(
       manifest().targetSets.items.map((id) => `public/ui/items/${id}.webp`),
     );
     expect(Object.values(verdict.auditScope.groups).reduce((sum, count) => sum + count, 0)).toBe(
-      1041,
+      1069,
     );
     expect(Object.keys(verdict.auditScope.groups)).toHaveLength(22);
     expect(verdict.auditScope.incrementalReviews.at(-1)).toEqual({
-      reviewedAt: '2026-08-26',
-      branch: 'feature/bank-storage-pr',
-      reviewer: 'implementation agent',
-      replacedIds: [
-        'burlap_reagent_pouch',
-        'duskweave_bag',
-        'foragers_haversack',
-        'loombound_reagent_satchel',
-        'necromancers_reagent_satchel',
-        'resonant_weave_bag',
-        'wayfarers_backpack',
-      ],
-      provenance: [
-        'docs/achievements/bank-storage-painted-bags-2026-08-25/accepted-art.json',
-        'public/ui/items/mapping.json',
-      ],
-      note: 'Seven project-owned programmatic SVG placeholder bag icons were superseded by distinct OpenAI-generated paintings under woc-item-icon-v1. The replacements passed the deterministic icon and complete item-art machine audits and were visually reviewed as a family at the 512px masters and every canonical runtime, grayscale, circular-crop, multiview, and identity sheet size on 2026-08-26; all earlier item-art reviews stand unchanged.',
+      reviewedAt: '2026-08-15',
+      branch: 'feature/turtle-mount',
+      reviewer: 'owner',
+      addedIds: ['reins_chimeglass_tortoise'],
+      provenance: ['public/ui/items/mapping.json'],
+      note: "The Chimeglass Tortoise mount reins icon. Rendered from the shipped mount model (public/models/mounts/chimeglass_tortoise.glb) as a three-quarter head study, background keyed and flattened to the 128px opaque woc-item-icon-v1 shipping format, and owner-reviewed pass on 2026-08-15. Re-rendered on 2026-08-16 alongside the mount's lens-glow pass, which restyled the glowing lens pair the icon frames: same three-quarter head study, same shipping format, 3062 to 3784 bytes, owner-reviewed pass again on 2026-08-16. The 2026-08-09 campaign review of the prior 817 files, the 2026-08-10 review of the five class-overhaul integration additions, and the 2026-08-15 Lanternback Troll review all stand unchanged. Joined the 2026-08-09 record at the release/v0.42.0 sync of PR #3439 (which carries the troll of PR #3399), on top of the release side's 2026-08-12 through 2026-08-30 additions.",
     });
     const shippingIds = new Set(
       readdirSync(path.join(repoRoot, 'public/ui/items'))
         .filter((name) => name.endsWith('.webp'))
         .map((name) => name.slice(0, -'.webp'.length)),
     );
+    // The art-pending ledger (ITEM_ART_PENDING) stages a wave's generated
+    // heroic variants outside the audited catalog until their paintings land,
+    // exactly as the audit CLI accounts them (scripts/lib/item_art_audit.mjs).
     const generatedHeroics = Object.entries(ITEMS).filter(
-      ([, item]) => 'heroicOf' in item && typeof item.heroicOf === 'string',
+      ([id, item]) =>
+        'heroicOf' in item && typeof item.heroicOf === 'string' && !ITEM_ART_PENDING.has(id),
     );
     const heroicWithOwnWebp = generatedHeroics.filter(([id]) => shippingIds.has(id));
     const heroicArtAliases = generatedHeroics.filter(([id]) => !shippingIds.has(id));
@@ -545,13 +543,15 @@ describe('item-art consistency accepted-art provenance', () => {
     ]);
     expect(verdict.visualVerdict).toMatchObject({
       status: 'pass',
-      passCount: 1041,
+      // + the three Nythraxis gap-fill weapon renders and the 22 Bramblehide
+      // wave paintings, hand-carried: 1044 + 25.
+      passCount: 1069,
       watchCount: 0,
       watch: [],
       rejectCount: 0,
       reject: [],
       summary:
-        'All 1041 shipping item-art files pass the visual contract: 817 reviewed in the 2026-08-09 campaign (documented retries included), plus the five class-overhaul integration additions owner-reviewed and passed on 2026-08-10, plus the Dawnhold posy addition (project-authored vector illustration) owner-reviewed and passed on 2026-08-12, plus the two Proving Shore prop renders (rendered from their own shipped world models) owner-reviewed and passed on 2026-08-17, plus the three pearl-detour icons (generated via the OpenAI proving-shore-mother-of-pearl-2026-08-20 batch) owner-reviewed and passed on 2026-08-20, plus the Proving Shore Passing Stone render (rendered from its own shipped world model by the same deterministic pipeline as the 2026-08-17 pair) added on 2026-08-22, machine-checked and awaiting owner visual review, plus the nine Crucible raid weapon icons (generated via the OpenAI crucible-raid-weapons-2026-08-28 batch) added on 2026-08-28, machine-checked and awaiting owner visual review, plus the two Ignivar legendary drop renders (varkhul_forgebreaker and varkhul_emberward, rendered from their own shipped held-weapon models by the deterministic weapon-still pipeline) added on 2026-08-28, machine-checked and awaiting owner visual review, plus the 192 Crucible set-piece, sigil, and off-set icons (generated via the OpenAI crucible-set-icons-2026-08-29 batch) added on 2026-08-29, machine-checked and awaiting owner visual review, plus the Core of the Last Flame reagent icon (staged early from the crucible-raid-professions-2026-08-28 batch) added on 2026-08-30, machine-checked and awaiting owner visual review, plus the seven bank-storage painted bags (implementation-agent reviewed and passed on 2026-08-26, joined at the v0.41.0 base sync), All 830 shipping item-art files pass the visual contract: 817 reviewed in the 2026-08-09 campaign (documented retries included), plus the five class-overhaul integration additions owner-reviewed and passed on 2026-08-10, plus the Dawnhold posy addition (project-authored vector illustration) owner-reviewed and passed on 2026-08-12, plus the two Proving Shore prop renders (rendered from their own shipped world models) owner-reviewed and passed on 2026-08-17, plus the three pearl-detour icons (generated via the OpenAI proving-shore-mother-of-pearl-2026-08-20 batch) owner-reviewed and passed on 2026-08-20, plus the Proving Shore Passing Stone render (rendered from its own shipped world model by the same deterministic pipeline as the 2026-08-17 pair) added on 2026-08-22, machine-checked and awaiting owner visual review, plus the Bonebound Rickshaw reins icon (generated under woc-item-icon-v1 from a user-directed prompt, its own provenance recorded against its mapping.json owner) owner-reviewed against the regenerated mount contact sheet and passed on 2026-08-21.',
+        "All 1069 shipping item-art files pass the visual contract: 817 reviewed in the 2026-08-09 campaign (documented retries included), plus the five class-overhaul integration additions owner-reviewed and passed on 2026-08-10, plus the Dawnhold posy addition (project-authored vector illustration) owner-reviewed and passed on 2026-08-12, plus the two Proving Shore prop renders (rendered from their own shipped world models) owner-reviewed and passed on 2026-08-17, plus the three pearl-detour icons (generated via the OpenAI proving-shore-mother-of-pearl-2026-08-20 batch) owner-reviewed and passed on 2026-08-20, plus the Proving Shore Passing Stone render (rendered from its own shipped world model by the same deterministic pipeline as the 2026-08-17 pair) added on 2026-08-22, machine-checked and awaiting owner visual review, plus the nine Crucible raid weapon icons (generated via the OpenAI crucible-raid-weapons-2026-08-28 batch) added on 2026-08-28, machine-checked and awaiting owner visual review, plus the two Ignivar legendary drop renders (varkhul_forgebreaker and varkhul_emberward, rendered from their own shipped held-weapon models by the deterministic weapon-still pipeline) added on 2026-08-28, machine-checked and awaiting owner visual review, plus the 192 Crucible set-piece, sigil, and off-set icons (generated via the OpenAI crucible-set-icons-2026-08-29 batch) added on 2026-08-29, machine-checked and awaiting owner visual review, plus the Core of the Last Flame reagent icon (staged early from the crucible-raid-professions-2026-08-28 batch) added on 2026-08-30, machine-checked and awaiting owner visual review, plus the seven bank-storage painted bags (implementation-agent reviewed and passed on 2026-08-26, joined at the v0.41.0 base sync), All 830 shipping item-art files pass the visual contract: 817 reviewed in the 2026-08-09 campaign (documented retries included), plus the five class-overhaul integration additions owner-reviewed and passed on 2026-08-10, plus the Dawnhold posy addition (project-authored vector illustration) owner-reviewed and passed on 2026-08-12, plus the two Proving Shore prop renders (rendered from their own shipped world models) owner-reviewed and passed on 2026-08-17, plus the three pearl-detour icons (generated via the OpenAI proving-shore-mother-of-pearl-2026-08-20 batch) owner-reviewed and passed on 2026-08-20, plus the Proving Shore Passing Stone render (rendered from its own shipped world model by the same deterministic pipeline as the 2026-08-17 pair) added on 2026-08-22, machine-checked and awaiting owner visual review, plus the Bonebound Rickshaw reins icon (generated under woc-item-icon-v1 from a user-directed prompt, its own provenance recorded against its mapping.json owner) owner-reviewed against the regenerated mount contact sheet and passed on 2026-08-21, plus the Lanternback Troll mount reins icon (owner-supplied painted master, downscaled to the shipping format) owner-reviewed and passed on 2026-08-15 and the Chimeglass Tortoise mount reins icon (rendered from its shipped mount model) owner-reviewed and passed on 2026-08-16, both joining this record at the release/v0.42.0 sync of PR #3439, plus the Cluckwork Mech Bird store-mount icon (project Blender render under the same contract) added for owner review on 2026-08-17, plus the three Nythraxis gap-fill one-hander renders (courtiers_bonefang, thornpeak_wardblade and gravecourt_hewer, rendered from their own shipped held-weapon models by the deterministic weapon-still pipeline) added on 2026-09-04, machine-checked and awaiting owner visual review, plus the twenty-two Roots' Bramblehide and Nythraxis gap-fill paintings (seven set pieces, the healer shield, the leather caster helm and the mail caster gloves and feet, each with its heroic variant, generated via the OpenAI roots-bramblehide-icons-2026-09-07 batch) added on 2026-09-07, machine-checked and awaiting owner visual review.",
     });
     expect(verdict.visualVerdict.passIds).toEqual(currentIds);
     expect(verdict.nonVisualContentWatch).toEqual([
@@ -591,8 +591,8 @@ describe('item-art consistency accepted-art provenance', () => {
 
     expect(verdict.evidence.catalog).toEqual({
       path: 'tmp/imagegen/item-art-consistency/final-audit/catalog.json',
-      sha256: 'de2dae43730ac6011269ba1564534a23f1cfcd2d721b66f6b1a2fa74228515ee',
-      bytes: 567_686,
+      sha256: 'e3eb0b0083df930521d024db4503d3799d647061ae9048c8bcacdb029ca6697e',
+      bytes: 569_296,
     });
     expect(verdict.evidence.rendererFingerprint).toBe(
       'd80ff4868f979e1717e106c889b7d6505841caf8d4cf887776ecb60848b1b2b7',
@@ -645,7 +645,7 @@ describe('item-art consistency accepted-art provenance', () => {
       sheetSetDigest.update(`${sheet.path}\0${sheet.sha256}\0${sheet.bytes}\n`);
     }
     expect(verdict.evidence.sheetSetSha256).toBe(
-      '7139cd731c87e514144b9d60551c6c1b19dfcd008236f68502e4a0ea3b4b8327',
+      '5d9fb20e96cd7f431ce129880f4e5a222345cf86f92f8672e39ecb1bc9b70371',
     );
     expect(sheetSetDigest.digest('hex')).toBe(verdict.evidence.sheetSetSha256);
 
@@ -655,7 +655,7 @@ describe('item-art consistency accepted-art provenance', () => {
       shippingCatalogDigest.update(`${id}\0${sha256(bytes)}\0${bytes.length}\n`);
     }
     expect(verdict.evidence.shippingCatalogSha256).toBe(
-      'f4d9c8f07e37a13c944b5ea4cf70da045f42f1154784b1da6605ff1c237c4924',
+      '8efefbdb39729e9d08383c4ac5d954b9eed2381875bd9a7b9798f1b5862632db',
     );
     expect(shippingCatalogDigest.digest('hex')).toBe(verdict.evidence.shippingCatalogSha256);
   });
@@ -765,9 +765,10 @@ describe('item-art consistency accepted-art provenance', () => {
       mapping.license,
       'no ordinary item inherits the retired CraftPix default',
     ).toBeUndefined();
-    expect(mapping.entries).toHaveLength(41);
+    expect(mapping.entries).toHaveLength(43);
     expect(mapping.entries.every(({ license }) => Boolean(license))).toBe(true);
-    expect(mapping.generatedBatches).toHaveLength(23);
+    // 24 + nythraxis-gap-weapon-renders-2026-09-04 + roots-bramblehide-icons-2026-09-07.
+    expect(mapping.generatedBatches).toHaveLength(26);
     const batch = mapping.generatedBatches.find(({ batchId }) => batchId === BATCH_ID);
     expect(batch).toBeDefined();
     expect(batch).toMatchObject({
@@ -784,13 +785,15 @@ describe('item-art consistency accepted-art provenance', () => {
     const oldGeneratedIds = mapping.generatedBatches
       .filter(({ batchId }) => batchId !== BATCH_ID)
       .flatMap(({ itemIds }) => itemIds);
-    expect(oldGeneratedIds).toHaveLength(726);
+    // 727 + the three Nythraxis gap-fill weapon renders + the 22 Bramblehide
+    // wave paintings.
+    expect(oldGeneratedIds).toHaveLength(752);
     const allCurrentOwnerIds = [
       ...mapping.entries.map(({ itemId }) => itemId),
       ...mapping.generatedBatches.flatMap(({ itemIds }) => itemIds),
     ];
-    expect(allCurrentOwnerIds).toHaveLength(1041);
-    expect(new Set(allCurrentOwnerIds).size).toBe(1041);
+    expect(allCurrentOwnerIds).toHaveLength(1069);
+    expect(new Set(allCurrentOwnerIds).size).toBe(1069);
     expect(batch?.provenanceRecords).toEqual([
       `${evidenceDir}/accepted-art.json`,
       `${evidenceDir}/supersession-audit.json`,
@@ -926,9 +929,12 @@ describe('item-art consistency accepted-art provenance', () => {
     for (const id of ownerIds) ownerCountById.set(id, (ownerCountById.get(id) ?? 0) + 1);
 
     const violations: string[] = [];
-    if (ownerIds.length !== 1041)
-      violations.push(`mapping owner count: ${ownerIds.length} != 1041`);
-    if (fileIds.length !== 1041) violations.push(`shipping WebP count: ${fileIds.length} != 1041`);
+    // 1044 + the three Nythraxis gap-fill weapon renders
+    // (nythraxis-gap-weapon-renders-2026-09-04) + the 22 Bramblehide wave
+    // paintings (roots-bramblehide-icons-2026-09-07).
+    if (ownerIds.length !== 1069)
+      violations.push(`mapping owner count: ${ownerIds.length} != 1069`);
+    if (fileIds.length !== 1069) violations.push(`shipping WebP count: ${fileIds.length} != 1069`);
     for (const id of ids) {
       const ownerCount = ownerCountById.get(id) ?? 0;
       if (ownerCount !== 1) violations.push(`${id}: current owner count ${ownerCount} != 1`);

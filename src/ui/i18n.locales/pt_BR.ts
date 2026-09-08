@@ -2247,6 +2247,8 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'entities.items.artisans_eye.name': 'Olhar do Artesão',
   'entities.items.reins_terrorspark_groundshaker.name':
     'Chave de ignição: Faíscaterror, Abala-Terra',
+  'entities.items.reins_lanternback_troll.name':
+    'Canga do acendedor de lampiões: Grumbol',
   'hudChrome.auraOverlay.allOff': 'Desativar tudo',
   'hudChrome.auraOverlay.allOn': 'Ativar tudo',
   'hudChrome.auraOverlay.arcs': 'Meias-luas laterais',
@@ -7463,10 +7465,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hud.errors.silenced': 'Você está silenciado!',
   'hud.pet.noPetFood': 'Você não tem comida para alimentar seu mascote.',
   'hud.pet.petEatsFoodOnly': 'Seu mascote só pode comer comida.',
-  'mode.caCopyAria': 'Copiar endereço do contrato',
-  'mode.caLabel': 'Endereço do contrato $WOC',
-  'mode.caNote':
-    'WOC é o token da nossa comunidade. Não é necessário para jogar. Entre no Discord para discutir a utilidade e o flywheel do WOC.',
   'mode.play': 'Jogar',
   'mode.playAria': 'Jogar World of ClaudeCraft',
   'mode.serverAria': 'Escolher mundo: Online ou Offline',
@@ -12916,7 +12914,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Protege um aliado por 30 s. O primeiro golpe que o deixar abaixo de 35% de vida consome a Vigília e o cura em {buff}. (Distintivo de Bênção)',
   'entities.abilities.scouring_mercy.description':
-    'Causa de 72 a 84 de dano Sagrado a um inimigo ou cura um alvo aliado de 130 a 155. Ambos os valores aumentam com o poder mágico. O dano também cura em 30% cada aliado vinculado pela Doutrina, ou em 15% o membro do grupo com menos vida se nenhum aliado estiver vinculado. (Distintivo de Doutrina)',
+    'Causa {damage} de dano Sagrado a um inimigo ou cura um alvo aliado em {healing}. O dano aumenta com o poder mágico; a cura aumenta com o poder de cura. A Doutrina converte esse dano em cura através dos seus vínculos. Se nenhum aliado vinculado e ferido do grupo estiver a até 30 metros, cura o membro do grupo ferido com menos vida a até 30 metros em 15% do dano. Curar um membro do grupo também cura até 2 outros membros do grupo feridos a até 10 metros desse alvo e na sua linha de visão, cada um em 50% da vida restaurada. Essas curas extras não podem ser críticas nem criar vínculos de Doutrina. (Distintivo de Doutrina)',
   'entities.abilities.solar_invocation.description':
     'Cura instantaneamente um aliado em {damage} ou causa dano Sagrado moderado a um inimigo. Qualquer um dos usos gera 1 de Devoção. Durante a Ascensão, uma conjuração de cura também cura pela metade os jogadores aliados a até 10 m do alvo.',
   'entities.abilities.solar_step.description':
@@ -13566,8 +13564,6 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Fragmentos de Alma',
   'hudChrome.warlock.doomEmptyStatus': 'Condenação {value} de {max}.',
   'hudChrome.warlock.doomLabel': 'Condenação',
-  'hudChrome.warlock.doomMeterLock': 'Travar barra de recurso de Aflição',
-  'hudChrome.warlock.doomMeterUnlock': 'Mover barra de recurso de Aflição',
   'hudChrome.warlock.doomStatus': 'Condenação {value} de {max}; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Três Fios do Destino: Consumir pode tecê-los em Condenação adicional.',
@@ -14277,6 +14273,10 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Acertos críticos de Puxada Longa prolongam o Foco Frio em 2 s, até 6 s por ativação.',
   'entities.itemSets.coldsight_trackers.name': 'Rastreadores da Visão Fria',
   'entities.itemSets.crownforged.bonus6': 'Aumenta em 4% as velocidades de ataque e conjuração e em 3% o Acerto. Acertos críticos da sua arma estilhaçam o alvo com Estilhaçaossos, causando 5 de dano a cada 2 s por 12 s. Acumula até 3 vezes.',
+  'entities.itemSets.bramblehide.name': 'Couro de Sarça de Roots',
+  'entities.itemSets.bramblehide.bonus2': 'Aumenta o poder de ataque em 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Seus acertos críticos com armas estilhaçam o alvo com Estilhaço Ósseo, causando 8 de sangramento a cada 2 s por 12 s. Acumula até 3 vezes.',
+  'entities.itemSets.bramblehide.bonus6': 'Aumenta em 4% as velocidades de ataque e conjuração e em 3% o Acerto. Acertos críticos da sua arma estilhaçam o alvo com Estilhaçaossos, causando 5 de dano a cada 2 s por 12 s. Acumula até 3 vezes.',
   'entities.itemSets.dawnforged.bonus2': 'Farol de Luz copia 55% das suas curas diretas. Dano sofrido não atrasa mais suas conjurações.',
   'entities.itemSets.dawnforged.bonus4': 'O Abraço do Alvorecer fortalecido da Ressonância Radiante é instantâneo.',
   'entities.itemSets.dawnforged.name': 'Vestes Forjadas pelo Alvorecer',

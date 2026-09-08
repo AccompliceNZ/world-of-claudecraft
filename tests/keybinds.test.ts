@@ -369,6 +369,89 @@ describe('Attack Move (shared key)', () => {
   });
 });
 
+describe('snapshot / importBindings (hotkey setup export + import)', () => {
+  it('snapshot is the saved shape and a copy, not the live map', () => {
+    const kb = new Keybinds();
+    kb.bind('slot0', 0, 'KeyR');
+    kb.clear('jump', 0);
+    const snap = kb.snapshot();
+    expect(snap.slot0).toEqual(['KeyR', null]);
+    expect(snap.jump).toEqual([null, null]);
+    expect(snap.forward).toEqual(['KeyW', 'ArrowUp']);
+    expect(Object.keys(snap).length).toBe(BIND_ACTIONS.length);
+    expect(snap).toEqual(JSON.parse(localStorage.getItem('woc_keybinds') ?? '{}'));
+    snap.slot0[0] = 'KeyZ';
+    expect(kb.codeAt('slot0', 0)).toBe('KeyR');
+  });
+
+  it('importBindings replaces the profile, persists it, and keeps defaults for missing actions', () => {
+    const kb = new Keybinds();
+    kb.bind('jump', 0, 'KeyY');
+    kb.importBindings({ slot0: ['KeyR', null], autorun: [null, null] });
+    expect(kb.actionForCode('KeyR')).toBe('slot0');
+    expect(kb.codeAt('autorun', 0)).toBe(null); // explicitly unbound by the setup
+    expect(kb.actionForCode('Space')).toBe('jump'); // the local rebind did not survive
+    expect(kb.actionForCode('KeyY')).toBe(null);
+    expect(kb.actionForCode('KeyW')).toBe('forward'); // missing action keeps its default
+    const reloaded = new Keybinds();
+    expect(reloaded.snapshot()).toEqual(kb.snapshot());
+  });
+
+  it('importBindings runs the stored-profile validation: unknown, reserved, duplicate', () => {
+    const kb = new Keybinds();
+    kb.importBindings({
+      notAnAction: ['KeyR', null],
+      slot0: ['Escape', 'Mouse1'],
+      slot1: ['KeyR', null],
+      slot2: ['KeyR', null],
+      jump: 'KeyJ',
+    });
+    expect(kb.snapshot().notAnAction).toBeUndefined();
+    expect(kb.codeAt('slot0', 0)).toBe(null);
+    expect(kb.codeAt('slot0', 1)).toBe(null);
+    expect(kb.actionForCode('KeyR')).toBe('slot1'); // first writer keeps the code
+    expect(kb.codeAt('slot2', 0)).toBe(null);
+    expect(kb.actionForCode('Space')).toBe('jump'); // malformed row: default kept
+    // A default that the setup's explicit binding claimed is evicted.
+    kb.importBindings({ slot5: ['KeyW', null] });
+    expect(kb.actionForCode('KeyW')).toBe('slot5');
+    expect(kb.codeAt('forward', 0)).toBe(null);
+    // A held action stores the bare key, as bind() does, so a hand-edited
+    // modifier combo on one is dropped and still evicts the bare key elsewhere.
+    kb.importBindings({ forward: ['Shift+KeyQ', null] });
+    expect(kb.codeAt('forward', 0)).toBe('KeyQ');
+    expect(kb.codeAt('strafeLeft', 0)).toBe(null);
+    // A string that is not a combo (no keydown could ever produce it) is skipped,
+    // so a crafted code cannot park garbage in a slot or reach a DOM lookup.
+    kb.importBindings({ slot3: ['Digit1"]', 'shift+KeyA'], slot4: ['Ctrl+Shift+KeyA', null] });
+    expect(kb.codeAt('slot3', 0)).toBe(null);
+    expect(kb.codeAt('slot3', 1)).toBe(null);
+    expect(kb.codeAt('slot4', 0)).toBe('Ctrl+Shift+KeyA');
+    // Combos are re-spelled the way makeCombo spells them, and a shape no
+    // keydown produces (a repeated head, a modifier under a head) is skipped,
+    // so the board and the rows never show a live-looking binding that can
+    // never fire. A bare modifier stays legal: Swim Down is Left Ctrl.
+    kb.importBindings({
+      slot5: ['Shift+Ctrl+KeyA', 'Shift+Shift+KeyB'],
+      slot6: ['ShiftLeft', 'Alt+ControlRight'],
+    });
+    expect(kb.codeAt('slot5', 0)).toBe('Ctrl+Shift+KeyA');
+    expect(kb.codeAt('slot5', 1)).toBe(null);
+    expect(kb.codeAt('slot6', 0)).toBe('ShiftLeft');
+    expect(kb.codeAt('slot6', 1)).toBe(null);
+  });
+
+  it('a snapshot re-imported elsewhere reproduces the setup exactly', () => {
+    const a = new Keybinds('char:1');
+    a.bind('slot3', 0, 'KeyF');
+    a.bind('jump', 1, 'KeyY');
+    a.clear('autorun', 0);
+    const b = new Keybinds('char:2');
+    b.importBindings(a.snapshot());
+    expect(b.snapshot()).toEqual(a.snapshot());
+  });
+});
+
 describe('persistence', () => {
   it('round-trips bindings across instances', () => {
     const a = new Keybinds();
@@ -854,22 +937,23 @@ describe('mouse buttons as bindable keys', () => {
   });
 });
 
-// Every bindable action's Key Bindings row must localize. actionDisplayName
-// (src/ui/options_window.ts) resolves a row's label through BIND_ACTION_LABEL_KEYS
-// and falls back to the RAW ENGLISH BindAction.label when the id is absent, so a
-// missing entry ships hard-coded English in all 22 locales and silently orphans the
+// Every bindable action's Key Bindings row must localize. bindActionDisplayName
+// (src/ui/keybind_action_names_core.ts, shared by the options window rows and the
+// on-bar rebind prompts) resolves a label through BIND_ACTION_LABEL_KEYS and falls
+// back to the RAW ENGLISH BindAction.label when the id is absent, so a missing
+// entry ships hard-coded English in all 22 locales and silently orphans the
 // catalog key someone added for it. Nothing else catches that: the i18n gates check
 // that keys EXIST, not that a key is reachable, and every keybind test before this
-// one asserted on codes rather than labels. Scanned from source because the map is
-// module-private in a DOM window module this Node suite cannot import.
+// one asserted on codes rather than labels. Scanned from source so a rename of the
+// map is caught too (tests/keybind_action_names.test.ts checks the export itself).
 describe('every bind action has a localized label key', () => {
-  const optionsWindowSrc = readFileSync(
-    new URL('../src/ui/options_window.ts', import.meta.url),
+  const actionNamesSrc = readFileSync(
+    new URL('../src/ui/keybind_action_names_core.ts', import.meta.url),
     'utf8',
   );
-  const mapBody = optionsWindowSrc.slice(
-    optionsWindowSrc.indexOf('const BIND_ACTION_LABEL_KEYS'),
-    optionsWindowSrc.indexOf('};', optionsWindowSrc.indexOf('const BIND_ACTION_LABEL_KEYS')),
+  const mapBody = actionNamesSrc.slice(
+    actionNamesSrc.indexOf('const BIND_ACTION_LABEL_KEYS'),
+    actionNamesSrc.indexOf('};', actionNamesSrc.indexOf('const BIND_ACTION_LABEL_KEYS')),
   );
 
   it('reads a non-empty map (the scan would pass vacuously on a rename)', () => {
@@ -877,7 +961,7 @@ describe('every bind action has a localized label key', () => {
     expect(mapBody.split('\n').filter((l) => /^\s+\w+:\s+'/.test(l)).length).toBeGreaterThan(30);
   });
 
-  // Action-bar slots resolve through their own numeric branch in actionDisplayName,
+  // Action-bar slots resolve through their own numeric branch in bindActionDisplayName,
   // never the map, so they are the one exempt family.
   const mapped = BIND_ACTIONS.filter((a) => !a.id.startsWith('slot'));
 

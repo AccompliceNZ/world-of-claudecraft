@@ -2232,6 +2232,8 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'entities.items.artisans_eye.name': 'Oko Rzemieślnika',
   'entities.items.reins_terrorspark_groundshaker.name':
     'Kluczyk zapłonu: Groziskra, Wstrząsacz Ziemi',
+  'entities.items.reins_lanternback_troll.name':
+    'Jarzmo latarnika: Grumbol',
   'hud.options.graphicsPresetInsane': 'Ekstremalne',
   'hud.options.surfaceDetail': 'Szczegóły powierzchni',
   'hud.options.surfaceDetailBasic': 'Podstawowe',
@@ -9063,10 +9065,6 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Graj w poziomym trybie pełnoekranowym, aby uzyskać najlepsze wrażenia na urządzeniu mobilnym.',
   'mobilePreflight.rotateTitle': 'Obróć do poziomu',
   'mobilePreflight.title': 'Graj w poziomym trybie pełnoekranowym',
-  'mode.caCopyAria': 'Skopiuj adres kontraktu',
-  'mode.caLabel': 'Adres kontraktu $WOC',
-  'mode.caNote':
-    'WOC to nasz token społecznościowy. Nie jest potrzebny do gry. Dołącz do Discorda, aby porozmawiać o użyteczności WOC i jego napędzie.',
   'mode.offlineAria': 'Graj offline: rozpocznij natychmiastową lokalną sesję jednoosobową',
   'mode.offlineDesc':
     'Natychmiastowy świat jednoosobowy w twojej przeglądarce. Nic nie jest zapisywane: idealny na szybką potyczkę lub testy.',
@@ -12811,7 +12809,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Chroni sojusznika przez 30 s. Pierwszy cios, który zepchnie go poniżej 35% zdrowia, zużywa Straż i leczy go za {buff}. (Sygnatura Błogosławieństwa)',
   'entities.abilities.scouring_mercy.description':
-    'Zadaje od 72 do 84 obrażeń Świętych wrogowi albo leczy sojuszniczy cel za 130 do 155. Obie wartości rosną wraz z mocą zaklęć. Obrażenia leczą także każdego sojusznika związanego Doktryną za 30% albo członka drużyny o najniższym zdrowiu za 15%, jeśli nikt nie jest związany. (Sygnatura Doktryny)',
+    'Zadaje {damage} obrażeń Świętych wrogowi albo leczy sojuszniczy cel o {healing}. Obrażenia rosną wraz z mocą zaklęć, a leczenie z mocą leczenia. Doktryna zamienia te obrażenia w leczenie poprzez twoje więzi. Jeśli żaden związany ranny członek drużyny nie znajduje się w promieniu 30 metrów, leczy rannego członka drużyny o najniższym zdrowiu w promieniu 30 metrów za 15% obrażeń. Wyleczenie członka drużyny leczy też do 2 innych rannych członków drużyny w promieniu 10 metrów od tego celu i w twojej linii wzroku, każdego za 50% przywróconego zdrowia. Te dodatkowe leczenia nie mogą być krytyczne ani tworzyć więzi Doktryny. (Sygnatura Doktryny)',
   'entities.abilities.solar_invocation.description':
     'Natychmiast leczy sojusznika za {damage} albo zadaje umiarkowane obrażenia Święte wrogowi. Oba zastosowania generują 1 Oddanie. Podczas Wzniesienia rzut leczący leczy także sojuszniczych graczy w promieniu 10 m od celu o połowę.',
   'entities.abilities.solar_step.description': 'Zwiększa twoją prędkość ruchu o 150% na 2 s.',
@@ -13500,8 +13498,6 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Odłamki Duszy',
   'hudChrome.warlock.doomEmptyStatus': '{value} z {max} Potępienia.',
   'hudChrome.warlock.doomLabel': 'Potępienie',
-  'hudChrome.warlock.doomMeterLock': 'Zablokuj pasek zasobu Udręki',
-  'hudChrome.warlock.doomMeterUnlock': 'Przesuń pasek zasobu Udręki',
   'hudChrome.warlock.doomStatus': '{value} z {max} Potępienia; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Trzy Nici Przeznaczenia: Pochłonięcie może wpleść je w dodatkowe Potępienie.',
@@ -14256,6 +14252,10 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Trafienia krytyczne Długiego Naciągnięcia wydłużają Zimne Skupienie o 2 sek., maksymalnie o 6 sek. na aktywację.',
   'entities.itemSets.coldsight_trackers.name': 'Tropiciele Zimnego Wzroku',
   'entities.itemSets.crownforged.bonus6': 'Zwiększa szybkość ataku i rzucania zaklęć o 4% oraz trafienie o 3%. Twoje krytyczne trafienia bronią rozłupują cel Kościaną Drzazgą, zadając 5 obrażeń od krwawienia co 2 sek. przez 12 sek. Kumuluje się do 3 razy.',
+  'entities.itemSets.bramblehide.name': 'Cierniowa Skóra Rootsa',
+  'entities.itemSets.bramblehide.bonus2': 'Zwiększa siłę ataku o 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Twoje krytyczne trafienia bronią rozłupują cel Kościaną Drzazgą, zadając 8 obrażeń od krwawienia co 2 s przez 12 s. Kumuluje się do 3 razy.',
+  'entities.itemSets.bramblehide.bonus6': 'Zwiększa szybkość ataku i rzucania zaklęć o 4% oraz trafienie o 3%. Twoje krytyczne trafienia bronią rozłupują cel Kościaną Drzazgą, zadając 5 obrażeń od krwawienia co 2 sek. przez 12 sek. Kumuluje się do 3 razy.',
   'entities.itemSets.dawnforged.bonus2': 'Latarnia Światła kopiuje 55 procent twoich bezpośrednich uzdrowień. Otrzymywane obrażenia nie opóźniają już rzucania zaklęć.',
   'entities.itemSets.dawnforged.bonus4': 'Wzmocniony przez Promienny Rezonans Uścisk Świtu jest natychmiastowy.',
   'entities.itemSets.dawnforged.name': 'Szaty Wykute o Świcie',

@@ -8,14 +8,14 @@
     "license": "World of ClaudeCraft project-generated art, project asset, rights reserved"
   },
   "scope": {
-    "targetRows": 210,
+    "targetRows": 213,
     "rasterPaintings": 194,
     "abilities": 90,
     "items": 101,
     "deeds": 3,
-    "heroicWeaponResolvers": 16,
+    "heroicWeaponResolvers": 19,
     "originalInventoryRows": 197,
-    "supplementalCurrentHeadRows": 12
+    "supplementalCurrentHeadRows": 15
   },
   "contracts": {
     "ability": {
@@ -254,6 +254,17 @@
         "validationStatus": "implemented and focused tests passing"
       },
       {
+        "id": "heroic_courtiers_bonefang",
+        "baseId": "courtiers_bonefang",
+        "variant": "purple_dagger",
+        "bagIconUrl": "/ui/weapons/purple_dagger.jpg",
+        "portraitPath": "public/ui/weapons/purple_dagger.jpg",
+        "heldModelPath": "public/models/weapons/purple_dagger.glb",
+        "canonicalDisplayName": "Courtier's Bonefang",
+        "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Courtier's Bonefang; inherits base visual variant purple_dagger.",
+        "validationStatus": "implemented and focused tests passing"
+      },
+      {
         "id": "heroic_deathless_heartwood",
         "baseId": "deathless_heartwood",
         "variant": "adv_druid_staff",
@@ -306,6 +317,17 @@
         "heldModelPath": "public/models/weapons/spear_a.glb",
         "canonicalDisplayName": "Fanglord's Beastspear",
         "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Fanglord's Beastspear; inherits base visual variant spear_a.",
+        "validationStatus": "implemented and focused tests passing"
+      },
+      {
+        "id": "heroic_gravecourt_hewer",
+        "baseId": "gravecourt_hewer",
+        "variant": "purple_axe",
+        "bagIconUrl": "/ui/weapons/purple_axe.jpg",
+        "portraitPath": "public/ui/weapons/purple_axe.jpg",
+        "heldModelPath": "public/models/weapons/purple_axe.glb",
+        "canonicalDisplayName": "Gravecourt Hewer",
+        "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Gravecourt Hewer; inherits base visual variant purple_axe.",
         "validationStatus": "implemented and focused tests passing"
       },
       {
@@ -372,6 +394,17 @@
         "heldModelPath": "public/models/weapons/staff_d.glb",
         "canonicalDisplayName": "Staff of Velkhar",
         "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Staff of Velkhar; inherits base visual variant staff_d.",
+        "validationStatus": "implemented and focused tests passing"
+      },
+      {
+        "id": "heroic_thornpeak_wardblade",
+        "baseId": "thornpeak_wardblade",
+        "variant": "purple_sword",
+        "bagIconUrl": "/ui/weapons/purple_sword.jpg",
+        "portraitPath": "public/ui/weapons/purple_sword.jpg",
+        "heldModelPath": "public/models/weapons/purple_sword.glb",
+        "canonicalDisplayName": "Thornpeak Wardblade",
+        "canonicalGameplayMeaningOrAcquisition": "Generated Heroic stat upgrade of Thornpeak Wardblade; inherits base visual variant purple_sword.",
         "validationStatus": "implemented and focused tests passing"
       },
       {

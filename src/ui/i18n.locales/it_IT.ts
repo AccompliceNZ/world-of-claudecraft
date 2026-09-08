@@ -2258,6 +2258,8 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'entities.items.artisans_eye.name': 'Occhio dell’Artigiano',
   'entities.items.reins_terrorspark_groundshaker.name':
     'Chiave d’accensione: Terrorscintilla, Scuoteterra',
+  'entities.items.reins_lanternback_troll.name':
+    'Giogo del lampionaio: Grumbol',
   'hudChrome.auraOverlay.allOff': 'Disattiva tutto',
   'hudChrome.auraOverlay.allOn': 'Attiva tutto',
   'hudChrome.auraOverlay.arcs': 'Mezzelune laterali',
@@ -7513,10 +7515,6 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'hud.errors.silenced': 'Sei ridotto al silenzio!',
   'hud.pet.noPetFood': 'Non hai cibo per nutrire la tua mascotte.',
   'hud.pet.petEatsFoodOnly': 'La tua mascotte può mangiare solo cibo.',
-  'mode.caCopyAria': "Copia l'indirizzo del contratto",
-  'mode.caLabel': 'Indirizzo del contratto $WOC',
-  'mode.caNote':
-    "WOC è il token della nostra community. Non serve per giocare. Entra nel Discord per discutere dell'utilità e del flywheel di WOC.",
   'mode.play': 'Gioca',
   'mode.playAria': 'Gioca a World of ClaudeCraft',
   'mode.serverAria': 'Seleziona il mondo: Online o Offline',
@@ -12979,7 +12977,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Protegge un alleato per 30 s. Il primo colpo che lo porta sotto il 35% di salute consuma la Veglia e lo cura per {buff}. (Distintivo di Benedizione)',
   'entities.abilities.scouring_mercy.description':
-    'Infligge da 72 a 84 danni Sacri a un nemico oppure cura un bersaglio alleato da 130 a 155. Entrambi gli importi aumentano con la potenza magica. I danni curano inoltre del 30% ogni alleato legato dalla Dottrina, o del 15% il membro del gruppo con meno salute se nessun alleato è legato. (Distintivo di Dottrina)',
+    'Infligge {damage} danni Sacri a un nemico oppure cura un bersaglio alleato di {healing}. I danni aumentano con la potenza magica; le cure aumentano con il potere di guarigione. La Dottrina converte questi danni in cure attraverso i tuoi legami. Se nessun alleato legato e ferito del gruppo si trova entro 30 metri, cura il membro del gruppo ferito con meno salute entro 30 metri per il 15% del danno. Curare un membro del gruppo cura anche fino a 2 altri membri del gruppo feriti entro 10 metri da quel bersaglio e nella tua linea di vista, ciascuno per il 50% della salute ripristinata. Queste cure aggiuntive non possono essere critiche né creare legami di Dottrina. (Distintivo di Dottrina)',
   'entities.abilities.solar_invocation.description':
     "Cura all'istante un alleato per {damage} oppure infligge danni Sacri moderati a un nemico. Entrambi gli usi generano 1 Devozione. Durante l'Ascensione, un lancio di cura cura anche i giocatori alleati entro 10 m dal bersaglio per metà.",
   'entities.abilities.solar_step.description':
@@ -13634,8 +13632,6 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Frammenti d\'Anima',
   'hudChrome.warlock.doomEmptyStatus': '{value} su {max} Condanna.',
   'hudChrome.warlock.doomLabel': 'Condanna',
-  'hudChrome.warlock.doomMeterLock': 'Blocca la barra della risorsa Afflizione',
-  'hudChrome.warlock.doomMeterUnlock': 'Sposta la barra della risorsa Afflizione',
   'hudChrome.warlock.doomStatus': '{value} su {max} Condanna; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tre Filamenti del Fato: Divorare può intrecciarli in Condanna aggiuntiva.',
@@ -14354,6 +14350,10 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'I colpi critici del Lungo Tiro estendono la Concentrazione Gelida di 2 s, fino a 6 s per attivazione.',
   'entities.itemSets.coldsight_trackers.name': 'Inseguitori della Vista Gelida',
   'entities.itemSets.crownforged.bonus6': 'Aumenta velocità d’attacco e lancio del 4% e Precisione del 3%. I colpi critici dell’arma frantumano il bersaglio con Frantumaossa, causando 5 danni ogni 2 s per 12 s. Si accumula fino a 3 volte.',
+  'entities.itemSets.bramblehide.name': 'Pelle di Rovo di Roots',
+  'entities.itemSets.bramblehide.bonus2': "Aumenta la potenza d'attacco di 40.",
+  'entities.itemSets.bramblehide.bonus4': 'I colpi critici della tua arma scheggiano il bersaglio con Scheggiaossa, facendolo sanguinare per 8 danni ogni 2 sec per 12 sec. Si accumula fino a 3 volte.',
+  'entities.itemSets.bramblehide.bonus6': 'Aumenta velocità d’attacco e lancio del 4% e Precisione del 3%. I colpi critici dell’arma frantumano il bersaglio con Frantumaossa, causando 5 danni ogni 2 s per 12 s. Si accumula fino a 3 volte.',
   'entities.itemSets.dawnforged.bonus2': 'Faro di Luce replica il 55 percento delle tue cure dirette. I danni subiti non ritardano più il lancio degli incantesimi.',
   'entities.itemSets.dawnforged.bonus4': 'L’Abbraccio dell’Alba potenziato dalla Risonanza Radiosa è istantaneo.',
   'entities.itemSets.dawnforged.name': 'Vesti Forgiate dall’Alba',

@@ -536,6 +536,41 @@ function codeLabel(code: string): string {
   return named[code] ?? code;
 }
 
+const MODIFIER_NAMES = new Set(['Ctrl', 'Alt', 'Shift', 'Meta']);
+const CODE_RE = /^[A-Za-z0-9]+$/;
+
+/**
+ * The one shape a stored or imported binding may take, re-spelled the way
+ * makeCombo spells it: each modifier at most once, in canonical order, over a
+ * bare KeyboardEvent.code (or a Mouse<n> pseudo-code). A modifier key may be the
+ * bare code (Swim Down is Left Ctrl by default, polled as a held key) but never
+ * under a modifier head, and no head repeats. Returns null for anything else
+ * (`Shift+Shift+KeyA`, `Alt+ControlRight`, a garbage string), which applyBlob
+ * then skips: such a value could never match a keydown, and one sink (the
+ * keyboard overview) turns a code into a DOM lookup. A hand-edited
+ * `Shift+Ctrl+KeyA` comes back as `Ctrl+Shift+KeyA`.
+ */
+export function canonicalCombo(raw: string): string | null {
+  const parts = raw.split('+');
+  const code = parts.pop() ?? '';
+  if (!CODE_RE.test(code)) return null;
+  if (isModifierCode(code) && parts.length > 0) return null;
+  if (parts.some((m) => !MODIFIER_NAMES.has(m)) || new Set(parts).size !== parts.length)
+    return null;
+  return makeCombo(code, {
+    ctrl: parts.includes('Ctrl'),
+    alt: parts.includes('Alt'),
+    shift: parts.includes('Shift'),
+    meta: parts.includes('Meta'),
+  });
+}
+
+/** The registry's English label for an action id (the fallback name the
+ *  display-name table uses for an action it does not know). */
+export function bindActionLabel(id: string): string | undefined {
+  return ACTION_BY_ID.get(id)?.label;
+}
+
 // Read a stored bindings blob, returning a plain object map or null. A missing,
 // corrupt (unparseable), or non-object value (including a JSON array) counts as
 // "no profile"; the caller then falls back to the legacy seed or to defaults.
@@ -609,11 +644,19 @@ export class Keybinds {
     // below, and leaves every other stored value (including deliberate remaps)
     // untouched. See keybinds_repair.ts.
     repairStoredBindings(obj);
-    // Apply stored codes over the defaults, but only for known actions and
-    // never letting one code land on two actions (first writer keeps it).
-    // Actions absent from the stored blob (e.g. ones added in a later release
-    // than the player's last save) KEEP their defaults rather than loading
-    // unbound — explicit stored bindings still win, so this only fills gaps.
+    this.applyBlob(obj);
+  }
+
+  /**
+   * Apply a bindings blob (stored profile or an imported setup) over the current
+   * defaults. Only known actions are read, and one code never lands on two
+   * actions (first writer keeps it). Actions absent from the blob (e.g. ones
+   * added in a later release than the blob was written by) KEEP their defaults
+   * rather than going unbound; explicit entries still win, so this only fills
+   * gaps. Shared by load() and importBindings() so an imported setup obeys the
+   * exact invariants a stored one does.
+   */
+  private applyBlob(obj: Record<string, unknown>): void {
     const claimed = new Set<string>();
     for (const a of BIND_ACTIONS) {
       const entry = obj[a.id];
@@ -621,8 +664,14 @@ export class Keybinds {
       const slots: (string | null)[] = [null, null];
       const shared = actionAllowsShared(a.id);
       for (let i = 0; i < SLOTS_PER_ACTION; i++) {
-        const v = entry[i];
-        if (typeof v !== 'string' || isReservedCode(v)) continue;
+        const raw = entry[i];
+        const combo = typeof raw === 'string' ? canonicalCombo(raw) : null;
+        if (combo === null) continue;
+        // Held (movement) actions are stored bare, as bind() stores them; a
+        // modifier on one (only a hand-edited import can carry it) is dropped
+        // so the poll and the eviction sweep keep matching.
+        const v = a.kind === 'held' ? comboCode(combo) : combo;
+        if (isReservedCode(v)) continue;
         // Shared actions keep their code even if another action already claimed
         // it, and never claim it themselves, so the overlap survives a round-trip.
         if (!shared && claimed.has(v)) continue;
@@ -646,6 +695,30 @@ export class Keybinds {
         else claimed.add(c);
       }
     }
+  }
+
+  /**
+   * The current bindings as a plain actionId -> [primary, secondary] object, the
+   * same shape save() persists. This is the payload a hotkey-setup export
+   * carries (src/ui/keybind_transfer_core.ts); a copy, so callers cannot mutate
+   * the live map through it.
+   */
+  snapshot(): Record<string, (string | null)[]> {
+    const obj: Record<string, (string | null)[]> = {};
+    for (const [id, codes] of this.map) obj[id] = [...codes];
+    return obj;
+  }
+
+  /**
+   * Replace this profile with an imported hotkey setup: defaults first, then the
+   * blob applied with load()'s validation (unknown actions ignored, reserved
+   * codes skipped, one code per action, missing actions keep their defaults).
+   * Persists immediately, so the setup survives a reload like any rebind.
+   */
+  importBindings(obj: Record<string, unknown>): void {
+    this.map = this.defaults();
+    this.applyBlob(obj);
+    this.save();
   }
 
   private save(): void {

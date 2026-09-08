@@ -5256,11 +5256,17 @@ function dirtyEveryDeltaField(): {
     weaponSkinLoadout: {},
   };
   // Session-scoped stored action-bar layout (`hbl`, self-only): set the frozen
-  // join-time copy so the heavy self block wires it once.
-  leader.initialHotbarLayout = {
-    v: 1,
-    forms: { normal: { bar: [{ type: 'ability', id: 'heroic_strike' }], attack: null } },
+  // join-time wire view (the per-profile document plus the desktop `forms`
+  // mirror), pre-serialized as the session holds it, so the heavy self block
+  // wires it once.
+  const hotbarForms = {
+    normal: { bar: [{ type: 'ability' as const, id: 'heroic_strike' }], attack: null },
   };
+  leader.initialHotbarLayoutJson = JSON.stringify({
+    v: 2,
+    forms: hotbarForms,
+    profiles: { desktop: { v: 1, forms: hotbarForms } },
+  });
 
   // Player Entity fields.
   p.cooldowns.set('heroic_strike', 5);
@@ -5729,13 +5735,20 @@ describe('full self-state snapshot delta fixture', () => {
     expect(client.loadouts).toEqual([{ name: 'PvP', alloc: { spec: 'arms', rows: {} }, bar: [] }]);
     expect(client.activeLoadout).toBe(0);
     // hbl -> the login action-bar restore (self-only, resolved once on the first
-    // self payload). A stored server layout arrives as a 'server' win; like tal
-    // it is asserted directly (no TERSE_TO_IWORLD rename entry).
+    // self payload). A stored server document arrives as a 'server' restore
+    // carrying every profile (the `forms` mirror is for pre-profile bundles and
+    // is not mirrored); like tal it is asserted directly (no TERSE_TO_IWORLD
+    // rename entry).
     expect(client.takeActionBarLayoutRestore()).toEqual({
       source: 'server',
-      layout: {
-        v: 1,
-        forms: { normal: { bar: [{ type: 'ability', id: 'heroic_strike' }], attack: null } },
+      profiles: {
+        v: 2,
+        profiles: {
+          desktop: {
+            v: 1,
+            forms: { normal: { bar: [{ type: 'ability', id: 'heroic_strike' }], attack: null } },
+          },
+        },
       },
     });
   });
@@ -7183,6 +7196,310 @@ describe('Ignivar meteor snapshot parity', () => {
 
     expect(lastSnap(fc.sent).ignivarMeteors).toEqual([
       expect.objectContaining({ id: `${boss.id}:912:0`, r: 2.4, dur: 2.5, rem: 1.4, lead: 0.75 }),
+    ]);
+  });
+});
+
+describe('Nythraxis Grave Eruption snapshot parity', () => {
+  it('rebuilds warning rings and flame patches after reconnect and clears them when absent', () => {
+    const client = bareClient(1);
+    (client as any).applySnapshot({
+      t: 'snap',
+      ents: [],
+      nythraxisEruptions: [{ id: '77:ge:41:0', x: 3, z: 5, r: 3, dur: 2.5, rem: 1.4, lead: 0.75 }],
+      nythraxisFlames: [{ id: '77:gf:3', src: 77, k: 'grave', x: 8, z: 9, r: 3, dur: 12, rem: 7 }],
+      nythraxisGravefires: [
+        {
+          id: '77:gfl:5',
+          src: 77,
+          x: 10,
+          z: 11,
+          dx: 0.6,
+          dz: 0.8,
+          tail: 2,
+          head: 20,
+          hw: 1.5,
+          rem: 4,
+        },
+      ],
+      nythraxisSigils: [{ id: '77:sig:8', src: 77, x: 12, z: 13, r: 4, dur: 15, rem: 11 }],
+    });
+    expect(client.activeNythraxisGraveEruptions).toEqual([
+      {
+        id: '77:ge:41:0',
+        x: 3,
+        z: 5,
+        radius: 3,
+        duration: 2.5,
+        remaining: 1.4,
+        warningLead: 0.75,
+      },
+    ]);
+    expect(client.activeNythraxisGraveFlames).toEqual([
+      {
+        id: '77:gf:3',
+        sourceId: 77,
+        kind: 'grave',
+        x: 8,
+        z: 9,
+        radius: 3,
+        duration: 12,
+        remaining: 7,
+      },
+    ]);
+    expect(client.activeNythraxisGravefires).toEqual([
+      {
+        id: '77:gfl:5',
+        sourceId: 77,
+        x: 10,
+        z: 11,
+        dirX: 0.6,
+        dirZ: 0.8,
+        tail: 2,
+        head: 20,
+        halfWidth: 1.5,
+        remaining: 4,
+      },
+    ]);
+    expect(client.activeNythraxisBindingSigils).toEqual([
+      { id: '77:sig:8', sourceId: 77, x: 12, z: 13, radius: 4, duration: 15, remaining: 11 },
+    ]);
+
+    (client as any).applySnapshot({ t: 'snap', ents: [] });
+    expect(client.activeNythraxisGraveEruptions).toEqual([]);
+    expect(client.activeNythraxisGraveFlames).toEqual([]);
+    expect(client.activeNythraxisGravefires).toEqual([]);
+    expect(client.activeNythraxisBindingSigils).toEqual([]);
+  });
+
+  it('rejects malformed rows and clamps remaining time to duration', () => {
+    const client = bareClient(1);
+    (client as any).applySnapshot({
+      t: 'snap',
+      ents: [],
+      nythraxisEruptions: [
+        null,
+        'primitive-row',
+        { id: 'valid', x: 3, z: 5, r: 3, dur: 2.5, rem: 9, lead: 0 },
+        { id: 'expired', x: 3, z: 5, r: 3, dur: 2.5, rem: 0, lead: 0.75 },
+        { id: 'bad-lead', x: 3, z: 5, r: 3, dur: 2.5, rem: 1, lead: 2.5 },
+        { id: 77, x: 3, z: 5, r: 3, dur: 2.5, rem: 1, lead: 0.75 },
+        { id: 'bad-coordinate', x: Number.NaN, z: 5, r: 3, dur: 2.5, rem: 1, lead: 0.75 },
+        { id: 'bad-radius', x: 3, z: 5, r: 0, dur: 2.5, rem: 1, lead: 0.75 },
+        { id: 'bad-duration', x: 3, z: 5, r: 3, dur: 0, rem: 1, lead: 0.75 },
+      ],
+      nythraxisFlames: [
+        null,
+        { id: 'valid', src: 77, k: 'soul', x: 8, z: 9, r: 4, dur: 15, rem: 30 },
+        { id: 'expired', src: 77, k: 'grave', x: 8, z: 9, r: 3, dur: 12, rem: 0 },
+        { id: 'bad-kind', src: 77, k: 'ember', x: 8, z: 9, r: 3, dur: 12, rem: 7 },
+        { id: 'bad-source', src: '77', k: 'grave', x: 8, z: 9, r: 3, dur: 12, rem: 7 },
+        {
+          id: 'bad-coordinate',
+          src: 77,
+          k: 'grave',
+          x: 8,
+          z: Number.POSITIVE_INFINITY,
+          r: 3,
+          dur: 12,
+          rem: 7,
+        },
+        { id: 'bad-radius', src: 77, k: 'grave', x: 8, z: 9, r: 0, dur: 12, rem: 7 },
+        { id: 'bad-duration', src: 77, k: 'grave', x: 8, z: 9, r: 3, dur: 0, rem: 7 },
+      ],
+      nythraxisGravefires: [
+        {
+          id: 'valid-line',
+          src: 77,
+          x: 10,
+          z: 11,
+          dx: 0,
+          dz: 1,
+          tail: 0,
+          head: 12,
+          hw: 1.5,
+          rem: 20,
+        },
+        {
+          id: 'bad-line',
+          src: 77,
+          x: 10,
+          z: 11,
+          dx: 1,
+          dz: 1,
+          tail: 0,
+          head: 12,
+          hw: 1.5,
+          rem: 20,
+        },
+      ],
+      nythraxisSigils: [
+        { id: 'valid-sigil', src: 77, x: 12, z: 13, r: 4, dur: 15, rem: 30 },
+        { id: 'bad-sigil', src: 77, x: 12, z: 13, r: 0, dur: 15, rem: 10 },
+      ],
+    });
+
+    expect(client.activeNythraxisGraveEruptions).toEqual([
+      { id: 'valid', x: 3, z: 5, radius: 3, duration: 2.5, remaining: 2.5, warningLead: 0 },
+    ]);
+    expect(client.activeNythraxisGraveFlames).toEqual([
+      {
+        id: 'valid',
+        sourceId: 77,
+        kind: 'soul',
+        x: 8,
+        z: 9,
+        radius: 4,
+        duration: 15,
+        remaining: 15,
+      },
+    ]);
+    expect(client.activeNythraxisGravefires).toEqual([
+      {
+        id: 'valid-line',
+        sourceId: 77,
+        x: 10,
+        z: 11,
+        dirX: 0,
+        dirZ: 1,
+        tail: 0,
+        head: 12,
+        halfWidth: 1.5,
+        remaining: 20,
+      },
+    ]);
+    expect(client.activeNythraxisBindingSigils).toEqual([
+      { id: 'valid-sigil', sourceId: 77, x: 12, z: 13, radius: 4, duration: 15, remaining: 15 },
+    ]);
+  });
+
+  it('interest-scopes rings and flames with stable ids and authoritative lifetime', () => {
+    const server = new GameServer();
+    const fc = fakeWs();
+    const session = joinServer(server, fc, 1, 'Gravewire', 'priest');
+    const player = server.sim.entities.get(session.pid)!;
+    const boss = createMob(
+      9903,
+      MOBS.nythraxis_scourge_of_thornpeak,
+      MOBS.nythraxis_scourge_of_thornpeak.maxLevel,
+      { x: player.pos.x + 4, y: player.pos.y, z: player.pos.z },
+    );
+    boss.nythraxis = {
+      eruptionCastKey: 41,
+      eruptionImpactRemaining: 1.4,
+      eruptionPoints: [
+        { x: player.pos.x + 5, z: player.pos.z },
+        { x: player.pos.x + 100, z: player.pos.z },
+      ],
+      graveFlames: [
+        {
+          seq: 3,
+          kind: 'grave',
+          x: player.pos.x - 6,
+          z: player.pos.z,
+          radius: 3,
+          remaining: 7,
+          tickTimer: 0.4,
+        },
+        {
+          seq: 4,
+          kind: 'soul',
+          x: player.pos.x + 100,
+          z: player.pos.z,
+          radius: 4,
+          remaining: 7,
+          tickTimer: 0.4,
+        },
+      ],
+      gravefires: [
+        {
+          seq: 5,
+          x: player.pos.x - 8,
+          z: player.pos.z,
+          dirX: 0.6,
+          dirZ: 0.8,
+          elapsed: 1,
+          tickTimer: 0.4,
+        },
+      ],
+      sigil: {
+        castKey: 8,
+        x: player.pos.x + 9,
+        z: player.pos.z,
+        remaining: 11,
+        ascensionTimer: 1,
+        ascensionStacks: 2,
+      },
+    } as unknown as NonNullable<typeof boss.nythraxis>;
+    server.sim.entities.set(boss.id, boss);
+
+    broadcast(server);
+
+    const snap = lastSnap(fc.sent);
+    expect(snap.nythraxisEruptions).toEqual([
+      expect.objectContaining({ id: `${boss.id}:ge:41:0`, r: 3, dur: 2.5, rem: 1.4, lead: 0.75 }),
+    ]);
+    expect(snap.nythraxisFlames).toEqual([
+      expect.objectContaining({
+        id: `${boss.id}:gf:3`,
+        src: boss.id,
+        k: 'grave',
+        r: 3,
+        dur: 12,
+        rem: 7,
+      }),
+    ]);
+    expect(snap.nythraxisGravefires).toEqual([
+      expect.objectContaining({
+        id: `${boss.id}:gfl:5`,
+        src: boss.id,
+        dx: 0.6,
+        dz: 0.8,
+        tail: 0,
+        head: 12,
+        hw: 1.5,
+        rem: 8.33,
+      }),
+    ]);
+    expect(snap.nythraxisSigils).toEqual([
+      expect.objectContaining({
+        id: `${boss.id}:sig:8`,
+        src: boss.id,
+        r: 4,
+        dur: 15,
+        rem: 11,
+      }),
+    ]);
+    expect(Object.keys(snap.nythraxisFlames[0])).toEqual([
+      'id',
+      'src',
+      'k',
+      'x',
+      'z',
+      'r',
+      'dur',
+      'rem',
+    ]);
+    expect(Object.keys(snap.nythraxisGravefires[0])).toEqual([
+      'id',
+      'src',
+      'x',
+      'z',
+      'dx',
+      'dz',
+      'tail',
+      'head',
+      'hw',
+      'rem',
+    ]);
+    expect(Object.keys(snap.nythraxisSigils[0])).toEqual([
+      'id',
+      'src',
+      'x',
+      'z',
+      'r',
+      'dur',
+      'rem',
     ]);
   });
 });

@@ -2259,6 +2259,8 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'entities.items.artisans_eye.name': 'Auge des Handwerkers',
   'entities.items.reins_terrorspark_groundshaker.name':
     'Zündschlüssel: Schreckfunke, der Bodenerschütterer',
+  'entities.items.reins_lanternback_troll.name':
+    'Joch des Laternenanzünders: Grumbol',
   'hudChrome.auraOverlay.allOff': 'Alle aus',
   'hudChrome.auraOverlay.allOn': 'Alle an',
   'hudChrome.auraOverlay.arcs': 'Seitliche Halbmonde',
@@ -7547,10 +7549,6 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hud.errors.silenced': 'Ihr seid stummgeschaltet!',
   'hud.pet.noPetFood': 'Du hast keine Nahrung, um deinen Begleiter zu füttern.',
   'hud.pet.petEatsFoodOnly': 'Dein Begleiter frisst nur Nahrung.',
-  'mode.caCopyAria': 'Vertragsadresse kopieren',
-  'mode.caLabel': '$WOC-Vertragsadresse',
-  'mode.caNote':
-    'WOC ist unser Community-Token. Es wird zum Spielen nicht benötigt. Tritt dem Discord bei, um über den Nutzen und das Schwungrad von WOC zu sprechen.',
   'mode.play': 'Spielen',
   'mode.playAria': 'World of ClaudeCraft spielen',
   'mode.serverAria': 'Welt wählen: Online oder Offline',
@@ -11768,7 +11766,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Schützt einen Verbündeten 30 Sek. lang. Der erste Treffer, der ihn unter 35% Gesundheit bringt, verbraucht die Wacht und heilt ihn um {buff}. (Segensspruch-Signatur)',
   'entities.abilities.scouring_mercy.description':
-    'Verursacht 72 bis 84 Heiligschaden an einem Gegner oder heilt ein freundliches Ziel um 130 bis 155. Beide Werte steigen mit der Zaubermacht. Der Schaden heilt außerdem jeden über die Doktrin verbundenen Verbündeten um 30% oder, wenn kein Verbündeter verbunden ist, das Gruppenmitglied mit der geringsten Gesundheit um 15%. (Doktrin-Signatur)',
+    'Verursacht {damage} Heiligschaden an einem Gegner oder heilt ein freundliches Ziel um {healing}. Der Schaden steigt mit der Zaubermacht, die Heilung mit der Heilkraft. Die Doktrin wandelt diesen Schaden über deine Verbindungen in Heilung um. Befindet sich kein verbundenes verwundetes Gruppenmitglied innerhalb von 30 Metern, wird das verwundete Gruppenmitglied mit der geringsten Gesundheit innerhalb von 30 Metern um 15% des Schadens geheilt. Das Heilen eines Gruppenmitglieds heilt außerdem bis zu 2 weitere verwundete Gruppenmitglieder innerhalb von 10 Metern dieses Ziels und in deiner Sichtlinie, jeweils um 50% der wiederhergestellten Gesundheit. Diese zusätzlichen Heilungen können weder kritisch treffen noch Doktrin-Verbindungen erschaffen. (Doktrin-Signatur)',
   'entities.abilities.solar_invocation.description':
     'Heilt einen Verbündeten sofort um {damage} oder verursacht mäßigen Heiligschaden an einem Gegner. Beide Anwendungen erzeugen 1 Hingabe. Während des Aufstiegs heilt ein Heilzauber zusätzlich verbündete Spieler innerhalb von 10 m um die Hälfte.',
   'entities.abilities.solar_step.description': 'Erhöht Euer Tempo 2 Sek. lang um 150%.',
@@ -13746,8 +13744,6 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Seelenfragmente',
   'hudChrome.warlock.doomEmptyStatus': '{value} von {max} Verdammnis.',
   'hudChrome.warlock.doomLabel': 'Verdammnis',
-  'hudChrome.warlock.doomMeterLock': 'Verdammnis-Leiste sperren',
-  'hudChrome.warlock.doomMeterUnlock': 'Verdammnis-Leiste verschieben',
   'hudChrome.warlock.doomStatus': '{value} von {max} Verdammnis; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Drei Schicksalsfäden: Verzehren kann sie zu zusätzlicher Verdammnis verweben.',
@@ -14356,6 +14352,10 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Kritische Treffer von Langer Zug verlängern Kalte Konzentration um 2 Sek., bis zu 6 Sek. pro Aktivierung.',
   'entities.itemSets.coldsight_trackers.name': 'Späher der Kältesicht',
   'entities.itemSets.crownforged.bonus6': 'Erhöht Angriffs- und Zaubertempo um 4 % und Trefferchance um 3 %. Kritische Waffentreffer zersplittern das Ziel mit Knochenspalter und lassen es 12 Sek. lang alle 2 Sek. 5 Schaden erleiden. Bis zu 3-mal stapelbar.',
+  'entities.itemSets.bramblehide.name': "Roots' Dornenhaut",
+  'entities.itemSets.bramblehide.bonus2': 'Erhöht Angriffskraft um 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Eure kritischen Waffentreffer zersplittern das Ziel mit Knochensplitter und lassen es 12 Sek. lang alle 2 Sek. 8 Schaden bluten. Stapelt sich bis zu 3-mal.',
+  'entities.itemSets.bramblehide.bonus6': 'Erhöht Angriffs- und Zaubertempo um 4 % und Trefferchance um 3 %. Kritische Waffentreffer zersplittern das Ziel mit Knochenspalter und lassen es 12 Sek. lang alle 2 Sek. 5 Schaden erleiden. Bis zu 3-mal stapelbar.',
   'entities.itemSets.dawnforged.bonus2': 'Leuchtfeuer des Lichts kopiert 55 Prozent deiner direkten Heilungen. Erlittener Schaden verzögert dein Zauberwirken nicht mehr.',
   'entities.itemSets.dawnforged.bonus4': 'Die verstärkte Umarmung der Morgenröte durch Strahlende Resonanz ist sofortig.',
   'entities.itemSets.dawnforged.name': 'Gewänder der Morgenschmiede',

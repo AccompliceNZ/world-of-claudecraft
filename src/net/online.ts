@@ -13,24 +13,25 @@ import {
 import { bagCapacity } from '../sim/bags';
 import { signChallenge } from '../sim/client_challenge';
 import { allocRiftCollisionToken, clearRiftRegion, setRiftRegion } from '../sim/colliders';
+import { applyAbilityCostTail, resolveAbilityChain } from '../sim/combat/ability_resolution';
 import { heroicLeapPlacementPreview } from '../sim/combat/heroic_leap';
 import { MOUNT_RACE_COURSE, type MountKey, normalizeMountKey } from '../sim/content/mounts';
 import { mechChromaSkinIndex } from '../sim/content/skins';
 import {
   emptyAllocation,
+  emptyModifiers,
   type Role,
-  repairAllocation,
   rowsPicked,
   rowsUnlockedAtLevel,
   type SavedLoadout,
   type TalentAllocation,
+  type TalentModifiers,
   type TalentRowLevel,
 } from '../sim/content/talents';
 import { resolveActiveWeaponSkin, withWeaponSkinApplied } from '../sim/content/weapon_skin_rules';
 import { WEAPON_SKINS } from '../sim/content/weapon_skins';
 import {
   ALL_RECIPES,
-  abilitiesKnownAt,
   CLASSES,
   dungeonAt,
   getActiveWorldContent,
@@ -62,10 +63,7 @@ import {
   type SavedReliquaryState,
 } from '../sim/reliquary';
 import { riftFloorColliders } from '../sim/rift/rift_gen';
-import { computeCharacterModifiers } from '../sim/set_bonus_mods';
 import type { ResolvedAbility } from '../sim/sim';
-import { parseTalentAllocation } from '../sim/talent_allocation_input';
-import { repairTalentLoadouts } from '../sim/talent_loadouts';
 import {
   type Aura,
   cloneItemInstancePayload,
@@ -98,6 +96,10 @@ import {
   type ActiveConsecration,
   type ActiveFrostRing,
   type ActiveIgnivarMeteorWarning,
+  type ActiveNythraxisBindingSigil,
+  type ActiveNythraxisGraveEruption,
+  type ActiveNythraxisGraveFlame,
+  type ActiveNythraxisGravefire,
   type ActiveTemporalHourglass,
   type ActiveVarkhulAnvilMeteorWarning,
   type ActiveVarkhulAssembly,
@@ -124,11 +126,10 @@ import {
   type DelveRunInfo,
   type DelveShopOfferView,
   type DevLeaderboardPage,
-  DUNGEON_ENTRY_FACING_WIRE_VERSION,
   type DuelInfo,
   type FriendInfo,
   type GuildBankInfo,
-  type GuildBankLogEntry,
+  type GuildBankLogKind,
   type GuildBankLogView,
   type GuildLeaderboardPage,
   type GuildRosterInfo,
@@ -160,8 +161,9 @@ import {
 } from '../world_api';
 import {
   type ActionBarLayout,
+  type ActionBarLayoutProfile,
   type ActionBarLayoutRestore,
-  sanitizeActionBarLayout,
+  sanitizeActionBarLayoutProfiles,
 } from '../world_api/action_bar';
 import type { GroundAimPointXZ } from '../world_api/combat';
 import type {
@@ -172,7 +174,9 @@ import type {
   MasterworkView,
   SalvageResultView,
 } from '../world_api/professions';
+import { buildClientAbilityPresentation } from './ability_presentation';
 import { normalizeAccountCosmetics } from './account_cosmetics_wire';
+import { ActionBarLayoutUploader } from './action_bar_upload';
 import { apiErrorFromBody } from './api_error';
 import { computeBackoffDelay } from './backoff';
 import { applyBankSelfWire } from './bank_snapshot_wire';
@@ -187,17 +191,12 @@ import {
   parseDesktopWalletHandoffStatus,
 } from './desktop_wallet_handoff';
 import { dungeonEntrySnapshotFacing } from './dungeon_entry_facing';
-import {
-  decodeConsecrations,
-  decodeFrostRings,
-  decodeIgnivarMeteors,
-  decodeTemporalHourglasses,
-  decodeVarkhulForgestormWarnings,
-} from './ground_telegraph_wire';
-import { decodeGuildBankLogFrame, GUILD_BANK_LOG_TTL_MS } from './guild_bank_log_wire';
+import { applyGroundTelegraphSnapshot } from './ground_telegraph_wire';
+import { GuildBankLogMirror } from './guild_bank_log_mirror';
 import { foldInputAck } from './input_ack';
 import { INPUT_SEND_TIMER_INTERVAL_MS, inputFlushGateOpen } from './input_send_cadence';
 import { inputSignature } from './input_signature';
+import { copyPos, wrapAngle } from './interp_math';
 import {
   type MovementFrameV2,
   MovementFrameV2Outbox,
@@ -218,11 +217,6 @@ import {
   stableCooldownRemaining,
   stableDeadlineRemaining,
 } from './snapshot_timer_wire';
-import { decodeVarkhulAnvilMeteors, decodeVarkhulAssemblies } from './varkhul_assembly_wire';
-import {
-  decodeVarkhulCinderFires,
-  decodeVarkhulCinderOrbProjectiles,
-} from './varkhul_cinder_orb_wire';
 import { vaultWithdrawPayload } from './vault_snapshot_wire';
 import { buildWebSocketAuthMessage } from './world_auth_message';
 
@@ -1192,21 +1186,6 @@ export class Api {
 // World mirror
 // ---------------------------------------------------------------------------
 
-function wrapAngle(d: number): number {
-  while (d > Math.PI) d -= 2 * Math.PI;
-  while (d < -Math.PI) d += 2 * Math.PI;
-  return d;
-}
-
-function copyPos(
-  dst: { x: number; y: number; z: number },
-  src: { x: number; y: number; z: number },
-): void {
-  dst.x = src.x;
-  dst.y = src.y;
-  dst.z = src.z;
-}
-
 // A single position update never moves an entity more than a few yards by
 // walking; anything past this is a teleport (arena pit, dungeon portal,
 // graveyard release). Those are snapped, not interpolated — see applyWire.
@@ -1222,10 +1201,6 @@ const TELEPORT_SNAP_DIST_SQ = 40 * 40;
 // entity map; hold it at its last pose for this window instead. Kept short so a
 // genuine leaver (logout, corpse cleanup) lingers only momentarily.
 const DESPAWN_GRACE_MS = 600;
-
-// Debounce for the action-bar layout upload: coalesce a burst of drag/drop edits
-// into one wire save rather than a send per slot change (server persists it).
-const ACTION_BAR_SAVE_DEBOUNCE_MS = 1500;
 
 // Auto-reconnect backoff for an unexpectedly dropped game socket. The server
 // holds the character in-world (linkdead) for five minutes; the retry window
@@ -1504,6 +1479,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
   spectating: string | null = null;
   moveInput: MoveInput = emptyMoveInput();
   known: ResolvedAbility[] = [];
+  private talentMods: TalentModifiers = emptyModifiers();
   realm = '';
   // Whether this session's account holds a staff/admin role, from the hello
   // frame. Advert only: every admin-gated command is re-checked server-side.
@@ -1627,17 +1603,14 @@ export class ClientWorld extends ReconWireState implements IWorld {
   // sees it and `canEdit` marks officer-plus), so it only rides the wire for
   // a guild member actually standing at a bursar. ---
   guildBankInfo: GuildBankInfo | null = null;
-  // The guild bank ACTIVITY LOG mirror. Deliberately NOT a snapshot key: it is
-  // cold, identical for every member of the guild, and 50 rows wide, so it
-  // rides its own on-demand request/response pair (`guild_bank_log` ->
-  // `gbanklog`) that the guildBankLog() read below issues while the log view is
-  // open. `guildBankLogAt` is the SEND time of the last request and is the ONE
-  // gate on re-requesting: it makes a per-frame repaint idempotent, ages a
-  // response that never arrived back into a retry (so a dropped frame cannot
-  // wedge the pane on 'loading'), and bounds this client to one request per TTL.
-  private guildBankLogEntries: readonly GuildBankLogEntry[] = [];
-  private guildBankLogState: 'idle' | 'ready' | 'refused' = 'idle';
-  private guildBankLogAt = 0;
+  // The guild bank TRANSACTION HISTORY mirror (guild_bank_log_mirror.ts).
+  // Deliberately NOT a snapshot key: it is cold, identical for every member of
+  // the guild, and pages wide, so it rides its own on-demand request/response
+  // pair (`guild_bank_log` -> `gbanklog`) that the guildBankLog() read below
+  // issues while the history view is open. The mirror owns the pages, the
+  // per-TTL request gate, and the merge rules; this class only puts the
+  // requests it hands back on the wire.
+  private guildBankLogMirror = new GuildBankLogMirror();
   // --- IWorldDeeds: the Book of Deeds self mirror, from the snapshot self
   // (`s.deeds`/`s.dstats` heavy-gated, `s.renown`/`s.atitle`/`s.aborder`
   // per-tick diffed).
@@ -1926,6 +1899,10 @@ export class ClientWorld extends ReconWireState implements IWorld {
   private eventQueue: SimEvent[] = [];
   activeFrostRings: ActiveFrostRing[] = [];
   activeIgnivarMeteors: ActiveIgnivarMeteorWarning[] = [];
+  activeNythraxisGraveEruptions: ActiveNythraxisGraveEruption[] = [];
+  activeNythraxisGraveFlames: ActiveNythraxisGraveFlame[] = [];
+  activeNythraxisGravefires: ActiveNythraxisGravefire[] = [];
+  activeNythraxisBindingSigils: ActiveNythraxisBindingSigil[] = [];
   activeVarkhulForgestormWarnings: ActiveVarkhulForgestormWarning[] = [];
   activeVarkhulCinderFires: ActiveVarkhulCinderFire[] = [];
   activeVarkhulCinderOrbProjectiles: ActiveVarkhulCinderOrbProjectile[] = [];
@@ -1939,14 +1916,12 @@ export class ClientWorld extends ReconWireState implements IWorld {
   private invChanged = false;
   private cosmeticsChanged = false;
   // IWorldActionBar: the login-time reconciliation, resolved once from the first
-  // self-payload (undefined until then, and again once consumed); the debounced
-  // upload state coalesces rapid layout edits into one wire save and skips a
-  // send whose serialized layout matches the last one sent.
+  // self-payload (undefined until then, and again once consumed); the uploader
+  // (src/net/action_bar_upload.ts) coalesces rapid layout edits into one wire
+  // save and skips a send whose serialized layout matches the last one sent.
   private actionBarRestore: ActionBarLayoutRestore | undefined = undefined;
   private actionBarRestoreResolved = false;
-  private actionBarSaveTimer: ReturnType<typeof setTimeout> | null = null;
-  private actionBarSaveLastJson: string | null = null;
-  private actionBarSavePending: ActionBarLayout | null = null;
+  private readonly actionBarUploader = new ActionBarLayoutUploader((command) => this.cmd(command));
   // Soft (cosmetic) profanity terms the server sends in `hello` and pushes via
   // `censor` frames when an admin edits the list. The HUD drains these to mask
   // chat locally when the player's filter is on. Hard words never arrive here.
@@ -2229,6 +2204,20 @@ export class ClientWorld extends ReconWireState implements IWorld {
 
   get player(): Entity {
     return this.entities.get(this.playerId) ?? blankEntity(-1);
+  }
+
+  // The local player's own known ability, presentation transforms and the
+  // full cost tail folded in (server remains the sole spend authority).
+  resolvedAbility(abilityId: string): ResolvedAbility | null {
+    const known = this.known.find((k) => k.def.id === abilityId) ?? null;
+    if (!known) return null;
+    const found = resolveAbilityChain(
+      known,
+      this.player,
+      { cls: this.cfg.playerClass, talents: this.talents },
+      this.talentMods,
+    );
+    return applyAbilityCostTail(found, abilityId, this.player, this.known, this.talentMods);
   }
 
   drainEvents(): SimEvent[] {
@@ -2620,15 +2609,9 @@ export class ClientWorld extends ReconWireState implements IWorld {
       return;
     }
     if (msg.t === 'gbanklog') {
-      // The one-shot answer to a `guild_bank_log` request. A refusal keeps the
-      // pane honest ("you are not allowed to read this") instead of showing an
-      // empty history; a success installs the decoded rows wholesale, because
-      // the server always answers the full most-recent window and never a delta.
-      const frame = decodeGuildBankLogFrame(msg);
-      if (frame) {
-        this.guildBankLogState = frame.refused ? 'refused' : 'ready';
-        this.guildBankLogEntries = frame.entries;
-      }
+      // The one-shot answer to a `guild_bank_log` request. The mirror matches
+      // it against the query it is waiting on and merges or drops it.
+      this.guildBankLogMirror.receive(msg);
       return;
     }
     if (msg.t === 'censor') {
@@ -2928,17 +2911,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
     if (typeof snap.tickHz === 'number' && Number.isFinite(snap.tickHz) && snap.tickHz > 0) {
       this.serverTickHz = snap.tickHz;
     }
-    this.activeFrostRings = decodeFrostRings(snap.rings);
-    this.activeIgnivarMeteors = decodeIgnivarMeteors(snap.ignivarMeteors);
-    this.activeVarkhulForgestormWarnings = decodeVarkhulForgestormWarnings(snap.varkhulForgestorm);
-    this.activeVarkhulCinderFires = decodeVarkhulCinderFires(snap.varkhulCinderFires);
-    this.activeVarkhulCinderOrbProjectiles = decodeVarkhulCinderOrbProjectiles(
-      snap.varkhulCinderOrbs,
-    );
-    this.activeVarkhulAnvilMeteors = decodeVarkhulAnvilMeteors(snap.varkhulAnvilMeteors);
-    this.activeVarkhulAssemblies = decodeVarkhulAssemblies(snap.varkhulAssemblies);
-    this.activeTemporalHourglasses = decodeTemporalHourglasses(snap.hourglasses);
-    this.activeConsecrations = decodeConsecrations(snap.consecrations);
+    applyGroundTelegraphSnapshot(this, snap);
 
     // lazy init (not the field initializer alone): tests build bare instances
     // via Object.create(ClientWorld.prototype), which skips field initializers
@@ -3631,36 +3604,21 @@ export class ClientWorld extends ReconWireState implements IWorld {
       }
       if (s.ddiff === 'normal' || s.ddiff === 'heroic') this.selectedDungeonDifficulty = s.ddiff;
       if (s.qlog !== undefined || s.qdone !== undefined) this.pendingQuestCommands?.clear();
-      // IWorldTalents facet (W7) self-decode: tal is delta-guarded (omitted keeps
-      // the prior mirror); the known rebuild below is display-only (re-renders what
-      // the server already decided), not client authority.
-      // talent state (heavy field, sent on change): mirror it, then resolve known
-      // with the precomputed modifiers so granted abilities + tweaks show locally.
-      if (s.tal !== undefined && s.tal) {
-        const parsed = parseTalentAllocation(s.tal.alloc);
-        if (parsed) {
-          this.talents = repairAllocation(this.cfg.playerClass, parsed, e.level);
-          const repairedLoadouts = repairTalentLoadouts(
-            this.cfg.playerClass,
-            e.level,
-            s.tal.loadouts,
-            s.tal.activeLoadout,
-          );
-          this.loadouts = repairedLoadouts.loadouts;
-          this.activeLoadout = repairedLoadouts.activeLoadout;
-        }
-      }
-      if (!this.talents) this.talents = emptyAllocation();
-      const talents = this.talents;
-      const talentMods = computeCharacterModifiers(
+      const arena = s.arena !== undefined ? s.arena : this.arenaInfo;
+      const presentation = buildClientAbilityPresentation(
         this.cfg.playerClass,
-        talents,
         e.level,
-        this.equipment,
+        this,
+        s.tal,
+        arena?.match?.fiesta?.augments ?? [],
       );
-      this.talentSpec = talentMods.spec;
-      this.talentRole = talentMods.role;
-      this.known = abilitiesKnownAt(this.cfg.playerClass, e.level, talentMods, this.questsDone);
+      this.talents = presentation.talents;
+      this.loadouts = presentation.loadouts;
+      this.activeLoadout = presentation.activeLoadout;
+      this.talentMods = presentation.mods;
+      this.talentSpec = presentation.mods.spec;
+      this.talentRole = presentation.mods.role;
+      this.known = presentation.known;
       // --- IWorldParty: party roster + raid markers, delta-omitted self-decode
       // (keep the prior value when absent; `marks: null` clears on disband). ---
       if (s.party !== undefined) this.partyInfo = s.party;
@@ -3705,7 +3663,7 @@ export class ClientWorld extends ReconWireState implements IWorld {
         // the transition makes it self-correct in one frame.
         const hadGate = this.guildBankInfo !== null;
         this.guildBankInfo = s.guildBank;
-        if (hadGate !== (this.guildBankInfo !== null)) this.resetGuildBankLog();
+        if (hadGate !== (this.guildBankInfo !== null)) this.guildBankLogMirror.reset();
       }
       // --- IWorldDeeds self-decode: `deeds`/`dstats` are heavy-gated,
       // `renown`/`atitle`/`aborder` per-tick diffed (all five delta-omitted: a
@@ -3816,15 +3774,15 @@ export class ClientWorld extends ReconWireState implements IWorld {
       // IWorldActionBar: resolve the login-time layout reconciliation exactly
       // once, on the first self-payload this ClientWorld processes. A fresh join
       // always carries the heavy self block, so `hbl` is present: the stored
-      // server layout (server WINS) or an explicit null (the server has no copy,
-      // so seed from local). `hbl` absent on the first payload (a resumed
-      // session's re-sync, where it was already sent once) leaves the local
-      // mirror authoritative ('noop').
+      // per-profile document (this device's profile WINS; another profile seeds
+      // it) or an explicit null (the server has no copy, so seed from local).
+      // `hbl` absent on the first payload (a resumed session's re-sync, where it
+      // was already sent once) leaves the local mirror authoritative ('noop').
       if (!this.actionBarRestoreResolved) {
         this.actionBarRestoreResolved = true;
         if (s.hbl !== undefined) {
-          const clean = s.hbl === null ? null : sanitizeActionBarLayout(s.hbl);
-          this.actionBarRestore = clean ? { source: 'server', layout: clean } : { source: 'seed' };
+          const doc = s.hbl === null ? null : sanitizeActionBarLayoutProfiles(s.hbl);
+          this.actionBarRestore = doc ? { source: 'server', profiles: doc } : { source: 'seed' };
         } else {
           this.actionBarRestore = { source: 'noop' };
         }
@@ -4196,17 +4154,19 @@ export class ClientWorld extends ReconWireState implements IWorld {
   unequipItem(slot: EquipSlot): void {
     this.cmd({ cmd: 'unequip_item', slot });
   }
-  upgradeRiftItem(itemId: string, target?: { slotIndex: number }): void {
-    if (target === undefined) this.cmd({ cmd: 'rift_upgrade_item', item: itemId });
-    else this.cmd({ cmd: 'rift_upgrade_item', item: itemId, slot: target.slotIndex });
+  // The forge pair awaits the commandOutcome ack (the forge window renders a
+  // false ack as a visible refusal). Literal tokens on purpose: the command
+  // schema and copy-addressing guards scan these sends by their string.
+  upgradeRiftItem(itemId: string, target?: { slotIndex: number }): Promise<boolean> {
+    return this.cmdWithOutcome({ cmd: 'rift_upgrade_item', item: itemId, slot: target?.slotIndex });
   }
-  enchantRiftItem(itemId: string, stat: string, target?: { slotIndex: number }): void {
-    if (target === undefined) this.cmd({ cmd: 'rift_enchant_item', item: itemId, stat });
-    else this.cmd({ cmd: 'rift_enchant_item', item: itemId, stat, slot: target.slotIndex });
-  }
-  socketRiftGem(itemId: string, gemId: string, target?: { slotIndex: number }): void {
-    if (target === undefined) this.cmd({ cmd: 'rift_socket_gem', item: itemId, gem: gemId });
-    else this.cmd({ cmd: 'rift_socket_gem', item: itemId, gem: gemId, slot: target.slotIndex });
+  socketRiftGem(itemId: string, gemId: string, target?: { slotIndex: number }): Promise<boolean> {
+    return this.cmdWithOutcome({
+      cmd: 'rift_socket_gem',
+      item: itemId,
+      gem: gemId,
+      slot: target?.slotIndex,
+    });
   }
   // IWorldInventory: server-stamped untilMs vs Date.now(), riftEventMsRemaining's clock.
   partyTradeMsRemaining(untilMs: number): number {
@@ -4629,40 +4589,19 @@ export class ClientWorld extends ReconWireState implements IWorld {
     }
     this.cmd({ cmd: 'change_weapon_skin', skin: skinId, wtype: type ?? null });
   }
-  saveActionBarLayout(layout: ActionBarLayout): void {
-    // Debounced, deduped upload of the whole layout. The controller has already
-    // written the localStorage mirror; this pushes the server copy so it
-    // restores on other devices. Rapid drags coalesce to the last layout, and an
-    // upload whose serialized form matches the last send is skipped, so a
-    // re-save during login (or an unchanged bar) never amplifies wire/db writes.
-    const clean = sanitizeActionBarLayout(layout);
-    if (!clean) return;
-    const json = JSON.stringify(clean);
-    if (json === this.actionBarSaveLastJson) return;
-    this.actionBarSaveLastJson = json;
-    this.actionBarSavePending = clean;
-    if (this.actionBarSaveTimer !== null) clearTimeout(this.actionBarSaveTimer);
-    this.actionBarSaveTimer = setTimeout(
-      () => this.flushActionBarLayoutSave(),
-      ACTION_BAR_SAVE_DEBOUNCE_MS,
-    );
+  saveActionBarLayout(profile: ActionBarLayoutProfile, layout: ActionBarLayout): void {
+    // Debounced, deduped upload of one profile's whole layout (the uploader owns
+    // the coalescing rule); the controller has already written the local mirror.
+    this.actionBarUploader.save(profile, layout);
   }
 
-  // Send any debounced-but-not-yet-sent layout NOW. Called on the debounce timer
-  // and, critically, when the session ends or the page backgrounds (endSession +
-  // the visibilitychange 'hidden' branch), so the final sub-debounce edit reaches
-  // the server before the socket goes away instead of being stranded (the local
-  // mirror would still be right on the same device, but a second device would
-  // miss it). No-op unless a save is pending.
+  // Send any debounced-but-not-yet-sent layout NOW. Called when the session ends
+  // or the page backgrounds (endSession + the visibilitychange 'hidden' branch),
+  // so the final sub-debounce edit reaches the server before the socket goes
+  // away instead of being stranded (the local mirror would still be right on
+  // the same device, but a second device would miss it).
   private flushActionBarLayoutSave(): void {
-    if (this.actionBarSaveTimer !== null) {
-      clearTimeout(this.actionBarSaveTimer);
-      this.actionBarSaveTimer = null;
-    }
-    const pending = this.actionBarSavePending;
-    if (pending === null) return;
-    this.actionBarSavePending = null;
-    this.cmd({ cmd: 'save_hotbar_layout', layout: pending });
+    this.actionBarUploader.flush();
   }
   takeActionBarLayoutRestore(): ActionBarLayoutRestore | undefined {
     const restore = this.actionBarRestore;
@@ -4966,6 +4905,9 @@ export class ClientWorld extends ReconWireState implements IWorld {
   guildSetMotd(text: string): void {
     this.cmd({ cmd: 'guild_set_motd', text });
   }
+  guildBuyRosterPage(): void {
+    this.cmd({ cmd: 'guild_buy_roster_page' });
+  }
   async searchCharacters(query: string): Promise<CharacterSearchResult[]> {
     const q = query.trim();
     if (!q) return [];
@@ -5221,25 +5163,17 @@ export class ClientWorld extends ReconWireState implements IWorld {
    *  never had an answer shows the loading state, and a REFUSAL keeps saying so
    *  until a fresh answer replaces it, never silently degrading to an empty
    *  log (which would read as "no officer has ever done anything"). */
-  guildBankLog(): GuildBankLogView {
-    const now = Date.now();
-    if (now - this.guildBankLogAt >= GUILD_BANK_LOG_TTL_MS) {
-      this.guildBankLogAt = now;
-      this.cmd({ cmd: 'guild_bank_log' });
-    }
-    return {
-      state: this.guildBankLogState === 'idle' ? 'loading' : this.guildBankLogState,
-      entries: this.guildBankLogEntries,
-    };
+  guildBankLog(kind: GuildBankLogKind = 'all'): GuildBankLogView {
+    const { view, request } = this.guildBankLogMirror.read(kind, Date.now());
+    if (request !== null) this.cmd(request);
+    return view;
   }
-  /** Drop the installed log and re-arm the request gate. Called when the guild
-   *  bank mirror goes null (walked away, demoted, left or switched guild): the
-   *  rows belong to a guild and a rank this client may no longer have, so they
-   *  must never survive into the next pane that opens. */
-  private resetGuildBankLog(): void {
-    this.guildBankLogEntries = [];
-    this.guildBankLogState = 'idle';
-    this.guildBankLogAt = 0;
+  /** One older page of the slice last read; the mirror says whether there is
+   *  anything to ask for (nothing loaded, nothing older, or already in flight
+   *  all answer null and nothing is sent). */
+  guildBankLogOlder(): void {
+    const request = this.guildBankLogMirror.requestOlder(Date.now());
+    if (request !== null) this.cmd(request);
   }
   // --- IWorldDeeds: title selection. No optimistic local write (the bank
   // precedent): the mirror updates from the `atitle` snapshot echo once the

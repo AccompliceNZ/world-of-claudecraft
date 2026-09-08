@@ -35,6 +35,7 @@ import { grantDevotionFromBlock } from '../paladin_devotion';
 import { scheduleProjectile } from '../projectile_travel';
 import type { PlayerMeta } from '../sim';
 import type { SimContext } from '../sim_context';
+import { disciplineWandOffenseMultiplier } from '../spec_output_tuning';
 import { resolveTalentHitMult } from '../talent_hit_mult';
 import { addThreat, hasEscapeStealth } from '../threat';
 import { creditAbilityDrill } from '../tutorial/ability_drill';
@@ -434,6 +435,10 @@ export function rangedSwing(
     let dmg =
       (ranged.wand ? weaponRoll : weaponRoll * RANGED_WEAPON_COEFF) +
       (atk.rangedPower / 14) * ranged.speed;
+    const owner = ranged.wand ? ctx.players.get(atk.id) : undefined;
+    if (owner?.cls === 'priest' && ctx.playerMods(owner).spec === 'discipline') {
+      dmg *= disciplineWandOffenseMultiplier();
+    }
     // ranged white hits suffer the same higher-level crit suppression as melee
     const critChance = Math.max(0.005, atk.critChance - Math.max(0, tgt.level - atk.level) * 0.002);
     const crit = ctx.rng.chance(consumeNextAttackCrit(ctx, atk) ? 1 : critChance);

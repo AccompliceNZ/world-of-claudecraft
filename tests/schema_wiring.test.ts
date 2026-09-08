@@ -623,6 +623,16 @@ describe('ensureSchema wires every schema module at boot', () => {
     expect(applied).toContain('CREATE TABLE IF NOT EXISTS ad_spend');
   });
 
+  it('applies the Realm Builder honours schema', async () => {
+    // REALM_BUILDER_SCHEMA (server/realm_builder_db.ts) backs the Eastbrook
+    // monument's honour roll. tests/server/realm_builder.test.ts fakes the
+    // whole db seam, so without this pin deleting the ensureSchema line in
+    // server/db.ts would fail nowhere until the first dashboard save.
+    await ensureSchema();
+    const applied = h.calls.join('\n');
+    expect(applied).toContain('CREATE TABLE IF NOT EXISTS realm_builder_honours');
+  });
+
   it('applies the $WOC Exchange schema (listings plus a dependent table)', async () => {
     // WOC_MARKET_SCHEMA (server/woc_market_db.ts) backs every marketplace
     // table. Same defined-but-unwired hazard as the DISCORD_SCHEMA lesson:
@@ -819,6 +829,60 @@ describe('ensureSchema wires every schema module at boot', () => {
       (sql, i) => i < commitIndex && sql.includes('client_perf_reports_worst10s_created'),
     );
     expect(bootCreates).toEqual([]);
+  });
+
+  it('applies the client-perf schema module and its shader warm-up columns as guarded boot DDL', async () => {
+    // The fleet readout for the warm-up worker: a boolean the perf reports can
+    // be FILTERED on, plus the client's short cause token. Both must be
+    // additive and idempotent, since the block is re-applied at every boot.
+    await ensureSchema();
+    const first = h.calls.join('\n');
+    // The whole table's DDL lives in client_perf_reports_schema.ts now, so this
+    // also proves ensureSchema still applies that module (an unwired module
+    // would leave a fresh database with no client_perf_reports table at all).
+    expect(first).toContain('CREATE TABLE IF NOT EXISTS client_perf_reports (');
+    expect(first.indexOf('CREATE TABLE IF NOT EXISTS client_perf_reports (')).toBeLessThan(
+      first.indexOf('ALTER TABLE client_perf_reports ADD COLUMN IF NOT EXISTS crowd_bucket'),
+    );
+    expect(first).toContain(
+      'ALTER TABLE client_perf_reports ADD COLUMN IF NOT EXISTS shader_warm_worker_active BOOLEAN NOT NULL DEFAULT FALSE',
+    );
+    expect(first).toContain(
+      "ALTER TABLE client_perf_reports ADD COLUMN IF NOT EXISTS shader_warm_refusal TEXT NOT NULL DEFAULT ''",
+    );
+    // Never a rewrite of the existing rows' meaning: no DROP, no NOT NULL
+    // added without a default, no type change on a shipped column.
+    expect(first).not.toContain('ALTER TABLE client_perf_reports DROP COLUMN');
+    expect(first).not.toContain('ALTER TABLE client_perf_reports ALTER COLUMN');
+
+    h.calls.length = 0;
+    await ensureSchema();
+    // A second boot issues the SAME guarded statements, so a restart on a
+    // database that already has the columns is a no-op.
+    expect(h.calls.join('\n')).toContain(
+      'ALTER TABLE client_perf_reports ADD COLUMN IF NOT EXISTS shader_warm_worker_active BOOLEAN NOT NULL DEFAULT FALSE',
+    );
+  });
+
+  it('applies the client-perf schema module AFTER the core SCHEMA (its foreign keys)', async () => {
+    // client_perf_reports FK-references accounts(id) and characters(id), both
+    // created by SCHEMA. Lifting the table's DDL out of server/db.ts put that
+    // ordering at risk: a module applied first would fail on a FRESH database
+    // with "relation accounts does not exist", and every existing database
+    // would keep booting green, so nothing but this pin catches it.
+    await ensureSchema();
+    const applied = h.calls.join('\n');
+    const accountsAt = applied.indexOf('CREATE TABLE IF NOT EXISTS accounts (');
+    const charactersAt = applied.indexOf('CREATE TABLE IF NOT EXISTS characters (');
+    const perfAt = applied.indexOf('CREATE TABLE IF NOT EXISTS client_perf_reports (');
+    expect(accountsAt).toBeGreaterThan(-1);
+    expect(charactersAt).toBeGreaterThan(-1);
+    expect(perfAt).toBeGreaterThan(-1);
+    expect(accountsAt).toBeLessThan(perfAt);
+    expect(charactersAt).toBeLessThan(perfAt);
+    // And the referencing columns really are the ones that need it.
+    expect(applied).toContain('account_id INT REFERENCES accounts(id) ON DELETE SET NULL');
+    expect(applied).toContain('character_id INT REFERENCES characters(id) ON DELETE SET NULL');
   });
 
   it('drops an INVALID metrics-index carcass before rebuilding it (a killed CONCURRENTLY build self-heals)', async () => {
@@ -1039,6 +1103,7 @@ describe('ensureSchema wires every schema module at boot', () => {
       'woc_market_sales_seller',
       'woc_market_ops_closed_created',
       'bank_ledger_account_large_recent',
+      'bank_ledger_container_money_recent',
     ]);
     const guildPrefix = CONCURRENT_INDEX_MIGRATIONS.find(
       (m) => m.name === 'guilds_realm_lower_name_prefix',

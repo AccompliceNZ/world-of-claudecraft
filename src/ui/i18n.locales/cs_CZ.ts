@@ -2227,6 +2227,8 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'entities.items.artisans_eye.name': 'Řemeslníkovo oko',
   'entities.items.reins_terrorspark_groundshaker.name':
     'Klíček zapalování: Hrůzojiskra, otřásač země',
+  'entities.items.reins_lanternback_troll.name':
+    'Lampářovo jho: Grumbol',
   'hud.options.graphicsPresetInsane': 'Extrémní',
   'hud.options.surfaceDetail': 'Detail povrchů',
   'hud.options.surfaceDetailBasic': 'Základní',
@@ -3570,10 +3572,6 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'auth.username': 'Uživatelské jméno',
   'auth.usernameError': 'Zadej uživatelské jméno.',
   'auth.usernamePlaceholder': 'Zadej uživatelské jméno',
-  'mode.caCopyAria': 'Kopírovat adresu kontraktu',
-  'mode.caLabel': 'Adresa kontraktu $WOC',
-  'mode.caNote':
-    'WOC je komunitní token. Ke hraní není potřeba. Připoj se na Discord a diskutuj o využití a ekonomickém modelu WOC.',
   'mode.offlineAria': 'Hrát offline: spustit okamžitou lokální hru pro jednoho hráče',
   'mode.offlineDesc':
     'Okamžitý svět pro jednoho hráče v prohlížeči. Nic se neukládá: ideální pro rychlou bitku nebo testování.',
@@ -12690,7 +12688,7 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Chrání spojence po dobu 30 s. První zásah, který jej srazí pod 35% zdraví, spotřebuje Stráž a vyléčí jej za {buff}. (Signatura Požehnání)',
   'entities.abilities.scouring_mercy.description':
-    'Způsobí 72 až 84 Svatého poškození nepříteli nebo vyléčí spřáteleného cíle za 130 až 155. Obě hodnoty rostou se silou kouzel. Poškození navíc vyléčí každého spojence spojeného Doktrínou za 30%, nebo člena skupiny s nejnižším zdravím za 15%, pokud není spojen nikdo. (Signatura Doktríny)',
+    'Způsobí {damage} Svatého poškození nepříteli nebo vyléčí spřáteleného cíle za {healing}. Poškození roste se silou kouzel, léčení se silou léčení. Doktrína přemění toto poškození na léčení skrze vaše spojení. Pokud se v okruhu 30 metrů nenachází žádný spojený zraněný člen skupiny, vyléčí zraněného člena skupiny s nejnižším zdravím v okruhu 30 metrů za 15% poškození. Vyléčení člena skupiny také vyléčí až 2 další zraněné členy skupiny v okruhu 10 metrů od tohoto cíle a ve vaší přímé viditelnosti, každého za 50% obnoveného zdraví. Toto dodatečné léčení nemůže být kritické ani vytvářet spojení Doktríny. (Signatura Doktríny)',
   'entities.abilities.solar_invocation.description':
     'Okamžitě vyléčí spojence za {damage} nebo způsobí mírné Svaté poškození nepříteli. Obě použití získají 1 Oddanost. Během Vzestupu léčivé seslání vyléčí také spřátelené hráče do 10 m od cíle za polovinu.',
   'entities.abilities.solar_step.description': 'Zvýší tvou rychlost pohybu o 150% na 2 s.',
@@ -13364,8 +13362,6 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Úlomky duše',
   'hudChrome.warlock.doomEmptyStatus': 'Odsouzení {value} z {max}.',
   'hudChrome.warlock.doomLabel': 'Odsouzení',
-  'hudChrome.warlock.doomMeterLock': 'Zamknout lištu zdroje Utrpení',
-  'hudChrome.warlock.doomMeterUnlock': 'Přesunout lištu zdroje Utrpení',
   'hudChrome.warlock.doomStatus': 'Odsouzení {value} z {max}; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tři Nitě osudu: Vysát je dokáže vetkat do dalšího Odsouzení.',
@@ -14194,6 +14190,10 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Kritické zásahy Dlouhého nátahu prodlužují Chladné soustředění o 2 s, až o 6 s při jednom spuštění.',
   'entities.itemSets.coldsight_trackers.name': 'Stopaři Chladného zraku',
   'entities.itemSets.crownforged.bonus6': 'Zvyšuje rychlost útoků a sesílání o 4 % a zásah o 3 %. Kritické zásahy zbraní způsobí Krvavý střep, který cíl krvácí za 5 poškození každé 2 s po dobu 12 s. Sčítá se až 3krát.',
+  'entities.itemSets.bramblehide.name': 'Rootsova ostružinová kůže',
+  'entities.itemSets.bramblehide.bonus2': 'Zvyšuje sílu útoku o 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Kritické zásahy tvé zbraně roztříští cíl efektem Kostitříska a způsobí mu krvácení za 8 poškození každé 2 s po dobu 12 s. Nasčítá se až 3krát.',
+  'entities.itemSets.bramblehide.bonus6': 'Zvyšuje rychlost útoků a sesílání o 4 % a zásah o 3 %. Kritické zásahy zbraní způsobí Krvavý střep, který cíl krvácí za 5 poškození každé 2 s po dobu 12 s. Sčítá se až 3krát.',
   'entities.itemSets.dawnforged.bonus2': 'Maják světla kopíruje 55 procent tvých přímých léčení. Utržené poškození již nezpožďuje sesílání kouzel.',
   'entities.itemSets.dawnforged.bonus4': 'Posílené objetí úsvitu Zářivé rezonance je okamžité.',
   'entities.itemSets.dawnforged.name': 'Roucha Kovaná úsvitem',

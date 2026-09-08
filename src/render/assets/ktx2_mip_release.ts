@@ -110,6 +110,7 @@ export const KTX2_MIP_RELEASABLE_MODEL_ROOTS: readonly string[] = [
   'battleground',
   'biome',
   'city',
+  'drakelands_kit',
   'dungeon',
   'foliage',
   'medieval_village_v2',

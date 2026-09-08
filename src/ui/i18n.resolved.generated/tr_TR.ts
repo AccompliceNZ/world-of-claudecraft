@@ -324,8 +324,6 @@ export const tr_TR: EnTranslations = {
     "warlock": {
       "doomLabel": "Mahkûmiyet",
       "fateThreadsLabel": "Kader İplikleri",
-      "doomMeterUnlock": "Istırap kaynak çubuğunu taşı",
-      "doomMeterLock": "Istırap kaynak çubuğunu kilitle",
       "doomEmptyStatus": "{value} / {max} Mahkûmiyet.",
       "doomStatus": "{value} / {max} Mahkûmiyet; {remaining}.",
       "fateThreadsStatus": "{value} / {max} Kader İpliği.",
@@ -570,6 +568,9 @@ export const tr_TR: EnTranslations = {
       "tabsLabel": "WOC Mağaza bölümleri",
       "storeTab": "Mağaza",
       "rewardsTab": "Günlük Ödüller",
+      "mountsEyebrow": "Account Mounts",
+      "mountsTitle": "Machine Stable",
+      "mountBuyAria": "Purchase {item}",
       "loading": "WOC Mağazası yükleniyor...",
       "error": "WOC Mağazası şu anda kullanılamıyor. Lütfen kısa süre sonra tekrar deneyin.",
       "balance": "Claudium Bakiyesi",
@@ -1315,6 +1316,11 @@ export const tr_TR: EnTranslations = {
       "separate": "Ayır: {meter}",
       "regroup": "Yeniden grupla: {meter}"
     },
+    "targetDots": {
+      "title": "Target Dots",
+      "row": "{aura} on {target}",
+      "overflow": "{count} more not shown"
+    },
     "targetAuras": {
       "title": "Hedef Auraları",
       "keybindLabel": "Hedefin Takviyeleri ve Zayıflatmaları",
@@ -1398,6 +1404,9 @@ export const tr_TR: EnTranslations = {
       "name_thunderstrut_gobbler": "Gürlemeadım, Büyük Hindi",
       "name_terrorspark_groundshaker": "Dehşetkıvılcım, Yer Sarsan",
       "name_drakemaw_raptor": "Ejder Ağzı Raptoru",
+      "name_mech_bird": "Cluckwork Mech Bird",
+      "name_lanternback_troll": "Grumbol the Lanternback",
+      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
       "name_rickshaw_mount": "Kemikbağlı Çekçek",
       "desc_valorsteed": "Gelişmiş seyahat hızı sağlayan, dayanıklı ve sağlam adımlı bir küheylan.",
       "desc_grag_bear": "Gelişmiş seyahat hızı sağlayan, dayanıklı ve sağlam adımlı bir ayı.",
@@ -1408,6 +1417,9 @@ export const tr_TR: EnTranslations = {
       "desc_thunderstrut_gobbler": "Uyanan Zirve'den kabararak inen, kuyruğu bir fırtına bulutu gibi açılmış devasa bir fırtına hindisi.",
       "desc_terrorspark_groundshaker": "Ağır paletleri, büyük çaplı bir topu ve korkusuz pilotlar için yapılmış bir eyeri olan kompakt zırhlı bir makine.",
       "desc_drakemaw_raptor": "Ejder Ağzı Kalderası'ndan gelen, eyere alıştırılmış bir yuva raptoru: tepeden tırnağa kas ve hız, hâlâ hafiften kül kokuyor.",
+      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
+      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
+      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
       "desc_rickshaw_mount": "Sırıklarına kemikleri çıkmış bir avanenin koşulduğu, seni ölümüne bir koşuyla çeken takırdayan kemik arabası."
     },
     "mountTraining": {
@@ -1569,6 +1581,26 @@ export const tr_TR: EnTranslations = {
       "showPlaytime": "Karakter Ekranında Oynama Süresini Göster",
       "forceHighPerfGpu": "Ayrık Oyun GPU'sunu Kullan",
       "forceHighPerfGpuNote": "Varsayılan olarak açık: masaüstü uygulaması bu bilgisayardan ayrık oyun GPU'sunu ister. Oyun başlamıyorsa, siyah bir ekranla açılıyorsa ya da dizüstü bilgisayarın ekranı karararsa bunu kapat. Değişiklik oyunun bir sonraki başlangıcında etkili olur.",
+      "shaderWarm": "Shader Warm-up Worker",
+      "shaderWarmAuto": "Auto",
+      "shaderWarmOff": "Off",
+      "shaderWarmOn": "On",
+      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
+      "gpuBackend": "Graphics Backend",
+      "gpuBackendAuto": "Auto",
+      "gpuBackendVulkan": "Vulkan",
+      "gpuBackendOpenGL": "OpenGL (slow)",
+      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
+      "gpuBackendActive": "Currently using {backend}.",
+      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
+      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
+      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendActiveNameVulkan": "Vulkan",
+      "gpuBackendActiveNameOpenGL": "OpenGL",
+      "restartPending": "Some changes take effect after a restart.",
+      "restartGame": "Restart Game",
+      "restartInProgress": "Restarting the game...",
+      "restartFailed": "The game could not restart itself. Quit and start it again.",
       "discordPresence": "Discord Zengin Durumu",
       "discordPresenceNote": "Bulunduğun bölgeyi ve bu oturumda ne kadar süredir oynadığını Discord etkinliğin olarak gösterir, Discord profilini görebilen herkes ikisini de görebilir. Yalnızca bölge adı, oturum süren ve oyun paylaşılır; karakterin, hesabın ya da kiminle oynadığın asla paylaşılmaz. Bu bilgisayarda Discord uygulamasının çalışıyor olması gerekir.",
       "showDevBadges": "Geliştirici Rozetlerini Göster",
@@ -1600,6 +1632,9 @@ export const tr_TR: EnTranslations = {
       "showTargetOfTarget": "Hedefin Hedefini Göster",
       "showTargetSwingTimer": "Hedefin savurma zamanlayıcısını göster",
       "showPetFrame": "Yoldaşını Göster",
+      "showNameplateDots": "Show My Dots on Nameplates",
+      "nameplateDotScale": "Nameplate Dot Size",
+      "showTargetDots": "Show Target Dots",
       "waterRipples": "Su Dalgacıkları (İz Dalgaları)",
       "showAttackButton": "Saldırı Düğmesini Göster",
       "showDailyRewardsChest": "Günlük Ödül Sandığını Göster",
@@ -2530,6 +2565,24 @@ export const tr_TR: EnTranslations = {
       "worldfireClosing": "Dünya Yangını yaklaşıyor. Merkeze doğru hareket edin!",
       "worldfireConsumed": "Koca pota yanıyor!"
     },
+    "nythraxisCallout": {
+      "impaled": "Bone Spikes! Free the impaled!",
+      "youAreImpaled": "You are impaled! Hold on!",
+      "spikeBroken": "Spike shattered!",
+      "dreadCurseSwap": "Dread Curse: swap tanks!",
+      "sigilAppears": "A Binding Sigil flares! Drag Nythraxis onto it!",
+      "sigilBound": "Nythraxis is bound! Burn him!",
+      "sigilUnbound": "The sigil fades unbound! Nythraxis grows stronger!",
+      "gravefireTarget": "Gravefire races toward you! Sidestep!",
+      "kingsWrath": "The King rises in wrath! Everything hits harder now!",
+      "boneStormBegins": "Bone Storm! Spread out and run!",
+      "boneStormCharge": "Nythraxis is charging YOU! Run!",
+      "boneStormEnds": "Bone Storm over. Tanks, pick him up!",
+      "crownEndures60": "One minute until The Crown Endures!",
+      "crownEndures30": "Thirty seconds until The Crown Endures!",
+      "crownEndures10": "Ten seconds! Burn him!",
+      "crownEndures": "The Crown Endures! Nythraxis is enraged!"
+    },
     "varkhulWaveStatus": "Dalga {wave}/{waves} | Düşmanlar: {remaining}",
     "raidBossGuide": {
       "title": "Patron Rehberi",
@@ -2678,6 +2731,67 @@ export const tr_TR: EnTranslations = {
         "assembly": "Ustanın Meclisi: her iki demirhane ışınını engelleyin, her portal dalgasını öldürün, Pota Depremini kesintiye uğratın ve Kor Zanaatkârlarının Varkhul'u iyileştirmesini durdurun.",
         "worldfire": "Dünya Yangını: Kahramanca'da, yanan kenar son evre boyunca merkeze doğru kapanır. Koca pota tümüyle yanmadan Varkhul'u alt et.",
         "heroic": "Kahramanca: demirhane ısısı asla soğumaz, Örsün Fermanı göktaşları ekler ve son evre, Dünya Yangınına odaklanmak için mekaniklerin çoğunu kaldırır."
+      },
+      "nythraxis": {
+        "overview": "High Priest Malric refused to let his king die, and the rite that raised Nythraxis bound the whole court to the crypt. The encounter tests a disciplined tank swap, fast switches onto Bone Spikes, movement off burning ground, and a coordinated wardstone channel once the Throne falls.",
+        "phaseThroneName": "The Throne",
+        "phaseThroneSummary": "Nythraxis holds his throne room with a charged frontal cleave, the Dread Curse tank swap, Bone Spikes that impale raiders, and Grave Eruptions that leave burning ground.",
+        "phaseWardstonesName": "The Wardstones",
+        "phaseWardstonesSummary": "At {health} health, Shuddering Stomp holds the raid still while Brother Aldric arrives and lights the wardstones. Every spike shatters and the floor stops burning, then Soul Rend and Deathless Rage join the Throne mechanics.",
+        "phaseKingsWrathName": "The King's Wrath",
+        "phaseKingsWrathSummary": "At {health} health, Nythraxis roars in The King's Wrath and gains {bonusNormal} damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption tightens to every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire to every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic). Every other mechanic keeps its cadence.",
+        "gravebreakerName": "Gravebreaker",
+        "gravebreakerSummary": "Every {seconds} sec, Nythraxis charges his next landed swing. His target takes only the swing itself, but everyone else within {range} yd inside the {arc} degree cone in front of him takes {splash} of that swing as Physical damage, reduced by their own armor.",
+        "gravebreakerResponse": "Tanks keep Nythraxis facing away from the raid. Everyone else stays behind or beside him and never crosses the cone.",
+        "dreadCurseName": "Dread Curse",
+        "dreadCurseSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitNormal} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackNormal}, up to {max} stacks.",
+        "dreadCurseHeroicSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitHeroic} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackHeroic}, up to {max} stacks.",
+        "dreadCurseResponse": "Tanks swap at {stacks} stacks: the other tank taunts and the cursed tank stays out of the Gravebreaker cone while the stacks fade. Healers prepare the incoming tank before the swap.",
+        "boneSpikeName": "Bone Spike",
+        "boneSpikeSummary": "Every {everyNormal} sec, Nythraxis impales {victimsNormal} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainNormal} of maximum health every second until their spike is destroyed.",
+        "boneSpikeHeroicSummary": "Every {everyHeroic} sec, Nythraxis impales {victimsHeroic} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainHeroic} of maximum health every second until their spike is destroyed.",
+        "boneSpikeResponse": "Damage dealers switch to the Bone Spikes at once and destroy them to free the impaled raiders. Healers keep the impaled alive while the spikes fall.",
+        "graveEruptionName": "Grave Eruption",
+        "graveEruptionSummary": "Every {everyNormal} sec, skeletal hands mark {countNormal} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstNormal} of maximum health as Shadow damage, then burns as Grave Flame for {flameNormal} sec, dealing {tickNormal} of maximum health every second to anyone standing in it.",
+        "graveEruptionHeroicSummary": "Every {everyHeroic} sec, skeletal hands mark {countHeroic} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstHeroic} of maximum health as Shadow damage, then burns as Grave Flame for {flameHeroic} sec, dealing {tickHeroic} of maximum health every second to anyone standing in it.",
+        "graveEruptionResponse": "Step out of every warning circle before it erupts and stay off the burning ground. Tanks pull Nythraxis clear of the flames so melee keeps room to work.",
+        "bindingSigilName": "Binding Sigil",
+        "bindingSigilSummary": "Every {everyNormal} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionNormal} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindNormal} sec he is Bound: the Ascension is purged, he is stunned for {stunNormal} sec, and he takes {vulnerability} more damage for {boundNormal} sec. Otherwise every raider takes {unboundHitNormal} of maximum health as Shadow damage and he keeps {unboundBonusNormal} more damage until the next binding.",
+        "bindingSigilHeroicSummary": "Every {everyHeroic} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionHeroic} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindHeroic} sec he is Bound: the Ascension is purged, he is stunned for {stunHeroic} sec, and he takes {vulnerability} more damage for {boundHeroic} sec. Otherwise every raider takes {unboundHitHeroic} of maximum health as Shadow damage and he keeps {unboundBonusHeroic} more damage until the next binding.",
+        "bindingSigilResponse": "The tank drags Nythraxis onto the sigil at once, through whatever fire the raid left behind. Melee follow the drag and ranged stay out of the new Gravebreaker cone. Everyone burns him while he is Bound.",
+        "raiseFallenName": "Raise Fallen",
+        "raiseFallenSummary": "Every {every} sec during The Throne, Nythraxis raises Risen Royal Guards behind him. They rush his current target and fight until they are destroyed.",
+        "raiseFallenResponse": "The off-tank picks up each wave as it rises. Damage dealers clear the guards between Bone Spikes so the waves never pile up before the Throne falls.",
+        "soulRendName": "Soul Rend",
+        "soulRendSummary": "Nythraxis marks {marksNormal} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals its bearer's full maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them.",
+        "soulRendHeroicSummary": "Nythraxis marks {marksHeroic} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals {damageHeroic} of its bearer's maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them. A mark that resolves alone is lethal.",
+        "soulRendResponse": "Every marked raider runs to one stack point and stands within {range} yd of the other marks before the {fuse} sec fuse ends. Healers top the group off as the marks resolve.",
+        "soulfireName": "Soulfire",
+        "soulfireSummary": "Every Soul Rend detonation leaves a pool of purple fire with a {radius} yd radius where each mark stood, burning for {seconds} sec at {tickNormal} of maximum health every second. Standing where pools overlap takes a tick from each one. Pools never form within {clearance} yd of a wardstone.",
+        "soulfireHeroicSummary": "Every Soul Rend detonation leaves one pool of purple fire with a {radius} yd radius per stacked group of marks, burning for {secondsHeroic} sec at {tickHeroic} of maximum health every second. Standing where pools overlap takes only one tick, never stacked copies. Pools never form within {clearance} yd of a wardstone.",
+        "soulfireResponse": "Move out of the purple pool as soon as the marks detonate. Keep the next stack point clear of active fire.",
+        "gravefireName": "Gravefire",
+        "gravefireSummary": "Every {everyNormal} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnNormal} sec and deals {tickNormal} of maximum health every second to anyone standing in it.",
+        "gravefireHeroicSummary": "Every {everyHeroic} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnHeroic} sec and deals {tickHeroic} of maximum health every second to anyone standing in it.",
+        "gravefireResponse": "Sidestep the line as it comes: it is narrow and never turns. Ranged raiders keep moving instead of standing in one spot.",
+        "deathlessRageName": "Deathless Rage",
+        "deathlessRageSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageNormal} of maximum health as Shadow damage.",
+        "deathlessRageHeroicSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageHeroic} of maximum health as Shadow damage, which no health pool survives.",
+        "deathlessRageResponse": "Assign one raider to each wardstone before the pull. When the cast begins, each runs to their stone and channels it until it completes. Stuns, stepping away, and death break the channel, so keep the channelers safe and never assign an impaled raider.",
+        "courtName": "The Deathless Court",
+        "courtSummary": "On Heroic, Nythraxis raises his court after each Deathless Rage, interrupted or not, once the previous court has fallen. The Spirit of Aldren cleaves everything near his target with Royal Cleave. The Spirit of Malric channels Malric's Mending, healing Nythraxis for more with every cast. The Spirit of Voss ignores taunts and hunts the raid.",
+        "courtResponse": "Tanks pick up Aldren and turn his cleave away from the raid. Stun or silence Malric the moment Malric's Mending begins and kill him first, then root or stun Voss off the healers, since he cannot be taunted, and finish him next.",
+        "kingsWrathName": "King's Wrath",
+        "kingsWrathSummary": "Nythraxis deals {bonusNormal} more damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption occurs every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic).",
+        "kingsWrathResponse": "Use remaining defensive cooldowns for unavoidable damage. Keep every earlier mechanic clean while the raid finishes the fight.",
+        "boneStormName": "Bone Storm",
+        "boneStormSummary": "Starting {first} sec into The King's Wrath and every {everyNormal} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlNormal} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamNormal} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
+        "boneStormHeroicSummary": "Starting {first} sec into The King's Wrath and every {everyHeroic} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlHeroic} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamHeroic} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
+        "boneStormResponse": "Spread out and keep running from Nythraxis. The charged raider runs away while everyone else leaves room around the charge path, then tanks pick him up when the storm ends.",
+        "crownEnduresName": "The Crown Endures",
+        "crownEnduresSummary": "At {enrageNormal} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryNormal} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
+        "crownEnduresHeroicSummary": "At {enrageHeroic} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryHeroic} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
+        "crownEnduresResponse": "Treat the first warning as the final burn. Save movement and defensive cooldowns for the remaining mechanics, then defeat Nythraxis before the enrage."
       }
     },
     "auraEffect": {
@@ -2688,6 +2802,14 @@ export const tr_TR: EnTranslations = {
       "varkhulMoltenCore": "Bu çekirdeği demirhaneye taşı. Ergimiş Yük, her {interval} sn'de azami canın %{min} ila %{max} arasında artan hasar verir.",
       "varkhulForgeLink": "Etkin bir sütun ışınını demirhaneye ulaşmadan önce durdur. Açık ışınlar saniyede %6 ısı ekler. Normal'de engellenen ışınlar ve etkin olmayan sütunlar demirhaneyi soğutur; Kahramanca'da ısı hiç düşmez. %100'de demirhane ölümcül bir Erime yaşar.",
       "varkhulCrucibleExposure": "Bir Pota Işınını engellemek, her saniye artan azami can hasarı verir. Yığınlar Normal'de bir ışından ayrıldıktan 10 saniye sonra, Kahramanca'da ise 60 saniye sonra sıfırlanır.",
+      "nythraxisDreadCurse": "Each stack increases damage taken from Nythraxis by {perStack}% for {duration} sec: {stacks} of {max} stacks now, {pct}% more damage. Every {every} sec his next hit on his target deals {hit}% of maximum health and adds a stack. Tanks should swap at {swap} stacks.",
+      "nythraxisImpaled": "Impaled on a Bone Spike: you cannot act and lose {normal}% of your maximum health every {interval} sec ({heroic}% on Heroic) until the raid destroys the spike.",
+      "nythraxisAscension": "Deathless Ascension: {stacks} stacks, {pct}% more damage and attack speed. Drag Nythraxis onto the Binding Sigil to purge it.",
+      "nythraxisBound": "Bound by the old wards: Nythraxis takes {pct}% more damage for {duration} sec.",
+      "nythraxisUnbound": "Unbound: Nythraxis deals {pct}% more damage until a Binding Sigil holds him.",
+      "nythraxisKingsWrath": "King's Wrath: Nythraxis deals {pct}% more damage for the rest of the fight.",
+      "nythraxisBoneStorm": "Bone Storm: Nythraxis ignores threat, whirls for {tick}% of maximum health every second within {radius} yd, and charges raiders. Spread out and run.",
+      "nythraxisCrownEndures": "The Crown Endures: {stacks} stacks, {pct}% more damage and {haste}% faster attacks. The raid is out of time.",
       "dot": "Her {interval} sn {value} {school} hasarı verir",
       "hot": "Her {interval} sn {value} sağlık yeniler",
       "mendingCurrent": "{value} iyileştirme biriktirir; zamanla salınır veya Şelale Onarımı tarafından tüketilir",
@@ -2758,6 +2880,8 @@ export const tr_TR: EnTranslations = {
       "redline": "Kırmızı Çizgi: çentik {stacks} / {max}. Gövde Vuruşları çentik ekler; Merhamet Darbesi çentik başına {pct}% daha sert vurur ve pencereyi kapatır. Önce sona ererse kaybedilir",
       "veilstrikeWindow": "Gölge Perdesi: Alacakaranlık Perdesi açılışların açık alanda her açıdan kullanılabilir ve verdiğin hasar {pct}% artar",
       "veiledEdge": "Sonraki Pusucu Vuruşun iki kat sert vurur",
+      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
+      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
       "duskEconomy": "Yetenekler {pct}% daha az enerji harcar",
       "moontide": "Ay Gelgiti: aşama {stacks} / {max}. Yaban Oku, Gök Düşüşü ve Ay Tohumu büyüleri Aykuşu Formunda onu doldurur; {max} olduğunda Ay Tohumu Ay Kabarışına, Gök Düşüşü Güneş İzine dönüşür ve ikisi de onu harcar",
       "oldBlood": "Kadim Kan: aşama {stacks} / {max}. İsabet eden Kurt ve Bruin vuruşları bu birikimi paylaşır; {max} olduğunda Kanlı Isırık veya Kemik Kıran dönüşür",
@@ -2987,7 +3111,18 @@ export const tr_TR: EnTranslations = {
         "playerFrame": "Oyuncu",
         "targetFrame": "Hedef",
         "partyFrames": "Grup",
-        "swingBar": "Otomatik Saldırı"
+        "swingBar": "Otomatik Saldırı",
+        "targetDots": "Target Dots",
+        "questTracker": "Quest Tracker",
+        "reliquaryTracker": "Reliquary Tracker",
+        "petBar": "Pet Bar",
+        "procOverlay": "Spell Procs",
+        "procOverlayFrost": "Icicles",
+        "damageMeter": "Damage Meter",
+        "deedTracker": "Deed Tracker",
+        "delveTracker": "Delve Tracker",
+        "riftTracker": "Rift Tracker",
+        "swingBarOffhand": "Off Hand"
       },
       "framesMenu": "Çerçeve Ayarları",
       "framesMenuTitle": "Ayrı ayrı çerçeveleri göster ya da gizle. İşareti kaldırılmış bir çerçeve, tekrar işaretleyene ya da varsayılanlara sıfırlayana kadar gizli kalır.",
@@ -3019,11 +3154,86 @@ export const tr_TR: EnTranslations = {
       "invalid": "Bu geçerli bir dışa aktarma kodu değil.",
       "wrongKind": "Bu kod farklı bir dışa aktarma türüne ait."
     },
+    "keybindTransfer": {
+      "setup": "Hotkey Setup",
+      "apply": "Apply",
+      "imported": "Hotkey setup imported.",
+      "wrongKind": "That code is a settings export, not a hotkey setup."
+    },
+    "keyboardMap": {
+      "title": "Keyboard Overview",
+      "hint": "Keys in use are coloured by category. Hover or focus a key to see everything bound to it.",
+      "hintInteractive": "Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.",
+      "popOut": "Pop Out",
+      "close": "Close keyboard overview",
+      "pressKey": "Press a key for {action}. Esc cancels.",
+      "boundTo": "Bound {action} to {key}.",
+      "notBindable": "That key cannot be bound.",
+      "assignHint": "Choose an action to bind to {key}.",
+      "assignPlaceholder": "Assign an action to {key}",
+      "layerGroup": "Modifier layer",
+      "formGroup": "Keyboard size",
+      "formFull": "Full size",
+      "formTkl": "Tenkeyless",
+      "form75": "75%",
+      "form60": "60%",
+      "notOnLayout": "Not on this keyboard: {bindings}",
+      "legendGroup": "Key labels",
+      "legendLayout": "Your layout",
+      "legendQwerty": "QWERTY",
+      "layerNone": "No modifier",
+      "layerShift": "Shift",
+      "layerCtrl": "Ctrl",
+      "layerAlt": "Alt",
+      "keyDetail": "{key}: {bindings}",
+      "separator": ", ",
+      "bindingLine": "{key}: {action}",
+      "assignOption": "{category}: {action}",
+      "otherLayers": "Also bound with a modifier"
+    },
+    "fullTransfer": {
+      "menu": "Import / Export",
+      "title": "Import / Export Settings",
+      "fullSettings": "Full Settings",
+      "intro": "Export every saved preference on this device as one code, and paste it on another device or browser to import it: graphics, audio, interface, theme, frame layout, key bindings for every character, controller and cross hotbar bindings, chat, window filters, language, and dismissed hints.",
+      "excluded": "Never included: your login, account, wallet, or purchase data. Action bar layouts are saved to your account and travel with it."
+    },
+    "riftForge": {
+      "title": "Rift Forge",
+      "subtitle": "Riftbound bands",
+      "currency": "{name}: {count}",
+      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
+      "wornHint": "Worn. Unequip it to forge.",
+      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
+      "upgradeMax": "Fully upgraded",
+      "gemPickAria": "Gem to socket",
+      "gemOption": "{name} ({bonus})",
+      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
+      "socketBtn": "Socket",
+      "socketsNone": "no gems",
+      "noGems": "No Rift gems in your bags",
+      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "reason": {
+        "notFound": "That band is not in your bags.",
+        "notRiftGear": "Only a Riftbound band can be forged.",
+        "maxUpgrade": "That band is fully upgraded.",
+        "insufficientEssence": "Not enough Rift Essence.",
+        "invalidGem": "You have no such Rift gem.",
+        "dead": "You can't do that while dead.",
+        "tooFar": "You are too far from the Rift Forge."
+      },
+      "done": {
+        "upgrade": "Upgraded {name}.",
+        "socket": "Socketed a gem into {name}.",
+        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+      }
+    },
     "itemTooltip": {
       "requiresLevel": "Gereken Seviye {level}",
       "riftTier": "{tier} dereceli Yarık eşyası",
       "riftUpgrade": "Yarık yükseltmesi {level}/{max}",
       "riftSockets": "Yarık mücevherleri {used}/{total}",
+      "riftGemSocket": "Socket bonus for a Riftbound band",
       "statEnchanted": "+{value} {stat} (Büyülü)",
       "enchantedFallback": "Büyülü",
       "partyTradeWindow": "Bu eşyayı, düşüşünü paylaşan oyunculara önümüzdeki {time} boyunca takas edebilirsin. Kuşanmak takas penceresini sona erdirir."
@@ -3304,6 +3514,15 @@ export const tr_TR: EnTranslations = {
       "popupTitle": "Lonca Tabelası",
       "close": "Kapat"
     },
+    "realmBuilder": {
+      "title": "Realm Builder of the Month",
+      "currentLabel": "Honoured this month",
+      "placeholderName": "Your Name Here",
+      "placeholderHint": "This plate is waiting for its first name.",
+      "pastTitle": "Past honourees",
+      "pastEmpty": "No names on the roll yet.",
+      "close": "Close"
+    },
     "bank": {
       "title": "Banka",
       "subtitle": "Yaldızlı Kasa",
@@ -3431,8 +3650,34 @@ export const tr_TR: EnTranslations = {
       "guildViewsAria": "Lonca bankası görünümleri",
       "guildContentsTab": "İçerik",
       "guildLogTab": "Günlük",
+      "guildHistoryTab": "History",
       "logAria": "Lonca bankası etkinlik günlüğü",
       "logNote": "En son {count} lonca bankası işlemi.",
+      "logShowing": "Showing {count} guild bank actions, newest first.",
+      "logFilterAria": "Filter the guild bank history",
+      "logFilterAll": "All",
+      "logFilterItems": "Items",
+      "logFilterMoney": "Money",
+      "logOlder": "Show older",
+      "logOlderLoading": "Loading older actions...",
+      "logEnd": "That is the whole guild bank history.",
+      "logEmptyFiltered": "No guild bank actions match this filter.",
+      "logColTime": "When",
+      "logColMember": "Member",
+      "logColAction": "Action",
+      "logColDetail": "Details",
+      "logActionDeposit": "Deposited",
+      "logActionWithdraw": "Withdrew",
+      "logActionBuySlots": "Bought an expansion",
+      "logActionOpenBank": "Opened the bank",
+      "logActionCharterFee": "Paid the charter fee",
+      "logActionAdminPurge": "Removed",
+      "logActorAdmin": "An administrator",
+      "logDetailItem": "{count} {item}",
+      "logSearchPlaceholder": "Search this history",
+      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
+      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
+      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
       "logLoading": "Lonca bankası günlüğü yükleniyor...",
       "logEmpty": "Lonca bankasına henüz bir şey girmedi ya da çıkmadı.",
       "logUnavailable": "Lonca bankası günlüğü şu anda okunamıyor.",
@@ -3530,6 +3775,20 @@ export const tr_TR: EnTranslations = {
         "result": {
           "set": "Lonca panosu güncellendi.",
           "notOfficer": "Panoyu yalnızca subaylar ve Lonca Üstadı düzenleyebilir."
+        }
+      },
+      "roster": {
+        "seats": "{count} of {cap} seats",
+        "expand": "Expand roster (+{seats} seats for {price})",
+        "maxed": "The roster is at its largest size",
+        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
+        "confirmAction": "Expand",
+        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "result": {
+          "notLeader": "Only the Guild Master may expand the guild roster.",
+          "maxed": "The guild roster cannot grow any larger.",
+          "cannotAfford": "You need {price} to expand the guild roster.",
+          "retry": "The guild roster changed while you were buying. Try again."
         }
       }
     },
@@ -3948,6 +4207,7 @@ export const tr_TR: EnTranslations = {
       "yieldLineRange": "{min} ile {max} arası {item}",
       "alreadyEnchanted": "O eşya zaten büyülü.",
       "sameEnchant": "O eşyada zaten bu büyü var.",
+      "riftGear": "Riftbound bands take Rift gems, not enchants.",
       "replaceTag": "{enchant} yerine geçer",
       "sameEnchantTag": "Zaten uygulandı",
       "plainTag": "Büyüsüz",
@@ -4165,7 +4425,16 @@ export const tr_TR: EnTranslations = {
         "soul_rend": "Ruh Yırtılması (işaretlenen oyuncular yayılmalı ve iyileştirilmeli)",
         "deathless_rage": "Ölümsüz Öfke (koruma taşlarında kesilir)",
         "wardstones": "Koruma taşı kanalları (faz geçişi)",
-        "dread_curse": "Dehşet Laneti (yalnızca kahramanlık, tank değişimi için biriken zayıflatma)"
+        "dread_curse": "Dehşet Laneti (yalnızca kahramanlık, tank değişimi için biriken zayıflatma)",
+        "bone_spike": "Bone Spike (impaled raiders drain until the spike is destroyed)",
+        "grave_eruption": "Grave Eruption (warning circles that leave burning ground)",
+        "binding_sigil": "Binding Sigil (drag the boss onto the sigil or the raid pays)",
+        "gravefire": "Gravefire (a traveling line of fire to sidestep)",
+        "soulfire": "Soulfire (Soul Rend detonations leave burning pools)",
+        "kings_wrath": "King's Wrath (30%: permanent damage bonus, faster floor hazards)",
+        "bone_storm": "Bone Storm (he ignores threat, whirls, and charges the raid)",
+        "crown_endures": "The Crown Endures (hard enrage at 6:00, heroic 5:00)",
+        "deathless_court": "The Deathless Court (heroic only, the royal court rises after Deathless Rage)"
       }
     },
     "reliquary": {
@@ -6042,6 +6311,8 @@ export const tr_TR: EnTranslations = {
       "raceBody": "Diyardaki her grup aynı Yarığa aynı anda saldırabilir, her biri kendi kopyasında, ve yalnızca diptekini ilk deviren onu mühürler. Bir grup kazandığında diyar onların adlarını ve sürelerini duyar, ve giriş yolu ardlarından kapanır. Yarışı kaybetmek koşunu bitirmez: kopyan açık kalır, diptekini yine de sen devirirsin ve yine de kendi gücünle dışarı yürürsün. Sana mal olan şey, onu temizlemenin ödeyeceği her şeydir. Patron, ikinci gelen grup için hiçbir şey bırakmaz, bu yüzden eve taşıdığın şey yalnızca inişte canavarlardan düşenlerdir, ondan fazlası değil. Yiğitlikler Kitabı temizliği yine de sayar, çünkü diptekini gerçekten sen devirdin. Bu, seni yenen insanların yüzünü hiç görmeden kaybedebileceğin oyundaki tek yarıştır.",
       "rewardsHeading": "Dışarı ne çıkarırsın",
       "rewardsBody": "Ödeyen şey bir Yarığı yalnızca atlatmak değil, onu mühürlemektir. Yarığı ilk sen devirirsen, derecesinin yanında durduğu kopya alanlı içerik gibi öder, bu yüzden daha zor dereceler daha zor koşuya değer. Mühürlemek ayrıca orada bulunan herkesin eline, sınıfının rolüne göre kesilmiş ve sana özel bir Yarık Bağlı halka koyar, çantalarına da üstüne Yarık Özü bırakır, daha zor derecelerde bunun üstüne Yarık Mücevherleri de eklenir. Eve giden yolun yanı sıra, diptekinin bıraktığı mühürlü bir zulayı grubun, mağara sandıklarından bildiğin aynı Maşa Yolu kilit açma yöntemiyle ekstra ganimet için açabilir, bu yüzden temiz ve sabırlı bir iş, acele edilmiş birinden daha iyi öder. Bunların hiçbiri ikinci gelen bir gruba ulaşmaz: kaybedilen bir yarış sana yalnızca inişte canavarlardan düşenleri bırakır. Yiğitlikler Kitabı bir istisnadır ve temizliğini her hâlükârda sayar; ilk Yarığını kapatman için bir yiğitlik, bir S dereceli olanı devirmen için bir başkası vardır.",
+      "forgeHeading": "The Rift Forge",
+      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
       "trackerHeading": "Ekranındaki takipçi",
       "trackerBody": "İçerideyken, ekranındaki küçük bir şerit seni yönlendirir: kaç kattan hangisinde olduğunu ve canlı bir geri sayımı gösterir. O geri sayımı dikkatle oku, çünkü tükenen şey koşun değildir. Tükenen, dünyadaki dönüş girişidir. Bir kez içeri girdikten sonra, grubun Yarığı ne kadar sürerse sürsün kendi hızında oynar, ama o saat sıfıra ulaştığında giriş yolu herkes için kaybolur, bu yüzden süre bitimine yakın dışarı adım atmayı iki kez düşün."
     },
@@ -7380,10 +7651,7 @@ export const tr_TR: EnTranslations = {
     "playAria": "World of ClaudeCraft oyna",
     "serverLabel": "Dünyanı seç",
     "serverAria": "Dünya seç: Çevrimiçi veya Çevrimdışı",
-    "serverOfflineSub": "Anında yerel dünya",
-    "caLabel": "$WOC Sözleşme Adresi",
-    "caCopyAria": "Sözleşme adresini kopyala",
-    "caNote": "WOC topluluk jetonumuzdur. Oynamak için gerekli değildir. WOC'un faydasını ve döngüsünü tartışmak için Discord'a katılın."
+    "serverOfflineSub": "Anında yerel dünya"
   },
   "auth": {
     "enterRealm": "Dünyaya Gir",
@@ -7933,6 +8201,7 @@ export const tr_TR: EnTranslations = {
       "forgeUpgraded": "{name} için Yarık yükseltmesi tamamlandı.",
       "forgeEnchanted": "{name} için Yarık büyüsü tamamlandı.",
       "forgeSocketed": "{name} için Yarık mücevheri yuvalandı.",
+      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
       "detonateGlacialGrave": "Buzul Mezarı patlıyor!",
       "detonateAbsoluteZero": "Mutlak Sıfır patlıyor!",
       "detonateMagmaWell": "Magma Kuyusu patlıyor!",
@@ -8677,6 +8946,7 @@ export const tr_TR: EnTranslations = {
     "bodyWeb": "Oyun GPU hızlandırması olmadan çalışıyor ve yavaş olacak. Tarayıcı ayarlarından donanım hızlandırmayı etkinleştir, grafik sürücülerini güncelleyip tarayıcını yeniden başlat.",
     "hybridBodyWindows": "Bu oturum, tümleşik (güç tasarruflu) GPU üzerinde çalışıyor. Bu bilgisayarda ayrıca ayrık bir oyun GPU’su varsa tarayıcını Ayarlar > Sistem > Ekran > Grafikler altında Yüksek performans olarak ayarla, ardından yeniden başlat. Masaüstü uygulaması ayrık GPU’yu otomatik olarak seçer.",
     "hybridBodyLinux": "Bu oturum, tümleşik (güç tasarruflu) GPU üzerinde çalışıyor. Bu bilgisayarda ayrıca ayrık bir oyun GPU’su varsa tarayıcın veya grafik sürücün kendi GPU seçim ayarını sunabilir, ya da dağıtımın PRIME veya optimus-manager gibi bir GPU değiştirme aracı sağlayabilir. Masaüstü uygulaması ayrık GPU’yu otomatik olarak seçer.",
+    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
     "hybridBodyOther": "Bu oturum, tümleşik (güç tasarruflu) GPU üzerinde çalışıyor. Bu bilgisayarda ayrıca ayrık bir oyun GPU’su varsa onu etkinleştirmek için tarayıcının ve işletim sisteminin grafik ayarlarını kontrol et. Masaüstü uygulaması ayrık GPU’yu otomatik olarak seçer.",
     "dismiss": "Kapat"
   },
@@ -10638,7 +10908,8 @@ export const tr_TR: EnTranslations = {
       },
       "arcane_shot": {
         "name": "Uğursuz Atış",
-        "description": "Hedefi {damage} Arkane hasar için vurur. Hasar menzilli saldırı gücüyle artar."
+        "description": "Hedefi {damage} Arkane hasar için vurur. Hasar menzilli saldırı gücüyle artar.",
+        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
       },
       "concussive_shot": {
         "name": "Sarsıcı Atış",
@@ -11669,7 +11940,7 @@ export const tr_TR: EnTranslations = {
       },
       "scouring_mercy": {
         "name": "Arındıran Merhamet",
-        "description": "Bir düşmana 72 ila 84 Kutsal hasar verir ya da dost bir hedefi 130 ila 155 iyileştirir. Her iki değer de büyü gücüyle artar. Hasar ayrıca Öğreti ile bağlı her müttefiki 30%, hiç bağlı müttefik yoksa en düşük canlı grup üyesini 15% iyileştirir. (Öğreti imzası)"
+        "description": "Bir düşmana {damage} Kutsal hasar verir ya da dost bir hedefi {healing} iyileştirir. Hasar büyü gücüyle, iyileştirme ise iyileştirme gücüyle artar. Öğreti, bu hasarı bağlarınız aracılığıyla iyileştirmeye dönüştürür. 30 metre içinde bağlı yaralı bir grup üyesi yoksa, 30 metre içindeki en düşük canlı yaralı grup üyesini hasarın 15%'i kadar iyileştirir. Bir grup üyesini iyileştirmek, o hedefin 10 metre içindeki ve görüş hattındaki en fazla 2 yaralı grup üyesini daha, her birini iyileşen canın 50%'i kadar iyileştirir. Bu ekstra iyileştirmeler kritik vuramaz ya da Öğreti bağı oluşturamaz. (Öğreti imzası)"
       },
       "seraphic_vigil": {
         "name": "Serafik Nöbet",
@@ -13216,11 +13487,20 @@ export const tr_TR: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Kontak Anahtarı: Dehşetkıvılcım, Yer Sarsan"
       },
+      "reins_lanternback_troll": {
+        "name": "Fenerci Boyunduruğu: Grumbol"
+      },
+      "reins_chimeglass_tortoise": {
+        "name": "Roadwarden's Bellstrap: Tolliver"
+      },
       "reins_rickshaw_mount": {
         "name": "Bağlı Dizginler: Kemikbağlı Çekçek"
       },
       "reins_drakemaw_raptor": {
         "name": "Ejder Ağzı Raptoru'nun Dizginleri"
+      },
+      "reins_mech_bird": {
+        "name": "Ignition Key: Cluckwork Mech Bird"
       },
       "rimefang": {
         "name": "Kırağı Dişi"
@@ -13902,6 +14182,48 @@ export const tr_TR: EnTranslations = {
       },
       "wand_of_quenched_sparks": {
         "name": "Sönmüş Kıvılcımların Asası"
+      },
+      "bramblehide_crown": {
+        "name": "Roots' Bramblehide Crown"
+      },
+      "bramblehide_mantle": {
+        "name": "Roots' Bramblehide Mantle"
+      },
+      "bramblehide_harness": {
+        "name": "Roots' Bramblehide Harness"
+      },
+      "bramblehide_cinch": {
+        "name": "Roots' Bramblehide Cinch"
+      },
+      "bramblehide_legguards": {
+        "name": "Roots' Bramblehide Legguards"
+      },
+      "bramblehide_grips": {
+        "name": "Roots' Bramblehide Grips"
+      },
+      "bramblehide_treads": {
+        "name": "Roots' Bramblehide Treads"
+      },
+      "courtiers_bonefang": {
+        "name": "Courtier's Bonefang"
+      },
+      "thornpeak_wardblade": {
+        "name": "Thornpeak Wardblade"
+      },
+      "gravecourt_hewer": {
+        "name": "Gravecourt Hewer"
+      },
+      "votive_ward_of_the_deathless_court": {
+        "name": "Votive Ward of the Deathless Court"
+      },
+      "thornpeak_moonhide_cowl": {
+        "name": "Thornpeak Moonhide Cowl"
+      },
+      "stormhymn_chain_grips": {
+        "name": "Stormhymn Chain Grips"
+      },
+      "stormhymn_chain_treads": {
+        "name": "Stormhymn Chain Treads"
       },
       "conjured_water4": {
         "name": "Sihirle Yaratılmış Kaynak Suyu"
@@ -14880,6 +15202,9 @@ export const tr_TR: EnTranslations = {
       "nythraxis_scourge_of_thornpeak": {
         "name": "Nythraxis, Dikenzirve Belası"
       },
+      "nythraxis_bone_spike": {
+        "name": "Bone Spike"
+      },
       "ignivar_herald_of_the_last_flame": {
         "name": "Ignivar, Son Alevin Habercisi"
       },
@@ -15845,6 +16170,11 @@ export const tr_TR: EnTranslations = {
         "name": "Korkmuş Nell",
         "title": "Gullhaven Balıkçısı",
         "greeting": "Tam ağların kurutulduğu yerde açıldı. Tam orada, hayatım boyunca her sabah durduğum yerde. Artık kıyıya inmiyorum. Artık pek bir yere gitmiyorum."
+      },
+      "riftwright_maelis": {
+        "name": "Riftwright Maelis",
+        "title": "Rift Forgemaster",
+        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
       },
       "forgemistress_darva": {
         "name": "Dövme Ustası Darva",
@@ -18919,6 +19249,12 @@ export const tr_TR: EnTranslations = {
         "name": "Bağlıtaş Öncüsü",
         "bonus3": "Saldırı ve büyü hızını %15 artırır."
       },
+      "bramblehide": {
+        "name": "Roots'un Dikenli Postu",
+        "bonus2": "Saldırı gücünü 40 artırır.",
+        "bonus4": "Silah kritik vuruşların hedefi Kemikkıymık ile parçalar, 12 sn boyunca her 2 sn'de 8 kanama hasarı verir. 3 kata kadar üst üste binebilir.",
+        "bonus6": "Saldırı ve büyü yapma hızını %4, İsabeti %3 artırır. Silahlarının kritik vuruşları hedefi Kemik Yarığı ile parçalar ve 12 saniye boyunca her 2 saniyede 5 hasar vererek kanatır. En fazla 3 kez birikir."
+      },
       "chronoweave": {
         "name": "Aether Dokuması Giysileri",
         "bonus2": "Zamansal Yankı, tek hedefli Gizemli hasarının %50’sini iyileştirmeye dönüştürür. Alınan hasar artık büyü yapmanı geciktirmez.",
@@ -19150,6 +19486,7 @@ export const tr_TR: EnTranslations = {
     "delveRiteShrineReedInteract": "Saz Sunağı: Dokunmak için F'ye bas",
     "delveRiteShrineSkullInteract": "Kafatası Sunağı: Dokunmak için F'ye bas",
     "mailboxName": "Posta Kutusu",
-    "noticeboardName": "İlan Tahtası"
+    "noticeboardName": "İlan Tahtası",
+    "realmBuilderMonumentName": "Realm Builder Monument"
   }
 };

@@ -2220,6 +2220,8 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'entities.items.artisans_eye.name': 'Zanaatkârın Gözü',
   'entities.items.reins_terrorspark_groundshaker.name':
     'Kontak Anahtarı: Dehşetkıvılcım, Yer Sarsan',
+  'entities.items.reins_lanternback_troll.name':
+    'Fenerci Boyunduruğu: Grumbol',
   'hud.options.graphicsPresetInsane': 'Ekstrem',
   'hud.options.surfaceDetail': 'Yüzey Detayı',
   'hud.options.surfaceDetailBasic': 'Temel',
@@ -9566,10 +9568,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'En iyi mobil deneyim için yatay tam ekranda oynayın.',
   'mobilePreflight.rotateTitle': 'Yatay Konuma Çevir',
   'mobilePreflight.title': 'Yatay Tam Ekranda Oyna',
-  'mode.caCopyAria': 'Sözleşme adresini kopyala',
-  'mode.caLabel': '$WOC Sözleşme Adresi',
-  'mode.caNote':
-    "WOC topluluk jetonumuzdur. Oynamak için gerekli değildir. WOC'un faydasını ve döngüsünü tartışmak için Discord'a katılın.",
   'mode.offlineAria': 'Çevrimdışı Oyna: anında yerel tek oyunculu oturum başlat',
   'mode.offlineDesc':
     'Tarayıcınızda anında tek oyunculu dünya. Hiçbir şey kaydedilmez: hızlı bir kapışma veya test için ideal.',
@@ -12759,7 +12757,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Bir müttefiki 30 sn korur. Onu 35% canın altına düşüren ilk vuruş Nöbeti tüketir ve onu {buff} iyileştirir. (Lütuf imzası)',
   'entities.abilities.scouring_mercy.description':
-    'Bir düşmana 72 ila 84 Kutsal hasar verir ya da dost bir hedefi 130 ila 155 iyileştirir. Her iki değer de büyü gücüyle artar. Hasar ayrıca Öğreti ile bağlı her müttefiki 30%, hiç bağlı müttefik yoksa en düşük canlı grup üyesini 15% iyileştirir. (Öğreti imzası)',
+    "Bir düşmana {damage} Kutsal hasar verir ya da dost bir hedefi {healing} iyileştirir. Hasar büyü gücüyle, iyileştirme ise iyileştirme gücüyle artar. Öğreti, bu hasarı bağlarınız aracılığıyla iyileştirmeye dönüştürür. 30 metre içinde bağlı yaralı bir grup üyesi yoksa, 30 metre içindeki en düşük canlı yaralı grup üyesini hasarın 15%'i kadar iyileştirir. Bir grup üyesini iyileştirmek, o hedefin 10 metre içindeki ve görüş hattındaki en fazla 2 yaralı grup üyesini daha, her birini iyileşen canın 50%'i kadar iyileştirir. Bu ekstra iyileştirmeler kritik vuramaz ya da Öğreti bağı oluşturamaz. (Öğreti imzası)",
   'entities.abilities.solar_invocation.description':
     'Bir müttefiki anında {damage} iyileştirir ya da bir düşmana orta düzeyde Kutsal hasar verir. Her iki kullanım da 1 Adanmışlık üretir. Yüceliş sırasında iyileştirme okuması hedefin 10 m yakınındaki dost oyuncuları da yarısı kadar iyileştirir.',
   'entities.abilities.solar_step.description': 'Hareket hızını 2 sn boyunca 150% artırır.',
@@ -13326,8 +13324,6 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Ruh Parçaları',
   'hudChrome.warlock.doomEmptyStatus': '{value} / {max} Mahkûmiyet.',
   'hudChrome.warlock.doomLabel': 'Mahkûmiyet',
-  'hudChrome.warlock.doomMeterLock': 'Istırap kaynak çubuğunu kilitle',
-  'hudChrome.warlock.doomMeterUnlock': 'Istırap kaynak çubuğunu taşı',
   'hudChrome.warlock.doomStatus': '{value} / {max} Mahkûmiyet; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady': 'Üç Kader İpliği: Tüketme onları ek Mahkûmiyete dönüştürebilir.',
   'hudChrome.warlock.fateThreadsLabel': 'Kader İplikleri',
@@ -14072,6 +14068,10 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Uzun Çekiş kritik vuruşları Soğuk Odağı 2 saniye uzatır; her etkinleştirmede en fazla 6 saniye.',
   'entities.itemSets.coldsight_trackers.name': 'Soğuk Görüş İz Sürücüleri',
   'entities.itemSets.crownforged.bonus6': 'Saldırı ve büyü yapma hızını %4, İsabeti %3 artırır. Silahlarının kritik vuruşları hedefi Kemik Yarığı ile parçalar ve 12 saniye boyunca her 2 saniyede 5 hasar vererek kanatır. En fazla 3 kez birikir.',
+  'entities.itemSets.bramblehide.name': "Roots'un Dikenli Postu",
+  'entities.itemSets.bramblehide.bonus2': 'Saldırı gücünü 40 artırır.',
+  'entities.itemSets.bramblehide.bonus4': "Silah kritik vuruşların hedefi Kemikkıymık ile parçalar, 12 sn boyunca her 2 sn'de 8 kanama hasarı verir. 3 kata kadar üst üste binebilir.",
+  'entities.itemSets.bramblehide.bonus6': 'Saldırı ve büyü yapma hızını %4, İsabeti %3 artırır. Silahlarının kritik vuruşları hedefi Kemik Yarığı ile parçalar ve 12 saniye boyunca her 2 saniyede 5 hasar vererek kanatır. En fazla 3 kez birikir.',
   'entities.itemSets.dawnforged.bonus2': 'Işık Feneri doğrudan iyileştirmelerinin %55\'ini kopyalar. Alınan hasar artık büyü yapmanı geciktirmez.',
   'entities.itemSets.dawnforged.bonus4': 'Parlak Rezonans\'ın güçlendirilmiş Şafağın Kucaklayışı anında gerçekleşir.',
   'entities.itemSets.dawnforged.name': 'Şafak Dövmesi Giysileri',

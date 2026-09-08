@@ -2217,6 +2217,8 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'entities.items.gatherers_cache.name': 'Indsamlerens Gemme',
   'entities.items.artisans_eye.name': 'Håndværkerens Øje',
   'entities.items.reins_terrorspark_groundshaker.name': 'Tændingsnøgle: Skrækgnist, jordrysteren',
+  'entities.items.reins_lanternback_troll.name':
+    'Lygtetænderens åg: Grumbol',
   'hud.options.graphicsPresetInsane': 'Ekstrem',
   'hud.options.surfaceDetail': 'Overfladedetaljer',
   'hud.options.surfaceDetailBasic': 'Basis',
@@ -8884,10 +8886,6 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'mobilePreflight.rotateSub': 'Spil i liggende fuldskærm for den bedste mobiloplevelse.',
   'mobilePreflight.rotateTitle': 'Drej til liggende format',
   'mobilePreflight.title': 'Spil i liggende fuldskærm',
-  'mode.caCopyAria': 'Kopiér kontraktadresse',
-  'mode.caLabel': '$WOC Kontraktadresse',
-  'mode.caNote':
-    'WOC er vores fællesskabstoken. Det er ikke nødvendigt for at spille. Tilslut dig Discord for at diskutere WOC-nytten og svinghjulet.',
   'mode.offlineAria': 'Spil offline: start en øjeblikkelig lokal singleplayer-session',
   'mode.offlineDesc':
     'Øjeblikkelig singleplayer-verden i din browser. Intet gemmes: perfekt til en hurtig dyst eller test.',
@@ -12572,7 +12570,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.seraphic_vigil.description':
     'Beskytter en allieret i 30 sek. Det første slag, der bringer vedkommende under 35% sundhed, forbruger Vagten og helbreder vedkommende for {buff}. (Velsignelsessignatur)',
   'entities.abilities.scouring_mercy.description':
-    'Gør 72 til 84 hellig skade på en fjende eller helbreder et venligt mål for 130 til 155. Begge beløb stiger med besværgelseskraft. Skaden helbreder også hver lærebundet allieret for 30%, eller gruppemedlemmet med lavest sundhed for 15%, hvis ingen allieret er bundet. (Læresignatur)',
+    'Gør {damage} hellig skade på en fjende eller helbreder et venligt mål for {healing}. Skaden stiger med besværgelseskraft; helbredelsen stiger med helbredelseskraft. Læren omdanner denne skade til helbredelse gennem dine bånd. Hvis intet bundet såret gruppemedlem er inden for 30 meter, helbredes det sårede gruppemedlem med lavest sundhed inden for 30 meter for 15% af skaden. At helbrede et gruppemedlem helbreder også op til 2 andre sårede gruppemedlemmer inden for 10 meter af det mål og inden for din sigtelinje, hver for 50% af den gendannede sundhed. Denne ekstra helbredelse kan hverken være kritisk eller skabe Læren-bånd. (Læresignatur)',
   'entities.abilities.solar_invocation.description':
     'Helbreder øjeblikkeligt en allieret for {damage} eller gør moderat hellig skade på en fjende. Begge anvendelser genererer 1 Hengivenhed. Under Ophøjelse helbreder en helbredende kastning også allierede spillere inden for 10 m af målet for halvdelen.',
   'entities.abilities.solar_step.description': 'Øger din bevægelseshastighed med 150% i 2 sek.',
@@ -13414,8 +13412,6 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'hudChrome.procOverlay.soulFragmentsMeter': 'Sjælesplinter',
   'hudChrome.warlock.doomEmptyStatus': '{value} af {max} Fordømmelse.',
   'hudChrome.warlock.doomLabel': 'Fordømmelse',
-  'hudChrome.warlock.doomMeterLock': 'Lås Lidelse-ressourcebjælken',
-  'hudChrome.warlock.doomMeterUnlock': 'Flyt Lidelse-ressourcebjælken',
   'hudChrome.warlock.doomStatus': '{value} af {max} Fordømmelse; {remaining}.',
   'hudChrome.warlock.fateThreadsConsumeReady':
     'Tre Skæbnetråde: Fortær kan flette dem ind i yderligere Fordømmelse.',
@@ -14127,6 +14123,10 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'entities.itemSets.coldsight_trackers.bonus4': 'Kritiske træffere fra Long Draw forlænger Cold Focus med 2 sek., op til 6 sek. pr. aktivering.',
   'entities.itemSets.coldsight_trackers.name': 'Koldesynsspejdere',
   'entities.itemSets.crownforged.bonus6': 'Øger angrebs- og besværgelseshastigheden med 4% og træfsikkerheden med 3%. Kritiske våbentræffere splintrer målet med Bonesplinter, så det bløder for 5 skade hvert 2. sek. i 12 sek. Stables op til 3 gange.',
+  'entities.itemSets.bramblehide.name': "Roots' Tornehud",
+  'entities.itemSets.bramblehide.bonus2': 'Øger angrebskraft med 40.',
+  'entities.itemSets.bramblehide.bonus4': 'Dine kritiske våbenslag splintrer målet med Bensplint og påfører 8 blødningsskade hvert 2. sek. i 12 sek. Stakker op til 3 gange.',
+  'entities.itemSets.bramblehide.bonus6': 'Øger angrebs- og besværgelseshastigheden med 4% og træfsikkerheden med 3%. Kritiske våbentræffere splintrer målet med Bonesplinter, så det bløder for 5 skade hvert 2. sek. i 12 sek. Stables op til 3 gange.',
   'entities.itemSets.dawnforged.bonus2': 'Beacon of Light kopierer 55 procent af dine direkte helinger. Modtaget skade forsinker ikke længere dine besværgelser.',
   'entities.itemSets.dawnforged.bonus4': 'Radiant Resonances styrkede Dawn\'s Embrace er øjeblikkelig.',
   'entities.itemSets.dawnforged.name': 'Daggryssmedede gevandter',

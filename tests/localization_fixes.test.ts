@@ -578,6 +578,12 @@ describe('S1: sim event-text pipeline is localized in every locale', () => {
     'Loadout "PvP" applied.',
     'Deleted build "PvP".',
     'You may choose a specialization at level 10.',
+    // The Rift forge log lines (src/sim/rift/progression.ts emitResult) reach
+    // ctx.emit through a variable, so the emit scanner below cannot see them;
+    // pinned here by sample instead, item names included.
+    'Rift upgrade completed for Riftbound Band of Might.',
+    'Rift gem socketed for Riftbound Band of Might.',
+    'Rift gem replaced for Riftbound Band of Might: Verdant Rift Gem destroyed.',
     'You can save at most 5 loadouts.',
     'You have prestiged! Prestige Rank 2.',
     'You dismiss Forest Wolf.',
@@ -893,24 +899,24 @@ describe("R3: the flood-kick reason maps to the client matcher's exact bytes", (
     // and must update this pin, the matcher arm, and the frame pins together.
     expect(exported?.[1]).toBe('message rate exceeded');
 
-    // All six flood kick arms (the pre-parse gate in handleMessage, the
-    // post-parse lane path in consumeLane, the list-read guard path in
-    // consumeListRead per the phase 06 maintainer ruling, the guild-bank
-    // bank/vault retained-ledger refusal callback, the guild-bank op guard path
-    // in consumeGuildBankOp per the Guild Bank Phase 3 QA
-    // database ruling, and the cosmetic-set guard path in consumeCosmeticOp
-    // per the Reliquary border security review) pass the CONSTANT, never an
-    // inline literal, with the grep-ability 'message flood' leaveReason label;
-    // the anti-bot kick keeps its deliberately vague literal pair,
-    // byte-untouched. The exact count keeps this pin selective: a NEW kick
-    // site must consciously join it.
+    // All 3 flood kick arms (the pre-parse gate in handleMessage, the
+    // guild-bank bank/vault retained-ledger refusal callback, and the ONE
+    // shared shed() helper every post-parse meter drops through: the lane
+    // path, the list-read guard per the phase 06 maintainer ruling, the
+    // guild-bank op guard per the Guild Bank Phase 3 QA database ruling, the
+    // guild-bank history read guard from the transaction-history review, and
+    // the cosmetic-set guard per the Reliquary border security review) pass
+    // the CONSTANT, never an inline literal, with the grep-ability 'message
+    // flood' leaveReason label; the anti-bot kick keeps its deliberately vague
+    // literal pair, byte-untouched. The exact count keeps this pin selective:
+    // a NEW kick site must consciously join it, and a new meter joins shed().
     const gameSrc = stripComments(
       fs.readFileSync(path.resolve(process.cwd(), 'server/game.ts'), 'utf8'),
     );
     const kickArms = gameSrc.match(
       /kickSession\(session, MSG_RATE_KICK_REASON, 'message flood'\)/g,
     );
-    expect(kickArms, 'all six flood kick arms must pass MSG_RATE_KICK_REASON').toHaveLength(6);
+    expect(kickArms, 'all 3 flood kick arms must pass MSG_RATE_KICK_REASON').toHaveLength(3);
     expect(gameSrc).toContain("kickSession(session, 'rejected by server', 'disconnected')");
 
     // The matcher arm recognizes the same bytes and returns the loading key. A

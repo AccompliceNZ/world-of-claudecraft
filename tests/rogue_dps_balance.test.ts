@@ -69,23 +69,20 @@ describe('Rogue fight-6498 deterministic DPS bands', () => {
     const repeat = measuredDps();
     expect(repeat).toEqual(first);
 
-    // Accepted three-seed measurements on this fixture are approximately
-    // 212 Combat, 175 Assassination, and 190 Subtlety. Re-anchored through
-    // the 2026-08-30 hit rebalance: the Crucible elective rings traded their
-    // crit lines for Hit (full-coverage program), and this fixture fights
-    // SAME-LEVEL mobs where that hit is far past cap, so the crit-for-hit
-    // trade is a real small loss here (the classic farm-content shape) while
-    // the heroic +2 profile gains it back and more. A new itemization ruling
-    // sets a new power level; re-anchor to the measured values rather than
-    // restoring an old band, and keep the sibling ordering pinned so a real
-    // collapse still reds.
+    // Prior anchor: ~212 Combat, 175 Assassination, 190 Subtlety (2026-08-30
+    // hit rebalance). v0.42.0 (docs/design/class-balance-v042.md) buffs
+    // Knifework/assassination (+9.89%) and nerfs Skulduggery/subtlety's
+    // sustained output (-12.50%, this fixture's "generic rogue policy" row);
+    // combat is untuned. The two moves cross: assassination now measures
+    // ABOVE subtlety, so the ordering assertion re-anchors to
+    // combat > assassination > subtlety.
     expect(first.combat).toBeGreaterThanOrEqual(204);
     expect(first.combat).toBeLessThanOrEqual(220);
-    expect(first.assassination).toBeGreaterThanOrEqual(167);
-    expect(first.assassination).toBeLessThanOrEqual(183);
-    expect(first.subtlety).toBeGreaterThanOrEqual(182);
-    expect(first.subtlety).toBeLessThanOrEqual(198);
-    expect(first.combat).toBeGreaterThan(first.subtlety);
-    expect(first.subtlety).toBeGreaterThan(first.assassination);
+    expect(first.assassination).toBeGreaterThanOrEqual(183);
+    expect(first.assassination).toBeLessThanOrEqual(199);
+    expect(first.subtlety).toBeGreaterThanOrEqual(158);
+    expect(first.subtlety).toBeLessThanOrEqual(174);
+    expect(first.combat).toBeGreaterThan(first.assassination);
+    expect(first.assassination).toBeGreaterThan(first.subtlety);
   }, 30_000);
 });

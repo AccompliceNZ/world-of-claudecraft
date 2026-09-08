@@ -14,6 +14,19 @@ const wait = (ms) => new Promise((r) => setTimeout(r, ms));
 // 500ms. Some windows (crafting: several icon-bearing rows) settle their layout
 // noticeably slower than others in headless swiftshader; a fixed wait is either
 // too short (flaky) or wastefully long, so this returns as soon as it is ready.
+// The tutorial island's one-shot arrival greeting (#tutorial-greeting) spawns a
+// beat after the reveal and sits over every window; a panel shot taken under it
+// shows the greeting, not the panel. Wait for it briefly and dismiss it.
+async function dismissArrivalGreeting(page) {
+  if (await pollForSize(page, '#tutorial-greeting', 4, 500)) {
+    await page.evaluate(() => {
+      document.querySelector('#tutorial-greeting button')?.click();
+      document.querySelector('#tutorial-greeting')?.remove();
+    });
+    await wait(200);
+  }
+}
+
 async function pollForSize(page, selector, attempts = 20, intervalMs = 500) {
   for (let i = 0; i < attempts; i++) {
     await wait(intervalMs);
@@ -46,6 +59,29 @@ async function awaitWorldPainted(page) {
   );
 }
 
+// The loading veil can rise more than once after a teleport (asset streaming
+// re-arms it), and a clip taken under it shoots the curtain art. Wait until
+// it has stayed hidden for a full streak, both before and after staging.
+async function awaitVeilSettled(page, streakMs = 3000) {
+  const deadline = Date.now() + 120000;
+  let hiddenSince = null;
+  while (Date.now() < deadline) {
+    const hidden = await page.evaluate(() => {
+      const veil = document.getElementById('loading-screen');
+      if (!veil) return true;
+      const style = getComputedStyle(veil);
+      return (
+        style.display === 'none' || style.visibility === 'hidden' || Number(style.opacity) === 0
+      );
+    });
+    if (!hidden) hiddenSince = null;
+    else if (hiddenSince === null) hiddenSince = Date.now();
+    else if (Date.now() - hiddenSince >= streakMs) return;
+    await wait(250);
+  }
+  throw new Error('loading veil never settled');
+}
+
 // Seed the theme preset BEFORE the document loads (variant.beforeLoad), in string
 // form because this script runs under tsx (keepNames breaks nested functions inside
 // evaluate callbacks). Every themed variant seeds explicitly, never relies on a
@@ -54,6 +90,15 @@ async function awaitWorldPainted(page) {
 const themeSeed = (preset) => async (page) => {
   await page.evaluateOnNewDocument(
     `try { localStorage.setItem('woc_theme', JSON.stringify({ preset: '${preset}', custom: {} })); } catch {}`,
+  );
+};
+
+// The band tooltip rig: the standing lowest graphics preset, plus the
+// off-by-default item-level readout (Esc options), which is the line the
+// Riftbound band ladder exists to make true. String form: this runs under tsx.
+const riftBandRigSeed = async (page) => {
+  await page.evaluateOnNewDocument(
+    "try { localStorage.setItem('woc_settings', JSON.stringify({ graphicsPreset: 1, showItemLevel: true })); } catch {}",
   );
 };
 
@@ -317,13 +362,14 @@ async function openMarketBrowse(page) {
   return pollForSize(page, '#market-window');
 }
 
-// Open Esc options -> Interface -> Combat by CLICKING the rendered controls rather
+// Open Esc options -> Interface -> Frames by CLICKING the rendered controls rather
 // than reaching past them, so the shot proves the row is reachable the way a player
 // reaches it. Interface is the 4th main-menu row (buildOptionsMenu; the optional Bug
-// Report row is appended AFTER it, so the index is stable) and Combat the 4th tab of
-// the Interface panel (INTERFACE_TAB_ORDER). The window is force-hidden first so the
+// Report row is appended AFTER it, so the index is stable) and Frames the 2nd tab of
+// the Interface panel (INTERFACE_TAB_ORDER; the Edit Frames entry row moved there
+// when the tab was minted). The window is force-hidden first so the
 // toggle is deterministic regardless of prior state, the same trick the bags target uses.
-async function openInterfaceCombatTab(page) {
+async function openInterfaceFramesTab(page) {
   await page.evaluate(() => {
     const el = document.querySelector('#options-menu');
     if (el) el.style.display = 'none';
@@ -335,16 +381,16 @@ async function openInterfaceCombatTab(page) {
   });
   await wait(400);
   await page.evaluate(() => {
-    document.querySelectorAll('#options-menu .opt-tab')[3]?.click();
+    document.querySelectorAll('#options-menu .opt-tab')[1]?.click();
   });
   return pollForSize(page, '#options-menu');
 }
 
-// Press the real "Unlock interface" button (the first row of the Combat tabpanel,
+// Press the real "Unlock interface" button (the first row of the Frames tabpanel,
 // which interfaceUnlockRow appends ahead of the declarative list), then close the
 // menu so the loosened HUD is what the camera sees.
 async function unlockInterfaceThroughTheOption(page) {
-  await openInterfaceCombatTab(page);
+  await openInterfaceFramesTab(page);
   await page.evaluate(() => {
     document.querySelector('#interface-tabpanel .set-row button')?.click();
   });
@@ -766,7 +812,220 @@ const fakePadAxesSeed = async (page) => {
   );
 };
 
+// The shared entry sweep plus the two overlays it does not own: the tutorial
+// island's single-button greeting note (#tutorial-greeting, the `Understood`
+// button) and the software-rendering notice, both of which land on their own
+// schedule after entry and sit exactly where an in-world HUD shot needs to look.
+// Swept rather than clicked once, for the same reason the skill-milestone recipe
+// sweeps: one pass catches whichever overlay happens to be up at that instant.
+async function sweepOverlays(page, passes = 8) {
+  for (let i = 0; i < passes; i++) {
+    await dismissEntryOverlays(page);
+    await page
+      .evaluate(() => {
+        const visible = (el) => !!el && getComputedStyle(el).display !== 'none' && !el.hidden;
+        const greeting = document.getElementById('tutorial-greeting');
+        if (visible(greeting)) greeting.querySelector('[data-close], [data-skip]')?.click();
+        for (const id of ['gpu-notice', 'perf-nudge']) {
+          const notice = document.getElementById(id);
+          if (!visible(notice)) continue;
+          notice.querySelector('button')?.click();
+          notice.hidden = true;
+          notice.style.display = 'none';
+        }
+      })
+      .catch(() => {});
+    await wait(250);
+  }
+}
+
+// Both dot surfaces ON, stated explicitly rather than left to the default: the
+// harness profile's localStorage outlives page.close, so the "-off" variant
+// below would otherwise leak its false into the very next shot (the same leak
+// the themed variants seed against).
+const dotsOnSeed = async (page) => {
+  await lowGraphicsSeed(page);
+  await page.evaluateOnNewDocument(
+    `try { const k = 'woc_settings'; const s = JSON.parse(localStorage.getItem(k) || '{}'); s.showTargetDots = true; s.showNameplateDots = true; localStorage.setItem(k, JSON.stringify(s)); } catch {}`,
+  );
+};
+
+// The BEFORE frames for the dot surfaces: both settings off is byte-identical
+// to the base build (resolveDots and the tracker's core each return before
+// drawing anything), so it is the honest before without a branch flip and
+// without the stale-bundle trap a flip carries.
+const dotsOffSeed = async (page) => {
+  await lowGraphicsSeed(page);
+  await page.evaluateOnNewDocument(
+    `try { const k = 'woc_settings'; const s = JSON.parse(localStorage.getItem(k) || '{}'); s.showTargetDots = false; s.showNameplateDots = false; localStorage.setItem(k, JSON.stringify(s)); } catch {}`,
+  );
+};
+
 export const TARGETS = [
+  {
+    key: 'target-dots',
+    label: 'Target dots: the player-only tracker frame and the nameplate dot row',
+    // Committed frames live in docs/screenshots/target-dots/ (before- and after-
+    // desktop/mobile). Named here because this entry is what produces them, the
+    // way wildheart_shots.mjs and admin_professions_shot.mjs each name their own
+    // output subtree, and because the CI sparse-checkout cone is pinned as a set
+    // equality against the subtrees the tree actually references.
+    when: [
+      'ui/hud/target_dots/',
+      'render/nameplate_dots_core.ts',
+      'render/nameplate_dot_row.ts',
+      'render/nameplate_canvas.ts',
+    ],
+    // The practice row is the honest stage for a MULTI-target tracker: three
+    // hostile dummies six yards apart, side by side from the Highwatch walk-up,
+    // so one frame carries three plates and the tracker's own rows at once.
+    variants: [
+      { key: 'desktop-off', charClass: 'warlock', charName: 'Nyrra', beforeLoad: dotsOffSeed },
+      { key: 'desktop', charClass: 'warlock', charName: 'Nyrra', beforeLoad: dotsOnSeed },
+      {
+        key: 'mobile-off',
+        mobile: true,
+        charClass: 'warlock',
+        charName: 'Nyrra',
+        beforeLoad: dotsOffSeed,
+      },
+      {
+        key: 'mobile',
+        mobile: true,
+        charClass: 'warlock',
+        charName: 'Nyrra',
+        beforeLoad: dotsOnSeed,
+      },
+    ],
+    async capture(page) {
+      // The entry banners, the tutorial prompt and the first NPC greeting each
+      // arrive on their own schedule, so sweep the dismissals rather than
+      // clicking once: any one of them left open covers the tracker's corner.
+      await sweepOverlays(page, 10);
+
+      const staged = await page.evaluate(() => {
+        const game = window.__game;
+        const sim = game?.sim;
+        const player = sim?.player;
+        if (!game || !sim || !player) return { ok: false, reason: 'offline world is unavailable' };
+        sim.setPlayerLevel?.(20, player.id);
+        // The practice row, not the nearest wild pack. Dummies never move, never
+        // fight back and never die, so a rotation cast across three of them still
+        // finds all three standing on their marks when the shot is taken; wild
+        // mobs aggro, close on the player, and (at level 20 against the starting
+        // zone) die to the first Burning Pact, which leaves nothing to track.
+        const dummyIds = new Set(['training_dummy', 'normal_boss_dummy', 'heroic_boss_dummy']);
+        const dummies = [...sim.entities.values()].filter(
+          (e) => e.kind === 'mob' && !e.dead && dummyIds.has(e.templateId),
+        );
+        if (dummies.length < 2) return { ok: false, reason: 'the practice row is unavailable' };
+        // The row runs along z, ascending; a player arrives on the plus-x side.
+        dummies.sort((a, b) => a.pos.z - b.pos.z);
+        const mid = dummies[Math.floor(dummies.length / 2)];
+        player.pos.x = mid.pos.x + 9;
+        player.pos.y = mid.pos.y;
+        // Off the middle dummy's own axis: the row's one authored campfire sits
+        // in FRONT of that dummy, which is exactly where a plus-x stand lands,
+        // and it blocks line of sight to it ("Line of sight." in chat).
+        player.pos.z = mid.pos.z + 4.5;
+        player.prevPos = { ...player.pos };
+        // Face down minus x, straight into the row, and swing the chase camera
+        // onto the same heading so every plate is in frame.
+        player.facing = -Math.PI / 2;
+        game.input.camYaw = player.facing;
+        game.input.camDist = 7;
+        sim.rebucket?.(player);
+        return { ok: true, ids: dummies.map((d) => d.id) };
+      });
+      if (!staged.ok) return { skip: staged.reason };
+
+      // Crossing the world raises the streaming veil and, behind it, a fresh
+      // round of zone banners.
+      await wait(1500);
+      await awaitWorldPainted(page);
+      await sweepOverlays(page, 8);
+
+      // Cast for real, through the same action-bar click a player uses: the
+      // house rule for aura evidence is never to inject an aura or call
+      // castAbility from the harness. Both dots on all three dummies, so the
+      // frame shows a genuine multi-target spread with a real caster id on every
+      // aura. Deliberately the two the BASE warlock knows (Blackrot and Hex of
+      // Anguish): Burning Pact is Destruction-only, so an unspecced level 20
+      // never learns it and every click on it is silently refused.
+      const plan = [
+        { index: 0, abilityId: 'corruption' },
+        { index: 0, abilityId: 'curse_of_agony' },
+        { index: 1, abilityId: 'corruption' },
+        { index: 1, abilityId: 'curse_of_agony' },
+        { index: 2, abilityId: 'corruption' },
+        { index: 2, abilityId: 'curse_of_agony' },
+      ];
+      for (const step of plan) {
+        const mobId = staged.ids[step.index];
+        if (mobId === undefined) continue;
+        const clicked = await page.evaluate(
+          ({ mobId, abilityId }) => {
+            const game = window.__game;
+            const player = game?.sim?.player;
+            const button = document.querySelector('.action-btn[data-hotbar-slot="1"]');
+            if (!game || !player || !button) return false;
+            game.sim.targetEntity(mobId, player.id);
+            player.resource = player.maxResource;
+            game.hud.hotbarActions[0] = { type: 'ability', id: abilityId };
+            game.hud.saveSlotMap?.();
+            button.click();
+            return true;
+          },
+          { mobId, abilityId: step.abilityId },
+        );
+        if (!clicked) return { skip: 'primary action slot 1 is unavailable' };
+        let landed = false;
+        for (let poll = 0; poll < 30 && !landed; poll++) {
+          await wait(200);
+          landed = await page.evaluate(
+            ({ mobId, abilityId }) => {
+              const sim = window.__game?.sim;
+              const mob = sim?.entities.get(mobId);
+              return !!mob?.auras.some(
+                (a) => a.id.startsWith(abilityId) && a.sourceId === sim.player.id,
+              );
+            },
+            { mobId, abilityId: step.abilityId },
+          );
+        }
+        // Let the global cooldown clear before the next click, or that click is
+        // simply refused and the next poll burns its whole budget waiting for an
+        // aura that was never cast.
+        await wait(1700);
+      }
+
+      // The dummies never moved, so nothing needs re-placing: only re-aim the
+      // camera (a cast can swing it) and end on the FIRST dummy, so the
+      // tracker's current-target rows lead the list and carry their gold rule
+      // while the target frame strip below shows the same dots the classic way.
+      await page.evaluate((ids) => {
+        const game = window.__game;
+        const sim = game?.sim;
+        const player = sim?.player;
+        if (!game || !sim || !player) return;
+        player.facing = -Math.PI / 2;
+        game.input.camYaw = player.facing;
+        game.input.camDist = 7;
+        sim.targetEntity(ids[0], player.id);
+      }, staged.ids);
+      await sweepOverlays(page, 4);
+      // Wait out any cast still in flight LAST, so no half-full cast bar rides
+      // the frame.
+      await page
+        .waitForFunction(() => !window.__game?.sim?.player?.castingAbility, {
+          timeout: 20000,
+          polling: 250,
+        })
+        .catch(() => {});
+      await wait(900);
+      return {};
+    },
+  },
   {
     key: 'ravenrift',
     label:
@@ -1786,6 +2045,131 @@ export const TARGETS = [
     },
   },
   {
+    key: 'aura-strip',
+    label: 'Player buff and debuff strips under a full raid-buff load',
+    when: ['aura_strip_order', 'auras_view', 'auras_painter', 'aura_overflow'],
+    variants: [
+      { key: 'desktop', beforeLoad: lowGraphicsSeed },
+      { key: 'mobile', mobile: true, beforeLoad: lowGraphicsSeed },
+    ],
+    async capture(page, variant) {
+      await awaitWorldPainted(page);
+      // This recipe SEEDS player.auras rather than casting. That is deliberate and it
+      // is the opposite of what the sibling `target-auras` target does, so the reason
+      // matters: this target's claim is about STRIP LAYOUT (how many rows the buffs
+      // wrap to, and whether the debuff row clears their duration labels), never about
+      // how an aura came to exist. No reachable sequence of real casts puts a raid's
+      // worth of buffs plus four debuffs on one player inside a capture, and the empty
+      // strip a cast-only recipe could reach is exactly the state that hid the overlap
+      // bug. Same array and same move as scripts/mobile_hud_overlap_audit.mjs, which
+      // seeds for the same layout reason. `target-auras` casts for real because its
+      // claim IS that an ability applies an aura; that rule is scoped to that claim.
+      const seeded = await page.evaluate(() => {
+        const sim = window.__game?.sim;
+        const p = sim?.player;
+        if (!sim || !p || !Array.isArray(p.auras)) {
+          return { ok: false, reason: 'offline world is unavailable' };
+        }
+        p.auras.length = 0;
+        // A realistic raid-buffed spread: long upkeep applied FIRST (as a real pull
+        // does), the short cooldowns a player actually times applied last, so the shot
+        // shows what the ordering pass does rather than a pre-sorted list.
+        const buffs = [
+          ['bl_might', 'Blessing of Might', 'buff_ap', 1800, 25],
+          ['bl_kings', 'Blessing of Kings', 'buff_str', 1800, 10],
+          ['arcane_int', 'Arcane Intellect', 'buff_int', 1800, 20],
+          ['mark_wild', 'Mark of the Wild', 'buff_agi', 1800, 12],
+          ['power_word_fort', 'Power Word: Fortitude', 'buff_sta', 1800, 30],
+          ['divine_spirit', 'Divine Spirit', 'buff_spirit', 1800, 18],
+          ['battle_shout', 'Battle Shout', 'buff_ap', 120, 40],
+          ['horn_winter', 'Horn of Winter', 'buff_str', 120, 15],
+          ['well_fed', 'Well Fed', 'buff_sta', 900, 8],
+          ['flask_titans', 'Flask of Titans', 'buff_sta', 3600, 60],
+          ['sprint', 'Sprint', 'buff_speed', 9, 50],
+          ['heroism', 'Heroism', 'buff_haste', 34, 30],
+        ];
+        for (const [id, name, kind, remaining, value] of buffs) {
+          p.auras.push({
+            id,
+            name,
+            kind,
+            remaining,
+            duration: remaining,
+            value,
+            sourceId: sim.primaryId,
+            school: 'physical',
+          });
+        }
+        // One debuff per school border tint, so the shot also carries the school
+        // colouring the strip already ships.
+        const debuffs = [
+          ['rend', 'Rend', 'dot', 12, 20, 'physical'],
+          ['curse_weak', 'Curse of Weakness', 'debuff_ap', 110, 30, 'shadow'],
+          ['crippling_poison', 'Crippling Poison', 'slow', 8, 50, 'nature'],
+          ['frostbite', 'Frostbite', 'slow', 5, 60, 'frost'],
+        ];
+        for (const [id, name, kind, remaining, value, school] of debuffs) {
+          p.auras.push({
+            id,
+            name,
+            kind,
+            remaining,
+            duration: remaining,
+            value,
+            sourceId: 0,
+            school,
+          });
+        }
+        return { ok: true, count: p.auras.length };
+      });
+      if (!seeded.ok) throw new Error(seeded.reason);
+
+      // Wait for the painter to actually lay both strips out. Polling the DEBUFF row
+      // matters: it is the one that used to be drawn underneath the wrapped buff rows,
+      // so a shot taken before it has a box would hide the very thing being compared.
+      await page.waitForFunction(
+        () => {
+          const buffs = document.getElementById('buff-bar');
+          const debuffs = document.getElementById('debuff-bar');
+          if (!buffs || !debuffs) return false;
+          return buffs.getBoundingClientRect().height > 0 && debuffs.children.length > 0;
+        },
+        { timeout: 30000, polling: 200 },
+      );
+      await wait(600);
+
+      // A close-up over the UNION of the two strips, taken here rather than returned
+      // as a `clip` selector: `clip` resolves one element, and the whole point of the
+      // comparison is the space BETWEEN the two. A union rect also frames the same
+      // region on both sides of a before/after pair, where the after tree has a
+      // wrapper element the before tree does not. Same shape as the weapon-vfx-shed
+      // target's closeup; returning {} below still keeps the full-frame shot too.
+      const region = await page.evaluate(() => {
+        const b = document.getElementById('buff-bar').getBoundingClientRect();
+        const d = document.getElementById('debuff-bar').getBoundingClientRect();
+        const pad = 16;
+        const x = Math.max(0, Math.min(b.x, d.x) - pad);
+        const y = Math.max(0, Math.min(b.y, d.y) - pad);
+        // The duration labels hang out of flow BELOW the last row, so the bottom pad
+        // is deliberately deeper than the others or the shot crops the evidence off.
+        return {
+          x,
+          y,
+          width: Math.min(window.innerWidth - x, Math.max(b.right, d.right) - x + pad),
+          height: Math.min(window.innerHeight - y, Math.max(b.bottom, d.bottom) - y + pad + 14),
+        };
+      });
+      if (region.width > 0 && region.height > 0) {
+        await page.screenshot({
+          // biome-ignore lint/suspicious/noUndeclaredEnvVars: Screenshot-only CLI input is not a Turbo task dependency.
+          path: `${process.env.SHOTS_DIR ?? 'pr-shots'}/aura-strip-${variant.key}-closeup.png`,
+          clip: region,
+        });
+      }
+      return {};
+    },
+  },
+  {
     key: 'player-tooltip',
     label: 'Player hover tooltip',
     when: ['player_tooltip'],
@@ -2022,13 +2406,14 @@ export const TARGETS = [
   },
   {
     key: 'interface-unlock-option',
-    label: 'Interface options, Combat tab: the Unlock interface row',
+    label: 'Interface options, Frames tab: the Edit Frames entry row',
     when: ['ui/interface_unlock', 'ui/options_window', 'ui/options_view'],
-    // Desktop and mobile: the row is an ordinary options control on both, and the
-    // template asks for the mobile arm of any options-panel change.
+    // Desktop and mobile: the tab is an ordinary options panel on both (the entry
+    // row itself is desktop-only), and the template asks for the mobile arm of any
+    // options-panel change.
     variants: [{ key: 'desktop' }, { key: 'mobile', mobile: true }],
     async capture(page) {
-      await openInterfaceCombatTab(page);
+      await openInterfaceFramesTab(page);
       return { clip: '#options-menu' };
     },
   },
@@ -2975,6 +3360,83 @@ export const TARGETS = [
           );
         }
       });
+      await wait(600);
+      return { clip: '#ui' };
+    },
+  },
+  {
+    key: 'riftbound-band-tooltip',
+    label: 'Riftbound band and Rift gem tooltips on the item-level ladder',
+    when: ['rift/band_ladder', 'rift_band_tooltip', 'rift/progression', 'content/rift/items'],
+    // Two standalone shots, desktop only (the synthetic hover path does not
+    // raise #tooltip on the touch layout, and the tooltip content is
+    // byte-identical on mobile): a bagged band beside its worn twin (the
+    // per-copy item level, the ladder-priced stat line, the gem rating line,
+    // and the instance-aware compare block) and a Rift gem's own tooltip
+    // (its socket-bonus line).
+    variants: [
+      { key: 'band', charClass: 'warrior', charName: 'Thorgar', beforeLoad: riftBandRigSeed },
+      { key: 'gem', charClass: 'warrior', charName: 'Thorgar', beforeLoad: riftBandRigSeed },
+    ],
+    async capture(page, variant) {
+      await page.waitForFunction(() => window.__game?.sim?.player, { timeout: 90000 });
+      await dismissEntryOverlays(page);
+      const hoverId = variant?.key === 'gem' ? 'rift_gem_verdant' : 'riftbound_band_of_might';
+      await page.evaluate((id) => {
+        const sim = window.__game?.sim;
+        try {
+          sim?.setPlayerLevel?.(20);
+        } catch {}
+        if (id === 'rift_gem_verdant') {
+          for (const gem of ['rift_gem_verdant', 'rift_gem_crimson']) {
+            try {
+              sim?.addItem(gem, 1);
+            } catch {}
+          }
+        } else {
+          // The dev kit mints two maxed S bands on the fingers; moving one to
+          // the bags lets the hover show the copy AND the compare against its
+          // worn twin.
+          try {
+            sim?.chat?.('/dev bis prot');
+          } catch {}
+          try {
+            sim?.unequipItem?.('ring2');
+          } catch {}
+        }
+        const el = document.querySelector('#bags');
+        if (el) el.style.display = 'none';
+        window.__game?.hud?.toggleBags?.();
+      }, hoverId);
+      await pollForSize(page, '#bags');
+      // Hover through the REAL pointer path so the tooltip is the one a player
+      // sees, not a hand-built string (the rod-ladder recipe).
+      await page.evaluate((id) => {
+        const cells = [...document.querySelectorAll('#bags *')];
+        const el = cells.find((c) => {
+          const bg = c instanceof HTMLElement ? c.style.backgroundImage : '';
+          const img = c.querySelector?.('img');
+          return bg?.includes(id) || img?.getAttribute('src')?.includes(id);
+        });
+        if (!el) return;
+        const r = el.getBoundingClientRect();
+        for (const type of [
+          'pointerenter',
+          'pointerover',
+          'mouseenter',
+          'mouseover',
+          'pointermove',
+          'mousemove',
+        ]) {
+          el.dispatchEvent(
+            new MouseEvent(type, {
+              bubbles: true,
+              clientX: r.left + r.width / 2,
+              clientY: r.top + r.height / 2,
+            }),
+          );
+        }
+      }, hoverId);
       await wait(600);
       return { clip: '#ui' };
     },
@@ -6704,6 +7166,151 @@ export const TARGETS = [
     },
   },
   {
+    // The Key Bindings panel's keyboard overview: the live board coloured by
+    // category, the option rows under it, and the Hotkey Setup export row at
+    // the foot. Falls back to the plain panel on a base without the board, so
+    // a before shot still frames the same window.
+    key: 'keybinds-keyboard-overview',
+    label: 'Key Bindings panel: keyboard overview, options and Hotkey Setup row',
+    when: ['ui/keyboard_map', 'ui/keybind_transfer', 'ui/keyboard_layout_pref'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        // Key Bindings is the first row on the main options menu.
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .kb-actionbar-edit');
+      const board = await pollForSize(page, '#options-menu .kbm-key', 6);
+      await dismissArrivalGreeting(page);
+      // The panel outgrows the capture viewport, so clip the overview section
+      // itself (the board, its legend and option rows); a base without the
+      // board frames the whole panel instead.
+      if (!open) return {};
+      return board ? { clip: '#options-menu .kbm' } : { clip: '#options-menu' };
+    },
+  },
+  {
+    // The Hotkey Setup export pane open on the Key Bindings panel: the code box
+    // with its Copy button (text based, no file).
+    key: 'keybinds-hotkey-setup-export',
+    label: 'Key Bindings panel: Hotkey Setup export code',
+    when: ['ui/keybind_transfer'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .kb-transfer .set-toggle');
+      if (!open) return {};
+      await page.evaluate(() => {
+        document.querySelector('#options-menu .kb-transfer .set-toggle')?.click();
+      });
+      await pollForSize(page, '#options-menu .kb-transfer .transfer-code');
+      await dismissArrivalGreeting(page);
+      // The row sits at the foot of a panel taller than the viewport: clip it.
+      return { clip: '#options-menu .kb-transfer' };
+    },
+  },
+  {
+    // The keyboard overview popped out into its own movable window over the
+    // world (the menu closes).
+    key: 'keybinds-keyboard-popout',
+    label: 'Keyboard overview pop-out window',
+    when: ['ui/keyboard_map_window'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      const ready = await pollForSize(page, '#options-menu .kbm-popout');
+      if (!ready) return {};
+      await page.evaluate(() => document.querySelector('#options-menu .kbm-popout')?.click());
+      const open = await pollForSize(page, '#keyboard-map-window .kbm-key');
+      await dismissArrivalGreeting(page);
+      return open ? { clip: '#keyboard-map-window' } : {};
+    },
+  },
+  {
+    // The Game Menu's Import / Export sub-panel: the Full Settings row with its
+    // export code open.
+    key: 'options-import-export',
+    label: 'Game Menu: Import / Export Settings panel with the full settings code',
+    when: ['ui/settings_transfer'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        // The entry sits between Performance Overlay and Wiki; find it by its
+        // transfer panel rather than a fixed index.
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        const entry = buttons.find((b) => /Import/.test(b.textContent ?? ''));
+        entry?.click();
+      });
+      const open = await pollForSize(page, '#options-menu .transfer-body .set-toggle', 6);
+      if (!open) return {};
+      await page.evaluate(() =>
+        document.querySelector('#options-menu .transfer-body .set-toggle')?.click(),
+      );
+      await pollForSize(page, '#options-menu .transfer-body .transfer-code');
+      await dismissArrivalGreeting(page);
+      return { clip: '#options-menu' };
+    },
+  },
+  {
+    // The on-bar key-binding mode's conflict prompt: a slot selected, a key
+    // another action already holds pressed, the are-you-sure dialog up.
+    key: 'actionbar-keybind-conflict',
+    label: 'On-bar key-binding mode: key already bound prompt',
+    when: ['ui/hud/action_bar/action_bar_bind_controller'],
+    variants: [{ key: 'desktop' }],
+    async capture(page) {
+      await page.evaluate(() => {
+        const hud = window.__game?.hud;
+        if (!hud) return;
+        const win = document.querySelector('#options-menu');
+        if (win && getComputedStyle(win).display !== 'none') hud.toggleOptionsMenu();
+        hud.toggleOptionsMenu();
+        const buttons = Array.from(document.querySelectorAll('#options-menu .opt-btn'));
+        buttons[0]?.click();
+      });
+      await pollForSize(page, '#options-menu .kb-actionbar-edit');
+      await page.evaluate(() => document.querySelector('.kb-actionbar-edit')?.click());
+      const open = await pollForSize(page, '#actionbar-bind-banner');
+      if (!open) return {};
+      await page.evaluate(() => {
+        document.querySelectorAll('#actionbar .action-btn')[3]?.click();
+      });
+      await wait(300);
+      // W is Move Forward by default: pressing it for a bar slot raises the prompt.
+      await page.keyboard.press('KeyW');
+      const prompt = await pollForSize(page, '#confirm-dialog', 6);
+      await dismissArrivalGreeting(page);
+      return prompt ? { clip: '#confirm-dialog' } : {};
+    },
+  },
+  {
     // The Key Bindings panel with the per-slot action-bar rows replaced by a
     // single "Edit action bar keys" entry (issue #1238).
     key: 'actionbar-keybind-menu-entry',
@@ -10415,6 +11022,30 @@ export const TARGETS = [
     },
   },
   {
+    key: 'landing-play-console',
+    label: 'Landing page play console (world picker, Play button, tip) on the web shell',
+    // The pre-game home page: any index.html or shell.css change can move what a
+    // first-time visitor sees before they log in, so shoot the console itself.
+    // Web only: the native and desktop shells hide parts of the console (see the
+    // body.native-app / desktop-app rules in hud.css); the phone variant shows the
+    // trimmed mode-select layout hud.mobile.css owns.
+    when: ['index.html', 'styles/shell.css'],
+    variants: [
+      { key: 'desktop-web', landing: true, beforeLoad: lowGraphicsSeed },
+      { key: 'mobile-web', landing: true, mobile: true, beforeLoad: lowGraphicsSeed },
+    ],
+    async capture(page) {
+      if (!(await pollForSize(page, '#mode-select'))) {
+        throw new Error('landing play console did not render');
+      }
+      await page.evaluate(() => {
+        document.querySelector('#mode-select')?.scrollIntoView({ block: 'center' });
+      });
+      await wait(300);
+      return { clip: '#mode-select' };
+    },
+  },
+  {
     key: 'steam-wishlist',
     label: 'Steam wishlist reminder on the landing shell and desktop/mobile chrome',
     when: ['src/ui/steam_wishlist'],
@@ -11937,6 +12568,319 @@ export const TARGETS = [
       });
       await wait(400);
       return { clip: '#ui' };
+    },
+  },
+  {
+    key: 'nythraxis-hazards',
+    label:
+      'Nythraxis arena: ground hazards (Grave Flame, Soulfire, Gravefire, Grave Eruption ' +
+      'warning), the blue Binding Sigil, and Soul Rend markers (red solo, green stacked)',
+    when: [
+      'nythraxis_soul_rend_marker',
+      'nythraxis_grave_flame_visual',
+      'nythraxis_gravefire_visual',
+      'nythraxis_sigil_visual',
+      'nythraxis_mechanic_visuals',
+      'nythraxis_grave_core',
+      'nythraxis_gravefire_core',
+      'nythraxis_sigil_core',
+      'sim/nythraxis_',
+      'sim/encounters/nythraxis',
+    ],
+    // A staged fixture, not a live pull: the real /dev practice raid spawns the
+    // boss and nine invulnerable bots, then the tick is frozen and the four
+    // ground-hazard readouts plus two bots' auras are overwritten directly so
+    // every mechanic this PR touches is visible in one frame, never waiting on
+    // the encounter's own cadence. See docs/screenshots/nythraxis-playtest-tuning.
+    variants: [
+      { key: 'desktop', beforeLoad: seedLowGraphicsPreset },
+      { key: 'mobile', mobile: true, beforeLoad: seedLowGraphicsPreset },
+    ],
+    async capture(page) {
+      await page.waitForFunction(() => window.__game?.sim?.player, { timeout: 90000 });
+      await dismissEntryOverlays(page);
+      let staged = { ok: false, reason: 'world is unavailable' };
+      for (let i = 0; i < 20 && !staged.ok; i++) {
+        staged = await page.evaluate(() => {
+          const game = window.__game;
+          const sim = game?.sim;
+          if (!sim?.player) return { ok: false, reason: 'offline world is unavailable' };
+          document.querySelector('#gpu-notice')?.remove();
+          document.querySelector('.camera-prompt-confirm')?.click();
+          const banner = document.querySelector('#banner');
+          if (banner) banner.style.opacity = '0';
+          // A freshly-created character spawns into the New Adventurer tutorial
+          // zone (the Proving Shore) and a nearby NPC auto-greets: neither is
+          // dismissed by the shared entry flow's dismissEntryOverlays (that
+          // only covers the intro cinematic, the FIRST tutorial overlay, and
+          // the camera prompt), and both persist after /dev nythraxisraid
+          // teleports the party into the arena. Becoming a raid leader also
+          // auto-opens Loot Settings (see the party-pets target above).
+          document.querySelector('.tut-card')?.remove();
+          document.getElementById('tutorial-greeting')?.remove();
+          const loot = document.querySelector('#loot-settings-window');
+          if (loot) loot.style.display = 'none';
+          // Unconditional and idempotent: setupNythraxisDevRaid reuses an
+          // existing matching roster, so calling it again is a no-op. Never
+          // skip it on the presence of SOME Nythraxis mob: an unclaimed
+          // instance from an earlier claim in this same world would then be
+          // mistaken for our player's own raid, and no bots would ever spawn.
+          sim.chat('/dev nythraxisraid heroic');
+          const player = sim.player;
+          const bossCandidates = [...sim.entities.values()].filter(
+            (e) => e.templateId === 'nythraxis_scourge_of_thornpeak' && !e.dead,
+          );
+          if (bossCandidates.length === 0) return { ok: false, reason: 'Nythraxis did not spawn' };
+          // The boss in OUR player's own claimed instance: nearest to the
+          // player, who /dev nythraxisraid just zoned in beside him.
+          const boss = bossCandidates.reduce((closest, candidate) => {
+            const d = (a) => (a.pos.x - player.pos.x) ** 2 + (a.pos.z - player.pos.z) ** 2;
+            return d(candidate) < d(closest) ? candidate : closest;
+          });
+          const bots = [...sim.players.values()]
+            .filter((meta) => meta.isDevBot && /^NythraxisBot\d$/.test(meta.name))
+            .map((meta) => sim.entities.get(meta.entityId))
+            .filter((e) => e && !e.dead);
+          if (bots.length < 3) return { ok: false, reason: 'practice bots did not spawn' };
+
+          // Freeze the encounter driver so the injected fixture below survives
+          // to the screenshot instead of being overwritten by the next tick.
+          sim.tick = () => [];
+
+          const bx = boss.pos.x;
+          const bz = boss.pos.z;
+
+          // Two Soul Rend marks: one isolated (reads red), two close together
+          // (reads green, the stack-range rule the redo introduced).
+          const soulRendAura = (sourceId) => ({
+            id: 'nythraxis_soul_rend',
+            name: 'Soul Rend',
+            kind: 'vulnerability',
+            remaining: 8,
+            duration: 8,
+            value: 0,
+            sourceId,
+            school: 'shadow',
+            encounterOwned: true,
+          });
+          const solo = bots[0];
+          solo.pos = { x: bx - 14, y: solo.pos.y, z: bz + 6 };
+          solo.prevPos = { ...solo.pos };
+          solo.auras = [
+            ...solo.auras.filter((a) => a.id !== 'nythraxis_soul_rend'),
+            soulRendAura(boss.id),
+          ];
+          const [stackedA, stackedB] = [bots[1], bots[2]];
+          stackedA.pos = { x: bx + 12, y: stackedA.pos.y, z: bz + 6 };
+          stackedA.prevPos = { ...stackedA.pos };
+          stackedB.pos = { x: bx + 14, y: stackedB.pos.y, z: bz + 8 };
+          stackedB.prevPos = { ...stackedB.pos };
+          for (const e of [stackedA, stackedB])
+            e.auras = [
+              ...e.auras.filter((a) => a.id !== 'nythraxis_soul_rend'),
+              soulRendAura(boss.id),
+            ];
+          for (const e of [solo, stackedA, stackedB]) sim.rebucket(e);
+
+          // Ground hazards, staged directly on the readout getters the
+          // renderer consumes (IWorld combat facet), around the boss. Radius
+          // and duration mirror the real heroic constants (grave flame radius 3
+          // / duration 8s, Soulfire radius 4 / duration 12s) so this staged
+          // fixture cannot be misread as a balance change.
+          Object.defineProperty(sim, 'activeNythraxisGraveFlames', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:grave-flame',
+                sourceId: boss.id,
+                kind: 'grave',
+                x: bx - 6,
+                z: bz - 4,
+                radius: 3,
+                duration: 8,
+                remaining: 5,
+              },
+              {
+                id: 'shot:soul-flame',
+                sourceId: boss.id,
+                kind: 'soul',
+                x: bx + 6,
+                z: bz - 4,
+                radius: 4,
+                duration: 12,
+                remaining: 8,
+              },
+            ],
+          });
+          Object.defineProperty(sim, 'activeNythraxisGraveEruptions', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:eruption',
+                x: bx,
+                z: bz + 10,
+                radius: 3,
+                duration: 2.5,
+                remaining: 1.5,
+                warningLead: 0.75,
+              },
+            ],
+          });
+          Object.defineProperty(sim, 'activeNythraxisGravefires', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:gravefire',
+                sourceId: boss.id,
+                x: bx,
+                z: bz,
+                dirX: 0,
+                dirZ: 1,
+                tail: 0,
+                head: 11,
+                halfWidth: 1.5,
+                remaining: 4,
+              },
+            ],
+          });
+          Object.defineProperty(sim, 'activeNythraxisBindingSigils', {
+            configurable: true,
+            value: [
+              {
+                id: 'shot:sigil',
+                sourceId: boss.id,
+                x: bx,
+                z: bz,
+                radius: 6,
+                duration: 20,
+                remaining: 12,
+              },
+            ],
+          });
+
+          // In front of the boss, inside the hall: the arena room spans z
+          // 16..116 with the boss dais near z 96, so +22 here would put the
+          // player z 118, outside the back wall (the wall-blocked shot this
+          // replaces). -22 keeps the player and camera inside the room.
+          player.pos = { x: bx, y: player.pos.y, z: bz - 22 };
+          player.prevPos = { ...player.pos };
+          player.facing = Math.atan2(bx - player.pos.x, bz - player.pos.z);
+          sim.rebucket(player);
+          game.input.camYaw = player.facing;
+          // Wide and raised: the two side bots sit +/-12 to 14 yd off the
+          // boss, and a low angle hides the sigil's floor ring behind his
+          // own model.
+          game.input.camDist = 28;
+          game.input.camPitch = 0.42;
+          return { ok: true };
+        });
+        if (!staged.ok) await wait(300);
+      }
+      if (!staged.ok) throw new Error(staged.reason);
+      // Let the frozen fixture's meshes build and the loading veil clear
+      // before the shot (the arena door teleport re-raises it briefly).
+      await awaitWorldPainted(page);
+      await wait(1200);
+      // A second pass: becoming raid leader / the arena teleport can pop the
+      // tutorial banner, the greeting NPC, or Loot Settings back up after the
+      // staging above ran, and any of the three would obscure the hazards.
+      await page.evaluate(() => {
+        document.querySelector('.camera-prompt-confirm')?.click();
+        document.querySelector('.tut-card')?.remove();
+        document.getElementById('tutorial-greeting')?.remove();
+        const loot = document.querySelector('#loot-settings-window');
+        if (loot) loot.style.display = 'none';
+      });
+      await wait(300);
+      return {};
+    },
+  },
+  {
+    key: 'rift-forge',
+    label: 'Rift Forge: the Riftwright in Gullhaven and the forge window',
+    when: ['ui/hud/rift_forge/', 'sim/rift/forge_gate', 'content/farshore.ts'],
+    variants: [
+      // The meadow spot itself: on the base branch the NPC is absent (the
+      // BEFORE frame), on the feature branch the Riftwright stands there.
+      { key: 'meadow', scene: 'meadow' },
+      { key: 'window', scene: 'window' },
+      { key: 'window-mobile', scene: 'window', mobile: true },
+    ],
+    async capture(page, variant) {
+      const scene = variant?.scene ?? 'window';
+      await awaitVeilSettled(page);
+      const staged = await page.evaluate((wantWindow) => {
+        const game = window.__game;
+        const sim = game?.sim;
+        if (!sim?.player) return { ok: false, reason: 'offline world is unavailable' };
+        const p = sim.player;
+        let forge = null;
+        for (const e of sim.entities.values()) {
+          if (e.kind === 'npc' && e.templateId === 'riftwright_maelis') forge = e;
+        }
+        // The authored Watch Meadow spot (content/farshore.ts): the base branch
+        // has no NPC to read it from, so the coordinates are restated here.
+        const at = forge ? { x: forge.pos.x, z: forge.pos.z } : { x: 377, z: 7 };
+        p.pos = { x: at.x - 2.5, y: p.pos.y, z: at.z + 2.5 };
+        p.prevPos = { ...p.pos };
+        p.facing = Math.PI * 0.25;
+        sim.rebucket(p);
+        game.input.camYaw = p.facing;
+        game.input.camDist = 9;
+        game.input.camPitch = 0.45;
+        if (!wantWindow) return { ok: true, npc: !!forge };
+        if (typeof game.hud?.openRiftForge !== 'function') {
+          return { ok: false, reason: 'no forge window on this branch' };
+        }
+        try {
+          // One S-rank band one step up the ladder, a bag of essence and one
+          // gem: every row control renders enabled.
+          sim.addItemInstance('riftbound_band_of_might', {
+            rift: {
+              sourceEventId: 'pr-shot',
+              tier: 'S',
+              power: 4,
+              upgradeLevel: 1,
+              maxUpgradeLevel: 5,
+              baseStats: { str: 6, sta: 4 },
+              gemSlots: 2,
+              gems: [],
+            },
+          });
+          sim.addItem('rift_essence', 9);
+          sim.addItem('rift_gem_verdant', 1);
+        } catch {}
+        game.hud.openRiftForge();
+        return { ok: true, npc: !!forge };
+      }, scene === 'window');
+      if (!staged.ok) return { skip: staged.reason };
+      await awaitVeilSettled(page);
+      await dismissEntryOverlays(page);
+      const dismissed = await page.evaluate(() => {
+        let any = false;
+        const greeting = document.getElementById('tutorial-greeting');
+        if (greeting instanceof HTMLElement && getComputedStyle(greeting).display !== 'none') {
+          [...greeting.querySelectorAll('button')].at(-1)?.click();
+          any = true;
+        }
+        const skip = document.querySelector('.tut-skip');
+        if (skip instanceof HTMLElement && skip.offsetParent !== null) {
+          skip.click();
+          any = true;
+        }
+        return any;
+      });
+      if (dismissed) await wait(400);
+      // Staging teleported and opened a window: the veil may rise again.
+      await awaitVeilSettled(page);
+      if (scene !== 'window') {
+        await wait(2500); // let the meadow and the NPC body settle under swiftshader
+        return {};
+      }
+      if (!(await pollForSize(page, '#rift-forge-window .rf-ring'))) {
+        throw new Error('rift forge window did not render a band row');
+      }
+      return { clip: '#rift-forge-window' };
     },
   },
 ];

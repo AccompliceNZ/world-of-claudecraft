@@ -1063,4 +1063,8 @@ export const table: DeedLocaleTable = {
     desc: 'Pokonaj Varkhul, Forgefather of the Last Flame, na heroicznym poziomie trudności tak, by ani jeden rajdowiec nie zginął.',
     title: 'Niespalony',
   },
+  col_set_bramblehide: {
+    name: 'Cierniowa Skóra Rootsa',
+    desc: 'Odkryj każdą część Cierniowej Skóry Rootsa.',
+  },
 };

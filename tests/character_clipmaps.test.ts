@@ -165,6 +165,8 @@ function requiredClipNames(clips: ClipMap): string[] {
     clips.flourish,
     clips.stow,
     ...clips.attack,
+    ...(clips.idleVariants ?? []),
+    clips.idleBeat?.clip,
     ...(clips.hit ?? []),
     ...Object.values(clips.attackByAbility ?? {}),
     ...Object.values(clips.castByAbility ?? {}),
@@ -212,6 +214,8 @@ const COVERED_CLIP_FIELDS = new Set<keyof ClipMap>([
   'castPlayOut',
   'attackByHand',
   'emote',
+  'idleVariants',
+  'idleBeat',
 ]);
 
 /**
@@ -232,6 +236,8 @@ const CLIPLESS_RIGS = new Set([
   // the dragonkin clutch shell: a two-state prop whose GLB ships no clips
   // (alive/dead is a mesh-visibility swap, VisualDef.corpseMeshSwap)
   'mob_dragon_egg',
+  // the Nythraxis Bone Spike: a stationary Tripo prop mob, no rig, no clips
+  'mob_nythraxis_bone_spike',
 ]);
 
 /** mob_yumi_cat is a single-clip objective prop: its ClipMap names the one real

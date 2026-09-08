@@ -938,4 +938,8 @@ export const table: DeedLocaleTable = {
     desc: 'レイドの誰ひとり死なせずに、英雄難易度で「最後の炎の鍛造父、ヴァルクル」を倒す。',
     title: '無傷',
   },
+  col_set_bramblehide: {
+    name: 'ルーツのブランブルハイド',
+    desc: 'ルーツのブランブルハイドの全部位を発見する。',
+  },
 };
