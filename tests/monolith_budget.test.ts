@@ -443,7 +443,8 @@ const MONOLITHS: MonolithRow[] = [
     // The aura-tracks release sync (186dd8fe7f) composes its system-text
     // extraction with the OSSBrain long-press and tooltip modules. The
     // measured combined count is below both parent pins (18574 / 18489).
-    ceiling: 18486,
+    // Mount skins: bank the coordinator extraction at its measured size.
+    ceiling: 18480,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -833,7 +834,8 @@ const MONOLITHS: MonolithRow[] = [
     // merged count, zero slack: any further growth reds again.
     // OSSBrain integration: Fiesta effects moved to render/fiesta_effects.ts.
     // Measured after formatting; lower the ratchet with the extraction.
-    ceiling: 12879,
+    // Mount skins: bank the coordinator extraction at its measured size.
+    ceiling: 12852,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
@@ -1198,7 +1200,8 @@ const MONOLITHS: MonolithRow[] = [
     // merged count, zero slack: any further growth reds again.
     // OSSBrain integration: mobile preflight detection and copy moved to game/mobile_preflight.ts.
     // Measured after formatting; lower the ratchet with the extraction.
-    ceiling: 11366,
+    // Mount skins: bank the coordinator extraction at its measured size.
+    ceiling: 11335,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
@@ -1411,7 +1414,8 @@ const MONOLITHS: MonolithRow[] = [
     // the exact `wc -l < server/game.ts` measurement on the resolved tree.
     // RE-CONFIRMED at the final line-budget reconciliation: still 10291,
     // below both parent pins. Exact merged count, zero slack.
-    ceiling: 10291,
+    // Mount skins: bank the coordinator extraction at its measured size.
+    ceiling: 10150,
     seam: 'a sibling server module; see the hot-path seams in server/CLAUDE.md',
   },
   {
@@ -1700,7 +1704,8 @@ const MONOLITHS: MonolithRow[] = [
     // stays imported at the top of db.ts too (the save-family fence sites
     // reach it directly), unlike createCharacterCapped's pure re-export.
     // Exact count, zero slack.
-    ceiling: 4893,
+    // Mount skins: bank the coordinator extraction at its measured size.
+    ceiling: 4744,
     seam: 'a domain <domain>_db.ts module with its own *_SCHEMA (server/CLAUDE.md)',
   },
   {
