@@ -16687,7 +16687,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.charSidebar.openProfessions': '職業を開く',
   'hudChrome.questLog.completed': '完了済み',
   'hudChrome.questLog.zoneSummary': '{count}件（{ready}件完了）',
-  'hudChrome.questLog.shiftHint': 'Shiftキーを押しながらクエストをクリックするとチャットにリンクできます。',
+  'hudChrome.questLog.shiftHint':
+    'Shiftキーを押しながらクエストをクリックするとチャットにリンクできます。',
   'hudChrome.bugReport.online': 'オンライン',
   'hudChrome.controller.device': '接続中のデバイス',
   'hudChrome.controller.deviceConnected': '接続済み',
