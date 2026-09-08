@@ -1410,17 +1410,22 @@ export const hudChromeStrings = {
     // slot (see hub_lesson_controller.ts healChip()).
     addToBar: 'Add your heal to your action bar from your Spellbook, then cast it on the dummy.',
     readRow: 'Read your row, then press Continue.',
-    readRowDamage: 'Total is all your damage this run. DPS is damage per second over the run. Watch your row, then Continue.',
-    readRowHealing: 'Total counts health restored; healing past full health adds zero. HPS is health restored per second over the run. Read your row, then Continue.',
+    readRowDamage:
+      'Total is all your damage this run. DPS is damage per second over the run. Watch your row, then Continue.',
+    readRowHealing:
+      'Total counts health restored; healing past full health adds zero. HPS is health restored per second over the run. Read your row, then Continue.',
     findRun: 'Use the meter arrows to return to your practice run.',
-    addAttackToBar: 'Add your attack from your Spellbook to the action bar, then use it on the dummy.',
+    addAttackToBar:
+      'Add your attack from your Spellbook to the action bar, then use it on the dummy.',
     ackContinue: 'Continue',
     viewBreakdown: 'Hover, focus, or hold your row for the per-ability split.',
     endRun: 'Turn off Attack and stop casting. After 5 seconds without a hit, this run ends.',
     endHealingRun: 'Stop healing for 5 seconds to finish this run, then you can replay the lesson.',
     inspectHistory: 'Use the history arrow to look back at that finished run.',
-    compareAgain: 'Return to Current with the right arrow, then attack the same dummy for about the same time.',
-    reviewComparison: 'Use the arrows to compare Total, DPS, and duration with your first run. Return to this run, then Done.',
+    compareAgain:
+      'Return to Current with the right arrow, then attack the same dummy for about the same time.',
+    reviewComparison:
+      'Use the arrows to compare Total, DPS, and duration with your first run. Return to this run, then Done.',
     ackDone: 'Done',
     replay: 'Lesson complete. Practice freely, or replay these instructions.',
     replayAction: 'Practice again',

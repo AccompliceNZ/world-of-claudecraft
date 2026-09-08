@@ -2187,24 +2187,20 @@ export class Hud {
           bindActions: (onActivate) => this.bindContextMenuActions(onActivate),
           isMobileLayout: () => this.isMobileLayout(),
         }),
-      // The hub practice coach's own deps (src/ui/hud/practice/): the SAME
-      // keybinds instance the action bar reads, the bar's LIVE slot array (so
-      // the healing lesson resolves where the heal actually sits right now,
-      // never a hardcoded slot), and the renderer's raw worldToScreen (screen
-      // px; no separate uiScale division, exactly like bootcamp.ts's own
-      // .tut-prompt bubble). No gamepad-binding seam is threaded through yet
-      // (see meters.ts MetersDeps.padLabel): the coach's pad chip stays
-      // honestly absent until that plumbing exists elsewhere too.
+      // The hub practice coach's deps (src/ui/hud/practice/): the bar's LIVE
+      // slot array (so the healing lesson always resolves the heal's current
+      // slot) and the renderer's raw worldToScreen, like bootcamp.ts's own
+      // .tut-prompt bubble. No gamepad seam yet (see meters.ts
+      // MetersDeps.padLabel), so the coach's pad chip stays absent.
       keybinds: this.keybinds,
       actionBarSlots: () => this.hotbarActions,
-      actionButtonForSlot: (slot) => {
-        if (!this.isMobileLayout()) return this.abilityButtons[slot]?.btn ?? null;
-        if (slot === 0) return this.mobileRingAttackBtn;
-        return this.mobileRingSlotBtns.find((_, index) =>
-          RADIAL_DIRECTIONS.some(direction => this.mobileSourceSlotForButton(index, direction) === slot)
-        ) ?? document.getElementById('mobile-action-page-toggle');
-      },
-      tooltipVisibleFor: (el) => this.tooltipOwner.current() === el && this.tooltipEl.style.display !== 'none',
+      actionButtonForSlot: (slot) =>
+        this.isMobileLayout()
+          ? (this.mobileRingButtonForSlot(slot) ??
+            document.getElementById('mobile-action-page-toggle'))
+          : (this.abilityButtons[slot]?.btn ?? null),
+      tooltipVisibleFor: (el) =>
+        this.tooltipOwner.current() === el && this.tooltipEl.style.display !== 'none',
       worldToScreen: (x, y, z) => this.renderer.worldToScreen(x, y, z),
     });
     this.targetAurasWindow = new TargetAurasWindow({
@@ -7656,22 +7652,22 @@ export class Hud {
     if (btn) this.flashActionButton(btn);
     // Mirror the used-flash onto the mobile ring (the desktop bar is
     // display:none under body.mobile-touch, so without this a ring cast gave
-    // no visual acknowledgment at all). barSlot 0 is the attack toggle; the 4
-    // radial buttons cover 5 slots each on the CURRENT page.
-    if (barSlot === 0 && this.mobileRingAttackBtn) {
-      this.flashActionButton(this.mobileRingAttackBtn);
-      return;
-    }
-    for (let i = 0; i < this.mobileRingSlotBtns.length; i++) {
-      // Every direction, not just the centre: a flick casts a slot the resting
-      // button does not show, and without this a directional cast landed with
-      // no visual acknowledgment at all.
-      for (const direction of RADIAL_DIRECTIONS) {
-        if (this.mobileSourceSlotForButton(i, direction) !== barSlot) continue;
-        this.flashActionButton(this.mobileRingSlotBtns[i]);
-        return;
-      }
-    }
+    // no visual acknowledgment at all).
+    const ringBtn = this.mobileRingButtonForSlot(barSlot);
+    if (ringBtn) this.flashActionButton(ringBtn);
+  }
+
+  // Every direction, not just the centre: a flick casts a slot the resting
+  // ring button does not show. Shared by the used-flash mirror above and the
+  // hub practice coach's glow anchor (Meters deps, above the constructor).
+  private mobileRingButtonForSlot(barSlot: number): HTMLButtonElement | null {
+    if (barSlot === 0) return this.mobileRingAttackBtn;
+    const i = this.mobileRingSlotBtns.findIndex((_, index) =>
+      RADIAL_DIRECTIONS.some(
+        (direction) => this.mobileSourceSlotForButton(index, direction) === barSlot,
+      ),
+    );
+    return i === -1 ? null : this.mobileRingSlotBtns[i];
   }
 
   private flashActionButton(btn: HTMLButtonElement): void {

@@ -197,7 +197,11 @@ describe('every multi-count interact objective has enough distinct objects to fi
     // Plus the hub dummy drill (q_hub_know_your_numbers, count 10), a fifth:
     // tutorial/dummy_drill.ts credits it off every blow that lands on a
     // training dummy, never through this ledger.
-    expect(interactObjectives.filter((o) => o.count > 1).length).toBe(25);
+    //
+    // Plus the hub healing drill (q_hub_healing_numbers, count 3), a sixth:
+    // tutorial/hub_healing_drill.ts credits it off every EFFECTIVE heal that
+    // lands on the friendly hub healing dummy, never through this ledger.
+    expect(interactObjectives.filter((o) => o.count > 1).length).toBe(26);
   });
 
   it.each(
@@ -206,7 +210,8 @@ describe('every multi-count interact objective has enough distinct objects to fi
         o.count > 1 &&
         o.itemId !== 'ps_gauntlet_flag' &&
         o.itemId !== 'ps_ability_drill' &&
-        o.itemId !== 'hub_dummy_drill',
+        o.itemId !== 'hub_dummy_drill' &&
+        o.itemId !== 'hub_healing_drill',
     ),
   )('$questId can reach $count on distinct $itemId objects', ({ itemId, count }) => {
     expect(placedByItem.get(itemId) ?? 0).toBeGreaterThanOrEqual(count);
@@ -257,7 +262,7 @@ describe('every multi-count interact objective has enough distinct objects to fi
     }
   });
 
-  it('places every interact target in the world, a dungeon, or the six sentinels', () => {
+  it('places every interact target in the world, a dungeon, or the seven sentinels', () => {
     // train_valorsteed (mounts_training.ts credits it off the trainer NPC),
     // ps_gauntlet_flag (tutorial/gauntlet_run.ts credits it by ordered
     // position against the authored checkpoints), ps_guild_signpost
@@ -270,7 +275,9 @@ describe('every multi-count interact objective has enough distinct objects to fi
     // credited by the resurrection that ends the corpse run
     // (tutorial/death_lesson.ts), never by an object click. hub_dummy_drill
     // (tutorial/dummy_drill.ts) credits off every blow that lands on a
-    // training dummy. Anything ELSE missing from both placement
+    // training dummy, and hub_healing_drill (tutorial/hub_healing_drill.ts)
+    // credits off every effective heal that lands on the friendly hub
+    // healing dummy. Anything ELSE missing from both placement
     // registries would mean an objective whose object spawns somewhere this
     // reasoning has not checked.
     const placedItemIds = new Set([
@@ -282,6 +289,7 @@ describe('every multi-count interact objective has enough distinct objects to fi
     );
     expect(unplaced.sort()).toEqual([
       'hub_dummy_drill',
+      'hub_healing_drill',
       'ps_ability_drill',
       'ps_gauntlet_flag',
       'ps_guild_signpost',

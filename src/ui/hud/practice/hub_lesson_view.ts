@@ -273,7 +273,10 @@ export function advanceHubLessonTrack(
     if (!next.historyViewed)
       return { progress: next, step: { track, kind: 'inspect-history', live: false } };
     if (next.attempts >= 2 && !next.compareReviewed) {
-      return { progress: next, step: { track, kind: obs.liveNow ? 'end-run' : 'review-comparison', live: obs.liveNow } };
+      return {
+        progress: next,
+        step: { track, kind: obs.liveNow ? 'end-run' : 'review-comparison', live: obs.liveNow },
+      };
     }
   }
   // Unreachable: roundOneObserved (and so isComplete) would already have
@@ -295,7 +298,10 @@ export function advanceHubLesson(
   const h = advanceHubLessonTrack('healing', progress.healing, healing);
   const changed = d.progress !== progress.damage || h.progress !== progress.healing;
   const next = changed ? { damage: d.progress, healing: h.progress } : progress;
-  return { progress: next, step: healing.targeting && !damage.targeting ? h.step ?? d.step : d.step ?? h.step };
+  return {
+    progress: next,
+    step: healing.targeting && !damage.targeting ? (h.step ?? d.step) : (d.step ?? h.step),
+  };
 }
 
 /**
@@ -330,7 +336,10 @@ export const HUB_LESSON_START: HubLessonProgress = {
  *  reviewed comparison attempt). Exported so a caller can decide whether a
  *  loaded, mid-round track is safe to keep across a reload (see
  *  `isSafeToKeepAcrossReload`) without duplicating the completion rule. */
-export function isHubLessonTrackComplete(track: HubLessonTrack, p: HubLessonTrackProgress): boolean {
+export function isHubLessonTrackComplete(
+  track: HubLessonTrack,
+  p: HubLessonTrackProgress,
+): boolean {
   return isComplete(track, p);
 }
 
@@ -345,7 +354,10 @@ export function isHubLessonTrackComplete(track: HubLessonTrack, p: HubLessonTrac
  * CURRENT ledger, not the old attempt's identity). The caller resets an
  * unsafe track with `resetHubLessonTrack`, never marking it done.
  */
-export function isSafeToKeepAcrossReload(track: HubLessonTrack, p: HubLessonTrackProgress): boolean {
+export function isSafeToKeepAcrossReload(
+  track: HubLessonTrack,
+  p: HubLessonTrackProgress,
+): boolean {
   return p.attempts === 0 || isComplete(track, p);
 }
 

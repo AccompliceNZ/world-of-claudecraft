@@ -156,7 +156,8 @@ const FRAME_EXEMPT: Record<string, string> = {
   'arena-status': 'match-scoped arena status strip, pointer-inert',
   'dfinder-proposal-popup': 'transient dungeon-finder proposal popup',
   'bg-proposal-popup': 'transient battleground proposal popup',
-  'practice-tracker': 'live DPS readout strip (src/ui/hud/practice/), read-only text: not yet promoted to a movable frame (pre-existing gap, not introduced by this change)',
+  'practice-tracker':
+    'live DPS readout strip (src/ui/hud/practice/), read-only text: not yet promoted to a movable frame (pre-existing gap, not introduced by this change)',
   'hub-lesson-coach':
     'guided Meters coaching strip beside practice-tracker (src/ui/hud/practice/), read-only text plus its own small ack/replay buttons: same standing-tracker family, not yet promoted to a movable frame',
 };

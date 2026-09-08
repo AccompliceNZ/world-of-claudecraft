@@ -144,7 +144,13 @@ describe('advanceHubLessonTrack: window/tab are prerequisites AFTER an attempt t
     const { progress, step } = advanceHubLessonTrack(
       'damage',
       afterAttempt1,
-      obs({ attemptKey: 100, liveNow: true, anyWindowOpen: true, tabOpen: true, rowVisibleNow: true }),
+      obs({
+        attemptKey: 100,
+        liveNow: true,
+        anyWindowOpen: true,
+        tabOpen: true,
+        rowVisibleNow: true,
+      }),
     );
     expect(progress.rowSeen).toBe(false);
     expect(step).toEqual({ track: 'damage', kind: 'read-row', live: true });
@@ -425,7 +431,11 @@ describe('advanceHubLessonTrack: healing needs no comparison', () => {
   });
 
   it('the row still needs an explicit ack, not merely rendering', () => {
-    const fresh: HubLessonTrackProgress = { ...resetHubLessonTrack(), attempts: 1, lastCountedKey: 100 };
+    const fresh: HubLessonTrackProgress = {
+      ...resetHubLessonTrack(),
+      attempts: 1,
+      lastCountedKey: 100,
+    };
     const { progress, step } = advanceHubLessonTrack(
       'healing',
       fresh,
@@ -517,12 +527,20 @@ describe('advanceHubLesson: track priority and identity preservation', () => {
     // Both tracks ineligible: advanceHubLessonTrack returns its input
     // progress unchanged for each, so the aggregate must too (this is what
     // lets a caller persist only on identity change, instead of every poll).
-    const { progress } = advanceHubLesson(HUB_LESSON_START, obs({ eligible: false }), obs({ eligible: false }));
+    const { progress } = advanceHubLesson(
+      HUB_LESSON_START,
+      obs({ eligible: false }),
+      obs({ eligible: false }),
+    );
     expect(progress).toBe(HUB_LESSON_START);
   });
 
   it('returns a NEW progress object when a track actually changed', () => {
-    const { progress } = advanceHubLesson(HUB_LESSON_START, obs({ attemptKey: 100 }), obs({ eligible: false }));
+    const { progress } = advanceHubLesson(
+      HUB_LESSON_START,
+      obs({ attemptKey: 100 }),
+      obs({ eligible: false }),
+    );
     expect(progress).not.toBe(HUB_LESSON_START);
     expect(progress.healing).toBe(HUB_LESSON_START.healing); // the untouched track keeps its identity too
   });
@@ -613,7 +631,6 @@ describe('parseHubLessonProgress: validates a loaded blob rather than trusting i
   });
 });
 
-
 describe('hub lesson playthrough regressions', () => {
   it('lets a selected friendly dummy take priority over unfinished damage coaching', () => {
     const { step } = advanceHubLesson(HUB_LESSON_START, obs(), obs({ targeting: true }));
@@ -621,17 +638,27 @@ describe('hub lesson playthrough regressions', () => {
   });
   it('does not credit a breakdown on a different displayed encounter', () => {
     const p = { ...resetHubLessonTrack(), attempts: 1, lastCountedKey: 100, rowSeen: true };
-    const { progress } = advanceHubLessonTrack('damage', p,
-      obs({ attemptKey: 100, rowVisibleNow: false, breakdownInteractionNow: true }));
+    const { progress } = advanceHubLessonTrack(
+      'damage',
+      p,
+      obs({ attemptKey: 100, rowVisibleNow: false, breakdownInteractionNow: true }),
+    );
     expect(progress.breakdownViewed).toBe(false);
   });
 });
 
-
 it('lets the healing encounter finish before offering a fresh replay', () => {
-  const complete = { ...resetHubLessonTrack(), attempts: 1, lastCountedKey: 100,
-    rowSeen: true, breakdownViewed: true };
-  const { step } = advanceHubLessonTrack('healing', complete,
-    obs({ targeting: true, attemptKey: 100, liveNow: true }));
+  const complete = {
+    ...resetHubLessonTrack(),
+    attempts: 1,
+    lastCountedKey: 100,
+    rowSeen: true,
+    breakdownViewed: true,
+  };
+  const { step } = advanceHubLessonTrack(
+    'healing',
+    complete,
+    obs({ targeting: true, attemptKey: 100, liveNow: true }),
+  );
   expect(step).toEqual({ track: 'healing', kind: 'end-run', live: true });
 });

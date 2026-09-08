@@ -947,7 +947,10 @@ async function clickOrTap(page, variant, selector) {
     try {
       // Queue both edges in order before waiting for renderer acknowledgments.
       // Slow software GL must not turn a short tap into a 180ms hold.
-      const down = session.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [point] });
+      const down = session.send('Input.dispatchTouchEvent', {
+        type: 'touchStart',
+        touchPoints: [point],
+      });
       const up = session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
       await Promise.all([down, up]);
     } finally {
@@ -13888,7 +13891,7 @@ export const TARGETS = [
       // again before the real casts; all meter observations still come from play.
       await page.evaluate(() => {
         const sim = window.__game.sim;
-        const dummy = [...sim.entities.values()].find(e => e.templateId === 'hub_training_dummy');
+        const dummy = [...sim.entities.values()].find((e) => e.templateId === 'hub_training_dummy');
         sim.targetEntity(dummy.id, sim.player.id);
       });
       await page.evaluate(() => {
@@ -14115,7 +14118,7 @@ export const TARGETS = [
       await openHubMetersWindow(page, variant);
       await page.evaluate(() => {
         const sim = window.__game.sim;
-        const dummy = [...sim.entities.values()].find(e => e.templateId === 'hub_healing_dummy');
+        const dummy = [...sim.entities.values()].find((e) => e.templateId === 'hub_healing_dummy');
         sim.targetEntity(dummy.id, sim.player.id);
       });
       await page.evaluate(() => {
