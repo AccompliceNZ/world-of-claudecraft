@@ -95,6 +95,22 @@ describe('runPeriodicSaveFlush', () => {
     expect(writes.saveMarket).toHaveBeenCalledTimes(1);
   });
 
+  it('accepts synchronous prune return values without reporting an error', async () => {
+    const errors: Array<{ write: string; err: unknown }> = [];
+    const { writes, calls } = fakeWrites({
+      pruneIdleGuards: vi.fn(() => {
+        calls.push('pruneIdleGuards');
+        return 0;
+      }),
+    });
+    expect(() =>
+      runPeriodicSaveFlush(writes, (write, err) => errors.push({ write, err })),
+    ).not.toThrow();
+    await Promise.resolve();
+    expect(errors).toEqual([]);
+    expect(calls).toContain('heartbeatLeases');
+  });
+
   it('isolates a rejected write: the others still run and nothing escapes', async () => {
     // One failing save must not take the rest of the flush with it, and must
     // not surface as an unhandled rejection in the tick.
