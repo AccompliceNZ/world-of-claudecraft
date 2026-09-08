@@ -155,7 +155,10 @@ export class AuraTrackPainter {
 
       const isPoints = model.points > 0;
       w.toggleClass(els.row, POINTS_CLASS, isPoints);
-      w.setDisplay(els.points, isPoints ? SHOWN : HIDDEN);
+      // Display goes through setStyleProp on the nodes that also take setText:
+      // the two single-slot writers would share one cache entry and never elide
+      // (painter_host.ts, PainterHostWriters; the collision guard test pins it).
+      w.setStyleProp(els.points, 'display', isPoints ? SHOWN : HIDDEN);
       if (isPoints) w.setText(els.points, formatNumber(model.points, POINTS_OPTIONS));
 
       // A mode prints its steady chip; everything else prints its countdown.
@@ -166,10 +169,10 @@ export class AuraTrackPainter {
           : `${formatNumber(model.remaining, NUMBER_OPTIONS[model.decimals])}${this.secondsSuffix}`,
       );
 
-      w.setDisplay(els.stacks, model.stacks > 0 ? SHOWN : HIDDEN);
+      w.setStyleProp(els.stacks, 'display', model.stacks > 0 ? SHOWN : HIDDEN);
       if (model.stacks > 0) w.setText(els.stacks, formatNumber(model.stacks, POINTS_OPTIONS));
     }
-    w.setDisplay(this.overflowEl, state.overflow > 0 ? SHOWN : HIDDEN);
+    w.setStyleProp(this.overflowEl, 'display', state.overflow > 0 ? SHOWN : HIDDEN);
     if (state.overflow > 0) w.setText(this.overflowEl, this.deps.overflowLabel(state.overflow));
   }
 }

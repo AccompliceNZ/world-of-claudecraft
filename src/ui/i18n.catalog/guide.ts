@@ -721,6 +721,14 @@ export const guideStrings = {
     // down this page so each is checked against one literal.
     framesGovernedExtra:
       "Edit Frames also loosens the tracker stack below (your tracked quests and their objectives, your deed progress, your Reliquary pages, the delve you are in, any rift you are taking part in, and the recipe or commission you are tracking), the pet action bar beside your pet frame, the Target dots frame for your debuffs across nearby enemies, the paladin's Devotion medallion, the warlock's Affliction Bar, the spell-proc overlay, the off-hand swing timer for dual-wielders, and the tabbed damage meter window, each wearing its own name chip while it is loose.",
+    // The six opt-in aura tracks (src/ui/hud/aura_tracks/, PR #3925) joined
+    // HUD_FRAME_SPECS with no prior prose. Their own key rather than a reword
+    // of framesGovernedExtra, whose non-Latin fills would otherwise go stale;
+    // the track names are the live hudChrome.auraTracks values and the
+    // Combat tab is where their Interface switches sit. Wordy (M16): the
+    // five non-Latin fills land in this same change.
+    framesGovernedAuraTracks:
+      'Edit Frames also loosens the six opt-in aura tracks once you have switched them on from the Combat tab of the same Interface options: the My Buffs track, the Defensive Cooldowns track, the My Shields track, the Offensive Cooldowns track, the Movement and Stealth track, and the My Buffs on Allies track. Every track is off by default, and each wears its own name chip while it is loose.',
 
     barsTitle: 'Bars, timers, and combat text',
     barsBody:

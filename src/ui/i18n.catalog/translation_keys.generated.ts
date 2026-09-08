@@ -6467,6 +6467,7 @@ export type TranslationKeyFlat =
   | 'guide.interfacePage.frameTotBody'
   | 'guide.interfacePage.frameTotTitle'
   | 'guide.interfacePage.framesBody'
+  | 'guide.interfacePage.framesGovernedAuraTracks'
   | 'guide.interfacePage.framesGovernedExtra'
   | 'guide.interfacePage.framesMoveBody'
   | 'guide.interfacePage.framesMoveBodyEditFrames'
