@@ -1729,9 +1729,7 @@ describe('client HTML shell', () => {
     expect(hudCss).toContain('body.show-actionbar3 #swingbar-offhand {\n    bottom: 272px;\n  }');
     // The page control hangs beside the action row above the XP rail.
     expect(hudCss).toContain('right: -28px;');
-    expect(hudCss).toContain(
-      'bottom: calc(var(--xp-rail-h) + var(--socket-row-gap) + var(--spacing-2xs));',
-    );
+    expect(hudCss).toContain('bottom: 0;');
     // Primitive class pins prevent later host rules from silently replacing shared socket chrome.
     for (const className of [
       'action-btn ui-socket empty',
@@ -3596,18 +3594,22 @@ describe('the stock unit-frame seats sit side by side above the action bar', () 
   const tokensCss = readFileSync(new URL('../src/styles/tokens.css', import.meta.url), 'utf8');
 
   it('declares the seat tokens the two rules share', () => {
-    expect(tokensCss).toContain('--unit-frame-pair-gap: 12px;');
+    expect(tokensCss).toContain('--unit-frame-bar-gap: 14px;');
     expect(tokensCss).toContain('--unit-frame-seat-offset: calc(');
-    expect(tokensCss).toContain('var(--socket-size) +\n      78px');
+    expect(tokensCss).toContain(
+      'var(--socket-size) +\n      var(--unit-frame-bar-gap) +\n      70px',
+    );
   });
 
   it('holds the docked player frame just left of centre', () => {
-    expect(hudCss).toContain('margin: 0 calc(50% + var(--unit-frame-pair-gap) / 2) 8px auto;');
+    expect(hudCss).toContain('margin: 0 auto var(--unit-frame-bar-gap) 0;');
     expect(hudCss).not.toContain('margin: 0 auto 8px;');
   });
 
   it('mirrors the target frame right of centre and level with it', () => {
-    expect(hudCss).toContain('left: calc(50% + var(--unit-frame-pair-gap) / 2);');
+    expect(hudCss).toContain(
+      'left: calc(50% + var(--action-rail-w) / 2 - var(--target-frame-width, var(--unit-frame-w)));',
+    );
     expect(hudCss).toContain('top: calc(100% - var(--unit-frame-seat-offset));');
     expect(hudCss).not.toContain('#target-frame {\n    left: 12px;\n    top: 12px;');
   });

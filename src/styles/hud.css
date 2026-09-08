@@ -955,12 +955,10 @@
        .bar and .bar-text read the var, so a height drag thickens the bars at
        crisp text instead of distorting them through a transform. */
     --uf-bar-height: var(--player-frame-height, var(--bar-h-hp));
-    /* The stock seat holds the frame just LEFT of centre, so the target frame's
-       stock seat mirrors it on the right and the pair reads as one cluster over
-       the action bar. The percentage resolves against the stack, whose centre is
-       the screen centre, so auto on the left puts this frame's right edge exactly
-       half the pair gap short of it. */
-    margin: 0 calc(50% + var(--unit-frame-pair-gap) / 2) 8px auto;
+    /* The stock seat sits flush with the action bar's LEFT edge (the stack is
+       exactly one action rail wide), and the target frame's stock seat mirrors
+       it on the right edge, so the pair brackets the bar with open middle. */
+    margin: 0 auto var(--unit-frame-bar-gap) 0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1315,7 +1313,7 @@
      spent about 52px of vertical space on what is one subject, and left the health
      strip reading as a satellite of the player frame rather than part of the pet UI.
      Side by side they measure ~294px (two 3-button groups) plus ~270px (portrait +
-     bars), which fits the 612px stack with room to spare.
+     bars), which fits the action-rail-wide stack with room to spare.
 
      The stack is bottom-anchored (#bottom-bar sits at bottom: 6px), so this grows it
      UPWARD: the action bars and the player frame keep their positions and the
@@ -1328,7 +1326,7 @@
     align-items: center;
     justify-content: flex-start;
     gap: 8px;
-    width: 612px;
+    width: var(--action-rail-w);
     margin: 0 auto;
     padding-left: var(--unit-frame-content-inset);
   }
@@ -1379,7 +1377,7 @@
      default; a persisted position writes inline left/top that outranks this, and
      resetting the layout clears those and lands back here. */
   #target-frame {
-    left: calc(50% + var(--unit-frame-pair-gap) / 2);
+    left: calc(50% + var(--action-rail-w) / 2 - var(--target-frame-width, var(--unit-frame-w)));
     top: calc(100% - var(--unit-frame-seat-offset));
     display: none;
     z-index: 6;
@@ -4094,7 +4092,7 @@
   .bar-toggle {
     position: absolute;
     right: -28px;
-    bottom: calc(var(--xp-rail-h) + var(--socket-row-gap) + var(--spacing-2xs));
+    bottom: 0;
     width: 24px;
     height: var(--socket-size);
   }
@@ -4499,13 +4497,13 @@
   }
   .micro-btn .keybind {
     position: absolute;
-    bottom: -1px;
-    right: 2px;
-    min-width: 12px;
-    height: 12px;
+    bottom: -3px;
+    right: -3px;
+    min-width: 13px;
+    height: 13px;
     padding: 0 2px;
-    font-size: 8px;
-    line-height: 10px;
+    font-size: 9px;
+    line-height: 11px;
   }
   /* Micro-menu count badge (unspent talent points today). Geometry only: the look
      is the .ui-badge / .ui-badge--corner primitive. The corner default overhangs a

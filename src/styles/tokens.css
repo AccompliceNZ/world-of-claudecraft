@@ -796,7 +796,7 @@
     --bar-h: 15px;
     --bar-h-hp: 16px;
     --bar-h-res: 11px;
-    --bar-h-res-empty: 7px;
+    --bar-h-res-empty: var(--bar-h-res);
     --bar-notch: 5px;
     --castbar-w: 300px;
     --castbar-h: 20px;
@@ -1102,18 +1102,18 @@
     );
 
     /* unit frames */
-    /* Gap between the two stock unit frames, which mirror each other around the
-       screen centre directly above the action bar. */
-    --unit-frame-pair-gap: 12px;
+    /* Clearance between the stock unit frames and the action bar under them. */
+    --unit-frame-bar-gap: 14px;
     /* Distance from the bottom of #ui to the TOP of that stock seat: the 6px
-       bottom-bar inset, the XP rail, the action row and its gap, then the docked
-       player frame's own 8px margin and 64px height, so the stock target frame
+       bottom-bar inset, the XP rail, the action row and its gap, the bar gap,
+       then the docked player frame's 64px height, so the stock target frame
        lands level with the player frame. */
     --unit-frame-seat-offset: calc(
       var(--xp-rail-h) +
       var(--socket-row-gap) +
       var(--socket-size) +
-      78px
+      var(--unit-frame-bar-gap) +
+      70px
     );
   }
 
