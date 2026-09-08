@@ -379,16 +379,18 @@ describe('absorbSegmentTransform: the shield hatch covers the shield, never the 
     // bar, so the fill read as striped instead of the library health gradient.
     const v = unitFrameView(playerDescriptor({ absorb: { hp: 600, maxHp: 600, auras: [] } }));
     expect(v.absorbSizeFrac).toBe(0);
-    expect(absorbSegmentTransform(v.absorbStartFrac, v.absorbSizeFrac)).toBe('scaleX(0)');
+    expect(
+      absorbSegmentTransform(v.absorbStartFrac, v.absorbSizeFrac, `scaleX(${v.absorbSizeFrac})`),
+    ).toBe('scaleX(0)');
   });
 
   it('seats a partial shield at the health edge and sizes it to the shield alone', () => {
     const v = unitFrameView(
       playerDescriptor({ absorb: { hp: 300, maxHp: 600, auras: [shield(60)] } }),
     );
-    expect(absorbSegmentTransform(v.absorbStartFrac, v.absorbSizeFrac)).toBe(
-      'translateX(50%) scaleX(0.1)',
-    );
+    expect(
+      absorbSegmentTransform(v.absorbStartFrac, v.absorbSizeFrac, `scaleX(${v.absorbSizeFrac})`),
+    ).toBe('translateX(50%) scaleX(0.1)');
   });
 
   it('pins an overshield against the bar right edge', () => {
@@ -396,8 +398,8 @@ describe('absorbSegmentTransform: the shield hatch covers the shield, never the 
       playerDescriptor({ absorb: { hp: 590, maxHp: 600, auras: [shield(50)] } }),
     );
     expect(v.absorbOvershield).toBe(true);
-    expect(absorbSegmentTransform(v.absorbStartFrac, v.absorbSizeFrac)).toBe(
-      'translateX(91.66666666666666%) scaleX(0.08333333333333333)',
-    );
+    expect(
+      absorbSegmentTransform(v.absorbStartFrac, v.absorbSizeFrac, `scaleX(${v.absorbSizeFrac})`),
+    ).toBe('translateX(91.66666666666666%) scaleX(0.08333333333333333)');
   });
 });

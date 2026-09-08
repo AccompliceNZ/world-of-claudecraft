@@ -218,10 +218,12 @@ export function unitResourceClass(kind: UnitResourceKind): UnitResourceClass {
  * The absorb overlay's transform: the hatched shield segment ONLY, seated at its
  * own left edge. A bar with no shield collapses to zero width, so a healthy unit
  * shows the plain health gradient instead of a hatch laid over the whole bar.
+ * `scale` is the caller's already-formatted scaleX for the segment's width, so a
+ * party row keeps its quantized precision.
  */
-export function absorbSegmentTransform(startFrac: number, sizeFrac: number): string {
-  if (sizeFrac <= 0) return 'scaleX(0)';
-  return `translateX(${startFrac * 100}%) scaleX(${sizeFrac})`;
+export function absorbSegmentTransform(startFrac: number, sizeFrac: number, scale: string): string {
+  if (sizeFrac <= 0) return scale;
+  return `translateX(${startFrac * 100}%) ${scale}`;
 }
 
 /**

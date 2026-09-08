@@ -220,9 +220,10 @@ export class UnitFramePainter {
   private paintAbsorb(view: UnitFrameView): void {
     const absorb = this.el.absorb;
     if (!absorb) return;
+    const size = view.absorbSizeFrac;
     this.writers.setTransform(
       absorb,
-      absorbSegmentTransform(view.absorbStartFrac, view.absorbSizeFrac),
+      absorbSegmentTransform(view.absorbStartFrac, size, this.barScaleX(size)),
     );
     this.writers.toggleClass(absorb, OVERSHIELD_CLASS, view.absorbOvershield);
   }
