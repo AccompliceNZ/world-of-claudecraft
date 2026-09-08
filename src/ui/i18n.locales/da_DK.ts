@@ -10513,6 +10513,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.sunder_armor.description':
     'Flænger målets rustning og sænker den med {damage}% pr. anvendelse. Stakker op til 5 gange. Skaber en stor mængde trussel.',
   'entities.mobs.training_dummy.name': 'Træningsdukke',
+  'entities.mobs.hub_training_dummy.name': 'Træningsdukke',
   'entities.mobs.yumi_cat.name': 'Yumi',
   'hudChrome.auraEffect.armorPct': 'Reducerer rustning med {pct}%',
   'hudChrome.auraEffect.armorPctStacks': 'Reducerer rustning med {pct}% ({stacks} stakke)',

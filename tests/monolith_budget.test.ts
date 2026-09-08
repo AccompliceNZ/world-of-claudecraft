@@ -443,9 +443,9 @@ const MONOLITHS: MonolithRow[] = [
     // The aura-tracks release sync (186dd8fe7f) composes its system-text
     // extraction with the OSSBrain long-press and tooltip modules. The
     // measured combined count is below both parent pins (18574 / 18489).
-    // Re-measured at the second release/v0.42.0 sync: the review-fix batches
+    // Re-measured at the third release/v0.42.0 sync: the review-fix batches
     // and the release's own extractions both landed; wc -l on the merged tree.
-    ceiling: 18418,
+    ceiling: 18409,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {
@@ -1203,8 +1203,8 @@ const MONOLITHS: MonolithRow[] = [
     // merged count, zero slack: any further growth reds again.
     // OSSBrain integration: mobile preflight detection and copy moved to game/mobile_preflight.ts.
     // Measured after formatting; lower the ratchet with the extraction.
-    // Re-measured at the second release/v0.42.0 sync; wc -l on the merged tree.
-    ceiling: 11360,
+    // Re-measured at the third release/v0.42.0 sync; wc -l on the merged tree.
+    ceiling: 11357,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {

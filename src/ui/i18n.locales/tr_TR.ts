@@ -11203,6 +11203,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.sunder_armor.description':
     'Hedefin zırhını parçalar, her uygulamada %{damage} azaltır. 5 kez istiflenir. Yüksek miktarda tehdit üretir.',
   'entities.mobs.training_dummy.name': 'Antrenman Kuklası',
+  'entities.mobs.hub_training_dummy.name': 'Antrenman Kuklası',
   'entities.mobs.yumi_cat.name': 'Yumi',
   'hudChrome.auraEffect.armorPct': 'Zırhı %{pct} azaltır',
   'hudChrome.auraEffect.armorPctStacks': 'Zırhı %{pct} azaltır ({stacks} istif)',

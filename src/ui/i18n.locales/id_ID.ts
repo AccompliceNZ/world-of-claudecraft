@@ -11322,6 +11322,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.sunder_armor.description':
     'Merobek zirah target, menguranginya sebesar {damage}% per penerapan. Menumpuk hingga 5 kali. Menghasilkan ancaman dalam jumlah besar.',
   'entities.mobs.training_dummy.name': 'Boneka Latihan',
+  'entities.mobs.hub_training_dummy.name': 'Boneka Latihan',
   'entities.mobs.yumi_cat.name': 'Yumi',
   'hudChrome.auraEffect.armorPct': 'Mengurangi zirah sebesar {pct}%',
   'hudChrome.auraEffect.armorPctStacks': 'Mengurangi zirah sebesar {pct}% ({stacks} tumpukan)',

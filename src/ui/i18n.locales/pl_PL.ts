@@ -10694,6 +10694,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.sunder_armor.description':
     'Rozdziera pancerz celu, zmniejszając go o {damage}% za każde nałożenie. Kumuluje się do 5 razy. Generuje dużą ilość zagrożenia.',
   'entities.mobs.training_dummy.name': 'Manekin treningowy',
+  'entities.mobs.hub_training_dummy.name': 'Manekin treningowy',
   'entities.mobs.yumi_cat.name': 'Yumi',
   'hudChrome.auraEffect.armorPct': 'Zmniejsza pancerz o {pct}%',
   'hudChrome.auraEffect.armorPctStacks': 'Zmniejsza pancerz o {pct}% ({stacks} nałożeń)',
