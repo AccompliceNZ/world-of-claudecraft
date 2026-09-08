@@ -15936,6 +15936,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.prayer_of_returning.description':
     '呼喚隊伍或團隊中 40 碼內且在你視線內的所有陣亡成員回到你身邊復活，並恢復30%生命值和法力值。戰鬥中無法施放。（聖光與戒律）',
   'entities.abilities.prayer_of_returning.name': '歸返祈禱',
-  'entities.abilities.wildwake.description': '催發倒下的盟友驟然綻放，使其回到你身邊復活，恢復35%生命值和法力值，即使激戰正酣也能施放。（恢復）',
+  'entities.abilities.wildwake.description':
+    '催發倒下的盟友驟然綻放，使其回到你身邊復活，恢復35%生命值和法力值，即使激戰正酣也能施放。（恢復）',
   'entities.abilities.wildwake.name': '野性復甦',
 };
