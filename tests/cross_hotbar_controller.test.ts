@@ -290,11 +290,7 @@ describe('the cross hotbar stylesheet', () => {
     }
   });
 
-  it('mounts the pad hint strip and the launcher legend behind pad mode', () => {
-    expect(section).toContain('#pad-hint-strip,\n  #pad-legend {');
-    expect(section).toContain(
-      'body.xhb-mode.pad-hints-on:not(.mobile-touch) #pad-hint-strip,\n  body.xhb-mode.pad-hints-on:not(.mobile-touch) #pad-legend {\n    display: flex;',
-    );
+  it('stands the launcher keycaps down while the pad is live', () => {
     // The keycaps come back the moment the player touches the keyboard, so the
     // standdown reads pad-active rather than the mode class.
     expect(section).toContain(

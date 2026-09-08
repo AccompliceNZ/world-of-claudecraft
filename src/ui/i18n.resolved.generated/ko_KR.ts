@@ -1755,7 +1755,6 @@ export const ko_KR: EnTranslations = {
       "crossHotbar": "크로스 핫바",
       "crossHotbarEnable": "크로스 핫바 사용",
       "crossHotbarExpand": "더블 크로스 핫바",
-      "showHints": "컨트롤러 버튼 힌트",
       "crossHotbarHelp": "트리거를 누르고 있으면 방향키와 페이스 버튼에 여덟 개의 액션 바 슬롯이 표시됩니다. 다른 트리거를 짧게 누르면 두 번째 세트로 전환됩니다.",
       "crossHotbarResetLayout": "크로스 핫바 초기화",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const ko_KR: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "{action} 을(를) 들고 있습니다. 칸에서 확인을 누르면 놓고, 취소하면 되돌립니다.",
       "crossHotbarEditHint": "정렬 중: 확인으로 칸이나 마법서에서 액션을 집어 칸에 놓고, 취소로 칸을 비웁니다.",
-      "crossHotbarEditHelp": "왼쪽 범퍼를 누른 채 위쪽 페이스 버튼을 누르면 컨트롤러로 바를 정렬할 수 있습니다.",
-      "padHintLabel": "컨트롤러 도움말",
-      "padHintInteract": "상호작용",
-      "padHintTargetMenu": "대상 메뉴",
-      "padHintSwapSet": "세트 전환",
-      "padHintArrangeBar": "단축바 정렬",
-      "padLegendBags": "가방",
-      "padLegendMenu": "메뉴",
-      "padLegendCycleHud": "인터페이스 전환"
+      "crossHotbarEditHelp": "왼쪽 범퍼를 누른 채 위쪽 페이스 버튼을 누르면 컨트롤러로 바를 정렬할 수 있습니다."
     },
     "perf": {
       "title": "성능 오버레이",

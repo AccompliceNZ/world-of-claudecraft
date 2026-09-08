@@ -1755,7 +1755,6 @@ export const zh_TW: EnTranslations = {
       "crossHotbar": "十字熱鍵欄",
       "crossHotbarEnable": "啟用十字熱鍵欄",
       "crossHotbarExpand": "雙十字熱鍵欄",
-      "showHints": "手把按鍵提示",
       "crossHotbarHelp": "按住扳機鍵即可點亮方向鍵和面板按鍵上的八個動作條格位。輕按另一個扳機鍵可切換到第二組。",
       "crossHotbarResetLayout": "重置十字熱鍵欄",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const zh_TW: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "正在拿著{action}：在格子上按確認放置，按取消放回。",
       "crossHotbarEditHint": "整理中：確認鍵可從格子或法術書中拿起技能並放到格子上，取消鍵清空格子。",
-      "crossHotbarEditHelp": "按住左肩鍵並按上方面鍵，即可用手把整理十字熱鍵列。",
-      "padHintLabel": "手把提示",
-      "padHintInteract": "互動",
-      "padHintTargetMenu": "目標選單",
-      "padHintSwapSet": "切換組",
-      "padHintArrangeBar": "整理動作列",
-      "padLegendBags": "背包",
-      "padLegendMenu": "選單",
-      "padLegendCycleHud": "切換介面"
+      "crossHotbarEditHelp": "按住左肩鍵並按上方面鍵，即可用手把整理十字熱鍵列。"
     },
     "perf": {
       "title": "效能監視器",

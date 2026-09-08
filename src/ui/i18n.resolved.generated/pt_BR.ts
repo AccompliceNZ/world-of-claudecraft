@@ -1755,7 +1755,6 @@ export const pt_BR: EnTranslations = {
       "crossHotbar": "Barra de atalho cruzada",
       "crossHotbarEnable": "Ativar barra de atalho cruzada",
       "crossHotbarExpand": "Hotbar Cruz Dupla",
-      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Segure um gatilho para acender oito slots de barra de ação no d-pad e nos botões frontais. Toque no outro gatilho para mudar para o segundo conjunto.",
       "crossHotbarResetLayout": "Redefinir barra de atalho cruzada",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const pt_BR: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Carregando {action}: confirme em uma célula para colocá-la, cancele para colocá-la de volta.",
       "crossHotbarEditHint": "Organizando: confirme pega de uma célula ou do livro de feitiços e cai em uma célula, cancele limpa uma.",
-      "crossHotbarEditHelp": "Segure o pára-choque esquerdo e pressione o botão superior para organizar a barra com o controlador.",
-      "padHintLabel": "Controller hints",
-      "padHintInteract": "Interact",
-      "padHintTargetMenu": "Target menu",
-      "padHintSwapSet": "Swap set",
-      "padHintArrangeBar": "Arrange bar",
-      "padLegendBags": "Bags",
-      "padLegendMenu": "Menu",
-      "padLegendCycleHud": "Cycle HUD"
+      "crossHotbarEditHelp": "Segure o pára-choque esquerdo e pressione o botão superior para organizar a barra com o controlador."
     },
     "perf": {
       "title": "Sobreposição de Desempenho",

@@ -1755,7 +1755,6 @@ export const de_DE: EnTranslations = {
       "crossHotbar": "Überqueren Sie die Hotbar",
       "crossHotbarEnable": "Aktivieren Sie Cross Hotbar",
       "crossHotbarExpand": "Double Cross Hotbar",
-      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Halten Sie einen Auslöser gedrückt, um acht Aktionsleisten-Slots auf dem Steuerkreuz und den Gesichtstasten zu beleuchten. Tippen Sie auf den anderen Auslöser, um zum zweiten Satz zu wechseln.",
       "crossHotbarResetLayout": "Cross Hotbar zurücksetzen",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const de_DE: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Tragen von {action}: Bestätigen Sie auf einer Zelle, um sie zu platzieren, und brechen Sie ab, um sie zurückzusetzen.",
       "crossHotbarEditHint": "Ordnen: Bestätigen: Nimmt eine Zelle oder das Zauberbuch auf und legt sie auf eine Zelle ab, Abbrechen löscht eine.",
-      "crossHotbarEditHelp": "Halten Sie den linken Stoßfänger fest und drücken Sie die Taste auf der Oberseite, um die Leiste mit dem Controller auszurichten.",
-      "padHintLabel": "Controller hints",
-      "padHintInteract": "Interact",
-      "padHintTargetMenu": "Target menu",
-      "padHintSwapSet": "Swap set",
-      "padHintArrangeBar": "Arrange bar",
-      "padLegendBags": "Bags",
-      "padLegendMenu": "Menu",
-      "padLegendCycleHud": "Cycle HUD"
+      "crossHotbarEditHelp": "Halten Sie den linken Stoßfänger fest und drücken Sie die Taste auf der Oberseite, um die Leiste mit dem Controller auszurichten."
     },
     "perf": {
       "title": "Leistungsanzeige",

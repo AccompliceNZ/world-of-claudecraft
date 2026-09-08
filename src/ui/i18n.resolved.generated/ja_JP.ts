@@ -1755,7 +1755,6 @@ export const ja_JP: EnTranslations = {
       "crossHotbar": "クロスホットバー",
       "crossHotbarEnable": "クロスホットバーを有効化",
       "crossHotbarExpand": "ダブルクロスホットバー",
-      "showHints": "コントローラーボタンのヒント",
       "crossHotbarHelp": "トリガーを押している間、方向キーとフェイスボタンに8つのアクションバースロットが表示されます。もう一方のトリガーを軽く押すと、2つ目のセットに切り替わります。",
       "crossHotbarResetLayout": "クロスホットバーをリセット",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const ja_JP: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "{action}を持っています。マスで決定を押すと置き、キャンセルで戻します。",
       "crossHotbarEditHint": "配置変更中：決定でマスまたはスペルブックからアクションを持ち上げてマスに置き、キャンセルでマスを空にします。",
-      "crossHotbarEditHelp": "左バンパーを押しながら上の面ボタンを押すと、コントローラーでバーを配置変更できます。",
-      "padHintLabel": "コントローラーのヒント",
-      "padHintInteract": "調べる",
-      "padHintTargetMenu": "ターゲットメニュー",
-      "padHintSwapSet": "セット切替",
-      "padHintArrangeBar": "バーの配置変更",
-      "padLegendBags": "バッグ",
-      "padLegendMenu": "メニュー",
-      "padLegendCycleHud": "インターフェース切替"
+      "crossHotbarEditHelp": "左バンパーを押しながら上の面ボタンを押すと、コントローラーでバーを配置変更できます。"
     },
     "perf": {
       "title": "パフォーマンスオーバーレイ",

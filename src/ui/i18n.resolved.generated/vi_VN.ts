@@ -1755,7 +1755,6 @@ export const vi_VN: EnTranslations = {
       "crossHotbar": "Thanh nóng chéo",
       "crossHotbarEnable": "Kích hoạt Cross Hotbar",
       "crossHotbarExpand": "Thanh nóng đôi chéo",
-      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Giữ nút kích hoạt để thắp sáng tám khe thanh hành động trên các nút d-pad và mặt. Nhấn vào nút kích hoạt khác để chuyển sang bộ thứ hai.",
       "crossHotbarResetLayout": "Đặt lại thanh nóng chéo",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const vi_VN: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Mang {action}: xác nhận vào một ô để đặt nó, hủy để đặt lại.",
       "crossHotbarEditHint": "Sắp xếp: xác nhận nhặt từ một ô hoặc sổ chính tả và thả vào một ô, hủy xóa một ô.",
-      "crossHotbarEditHelp": "Giữ cản trái và nhấn nút mặt trên để sắp xếp thanh với bộ điều khiển.",
-      "padHintLabel": "Controller hints",
-      "padHintInteract": "Interact",
-      "padHintTargetMenu": "Target menu",
-      "padHintSwapSet": "Swap set",
-      "padHintArrangeBar": "Arrange bar",
-      "padLegendBags": "Bags",
-      "padLegendMenu": "Menu",
-      "padLegendCycleHud": "Cycle HUD"
+      "crossHotbarEditHelp": "Giữ cản trái và nhấn nút mặt trên để sắp xếp thanh với bộ điều khiển."
     },
     "perf": {
       "title": "Lớp Phủ Hiệu Năng",

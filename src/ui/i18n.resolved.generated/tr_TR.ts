@@ -1755,7 +1755,6 @@ export const tr_TR: EnTranslations = {
       "crossHotbar": "Çapraz Hotbar",
       "crossHotbarEnable": "Çapraz Hotbar'ı Etkinleştir",
       "crossHotbarExpand": "Çift Çapraz Hotbar",
-      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "D-pad ve yüz düğmelerindeki sekiz işlem çubuğu yuvasını yakmak için tetiği basılı tutun. İkinci sete geçmek için diğer tetiğe dokunun.",
       "crossHotbarResetLayout": "Çapraz Hotbar'ı sıfırla",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const tr_TR: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "{action} taşıma: hücreye yerleştirmeyi onaylayın, geri takmak için iptal edin.",
       "crossHotbarEditHint": "Düzenleme: Bir hücreden veya büyü kitabından alımları onaylayın ve bir hücreye bırakın, iptal birini siler.",
-      "crossHotbarEditHelp": "Çubuğu kontrol cihazıyla ayarlamak için sol tamponu tutun ve üst taraftaki düğmeye basın.",
-      "padHintLabel": "Controller hints",
-      "padHintInteract": "Interact",
-      "padHintTargetMenu": "Target menu",
-      "padHintSwapSet": "Swap set",
-      "padHintArrangeBar": "Arrange bar",
-      "padLegendBags": "Bags",
-      "padLegendMenu": "Menu",
-      "padLegendCycleHud": "Cycle HUD"
+      "crossHotbarEditHelp": "Çubuğu kontrol cihazıyla ayarlamak için sol tamponu tutun ve üst taraftaki düğmeye basın."
     },
     "perf": {
       "title": "Performans Katmanı",

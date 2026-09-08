@@ -220,7 +220,6 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'クロスホットバーが有効な間、トリガーと方向キーはクロスホットバーが使用します。ここではなく下の項目で設定してください。',
   'hudChrome.controller.crossHotbar': 'クロスホットバー',
   'hudChrome.controller.crossHotbarEnable': 'クロスホットバーを有効化',
-  'hudChrome.controller.showHints': 'コントローラーボタンのヒント',
   'hudChrome.controller.crossHotbarExpand': 'ダブルクロスホットバー',
   'hudChrome.controller.crossHotbarHelp':
     'トリガーを押している間、方向キーとフェイスボタンに8つのアクションバースロットが表示されます。もう一方のトリガーを軽く押すと、2つ目のセットに切り替わります。',
@@ -16726,14 +16725,6 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'loading.kickedByModerator': 'モデレーターによって切断されました：{reason}',
   'loading.rendererContextLost':
     '3D レンダラーがグラフィックスコンテキストを失い、復旧できませんでした。再読み込みしてください。',
-  'hudChrome.controller.padHintLabel': 'コントローラーのヒント',
-  'hudChrome.controller.padHintInteract': '調べる',
-  'hudChrome.controller.padHintTargetMenu': 'ターゲットメニュー',
-  'hudChrome.controller.padHintSwapSet': 'セット切替',
-  'hudChrome.controller.padHintArrangeBar': 'バーの配置変更',
-  'hudChrome.controller.padLegendBags': 'バッグ',
-  'hudChrome.controller.padLegendMenu': 'メニュー',
-  'hudChrome.controller.padLegendCycleHud': 'インターフェース切替',
   'hudChrome.charSidebar.label': 'キャラクター詳細',
   'hudChrome.charSidebar.subtitle': 'レベル{level} {className} . {archetype} . 趣味：{hobby}',
   'hudChrome.charSidebar.subtitleNoHobby': 'レベル{level} {className} . {archetype}',

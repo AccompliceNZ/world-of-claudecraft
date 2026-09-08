@@ -2258,7 +2258,6 @@ export const hudChromeStrings = {
     crossHotbar: 'Cross Hotbar',
     crossHotbarEnable: 'Enable Cross Hotbar',
     crossHotbarExpand: 'Double Cross Hotbar',
-    showHints: 'Controller Button Hints',
     crossHotbarHelp:
       'Hold a trigger to light eight action-bar slots on the d-pad and face buttons. Tap the other trigger to swap to the second set.',
     crossHotbarResetLayout: 'Reset Cross Hotbar',
@@ -2285,14 +2284,6 @@ export const hudChromeStrings = {
     // The pad hint strip and the micro-menu legend: a controller's replacement
     // for the keyboard's implicit key knowledge. The glyph beside each label is
     // a hardware name from gamepad_map, so only the action words are keyed.
-    padHintLabel: 'Controller hints',
-    padHintInteract: 'Interact',
-    padHintTargetMenu: 'Target menu',
-    padHintSwapSet: 'Swap set',
-    padHintArrangeBar: 'Arrange bar',
-    padLegendBags: 'Bags',
-    padLegendMenu: 'Menu',
-    padLegendCycleHud: 'Cycle HUD',
   },
   // Performance overlay (the customizable in-game stats panel + its Options
   // sub-view). Player-facing, so every label is a key here; the live numbers in

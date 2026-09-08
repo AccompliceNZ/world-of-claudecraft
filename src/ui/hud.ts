@@ -725,7 +725,6 @@ import { type FrameDimension, MovableFrame } from './movable_frame';
 import { NoticeboardPopup } from './noticeboard_popup';
 import { NPC_WINDOW_CLOSE_RANGE } from './npc_service_range';
 import { type AccountToggleSeam, OptionsWindow } from './options_window';
-import { PadHintStripController } from './pad_hint_strip_controller';
 import {
   makeWriterFacet,
   type PainterHostPresentation,
@@ -4557,7 +4556,6 @@ export class Hud {
     keyCapLabel,
     labelForGamepadAction,
   );
-  private readonly padHintStrip = PadHintStripController.create(this.writerFacet);
   private readonly interactPromptPainter = new InteractPromptPainter(this.writerFacet, {
     root: this.interactPromptEl,
     keycap: this.interactPromptKeycapEl,
@@ -8927,9 +8925,6 @@ export class Hud {
         gamepad?.kind() ?? 'generic',
       ),
     );
-    // The pad hint strip rides the same read: one gamepad lookup, one band, and
-    // the two pad-facing readouts can never disagree about which pad is live.
-    this.padHintStrip?.update(padActive, gamepad ?? null);
   }
 
   update(paint = true): void {

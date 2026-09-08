@@ -267,18 +267,6 @@ describe('onHold', () => {
   });
 });
 
-describe('the controller hint chrome', () => {
-  it('stamps body.pad-hints-on only while the opt-in setting is on', () => {
-    const wiring = createCrossHotbar(() => fakeHost(), SCOPE, PAD_LAYOUT);
-    const pad = fakePad(true);
-    const store = { set: (_k: string, v: never) => v };
-    expect(wiring.applySetting(pad, store, 'showControllerHints', true)).toBe(true);
-    expect(bodyClasses.has('pad-hints-on')).toBe(true);
-    wiring.applySetting(pad, store, 'showControllerHints', false);
-    expect(bodyClasses.has('pad-hints-on')).toBe(false);
-  });
-});
-
 describe('the display preset', () => {
   it('puts exactly one preset class on the body', () => {
     // Each preset is a coherent look, so they are mutually exclusive: leaving two

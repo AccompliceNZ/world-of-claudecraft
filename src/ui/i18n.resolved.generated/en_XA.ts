@@ -1755,7 +1755,6 @@ export const en_XA: EnTranslations = {
       "crossHotbar": "[Çŕóšš Ĥóţƀáŕ]",
       "crossHotbarEnable": "[Éñáƀļé Çŕóšš Ĥóţƀáŕ]",
       "crossHotbarExpand": "[Ðóúƀļé Çŕóšš Ĥóţƀáŕ]",
-      "showHints": "[Çóñţŕóļļéŕ Ɓúţţóñ Ĥíñţš]",
       "crossHotbarHelp": "[Ĥóļð á ţŕíĝĝéŕ ţó ļíĝĥţ éíĝĥţ áçţíóñ-ƀáŕ šļóţš óñ ţĥé ð-þáð áñð ƒáçé ƀúţţóñš. Ţáþ ţĥé óţĥéŕ ţŕíĝĝéŕ ţó šŵáþ ţó ţĥé šéçóñð šéţ.]",
       "crossHotbarResetLayout": "[Ŕéšéţ Çŕóšš Ĥóţƀáŕ]",
       "crossHotbarPosition": "[{trigger} + {button}]",
@@ -1771,15 +1770,7 @@ export const en_XA: EnTranslations = {
       "crossHotbarArrangeChord": "[{bumper} + {button}]",
       "crossHotbarCarrying": "[Çáŕŕýíñĝ {action}: çóñƒíŕɱ óñ á çéļļ ţó þļáçé íţ, çáñçéļ ţó þúţ íţ ƀáçķ.]",
       "crossHotbarEditHint": "[Áŕŕáñĝíñĝ · ð-þáð ɱóʋéš · çóñƒíŕɱ þíçķš úþ áñð þļáçéš · çáñçéļ çļéáŕš á çéļļ]",
-      "crossHotbarEditHelp": "[Ĥóļð ţĥé ļéƒţ ƀúɱþéŕ áñð þŕéšš ţĥé ţóþ ƒáçé ƀúţţóñ ţó áŕŕáñĝé ţĥé ƀáŕ ŵíţĥ ţĥé çóñţŕóļļéŕ.]",
-      "padHintLabel": "[Çóñţŕóļļéŕ ĥíñţš]",
-      "padHintInteract": "[Íñţéŕáçţ]",
-      "padHintTargetMenu": "[Ţáŕĝéţ ɱéñú]",
-      "padHintSwapSet": "[Šŵáþ šéţ]",
-      "padHintArrangeBar": "[Áŕŕáñĝé ƀáŕ]",
-      "padLegendBags": "[Ɓáĝš]",
-      "padLegendMenu": "[Ɱéñú]",
-      "padLegendCycleHud": "[Çýçļé ĤÚÐ]"
+      "crossHotbarEditHelp": "[Ĥóļð ţĥé ļéƒţ ƀúɱþéŕ áñð þŕéšš ţĥé ţóþ ƒáçé ƀúţţóñ ţó áŕŕáñĝé ţĥé ƀáŕ ŵíţĥ ţĥé çóñţŕóļļéŕ.]"
     },
     "perf": {
       "title": "[Þéŕƒóŕɱáñçé Óʋéŕļáý]",

@@ -1755,7 +1755,6 @@ export const id_ID: EnTranslations = {
       "crossHotbar": "Lintas Hotbar",
       "crossHotbarEnable": "Aktifkan Lintas Hotbar",
       "crossHotbarExpand": "Hotbar Silang Ganda",
-      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Tahan pemicu untuk menyalakan delapan slot bilah tindakan pada d-pad dan tombol muka. Ketuk pemicu lainnya untuk beralih ke set kedua.",
       "crossHotbarResetLayout": "Setel Ulang Lintas Hotbar",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const id_ID: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Membawa {action}: konfirmasi pada sel untuk meletakkannya, batal untuk memasangnya kembali.",
       "crossHotbarEditHint": "Pengaturan: konfirmasi pengambilan dari sel atau buku mantra dan dijatuhkan ke sel, batalkan hapus satu.",
-      "crossHotbarEditHelp": "Pegang bemper kiri dan tekan tombol muka atas untuk mengatur palang dengan pengontrol.",
-      "padHintLabel": "Controller hints",
-      "padHintInteract": "Interact",
-      "padHintTargetMenu": "Target menu",
-      "padHintSwapSet": "Swap set",
-      "padHintArrangeBar": "Arrange bar",
-      "padLegendBags": "Bags",
-      "padLegendMenu": "Menu",
-      "padLegendCycleHud": "Cycle HUD"
+      "crossHotbarEditHelp": "Pegang bemper kiri dan tekan tombol muka atas untuk mengatur palang dengan pengontrol."
     },
     "perf": {
       "title": "Lapisan Performa",

@@ -1755,7 +1755,6 @@ export const fr_FR: EnTranslations = {
       "crossHotbar": "Barre de raccourcis croisée",
       "crossHotbarEnable": "Activer la barre de raccourcis croisée",
       "crossHotbarExpand": "Barre de raccourcis double croix",
-      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Maintenez une gâchette enfoncée pour allumer huit emplacements de barre d'action sur le pavé directionnel et les boutons du visage. Appuyez sur l'autre déclencheur pour passer au deuxième ensemble.",
       "crossHotbarResetLayout": "Réinitialiser la barre de raccourcis croisée",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const fr_FR: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Porter {action} : confirmer sur une cellule pour la placer, annuler pour la remettre.",
       "crossHotbarEditHint": "Organisation : confirmer le prélèvement dans une cellule ou le livre de sorts et le dépôt sur une cellule, annuler en efface un.",
-      "crossHotbarEditHelp": "Maintenez le pare-chocs gauche et appuyez sur le bouton supérieur pour organiser la barre avec le contrôleur.",
-      "padHintLabel": "Controller hints",
-      "padHintInteract": "Interact",
-      "padHintTargetMenu": "Target menu",
-      "padHintSwapSet": "Swap set",
-      "padHintArrangeBar": "Arrange bar",
-      "padLegendBags": "Bags",
-      "padLegendMenu": "Menu",
-      "padLegendCycleHud": "Cycle HUD"
+      "crossHotbarEditHelp": "Maintenez le pare-chocs gauche et appuyez sur le bouton supérieur pour organiser la barre avec le contrôleur."
     },
     "perf": {
       "title": "Surcouche de performance",

@@ -218,7 +218,6 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '크로스 핫바가 켜져 있는 동안에는 트리거와 방향키를 크로스 핫바가 사용합니다. 여기가 아니라 아래에서 설정하세요.',
   'hudChrome.controller.crossHotbar': '크로스 핫바',
   'hudChrome.controller.crossHotbarEnable': '크로스 핫바 사용',
-  'hudChrome.controller.showHints': '컨트롤러 버튼 힌트',
   'hudChrome.controller.crossHotbarExpand': '더블 크로스 핫바',
   'hudChrome.controller.crossHotbarHelp':
     '트리거를 누르고 있으면 방향키와 페이스 버튼에 여덟 개의 액션 바 슬롯이 표시됩니다. 다른 트리거를 짧게 누르면 두 번째 세트로 전환됩니다.',
@@ -16694,14 +16693,6 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'loading.kickedByModerator': '운영자가 연결을 끊었습니다: {reason}',
   'loading.rendererContextLost':
     '3D 렌더러가 그래픽 컨텍스트를 잃어 복구할 수 없습니다. 새로고침해 보세요.',
-  'hudChrome.controller.padHintLabel': '컨트롤러 도움말',
-  'hudChrome.controller.padHintInteract': '상호작용',
-  'hudChrome.controller.padHintTargetMenu': '대상 메뉴',
-  'hudChrome.controller.padHintSwapSet': '세트 전환',
-  'hudChrome.controller.padHintArrangeBar': '단축바 정렬',
-  'hudChrome.controller.padLegendBags': '가방',
-  'hudChrome.controller.padLegendMenu': '메뉴',
-  'hudChrome.controller.padLegendCycleHud': '인터페이스 전환',
   'hudChrome.charSidebar.label': '캐릭터 세부 정보',
   'hudChrome.charSidebar.subtitle': '레벨 {level} {className} . {archetype} . 취미: {hobby}',
   'hudChrome.charSidebar.subtitleNoHobby': '레벨 {level} {className} . {archetype}',

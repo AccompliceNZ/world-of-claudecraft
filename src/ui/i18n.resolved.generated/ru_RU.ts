@@ -1755,7 +1755,6 @@ export const ru_RU: EnTranslations = {
       "crossHotbar": "Крестовая панель",
       "crossHotbarEnable": "Включить крестовую панель",
       "crossHotbarExpand": "Двойная крестовая панель",
-      "showHints": "Подсказки кнопок геймпада",
       "crossHotbarHelp": "Удерживайте курок, чтобы подсветить восемь ячеек панели действий на крестовине и лицевых кнопках. Нажмите второй курок, чтобы переключиться на второй набор.",
       "crossHotbarResetLayout": "Сбросить крестовую панель",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const ru_RU: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "В руках {action}: подтверждение на ячейке кладет действие, отмена возвращает его.",
       "crossHotbarEditHint": "Перестановка: подтверждение берет действие из ячейки или книги заклинаний и кладет его в ячейку, отмена очищает ячейку.",
-      "crossHotbarEditHelp": "Удерживайте левый бампер и нажмите верхнюю лицевую кнопку, чтобы переставить панель геймпадом.",
-      "padHintLabel": "Подсказки геймпада",
-      "padHintInteract": "Взаимодействовать",
-      "padHintTargetMenu": "Меню цели",
-      "padHintSwapSet": "Сменить набор",
-      "padHintArrangeBar": "Перестановка панели",
-      "padLegendBags": "Сумки",
-      "padLegendMenu": "Меню",
-      "padLegendCycleHud": "Переключить интерфейс"
+      "crossHotbarEditHelp": "Удерживайте левый бампер и нажмите верхнюю лицевую кнопку, чтобы переставить панель геймпадом."
     },
     "perf": {
       "title": "Оверлей производительности",

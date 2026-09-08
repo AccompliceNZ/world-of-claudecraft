@@ -210,7 +210,6 @@ describe('live graphics profile architecture', () => {
 // repo-relative for the failure messages.
 const UI_PURE_CORES = [
   'src/ui/interact_prompt_view.ts',
-  'src/ui/pad_hint_strip_view.ts',
   // The one face-button tone rule, shared by the interact prompt and the pad
   // hint strip so a printed glyph and its colour can never disagree.
   'src/ui/pad_face_tone_core.ts',
@@ -2423,7 +2422,6 @@ const UI_DOM_MODULES = [
   'src/ui/hud/cross_hotbar/cross_hotbar_controller.ts',
   'src/ui/options_window_shell.ts',
   'src/ui/hud/talking_head/talking_head_controller.ts',
-  'src/ui/pad_hint_strip_controller.ts',
   'src/ui/char_skin_window.ts',
   'src/ui/char_window.ts',
   'src/ui/charselect_news.ts',

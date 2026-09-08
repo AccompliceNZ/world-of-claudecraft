@@ -1755,7 +1755,6 @@ export const es: EnTranslations = {
       "crossHotbar": "Barra de acceso rápido cruzada",
       "crossHotbarEnable": "Habilitar barra de acceso rápido cruzada",
       "crossHotbarExpand": "Barra caliente de doble cruz",
-      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Mantenga presionado un gatillo para iluminar ocho ranuras de la barra de acción en el d-pad y los botones frontales. Toque el otro disparador para cambiar al segundo conjunto.",
       "crossHotbarResetLayout": "Restablecer barra de acceso rápido cruzada",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const es: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Llevar {action}: confirmar en una celda para colocarlo, cancelar para volver a colocarlo.",
       "crossHotbarEditHint": "Organizar: confirmar recoge de una celda o del libro de hechizos y deja caer en una celda, cancelar borra una.",
-      "crossHotbarEditHelp": "Sostenga el parachoques izquierdo y presione el botón de la cara superior para organizar la barra con el controlador.",
-      "padHintLabel": "Controller hints",
-      "padHintInteract": "Interact",
-      "padHintTargetMenu": "Target menu",
-      "padHintSwapSet": "Swap set",
-      "padHintArrangeBar": "Arrange bar",
-      "padLegendBags": "Bags",
-      "padLegendMenu": "Menu",
-      "padLegendCycleHud": "Cycle HUD"
+      "crossHotbarEditHelp": "Sostenga el parachoques izquierdo y presione el botón de la cara superior para organizar la barra con el controlador."
     },
     "perf": {
       "title": "Superposición de rendimiento",

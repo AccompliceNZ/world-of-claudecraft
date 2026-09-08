@@ -1755,7 +1755,6 @@ export const sv_SE: EnTranslations = {
       "crossHotbar": "Cross Hotbar",
       "crossHotbarEnable": "Aktivera Cross Hotbar",
       "crossHotbarExpand": "Double Cross Hotbar",
-      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Håll en avtryckare för att tända åtta action-bar-fack på d-pad- och ansiktsknapparna. Tryck på den andra utlösaren för att byta till den andra uppsättningen.",
       "crossHotbarResetLayout": "Återställ Cross Hotbar",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const sv_SE: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Bär {action}: bekräfta på en cell för att placera den, avbryt för att sätta tillbaka den.",
       "crossHotbarEditHint": "Ordna: bekräfta plockar upp från en cell eller stavningsboken och släpper på en cell, avbryt rensar en.",
-      "crossHotbarEditHelp": "Håll i den vänstra stötfångaren och tryck på den övre ansiktsknappen för att placera stången med kontrollen.",
-      "padHintLabel": "Controller hints",
-      "padHintInteract": "Interact",
-      "padHintTargetMenu": "Target menu",
-      "padHintSwapSet": "Swap set",
-      "padHintArrangeBar": "Arrange bar",
-      "padLegendBags": "Bags",
-      "padLegendMenu": "Menu",
-      "padLegendCycleHud": "Cycle HUD"
+      "crossHotbarEditHelp": "Håll i den vänstra stötfångaren och tryck på den övre ansiktsknappen för att placera stången med kontrollen."
     },
     "perf": {
       "title": "Prestandaöverlägg",

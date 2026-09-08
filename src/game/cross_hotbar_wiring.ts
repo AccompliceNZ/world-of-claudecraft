@@ -88,7 +88,6 @@ export interface CrossHotbarSettingsStore {
 export type CrossHotbarSettingKey =
   | 'gamepadCrossHotbar'
   | 'gamepadCrossHotbarExpand'
-  | 'showControllerHints'
   | 'gamepadCrossHotbarDisplay';
 
 /** The rebind surface the Controller options panel consumes. */
@@ -183,7 +182,6 @@ export function crossHotbarButtonLabels(kind: GamepadKind): string[] {
 // pad keeps the desktop rows even though the setting defaults on, which is the
 // whole reason this is not just the setting.
 const PAD_MODE_CLASS = 'xhb-mode';
-const PAD_HINTS_CLASS = 'pad-hints-on';
 // How much of itself the bar shows. A class per preset rather than a pile of
 // toggles: each is a coherent look, and CSS owns the whole difference.
 export const CROSS_HOTBAR_DISPLAY_CLASSES = ['xhb-full', 'xhb-compact', 'xhb-minimal'] as const;
@@ -342,10 +340,6 @@ export function createCrossHotbar(
       }
       if (key === 'gamepadCrossHotbarDisplay') {
         applyDisplayClass(store.set(key, Number(value)));
-        return true;
-      }
-      if (key === 'showControllerHints') {
-        document.body.classList.toggle(PAD_HINTS_CLASS, store.set(key, !!value));
         return true;
       }
       return false;

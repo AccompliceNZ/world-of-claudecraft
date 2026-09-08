@@ -1755,7 +1755,6 @@ export const en_CA: EnTranslations = {
       "crossHotbar": "Cross Hotbar",
       "crossHotbarEnable": "Enable Cross Hotbar",
       "crossHotbarExpand": "Double Cross Hotbar",
-      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Hold a trigger to light eight action-bar slots on the d-pad and face buttons. Tap the other trigger to swap to the second set.",
       "crossHotbarResetLayout": "Reset Cross Hotbar",
       "crossHotbarPosition": "{trigger} + {button}",
@@ -1771,15 +1770,7 @@ export const en_CA: EnTranslations = {
       "crossHotbarArrangeChord": "{bumper} + {button}",
       "crossHotbarCarrying": "Carrying {action}: confirm on a cell to place it, cancel to put it back.",
       "crossHotbarEditHint": "Arranging · d-pad moves · confirm picks up and places · cancel clears a cell",
-      "crossHotbarEditHelp": "Hold the left bumper and press the top face button to arrange the bar with the controller.",
-      "padHintLabel": "Controller hints",
-      "padHintInteract": "Interact",
-      "padHintTargetMenu": "Target menu",
-      "padHintSwapSet": "Swap set",
-      "padHintArrangeBar": "Arrange bar",
-      "padLegendBags": "Bags",
-      "padLegendMenu": "Menu",
-      "padLegendCycleHud": "Cycle HUD"
+      "crossHotbarEditHelp": "Hold the left bumper and press the top face button to arrange the bar with the controller."
     },
     "perf": {
       "title": "Performance Overlay",
