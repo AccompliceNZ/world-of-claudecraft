@@ -23,10 +23,19 @@
 //    repaints resume the moment a filter is chosen even though the picked
 //    select keeps focus.
 //  - focusout from a select DISARMS.
-//  - wheel anywhere in the root DISARMS: an open native popup takes the wheel
-//    itself or is rolled up by the page scroll, so a wheel that reached the
-//    page means no popup is capturing input, and the reader scrolling the
-//    list is exactly who a frozen countdown would punish.
+//  - pointercancel DISARMS: the gesture became a scroll (a touch drag that
+//    began on the select), so no dropdown opened, and a select still focused
+//    from an earlier pick must not freeze the countdowns for the whole read.
+//  - wheel anywhere in the root DISARMS once the arming press is older than
+//    WHEEL_SETTLE_MS: an open native popup takes the wheel itself or is
+//    rolled up by the page scroll, so a wheel that reached the page means no
+//    popup is capturing input, and the reader scrolling the list is exactly
+//    who a frozen countdown would punish. The settle window is for the tail
+//    of a trackpad flick, which keeps delivering wheel events after the
+//    fingers lift and would otherwise release a hold armed by the very next
+//    click. The premise is a popup OUTSIDE the DOM; a stylable in-DOM picker
+//    (appearance: base-select) would bubble its own wheel to the root and
+//    needs its own rule before this window adopts one.
 //
 // The residual: a dropdown dismissed WITHOUT a pick (an outside click or
 // Escape swallowed by the native popup, or re-picking the current value,
@@ -38,10 +47,12 @@
 // consumer's sell-picker guard documents the same bounding doctrine for its
 // own flag.
 //
-// Attaches its own delegated listeners at construction, BEFORE the consumer
-// wires its handlers, so a change disarms while the select is still attached
-// (the consumer's change handler rebuilds the subtree, and an observe running
-// after that rebuild would see a detached target and skip the disarm).
+// Attaches its own delegated listeners at construction, so the CALLER must
+// construct it BEFORE wiring its own handlers on the same root
+// (woc_market_window.ts does, first in its built block): a change then
+// disarms while the select is still attached (the consumer's change handler
+// rebuilds the subtree, and an observe running after that rebuild would see
+// a detached target and skip the disarm).
 //
 // Owns browser state by design (live listeners, instanceof narrowing):
 // registered in UI_DOM_MODULES (tests/architecture.test.ts), the
@@ -59,17 +70,35 @@ export interface NativeSelectHold {
 
 const OPEN_KEYS = new Set([' ', 'Enter', 'ArrowDown', 'ArrowUp']);
 
-export function createNativeSelectHold(root: HTMLElement): NativeSelectHold {
+/** How long after an arming press a wheel is read as the flick's momentum
+ *  tail rather than the reader scrolling (macOS delivers momentum wheel
+ *  events for over a second after the fingers lift). */
+const WHEEL_SETTLE_MS = 1500;
+
+/** `now` is injectable for the paired test's clock; the default is the
+ *  monotonic page clock, which is all the settle window needs. */
+export function createNativeSelectHold(
+  root: HTMLElement,
+  now: () => number = () => performance.now(),
+): NativeSelectHold {
   let armed = false;
+  let armedAt = Number.NEGATIVE_INFINITY;
+  const arm = (on: boolean): void => {
+    armed = on;
+    if (on) armedAt = now();
+  };
   const onSelect = (e: Event): boolean =>
     e.target instanceof HTMLSelectElement && root.contains(e.target);
   for (const press of ['pointerdown', 'mousedown'] as const) {
     root.addEventListener(press, (e) => {
-      armed = onSelect(e);
+      arm(onSelect(e));
     });
   }
+  root.addEventListener('pointercancel', () => {
+    armed = false;
+  });
   root.addEventListener('keydown', (e) => {
-    if (onSelect(e)) armed = OPEN_KEYS.has(e.key);
+    if (onSelect(e)) arm(OPEN_KEYS.has(e.key));
   });
   root.addEventListener('change', (e) => {
     if (onSelect(e)) armed = false;
@@ -81,7 +110,7 @@ export function createNativeSelectHold(root: HTMLElement): NativeSelectHold {
   root.addEventListener(
     'wheel',
     () => {
-      armed = false;
+      if (now() - armedAt >= WHEEL_SETTLE_MS) armed = false;
     },
     { passive: true },
   );

@@ -877,6 +877,35 @@ describe('WocMarketWindow live rig: tabs, rebuild, focus and scroll', () => {
     expect(q<HTMLSelectElement>(r.root, 'select[data-field="filter-quality"]')).not.toBe(sel);
   });
 
+  it('a wallet beat before the first render neither throws nor paints (no hold yet)', async () => {
+    // hud.ts fans onWalletChanged out with no isOpen gate, so a balance beat
+    // can reach a never-opened Exchange; the hold attaches on the first
+    // render, and until then there is no DOM to hold and nothing to paint.
+    const r = rig();
+    setWalletUiEnabled(true);
+    setWalletConnectionAddresses('9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin', null);
+    expect(() => r.win.onWalletChanged()).not.toThrow();
+    await flush();
+    expect(r.root.innerHTML).toBe('');
+  });
+
+  it('construction reads no dep: the root closure is first called on render', () => {
+    // hud.ts builds these painters as field initializers over a bare
+    // querySelector cast, so an eager deps.root() in the constructor would
+    // have thrown for a missing element at HUD construction and bricked the
+    // whole HUD, not just this window.
+    const base = (rig().win as unknown as { deps: WocMarketWindowDeps }).deps;
+    expect(
+      () =>
+        new WocMarketWindow({
+          ...base,
+          root: () => {
+            throw new Error('deps.root() read before render');
+          },
+        }),
+    ).not.toThrow();
+  });
+
   it('keeps the detail pane scroll on the same listing and resets it on another', async () => {
     const r = rig({
       rows: [listing(1), listing(2, { itemId: EPIC_TWO, item: { itemId: EPIC_TWO, count: 1 } })],
@@ -920,7 +949,10 @@ describe('WocMarketWindow live rig: tabs, rebuild, focus and scroll', () => {
     // table WITHOUT that row. No rung exists to focus, so no focus() ran and
     // nothing scrolled the pane: the kept offset must come back. Spelling the
     // degrade as "landed anywhere else" read this as degraded too and dropped
-    // the offset, a jump to the top the base never had.
+    // the offset, a jump to the top the base never had. Keyboard focus is the
+    // premise: a mouse click parks focus on the dialog root (pointer_blur),
+    // which focusedWithin refuses, so that arm carries no key at all and the
+    // offset survives through the focusKey === null path instead.
     const r = rig({ rows: [listing(1), listing(2)] });
     r.win.open();
     await flush();
@@ -939,9 +971,11 @@ describe('WocMarketWindow live rig: tabs, rebuild, focus and scroll', () => {
     await flush();
     r.win.refreshIfChanged();
     await flush();
-    // The positive control: the table really was rebuilt without the row.
+    // The positive control: the table really was rebuilt without the row, and
+    // nothing inside the window took focus in its place (the nowhere landing).
     expect(r.root.querySelector('[data-focus-key="wm-row-1"]')).toBeNull();
     expect(r.root.querySelectorAll('.wm-row').length).toBe(1);
+    expect(r.root.contains(document.activeElement)).toBe(false);
     expect(q<HTMLElement>(r.root, '.wm-body').scrollTop).toBe(120);
   });
 

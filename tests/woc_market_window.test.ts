@@ -183,10 +183,17 @@ describe('woc_market_window: cold-window contract', () => {
     const built = betweenCode('if (!this.built) {', 'const model = this.buildModel();');
     const attach = 'this.selectHold = createNativeSelectHold(root);';
     expect(built).toContain(attach);
-    expect(built.indexOf(attach)).toBeLessThan(built.indexOf("root.addEventListener('change'"));
+    // FIRST in the block, not merely ahead of change: ahead of the dialog-root
+    // mark and every listener, so a later insertion cannot slip in front.
+    expect(built.indexOf(attach)).toBeLessThan(built.indexOf('markDialogRoot('));
+    expect(built.indexOf(attach)).toBeLessThan(built.indexOf('root.addEventListener('));
     expect(betweenCode('constructor(private readonly deps', 'get isOpen()')).not.toContain(
       'createNativeSelectHold',
     );
+    // Every read of the hold is null-safe: a wallet beat can reach a
+    // never-rendered window (hud.ts fans it out with no isOpen gate), and a
+    // third call site added with a bare `.holdRepaints()` would throw there.
+    expect(code).not.toMatch(/this\.selectHold(?!\s*[?=:])/);
   });
 
   it('keeps the wocMarketViewSig repaint guard the hud_update_drive registry names', () => {
