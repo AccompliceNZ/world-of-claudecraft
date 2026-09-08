@@ -1869,7 +1869,8 @@
     padding: var(--spacing-xs);
     text-align: left;
     cursor: var(--cursor-point);
-  }  .ql-group-line {
+  }
+  .ql-group-line {
     cursor: default;
   }
 

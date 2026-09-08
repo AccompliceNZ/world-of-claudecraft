@@ -194,6 +194,8 @@ describe('map window: the pad band stays the drag handle', () => {
     );
     expect(value).toBe('var(--window-pad)');
     expect(value).not.toBe('0');
+  });
+});
 
 describe('map sidebar controller: walking cadence', () => {
   beforeEach(() => {
