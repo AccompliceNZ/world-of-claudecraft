@@ -14776,6 +14776,13 @@
     flex-direction: column;
     gap: var(--spacing-sm);
   }
+  /* .set-rows is the window shell's scrolling body on most settings pages, which
+     gives it a resolved height: without this, every row is a shrinkable flex item
+     and a full page squeezes its rows together (labels colliding) instead of
+     scrolling. Rows keep their natural height and the body scrolls. */
+  .set-rows > * {
+    flex: none;
+  }
   /* Rows carry NO horizontal inset of their own: the label starts on the
      window gutter the head, the tab strip and the footer buttons share
      (.ui-win-body's --window-pad padding). */
