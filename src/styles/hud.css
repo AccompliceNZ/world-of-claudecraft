@@ -1588,6 +1588,7 @@
   #reliquary-tracker.tf-unlocked,
   #delve-tracker.tf-unlocked,
   #rift-tracker.tf-unlocked,
+  .gathering-goal-panel.tf-unlocked,
   #swingbar-offhand.tf-unlocked,
   #paladin-devotion-frame.tf-unlocked,
   #proc-overlay.tf-unlocked,
@@ -1664,7 +1665,8 @@
   #deed-tracker.hud-frame-detached,
   #reliquary-tracker.hud-frame-detached,
   #delve-tracker.hud-frame-detached,
-  #rift-tracker.hud-frame-detached {
+  #rift-tracker.hud-frame-detached,
+  .gathering-goal-panel.hud-frame-detached {
     position: absolute;
     margin: 0;
     z-index: 20;
@@ -1676,7 +1678,8 @@
   #deed-tracker.hud-frame-detached,
   #reliquary-tracker.hud-frame-detached,
   #delve-tracker.hud-frame-detached,
-  #rift-tracker.hud-frame-detached {
+  #rift-tracker.hud-frame-detached,
+  .gathering-goal-panel.hud-frame-detached {
     width: 240px;
   }
   #actionbar .tf-move-btn,
@@ -1696,6 +1699,7 @@
   #reliquary-tracker .tf-move-btn,
   #delve-tracker .tf-move-btn,
   #rift-tracker .tf-move-btn,
+  .gathering-goal-panel .tf-move-btn,
   #swingbar-offhand .tf-move-btn,
   #paladin-devotion-frame .tf-move-btn,
   #proc-overlay .tf-move-btn,
@@ -1730,6 +1734,7 @@
   #reliquary-tracker .tf-move-btn:focus-visible,
   #delve-tracker .tf-move-btn:focus-visible,
   #rift-tracker .tf-move-btn:focus-visible,
+  .gathering-goal-panel .tf-move-btn:focus-visible,
   #swingbar-offhand .tf-move-btn:focus-visible,
   #paladin-devotion-frame .tf-move-btn:focus-visible,
   #petbar .tf-move-btn:focus-visible,
@@ -1883,7 +1888,8 @@
   body.interface-unlocked #deed-tracker.tf-unlocked,
   body.interface-unlocked #reliquary-tracker.tf-unlocked,
   body.interface-unlocked #delve-tracker.tf-unlocked,
-  body.interface-unlocked #rift-tracker.tf-unlocked {
+  body.interface-unlocked #rift-tracker.tf-unlocked,
+  body.interface-unlocked .gathering-goal-panel.tf-unlocked {
     display: block !important;
     opacity: 0.55;
     min-height: 48px;
@@ -7059,6 +7065,11 @@
     z-index: 100;
     pointer-events: none;
     max-width: min(720px, calc(100vw - 16px));
+    /* The height cap is written inline per paint (tooltip_clamp_core.ts via
+       Hud.paintTooltipAt: the viewport height in AUTHOR space, which a static
+       vh value cannot express under the UI scale); this only keeps a capped
+       box from spilling its tail past the border. */
+    overflow-y: auto;
     padding: 8px 10px;
     font-size: 12px;
     line-height: 1.5;
@@ -8499,6 +8510,44 @@
   }
   #ghost-prompt .btn {
     pointer-events: auto;
+  }
+  /* Interact affordance: a small, NON-BLOCKING line shown only while an interact
+     press is ambiguous between two farming targets in reach (a placed feast over
+     a garden bed). Sits just above the ghost prompt's band and below the action
+     bar, in the same read-and-keep-playing register: pointer-events:none, so it
+     never eats a click meant for the world, and no transition, because it must
+     be readable the instant the player steps into the ambiguity rather than
+     fading in after they have already pressed.
+     Visibility is a CLASS, not a display write, and that is load-bearing rather
+     than stylistic: the PainterHost facet keeps ONE (kind, value) entry per
+     element for its four single-slot writers, so a module writing both setText
+     and setDisplay to the same node would flip that entry every poll and elide
+     NOTHING. The class cache is multi-slot, so `is-shown` and the text elide
+     independently. Painted by
+     src/ui/hud/professions/farm_press_affordance_controller.ts. */
+  #interact-affordance {
+    position: absolute;
+    left: 50%;
+    bottom: 30%;
+    transform: translateX(-50%);
+    opacity: 0;
+    max-width: min(420px, calc(100vw - 48px));
+    box-sizing: border-box;
+    padding: 6px 12px;
+    border: 1px solid var(--color-border-default);
+    border-radius: 6px;
+    background: var(--color-bg-map-ink);
+    color: var(--color-text-light);
+    font-family: var(--font-serif);
+    font-size: 15px;
+    line-height: 1.3;
+    text-align: center;
+    text-wrap: balance;
+    z-index: 30;
+    pointer-events: none;
+  }
+  #interact-affordance.is-shown {
+    opacity: 1;
   }
   /* The death actions use the same live Confirm binding as the rest of pad UI.
      Generated content leaves the localized button text intact while making the
@@ -11684,7 +11733,7 @@
     animation: none !important;
   }
 
-  /* ---- Frost spec variant: the Glacial Spike Icicle bank ------------------ */
+  /* ---- Frost spec variant: the Rimeneedle Icicle bank ------------------ */
   /* The complete frozen phoenix is visible from the first Icicle. Additional
    Icicles glaze the same silhouette with brighter layers, and the fifth locks
    it with a sharp crystal crown. */

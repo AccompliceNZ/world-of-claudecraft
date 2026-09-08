@@ -92,7 +92,7 @@ const SLOT_DEFAULTS = [
 ];
 
 export const BIND_ACTIONS: BindAction[] = [
-  // Movement / camera — polled every frame (held)
+  // Movement / camera: polled every frame (held)
   {
     id: 'forward',
     label: 'Move Forward',
@@ -326,6 +326,29 @@ export const BIND_ACTIONS: BindAction[] = [
     kind: 'edge',
     defaults: ['Shift+KeyX'],
   },
+  // The Harvest Journal parks on Shift+K. Its own initials are both spoken
+  // for on the shifted layer (Shift+H is Damage Meters, Shift+J is Target
+  // Buffs and Debuffs), and K is the free key next to them; bare KeyK stays
+  // the Leaderboard. Rebindable like any action.
+  {
+    id: 'harvestJournal',
+    label: 'Harvest Journal',
+    category: 'Interface',
+    kind: 'edge',
+    defaults: ['Shift+KeyK'],
+  },
+  // Perfecting parks on the shifted layer of KeyT, Crafting's letter: bare
+  // KeyT is Crafting, its own initial is spoken for on both layers (bare P is
+  // the Spellbook, Shift+P is Professions), and Perfecting is the crafting
+  // family's endgame surface, so it sits over Crafting the way Professions
+  // sits over the Spellbook. Rebindable like any action.
+  {
+    id: 'perfecting',
+    label: 'Perfecting',
+    category: 'Interface',
+    kind: 'edge',
+    defaults: ['Shift+KeyT'],
+  },
   {
     id: 'chat',
     label: 'Open Chat',
@@ -435,7 +458,7 @@ export interface KeyMods {
   meta?: boolean;
 }
 
-// e.code values for the modifier keys themselves — never bindable on their own.
+// e.code values for the modifier keys themselves, never bindable on their own.
 const MODIFIER_CODES = new Set([
   'ShiftLeft',
   'ShiftRight',
@@ -780,7 +803,7 @@ export class Keybinds {
     return keyLabel(this.codeAt(id, index));
   }
 
-  /** Primary (or, if unset, secondary) label — used for action-bar keycaps. */
+  /** Primary (or, if unset, secondary) label, used for action-bar keycaps. */
   primaryLabel(id: string): string {
     const codes = this.map.get(id) ?? [];
     return keyLabel(codes[0] ?? codes[1] ?? null);

@@ -9,7 +9,7 @@ import {
 
 const DEFAULT_OUTPUT = 'tmp/imagegen/item-art-consistency/final-audit';
 const DEFAULT_VERDICT =
-  'docs/achievements/item-art-consistency-2026-08-09/final-item-art-audit-verdict.json';
+  'docs/achievements/masterwrought-art-completion-2026-09-02/final-item-art-audit-verdict.json';
 
 function usage() {
   return `Usage: node scripts/item_art_audit.mjs [options]
@@ -59,8 +59,13 @@ function parseArguments(arguments_) {
 async function loadItems(repoRoot) {
   const build = await esbuild.build({
     stdin: {
+      // ITEM_ART_PENDING is the one art-pending ledger: it spreads its
+      // content-side source list (IGNIVAR_ART_PENDING_ITEM_IDS in
+      // src/sim/content/ignivar_loot.ts) on top of the enumerated debt, so the
+      // audit reads the union through the UI seam and never a partial list.
       contents:
-        "export { ITEMS } from './src/sim/data.ts'; export { IGNIVAR_ART_PENDING_ITEM_IDS } from './src/sim/content/ignivar_loot.ts'; export { BRAMBLEHIDE_ART_PENDING_ITEM_IDS, NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS } from './src/sim/content/zone3.ts';",
+        "export { ITEMS } from './src/sim/data.ts';\n" +
+        "export { ITEM_ART_PENDING } from './src/ui/icons.ts';",
       resolveDir: repoRoot,
       sourcefile: 'item-art-audit-entry.ts',
       loader: 'ts',
@@ -74,14 +79,7 @@ async function loadItems(repoRoot) {
   const bundled = build.outputFiles[0].text;
   const dataUrl = `data:text/javascript;base64,${Buffer.from(bundled).toString('base64')}`;
   const module_ = await import(dataUrl);
-  return {
-    items: module_.ITEMS,
-    artPendingIds: [
-      ...module_.IGNIVAR_ART_PENDING_ITEM_IDS,
-      ...module_.BRAMBLEHIDE_ART_PENDING_ITEM_IDS,
-      ...module_.NYTHRAXIS_GAP_ART_PENDING_ITEM_IDS,
-    ],
-  };
+  return { items: module_.ITEMS, pendingArtIds: module_.ITEM_ART_PENDING };
 }
 
 const arguments_ = parseArguments(process.argv.slice(2));
@@ -92,7 +90,7 @@ if (arguments_.help) {
 
 const repoRoot = process.cwd();
 await readFile(path.join(repoRoot, 'package.json'));
-const { items, artPendingIds } = await loadItems(repoRoot);
+const { items, pendingArtIds } = await loadItems(repoRoot);
 const mapping = JSON.parse(
   await readFile(path.join(repoRoot, 'public/ui/items/mapping.json'), 'utf8'),
 );
@@ -110,38 +108,24 @@ const build = await buildItemArtAudit({
   outputDirectory: arguments_.outputDirectory,
   renderOutputs: !arguments_.verifyOnly,
   items,
-  artPendingIds,
   mapping,
+  pendingArtIds: [...pendingArtIds].sort(),
+  // Restored post-merge (release/v0.42.0 into professions): the merged
+  // catalog (professions' Crucible armor/patterns/quest items union'd with
+  // release's Nythraxis gap-fill weapons and Bramblehide icons) does not
+  // match either pre-merge parent's pin (professions HEAD: catalogCount
+  // 1256; release: catalogCount 1069). These are the measured values from
+  // `node scripts/item_art_audit.mjs --verify-only` run directly on the
+  // merged tree, not guessed or derived from either parent.
   expected: {
-    // 829 + the crucible-raid-weapons-2026-08-28 batch (9 painted weapons)
-    // + the ignivar-varkhul-drop-renders-2026-08-28 batch (2 rendered
-    // legendaries) + the crucible-set-icons-2026-08-29 wave (all 192
-    // non-weapon Crucible pieces; the art-pending ledger is now empty).
-    // + the OSSBrain v0.41 batch's own painted piece, carried through the
-    // base merge alongside the release-side Crucible waves.
-    // + the two developer mount reins icons (Lanternback Troll, Chimeglass
-    // Tortoise) that joined at the release/v0.42.0 sync of PR #3439.
-    // + the Cluckwork Mech Bird store mount reins icon (PR #3464); liveItemCount
-    // moves with it.
-    // + the nythraxis-gap-weapon-renders-2026-09-04 batch (3 rendered
-    // one-handers).
-    // + the roots-bramblehide-icons-2026-09-07 wave (22 paintings).
-    catalogCount: 1069,
-    // 844 + the 201 Crucible raid loot definitions (192 of them art-pending)
-    // + the base's 2 Varkhul legendary definitions, + the release sync's 7
-    // bank-storage painted bags, + the two developer mount reins.
-    // The Roots' Bramblehide and Nythraxis gap-fill shield/armor definitions
-    // (with their heroic variants) are art-pending and sit outside the audited
-    // set (see auditedItems above); the three gap-fill weapons and their heroic
-    // aliases are audited (rendered base art, alias variants): +6.
-    // + the 22 now-painted Bramblehide and gap-fill definitions (11 bases, 11
-    // heroic variants with their own WebPs) that left the pending ledger.
-    liveItemCount: 1087,
+    catalogCount: 1281,
+    liveItemCount: 1299,
+    pendingArtCount: 0,
     generatedHeroicDefinitions: 78,
     heroicDefinitionsWithOwnWebp: 59,
     heroicWeaponArtAliases: 19,
-    sheetPageCount: 27,
-    groupCount: 22,
+    sheetPageCount: 31,
+    groupCount: 25,
   },
 });
 assertItemArtAuditPass(build);

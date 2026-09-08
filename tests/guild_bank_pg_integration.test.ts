@@ -23,6 +23,7 @@
 import type { Pool as PgPool, PoolClient } from 'pg';
 import { Pool } from 'pg';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { materialSourceConnection } from '../server/material_source_connection';
 import type { GuildBankOpDelta } from '../src/sim/guild_bank';
 
 const ADMIN_URL = process.env.TEST_DATABASE_URL;
@@ -197,7 +198,7 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
     await rawDb.ensureSchema();
     await rawDb.runConcurrentIndexMigrations();
 
-    pool = new Pool({ connectionString: verifyUrl(ADMIN_URL as string), max: 12 });
+    pool = new Pool({ ...materialSourceConnection(verifyUrl(ADMIN_URL as string)), max: 12 });
 
     // Most cases predate command receipts but intentionally exercise the live
     // save API. Give each nonempty guild save its production-shaped immutable
@@ -293,7 +294,7 @@ describeDb('guild bank persistence (REAL Postgres)', () => {
       const book = await bookOf(guildId);
       expect(book).toMatchObject({ treasury: 500 });
       expect((book as { inventory: { itemId: string; count: number }[] }).inventory).toEqual([
-        { itemId: 'wolf_fang', count: 3 },
+        { itemId: 'wolf_fang', count: 3, materialSources: [{ count: 3, source: {} }] },
       ]);
     });
 

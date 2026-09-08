@@ -466,6 +466,13 @@ export class ActionBarController {
     // useItem dispatch a potion rides (src/sim/items.ts -> summonMountItem), so
     // reins are placeable for the same reason a potion is. Without this arm the
     // bag drag never writes a hotbar payload and the bar cannot accept them.
+    // Recipe patterns (kind 'recipe') ride that same dispatch but are DELIBERATELY
+    // not placeable (elixirs, scrolls since phase 06, and flasks since phase 10
+    // are the precedent that riding useItem does not imply a slot, though their
+    // reason differs): a pattern is a one-shot unlock consumed on its first
+    // successful use, so a hotbar slot would hold a dead button from the first
+    // press on; the bags are its home. Elixirs, scrolls, and flasks live on the
+    // mobile consumable tray instead.
     const item = ITEMS[itemId];
     return (
       item?.kind === 'food' ||
@@ -473,7 +480,8 @@ export class ActionBarController {
       item?.kind === 'potion' ||
       item?.kind === 'mount' ||
       item?.use?.type === 'fishing' ||
-      item?.use?.type === 'gatherTool'
+      item?.use?.type === 'gatherTool' ||
+      item?.use?.type === 'harvestPreference'
     );
   }
 
