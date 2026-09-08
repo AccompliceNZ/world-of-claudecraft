@@ -482,8 +482,11 @@ export class MailboxWindow {
       `<span class="mail-reading-sender">${esc(sender)}</span></div>` +
       `<div class="mail-reading-body ui-card">${esc(letterBody).replace(/\n/g, '<br>')}</div>` +
       `<div class="mail-attachments" id="mail-attachments"></div>` +
-      `<div class="mail-actions" id="mail-actions"></div>` +
-      `</div>`;
+      `</div>` +
+      // Outside .mail-reading-body, which is the pane's scrollport: a long letter
+      // must never push Reply / Return / Delete out of reach (the window-shell
+      // rule, library.css).
+      `<div class="mail-actions" id="mail-actions"></div>`;
     body.querySelector('[data-mail-back]')?.addEventListener('click', () => {
       this.openedId = null;
       this.lastSig = '';
@@ -574,6 +577,7 @@ export class MailboxWindow {
     this.recipientSuggest = { items: [], index: -1 };
     body.innerHTML =
       `<div class="mail-send-form">` +
+      `<div class="mail-send-fields">` +
       `<div class="mail-field"><label for="mail-to">${esc(t('hudChrome.mailbox.toLabel'))}</label>` +
       `<div class="mail-to-wrap">` +
       `<div class="mail-to-suggest" id="mail-to-suggest" role="listbox"></div>` +
@@ -594,8 +598,11 @@ export class MailboxWindow {
           seconds: formatNumber(view.deliverySeconds, { maximumFractionDigits: 0 }),
         }),
       )}</div>` +
+      `</div>` +
+      // The one pinned action row: the field stack above it scrolls instead.
+      `<div class="mail-send-actions">` +
       `<button type="button" class="mail-send-btn ui-btn ui-btn--red" id="mail-send-btn">${esc(t('hudChrome.mailbox.sendButton'))}</button>` +
-      `</div>`;
+      `</div></div>`;
     this.renderParcels();
     // Bags ride alongside so parcels can be clicked straight onto the letter.
     // NOT on the relocalize path (revealBags false): syncBags(true) REVEALS the

@@ -67,6 +67,37 @@ describe('ui library: sheet and manifest agree', () => {
     expect(library).toMatch(/\.ui-win-head \{\s*display: flex;\s*flex: none;/);
   });
 
+  it('gives a window with a .ui-win-body ONE scroller and a foot that cannot scroll away', () => {
+    // The maintainer finding W25 fixes: a settings page with an Apply / Reset /
+    // Confirm row must keep that row visible. The shell is the mechanism, so all
+    // three halves are pinned: the window stops scrolling itself and becomes a
+    // column, the body is the one scrollport, and the foot never shrinks.
+    expect(library).toMatch(
+      /\.ui-window:has\(> \.ui-win-body\) \{\s*flex-direction: column;\s*padding: 0;\s*overflow: hidden;\s*\}/,
+    );
+    expect(library).toMatch(
+      /\.ui-win-body \{\s*flex: 1 1 auto;\s*min-height: 0;\s*overflow-y: auto;/,
+    );
+    expect(library).toMatch(/\.ui-win-foot \{[^}]*flex: none;/);
+    expect(library).toMatch(
+      /\.ui-win-foot \{[^}]*border-top: 1px solid var\(--color-border-showcase\);/,
+    );
+    // The shell must NOT declare a display of its own: a `.window` is opened by
+    // an inline style.display, which no stylesheet rule can outrank, so a
+    // display here would leave every closed window visible instead.
+    expect(library).not.toMatch(/\.ui-window:has\(> \.ui-win-body\) \{[^}]*display:/);
+  });
+
+  it('puts the head, the body and the foot on the ONE window gutter', () => {
+    // Finding 2 ("a lot of padding in the menus not nicely aligned"): the head's
+    // inline start, the body's padding and the foot's buttons all read the same
+    // --window-pad, so a label, a tab and a button line up on one x.
+    const gutter = /padding: [^;]*var\(--window-pad, 12px\)/;
+    expect(library.match(/\.ui-win-head \{[^}]*\}/)?.[0]).toMatch(gutter);
+    expect(library.match(/\.ui-win-body \{[^}]*\}/)?.[0]).toMatch(gutter);
+    expect(library.match(/\.ui-win-foot \{[^}]*\}/)?.[0]).toMatch(gutter);
+  });
+
   it('paints card text with the text token even when the card is a button', () => {
     expect(library).toMatch(/\.ui-card \{[^}]*color: var\(--color-text\);/);
     expect(library).toMatch(/button\.ui-card \{\s*font: inherit;/);

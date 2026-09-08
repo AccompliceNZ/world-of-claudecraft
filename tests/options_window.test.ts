@@ -95,7 +95,9 @@ describe('options_window: keyboard overview', () => {
       painter.indexOf('private renderKeybinds(): void {'),
       painter.indexOf('private beginCapture('),
     );
-    expect(keybinds).toContain('if (!useTouchInterface()) this.paintKeyboardOverview(el);');
+    // Pinned against the shell's scrolling body, not the window root: the panel
+    // fills .ui-win-body so Reset / Back stay pinned under it (W25).
+    expect(keybinds).toContain('if (!useTouchInterface()) this.paintKeyboardOverview(scroll);');
     const deps = painter.slice(painter.indexOf('private keyboardMapDeps('));
     expect(deps.slice(0, deps.indexOf('\n  }\n'))).toContain('delete snapshot.attackMove;');
     // The pop-out closes the menu first so the board floats over the world.
@@ -122,8 +124,11 @@ describe('options_window: hotkey setup row', () => {
     expect(rows).toContain('this.dropKeyCapture();');
     expect(rows).toContain('this.renderKeybinds();');
     expect(rows).not.toContain('window.location.reload()');
-    // The row sits at the foot of the panel, right before Reset / Back.
-    expect(painter).toMatch(/el\.appendChild\(cols\);[\s\S]*?this\.keybindTransferRows\(el\);/);
+    // The row sits at the foot of the SCROLLING body, right before the pinned
+    // Reset / Back foot (W25: both moved from the window root into .ui-win-body).
+    expect(painter).toMatch(
+      /scroll\.appendChild\(cols\);[\s\S]*?this\.keybindTransferRows\(scroll\);/,
+    );
   });
 
   it('never leaves a key capture armed behind a closed or rebuilt panel', () => {
@@ -659,9 +664,9 @@ describe('options_window: viewport resync on open (PR #1118)', () => {
     const render = painter.slice(painter.indexOf('private render(): void {'));
     const renderEnd = render.indexOf('\n  }\n');
     const renderBody = render.slice(0, renderEnd);
-    expect(renderBody).toContain(
-      "el.style.display = this.view === 'performance' ? 'flex' : 'block'",
-    );
+    // Every sub-view is a flex-column window shell now (W25), so the one display
+    // value is 'flex'; Performance is no longer the exception.
+    expect(renderBody).toContain("el.style.display = 'flex'");
   });
 });
 
@@ -1053,5 +1058,64 @@ describe('options_window: frame editing is locked out on touch', () => {
     expect(start).toBeGreaterThan(-1);
     const body = hudTs.slice(start, hudTs.indexOf('\n  }\n', start));
     expect(body).toContain('if (this.isMobileLayout()) return false;');
+  });
+});
+
+// Finding 2: "there is a lot of padding in the menus not nicely aligned". The
+// gutter is ONE value now (--window-pad, via .ui-win-body / .ui-win-foot /
+// .ui-win-head), and the options family stopped fighting it with per-row insets.
+// Normalized like window_fill_css.test.ts so a re-wrap never breaks a pin.
+const flatComponents = componentsCss.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ');
+
+describe('options window: one padding scale', () => {
+  it('lets the shell own the scroll, so the window itself no longer scrolls', () => {
+    // With the window scrolling, its footer scrolled with it however the body
+    // was shaped, so this is half of finding 1 as well.
+    expect(flatComponents).toContain('#options-menu { width: 320px; z-index: 40; }');
+  });
+
+  it('starts the settings rows on the gutter instead of a 6px inset of their own', () => {
+    expect(flatComponents).toContain(
+      '.set-row { display: grid; grid-template-columns: 120px 1fr 48px; align-items: center; gap: 10px; padding: 3px 0; }',
+    );
+  });
+
+  it('hangs the Interface tab strip on the same gutter as the head and the rows', () => {
+    // The strip sits between the head and the scroller, so it is NOT inside the
+    // body's padding and has to carry the gutter itself.
+    expect(flatComponents).toContain(
+      '.opt-tabs { display: flex; gap: var(--spacing-xs); margin: 0; padding: var(--spacing-sm) var(--window-pad) 0; flex: none; }',
+    );
+  });
+
+  it('gives the rows and sections one vertical rhythm off the spacing scale', () => {
+    expect(flatComponents).toContain(
+      '.set-rows { display: flex; flex-direction: column; gap: var(--spacing-sm); }',
+    );
+    expect(flatComponents).toContain('margin: var(--spacing-md) 0 var(--spacing-2xs);');
+  });
+
+  it('drops the second inset inside the Custom Colors panel', () => {
+    // The swatch grid sat on the card's inset PLUS 12px of its own.
+    expect(flatComponents).toContain('padding: 0 0 var(--spacing-sm); }');
+    expect(flatComponents).not.toContain(
+      '.theme-color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(132px, 1fr)); gap: 6px 12px; padding: 0 12px 12px; }',
+    );
+  });
+
+  it('gives the settings-card family ONE inset instead of three hand-tuned ones', () => {
+    expect(flatComponents).toContain(
+      'padding: var(--spacing-xs) var(--spacing-md) var(--spacing-md); min-width: 0; }',
+    );
+    expect(flatComponents).not.toContain('.gfx-card { padding: 6px 15px 13px; }');
+  });
+
+  it('leaves the pinned foot rows to the primitive, with no margin of their own', () => {
+    // A margin-top on a pinned foot opens a seam between it and the scroller.
+    expect(flatComponents).not.toContain('.options-footer { display: flex;');
+    expect(flatComponents).not.toContain(
+      '.perf-footer { display: flex; gap: 12px; margin-top: 9px; }',
+    );
+    expect(flatComponents).toContain('.gfx-footer { gap: 10px; min-height: 40px; }');
   });
 });

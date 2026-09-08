@@ -156,6 +156,49 @@
     outline: 2px solid var(--color-border-focus);
     outline-offset: 2px;
   }
+
+  /* Window shell: a window that owns a .ui-win-body stops scrolling itself and
+     becomes a column of head, optional tab strip, ONE scrolling body and an
+     optional pinned foot, so an action or confirm row (Apply, Reset, Submit)
+     stays reachable however long the body runs. The window still needs an inline
+     `display: flex` from its open path: a `.window` is shown by an inline
+     style.display no stylesheet rule can outrank (the .window-fill family in
+     components.css opts in the same way), so declaring display here would only
+     make every closed window visible. The gutter is one value, --window-pad:
+     the head's inline start, the body's padding and the foot's buttons all sit
+     on it. */
+  .ui-window:has(> .ui-win-body) {
+    flex-direction: column;
+    padding: 0;
+    overflow: hidden;
+  }
+  /* The head is chrome again, not a sticky strip inside a padded scrollport:
+     the shell already keeps it in view, so the negative margins that countered
+     the window padding and the sticky offset both go. It stays positioned, so a
+     head control a host rule places absolutely still resolves against the head. */
+  .ui-window:has(> .ui-win-body) > .ui-win-head {
+    position: relative;
+    top: auto;
+    margin: 0;
+    border-radius: 0;
+    padding: 0 var(--spacing-sm) 0 var(--window-pad, 12px);
+  }
+  .ui-win-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: var(--window-pad, 12px);
+  }
+  .ui-win-foot {
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--window-pad, 12px);
+    border-top: 1px solid var(--color-border-showcase);
+  }
   .ui-well {
     background: var(--color-bg-input);
     border: 1px solid var(--color-keyline);

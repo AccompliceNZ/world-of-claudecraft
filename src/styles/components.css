@@ -14245,7 +14245,6 @@
   #options-menu {
     width: 320px;
     z-index: 40;
-    overflow-y: auto;
   }
   #options-menu:has(> .audio-options) {
     width: min(520px, calc(100vw - 32px));
@@ -14349,10 +14348,14 @@
      The four tabs share the row equally on desktop; the mobile sheet override in
      hud.mobile.css keeps the 40px touch floor and scrolls if the sheet is very
      narrow. */
+  /* Between the head and the scrolling body (the window shell), so the strip
+     owns the gutter: its first tab starts on the same x as the head title, the
+     rows below and the footer buttons. */
   .opt-tabs {
     display: flex;
-    gap: 4px;
-    margin: 6px 0 10px;
+    gap: var(--spacing-xs);
+    margin: 0;
+    padding: var(--spacing-sm) var(--window-pad) 0;
     flex: none;
   }
   .opt-tab {
@@ -14771,15 +14774,24 @@
   .set-rows {
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    margin-bottom: 6px;
+    gap: var(--spacing-sm);
   }
+  /* .set-rows is the window shell's scrolling body on most settings pages, which
+     gives it a resolved height: without this, every row is a shrinkable flex item
+     and a full page squeezes its rows together (labels colliding) instead of
+     scrolling. Rows keep their natural height and the body scrolls. */
+  .set-rows > * {
+    flex: none;
+  }
+  /* Rows carry NO horizontal inset of their own: the label starts on the
+     window gutter the head, the tab strip and the footer buttons share
+     (.ui-win-body's --window-pad padding). */
   .set-row {
     display: grid;
     grid-template-columns: 120px 1fr 48px;
     align-items: center;
     gap: 10px;
-    padding: 3px 6px;
+    padding: 3px 0;
   }
   .set-name {
     font-size: 12.5px;
@@ -14820,7 +14832,7 @@
   .set-note {
     font-size: 11px;
     color: var(--color-text-muted);
-    margin: 6px 0 2px;
+    margin: var(--spacing-sm) 0 var(--spacing-2xs);
     line-height: 1.4;
   }
   /* An options-tab subsection header (the Frames tab's Party Frame Options
@@ -14844,8 +14856,8 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 6px;
-    margin: 4px 0 8px;
+    gap: var(--spacing-sm);
+    margin: var(--spacing-xs) 0 var(--spacing-sm);
   }
   .transfer-pane[hidden] {
     display: none;
@@ -14853,11 +14865,11 @@
   /* The Key Bindings panel's hotkey-setup Export/Import row: sits between the
      binding columns and the Reset/Back buttons, with the same expando. */
   .kb-transfer {
-    margin: 0 0 8px;
+    margin: 0 0 var(--spacing-sm);
   }
   /* The Import / Export sub-panel's body around the Full Settings row. */
   .transfer-body {
-    margin: 8px 0;
+    margin: var(--spacing-sm) 0;
   }
   .transfer-code {
     width: 100%;
@@ -14868,25 +14880,16 @@
     font-size: 12px;
     height: auto;
   }
-  .options-footer {
-    display: flex;
-    justify-content: flex-end;
-    gap: 8px;
-    margin-top: 10px;
-    padding-top: 8px;
-    border-top: 1px solid var(--color-border-showcase);
-  }
+  /* Geometry only: the row itself is the .ui-win-foot primitive (pinned below
+     the scrolling body, its own top hairline and gutter padding). */
   .options-footer .ui-btn {
     min-width: 128px;
   }
   /* The graphics panel's one inline action row: Back, the stretching status,
      then Reset (a quiet text button) beside the primary Apply at the end. */
   .gfx-footer {
-    display: flex;
-    align-items: center;
     gap: 10px;
     min-height: 40px;
-    margin-top: 8px;
   }
   .gfx-footer .btn {
     margin: 0;
@@ -15045,25 +15048,14 @@
   .gfx-cols {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 14px;
+    gap: var(--spacing-md);
     align-items: start;
-    margin-bottom: 8px;
   }
   .gfx-col {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: var(--spacing-md);
     min-width: 0;
-  }
-  .gfx-card {
-    padding: 6px 15px 13px;
-  }
-  .gfx-card .set-rows {
-    margin-bottom: 0;
-  }
-  /* Rows align to the card's own padding (drop the row's horizontal inset). */
-  .gfx-card .set-row {
-    padding: 3px 0;
   }
   /* Ladder rows (the preset row and the per-system dials) stack the label
      above the buttons: a half-width card leaves a 6-button segmented group
@@ -15123,11 +15115,12 @@
   .theme-custom-head {
     grid-template-columns: 1fr auto;
   }
+  /* The swatch grid sits on the card's own inset, not a second one inside it. */
   .theme-color-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(132px, 1fr));
-    gap: 6px 12px;
-    padding: 0 12px 12px;
+    gap: var(--spacing-sm) var(--spacing-md);
+    padding: 0 0 var(--spacing-sm);
   }
   .theme-color-row {
     display: flex;
@@ -15167,7 +15160,7 @@
     font-size: 12.5px;
     color: var(--gold);
     letter-spacing: 0.5px;
-    margin: 9px 2px 1px;
+    margin: var(--spacing-md) 0 var(--spacing-2xs);
     padding-bottom: 3px;
     border-bottom: 1px solid #ffffff14;
   }
@@ -15234,9 +15227,8 @@
        non-scrolling: options_window.ts sets its `display` to `flex` only while
        this sub-view is open (mirroring #deeds-window), so flex-direction here
        takes effect exactly then. The .perf-scroll wrapper below owns the
-       actual scroll instead. */
-    overflow: hidden;
-    flex-direction: column;
+       actual scroll instead. Both now come from the shared window shell
+       (.ui-window:has(> .ui-win-body), library.css), which .perf-scroll joins. */
   }
   #options-menu.aura-wide {
     width: min(780px, calc(100vw - 32px));
@@ -15562,18 +15554,18 @@
     }
   }
   /* Streamlined title bar for the perf panel (less bulky than the default chrome). */
-  #options-menu.perf-wide .panel-title {
+  #options-menu.perf-wide > .panel-title {
     font-size: 14px;
-    padding-bottom: 5px;
-    margin-bottom: 7px;
+    position: relative;
+    top: auto;
+    margin: 0;
+    border-radius: 0;
+    padding: 7px var(--window-pad);
   }
   /* The one child that actually scrolls. Bottom padding reserves room for the
      corner motif's ink reach past the footer buttons (moved off
      #options-menu.perf-wide itself, which no longer scrolls; see above). */
   #options-menu.perf-wide .perf-scroll {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow-y: auto;
     padding-bottom: 64px;
   }
   .perf-panel {
@@ -15626,11 +15618,14 @@
     min-width: 0;
   }
   /* Cards: roomy inner padding so the headings get clear left-edge breathing room. */
+  /* The one settings-card inset, shared by every panel that composes the family
+     (Performance, Graphics, the theme palette): the cards used to carry three
+     near-identical hand-tuned insets. */
   .perf-card {
     background: #ffffff08;
     border: 1px solid #ffffff14;
     border-radius: 8px;
-    padding: 6px 17px 15px;
+    padding: var(--spacing-xs) var(--spacing-md) var(--spacing-md);
     min-width: 0;
   }
   .perf-card-title {
@@ -15702,9 +15697,7 @@
     grid-column: 1 / -1;
   }
   .perf-footer {
-    display: flex;
     gap: 12px;
-    margin-top: 9px;
   }
   .perf-footer .btn {
     flex: 1;
@@ -16382,6 +16375,37 @@
     flex: 1;
     overflow-y: auto;
   }
+  /* The inbox list scrolls as the pane's own content, but the reading pane and
+     the send form each own an action row (Reply / Return / Delete, Send). Those
+     rows are pinned the way a window foot is (library.css): the pane stops
+     scrolling and the letter body / the field stack takes the leftover height,
+     so a long letter or a full form can never push the buttons out of reach. */
+  #mailbox-body:has(> .mail-reading),
+  #mailbox-body:has(> .mail-send-form) {
+    overflow: hidden;
+  }
+  #mailbox-body > .mail-reading,
+  #mailbox-body > .mail-send-form {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .mail-reading-body,
+  .mail-send-fields {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+  .mail-send-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    overflow-y: auto;
+  }
+  #mailbox-body > .mail-actions,
+  .mail-send-actions {
+    flex: none;
+    padding-top: var(--spacing-sm);
+    border-top: 1px solid var(--color-border-showcase);
+  }
   .mail-tabs {
     display: flex;
     gap: 4px;
@@ -16895,6 +16919,14 @@
     font-size: 12px;
     font-style: italic;
     padding: 6px 2px;
+  }
+  /* The composer's own pinned band under the scrolling day pane. */
+  .cal-day-foot {
+    flex: none;
+    margin-top: var(--spacing-sm);
+  }
+  .cal-day-foot:empty {
+    display: none;
   }
   .cal-form {
     display: flex;
