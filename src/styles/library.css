@@ -30,6 +30,13 @@
   .ui-outline {
     text-shadow: var(--outline-shadow);
   }
+  /* A heading minted as a button must not fall back to the UA's black button
+     text: neither type helper carries a colour, so the button takes its host's,
+     the way the same heading written as a div already does. */
+  button.ui-cin,
+  button.ui-outline {
+    color: inherit;
+  }
   .ui-h {
     font-family: var(--font-display);
     letter-spacing: 0.5px;

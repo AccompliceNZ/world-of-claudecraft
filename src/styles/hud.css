@@ -4652,6 +4652,9 @@
     transition: filter 0.12s ease;
   }
   .store-promo-card-copy {
+    /* The copy sits inside the card's own <button>, which carries no colour, so
+       it needs one of its own or it takes the UA's black over the art. */
+    color: var(--color-text-light);
     position: absolute;
     top: 7%;
     left: 4%;
@@ -4959,6 +4962,7 @@
      pointer. The border-bottom underline shrinks to match: an accepted
      tradeoff over the rail eating the tracker's clicks. */
   #quest-tracker .qt-header {
+    color: var(--color-accent);
     display: flex;
     align-items: center;
     gap: 6px;

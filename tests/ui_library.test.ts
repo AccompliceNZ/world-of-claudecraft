@@ -58,6 +58,12 @@ describe('ui library: sheet and manifest agree', () => {
   const declared = declaredSelectors(library);
   const manifest = manifestSelectors(doc);
 
+  it('lets a heading minted as a button inherit its host colour', () => {
+    // The review finding: the quest tracker's QUESTS heading is a <button> and
+    // neither type helper sets a colour, so it took the UA's black button text.
+    expect(library).toMatch(/button\.ui-cin,\s*\n\s*button\.ui-outline \{\s*\n\s*color: inherit;/);
+  });
+
   it('centres the rail label INSIDE the rail and swaps it on hover or focus', () => {
     // Pin moved with the review finding: the readout now rides the rail itself
     // (percent centred inside it) instead of hanging above it, and the detail
