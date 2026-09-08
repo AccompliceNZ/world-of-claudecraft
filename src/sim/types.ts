@@ -966,6 +966,8 @@ export type ItemUse =
   // player meets their first death somewhere nothing is hunting them.
   // Consumed on use and refused unless the lesson is active.
   | { type: 'passingStone' }
+  // Starts the one-time hammer quest; the Ember is consumed by crafting.
+  | { type: 'forgebreakerEmber' }
   | { type: 'mechChroma'; chromaId: string }
   // Opens the client-side event skin-select overlay. The server rolls a rank on
   // use (see Sim.openSkinSelect) and the player locks one in via claimEventSkin.
