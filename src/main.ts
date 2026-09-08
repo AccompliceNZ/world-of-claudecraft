@@ -435,7 +435,7 @@ import {
 import { BreathBar } from './ui/breath_bar';
 import { assembleBugReportMeta } from './ui/bug_report';
 import { cameraPromptOpen, dismissCameraPrompt } from './ui/camera_prompt';
-import { deleteCharButtonHtml } from './ui/char_delete_button';
+import { deleteCharButtonHtml, normalizeDeleteConfirmation } from './ui/char_delete_button';
 import { resetComposedRows, trackComposedChipRow } from './ui/charselect_composed_refresh';
 import { loadCharselectNews } from './ui/charselect_news';
 import { CharselectRedesignEditor } from './ui/charselect_redesign';
@@ -1959,6 +1959,7 @@ async function startGame(
       syncCharacterOpenDiagnostics();
     },
     onBags: () => hud.toggleBags(),
+    onMeters: () => hud.toggleMeters(),
     onCrafting: () => hud.toggleCrafting(),
     onSpellbook: () => hud.toggleSpellbook(),
     onBarEditor: () => hud.toggleBarEditor(),
@@ -6637,10 +6638,6 @@ function closeDeleteCharacterDialog(): void {
   input.value = '';
   confirmBtn.disabled = true;
   setDeleteCharacterError('');
-}
-
-function normalizeDeleteConfirmation(name: string): string {
-  return name.trim().toLowerCase();
 }
 
 function openDeleteCharacterDialog(character: CharacterSummary): void {

@@ -50,3 +50,29 @@ The browser smoke wore all five skins, summoned an earned Valorsteed, and checke
 Dependency audit before publication: `npm audit` cannot consume the game pnpm lockfile; `pnpm audit --json` passed with zero unignored advisories and the existing three configured exceptions (two moderate, one high). Economy `npm audit --json` reports the inherited 11 advisories listed below. No dependency or exception configuration changed.
 
 Pricing decision, 2026-09-08: Reuben selected a USD 20 target for every mount skin. All five now cost 2000 Claudium at the service peg of 100 Claudium per USD. The standard USD 19.99 pack grants 2200 Claudium; existing pack bonuses and rail discounts affect effective cash cost. Companion `service/docs/MOUNT_SKINS.md` records catalogue activation and rollback. Deploy compatible game server/client before enabling the five economy rows. No deployment or production ledger inspection was performed. Economy dependencies were unchanged; its install reported 11 inherited audit advisories (3 moderate, 8 high), outside this feature cleanup.
+
+## Release synchronization for PR3941 (2026-09-08)
+
+Merged release `553a5672ed1d914cbb67d2b450a1777a835447eb` into the feature
+parent `77954b803b079c03fd7a443fb60a7cf3bd1ccf58`. The two conflicted files
+were generated localization pending rows and monolith budgets. Localization was
+regenerated with `npm run i18n:gen`; budgets now reflect the measured combined
+HUD and entry-point extractions, below both parent ceilings.
+
+Audited the automatic merges in the keyboard/controller collection routing,
+mobile Meters entry, HUD practice coach dependencies, simulation spawn setup,
+and architecture/localization registries. Both features remain wired. The core
+Cosmetics painters/window and optimistic weapon-skin module are byte-identical
+to PR3859; the extracted side-button table additionally preserves newer release
+entries. All production modules introduced by PR3859 are present. The three
+original skins remain in the five-skin catalogue, with paid ownership and the
+per-character wear path covered by the existing feature tests.
+
+Validation on the combined tree: 22 files passed, 1071 tests passed and 7 skipped.
+Command: `npx vitest run tests/monolith_budget.test.ts tests/architecture.test.ts tests/language_fanout_registry.test.ts tests/localization_fixes.test.ts tests/collection_actions_core.test.ts tests/cosmetics_view.test.ts tests/cosmetics_window.test.ts tests/mount_skins.test.ts tests/game_sessions.test.ts tests/snapshots.test.ts tests/hud_perf_budget.test.ts tests/hub_dummy_drill.test.ts tests/hub_healing_drill.test.ts tests/hub_healing_lesson.test.ts tests/hub_lesson_controller.test.ts tests/hub_lesson_view.test.ts tests/practice_dps_controller.test.ts tests/practice_dps_view.test.ts tests/hub_training_dummy.test.ts tests/hub_healing_dummy.test.ts tests/client_shell.test.ts tests/mobile_controls.test.ts --maxWorkers=2`.
+
+`node_modules/.bin/turbo run check:types build:server build:bundle --ui=stream`
+passed all five tasks, including client/server builds and admin/bot typechecks.
+`pnpm audit --json` again reported zero unignored advisories, retaining the same
+three existing exceptions. Full release/CI and live-device acceptance remain
+outstanding; this synchronization is not merge or deployment approval.
