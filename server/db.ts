@@ -10,6 +10,7 @@ import { sanitizeRemovedZone1Content } from '../src/sim/removed_zone1_content';
 import type { CharacterState, MailSave, MarketSave } from '../src/sim/sim';
 import type { ArenaFormat, PlayerClass } from '../src/sim/types';
 import type { ActionBarLayoutProfiles, StoredActionBarLayout } from '../src/world_api/action_bar';
+import { projectAccountExportState } from './account_export_state';
 import { ACCOUNT_WEALTH_SCHEMA } from './account_wealth_db';
 import { AD_SPEND_SCHEMA } from './ad_spend_db';
 import { bustAdminGuildListReads } from './admin_guilds_read';
@@ -32,7 +33,6 @@ import {
 } from './bank_ledger_batch_db';
 import {
   BANK_LEDGER_GROWTH_BUDGET_SCHEMA,
-  BankLedgerGrowthLimitExceeded,
   bankLedgerGrowthBudgetReadbackSql,
   bankLedgerGrowthLimitFromError,
   observeBankLedgerGrowthBudget,
@@ -40,15 +40,22 @@ import {
 import {
   attachBankLedgerCommittedPrefixToError,
   type BankLedgerSaveEffects,
-  characterUpdateStatement,
   lockCharacterSaveEffectAccountsOnClient as lockSaveEffectAccounts,
   writeBankLedgerSaveEffectsOnClient,
 } from './bank_ledger_save_effects_db';
 import { deleteOwnedCharacterRow } from './character_delete_db';
+import { journalCharacterSaveSources } from './character_material_sources_db';
 import {
   configureLifetimeXpRankCache,
   readLifetimeXpRankForCharacter,
 } from './character_rank_cache';
+import { characterSaveFailure, characterSaveLanded } from './character_save_result';
+import {
+  type CharacterSaveFence,
+  liveSaveFence,
+  runFencedCharacterSave,
+  runPreimageCharacterSave,
+} from './character_save_statement';
 import {
   beginCharacterSaveTx,
   CHARACTER_SAVE_STATEMENT_TIMEOUT_MS,
@@ -57,6 +64,7 @@ import {
 } from './character_save_transaction';
 import { seedChatFilterDefaults } from './chat_filter_db';
 import type { ChatLogRow } from './chat_log';
+import { cleanMetadataText } from './clean_metadata_text';
 import { CLIENT_PERF_REPORTS_SCHEMA } from './client_perf_reports_schema';
 import {
   buildCommunityTestCharacters,
@@ -108,7 +116,11 @@ import {
   marketStateKey,
   runMarketBackfill,
 } from './market_backfill';
+import { MARKET_SOLD_VOLUME_SCHEMA } from './market_sold_volume_db';
+import { materialSourceConnection } from './material_source_connection';
+import { applyMaterialSourceSchema, applyMaterialSourceWriterGuard } from './material_source_host';
 import { OAUTH_SCHEMA } from './oauth_db';
+import { runOfflineCharacterSave } from './offline_character_save_db';
 import { PLAY_SESSION_RETENTION_SCHEMA } from './play_session_retention_db';
 import {
   closeOrphanPlayerSessions,
@@ -268,8 +280,14 @@ export const DB_HEAVY_STATEMENT_TIMEOUT_MS = CHARACTER_SAVE_STATEMENT_TIMEOUT_MS
 // that accepted a query and never answers, so no server-side timer ever fires.
 export const DB_QUERY_TIMEOUT_MS = CHARACTER_SAVE_TRANSACTION_TIMEOUT_MS;
 
+// The code-owned material-source writer capability as a STARTUP option (so it
+// describes THIS binary, never a shared PGOPTIONS an old one inherits), on the
+// pool below and both boot Clients (material_source_connection.ts owns how).
+const SOURCE_WRITER_CONNECTION = materialSourceConnection(DATABASE_URL);
+
 export const pool = new Pool({
-  connectionString: DATABASE_URL,
+  connectionString: SOURCE_WRITER_CONNECTION.connectionString,
+  options: SOURCE_WRITER_CONNECTION.options,
   max: DB_POOL_MAX_CLIENTS,
   connectionTimeoutMillis: DB_POOL_CONNECT_TIMEOUT_MS,
   statement_timeout: DB_STATEMENT_TIMEOUT_MS,
@@ -1241,7 +1259,7 @@ export async function ensureSchema(): Promise<void> {
   // with a Pool-only factory and never boot the schema; a top-level named
   // import would invalidate every one of those mocks.
   const { Client } = await import('pg');
-  const client = new Client({ connectionString: DATABASE_URL });
+  const client = new Client({ ...SOURCE_WRITER_CONNECTION });
   // The schema fragments report through RAISE NOTICE (the storage-purchase
   // refused-row sweep names what it removed); node-postgres discards notices
   // that no listener consumes, so forward them to the boot log, filtered
@@ -1261,6 +1279,9 @@ export async function ensureSchema(): Promise<void> {
     await client.query('SET LOCAL statement_timeout = 0');
     await client.query('SELECT pg_advisory_xact_lock($1)', [SCHEMA_ADVISORY_LOCK_KEY]);
     await client.query(SCHEMA);
+    // The material source audit's anchor + journal pair: after SCHEMA (it
+    // FK-references characters), before the growth budget that must count it.
+    await applyMaterialSourceSchema(client);
     await client.query(BANK_LEDGER_BATCH_RECEIPTS_SCHEMA);
     // Local-recovery reports reference accounts/characters, so their additive
     // schema runs after the core tables under the same boot advisory lock.
@@ -1357,6 +1378,9 @@ export async function ensureSchema(): Promise<void> {
     // After SCHEMA: every marketplace table FKs accounts(id), and the custody
     // model rides characters + world_state (the escrow combined save).
     await client.query(WOC_MARKET_SCHEMA);
+    // The World Market sold-volume store (qr-19-sold-volume-four-seam-wiring):
+    // realm x day x tracked-item daily aggregates, no FK, additive, idempotent.
+    await client.query(MARKET_SOLD_VOLUME_SCHEMA);
     // Seed chat-filter defaults once (idempotent), under the same advisory lock.
     await seedChatFilterDefaults(client);
     // Partitioned World Market backfill: runs inside this same advisory-lock
@@ -1402,6 +1426,14 @@ export async function ensureSchema(): Promise<void> {
     // Storage purchase parent triggers land late so their first-rollout table
     // locks are held only briefly before COMMIT.
     await client.query(STORAGE_PURCHASE_SCHEMA);
+    // The source-writer capability guard: HERE because every table it guards
+    // now exists (characters, world_state, bank_ledger, character_leases,
+    // guild_banks, the mail custody pair, the market tables). Unconditional and
+    // switchless (material_source_host.ts): this binary writes compositions, so
+    // an un-migrated writer on those rows is the defect the guard prevents. It
+    // probes BOTH connections first, so a process that could not satisfy its own
+    // guard refuses to boot rather than failing at its first save.
+    await applyMaterialSourceWriterGuard(client, pool);
     // The first durable-ledger ceiling install locks the ledger while seeding
     // an exact row count; keep it the final fragment so nothing else waits.
     await client.query(BANK_LEDGER_GROWTH_BUDGET_SCHEMA);
@@ -1469,7 +1501,7 @@ export async function runConcurrentIndexMigrations(): Promise<void> {
   // Resolved at call time, not module scope: many suites module-mock 'pg' with
   // a Pool-only factory (the ensureSchema precedent above).
   const { Client } = await import('pg');
-  const client = new Client({ connectionString: DATABASE_URL });
+  const client = new Client({ ...SOURCE_WRITER_CONNECTION });
   // The post-listen fragments report through RAISE NOTICE too; without the
   // forwarder (schema_notices.ts) node-postgres discards them.
   attachSchemaNoticeForwarder(client);
@@ -1743,11 +1775,6 @@ export async function setAccountWeaponSkinLoadout(
     [accountId, JSON.stringify(cleanLoadout)],
   );
   return normalizeAccountCosmeticsRow(res.rows[0]);
-}
-
-function cleanMetadataText(value: string | null | undefined, max: number): string | null {
-  const text = typeof value === 'string' ? value.trim() : '';
-  return text ? text.slice(0, max) : null;
 }
 
 export async function createAccount(
@@ -2580,7 +2607,7 @@ export async function exportAccountData(
       name: c.name,
       class: c.class,
       level: c.level,
-      state: c.state,
+      state: projectAccountExportState(c.state),
       realm: c.realm,
       // The authored modular look: per-character personal data the account
       // created, so it belongs in the export beside the state blob.
@@ -2819,9 +2846,7 @@ export async function bankBonusFactsForAccount(accountId: number): Promise<BankB
             AND EXISTS(
               SELECT 1 FROM characters c
               WHERE c.account_id = r.referee_account_id AND c.level >= 10
-            )) AS qualified_referrals,
-       (SELECT count(*)::int FROM characters cc
-          WHERE cc.account_id = $1) AS character_count
+            )) AS qualified_referrals
      FROM accounts a
      WHERE a.id = $1`,
     [accountId],
@@ -2832,7 +2857,6 @@ export async function bankBonusFactsForAccount(accountId: number): Promise<BankB
     discordLinked: !!row?.discord_linked,
     walletLinked: !!row?.wallet_linked,
     qualifiedReferrals: row?.qualified_referrals ?? 0,
-    characterCount: row?.character_count ?? 0,
   };
 }
 
@@ -3238,61 +3262,10 @@ export async function guildNameForCharacter(characterId: number): Promise<string
   return res.rows[0]?.name ?? null;
 }
 
-export async function createCharacterCapped(
-  accountId: number,
-  name: string,
-  cls: PlayerClass,
-  limit = 10,
-  state: CharacterState | null = null,
-  // The authored modular look, already normalized by the route handler.
-  // Null = created without the creator (legacy rig).
-  appearance: Record<string, unknown> | null = null,
-): Promise<CharacterRow | null> {
-  const client = await pool.connect();
-  try {
-    await client.query('BEGIN');
-    const account = await client.query('SELECT id FROM accounts WHERE id = $1 FOR UPDATE', [
-      accountId,
-    ]);
-    if ((account.rowCount ?? 0) === 0) {
-      await client.query('ROLLBACK');
-      return null;
-    }
-    const count = await client.query(
-      'SELECT count(*)::int AS n FROM characters WHERE account_id = $1 AND realm = $2',
-      [accountId, REALM],
-    );
-    if (Number(count.rows[0]?.n ?? 0) >= limit) {
-      await client.query('ROLLBACK');
-      return null;
-    }
-    const res = await client.query(
-      'INSERT INTO characters (account_id, name, class, realm, state, appearance) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, account_id, name, class, level, state, is_gm, force_rename, appearance',
-      [
-        accountId,
-        name,
-        cls,
-        REALM,
-        state ? JSON.stringify(state) : null,
-        appearance ? JSON.stringify(appearance) : null,
-      ],
-    );
-    await recordCharacterCreation(client, accountId, REALM);
-    await client.query('COMMIT');
-    // A created character can become the account's top one, and its class is fixed
-    // here forever (no statement ever updates characters.class). Enqueued inside the
-    // db function rather than at the route so the RouteDef arm, its retained legacy
-    // twin in main.ts, and the PBE boost roster are all covered by one site. After
-    // COMMIT: a rolled-back create must never have enqueued.
-    enqueueLinkChange({ accountId, kinds: ['flex'] }, Date.now());
-    return res.rows[0];
-  } catch (err) {
-    await client.query('ROLLBACK').catch(() => {});
-    throw err;
-  } finally {
-    client.release();
-  }
-}
+// The capped character CREATE moved whole to server/character_create_db.ts
+// at the Phase 18 database review (the character_delete_db.ts sibling's
+// shape); re-exported here so no caller re-points.
+export { createCharacterCapped } from './character_create_db';
 
 // Reclaim a character name abandoned by a deactivated ("invalid") account.
 // Character names are unique per (realm, lower(name)), and deactivation is a
@@ -3457,6 +3430,20 @@ export async function renameCharacter(
   return row;
 }
 
+// Persist a character row. Returns true when the write landed. When a leaseNonce is
+// given the UPDATE is fenced to the current lease holder+nonce in the SAME statement:
+// a displaced session (its lease reclaimed by a same-account takeover, which rotated
+// the nonce) matches no lease row, the UPDATE touches nothing, and this returns false
+// so the caller can refuse to overwrite the live session's state. The fence rides the
+// write statement itself and never a separate pre-check, because a check-then-write
+// pair would race the takeover that steals the lease between the two. The no-nonce path
+// (tests, resumes, meta-less sessions) writes unconditionally and returns true, exactly
+// as before.
+// The statement builders, the fence-shape picker (liveSaveFence, holder passed in
+// to avoid a db.ts cycle) and the executors (runFencedCharacterSave, which takes
+// the characters row lock FIRST, qr-19-live-nonce-fence-write-loss, and returns
+// the locked source pre-image) live in server/character_save_statement.ts.
+
 export async function saveCharacterState(
   characterId: number,
   level: number,
@@ -3468,42 +3455,47 @@ export async function saveCharacterState(
 ): Promise<boolean> {
   const ledger = prepareCharacterSaveEffects(characterId, storageEffects, ledgerEffects);
   const cleanState = sanitizeRemovedZone1Content(state).state;
-  const stmt = characterUpdateStatement(
-    characterId,
-    level,
-    JSON.stringify(cleanState),
-    PROCESS_LEASE_HOLDER,
-    leaseNonce,
-  );
+  // Serialized BEFORE the checkout, as it always was here: this stringify is the
+  // save's one non-trivial CPU cost and must not run inside the transaction.
+  const stateJson = JSON.stringify(cleanState);
   const client = await pool.connect();
   const transaction = await beginSaveTx(client, 'character save', signal);
   let ledgerWrite: BankLedgerBatchWriteResult | undefined;
   try {
     await lockSaveEffectAccounts(transaction, storageEffects, ledger);
-    const res = await transaction.query(stmt.text, stmt.values);
-    const saved =
-      leaseNonce === undefined && storageEffects.length === 0 && !ledger
-        ? true
-        : (res.rowCount ?? 0) > 0;
-    if (!saved) {
+    const { result: res, before } = await runFencedCharacterSave(
+      transaction,
+      characterId,
+      level,
+      stateJson,
+      liveSaveFence(leaseNonce, PROCESS_LEASE_HOLDER),
+    );
+    if (!characterSaveLanded(leaseNonce, storageEffects, ledger, res.rowCount)) {
       await transaction.rollback();
       return false;
     }
+    await journalCharacterSaveSources(transaction, characterId, before, res, cleanState);
     ledgerWrite = await writeBankLedgerSaveEffectsOnClient(transaction, ledger);
     await writeStorageAppliedEffectsOnClient(transaction, storageEffects);
     await transaction.commit();
     return true;
   } catch (err) {
     await transaction.rollback();
-    const failure =
-      err instanceof BankLedgerGrowthLimitExceeded
-        ? err
-        : (bankLedgerGrowthLimitFromError(err) ?? err);
-    attachBankLedgerCommittedPrefixToError(failure, ledger, ledgerWrite);
-    throw failure;
+    throw characterSaveFailure(err, ledger, ledgerWrite);
   } finally {
     transaction.release();
   }
+}
+
+// Lease-fenced offline snapshots for the PBE roster fallback.
+// Signer and name mutations use offline_character_mutation_db.ts instead.
+// The snapshot writer and its bounds live in offline_character_save_db.ts.
+export function saveOfflineCharacterState(
+  characterId: number,
+  level: number,
+  state: CharacterState,
+): Promise<boolean> {
+  return runOfflineCharacterSave(runWithStatementTimeout, characterId, level, state);
 }
 
 // Persist a character row AND this realm's World Market + Ravenpost mail
@@ -3560,21 +3552,18 @@ export async function saveCharacterAndMarketState(
   try {
     await lockSaveEffectAccounts(transaction, storageEffects, ledger);
     // Fence the bag half first; a miss rolls back before shared escrow writes.
-    const stmt = characterUpdateStatement(
+    const { result: charRes, before } = await runFencedCharacterSave(
+      transaction,
       characterId,
       level,
       JSON.stringify(cleanState),
-      PROCESS_LEASE_HOLDER,
-      leaseNonce,
+      liveSaveFence(leaseNonce, PROCESS_LEASE_HOLDER),
     );
-    const charRes = await transaction.query(stmt.text, stmt.values);
-    if (
-      (leaseNonce !== undefined || storageEffects.length > 0 || ledger) &&
-      (charRes.rowCount ?? 0) === 0
-    ) {
+    if (!characterSaveLanded(leaseNonce, storageEffects, ledger, charRes.rowCount)) {
       await transaction.rollback();
       return false;
     }
+    await journalCharacterSaveSources(transaction, characterId, before, charRes, cleanState);
     // Every statement in this function goes through `transaction`, never the
     // raw client: the wrapper owns the SET LOCAL statement/lock timeouts and
     // the abort-driven pg_cancel_backend, so a raw client.query would run
@@ -3612,12 +3601,7 @@ export async function saveCharacterAndMarketState(
     return true;
   } catch (err) {
     await transaction.rollback();
-    const failure =
-      err instanceof BankLedgerGrowthLimitExceeded
-        ? err
-        : (bankLedgerGrowthLimitFromError(err) ?? err);
-    attachBankLedgerCommittedPrefixToError(failure, ledger, ledgerWrite);
-    throw failure;
+    throw characterSaveFailure(err, ledger, ledgerWrite);
   } finally {
     transaction.release();
   }
@@ -3664,21 +3648,18 @@ export async function saveCharacterAndGuildBankState(
   let ledgerWrite: BankLedgerBatchWriteResult | undefined;
   try {
     await lockSaveEffectAccounts(transaction, storageEffects, ledger);
-    const stmt = characterUpdateStatement(
+    const { result: charRes, before } = await runFencedCharacterSave(
+      transaction,
       characterId,
       level,
       JSON.stringify(cleanState),
-      PROCESS_LEASE_HOLDER,
-      leaseNonce,
+      liveSaveFence(leaseNonce, PROCESS_LEASE_HOLDER),
     );
-    const charRes = await transaction.query(stmt.text, stmt.values);
-    if (
-      (leaseNonce !== undefined || storageEffects.length > 0 || ledger) &&
-      (charRes.rowCount ?? 0) === 0
-    ) {
+    if (!characterSaveLanded(leaseNonce, storageEffects, ledger, charRes.rowCount)) {
       await transaction.rollback();
       return false;
     }
+    await journalCharacterSaveSources(transaction, characterId, before, charRes, cleanState);
     ledgerWrite = await writeBankLedgerSaveEffectsOnClient(transaction, ledger);
     await writeClaimedGuildBankEffectsOnClient(transaction, guildReplay, ledgerWrite, results);
     await writeStorageAppliedEffectsOnClient(transaction, storageEffects);
@@ -3686,12 +3667,7 @@ export async function saveCharacterAndGuildBankState(
     return true;
   } catch (err) {
     await transaction.rollback();
-    const failure =
-      err instanceof BankLedgerGrowthLimitExceeded
-        ? err
-        : (bankLedgerGrowthLimitFromError(err) ?? err);
-    attachBankLedgerCommittedPrefixToError(failure, ledger, ledgerWrite);
-    throw failure;
+    throw characterSaveFailure(err, ledger, ledgerWrite);
   } finally {
     transaction.release();
   }
@@ -3810,21 +3786,19 @@ export async function saveCharacterStateOnClient(
   const ledger = prepareCharacterSaveEffects(characterId, storageEffects, ledgerEffects);
   const cleanState = sanitizeRemovedZone1Content(state).state;
   await lockSaveEffectAccounts(client, storageEffects, ledger, existingAccountLock);
-  const stmt = characterUpdateStatement(
+  // D145-excluded (occupancy invariant, race carried): the character write stays
+  // ONE statement (the journal below adds one only when a container moved).
+  const { result: res, before } = await runPreimageCharacterSave(
+    client,
     characterId,
     level,
     JSON.stringify(cleanState),
-    PROCESS_LEASE_HOLDER,
-    leaseNonce,
+    liveSaveFence(leaseNonce, PROCESS_LEASE_HOLDER),
   );
-  const res = await client.query(stmt.text, stmt.values);
-  const saved =
-    leaseNonce === undefined && storageEffects.length === 0 && !ledger
-      ? true
-      : (res.rowCount ?? 0) > 0;
-  if (!saved) return false;
+  if (!characterSaveLanded(leaseNonce, storageEffects, ledger, res.rowCount)) return false;
   let ledgerWrite: BankLedgerBatchWriteResult | undefined;
   try {
+    await journalCharacterSaveSources(client, characterId, before, res, cleanState);
     ledgerWrite = await writeBankLedgerSaveEffectsOnClient(client, ledger);
     await writeStorageAppliedEffectsOnClient(client, storageEffects);
     return true;
@@ -4933,104 +4907,6 @@ export interface BankLedgerRow {
   /** Signed count of THIS ROW'S item_id the acting character's BAGS gained
    *  (negative means they gave it up). Null on the same terms as above. */
   counterpartyCount?: number | null;
-}
-
-// ---------------------------------------------------------------------------
-// The guild bank ACTIVITY LOG read: the newest window of one guild's
-// bank_ledger rows, for the in-game officer-visible history
-// (server/guild_bank_log.ts owns the projection, the gate, and the cache; this
-// is only the statement).
-//
-// PRIVACY IS THE COLUMN LIST. This is the one read whose result reaches
-// players, so it selects the narrowest set that can render a sentence:
-// bank_ledger.account_id, realm, and the instance payload are NOT selected at
-// all, and character_id is resolved to a display name here rather than shipped.
-// Nothing account-scoped can leak through a projection bug downstream, because
-// nothing account-scoped is in the row.
-//
-// The predicate rides bank_ledger_container_recent (container, container_id,
-// id DESC), added through the CONCURRENTLY seam with this reader: see
-// server/bank_ledger_indexes.ts for why the third column carries its weight.
-// `id DESC` (not created_at) is the paging order: BIGSERIAL cannot tie, and it
-// is exactly the index's trailing column, so this is a bounded backwards index
-// scan whose cost is the LIMIT rather than the guild's lifetime row count.
-//
-// The op filter is applied HERE rather than in JS so a suppressed row never
-// crosses the wire into this process at all, and so the LIMIT counts only rows
-// a player can actually see (filtering after the fact would silently return
-// fewer than the window it promised).
-export interface GuildBankLogDbRow {
-  id: number;
-  /** Epoch milliseconds (the column is TIMESTAMPTZ; pg hands back a Date). */
-  at: number;
-  /** The acting character's display name, or null when the character row is
-   *  gone. Never an id. */
-  characterName: string | null;
-  op: string;
-  itemId: string | null;
-  count: number | null;
-  copperDelta: number;
-}
-
-/**
- * The per-statement bound for the activity log read, deliberately far BELOW the
- * pool default rather than above it.
- *
- * Intended cost is a bounded backward index scan of 50 rows, i.e. single-digit
- * milliseconds. The cost without its index is a sequential scan of a
- * keep-forever table, and at the 15s pool default roughly ten of those in
- * flight would exhaust DB_POOL_MAX_CLIENTS and make every login and autosave on
- * the realm fail its checkout. That window is reachable now that the
- * CONCURRENTLY builds run after listen (runConcurrentIndexMigrations), and it
- * is also what a dropped index or an unhealed INVALID carcass looks like. Two
- * seconds is ~3 orders of magnitude of headroom over the intended cost and
- * still fails this ONE read instead of the realm: the caller answers the
- * player a refusal, which the pane renders.
- */
-export const GUILD_BANK_LOG_TIMEOUT_MS = 2_000;
-
-export async function loadGuildBankLogRows(
-  guildId: number,
-  limit: number,
-  visibleOps: readonly string[],
-): Promise<GuildBankLogDbRow[]> {
-  const res = await runWithStatementTimeout(GUILD_BANK_LOG_TIMEOUT_MS, (query) =>
-    query(
-      `SELECT bl.id,
-            bl.created_at,
-            bl.op,
-            bl.item_id,
-            bl.count,
-            bl.copper_delta,
-            c.name AS character_name
-       FROM bank_ledger bl
-       LEFT JOIN characters c ON c.id = bl.character_id
-      WHERE bl.container = 'guild'
-        AND bl.container_id = $1
-        -- Realm discipline, matching every sibling statement. A guild lives on
-        -- exactly one realm and guild ids are globally unique, so this cannot
-        -- change which rows match today and cannot make the LIMIT scan wider;
-        -- it is here so a cross-realm row could never be projected into a
-        -- guild's history if that ever stopped being true.
-        AND bl.realm = $4
-        AND bl.op = ANY($2::text[])
-      ORDER BY bl.id DESC
-      LIMIT $3`,
-      [guildId, visibleOps, limit, REALM],
-    ),
-  );
-  return res.rows.map((r) => ({
-    id: Number(r.id),
-    at: r.created_at instanceof Date ? r.created_at.getTime() : Number(new Date(r.created_at)),
-    characterName: typeof r.character_name === 'string' ? r.character_name : null,
-    op: String(r.op),
-    itemId: r.item_id === null || r.item_id === undefined ? null : String(r.item_id),
-    count: r.count === null || r.count === undefined ? null : Number(r.count),
-    // BIGINT arrives as a string from pg; Number() is safe here because every
-    // legitimate copper magnitude is far inside the safe-integer range (the
-    // treasury cap alone is 1e9).
-    copperDelta: Number(r.copper_delta) || 0,
-  }));
 }
 
 /** The multi-row sibling of insertBankLedgerRow (the insertChatLogs UNNEST

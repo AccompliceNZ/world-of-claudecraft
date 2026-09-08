@@ -1133,7 +1133,7 @@ describe('entry HTML and i18n chrome', () => {
     // (noUnusedLocals is off) while a veteran's one catch-up line vanishes:
     // the deeds sibling pins its emission (tests/deeds_window.test.ts) and
     // the reliquary side must too.
-    expect(handler).toContain("this.log(retroText, '#ffd100');");
+    expect(handler).toContain('this.log(retroText, HUD_LOG.NOTICE);');
     expect(handler).toContain('this.combatAnnouncer.push(retroText, performance.now());');
     // Exactly the live-find banner push plus the retro push: a stray or
     // duplicated announcement cannot hide (the deeds sibling pins the same).
@@ -1180,7 +1180,7 @@ describe('entry HTML and i18n chrome', () => {
     // A relic the catalog no longer places keeps a PLAIN line: a link that
     // opens nothing is worse than no link (the recent strip's inert chip).
     expect(handler).toMatch(
-      /if \(pageId === null\) \{\s*this\.log\(t\('hudChrome\.reliquary\.unlockToast', \{ name \}\), '#ffd100'\);\s*continue;\s*\}/,
+      /if \(pageId === null\) \{\s*this\.log\(t\('hudChrome\.reliquary\.unlockToast', \{ name \}\), HUD_LOG\.NOTICE\);\s*continue;\s*\}/,
     );
     // The retro catch-up summary stays plain by design (it names no single
     // relic to jump to), so nothing after the retroCount gate may go node-built.
@@ -1248,8 +1248,12 @@ describe('entry HTML and i18n chrome', () => {
   });
 
   it('maps the reliquary keybind action through t() in Options', () => {
-    // Without this entry, Options/gamepad fall back to raw English BIND_ACTIONS labels.
-    expect(optionsWindow).toContain("reliquary: 'hudChrome.reliquary.title'");
+    // Without this entry, Options/gamepad fall back to raw English BIND_ACTIONS
+    // labels. The table lives in the shared keybind_action_names_core.ts (the on-bar
+    // rebind prompts read the same one).
+    expect(read('../src/ui/keybind_action_names_core.ts')).toContain(
+      "reliquary: 'hudChrome.reliquary.title'",
+    );
   });
 });
 

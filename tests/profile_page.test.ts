@@ -171,8 +171,21 @@ describe('profile page Reliquary pair + Curator rank lines', () => {
     // (311 base + the Bonebound Rickshaw's horizons_mounts slot + the 40
     // Crucible raid relics and the raid's flawless title; Forgebreaker left
     // the pages for its crafting chain; then the Lanternback Troll and the
-    // Chimeglass Tortoise's two developer mount slots).
-    expect(catalogTotal).toBe(360);
+    // Chimeglass Tortoise's two developer mount slots): 360 base for this
+    // merge.
+    //
+    // RE-PINNED at this merge of release/v0.42.0 into feature/masterwrought.
+    // BOTH parent pins for the record: ours 400 (the professions parent's 367
+    // character relics plus eleven collections' three distinct armor
+    // discoveries each; Forgebreaker stays in its separate stacked quest
+    // contribution), the release 374 (base 360 + the seven Roots' Bramblehide
+    // pieces and the seven Nythraxis gap-fill drops, one relic apiece).
+    // Arithmetic reconciliation (base + ours' delta + theirs' delta =
+    // 360 + (400 - 360) + (374 - 360) = 414), not a suite run: confirm with
+    // `npx vitest run tests/profile_page.test.ts` before merge lands, since
+    // both additions land in the same resolved src/sim/content/reliquary.ts
+    // and could in principle collide on a relic id.
+    expect(catalogTotal).toBe(414);
   });
 
   it('renders the owned/total pair and the English rank name for a ranked character', async () => {

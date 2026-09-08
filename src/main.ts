@@ -48,7 +48,6 @@ import { clientEnvBits, installPageStateTracking, pageStateBits } from './game/c
 import { getClientSeed } from './game/client_seed';
 import { localPartyMemberIds } from './game/corpse_loot_availability';
 import { createCrossHotbar, measureCrossHotbarLift } from './game/cross_hotbar_wiring';
-import { tryDayNightDevCommand } from './game/daynight_dev_command';
 import { shouldClearAutorunOnDeath } from './game/death_input_reset';
 import { setDisplayChangeTarget } from './game/desktop_display_change';
 import {
@@ -60,6 +59,7 @@ import { desktopNotifyOnSimEvents } from './game/desktop_notifications';
 import { desktopPresentationHidden } from './game/desktop_presentation';
 import { initDesktopShellIntegration } from './game/desktop_shell_integration';
 import { applyDesktopShellSetting, syncDesktopShellSettings } from './game/desktop_shell_settings';
+import { tryDevChatHooks } from './game/dev_chat_hooks';
 import { installDevTeleports } from './game/dev_shortcuts';
 import {
   clearDiscordChoice,
@@ -109,7 +109,6 @@ import {
   stampGraphicsRebuildProbe,
   updateGraphicsRebuildProbePhase,
 } from './game/graphics_rebuild_crash_guard';
-import { tryIgnivarPlacerCommand } from './game/ignivar_placer';
 import { Input } from './game/input';
 import { InputActivityMeter, installInputActivityTracking } from './game/input_activity';
 import { stopAutorunForInteraction } from './game/interaction_autorun';
@@ -143,6 +142,7 @@ import {
   resetLoadProfile,
   summarizeLoadProfile,
 } from './game/load_profiler';
+import { trackMetaPixel } from './game/meta_pixel';
 import {
   interfaceModeFromSetting,
   isPhoneTouchDevice,
@@ -159,6 +159,7 @@ import { music } from './game/music';
 import { tryNearbyInteraction } from './game/nearby_interaction';
 import { nextNpcTarget } from './game/npc_cycle';
 import { isOfflineModeAvailable } from './game/offline_mode_gate';
+import { offlineWorldConfig } from './game/offline_world_config';
 import { interpolatedOnlineSelfFacing } from './game/online_facing_mirror';
 import { sendOnlineMovementFrame } from './game/online_movement_frame';
 import { padCastPress, padCastRelease } from './game/pad_cast_routing';
@@ -193,6 +194,7 @@ import {
   stopShaderWarmup,
 } from './game/shader_cache_warmup';
 import { registerShaderWarmSetting } from './game/shader_warm_setting';
+import { toggleSheatheWithCue } from './game/sheathe_toggle';
 import { initSoftwareRenderNotice } from './game/software_render_notice';
 import {
   decideSpawnCinematic,
@@ -210,6 +212,12 @@ import {
   teleportCameraArrivalKind,
   teleportCameraFacingState,
 } from './game/teleport_camera';
+import {
+  ensureTurnstile,
+  resetTurnstile,
+  TURNSTILE_SITEKEY,
+  turnstileToken,
+} from './game/turnstile_gate';
 import { loadingCurtainFadeMs, resolveUiEffectsProfile } from './game/ui_effects_profile';
 import { feedSimCalendar } from './game/utc_day';
 import { voice } from './game/voice';
@@ -382,13 +390,11 @@ import {
   DT,
   dist2d,
   MELEE_RANGE,
-  PLAYER_INTEREST_DROP_RADIUS,
   type PlayerClass,
   RUN_SPEED,
   type WorldContent,
 } from './sim/types';
 import { zoneBiomeAt } from './sim/world';
-import { WORLD_SEED } from './sim/world_seed';
 import { startSitePresence } from './site_presence';
 import {
   accountPortalModel,
@@ -457,7 +463,6 @@ import {
   attachGatherNodeHoverTooltip,
   gatherNodeToolGateFor,
 } from './ui/gather_node_tooltip_controller';
-import { gatherEffectPrompt, gatherToolNoNodeKey } from './ui/gathering_view';
 import { loadHighscoresInto } from './ui/highscore_board';
 import { type ClaudiumHooks, Hud } from './ui/hud';
 import { resolveActionBarVisibility } from './ui/hud/action_bar/action_bar_visibility_core';
@@ -469,6 +474,7 @@ import {
   setReferralProvider,
   setStandingProvider,
 } from './ui/hud/player_card/player_card_share';
+import { gatherEffectPrompt, gatherToolNoNodeKey } from './ui/hud/professions/gathering_view';
 import {
   ensureLocaleLoaded,
   formatNumber,
@@ -687,65 +693,6 @@ function saveHomepageMusicMuted(muted: boolean): void {
   } catch {
     // Private browsing or storage failures should not block the control.
   }
-}
-
-// --- Cloudflare Turnstile (bot gate on the login/register form) ---------------
-// The site key is injected at build time; when it is empty (local/offline dev or
-// a build without the env var) the widget never renders and the token is '', so
-// the server, which also skips verification without its secret, lets requests
-// through unchanged. The api.js <script> is in index.html.
-const TURNSTILE_SITEKEY = String(import.meta.env.VITE_TURNSTILE_SITEKEY ?? '');
-
-interface TurnstileApi {
-  render: (el: string | HTMLElement, opts: { sitekey: string }) => string;
-  getResponse: (widgetId?: string) => string | undefined;
-  reset: (widgetId?: string) => void;
-}
-let turnstileWidgetId: string | undefined;
-
-function turnstileApi(): TurnstileApi | undefined {
-  return (window as unknown as { turnstile?: TurnstileApi }).turnstile;
-}
-
-// Render the widget once, retrying until the async api.js script is ready. Safe to
-// call repeatedly (idempotent) and a no-op when no site key is configured. The
-// Electron desktop shell never renders it: Cloudflare rejects the app:// origin
-// (widget error 110200), and the server bypasses Turnstile for desktop origins
-// (passesTurnstile in server/turnstile.ts), so a widget here could only wedge
-// the form.
-function ensureTurnstile(): void {
-  if (DESKTOP_APP || !TURNSTILE_SITEKEY || turnstileWidgetId !== undefined) return;
-  const ts = turnstileApi();
-  const el = document.getElementById('cf-turnstile-container');
-  if (!ts || !el) {
-    window.setTimeout(ensureTurnstile, 200);
-    return;
-  }
-  turnstileWidgetId = ts.render(el, { sitekey: TURNSTILE_SITEKEY });
-}
-
-// The current single-use token, or '' when verification is not configured / not
-// yet solved. Tokens are consumed server-side, so reset after each attempt.
-function turnstileToken(): string {
-  const ts = turnstileApi();
-  if (!TURNSTILE_SITEKEY || !ts || turnstileWidgetId === undefined) return '';
-  return ts.getResponse(turnstileWidgetId) ?? '';
-}
-
-function resetTurnstile(): void {
-  const ts = turnstileApi();
-  if (ts && turnstileWidgetId !== undefined) ts.reset(turnstileWidgetId);
-}
-
-function trackMetaPixel(
-  eventName: string,
-  data?: Record<string, unknown>,
-  options?: Record<string, unknown>,
-): void {
-  const fbq = (window as Window & { fbq?: (...args: unknown[]) => void }).fbq;
-  if (typeof fbq !== 'function') return;
-  if (options) fbq('trackCustom', eventName, data ?? {}, options);
-  else fbq('trackCustom', eventName, data ?? {});
 }
 
 function trackCommunityLinkClicks(): void {
@@ -1806,21 +1753,8 @@ async function startGame(
       // the active channel tab supplies the send prefix, so plain text goes to
       // that channel without the player retyping "/world" etc.
       const raw = chatInput.value;
-      // dev-only day/night scrub command, intercepted before the chat send path
-      if (import.meta.env.DEV && tryDayNightDevCommand(raw, hud)) {
-        chatInput.value = '';
-        closeChat();
-        return;
-      }
-      // dev-only Ignivar prop placement rig (local branch tooling)
-      if (
-        import.meta.env.DEV &&
-        tryIgnivarPlacerCommand(raw, {
-          scene: renderer.scene,
-          getPlayer: () => world.player,
-          log: (text, color) => hud.log(text, color),
-        })
-      ) {
+      // dev-only chat interceptors (day/night scrub, the placer rig)
+      if (tryDevChatHooks(raw, { hud, scene: renderer.scene, world })) {
         chatInput.value = '';
         closeChat();
         return;
@@ -1969,17 +1903,17 @@ async function startGame(
           case 'reliquary':
             hud.toggleReliquary();
             break;
-          case 'sheathe': {
-            // Cosmetic sheathe toggle (Z). The world owns the rule (dead-gate,
-            // combat auto-unsheathe); play the cue only when the state moved.
-            const wasStowed = world.player.weaponStowed;
-            world.toggleWeaponStow();
-            if (world.player.weaponStowed !== wasStowed) {
-              if (world.player.weaponStowed) audio.weaponSheathe();
-              else audio.weaponUnsheathe();
-            }
+          case 'harvestJournal':
+            hud.toggleHarvestJournal();
             break;
-          }
+          case 'perfecting':
+            hud.togglePerfecting();
+            break;
+          case 'sheathe':
+            // Cosmetic sheathe toggle (Z): the cue-on-state-change rule lives
+            // in sheathe_toggle.ts, shared with the gamepad dispatch below.
+            toggleSheatheWithCue(world, audio);
+            break;
           case 'chat':
             openChat();
             break;
@@ -2307,6 +2241,12 @@ async function startGame(
       case 'reliquary':
         hud.toggleReliquary();
         break;
+      case 'harvestJournal':
+        hud.toggleHarvestJournal();
+        break;
+      case 'perfecting':
+        hud.togglePerfecting();
+        break;
       case 'crafting':
         // The controller panel has always OFFERED this bind (it lists every
         // edge keybind action); the dispatch dropped it silently.
@@ -2337,17 +2277,10 @@ async function startGame(
       case 'dungeonFinder':
         hud.toggleDungeonFinder();
         break;
-      case 'sheathe': {
-        // The keyboard arm's exact rule: the world owns the gate, the cue
-        // plays only when the state moved.
-        const wasStowed = world.player.weaponStowed;
-        world.toggleWeaponStow();
-        if (world.player.weaponStowed !== wasStowed) {
-          if (world.player.weaponStowed) audio.weaponSheathe();
-          else audio.weaponUnsheathe();
-        }
+      case 'sheathe':
+        // The keyboard arm's exact rule, from the same module.
+        toggleSheatheWithCue(world, audio);
         break;
-      }
       case 'chat':
         openChat();
         break;
@@ -3193,7 +3126,7 @@ async function startGame(
       // A ground aim armed before the drop is anchored to a stale world; the
       // rebuilt mirror may place the player elsewhere entirely.
       hud.cancelGroundAim();
-      hud.marketResyncAfterReconnect();
+      hud.resyncAfterReconnect();
       // A fresh join hands the server a brand-new PlayerMeta with stopAutoAttackOnTargetSwitch
       // undefined, so the stored preference needs a re-push, the same way it is
       // pushed once on world entry above. onReconnected fires before ClientWorld
@@ -3486,10 +3419,11 @@ async function startGame(
     if (world.bgInfo?.match) world.bgFlagAction();
   }
 
-  // The R40 per-use effect confirm gate, shared by every gather entry point
-  // (world click, interact key, gathering-tool use): the pure question from
-  // the view core, the ask through the HUD's confirm-dialog family. The
-  // harvest proceeds on either answer; only the charge follows it.
+  // The R40 per-use effect confirm gate, shared by the explicit gather entry
+  // points (world click, gathering-tool use): the pure question from the view
+  // core, the ask through the HUD's confirm-dialog family. The harvest
+  // proceeds on either answer; only the charge follows it. The generic
+  // interact key never gathers, so it takes no part in this.
   const gatherEffectConfirm = {
     needed: (nodeId: string) => gatherEffectPrompt(world, nodeId),
     ask: (prompt: { effectId: string; charges: number }, proceed: (confirmed: boolean) => void) =>
@@ -3504,14 +3438,9 @@ async function startGame(
       tryNearbyInteraction(
         world,
         hud,
-        GATHER_NODES,
-        (node) => gatherNodeToolGateFor(world, node),
-        t('questUi.errors.tooFar'),
-        t('hudChrome.gathering.notReady'),
         t('questUi.errors.escortAway'),
         t('errors.nothingInteract'),
         undefined,
-        gatherEffectConfirm,
         preferNpcId,
       ),
       input,
@@ -5327,21 +5256,15 @@ async function startOffline(
   const sim = loadSpan(
     'sim-build',
     () =>
-      new Sim({
-        seed: seedOverride ?? WORLD_SEED,
-        playerClass,
-        playerName: name,
-        devCommands: import.meta.env.DEV,
-        // Live-world features (custom editor play-test maps keep both off).
-        riftPortals: world === undefined,
-        compulsoryTutorial: world === undefined,
-        // Match the live server's proven-safe idle-AI interest throttle. Ordinary
-        // entity rigs are gone by 96 yd and mob aggro caps at 20 yd, so this removes
-        // full-world wilderness AI from the browser's 20 Hz tick without changing
-        // anything visible or interactable.
-        idleMobTickRadius: PLAYER_INTEREST_DROP_RADIUS,
-        world,
-      }),
+      new Sim(
+        offlineWorldConfig({
+          playerClass,
+          name,
+          world,
+          seedOverride,
+          devCommands: import.meta.env.DEV,
+        }),
+      ),
   );
   sim.setPlayerSkin(sim.playerId, skin);
   // Offline has no account and no character row, so the local draft IS this
@@ -7854,59 +7777,6 @@ async function loadNews(): Promise<void> {
   await loadNewsInto($('#news-feed'), () => api.releases(20));
 }
 
-let caCopyResetTimer: number | null = null;
-
-// Click-to-copy for the $WOC contract address on the landing page. Falls back to
-// a hidden-textarea copy when the async Clipboard API is unavailable (insecure
-// context / older browsers); the copied state is only shown on a real success.
-function wireContractAddressCopy(): void {
-  const btn = document.getElementById('btn-copy-ca');
-  const container = document.getElementById('token-ca');
-  if (!btn || !container) return;
-
-  const showCopied = () => {
-    container.classList.add('is-copied');
-    if (caCopyResetTimer !== null) window.clearTimeout(caCopyResetTimer);
-    caCopyResetTimer = window.setTimeout(() => {
-      container.classList.remove('is-copied');
-      caCopyResetTimer = null;
-    }, 1800);
-  };
-
-  const fallbackCopy = (text: string): boolean => {
-    const ta = document.createElement('textarea');
-    ta.value = text;
-    ta.setAttribute('readonly', '');
-    ta.style.position = 'fixed';
-    ta.style.opacity = '0';
-    document.body.appendChild(ta);
-    ta.select();
-    let ok = false;
-    try {
-      ok = document.execCommand('copy');
-    } catch {
-      ok = false;
-    }
-    document.body.removeChild(ta);
-    return ok;
-  };
-
-  btn.addEventListener('click', () => {
-    const ca = btn.getAttribute('data-ca');
-    if (!ca) return;
-    if (navigator.clipboard?.writeText) {
-      navigator.clipboard
-        .writeText(ca)
-        .then(showCopied)
-        .catch(() => {
-          if (fallbackCopy(ca)) showCopied();
-        });
-    } else if (fallbackCopy(ca)) {
-      showCopied();
-    }
-  });
-}
-
 function syncHomepageMusicToggle(): void {
   const btn = document.getElementById('homepage-music-toggle') as HTMLButtonElement | null;
   if (!btn) return;
@@ -9666,7 +9536,6 @@ function wireStartScreens(): void {
   for (const ensure of CONTENT_LOCALE_CHANNEL_ENSURERS) void ensure(bootLang).catch(() => {});
   hydrateIcons();
   void loadProjectStats();
-  wireContractAddressCopy();
   wireHomepageMusicToggle();
   void wireWallet();
   wireGithubLink();

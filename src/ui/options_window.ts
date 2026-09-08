@@ -94,6 +94,16 @@ import {
 } from './i18n';
 import type { TranslationKey } from './i18n.catalog';
 import { interfaceUnlockLabelKey } from './interface_unlock_core';
+import { BIND_CATEGORY_LABEL_KEYS, bindActionDisplayName } from './keybind_action_names_core';
+import { keybindConflictPrompt } from './keybind_conflict_prompt_core';
+import { buildKeybindCode, parseKeybindCode } from './keybind_transfer_core';
+import {
+  type KeyboardMapHandle,
+  type KeyboardMapPaintDeps,
+  paintKeyboardMap,
+} from './keyboard_map';
+import type { KeyboardLayer } from './keyboard_map_core';
+import { KeyboardMapWindow } from './keyboard_map_window';
 import {
   type BoolToggleControl,
   boolToggleNextValue,
@@ -172,6 +182,9 @@ const KEYBIND_PANEL_SETTING_KEYS: (keyof GameSettings)[] = [
   'leftHandedTouch',
   'filterProfanity',
 ];
+// Every action id the registry knows: a pasted hotkey code naming none of them
+// would import as a full reset, so parseKeybindCode refuses it as hollow.
+const KNOWN_ACTION_IDS: ReadonlySet<string> = new Set(BIND_ACTIONS.map((a) => a.id));
 
 // Endonyms for the in-game language picker; never localized (they render
 // identically in every locale, matching the homepage footer picker), keyed by
@@ -199,70 +212,6 @@ const LANGUAGE_ENDONYMS: Record<SupportedLanguage, string> = {
   sv_SE: 'Svenska',
   vi_VN: 'Tiếng Việt',
   da_DK: 'Dansk',
-};
-
-// Localized labels for the keybind category headers + action rows.
-const BIND_CATEGORY_LABEL_KEYS: Partial<Record<string, TranslationKey>> = {
-  Movement: 'hud.keybinds.categories.movement',
-  Targeting: 'hud.keybinds.categories.targeting',
-  Interface: 'hud.keybinds.categories.interface',
-  'Action Bar': 'hud.keybinds.categories.actionBar',
-  Pet: 'hudChrome.keybinds.categoryPet',
-};
-const BIND_ACTION_LABEL_KEYS: Partial<Record<string, TranslationKey>> = {
-  forward: 'hud.keybinds.actions.forward',
-  back: 'hud.keybinds.actions.back',
-  turnLeft: 'hud.keybinds.actions.turnLeft',
-  turnRight: 'hud.keybinds.actions.turnRight',
-  strafeLeft: 'hud.keybinds.actions.strafeLeft',
-  strafeRight: 'hud.keybinds.actions.strafeRight',
-  jump: 'hud.keybinds.actions.jump',
-  // English-only chrome key, like every keybind row added since the `hud`
-  // domain was tsc-locked to inline per-locale blocks.
-  dive: 'hudChrome.keybinds.dive',
-  autorun: 'hud.keybinds.actions.autorun',
-  target: 'hud.keybinds.actions.target',
-  attackMove: 'hud.keybinds.actions.attackMove',
-  interact: 'hud.keybinds.actions.interact',
-  char: 'hud.keybinds.actions.char',
-  spellbook: 'hud.keybinds.actions.spellbook',
-  questlog: 'hud.keybinds.actions.questlog',
-  map: 'hud.keybinds.actions.map',
-  bags: 'hud.keybinds.actions.bags',
-  nameplates: 'hud.keybinds.actions.nameplates',
-  meters: 'hud.keybinds.actions.meters',
-  targetAuras: 'hudChrome.targetAuras.keybindLabel',
-  social: 'hud.keybinds.actions.social',
-  arena: 'hud.keybinds.actions.arena',
-  dungeonFinder: 'hudChrome.finder.title',
-  chat: 'hud.keybinds.actions.chat',
-  // Combat/social target + emote-wheel actions. English-only chrome keys (the
-  // `hud` catalog domain is tsc-locked to inline per-locale blocks).
-  emoteWheel: 'hudChrome.keybinds.emoteWheel',
-  targetFriendly: 'hudChrome.keybinds.targetFriendly',
-  targetFriendlyNext: 'hudChrome.keybinds.targetFriendlyNext',
-  targetPrev: 'hudChrome.keybinds.targetPrev',
-  discord: 'hudChrome.keybinds.discord',
-  bgFlag: 'hudChrome.keybinds.bgFlag',
-  sheathe: 'hudChrome.keybinds.sheathe',
-  petAttack: 'hudChrome.keybinds.petAttack',
-  petStop: 'hudChrome.keybinds.petStop',
-  petTaunt: 'hudChrome.keybinds.petTaunt',
-  petDefensive: 'hudChrome.keybinds.petDefensive',
-  petAggressive: 'hudChrome.keybinds.petAggressive',
-  targetPet: 'hudChrome.keybinds.targetPet',
-
-  // Reuse the existing window/feature names so these labels localize everywhere
-  // without duplicating strings (these two ids were previously absent from the
-  // map and fell back to the raw English BIND_ACTIONS labels).
-  talents: 'game.talents.title',
-  leaderboard: 'game.leaderboard.title',
-  calendar: 'hudChrome.calendar.keybindLabel',
-  crafting: 'hudChrome.crafting.title',
-  mount: 'hudChrome.keybinds.mount',
-  deeds: 'hudChrome.deeds.title',
-  professions: 'hudChrome.professions.title',
-  reliquary: 'hudChrome.reliquary.title',
 };
 
 /**
@@ -421,6 +370,15 @@ export class OptionsWindow {
   private interfaceTab: InterfaceTab = 'general';
   private capturingKey: { action: string; index: number } | null = null; // binding awaiting a key
   private keybindNote = '';
+  // The keyboard overview's modifier layer, kept across the panel's rebuilds
+  // (every rebind repaints the whole panel) and shared with the pop-out.
+  private keyboardLayer: KeyboardLayer = '';
+  private readonly keyboardWindow = new KeyboardMapWindow(() => this.keyboardMapDeps(), {
+    openFocusTrap: (root, returnFocusTo) => this.deps.openFocusTrap(root, returnFocusTo),
+  });
+  // The in-panel board, so a panel rebuild or the window closing can drop the
+  // key capture it may have armed.
+  private keyboardBoard: KeyboardMapHandle | null = null;
   // The Options > Performance panel, lazily built and reused (it caches the live
   // position-slider handles so a drag-to-move can update them in place).
   private perfSettings: PerfOverlaySettingsPanel | null = null;
@@ -500,7 +458,12 @@ export class OptionsWindow {
     this.syncGpuBackendWatch();
     this.deps.root().removeAttribute('aria-busy');
     this.deps.root().style.display = 'none';
+    // A key capture armed from a row or the keyboard overview must not outlive
+    // the window: the one-shot would fire on the player's next in-game keypress.
+    if (this.capturingKey) this.deps.options()?.captureKey(null);
     this.capturingKey = null;
+    this.keyboardBoard?.dispose();
+    this.keyboardBoard = null;
     this.deps.options()?.perfOverlay.setPlacement(false);
     this.auraSettings?.closePlacement();
     this.deps.auraOverlays?.().setPlacement(false);
@@ -577,6 +540,9 @@ export class OptionsWindow {
         break;
       case 'performance':
         this.renderPerformance();
+        break;
+      case 'transfer':
+        this.renderTransfer();
         break;
       case 'bugreport':
         this.renderBugReport();
@@ -1753,6 +1719,68 @@ export class OptionsWindow {
     const label = t(
       kind === 'frames' ? 'hudChrome.transfer.frameLayout' : 'hudChrome.transfer.allSettings',
     );
+    this.transferControls(body, label, {
+      exportCode: () => exportTransferCode(kind),
+      applyLabel: t('hudChrome.transfer.applyReload'),
+      importCode: (text) => {
+        const result = importTransferCode(kind, text);
+        if (result.ok) {
+          window.location.reload();
+          return null;
+        }
+        return t(
+          result.reason === 'kind' ? 'hudChrome.transfer.wrongKind' : 'hudChrome.transfer.invalid',
+        );
+      },
+    });
+  }
+
+  // The hotkey-setup row on the Key Bindings panel: the same Export/Import
+  // expando, carrying this character's key-code map (Keybinds.snapshot) in the
+  // keybind_transfer_core.ts envelope. Import applies live through
+  // Keybinds.importBindings (load()'s validation: unknown actions ignored,
+  // reserved codes skipped, one code per action) and repaints the panel; no
+  // reload, since every reader of the map goes through the live instance.
+  private keybindTransferRows(body: HTMLElement): void {
+    const wrap = document.createElement('div');
+    wrap.className = 'kb-transfer';
+    this.transferControls(wrap, t('hudChrome.keybindTransfer.setup'), {
+      exportCode: () => buildKeybindCode(this.deps.keybinds().snapshot()),
+      applyLabel: t('hudChrome.keybindTransfer.apply'),
+      importCode: (text) => {
+        const parsed = parseKeybindCode(text, KNOWN_ACTION_IDS);
+        if (!parsed.ok) {
+          return t(
+            parsed.reason === 'kind'
+              ? 'hudChrome.keybindTransfer.wrongKind'
+              : 'hudChrome.transfer.invalid',
+          );
+        }
+        this.deps.keybinds().importBindings(parsed.binds);
+        this.dropKeyCapture();
+        this.keybindNote = t('hudChrome.keybindTransfer.imported');
+        this.deps.refreshKeybindLabels();
+        this.keyboardWindow.repaint();
+        this.renderKeybinds();
+        return null;
+      },
+    });
+    body.appendChild(wrap);
+  }
+
+  // The shared Export/Import row + expando. `exportCode` yields the code shown
+  // read-only with a Copy button; `importCode` validates and applies a pasted
+  // code, returning null on success (the caller owns the follow-up: a reload or
+  // a repaint) or the localized error to show in the status line.
+  private transferControls(
+    body: HTMLElement,
+    label: string,
+    io: {
+      exportCode: () => string;
+      applyLabel: string;
+      importCode: (text: string) => string | null;
+    },
+  ): void {
     const row = document.createElement('div');
     row.className = 'set-row';
     const name = document.createElement('span');
@@ -1789,7 +1817,7 @@ export class OptionsWindow {
       status.setAttribute('role', 'status');
       if (mode === 'export') {
         box.readOnly = true;
-        box.value = exportTransferCode(kind);
+        box.value = io.exportCode();
         const copy = document.createElement('button');
         copy.className = 'btn';
         copy.textContent = t('hudChrome.transfer.copy');
@@ -1817,19 +1845,11 @@ export class OptionsWindow {
         box.placeholder = t('hudChrome.transfer.pastePlaceholder');
         const apply = document.createElement('button');
         apply.className = 'btn';
-        apply.textContent = t('hudChrome.transfer.applyReload');
+        apply.textContent = io.applyLabel;
         apply.addEventListener('click', () => {
           audio.click();
-          const result = importTransferCode(kind, box.value);
-          if (result.ok) {
-            window.location.reload();
-            return;
-          }
-          status.textContent = t(
-            result.reason === 'kind'
-              ? 'hudChrome.transfer.wrongKind'
-              : 'hudChrome.transfer.invalid',
-          );
+          const error = io.importCode(box.value);
+          if (error !== null) status.textContent = error;
         });
         pane.appendChild(apply);
         box.focus();
@@ -2175,13 +2195,107 @@ export class OptionsWindow {
   // currently occupies them (slot 0 is always Attack); everything else uses its
   // registry label.
   private actionDisplayName(actionId: string, fallback: string): string {
-    if (!actionId.startsWith('slot'))
-      return BIND_ACTION_LABEL_KEYS[actionId] ? t(BIND_ACTION_LABEL_KEYS[actionId]) : fallback;
-    const slot = Number(actionId.slice(4));
-    if (slot === 0) return t('hud.keybinds.actions.attack');
-    return (
-      this.deps.slotActionName(slot) ?? t('hud.keybinds.actions.actionBarSlot', { slot: slot + 1 })
-    );
+    return bindActionDisplayName(actionId, fallback, this.deps.slotActionName);
+  }
+
+  /** Close the keyboard overview pop-out (Hud.closeManagedWindow's arm for it). */
+  closeKeyboardWindow(): void {
+    this.keyboardWindow.close();
+  }
+
+  /** A runtime language switch (the Hud.refreshLocalizedDynamicUi arm): the
+   *  options window itself rebuilds on its next open, so this only forwards to
+   *  the keyboard pop-out, which can stay open across the switch. */
+  relocalize(): void {
+    this.keyboardWindow.relocalize();
+  }
+
+  /** Redraw an open keyboard pop-out from the live bindings: every rebind path
+   *  (panel rows, imports, resets, the on-bar mode) ends in
+   *  Hud.refreshKeybindLabels, which calls this. */
+  repaintKeyboardWindow(): void {
+    this.keyboardWindow.repaint();
+  }
+
+  /** Forget a row capture in progress AND disarm it, so the one-shot never
+   *  fires on a later keypress against a panel that has moved on. */
+  private dropKeyCapture(): void {
+    if (this.capturingKey) this.deps.options()?.captureKey(null);
+    this.capturingKey = null;
+  }
+
+  private paintKeyboardOverview(el: HTMLElement): void {
+    this.keyboardBoard = paintKeyboardMap(el, {
+      ...this.keyboardMapDeps(),
+      onPopOut: () => {
+        // The pop-out replaces the in-menu board: close the menu so the
+        // keyboard floats over the world (the on-bar bind mode's precedent).
+        this.close();
+        this.keyboardWindow.open();
+      },
+    });
+  }
+
+  // The keyboard overview's wiring, shared by the in-panel board and the pop-out
+  // window: the live bindings (minus the Attack Move row the list hides while
+  // its mode is off), names and categories from the shared label table, and the
+  // rebind seams (the same key capture, conflict prompt and refresh the rows use).
+  private keyboardMapDeps(): KeyboardMapPaintDeps {
+    const byId = new Map(BIND_ACTIONS.map((a) => [a.id, a]));
+    const hooks = this.deps.options();
+    // Read at every use, not once: the pop-out keeps these deps while open.
+    const attackMoveOn = () => !!hooks?.settings.get('attackMove');
+    const name = (id: string) => this.actionDisplayName(id, byId.get(id)?.label ?? id);
+    const categoryLabel = (id: string) => {
+      const key = BIND_CATEGORY_LABEL_KEYS[id];
+      return key ? t(key) : id;
+    };
+    return {
+      bindings: () => {
+        const snapshot = this.deps.keybinds().snapshot();
+        if (!attackMoveOn()) delete snapshot.attackMove;
+        return snapshot;
+      },
+      actionName: name,
+      actionCategory: (id) => byId.get(id)?.category ?? '',
+      categories: () => BIND_CATEGORIES.map((id) => ({ id, label: categoryLabel(id) })),
+      layer: this.keyboardLayer,
+      onLayerChange: (layer) => {
+        this.keyboardLayer = layer;
+      },
+      rebind: hooks
+        ? {
+            keybinds: () => this.deps.keybinds(),
+            // A board capture replaces any row capture on the one-shot seam, so
+            // the row must stop painting as "capturing" too.
+            captureKey: (cb) => {
+              this.capturingKey = null;
+              hooks.captureKey(cb);
+            },
+            confirmDialog: (title, body, okText, cancelText, onOk) =>
+              this.deps.confirmDialog(title, body, okText, cancelText, onOk),
+            onChanged: (status) => {
+              this.deps.refreshKeybindLabels();
+              this.keyboardWindow.repaint();
+              if (this.isOpen && this.view === 'keybinds') {
+                // The panel rebuilds its board, so the outcome moves to its note.
+                this.keybindNote = status;
+                this.renderKeybinds();
+              }
+            },
+            assignable: () =>
+              BIND_ACTIONS.filter((a) => attackMoveOn() || a.id !== 'attackMove').map((a) => ({
+                id: a.id,
+                label: t('hudChrome.keyboardMap.assignOption', {
+                  category: categoryLabel(a.category),
+                  action: name(a.id),
+                }),
+              })),
+            buildDropdown: (options, current, onChange, placeholder, a11y) =>
+              this.deps.buildDropdown(options, current, onChange, placeholder, a11y),
+          }
+        : undefined,
+    };
   }
 
   // Action ids a gamepad button may be bound to: explicit unbind, the game menu,
@@ -2428,6 +2542,48 @@ export class OptionsWindow {
     parent.appendChild(row);
   }
 
+  // The Import / Export sub-panel: the FULL preference set as one text code
+  // (copy / paste, like every other transfer here). Same envelope and allowlist
+  // boundary as the Interface
+  // tab's rows (settings_transfer_core.ts, kind 'full'), so a pasted blob still
+  // cannot plant a session, wallet, purchase or cache key; a successful import
+  // reloads, since every family it writes is read at boot.
+  private renderTransfer(): void {
+    const el = this.deps.root();
+    el.innerHTML = this.panelTitle(t('hudChrome.fullTransfer.title'));
+    const intro = document.createElement('div');
+    intro.className = 'set-note';
+    intro.textContent = t('hudChrome.fullTransfer.intro');
+    el.appendChild(intro);
+    const body = document.createElement('div');
+    body.className = 'transfer-body';
+    this.transferControls(body, t('hudChrome.fullTransfer.fullSettings'), {
+      exportCode: () => exportTransferCode('full'),
+      applyLabel: t('hudChrome.transfer.applyReload'),
+      importCode: (text) => {
+        const result = importTransferCode('full', text);
+        if (result.ok) {
+          window.location.reload();
+          return null;
+        }
+        return t(
+          result.reason === 'kind' ? 'hudChrome.transfer.wrongKind' : 'hudChrome.transfer.invalid',
+        );
+      },
+    });
+    el.appendChild(body);
+    const excluded = document.createElement('div');
+    excluded.className = 'set-note';
+    excluded.textContent = t('hudChrome.fullTransfer.excluded');
+    el.appendChild(excluded);
+    const back = document.createElement('button');
+    back.className = 'btn';
+    back.textContent = t('hud.options.back');
+    back.addEventListener('click', () => this.goBack());
+    el.appendChild(back);
+    el.querySelector('[data-close]')?.addEventListener('click', () => this.close());
+  }
+
   private renderKeybinds(): void {
     const el = this.deps.root();
     const hooks = this.deps.options();
@@ -2461,11 +2617,17 @@ export class OptionsWindow {
       mouseNote.textContent = t('hudChrome.keybinds.mouseHint');
       el.appendChild(mouseNote);
     }
-    const cols = document.createElement('div');
-    cols.className = 'kb-cols';
     // The Attack Move key is only meaningful (and only rebindable) while its mode
     // is on; otherwise hide its row so it can't shadow Turn Left's A in the list.
     const attackMoveOn = !!hooks?.settings.get('attackMove');
+    // The keyboard overview: every key in use, coloured by category and
+    // captioned with its action, one modifier layer at a time. Desktop only
+    // (touch has no keyboard); it hides the same Attack Move row the list does.
+    this.keyboardBoard?.dispose();
+    this.keyboardBoard = null;
+    if (!useTouchInterface()) this.paintKeyboardOverview(el);
+    const cols = document.createElement('div');
+    cols.className = 'kb-cols';
     for (const category of BIND_CATEGORIES) {
       if (category === 'Action Bar') {
         // The wall of per-slot rebind rows (one per action-bar slot, 34 on this
@@ -2556,12 +2718,16 @@ export class OptionsWindow {
       cols.appendChild(col);
     }
     el.appendChild(cols);
+    // Export / import this character's whole key map as a shareable code
+    // (another character, another device, a friend's layout).
+    this.keybindTransferRows(el);
     const reset = document.createElement('button');
     reset.className = 'btn';
     reset.textContent = t('hud.options.resetToDefaults');
     reset.addEventListener('click', () => {
       audio.click();
       this.deps.keybinds().reset();
+      this.keyboardWindow.repaint();
       // The panel also renders seven GameSettings toggles alongside the
       // rebindable keys (mouse camera, click-to-move and its mouse button,
       // attack move, left-handed touch, profanity filter); Reset to Defaults
@@ -2569,7 +2735,7 @@ export class OptionsWindow {
       const hooks = this.deps.options();
       hooks?.settings.reset(KEYBIND_PANEL_SETTING_KEYS);
       for (const k of KEYBIND_PANEL_SETTING_KEYS) hooks?.onSettingChange(k, hooks.settings.get(k));
-      this.capturingKey = null;
+      this.dropKeyCapture();
       this.keybindNote = t('hud.options.keybindReset');
       this.deps.refreshKeybindLabels();
       this.renderKeybinds();
@@ -2601,19 +2767,19 @@ export class OptionsWindow {
       // look-ahead reports exactly what bind() would evict, so the prompt can
       // name it, and cancelling leaves both bindings untouched.
       const conflict = this.deps.keybinds().findBindConflict(actionId, index, code);
-      if (conflict) {
-        const other = this.actionDisplayName(conflict.id, conflict.id);
-        this.keybindNote = t('hudChrome.actionBar.conflictTitle');
+      const prompt = keybindConflictPrompt({
+        key: keyLabel(conflict?.code ?? code),
+        other: conflict ? this.actionDisplayName(conflict.id, conflict.id) : null,
+        action: name,
+      });
+      if (prompt) {
+        this.keybindNote = t(prompt.titleKey);
         if (this.isOpen) this.renderKeybinds();
         this.deps.confirmDialog(
-          t('hudChrome.actionBar.conflictTitle'),
-          t('hudChrome.actionBar.conflictBody', {
-            key: keyLabel(conflict.code),
-            other,
-            action: name,
-          }),
-          t('hudChrome.actionBar.conflictAccept'),
-          t('hud.chat.context.cancel'),
+          t(prompt.titleKey),
+          t(prompt.bodyKey, prompt.params),
+          t(prompt.acceptKey),
+          t(prompt.cancelKey),
           () => {
             this.commitCapturedBind(actionId, index, code, name);
             if (this.isOpen) this.renderKeybinds();
@@ -2639,6 +2805,7 @@ export class OptionsWindow {
         key: keyLabel(this.deps.keybinds().codeAt(actionId, index)),
       });
       this.deps.refreshKeybindLabels();
+      this.keyboardWindow.repaint();
     } else if (isReservedCode(code)) {
       this.keybindNote = t('hud.options.keybindReserved', { key: keyLabel(code) });
     }

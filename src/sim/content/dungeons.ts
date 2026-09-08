@@ -28,6 +28,7 @@ import type {
   LootEntry,
   MobTemplate,
 } from '../types';
+import { CRUCIBLE_PROFESSION_PATTERN_LOOT } from './crucible_collections';
 import { HEROIC_FINALE_COPPER, NYTHRAXIS_HEROIC_COPPER } from './dungeon_difficulty';
 import { CRUCIBLE_VENDOR_NPC_ID } from './ignivar_loot';
 import {
@@ -159,8 +160,8 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
       normalOnlyRow('varkhul_offset', 'orb_of_the_last_spring', 0.09375),
       normalOnlyRow('varkhul_offset', 'cinder_of_the_first_design', 0.09375),
       // Neither legendary drops on Normal. Emberward's 3 percent roll lives
-      // in Varkhul's heroic-only exclusive group; Forgebreaker remains reserved
-      // for the crafting professions until its recipe chain lands.
+      // in Varkhul's heroic-only exclusive group; Forgebreaker's one-time
+      // quest shaping belongs to Weaponcrafting, never a boss loot row.
       normalOnlyRow('varkhul_offset', 'seal_of_the_forgewall', 0.125),
       normalOnlyRow('varkhul_offset', 'band_of_marked_strikes', 0.125),
       normalOnlyRow('varkhul_offset', 'circle_of_cinders', 0.125),
@@ -172,6 +173,8 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
       // shape with the scroll roll group and the hammer chain starter).
       { itemId: 'lastflame_core', chance: 1 },
       { itemId: 'lastflame_core', chance: 0.5 },
+      ...CRUCIBLE_PROFESSION_PATTERN_LOOT,
+      { itemId: 'forgefathers_ember', chance: 1, questId: 'q_forgefathers_requiem' },
     ],
     scale: 3.2,
     color: 0x9f351c,
@@ -354,6 +357,7 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
       // shape with the scroll roll group and the hammer chain starter).
       { itemId: 'lastflame_core', chance: 1 },
       { itemId: 'lastflame_core', chance: 0.5 },
+      ...CRUCIBLE_PROFESSION_PATTERN_LOOT,
     ],
     scale: 3.4,
     color: 0xd64316,
@@ -1050,6 +1054,36 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
     scale: 1.12,
     color: 0x776f83,
   },
+  // Bone Spike: the stationary pillar Nythraxis impales a raider on
+  // (src/sim/nythraxis_bone_spike.ts). It never moves, aggroes, or swings; the
+  // impaled raider drains until the raid kills it, so its health IS the
+  // mechanic's timer (about four seconds of two DPS on normal after the arena's
+  // 2.0x, 1.5x that on heroic via healthMultiplierByMob). xpMult 0: shattering a
+  // spike is the counterplay, never a kill worth experience.
+  nythraxis_bone_spike: {
+    id: 'nythraxis_bone_spike',
+    name: 'Bone Spike',
+    minLevel: 20,
+    maxLevel: 20,
+    family: 'undead',
+    elite: true,
+    ccImmune: true,
+    slowImmune: true,
+    ignoreTaunt: true,
+    quietMechanics: true,
+    xpMult: 0,
+    hpBase: 500 / 2.3,
+    hpPerLevel: 0,
+    dmgBase: 0,
+    dmgPerLevel: 0,
+    attackSpeed: 2.6,
+    armorPerLevel: 0,
+    moveSpeed: 0,
+    aggroRadius: 0,
+    loot: [],
+    scale: 1,
+    color: 0xd9d2b8,
+  },
   // Brother Aldric is now a dynamically-spawned NPC (see NPCS.brother_aldric_raid
   // in zone3.ts and spawnNythraxisAldric in sim.ts), not a mob.
   nythraxis_scourge_of_thornpeak: {
@@ -1068,8 +1102,11 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
     // this via the nythraxis_boss_arena healthMultiplier.
     hpBase: 60000 / 2.3,
     hpPerLevel: 0,
-    dmgBase: 54,
-    dmgPerLevel: 11.4,
+    // 70% of the pre-redo swing (54 / 11.4): the owner's first playtest of the
+    // mechanics redo (2026-09-04) found the white damage too high on top of
+    // the Dread Curse stacks. Gravebreaker's splash scales off the swing too.
+    dmgBase: 37.8,
+    dmgPerLevel: 7.98,
     attackSpeed: 2.6,
     armorPerLevel: 42,
     moveSpeed: 10.5,
@@ -1120,6 +1157,95 @@ export const DUNGEON_MOBS: Record<string, MobTemplate> = {
       // independent draw so the four guaranteed groups above keep their exact
       // 1.00 partitions (a 25% bonus shot, never displacing a set piece).
       { itemId: 'maul_of_the_scourged_wilds', chance: 0.25, rollGroup: 'nythraxis_drop_5' },
+      // Roots' Bramblehide (zone3.ts), the feral druid's Strength leather
+      // family: a sixth independent bonus group, the same shape as the maul's
+      // group 5, so the four guaranteed groups keep their exact 1.00
+      // partitions and no other class's set piece is displaced. Seven pieces at
+      // 0.08 each: a 56% shot at ONE family piece per kill. The pieces carry
+      // the FERAL tag, which armor equips do not enforce (canEquipItem gates
+      // armor by weight alone), but as a separate bonus draw the family never
+      // displaces a piece from the shared helm/shoulder groups above. Appended
+      // AFTER group 5 so the earlier draw order stays byte-identical.
+      { itemId: 'bramblehide_crown', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_mantle', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_harness', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_cinch', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_legguards', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_grips', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      { itemId: 'bramblehide_treads', chance: 0.08, rollGroup: 'nythraxis_drop_6' },
+      // The seven gap-fill drops (zone3.ts, owner request 2026-09-04): a fifth
+      // GUARANTEED group (sums to exactly 1.00) so each lane the top-parse review
+      // found empty at the raid tier gets the same per-kill availability as a
+      // set piece. Appended AFTER group 6 so the earlier draw order stays
+      // byte-identical.
+      { itemId: 'courtiers_bonefang', chance: 0.15, rollGroup: 'nythraxis_drop_7' },
+      { itemId: 'thornpeak_wardblade', chance: 0.15, rollGroup: 'nythraxis_drop_7' },
+      { itemId: 'gravecourt_hewer', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
+      {
+        itemId: 'votive_ward_of_the_deathless_court',
+        chance: 0.14,
+        rollGroup: 'nythraxis_drop_7',
+      },
+      { itemId: 'thornpeak_moonhide_cowl', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
+      { itemId: 'stormhymn_chain_grips', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
+      { itemId: 'stormhymn_chain_treads', chance: 0.14, rollGroup: 'nythraxis_drop_7' },
+      // MERGE NOTE (release/v0.42.0 -> feature/masterwrought): the groups below
+      // were authored on masterwrought assuming they would sit immediately
+      // after group 5 (nythraxis_drop_5); release's drop_6/drop_7 groups above
+      // now sit between them and group 5 instead. The rollGroup draw order has
+      // therefore shifted for every group below relative to masterwrought's own
+      // prior parity recording; tests/parity's nythraxis scenarios need
+      // re-minting after this merge (see the merge report).
+      // Masterwrought apex GEAR patterns (Phase 11, R8 channel doctrine): the
+      // raid pillar carries the ten weaponcrafting/jewelcrafting/engineering/
+      // inscription patterns (content/apex_patterns.ts) as ONE new partitioned
+      // rollGroup, 0.04 each (0.40 total: at most one pattern per kill, 60% of
+      // kills shed none). APPENDED AT THE TAIL by contract: loot_roll.ts
+      // consumes rng draws in array order (one draw per rollGroup at its first
+      // member's index; a normalOnly group draws nothing on a heroic claim, and
+      // no row in this table is normalOnly), so a tail append leaves every
+      // existing draw's stream
+      // position byte-identical WITHIN THE BASE WALK (a heroic claim's
+      // HEROIC_BOSS_LOOT draws roll after the base table in the same rollLoot
+      // call, so they sit one draw later; benign, and PINNED since Phase 11f,
+      // which recorded the nythraxis_heroic_claim parity scenario for exactly
+      // that stream, so this is no longer covered only by the normal-difficulty
+      // kill the sibling scenario drives) while an insert or
+      // reorder forks the parity digest. Never insert or reorder any entry
+      // above this group. kind 'recipe' defs mint no heroic variants
+      // (heroic_variants.ts generator filter), so the heroic auto-upgrade
+      // path ignores them.
+      { itemId: 'pattern_duskforged_warblade', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_ridgebreaker', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_duskforged_bulwark', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_wyrmfall_pendant', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_warhewn_signet', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_prismglass_loop', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_gyrelens_array', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_masters_field_forge', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_makers_charm', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      { itemId: 'pattern_voidbound_grimoire', chance: 0.04, rollGroup: 'nythraxis_patterns' },
+      // Farming's raid channel (Phase 11f, masterwrought R8): the farm ladder's PINNACLE
+      // rides the pinnacle encounter. ONE more partitioned rollGroup at the
+      // tail carrying pattern_harvest_feast (the party feast, now cooking 100)
+      // and every TIER-4 seed, so a raid night can hand a farmer the recipe for
+      // the feast the raid itself eats, or the seed for the crop it is made of.
+      //
+      // Appended BELOW 'nythraxis_patterns' under the same contract the block
+      // above states, and for the same reason: one more draw at the very end of
+      // the base walk, so every existing draw keeps its stream position. The
+      // heroic draws that roll after the base table in the same rollLoot call
+      // DO shift by one, which is no longer unpinned: the nythraxis_heroic_claim
+      // parity scenario records exactly that stream.
+      //
+      // RATE: 0.04 per entry, the SHIPPED per-pattern point the group above
+      // uses, reused rather than re-derived. Five entries, so 0.20 total: at
+      // most one item per kill and four kills in five shed nothing here.
+      { itemId: 'pattern_harvest_feast', chance: 0.04, rollGroup: 'nythraxis_farm' },
+      { itemId: 'gilded_sunmelon_seed', chance: 0.04, rollGroup: 'nythraxis_farm' },
+      { itemId: 'evergarden_greens_seed', chance: 0.04, rollGroup: 'nythraxis_farm' },
+      { itemId: 'gilded_yam_seed', chance: 0.04, rollGroup: 'nythraxis_farm' },
+      { itemId: 'evergarden_pumpkin_seed', chance: 0.04, rollGroup: 'nythraxis_farm' },
     ],
     scale: 3.1,
     color: 0x221b2d,
@@ -1415,18 +1541,15 @@ export const DUNGEON_DEFS: Record<string, DungeonDef> = {
     // Overflow band: indexes 0..7 are taken (temple 3, orkadia 6, wildheart 7),
     // so the keep claims 8 (instanceOrigin: DUNGEON_OVERFLOW_X_BASE + 600).
     index: 8,
-    // On the keep model's door axis (the keep sits at 421,2001.5 at scale
-    // 9.5, face at z 2012.2, facing +z), standing 1.2yd PROUD of the facade
-    // as a porch rather than flush against it. Flush put the arch's stone
-    // jambs 0.3yd off the keep's collision circle, and the two slivers of
-    // floor pinched between them were narrower than a body could turn around
-    // in. The apron cannot be fenced off instead: the restore path below
-    // drops a player inside the keep's own circle, which depenetrates them
-    // south across exactly this ground. Leaving drops the player FORWARD onto
-    // the terrace (leaveOffset +z) instead of the default z - 4, which would
-    // land inside the keep's decor collider (castle_layout)
-    doorPos: { x: 421, z: 2013.4 },
-    leaveOffset: { x: 0, z: 3.5 },
+    // The rebuilt keep's real door: the owner's placed castle_door facade
+    // on the temple court (forgefather_fortress.ts, the keep rebuild rows;
+    // the facade base sits at the court's stamped ground and faces WEST
+    // over the terrace). doorPos stands 1.2yd proud of the facade as a
+    // porch (the old keep's flush-jamb lesson), the visible body is the
+    // facade itself (door_portal.ts doorArchAuthoredElsewhere), and
+    // leaving drops the player forward onto the terrace deck (-x).
+    doorPos: { x: 479.4, z: 2168.1 },
+    leaveOffset: { x: -3.5, z: 0 },
     staticDoor: true,
     // Arrival just inside the entrance hall's south end, 4yd north of the exit
     // portal so zoning in never lands inside the exit's 2yd door trigger.
@@ -1488,24 +1611,27 @@ export const DUNGEON_DEFS: Record<string, DungeonDef> = {
     index: 5,
     doorPos: { x: -152, z: 610 },
     overworldDoor: false,
-    entry: { x: 0, z: 4 },
-    exitOffset: { x: 0, z: -6 },
+    // The hall runs z 16 to 116 (NYTHRAXIS_LAYOUT): raiders enter at the front
+    // wall and the exit portal sits just inside it.
+    entry: { x: 0, z: 20 },
+    exitOffset: { x: 0, z: 17 },
     spawns: NYTHRAXIS_RAID_SPAWN_LIST,
     objects: [
-      // Three soul wardstones in a wide forward triangle in front of the boss
-      // (spawn 0,96), well clear of his body so all three read distinctly and
-      // raiders must split to channel them. Kept within the encounter's
-      // wardstone search radius (see nythraxisWardstones in sim.ts). The item id
-      // doubles as the Sunken Bastion quest pickup, so without interactOnly the
-      // quest-collectable display gate hides them from every raider who is not on
-      // that zone 2 quest.
-      { itemId: 'bastion_ward_stone', name: 'Left Wardstone', x: -40, z: 79, interactOnly: true },
-      { itemId: 'bastion_ward_stone', name: 'Right Wardstone', x: 40, z: 79, interactOnly: true },
+      // Three soul wardstones in a forward triangle in front of the boss (spawn
+      // 0,96), 34 to 38 yd out so all three read distinctly and raiders must
+      // split to channel them, and 6 yd clear of the sigil and Soulfire
+      // placement rules. Kept within the encounter's wardstone search radius
+      // (see nythraxisWardstones in sim.ts). The item id doubles as the Sunken
+      // Bastion quest pickup, so without interactOnly the quest-collectable
+      // display gate hides them from every raider who is not on that zone 2
+      // quest.
+      { itemId: 'bastion_ward_stone', name: 'Left Wardstone', x: -30, z: 74, interactOnly: true },
+      { itemId: 'bastion_ward_stone', name: 'Right Wardstone', x: 30, z: 74, interactOnly: true },
       {
         itemId: 'bastion_ward_stone',
         name: 'Threshold Wardstone',
         x: 0,
-        z: 63,
+        z: 62,
         interactOnly: true,
       },
     ],

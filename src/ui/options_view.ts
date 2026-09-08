@@ -423,6 +423,7 @@ export type OptionsPanelId =
   | 'auras'
   | 'audio'
   | 'performance'
+  | 'transfer'
   | 'bugreport';
 
 export type OptionsMenuAction =
@@ -448,6 +449,9 @@ export function buildOptionsMenu(opts: { bugReportAvailable: boolean }): Options
     { labelKey: 'hudChrome.auraOverlay.title', action: { kind: 'goto', view: 'auras' } },
     { labelKey: 'hud.options.audio', action: { kind: 'goto', view: 'audio' } },
     { labelKey: 'hudChrome.perf.title', action: { kind: 'goto', view: 'performance' } },
+    // Full settings export/import: its own sub-panel, since the code it carries
+    // spans every family (the Interface tab's rows carry only their own).
+    { labelKey: 'hudChrome.fullTransfer.menu', action: { kind: 'goto', view: 'transfer' } },
     // The wiki row sits with the help-shaped entries (above Report a Bug /
     // Unstuck); it opens the confirm-first external hop, never a sub-panel.
     { labelKey: 'nav.wiki', action: { kind: 'wiki' } },
@@ -924,6 +928,15 @@ export function buildInterfaceControls(
       // the default slider format, so the readout says "150%".
       slider(s, 'nameplateDotScale', 'hudChrome.options.nameplateDotScale'),
       boolToggle(s, 'showTargetDots', 'hudChrome.options.showTargetDots'),
+      // The six aura tracks: bars of the auras YOU have out, each its own
+      // movable frame and each opted into individually (all default off).
+      boolToggle(s, 'showDefensivesTrack', 'hudChrome.options.showDefensivesTrack'),
+      boolToggle(s, 'showSelfBuffTrack', 'hudChrome.options.showSelfBuffTrack'),
+      boolToggle(s, 'showOffensiveTrack', 'hudChrome.options.showOffensiveTrack'),
+      boolToggle(s, 'showUtilityTrack', 'hudChrome.options.showUtilityTrack'),
+      boolToggle(s, 'showUtilityModes', 'hudChrome.options.showUtilityModes'),
+      boolToggle(s, 'showFriendlyTrack', 'hudChrome.options.showFriendlyTrack'),
+      boolToggle(s, 'showShieldTrack', 'hudChrome.options.showShieldTrack'),
       slider(s, 'fctScale', 'hud.options.fctScale'),
       // The secondary/third bar toggles deliberately have NO menu rows: the
       // plus/minus buttons on the primary action bar are the one control for

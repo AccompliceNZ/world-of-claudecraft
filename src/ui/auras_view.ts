@@ -34,6 +34,7 @@ import {
   DEBUFF_AURA_KINDS,
 } from '../sim/aura_classify';
 import { isCancelableAura } from '../sim/combat/aura_cancel';
+import { isColdsightInternalMarkerAuraId } from '../sim/combat/hunter_coldsight_read';
 import { isPersistentEngineAura } from '../sim/persistent_aura';
 import type { AuraKind } from '../sim/types';
 import type { AuraSchool } from './aura_effect';
@@ -92,16 +93,31 @@ const NEVER_SHED_IDS: ReadonlySet<string> = new Set([CARRIED_FLAG_AURA_ID]);
 // buff, not a toggle, so it must show its remaining time like any other buff.
 const TIMED_IDS: ReadonlySet<string> = new Set(['greater_invisibility']);
 
-/** Whether this aura reads as a MODE rather than a timed effect (a stance, a druid
- *  form, stealth, Ghost Wolf, the carried flag). Named because two callers need the
- *  same answer: the slot's suppressed countdown (`toggle`) and the urgency band an
- *  ordered strip sorts by (`auraUrgencyBucket`). Keeping it one function is what stops
- *  the strip from banding an aura as a mode while still printing a countdown under it. */
-function isToggleAura(a: AuraInput): boolean {
+/**
+ * Whether an aura reads as a MODE rather than a timed effect (a stance, a druid
+ * form, stealth, Ghost Wolf, the carried flag), by the only two facts the rule
+ * needs.
+ *
+ * Split out of `isToggleAura` below when the aura TRACKS
+ * (src/ui/hud/aura_tracks/) became a third caller. They hold the id and kind but
+ * NOT a whole `AuraInput`, and building one per aura per frame would allocate on
+ * the per-frame path; a second copy of the rule would drift from this one, which
+ * is the outcome the shared classifier exists to prevent. So the rule lives here
+ * and the object form delegates.
+ */
+export function isToggleAuraKind(id: string, kind: AuraKind): boolean {
   return (
-    (TOGGLE_KINDS.has(a.kind) || TOGGLE_IDS.has(a.id) || isPersistentEngineAura(a.id)) &&
-    !TIMED_IDS.has(a.id)
+    (TOGGLE_KINDS.has(kind) || TOGGLE_IDS.has(id) || isPersistentEngineAura(id)) &&
+    !TIMED_IDS.has(id)
   );
+}
+
+/** The `AuraInput` form, for the two callers inside this module that hold one:
+ *  the slot's suppressed countdown (`toggle`) and the urgency band an ordered
+ *  strip sorts by (`auraUrgencyBucket`). Keeping it one rule is what stops the
+ *  strip from banding an aura as a mode while still printing a countdown. */
+function isToggleAura(a: AuraInput): boolean {
+  return isToggleAuraKind(a.id, a.kind);
 }
 
 /** Whether cancelling this aura performs a GAMEPLAY action rather than merely
@@ -443,6 +459,13 @@ export function createAurasView(
         // via echoVisibleTo, so re-filtering here would wrongly hide the viewer's OWN
         // marks too.
         if (ownFirst && a.kind === 'temporal_echo' && !deps.isOwn(a)) return;
+        // Coldsight Read's internal bookkeeping markers (the Fevered Draw progress
+        // counter, the two per-ability reserved-cast markers): kind 'internal_cd'
+        // with an 86400s reservation-timeout duration purely so nothing but their
+        // own consumer clears them, never a real day-long buff. Exact-id, so every
+        // OTHER internal_cd marker (Heating Up, Stormsurge Ready, ...) and the
+        // real armed Coldsight Read opportunity (10s) still render normally.
+        if (a.kind === 'internal_cd' && isColdsightInternalMarkerAuraId(a.id)) return;
         const debuff = isAuraDebuff(a);
         if (mode === 'debuffs' && !debuff) return;
         if (mode === 'buffs' && debuff) return;

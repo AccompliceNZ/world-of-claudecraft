@@ -291,6 +291,17 @@
          whenever the list is empty. -->
     <div id="target-dots"></div>
 
+    <!-- Aura tracks: the player's own beneficial auras, one movable frame per
+         question (see src/ui/hud/aura_tracks/). Each painter builds its rows and
+         sets role/aria-label; each stays display:none while its track is empty
+         or its setting is off. -->
+    <div id="aura-track-defensives"></div>
+    <div id="aura-track-self"></div>
+    <div id="aura-track-power"></div>
+    <div id="aura-track-utility"></div>
+    <div id="aura-track-friendly"></div>
+    <div id="aura-track-shields"></div>
+
     <div id="ctx-menu" class="panel"></div>
     <div id="prompt-stack"></div>
     <div id="trade-window" class="window panel"></div>
@@ -352,14 +363,17 @@
     </nav>
 
     <div id="right-tracker-stack">
-      <div id="quest-tracker"></div>
+      <div id="quest-tracker"><div id="qt-body"></div></div>
       <div id="deed-tracker"></div>
       <div id="reliquary-tracker"></div>
-      <div id="delve-tracker"></div>
-      <div id="rift-tracker"></div>
+      <div id="delve-tracker"><div id="delve-body"></div></div>
+      <div id="rift-tracker"><div id="rift-body"></div></div>
+      <div id="gathering-goal-tracker" class="gathering-goal-panel">
+        <div id="gathering-goal-body"></div>
+      </div>
     </div>
 
-    <div class="paladin-devotion-frame" id="paladin-devotion-frame" role="group" tabindex="0" data-i18n-aria="hudChrome.paladin.devotion" aria-label="Devotion">
+    <div class="paladin-devotion-frame" id="paladin-devotion-frame" role="group" data-i18n-aria="hudChrome.paladin.devotion" aria-label="Devotion">
       <div class="paladin-devotion" id="paladin-devotion" role="progressbar" data-i18n-aria="hudChrome.paladin.devotion" aria-label="Devotion" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0">
         <div class="paladin-devotion-fill" id="paladin-devotion-fill"></div>
         <div class="paladin-devotion-label" id="paladin-devotion-label"></div>
@@ -561,6 +575,9 @@
     <div id="deeds-window" class="window panel"></div>
     <div id="reliquary-window" class="window panel"></div>
     <div id="professions-window" class="window panel"></div>
+    <div id="harvest-journal-window" class="window panel"></div>
+    <div id="plant-sheet-window" class="window panel"></div>
+    <div id="harvest-preference-window" class="window panel"></div>
     <div id="calendar-window" class="window panel"></div>
     <div id="arena-status"></div>
     <div id="options-menu" class="window panel"></div>
@@ -577,9 +594,11 @@
         <button type="button" class="micro-btn" id="mm-deeds" data-i18n-title="hudChrome.deeds.title" data-i18n-aria="hudChrome.deeds.title" title="Book of Deeds" aria-label="Book of Deeds" data-icon="book"><span class="keybind">s-z</span></button>
         <button type="button" class="micro-btn" id="mm-reliquary" data-i18n-title="hudChrome.reliquary.title" data-i18n-aria="hudChrome.reliquary.title" title="The Reliquary" aria-label="The Reliquary" data-icon="crown"><span class="keybind">s-x</span></button>
         <button type="button" class="micro-btn" id="mm-professions" data-i18n-title="hudChrome.professions.title" data-i18n-aria="hudChrome.professions.title" title="Professions" aria-label="Professions" data-icon="professions"><span class="keybind">s-p</span></button>
+        <button type="button" class="micro-btn" id="mm-harvest-journal" data-i18n-title="hudChrome.harvestJournal.title" data-i18n-aria="hudChrome.harvestJournal.title" title="Harvest Journal" aria-label="Harvest Journal" data-icon="harvest-journal"><span class="keybind">s-k</span></button>
         <button type="button" class="micro-btn" id="mm-map" data-i18n-title="hud.keybinds.actions.map" data-i18n-aria="hud.keybinds.actions.map" title="World Map" aria-label="World Map" data-icon="map"><span class="keybind">m</span></button>
         <button type="button" class="micro-btn" id="mm-bag" data-i18n-title="itemUi.bags.title" data-i18n-aria="itemUi.bags.title" title="Bags" aria-label="Bags" data-icon="bags"><span class="keybind">b</span></button>
         <button type="button" class="micro-btn" id="mm-crafting" data-i18n-title="hudChrome.crafting.title" data-i18n-aria="hudChrome.crafting.title" title="Crafting" aria-label="Crafting" data-icon="crafting"><span class="keybind">t</span></button>
+        <button type="button" class="micro-btn" id="mm-perfecting" data-i18n-title="hudChrome.perfecting.title" data-i18n-aria="hudChrome.perfecting.title" title="Perfecting" aria-label="Perfecting" data-icon="perfecting"><span class="keybind">s-t</span></button>
       </div>
       <div id="side-buttons-col-b" class="side-buttons-col">
         <button id="daily-rewards-button" type="button" data-i18n-title="hudChrome.wocStore.title" data-i18n-aria="hudChrome.wocStore.title" title="WOC Store" aria-label="WOC Store"></button>
@@ -614,6 +633,12 @@
       <button type="button" class="btn" id="resurrect-corpse-btn" data-i18n="hudChrome.death.resurrectAtCorpse">Resurrect at Corpse</button>
       <button type="button" class="btn" id="resurrect-healer-btn" data-i18n="hudChrome.death.resurrectAtHealer">The Pale Keeper (Keeper's Toll)</button>
     </div>
+    <!-- Interact affordance: a small non-blocking line, hidden until an interact press
+         is ambiguous between two farming targets in reach (a placed feast over a garden
+         bed). role=status so a screen reader hears the ambiguity the sighted line shows;
+         it carries no authored text because every sentence is localized at paint time by
+         src/ui/hud/professions/farm_press_affordance_controller.ts. -->
+    <div id="interact-affordance" role="status" aria-live="polite"></div>
   </div>
 
   <textarea id="chat-input" rows="1" maxlength="255" data-i18n-placeholder="hud.core.chatPlaceholder" placeholder="Say something... (/w name, /r, /p, /gu, /o, /general, /join world|lfg, /afk, /dnd)" autocomplete="off" autocapitalize="sentences" autocorrect="off" spellcheck="false" data-1p-ignore data-lpignore="true" data-bwignore data-form-type="other"></textarea>
@@ -847,18 +872,6 @@
                tours / E2E scripts use to drive the online & offline flows directly. -->
           <button type="button" id="btn-online" class="play-compat-trigger" tabindex="-1" aria-hidden="true"></button>
           <button type="button" id="btn-offline" class="play-compat-trigger" tabindex="-1" aria-hidden="true"></button>
-
-          <div id="token-ca">
-            <span class="token-ca-label" data-i18n="mode.caLabel">$WOC Contract Address</span>
-            <button type="button" id="btn-copy-ca" class="token-ca-pill" data-ca="3WjLscH2JsXLEFJZRA9z8ti8yRGxWGKbqymPd7UicRth" data-i18n-aria="mode.caCopyAria" aria-label="Copy contract address">
-              <code class="token-ca-addr">3WjLscH2JsXLEFJZRA9z8ti8yRGxWGKbqymPd7UicRth</code>
-              <span class="token-ca-copy" aria-hidden="true">
-                <svg class="icon-clipboard" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                <svg class="icon-check" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-              </span>
-            </button>
-            <p class="token-ca-note" data-i18n="mode.caNote">WOC is our community token. It is not needed to play. Join Discord to discuss the WOC utility and flywheel.</p>
-          </div>
 
           <!-- Tip — part of the same play container (divider above). -->
           <div class="play-tip">

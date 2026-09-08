@@ -27,7 +27,6 @@ import type {
 
 export type { FishingEntry } from './content/items';
 
-import { CASTLE_BLOCKERS } from './castle_layout';
 import {
   AMBERFALL_CAMPS,
   AMBERFALL_ITEMS,
@@ -309,8 +308,10 @@ export {
   resolveDelveShopOffers,
 } from './content/delves';
 
+import { APEX_PATTERN_ITEMS } from './content/apex_patterns';
 import { CRUCIBLE_PROFESSION_ITEMS } from './content/crucible_professions';
 import { DELVE_ITEMS } from './content/delves/items';
+import { FARM_PATTERN_ITEMS } from './content/farm_patterns';
 import { HEROIC_ITEMS, RETIRED_HEROIC_ITEMS } from './content/heroic_loot';
 import { buildHeroicVariants } from './content/heroic_variants';
 import { HEROIC_VENDOR_ITEMS } from './content/heroic_vendor';
@@ -356,6 +357,8 @@ export { STATIONS };
 export const ITEMS: Record<string, ItemDef> = mergeItems(
   BASE_ITEMS,
   PROFESSION_ITEMS,
+  APEX_PATTERN_ITEMS,
+  FARM_PATTERN_ITEMS,
   ZONE2_ITEMS,
   ZONE3_ITEMS,
   TEMPLE_ITEMS,
@@ -778,8 +781,7 @@ export const BUILTIN_WORLD: WorldContent = {
     graveyards: OVERWORLD_GRAVEYARDS,
   },
   // invisible collision walls: the moderation cage plus the Last Keep's
-  // sealed building slot (castle_layout.ts CASTLE_BLOCKERS)
-  blockers: [...JAIL_BLOCKERS, ...CASTLE_BLOCKERS],
+  blockers: [...JAIL_BLOCKERS],
   terrainEdits: [
     ...JAIL_TERRAIN_EDITS,
     ...COPPER_DIG_TERRAIN_EDITS,
