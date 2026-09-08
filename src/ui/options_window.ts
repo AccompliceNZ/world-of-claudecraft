@@ -134,6 +134,7 @@ import {
   toggleNextValue,
   withGraphicsDraft,
 } from './options_view';
+import { mountViewShell } from './options_window_shell';
 import { PerfOverlaySettingsPanel, type PerfSettingsHost } from './perf_overlay_settings';
 import { type RestartRequestPhase, restartStripState } from './restart_strip_core';
 import { buildRestartStrip, paintRestartStrip } from './restart_strip_painter';
@@ -1011,21 +1012,9 @@ export class OptionsWindow {
     parent.appendChild(row);
   }
 
-  // The window shell (library.css): the head, then the ONE scrolling body a
-  // sub-view fills. Anything appended to the root AFTER this body is a SIBLING
-  // of the scroller, so an action or confirm row stays pinned in view however
-  // long the body runs (maintainer finding: Graphics Apply scrolled out of reach).
+  // The window shell (options_window_shell.ts): head, then the ONE scrolling body.
   private viewShell(title: string, bodyClass?: string): HTMLElement {
-    const el = this.deps.root();
-    el.innerHTML = this.panelTitle(title);
-    const body = document.createElement('div');
-    body.className = bodyClass ? `${bodyClass} ui-win-body` : 'ui-win-body';
-    el.appendChild(body);
-    return body;
-  }
-
-  private settingsViewShell(title: string): HTMLElement {
-    return this.viewShell(title, 'set-rows');
+    return mountViewShell(this.deps.root(), this.panelTitle(title), bodyClass);
   }
 
   // Restore exactly these keys, re-apply them to their subsystem, then redraw.
@@ -1421,7 +1410,7 @@ export class OptionsWindow {
 
   private renderAudio(): void {
     const hooks = this.deps.options();
-    const body = this.settingsViewShell(t('hud.options.audio'));
+    const body = this.viewShell(t('hud.options.audio'), 'set-rows');
     body.classList.add('audio-options');
     const controls = hooks ? buildAudioControls(this.settingsSource(hooks)) : [];
     // Through render(), not renderAudio(): the dispatcher re-wires the
@@ -1599,7 +1588,7 @@ export class OptionsWindow {
   // (language + theme, the chat/frame reset rows, the deed-broadcast row) are
   // placed into their tab by the same approved taxonomy.
   private renderInterface(): void {
-    const body = this.settingsViewShell(t('hud.options.interface'));
+    const body = this.viewShell(t('hud.options.interface'), 'set-rows');
     const el = this.deps.root();
     const hooks = this.deps.options();
     const tab = this.interfaceTab;
@@ -2046,7 +2035,7 @@ export class OptionsWindow {
     const hooks = this.deps.auraOverlays?.();
     if (!hooks) return;
     this.deps.root().classList.add('aura-wide');
-    const body = this.settingsViewShell(t('hudChrome.auraOverlay.title'));
+    const body = this.viewShell(t('hudChrome.auraOverlay.title'), 'set-rows');
     this.auraSettings ??= new AuraOverlaySettingsPanel({
       auras: hooks,
       click: () => audio.click(),
@@ -2083,7 +2072,7 @@ export class OptionsWindow {
       this.render();
       return;
     }
-    const body = this.settingsViewShell(t('hudChrome.bugReport.menuButton'));
+    const body = this.viewShell(t('hudChrome.bugReport.menuButton'), 'set-rows');
     body.classList.add('bug-report-options');
     const info = buildBugReportInfo(this.deps.world().realm, this.deps.world().player);
     const realm = info.realmKnown ? info.realm : t('hudChrome.bugReport.unknown');
@@ -2386,7 +2375,7 @@ export class OptionsWindow {
 
   private renderController(): void {
     const hooks = this.deps.options();
-    const body = this.settingsViewShell(t('hudChrome.controller.title'));
+    const body = this.viewShell(t('hudChrome.controller.title'), 'set-rows');
     body.classList.add('controller-options');
     const controls = hooks ? buildControllerControls(this.settingsSource(hooks)) : [];
     const tuning = document.createElement('div');
