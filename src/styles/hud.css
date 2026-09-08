@@ -955,7 +955,12 @@
        .bar and .bar-text read the var, so a height drag thickens the bars at
        crisp text instead of distorting them through a transform. */
     --uf-bar-height: var(--player-frame-height, var(--bar-h-hp));
-    margin: 0 auto 8px;
+    /* The stock seat holds the frame just LEFT of centre, so the target frame's
+       stock seat mirrors it on the right and the pair reads as one cluster over
+       the action bar. The percentage resolves against the stack, whose centre is
+       the screen centre, so auto on the left puts this frame's right edge exactly
+       half the pair gap short of it. */
+    margin: 0 calc(50% + var(--unit-frame-pair-gap) / 2) 8px auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1368,9 +1373,14 @@
   #pet-frame.dead {
     opacity: 0.7;
   }
+  /* The stock seat: mirrored against the docked player frame, half the pair gap
+     right of the screen centre and level with it, so an uncustomized interface
+     shows both unit frames side by side directly above the action bar. Only the
+     default; a persisted position writes inline left/top that outranks this, and
+     resetting the layout clears those and lands back here. */
   #target-frame {
-    left: 12px;
-    top: 12px;
+    left: calc(50% + var(--unit-frame-pair-gap) / 2);
+    top: calc(100% - var(--unit-frame-seat-offset));
     display: none;
     z-index: 6;
     width: var(--target-frame-width, var(--unit-frame-w));
@@ -1385,14 +1395,29 @@
   #target-frame > :not(.tf-move-btn) {
     zoom: var(--target-frame-scale, 1);
   }
-  /* The target's debuff strip hangs BELOW the frame (WoW-style) instead of
-     living inside the uf-bars panel, where every fresh debuff used to stretch
-     the frame taller. A direct #target-frame child (index.html), absolutely
-     anchored under the frame, wrapping left-to-right from its left edge, and
-     sharing the children-zoom scale above. */
+  /* Every extra action row lifts the docked player frame by one socket row, so
+     the mirrored target seat lifts by the same step and the pair stays level. */
+  body.show-actionbar2 #target-frame,
+  body.show-actionbar3 #target-frame {
+    top: calc(100% - var(--unit-frame-seat-offset) - var(--socket-size) - var(--socket-row-gap));
+  }
+  body.show-actionbar2.show-actionbar3 #target-frame {
+    top: calc(
+      100% -
+      var(--unit-frame-seat-offset) -
+      2 *
+      (var(--socket-size) + var(--socket-row-gap))
+    );
+  }
+  /* The target's debuff strip hangs off the frame instead of living inside the
+     uf-bars panel, where every fresh debuff used to stretch the frame taller. A
+     direct #target-frame child (index.html), absolutely anchored to the frame,
+     wrapping left-to-right from its left edge, and sharing the children-zoom
+     scale above. It sits ABOVE the frame: the stock seat is directly over the
+     action bar, so a strip hanging below would paint across the hotbar. */
   #target-frame > #tf-debuffs {
     position: absolute;
-    top: calc(100% + 8px);
+    bottom: calc(100% + 8px);
     left: 4px;
     display: flex;
     flex-wrap: wrap;

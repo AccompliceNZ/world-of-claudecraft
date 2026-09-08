@@ -47,8 +47,11 @@ describe('target-of-target frame sits BESIDE the target frame', () => {
 
   it('old below-frame anchor (the aura-strip band) must not return', () => {
     expect(hudCss).not.toContain('right: -6px; top: calc(100% + 6px);');
-    // The strip still owns the below-frame band on its own.
-    expect(rule(hudCss, '#target-frame > #tf-debuffs')).toContain('top: calc(100% + 8px);');
+    // Pin moved with the stock target seat: the frame now sits directly above the
+    // action bar, so the strip owns the band ABOVE the frame rather than the one
+    // below it, which would paint across the hotbar.
+    expect(rule(hudCss, '#target-frame > #tf-debuffs')).toContain('bottom: calc(100% + 8px);');
+    expect(rule(hudCss, '#target-frame > #tf-debuffs')).not.toContain('top:');
   });
 
   it('reads portrait-left like every other unit frame (mirror overrides dropped)', () => {
