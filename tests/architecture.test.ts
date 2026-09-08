@@ -154,9 +154,12 @@ describe('live graphics profile architecture', () => {
       readFileSync(join(repoRoot, 'src', 'render', relativePath), 'utf8');
     const props = renderSource('props.ts');
     const foliage = renderSource('foliage.ts');
+    // The merge band depth moved out of props.ts with the static merge itself
+    // (src/render/static_merge.ts); the live-GFX rule follows the code.
+    const staticMerge = renderSource('static_merge.ts');
 
-    expect(props).not.toMatch(/\bconst\s+MERGE_BAND_DEPTH\s*=\s*GFX\b/);
-    expect(props).toContain('const mergeBandDepth = ():');
+    expect(staticMerge).not.toMatch(/\bconst\s+MERGE_BAND_DEPTH\s*=\s*GFX\b/);
+    expect(staticMerge).toContain('export const mergeBandDepth = ():');
     expect(props).toContain('deferredPropKeys ??= preloadPropKeys(GFX.standardMaterials)');
     expect(foliage).not.toMatch(/\bconst\s+MODEL_URLS\s*=\s*GFX\b/);
     expect(foliage).toContain('const foliageModelUrls = ():');
@@ -212,6 +215,8 @@ const UI_PURE_CORES = [
   'src/ui/map_marker_profile_core.ts',
   'src/ui/map_marker_semantics_core.ts',
   'src/ui/map_semantic_accessibility_core.ts',
+  'src/ui/map_surface_core.ts',
+  'src/ui/mouseover_cast_core.ts',
   'src/ui/paladin_devotion_view.ts',
   'src/ui/aura_icon_view.ts',
   'src/ui/aura_strip_order_core.ts',
@@ -341,6 +346,7 @@ const UI_PURE_CORES = [
   'src/ui/item_set_tooltip_view.ts',
   'src/ui/weapon_proc_view.ts',
   'src/ui/options_view.ts',
+  'src/ui/hud/loot_explorer/loot_explorer_view.ts',
   'src/ui/hud/vendor/vendor_view.ts',
   'src/ui/hud/vendor/heroic_vendor_view.ts',
   'src/ui/hud/vendor/crucible_vendor_view.ts',
@@ -566,7 +572,7 @@ const UI_PURE_CORES = [
   'src/ui/heal_landing_feedback_core.ts',
   'src/ui/block_landing_feedback_core.ts',
   'src/ui/window_drag_core.ts',
-  'src/ui/window_position_core.ts',
+  'src/ui/window_reflow_core.ts',
   'src/ui/window_resize_core.ts',
   'src/ui/window_stack_state_core.ts',
   'src/ui/target_frame_pos.ts',
@@ -629,6 +635,7 @@ const DOM_GLOBAL_VALUE_ALLOWLIST = new Set([join(repoRoot, 'src/ui/safe_local_st
 // identity tint terms in UnrealBloom's composite shader.
 const RENDER_PURE_CORES = [
   'src/render/arena_wall_occlusion_core.ts',
+  'src/render/outdoor_light_rig_core.ts',
   'src/render/wall_backface_cull_core.ts',
   'src/render/dungeon_banner_core.ts',
   'src/render/dungeon_tile_kind_core.ts',
@@ -652,6 +659,7 @@ const RENDER_PURE_CORES = [
   'src/render/build_ledger_core.ts',
   'src/render/hitch_frame_align_core.ts',
   'src/render/initial_frame_core.ts',
+  'src/render/character_cull_core.ts',
   'src/render/characters/anim_state_entity_core.ts',
   'src/render/characters/death_grounding_core.ts',
   'src/render/entry_detail_horizon_core.ts',
@@ -695,6 +703,8 @@ const RENDER_PURE_CORES = [
   'src/render/battleground_lantern_fx_core.ts',
   'src/render/battleground_rune_vfx_core.ts',
   'src/render/blade_grass_dense_core.ts',
+  'src/render/blade_grass_pool_core.ts',
+  'src/render/blade_grass_upload_bands_core.ts',
   'src/render/blob_shadow_core.ts',
   'src/render/camera_boom_core.ts',
   'src/render/compile_gate.ts',
@@ -712,6 +722,8 @@ const RENDER_PURE_CORES = [
   'src/render/detail_horizon_core.ts',
   'src/render/drape_lod_core.ts',
   'src/render/legendary_regalia_core.ts',
+  'src/render/draped_bounds_core.ts',
+  'src/render/vfx_screen_bounds_core.ts',
   'src/render/weapon_vfx_emissive_cache_core.ts',
   'src/render/weapon_vfx_shed_core.ts',
   'src/render/draw_stats_core.ts',
@@ -740,11 +752,14 @@ const RENDER_PURE_CORES = [
   'src/render/frame_present.ts',
   'src/render/self_motion_rift_lift.ts',
   'src/render/shadow_cadence_core.ts',
+  'src/render/shadow_extent_core.ts',
   'src/render/shadow_texel_snap_core.ts',
+  'src/render/terrain_detail_shed_core.ts',
   'src/render/frost_ice_fields_core.ts',
   'src/render/frost_sky_fade_core.ts',
   'src/render/gfx_aa_policy_core.ts',
   'src/render/gfx_override_core.ts',
+  'src/render/goblin_rocket_sled_fx_core.ts',
   'src/render/ground_aim_reticle_core.ts',
   'src/render/ignivar_encounter_core.ts',
   'src/render/varkhul_encounter_core.ts',
@@ -757,6 +772,7 @@ const RENDER_PURE_CORES = [
   'src/render/ground_tilt_core.ts',
   'src/render/grass_build_slicer_core.ts',
   'src/render/grass_cap_collapse_core.ts',
+  'src/render/grass_tuft_cards_core.ts',
   'src/render/step_smooth_core.ts',
   'src/render/eastbrook_town_visibility_core.ts',
   'src/render/fenbridge_town_visibility_core.ts',
@@ -766,8 +782,14 @@ const RENDER_PURE_CORES = [
   'src/render/post_bloom_shader_core.ts',
   'src/render/dynamic_resolution_core.ts',
   'src/render/post_plan_core.ts',
+  'src/render/post_pixel_budget_core.ts',
+  'src/render/resize_coalesce_core.ts',
+  'src/render/post_shed_core.ts',
   'src/render/nameplate_view.ts',
   'src/render/nameplate_pick_core.ts',
+  'src/render/nameplate_paint_gate_core.ts',
+  'src/render/spirit_grade_core.ts',
+  'src/render/nameplate_cadence_core.ts',
   'src/render/nameplate_heraldry_core.ts',
   'src/render/nameplate_dots_core.ts',
   'src/render/net_interp_core.ts',
@@ -785,6 +807,7 @@ const RENDER_PURE_CORES = [
   // Same reason, one seam over: the per-interior encounter prewarm's decision
   // layer (which interior warms what, the kill switch, the live-queue verdict).
   'src/render/interior_encounter_prewarm.ts',
+  'src/render/canopy_detail_tier_core.ts',
   'src/render/camp_brazier_placement_core.ts',
   'src/render/night_accents_core.ts',
   'src/render/night_light_field_core.ts',
@@ -802,9 +825,13 @@ const RENDER_PURE_CORES = [
   'src/render/self_render_position_core.ts',
   'src/render/shadow_pass_gate_core.ts',
   'src/render/shore_water_gate_core.ts',
+  'src/render/static_merge_shadow_core.ts',
   'src/render/terrain_region_core.ts',
   'src/render/texture_prep_core.ts',
   'src/render/terrain_splat_presence_core.ts',
+  'src/render/vehicle_exhaust_core.ts',
+  'src/render/vehicle_steering_core.ts',
+  'src/render/vehicle_suspension_core.ts',
   'src/render/vfx_pool_core.ts',
   'src/render/view_candidate_pool_core.ts',
   'src/render/water_core.ts',
@@ -820,6 +847,7 @@ const RENDER_PURE_CORES = [
   'src/render/far_surface_core.ts',
   'src/render/far_terrain_core.ts',
   'src/render/foliage_impostor_core.ts',
+  'src/render/foliage_frame_windows_core.ts',
   'src/render/lava_chain_core.ts',
   'src/render/foliage_lod.ts',
   'src/render/prewarm_pass.ts',
@@ -834,12 +862,16 @@ const RENDER_PURE_CORES = [
   'src/render/warlock_meteor_fx_core.ts',
   'src/render/weapon_vfx_apply_queue_core.ts',
   'src/render/weapon_vfx_emissive_core.ts',
+  'src/render/zone_dressing_lod_core.ts',
   'src/render/zone_feature_visibility_core.ts',
   'src/render/zone_eviction_core.ts',
   'src/render/zone_prewarm_templates_core.ts',
   'src/render/cast_vfx_readiness_core.ts',
   'src/render/characters/skeleton_update_core.ts',
   'src/render/characters/material_program_shape_core.ts',
+  'src/render/characters/far_bake_groups_core.ts',
+  'src/render/characters/modular_name_facts_core.ts',
+  'src/render/characters/morph_union_core.ts',
   'src/render/characters/tinted_material_cache_core.ts',
   'src/render/characters/weapon_attack_style_core.ts',
 ].map((rel) => join(repoRoot, rel));
@@ -2351,6 +2383,7 @@ const UI_PAINTER_HELPERS = [
 // the English catalog, it is a maintainer fix during the release locale fill:
 // contributors do not edit those files.
 const UI_DOM_MODULES = [
+  'src/ui/mobile_frame_long_press.ts',
   'src/ui/account_portal_dom.ts',
   'src/ui/appearance_customizer.ts',
   'src/ui/arena_window.ts',
@@ -2363,6 +2396,7 @@ const UI_DOM_MODULES = [
   'src/ui/bank_window.ts',
   'src/ui/breath_bar.ts',
   'src/ui/calendar_window.ts',
+  'src/ui/hud/action_bar/action_bar_bind_banner.ts',
   'src/ui/hud/action_bar/bar_editor/bar_editor_window.ts',
   'src/ui/hud/action_bar/consumable_seat_controller.ts',
   'src/ui/hud/action_bar/mobile_action_ring_controller.ts',
@@ -2415,7 +2449,6 @@ const UI_DOM_MODULES = [
   'src/ui/input_controller.ts',
   'src/ui/hud.ts',
   'src/ui/hud/action_bar/action_bar_toggle_controller.ts',
-  'src/ui/hud/action_bar/action_bar_bind_banner.ts',
   'src/ui/hud/chat/chat_geometry_controller.ts',
   'src/ui/hud/chat/chat_window_controller.ts',
   'src/ui/hud/cosmetics/skin_event_controller.ts',
@@ -2558,6 +2591,7 @@ const UI_DOM_MODULES = [
   'src/ui/wiki_link.ts',
   'src/ui/window_drag.ts',
   'src/ui/window_open_state.ts',
+  'src/ui/window_reflow.ts',
   'src/ui/window_resize.ts',
   'src/ui/woc_market_link.ts',
 ].map((rel) => join(repoRoot, rel));

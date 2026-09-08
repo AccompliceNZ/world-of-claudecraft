@@ -982,6 +982,7 @@ export const ru_RU: EnTranslations = {
       "mounts": "Транспорт",
       "professions": "Профессии",
       "reliquary": "Реликварий",
+      "lootExplorer": "Обозреватель добычи",
       "nameplates": "Имена",
       "haptics": "Вибрация",
       "hapticsOff": "Вибрация выкл.",
@@ -1140,6 +1141,9 @@ export const ru_RU: EnTranslations = {
       "promptAttack": "Атака",
       "promptUseAbility": "Применить способность",
       "promptKneel": "Преклонить колени",
+      "promptAccessInterface": "Открой интерфейс",
+      "promptMoveToTarget": "Перейди к: {target}",
+      "promptSelectItem": "Выбери: {item}",
       "promptOpenBags": "Открой сумки",
       "promptCharacterSheet": "Открой лист персонажа",
       "promptLookAround": "Зажми правую кнопку мыши и веди, чтобы осмотреться",
@@ -1320,7 +1324,7 @@ export const ru_RU: EnTranslations = {
     },
     "targetDots": {
       "title": "Эффекты на целях",
-      "row": "{aura} on {target}",
+      "row": "{aura} на {target}",
       "overflow": "ещё {count}, не показаны"
     },
     "targetAuras": {
@@ -1404,6 +1408,8 @@ export const ru_RU: EnTranslations = {
       "name_shadowjump_toad": "Кама-Кагэ, жаба теневых прыжков",
       "name_stormfeather_griffin": "Штормокрыл Поднебесный",
       "name_thunderstrut_gobbler": "Громоступ, великий индюк",
+      "name_goblin_rocket_sled": "Гоблинские ракетные сани",
+      "name_rallycart_rxt": "Ралликарт RXT",
       "name_terrorspark_groundshaker": "Ужасоискр, сотрясатель земли",
       "name_drakemaw_raptor": "Раптор Дрейкмо",
       "name_mech_bird": "Заводная механоптица",
@@ -1417,6 +1423,8 @@ export const ru_RU: EnTranslations = {
       "desc_shadowjump_toad": "Огромная устойчивая жаба, обученная молниеносным теневым прыжкам по любой местности.",
       "desc_stormfeather_griffin": "Величавый штормовой грифон, ступающий по земле на рунных когтях со сложенными крыльями.",
       "desc_thunderstrut_gobbler": "Исполинский индюк, рожденный бурей: он важно спускается с Пробуждающегося пика, распустив хвост, словно грозовой фронт.",
+      "desc_goblin_rocket_sled": "Опасно переусложнённые гоблинские сани на двух ракетах и полном отсутствии здравого смысла.",
+      "desc_rallycart_rxt": "Компактная, но самая настоящая раллийная машина, повышающая скорость передвижения.",
       "desc_terrorspark_groundshaker": "Компактная бронированная машина с тяжёлыми гусеницами, крупнокалиберной пушкой и седлом для бесстрашных пилотов.",
       "desc_drakemaw_raptor": "Приученный к седлу выводковый раптор из кальдеры Дрейкмо: сплошные жилы и бег, и от него всё ещё едва пахнет пеплом.",
       "desc_mech_bird": "Заводная боевая курица ручной сборки: несётся на щёлкающих сервоприводах, а заводной ключ всё ещё крутится.",
@@ -1611,7 +1619,10 @@ export const ru_RU: EnTranslations = {
       "uiScale": "Масштаб интерфейса",
       "playerFrameScale": "Размер рамки игрока",
       "targetFrameScale": "Размер рамки цели",
+      "playerHealthText": "Текст здоровья игрока",
+      "targetHealthText": "Текст здоровья цели",
       "aurasOnPlayerFrame": "Баффы у рамки игрока",
+      "auraBarBelowFrame": "Баффы под рамкой игрока",
       "alwaysShowAllBuffs": "Всегда показывать все баффы",
       "highContrastBackground": "Фон высокой контрастности",
       "startAttackOnAbility": "Автоатака при использовании способности",
@@ -2659,7 +2670,9 @@ export const ru_RU: EnTranslations = {
       "unequipHint": "Нажмите, чтобы снять эту сумку",
       "poolGeneral": "Общие: {used} из {total}",
       "poolMaterials": "Материалы: {used} из {total}",
-      "capacityPoolsAria": "Занято ячеек сумок: {used} из {total}. Общие предметы: {generalUsed} из {generalTotal}. Материалы: {materialsUsed} из {materialsTotal}."
+      "capacityPoolsAria": "Занято ячеек сумок: {used} из {total}. Общие предметы: {generalUsed} из {generalTotal}. Материалы: {materialsUsed} из {materialsTotal}.",
+      "capacityPools": "Предметы {generalUsed}/{generalTotal}, материалы {materialsUsed}/{materialsTotal}",
+      "emptyMaterialsOnly": "Только материалы"
     },
     "raidConvert": {
       "toPartyDone": "Ваш рейд снова преобразован в группу.",
@@ -2885,7 +2898,7 @@ export const ru_RU: EnTranslations = {
         "raiseFallenName": "Поднятие павших",
         "raiseFallenSummary": "Каждые {every} сек. во время фазы Трон Нитраксис поднимает у себя за спиной Восставших королевских стражей. Они бросаются на его текущую цель и сражаются, пока не будут уничтожены.",
         "raiseFallenResponse": "Оф-танк принимает на себя каждую поднявшуюся волну. Бойцы зачищают стражей между Костяными шипами, чтобы волны не накапливались до падения Трона.",
-        "soulRendName": "Soul Rend",
+        "soulRendName": "Разрыв души",
         "soulRendSummary": "Нитраксис отмечает Разрывом души {marksNormal} рейдеров, кроме текущей цели. Через {fuse} сек. каждая метка наносит полное максимальное здоровье её носителя как урон тьмой, поделённое между отмеченными рейдерами в радиусе {range} м от него.",
         "soulRendHeroicSummary": "Нитраксис отмечает Разрывом души {marksHeroic} рейдеров, кроме текущей цели. Через {fuse} сек. каждая метка наносит {damageHeroic} максимального здоровья её носителя как урон тьмой, поделённое между отмеченными рейдерами в радиусе {range} м от него. Метка, сработавшая в одиночку, смертельна.",
         "soulRendResponse": "Каждый отмеченный рейдер бежит к общей точке сбора и встаёт в пределах {range} м от других меток до истечения {fuse}-секундного таймера. Лекари поднимают здоровье группы, пока метки срабатывают.",
@@ -3198,6 +3211,7 @@ export const ru_RU: EnTranslations = {
       "healthPercent": "Проценты",
       "healthCurrent": "Текущее",
       "healthCurrentMax": "Текущее / Максимум",
+      "healthCurrentMaxPercent": "Текущее / максимум (проценты)",
       "sort": "Сортировка игроков",
       "sortGroup": "Группа",
       "sortRole": "Роль",
@@ -3240,14 +3254,14 @@ export const ru_RU: EnTranslations = {
         "targetDots": "Эффекты на целях",
         "questTracker": "Трекер заданий",
         "reliquaryTracker": "Список Реликвария",
-        "petBar": "Pet Bar",
+        "petBar": "Панель питомца",
         "procOverlay": "Срабатывания заклинаний",
         "procOverlayFrost": "Ледяные осколки",
         "damageMeter": "Счетчик урона",
         "deedTracker": "Трекер деяний",
         "delveTracker": "Трекер вылазки",
         "riftTracker": "Трекер разлома",
-        "swingBarOffhand": "Off Hand"
+        "swingBarOffhand": "Левая рука"
       },
       "framesMenu": "Настройки фреймов",
       "framesMenuTitle": "Показать или скрыть отдельные фреймы. Снятый флажок скрывает фрейм, пока вы не включите его снова или не сбросите настройки.",
@@ -3289,7 +3303,7 @@ export const ru_RU: EnTranslations = {
       "title": "Обзор клавиатуры",
       "hint": "Используемые клавиши окрашены по категориям. Наведите курсор или сфокусируйтесь на клавише, чтобы увидеть все её назначения.",
       "hintInteractive": "Используемые клавиши окрашены по категориям. Нажмите на клавишу, чтобы изменить её назначение; наведите курсор или сфокусируйтесь на ней, чтобы увидеть все её назначения.",
-      "popOut": "Pop Out",
+      "popOut": "Открыть отдельно",
       "close": "Закрыть обзор клавиатуры",
       "pressKey": "Нажмите клавишу для {action}. Esc отменяет.",
       "boundTo": "{action} назначено на {key}.",
@@ -3308,8 +3322,8 @@ export const ru_RU: EnTranslations = {
       "legendQwerty": "QWERTY",
       "layerNone": "Без модификатора",
       "layerShift": "Клавиша Shift",
-      "layerCtrl": "Ctrl",
-      "layerAlt": "Alt",
+      "layerCtrl": "Клавиша Ctrl",
+      "layerAlt": "Клавиша Alt",
       "keyDetail": "{key}: {bindings}",
       "separator": ", ",
       "bindingLine": "{key}: {action}",
@@ -3423,6 +3437,7 @@ export const ru_RU: EnTranslations = {
       "close": "Закрыть",
       "keybind": "Панель Discord",
       "disabled": "Интеграция с Discord сейчас недоступна.",
+      "queuePingsLabel": "Присылать мне личное сообщение в Discord, когда очередь на поле боя или арену сработает (нужен привязанный аккаунт Discord)",
       "tiers": {
         "none": "Без ранга",
         "initiate": "Послушник",
@@ -3743,6 +3758,8 @@ export const ru_RU: EnTranslations = {
       "depositAllDone": "Материалов положено: {count}.",
       "depositAllFull": "Материалов положено: {count}. Банк заполнен.",
       "depositAllNone": "Банк заполнен: ничего не положено.",
+      "depositAllNotable": "Материалов положено: {count}, включая {item}.",
+      "depositAllNotableFull": "Материалов положено: {count}, включая {item}. Банк заполнен.",
       "bonusTitle": "Бонусные ячейки",
       "bonusEarned": "+{count}",
       "bonusStatusEarned": "+{count}",
@@ -3781,6 +3798,8 @@ export const ru_RU: EnTranslations = {
       "vaultDepositAllDone": "Сложено материалов: {count}.",
       "vaultDepositAllFull": "Сложено материалов: {count}. Часть пределов заполнена.",
       "vaultDepositAllNone": "Пределы хранилища заполнены: ничего не сложено.",
+      "vaultDepositAllNotable": "Сложено материалов: {count}, включая {item}.",
+      "vaultDepositAllNotableFull": "Сложено материалов: {count}, включая {item}. Часть пределов заполнена.",
       "vaultWithdrawShort": "В сумки помещается только {fit} из {count}.",
       "vaultDepositHint": "Щелкните, чтобы поместить в хранилище",
       "vaultCannotDeposit": "Нельзя поместить в хранилище",
@@ -4906,6 +4925,7 @@ export const ru_RU: EnTranslations = {
       "sourceProfession": "Добывается профессией {profession}",
       "sourceDeed": "Награда за деяние {deed}",
       "sourceVendor": "Продаёт {vendor}",
+      "sourceVendorGated": "Продаёт {vendor} ({requirement})",
       "sourceBossZone": "Падает с {boss} в регионе {zone}",
       "sourceDelve": "Находится в вылазке {delve}",
       "sourceRift": "Падает при прохождении разломов ранга {rank}",
@@ -4925,6 +4945,10 @@ export const ru_RU: EnTranslations = {
       "filterAll": "Все",
       "filterOwned": "Каталогизированы",
       "filterMissing": "Не найдены",
+      "filterIlluminated": "Озарено",
+      "filterRemaining": "Осталось",
+      "filterEmptyPages": "По этому фильтру страниц нет.",
+      "filterGroupAriaPages": "Фильтр страниц по тому, озарены ли они",
       "recentJumpAria": "Открыть страницу с реликвией {name}",
       "recentEmpty": "Находок пока нет. Реликвии, которые вы каталогизируете, будут появляться здесь.",
       "nearlyEmpty": "Здесь собираются страницы, близкие к завершению.",
@@ -5032,6 +5056,7 @@ export const ru_RU: EnTranslations = {
       "summary": "Карта мира. Выберите зону, чтобы открыть её карту.",
       "toWorld": "Карта мира",
       "toZone": "Карта региона",
+      "toInstance": "Карта подземелья",
       "toggleAria": "Переключение между картой мира и картой региона",
       "levels": "Уровни {min} до {max}"
     },
@@ -5066,6 +5091,7 @@ export const ru_RU: EnTranslations = {
       "walletLinkedConnected": "Привязанное приложение-кошелёк подключено и готово к платежам в $WOC.",
       "walletUsdBalance": "{amount} USD",
       "walletUsdUnknown": "Неизвестно",
+      "walletCardDismiss": "Скрыть карточку кошелька",
       "rateNote": "Курс: около {tokens} $WOC за доллар США по состоянию на {time}.",
       "rateNotePaused": "Последний известный курс: около {tokens} $WOC за доллар США по состоянию на {time}.",
       "estimateNote": "{usd} по текущему курсу составляет около {tokens} $WOC.",
@@ -5257,6 +5283,43 @@ export const ru_RU: EnTranslations = {
       "listingStatusCancelled": "Отменён",
       "listingStatusSuspended": "Приостановлен",
       "listingStatusUnsold": "Не продан"
+    },
+    "lootExplorer": {
+      "title": "Обозреватель добычи",
+      "close": "Закрыть обозреватель добычи",
+      "searchPlaceholder": "Поиск предметов...",
+      "searchAria": "Поиск предметов",
+      "filterCategoryAria": "Источник",
+      "filterClassAria": "Класс",
+      "filterStatAria": "Стат",
+      "filterQualityAria": "Качество",
+      "filterAll": "Все",
+      "tabItems": "По товару",
+      "tabEncounters": "По источникам",
+      "category": {
+        "raid": "Рейд",
+        "dungeon": "Подземелье",
+        "delve": "Вылазка",
+        "open_world": "Открытый мир",
+        "rift": "Рифт",
+        "vendor": "Торговец",
+        "quest_reward": "Награда за задание",
+        "quest_objective": "Цель задания",
+        "ground_object": "Мировой объект",
+        "starting_equipment": "Начальное снаряжение"
+      },
+      "difficulty": {
+        "normal": "Обычная",
+        "heroic": "Героическая"
+      },
+      "riftRankLabel": "Ранг Разлома {rank}",
+      "source": "{category}: {name}",
+      "sourceWithContext": "{category}: {name} ({context})",
+      "chance": "Шанс {pct}%",
+      "guaranteed": "Гарантированно",
+      "gatedByQuest": "Во время задания: {quest}",
+      "empty": "Нет добычи, соответствующей этим фильтрам.",
+      "resultCount": "Результатов: {count}"
     }
   },
   "gatherEvent": {
@@ -5356,7 +5419,8 @@ export const ru_RU: EnTranslations = {
       "link_required": "Сначала привяжите аккаунт Discord.",
       "swag_claimed": "Вы уже получили эту награду.",
       "swag_tier": "Достигните более высокого ранга, чтобы получить это.",
-      "swag_points": "Недостаточно очков."
+      "swag_points": "Недостаточно очков.",
+      "invalid_input": "Недопустимые данные."
     },
     "deeds": {
       "invalid_input": "Недопустимые данные."
@@ -5408,6 +5472,11 @@ export const ru_RU: EnTranslations = {
       "reason_required": "Необходимо указать причину.",
       "invalid_duration": "Укажите длительность отметки не менее одной секунды.",
       "not_marked": "Эта учетная запись не отмечена."
+    },
+    "kick": {
+      "reason_required": "Необходимо указать причину.",
+      "admin_target": "Учетные записи операторов нельзя отключить.",
+      "target_offline": "Этот игрок больше не в сети на этом мире."
     },
     "woc_market": {
       "invalid_input": "Недопустимый ввод.",
@@ -5843,10 +5912,13 @@ export const ru_RU: EnTranslations = {
       "ifPlayerFrameScale": "Размер вашей собственной рамки персонажа.",
       "ifTargetFrameScale": "Размер рамки вашей цели.",
       "ifPartyStyle": "Раскладка группы: «Автоматически» подстраивается под размер вашей группы, «Классическая» — привычный столбец, а «Рейдовая» собирает всех в плотную сетку.",
+      "ifPlayerHealthText": "Что пишет ваша полоска здоровья: ничего, проценты, текущее здоровье, текущее и максимальное или оба значения с процентами рядом.",
+      "ifTargetHealthText": "Что пишут полоски здоровья цели и цели цели, с теми же вариантами, что и у вашей рамки.",
       "ifPartyHealthText": "Что пишут полоски группы: ничего, проценты, текущее здоровье или текущее и максимальное.",
       "ifPartySort": "Порядок, в котором перечислены участники группы: порядок в группе, роль или имя.",
       "ifPartyShowAuras": "Показывать ли усиления и ослабления на рамках группы. Такие же переключатели отвечают за полоски ресурса, поглощение, питомцев и за то, показываетесь ли вы сами в своём списке группы.",
       "ifAurasOnPlayerFrame": "Показывает ваши усиления и ослабления не только на панели аур, но и на вашей собственной рамке персонажа.",
+      "ifAuraBarBelowFrame": "Перемещает полосу усилений под рамку персонажа вместо над ней. Действует, только когда усиления отображаются на рамке игрока.",
       "ifAlwaysShowAllBuffs": "Показывает все активные баффы даже на низком графическом пресете, обходя его обычное ограничение на количество значков баффов.",
       "ifTargetOfTarget": "Показывает, кого держит целью ваша цель, — классический способ понять, удерживает ли её ещё танк.",
       "ifPetFrame": "Показывает рамку вашего питомца.",
@@ -5854,6 +5926,7 @@ export const ru_RU: EnTranslations = {
       "ifChatOpacity": "Насколько плотный фон у чата.",
       "ifCompactChat": "Уплотняет строки чата, чтобы их помещалось больше.",
       "ifChatTimestamps": "Добавляет к каждой строке чата время, в 12-часовом или 24-часовом виде.",
+      "ifFilterProfanity": "Скрывает нецензурные слова в чате звёздочками. Включено по умолчанию; отключите здесь, если хотите читать чат без фильтра.",
       "ifStartAttack": "Начинает ли применение способности заодно и вашу авто-атаку. По умолчанию включено, и это классическое поведение, которого ждёт большинство игроков.",
       "ifStopAutoAttack": "Прекращает ли смена цели ваши удары. По умолчанию выключено, так что атака переносится на новую цель.",
       "ifShowAttackButton": "Ставит на панель способностей отдельную кнопку «Атака».",
@@ -9345,6 +9418,7 @@ export const ru_RU: EnTranslations = {
     "connectingRealm": "Подключение к миру...",
     "assetsFailed": "Не удалось загрузить ресурсы: попробуйте обновить страницу. {error}",
     "rendererFailed": "Не удалось запустить рендерер: попробуйте обновить страницу. {error}",
+    "rendererContextLost": "3D-рендерер потерял графический контекст и не смог восстановиться. Попробуйте обновить страницу.",
     "enterTimeout": "Не удалось войти в мир. Время подключения истекло. Запущен ли игровой сервер?",
     "connectionLost": "Соединение с сервером потеряно.",
     "reconnectingAttempt": "Соединение потеряно. Повторное подключение... (попытка {attempt}/{maxAttempts}, повтор через {seconds} с)",
@@ -9355,6 +9429,7 @@ export const ru_RU: EnTranslations = {
     "realmFull": "Этот мир сейчас переполнен. Пожалуйста, попробуйте снова через несколько минут.",
     "tooManyConnections": "Из вашей сети открыто слишком много подключений к этому миру. Пожалуйста, закройте лишние игровые окна или попробуйте снова через несколько минут.",
     "messageRateExceeded": "Вы были отключены за слишком быструю отправку действий. Пожалуйста, подождите немного и войдите снова.",
+    "kickedByModerator": "Модератор отключил вас: {reason}",
     "tips": {
       "classes": "Совет: все 9 классов играются по-разному. Попробуйте несколько, прежде чем выбрать один.",
       "talents": "Совет: вы можете сбросить таланты в любое время вне боя, так что ранний выбор никогда не станет ловушкой.",
@@ -11189,11 +11264,11 @@ export const ru_RU: EnTranslations = {
       },
       "melting_acid": {
         "name": "Плавящая кислота",
-        "description": "Обливает цель едким ядом, нанося {damage} ед. урона от сил природы и снижая её броню на 5% на 12 сек."
+        "description": "Покрывает ваше оружие на 30 мин. Каждый ваш удар в ближнем бою обрызгивает цель едкой кислотой, снижая её броню на 5% на 12 сек."
       },
       "nightshade_coating": {
         "name": "Покрытие паслёном",
-        "description": "Покрывает цель паслёном, нанося {damage} ед. урона от сил природы и снижая получаемое ею исцеление на 25% на 12 сек."
+        "description": "Покрывает ваше оружие на 30 мин. Каждый ваш удар в ближнем бою покрывает цель паслёном, снижая получаемое ею исцеление на 25% на 12 сек."
       },
       "expose_armor": {
         "name": "Пролом брони",
@@ -11209,11 +11284,11 @@ export const ru_RU: EnTranslations = {
       },
       "instant_poison": {
         "name": "Укус гадюки",
-        "description": "Покрывает ваше оружие ядом на 30 мин, заставляя каждый ваш удар в ближнем бою наносить 8 дополнительных ед. урона от сил природы."
+        "description": "Покрывает ваше оружие ядом на 30 мин, заставляя каждый ваш удар в ближнем бою наносить {damage} дополнительных ед. урона от сил природы."
       },
       "deadly_poison": {
         "name": "Гнойный яд",
-        "description": "Покрывает ваше оружие ядом на 30 мин, заставляя каждый ваш удар в ближнем бою наносить 14 дополнительных ед. урона от сил природы."
+        "description": "Покрывает ваше оружие ядом на 30 мин. Каждый ваш удар в ближнем бою добавляет на цель заряд яда, до 5 зарядов, и обновляет время действия 12 сек. Каждый заряд наносит {damage} ед. урона от сил природы раз в 2 сек."
       },
       "blind": {
         "name": "Горсть земли",
@@ -12312,7 +12387,7 @@ export const ru_RU: EnTranslations = {
       },
       "temporal_echo": {
         "name": "Временное эхо",
-        "description": "Отмечает союзника эхом более здорового мгновения, мгновенно восполняя {damage} здоровья. В течение {duration} сек часть наносимого вами урона от тайной магии возвращается через эхо, исцеляя его."
+        "description": "Отмечает союзника эхом более здорового мгновения, мгновенно восполняя {damage} здоровья. В течение {duration} сек {echoSinglePct}% прочего вашего урона от тайной магии по одной цели и {echoAreaPct}% урона от тайной магии по области исцеляют его. «Выброс эфира» и «Эфирные дротики» вместо этого исцеляют его на {echoDriverPct}% от наносимого ими урона."
       },
       "temporal_cascade": {
         "name": "Временной каскад",
@@ -14003,6 +14078,12 @@ export const ru_RU: EnTranslations = {
       },
       "reins_terrorspark_groundshaker": {
         "name": "Ключ зажигания Ужасоискра"
+      },
+      "reins_goblin_rocket_sled": {
+        "name": "Ключ зажигания гоблинских ракетных саней"
+      },
+      "reins_rallycart_rxt": {
+        "name": "Ключ зажигания ралликарта RXT"
       },
       "reins_lanternback_troll": {
         "name": "Ярмо фонарщика: Грумбол"

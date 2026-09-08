@@ -525,4 +525,7 @@ export const es_ES: Partial<Record<TranslationKey, string>> = {
     'Todavía se está completando una compra para este personaje. Vuelve a intentarlo en un momento.',
   'hudChrome.wocStore.charter.outage':
     'No se pudo confirmar la compra. Vuelve a intentarlo con este botón y no se te cobrará dos veces. Si recargas el juego antes, puedes perder esa protección.',
+  'hudChrome.bags.capacityPools':
+    'Artículos {generalUsed}/{generalTotal}, materiales {materialsUsed}/{materialsTotal}',
+  'hudChrome.bags.emptyMaterialsOnly': 'Solo para materiales',
 };

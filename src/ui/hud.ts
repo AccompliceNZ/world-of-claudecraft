@@ -1,5 +1,8 @@
 import { audio } from '../game/audio';
-import { corpseLootAvailabilityInWorld } from '../game/corpse_loot_availability';
+import {
+  corpseLootAvailabilityInWorld,
+  localPartyMemberIds,
+} from '../game/corpse_loot_availability';
 import { CROSS_HOTBAR_ATTACK_ID } from '../game/cross_hotbar';
 import { syncDeathControllerHints } from '../game/death_controller_hint';
 import { farmPressTarget } from '../game/farm_press_target_core';
@@ -86,7 +89,6 @@ import {
 import { specialRoleColor } from '../sim/discord_roles';
 import { canEquipItem, isUniqueEquipped, weaponHand } from '../sim/equipment_rules';
 import { isItemLevelEligible, itemInstanceLevel, itemScore } from '../sim/item_level';
-import { requiredLevelFor } from '../sim/item_level_req';
 import type { Ante, PickAction } from '../sim/lockpick';
 import type { MaterialComposition } from '../sim/material_sources';
 import { petCanForceTaunt } from '../sim/pet/pet_taunt_gate';
@@ -359,6 +361,7 @@ import {
 import type { ActionBarVisibility } from './hud/action_bar/action_bar_visibility_core';
 import {
   abilityStartsAutoAttack,
+  confirmPendingAutoAttackEngage,
   deferAutoAttackUntilCastEnd,
   hasAutoAttackTarget,
   isPvpHostileTarget,
@@ -385,6 +388,8 @@ import {
   attackDragDisposition,
   clearHotbarSlot,
   encodeHotbarAction,
+  type FreedAttackSlotAbility,
+  freedAttackSlotDisplayAbility,
   HOTBAR_ACTION_MIME,
   type HotbarAction,
   isAbilityActionBarEligible,
@@ -420,7 +425,7 @@ import {
   buildBgTimeWarningView,
 } from './hud/battleground';
 import { BgProposalPopup } from './hud/battleground/battleground_proposal_popup';
-import { ChatAnnouncer } from './hud/chat/chat_announcer';
+import { ChatAnnouncer, ChatScrollFollow } from './hud/chat';
 import { chatChannelColor } from './hud/chat/chat_channels';
 import { ChatGeometryController } from './hud/chat/chat_geometry_controller';
 import {
@@ -453,6 +458,7 @@ import { LootRollController } from './hud/loot/loot_roll_controller';
 import { lootSettingsView } from './hud/loot/loot_settings_view';
 import { renderLootSettingsWindow } from './hud/loot/loot_settings_window';
 import { LootWindowController } from './hud/loot/loot_window_controller';
+import { LootExplorerWindow } from './hud/loot_explorer/loot_explorer_window';
 import { MapMarkerInteractionController, MapMarkerTooltipContent } from './hud/map';
 import { livingSecondaryPet } from './hud/pet_bar_core';
 import { CARD_POSES } from './hud/player_card/player_card';
@@ -581,7 +587,7 @@ import { buildWarfareVendorView, warfareShopViewer } from './hud/vendor/warfare_
 import { renderWarfareVendorWindow } from './hud/vendor/warfare_vendor_window';
 import { afflictionFateThreadCount, createDoomMeter, destructionRuinPips } from './hud/warlock';
 import { WocTradeController } from './hud/woc_trade';
-import { unitFrameCurrentMaxText } from './hud_frames';
+import { healthTextMode, unitFrameCurrentMaxText, unitFrameHealthText } from './hud_frames';
 import { BG_END_LOG_COLORS, CHROME_TONE, HUD_LOG, MAP_TONE } from './hud_tones';
 import { availableMobVoiceCue, sfxHasCue, yellVoiceKey } from './hud_voice_cues';
 import {
@@ -661,6 +667,14 @@ import {
 } from './map_pinch_zoom_core';
 import { shouldResetMapPanOnZoneCross, showOnMapPanState } from './map_show_on_map_core';
 import {
+  defaultMapLevel,
+  type MapLevel,
+  mapLevelToggleKey,
+  nextMapLevel,
+  remoteInstanceAnchor,
+  resolveMapSurface,
+} from './map_surface_core';
+import {
   type MapRegion,
   mapCanvasHeight,
   mapZoneRegion,
@@ -693,14 +707,16 @@ import {
   pickIdleBarkCandidates,
 } from './mob_idle_sfx';
 import { type MobTooltipI18n, type MobTooltipModel, mobTooltipHtml } from './mob_tooltip_view';
+import { bindMobileFrameLongPress as bindMobileFrameLongPressCore } from './mobile_frame_long_press';
 import { MobileMoreDialogController } from './mobile_more_dialog';
 import { MOUNT_DESC_KEYS, mountSpecLines } from './mount_labels';
 import { MountRaceControls } from './mount_race_controls';
 import { MountRaceStrip } from './mount_race_strip';
+import { mouseoverCastTargetPid } from './mouseover_cast_core';
 import { type FrameDimension, MovableFrame } from './movable_frame';
 import { NoticeboardPopup } from './noticeboard_popup';
 import { NPC_WINDOW_CLOSE_RANGE } from './npc_service_range';
-import { OptionsWindow } from './options_window';
+import { type AccountToggleSeam, OptionsWindow } from './options_window';
 import {
   makeWriterFacet,
   type PainterHostPresentation,
@@ -712,7 +728,11 @@ import { createPaladinDevotionView } from './paladin_devotion_view';
 import { PartyBelowTargetPainter } from './party_below_target_painter';
 import { loadPartyCollapsed, savePartyCollapsed } from './party_collapse';
 import type { PartyRowAuraDeps } from './party_frame_row';
-import { partyFrameSignature, selectPartyFrameMembers } from './party_frames';
+import {
+  partyFrameSignature,
+  readPartyFrameDisplayConfig,
+  selectPartyFrameMembers,
+} from './party_frames';
 import { PartyFramesPainter } from './party_frames_painter';
 import type { PerfOverlayHooks } from './perf_overlay_settings';
 import {
@@ -849,16 +869,15 @@ import { TargetSwingTimerBars } from './target_swing_timer_bars';
 import type { PresetId, ThemeKnob, ThemeState } from './theme';
 import { toolEffectNameKey } from './tool_effect_name';
 import { toolEffectTooltipLines } from './tool_effect_tooltip';
-import {
-  mobTooltipCornerPlacement,
-  type TooltipViewport,
-  tooltipMaxHeight,
-  tooltipPlacementAt,
-} from './tooltip_clamp_core';
+import { type TooltipViewport, tooltipPlacementAt } from './tooltip_clamp_core';
 import { createTooltipLine } from './tooltip_line';
 import { SharedTooltipOwner } from './tooltip_owner';
+import {
+  paintMobTooltipBottomRight as paintMobTooltipBottomRightCore,
+  paintTooltipAt as paintTooltipAtCore,
+} from './tooltip_paint';
 import { TOOLTIP_PEEK_MS, TouchPeekGuard } from './touch_peek';
-import { bindTouchDoubleTap, bindTouchTap, CLICK_SUPPRESS_MS, TAP_SLOP_PX } from './touch_tap';
+import { bindTouchDoubleTap, bindTouchTap } from './touch_tap';
 import { buildTownFocusView, stepTownFocus, townFocusRenderSig } from './town_focus_view';
 import { renderTownFocusWindow } from './town_focus_window';
 import { installTrackerStackAnchor } from './tracker_stack_anchor';
@@ -892,7 +911,8 @@ import {
 } from './window_drag';
 import { makeWindowFocus } from './window_focus';
 import { syncWindowOpenBodyClasses } from './window_open_state';
-import { windowPixelPosition } from './window_position_core';
+import { installWindowReflow, rememberWindowPos, requestedWindowPos } from './window_reflow';
+import { placeWindow } from './window_reflow_core';
 import { installWindowResize, markResizableWindow } from './window_resize';
 import { wocBalanceChipHtml } from './woc_balance_chip';
 import { promptWocMarketBrowserVisit, wocMarketToggleAction } from './woc_market_link';
@@ -925,16 +945,13 @@ export interface OptionsHooks {
   // bag footer and player card reflect on-chain token changes. No-op when the wallet
   // feature is off or no wallet is connected/linked.
   refreshWocBalance(force?: boolean): void;
-  // Account deed-broadcast opt-out seam (accounts.deed_broadcasts): whether a
-  // marquee deed unlock fans out to guildmates and followers, and whether the
-  // Discord activity feed posts the account's deed and masterwork cards (R58).
-  // main.ts wires the REST read/write pair ONLINE ONLY; the options row
-  // renders only when the seam is present (offline characters have no
-  // account, so no row).
-  deedBroadcasts?: {
-    get(): Promise<boolean>;
-    set(enabled: boolean): Promise<boolean>;
-  };
+  // Account toggle seams, each a REST read/write pair main.ts wires ONLINE
+  // ONLY (offline characters have no account row); the options row renders
+  // only when its seam is present. deedBroadcasts: the deed-broadcast opt-out
+  // (accounts.deed_broadcasts, R58). discordQueuePings: the queue-pop Discord
+  // DM opt-in (accounts.discord_queue_pings).
+  deedBroadcasts?: AccountToggleSeam;
+  discordQueuePings?: AccountToggleSeam;
   perfOverlay: PerfOverlayHooks;
   // UI theming seam — main.ts owns the ThemeStore + live CSS-variable apply.
   theme: ThemeHooks;
@@ -1026,7 +1043,6 @@ const $ = <T extends HTMLElement = HTMLElement>(sel: string): T => document.quer
 // painter's repaint gate never fires for it; the constant just pins the key so the
 // gate stays a no-op (target/party pass a per-unit key).
 const PLAYER_PORTRAIT_KEY = 'player';
-const MOBILE_CONTEXT_LONG_PRESS_MS = 650;
 // The modal one-shots that stay above every banded window AND the mobile
 // window backdrop (z 85): the confirm/input prompt plus the confirm-dialog
 // family's once-ever explainers (the scoped-popup 96 rule).
@@ -1221,6 +1237,10 @@ function curatorRankDisplayName(rank: number): string {
   return t(curatorRankNameKey(rank), { rank: formatNumber(rank) });
 }
 
+// Module-scope (created once, not per frame): freedAttackSlotAbility's abilityDef
+// callback into freedAttackSlotDisplayAbility.
+const abilityDefLookup = (id: string) => ABILITIES[id];
+
 export class Hud {
   // Ability slots across three rows: 1..11 primary, 12..22 secondary, and
   // 23..33 third (slot 0 is the Attack toggle on the primary row). Every row
@@ -1363,6 +1383,7 @@ export class Hud {
   private chatTimestamps = localStorage.getItem('chatTimestamps') === '1';
   private chatClock: ChatClock = clampChatClock(localStorage.getItem('chatClock'));
   private combatLogEl = $('#combatlog');
+  private chatFollow = new ChatScrollFollow([this.chatLogEl, this.combatLogEl]);
   // Off-screen polite live region for the throttled combat summary. The 3D
   // world / game canvas is OUT of accessibility scope (not screen-readable), so this
   // announces only the combat-log text, never the game world.
@@ -1911,7 +1932,7 @@ export class Hud {
   } | null = null;
   private readonly mapMarkerTooltipContent: MapMarkerTooltipContent;
   private readonly mapMarkerInteraction: MapMarkerInteractionController;
-  private mapLevel: 'zone' | 'continent' = 'zone';
+  private mapLevel: MapLevel = 'zone';
   // The zone id under the cursor on the continent overview (drives the highlight
   // + hover tooltip), and the last paint's clickable zone regions for hit-testing.
   private mapHoverZone: string | null = null;
@@ -1963,17 +1984,7 @@ export class Hud {
         onToggleCollapse: noopWrite,
         partyAuras: this.partyAurasDeps,
       });
-      const settings = this.optionsHooks?.settings;
-      const config = {
-        showSelf: settings?.get('partyFrameShowSelf') ?? false,
-        showResource: settings?.get('partyFrameShowResource') ?? true,
-        showAbsorbs: settings?.get('partyFrameShowAbsorbs') ?? true,
-        showAuras: settings?.get('partyFrameShowAuras') ?? true,
-        showPets: settings?.get('partyFrameShowPets') ?? true,
-        presentation: Math.round(settings?.get('partyFrameStyle') ?? 0) as 0 | 1 | 2,
-        healthText: Math.round(settings?.get('partyFrameHealthText') ?? 1) as 0 | 1 | 2 | 3,
-        sort: Math.round(settings?.get('partyFrameSort') ?? 0) as 0 | 1 | 2,
-      };
+      const config = readPartyFrameDisplayConfig(this.optionsHooks?.settings);
       // The player's REAL party renders first, selected through the exact
       // pipeline the live frames use; the pure core pads the roster out to the
       // full sample stack (interface_unlock_menu_core.ts).
@@ -2494,6 +2505,9 @@ export class Hud {
       selectedQuestId: () => this.questlogWindow.selectedQuestId,
       hasQuest: (questId) => this.sim.questLog.has(questId),
       showError: (text) => this.showError(text),
+      afterTabShown: (pane) => {
+        window.requestAnimationFrame(() => this.chatFollow.scrollToBottomIfPinned(pane));
+      },
     });
     this.chatWindow.init();
     this.chatGeometry.init();
@@ -2795,6 +2809,7 @@ export class Hud {
     $('#mm-quest').addEventListener('click', () => this.toggleQuestLog());
     $('#mm-deeds').addEventListener('click', () => this.toggleDeeds());
     $('#mm-reliquary')?.addEventListener('click', () => this.toggleReliquary());
+    $('#mm-loot-explorer')?.addEventListener('click', () => this.toggleLootExplorer());
     $('#mm-professions').addEventListener('click', () => this.toggleProfessions());
     $('#mm-harvest-journal')?.addEventListener('click', () => this.toggleHarvestJournal());
     $('#mm-perfecting')?.addEventListener('click', () => this.togglePerfecting());
@@ -3269,12 +3284,12 @@ export class Hud {
       getScale: () => getUiScale(),
       pinWindow: (el, rect) => this.setWindowPixelPosition(el, rect.left, rect.top, rect),
     });
-    window.addEventListener('resize', () => {
-      document.querySelectorAll<HTMLElement>('.window.panel').forEach((el) => {
-        if (!this.isWindowVisible(el) || el.dataset.windowMoved !== '1') return;
-        const rect = el.getBoundingClientRect();
-        this.setWindowPixelPosition(el, rect.left, rect.top, rect);
-      });
+    installWindowReflow({
+      movedWindows: () =>
+        [...document.querySelectorAll<HTMLElement>('.window.panel')].filter(
+          (el) => this.isWindowVisible(el) && el.dataset.windowMoved === '1',
+        ),
+      reflow: (el, left, top, rect) => this.setWindowPixelPosition(el, left, top, rect, false),
     });
   }
 
@@ -3299,12 +3314,12 @@ export class Hud {
     if (el.dataset.windowOpen !== '1') {
       el.dataset.windowOpen = '1';
       this.placeNewWindow(el);
-      // A window moved or resized at an earlier viewport keeps its inline
-      // left/top while hidden; the viewport-resize re-clamp skips hidden
-      // windows, so re-clamp at show time or it can reopen off-screen.
+      // The viewport-resize reflow skips hidden windows, so re-derive (and
+      // re-anchor) at show time or a stale spot can reopen off-screen.
       if (el.dataset.windowMoved === '1') {
         const rect = el.getBoundingClientRect();
-        this.setWindowPixelPosition(el, rect.left, rect.top, rect);
+        const requested = requestedWindowPos(el, rect);
+        this.setWindowPixelPosition(el, requested.left, requested.top, rect, false);
       }
       this.bringWindowToFront(el);
     }
@@ -3402,28 +3417,34 @@ export class Hud {
     return win.id === 'map-window' && target === win;
   }
 
+  // left/top: visual space (placeWindow); remember=false for a passive reflow.
   private setWindowPixelPosition(
     el: HTMLElement,
     left: number,
     top: number,
     rect = el.getBoundingClientRect(),
+    remember = true,
   ): void {
-    const position = windowPixelPosition({
+    const placement = placeWindow(
       left,
       top,
-      width: rect.width,
-      height: rect.height,
-      viewportWidth: window.innerWidth,
-      viewportHeight: window.innerHeight,
-      scale: getUiScale(),
-    });
-    el.style.left = `${position.left}px`;
-    el.style.top = `${position.top}px`;
+      { w: rect.width, h: rect.height },
+      { w: window.innerWidth, h: window.innerHeight },
+      getUiScale(),
+    );
+    el.style.left = `${placement.css.left}px`;
+    el.style.top = `${placement.css.top}px`;
     el.style.right = 'auto';
     el.style.bottom = 'auto';
     el.style.transform = 'none';
-    // Pixel positions are re-clamped after viewport changes and on reopen.
-    el.dataset.windowMoved = '1';
+    if (remember) {
+      rememberWindowPos(el, placement.visual.left, placement.visual.top);
+      // Every explicit write (drag/resize commit, or the automatic open
+      // cascade in placeNewWindow) marks the window as moved, so a viewport
+      // resize/reopen also reflows a window the player never dragged by hand
+      // (a cascaded window going invisible after a shrink resize otherwise).
+      el.dataset.windowMoved = '1';
+    }
   }
 
   // Place a cursor-anchored popup (context menus, the loot window) at a viewport
@@ -3577,6 +3598,10 @@ export class Hud {
       case 'reliquary-window':
         // Route through the painter so focus returns to the opener (WCAG 2.2 AA).
         this.reliquaryWindow.close();
+        break;
+      case 'loot-explorer-window':
+        // Route through the painter so focus returns to the opener (WCAG 2.2 AA).
+        this.lootExplorerWindow.close();
         break;
       case 'professions-window':
         // Route through the painter so focus returns to the opener (WCAG 2.2 AA).
@@ -4629,6 +4654,7 @@ export class Hud {
     outOfRange: false,
   };
   private lastPlayerFrameHp = Number.NaN;
+  private lastPlayerFrameHpMode = Number.NaN;
   private lastPlayerFrameMaxHp = Number.NaN;
   private lastPlayerFrameResource = Number.NaN;
   private lastPlayerFrameMaxResource = Number.NaN;
@@ -4799,11 +4825,14 @@ export class Hud {
       stateClasses: true,
     },
   );
-  // Deferred "Auto-Attack on Ability Use" for TIMED casts: set by castSlot when
-  // the QoL would engage but the ability has a cast time, consumed by the
-  // castStop event (engage on success, drop on interrupt), so starting a Smite
-  // never aggros the target before its damage lands.
-  private pendingAutoAttackOnCastEnd = false;
+  // Deferred "Auto-Attack on Ability Use" for TIMED casts: the requested ability
+  // id, recorded by castSlot when the QoL would engage but the ability has a cast
+  // time. Confirmed (or dropped) by the castStart event, consumed by the castStop
+  // event (engage on success, drop on interrupt), so starting a Smite never
+  // aggros the target before its damage lands, and a refused cast never leaks a
+  // stale engage into whatever unrelated cast completes next (see
+  // confirmPendingAutoAttackEngage).
+  private pendingAutoAttackAbilityId: string | null = null;
   // The party rows' mini aura strips share these deps (each row builds its own
   // view + painter instance over them). The wire summaries carry no remaining
   // time (Infinity reaches the core, so the duration label stays blank), which
@@ -5427,6 +5456,16 @@ export class Hud {
       this.optionsHooks?.onSettingChange('showReliquaryTracker', shown);
       this.updateReliquaryTracker();
     },
+  });
+  // Loot Explorer: a cold, static-content catalog window (no IWorld read at
+  // all, see src/ui/hud/loot_explorer/CLAUDE.md), so its deps bag is the
+  // minimal window shape with no world()/tracker members.
+  private readonly lootExplorerWindow = new LootExplorerWindow({
+    ...this.presentationBag,
+    root: () => $('#loot-explorer-window'),
+    closeOthers: () => this.closeOtherWindows('#loot-explorer-window'),
+    hideTooltip: () => this.hideTooltip(),
+    ...this.windowFocus('#loot-explorer-window'),
   });
   // Watchlist HUD tracker (#deed-tracker): slow-band painter over the one
   // reused tracker-view container (allocation-light by contract).
@@ -6268,58 +6307,7 @@ export class Hud {
     onLongPress: (x: number, y: number) => void,
     opts: { ignoreSelector?: string } = {},
   ): void {
-    let timer: number | undefined;
-    let downId: number | null = null;
-    let downX = 0;
-    let downY = 0;
-    let suppressUntil = 0;
-    const clear = () => {
-      if (timer !== undefined) window.clearTimeout(timer);
-      timer = undefined;
-      downId = null;
-    };
-    el.addEventListener('pointerdown', (ev) => {
-      if (ev.pointerType !== 'touch' || !this.isMobileLayout()) return;
-      const target = ev.target as HTMLElement | null;
-      if (opts.ignoreSelector && target?.closest(opts.ignoreSelector)) return;
-      clear();
-      downId = ev.pointerId;
-      downX = ev.clientX;
-      downY = ev.clientY;
-      timer = window.setTimeout(() => {
-        timer = undefined;
-        suppressUntil = Date.now() + CLICK_SUPPRESS_MS;
-        onLongPress(downX, downY);
-      }, MOBILE_CONTEXT_LONG_PRESS_MS);
-    });
-    el.addEventListener('pointermove', (ev) => {
-      if (ev.pointerType !== 'touch' || ev.pointerId !== downId) return;
-      if (Math.hypot(ev.clientX - downX, ev.clientY - downY) > TAP_SLOP_PX) clear();
-    });
-    el.addEventListener('pointerup', (ev) => {
-      if (ev.pointerId === downId) clear();
-    });
-    el.addEventListener('pointercancel', (ev) => {
-      if (ev.pointerId === downId) clear();
-    });
-    el.addEventListener(
-      'click',
-      (ev) => {
-        if (Date.now() > suppressUntil) return;
-        ev.preventDefault();
-        ev.stopImmediatePropagation();
-      },
-      true,
-    );
-    el.addEventListener(
-      'contextmenu',
-      (ev) => {
-        if (!this.isMobileLayout() || Date.now() > suppressUntil) return;
-        ev.preventDefault();
-        ev.stopImmediatePropagation();
-      },
-      true,
-    );
+    bindMobileFrameLongPressCore(el, onLongPress, () => this.isMobileLayout(), opts);
   }
 
   hideTooltip(): void {
@@ -6338,32 +6326,11 @@ export class Hud {
     this.paintTooltipAt(this.raidLockoutPanelView(), rect.right, rect.top + rect.height / 2);
   }
 
-  // Paints the shared #tooltip box at a screen point, used by attachTooltip's
-  // element-hover showAt (item/ability/stat tooltips). Drops the mob-tooltip
-  // size modifier so a leftover world-hover tooltip never leaks its bigger
-  // sizing onto one of these. Returns the measured author-space box size so the
-  // caller can cache it (attachTooltip's mousemove clamp reuses it instead of
-  // re-reading offsetWidth/Height, which would force a reflow per mousemove).
-  // Accepts a legacy HTML string or a prebuilt Node / DocumentFragment so
-  // createElement painters can mount without forcing every caller onto strings.
+  // Paints the shared #tooltip box at a screen point (see tooltip_paint.ts for
+  // the sizing/placement detail); returns the measured box so attachTooltip's
+  // mousemove clamp can reuse it without a re-measure.
   private paintTooltipAt(content: string | Node, x: number, y: number): { w: number; h: number } {
-    this.tooltipEl.classList.remove('mob-tooltip');
-    if (typeof content === 'string') {
-      this.tooltipEl.innerHTML = content;
-    } else {
-      this.tooltipEl.replaceChildren(content);
-    }
-    this.tooltipEl.style.display = 'block';
-    // The height cap goes on BEFORE the one measure so the measured box already
-    // reflects it; the clamp core (tooltip_clamp_core.ts) then maps the visual
-    // x/y into author space and keeps the box inside every viewport edge.
-    const viewport = this.tooltipViewport();
-    this.tooltipEl.style.maxHeight = `${tooltipMaxHeight(viewport)}px`;
-    const box = { w: this.tooltipEl.offsetWidth, h: this.tooltipEl.offsetHeight };
-    const at = tooltipPlacementAt(x, y, box, viewport);
-    this.tooltipEl.style.left = `${at.left}px`;
-    this.tooltipEl.style.top = `${at.top}px`;
-    return box;
+    return paintTooltipAtCore(this.tooltipEl, content, x, y, this.tooltipViewport());
   }
 
   private tooltipViewport(): TooltipViewport {
@@ -6377,22 +6344,10 @@ export class Hud {
   // Deliberately NOT tied to the player frame: that frame is player-movable
   // (MovableFrame), and an anchor riding it wanders wherever the frame was dragged.
   private paintMobTooltipBottomRight(html: string): void {
-    this.tooltipEl.classList.add('mob-tooltip');
-    this.tooltipEl.innerHTML = html;
-    this.tooltipEl.style.display = 'block';
-    // The cap goes on BEFORE the one measure here too. Both paint paths share
-    // the ONE #tooltip box, so a path that never writes maxHeight paints under
-    // whatever cap the last cursor tooltip computed, which goes stale the
-    // moment the viewport resizes.
-    const viewport = this.tooltipViewport();
-    this.tooltipEl.style.maxHeight = `${tooltipMaxHeight(viewport)}px`;
-    const box = { w: this.tooltipEl.offsetWidth, h: this.tooltipEl.offsetHeight };
     const minimapRect = document.body.classList.contains('mobile-touch')
       ? (document.getElementById('minimap-wrap')?.getBoundingClientRect() ?? null)
       : null;
-    const at = mobTooltipCornerPlacement(box, viewport, minimapRect);
-    this.tooltipEl.style.left = `${at.left}px`;
-    this.tooltipEl.style.top = `${at.top}px`;
+    paintMobTooltipBottomRightCore(this.tooltipEl, html, this.tooltipViewport(), minimapRect);
   }
 
   // Shows the WoW-style mouseover tooltip (name / level / creature type) for a
@@ -7078,6 +7033,7 @@ export class Hud {
     if (this.deedsWindow.isOpen) this.deedsWindow.render();
     if (this.reliquaryWindow.isOpen) this.reliquaryWindow.render();
     if (this.professionsWindow.isOpen) this.professionsWindow.render();
+    this.lootExplorerWindow.relocalize();
     this.lootWindow.relocalize();
     this.harvestJournalWindow.relocalize();
     this.plantSheetWindow.relocalize();
@@ -7350,6 +7306,28 @@ export class Hud {
     return this.sim.resolvedAbility(action.id);
   }
 
+  // Slot 0's display-only fallback (freedAttackSlotDisplayAbility): memoized by
+  // action id, the same "diff a stable key, reuse the reference" idiom the hot
+  // painters use (action_bar_painter's lastIcon, unit_portrait_painter's imgCache),
+  // so the per-frame ability() accessor below never allocates a fresh object while
+  // the freed slot's assignment is unchanged (ActionBarSlotDescriptor's own
+  // no-per-frame-allocation contract).
+  private freedAttackSlotAbilityCache: { id: string; ability: FreedAttackSlotAbility } | null =
+    null;
+  private freedAttackSlotAbility(): FreedAttackSlotAbility | null {
+    const action = this.actionForSlot(0);
+    const id = action?.type === 'ability' ? action.id : null;
+    if (id === null) {
+      this.freedAttackSlotAbilityCache = null;
+      return null;
+    }
+    if (this.freedAttackSlotAbilityCache?.id !== id) {
+      const ability = freedAttackSlotDisplayAbility(action, abilityDefLookup);
+      this.freedAttackSlotAbilityCache = ability ? { id, ability } : null;
+    }
+    return this.freedAttackSlotAbilityCache?.ability ?? null;
+  }
+
   private itemForSlot(barSlot: number): ItemDef | null {
     const action = this.actionForSlot(barSlot);
     return action?.type === 'item' ? (ITEMS[action.id] ?? null) : null;
@@ -7596,16 +7574,17 @@ export class Hud {
           // Clique-style mouseover cast: a friendly (heal/buff) ability pressed
           // while hovering a party frame lands on the hovered member instead of
           // the current target; the sim validates and falls back if it went stale.
-          // Gated on the Interface option (mouseoverCast, on by default).
-          const def = resolved.def;
-          if (
-            this.hoveredPartyPid !== null &&
-            (this.optionsHooks?.settings.get('mouseoverCast') ?? true) &&
-            def.requiresTarget &&
-            def.targetType === 'friendly' &&
-            this.sim.entities.has(this.hoveredPartyPid)
-          ) {
-            this.sim.castAbilityOn(action.id, this.hoveredPartyPid);
+          // Gated on the Interface option (mouseoverCast, on by default). A member
+          // outside this client's interest scope (a RELEASED ghost waits at the
+          // graveyard) still redirects on the party roster alone: see
+          // mouseover_cast_core.ts.
+          const mouseoverPid = mouseoverCastTargetPid(this.hoveredPartyPid, resolved.def, {
+            enabled: this.optionsHooks?.settings.get('mouseoverCast') ?? true,
+            hasEntity: (pid) => this.sim.entities.has(pid),
+            partyMemberPids: () => localPartyMemberIds(this.sim.partyInfo),
+          });
+          if (mouseoverPid !== null) {
+            this.sim.castAbilityOn(action.id, mouseoverPid);
           } else {
             this.sim.castAbility(action.id);
           }
@@ -7625,19 +7604,25 @@ export class Hud {
               isPvpHostileTarget(tid, this.sim.duelInfo, this.sim.arenaInfo, this.sim.bgInfo),
             )
           ) {
-            // A TIMED cast must not engage yet: startAutoAttack aggros the target
-            // immediately, so engaging at cast start pulled the mob before any
-            // damage existed (the aggro-before-damage bug). Defer to the
-            // successful castStop (handled in the events switch); instants keep
-            // engaging at once since their damage lands this same tick.
+            // A TIMED cast must not engage yet (the aggro-before-damage bug). The
+            // recorded id only ARMS once castStart below confirms this exact cast
+            // began (a refused cast never reaches it); see
+            // confirmPendingAutoAttackEngage for why that matters. Instants still
+            // engage at once since their damage lands this same tick.
             if (deferAutoAttackUntilCastEnd(resolved.castTime)) {
-              this.pendingAutoAttackOnCastEnd = true;
+              this.pendingAutoAttackAbilityId = action.id;
             } else {
               this.sim.startAutoAttack();
             }
           }
         }
         this.flashActionSlot(barSlot);
+      } else if (barSlot === 0 && this.freedAttackSlotAbility()) {
+        // The freed slot now visibly shows an assigned, named icon (dimmed) even
+        // while unusable, so a press must refuse out loud rather than eating the
+        // click silently, the same courtesy a stale item binding already gets
+        // (castCrossHotbarAction's tSim('error.noItem') a few dozen lines up).
+        this.showError(t('abilityUi.tooltip.unavailable'));
       }
     } else if (action?.type === 'item' && this.isHotbarItemId(action.id)) {
       if (this.tradeOpen) return;
@@ -7826,6 +7811,9 @@ export class Hud {
         const known = this.abilityForSlot(slot);
         const clearHint = `<div class="tt-sub">${esc(t('abilityUi.actionBar.clearHint'))}</div>`;
         if (known) return this.abilityTooltip(known) + clearHint;
+        const freed = slot === 0 && this.freedAttackSlotAbility();
+        if (freed)
+          return `<div class="tt-title">${esc(abilityDisplayName(freed.def))}</div><div class="tt-sub">${esc(t('abilityUi.tooltip.unavailable'))}</div>${clearHint}`;
         const item = this.itemForSlot(slot);
         if (item) {
           return this.itemTooltip(item) + itemInBagsLine(this.inventoryCount(item.id)) + clearHint;
@@ -8037,7 +8025,10 @@ export class Hud {
             // unlearned or item id is unknown): the many-spells count source, kept
             // byte-identical to the former hotbarActions.filter(a => a !== null).
             hasAction: () => this.actionForSlot(i) !== null,
-            ability: () => (i === 0 && this.attackSlotIsAttack() ? null : this.abilityForSlot(i)),
+            ability: () =>
+              i === 0 && this.attackSlotIsAttack()
+                ? null
+                : (this.abilityForSlot(i) ?? (i === 0 ? this.freedAttackSlotAbility() : null)),
             item: () => this.itemForSlot(i),
             keybindLabel: () => keyCapLabel(this.keybinds.primaryLabel(slotKey)),
           };
@@ -8250,6 +8241,7 @@ export class Hud {
       ['#mm-quest', 'questlog', 'questUi.log.title'],
       ['#mm-deeds', 'deeds', 'hudChrome.deeds.title'],
       ['#mm-reliquary', 'reliquary', 'hudChrome.reliquary.title'],
+      ['#mm-loot-explorer', 'lootExplorer', 'hudChrome.lootExplorer.title'],
       ['#mm-professions', 'professions', 'hudChrome.professions.title'],
       ['#mm-harvest-journal', 'harvestJournal', 'hudChrome.harvestJournal.title'],
       ['#mm-map', 'map', 'hud.core.mobileMap'],
@@ -8914,6 +8906,7 @@ export class Hud {
         now,
         lastCombatEventAt: this.lastCombatEventAt,
         lastBossCombatEventAt: this.lastNythraxisCombatEventAt,
+        inCombat: p.inCombat,
         playerId: sim.playerId,
         playerPos: p.pos,
         zone: zoneAt(p.pos.x, p.pos.z),
@@ -8992,10 +8985,17 @@ export class Hud {
     // here, OUT of the shared family (target/party must not inherit them).
     const playerFrame = this.playerFrameDescriptor;
     playerFrame.hpFrac = p.hp / Math.max(1, p.maxHp);
-    if (p.hp !== this.lastPlayerFrameHp || p.maxHp !== this.lastPlayerFrameMaxHp) {
+    const hpMode = healthTextMode(this.optionsHooks?.settings?.get('playerFrameHealthText'), 3);
+    if (
+      p.hp !== this.lastPlayerFrameHp ||
+      p.maxHp !== this.lastPlayerFrameMaxHp ||
+      hpMode !== this.lastPlayerFrameHpMode
+    ) {
       this.lastPlayerFrameHp = p.hp;
       this.lastPlayerFrameMaxHp = p.maxHp;
-      playerFrame.hpText = unitFrameCurrentMaxText(p.hp, p.maxHp);
+      this.lastPlayerFrameHpMode = hpMode;
+      playerFrame.hpText = unitFrameHealthText(p.hp, p.maxHp, hpMode);
+      playerFrame.showAbsorbText = hpMode !== 0;
     }
     playerFrame.resourceKind = p.resourceType;
     playerFrame.resFrac = p.resource / Math.max(1, p.maxResource);
@@ -9151,10 +9151,11 @@ export class Hud {
         const targetFrame = this.targetFrameDescriptor;
         targetFrame.present = true;
         targetFrame.hpFrac = target.hp / Math.max(1, target.maxHp);
+        const hpMode = healthTextMode(this.optionsHooks?.settings?.get('targetFrameHealthText'), 3);
         targetFrame.hpText = target.dead
           ? t('hud.core.dead')
-          : unitFrameCurrentMaxText(target.hp, target.maxHp);
-        targetFrame.showAbsorbText = !target.dead;
+          : unitFrameHealthText(target.hp, target.maxHp, hpMode);
+        targetFrame.showAbsorbText = !target.dead && hpMode !== 0;
         // The target's power bar (classic target frame): players and caster
         // mobs show their mana/rage/energy; a resource-less target (a plain
         // beast, rtype null) maps to 'none' EXPLICITLY (unitResourceClass
@@ -9269,7 +9270,11 @@ export class Hud {
           totFrame.hpFrac = tot.hp / Math.max(1, tot.maxHp);
           totFrame.hpText = tot.dead
             ? t('hud.core.dead')
-            : unitFrameCurrentMaxText(tot.hp, tot.maxHp);
+            : unitFrameHealthText(
+                tot.hp,
+                tot.maxHp,
+                healthTextMode(this.optionsHooks?.settings?.get('targetFrameHealthText'), 3),
+              );
           totFrame.showAbsorbText = false;
           totFrame.resourceKind = 'none';
           totFrame.resFrac = 0;
@@ -9598,11 +9603,11 @@ export class Hud {
           // Zone-entry vista: a slow up-and-out camera sweep over the new
           // zone alongside the banner. Display-only, cancelled by any
           // camera input, skipped in combat/while dead and under reduced
-          // motion (the renderer gates the latter). Online mirrors never
-          // set p.inCombat, so the recent-personal-combat-event window (the
-          // same signal the combat music rides) carries that gate there.
-          const recentCombat = performance.now() - this.lastCombatEventAt < 6000;
-          if (!p.dead && !p.inCombat && !recentCombat) this.renderer.vistaPan();
+          // motion (the renderer gates the latter). Recent local combat events
+          // cover the online frame where events have arrived before the matching
+          // self cbt snapshot.
+          const recentlyInCombat = performance.now() - this.lastCombatEventAt < 5000;
+          if (!p.dead && !p.inCombat && !recentlyInCombat) this.renderer.vistaPan();
         }
         this.lastZoneId = currentZone.id;
         this.prewarmMapBg(currentZone.id); // get the new zone's map bg ready before the player opens it
@@ -10804,22 +10809,22 @@ export class Hud {
     this.mapCenter = null;
     this.mapPing = null;
     this.mapZoneOverride = null;
-    this.mapLevel = 'zone'; // always open on the per-zone detail map
+    this.mapLevel = defaultMapLevel(mapWindowMode(this.sim)); // own instance plan, else zone
     this.mapHoverZone = null;
     el.style.display = 'block';
     this.updateMapWindow();
     this.syncAnyWindowOpenState();
   }
 
-  // Toggle the world map between the per-zone detail level and the continent
-  // overview (WoW-style right-click zoom out / the level-toggle button). Not
-  // available in a delve, whose map is the schematic branch.
+  // Cycle the world map through its levels (map_surface_core.ts owns the order):
+  // inside an instance, plan -> zone -> continent -> plan, so the overworld is
+  // always reachable; outside, zone <-> continent plus the party's dungeon plan.
   private toggleMapLevel(): void {
-    if (mapWindowMode(this.sim) !== 'overworld') return;
-    this.setMapLevel(this.mapLevel === 'continent' ? 'zone' : 'continent');
+    const mode = mapWindowMode(this.sim);
+    this.setMapLevel(nextMapLevel(mode, this.mapLevel, remoteInstanceAnchor(this.sim) !== null));
   }
 
-  private setMapLevel(level: 'zone' | 'continent'): void {
+  private setMapLevel(level: MapLevel): void {
     if (this.mapLevel === level) return;
     this.mapLevel = level;
     this.mapHoverZone = null;
@@ -10863,7 +10868,7 @@ export class Hud {
 
   // scroll-wheel / button zoom for the world map (clamped to [1, MAP_MAX_ZOOM])
   private zoomMap(factor: number): void {
-    if (mapWindowMode(this.sim) !== 'overworld') return;
+    if (this.mapLevel !== 'zone' && this.mapLevel !== 'continent') return;
     // One more zoom-out at the zone map's full extent leaves the zone and opens
     // the continent overview (the level toggle's other half), instead of clamping
     // at the minimum and doing nothing. A delve has no overview to go to.
@@ -10901,14 +10906,18 @@ export class Hud {
   private resetMapModeTransition(mode: MapWindowMode): void {
     const prior = this.lastMapWindowMode;
     this.lastMapWindowMode = mode;
-    if (!prior || prior === mode) return;
+    if (prior === mode) return;
+    if (!prior) {
+      this.mapLevel = defaultMapLevel(mode); // first paint: the band's own level
+      return;
+    }
     this.mapDrag = null;
     this.mapCenter = null;
     this.mapPing = null;
     this.mapZoneOverride = null;
     this.mapHoverZone = null;
     this.mapZoom = MAP_OPEN_ZOOM;
-    this.mapLevel = 'zone';
+    this.mapLevel = defaultMapLevel(mode);
     this.hideTooltip();
   }
 
@@ -10923,14 +10932,13 @@ export class Hud {
 
     const mapMode = mapWindowMode(this.sim);
     this.resetMapModeTransition(mapMode);
-    const inRift = mapMode === 'rift';
-    const inBattleground = mapMode === 'battleground';
-    const inDelve = mapMode === 'delve';
-    const inDungeon = mapMode === 'dungeon';
-    const schematic = inRift || inDelve || inBattleground || inDungeon;
-    this.setStyleProp($('#map-level-toggle'), 'display', schematic ? 'none' : 'block');
-    this.setDisplay($('#map-zoom'), schematic || this.mapLevel === 'continent' ? 'none' : 'flex');
-    if (inRift) {
+    const remote = remoteInstanceAnchor(this.sim);
+    // Normalise the requested level: a party plan whose member has since left falls to zone.
+    this.mapLevel = resolveMapSurface(mapMode, this.mapLevel, remote !== null);
+    const schematic = this.mapLevel === 'instance';
+    this.setText($('#map-level-toggle'), t(mapLevelToggleKey(mapMode, this.mapLevel, !!remote)));
+    this.setDisplay($('#map-zoom'), this.mapLevel === 'zone' ? 'flex' : 'none');
+    if (schematic && mapMode === 'rift') {
       this.clearMapHitState(canvas);
       const model = this.riftPainter.paintWorldMap(ctx, this.sim, S);
       const area = model?.areaLabel ?? '';
@@ -10938,7 +10946,7 @@ export class Hud {
       this.setText(markerSummaryEl, this.mapMarkerInteraction.semantics.updateRift(model, S));
       return;
     }
-    if (inBattleground) {
+    if (schematic && mapMode === 'battleground') {
       this.clearMapHitState(canvas);
       const model = buildBgMapModel(this.sim);
       const area = t('hudChrome.bg.title');
@@ -10951,7 +10959,7 @@ export class Hud {
       return;
     }
 
-    if (inDelve) {
+    if (schematic && mapMode === 'delve') {
       this.clearMapHitState(canvas);
       const model = this.delvePainter.paintWorldMapDelve(ctx, this.sim, S);
       const area = model?.areaLabel ?? '';
@@ -10960,9 +10968,11 @@ export class Hud {
       return;
     }
 
-    if (inDungeon) {
+    if (schematic) {
+      // Own dungeon / castle plan, or the party member's when viewed from outside.
       this.clearMapHitState(canvas);
-      const result = this.interiorMaps.paintDungeonWorldMap(ctx, this.sim, S);
+      const anchor = mapMode === 'overworld' && remote ? remote : p.pos;
+      const result = this.interiorMaps.paintWorldMap(ctx, this.sim, S, anchor);
       const title = result?.title ?? '';
       this.setText(summaryEl, t('hud.core.mapSummary', { zone: title }));
       this.setText(
@@ -10971,15 +10981,6 @@ export class Hud {
       );
       return;
     }
-
-    this.setText(
-      $('#map-level-toggle'),
-      t(
-        this.mapLevel === 'continent'
-          ? 'hudChrome.continentMap.toZone'
-          : 'hudChrome.continentMap.toWorld',
-      ),
-    );
 
     if (this.mapLevel === 'continent') {
       this.clearMapHitState(canvas); // panning/zoom belong to the per-zone level only
@@ -10998,19 +10999,10 @@ export class Hud {
     }
     this.continentRegions = [];
 
-    const castleTitle = this.interiorMaps.paintCastleWorldMap(ctx, this.sim, S);
-    if (castleTitle !== null) {
-      this.clearMapHitState(canvas);
-      this.setText(summaryEl, t('hud.core.mapSummary', { zone: castleTitle }));
-      this.setText(
-        markerSummaryEl,
-        this.mapMarkerInteraction.semantics.updateSimple(castleTitle, S),
-      );
-      return;
-    }
-
-    // inside an instance, show the zone the dungeon's door is in (dungeonAt owns
-    // the instance x-band layout); outdoors, follow the committed zone so
+    // inside a dungeon, show the zone the dungeon's door is in (dungeonAt owns
+    // the instance x-band layout); in any other instance band lastZoneId is the
+    // zone the player entered from (the zone tracker freezes past
+    // DUNGEON_X_THRESHOLD); outdoors, follow the committed zone so
     // border-straddling can't thrash the cached terrain regen.
     const dungeon = dungeonAt(p.pos.x);
     const zone: ZoneDef = this.mapZoneOverride
@@ -11045,10 +11037,7 @@ export class Hud {
     this.mapView = result.view;
     this.mapMarkerInteraction.setOverworld(result);
     if (!this.mapDrag) canvas.style.cursor = result.cursor;
-    const riftFloor = this.sim.riftFloor;
-    const zoneLabel = riftFloor
-      ? riftFloorLabel(riftFloor.name, riftFloor.tier)
-      : zoneDisplayName(zone.id);
+    const zoneLabel = zoneDisplayName(zone.id);
     this.setText(summaryEl, t('hud.core.mapSummary', { zone: zoneLabel }));
     this.setText(
       markerSummaryEl,
@@ -13616,6 +13605,13 @@ export class Hud {
           // share one workbench wind-up (audio.craftCast); completion still
           // uses craftSuccess / disenchant / enchant / salvage.
           if (ev.entityId === sim.playerId) {
+            // Confirm (or drop) any deferred "Auto-Attack on Ability Use" request
+            // against the cast that just actually started; see
+            // confirmPendingAutoAttackEngage for the refused-cast leak it closes.
+            this.pendingAutoAttackAbilityId = confirmPendingAutoAttackEngage(
+              this.pendingAutoAttackAbilityId,
+              ev.ability,
+            );
             if (ev.ability === GATHER_CAST_ID) audio.gatherCast(ev.gatherNodeType);
             // Corpse harvest (Intentional Gathering PR3) deliberately reuses
             // the flat gathering wind-up: it is a land-gather cast in
@@ -13641,8 +13637,8 @@ export class Hud {
           // lands, never at cast start (the aggro-before-damage bug). An
           // interrupted/canceled cast just drops the pending engage; the target
           // is re-validated since the cast itself may have killed or cleared it.
-          if (ev.entityId === sim.playerId && this.pendingAutoAttackOnCastEnd) {
-            this.pendingAutoAttackOnCastEnd = false;
+          if (ev.entityId === sim.playerId && this.pendingAutoAttackAbilityId !== null) {
+            this.pendingAutoAttackAbilityId = null;
             if (ev.success) {
               const castTid = sim.player.targetId;
               const castTarget = castTid !== null ? (sim.entities.get(castTid) ?? null) : null;
@@ -14249,8 +14245,8 @@ export class Hud {
     fromTitle?: string,
     classId?: PlayerClass,
   ): void {
-    const wasNearBottom =
-      this.chatLogEl.scrollHeight - this.chatLogEl.scrollTop - this.chatLogEl.clientHeight < 24;
+    this.chatFollow ||= new ChatScrollFollow([this.chatLogEl, this.combatLogEl]);
+    const wasNearBottom = this.chatFollow.shouldFollow(this.chatLogEl);
     const div = document.createElement('div');
     // The line color is a pure function of its channel (the single source of truth
     // shared with the chat input tint), so it is derived here rather than passed in.
@@ -14331,12 +14327,11 @@ export class Hud {
       if (!first) break;
       this.chatLogEl.removeChild(first);
     }
-    if (wasNearBottom) this.chatLogEl.scrollTop = this.chatLogEl.scrollHeight;
+    if (wasNearBottom) this.chatFollow.scrollToBottom(this.chatLogEl);
   }
 
-  // Append a chat message body, rendering [[q:id]] tokens as clickable quest links
-  // and masking only the plain-text segments. Links bind the message author (fromPid)
-  // so a click can offer accept to the author's party members.
+  // Append a chat message body, rendering [[q:id]] links and masking only text.
+  // Links bind the author so party members can accept shared quests.
   private appendChatMessageBody(parent: HTMLElement, text: string, fromPid?: number): void {
     for (const seg of parseChatSegments(text)) {
       if (seg.kind === 'text') {
@@ -14567,10 +14562,9 @@ export class Hud {
     this.combatAnnouncer.push(text, performance.now());
   }
 
-  // Announce a chat line that reached the visible #chatlog pane through the tab-independent
-  // #chat-live region, mirroring what the old #chatlog aria-live spoke: a
-  // channel-filtered line is .chat-hidden (display:none) and stays silent, exactly as a
-  // display:none live-region child did. The relayed text is the rendered line text the
+  // Announce visible #chatlog lines through #chat-live, mirroring the old aria-live:
+  // channel-filtered .chat-hidden lines stay silent, matching display:none live-region children.
+  // The relayed text is the rendered line text the
   // screen reader read off the div (sender + message, already localized); ChatAnnouncer
   // coalesces + throttles a burst. Both chat append paths (appendLog's chat case and
   // chatLogFrom) call this so player chat and system chat announce alike, as #chatlog's
@@ -14599,7 +14593,8 @@ export class Hud {
     // region when its durable channel line is filtered by another active tab.
     announceWhenFiltered = false,
   ): void {
-    const wasNearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 24;
+    this.chatFollow ||= new ChatScrollFollow([this.chatLogEl, this.combatLogEl]);
+    const wasNearBottom = this.chatFollow.shouldFollow(el);
     const div = document.createElement('div');
     div.style.color = color;
     if (timestamp) this.prependTimestamp(div);
@@ -14638,7 +14633,7 @@ export class Hud {
       if (!first) break;
       el.removeChild(first);
     }
-    if (wasNearBottom) el.scrollTop = el.scrollHeight;
+    if (wasNearBottom) this.chatFollow.scrollToBottom(el);
   }
 
   // A floating note over the local player (e.g. "Can't move!" when a movement command
@@ -16099,6 +16094,10 @@ export class Hud {
     this.perfectingWindow.toggle();
   }
 
+  toggleLootExplorer(): void {
+    this.lootExplorerWindow.toggle();
+  }
+
   // Repaint the deed tracker from the live facet: the slow band, a watch
   // toggle, the collapse toggle, and language switches all funnel here; the
   // elided writers make an unchanged repaint free.
@@ -17436,17 +17435,7 @@ export class Hud {
     // Hoist the cheap signature (a single string pass, no intermediate arrays) AHEAD
     // of the selector so an unchanged party short-circuits before selectPartyFrameMembers
     // allocates its sorted / filtered / mapped arrays.
-    const settings = this.optionsHooks?.settings;
-    const config = {
-      showSelf: settings?.get('partyFrameShowSelf') ?? false,
-      showResource: settings?.get('partyFrameShowResource') ?? true,
-      showAbsorbs: settings?.get('partyFrameShowAbsorbs') ?? true,
-      showAuras: settings?.get('partyFrameShowAuras') ?? true,
-      showPets: settings?.get('partyFrameShowPets') ?? true,
-      presentation: Math.round(settings?.get('partyFrameStyle') ?? 0) as 0 | 1 | 2,
-      healthText: Math.round(settings?.get('partyFrameHealthText') ?? 1) as 0 | 1 | 2 | 3,
-      sort: Math.round(settings?.get('partyFrameSort') ?? 0) as 0 | 1 | 2,
-    };
+    const config = readPartyFrameDisplayConfig(this.optionsHooks?.settings);
     // Party members' pets, resolved from the SAME roster the pet frame uses. Built
     // before the signature because the signature folds pet health: a pet losing health
     // moves no wire field on the party payload, so without it the sliver would freeze.
@@ -18459,9 +18448,17 @@ export class Hud {
       return true;
     }
     const top = this.topmostOpenWindow();
-    if (!top) return false;
-    this.closeManagedWindow(top);
-    return true;
+    if (top) {
+      this.closeManagedWindow(top);
+      return true;
+    }
+    // Nothing else open: Escape leaves the on-bar key-binding mode (a pending
+    // capture never reaches here; Input.onKeyDown cancels it first).
+    if (this.actionBarBind?.active) {
+      this.actionBarBind.end();
+      return true;
+    }
+    return false;
   }
 }
 

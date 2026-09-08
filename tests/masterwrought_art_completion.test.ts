@@ -813,7 +813,9 @@ describe('Masterwrought art completion evidence', () => {
     // both later release-merge waves, already machine-checked and owner-review
     // pending per item_art_consistency.test.ts / item_icons.test.ts /
     // weapon_icons.test.ts, so their mapping owners are genuine, not fabricated.
-    expect(currentOwnerIds).toHaveLength(1281);
+    // OSSBrain adds the Goblin Rocket Sled and Rallycart RXT reins owners;
+    // these do not alter the dated completion/approval universe below.
+    expect(currentOwnerIds).toHaveLength(1283);
     for (const id of datedIds) {
       expect(currentOwnerIds.includes(id), `${id} still has a current mapping owner`).toBe(true);
     }
@@ -863,15 +865,24 @@ describe('Masterwrought art completion evidence', () => {
     const completionDatedIds = datedIds.filter((id) => !crucibleIds.has(id));
     expect(completionDatedIds).toHaveLength(1209);
 
-    // Strip all four later additive waves (Crucible professions, the Field Kit, the
-    // Nythraxis gap-fill weapon renders, and the Roots' Bramblehide/gap-fill paintings)
+    const ossBrainMountIds = new Set(['reins_goblin_rocket_sled', 'reins_rallycart_rxt']);
+    expect(datedIds.filter((id) => ossBrainMountIds.has(id))).toEqual([]);
+    expect(currentOwnerIds.filter((id) => ossBrainMountIds.has(id))).toHaveLength(2);
+
+    // Strip all five later additive waves (Crucible professions, the Field Kit, the
+    // Nythraxis gap-fill weapon renders, Roots' Bramblehide/gap-fill paintings,
+    // and the OSSBrain mount reins)
     // back out of the live mapping by their EXACT ids, so the underlying 1,209-item
     // completion union equation below stays isolated to exactly the same set as
-    // completionDatedIds above. This filters by the exact ids of those four batches only,
+    // completionDatedIds above. This filters by the exact ids of those additions only,
     // never by broad membership of datedIds: a filter keyed on datedIds membership would
     // silently discard future, unrecognized additions to the current owner registry.
     const completionOwnerIds = currentOwnerIds.filter(
-      (id) => !crucibleIds.has(id) && id !== 'field_kit' && !laterGapFillIds.has(id),
+      (id) =>
+        !crucibleIds.has(id) &&
+        id !== 'field_kit' &&
+        !laterGapFillIds.has(id) &&
+        !ossBrainMountIds.has(id),
     );
     expect(completionOwnerIds).toHaveLength(1209);
     expect(sorted(completionOwnerIds)).toEqual(completionDatedIds);

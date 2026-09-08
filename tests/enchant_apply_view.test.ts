@@ -388,7 +388,9 @@ describe('enchant_apply_view: enchantTargets', () => {
     const targets = enchantTargets(inventory, 'enchant_chest_stamina');
     // #2415: the enchanted chest is no longer hidden: it paints as a replace
     // row AFTER the plain family, carrying the doomed enchant's id, and since
-    // the picked enchant IS the one it carries, it is a sameEnchant deny row.
+    // the picked enchant IS the one it carries, it is a sameEnchant row: still
+    // clickable (a QoL re-apply), just tagged "Already applied" rather than
+    // naming a doomed enchant.
     expect(familyRows(targets)).toEqual([
       { itemId: otherChestId, count: 1 },
       {
@@ -648,7 +650,9 @@ describe('enchant_apply_view: wornEnchantTargets', () => {
       WEAPON_ENCHANT,
     );
     // #2415: same slot-order pass, the enchanted hand flagged (and a
-    // sameEnchant deny row here, since the picked enchant is the carried one).
+    // sameEnchant row here, since the picked enchant is the carried one: this
+    // stays a clickable QoL re-apply, never an inert deny, see the thin
+    // consumer's replace: dispatch).
     expect(rows).toEqual([
       {
         itemId: SWORD,
@@ -1119,8 +1123,8 @@ describe('enchant_apply_view: mixedHolding (#2421)', () => {
     ).toBeUndefined();
   });
 
-  it('flags a bagged plain row when the WORN twin is a same-enchant deny row too', () => {
-    // Disabled, but still on screen and still stating a state the bare bagged
+  it('flags a bagged plain row when the WORN twin is a same-enchant replace row too', () => {
+    // Enabled (a QoL reapply), but still stating a state the bare bagged
     // row does not: the pair is read before either is activated.
     const worn = wornEnchantTargets(
       { chest: chestId },
@@ -1183,23 +1187,23 @@ describe('enchant_apply_view: mixedHolding (#2421)', () => {
     for (const row of targets) expect(Object.hasOwn(row, 'mixedHolding')).toBe(false);
   });
 
-  it('does not flag a lone replace row, nor the sameEnchant deny pair', () => {
+  it('leaves a lone replace row unflagged and flags a plain/same-enchant pair', () => {
     expect(
       enchantTargets(
         [{ itemId: chestId, count: 1, instance: { enchant: 'enchant_chest_spirit' } }],
         'enchant_chest_stamina',
       )[0].mixedHolding,
     ).toBeUndefined();
-    // The disabled twin still SHARES the name, so it stays flagged: the pair is
+    // The enabled twin still SHARES the name, so it stays flagged: the pair is
     // read before either is activated.
-    const denied = enchantTargets(
+    const replaceable = enchantTargets(
       [
         { itemId: chestId, count: 1 },
         { itemId: chestId, count: 1, instance: { enchant: 'enchant_chest_stamina' } },
       ],
       'enchant_chest_stamina',
     );
-    expect(denied.map((row) => row.mixedHolding)).toEqual([true, true]);
+    expect(replaceable.map((row) => row.mixedHolding)).toEqual([true, true]);
   });
 });
 
@@ -1322,9 +1326,9 @@ describe('enchant_apply_view: name discriminators (#2466)', () => {
       { itemId: ring, slot: 'ring1', slotIndex: 1 },
       { itemId: ring, slot: 'ring2', slotIndex: 2 },
     ]);
-    // Numbered on the replace arm too, including the disabled same-enchant pair:
-    // a row is read before it is activated, so an inert row still has to say
-    // which finger it describes.
+    // Numbered on the replace arm too, including the enabled same-enchant pair:
+    // a row is read before it is activated, so a QoL-reapply row still has to
+    // say which finger it describes.
     const enchanted = wornEnchantTargets(
       { ring1: ring, ring2: ring },
       { ring1: { enchant: RING_ENCHANT }, ring2: { enchant: RING_ENCHANT } },

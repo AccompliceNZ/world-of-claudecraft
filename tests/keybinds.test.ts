@@ -151,6 +151,13 @@ describe('registry', () => {
     expect(perfecting?.category).toBe('Interface');
     expect(perfecting?.kind).toBe('edge');
     expect(perfecting?.defaults).toEqual(['Shift+KeyT']);
+    // Loot Explorer is a rebindable Interface toggle on the shifted layer of
+    // KeyO (bare KeyO is free), matching the collection/catalog convention
+    // every other shifted-letter window uses.
+    const lootExplorer = BIND_ACTIONS.find((a) => a.id === 'lootExplorer');
+    expect(lootExplorer?.category).toBe('Interface');
+    expect(lootExplorer?.kind).toBe('edge');
+    expect(lootExplorer?.defaults).toEqual(['Shift+KeyO']);
   });
 
   it('gives every shipped default code to exactly one action per layer', () => {
@@ -409,7 +416,13 @@ describe('snapshot / importBindings (hotkey setup export + import)', () => {
     expect(snap.jump).toEqual([null, null]);
     expect(snap.forward).toEqual(['KeyW', 'ArrowUp']);
     expect(Object.keys(snap).length).toBe(BIND_ACTIONS.length);
-    expect(snap).toEqual(JSON.parse(localStorage.getItem('woc_keybinds') ?? '{}'));
+    const saved = JSON.parse(localStorage.getItem('woc_keybinds') ?? '{}') as Record<
+      string,
+      unknown
+    >;
+    expect(saved.__repaired).toBe(true);
+    delete saved.__repaired;
+    expect(snap).toEqual(saved);
     snap.slot0[0] = 'KeyZ';
     expect(kb.codeAt('slot0', 0)).toBe('KeyR');
   });
@@ -736,6 +749,78 @@ describe('per-character scope', () => {
     expect(fresh.codeAt('slot1', 0)).toBe('Digit1');
     expect(fresh.actionForCode('Digit2')).toBe('slot0');
     expect(fresh.actionForCode('Digit1')).toBe('slot1');
+  });
+
+  it('does not revert a legitimate slot10/slot11 rebind to Q/E across relogin', () => {
+    // Reported bug: binding the "-" (slot10) and "=" (slot11) action-bar slots to
+    // Q and E reproduces the byte-identical shape the reverted Q/E strafe overhaul
+    // left behind (KeyQ/KeyE on those two slots, strafe left/right evicted to null
+    // by the ordinary uniqueness sweep in bind()), so the one-time repair signature
+    // match kept firing on every relogin and silently reverting the player's own
+    // rebind back to Minus/Equal.
+    const first = new Keybinds('char:alice');
+    first.bind('slot10', 0, 'KeyQ');
+    first.bind('slot11', 0, 'KeyE');
+    expect(first.codeAt('slot10', 0)).toBe('KeyQ');
+    expect(first.codeAt('slot11', 0)).toBe('KeyE');
+
+    const relogin = new Keybinds('char:alice');
+    expect(relogin.codeAt('slot10', 0)).toBe('KeyQ');
+    expect(relogin.codeAt('slot11', 0)).toBe('KeyE');
+
+    // Survives a second relogin too, not just the first.
+    const secondRelogin = new Keybinds('char:alice');
+    expect(secondRelogin.codeAt('slot10', 0)).toBe('KeyQ');
+    expect(secondRelogin.codeAt('slot11', 0)).toBe('KeyE');
+
+    // The persisted blob carries the repair marker and nothing else beyond the
+    // action ids, so it can never be mistaken for one of BIND_ACTIONS.
+    const stored = JSON.parse(localStorage.getItem('woc_keybinds:char:alice')!);
+    expect(stored.__repaired).toBe(true);
+    const actionIds = new Set(BIND_ACTIONS.map((a) => a.id));
+    expect(Object.keys(stored).filter((k) => !actionIds.has(k))).toEqual(['__repaired']);
+  });
+
+  it('leaves a Signature-A-shaped blob alone once it is already marked repaired', () => {
+    // A profile that is marked repaired but still holds the exact corrupted
+    // shape (e.g. because the player deliberately recreated it after the fix
+    // shipped) must not be reverted again: the marker, not the shape, decides.
+    localStorage.setItem(
+      'woc_keybinds:char:alice',
+      JSON.stringify({
+        strafeLeft: [null, null],
+        strafeRight: [null, null],
+        slot10: ['KeyQ', 'Minus'],
+        slot11: ['KeyE', 'Equal'],
+        __repaired: true,
+      }),
+    );
+    const fresh = new Keybinds('char:alice');
+    expect(fresh.codeAt('slot10', 0)).toBe('KeyQ');
+    expect(fresh.codeAt('slot11', 0)).toBe('KeyE');
+    expect(fresh.codeAt('strafeLeft', 0)).toBe(null);
+    expect(fresh.codeAt('strafeRight', 0)).toBe(null);
+  });
+
+  it('still repairs when the marker is present but not exactly true', () => {
+    // Only a strict `true` counts as already-repaired; any other stored value
+    // (a hand-edited blob, a future format change) must not suppress a real
+    // repair the shape still calls for.
+    localStorage.setItem(
+      'woc_keybinds:char:alice',
+      JSON.stringify({
+        strafeLeft: [null, null],
+        strafeRight: [null, null],
+        slot10: ['KeyQ', 'Minus'],
+        slot11: ['KeyE', 'Equal'],
+        __repaired: 1,
+      }),
+    );
+    const fresh = new Keybinds('char:alice');
+    expect(fresh.codeAt('strafeLeft', 0)).toBe('KeyQ');
+    expect(fresh.codeAt('strafeRight', 0)).toBe('KeyE');
+    expect(fresh.codeAt('slot10', 0)).toBe('Minus');
+    expect(fresh.codeAt('slot11', 0)).toBe('Equal');
   });
 
   it('still imports a genuine legacy customization that does not collide with a current default', () => {

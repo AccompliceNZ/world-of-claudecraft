@@ -574,9 +574,9 @@ export const de_DE: EnTranslations = {
       "tabsLabel": "Bereiche des WOC-Shops",
       "storeTab": "Shop",
       "rewardsTab": "Tägliche Belohnungen",
-      "mountsEyebrow": "Account Mounts",
-      "mountsTitle": "Machine Stable",
-      "mountBuyAria": "Purchase {item}",
+      "mountsEyebrow": "Konto-Mounts",
+      "mountsTitle": "Maschinenstabil",
+      "mountBuyAria": "Kaufen Sie {item}",
       "loading": "WOC-Shop wird geladen...",
       "error": "Der WOC-Shop ist derzeit nicht verfügbar. Bitte versuche es gleich noch einmal.",
       "balance": "Claudium-Guthaben",
@@ -982,6 +982,7 @@ export const de_DE: EnTranslations = {
       "mounts": "Reittiere",
       "professions": "Berufe",
       "reliquary": "Reliquiar",
+      "lootExplorer": "Beute-Explorer",
       "nameplates": "Namen",
       "haptics": "Haptik",
       "hapticsOff": "Haptik aus",
@@ -1140,6 +1141,9 @@ export const de_DE: EnTranslations = {
       "promptAttack": "Angreifen",
       "promptUseAbility": "Fähigkeit einsetzen",
       "promptKneel": "Knien",
+      "promptAccessInterface": "Öffne die Benutzeroberfläche",
+      "promptMoveToTarget": "Gehe zu {target}",
+      "promptSelectItem": "Wähle {item} aus",
       "promptOpenBags": "Öffne deine Taschen",
       "promptCharacterSheet": "Öffne dein Charakterfenster",
       "promptLookAround": "Halte die rechte Maustaste gedrückt und ziehe, um dich umzusehen.",
@@ -1319,9 +1323,9 @@ export const de_DE: EnTranslations = {
       "overflow": "{count} more not shown"
     },
     "targetDots": {
-      "title": "Target Dots",
-      "row": "{aura} on {target}",
-      "overflow": "{count} more not shown"
+      "title": "Zielpunkte",
+      "row": "{aura} auf {target}",
+      "overflow": "{count} mehr nicht angezeigt"
     },
     "targetAuras": {
       "title": "Auren des Ziels",
@@ -1404,11 +1408,13 @@ export const de_DE: EnTranslations = {
       "name_shadowjump_toad": "Kama-Kage die Schattensprungkröte",
       "name_stormfeather_griffin": "Himmelsgreif Sturmfeder",
       "name_thunderstrut_gobbler": "Donnerstolz der Große Puter",
+      "name_goblin_rocket_sled": "Goblin-Raketenschlitten",
+      "name_rallycart_rxt": "Rallycart RXT",
       "name_terrorspark_groundshaker": "Dreadspark Groundshaker",
       "name_drakemaw_raptor": "Drakenrachen-Raptor",
-      "name_mech_bird": "Cluckwork Mech Bird",
-      "name_lanternback_troll": "Grumbol the Lanternback",
-      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
+      "name_mech_bird": "Cluckwork-Mechvogel",
+      "name_lanternback_troll": "Grumbol der Laternenrücken",
+      "name_chimeglass_tortoise": "Tolliver das Chimeglass",
       "name_rickshaw_mount": "Knochengebundene Rikscha",
       "desc_valorsteed": "Ein robustes, trittsicheres Ross, das die Reisegeschwindigkeit erhöht.",
       "desc_grag_bear": "Ein robuster, trittsicherer Bär, der die Reisegeschwindigkeit erhöht.",
@@ -1417,11 +1423,13 @@ export const de_DE: EnTranslations = {
       "desc_shadowjump_toad": "Eine massige, trittsichere Riesenkröte, geschult in blitzschnellen Schattensprüngen über jedes Gelände.",
       "desc_stormfeather_griffin": "Ein königlicher Sturmgreif, der mit runenbeschlagenen Klauen und angelegten Schwingen über den Boden pirscht.",
       "desc_thunderstrut_gobbler": "Ein kolossaler sturmgeborener Puter, der vom Erwachenden Gipfel herabstolziert, den Schwanz gefächert wie eine Gewitterfront.",
+      "desc_goblin_rocket_sled": "Ein gefährlich überkonstruierter Goblinschlitten, angetrieben von zwei Raketen und hervorragend schlechtem Urteilsvermögen.",
+      "desc_rallycart_rxt": "Eine handliche Rallyemaschine, die die Reisegeschwindigkeit erhöht.",
       "desc_terrorspark_groundshaker": "Eine kompakte gepanzerte Maschine mit schweren Ketten, einer großkalibrigen Kanone und einem Sattel für furchtlose Piloten.",
       "desc_drakemaw_raptor": "Ein zugerittener Brutraptor aus der Drakenrachen-Caldera, ganz Sehne und Sprint, der noch schwach nach Asche riecht.",
-      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
-      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
-      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
+      "desc_mech_bird": "Ein handgefertigtes Uhrwerk-Kriegshuhn, das mit schnappenden Servos sprintet, während sich der Aufziehschlüssel noch dreht.",
+      "desc_lanternback_troll": "Ein von Lampenanzündern bis zum Joch gebrochener Bergtroll, der einen eisernen Thron über seinen Schultern trägt und auf beiden Armen eine brennende Sturmlaterne trägt.",
+      "desc_chimeglass_tortoise": "Eine Salzschildkröte, die drei Generationen von Wohnwagen überholt hat. Kesselflicker haben ihm eine Brille aus Sturmglas geschliffen und ihm eine Bronzeglocke an den Hals gehängt, damit die Straße ihn hört, lange bevor sie ihn sieht.",
       "desc_rickshaw_mount": "Ein klappernder Knochenkarren, an dessen Deichseln ein knochiger Scherge angeschirrt ist und Euch im vollen Lauf zieht."
     },
     "mountTraining": {
@@ -1583,26 +1591,26 @@ export const de_DE: EnTranslations = {
       "showPlaytime": "Spielzeit auf dem Charakterbildschirm anzeigen",
       "forceHighPerfGpu": "Dedizierte Gaming-GPU verwenden",
       "forceHighPerfGpuNote": "Standardmäßig aktiviert: Die Desktop-App fordert von diesem Computer die dedizierte Gaming-GPU an. Schalte dies aus, wenn das Spiel nicht startet, nur einen schwarzen Bildschirm zeigt oder das Laptop-Display schwarz bleibt. Wird erst beim nächsten Spielstart wirksam.",
-      "shaderWarm": "Shader Warm-up Worker",
-      "shaderWarmAuto": "Auto",
-      "shaderWarmOff": "Off",
-      "shaderWarmOn": "On",
-      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
-      "gpuBackend": "Graphics Backend",
-      "gpuBackendAuto": "Auto",
+      "shaderWarm": "Shader-Aufwärm-Worker",
+      "shaderWarmAuto": "Automatisch",
+      "shaderWarmOff": "Aus",
+      "shaderWarmOn": "An",
+      "shaderWarmNote": "Wärmt den Shader-Cache im Hintergrund vor, um Ruckler im Spiel zu verhindern. Automatisch: nur aktiviert, wenn Euer Grafiksystem es unterstützt. (Empfohlen). An: überall erzwungen. Kann auf manchen Systemen die Leistung verschlechtern. Aus: deaktiviert.",
+      "gpuBackend": "Grafik-Backend",
+      "gpuBackendAuto": "Automatisch",
       "gpuBackendVulkan": "Vulkan",
-      "gpuBackendOpenGL": "OpenGL (slow)",
-      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
-      "gpuBackendActive": "Currently using {backend}.",
-      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
-      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
-      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendOpenGL": "OpenGL (langsam)",
+      "gpuBackendNote": "Automatisch wählt die beste Option für Euch. Vulkan ist schneller und für die meisten Spieler empfohlen. OpenGL ist langsamer, kann aber helfen, wenn Vulkan nicht richtig funktioniert. Wirkt beim nächsten Spielstart.",
+      "gpuBackendActive": "Derzeit wird {backend} verwendet.",
+      "gpuBackendActiveUnavailable": "Derzeit wird {backend} verwendet (Vulkan kann nicht aktiviert werden).",
+      "gpuBackendActiveAutoCapped": "Derzeit wird {backend} verwendet. Automatisch versucht Vulkan auf dieser Grafikkarte noch nicht. Wählt Vulkan, um es zu versuchen.",
+      "gpuBackendSaveFailed": "Die Auswahl konnte nicht gespeichert werden. Beim nächsten Start bleibt {backend}.",
       "gpuBackendActiveNameVulkan": "Vulkan",
       "gpuBackendActiveNameOpenGL": "OpenGL",
-      "restartPending": "Some changes take effect after a restart.",
-      "restartGame": "Restart Game",
-      "restartInProgress": "Restarting the game...",
-      "restartFailed": "The game could not restart itself. Quit and start it again.",
+      "restartPending": "Einige Änderungen wirken erst nach einem Neustart.",
+      "restartGame": "Spiel neu starten",
+      "restartInProgress": "Spiel wird neu gestartet...",
+      "restartFailed": "Das Spiel konnte sich nicht selbst neu starten. Beendet es und startet es erneut.",
       "discordPresence": "Discord-Aktivitätsanzeige",
       "discordPresenceNote": "Zeigt die Zone, in der du dich befindest, und wie lange du diese Sitzung schon spielst, als deine Discord-Aktivität an, und jeder, der dein Discord-Profil sehen kann, kann beides sehen. Geteilt werden nur der Zonenname, deine Sitzungszeit und das Spiel, niemals dein Charakter, dein Konto oder mit wem du spielst. Erfordert, dass die Discord-App auf diesem Computer läuft.",
       "showDevBadges": "Entwicklerabzeichen anzeigen",
@@ -1611,7 +1619,10 @@ export const de_DE: EnTranslations = {
       "uiScale": "UI-Skalierung",
       "playerFrameScale": "Skalierung des Spielerfensters",
       "targetFrameScale": "Skalierung des Zielfensters",
+      "playerHealthText": "Text zur Spielergesundheit",
+      "targetHealthText": "Zielgesundheitstext",
       "aurasOnPlayerFrame": "Stärkungszauber am Spielerfenster",
+      "auraBarBelowFrame": "Stärkungszauber unter dem Spielerfenster",
       "alwaysShowAllBuffs": "Immer alle Stärkungszauber anzeigen",
       "highContrastBackground": "Hintergrund mit hohem Kontrast",
       "startAttackOnAbility": "Auto-Angriff bei Fähigkeitseinsatz",
@@ -1634,9 +1645,9 @@ export const de_DE: EnTranslations = {
       "showTargetOfTarget": "Ziel des Ziels anzeigen",
       "showTargetSwingTimer": "Zielschwungtimer anzeigen",
       "showPetFrame": "Euren Begleiter anzeigen",
-      "showNameplateDots": "Show My Dots on Nameplates",
-      "nameplateDotScale": "Nameplate Dot Size",
-      "showTargetDots": "Show Target Dots",
+      "showNameplateDots": "Zeigen Sie meine Punkte auf Namensschildern",
+      "nameplateDotScale": "Punktgröße des Typenschilds",
+      "showTargetDots": "Zielpunkte anzeigen",
       "showDefensivesTrack": "Show Defensive Cooldowns",
       "showSelfBuffTrack": "Show My Buffs",
       "showOffensiveTrack": "Show Offensive Cooldowns",
@@ -2659,7 +2670,9 @@ export const de_DE: EnTranslations = {
       "unequipHint": "Klicke, um diese Tasche abzulegen",
       "poolGeneral": "Allgemein: {used} von {total}",
       "poolMaterials": "Materialien: {used} von {total}",
-      "capacityPoolsAria": "Belegte Taschenplätze: {used} von {total}. Allgemeine Gegenstände: {generalUsed} von {generalTotal}. Materialien: {materialsUsed} von {materialsTotal}."
+      "capacityPoolsAria": "Belegte Taschenplätze: {used} von {total}. Allgemeine Gegenstände: {generalUsed} von {generalTotal}. Materialien: {materialsUsed} von {materialsTotal}.",
+      "capacityPools": "Gegenstände {generalUsed}/{generalTotal}, Materialien {materialsUsed}/{materialsTotal}",
+      "emptyMaterialsOnly": "Nur Materialien"
     },
     "raidConvert": {
       "toPartyDone": "Euer Schlachtzug wurde wieder in eine Gruppe umgewandelt.",
@@ -2689,22 +2702,22 @@ export const de_DE: EnTranslations = {
       "worldfireConsumed": "Der gesamte Schmelztiegel brennt!"
     },
     "nythraxisCallout": {
-      "impaled": "Bone Spikes! Free the impaled!",
-      "youAreImpaled": "You are impaled! Hold on!",
-      "spikeBroken": "Spike shattered!",
-      "dreadCurseSwap": "Dread Curse: swap tanks!",
-      "sigilAppears": "A Binding Sigil flares! Drag Nythraxis onto it!",
-      "sigilBound": "Nythraxis is bound! Burn him!",
-      "sigilUnbound": "The sigil fades unbound! Nythraxis grows stronger!",
-      "gravefireTarget": "Gravefire races toward you! Sidestep!",
-      "kingsWrath": "The King rises in wrath! Everything hits harder now!",
-      "boneStormBegins": "Bone Storm! Spread out and run!",
-      "boneStormCharge": "Nythraxis is charging YOU! Run!",
-      "boneStormEnds": "Bone Storm over. Tanks, pick him up!",
-      "crownEndures60": "One minute until The Crown Endures!",
-      "crownEndures30": "Thirty seconds until The Crown Endures!",
-      "crownEndures10": "Ten seconds! Burn him!",
-      "crownEndures": "The Crown Endures! Nythraxis is enraged!"
+      "impaled": "Knochenspieße! Befreit die Aufgespießten!",
+      "youAreImpaled": "Ihr seid aufgespießt! Haltet durch!",
+      "spikeBroken": "Spieß zerschmettert!",
+      "dreadCurseSwap": "Schreckensfluch: Tanks wechseln!",
+      "sigilAppears": "Ein Bindungssiegel flammt auf! Zieht Nythraxis darauf!",
+      "sigilBound": "Nythraxis ist gebunden! Brennt ihn nieder!",
+      "sigilUnbound": "Das Siegel verblasst ungebunden! Nythraxis wird stärker!",
+      "gravefireTarget": "Grabfeuer rast auf Euch zu! Seitlich ausweichen!",
+      "kingsWrath": "Der König erhebt sich im Zorn! Jetzt trifft alles härter!",
+      "boneStormBegins": "Knochensturm! Verteilt Euch und lauft!",
+      "boneStormCharge": "Nythraxis stürmt auf EUCH zu! Lauft!",
+      "boneStormEnds": "Knochensturm vorbei. Tanks, nehmt ihn auf!",
+      "crownEndures60": "Eine Minute bis Die Krone hält stand!",
+      "crownEndures30": "Dreißig Sekunden bis Die Krone hält stand!",
+      "crownEndures10": "Zehn Sekunden! Brennt ihn nieder!",
+      "crownEndures": "Die Krone hält stand! Nythraxis ist rasend!"
     },
     "varkhulWaveStatus": "Welle {wave}/{waves} | Feinde: {remaining}",
     "raidBossGuide": {
@@ -2856,65 +2869,65 @@ export const de_DE: EnTranslations = {
         "heroic": "Heroisch: Die Schmiedehitze kühlt nie ab, der Amboss-Erlass bringt zusätzliche Meteore, und die letzte Phase entfernt die meisten Mechaniken zugunsten des Weltenbrands."
       },
       "nythraxis": {
-        "overview": "High Priest Malric refused to let his king die, and the rite that raised Nythraxis bound the whole court to the crypt. The encounter tests a disciplined tank swap, fast switches onto Bone Spikes, movement off burning ground, and a coordinated wardstone channel once the Throne falls.",
-        "phaseThroneName": "The Throne",
-        "phaseThroneSummary": "Nythraxis holds his throne room with a charged frontal cleave, the Dread Curse tank swap, Bone Spikes that impale raiders, and Grave Eruptions that leave burning ground.",
-        "phaseWardstonesName": "The Wardstones",
-        "phaseWardstonesSummary": "At {health} health, Shuddering Stomp holds the raid still while Brother Aldric arrives and lights the wardstones. Every spike shatters and the floor stops burning, then Soul Rend and Deathless Rage join the Throne mechanics.",
-        "phaseKingsWrathName": "The King's Wrath",
-        "phaseKingsWrathSummary": "At {health} health, Nythraxis roars in The King's Wrath and gains {bonusNormal} damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption tightens to every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire to every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic). Every other mechanic keeps its cadence.",
-        "gravebreakerName": "Gravebreaker",
-        "gravebreakerSummary": "Every {seconds} sec, Nythraxis charges his next landed swing. His target takes only the swing itself, but everyone else within {range} yd inside the {arc} degree cone in front of him takes {splash} of that swing as Physical damage, reduced by their own armor.",
-        "gravebreakerResponse": "Tanks keep Nythraxis facing away from the raid. Everyone else stays behind or beside him and never crosses the cone.",
-        "dreadCurseName": "Dread Curse",
-        "dreadCurseSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitNormal} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackNormal}, up to {max} stacks.",
-        "dreadCurseHeroicSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitHeroic} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackHeroic}, up to {max} stacks.",
-        "dreadCurseResponse": "Tanks swap at {stacks} stacks: the other tank taunts and the cursed tank stays out of the Gravebreaker cone while the stacks fade. Healers prepare the incoming tank before the swap.",
-        "boneSpikeName": "Bone Spike",
-        "boneSpikeSummary": "Every {everyNormal} sec, Nythraxis impales {victimsNormal} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainNormal} of maximum health every second until their spike is destroyed.",
-        "boneSpikeHeroicSummary": "Every {everyHeroic} sec, Nythraxis impales {victimsHeroic} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainHeroic} of maximum health every second until their spike is destroyed.",
-        "boneSpikeResponse": "Damage dealers switch to the Bone Spikes at once and destroy them to free the impaled raiders. Healers keep the impaled alive while the spikes fall.",
-        "graveEruptionName": "Grave Eruption",
-        "graveEruptionSummary": "Every {everyNormal} sec, skeletal hands mark {countNormal} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstNormal} of maximum health as Shadow damage, then burns as Grave Flame for {flameNormal} sec, dealing {tickNormal} of maximum health every second to anyone standing in it.",
-        "graveEruptionHeroicSummary": "Every {everyHeroic} sec, skeletal hands mark {countHeroic} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstHeroic} of maximum health as Shadow damage, then burns as Grave Flame for {flameHeroic} sec, dealing {tickHeroic} of maximum health every second to anyone standing in it.",
-        "graveEruptionResponse": "Step out of every warning circle before it erupts and stay off the burning ground. Tanks pull Nythraxis clear of the flames so melee keeps room to work.",
-        "bindingSigilName": "Binding Sigil",
-        "bindingSigilSummary": "Every {everyNormal} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionNormal} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindNormal} sec he is Bound: the Ascension is purged, he is stunned for {stunNormal} sec, and he takes {vulnerability} more damage for {boundNormal} sec. Otherwise every raider takes {unboundHitNormal} of maximum health as Shadow damage and he keeps {unboundBonusNormal} more damage until the next binding.",
-        "bindingSigilHeroicSummary": "Every {everyHeroic} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionHeroic} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindHeroic} sec he is Bound: the Ascension is purged, he is stunned for {stunHeroic} sec, and he takes {vulnerability} more damage for {boundHeroic} sec. Otherwise every raider takes {unboundHitHeroic} of maximum health as Shadow damage and he keeps {unboundBonusHeroic} more damage until the next binding.",
-        "bindingSigilResponse": "The tank drags Nythraxis onto the sigil at once, through whatever fire the raid left behind. Melee follow the drag and ranged stay out of the new Gravebreaker cone. Everyone burns him while he is Bound.",
-        "raiseFallenName": "Raise Fallen",
-        "raiseFallenSummary": "Every {every} sec during The Throne, Nythraxis raises Risen Royal Guards behind him. They rush his current target and fight until they are destroyed.",
-        "raiseFallenResponse": "The off-tank picks up each wave as it rises. Damage dealers clear the guards between Bone Spikes so the waves never pile up before the Throne falls.",
-        "soulRendName": "Soul Rend",
-        "soulRendSummary": "Nythraxis marks {marksNormal} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals its bearer's full maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them.",
-        "soulRendHeroicSummary": "Nythraxis marks {marksHeroic} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals {damageHeroic} of its bearer's maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them. A mark that resolves alone is lethal.",
-        "soulRendResponse": "Every marked raider runs to one stack point and stands within {range} yd of the other marks before the {fuse} sec fuse ends. Healers top the group off as the marks resolve.",
-        "soulfireName": "Soulfire",
-        "soulfireSummary": "Every Soul Rend detonation leaves a pool of purple fire with a {radius} yd radius where each mark stood, burning for {seconds} sec at {tickNormal} of maximum health every second. Standing where pools overlap takes a tick from each one. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireHeroicSummary": "Every Soul Rend detonation leaves one pool of purple fire with a {radius} yd radius per stacked group of marks, burning for {secondsHeroic} sec at {tickHeroic} of maximum health every second. Standing where pools overlap takes only one tick, never stacked copies. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireResponse": "Move out of the purple pool as soon as the marks detonate. Keep the next stack point clear of active fire.",
-        "gravefireName": "Gravefire",
-        "gravefireSummary": "Every {everyNormal} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnNormal} sec and deals {tickNormal} of maximum health every second to anyone standing in it.",
-        "gravefireHeroicSummary": "Every {everyHeroic} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnHeroic} sec and deals {tickHeroic} of maximum health every second to anyone standing in it.",
-        "gravefireResponse": "Sidestep the line as it comes: it is narrow and never turns. Ranged raiders keep moving instead of standing in one spot.",
-        "deathlessRageName": "Deathless Rage",
-        "deathlessRageSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageNormal} of maximum health as Shadow damage.",
-        "deathlessRageHeroicSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageHeroic} of maximum health as Shadow damage, which no health pool survives.",
-        "deathlessRageResponse": "Assign one raider to each wardstone before the pull. When the cast begins, each runs to their stone and channels it until it completes. Stuns, stepping away, and death break the channel, so keep the channelers safe and never assign an impaled raider.",
-        "courtName": "The Deathless Court",
-        "courtSummary": "On Heroic, Nythraxis raises his court after each Deathless Rage, interrupted or not, once the previous court has fallen. The Spirit of Aldren cleaves everything near his target with Royal Cleave. The Spirit of Malric channels Malric's Mending, healing Nythraxis for more with every cast. The Spirit of Voss ignores taunts and hunts the raid.",
-        "courtResponse": "Tanks pick up Aldren and turn his cleave away from the raid. Stun or silence Malric the moment Malric's Mending begins and kill him first, then root or stun Voss off the healers, since he cannot be taunted, and finish him next.",
-        "kingsWrathName": "King's Wrath",
-        "kingsWrathSummary": "Nythraxis deals {bonusNormal} more damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption occurs every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic).",
-        "kingsWrathResponse": "Use remaining defensive cooldowns for unavoidable damage. Keep every earlier mechanic clean while the raid finishes the fight.",
-        "boneStormName": "Bone Storm",
-        "boneStormSummary": "Starting {first} sec into The King's Wrath and every {everyNormal} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlNormal} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamNormal} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormHeroicSummary": "Starting {first} sec into The King's Wrath and every {everyHeroic} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlHeroic} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamHeroic} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormResponse": "Spread out and keep running from Nythraxis. The charged raider runs away while everyone else leaves room around the charge path, then tanks pick him up when the storm ends.",
-        "crownEnduresName": "The Crown Endures",
-        "crownEnduresSummary": "At {enrageNormal} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryNormal} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresHeroicSummary": "At {enrageHeroic} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryHeroic} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresResponse": "Treat the first warning as the final burn. Save movement and defensive cooldowns for the remaining mechanics, then defeat Nythraxis before the enrage."
+        "overview": "Hohepriester Malric weigerte sich, seinen König sterben zu lassen, und der Ritus, der Nythraxis erhob, band den ganzen Hof an die Gruft. Die Begegnung prüft einen disziplinierten Tankwechsel, schnelle Wechsel auf Knochenspieße, Bewegung aus brennendem Boden und eine koordinierte Schutzstein-Kanalisierung, sobald der Thron fällt.",
+        "phaseThroneName": "Der Thron",
+        "phaseThroneSummary": "Nythraxis hält seinen Thronsaal mit einem aufgeladenen frontalen Spaltangriff, dem Schreckensfluch-Tankwechsel, Knochenspießen, die Schlachtzügler aufspießen, und Graberuptionen, die brennenden Boden hinterlassen.",
+        "phaseWardstonesName": "Die Schutzsteine",
+        "phaseWardstonesSummary": "Bei {health} Gesundheit hält Erschütterndes Stampfen den Schlachtzug fest, während Bruder Aldric eintrifft und die Schutzsteine entzündet. Jeder Spieß zerbricht und der Boden hört auf zu brennen, dann kommen Seelenriss und Todlose Raserei zu den Thron-Mechaniken hinzu.",
+        "phaseKingsWrathName": "Zorn des Königs",
+        "phaseKingsWrathSummary": "Bei {health} Gesundheit brüllt Nythraxis im Zorn des Königs und erhält auf Normal {bonusNormal} Schaden oder auf Heroisch {bonusHeroic} für den Rest des Kampfes. Graberuption verkürzt sich auf alle {eruptionEveryNormal} Sek. ({eruptionEveryHeroic} auf Heroisch) und Grabfeuer auf alle {gravefireEveryNormal} Sek. ({gravefireEveryHeroic} auf Heroisch). Jede andere Mechanik behält ihren Rhythmus.",
+        "gravebreakerName": "Grabbrecher",
+        "gravebreakerSummary": "Alle {seconds} Sek. lädt Nythraxis seinen nächsten gelandeten Schlag auf. Sein Ziel erleidet nur den Schlag selbst, aber alle anderen innerhalb von {range} yd im {arc}-Grad-Kegel vor ihm erleiden {splash} dieses Schlags als körperlichen Schaden, reduziert durch ihre eigene Rüstung.",
+        "gravebreakerResponse": "Tanks halten Nythraxis vom Schlachtzug weggedreht. Alle anderen bleiben hinter oder neben ihm und kreuzen nie den Kegel.",
+        "dreadCurseName": "Schreckensfluch",
+        "dreadCurseSummary": "Alle {every} Sek. trifft Nythraxis seinen aktuellen Tank für {hitNormal} der maximalen Gesundheit als Schattenschaden und fügt einen Stapel Schreckensfluch hinzu. Für {duration} Sek. erhöht jeder Stapel den Schaden, den dieser Tank von Nythraxis erleidet, um {perStackNormal}, bis zu {max} Stapeln.",
+        "dreadCurseHeroicSummary": "Alle {every} Sek. trifft Nythraxis seinen aktuellen Tank für {hitHeroic} der maximalen Gesundheit als Schattenschaden und fügt einen Stapel Schreckensfluch hinzu. Für {duration} Sek. erhöht jeder Stapel den Schaden, den dieser Tank von Nythraxis erleidet, um {perStackHeroic}, bis zu {max} Stapeln.",
+        "dreadCurseResponse": "Tanks wechseln bei {stacks} Stapeln: Der andere Tank verspottet, und der verfluchte Tank bleibt aus dem Grabbrecher-Kegel, während die Stapel auslaufen. Heiler bereiten den kommenden Tank vor dem Wechsel vor.",
+        "boneSpikeName": "Knochenspieß",
+        "boneSpikeSummary": "Alle {everyNormal} Sek. spießt Nythraxis {victimsNormal} Schlachtzügler außer seinem aktuellen Ziel auf Knochenspieße. Ein aufgespießter Schlachtzügler kann nicht handeln und verliert jede Sekunde {drainNormal} der maximalen Gesundheit, bis sein Spieß zerstört ist.",
+        "boneSpikeHeroicSummary": "Alle {everyHeroic} Sek. spießt Nythraxis {victimsHeroic} Schlachtzügler außer seinem aktuellen Ziel auf Knochenspieße. Ein aufgespießter Schlachtzügler kann nicht handeln und verliert jede Sekunde {drainHeroic} der maximalen Gesundheit, bis sein Spieß zerstört ist.",
+        "boneSpikeResponse": "Schadensklassen wechseln sofort auf die Knochenspieße und zerstören sie, um die aufgespießten Schlachtzügler zu befreien. Heiler halten die Aufgespießten am Leben, während die Spieße fallen.",
+        "graveEruptionName": "Graberuption",
+        "graveEruptionSummary": "Alle {everyNormal} Sek. markieren Skeletthände {countNormal} Kreise von {radius} yd unter Schlachtzüglern. Nach {warning} Sek. bricht jeder Kreis für {burstNormal} der maximalen Gesundheit als Schattenschaden aus und brennt dann {flameNormal} Sek. lang als Grabflamme, die jedem darin Stehenden jede Sekunde {tickNormal} der maximalen Gesundheit zufügt.",
+        "graveEruptionHeroicSummary": "Alle {everyHeroic} Sek. markieren Skeletthände {countHeroic} Kreise von {radius} yd unter Schlachtzüglern. Nach {warning} Sek. bricht jeder Kreis für {burstHeroic} der maximalen Gesundheit als Schattenschaden aus und brennt dann {flameHeroic} Sek. lang als Grabflamme, die jedem darin Stehenden jede Sekunde {tickHeroic} der maximalen Gesundheit zufügt.",
+        "graveEruptionResponse": "Tretet aus jedem Warnkreis, bevor er ausbricht, und bleibt vom brennenden Boden weg. Tanks ziehen Nythraxis aus den Flammen, damit Nahkämpfer Platz zum Arbeiten behalten.",
+        "bindingSigilName": "Bindungssiegel",
+        "bindingSigilSummary": "Alle {everyNormal} Sek. flammt ein Siegel der alten Schutzzauber {minDist} bis {maxDist} yd von Nythraxis entfernt auf dem Boden auf, und er beginnt Todlose Erhebung, wodurch er alle {ascensionEvery} Sek. {ascensionNormal} Schaden und Angriffstempo erhält. Steht er innerhalb von {bindNormal} Sek. auf dem Siegel, wird er gebunden: Die Erhebung wird gebannt, er ist {stunNormal} Sek. betäubt und er erleidet {boundNormal} Sek. lang {vulnerability} mehr Schaden. Andernfalls erleidet jeder Schlachtzügler {unboundHitNormal} der maximalen Gesundheit als Schattenschaden, und er behält bis zur nächsten Bindung {unboundBonusNormal} mehr Schaden.",
+        "bindingSigilHeroicSummary": "Alle {everyHeroic} Sek. flammt ein Siegel der alten Schutzzauber {minDist} bis {maxDist} yd von Nythraxis entfernt auf dem Boden auf, und er beginnt Todlose Erhebung, wodurch er alle {ascensionEvery} Sek. {ascensionHeroic} Schaden und Angriffstempo erhält. Steht er innerhalb von {bindHeroic} Sek. auf dem Siegel, wird er gebunden: Die Erhebung wird gebannt, er ist {stunHeroic} Sek. betäubt und er erleidet {boundHeroic} Sek. lang {vulnerability} mehr Schaden. Andernfalls erleidet jeder Schlachtzügler {unboundHitHeroic} der maximalen Gesundheit als Schattenschaden, und er behält bis zur nächsten Bindung {unboundBonusHeroic} mehr Schaden.",
+        "bindingSigilResponse": "Der Tank zieht Nythraxis sofort auf das Siegel, auch durch jedes Feuer, das der Schlachtzug zurückgelassen hat. Nahkämpfer folgen dem Zug, Fernkämpfer bleiben aus dem neuen Grabbrecher-Kegel. Alle brennen ihn nieder, solange er gebunden ist.",
+        "raiseFallenName": "Gefallene erheben",
+        "raiseFallenSummary": "Alle {every} Sek. während des Throns erhebt Nythraxis Auferstandene Königswachen hinter sich. Sie stürmen auf sein aktuelles Ziel zu und kämpfen, bis sie zerstört sind.",
+        "raiseFallenResponse": "Der zweite Tank nimmt jede Welle auf, sobald sie sich erhebt. Schadensklassen räumen die Wachen zwischen den Knochenspießen ab, damit die Wellen sich vor dem Fall des Throns nie stapeln.",
+        "soulRendName": "Seelenriss",
+        "soulRendSummary": "Nythraxis markiert {marksNormal} Schlachtzügler außer seinem aktuellen Ziel mit Seelenriss. Nach {fuse} Sek. verursacht jede Markierung die volle maximale Gesundheit ihres Trägers als Schattenschaden, geteilt durch die Anzahl markierter Schlachtzügler innerhalb von {range} yd um sie.",
+        "soulRendHeroicSummary": "Nythraxis markiert {marksHeroic} Schlachtzügler außer seinem aktuellen Ziel mit Seelenriss. Nach {fuse} Sek. verursacht jede Markierung {damageHeroic} der maximalen Gesundheit ihres Trägers als Schattenschaden, geteilt durch die Anzahl markierter Schlachtzügler innerhalb von {range} yd um sie. Eine Markierung, die allein auslöst, ist tödlich.",
+        "soulRendResponse": "Jeder markierte Schlachtzügler läuft zu einem Sammelpunkt und steht innerhalb von {range} yd der anderen Markierungen, bevor die {fuse} Sek. lange Zündzeit endet. Heiler bringen die Gruppe hoch, wenn die Markierungen auslösen.",
+        "soulfireName": "Seelenfeuer",
+        "soulfireSummary": "Jede Seelenriss-Detonation hinterlässt dort, wo jede Markierung stand, eine violette Feuerfläche mit {radius} yd Radius, die {seconds} Sek. lang brennt und jede Sekunde {tickNormal} der maximalen Gesundheit verursacht. Wer dort steht, wo Flächen überlappen, erleidet von jeder Fläche einen Tick. Flächen entstehen nie innerhalb von {clearance} yd eines Schutzsteins.",
+        "soulfireHeroicSummary": "Jede Seelenriss-Detonation hinterlässt pro gestapelter Markierungsgruppe eine violette Feuerfläche mit {radius} yd Radius, die {secondsHeroic} Sek. lang brennt und jede Sekunde {tickHeroic} der maximalen Gesundheit verursacht. Wer dort steht, wo Flächen überlappen, erleidet nur einen Tick, nie gestapelte Kopien. Flächen entstehen nie innerhalb von {clearance} yd eines Schutzsteins.",
+        "soulfireResponse": "Lauft aus der violetten Fläche, sobald die Markierungen detonieren. Haltet den nächsten Sammelpunkt frei von aktivem Feuer.",
+        "gravefireName": "Grabfeuer",
+        "gravefireSummary": "Alle {everyNormal} Sek. läuft eine Linie aus violettem Grabfeuer von Nythraxis auf einen Schlachtzügler zu und wächst jede Sekunde um {speed} yd bis auf {length} yd. Jeder Yard brennt {burnNormal} Sek. lang und verursacht jede Sekunde {tickNormal} der maximalen Gesundheit bei jedem, der darin steht.",
+        "gravefireHeroicSummary": "Alle {everyHeroic} Sek. läuft eine Linie aus violettem Grabfeuer von Nythraxis auf einen Schlachtzügler zu und wächst jede Sekunde um {speed} yd bis auf {length} yd. Jeder Yard brennt {burnHeroic} Sek. lang und verursacht jede Sekunde {tickHeroic} der maximalen Gesundheit bei jedem, der darin steht.",
+        "gravefireResponse": "Weicht seitlich aus, wenn die Linie kommt: Sie ist schmal und dreht nie. Fernkämpfer bleiben in Bewegung, statt an einer Stelle stehen zu bleiben.",
+        "deathlessRageName": "Todlose Raserei",
+        "deathlessRageSummary": "Alle {every} Sek. wirkt Nythraxis {cast} Sek. lang Todlose Raserei. Während er wirkt, kann jeder erleuchtete Schutzstein von einem Schlachtzügler {channel} Sek. lang kanalisiert werden. Wenn drei verschiedene Schlachtzügler jeweils einen Schutzstein abschließen, bevor der Zauber endet, wird die Raserei unterbrochen und Nythraxis {stun} Sek. lang betäubt. Andernfalls erleidet jeder Schlachtzügler {damageNormal} der maximalen Gesundheit als Schattenschaden.",
+        "deathlessRageHeroicSummary": "Alle {every} Sek. wirkt Nythraxis {cast} Sek. lang Todlose Raserei. Während er wirkt, kann jeder erleuchtete Schutzstein von einem Schlachtzügler {channel} Sek. lang kanalisiert werden. Wenn drei verschiedene Schlachtzügler jeweils einen Schutzstein abschließen, bevor der Zauber endet, wird die Raserei unterbrochen und Nythraxis {stun} Sek. lang betäubt. Andernfalls erleidet jeder Schlachtzügler {damageHeroic} der maximalen Gesundheit als Schattenschaden, was kein Lebenspool überlebt.",
+        "deathlessRageResponse": "Weist vor dem Pull jedem Schutzstein einen Schlachtzügler zu. Wenn der Zauber beginnt, läuft jeder zu seinem Stein und kanalisiert ihn bis zum Abschluss. Betäubungen, Wegtreten und Tod brechen die Kanalisierung, also schützt die Kanalisierer und weist niemals einen aufgespießten Schlachtzügler zu.",
+        "courtName": "Der Todlose Hof",
+        "courtSummary": "Auf Heroisch erhebt Nythraxis seinen Hof nach jeder Todlosen Raserei, unterbrochen oder nicht, sobald der vorherige Hof gefallen ist. Der Geist von Aldren spaltet alles nahe seinem Ziel mit Königlicher Spalt. Der Geist von Malric kanalisiert Malrics Heilung und heilt Nythraxis mit jedem Zauber stärker. Der Geist von Voss ignoriert Spott und jagt den Schlachtzug.",
+        "courtResponse": "Tanks nehmen Aldren auf und drehen seinen Spaltangriff vom Schlachtzug weg. Betäubt oder unterbrecht Malric, sobald Malrics Heilung beginnt, und tötet ihn zuerst. Verwurzelt oder betäubt danach Voss weg von den Heilern, da er nicht verspottet werden kann, und erledigt ihn als Nächstes.",
+        "kingsWrathName": "Zorn des Königs",
+        "kingsWrathSummary": "Nythraxis verursacht auf Normal {bonusNormal} mehr Schaden oder auf Heroisch {bonusHeroic} für den Rest des Kampfes. Graberuption tritt alle {eruptionEveryNormal} Sek. auf ({eruptionEveryHeroic} auf Heroisch) und Grabfeuer alle {gravefireEveryNormal} Sek. ({gravefireEveryHeroic} auf Heroisch).",
+        "kingsWrathResponse": "Nutzt verbleibende defensive Abklingzeiten für unvermeidbaren Schaden. Haltet jede frühere Mechanik sauber, während der Schlachtzug den Kampf beendet.",
+        "boneStormName": "Knochensturm",
+        "boneStormSummary": "Ab {first} Sek. nach Beginn von Zorn des Königs und danach alle {everyNormal} Sek. beginnt Nythraxis {duration} Sek. lang Knochensturm. Er ignoriert Bedrohung, bewegt sich {speed}-mal so schnell wie normal und führt {charges} Anstürme aus, die jeweils {chargeSeconds} Sek. dauern. Sein Wirbel verursacht jede Sekunde innerhalb von {radius} yd {whirlNormal} der maximalen Gesundheit. Jeder Ansturm endet mit einem Knochenschlag im selben Radius für {slamNormal} der maximalen Gesundheit. Er wirkt {spikeAt} Sek. nach Beginn des Sturms Knochenspieß, dann wird Grabbrecher {rearm} Sek. nach seinem Ende wieder bereit.",
+        "boneStormHeroicSummary": "Ab {first} Sek. nach Beginn von Zorn des Königs und danach alle {everyHeroic} Sek. beginnt Nythraxis {duration} Sek. lang Knochensturm. Er ignoriert Bedrohung, bewegt sich {speed}-mal so schnell wie normal und führt {charges} Anstürme aus, die jeweils {chargeSeconds} Sek. dauern. Sein Wirbel verursacht jede Sekunde innerhalb von {radius} yd {whirlHeroic} der maximalen Gesundheit. Jeder Ansturm endet mit einem Knochenschlag im selben Radius für {slamHeroic} der maximalen Gesundheit. Er wirkt {spikeAt} Sek. nach Beginn des Sturms Knochenspieß, dann wird Grabbrecher {rearm} Sek. nach seinem Ende wieder bereit.",
+        "boneStormResponse": "Verteilt Euch und lauft weiter vor Nythraxis weg. Der anvisierte Schlachtzügler läuft davon, während alle anderen Platz um die Ansturmroute lassen. Danach nehmen die Tanks ihn wieder auf.",
+        "crownEnduresName": "Die Krone hält stand",
+        "crownEnduresSummary": "Bei {enrageNormal} Sek. nach Kampfbeginn (die Uhr pausiert, während Bruder Aldric bei 70% eintritt) löst Die Krone hält stand eine harte Raserei aus. Nythraxis erhält {damage} mehr Schaden und {haste} schnellere Angriffe, danach alle {rampEveryNormal} Sek. weitere {rampStep} Schaden. Es gibt keine Timerleiste. Warnungen kommen als Rufe bei {warn60}, {warn30} und {warn10} Sek. verbleibend.",
+        "crownEnduresHeroicSummary": "Bei {enrageHeroic} Sek. nach Kampfbeginn (die Uhr pausiert, während Bruder Aldric bei 70% eintritt) löst Die Krone hält stand eine harte Raserei aus. Nythraxis erhält {damage} mehr Schaden und {haste} schnellere Angriffe, danach alle {rampEveryHeroic} Sek. weitere {rampStep} Schaden. Es gibt keine Timerleiste. Warnungen kommen als Rufe bei {warn60}, {warn30} und {warn10} Sek. verbleibend.",
+        "crownEnduresResponse": "Behandelt die erste Warnung als letzten Schadensrausch. Spart Bewegung und defensive Abklingzeiten für die übrigen Mechaniken, dann besiegt Nythraxis vor der Raserei."
       }
     },
     "auraEffect": {
@@ -2925,14 +2938,14 @@ export const de_DE: EnTranslations = {
       "varkhulMoltenCore": "Trage diesen Kern zur Schmiede. Glühende Last verursacht alle {interval} Sek. steigenden Schaden, von {min}% bis {max}% der maximalen Gesundheit.",
       "varkhulForgeLink": "Fange einen aktiven Pfeilerstrahl ab, bevor er die Schmiede erreicht. Offene Strahlen fügen pro Sekunde 6% Hitze hinzu. In Normal kühlen geblockte Strahlen und inaktive Pfeiler die Schmiede ab; in Heroisch sinkt die Hitze nie. Bei 100% erleidet die Schmiede eine tödliche Kernschmelze.",
       "varkhulCrucibleExposure": "Das Blocken eines Schmelztiegelstrahls verursacht jede Sekunde steigenden Schaden an der maximalen Gesundheit. Die Stapel setzen sich in Normal 10 Sekunden und in Heroisch 60 Sekunden nach dem Verlassen eines Strahls zurück.",
-      "nythraxisDreadCurse": "Each stack increases damage taken from Nythraxis by {perStack}% for {duration} sec: {stacks} of {max} stacks now, {pct}% more damage. Every {every} sec his next hit on his target deals {hit}% of maximum health and adds a stack. Tanks should swap at {swap} stacks.",
-      "nythraxisImpaled": "Impaled on a Bone Spike: you cannot act and lose {normal}% of your maximum health every {interval} sec ({heroic}% on Heroic) until the raid destroys the spike.",
-      "nythraxisAscension": "Deathless Ascension: {stacks} stacks, {pct}% more damage and attack speed. Drag Nythraxis onto the Binding Sigil to purge it.",
-      "nythraxisBound": "Bound by the old wards: Nythraxis takes {pct}% more damage for {duration} sec.",
-      "nythraxisUnbound": "Unbound: Nythraxis deals {pct}% more damage until a Binding Sigil holds him.",
-      "nythraxisKingsWrath": "King's Wrath: Nythraxis deals {pct}% more damage for the rest of the fight.",
-      "nythraxisBoneStorm": "Bone Storm: Nythraxis ignores threat, whirls for {tick}% of maximum health every second within {radius} yd, and charges raiders. Spread out and run.",
-      "nythraxisCrownEndures": "The Crown Endures: {stacks} stacks, {pct}% more damage and {haste}% faster attacks. The raid is out of time.",
+      "nythraxisDreadCurse": "Jeder Stapel erhöht den von Nythraxis erlittenen Schaden {duration} Sek. lang um {perStack}%: jetzt {stacks} von {max} Stapeln, {pct}% mehr Schaden. Alle {every} Sek. verursacht sein nächster Treffer gegen sein Ziel {hit}% der maximalen Gesundheit und fügt einen Stapel hinzu. Tanks sollten bei {swap} Stapeln wechseln.",
+      "nythraxisImpaled": "Auf einem Knochenspieß aufgespießt: Ihr könnt nicht handeln und verliert alle {interval} Sek. {normal}% Eurer maximalen Gesundheit ({heroic}% auf Heroisch), bis der Schlachtzug den Spieß zerstört.",
+      "nythraxisAscension": "Todlose Erhebung: {stacks} Stapel, {pct}% mehr Schaden und Angriffstempo. Zieht Nythraxis auf das Bindungssiegel, um sie zu bannen.",
+      "nythraxisBound": "Von den alten Schutzzaubern gebunden: Nythraxis erleidet {pct}% mehr Schaden für {duration} Sek.",
+      "nythraxisUnbound": "Ungebunden: Nythraxis verursacht {pct}% mehr Schaden, bis ein Bindungssiegel ihn hält.",
+      "nythraxisKingsWrath": "Zorn des Königs: Nythraxis verursacht für den Rest des Kampfes {pct}% mehr Schaden.",
+      "nythraxisBoneStorm": "Knochensturm: Nythraxis ignoriert Bedrohung, wirbelt jede Sekunde innerhalb von {radius} yd für {tick}% der maximalen Gesundheit und stürmt Schlachtzügler an. Verteilt Euch und lauft.",
+      "nythraxisCrownEndures": "Die Krone hält stand: {stacks} Stapel, {pct}% mehr Schaden und {haste}% schnellere Angriffe. Dem Schlachtzug läuft die Zeit davon.",
       "dot": "Verursacht alle {interval} s {value} {school}schaden",
       "hot": "Stellt alle {interval} s {value} Gesundheit wieder her",
       "mendingCurrent": "Speichert {value} Heilung, mit der Zeit freigesetzt oder von Kaskadenflickung verbraucht",
@@ -3003,8 +3016,8 @@ export const de_DE: EnTranslations = {
       "redline": "Rote Linie: Kerbe {stacks} von {max}. Körpertreffer fügen Kerben hinzu; der K.-o.-Schlag trifft pro Kerbe {pct}% härter und schließt das Fenster. Läuft es vorher ab, verfällt es",
       "veilstrikeWindow": "Schattenschleier: Eure Dämmerschleier-Eröffnungen sind im Offenen aus jedem Winkel einsetzbar, und der verursachte Schaden steigt um {pct}%",
       "veiledEdge": "Euer nächster Lauererschlag trifft doppelt so hart",
-      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
-      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
+      "veiledEdgeStrike": "Euer nächster Lauerschlag verursacht {pct}% mehr Waffenschaden",
+      "coldsightRead": "Euer nächster Langer Zug verursacht {longDrawPct}% mehr Schaden, oder Euer nächster Unheilsschuss verursacht {fellShotPct}% mehr",
       "duskEconomy": "Fähigkeiten kosten {pct}% weniger Energie",
       "moontide": "Mondflut: Stufe {stacks} von {max}. Wildblitz-, Himmelssturz- und Mondsaat-Zauber füllen sie in Mondkingestalt; bei {max} wird Mondsaat zu Mondwoge und Himmelssturz zu Sonnenspur, und beide zehren von ihr",
       "oldBlood": "Altes Blut: Stufe {stacks} von {max}. Gelandete Wolfs- und Bruin-Schläge teilen sich diese Bank; bei {max} verwandelt sich Blutbiss oder Knochenmalmer",
@@ -3198,6 +3211,7 @@ export const de_DE: EnTranslations = {
       "healthPercent": "Prozent",
       "healthCurrent": "Aktuell",
       "healthCurrentMax": "Aktuell / Maximum",
+      "healthCurrentMaxPercent": "Aktuell/Max (Prozent)",
       "sort": "Spieler sortieren",
       "sortGroup": "Gruppe",
       "sortRole": "Rolle",
@@ -3237,17 +3251,17 @@ export const de_DE: EnTranslations = {
         "targetFrame": "Ziel",
         "partyFrames": "Gruppe",
         "swingBar": "Automatischer Angriff",
-        "targetDots": "Target Dots",
-        "questTracker": "Quest Tracker",
-        "reliquaryTracker": "Reliquary Tracker",
-        "petBar": "Pet Bar",
-        "procOverlay": "Spell Procs",
-        "procOverlayFrost": "Icicles",
-        "damageMeter": "Damage Meter",
-        "deedTracker": "Deed Tracker",
-        "delveTracker": "Delve Tracker",
-        "riftTracker": "Rift Tracker",
-        "swingBarOffhand": "Off Hand"
+        "targetDots": "Zielpunkte",
+        "questTracker": "Questtracker",
+        "reliquaryTracker": "Reliquiartracker",
+        "petBar": "Begleiterleiste",
+        "procOverlay": "Zauber-Auslöser",
+        "procOverlayFrost": "Eiszapfen",
+        "damageMeter": "Schadensanzeige",
+        "deedTracker": "Tatentracker",
+        "delveTracker": "Tiefentracker",
+        "riftTracker": "Riss-Tracker",
+        "swingBarOffhand": "Nebenhand"
       },
       "framesMenu": "Rahmeneinstellungen",
       "framesMenuTitle": "Einzelne Rahmen ein- oder ausblenden. Ein deaktivierter Rahmen bleibt verborgen, bis du ihn wieder aktivierst oder auf die Standardeinstellungen zurücksetzt.",
@@ -3280,33 +3294,33 @@ export const de_DE: EnTranslations = {
       "wrongKind": "Dieser Code hat einen anderen Exporttyp."
     },
     "keybindTransfer": {
-      "setup": "Hotkey Setup",
-      "apply": "Apply",
-      "imported": "Hotkey setup imported.",
-      "wrongKind": "That code is a settings export, not a hotkey setup."
+      "setup": "Tastenkürzel-Einrichtung",
+      "apply": "Anwenden",
+      "imported": "Tastenkürzel-Einrichtung importiert.",
+      "wrongKind": "Dieser Code ist ein Einstellungsexport, keine Tastenkürzel-Einrichtung."
     },
     "keyboardMap": {
-      "title": "Keyboard Overview",
-      "hint": "Keys in use are coloured by category. Hover or focus a key to see everything bound to it.",
-      "hintInteractive": "Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.",
-      "popOut": "Pop Out",
-      "close": "Close keyboard overview",
-      "pressKey": "Press a key for {action}. Esc cancels.",
-      "boundTo": "Bound {action} to {key}.",
-      "notBindable": "That key cannot be bound.",
-      "assignHint": "Choose an action to bind to {key}.",
-      "assignPlaceholder": "Assign an action to {key}",
-      "layerGroup": "Modifier layer",
-      "formGroup": "Keyboard size",
-      "formFull": "Full size",
-      "formTkl": "Tenkeyless",
+      "title": "Tastaturübersicht",
+      "hint": "Belegte Tasten sind nach Kategorie eingefärbt. Zeigt mit Mauszeiger oder Fokus auf eine Taste, um alle Belegungen zu sehen.",
+      "hintInteractive": "Belegte Tasten sind nach Kategorie eingefärbt. Klickt eine Taste, um ihre Aktion zu ändern. Zeigt mit Mauszeiger oder Fokus darauf, um alle Belegungen zu sehen.",
+      "popOut": "Ausklappen",
+      "close": "Tastaturübersicht schließen",
+      "pressKey": "Drückt eine Taste für {action}. Esc bricht ab.",
+      "boundTo": "{action} an {key} gebunden.",
+      "notBindable": "Diese Taste kann nicht belegt werden.",
+      "assignHint": "Wählt eine Aktion für {key}.",
+      "assignPlaceholder": "Aktion für {key} zuweisen",
+      "layerGroup": "Modifikatorebene",
+      "formGroup": "Tastaturgröße",
+      "formFull": "Vollgröße",
+      "formTkl": "Ohne Nummernblock",
       "form75": "75%",
       "form60": "60%",
-      "notOnLayout": "Not on this keyboard: {bindings}",
-      "legendGroup": "Key labels",
-      "legendLayout": "Your layout",
+      "notOnLayout": "Nicht auf dieser Tastatur: {bindings}",
+      "legendGroup": "Tastenbeschriftungen",
+      "legendLayout": "Euer Layout",
       "legendQwerty": "QWERTY",
-      "layerNone": "No modifier",
+      "layerNone": "Kein Modifikator",
       "layerShift": "Shift",
       "layerCtrl": "Ctrl",
       "layerAlt": "Alt",
@@ -3314,43 +3328,43 @@ export const de_DE: EnTranslations = {
       "separator": ", ",
       "bindingLine": "{key}: {action}",
       "assignOption": "{category}: {action}",
-      "otherLayers": "Also bound with a modifier"
+      "otherLayers": "Auch mit einem Modifikator belegt"
     },
     "fullTransfer": {
-      "menu": "Import / Export",
-      "title": "Import / Export Settings",
-      "fullSettings": "Full Settings",
-      "intro": "Export every saved preference on this device as one code, and paste it on another device or browser to import it: graphics, audio, interface, theme, frame layout, key bindings for every character, controller and cross hotbar bindings, chat, window filters, language, and dismissed hints.",
-      "excluded": "Never included: your login, account, wallet, or purchase data. Action bar layouts are saved to your account and travel with it."
+      "menu": "Importieren / Exportieren",
+      "title": "Einstellungen importieren / exportieren",
+      "fullSettings": "Vollständige Einstellungen",
+      "intro": "Exportiert jede auf diesem Gerät gespeicherte Einstellung als einen Code und fügt ihn auf einem anderen Gerät oder Browser zum Importieren ein: Grafik, Audio, Oberfläche, Thema, Fensterlayout, Tastenbelegungen für jeden Charakter, Controller- und Cross-Hotbar-Belegungen, Chat, Fensterfilter, Sprache und ausgeblendete Hinweise.",
+      "excluded": "Nie enthalten: Eure Anmeldung, Euer Konto, Eure Wallet oder Kaufdaten. Aktionsleistenlayouts werden in Eurem Konto gespeichert und reisen mit."
     },
     "riftForge": {
-      "title": "Rift Forge",
-      "subtitle": "Riftbound bands",
+      "title": "Rissschmiede",
+      "subtitle": "Riftbound-Bänder",
       "currency": "{name}: {count}",
-      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
-      "wornHint": "Worn. Unequip it to forge.",
-      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
-      "upgradeMax": "Fully upgraded",
-      "gemPickAria": "Gem to socket",
+      "empty": "Kein Riftbound-Band in Ihren Taschen. Ein Rift-Ranglistenspieler, der als Erster klarkommt, prägt einen.",
+      "wornHint": "Getragen. Lege es ab, um es zu schmieden.",
+      "upgradeBtn": "Upgrade auf Gegenstandsebene {level} ({cost}-Essenz)",
+      "upgradeMax": "Vollständig aufgerüstet",
+      "gemPickAria": "Edelstein zum Sockel",
       "gemOption": "{name} ({bonus})",
-      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
-      "socketBtn": "Socket",
-      "socketsNone": "no gems",
-      "noGems": "No Rift gems in your bags",
-      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "socketReplaceHint": "Steckdosen voll: Der nächste Edelstein ersetzt den ältesten, {gem}.",
+      "socketBtn": "Steckdose",
+      "socketsNone": "keine Edelsteine",
+      "noGems": "Keine Rift-Juwelen in deinen Taschen",
+      "refused": "Die Schmiede lehnte ab. Stellen Sie sich zum Riftwright und versuchen Sie es erneut.",
       "reason": {
-        "notFound": "That band is not in your bags.",
-        "notRiftGear": "Only a Riftbound band can be forged.",
-        "maxUpgrade": "That band is fully upgraded.",
-        "insufficientEssence": "Not enough Rift Essence.",
-        "invalidGem": "You have no such Rift gem.",
-        "dead": "You can't do that while dead.",
-        "tooFar": "You are too far from the Rift Forge."
+        "notFound": "Diese Band ist nicht in euren Taschen.",
+        "notRiftGear": "Nur ein Riftbound-Band kann geschmiedet werden.",
+        "maxUpgrade": "Diese Band ist vollständig aufgerüstet.",
+        "insufficientEssence": "Nicht genug Rift-Essenz.",
+        "invalidGem": "Du hast kein solches Rift-Juwel.",
+        "dead": "Das kann man nicht tun, wenn man tot ist.",
+        "tooFar": "Du bist zu weit von der Rift Forge entfernt."
       },
       "done": {
-        "upgrade": "Upgraded {name}.",
-        "socket": "Socketed a gem into {name}.",
-        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+        "upgrade": "{name} aktualisiert.",
+        "socket": "Ein Juwel in {name} eingefasst.",
+        "socketReplaced": "Einen Edelstein in {name} eingesteckt; {gem} wurde zerstört."
       }
     },
     "itemTooltip": {
@@ -3358,7 +3372,7 @@ export const de_DE: EnTranslations = {
       "riftTier": "Riss-Gegenstand (Rang {tier})",
       "riftUpgrade": "Riss-Aufwertung {level}/{max}",
       "riftSockets": "Riss-Edelsteine {used}/{total}",
-      "riftGemSocket": "Socket bonus for a Riftbound band",
+      "riftGemSocket": "Sockelbonus für ein Riftbound-Band",
       "statEnchanted": "+{value} {stat} (Verzaubert)",
       "enchantedFallback": "Verzaubert",
       "partyTradeWindow": "Du kannst diesen Gegenstand noch {time} lang an Spieler weitergeben, die denselben Beutefund erhalten haben. Das Anlegen beendet dieses Handelsfenster.",
@@ -3423,6 +3437,7 @@ export const de_DE: EnTranslations = {
       "close": "Schließen",
       "keybind": "Discord-Panel",
       "disabled": "Die Discord-Integration ist momentan nicht verfügbar.",
+      "queuePingsLabel": "Sende mir eine Discord-Direktnachricht, wenn meine Schlachtfeld- oder Arena-Warteschlange auftaucht (erfordert ein verknüpftes Discord-Konto)",
       "tiers": {
         "none": "Ohne Rang",
         "initiate": "Eingeweihter",
@@ -3680,13 +3695,13 @@ export const de_DE: EnTranslations = {
       "close": "Schließen"
     },
     "realmBuilder": {
-      "title": "Realm Builder of the Month",
-      "currentLabel": "Honoured this month",
-      "placeholderName": "Your Name Here",
-      "placeholderHint": "This plate is waiting for its first name.",
-      "pastTitle": "Past honourees",
-      "pastEmpty": "No names on the roll yet.",
-      "close": "Close"
+      "title": "Realm Builder des Monats",
+      "currentLabel": "Diesen Monat geehrt",
+      "placeholderName": "Ihr Name hier",
+      "placeholderHint": "Dieser Teller wartet auf seinen Vornamen.",
+      "pastTitle": "Ehemalige Preisträger",
+      "pastEmpty": "Noch sind keine Namen auf der Liste.",
+      "close": "Schließen"
     },
     "bank": {
       "title": "Bank",
@@ -3743,6 +3758,8 @@ export const de_DE: EnTranslations = {
       "depositAllDone": "Eingelagerte Materialien: {count}.",
       "depositAllFull": "Eingelagerte Materialien: {count}. Die Bank ist jetzt voll.",
       "depositAllNone": "Bank voll: nichts eingelagert.",
+      "depositAllNotable": "Hinterlegte Materialien: {count}, einschließlich {item}.",
+      "depositAllNotableFull": "Hinterlegte Materialien: {count}, einschließlich {item}. Bank jetzt voll.",
       "bonusTitle": "Bonusfächer",
       "bonusEarned": "+{count}",
       "bonusStatusEarned": "+{count}",
@@ -3781,6 +3798,8 @@ export const de_DE: EnTranslations = {
       "vaultDepositAllDone": "Eingelagerte Materialien: {count}.",
       "vaultDepositAllFull": "Eingelagerte Materialien: {count}. Manche Obergrenzen sind erreicht.",
       "vaultDepositAllNone": "Tresor-Obergrenzen erreicht: nichts eingelagert.",
+      "vaultDepositAllNotable": "Hinterlegte Materialien: {count}, einschließlich {item}.",
+      "vaultDepositAllNotableFull": "Hinterlegte Materialien: {count}, einschließlich {item}. Einige Decken sind voll.",
       "vaultWithdrawShort": "Nur {fit} von {count} passen in deine Taschen.",
       "vaultDepositHint": "Klicken, um in deinen Tresor einzulagern",
       "vaultCannotDeposit": "Kann nicht in den Tresor gelegt werden",
@@ -3815,34 +3834,34 @@ export const de_DE: EnTranslations = {
       "guildViewsAria": "Gildenbank-Ansichten",
       "guildContentsTab": "Inhalt",
       "guildLogTab": "Protokoll",
-      "guildHistoryTab": "History",
+      "guildHistoryTab": "Verlauf",
       "logAria": "Aktivitätsprotokoll der Gildenbank",
       "logNote": "Die {count} letzten Aktionen der Gildenbank.",
-      "logShowing": "Showing {count} guild bank actions, newest first.",
-      "logFilterAria": "Filter the guild bank history",
-      "logFilterAll": "All",
-      "logFilterItems": "Items",
-      "logFilterMoney": "Money",
-      "logOlder": "Show older",
-      "logOlderLoading": "Loading older actions...",
-      "logEnd": "That is the whole guild bank history.",
-      "logEmptyFiltered": "No guild bank actions match this filter.",
-      "logColTime": "When",
-      "logColMember": "Member",
-      "logColAction": "Action",
-      "logColDetail": "Details",
-      "logActionDeposit": "Deposited",
-      "logActionWithdraw": "Withdrew",
-      "logActionBuySlots": "Bought an expansion",
-      "logActionOpenBank": "Opened the bank",
-      "logActionCharterFee": "Paid the charter fee",
-      "logActionAdminPurge": "Removed",
-      "logActorAdmin": "An administrator",
+      "logShowing": "{count} Gildenbankaktionen werden angezeigt, neueste zuerst.",
+      "logFilterAria": "Gildenbankverlauf filtern",
+      "logFilterAll": "Alle",
+      "logFilterItems": "Gegenstände",
+      "logFilterMoney": "Geld",
+      "logOlder": "Ältere anzeigen",
+      "logOlderLoading": "Ältere Aktionen werden geladen...",
+      "logEnd": "Das ist der vollständige Gildenbankverlauf.",
+      "logEmptyFiltered": "Keine Gildenbankaktionen entsprechen diesem Filter.",
+      "logColTime": "Wann",
+      "logColMember": "Mitglied",
+      "logColAction": "Aktion",
+      "logColDetail": "Einzelheiten",
+      "logActionDeposit": "Eingezahlt",
+      "logActionWithdraw": "Abgehoben",
+      "logActionBuySlots": "Erweiterung gekauft",
+      "logActionOpenBank": "Bank geöffnet",
+      "logActionCharterFee": "Satzungsgebühr bezahlt",
+      "logActionAdminPurge": "Entfernt",
+      "logActorAdmin": "Ein Administrator",
       "logDetailItem": "{count} {item}",
-      "logSearchPlaceholder": "Search this history",
-      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
-      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
-      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
+      "logSearchPlaceholder": "Diesen Verlauf durchsuchen",
+      "logSearchAria": "Die geladenen Gildenbankaktionen nach Mitglied, Aktion oder Gegenstand durchsuchen",
+      "logShowingMatched": "{matched} von {count} geladenen Gildenbankaktionen werden angezeigt.",
+      "logSearchNoMatch": "Keine geladenen Gildenbankaktionen entsprechen Eurer Suche. Zeigt ältere Zeilen an, um sie zu erweitern.",
       "logLoading": "Protokoll der Gildenbank wird geladen...",
       "logEmpty": "Es wurde noch nichts in die Gildenbank eingelagert oder aus ihr entnommen.",
       "logUnavailable": "Das Protokoll der Gildenbank kann derzeit nicht gelesen werden.",
@@ -3943,17 +3962,17 @@ export const de_DE: EnTranslations = {
         }
       },
       "roster": {
-        "seats": "{count} of {cap} seats",
-        "expand": "Expand roster (+{seats} seats for {price})",
-        "maxed": "The roster is at its largest size",
-        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
-        "confirmAction": "Expand",
-        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "seats": "{count} von {cap} Sitzen",
+        "expand": "Kader erweitern (+{seats}-Plätze für {price})",
+        "maxed": "Der Dienstplan ist am größten",
+        "confirm": "Erweitern Sie die Gildenliste um {seats}-Plätze für {price}? Das Gold stammt aus Ihrem eigenen Portemonnaie und wird nicht erstattet.",
+        "confirmAction": "Erweitern",
+        "expandedLine": "{name} hat die Gildenliste auf {cap}-Mitglieder erweitert.",
         "result": {
-          "notLeader": "Only the Guild Master may expand the guild roster.",
-          "maxed": "The guild roster cannot grow any larger.",
-          "cannotAfford": "You need {price} to expand the guild roster.",
-          "retry": "The guild roster changed while you were buying. Try again."
+          "notLeader": "Nur der Gildenmeister darf die Gildenliste erweitern.",
+          "maxed": "Die Gildenliste kann nicht größer werden.",
+          "cannotAfford": "Du benötigst {price}, um die Gildenliste zu erweitern.",
+          "retry": "Die Gildenliste hat sich während des Kaufs geändert. Versuchen Sie es erneut."
         }
       }
     },
@@ -4517,7 +4536,7 @@ export const de_DE: EnTranslations = {
       "sameEnchant": "Dieser Gegenstand hat diese Verzauberung bereits.",
       "notPerfected": "Only a Perfected item can bear that enchant.",
       "enchantSkillTooLow": "Your Enchanting skill is too low for that enchant.",
-      "riftGear": "Riftbound bands take Rift gems, not enchants.",
+      "riftGear": "Riftbound-Bands erhalten Rift-Edelsteine, keine Verzauberungen.",
       "replaceTag": "Ersetzt {enchant}",
       "sameEnchantTag": "Bereits angewendet",
       "plainTag": "Nicht verzaubert",
@@ -4808,15 +4827,15 @@ export const de_DE: EnTranslations = {
         "deathless_rage": "Unsterbliche Raserei (an den Schutzsteinen unterbrochen)",
         "wardstones": "Schutzstein-Kanale (Phasenubergang)",
         "dread_curse": "Schreckensfluch (nur heroisch, stapelnder Schwachungseffekt fur Tankwechsel)",
-        "bone_spike": "Bone Spike (impaled raiders drain until the spike is destroyed)",
-        "grave_eruption": "Grave Eruption (warning circles that leave burning ground)",
-        "binding_sigil": "Binding Sigil (drag the boss onto the sigil or the raid pays)",
-        "gravefire": "Gravefire (a traveling line of fire to sidestep)",
-        "soulfire": "Soulfire (Soul Rend detonations leave burning pools)",
-        "kings_wrath": "King's Wrath (30%: permanent damage bonus, faster floor hazards)",
-        "bone_storm": "Bone Storm (he ignores threat, whirls, and charges the raid)",
-        "crown_endures": "The Crown Endures (hard enrage at 6:00, heroic 5:00)",
-        "deathless_court": "The Deathless Court (heroic only, the royal court rises after Deathless Rage)"
+        "bone_spike": "Knochenspieß (aufgespießte Schlachtzügler verlieren Leben, bis der Spieß zerstört ist)",
+        "grave_eruption": "Graberuption (Warnkreise, die brennenden Boden hinterlassen)",
+        "binding_sigil": "Bindungssiegel (zieht den Boss auf das Siegel, sonst bezahlt der Schlachtzug)",
+        "gravefire": "Grabfeuer (eine wandernde Feuerlinie zum Ausweichen)",
+        "soulfire": "Seelenfeuer (Detonationen von Seelenriss hinterlassen brennende Flächen)",
+        "kings_wrath": "Zorn des Königs (30%: dauerhafter Schadensbonus, schnellere Bodengefahren)",
+        "bone_storm": "Knochensturm (er ignoriert Bedrohung, wirbelt und stürmt den Schlachtzug an)",
+        "crown_endures": "Die Krone hält stand (harte Raserei bei 6:00, heroisch 5:00)",
+        "deathless_court": "Der Todlose Hof (nur heroisch, der Königshof erhebt sich nach Todloser Raserei)"
       }
     },
     "reliquary": {
@@ -4906,6 +4925,7 @@ export const de_DE: EnTranslations = {
       "sourceProfession": "Durch {profession} verdient",
       "sourceDeed": "Wird von der Tat {deed} verliehen",
       "sourceVendor": "Wird von {vendor} verkauft",
+      "sourceVendorGated": "Wird von {vendor} verkauft ({requirement})",
       "sourceBossZone": "Beute von {boss} in {zone}",
       "sourceDelve": "Im Tiefgang {delve} zu finden",
       "sourceRift": "Beute aus Rissdurchgängen des Rangs {rank}",
@@ -4925,6 +4945,10 @@ export const de_DE: EnTranslations = {
       "filterAll": "Alle",
       "filterOwned": "Katalogisiert",
       "filterMissing": "Fehlend",
+      "filterIlluminated": "Beleuchtet",
+      "filterRemaining": "Übrig",
+      "filterEmptyPages": "Keine Seite entspricht diesem Filter.",
+      "filterGroupAriaPages": "Filtern Sie Seiten danach, ob sie beleuchtet sind",
       "recentJumpAria": "Die Seite zu {name} öffnen",
       "recentEmpty": "Noch keine Funde. Reliquien, die du ab jetzt katalogisierst, landen hier.",
       "nearlyEmpty": "Seiten kurz vor der Vervollständigung sammeln sich hier.",
@@ -5032,6 +5056,7 @@ export const de_DE: EnTranslations = {
       "summary": "Weltkarte. Wähle eine Zone, um ihre Karte zu öffnen.",
       "toWorld": "Weltkarte",
       "toZone": "Zonenkarte",
+      "toInstance": "Instanzkarte",
       "toggleAria": "Zwischen Weltkarte und Zonenkarte wechseln",
       "levels": "Stufe {min} bis {max}"
     },
@@ -5066,6 +5091,7 @@ export const de_DE: EnTranslations = {
       "walletLinkedConnected": "Deine verknüpfte Wallet-App ist verbunden und bereit für $WOC-Käufe.",
       "walletUsdBalance": "{amount} USD",
       "walletUsdUnknown": "Unbekannt",
+      "walletCardDismiss": "Brieftaschenkarte ausblenden",
       "rateNote": "Kurs: etwa {tokens} $WOC pro 1,00 USD, Stand {time}.",
       "rateNotePaused": "Letzter bekannter Kurs: etwa {tokens} $WOC pro 1,00 USD, Stand {time}.",
       "estimateNote": "Etwa {tokens} $WOC für {usd} zum aktuellen Kurs.",
@@ -5257,6 +5283,43 @@ export const de_DE: EnTranslations = {
       "listingStatusCancelled": "Zurückgezogen",
       "listingStatusSuspended": "Ausgesetzt",
       "listingStatusUnsold": "Nicht verkauft"
+    },
+    "lootExplorer": {
+      "title": "Beute-Explorer",
+      "close": "Schließen Sie den Loot Explorer",
+      "searchPlaceholder": "Artikel suchen...",
+      "searchAria": "Elemente suchen",
+      "filterCategoryAria": "Quelle",
+      "filterClassAria": "Klasse",
+      "filterStatAria": "Attribut",
+      "filterQualityAria": "Qualität",
+      "filterAll": "Alle",
+      "tabItems": "Nach Artikel",
+      "tabEncounters": "Durch Begegnung",
+      "category": {
+        "raid": "Überfall",
+        "dungeon": "Kerker",
+        "delve": "Tauchen Sie ein",
+        "open_world": "Offene Welt",
+        "rift": "Riss",
+        "vendor": "Anbieter",
+        "quest_reward": "Questbelohnung",
+        "quest_objective": "Questziel",
+        "ground_object": "Weltobjekt",
+        "starting_equipment": "Startausrüstung"
+      },
+      "difficulty": {
+        "normal": "Normalmodus",
+        "heroic": "Heroisch"
+      },
+      "riftRankLabel": "Rift-Rang {rank}",
+      "source": "{category}: {name}",
+      "sourceWithContext": "{category}: {name} ({context})",
+      "chance": "{pct}% Chance",
+      "guaranteed": "Garantiert",
+      "gatedByQuest": "Während der Quest: {quest}",
+      "empty": "Keine Beute entspricht diesen Filtern.",
+      "resultCount": "{count}-Ergebnisse"
     }
   },
   "gatherEvent": {
@@ -5356,7 +5419,8 @@ export const de_DE: EnTranslations = {
       "link_required": "Verknüpfe zuerst dein Discord-Konto.",
       "swag_claimed": "Du hast diese Belohnung bereits beansprucht.",
       "swag_tier": "Erreiche einen höheren Rang, um dies zu beanspruchen.",
-      "swag_points": "Nicht genügend Punkte."
+      "swag_points": "Nicht genügend Punkte.",
+      "invalid_input": "Ungültige Eingabe."
     },
     "deeds": {
       "invalid_input": "Ungültige Eingabe."
@@ -5408,6 +5472,11 @@ export const de_DE: EnTranslations = {
       "reason_required": "Ein Grund ist erforderlich.",
       "invalid_duration": "Gib eine Markierungsdauer von mindestens einer Sekunde ein.",
       "not_marked": "Dieses Konto ist nicht markiert."
+    },
+    "kick": {
+      "reason_required": "Es ist ein Grund erforderlich.",
+      "admin_target": "Betreiberkonten können nicht gekündigt werden.",
+      "target_offline": "Dieser Spieler ist auf diesem Realm nicht mehr online."
     },
     "woc_market": {
       "invalid_input": "Ungültige Eingabe.",
@@ -5843,10 +5912,13 @@ export const de_DE: EnTranslations = {
       "ifPlayerFrameScale": "Die Größe Ihres eigenen Spielerfensters.",
       "ifTargetFrameScale": "Die Größe Ihres Zielfensters.",
       "ifPartyStyle": "Das Gruppenlayout: Automatisch richtet sich nach Ihrer Gruppengröße, Klassische Gruppenrahmen sind der traditionelle Stapel, und Schlachtzugsrahmen packen alle in das kompakte Raster.",
+      "ifPlayerHealthText": "Was Ihre eigene Gesundheitsanzeige ausgibt: nichts, ein Prozentsatz, aktuelle Gesundheit, aktuelle und maximale Gesundheit oder beides mit dem Prozentsatz daneben.",
+      "ifTargetHealthText": "Was die Gesundheitsbalken „Ziel“ und „Ziel des Ziels“ ausdrucken, mit den gleichen Auswahlmöglichkeiten wie Ihr eigener Rahmen.",
       "ifPartyHealthText": "Was die Gruppenbalken anzeigen: nichts, einen Prozentwert, die aktuelle Gesundheit oder aktuell und maximal.",
       "ifPartySort": "Die Reihenfolge, in der Gruppenmitglieder aufgelistet werden: Gruppenreihenfolge, Rolle oder Name.",
       "ifPartyShowAuras": "Ob Stärkungs- und Schwächungseffekte auf den Gruppenfenstern erscheinen. Passende Schalter regeln Ressourcenbalken, Absorptionsschilde, Begleiter und ob Sie selbst in Ihrer eigenen Gruppenliste erscheinen.",
       "ifAurasOnPlayerFrame": "Zeigt Ihre Stärkungs- und Schwächungseffekte zusätzlich zur Auren-Leiste auch auf Ihrem eigenen Spielerfenster.",
+      "ifAuraBarBelowFrame": "Verschiebt die Stärkungszauberleiste unter dein Einheitenfenster statt darüber. Wirkt nur, solange Stärkungszauber am Spielerfenster angezeigt werden.",
       "ifAlwaysShowAllBuffs": "Zeigt jeden aktiven Stärkungseffekt auch bei der Grafikeinstellung Niedrig an und umgeht das übliche Limit für Stärkungssymbole.",
       "ifTargetOfTarget": "Zeigt, wen Ihr Ziel anvisiert, die klassische Art zu erkennen, ob der Tank es noch hält.",
       "ifPetFrame": "Zeigt ein Fenster für Ihren Begleiter.",
@@ -5854,6 +5926,7 @@ export const de_DE: EnTranslations = {
       "ifChatOpacity": "Wie deckend der Hintergrund des Chats ist.",
       "ifCompactChat": "Staucht die Chatzeilen zusammen, damit mehr davon Platz finden.",
       "ifChatTimestamps": "Fügt jeder Chatzeile eine Uhrzeit hinzu, wahlweise im 12-Stunden- oder im 24-Stunden-Format.",
+      "ifFilterProfanity": "Maskiert Schimpfwörter im Chat mit Sternchen. Standardmäßig aktiviert; Schalten Sie es hier aus, wenn Sie den Chat lieber ungefiltert lesen möchten.",
       "ifStartAttack": "Ob der Einsatz einer Fähigkeit auch Ihren Automatikangriff startet. Standardmäßig an, und das klassische Verhalten, das die meisten Spieler erwarten.",
       "ifStopAutoAttack": "Ob ein Zielwechsel Ihren Schwung stoppt. Standardmäßig aus, sodass Ihr Angriff auf das neue Ziel übergeht.",
       "ifShowAttackButton": "Setzt eine eigene Angriffs-Schaltfläche auf Ihre Aktionsleiste.",
@@ -6706,8 +6779,8 @@ export const de_DE: EnTranslations = {
       "raceBody": "Jede Gruppe im Reich kann denselben Riss gleichzeitig angehen, jede in ihrer eigenen Kopie, und nur wer zuerst das bezwingt, was am Grund wartet, versiegelt ihn. Gewinnt eine Gruppe, erfährt das Reich ihre Namen und ihre Zeit, und der Zugang schließt sich hinter ihr. Das Rennen zu verlieren beendet deinen Lauf nicht: Deine Kopie bleibt offen, das, was am Grund wartet, fällt trotzdem dir, und du gehst aus eigener Kraft wieder hinaus. Was es dich kostet, ist alles, was ein Abschluss eingebracht hätte. Der Boss hinterlässt der Gruppe, die als Zweite kommt, nichts, also trägst du nur nach Hause, was von den Gegnern auf dem Weg nach unten gefallen ist, und nichts weiter. Das Buch der Taten zählt den Abschluss trotzdem, denn du hast das Ding tatsächlich zur Strecke gebracht. Es ist das einzige Rennen im Spiel, das du verlieren kannst, ohne je die Leute zu sehen, die dich geschlagen haben.",
       "rewardsHeading": "Was du davonträgst",
       "rewardsBody": "Einen Riss zu versiegeln, nicht bloß ihn zu überstehen, ist das, was sich lohnt. Bringt ihr den Riss als Erste zu Fall, zahlt er wie der instanzierte Inhalt, neben dem sein Rang steht, sodass die härteren Ränge den härteren Lauf wert sind. Das Versiegeln legt außerdem jedem, der dabei war, einen Rissgebundenen Reif in die Hand, zugeschnitten auf die Rolle deiner Klasse und persönlich an dich gebunden, dazu Riss-Essenz in deinen Taschen, und bei den härteren Rängen obendrauf Riss-Edelsteine. Neben dem Weg zurück hinterlässt das, was am Grund wartet, einen versiegelten Hort, den deine Gruppe für zusätzliche Beute aufknacken kann, mit demselben Pfad der Stifte, den du von Tiefgang-Truhen kennst, sodass eine saubere, geduldige Arbeit sich mehr lohnt als eine hastige. Nichts davon erreicht eine Gruppe, die als Zweite ankommt: Ein verlorenes Rennen lässt dir nur, was von den Gegnern auf dem Weg nach unten gefallen ist. Das Buch der Taten ist die Ausnahme, es zählt deinen Abschluss so oder so, mit einer Tat für den Abschluss deines ersten Risses und einer weiteren für die Bezwingung eines Risses vom Rang S.",
-      "forgeHeading": "The Rift Forge",
-      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
+      "forgeHeading": "Die Rissschmiede",
+      "forgeBody": "Das Band, das als Erstes klar prägt, ist noch nicht fertig, wenn Sie es erhalten. Riftwright Maelis, der eine Schmiede in der Watch Meadow auf dem Farshore unterhält, oberhalb von Gullhaven neben dem Breach Scholar, wird seine Gegenstandsstufe Schritt für Schritt erhöhen und die farbigen Edelsteine, die die Risse fallen lassen, in seine Fassungen einsetzen, jede Farbe hat eine Kampfwertung. Eine vollständige Band ersetzt den ältesten durch einen neuen Edelstein, sodass Sie ihn später neu stimmen können. All das wird in Rift-Essenz und Rift-Edelsteinen bezahlt, der Schmiedewährung, die von Rift-Bossen fällt und frei gehandelt werden kann, sodass ein Freund dir die Essenz geben kann, die dir fehlt. Nimm das Band ab, bevor du es ihr bringst: Sie arbeitet mit dem, was in deinen Taschen ist, und sie tut überhaupt nichts, es sei denn, du stehst an ihrer Schmiede.",
       "trackerHeading": "Die Anzeige auf deinem Bildschirm",
       "trackerBody": "Solange du drinnen bist, hält dich ein schmaler Streifen auf deinem Bildschirm orientiert: auf welcher Ebene du bist, von wie vielen insgesamt, und ein laufender Countdown. Lies diesen Countdown genau, denn er zählt nicht deinen Lauf herunter. Er zählt herunter, bis sich der Eingang draußen in der Welt schließt. Bist du erst einmal drin, spielt deine Gruppe den Riss in ihrem eigenen Tempo aus, so lange es auch dauert, doch erreicht die Uhr null, ist der Weg hinein für alle verschwunden, also überleg es dir zweimal, kurz vor Ablauf noch nach draußen zu treten."
     },
@@ -8702,7 +8775,7 @@ export const de_DE: EnTranslations = {
       "forgeUpgraded": "Riss-Aufwertung für {name} abgeschlossen.",
       "forgeEnchanted": "Riss-Verzauberung für {name} abgeschlossen.",
       "forgeSocketed": "Riss-Edelstein für {name} eingesetzt.",
-      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
+      "forgeGemReplaced": "Rift-Juwel für {name} ersetzt: {gem} zerstört.",
       "detonateGlacialGrave": "Gletschergrab detoniert!",
       "detonateAbsoluteZero": "Absoluter Nullpunkt bricht aus!",
       "detonateMagmaWell": "Magmaquelle bricht aus!",
@@ -9345,6 +9418,7 @@ export const de_DE: EnTranslations = {
     "connectingRealm": "Verbindung zur Welt...",
     "assetsFailed": "Ressourcen konnten nicht geladen werden: bitte neu laden. {error}",
     "rendererFailed": "Renderer konnte nicht gestartet werden: bitte neu laden. {error}",
+    "rendererContextLost": "Der 3D-Renderer hat seinen Grafikkontext verloren und konnte ihn nicht wiederherstellen. Bitte neu laden.",
     "enterTimeout": "Die Welt konnte nicht betreten werden. Die Verbindung ist abgelaufen. Läuft der Spielserver?",
     "connectionLost": "Die Verbindung zum Server wurde unterbrochen.",
     "reconnectingAttempt": "Verbindung verloren. Verbindung wird wiederhergestellt... (Versuch {attempt}/{maxAttempts}, erneuter Versuch in {seconds}s)",
@@ -9355,6 +9429,7 @@ export const de_DE: EnTranslations = {
     "realmFull": "Diese Welt ist derzeit voll. Bitte versuche es in wenigen Minuten erneut.",
     "tooManyConnections": "Zu viele Verbindungen zu dieser Welt kommen von deinem Netzwerk. Bitte schliesse zusatzliche Spielfenster oder versuche es in wenigen Minuten erneut.",
     "messageRateExceeded": "Du wurdest getrennt, weil du Aktionen zu schnell gesendet hast. Bitte warte einen Moment und melde dich erneut an.",
+    "kickedByModerator": "Ein Moderator hat Ihre Verbindung getrennt: {reason}",
     "tips": {
       "classes": "Tipp: Jede der 9 Klassen spielt sich anders. Probiere einige aus, bevor du dich für eine entscheidest.",
       "talents": "Tipp: Du kannst deine Talente jederzeit außerhalb des Kampfes zurücksetzen, eine frühe Wahl ist also nie eine Falle.",
@@ -9443,7 +9518,7 @@ export const de_DE: EnTranslations = {
     "bodyWeb": "Das Spiel läuft ohne GPU-Beschleunigung und wird langsam sein. Aktiviere die Hardwarebeschleunigung in deinen Browsereinstellungen, aktualisiere deine Grafiktreiber und starte deinen Browser neu.",
     "hybridBodyWindows": "Diese Sitzung wird auf der integrierten (stromsparenden) GPU gerendert. Falls dieser Computer auch eine dedizierte Gaming-GPU besitzt, stelle deinen Browser unter Einstellungen > System > Anzeige > Grafik auf Hohe Leistung ein und starte ihn anschließend neu. Die Desktop-App wählt die dedizierte GPU automatisch aus.",
     "hybridBodyLinux": "Diese Sitzung wird auf der integrierten (stromsparenden) GPU gerendert. Falls dieser Computer auch eine dedizierte Gaming-GPU besitzt, bieten dein Browser oder Grafiktreiber möglicherweise eine eigene GPU-Auswahl an, oder deine Distribution stellt ein Tool zum Wechseln der GPU bereit (etwa PRIME oder optimus-manager). Die Desktop-App wählt die dedizierte GPU automatisch aus.",
-    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
+    "bodyRequestedBackend": "Das Spiel konnte mit dem gewählten Grafik-Backend nicht starten und läuft deshalb stattdessen mit OpenGL. Alles funktioniert, Laden und die ersten Minuten können stärker ruckeln. Unter Optionen, Grafik, System könnt Ihr wieder ein Backend wählen.",
     "hybridBodyOther": "Diese Sitzung wird auf der integrierten (stromsparenden) GPU gerendert. Falls dieser Computer auch eine dedizierte Gaming-GPU besitzt, überprüfe die Grafikeinstellungen deines Browsers und Betriebssystems, um sie zu aktivieren. Die Desktop-App wählt die dedizierte GPU automatisch aus.",
     "dismiss": "Schließen"
   },
@@ -11189,11 +11264,11 @@ export const de_DE: EnTranslations = {
       },
       "melting_acid": {
         "name": "Schmelzende Säure",
-        "description": "Bespritzt das Ziel mit einem ätzenden Gift, das {damage} Naturschaden verursacht und seine Rüstung 12 Sek. lang um 5 % verringert."
+        "description": "Überzieht Eure Waffe 30 Min. lang. Jeder Nahkampfschwung bespritzt das Ziel mit ätzender Säure und verringert seine Rüstung 12 Sek. lang um 5 %."
       },
       "nightshade_coating": {
         "name": "Nachtschattenbeschichtung",
-        "description": "Hüllt das Ziel in Nachtschatten, verursacht {damage} Naturschaden und verringert die erhaltene Heilung 12 Sek. lang um 25 %."
+        "description": "Überzieht Eure Waffe 30 Min. lang. Jeder Nahkampfschwung hüllt das Ziel in Nachtschatten und verringert die erhaltene Heilung 12 Sek. lang um 25 %."
       },
       "expose_armor": {
         "name": "Rüstungsbruch",
@@ -11209,11 +11284,11 @@ export const de_DE: EnTranslations = {
       },
       "instant_poison": {
         "name": "Natternbiss",
-        "description": "Überzieht eure Waffe 30 Min. lang, sodass jeder eurer Nahkampfschwünge 8 zusätzlichen Naturschaden verursacht."
+        "description": "Überzieht eure Waffe 30 Min. lang, sodass jeder eurer Nahkampfschwünge {damage} zusätzlichen Naturschaden verursacht."
       },
       "deadly_poison": {
         "name": "Eiterndes Gift",
-        "description": "Überzieht eure Waffe 30 Min. lang, sodass jeder eurer Nahkampfschwünge 14 zusätzlichen Naturschaden verursacht."
+        "description": "Überzieht eure Waffe 30 Min. lang. Jeder eurer Nahkampfschwünge fügt dem Ziel eine Giftstufe hinzu, bis zu 5, und erneuert die Dauer von 12 Sek. Jede Stufe verursacht alle 2 Sek. {damage} Naturschaden."
       },
       "blind": {
         "name": "Dreckwurf",
@@ -11426,7 +11501,7 @@ export const de_DE: EnTranslations = {
       "arcane_shot": {
         "name": "Finsterer Schuss",
         "description": "Beschießt das Ziel für {damage} Arkanschaden. Der Schaden steigt mit der Distanzangriffskraft.",
-        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
+        "specNote_marksmanship": "Kaltblick-Bereit durch einen abgeschlossenen Fiebrigen Zug lässt Euren nächsten Unheilsschuss 75% mehr Schaden verursachen. Der Schuss verbraucht Bereit."
       },
       "concussive_shot": {
         "name": "Rasselnder Schuss",
@@ -12312,11 +12387,11 @@ export const de_DE: EnTranslations = {
       },
       "temporal_echo": {
         "name": "Temporales Echo",
-        "description": "Markiert einen Verbündeten mit dem Echo eines gesünderen Augenblicks und heilt sofort {damage} Gesundheit. Für {duration} Sek. wird ein Teil des Arkanen Schadens, den du verursachst, durch das Echo zurückgeleitet und heilt ihn."
+        "description": "Markiert einen Verbündeten mit dem Echo eines gesünderen Augenblicks und heilt sofort {damage} Gesundheit. Für {duration} Sek. heilen ihn {echoSinglePct}% deines sonstigen Arkanen Einzelzielschadens und {echoAreaPct}% deines Arkanen Flächenschadens. Ätherwoge und Äthergeschosse heilen ihn stattdessen um {echoDriverPct}% ihres verursachten Schadens."
       },
       "temporal_cascade": {
         "name": "Temporale Kaskade",
-        "description": "Sendet ein Echo durch deine Gruppe: Das Ziel und bis zu vier seiner nächsten Verbündeten werden sofort geheilt und jeweils {duration} Sek. lang markiert, wodurch ein Teil des Arkanen Schadens, den du verursachst, durch ihre Echos zurückgeleitet wird und sie heilt. (Chronomantie)"
+        "description": "Sendet ein Echo durch deine Gruppe: Das Ziel und bis zu vier seiner nächsten Verbündeten werden sofort geheilt und jeweils {duration} Sek. lang markiert, wodurch ein Teil des Arkanen Schadens, den du verursachst, durch ihre Echos zurückgeleitet wird und sie heilt. Ätherwoge und Äthergeschosse erzeugen aus jedem Gruppenecho eine gleich große Heilreserve, die nach fehlender Gesundheit unter markierten Verbündeten mit weniger als 60% Gesundheit verteilt wird. (Chronomantie)"
       },
       "temporal_reversal": {
         "name": "Temporale Umkehr",
@@ -14004,11 +14079,17 @@ export const de_DE: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Ignition Key: Dreadspark Groundshaker"
       },
+      "reins_goblin_rocket_sled": {
+        "name": "Zündschlüssel: Goblin-Raketenschlitten"
+      },
+      "reins_rallycart_rxt": {
+        "name": "Zündschlüssel: Rallycart RXT"
+      },
       "reins_lanternback_troll": {
         "name": "Joch des Laternenanzünders: Grumbol"
       },
       "reins_chimeglass_tortoise": {
-        "name": "Roadwarden's Bellstrap: Tolliver"
+        "name": "Glockenriemen des Straßenwärters: Tolliver"
       },
       "reins_rickshaw_mount": {
         "name": "Gebundene Zügel: Knochengebundene Rikscha"
@@ -14017,7 +14098,7 @@ export const de_DE: EnTranslations = {
         "name": "Zügel des Drakenrachen-Raptors"
       },
       "reins_mech_bird": {
-        "name": "Ignition Key: Cluckwork Mech Bird"
+        "name": "Zündschlüssel: Cluckwork Mech Bird"
       },
       "rimefang": {
         "name": "Reiffang"
@@ -15328,46 +15409,46 @@ export const de_DE: EnTranslations = {
         "name": "Field Kit"
       },
       "bramblehide_crown": {
-        "name": "Roots' Bramblehide Crown"
+        "name": "Wurzels Dornhautkrone"
       },
       "bramblehide_mantle": {
-        "name": "Roots' Bramblehide Mantle"
+        "name": "Wurzels Dornhautmantel"
       },
       "bramblehide_harness": {
-        "name": "Roots' Bramblehide Harness"
+        "name": "Wurzels Dornhautharnisch"
       },
       "bramblehide_cinch": {
-        "name": "Roots' Bramblehide Cinch"
+        "name": "Wurzels Dornhautgurt"
       },
       "bramblehide_legguards": {
-        "name": "Roots' Bramblehide Legguards"
+        "name": "Wurzels Dornhautbeinschutz"
       },
       "bramblehide_grips": {
-        "name": "Roots' Bramblehide Grips"
+        "name": "Wurzels Dornhauthandschutz"
       },
       "bramblehide_treads": {
-        "name": "Roots' Bramblehide Treads"
+        "name": "Wurzels Dornhautstiefel"
       },
       "courtiers_bonefang": {
-        "name": "Courtier's Bonefang"
+        "name": "Knochenfang des Höflings"
       },
       "thornpeak_wardblade": {
-        "name": "Thornpeak Wardblade"
+        "name": "Dorngipfel-Schutzklinge"
       },
       "gravecourt_hewer": {
-        "name": "Gravecourt Hewer"
+        "name": "Grabeshof-Hauer"
       },
       "votive_ward_of_the_deathless_court": {
-        "name": "Votive Ward of the Deathless Court"
+        "name": "Votivschutz des Todlosen Hofs"
       },
       "thornpeak_moonhide_cowl": {
-        "name": "Thornpeak Moonhide Cowl"
+        "name": "Dorngipfel-Mondhautgugel"
       },
       "stormhymn_chain_grips": {
-        "name": "Stormhymn Chain Grips"
+        "name": "Sturmhymnen-Kettenhandschutz"
       },
       "stormhymn_chain_treads": {
-        "name": "Stormhymn Chain Treads"
+        "name": "Sturmhymnen-Kettenstiefel"
       },
       "conjured_water4": {
         "name": "Herbeigezaubertes Quellwasser"
@@ -16356,7 +16437,7 @@ export const de_DE: EnTranslations = {
         "name": "Nythraxis, Geißel von Thornpeak"
       },
       "nythraxis_bone_spike": {
-        "name": "Bone Spike"
+        "name": "Knochenspieß"
       },
       "ignivar_herald_of_the_last_flame": {
         "name": "Ignivar, Herold der Letzten Flamme"
@@ -17325,9 +17406,9 @@ export const de_DE: EnTranslations = {
         "greeting": "Es öffnete sich genau dort, wo die Netze trocknen. Genau dort, wo ich jeden Morgen meines Lebens gestanden habe. Ich gehe nicht mehr zum Ufer hinunter. Ich gehe überhaupt nicht mehr viel irgendwohin."
       },
       "riftwright_maelis": {
-        "name": "Riftwright Maelis",
-        "title": "Rift Forgemaster",
-        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
+        "name": "Rissschmiedin Maelis",
+        "title": "Rift-Schmiedemeister",
+        "greeting": "Eine Riftbound-Band erinnert sich an den Durchbruch, der es geschafft hat, {className}. Bring mir die Band und die Essenz, die die Pausen vergießen, und ich werde ihr beibringen, sich mehr zu erinnern."
       },
       "forgemistress_darva": {
         "name": "Schmiedemeisterin Darva",
@@ -20748,6 +20829,6 @@ export const de_DE: EnTranslations = {
     "mailboxName": "Briefkasten",
     "noticeboardName": "Anschlagtafel",
     "farmPatchName": "Garden Beds",
-    "realmBuilderMonumentName": "Realm Builder Monument"
+    "realmBuilderMonumentName": "Reichsbauer-Denkmal"
   }
 };

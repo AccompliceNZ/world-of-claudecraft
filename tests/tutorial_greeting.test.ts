@@ -5,10 +5,10 @@ import { describe, expect, it } from 'vitest';
 import { PROVING_SHORE_ARRIVAL } from '../src/sim/content/proving_shore';
 import { DUNGEON_X_THRESHOLD, NPCS } from '../src/sim/data';
 import { FERRY_BELL_TOWN_LANDING } from '../src/sim/interactions/ferry_bell';
-import { Sim } from '../src/sim/sim';
+import { type PlayerMeta, Sim } from '../src/sim/sim';
 import type { SimContext } from '../src/sim/sim_context';
 import { maybeEmitTutorialGreeting, updateTutorialGreeting } from '../src/sim/tutorial/greeting';
-import type { SimEvent } from '../src/sim/types';
+import type { Entity, QuestProgress, SimEvent } from '../src/sim/types';
 
 /** Type-level pin: the SimEvent union declares NO `tutorialGreeting` arm.
  *  The compulsory greeting is event-only (src/sim/tutorial/greeting.ts),
@@ -25,6 +25,24 @@ function makeSim(seed = 4120): Sim {
   // The greeting suite exercises the live-world arm, so it opts in like the
   // offline client and the server do (SimConfig.compulsoryTutorial).
   return new Sim({ seed, playerClass: 'warrior', autoEquip: true, compulsoryTutorial: true });
+}
+
+function requirePlayer(sim: Sim, pid = sim.playerId): PlayerMeta {
+  const meta = sim.players.get(pid);
+  if (!meta) throw new Error(`missing player meta for ${pid}`);
+  return meta;
+}
+
+function requireEntity(sim: Sim, id = sim.playerId): Entity {
+  const entity = sim.entities.get(id);
+  if (!entity) throw new Error(`missing entity ${id}`);
+  return entity;
+}
+
+function requireQuest(meta: PlayerMeta, questId: string): QuestProgress {
+  const progress = meta.questLog.get(questId);
+  if (!progress) throw new Error(`missing quest progress for ${questId}`);
+  return progress;
 }
 
 function greetCtx(sim: Sim) {
@@ -48,8 +66,8 @@ describe('tutorial greeting one-shot', () => {
     // town spawn, a legacy save that never played) is ferried straight to
     // the arrival and welcomed by Odo.
     const sim = makeSim();
-    const meta = sim.players.get(sim.playerId)!;
-    const p = sim.entities.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
+    const p = requireEntity(sim);
     sim.drainEvents();
     expect(maybeEmitTutorialGreeting(meta, sim.ctx)).toBe(true);
     const events = sim.drainEvents();
@@ -76,10 +94,10 @@ describe('tutorial greeting one-shot', () => {
     // The server rolls newborn rows at PROVING_SHORE_ARRIVAL (auto-entered
     // tutorial), so the first greeting a new player sees is Odo's welcome.
     const sim = makeSim();
-    const p = sim.entities.get(sim.playerId)!;
+    const p = requireEntity(sim);
     p.pos.x = PROVING_SHORE_ARRIVAL.x;
     p.pos.z = PROVING_SHORE_ARRIVAL.z;
-    const meta = sim.players.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
     const first = greetCtx(sim);
     expect(maybeEmitTutorialGreeting(meta, first.ctx)).toBe(true);
     expect(first.emitted).toHaveLength(1);
@@ -96,40 +114,36 @@ describe('tutorial greeting one-shot', () => {
     // SimConfig.compulsoryTutorial the sweep is inert, so a fresh character
     // stays exactly where the scenario put them.
     const sim = new Sim({ seed: 4120, playerClass: 'warrior', autoEquip: true });
-    const p = sim.entities.get(sim.playerId)!;
+    const p = requireEntity(sim);
     const before = { x: p.pos.x, z: p.pos.z };
     sim.drainEvents();
     for (let t = 0; t < 42; t++) sim.tick();
     expect(sim.drainEvents().filter((e) => e.type === 'ferryIslandArrival')).toEqual([]);
     expect(p.pos.x).toBeCloseTo(before.x, 3);
     expect(p.pos.z).toBeCloseTo(before.z, 3);
-    expect(sim.players.get(sim.playerId)!.tutorialGreetingSent).toBe(false);
+    expect(requirePlayer(sim).tutorialGreetingSent).toBe(false);
   });
 
   it('never ferries a ghost away from their corpse, nor out of an instance', () => {
     // The sibling command path's gates, mirrored on the sweep.
     const ghostSim = makeSim();
-    const ghost = ghostSim.entities.get(ghostSim.playerId)!;
+    const ghost = requireEntity(ghostSim);
     ghost.dead = true;
     ghost.ghost = true;
     const ghostAt = { x: ghost.pos.x, z: ghost.pos.z };
-    expect(maybeEmitTutorialGreeting(ghostSim.players.get(ghostSim.playerId)!, ghostSim.ctx)).toBe(
-      false,
-    );
+    expect(maybeEmitTutorialGreeting(requirePlayer(ghostSim), ghostSim.ctx)).toBe(false);
     expect(ghost.pos.x).toBeCloseTo(ghostAt.x, 3);
 
     const instanced = makeSim();
-    const p = instanced.entities.get(instanced.playerId)!;
+    const p = requireEntity(instanced);
     p.pos.x = DUNGEON_X_THRESHOLD + 50;
-    expect(
-      maybeEmitTutorialGreeting(instanced.players.get(instanced.playerId)!, instanced.ctx),
-    ).toBe(false);
+    expect(maybeEmitTutorialGreeting(requirePlayer(instanced), instanced.ctx)).toBe(false);
     expect(p.pos.x).toBeCloseTo(DUNGEON_X_THRESHOLD + 50, 3);
   });
 
   it('latches SILENTLY for an established character (a pre-tutorial save)', () => {
     const sim = makeSim();
-    const meta = sim.players.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
     meta.lifetimeXp = 500; // any progress at all marks the character established
     const { ctx, emitted } = greetCtx(sim);
     expect(maybeEmitTutorialGreeting(meta, ctx)).toBe(false);
@@ -140,7 +154,7 @@ describe('tutorial greeting one-shot', () => {
 
   it('a character with quest history is established even at zero XP', () => {
     const sim = makeSim();
-    const meta = sim.players.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
     meta.questsDone.add('q_wolves');
     const { ctx, emitted } = greetCtx(sim);
     expect(maybeEmitTutorialGreeting(meta, ctx)).toBe(false);
@@ -156,12 +170,12 @@ describe('tutorial greeting one-shot', () => {
     // ...and fires on the cadence boundary: the stub ctx cannot displace, so
     // the positive arm is proved by the flag latching (the ferry itself is
     // covered through real ticks below).
-    const meta = sim.players.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
     expect(meta.tutorialGreetingSent).toBe(false);
     // ...and FIRES on the boundary. Driven with the character already
     // ashore so the stub ctx (which cannot displace) still exercises the
     // real firing arm; the ferry itself is covered through real ticks below.
-    const p = sim.entities.get(sim.playerId)!;
+    const p = requireEntity(sim);
     p.pos.x = PROVING_SHORE_ARRIVAL.x;
     p.pos.z = PROVING_SHORE_ARRIVAL.z;
     raw.tickCount = 20;
@@ -179,7 +193,7 @@ describe('tutorial greeting one-shot', () => {
     const arrivals = seen.filter((e) => e.type === 'ferryIslandArrival');
     expect(arrivals).toEqual([{ type: 'ferryIslandArrival', pid: sim.playerId, firstVisit: true }]);
     // The compulsory ferry landed the offline town spawn on the island.
-    const p = sim.entities.get(sim.playerId)!;
+    const p = requireEntity(sim);
     expect(p.pos.x).toBeCloseTo(PROVING_SHORE_ARRIVAL.x, 3);
     expect(p.pos.z).toBeCloseTo(PROVING_SHORE_ARRIVAL.z, 3);
     // And never again on later swept ticks.
@@ -190,13 +204,13 @@ describe('tutorial greeting one-shot', () => {
 
   it('the Gauntlet run credits its flags in running order, by position, through real ticks', () => {
     const sim = makeSim();
-    const p = sim.entities.get(sim.playerId)!;
-    const meta = sim.players.get(sim.playerId)!;
+    const p = requireEntity(sim);
+    const meta = requirePlayer(sim);
     // Stand at Warden Tam's gate and take the run.
     p.pos.x = -283;
     p.pos.z = -21;
     sim.acceptQuest('q_ps_the_gauntlet');
-    const qp = meta.questLog.get('q_ps_the_gauntlet')!;
+    const qp = requireQuest(meta, 'q_ps_the_gauntlet');
     expect(qp.state).toBe('active');
 
     // Standing at flag TWO first credits nothing: running order, not any order.
@@ -225,7 +239,7 @@ describe('tutorial greeting one-shot', () => {
 
   it('does not re-fire across save/load, and omits the flag while unset', () => {
     const sim = makeSim();
-    const meta = sim.players.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
     const bare = sim.serializeCharacter(sim.playerId);
     expect(bare && 'tutorialGreetingSent' in bare).toBe(false);
 
@@ -235,7 +249,7 @@ describe('tutorial greeting one-shot', () => {
 
     const reloaded = makeSim(4121);
     const pid = reloaded.addPlayer('warrior', 'Reloaded', { state: saved ?? undefined });
-    const reloadedMeta = reloaded.players.get(pid)!;
+    const reloadedMeta = requirePlayer(reloaded, pid);
     expect(reloadedMeta.tutorialGreetingSent).toBe(true);
     const afterLoad = greetCtx(reloaded);
     expect(maybeEmitTutorialGreeting(reloadedMeta, afterLoad.ctx)).toBe(false);
@@ -252,7 +266,7 @@ describe('tutorial greeting one-shot', () => {
     expect(events.filter((e) => e.type === 'ferryIslandArrival')).toEqual([
       { type: 'ferryIslandArrival', pid, firstVisit: true },
     ]);
-    const p = sim.entities.get(pid)!;
+    const p = requireEntity(sim, pid);
     expect(p.pos.x).toBeCloseTo(PROVING_SHORE_ARRIVAL.x, 3);
   });
 });
@@ -261,13 +275,15 @@ describe('tutorial greeting one-shot', () => {
 // premise (zero-progress character, repeat rides, combat as the only refusal
 // with its message); this block pins the exact landings and markers. Neither
 // is redundant with the other (11m QA).
+
 describe('the ferry bells (the clicked crossing)', () => {
   function bells(sim: Sim) {
     const found = [...sim.entities.values()].filter(
       (e) => e.kind === 'object' && e.objectItemId === 'ps_ferry_bell',
     );
-    const island = found.find((b) => b.pos.x < -180)!;
-    const vale = found.find((b) => b.pos.x >= -180)!;
+    const island = found.find((b) => b.pos.x < -180);
+    const vale = found.find((b) => b.pos.x >= -180);
+    if (!island || !vale) throw new Error('missing ferry bells');
     return { island, vale };
   }
 
@@ -275,7 +291,7 @@ describe('the ferry bells (the clicked crossing)', () => {
     const sim = makeSim();
     const { island } = bells(sim);
     expect(island).toBeTruthy();
-    const p = sim.entities.get(sim.playerId)!;
+    const p = requireEntity(sim);
     p.pos.x = island.pos.x + 1;
     p.pos.z = island.pos.z;
     sim.events = [];
@@ -292,7 +308,7 @@ describe('the ferry bells (the clicked crossing)', () => {
     const sim = makeSim();
     const { vale: town } = bells(sim);
     expect(town).toBeTruthy();
-    const p = sim.entities.get(sim.playerId)!;
+    const p = requireEntity(sim);
     p.pos.x = town.pos.x + 1;
     p.pos.z = town.pos.z;
     sim.events = [];
@@ -316,9 +332,9 @@ describe('the ferry bells (the clicked crossing)', () => {
     // character on a veteran's browser still get taught.
     const sim = makeSim();
     const { vale: town } = bells(sim);
-    const meta = sim.players.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
     meta.questsDone.add('q_ps_strike_true');
-    const p = sim.entities.get(sim.playerId)!;
+    const p = requireEntity(sim);
     p.pos.x = town.pos.x + 1;
     p.pos.z = town.pos.z;
     sim.events = [];
@@ -333,7 +349,7 @@ describe('the ferry bells (the clicked crossing)', () => {
   it('refuses in combat and stays put (no bell combat exit)', () => {
     const sim = makeSim();
     const { vale: town } = bells(sim);
-    const p = sim.entities.get(sim.playerId)!;
+    const p = requireEntity(sim);
     p.pos.x = town.pos.x + 1;
     p.pos.z = town.pos.z;
     p.inCombat = true;
@@ -346,8 +362,9 @@ describe('the quest-gated vendor row (the pouch lock-out guard)', () => {
   function standAtFinch(sim: Sim) {
     const finch = [...sim.entities.values()].find(
       (e) => e.kind === 'npc' && e.templateId === 'quartermaster_finch',
-    )!;
-    const p = sim.entities.get(sim.playerId)!;
+    );
+    if (!finch) throw new Error('missing quartermaster_finch');
+    const p = requireEntity(sim);
     p.pos.x = finch.pos.x + 1;
     p.pos.z = finch.pos.z;
     return finch;
@@ -356,7 +373,7 @@ describe('the quest-gated vendor row (the pouch lock-out guard)', () => {
   it('refuses the Linen Pouch before the lesson quest is in the log', () => {
     const sim = makeSim();
     const finch = standAtFinch(sim);
-    const meta = sim.players.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
     meta.copper = 1000;
     sim.buyItem(finch.id, 'linen_pouch');
     expect(sim.countItem('linen_pouch')).toBe(0);
@@ -366,7 +383,7 @@ describe('the quest-gated vendor row (the pouch lock-out guard)', () => {
   it('sells the Linen Pouch once the lesson quest is active, and after it is done', () => {
     const sim = makeSim();
     const finch = standAtFinch(sim);
-    const meta = sim.players.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
     meta.copper = 1000;
     meta.questLog.set('q_ps_pouch_and_purse', {
       questId: 'q_ps_pouch_and_purse',
@@ -391,7 +408,7 @@ describe('the quest-gated vendor row (the pouch lock-out guard)', () => {
     // have taken the bag Maren just taught them to wear.
     const sim = makeSim();
     const finch = standAtFinch(sim);
-    const meta = sim.players.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
     meta.copper = 1000;
     meta.questLog.set('q_ps_pouch_and_purse', {
       questId: 'q_ps_pouch_and_purse',
@@ -411,8 +428,9 @@ describe('the quest-gated vendor row (the pouch lock-out guard)', () => {
     // Hand in at Maren: she pays, and the pouch stays buckled on.
     const maren = [...sim.entities.values()].find(
       (e) => e.kind === 'npc' && e.templateId === 'instructor_maren',
-    )!;
-    const p = sim.entities.get(sim.playerId)!;
+    );
+    if (!maren) throw new Error('missing instructor_maren');
+    const p = requireEntity(sim);
     p.pos.x = maren.pos.x + 1;
     p.pos.z = maren.pos.z;
     const before = meta.copper;
@@ -435,16 +453,19 @@ describe('the quest-gated vendor row (the pouch lock-out guard)', () => {
       (e) =>
         e.kind === 'npc' &&
         (NPCS[e.templateId]?.vendorItems ?? []).some(
-          (id) => !(NPCS[e.templateId]?.vendorQuestGates ?? {})[id],
+          (id) => !NPCS[e.templateId]?.vendorQuestGates?.[id],
         ),
-    )!;
+    );
+    if (!vendor) throw new Error('missing ungated vendor row');
     expect(vendor, 'an ungated vendor row exists somewhere').toBeTruthy();
-    const npcDef = NPCS[vendor.templateId]!;
-    const ungated = (npcDef.vendorItems ?? []).find((id) => !(npcDef.vendorQuestGates ?? {})[id])!;
-    const p = sim.entities.get(sim.playerId)!;
+    const npcDef = NPCS[vendor.templateId];
+    if (!npcDef) throw new Error(`missing NPC definition for ${vendor.templateId}`);
+    const ungated = (npcDef.vendorItems ?? []).find((id) => !npcDef.vendorQuestGates?.[id]);
+    if (!ungated) throw new Error('missing ungated vendor item');
+    const p = requireEntity(sim);
     p.pos.x = vendor.pos.x + 1;
     p.pos.z = vendor.pos.z;
-    const meta = sim.players.get(sim.playerId)!;
+    const meta = requirePlayer(sim);
     meta.copper = 100000;
     sim.buyItem(vendor.id, ungated);
     // Some provisioner rows sell in stacks; owning ANY of it proves the

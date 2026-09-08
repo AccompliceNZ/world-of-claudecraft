@@ -577,6 +577,22 @@ describe('bags_window: touch peek + bank-cluster close', () => {
     // client entry point for the verb (the reachability suite pins the file).
     expect(body.split('.placeFeast(').length - 1).toBe(1);
   });
+
+  it('mail-attach-blocked-bound shows the specific bound reason, distinct from the generic mail deny', () => {
+    // A per-copy transfer lock (an armed disenchant typed secondary, or an
+    // already-traded boundTo copy) is not simply "unmailable": it clears once
+    // traded in person. The click deny must voice the same specific reason the
+    // sim's own send-time noMailBound refusal uses, never the generic line the
+    // def-level (quest/noMarketList) deny below still correctly uses.
+    const start = painter.indexOf('private runBagAction(');
+    const body = painter.slice(start, painter.indexOf('\n  }\n', start));
+    expect(body).toMatch(
+      /case 'mailAttachBlockedBound':[\s\S]{0,500}?this\.deps\.showError\(t\('hudChrome\.mailbox\.result\.noMailBound'\)\);\s*return;/,
+    );
+    expect(body).toMatch(
+      /case 'mailAttachBlocked':\s*this\.deps\.showError\(t\('hudChrome\.mailbox\.cannotMail'\)\);\s*return;/,
+    );
+  });
 });
 
 describe('bags_window: right-click uses, dragging destroys/equips', () => {
@@ -864,7 +880,9 @@ describe('bags_window: the bag-bar counter pools readout (phase 08)', () => {
       28,
     );
     const counter = root.querySelector('.bag-capacity');
-    expect(counter?.textContent).toBe('2/28');
+    // Issue #3795: the inline text names both pools once a satchel is equipped
+    // (the summed pair alone reads roomy while the general pool refuses).
+    expect(counter?.textContent).toBe('Items 1/16, Materials 1/12');
     expect(counter?.getAttribute('aria-label')).toBe(
       'Bag slots used: 2 of 28. General items: 1 of 16. Materials: 1 of 12.',
     );

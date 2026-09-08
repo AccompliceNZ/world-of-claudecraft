@@ -574,9 +574,9 @@ export const cs_CZ: EnTranslations = {
       "tabsLabel": "Sekce obchodu WOC",
       "storeTab": "Obchod",
       "rewardsTab": "Denní odměny",
-      "mountsEyebrow": "Account Mounts",
-      "mountsTitle": "Machine Stable",
-      "mountBuyAria": "Purchase {item}",
+      "mountsEyebrow": "Připojení účtu",
+      "mountsTitle": "Strojově stabilní",
+      "mountBuyAria": "Koupit {item}",
       "loading": "Načítání obchodu WOC…",
       "error": "Obchod WOC nyní není dostupný. Zkus to za chvíli znovu.",
       "balance": "Zůstatek Claudium",
@@ -982,6 +982,7 @@ export const cs_CZ: EnTranslations = {
       "mounts": "Jízdní zvířata",
       "professions": "Profese",
       "reliquary": "Relikviář",
+      "lootExplorer": "Průzkumník kořisti",
       "nameplates": "Jména",
       "haptics": "Haptika",
       "hapticsOff": "Haptika vypnuta",
@@ -1140,6 +1141,9 @@ export const cs_CZ: EnTranslations = {
       "promptAttack": "Útočit",
       "promptUseAbility": "Použít schopnost",
       "promptKneel": "Pokleknout",
+      "promptAccessInterface": "Otevři rozhraní",
+      "promptMoveToTarget": "Přejdi na {target}",
+      "promptSelectItem": "Vyber {item}",
       "promptOpenBags": "Otevřít batohy",
       "promptCharacterSheet": "Otevřít panel postavy",
       "promptLookAround": "Podržet pravé tlačítko a tažením se rozhlížet",
@@ -1319,9 +1323,9 @@ export const cs_CZ: EnTranslations = {
       "overflow": "{count} more not shown"
     },
     "targetDots": {
-      "title": "Target Dots",
-      "row": "{aura} on {target}",
-      "overflow": "{count} more not shown"
+      "title": "Cílové body",
+      "row": "{aura} na {target}",
+      "overflow": "{count} více nezobrazeno"
     },
     "targetAuras": {
       "title": "Aury cíle",
@@ -1404,11 +1408,13 @@ export const cs_CZ: EnTranslations = {
       "name_shadowjump_toad": "Kama-Kage, stínoskákací ropucha",
       "name_stormfeather_griffin": "Nebeský Bouřepero",
       "name_thunderstrut_gobbler": "Hromokrok, Velký krocan",
+      "name_goblin_rocket_sled": "Gobliní raketové saně",
+      "name_rallycart_rxt": "Rallycart RXT",
       "name_terrorspark_groundshaker": "Dreadspark Groundshaker",
       "name_drakemaw_raptor": "Raptor z Dračí tlamy",
-      "name_mech_bird": "Cluckwork Mech Bird",
-      "name_lanternback_troll": "Grumbol the Lanternback",
-      "name_chimeglass_tortoise": "Tolliver the Chimeglass",
+      "name_mech_bird": "Mechanický pták Cluckwork",
+      "name_lanternback_troll": "Grumbol Lanternback",
+      "name_chimeglass_tortoise": "Tolliver Chimeglass",
       "name_rickshaw_mount": "Kostipoutaná rikša",
       "desc_valorsteed": "Otužilý, jistonohý oř poskytující zvýšenou rychlost cestování.",
       "desc_grag_bear": "Otužilý, jistonohý medvěd poskytující zvýšenou rychlost cestování.",
@@ -1417,11 +1423,13 @@ export const cs_CZ: EnTranslations = {
       "desc_shadowjump_toad": "Mohutná, jistonohá obří ropucha, vycvičená v bleskurychlých stínových skocích, které zvládnou jakýkoli terén.",
       "desc_stormfeather_griffin": "Vznešený bouřný gryf, který se plíží po zemi na rounami okovaných spárech, se složenými křídly.",
       "desc_thunderstrut_gobbler": "Kolosální krocan zrozený z bouře, který se hrdě prochází z Probouzejícího se vrcholu, s ocasem rozevřeným jako bouřkový mrak.",
+      "desc_goblin_rocket_sled": "Nebezpečně překonstruované gobliní saně poháněné dvěma raketami a skvěle špatným úsudkem.",
+      "desc_rallycart_rxt": "Malý rallye stroj, který zvyšuje rychlost cestování.",
       "desc_terrorspark_groundshaker": "Kompaktní obrněný stroj s těžkými pásy, velkorážním kanónem a sedlem pro nebojácné piloty.",
       "desc_drakemaw_raptor": "Osedlaný raptor z líhně v Kaldeře Dračí tlamy, samé šlachy a hbitost, ještě slabě páchnoucí popelem.",
-      "desc_mech_bird": "A hand-built clockwork war chicken that sprints on snapping servos, wind-up key still turning.",
-      "desc_lanternback_troll": "A hill troll broken to the yoke by lamplighters, carrying an iron throne across his shoulders with a storm lantern burning on either arm.",
-      "desc_chimeglass_tortoise": "A salt-flat tortoise who has outwalked three generations of caravans. Tinkers ground him spectacles from storm-glass and hung a bronze bell at his throat, so the road hears him long before it sees him.",
+      "desc_mech_bird": "Ručně vyrobené strojové válečné kuře, které sprintuje na cvakací serva, natahovací klíč se stále otáčí.",
+      "desc_lanternback_troll": "Horský troll, který lampáři zlomili do jha, nesl přes ramena železný trůn a na obou pažích hořela bouřková lucerna.",
+      "desc_chimeglass_tortoise": "Solná želva, která překonala tři generace karavanů. Tinkers mu vybrousil brýle z bouřkového skla a pověsil mu na hrdlo bronzový zvon, takže ho cesta slyší dlouho předtím, než ho uvidí.",
       "desc_rickshaw_mount": "Chrastící kostěný vozík s kostnatým pěšákem zapřaženým do ojí, který tě veze tryskem."
     },
     "mountTraining": {
@@ -1583,26 +1591,26 @@ export const cs_CZ: EnTranslations = {
       "showPlaytime": "Zobrazit odehraný čas na obrazovce postavy",
       "forceHighPerfGpu": "Používat samostatnou herní grafickou kartu",
       "forceHighPerfGpuNote": "Ve výchozím nastavení zapnuto: desktopová aplikace požádá tento počítač o jeho samostatnou herní grafickou kartu. Toto vypni, pokud se hra nespustí, otevře se s černou obrazovkou, nebo displej notebooku zhasne. Projeví se až při příštím spuštění hry.",
-      "shaderWarm": "Shader Warm-up Worker",
-      "shaderWarmAuto": "Auto",
-      "shaderWarmOff": "Off",
-      "shaderWarmOn": "On",
-      "shaderWarmNote": "Pre-warm shader cache in the background to prevent in-game stuttering. Auto: Enabled only when supported by your graphics system. (Recommended). On: Forced everywhere. May worsen performance on some setups. Off: Disabled.",
-      "gpuBackend": "Graphics Backend",
-      "gpuBackendAuto": "Auto",
+      "shaderWarm": "Pracovní proces zahřívání shaderů",
+      "shaderWarmAuto": "Automaticky",
+      "shaderWarmOff": "Vypnuto",
+      "shaderWarmOn": "Zapnuto",
+      "shaderWarmNote": "Předem zahřívá mezipaměť shaderů na pozadí, aby se zabránilo zasekávání ve hře. Automaticky: zapnuto jen při podpoře grafickým systémem. (Doporučeno). Zapnuto: vynuceno všude. Na některých sestavách může zhoršit výkon. Vypnuto: zakázáno.",
+      "gpuBackend": "Grafické rozhraní",
+      "gpuBackendAuto": "Automaticky",
       "gpuBackendVulkan": "Vulkan",
-      "gpuBackendOpenGL": "OpenGL (slow)",
-      "gpuBackendNote": "Auto picks the best option for you. Vulkan is faster and recommended for most players. OpenGL is slower, but can help if Vulkan doesn't work properly. Takes effect the next time the game starts.",
-      "gpuBackendActive": "Currently using {backend}.",
-      "gpuBackendActiveUnavailable": "Currently using {backend} (unable to enable Vulkan).",
-      "gpuBackendActiveAutoCapped": "Currently using {backend}. Auto does not try Vulkan on this graphics card yet; pick Vulkan to try it.",
-      "gpuBackendSaveFailed": "The choice could not be saved. The next start keeps {backend}.",
+      "gpuBackendOpenGL": "OpenGL (pomalé)",
+      "gpuBackendNote": "Automatika vybere nejlepší možnost. Vulkan je rychlejší a doporučený pro většinu hráčů. OpenGL je pomalejší, ale může pomoct, když Vulkan nefunguje správně. Projeví se při příštím spuštění hry.",
+      "gpuBackendActive": "Právě se používá {backend}.",
+      "gpuBackendActiveUnavailable": "Právě se používá {backend} (Vulkan se nepodařilo zapnout).",
+      "gpuBackendActiveAutoCapped": "Právě se používá {backend}. Automatika zatím na této grafické kartě Vulkan nezkouší; vyber Vulkan ručně, pokud ho chceš zkusit.",
+      "gpuBackendSaveFailed": "Volbu se nepodařilo uložit. Příští spuštění ponechá {backend}.",
       "gpuBackendActiveNameVulkan": "Vulkan",
       "gpuBackendActiveNameOpenGL": "OpenGL",
-      "restartPending": "Some changes take effect after a restart.",
-      "restartGame": "Restart Game",
-      "restartInProgress": "Restarting the game...",
-      "restartFailed": "The game could not restart itself. Quit and start it again.",
+      "restartPending": "Některé změny se projeví až po restartu.",
+      "restartGame": "Restartovat hru",
+      "restartInProgress": "Hra se restartuje...",
+      "restartFailed": "Hra se nedokázala sama restartovat. Ukonči ji a spusť znovu.",
       "discordPresence": "Rozšířená aktivita Discordu",
       "discordPresenceNote": "Zobrazuje zónu, ve které se nacházíš, a jak dlouho hraješ tuto relaci, jako tvou aktivitu na Discordu, a obojí vidí kdokoli, kdo vidí tvůj profil na Discordu. Sdílí se jen název zóny, čas tvé relace a název hry, nikdy tvoje postava, tvůj účet nebo s kým hraješ. Vyžaduje spuštěnou aplikaci Discord na tomto počítači.",
       "showDevBadges": "Zobrazit vývojářské odznaky",
@@ -1611,7 +1619,10 @@ export const cs_CZ: EnTranslations = {
       "uiScale": "Měřítko UI",
       "playerFrameScale": "Měřítko rámu hráče",
       "targetFrameScale": "Měřítko rámu cíle",
+      "playerHealthText": "Text zdraví hráče",
+      "targetHealthText": "Text cíleného zdraví",
       "aurasOnPlayerFrame": "Buffy na rámu hráče",
+      "auraBarBelowFrame": "Buffy pod rámem hráče",
       "alwaysShowAllBuffs": "Vždy zobrazit všechny buffy",
       "highContrastBackground": "Vysoce kontrastní pozadí",
       "startAttackOnAbility": "Automatický útok při použití schopnosti",
@@ -1634,9 +1645,9 @@ export const cs_CZ: EnTranslations = {
       "showTargetOfTarget": "Zobrazit cíl cíle",
       "showTargetSwingTimer": "Zobrazit časovač švihu cíle",
       "showPetFrame": "Zobrazit tvého mazlíčka",
-      "showNameplateDots": "Show My Dots on Nameplates",
-      "nameplateDotScale": "Nameplate Dot Size",
-      "showTargetDots": "Show Target Dots",
+      "showNameplateDots": "Zobrazit moje tečky na jmenovkách",
+      "nameplateDotScale": "Velikost bodu na jmenovce",
+      "showTargetDots": "Zobrazit cílové body",
       "showDefensivesTrack": "Show Defensive Cooldowns",
       "showSelfBuffTrack": "Show My Buffs",
       "showOffensiveTrack": "Show Offensive Cooldowns",
@@ -2659,7 +2670,9 @@ export const cs_CZ: EnTranslations = {
       "unequipHint": "Klikni pro odebrání tohoto batohu",
       "poolGeneral": "Obecné: {used} z {total}",
       "poolMaterials": "Materiály: {used} z {total}",
-      "capacityPoolsAria": "Použité sloty batohu: {used} z {total}. Obecné předměty: {generalUsed} z {generalTotal}. Materiály: {materialsUsed} z {materialsTotal}."
+      "capacityPoolsAria": "Použité sloty batohu: {used} z {total}. Obecné předměty: {generalUsed} z {generalTotal}. Materiály: {materialsUsed} z {materialsTotal}.",
+      "capacityPools": "Předměty {generalUsed}/{generalTotal}, materiály {materialsUsed}/{materialsTotal}",
+      "emptyMaterialsOnly": "Jen materiály"
     },
     "raidConvert": {
       "toPartyDone": "Tvůj raid byl převeden zpět na skupinu.",
@@ -2689,22 +2702,22 @@ export const cs_CZ: EnTranslations = {
       "worldfireConsumed": "Celá tavicí pec hoří!"
     },
     "nythraxisCallout": {
-      "impaled": "Bone Spikes! Free the impaled!",
-      "youAreImpaled": "You are impaled! Hold on!",
-      "spikeBroken": "Spike shattered!",
-      "dreadCurseSwap": "Dread Curse: swap tanks!",
-      "sigilAppears": "A Binding Sigil flares! Drag Nythraxis onto it!",
-      "sigilBound": "Nythraxis is bound! Burn him!",
-      "sigilUnbound": "The sigil fades unbound! Nythraxis grows stronger!",
-      "gravefireTarget": "Gravefire races toward you! Sidestep!",
-      "kingsWrath": "The King rises in wrath! Everything hits harder now!",
-      "boneStormBegins": "Bone Storm! Spread out and run!",
-      "boneStormCharge": "Nythraxis is charging YOU! Run!",
-      "boneStormEnds": "Bone Storm over. Tanks, pick him up!",
-      "crownEndures60": "One minute until The Crown Endures!",
-      "crownEndures30": "Thirty seconds until The Crown Endures!",
-      "crownEndures10": "Ten seconds! Burn him!",
-      "crownEndures": "The Crown Endures! Nythraxis is enraged!"
+      "impaled": "Kostěné bodce! Osvoboďte nabodnuté!",
+      "youAreImpaled": "Jsi nabodnut! Vydrž!",
+      "spikeBroken": "Bodec roztříštěn!",
+      "dreadCurseSwap": "Děsivá kletba: vyměnit tanky!",
+      "sigilAppears": "Vazebná pečeť vzplála! Přetáhni na ni Nythraxise!",
+      "sigilBound": "Nythraxis je spoután! Spalte ho!",
+      "sigilUnbound": "Pečeť vyhasíná bez spoutání! Nythraxis sílí!",
+      "gravefireTarget": "Hrobový oheň se žene k tobě! Uhnout stranou!",
+      "kingsWrath": "Král povstává v hněvu! Všechno teď zasahuje tvrději!",
+      "boneStormBegins": "Kostěná bouře! Rozestupte se a utíkejte!",
+      "boneStormCharge": "Nythraxis útočí na TEBE! Utíkej!",
+      "boneStormEnds": "Kostěná bouře skončila. Tankové, převezměte ho!",
+      "crownEndures60": "Jedna minuta do Koruna vytrvá!",
+      "crownEndures30": "Třicet sekund do Koruna vytrvá!",
+      "crownEndures10": "Deset sekund! Dorazte ho!",
+      "crownEndures": "Koruna vytrvá! Nythraxis zuří!"
     },
     "varkhulWaveStatus": "Vlna {wave}/{waves} | Nepřátelé: {remaining}",
     "raidBossGuide": {
@@ -2856,65 +2869,65 @@ export const cs_CZ: EnTranslations = {
         "heroic": "Hrdinská: žár výhně nikdy nechladne, Výnos kovadliny přidává meteory a poslední fáze odstraní většinu mechanik ve prospěch Světového požáru."
       },
       "nythraxis": {
-        "overview": "High Priest Malric refused to let his king die, and the rite that raised Nythraxis bound the whole court to the crypt. The encounter tests a disciplined tank swap, fast switches onto Bone Spikes, movement off burning ground, and a coordinated wardstone channel once the Throne falls.",
-        "phaseThroneName": "The Throne",
-        "phaseThroneSummary": "Nythraxis holds his throne room with a charged frontal cleave, the Dread Curse tank swap, Bone Spikes that impale raiders, and Grave Eruptions that leave burning ground.",
-        "phaseWardstonesName": "The Wardstones",
-        "phaseWardstonesSummary": "At {health} health, Shuddering Stomp holds the raid still while Brother Aldric arrives and lights the wardstones. Every spike shatters and the floor stops burning, then Soul Rend and Deathless Rage join the Throne mechanics.",
-        "phaseKingsWrathName": "The King's Wrath",
-        "phaseKingsWrathSummary": "At {health} health, Nythraxis roars in The King's Wrath and gains {bonusNormal} damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption tightens to every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire to every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic). Every other mechanic keeps its cadence.",
-        "gravebreakerName": "Gravebreaker",
-        "gravebreakerSummary": "Every {seconds} sec, Nythraxis charges his next landed swing. His target takes only the swing itself, but everyone else within {range} yd inside the {arc} degree cone in front of him takes {splash} of that swing as Physical damage, reduced by their own armor.",
-        "gravebreakerResponse": "Tanks keep Nythraxis facing away from the raid. Everyone else stays behind or beside him and never crosses the cone.",
-        "dreadCurseName": "Dread Curse",
-        "dreadCurseSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitNormal} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackNormal}, up to {max} stacks.",
-        "dreadCurseHeroicSummary": "Every {every} sec, Nythraxis strikes his current tank for {hitHeroic} of maximum health as Shadow damage and adds a stack of Dread Curse. For {duration} sec, each stack increases the damage that tank takes from Nythraxis by {perStackHeroic}, up to {max} stacks.",
-        "dreadCurseResponse": "Tanks swap at {stacks} stacks: the other tank taunts and the cursed tank stays out of the Gravebreaker cone while the stacks fade. Healers prepare the incoming tank before the swap.",
-        "boneSpikeName": "Bone Spike",
-        "boneSpikeSummary": "Every {everyNormal} sec, Nythraxis impales {victimsNormal} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainNormal} of maximum health every second until their spike is destroyed.",
-        "boneSpikeHeroicSummary": "Every {everyHeroic} sec, Nythraxis impales {victimsHeroic} raiders other than his current target on Bone Spikes. An impaled raider cannot act and loses {drainHeroic} of maximum health every second until their spike is destroyed.",
-        "boneSpikeResponse": "Damage dealers switch to the Bone Spikes at once and destroy them to free the impaled raiders. Healers keep the impaled alive while the spikes fall.",
-        "graveEruptionName": "Grave Eruption",
-        "graveEruptionSummary": "Every {everyNormal} sec, skeletal hands mark {countNormal} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstNormal} of maximum health as Shadow damage, then burns as Grave Flame for {flameNormal} sec, dealing {tickNormal} of maximum health every second to anyone standing in it.",
-        "graveEruptionHeroicSummary": "Every {everyHeroic} sec, skeletal hands mark {countHeroic} circles of {radius} yd under raiders. After {warning} sec each circle erupts for {burstHeroic} of maximum health as Shadow damage, then burns as Grave Flame for {flameHeroic} sec, dealing {tickHeroic} of maximum health every second to anyone standing in it.",
-        "graveEruptionResponse": "Step out of every warning circle before it erupts and stay off the burning ground. Tanks pull Nythraxis clear of the flames so melee keeps room to work.",
-        "bindingSigilName": "Binding Sigil",
-        "bindingSigilSummary": "Every {everyNormal} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionNormal} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindNormal} sec he is Bound: the Ascension is purged, he is stunned for {stunNormal} sec, and he takes {vulnerability} more damage for {boundNormal} sec. Otherwise every raider takes {unboundHitNormal} of maximum health as Shadow damage and he keeps {unboundBonusNormal} more damage until the next binding.",
-        "bindingSigilHeroicSummary": "Every {everyHeroic} sec, a sigil of the old wards flares on the floor {minDist} to {maxDist} yd from Nythraxis and he begins Deathless Ascension, gaining {ascensionHeroic} damage and attack speed every {ascensionEvery} sec. If he stands on the sigil within {bindHeroic} sec he is Bound: the Ascension is purged, he is stunned for {stunHeroic} sec, and he takes {vulnerability} more damage for {boundHeroic} sec. Otherwise every raider takes {unboundHitHeroic} of maximum health as Shadow damage and he keeps {unboundBonusHeroic} more damage until the next binding.",
-        "bindingSigilResponse": "The tank drags Nythraxis onto the sigil at once, through whatever fire the raid left behind. Melee follow the drag and ranged stay out of the new Gravebreaker cone. Everyone burns him while he is Bound.",
-        "raiseFallenName": "Raise Fallen",
-        "raiseFallenSummary": "Every {every} sec during The Throne, Nythraxis raises Risen Royal Guards behind him. They rush his current target and fight until they are destroyed.",
-        "raiseFallenResponse": "The off-tank picks up each wave as it rises. Damage dealers clear the guards between Bone Spikes so the waves never pile up before the Throne falls.",
-        "soulRendName": "Soul Rend",
-        "soulRendSummary": "Nythraxis marks {marksNormal} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals its bearer's full maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them.",
-        "soulRendHeroicSummary": "Nythraxis marks {marksHeroic} raiders other than his current target with Soul Rend. After {fuse} sec each mark deals {damageHeroic} of its bearer's maximum health as Shadow damage, divided by the number of marked raiders within {range} yd of them. A mark that resolves alone is lethal.",
-        "soulRendResponse": "Every marked raider runs to one stack point and stands within {range} yd of the other marks before the {fuse} sec fuse ends. Healers top the group off as the marks resolve.",
-        "soulfireName": "Soulfire",
-        "soulfireSummary": "Every Soul Rend detonation leaves a pool of purple fire with a {radius} yd radius where each mark stood, burning for {seconds} sec at {tickNormal} of maximum health every second. Standing where pools overlap takes a tick from each one. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireHeroicSummary": "Every Soul Rend detonation leaves one pool of purple fire with a {radius} yd radius per stacked group of marks, burning for {secondsHeroic} sec at {tickHeroic} of maximum health every second. Standing where pools overlap takes only one tick, never stacked copies. Pools never form within {clearance} yd of a wardstone.",
-        "soulfireResponse": "Move out of the purple pool as soon as the marks detonate. Keep the next stack point clear of active fire.",
-        "gravefireName": "Gravefire",
-        "gravefireSummary": "Every {everyNormal} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnNormal} sec and deals {tickNormal} of maximum health every second to anyone standing in it.",
-        "gravefireHeroicSummary": "Every {everyHeroic} sec, a line of violet grave-fire runs from Nythraxis toward a raider, growing {speed} yd every second to {length} yd. Each yard burns for {burnHeroic} sec and deals {tickHeroic} of maximum health every second to anyone standing in it.",
-        "gravefireResponse": "Sidestep the line as it comes: it is narrow and never turns. Ranged raiders keep moving instead of standing in one spot.",
-        "deathlessRageName": "Deathless Rage",
-        "deathlessRageSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageNormal} of maximum health as Shadow damage.",
-        "deathlessRageHeroicSummary": "Every {every} sec, Nythraxis casts Deathless Rage for {cast} sec. While he casts, each lit wardstone can be channeled by one raider for {channel} sec. If three different raiders each complete a wardstone before the cast ends, the Rage is interrupted and Nythraxis is stunned for {stun} sec. Otherwise every raider takes {damageHeroic} of maximum health as Shadow damage, which no health pool survives.",
-        "deathlessRageResponse": "Assign one raider to each wardstone before the pull. When the cast begins, each runs to their stone and channels it until it completes. Stuns, stepping away, and death break the channel, so keep the channelers safe and never assign an impaled raider.",
-        "courtName": "The Deathless Court",
-        "courtSummary": "On Heroic, Nythraxis raises his court after each Deathless Rage, interrupted or not, once the previous court has fallen. The Spirit of Aldren cleaves everything near his target with Royal Cleave. The Spirit of Malric channels Malric's Mending, healing Nythraxis for more with every cast. The Spirit of Voss ignores taunts and hunts the raid.",
-        "courtResponse": "Tanks pick up Aldren and turn his cleave away from the raid. Stun or silence Malric the moment Malric's Mending begins and kill him first, then root or stun Voss off the healers, since he cannot be taunted, and finish him next.",
-        "kingsWrathName": "King's Wrath",
-        "kingsWrathSummary": "Nythraxis deals {bonusNormal} more damage on Normal or {bonusHeroic} on Heroic for the rest of the fight. Grave Eruption occurs every {eruptionEveryNormal} sec ({eruptionEveryHeroic} on Heroic) and Gravefire every {gravefireEveryNormal} sec ({gravefireEveryHeroic} on Heroic).",
-        "kingsWrathResponse": "Use remaining defensive cooldowns for unavoidable damage. Keep every earlier mechanic clean while the raid finishes the fight.",
-        "boneStormName": "Bone Storm",
-        "boneStormSummary": "Starting {first} sec into The King's Wrath and every {everyNormal} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlNormal} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamNormal} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormHeroicSummary": "Starting {first} sec into The King's Wrath and every {everyHeroic} sec after, Nythraxis begins Bone Storm for {duration} sec. He ignores threat, moves at {speed} times normal speed, and makes {charges} charges lasting {chargeSeconds} sec each. His whirl deals {whirlHeroic} of maximum health every second within {radius} yd. Each charge ends in a Bone Slam within the same radius for {slamHeroic} of maximum health. He casts Bone Spike {spikeAt} sec into the storm, then Gravebreaker re-arms {rearm} sec after it ends.",
-        "boneStormResponse": "Spread out and keep running from Nythraxis. The charged raider runs away while everyone else leaves room around the charge path, then tanks pick him up when the storm ends.",
-        "crownEnduresName": "The Crown Endures",
-        "crownEnduresSummary": "At {enrageNormal} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryNormal} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresHeroicSummary": "At {enrageHeroic} sec from the pull (the clock pauses while Brother Aldric enters at 70%), The Crown Endures triggers as a hard enrage. Nythraxis gains {damage} more damage and {haste} faster attacks, then another {rampStep} damage every {rampEveryHeroic} sec. There is no timer bar. Warnings come as yells at {warn60}, {warn30}, and {warn10} sec remaining.",
-        "crownEnduresResponse": "Treat the first warning as the final burn. Save movement and defensive cooldowns for the remaining mechanics, then defeat Nythraxis before the enrage."
+        "overview": "Velekněz Malric odmítl nechat svého krále zemřít a rituál, který Nythraxise pozvedl, připoutal celý dvůr ke kryptě. Střet prověří ukázněné střídání tanků, rychlé přepínání na kostěné bodce, pohyb mimo hořící zem a koordinované kanalizování ochranných kamenů, jakmile trůn padne.",
+        "phaseThroneName": "Trůn",
+        "phaseThroneSummary": "Nythraxis drží svůj trůnní sál nabitým čelním sekem, střídáním tanků kvůli Děsivé kletbě, kostěnými bodci, které nabodávají raidery, a Hrobovými erupcemi zanechávajícími hořící zem.",
+        "phaseWardstonesName": "Ochranné kameny",
+        "phaseWardstonesSummary": "Při {health} zdraví Rozechvělý dupot zadrží raid na místě, zatímco dorazí bratr Aldric a rozsvítí ochranné kameny. Každý bodec se roztříští a podlaha přestane hořet, potom se k mechanikám Trůnu přidají Trhání duše a Nesmrtelné běsnění.",
+        "phaseKingsWrathName": "Králův hněv",
+        "phaseKingsWrathSummary": "Při {health} zdraví Nythraxis zařve v Králově hněvu a získá o {bonusNormal} vyšší poškození na Normal nebo o {bonusHeroic} na Heroic po zbytek boje. Hrobová erupce se zrychlí na každých {eruptionEveryNormal} s ({eruptionEveryHeroic} na Heroic) a Hrobový oheň na každých {gravefireEveryNormal} s ({gravefireEveryHeroic} na Heroic). Všechny ostatní mechaniky drží své tempo.",
+        "gravebreakerName": "Hrobobijec",
+        "gravebreakerSummary": "Každých {seconds} s Nythraxis nabije svůj další dopadlý úder. Jeho cíl utrpí jen samotný úder, ale všichni ostatní v dosahu {range} yardů v kuželu {arc} stupňů před ním utrpí {splash} tohoto úderu jako fyzické poškození, snížené jejich vlastním brněním.",
+        "gravebreakerResponse": "Tankové drží Nythraxise otočeného pryč od raidu. Všichni ostatní stojí za ním nebo vedle něj a nikdy nekříží kužel.",
+        "dreadCurseName": "Děsivá kletba",
+        "dreadCurseSummary": "Každých {every} s Nythraxis zasáhne svého aktuálního tanka za {hitNormal} maximálního zdraví jako stínové poškození a přidá sadu Děsivé kletby. Po dobu {duration} s každá sada zvyšuje poškození, které tank utrpí od Nythraxise, o {perStackNormal}, až do {max} sad.",
+        "dreadCurseHeroicSummary": "Každých {every} s Nythraxis zasáhne svého aktuálního tanka za {hitHeroic} maximálního zdraví jako stínové poškození a přidá sadu Děsivé kletby. Po dobu {duration} s každá sada zvyšuje poškození, které tank utrpí od Nythraxise, o {perStackHeroic}, až do {max} sad.",
+        "dreadCurseResponse": "Tankové se střídají při {stacks} sadách: druhý tank provokuje a prokletý tank zůstává mimo kužel Hrobobijce, než sady vyprchají. Léčitelé připraví přebírajícího tanka před výměnou.",
+        "boneSpikeName": "Kostěný bodec",
+        "boneSpikeSummary": "Každých {everyNormal} s Nythraxis nabodne {victimsNormal} raiderů mimo svůj aktuální cíl na kostěné bodce. Nabodnutý raider nemůže jednat a každou sekundu ztrácí {drainNormal} maximálního zdraví, dokud není jeho bodec zničen.",
+        "boneSpikeHeroicSummary": "Každých {everyHeroic} s Nythraxis nabodne {victimsHeroic} raiderů mimo svůj aktuální cíl na kostěné bodce. Nabodnutý raider nemůže jednat a každou sekundu ztrácí {drainHeroic} maximálního zdraví, dokud není jeho bodec zničen.",
+        "boneSpikeResponse": "Útočníci se okamžitě přepnou na kostěné bodce a zničí je, aby osvobodili nabodnuté raidery. Léčitelé drží nabodnuté naživu, než bodce padnou.",
+        "graveEruptionName": "Hrobová erupce",
+        "graveEruptionSummary": "Každých {everyNormal} s kostlivé ruce označí {countNormal} kruhů o poloměru {radius} yardů pod raidery. Po {warning} s každý kruh vybuchne za {burstNormal} maximálního zdraví jako stínové poškození, potom hoří jako hrobový plamen po dobu {flameNormal} s a každou sekundu způsobuje {tickNormal} maximálního zdraví každému, kdo v něm stojí.",
+        "graveEruptionHeroicSummary": "Každých {everyHeroic} s kostlivé ruce označí {countHeroic} kruhů o poloměru {radius} yardů pod raidery. Po {warning} s každý kruh vybuchne za {burstHeroic} maximálního zdraví jako stínové poškození, potom hoří jako hrobový plamen po dobu {flameHeroic} s a každou sekundu způsobuje {tickHeroic} maximálního zdraví každému, kdo v něm stojí.",
+        "graveEruptionResponse": "Ustupte z každého varovného kruhu, než vybuchne, a nestůjte na hořící zemi. Tankové odtáhnou Nythraxise od plamenů, aby měli bojovníci nablízko prostor.",
+        "bindingSigilName": "Vazebná pečeť",
+        "bindingSigilSummary": "Každých {everyNormal} s vzplane na podlaze {minDist} až {maxDist} yardů od Nythraxise pečeť starých ochran a on začne Nesmrtelný vzestup, který mu každých {ascensionEvery} s přidá {ascensionNormal} poškození a rychlost útoku. Pokud do {bindNormal} s stojí na pečeti, je spoután: Vzestup se očistí, je omráčen na {stunNormal} s a po dobu {boundNormal} s utrpí o {vulnerability} vyšší poškození. Jinak každý raider utrpí {unboundHitNormal} maximálního zdraví jako stínové poškození a on si ponechá o {unboundBonusNormal} vyšší poškození až do dalšího spoutání.",
+        "bindingSigilHeroicSummary": "Každých {everyHeroic} s vzplane na podlaze {minDist} až {maxDist} yardů od Nythraxise pečeť starých ochran a on začne Nesmrtelný vzestup, který mu každých {ascensionEvery} s přidá {ascensionHeroic} poškození a rychlost útoku. Pokud do {bindHeroic} s stojí na pečeti, je spoután: Vzestup se očistí, je omráčen na {stunHeroic} s a po dobu {boundHeroic} s utrpí o {vulnerability} vyšší poškození. Jinak každý raider utrpí {unboundHitHeroic} maximálního zdraví jako stínové poškození a on si ponechá o {unboundBonusHeroic} vyšší poškození až do dalšího spoutání.",
+        "bindingSigilResponse": "Tank okamžitě přetáhne Nythraxise na pečeť, i přes oheň, který raid zanechal. Bojovníci nablízko sledují přesun a bojovníci na dálku zůstávají mimo nový kužel Hrobobijce. Všichni do něj pálí, dokud je spoután.",
+        "raiseFallenName": "Pozvednutí padlých",
+        "raiseFallenSummary": "Každých {every} s během Trůnu Nythraxis pozvedá za sebou Povstalé královské stráže. Vrhají se na jeho aktuální cíl a bojují, dokud nejsou zničeny.",
+        "raiseFallenResponse": "Off-tank převezme každou vlnu, jakmile povstane. Útočníci čistí stráže mezi kostěnými bodci, aby se vlny před pádem Trůnu nikdy nenahromadily.",
+        "soulRendName": "Trhání duše",
+        "soulRendSummary": "Nythraxis označí {marksNormal} raiderů mimo svůj aktuální cíl Trháním duše. Po {fuse} s každá značka způsobí plné maximální zdraví svého nositele jako stínové poškození, rozdělené počtem označených raiderů v dosahu {range} yardů od něj.",
+        "soulRendHeroicSummary": "Nythraxis označí {marksHeroic} raiderů mimo svůj aktuální cíl Trháním duše. Po {fuse} s každá značka způsobí {damageHeroic} maximálního zdraví svého nositele jako stínové poškození, rozdělené počtem označených raiderů v dosahu {range} yardů od něj. Značka, která se vyhodnotí o samotě, je smrtící.",
+        "soulRendResponse": "Každý označený raider běží na jedno místo ke shromáždění a postaví se do {range} yardů od ostatních značek před koncem odpočtu {fuse} s. Léčitelé doléčí skupinu, než se značky vyhodnotí.",
+        "soulfireName": "Oheň duší",
+        "soulfireSummary": "Každý výbuch Trhání duše zanechá fialovou ohnivou kaluž s poloměrem {radius} yardů na místě, kde stála každá značka, která hoří {seconds} s a každou sekundu způsobuje {tickNormal} maximálního zdraví. Stání v překryvu kaluží způsobí tik z každé z nich. Kaluže nikdy nevzniknou do {clearance} yardů od ochranného kamene.",
+        "soulfireHeroicSummary": "Každý výbuch Trhání duše zanechá jednu kaluž fialového ohně s poloměrem {radius} yardů za každou seskupenou skupinu značek, která hoří {secondsHeroic} s a každou sekundu způsobuje {tickHeroic} maximálního zdraví. Stání v překryvu kaluží způsobí jen jeden tik, nikdy nasčítané kopie. Kaluže nikdy nevzniknou do {clearance} yardů od ochranného kamene.",
+        "soulfireResponse": "Jakmile značky vybuchnou, odejdi z fialové kaluže. Udrž další místo shromáždění čisté od aktivního ohně.",
+        "gravefireName": "Hrobový oheň",
+        "gravefireSummary": "Každých {everyNormal} s vyběhne od Nythraxise k raiderovi linie fialového hrobového ohně, která každou sekundu roste o {speed} yardů až na {length} yardů. Každý yard hoří {burnNormal} s a každou sekundu způsobuje {tickNormal} maximálního zdraví každému, kdo v něm stojí.",
+        "gravefireHeroicSummary": "Každých {everyHeroic} s vyběhne od Nythraxise k raiderovi linie fialového hrobového ohně, která každou sekundu roste o {speed} yardů až na {length} yardů. Každý yard hoří {burnHeroic} s a každou sekundu způsobuje {tickHeroic} maximálního zdraví každému, kdo v něm stojí.",
+        "gravefireResponse": "Ustup stranou, jak linie přichází: je úzká a nikdy nezatáčí. Raideři na dálku se drží v pohybu místo stání na místě.",
+        "deathlessRageName": "Nesmrtelné běsnění",
+        "deathlessRageSummary": "Každých {every} s Nythraxis sesílá Nesmrtelné běsnění po dobu {cast} s. Během sesílání může každý rozsvícený ochranný kámen kanalizovat jeden raider po dobu {channel} s. Pokud tři různí raideři každý dokončí svůj ochranný kámen před koncem sesílání, běsnění se přeruší a Nythraxis je omráčen na {stun} s. Jinak každý raider utrpí {damageNormal} maximálního zdraví jako stínové poškození.",
+        "deathlessRageHeroicSummary": "Každých {every} s Nythraxis sesílá Nesmrtelné běsnění po dobu {cast} s. Během sesílání může každý rozsvícený ochranný kámen kanalizovat jeden raider po dobu {channel} s. Pokud tři různí raideři každý dokončí svůj ochranný kámen před koncem sesílání, běsnění se přeruší a Nythraxis je omráčen na {stun} s. Jinak každý raider utrpí {damageHeroic} maximálního zdraví jako stínové poškození, což žádný fond zdraví nepřežije.",
+        "deathlessRageResponse": "Před začátkem boje přiřaďte ke každému ochrannému kameni jednoho raidera. Když sesílání začne, každý běží ke svému kameni a kanalizuje ho až do dokončení. Omráčení, odstoupení a smrt kanál přeruší, proto udržte kanalizující hráče v bezpečí a nikdy nepřiřazujte nabodnutého raidera.",
+        "courtName": "Nesmrtelný dvůr",
+        "courtSummary": "Na Heroic Nythraxis po každém Nesmrtelném běsnění, přerušeném i nepřerušeném, pozvedne svůj dvůr, jakmile předchozí dvůr padl. Duch Aldrena zasáhne Královským sekem vše poblíž svého cíle. Duch Malrica sesílá Malricovo léčení, které každým sesláním léčí Nythraxise víc. Duch Vosse ignoruje provokace a loví raid.",
+        "courtResponse": "Tankové převezmou Aldrena a otočí jeho štěpný útok pryč od raidu. Omračte nebo umlčte Malrica hned, jak začne Malricovo léčení, a zabijte ho jako prvního; potom zakořeňte nebo omračte Vosse mimo léčitele, protože se nedá vyprovokovat, a dorazte ho jako dalšího.",
+        "kingsWrathName": "Králův hněv",
+        "kingsWrathSummary": "Nythraxis způsobuje o {bonusNormal} vyšší poškození na Normal nebo o {bonusHeroic} na Heroic po zbytek boje. Hrobová erupce nastává každých {eruptionEveryNormal} s ({eruptionEveryHeroic} na Heroic) a Hrobový oheň každých {gravefireEveryNormal} s ({gravefireEveryHeroic} na Heroic).",
+        "kingsWrathResponse": "Použijte zbývající obranné cooldowny na nevyhnutelné poškození. Udržte všechny dřívější mechaniky čisté, zatímco raid dokončuje boj.",
+        "boneStormName": "Kostěná bouře",
+        "boneStormSummary": "Počínaje {first} s po začátku Králova hněvu a pak každých {everyNormal} s Nythraxis zahájí Kostěnou bouři na {duration} s. Ignoruje hrozbu, pohybuje se {speed}násobkem běžné rychlosti a provede {charges} výpadů, každý v trvání {chargeSeconds} s. Jeho vír způsobí každou sekundu v dosahu {radius} yardů {whirlNormal} maximálního zdraví. Každý výpad končí Kostěným úderem ve stejném dosahu za {slamNormal} maximálního zdraví. {spikeAt} s po začátku bouře sesílá Kostěný bodec a Hrobobijec se znovu připraví {rearm} s po jejím konci.",
+        "boneStormHeroicSummary": "Počínaje {first} s po začátku Králova hněvu a pak každých {everyHeroic} s Nythraxis zahájí Kostěnou bouři na {duration} s. Ignoruje hrozbu, pohybuje se {speed}násobkem běžné rychlosti a provede {charges} výpadů, každý v trvání {chargeSeconds} s. Jeho vír způsobí každou sekundu v dosahu {radius} yardů {whirlHeroic} maximálního zdraví. Každý výpad končí Kostěným úderem ve stejném dosahu za {slamHeroic} maximálního zdraví. {spikeAt} s po začátku bouře sesílá Kostěný bodec a Hrobobijec se znovu připraví {rearm} s po jejím konci.",
+        "boneStormResponse": "Rozestupte se a nepřestávejte před Nythraxisem utíkat. Označený raider běží pryč, zatímco všichni ostatní nechají kolem trasy výpadu místo; tankové ho po konci bouře znovu převezmou.",
+        "crownEnduresName": "Koruna vytrvá",
+        "crownEnduresSummary": "V {enrageNormal} s od začátku boje (hodiny se zastaví, když bratr Aldric vstoupí při 70%) se Koruna vytrvá spustí jako tvrdé rozzuření. Nythraxis získá o {damage} vyšší poškození a o {haste} rychlejší útoky, poté každých {rampEveryNormal} s další {rampStep} poškození. Není zde žádná časová lišta. Varování přicházejí jako výkřiky při {warn60}, {warn30} a {warn10} s do konce.",
+        "crownEnduresHeroicSummary": "V {enrageHeroic} s od začátku boje (hodiny se zastaví, když bratr Aldric vstoupí při 70%) se Koruna vytrvá spustí jako tvrdé rozzuření. Nythraxis získá o {damage} vyšší poškození a o {haste} rychlejší útoky, poté každých {rampEveryHeroic} s další {rampStep} poškození. Není zde žádná časová lišta. Varování přicházejí jako výkřiky při {warn60}, {warn30} a {warn10} s do konce.",
+        "crownEnduresResponse": "První varování berte jako závěrečný nápor. Šetřete pohybové a obranné cooldowny na zbývající mechaniky a porazte Nythraxise před rozzuřením."
       }
     },
     "auraEffect": {
@@ -2925,14 +2938,14 @@ export const cs_CZ: EnTranslations = {
       "varkhulMoltenCore": "Nes toto jádro k výhni. Roztavené břemeno způsobuje každých {interval} s rostoucí poškození, od {min} % do {max} % maximálního zdraví.",
       "varkhulForgeLink": "Zachyť aktivní paprsek pilíře, než dosáhne výhně. Otevřené paprsky přidávají 6 % žáru za sekundu. V Normální obtížnosti blokované paprsky a neaktivní pilíře výheň ochlazují; v Hrdinské žár nikdy neklesá. Při 100 % výheň postihne smrtící Roztavení.",
       "varkhulCrucibleExposure": "Blokování Paprsku tavicí pece způsobuje každou sekundu rostoucí poškození z maximálního zdraví. Stacky se resetují 10 sekund po opuštění paprsku v Normální obtížnosti a po 60 sekundách v Hrdinské.",
-      "nythraxisDreadCurse": "Each stack increases damage taken from Nythraxis by {perStack}% for {duration} sec: {stacks} of {max} stacks now, {pct}% more damage. Every {every} sec his next hit on his target deals {hit}% of maximum health and adds a stack. Tanks should swap at {swap} stacks.",
-      "nythraxisImpaled": "Impaled on a Bone Spike: you cannot act and lose {normal}% of your maximum health every {interval} sec ({heroic}% on Heroic) until the raid destroys the spike.",
-      "nythraxisAscension": "Deathless Ascension: {stacks} stacks, {pct}% more damage and attack speed. Drag Nythraxis onto the Binding Sigil to purge it.",
-      "nythraxisBound": "Bound by the old wards: Nythraxis takes {pct}% more damage for {duration} sec.",
-      "nythraxisUnbound": "Unbound: Nythraxis deals {pct}% more damage until a Binding Sigil holds him.",
-      "nythraxisKingsWrath": "King's Wrath: Nythraxis deals {pct}% more damage for the rest of the fight.",
-      "nythraxisBoneStorm": "Bone Storm: Nythraxis ignores threat, whirls for {tick}% of maximum health every second within {radius} yd, and charges raiders. Spread out and run.",
-      "nythraxisCrownEndures": "The Crown Endures: {stacks} stacks, {pct}% more damage and {haste}% faster attacks. The raid is out of time.",
+      "nythraxisDreadCurse": "Každá sada zvyšuje poškození utržené od Nythraxise o {perStack}% po dobu {duration} s: nyní {stacks} z {max} sad, o {pct}% vyšší poškození. Každých {every} s jeho další zásah do cíle způsobí {hit}% maximálního zdraví a přidá sadu. Tankové by se měli vystřídat při {swap} sadách.",
+      "nythraxisImpaled": "Nabodnut na kostěný bodec: nemůžeš jednat a ztrácíš {normal}% svého maximálního zdraví každých {interval} s ({heroic}% na Heroic), dokud raid bodec nezničí.",
+      "nythraxisAscension": "Nesmrtelný vzestup: {stacks} sad, o {pct}% vyšší poškození a rychlost útoku. Přetáhni Nythraxise na Vazebnou pečeť, aby se efekt očistil.",
+      "nythraxisBound": "Spoután starými ochranami: Nythraxis utrpí o {pct}% vyšší poškození po dobu {duration} s.",
+      "nythraxisUnbound": "Nespoutaný: Nythraxis způsobuje o {pct}% vyšší poškození, dokud ho neudrží Vazebná pečeť.",
+      "nythraxisKingsWrath": "Králův hněv: Nythraxis způsobuje o {pct}% vyšší poškození po zbytek boje.",
+      "nythraxisBoneStorm": "Kostěná bouře: Nythraxis ignoruje hrozbu, víří za {tick}% maximálního zdraví každou sekundu v dosahu {radius} yardů a vyráží proti raiderům. Rozestupte se a utíkejte.",
+      "nythraxisCrownEndures": "Koruna vytrvá: {stacks} sad, o {pct}% vyšší poškození a o {haste}% rychlejší útoky. Raidu došel čas.",
       "dot": "Způsobuje {value} {school} poškození každých {interval} s",
       "hot": "Obnovuje {value} zdraví každých {interval} s",
       "mendingCurrent": "Ukládá {value} léčení, uvolňovaného v čase nebo spotřebovaného Kaskádovou látkou",
@@ -2983,7 +2996,7 @@ export const cs_CZ: EnTranslations = {
       "suddenDeath": "Tvůj příští Předčasný hrob nestojí žádný vztek a ignoruje svůj požadavek na zdraví",
       "aoeEcho": "Zbývá {charges} ozvěn: schopnosti na jeden cíl zasáhnou i až {targets} blízké nepřátele za {pct} % poškození",
       "sureCrit": "{charges} seslání poškozujících schopností jsou zaručeně kritické zásahy",
-      "temporalEcho": "Seslatelovo arkánní poškození tě léčí za {singlePct} % poškození na jeden cíl nebo {areaPct} % plošného poškození",
+      "temporalEcho": "Seslatelovo arkánní poškození tě léčí za {singlePct}% poškození na jeden cíl nebo {areaPct}% plošného poškození. Éterová vlna a Éterové šipky získávají u individuální Časové ozvěny čtyřnásobný bonus. Skupinové ozvěny vytvářejí stejnou rezervu léčení, která se rozdělí podle chybějícího zdraví mezi označené spojence pod 60% zdraví",
       "arcaneCharge": "{stacks} Éterických nábojů: Aether Surge způsobuje o {damagePct} % více poškození, sesílá se o {castPct} % rychleji a stojí {costMult}x many",
       "physicalReduction": "Snižuje utrpěné fyzické poškození o {pct} %",
       "temporalHourglass": "Nezranitelný/á a neschopný/á jednat; obnovuje zdraví a urychluje obnovu cooldownu. Klikni pravým tlačítkem pro zrušení.",
@@ -3003,8 +3016,8 @@ export const cs_CZ: EnTranslations = {
       "redline": "Červená linie: zářez {stacks} z {max}. Rány do těla přidávají zářezy; Rána z milosti zasáhne o {pct}% tvrději za zářez a uzavře okno. Dřívější vypršení je ztratí",
       "veilstrikeWindow": "Stínový závoj: tvá zahájení Soumračného závoje lze použít na otevřeném prostranství z libovolného úhlu a způsobené poškození se zvyšuje o {pct}%",
       "veiledEdge": "Tvůj další Úder číhajícího zasáhne dvojnásobně",
-      "veiledEdgeStrike": "Your next Lurker's Strike deals {pct}% more weapon damage",
-      "coldsightRead": "Your next Long Draw deals {longDrawPct}% more damage, or your next Fell Shot deals {fellShotPct}% more",
+      "veiledEdgeStrike": "Tvůj příští Úder číhajícího způsobí o {pct}% vyšší poškození zbraní",
+      "coldsightRead": "Tvůj příští Dlouhý nátah způsobí o {longDrawPct}% vyšší poškození, nebo tvůj příští Padlý výstřel o {fellShotPct}% vyšší",
       "duskEconomy": "Schopnosti stojí o {pct}% méně energie",
       "moontide": "Měsíční příliv: stupeň {stacks} z {max}. Sesílání Šípu divočiny, Pádu nebes a Měsíčního semene ho plní v Podobě měsíčního křídla; při {max} se Měsíční semeno mění v Měsíční vzedmutí a Pád nebes ve Sluneční brázdu a obojí ho čerpá",
       "oldBlood": "Stará krev: stupeň {stacks} z {max}. Zasažené vlčí a medvědí údery sdílejí tuto zásobu; při {max} se promění Krvavý skus nebo Drcení kostí",
@@ -3198,6 +3211,7 @@ export const cs_CZ: EnTranslations = {
       "healthPercent": "Procenta",
       "healthCurrent": "Aktuální",
       "healthCurrentMax": "Aktuální / Maximum",
+      "healthCurrentMaxPercent": "Aktuální / Max (procento)",
       "sort": "Seřadit hráče",
       "sortGroup": "Skupina",
       "sortRole": "Role",
@@ -3237,17 +3251,17 @@ export const cs_CZ: EnTranslations = {
         "targetFrame": "Cíl",
         "partyFrames": "Skupina",
         "swingBar": "Automatický útok",
-        "targetDots": "Target Dots",
-        "questTracker": "Quest Tracker",
-        "reliquaryTracker": "Reliquary Tracker",
-        "petBar": "Pet Bar",
-        "procOverlay": "Spell Procs",
-        "procOverlayFrost": "Icicles",
-        "damageMeter": "Damage Meter",
-        "deedTracker": "Deed Tracker",
-        "delveTracker": "Delve Tracker",
-        "riftTracker": "Rift Tracker",
-        "swingBarOffhand": "Off Hand"
+        "targetDots": "Cílové body",
+        "questTracker": "Sledování úkolů",
+        "reliquaryTracker": "Sledování relikviáře",
+        "petBar": "Lišta mazlíčka",
+        "procOverlay": "Aktivace kouzel",
+        "procOverlayFrost": "Rampouchy",
+        "damageMeter": "Měřič poškození",
+        "deedTracker": "Sledování skutků",
+        "delveTracker": "Sledování výprav do hlubin",
+        "riftTracker": "Sledování trhlin",
+        "swingBarOffhand": "Levá ruka"
       },
       "framesMenu": "Nastavení rámečků",
       "framesMenuTitle": "Zobraz nebo skryj jednotlivé rámečky. Nezaškrtnutý rámeček zůstane skrytý, dokud ho znovu nezaškrtneš nebo neobnovíš výchozí nastavení.",
@@ -3280,33 +3294,33 @@ export const cs_CZ: EnTranslations = {
       "wrongKind": "Tento kód je jiného typu exportu."
     },
     "keybindTransfer": {
-      "setup": "Hotkey Setup",
-      "apply": "Apply",
-      "imported": "Hotkey setup imported.",
-      "wrongKind": "That code is a settings export, not a hotkey setup."
+      "setup": "Nastavení zkratek",
+      "apply": "Použít",
+      "imported": "Nastavení klávesových zkratek importováno.",
+      "wrongKind": "Tento kód je export nastavení, ne nastavení zkratek."
     },
     "keyboardMap": {
-      "title": "Keyboard Overview",
-      "hint": "Keys in use are coloured by category. Hover or focus a key to see everything bound to it.",
-      "hintInteractive": "Keys in use are coloured by category. Click a key to change what it does; hover or focus one to see everything bound to it.",
-      "popOut": "Pop Out",
-      "close": "Close keyboard overview",
-      "pressKey": "Press a key for {action}. Esc cancels.",
-      "boundTo": "Bound {action} to {key}.",
-      "notBindable": "That key cannot be bound.",
-      "assignHint": "Choose an action to bind to {key}.",
-      "assignPlaceholder": "Assign an action to {key}",
-      "layerGroup": "Modifier layer",
-      "formGroup": "Keyboard size",
-      "formFull": "Full size",
-      "formTkl": "Tenkeyless",
+      "title": "Přehled klávesnice",
+      "hint": "Používané klávesy jsou vybarvené podle kategorie. Najeď na klávesu nebo ji zaměř, aby se zobrazilo vše, co je na ni navázané.",
+      "hintInteractive": "Používané klávesy jsou vybarvené podle kategorie. Kliknutím na klávesu změníš její akci; najetím nebo zaměřením zobrazíš vše, co je na ni navázané.",
+      "popOut": "Otevřít zvlášť",
+      "close": "Zavřít přehled klávesnice",
+      "pressKey": "Stiskni klávesu pro {action}. Esc zruší.",
+      "boundTo": "Akce {action} navázána na {key}.",
+      "notBindable": "Tuto klávesu nelze navázat.",
+      "assignHint": "Vyber akci, kterou navážeš na {key}.",
+      "assignPlaceholder": "Přiřadit akci ke klávese {key}",
+      "layerGroup": "Vrstva modifikátoru",
+      "formGroup": "Velikost klávesnice",
+      "formFull": "Plná velikost",
+      "formTkl": "Bez numerického bloku",
       "form75": "75%",
       "form60": "60%",
-      "notOnLayout": "Not on this keyboard: {bindings}",
-      "legendGroup": "Key labels",
-      "legendLayout": "Your layout",
+      "notOnLayout": "Není na této klávesnici: {bindings}",
+      "legendGroup": "Popisky kláves",
+      "legendLayout": "Tvoje rozložení",
       "legendQwerty": "QWERTY",
-      "layerNone": "No modifier",
+      "layerNone": "Bez modifikátoru",
       "layerShift": "Shift",
       "layerCtrl": "Ctrl",
       "layerAlt": "Alt",
@@ -3314,43 +3328,43 @@ export const cs_CZ: EnTranslations = {
       "separator": ", ",
       "bindingLine": "{key}: {action}",
       "assignOption": "{category}: {action}",
-      "otherLayers": "Also bound with a modifier"
+      "otherLayers": "Také navázáno s modifikátorem"
     },
     "fullTransfer": {
-      "menu": "Import / Export",
-      "title": "Import / Export Settings",
-      "fullSettings": "Full Settings",
-      "intro": "Export every saved preference on this device as one code, and paste it on another device or browser to import it: graphics, audio, interface, theme, frame layout, key bindings for every character, controller and cross hotbar bindings, chat, window filters, language, and dismissed hints.",
-      "excluded": "Never included: your login, account, wallet, or purchase data. Action bar layouts are saved to your account and travel with it."
+      "menu": "Import / export",
+      "title": "Import / export nastavení",
+      "fullSettings": "Úplná nastavení",
+      "intro": "Exportuj všechny uložené předvolby na tomto zařízení jako jeden kód a vlož ho na jiném zařízení nebo v jiném prohlížeči pro import: grafiku, zvuk, rozhraní, motiv, rozložení oken, klávesové zkratky pro každou postavu, ovladač a křížové hotbary, chat, filtry oken, jazyk a skryté rady.",
+      "excluded": "Nikdy se nezahrnuje: tvoje přihlášení, účet, peněženka ani údaje o nákupech. Rozložení akčních lišt se ukládá k účtu a cestuje s ním."
     },
     "riftForge": {
-      "title": "Rift Forge",
-      "subtitle": "Riftbound bands",
+      "title": "Kovárna trhlin",
+      "subtitle": "Riftbound kapely",
       "currency": "{name}: {count}",
-      "empty": "No Riftbound band in your bags. A ranked Rift first clear mints one.",
-      "wornHint": "Worn. Unequip it to forge.",
-      "upgradeBtn": "Upgrade to item level {level} ({cost} essence)",
-      "upgradeMax": "Fully upgraded",
-      "gemPickAria": "Gem to socket",
+      "empty": "Žádná Riftbound kapela ve vašich taškách. Zařazená Rift jako první čistá mincovna.",
+      "wornHint": "Nošené. Vybavit to kovat.",
+      "upgradeBtn": "Upgradujte na úroveň položky {level} (podstata {cost})",
+      "upgradeMax": "Plně upgradováno",
+      "gemPickAria": "Drahokam do zásuvky",
       "gemOption": "{name} ({bonus})",
-      "socketReplaceHint": "Sockets full: the next gem replaces the oldest, {gem}.",
-      "socketBtn": "Socket",
-      "socketsNone": "no gems",
-      "noGems": "No Rift gems in your bags",
-      "refused": "The forge refused. Stand at the Riftwright and try again.",
+      "socketReplaceHint": "Zásuvky plné: další drahokam nahrazuje nejstarší, {gem}.",
+      "socketBtn": "Zásuvka",
+      "socketsNone": "žádné drahokamy",
+      "noGems": "Žádné drahokamy Rift ve vašich taškách",
+      "refused": "Kovárna odmítla. Postavte se k Riftwrightovi a zkuste to znovu.",
       "reason": {
-        "notFound": "That band is not in your bags.",
-        "notRiftGear": "Only a Riftbound band can be forged.",
-        "maxUpgrade": "That band is fully upgraded.",
-        "insufficientEssence": "Not enough Rift Essence.",
-        "invalidGem": "You have no such Rift gem.",
-        "dead": "You can't do that while dead.",
-        "tooFar": "You are too far from the Rift Forge."
+        "notFound": "Ta kapela není ve vašich taškách.",
+        "notRiftGear": "Kovat lze pouze pásku Riftbound.",
+        "maxUpgrade": "Ta kapela je plně upgradovaná.",
+        "insufficientEssence": "Nedostatek Rift Essence.",
+        "invalidGem": "Nemáte žádný takový drahokam Rift.",
+        "dead": "Nemůžeš to udělat, když jsi mrtvý.",
+        "tooFar": "Jste příliš daleko od Rift Forge."
       },
       "done": {
-        "upgrade": "Upgraded {name}.",
-        "socket": "Socketed a gem into {name}.",
-        "socketReplaced": "Socketed a gem into {name}; {gem} was destroyed."
+        "upgrade": "Vylepšený {name}.",
+        "socket": "Zasunutý klenot do {name}.",
+        "socketReplaced": "Zasunutý drahokam do {name}; {gem} byl zničen."
       }
     },
     "itemTooltip": {
@@ -3358,7 +3372,7 @@ export const cs_CZ: EnTranslations = {
       "riftTier": "Trhlinový předmět stupně {tier}",
       "riftUpgrade": "Vylepšení trhliny {level}/{max}",
       "riftSockets": "Trhlinové drahokamy {used}/{total}",
-      "riftGemSocket": "Socket bonus for a Riftbound band",
+      "riftGemSocket": "Bonus do zásuvky pro kapelu Riftbound",
       "statEnchanted": "+{value} {stat} (okouzleno)",
       "enchantedFallback": "Okouzlený",
       "partyTradeWindow": "Tento předmět můžeš dalších {time} směňovat s hráči, kteří sdíleli jeho kořist. Nasazení předmětu okno pro směnu ukončí.",
@@ -3423,6 +3437,7 @@ export const cs_CZ: EnTranslations = {
       "close": "Zavřít",
       "keybind": "Panel Discordu",
       "disabled": "Discord integrace teď není dostupná.",
+      "queuePingsLabel": "Pošlete mi přímou zprávu Discord, když se objeví fronta na bojišti nebo v aréně (vyžaduje propojený účet Discord)",
       "tiers": {
         "none": "Bez hodnosti",
         "initiate": "Zasvěcenec",
@@ -3680,13 +3695,13 @@ export const cs_CZ: EnTranslations = {
       "close": "Zavřít"
     },
     "realmBuilder": {
-      "title": "Realm Builder of the Month",
-      "currentLabel": "Honoured this month",
-      "placeholderName": "Your Name Here",
-      "placeholderHint": "This plate is waiting for its first name.",
-      "pastTitle": "Past honourees",
-      "pastEmpty": "No names on the roll yet.",
-      "close": "Close"
+      "title": "Realm Builder měsíce",
+      "currentLabel": "Oceněno tento měsíc",
+      "placeholderName": "Vaše jméno zde",
+      "placeholderHint": "Tato deska čeká na své křestní jméno.",
+      "pastTitle": "Minulá vyznamenání",
+      "pastEmpty": "Na seznamu zatím nejsou žádná jména.",
+      "close": "Zavřít"
     },
     "bank": {
       "title": "Banka",
@@ -3743,6 +3758,8 @@ export const cs_CZ: EnTranslations = {
       "depositAllDone": "Uloženo materiálů: {count}.",
       "depositAllFull": "Uloženo materiálů: {count}. Banka je teď plná.",
       "depositAllNone": "Banka je plná: nic nebylo uloženo.",
+      "depositAllNotable": "Uložené materiály: {count}, včetně {item}.",
+      "depositAllNotableFull": "Uložené materiály: {count}, včetně {item}. Banka je nyní plná.",
       "bonusTitle": "Bonusové sloty",
       "bonusEarned": "+{count}",
       "bonusStatusEarned": "+{count}",
@@ -3781,6 +3798,8 @@ export const cs_CZ: EnTranslations = {
       "vaultDepositAllDone": "Uloženo materiálů: {count}.",
       "vaultDepositAllFull": "Uloženo materiálů: {count}. Některé stropy jsou plné.",
       "vaultDepositAllNone": "Stropy trezoru jsou plné: nic nebylo uloženo.",
+      "vaultDepositAllNotable": "Uložené materiály: {count}, včetně {item}.",
+      "vaultDepositAllNotableFull": "Uložené materiály: {count}, včetně {item}. Některé stropy jsou plné.",
       "vaultWithdrawShort": "Do tvých batohů se vejde jen {fit} z {count}.",
       "vaultDepositHint": "Klikni a ulož do svého trezoru",
       "vaultCannotDeposit": "Nelze uložit do trezoru",
@@ -3815,34 +3834,34 @@ export const cs_CZ: EnTranslations = {
       "guildViewsAria": "Zobrazení cechovní banky",
       "guildContentsTab": "Obsah",
       "guildLogTab": "Deník",
-      "guildHistoryTab": "History",
+      "guildHistoryTab": "Historie",
       "logAria": "Deník aktivity cechovní banky",
       "logNote": "{count} nejnovějších akcí cechovní banky.",
-      "logShowing": "Showing {count} guild bank actions, newest first.",
-      "logFilterAria": "Filter the guild bank history",
-      "logFilterAll": "All",
-      "logFilterItems": "Items",
-      "logFilterMoney": "Money",
-      "logOlder": "Show older",
-      "logOlderLoading": "Loading older actions...",
-      "logEnd": "That is the whole guild bank history.",
-      "logEmptyFiltered": "No guild bank actions match this filter.",
-      "logColTime": "When",
-      "logColMember": "Member",
-      "logColAction": "Action",
-      "logColDetail": "Details",
-      "logActionDeposit": "Deposited",
-      "logActionWithdraw": "Withdrew",
-      "logActionBuySlots": "Bought an expansion",
-      "logActionOpenBank": "Opened the bank",
-      "logActionCharterFee": "Paid the charter fee",
-      "logActionAdminPurge": "Removed",
-      "logActorAdmin": "An administrator",
+      "logShowing": "Zobrazuje se {count} akcí cechovní banky, nejnovější první.",
+      "logFilterAria": "Filtrovat historii cechovní banky",
+      "logFilterAll": "Vše",
+      "logFilterItems": "Předměty",
+      "logFilterMoney": "Peníze",
+      "logOlder": "Zobrazit starší",
+      "logOlderLoading": "Načítají se starší akce...",
+      "logEnd": "To je celá historie cechovní banky.",
+      "logEmptyFiltered": "Tomuto filtru neodpovídají žádné akce cechovní banky.",
+      "logColTime": "Kdy",
+      "logColMember": "Člen",
+      "logColAction": "Akce",
+      "logColDetail": "Podrobnosti",
+      "logActionDeposit": "Vloženo",
+      "logActionWithdraw": "Vybráno",
+      "logActionBuySlots": "Koupeno rozšíření",
+      "logActionOpenBank": "Otevřena banka",
+      "logActionCharterFee": "Zaplacen zakládací poplatek",
+      "logActionAdminPurge": "Odstraněno",
+      "logActorAdmin": "Administrátor",
       "logDetailItem": "{count} {item}",
-      "logSearchPlaceholder": "Search this history",
-      "logSearchAria": "Search the loaded guild bank actions by member, action or item",
-      "logShowingMatched": "Showing {matched} of {count} loaded guild bank actions.",
-      "logSearchNoMatch": "No loaded guild bank actions match your search. Show older rows to widen it.",
+      "logSearchPlaceholder": "Hledat v historii",
+      "logSearchAria": "Hledat v načtených akcích cechovní banky podle člena, akce nebo předmětu",
+      "logShowingMatched": "Zobrazuje se {matched} z {count} načtených akcí cechovní banky.",
+      "logSearchNoMatch": "Žádná načtená akce cechovní banky neodpovídá hledání. Zobraz starší řádky, aby se záběr rozšířil.",
       "logLoading": "Načítání deníku cechovní banky...",
       "logEmpty": "Do cechovní banky ani z ní se zatím nic nepřesunulo.",
       "logUnavailable": "Deník cechovní banky teď nelze načíst.",
@@ -3943,17 +3962,17 @@ export const cs_CZ: EnTranslations = {
         }
       },
       "roster": {
-        "seats": "{count} of {cap} seats",
-        "expand": "Expand roster (+{seats} seats for {price})",
-        "maxed": "The roster is at its largest size",
-        "confirm": "Expand the guild roster by {seats} seats for {price}? The gold comes from your own purse and is not refunded.",
-        "confirmAction": "Expand",
-        "expandedLine": "{name} has expanded the guild roster to {cap} members.",
+        "seats": "{count} sedadel {cap}",
+        "expand": "Rozbalit seznam (+ sedadla {seats} pro {price})",
+        "maxed": "Seznam je ve své největší velikosti",
+        "confirm": "Rozšířit seznam cechů o místa ve {seats} pro {price}? Zlato pochází z vaší vlastní peněženky a není vráceno.",
+        "confirmAction": "Rozbalit",
+        "expandedLine": "{name} rozšířil seznam cechů o členy {cap}.",
         "result": {
-          "notLeader": "Only the Guild Master may expand the guild roster.",
-          "maxed": "The guild roster cannot grow any larger.",
-          "cannotAfford": "You need {price} to expand the guild roster.",
-          "retry": "The guild roster changed while you were buying. Try again."
+          "notLeader": "Pouze gildovní mistr může rozšiřovat cechovní seznam.",
+          "maxed": "Soupiska cechu se nemůže zvětšovat.",
+          "cannotAfford": "K rozšíření seznamu cechu potřebujete {price}.",
+          "retry": "Během nákupu se cechovní seznam změnil. Zkuste to znovu."
         }
       }
     },
@@ -4517,7 +4536,7 @@ export const cs_CZ: EnTranslations = {
       "sameEnchant": "Tento předmět už má toto okouzlení.",
       "notPerfected": "Only a Perfected item can bear that enchant.",
       "enchantSkillTooLow": "Your Enchanting skill is too low for that enchant.",
-      "riftGear": "Riftbound bands take Rift gems, not enchants.",
+      "riftGear": "Riftbound kapely berou Rift drahokamy, ne enchanty.",
       "replaceTag": "Nahradí {enchant}",
       "sameEnchantTag": "Již aplikováno",
       "plainTag": "Bez okouzlení",
@@ -4808,15 +4827,15 @@ export const cs_CZ: EnTranslations = {
         "deathless_rage": "Nesmrtelný hněv (přerušen u ochranných kamenů)",
         "wardstones": "Kanály ochranných kamenů (přechod fáze)",
         "dread_curse": "Děsivá kletba (pouze heroická, sčítající se oslabení pro střídání tanků)",
-        "bone_spike": "Bone Spike (impaled raiders drain until the spike is destroyed)",
-        "grave_eruption": "Grave Eruption (warning circles that leave burning ground)",
-        "binding_sigil": "Binding Sigil (drag the boss onto the sigil or the raid pays)",
-        "gravefire": "Gravefire (a traveling line of fire to sidestep)",
-        "soulfire": "Soulfire (Soul Rend detonations leave burning pools)",
-        "kings_wrath": "King's Wrath (30%: permanent damage bonus, faster floor hazards)",
-        "bone_storm": "Bone Storm (he ignores threat, whirls, and charges the raid)",
-        "crown_endures": "The Crown Endures (hard enrage at 6:00, heroic 5:00)",
-        "deathless_court": "The Deathless Court (heroic only, the royal court rises after Deathless Rage)"
+        "bone_spike": "Kostěný bodec (nabodnutí raideři slábnou, dokud není bodec zničen)",
+        "grave_eruption": "Hrobová erupce (varovné kruhy, které zanechají hořící zem)",
+        "binding_sigil": "Vazebná pečeť (přetáhni bosse na pečeť, jinak raid zaplatí)",
+        "gravefire": "Hrobový oheň (pohyblivá ohnivá linie, které je třeba uhnout)",
+        "soulfire": "Oheň duší (výbuchy Trhání duše zanechají hořící kaluže)",
+        "kings_wrath": "Králův hněv (30%: trvalý bonus k poškození, rychlejší nebezpečí na podlaze)",
+        "bone_storm": "Kostěná bouře (ignoruje hrozbu, víří a útočí na raid)",
+        "crown_endures": "Koruna vytrvá (tvrdé rozzuření v 6:00, heroic 5:00)",
+        "deathless_court": "Nesmrtelný dvůr (jen heroic, královský dvůr povstane po Nesmrtelném běsnění)"
       }
     },
     "reliquary": {
@@ -4906,6 +4925,7 @@ export const cs_CZ: EnTranslations = {
       "sourceProfession": "Získáno díky {profession}",
       "sourceDeed": "Uděluje skutek {deed}",
       "sourceVendor": "Prodává {vendor}",
+      "sourceVendorGated": "Prodává {vendor} ({requirement})",
       "sourceBossZone": "Padá z {boss} v {zone}",
       "sourceDelve": "K nalezení ve výpravě {delve}",
       "sourceRift": "Padá z průchodů trhlinami hodnosti {rank}",
@@ -4925,6 +4945,10 @@ export const cs_CZ: EnTranslations = {
       "filterAll": "Vše",
       "filterOwned": "Zkatalogizované",
       "filterMissing": "Chybějící",
+      "filterIlluminated": "Osvětlené",
+      "filterRemaining": "Zbývající",
+      "filterEmptyPages": "Tomuto filtru neodpovídají žádné stránky.",
+      "filterGroupAriaPages": "Filtrujte stránky podle toho, zda jsou osvětlené",
       "recentJumpAria": "Otevřít stránku pro {name}",
       "recentEmpty": "Zatím žádné nálezy. Relikvie, které od teď zkatalogizuješ, přistanou tady.",
       "nearlyEmpty": "Sem se sbíhají stránky, které mají k dokončení nablízku.",
@@ -5032,6 +5056,7 @@ export const cs_CZ: EnTranslations = {
       "summary": "Mapa světa. Vyber oblast a otevři její mapu.",
       "toWorld": "Mapa světa",
       "toZone": "Mapa oblasti",
+      "toInstance": "Mapa instance",
       "toggleAria": "Přepnout mezi mapou světa a mapou oblasti",
       "levels": "Úrovně {min} až {max}"
     },
@@ -5066,6 +5091,7 @@ export const cs_CZ: EnTranslations = {
       "walletLinkedConnected": "Tvoje propojená aplikace peněženky je připojena a připravena na nákupy za $WOC.",
       "walletUsdBalance": "{amount} USD",
       "walletUsdUnknown": "Neznámé",
+      "walletCardDismiss": "Skrýt kartu peněženky",
       "rateNote": "Kurz: přibližně {tokens} $WOC za 1,00 USD k {time}.",
       "rateNotePaused": "Poslední známý kurz: přibližně {tokens} $WOC za 1,00 USD k {time}.",
       "estimateNote": "Přibližně {tokens} $WOC za {usd} při aktuálním kurzu.",
@@ -5257,6 +5283,43 @@ export const cs_CZ: EnTranslations = {
       "listingStatusCancelled": "Zrušeno",
       "listingStatusSuspended": "Pozastaveno",
       "listingStatusUnsold": "Neprodáno"
+    },
+    "lootExplorer": {
+      "title": "Průzkumník kořisti",
+      "close": "Zavřete Loot Explorer",
+      "searchPlaceholder": "Hledat položky...",
+      "searchAria": "Hledat položky",
+      "filterCategoryAria": "Zdroj",
+      "filterClassAria": "třídy",
+      "filterStatAria": "Atribut",
+      "filterQualityAria": "Kvalita",
+      "filterAll": "všechny",
+      "tabItems": "Podle položky",
+      "tabEncounters": "Podle Setkání",
+      "category": {
+        "raid": "Nájezd",
+        "dungeon": "Podzemí",
+        "delve": "Ponořte se",
+        "open_world": "Otevřený svět",
+        "rift": "Trhlina",
+        "vendor": "Prodejce",
+        "quest_reward": "Odměna za hledání",
+        "quest_objective": "Cíl výpravy",
+        "ground_object": "Světový objekt",
+        "starting_equipment": "Startovací zařízení"
+      },
+      "difficulty": {
+        "normal": "Normální",
+        "heroic": "Hrdinské"
+      },
+      "riftRankLabel": "Stupeň trhliny {rank}",
+      "source": "{category}: {name}",
+      "sourceWithContext": "{category}: {name} ({context})",
+      "chance": "{pct}% šance",
+      "guaranteed": "Zaručeno",
+      "gatedByQuest": "Při hledání: {quest}",
+      "empty": "Těmto filtrům neodpovídá žádná kořist.",
+      "resultCount": "Výsledky {count}"
     }
   },
   "gatherEvent": {
@@ -5356,7 +5419,8 @@ export const cs_CZ: EnTranslations = {
       "link_required": "Nejdřív propoj svůj Discord účet.",
       "swag_claimed": "Tuto odměnu už sis vyzvedl(a).",
       "swag_tier": "Pro vyzvednutí dosáhni vyšší hodnosti.",
-      "swag_points": "Nemáš dost bodů."
+      "swag_points": "Nemáš dost bodů.",
+      "invalid_input": "Neplatný vstup."
     },
     "deeds": {
       "invalid_input": "Neplatný vstup."
@@ -5408,6 +5472,11 @@ export const cs_CZ: EnTranslations = {
       "reason_required": "Je nutné uvést důvod.",
       "invalid_duration": "Zadejte dobu označení alespoň jednu sekundu.",
       "not_marked": "Tento účet není označen."
+    },
+    "kick": {
+      "reason_required": "Je vyžadován důvod.",
+      "admin_target": "Účty operátorů nelze vykopnout.",
+      "target_offline": "Tento hráč již není v této sféře online."
     },
     "woc_market": {
       "invalid_input": "Neplatný vstup.",
@@ -5843,10 +5912,13 @@ export const cs_CZ: EnTranslations = {
       "ifPlayerFrameScale": "Velikost tvého vlastního rámu hráče.",
       "ifTargetFrameScale": "Velikost tvého rámu cíle.",
       "ifPartyStyle": "Rozvržení skupiny: Automatický se řídí velikostí tvé skupiny, Klasické rámečky skupiny drží tradiční sloupec a Rámečky raidu narovnají všechny do kompaktní mřížky.",
+      "ifPlayerHealthText": "Co vytiskne váš vlastní ukazatel zdraví: nic, procento, aktuální zdraví, aktuální a maximální, nebo obojí s procentem vedle nich.",
+      "ifTargetHealthText": "Co vytisknou ukazatele zdraví cíle a cíle, se stejnými možnostmi jako u vašeho vlastního snímku.",
       "ifPartyHealthText": "Co lišty skupiny zobrazují: nic, procenta, aktuální zdraví, nebo aktuální a maximální.",
       "ifPartySort": "Pořadí, ve kterém jsou vypsáni členové skupiny: podle pořadí ve skupině, role nebo jména.",
       "ifPartyShowAuras": "Zda se na rámech skupiny zobrazují buffy a debuffy. Odpovídající přepínače pokrývají lišty zdrojů, absorpce, mazlíčky a to, jestli se objevíš ve vlastním seznamu skupiny.",
       "ifAurasOnPlayerFrame": "Přidá tvé buffy a debuffy i na rám hráče, nejen na lištu aur.",
+      "ifAuraBarBelowFrame": "Přesune řadu buffů pod rám jednotky místo nad něj. Má význam jen tehdy, když jsou buffy na rámu hráče.",
       "ifAlwaysShowAllBuffs": "Zobrazuje všechna aktivní posílení i při nízkém nastavení grafiky a obchází obvyklý limit ikon posílení.",
       "ifTargetOfTarget": "Zobrazí, na koho míří tvůj cíl, klasický způsob, jak poznat, jestli ho tank ještě drží.",
       "ifPetFrame": "Zobrazí rám pro tvého mazlíčka.",
@@ -5854,6 +5926,7 @@ export const cs_CZ: EnTranslations = {
       "ifChatOpacity": "Jak neprůhledné je pozadí chatu.",
       "ifCompactChat": "Zhustí řádky chatu, aby se jich vešlo víc.",
       "ifChatTimestamps": "Přidá ke každému řádku chatu čas, ve 12hodinovém nebo 24hodinovém formátu.",
+      "ifFilterProfanity": "Maskuje vulgární výrazy v chatu pomocí hvězdiček. Ve výchozím nastavení zapnuto; zde jej vypněte, pokud chcete chat číst nefiltrovaný.",
       "ifStartAttack": "Zda použití schopnosti spustí i tvůj automatický útok. Ve výchozím stavu zapnuto, klasické chování, které většina hráčů čeká.",
       "ifStopAutoAttack": "Zda přepnutí cíle zastaví tvůj úder. Ve výchozím stavu vypnuto, takže tvůj útok přejde na nový cíl.",
       "ifShowAttackButton": "Přidá na tvou akční lištu výslovné tlačítko Útok.",
@@ -6706,8 +6779,8 @@ export const cs_CZ: EnTranslations = {
       "raceBody": "Na stejnou trhlinu může naráz zaútočit každá skupina v říši, každá ve vlastní kopii, a zapečetí ji jen ta, která jako první srazí to, co čeká na dně. Když skupina vyhraje, říše se dozví její jména i čas a cesta dovnitř se za ní zavře. Prohra v závodě tvůj běh neukončí: tvoje kopie zůstane otevřená, ta věc na dně ti stále padne a ven odejdeš vlastní silou. Přijdeš jen o všechno, co by ti zaplatilo vyčištění. Boss té skupině, která doběhla druhá, nezanechá nic, takže domů si odneseš jen to, co upustili nepřátelé cestou dolů, a nic víc. Kniha skutků čistku počítá tak jako tak, protože tu věc jsi skutečně srazil. Je to jediný závod ve hře, který můžeš prohrát, aniž bys kdy spatřil ty, kdo tě porazili.",
       "rewardsHeading": "Co si odnášíš",
       "rewardsBody": "Vyplácí se zapečetit trhlinu, ne ji jen přežít. Sraz trhlinu jako první a zaplatí jako instancovaný obsah, vedle kterého svým stupněm stojí, takže těžší stupně stojí za tu těžší dřinu. Zapečetění navíc vloží trhlinou spoutaný prsten do rukou každého, kdo byl u toho, ušitý na míru roli tvé třídy a osobní jen pro tebe, a k tomu ti do batohů přidá esenci trhliny, na těžších stupních doplněnou drahokamy trhliny. Kromě cesty domů zanechá to, co čeká na dně, zapečetěnou skrýš, kterou tvoje skupina může otevřít za extra kořist, za použití stejného vypáčení Cestou stavítek, jaké znáš ze skrýší ve výpravách, takže čistá, trpělivá práce se vyplatí víc než uspěchaná. Nic z toho se nedostane ke skupině, která doběhla druhá: prohraný závod ti nechá jen to, co upustili nepřátelé cestou dolů. Výjimkou je Kniha skutků, která tvou čistku počítá tak jako tak, se skutkem za zapečetění tvé první trhliny a dalším za sražení trhliny stupně S.",
-      "forgeHeading": "The Rift Forge",
-      "forgeBody": "The band a ranked first clear mints is not finished when you receive it. Riftwright Maelis, who keeps a forge in the Watch Meadow on the Farshore, up the shore from Gullhaven beside the Breach Scholar, will raise its item level one step at a time and set the coloured gems the rifts drop into its sockets, each colour one combat rating. A full band takes a new gem in place of its oldest, so you can retune it later. All of that is paid in Rift Essence and Rift gems, the forge currency that falls from rift bosses and trades freely, so a friend can hand you the essence you are short. Take the band off before you bring it to her: she works on what is in your bags, and she does nothing at all unless you are standing at her forge.",
+      "forgeHeading": "Rift Forge",
+      "forgeBody": "Kapela na prvním místě v žebříčku není dokončena, když ji obdržíte. Riftwright Maelis, který má kovárnu na Watch Meadow na Farshore, na břehu od Gullhavenu vedle Breach Scholar, bude postupně zvyšovat úroveň svých předmětů a dávat barevné drahokamy, které trhliny vhazují do zásuvek, každá barva má jedno bojové hodnocení. Celá kapela má místo svého nejstaršího klenot nový, takže jej můžete později přeladit. To vše se platí v Rift Essence a Rift drahokamy, měně kovárny, která padá z riftových bossů a volně se s ní obchoduje, takže vám přítel může předat esenci, na kterou jste málo. Sundejte si pásek, než jí ho přinesete: pracuje na tom, co máte v taškách, a nedělá vůbec nic, pokud nestojíte u její kovárny.",
       "trackerHeading": "Tracker na obrazovce",
       "trackerBody": "Zatímco jsi uvnitř, malý pruh na obrazovce tě drží v obraze: na kterém jsi patře z kolika celkem, a živé odpočítávání. Čti to odpočítávání pozorně, protože nejde o čas tvého běhu. Je to čas, po který se zavře vstup zpátky do světa. Jakmile jsi uvnitř, tvoje skupina hraje trhlinu vlastním tempem, ať to trvá jakkoli dlouho, ale jakmile ty hodiny dojdou na nulu, cesta dovnitř zmizí pro každého, takže si to rozmysli, než těsně před koncem vyjdeš ven."
     },
@@ -8702,7 +8775,7 @@ export const cs_CZ: EnTranslations = {
       "forgeUpgraded": "Vylepšení trhliny dokončeno pro {name}.",
       "forgeEnchanted": "Okouzlení trhliny dokončeno pro {name}.",
       "forgeSocketed": "Trhlinový drahokam osazen pro {name}.",
-      "forgeGemReplaced": "Rift gem replaced for {name}: {gem} destroyed.",
+      "forgeGemReplaced": "Riftový drahokam nahrazen za {name}: {gem} zničen.",
       "detonateGlacialGrave": "Ledovcový hrob detonuje!",
       "detonateAbsoluteZero": "Absolutní nula vybuchuje!",
       "detonateMagmaWell": "Magmová studna vybuchuje!",
@@ -9345,6 +9418,7 @@ export const cs_CZ: EnTranslations = {
     "connectingRealm": "Připojuje se ke světu...",
     "assetsFailed": "Načítání assetů selhalo: zkus stránku obnovit. {error}",
     "rendererFailed": "Renderer se nepodařilo spustit: zkus stránku obnovit. {error}",
+    "rendererContextLost": "3D renderer ztratil grafický kontext a nedokázal ho obnovit. Zkus stránku obnovit.",
     "enterTimeout": "Nepodařilo se vstoupit do světa. Připojení vypršelo. Běží herní server?",
     "connectionLost": "Připojení k serveru bylo ztraceno.",
     "reconnectingAttempt": "Spojení ztraceno. Znovu se připojuji... (pokus {attempt}/{maxAttempts}, opakování za {seconds}s)",
@@ -9355,6 +9429,7 @@ export const cs_CZ: EnTranslations = {
     "realmFull": "Tento svět je momentálně plný. Zkus to prosím znovu za několik minut.",
     "tooManyConnections": "Z tvé sítě se k tomuto světu připojuje příliš mnoho spojení. Zavři nadbytečná herní okna nebo to zkus znovu za několik minut.",
     "messageRateExceeded": "Spojení bylo přerušeno kvůli příliš rychlému odesílání akcí. Chvíli počkej a přihlas se znovu.",
+    "kickedByModerator": "Moderátor vás odpojil: {reason}",
     "tips": {
       "classes": "Tip: každá z 9 tříd se hraje jinak. Než se pro jednu rozhodneš, několik jich vyzkoušej.",
       "talents": "Tip: kdykoli nejsi v boji, můžeš resetovat své talenty, takže časná volba nikdy není past.",
@@ -9443,7 +9518,7 @@ export const cs_CZ: EnTranslations = {
     "bodyWeb": "Hra běží bez grafické akcelerace a bude pomalá. Povol hardwarovou akceleraci v nastavení prohlížeče, aktualizuj ovladače grafiky a restartuj prohlížeč.",
     "hybridBodyWindows": "Tato relace se vykresluje na integrované (úsporné) grafické kartě. Pokud má tento počítač i samostatnou herní grafickou kartu, nastav prohlížeč na Vysoký výkon v Nastavení, Systém, Displej, Grafika, a pak ho restartuj. Desktopová aplikace vybere samostatnou grafickou kartu automaticky.",
     "hybridBodyLinux": "Tato relace se vykresluje na integrované (úsporné) grafické kartě. Pokud má tento počítač i samostatnou herní grafickou kartu, tvůj prohlížeč nebo grafický ovladač může mít vlastní nastavení výběru GPU, případně tvoje distribuce může nabízet nástroj pro přepínání grafiky (například PRIME nebo optimus-manager). Desktopová aplikace vybere samostatnou grafickou kartu automaticky.",
-    "bodyRequestedBackend": "The game could not start on the graphics backend you picked, so it is running on OpenGL instead. Everything works; loading and the first minutes may stutter more. You can pick a backend again under Options, Graphics, System.",
+    "bodyRequestedBackend": "Hru se nepodařilo spustit na grafickém rozhraní, které sis vybral, proto běží místo toho na OpenGL. Všechno funguje; načítání a první minuty se mohou víc zasekávat. Rozhraní můžeš znovu vybrat v Možnostech v části Grafika a Systém.",
     "hybridBodyOther": "Tato relace se vykresluje na integrované (úsporné) grafické kartě. Pokud má tento počítač i samostatnou herní grafickou kartu, zkontroluj nastavení grafiky v prohlížeči i v operačním systému a zapni ji tam. Desktopová aplikace vybere samostatnou grafickou kartu automaticky.",
     "dismiss": "Zavřít"
   },
@@ -11189,11 +11264,11 @@ export const cs_CZ: EnTranslations = {
       },
       "melting_acid": {
         "name": "Tavící kyselina",
-        "description": "Postříká cíl žíravým jedem, způsobí poškození přírody {damage} a sníží jeho brnění o 5 % na 12 sekund."
+        "description": "Na 30 minut potáhne vaši zbraň. Každý útok zblízka potřísní cíl žíravou kyselinou a sníží jeho brnění o 5 % na 12 sekund."
       },
       "nightshade_coating": {
         "name": "Nátěr Nightshade",
-        "description": "Pokryje cíl v nočním stínu, způsobí {damage} poškození přírody a sníží léčení, které obdrží, o 25 % po dobu 12 sekund."
+        "description": "Na 30 minut potáhne vaši zbraň. Každý útok zblízka pokryje cíl rulíkem a sníží léčení, které obdrží, o 25 % po dobu 12 sekund."
       },
       "expose_armor": {
         "name": "Průraz zbroje",
@@ -11209,11 +11284,11 @@ export const cs_CZ: EnTranslations = {
       },
       "instant_poison": {
         "name": "Zmijí kousnutí",
-        "description": "Potře zbraň na 30 min, takže každý tvůj úder na blízko způsobí 8 dodatečného přírodního poškození."
+        "description": "Potře zbraň na 30 min, takže každý tvůj úder na blízko způsobí {damage} dodatečného přírodního poškození."
       },
       "deadly_poison": {
         "name": "Hnisavý jed",
-        "description": "Potře zbraň na 30 min, takže každý tvůj úder na blízko způsobí 14 dodatečného přírodního poškození."
+        "description": "Potře zbraň na 30 min. Každý tvůj úder na blízko přidá cíli vrstvu jedu, až do 5, a obnoví trvání 12 sekund. Každá vrstva způsobí {damage} poškození přírody každé 2 sekundy."
       },
       "blind": {
         "name": "Hození hlíny",
@@ -11426,7 +11501,7 @@ export const cs_CZ: EnTranslations = {
       "arcane_shot": {
         "name": "Prokletý výstřel",
         "description": "Střelí cíl za {damage} arkánového poškození. Poškození roste s útočnou silou na dálku.",
-        "specNote_marksmanship": "Coldsight Read from a completed Fevered Draw makes your next Fell Shot deal 75% more damage. Firing the shot spends Read."
+        "specNote_marksmanship": "Čtení chladného zraku z dokončeného Horečného nátahu způsobí, že tvůj příští Padlý výstřel udělí o 75% vyšší poškození. Výstřel Čtení spotřebuje."
       },
       "concussive_shot": {
         "name": "Otřásající výstřel",
@@ -12312,11 +12387,11 @@ export const cs_CZ: EnTranslations = {
       },
       "temporal_echo": {
         "name": "Časová ozvěna",
-        "description": "Označíš spojence ozvěnou zdravějšího okamžiku a okamžitě zacelíš {damage} zdraví. Po dobu {duration} s část arcanového poškození, které způsobuješ, se přes tuto ozvěnu vrátí a léčí je."
+        "description": "Označíš spojence ozvěnou zdravějšího okamžiku a okamžitě zacelíš {damage} zdraví. Po dobu {duration} s ho léčí {echoSinglePct}% tvého ostatního arkánního poškození na jeden cíl a {echoAreaPct}% plošného arkánního poškození. Éterová vlna a Éterové šipky ho místo toho léčí za {echoDriverPct}% způsobeného poškození."
       },
       "temporal_cascade": {
         "name": "Časová kaskáda",
-        "description": "Sešle ozvěnu přes tvou skupinu: cíl a až čtyři nejbližší spojenci jsou okamžitě zaceleni a každý je označen na {duration} s; část arcanového poškození, které způsobuješ, se přes jejich ozvěny vrátí a vyléčí je. (Chronomagie)"
+        "description": "Sešle ozvěnu přes tvou skupinu: cíl a až čtyři nejbližší spojenci jsou okamžitě zaceleni a každý je označen na {duration} s; část arkánního poškození, které způsobuješ, se přes jejich ozvěny vrátí a vyléčí je. Éterová vlna a Éterové šipky vytvoří z každé skupinové ozvěny stejnou rezervu léčení, která se rozdělí podle chybějícího zdraví mezi označené spojence pod 60% zdraví. (Chronomagie)"
       },
       "temporal_reversal": {
         "name": "Časový návrat",
@@ -14004,11 +14079,17 @@ export const cs_CZ: EnTranslations = {
       "reins_terrorspark_groundshaker": {
         "name": "Ignition Key: Dreadspark Groundshaker"
       },
+      "reins_goblin_rocket_sled": {
+        "name": "Klíček zapalování: Gobliní raketové saně"
+      },
+      "reins_rallycart_rxt": {
+        "name": "Klíček zapalování: Rallycart RXT"
+      },
       "reins_lanternback_troll": {
         "name": "Lampářovo jho: Grumbol"
       },
       "reins_chimeglass_tortoise": {
-        "name": "Roadwarden's Bellstrap: Tolliver"
+        "name": "Zvoncový postroj cestovní hlídky: Tolliver"
       },
       "reins_rickshaw_mount": {
         "name": "Spoutané otěže: Kostipoutaná rikša"
@@ -14017,7 +14098,7 @@ export const cs_CZ: EnTranslations = {
         "name": "Otěže raptora z Dračí tlamy"
       },
       "reins_mech_bird": {
-        "name": "Ignition Key: Cluckwork Mech Bird"
+        "name": "Klíč zapalování: Cluckwork Mech Bird"
       },
       "rimefang": {
         "name": "Jinovatkový tesák"
@@ -15328,46 +15409,46 @@ export const cs_CZ: EnTranslations = {
         "name": "Field Kit"
       },
       "bramblehide_crown": {
-        "name": "Roots' Bramblehide Crown"
+        "name": "Kořenová koruna z trnité kůže"
       },
       "bramblehide_mantle": {
-        "name": "Roots' Bramblehide Mantle"
+        "name": "Kořenový plášť z trnité kůže"
       },
       "bramblehide_harness": {
-        "name": "Roots' Bramblehide Harness"
+        "name": "Kořenový postroj z trnité kůže"
       },
       "bramblehide_cinch": {
-        "name": "Roots' Bramblehide Cinch"
+        "name": "Kořenový pás z trnité kůže"
       },
       "bramblehide_legguards": {
-        "name": "Roots' Bramblehide Legguards"
+        "name": "Kořenové chrániče nohou z trnité kůže"
       },
       "bramblehide_grips": {
-        "name": "Roots' Bramblehide Grips"
+        "name": "Kořenové rukavice z trnité kůže"
       },
       "bramblehide_treads": {
-        "name": "Roots' Bramblehide Treads"
+        "name": "Kořenové boty z trnité kůže"
       },
       "courtiers_bonefang": {
-        "name": "Courtier's Bonefang"
+        "name": "Dvořanův kostěný tesák"
       },
       "thornpeak_wardblade": {
-        "name": "Thornpeak Wardblade"
+        "name": "Ochranná čepel Thornpeaku"
       },
       "gravecourt_hewer": {
-        "name": "Gravecourt Hewer"
+        "name": "Sekáč hrobového dvora"
       },
       "votive_ward_of_the_deathless_court": {
-        "name": "Votive Ward of the Deathless Court"
+        "name": "Zaslíbená ochrana Nesmrtelného dvora"
       },
       "thornpeak_moonhide_cowl": {
-        "name": "Thornpeak Moonhide Cowl"
+        "name": "Kápě z měsíční kůže Thornpeaku"
       },
       "stormhymn_chain_grips": {
-        "name": "Stormhymn Chain Grips"
+        "name": "Kroužkové rukavice Písně bouře"
       },
       "stormhymn_chain_treads": {
-        "name": "Stormhymn Chain Treads"
+        "name": "Kroužkové boty Písně bouře"
       },
       "conjured_water4": {
         "name": "Vyčarovaná pramenitá voda"
@@ -16356,7 +16437,7 @@ export const cs_CZ: EnTranslations = {
         "name": "Nythraxis, metla Thornpeaku"
       },
       "nythraxis_bone_spike": {
-        "name": "Bone Spike"
+        "name": "Kostěný bodec"
       },
       "ignivar_herald_of_the_last_flame": {
         "name": "Ignivar, hlasatel Posledního plamene"
@@ -17325,9 +17406,9 @@ export const cs_CZ: EnTranslations = {
         "greeting": "Otevřelo se to přesně tam, kde schnou sítě. Přesně tam, kde jsem stávala každé ráno svého života. Už nechodím dolů k pobřeží. Už skoro nikam nechodím."
       },
       "riftwright_maelis": {
-        "name": "Riftwright Maelis",
-        "title": "Rift Forgemaster",
-        "greeting": "A Riftbound band remembers the break that made it, {className}. Bring me the band, and the essence the breaks shed, and I will teach it to remember more."
+        "name": "Riftová tvůrkyně Maelis",
+        "title": "Mistryně riftové kovárny",
+        "greeting": "Kapela Riftbound si pamatuje přestávku, která ji udělala, {className}. Přines mi kapelu a esenci, která se zbaví, a já ji naučím pamatovat si víc."
       },
       "forgemistress_darva": {
         "name": "Mistryně kovárny Darva",
@@ -20748,6 +20829,6 @@ export const cs_CZ: EnTranslations = {
     "mailboxName": "Poštovní schránka",
     "noticeboardName": "Vývěska",
     "farmPatchName": "Garden Beds",
-    "realmBuilderMonumentName": "Realm Builder Monument"
+    "realmBuilderMonumentName": "Památník Realm Builder"
   }
 };

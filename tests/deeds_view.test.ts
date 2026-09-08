@@ -852,19 +852,24 @@ describe('real catalog integration', () => {
     // the three WARFARE honor ranks, four of the five Phase 18 Reliquary
     // completion-ladder deeds, the walk-in castle visit pair, the Proving
     // Shore graduation deed, the five Crucible raid deeds, the Roots'
-    // Bramblehide set collection deed, plus this branch's own Crucible
+    // Bramblehide set collection deed, this branch's own Crucible
     // professions additions (col_farm_roster, col_deepest_cast,
     // prog_field_to_feast, prog_legendmaker) and hid_forgebreaker (the
-    // Forgebreaker quest's hidden deed); col_reliquary_complete is the
-    // catalog's one off-prefix feat, so it sits outside the completion
-    // denominator like the three feat_ deeds, and hid_forgebreaker sits
-    // outside it unearned like every other hidden deed.
-    // Recomputed directly against the merged live catalog (src/sim/content/deeds.ts):
-    // 300 deeds - 4 feats - 10 hidden = 286 visible to a fresh character.
-    expect(view.summary.visibleTotal).toBe(286);
+    // Forgebreaker quest's hidden deed), PLUS OSSBrain PR3781's own feat-flag
+    // changes, which land on existing deed ids rather than adding new ones
+    // (the total stays 300; only the feat/hidden split moves).
+    // col_reliquary_complete is the catalog's off-prefix feat, so it sits
+    // outside the completion denominator with every other feat, and
+    // hid_forgebreaker sits outside it unearned like every other hidden deed.
+    // Recomputed directly against the merged live catalog
+    // (src/sim/content/deeds.ts) with a standalone probe calling
+    // buildDeedsView + countsTowardCompletion directly (tsx, no full
+    // compile), since the tree does not compile yet:
+    // 300 deeds - 22 feats - 10 hidden = 268 visible to a fresh character.
+    expect(view.summary.visibleTotal).toBe(268);
     // The bucket sum adds the feat-flagged rows back on top (hidden-unearned
-    // deeds never enter a bucket at all, so only the 4 feats separate this
-    // from visibleTotal): 286 + 4 = 290.
+    // deeds never enter a bucket at all, so only the 22 feats separate this
+    // from visibleTotal): 268 + 22 = 290.
     expect(view.categories.reduce((n, c) => n + c.visible, 0)).toBe(290);
   });
 
