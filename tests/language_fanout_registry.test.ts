@@ -628,6 +628,12 @@ const NOT_A_LANGUAGE_GATE: ReadonlyArray<{
       'lastHtml retains the last BUILT markup of the practice DPS strip (the quest tracker idiom above): every string in it is resolved through t() and formatNumber at build time, so a locale switch changes the freshly built side of the comparison and the strip repaints on its next 250ms tick by itself. Write-elision over resolved text, not a data signature.',
   },
   {
+    file: 'hud/practice/hub_lesson_controller.ts',
+    memos: ['lastHtml', 'lastPromptHtml'],
+    reason:
+      "The same write-elision idiom as its sibling practice_dps_controller.ts above: lastHtml retains the tracker card markup and lastPromptHtml the world-anchored bubble markup, both freshly built by markup(step) on the coach's own 250ms poll (Meters.update) and both resolved entirely through t() at build time. A locale switch changes the freshly built side of each comparison, so the coach repaints its next tick by itself with no fan-out arm.",
+  },
+  {
     file: 'claudium_window.ts',
     memos: ['paintedWalletMarkup'],
     reason:
@@ -1565,7 +1571,11 @@ describe('language fan-out: half 2, every signature-gated src/ui surface is clas
       // 34 as of the practice DPS tracker's `lastHtml`: the quest tracker's
       // built-markup idiom again (every string in it is resolved at build
       // time, so the fresh side of the compare moves with the locale).
-    ).toBe(34);
+      // 35 as of the hub lesson coach's `lastHtml`/`lastPromptHtml`: the
+      // same built-markup idiom, one row for both memos since both are
+      // built by the same markup(step) call and answered by the same
+      // reasoning.
+    ).toBe(35);
   });
 
   it('gives every relocalize() in src/ui a caller in the fan-out', () => {

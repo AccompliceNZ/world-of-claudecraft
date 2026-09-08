@@ -75,7 +75,8 @@ export const interfacePage: GuidePage = {
         ${section(
           'guide.interfacePage.mapTitle',
           paras('guide.interfacePage.mapBodyZoneFirst') +
-            paras('guide.interfacePage.gatheringGoalTrackerBody'),
+            paras('guide.interfacePage.gatheringGoalTrackerBody') +
+            paras('guide.interfacePage.hubPracticeTrackerBody'),
         )}
         ${section('guide.interfacePage.chatTitle', paras('guide.interfacePage.chatBody'))}
 

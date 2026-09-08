@@ -6487,6 +6487,7 @@ export type TranslationKeyFlat =
   | 'guide.interfacePage.gatheringGoalTrackerBody'
   | 'guide.interfacePage.glanceBody'
   | 'guide.interfacePage.glanceTitle'
+  | 'guide.interfacePage.hubPracticeTrackerBody'
   | 'guide.interfacePage.intro'
   | 'guide.interfacePage.keyWindowsBody'
   | 'guide.interfacePage.keyWindowsTitle'
