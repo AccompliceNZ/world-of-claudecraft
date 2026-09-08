@@ -3775,7 +3775,6 @@ export const zh_TW: EnTranslations = {
       "harvest": "剝取"
     },
     "gathering": {
-      "title": "採集",
       "mining": "採礦",
       "logging": "伐木",
       "herbalism": "藥草學",
@@ -3863,9 +3862,7 @@ export const zh_TW: EnTranslations = {
       "fineGradePreview": "使用當前工具採集可獲得優質品級。"
     },
     "archetypeTitle": {
-      "label": "稱號",
-      "none": "無",
-      "hobbyLabel": "愛好"
+      "none": "無"
     },
     "archetypePair": {
       "engineering+alchemy": "爆破師",

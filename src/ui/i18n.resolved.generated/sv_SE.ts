@@ -3775,7 +3775,6 @@ export const sv_SE: EnTranslations = {
       "harvest": "Harvest"
     },
     "gathering": {
-      "title": "Insamling",
       "mining": "Gruvdrift",
       "logging": "Skogsavverkning",
       "herbalism": "Örtkunskap",
@@ -3863,9 +3862,7 @@ export const sv_SE: EnTranslations = {
       "fineGradePreview": "Ditt verktyg förädlar det här utbytet till fin kvalitet."
     },
     "archetypeTitle": {
-      "label": "Titel",
-      "none": "Ingen",
-      "hobbyLabel": "Fritidssyssla"
+      "none": "Ingen"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombbärare",

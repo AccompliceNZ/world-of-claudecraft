@@ -3775,7 +3775,6 @@ export const pt_BR: EnTranslations = {
       "harvest": "Harvest"
     },
     "gathering": {
-      "title": "Coleta",
       "mining": "Mineração",
       "logging": "Lenharia",
       "herbalism": "Herborismo",
@@ -3863,9 +3862,7 @@ export const pt_BR: EnTranslations = {
       "fineGradePreview": "Sua ferramenta refina esta coleta para o grau fino."
     },
     "archetypeTitle": {
-      "label": "Título",
-      "none": "Nenhum",
-      "hobbyLabel": "Passatempo"
+      "none": "Nenhum"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombardeiro",

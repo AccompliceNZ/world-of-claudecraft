@@ -3775,7 +3775,6 @@ export const ru_RU: EnTranslations = {
       "harvest": "Освежевать"
     },
     "gathering": {
-      "title": "Собирательство",
       "mining": "Горное дело",
       "logging": "Лесозаготовка",
       "herbalism": "Травничество",
@@ -3863,9 +3862,7 @@ export const ru_RU: EnTranslations = {
       "fineGradePreview": "Ваш инструмент даёт здесь отборный сорт добычи."
     },
     "archetypeTitle": {
-      "label": "Титул",
-      "none": "Нет",
-      "hobbyLabel": "Хобби"
+      "none": "Нет"
     },
     "archetypePair": {
       "engineering+alchemy": "Бомбардир",

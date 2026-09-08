@@ -3775,7 +3775,6 @@ export const ja_JP: EnTranslations = {
       "harvest": "採取する"
     },
     "gathering": {
-      "title": "採集",
       "mining": "採掘",
       "logging": "伐採",
       "herbalism": "薬草学",
@@ -3863,9 +3862,7 @@ export const ja_JP: EnTranslations = {
       "fineGradePreview": "あなたの道具なら、ここの採取物は上質な等級になります。"
     },
     "archetypeTitle": {
-      "label": "称号",
-      "none": "なし",
-      "hobbyLabel": "趣味"
+      "none": "なし"
     },
     "archetypePair": {
       "engineering+alchemy": "爆破師",

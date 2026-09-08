@@ -3775,7 +3775,6 @@ export const cs_CZ: EnTranslations = {
       "harvest": "Harvest"
     },
     "gathering": {
-      "title": "Sběr",
       "mining": "Těžba",
       "logging": "Dřevorubectví",
       "herbalism": "Bylinkářství",
@@ -3863,9 +3862,7 @@ export const cs_CZ: EnTranslations = {
       "fineGradePreview": "Tvůj nástroj povyšuje tento výnos na jemnou jakost."
     },
     "archetypeTitle": {
-      "label": "Titul",
-      "none": "Žádný",
-      "hobbyLabel": "Koníček"
+      "none": "Žádný"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombardér",

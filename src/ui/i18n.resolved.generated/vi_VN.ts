@@ -3775,7 +3775,6 @@ export const vi_VN: EnTranslations = {
       "harvest": "Harvest"
     },
     "gathering": {
-      "title": "Thu thập",
       "mining": "Khai mỏ",
       "logging": "Đốn gỗ",
       "herbalism": "Thảo dược học",
@@ -3863,9 +3862,7 @@ export const vi_VN: EnTranslations = {
       "fineGradePreview": "Công cụ của bạn nâng sản vật này lên phẩm cấp hảo hạng."
     },
     "archetypeTitle": {
-      "label": "Danh hiệu",
-      "none": "Không có",
-      "hobbyLabel": "Sở Thích"
+      "none": "Không có"
     },
     "archetypePair": {
       "engineering+alchemy": "Chuyên Gia Nổ",

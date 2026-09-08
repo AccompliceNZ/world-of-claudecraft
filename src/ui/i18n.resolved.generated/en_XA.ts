@@ -3775,7 +3775,6 @@ export const en_XA: EnTranslations = {
       "harvest": "[Ĥáŕʋéšţ]"
     },
     "gathering": {
-      "title": "[Ĝáţĥéŕíñĝ]",
       "mining": "[Ɱíñíñĝ]",
       "logging": "[Ļóĝĝíñĝ]",
       "herbalism": "[Ĥéŕƀáļíšɱ]",
@@ -3863,9 +3862,7 @@ export const en_XA: EnTranslations = {
       "fineGradePreview": "[Ýóúŕ ţóóļ ŕéƒíñéš ţĥíš ýíéļð ţó ƒíñé ĝŕáðé.]"
     },
     "archetypeTitle": {
-      "label": "[Ţíţļé]",
-      "none": "[Ñóñé]",
-      "hobbyLabel": "[Ĥóƀƀý]"
+      "none": "[Ñóñé]"
     },
     "archetypePair": {
       "engineering+alchemy": "[Ɓóɱƀáŕðíéŕ]",

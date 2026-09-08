@@ -3775,7 +3775,6 @@ export const ko_KR: EnTranslations = {
       "harvest": "수확"
     },
     "gathering": {
-      "title": "채집",
       "mining": "채광",
       "logging": "벌목",
       "herbalism": "약초학",
@@ -3863,9 +3862,7 @@ export const ko_KR: EnTranslations = {
       "fineGradePreview": "현재 도구로 채집하면 상급 등급을 얻습니다."
     },
     "archetypeTitle": {
-      "label": "칭호",
-      "none": "없음",
-      "hobbyLabel": "취미"
+      "none": "없음"
     },
     "archetypePair": {
       "engineering+alchemy": "폭격수",

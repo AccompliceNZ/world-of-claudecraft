@@ -3775,7 +3775,6 @@ export const tr_TR: EnTranslations = {
       "harvest": "Harvest"
     },
     "gathering": {
-      "title": "Toplama",
       "mining": "Madencilik",
       "logging": "Ağaç kesme",
       "herbalism": "Bitkicilik",
@@ -3863,9 +3862,7 @@ export const tr_TR: EnTranslations = {
       "fineGradePreview": "Aletiniz bu verimi kaliteli dereceye yükseltir."
     },
     "archetypeTitle": {
-      "label": "Unvan",
-      "none": "Yok",
-      "hobbyLabel": "Hobi"
+      "none": "Yok"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombacı",

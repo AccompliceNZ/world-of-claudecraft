@@ -3775,7 +3775,6 @@ export const fr_FR: EnTranslations = {
       "harvest": "Harvest"
     },
     "gathering": {
-      "title": "Récolte",
       "mining": "Minage",
       "logging": "Bûcheronnage",
       "herbalism": "Herboristerie",
@@ -3863,9 +3862,7 @@ export const fr_FR: EnTranslations = {
       "fineGradePreview": "Votre outil affine cette récolte en qualité fine."
     },
     "archetypeTitle": {
-      "label": "Titre",
-      "none": "Aucun",
-      "hobbyLabel": "Loisir"
+      "none": "Aucun"
     },
     "archetypePair": {
       "engineering+alchemy": "Bombardier",

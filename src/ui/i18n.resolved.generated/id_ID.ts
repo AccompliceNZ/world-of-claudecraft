@@ -3775,7 +3775,6 @@ export const id_ID: EnTranslations = {
       "harvest": "Harvest"
     },
     "gathering": {
-      "title": "Pengumpulan",
       "mining": "Penambangan",
       "logging": "Penebangan",
       "herbalism": "Herbalisme",
@@ -3863,9 +3862,7 @@ export const id_ID: EnTranslations = {
       "fineGradePreview": "Alatmu menyempurnakan hasil ini menjadi mutu halus."
     },
     "archetypeTitle": {
-      "label": "Gelar",
-      "none": "Tidak Ada",
-      "hobbyLabel": "Hobi"
+      "none": "Tidak Ada"
     },
     "archetypePair": {
       "engineering+alchemy": "Pengebom",

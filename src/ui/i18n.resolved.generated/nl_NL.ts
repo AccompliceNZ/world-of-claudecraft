@@ -3775,7 +3775,6 @@ export const nl_NL: EnTranslations = {
       "harvest": "Harvest"
     },
     "gathering": {
-      "title": "Verzamelen",
       "mining": "Mijnbouw",
       "logging": "Houtkap",
       "herbalism": "Kruidenkunde",
@@ -3863,9 +3862,7 @@ export const nl_NL: EnTranslations = {
       "fineGradePreview": "Je gereedschap verfijnt deze opbrengst tot fijne kwaliteit."
     },
     "archetypeTitle": {
-      "label": "Titel",
-      "none": "Geen",
-      "hobbyLabel": "Liefhebberij"
+      "none": "Geen"
     },
     "archetypePair": {
       "engineering+alchemy": "Bommenwerper",
