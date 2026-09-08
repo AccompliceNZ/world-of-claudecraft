@@ -58,6 +58,15 @@ describe('ui library: sheet and manifest agree', () => {
   const declared = declaredSelectors(library);
   const manifest = manifestSelectors(doc);
 
+  it('keeps the window head at its authored height inside a flex column window', () => {
+    expect(library).toMatch(/\.ui-win-head \{\s*display: flex;\s*flex: none;/);
+  });
+
+  it('paints card text with the text token even when the card is a button', () => {
+    expect(library).toMatch(/\.ui-card \{[^}]*color: var\(--color-text\);/);
+    expect(library).toMatch(/button\.ui-card \{\s*font: inherit;/);
+  });
+
   it('lists a real primitive set (anti-vacuity)', () => {
     expect(declared.size).toBeGreaterThanOrEqual(50);
     expect(manifest.length).toBeGreaterThanOrEqual(50);

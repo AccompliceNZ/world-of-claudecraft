@@ -92,6 +92,7 @@
   }
   .ui-win-head {
     display: flex;
+    flex: none;
     align-items: center;
     gap: 10px;
     height: var(--win-head-h);
@@ -165,6 +166,12 @@
     background: color-mix(in srgb, var(--color-keyline) 28%, transparent);
     border: 1px solid var(--color-border-showcase);
     border-radius: var(--radius-card);
+    color: var(--color-text);
+  }
+  /* A card minted as a button must not fall back to the UA's black button text. */
+  button.ui-card {
+    font: inherit;
+    text-align: inherit;
   }
   .ui-card-tile {
     background: linear-gradient(160deg, var(--color-card-hi), var(--color-card-lo));
