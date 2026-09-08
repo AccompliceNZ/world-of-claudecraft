@@ -1086,6 +1086,10 @@
        stance button carried, so a touch device keeps the WCAG 2.5.5 floor the
        30px board disc would lose. */
     --socket-size-stance-coarse: 40px;
+    /* W24 additions (character window stage) */
+    /* Scrim under the paperdoll socket columns where they float over the live 3D
+       stage, so slot names and item names stay legible against a lit model. */
+    --color-stage-overlay-scrim: color-mix(in srgb, var(--color-keyline) 66%, transparent);
   }
 
   /* Glass is dropped WHOLE-RULE at the low effect tier: a universal removal

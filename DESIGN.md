@@ -754,6 +754,14 @@ Every window adopts the grammar; these carry specific intent:
 - **Character** (`char_window.ts`): the paperdoll and equipment sockets gain a tabbed
   sidebar with Stats, Progression, and Skills. Stat labels remain muted with parchment
   values; `item_compare.ts` continues to provide success and danger deltas.
+  ACCEPTED DEVIATION (stage and overlay): on pointer form factors the 3D model preview is
+  the full-height stage of the equipment pane, and the two equipment slot columns float
+  over its outer edges on a scrim (`--color-stage-overlay-scrim`) with the skin row along
+  the stage's bottom and the playtime and share footer pinned below. The boards drew the
+  model as a fixed narrow panel between two flowed columns, which left the pane's lower
+  half empty at every window height. Slot names, empty labels, the unequip and helm-eye
+  chips and the Masterwrought marks are unchanged; the touch sheet keeps the stacked
+  paperdoll, so the stage rules are scoped away from `body.mobile-touch`.
 - **Quest log** (`src/ui/hud/quest/questlog_window.ts`): quests group by zone. Each zone
   shows its count and has a collapse control; the detail pane keeps tracked state and
   reward sockets.

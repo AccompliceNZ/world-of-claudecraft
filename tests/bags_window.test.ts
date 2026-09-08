@@ -938,3 +938,32 @@ describe('bags_window: the bag-bar counter pools readout (phase 08)', () => {
     expect(document.activeElement).toBe(rebuilt);
   });
 });
+
+describe('bags_window: the grid fills the window it lives in (W24)', () => {
+  it('lays the sockets out as fluid auto-fill tracks, never a fixed centred count', () => {
+    // The review finding: a fixed six-column band centred in the body left dead
+    // space down both sides of every bag. Tracks now auto-fill the body width
+    // with the bag socket species as the floor, so the grid grows with the
+    // window (and with the wider vendor / bank companion docks).
+    expect(components).toContain(
+      'grid-template-columns: repeat(auto-fill, minmax(var(--socket-size-bag), 1fr));',
+    );
+    expect(components).not.toContain('grid-template-columns: repeat(6, 40px);');
+    // The socket species token itself is unchanged: cells still floor at 40px.
+    expect(tokens).toContain('--socket-size-bag: 40px;');
+  });
+
+  it('keeps every chrome row at its natural height so the grid is the one scroller', () => {
+    for (const row of ['#bags .panel-title', '#bags .bag-bar', '#bags .bag-filter-bar']) {
+      expect(components).toContain(`${row} {\n    flex: none;\n  }`);
+    }
+    expect(components).toContain('#bags .bag-grid {\n    flex: 1 1 auto;\n    min-height: 0;');
+  });
+
+  it('seats the money block as a ruled footer row pinned to the bottom edge', () => {
+    const money = /#bags \.money \{([^}]*)\}/.exec(components)?.[1] ?? '';
+    expect(money).toContain('flex: none;');
+    expect(money).toContain('border-top: 1px solid var(--color-border-showcase);');
+    expect(money).toContain('padding-top: var(--spacing-sm);');
+  });
+});
