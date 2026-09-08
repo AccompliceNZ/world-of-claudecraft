@@ -201,6 +201,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.controller.crossHotbarOwnsButtons': 'Пока крестовая панель включена, курки и крестовина принадлежат ей: настройте их ниже, а не здесь.',
   'hudChrome.controller.crossHotbar': 'Крестовая панель',
   'hudChrome.controller.crossHotbarEnable': 'Включить крестовую панель',
+  'hudChrome.controller.showHints': 'Подсказки кнопок геймпада',
   'hudChrome.controller.crossHotbarExpand': 'Двойная крестовая панель',
   'hudChrome.controller.crossHotbarHelp': 'Удерживайте курок, чтобы подсветить восемь ячеек панели действий на крестовине и лицевых кнопках. Нажмите второй курок, чтобы переключиться на второй набор.',
   'hudChrome.controller.crossHotbarResetLayout': 'Сбросить крестовую панель',

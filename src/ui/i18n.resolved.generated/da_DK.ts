@@ -1755,6 +1755,7 @@ export const da_DK: EnTranslations = {
       "crossHotbar": "Cross Hotbar",
       "crossHotbarEnable": "Aktiver Cross Hotbar",
       "crossHotbarExpand": "Double Cross Hotbar",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Hold en trigger for at tænde otte action-bar slots på d-pad og ansigtsknapperne. Tryk på den anden udløser for at skifte til det andet sæt.",
       "crossHotbarResetLayout": "Nulstil Cross Hotbar",
       "crossHotbarPosition": "{trigger} + {button}",

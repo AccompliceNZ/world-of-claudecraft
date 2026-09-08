@@ -1755,6 +1755,7 @@ export const it_IT: EnTranslations = {
       "crossHotbar": "Croce Hotbar",
       "crossHotbarEnable": "Abilita barra incrociata",
       "crossHotbarExpand": "Hotbar a doppia croce",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Tieni premuto un grilletto per illuminare otto slot della barra delle azioni sul D-pad e sui pulsanti frontali. Tocca l'altro trigger per passare al secondo set.",
       "crossHotbarResetLayout": "Reimposta la barra di accesso incrociata",
       "crossHotbarPosition": "{trigger} + {button}",

@@ -1755,6 +1755,7 @@ export const ko_KR: EnTranslations = {
       "crossHotbar": "크로스 핫바",
       "crossHotbarEnable": "크로스 핫바 사용",
       "crossHotbarExpand": "더블 크로스 핫바",
+      "showHints": "컨트롤러 버튼 힌트",
       "crossHotbarHelp": "트리거를 누르고 있으면 방향키와 페이스 버튼에 여덟 개의 액션 바 슬롯이 표시됩니다. 다른 트리거를 짧게 누르면 두 번째 세트로 전환됩니다.",
       "crossHotbarResetLayout": "크로스 핫바 초기화",
       "crossHotbarPosition": "{trigger} + {button}",

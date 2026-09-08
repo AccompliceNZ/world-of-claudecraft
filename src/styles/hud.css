@@ -12161,7 +12161,10 @@
    primitive while retaining every action state written by the action-bar painter.
    The overlay is pointer-events-free: a readout for a controller, never a target. */
   .xhb {
-    --xhb-cell: var(--socket-size);
+    /* Cells shrink just enough for the whole bar (twelve cells across plus its
+       gaps, paddings and set rail) to fit the action rail, so the pad bar never
+       runs wider than the XP bar under it or into the chat window. */
+    --xhb-cell: min(var(--socket-size), calc((var(--action-rail-w) - 99px) / 12));
     /* Fixed, not in the HUD column's flow: the bar comes and goes with the pad, and
      anything in flow here shoves the player frame and XP bar as it does. Out of
      flow it can never move another element. Its BOTTOM sits where the action-bar
@@ -12172,7 +12175,7 @@
     transform: translateX(-50%);
     z-index: 6;
     display: flex;
-    gap: 10px;
+    gap: 6px;
     align-items: center;
     justify-content: center;
     padding: 0;
@@ -12189,9 +12192,9 @@
   }
   .xhb-half {
     display: flex;
-    gap: 22px;
+    gap: 12px;
     align-items: center;
-    padding: 14px 6px 4px;
+    padding: 14px 2px 4px;
     position: relative;
   }
   .xhb-half::before {
@@ -12340,6 +12343,11 @@
    (which is pinned 260px off the bottom). The old value was tuned when the bar
    still had a panel and overshot on both counts. */
   body.xhb-mode #player-frame {
+    transform: translateY(calc(-1 * var(--xhb-lift, 56px)));
+  }
+  /* The stock target seat is level with the player frame, so it lifts by the
+     same measured amount or the pair splits when the pad bar comes up. */
+  body.xhb-mode #target-frame {
     transform: translateY(calc(-1 * var(--xhb-lift, 56px)));
   }
   /* The cast bar rides up with it. It is pinned a fixed distance off the bottom, so
@@ -12649,8 +12657,9 @@
     width: 186px;
     font-size: 11px;
   }
-  body.xhb-mode:not(.mobile-touch) #pad-hint-strip,
-  body.xhb-mode:not(.mobile-touch) #pad-legend {
+  /* Opt-in chrome (showControllerHints): the pad wiring stamps body.pad-hints-on. */
+  body.xhb-mode.pad-hints-on:not(.mobile-touch) #pad-hint-strip,
+  body.xhb-mode.pad-hints-on:not(.mobile-touch) #pad-legend {
     display: flex;
   }
   .pad-hint-row {

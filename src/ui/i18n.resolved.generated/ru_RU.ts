@@ -1755,6 +1755,7 @@ export const ru_RU: EnTranslations = {
       "crossHotbar": "Крестовая панель",
       "crossHotbarEnable": "Включить крестовую панель",
       "crossHotbarExpand": "Двойная крестовая панель",
+      "showHints": "Подсказки кнопок геймпада",
       "crossHotbarHelp": "Удерживайте курок, чтобы подсветить восемь ячеек панели действий на крестовине и лицевых кнопках. Нажмите второй курок, чтобы переключиться на второй набор.",
       "crossHotbarResetLayout": "Сбросить крестовую панель",
       "crossHotbarPosition": "{trigger} + {button}",

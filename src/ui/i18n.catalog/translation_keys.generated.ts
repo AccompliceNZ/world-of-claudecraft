@@ -9273,6 +9273,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.controller.padLegendMenu'
   | 'hudChrome.controller.resetButtons'
   | 'hudChrome.controller.reticleSpeed'
+  | 'hudChrome.controller.showHints'
   | 'hudChrome.controller.subcommandsAction'
   | 'hudChrome.controller.title'
   | 'hudChrome.controller.vibration'

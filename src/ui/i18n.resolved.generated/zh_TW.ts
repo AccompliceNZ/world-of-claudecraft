@@ -1755,6 +1755,7 @@ export const zh_TW: EnTranslations = {
       "crossHotbar": "十字熱鍵欄",
       "crossHotbarEnable": "啟用十字熱鍵欄",
       "crossHotbarExpand": "雙十字熱鍵欄",
+      "showHints": "手把按鍵提示",
       "crossHotbarHelp": "按住扳機鍵即可點亮方向鍵和面板按鍵上的八個動作條格位。輕按另一個扳機鍵可切換到第二組。",
       "crossHotbarResetLayout": "重置十字熱鍵欄",
       "crossHotbarPosition": "{trigger} + {button}",

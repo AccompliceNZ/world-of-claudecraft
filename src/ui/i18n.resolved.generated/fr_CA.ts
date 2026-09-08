@@ -1755,6 +1755,7 @@ export const fr_CA: EnTranslations = {
       "crossHotbar": "Barre de raccourcis croisée",
       "crossHotbarEnable": "Activer la barre de raccourcis croisée",
       "crossHotbarExpand": "Barre de raccourcis double croix",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Maintenez une gâchette enfoncée pour allumer huit emplacements de barre d'action sur le pavé directionnel et les boutons du visage. Appuyez sur l'autre déclencheur pour passer au deuxième ensemble.",
       "crossHotbarResetLayout": "Réinitialiser la barre de raccourcis croisée",
       "crossHotbarPosition": "{trigger} + {button}",

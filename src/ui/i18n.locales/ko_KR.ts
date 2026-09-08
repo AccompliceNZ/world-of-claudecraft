@@ -218,6 +218,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '크로스 핫바가 켜져 있는 동안에는 트리거와 방향키를 크로스 핫바가 사용합니다. 여기가 아니라 아래에서 설정하세요.',
   'hudChrome.controller.crossHotbar': '크로스 핫바',
   'hudChrome.controller.crossHotbarEnable': '크로스 핫바 사용',
+  'hudChrome.controller.showHints': '컨트롤러 버튼 힌트',
   'hudChrome.controller.crossHotbarExpand': '더블 크로스 핫바',
   'hudChrome.controller.crossHotbarHelp':
     '트리거를 누르고 있으면 방향키와 페이스 버튼에 여덟 개의 액션 바 슬롯이 표시됩니다. 다른 트리거를 짧게 누르면 두 번째 세트로 전환됩니다.',

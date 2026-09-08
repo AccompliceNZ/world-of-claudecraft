@@ -1755,6 +1755,7 @@ export const de_DE: EnTranslations = {
       "crossHotbar": "Überqueren Sie die Hotbar",
       "crossHotbarEnable": "Aktivieren Sie Cross Hotbar",
       "crossHotbarExpand": "Double Cross Hotbar",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Halten Sie einen Auslöser gedrückt, um acht Aktionsleisten-Slots auf dem Steuerkreuz und den Gesichtstasten zu beleuchten. Tippen Sie auf den anderen Auslöser, um zum zweiten Satz zu wechseln.",
       "crossHotbarResetLayout": "Cross Hotbar zurücksetzen",
       "crossHotbarPosition": "{trigger} + {button}",

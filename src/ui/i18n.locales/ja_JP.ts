@@ -220,6 +220,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'クロスホットバーが有効な間、トリガーと方向キーはクロスホットバーが使用します。ここではなく下の項目で設定してください。',
   'hudChrome.controller.crossHotbar': 'クロスホットバー',
   'hudChrome.controller.crossHotbarEnable': 'クロスホットバーを有効化',
+  'hudChrome.controller.showHints': 'コントローラーボタンのヒント',
   'hudChrome.controller.crossHotbarExpand': 'ダブルクロスホットバー',
   'hudChrome.controller.crossHotbarHelp':
     'トリガーを押している間、方向キーとフェイスボタンに8つのアクションバースロットが表示されます。もう一方のトリガーを軽く押すと、2つ目のセットに切り替わります。',

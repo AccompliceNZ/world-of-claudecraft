@@ -1755,6 +1755,7 @@ export const en_XA: EnTranslations = {
       "crossHotbar": "[Çŕóšš Ĥóţƀáŕ]",
       "crossHotbarEnable": "[Éñáƀļé Çŕóšš Ĥóţƀáŕ]",
       "crossHotbarExpand": "[Ðóúƀļé Çŕóšš Ĥóţƀáŕ]",
+      "showHints": "[Çóñţŕóļļéŕ Ɓúţţóñ Ĥíñţš]",
       "crossHotbarHelp": "[Ĥóļð á ţŕíĝĝéŕ ţó ļíĝĥţ éíĝĥţ áçţíóñ-ƀáŕ šļóţš óñ ţĥé ð-þáð áñð ƒáçé ƀúţţóñš. Ţáþ ţĥé óţĥéŕ ţŕíĝĝéŕ ţó šŵáþ ţó ţĥé šéçóñð šéţ.]",
       "crossHotbarResetLayout": "[Ŕéšéţ Çŕóšš Ĥóţƀáŕ]",
       "crossHotbarPosition": "[{trigger} + {button}]",

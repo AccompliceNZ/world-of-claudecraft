@@ -1755,6 +1755,7 @@ export const sv_SE: EnTranslations = {
       "crossHotbar": "Cross Hotbar",
       "crossHotbarEnable": "Aktivera Cross Hotbar",
       "crossHotbarExpand": "Double Cross Hotbar",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Håll en avtryckare för att tända åtta action-bar-fack på d-pad- och ansiktsknapparna. Tryck på den andra utlösaren för att byta till den andra uppsättningen.",
       "crossHotbarResetLayout": "Återställ Cross Hotbar",
       "crossHotbarPosition": "{trigger} + {button}",

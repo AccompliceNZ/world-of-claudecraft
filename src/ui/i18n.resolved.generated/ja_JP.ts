@@ -1755,6 +1755,7 @@ export const ja_JP: EnTranslations = {
       "crossHotbar": "クロスホットバー",
       "crossHotbarEnable": "クロスホットバーを有効化",
       "crossHotbarExpand": "ダブルクロスホットバー",
+      "showHints": "コントローラーボタンのヒント",
       "crossHotbarHelp": "トリガーを押している間、方向キーとフェイスボタンに8つのアクションバースロットが表示されます。もう一方のトリガーを軽く押すと、2つ目のセットに切り替わります。",
       "crossHotbarResetLayout": "クロスホットバーをリセット",
       "crossHotbarPosition": "{trigger} + {button}",

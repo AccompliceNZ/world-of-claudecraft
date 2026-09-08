@@ -1755,6 +1755,7 @@ export const pl_PL: EnTranslations = {
       "crossHotbar": "Krzyżowy pasek Hotbar",
       "crossHotbarEnable": "Włącz krzyżowy pasek skrótów",
       "crossHotbarExpand": "Pasek skrótów Double Cross",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Przytrzymaj spust, aby podświetlić osiem miejsc na pasku akcji na padzie kierunkowym i przyciskach twarzowych. Naciśnij drugi spust, aby przejść do drugiego zestawu.",
       "crossHotbarResetLayout": "Zresetuj krzyżowy pasek skrótów",
       "crossHotbarPosition": "{trigger} + {button}",

@@ -1755,6 +1755,7 @@ export const es_ES: EnTranslations = {
       "crossHotbar": "Barra de acceso rápido cruzada",
       "crossHotbarEnable": "Habilitar barra de acceso rápido cruzada",
       "crossHotbarExpand": "Barra caliente de doble cruz",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Mantenga presionado un gatillo para iluminar ocho ranuras de la barra de acción en el d-pad y los botones frontales. Toque el otro disparador para cambiar al segundo conjunto.",
       "crossHotbarResetLayout": "Restablecer barra de acceso rápido cruzada",
       "crossHotbarPosition": "{trigger} + {button}",

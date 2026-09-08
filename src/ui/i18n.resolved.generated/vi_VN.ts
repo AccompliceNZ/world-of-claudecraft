@@ -1755,6 +1755,7 @@ export const vi_VN: EnTranslations = {
       "crossHotbar": "Thanh nóng chéo",
       "crossHotbarEnable": "Kích hoạt Cross Hotbar",
       "crossHotbarExpand": "Thanh nóng đôi chéo",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Giữ nút kích hoạt để thắp sáng tám khe thanh hành động trên các nút d-pad và mặt. Nhấn vào nút kích hoạt khác để chuyển sang bộ thứ hai.",
       "crossHotbarResetLayout": "Đặt lại thanh nóng chéo",
       "crossHotbarPosition": "{trigger} + {button}",

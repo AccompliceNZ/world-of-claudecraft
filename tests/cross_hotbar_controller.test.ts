@@ -251,7 +251,9 @@ describe('the cross hotbar stylesheet', () => {
   const section = hudCss.slice(hudCss.indexOf('---------- controller cross hotbar ----------'));
 
   it('sizes and rounds the cells off the shared socket tokens', () => {
-    expect(section).toContain('--xhb-cell: var(--socket-size);');
+    expect(section).toContain(
+      '--xhb-cell: min(var(--socket-size), calc((var(--action-rail-w) - 99px) / 12));',
+    );
     expect(section).toContain('border-radius: var(--radius-cell);');
     // The art inset follows the cell's own radius rather than a second literal.
     expect(section).toContain('border-radius: calc(var(--radius-cell) - 2px);');
@@ -291,7 +293,7 @@ describe('the cross hotbar stylesheet', () => {
   it('mounts the pad hint strip and the launcher legend behind pad mode', () => {
     expect(section).toContain('#pad-hint-strip,\n  #pad-legend {');
     expect(section).toContain(
-      'body.xhb-mode:not(.mobile-touch) #pad-hint-strip,\n  body.xhb-mode:not(.mobile-touch) #pad-legend {\n    display: flex;',
+      'body.xhb-mode.pad-hints-on:not(.mobile-touch) #pad-hint-strip,\n  body.xhb-mode.pad-hints-on:not(.mobile-touch) #pad-legend {\n    display: flex;',
     );
     // The keycaps come back the moment the player touches the keyboard, so the
     // standdown reads pad-active rather than the mode class.

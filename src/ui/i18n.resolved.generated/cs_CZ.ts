@@ -1755,6 +1755,7 @@ export const cs_CZ: EnTranslations = {
       "crossHotbar": "Cross Hotbar",
       "crossHotbarEnable": "Povolit Cross Hotbar",
       "crossHotbarExpand": "Double Cross Hotbar",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Podržte spoušť, aby se rozsvítilo osm slotů akčních lišt na d-padu a tlačítkách na obličeji. Klepnutím na další spoušť přepnete na druhou sadu.",
       "crossHotbarResetLayout": "Resetujte Cross Hotbar",
       "crossHotbarPosition": "{trigger} + {button}",

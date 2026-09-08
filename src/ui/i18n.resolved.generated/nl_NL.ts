@@ -1755,6 +1755,7 @@ export const nl_NL: EnTranslations = {
       "crossHotbar": "Steek Hotbar over",
       "crossHotbarEnable": "Cross-hotbar inschakelen",
       "crossHotbarExpand": "Dubbele Cross-hotbar",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Houd een trekker ingedrukt om acht actiebalkgleuven op de d-pad en gezichtsknoppen te laten oplichten. Tik op de andere trigger om naar de tweede set te wisselen.",
       "crossHotbarResetLayout": "Cross-hotbar opnieuw instellen",
       "crossHotbarPosition": "{trigger} + {button}",

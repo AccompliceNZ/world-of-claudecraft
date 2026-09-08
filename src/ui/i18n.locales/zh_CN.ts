@@ -214,6 +214,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
     '十字热键栏启用时，扳机键和方向键归它所有，请在下方设置，而非此处。',
   'hudChrome.controller.crossHotbar': '十字热键栏',
   'hudChrome.controller.crossHotbarEnable': '启用十字热键栏',
+  'hudChrome.controller.showHints': '手柄按键提示',
   'hudChrome.controller.crossHotbarExpand': '双十字热键栏',
   'hudChrome.controller.crossHotbarHelp':
     '按住扳机键即可点亮方向键和面板按键上的八个动作条格位。轻按另一个扳机键可切换到第二组。',

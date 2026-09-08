@@ -1755,6 +1755,7 @@ export const pt_BR: EnTranslations = {
       "crossHotbar": "Barra de atalho cruzada",
       "crossHotbarEnable": "Ativar barra de atalho cruzada",
       "crossHotbarExpand": "Hotbar Cruz Dupla",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Segure um gatilho para acender oito slots de barra de ação no d-pad e nos botões frontais. Toque no outro gatilho para mudar para o segundo conjunto.",
       "crossHotbarResetLayout": "Redefinir barra de atalho cruzada",
       "crossHotbarPosition": "{trigger} + {button}",

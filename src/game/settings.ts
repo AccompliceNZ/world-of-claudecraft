@@ -285,6 +285,9 @@ export const BOOL_SETTINGS = {
   // on by default: tapping the opposite trigger while holding swaps the cross
   // hotbar to its second set. Off pins it to the first sixteen slots.
   gamepadCrossHotbarExpand: { def: true },
+  // off by default: the pad button hint strip under the minimap and the launcher
+  // legend beside the rail. Opt-in chrome for players still learning the pad.
+  showControllerHints: { def: false },
   // off by default: mirrors the touch layout so the movement joystick sits on
   // the right and the camera joystick on the left, for left-thumb-dominant
   // players. CSS-only swap gated on body.mobile-left-handed; ignored on desktop.

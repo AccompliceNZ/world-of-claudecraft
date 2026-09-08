@@ -1755,6 +1755,7 @@ export const tr_TR: EnTranslations = {
       "crossHotbar": "Çapraz Hotbar",
       "crossHotbarEnable": "Çapraz Hotbar'ı Etkinleştir",
       "crossHotbarExpand": "Çift Çapraz Hotbar",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "D-pad ve yüz düğmelerindeki sekiz işlem çubuğu yuvasını yakmak için tetiği basılı tutun. İkinci sete geçmek için diğer tetiğe dokunun.",
       "crossHotbarResetLayout": "Çapraz Hotbar'ı sıfırla",
       "crossHotbarPosition": "{trigger} + {button}",

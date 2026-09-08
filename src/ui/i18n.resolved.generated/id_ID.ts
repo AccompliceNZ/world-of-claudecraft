@@ -1755,6 +1755,7 @@ export const id_ID: EnTranslations = {
       "crossHotbar": "Lintas Hotbar",
       "crossHotbarEnable": "Aktifkan Lintas Hotbar",
       "crossHotbarExpand": "Hotbar Silang Ganda",
+      "showHints": "Controller Button Hints",
       "crossHotbarHelp": "Tahan pemicu untuk menyalakan delapan slot bilah tindakan pada d-pad dan tombol muka. Ketuk pemicu lainnya untuk beralih ke set kedua.",
       "crossHotbarResetLayout": "Setel Ulang Lintas Hotbar",
       "crossHotbarPosition": "{trigger} + {button}",
