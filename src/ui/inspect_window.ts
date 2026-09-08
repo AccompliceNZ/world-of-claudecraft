@@ -237,6 +237,7 @@ export class InspectWindow {
       `<div id="inspect-model-preview" class="char-model-preview" role="img" aria-label="${esc(t('hudChrome.character.modelPreview'))}"></div>` +
       `</div>` +
       `<div class="equip-col equip-col-right" id="inspect-equip-right"></div>` +
+      `<div class="equip-row-weapons" id="inspect-equip-weapons"></div>` +
       `</div></div>`;
     hydratePortraits(el);
     // Degrade a failed Discord avatar to the plain status badge (never the browser's
@@ -252,6 +253,8 @@ export class InspectWindow {
     const rightCol = el.querySelector('#inspect-equip-right');
     for (const cell of model.gear.left) leftCol?.appendChild(this.buildSlotRow(cell));
     for (const cell of model.gear.right) rightCol?.appendChild(this.buildSlotRow(cell));
+    const weaponsRow = el.querySelector('#inspect-equip-weapons');
+    for (const cell of model.gear.weapons) weaponsRow?.appendChild(this.buildSlotRow(cell));
     const stage = el.querySelector<HTMLElement>('#inspect-model-preview');
     if (stage) {
       this.deps.mountPreview(stage, {

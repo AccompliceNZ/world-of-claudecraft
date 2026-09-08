@@ -313,6 +313,7 @@ export class CharWindow {
           <div id="char-skin-row" class="skin-row char-skin-row" role="list" aria-label="${esc(t('auth.appearance'))}"></div>
         </div>
         <div class="equip-col equip-col-right" id="equip-col-right"></div>
+        <div class="equip-row-weapons" id="equip-row-weapons"></div>
       </div>${this.masterwroughtSlotsHtml(world)}<div class="ui-divider char-footer-divider"></div><footer class="char-footer">${this.playtimeHtml(world)}<div class="pc-share-row"><button type="button" class="pc-share-btn ui-btn ui-btn--red" data-act="share-card">${SHARE_GLYPH}<span>${esc(t('playerCard.shareButton'))}</span></button></div></footer></section>`;
     html += `<section class="char-sidebar">${tabStripHtml(
       tabStripModel({
@@ -383,8 +384,10 @@ export class CharWindow {
     const view = buildPaperdollView(world.equipment, ITEMS, world.equipmentInstances);
     const leftCol = el.querySelector('#equip-col-left');
     const rightCol = el.querySelector('#equip-col-right');
+    const weaponsRow = el.querySelector('#equip-row-weapons');
     for (const cell of view.left) leftCol?.appendChild(this.buildSlotRow(cell));
     for (const cell of view.right) rightCol?.appendChild(this.buildSlotRow(cell));
+    for (const cell of view.weapons) weaponsRow?.appendChild(this.buildSlotRow(cell));
 
     // A character-sheet rebuild mints new socket nodes, including after the
     // inventory-change path has synchronized the old set. Restore the active

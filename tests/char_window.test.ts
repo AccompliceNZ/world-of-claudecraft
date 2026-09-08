@@ -1285,7 +1285,7 @@ describe('char_window: the model is the stage and the sockets overlay it (W24)',
 
   it('floats both socket columns over the stage, one on each outer edge', () => {
     expect(css).toContain(
-      'body:not(.mobile-touch) #char-window .equip-col {\n    position: absolute;\n    top: 0;',
+      'body:not(.mobile-touch) #char-window .equip-col {\n    position: absolute;\n    top: var(--spacing-sm);',
     );
     expect(css).toMatch(
       /body:not\(\.mobile-touch\) #char-window \.equip-col:not\(\.equip-col-right\) \{\s*left: var\(--spacing-sm\);/,
@@ -1295,6 +1295,25 @@ describe('char_window: the model is the stage and the sockets overlay it (W24)',
     );
     // The overlay needs its own scrim token: slot names sit over a lit model.
     expect(css).toContain('var(--color-stage-overlay-scrim)');
+  });
+
+  it('spreads the socket columns over the stage height and seats the weapons at its bottom centre', () => {
+    // Review round 2: the columns span from the top of the stage down to the
+    // weapons seat and space their rows evenly, and the two weapon hands sit in
+    // their own centred row above the skin row (or at the stage edge without one).
+    expect(css).toContain(
+      'body:not(.mobile-touch) #char-window .equip-col {\n    position: absolute;\n    top: var(--spacing-sm);\n    bottom: var(--paperdoll-stage-foot-h);\n    justify-content: space-evenly;',
+    );
+    expect(css).toContain(
+      'body:not(.mobile-touch) #char-window .equip-row-weapons {\n    position: absolute;\n    left: 50%;\n    bottom: var(--paperdoll-skin-row-h);\n    transform: translateX(-50%);',
+    );
+    expect(css).toContain(
+      'body:not(.mobile-touch) #char-window .paperdoll:has(.char-skin-row:empty) .equip-row-weapons {\n    bottom: var(--spacing-sm);',
+    );
+    // The row is a wrapped full-width line of the shared paperdoll flex row, so
+    // the touch sheet and the inspect window get it in flow for free.
+    expect(css).toContain('.paperdoll {\n    display: flex;\n    flex-wrap: wrap;');
+    expect(css).toContain('.equip-row-weapons {\n    display: flex;\n    justify-content: center;');
   });
 
   it('re-anchors the unequip and helm-eye chips to the narrower overlay row unit', () => {

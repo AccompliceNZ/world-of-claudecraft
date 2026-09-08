@@ -5878,6 +5878,9 @@
   body.mobile-touch .equip-col-right .equip-slot .equip-unequip-btn {
     right: calc(50% - 80px);
   }
+  body.mobile-touch .equip-row-weapons .equip-slot .equip-unequip-btn {
+    left: calc(50% - 80px);
+  }
   /* Stat panels: 2-column grid, 16px tile numerals. */
   body.mobile-touch .stat-panels {
     grid-template-columns: 1fr 1fr;

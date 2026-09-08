@@ -1090,6 +1090,16 @@
     /* Scrim under the paperdoll socket columns where they float over the live 3D
        stage, so slot names and item names stay legible against a lit model. */
     --color-stage-overlay-scrim: color-mix(in srgb, var(--color-keyline) 66%, transparent);
+    /* Paperdoll stage seats: the skin row (34px swatch plus its padding) and one
+       40px socket row, so the overlay columns can span the height between them. */
+    --paperdoll-skin-row-h: 48px;
+    --paperdoll-weapons-row-h: 40px;
+    --paperdoll-stage-foot-h: calc(
+      var(--paperdoll-skin-row-h) +
+      var(--paperdoll-weapons-row-h) +
+      2 *
+      var(--spacing-sm)
+    );
 
     /* unit frames */
     /* Gap between the two stock unit frames, which mirror each other around the

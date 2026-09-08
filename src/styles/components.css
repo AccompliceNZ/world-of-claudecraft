@@ -1413,9 +1413,19 @@
      .equip-col / .equip-slot (inspect layout overrides live in shell.css). */
   .paperdoll {
     display: flex;
+    flex-wrap: wrap;
     gap: 18px;
     align-items: flex-start;
     padding-top: 12px;
+  }
+  /* The weapon hands sit in their own centered row under the stage; it wraps to a
+     full-width line of the flex row so the columns above keep their bands. */
+  .equip-row-weapons {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    flex: 1 0 100%;
+    min-width: 0;
   }
   .equip-col {
     display: flex;
@@ -1726,12 +1736,35 @@
      shrink-wraps its 114px row unit (40px socket + gap + 70px text box). */
   body:not(.mobile-touch) #char-window .equip-col {
     position: absolute;
-    top: 0;
+    top: var(--spacing-sm);
+    bottom: var(--paperdoll-stage-foot-h);
+    justify-content: space-evenly;
     z-index: 1;
     flex: none;
     width: auto;
     padding: var(--spacing-xs);
     border-radius: var(--radius-window);
+  }
+  /* The weapon hands seat centered along the stage's bottom, just above the skin
+     row; with no skins to pick they drop to the stage edge and the columns follow. */
+  body:not(.mobile-touch) #char-window .equip-row-weapons {
+    position: absolute;
+    left: 50%;
+    bottom: var(--paperdoll-skin-row-h);
+    transform: translateX(-50%);
+    z-index: 1;
+    flex: none;
+    width: auto;
+    gap: var(--spacing-md);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-window);
+    background: linear-gradient(to top, var(--color-stage-overlay-scrim), transparent);
+  }
+  body:not(.mobile-touch) #char-window .paperdoll:has(.char-skin-row:empty) .equip-row-weapons {
+    bottom: var(--spacing-sm);
+  }
+  body:not(.mobile-touch) #char-window .paperdoll:has(.char-skin-row:empty) .equip-col {
+    bottom: calc(var(--paperdoll-weapons-row-h) + 3 * var(--spacing-sm));
   }
   /* Inset by the chip radius so the outer corner chips still land on the stage
      rather than hanging over the window's own padding. */
@@ -1758,6 +1791,9 @@
     .equip-slot
     :is(.equip-unequip-btn, .equip-helm-eye) {
     right: calc(50% - 68px);
+  }
+  body:not(.mobile-touch) #char-window .equip-row-weapons .equip-slot .equip-unequip-btn {
+    left: calc(50% - 68px);
   }
   #char-window .char-sidebar {
     display: flex;
@@ -16326,6 +16362,9 @@
   }
   .equip-col-right .equip-slot .equip-unequip-btn {
     right: calc(50% - 88px);
+  }
+  .equip-row-weapons .equip-slot .equip-unequip-btn {
+    left: calc(50% - 88px);
   }
   .equip-slot:hover .equip-unequip-btn,
   .equip-slot:focus-within .equip-unequip-btn,

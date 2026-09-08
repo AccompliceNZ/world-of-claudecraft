@@ -8,6 +8,7 @@ import {
   CHARACTER_SIDEBAR_TABS,
   PAPERDOLL_LEFT_SLOTS,
   PAPERDOLL_RIGHT_SLOTS,
+  PAPERDOLL_WEAPON_SLOTS,
 } from '../src/ui/char_view';
 
 const FULL: Partial<Record<EquipSlot, string>> = {
@@ -22,44 +23,24 @@ const FULL: Partial<Record<EquipSlot, string>> = {
 };
 
 describe('char_view: paperdoll data model', () => {
-  it('lays two balanced 6/6 columns: head/neck/shoulder/chest/mainhand/offhand, then hands/waist/legs/feet/rings', () => {
-    // Showcase redesign: the offhand moved from the tail of the RIGHT column to
-    // the end of the LEFT column (under Main Hand), balancing the paperdoll to
-    // 6/6 so both bands flank the fixed-width model stage evenly. Inspect inherits
-    // this since it reuses these arrays via buildPaperdollView.
-    expect(PAPERDOLL_LEFT_SLOTS).toEqual([
-      'helmet',
-      'neck',
-      'shoulder',
-      'chest',
-      'mainhand',
-      'offhand',
-    ]);
-    expect(PAPERDOLL_RIGHT_SLOTS).toEqual(['gloves', 'waist', 'legs', 'feet', 'ring1', 'ring2']);
+  it('lays two 5/5 armor columns (head to hands, waist to rings) with the weapon hands in their own row', () => {
+    // Showcase redesign: the weapon hands left the columns for a centered row
+    // under the model stage, so the two armor bands flank the stage evenly at
+    // 5/5. Inspect inherits this since it reuses these arrays via buildPaperdollView.
+    expect(PAPERDOLL_LEFT_SLOTS).toEqual(['helmet', 'neck', 'shoulder', 'chest', 'gloves']);
+    expect(PAPERDOLL_RIGHT_SLOTS).toEqual(['waist', 'legs', 'feet', 'ring1', 'ring2']);
+    expect(PAPERDOLL_WEAPON_SLOTS).toEqual(['mainhand', 'offhand']);
   });
 
   it('resolves every equipped slot to its item, in column order', () => {
     const view = buildPaperdollView(FULL, ITEMS);
-    expect(view.left.map((c) => c.slot)).toEqual([
-      'helmet',
-      'neck',
-      'shoulder',
-      'chest',
-      'mainhand',
-      'offhand',
-    ]);
-    expect(view.right.map((c) => c.slot)).toEqual([
-      'gloves',
-      'waist',
-      'legs',
-      'feet',
-      'ring1',
-      'ring2',
-    ]);
+    expect(view.left.map((c) => c.slot)).toEqual(['helmet', 'neck', 'shoulder', 'chest', 'gloves']);
+    expect(view.right.map((c) => c.slot)).toEqual(['waist', 'legs', 'feet', 'ring1', 'ring2']);
+    expect(view.weapons.map((c) => c.slot)).toEqual(['mainhand', 'offhand']);
     expect(view.left[0].item).toBe(ITEMS.cryptbone_helm);
-    expect(view.left[4].item).toBe(ITEMS.worn_sword);
-    expect(view.left[5].item).toBeNull(); // offhand: unequipped in FULL, now the left tail
-    expect(view.right[3].item).toBe(ITEMS.oiled_boots);
+    expect(view.weapons[0].item).toBe(ITEMS.worn_sword);
+    expect(view.weapons[1].item).toBeNull(); // offhand: unequipped in FULL
+    expect(view.right[2].item).toBe(ITEMS.oiled_boots);
   });
 
   it('resolves jewelry slots: neck in the left column, both rings in the right', () => {
@@ -72,8 +53,8 @@ describe('char_view: paperdoll data model', () => {
       ITEMS,
     );
     expect(view.left[1].item).toBe(ITEMS.yumis_keepsake_locket);
-    expect(view.right[4].item).toBe(ITEMS.seal_of_the_nine_oaths);
-    expect(view.right[5].item).toBe(ITEMS.nielas_coldlight_band);
+    expect(view.right[3].item).toBe(ITEMS.seal_of_the_nine_oaths);
+    expect(view.right[4].item).toBe(ITEMS.nielas_coldlight_band);
   });
 
   it('renders an empty cell for an unequipped slot or an unknown item id', () => {
@@ -105,12 +86,13 @@ describe('char_view: paperdoll data model', () => {
       rolled: { quality: 'legendary' },
     });
     expect(view.left[0].instance).not.toBe(promoted); // a projection, not the raw handle
-    expect(view.left[4].instance).toBeNull(); // mainhand: worn, no payload
+    expect(view.weapons[0].instance).toBeNull(); // mainhand: worn, no payload
     // The def-only negative: no instances argument (a caller with no payloads
     // in hand) resolves every cell payload-free, byte for byte the old model.
     const defOnly = buildPaperdollView(FULL, ITEMS);
     expect(defOnly.left.every((c) => c.instance === null)).toBe(true);
     expect(defOnly.right.every((c) => c.instance === null)).toBe(true);
+    expect(defOnly.weapons.every((c) => c.instance === null)).toBe(true);
     // An empty slot never carries a payload, even if the record has a stale
     // entry for it (the item gate runs first).
     const stale = buildPaperdollView({ chest: 'no_such_item' }, ITEMS, {

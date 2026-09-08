@@ -6456,6 +6456,13 @@
       transparent
     );
   }
+  /* The armor columns stretch to the stage height and space their rows evenly,
+     so five sockets read as a band beside the tall inspect stage rather than a
+     cluster at its top. */
+  .inspect-paperdoll .equip-col {
+    align-self: stretch;
+    justify-content: space-evenly;
+  }
   /* The model stage takes the inspected player's CLASS color, delivered as the
      --inspect-class-color custom property the painter sets. Fixed width so the
      columns flex around it (the same band-centering contract as the sheet), and
