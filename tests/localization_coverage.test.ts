@@ -1648,7 +1648,16 @@ describe('i18n Localization Key Coverage', () => {
     );
     expect(minimapPainterSource).toContain('this.writers.setText(zoneLabelEl, this.localizeZone(');
     expect(hudSource).toContain('zonePoiLabel');
-    expect(hudSource).toContain('dungeonDisplayNameFromSource');
+    // The dungeon party-size warning's name localization moved with the whole
+    // of localizeSystemText into src/ui/system_text_i18n.ts when hud.ts hit its
+    // monolith ceiling (PR #3925). The helper still renders the dungeon name,
+    // just from the extracted module, the minimap_painter shape above.
+    const systemTextSource = fs.readFileSync(
+      path.resolve(process.cwd(), 'src/ui/system_text_i18n.ts'),
+      'utf8',
+    );
+    expect(systemTextSource).toContain('dungeonDisplayNameFromSource(match[1])');
+    expect(hudSource).not.toContain('dungeonDisplayNameFromSource');
     expect(hudSource).not.toContain('zoneWelcomeText(');
 
     // The per-entity nameplate content (corpse/mob names) moved into the

@@ -115,6 +115,8 @@ import {
   type ActionBarWorldInput,
   createActionBarView,
 } from '../src/ui/hud/action_bar/action_bar_view';
+import { AURA_TRACKS } from '../src/ui/hud/aura_tracks/aura_track_descriptors';
+import { createAuraTrackView } from '../src/ui/hud/aura_tracks/aura_track_view';
 import { createTargetDotsView } from '../src/ui/hud/target_dots';
 import { makeWriterFacet, type PainterHostWriters } from '../src/ui/painter_host';
 import type { SwingTimerState } from '../src/ui/swing_timer';
@@ -590,6 +592,12 @@ const HOT_PAINTERS: ReadonlyArray<ScannedPainter> = [
     allow: { '.innerHTML': 1, '.setAttribute': 2 },
     reflowAllow: {},
   },
+  // The one painter behind all six aura tracks. Its skeleton (a fixed pool of
+  // AURA_TRACK_ROW_CAP rows plus the overflow line) is built in ONE constructor
+  // innerHTML write and never touched again: every refresh, including the two
+  // accessible-name attributes, routes through the elided facet, which is what
+  // lets six instances share the per-frame band the aura strips run on.
+  { file: 'hud/aura_tracks/aura_track_painter.ts', allow: { '.innerHTML': 1 }, reflowAllow: {} },
   { file: 'party_frames_painter.ts', allow: {}, reflowAllow: {} },
   // The portrait rest badge. Cold by cadence (the caller gates it on the
   // resting flag changing, and the language fan-out clears that memo so a
@@ -3102,6 +3110,54 @@ describe('hud_perf_budget ARM 2: per-frame allocation budget (Node, npm test)', 
       assertAllocationStable(() => tick().rows, 64, 'target_dots_view rows');
     }).not.toThrow();
   });
+  // The aura tracks ride the same per-frame band as the strips above, and SIX of
+  // them tick every frame, so a container minted per tick is six allocations per
+  // frame rather than one. The core claims its state, its row array and every row
+  // record are reused; this is what makes that claim load-bearing instead of
+  // hand-checked. Both the self scan and the ally scan run (the steady ally
+  // carries a row on both tracks), and the points track is driven too, because
+  // its peak map and the live-key set it prunes with are the per-row state that
+  // could grow.
+  for (const trackId of ['friendly', 'shields'] as const) {
+    it(`aura_track_view reuses its state container every tick (${trackId})`, () => {
+      const descriptor = AURA_TRACKS.find((t) => t.id === trackId);
+      if (!descriptor) throw new Error(`no such track: ${trackId}`);
+      const view = createAuraTrackView(descriptor, {
+        isOwn: () => true,
+        isMode: () => false,
+        auraName: (a) => a.id,
+        unitName: (e) => e.name,
+        iconKey: (a) => a.id,
+      });
+      const auras = [
+        {
+          id: trackId === 'shields' ? 'power_word_shield' : 'rejuvenation',
+          name: 'A',
+          kind: trackId === 'shields' ? 'absorb' : 'hot',
+          remaining: 8,
+          duration: 12,
+          sourceId: 1,
+          value: 600,
+        },
+      ];
+      const player = { id: 1, name: 'P', dead: false, auras };
+      const ally = { id: 2, name: 'B', dead: false, auras };
+      const allies = [ally];
+      const input = { player, allies, enabled: true, includeModes: true };
+      expect(() => {
+        assertAllocationStable(
+          () => view.tick(input),
+          64,
+          `aura_track_view (${trackId}) container`,
+        );
+        assertAllocationStable(
+          () => view.tick(input).rows,
+          64,
+          `aura_track_view (${trackId}) rows`,
+        );
+      }).not.toThrow();
+    });
+  }
 });
 
 // --------------------------------------------------------------------------

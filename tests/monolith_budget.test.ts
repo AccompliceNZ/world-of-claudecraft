@@ -433,18 +433,21 @@ const MONOLITHS: MonolithRow[] = [
     // `wc -l < src/ui/hud.ts` on the reconciled file measures 18577, below
     // both arms, so the ceiling follows it down. Exact merged count, zero
     // slack: any further growth reds again.
-    // LOWERED on feature/hub-training-dummy-dps after the masterwrought sync
-    // (merge-base d28d1c69e9, base ceiling 18577). The branch's own arm
-    // carries the hub practice coach's Meters deps (keybinds, the live
-    // hotbar slot array, the ring-button glow anchor, tooltip visibility and
-    // the renderer's raw worldToScreen: dependency-injection glue over
-    // private Hud state, 15 lines). Rather than raise the ceiling for it, the
-    // branch pays by moving formatLockoutDuration, the localized raid-lockout
-    // countdown, out to src/ui/raid_lockout_format.ts beside its pure core
-    // (23 lines out). `wc -l < src/ui/hud.ts` measures 18569, under the
-    // base ceiling, so the ceiling follows it down. Exact count, zero slack:
-    // any further growth reds again.
-    ceiling: 18569,
+    // Re-measured at the aura-tracks sync (PR #3925): the release's 18577
+    // less the net 88 lines that branch takes out of hud.ts by moving
+    // localizeSystemText to src/ui/system_text_i18n.ts (its six-frame wiring
+    // costs about 45 of the lines it removes) and by dropping the imports the
+    // move orphaned. Exact merged count, zero slack.
+    // RESOLVED for the merge of release/v0.42.0 (tip 186dd8fe7f, PR #3925
+    // feature/support-aura-tracks) into feature/hub-training-dummy-dps. Our
+    // own arm had lowered to 18569 after paying for the hub practice
+    // coach's Meters deps by moving formatLockoutDuration out to
+    // src/ui/raid_lockout_format.ts; the incoming arm lowered its copy to
+    // 18489 via the localizeSystemText move. Neither parent pin fits the
+    // resolved tree: `wc -l < src/ui/hud.ts` on the reconciled file measures
+    // 18481, below both arms, so the ceiling follows it down. Exact merged
+    // count, zero slack: any further growth reds again.
+    ceiling: 18481,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

@@ -1582,6 +1582,12 @@
   #xpbar.tf-unlocked,
   #buff-bar.tf-unlocked,
   #debuff-bar.tf-unlocked,
+  #aura-track-defensives.tf-unlocked,
+  #aura-track-self.tf-unlocked,
+  #aura-track-power.tf-unlocked,
+  #aura-track-utility.tf-unlocked,
+  #aura-track-friendly.tf-unlocked,
+  #aura-track-shields.tf-unlocked,
   #target-dots.tf-unlocked,
   #quest-tracker.tf-unlocked,
   #deed-tracker.tf-unlocked,
@@ -1611,11 +1617,17 @@
   #proc-overlay.tf-unlocked {
     pointer-events: auto;
   }
-  /* The Target dots tracker is click-through in play too (it sits over the
-     world and must never eat a click meant for a mob), so the unlock mode has
-     to hand its pointer events back or the frame could not be dragged. It is
-     also hidden whenever no dots are out, so editing forces the placeholder
-     visible. */
+  /* The Target dots tracker and the six aura tracks are click-through in play
+     too (they sit over the world and must never eat a click meant for a mob),
+     so the unlock mode has to hand their pointer events back or the frames
+     could not be dragged. Each is also hidden whenever it has no rows, so
+     editing forces the placeholder visible. */
+  #aura-track-defensives.tf-unlocked,
+  #aura-track-self.tf-unlocked,
+  #aura-track-power.tf-unlocked,
+  #aura-track-utility.tf-unlocked,
+  #aura-track-friendly.tf-unlocked,
+  #aura-track-shields.tf-unlocked,
   #target-dots.tf-unlocked {
     display: flex !important;
     min-height: 34px;
@@ -3432,6 +3444,204 @@
     }
   }
   .td-overflow {
+    padding-left: 21px;
+    font: 400 10px var(--body-font);
+    color: #cfcfcf;
+    text-shadow: 1px 1px 1px #000;
+  }
+
+  /* ---------- aura tracks ---------- */
+  /* Six bars of the auras YOU have out (src/ui/hud/aura_tracks/), one movable,
+     resizable frame per question. One row vocabulary across all six: the fill
+     is what is left, the label rides the bar, the readout sits outside it so a
+     long spell name can never push the number off the row. Every track is
+     display:none until its painter has rows, so an empty bordered box never
+     floats over the world, and each is click-through in play. */
+  #aura-track-defensives,
+  #aura-track-self,
+  #aura-track-power,
+  #aura-track-utility,
+  #aura-track-friendly,
+  #aura-track-shields {
+    position: absolute;
+    z-index: 6;
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    width: 236px;
+    max-width: 42vw;
+    pointer-events: none;
+  }
+  /* Default seats: two columns of three, starting one frame width in from the
+     left rail. The rail itself (left: 18px, top: 34%) is the Target dots
+     tracker's seat, and a first cut put the Defensives and Self tracks at 30%
+     and 44% on that same rail, so a player who opened both families watched
+     the dot bars land between two aura bars. The 16% pitch is about seven rows
+     at 1080p, so a track fills most of the way to its cap before it reaches the
+     seat below; none sits under the action bars, the chat box or the minimap.
+     A player moves them from here; these only decide where an opted-in track
+     first appears. */
+  #aura-track-defensives {
+    left: 268px;
+    top: 30%;
+  }
+  #aura-track-self {
+    left: 268px;
+    top: 46%;
+  }
+  #aura-track-power {
+    left: 268px;
+    top: 62%;
+  }
+  #aura-track-utility {
+    left: 518px;
+    top: 30%;
+  }
+  #aura-track-friendly {
+    left: 518px;
+    top: 46%;
+  }
+  #aura-track-shields {
+    left: 518px;
+    top: 62%;
+  }
+
+  .at-row {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    height: 20px;
+  }
+  .at-icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    border: 1px solid #000;
+    border-radius: 3px;
+    background-color: #10141c;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .at-bar {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    height: 18px;
+    border: 1px solid #000;
+    border-radius: 2px;
+    background: rgba(8, 8, 12, 0.78);
+    overflow: hidden;
+  }
+  /* The fill is the CATEGORY colour, set per track by its own frame id: one
+     school of meaning per bar, so a glance at the colour says which question
+     the row answers before the label is read. */
+  .at-fill {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 100%;
+    background: var(--at-fill, var(--color-buff));
+  }
+  #aura-track-defensives {
+    --at-fill: #b0563c;
+  }
+  #aura-track-self {
+    --at-fill: #3f7fa8;
+  }
+  #aura-track-power {
+    --at-fill: #a2478c;
+  }
+  #aura-track-utility {
+    --at-fill: #6a7f9e;
+  }
+  #aura-track-friendly {
+    --at-fill: #2e8b57;
+  }
+  #aura-track-shields {
+    --at-fill: #c8a24a;
+  }
+  .at-label {
+    position: relative;
+    display: block;
+    padding: 0 5px;
+    /* Line height rides INSIDE the shorthand: declared separately the shorthand
+       resets it and the label stops being centred in its bar. */
+    font: 600 11px / 18px var(--body-font);
+    color: #fff;
+    text-shadow: 1px 1px 1px #000;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .at-stacks {
+    position: absolute;
+    top: 1px;
+    right: 2px;
+    min-width: 12px;
+    padding: 0 2px;
+    text-align: center;
+    font: 700 9px / 11px var(--body-font);
+    color: #fff;
+    background: rgba(8, 8, 12, 0.92);
+    border: 1px solid var(--color-buff);
+    border-radius: 6px;
+  }
+  .at-time {
+    flex: none;
+    min-width: 30px;
+    text-align: right;
+    font: 700 11px var(--body-font);
+    font-variant-numeric: tabular-nums;
+    color: #8ce68c;
+    text-shadow: 1px 1px 1px #000;
+  }
+  /* A shield spends POINTS, not seconds: the points lead and the countdown
+     rides behind them, dimmed, because either can end the shield first. */
+  .at-points {
+    flex: none;
+    min-width: 42px;
+    text-align: right;
+    font: 700 11px var(--body-font);
+    font-variant-numeric: tabular-nums;
+    color: #f0d68a;
+    text-shadow: 1px 1px 1px #000;
+  }
+  .at-points-row .at-time {
+    min-width: 26px;
+    font-weight: 400;
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+  /* A MODE has no timer, so nothing in its row may look like it is draining:
+     the bar sits full and dim and the readout is a steady chip. */
+  .at-mode-row .at-bar {
+    background: rgba(8, 8, 12, 0.6);
+  }
+  .at-mode-row .at-fill {
+    width: 100% !important;
+    opacity: 0.34;
+  }
+  .at-mode-row .at-time {
+    font: 700 9px var(--body-font);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: #cfe4a8;
+  }
+  /* Final seconds: the same cue and the same reduced-motion fallback the aura
+     strips use, so one aura never blinks on one surface and not the other. */
+  .at-row.at-expiring .at-time {
+    color: #ffcf40;
+  }
+  .at-row.at-expiring .at-fill {
+    animation: aura-expire-blink 0.8s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .at-row.at-expiring .at-fill {
+      animation: none;
+      filter: brightness(1.4);
+    }
+  }
+  .at-overflow {
     padding-left: 21px;
     font: 400 10px var(--body-font);
     color: #cfcfcf;

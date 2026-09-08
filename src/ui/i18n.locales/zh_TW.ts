@@ -11129,6 +11129,13 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.options.showTargetOfTarget': '顯示目標的目標',
   'hudChrome.options.showTargetSwingTimer': '顯示目標的揮砍計時器',
   'hudChrome.options.showPetFrame': '顯示你的寵物',
+  'hudChrome.options.showDefensivesTrack': '顯示防禦性冷卻',
+  'hudChrome.options.showSelfBuffTrack': '顯示我的增益',
+  'hudChrome.options.showOffensiveTrack': '顯示攻擊性冷卻',
+  'hudChrome.options.showUtilityTrack': '顯示移動與潛行',
+  'hudChrome.options.showUtilityModes': '包含潛行與旅行形態',
+  'hudChrome.options.showFriendlyTrack': '顯示我給隊友的增益',
+  'hudChrome.options.showShieldTrack': '顯示我的護盾',
   'hudChrome.options.stickyTarget': '點擊地面時保留目標',
   'hudChrome.options.showNameplateDots': '在名條上顯示我的減益',
   'hudChrome.options.nameplateDotScale': '名條減益圖示大小',
@@ -12748,6 +12755,13 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.continentMap.toZone': '地區地圖',
   'hudChrome.enchanting.wornTagIndexed': '已裝備（{slot}{index}）',
   'hudChrome.targetAuras.title': '目標光環',
+  'hudChrome.auraTracks.defensives': '防禦性冷卻',
+  'hudChrome.auraTracks.self': '我的增益',
+  'hudChrome.auraTracks.power': '攻擊性冷卻',
+  'hudChrome.auraTracks.utility': '移動與潛行',
+  'hudChrome.auraTracks.friendly': '我給隊友的增益',
+  'hudChrome.auraTracks.shields': '我的護盾',
+  'hudChrome.auraTracks.overflow': '還有{count}項未顯示',
   'hudChrome.targetAuras.keybindLabel': '目標增益與減益效果',
   'hudChrome.targetAuras.debuffs': '減益',
   'hudChrome.targetAuras.buffs': '增益',
@@ -15422,6 +15436,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '你自己的框架、目標框架與隊伍框架全都可以移動。每個框架的角落都帶著一顆小小的移動按鈕：解除鎖定，把框架拖到你要的位置，再重新鎖上，這樣一次失手的點擊就無法把它挪走。「介面」選項中「頭像框」分頁最上方的「編輯框體」，則會一口氣鬆開其餘的整個介面，連同這三個框架一起：動作列、施法條、揮擊條、經驗條、小地圖、按鈕列、寵物框架、姿態列、增益與減益列，以及「願望清單提醒」小標籤，每一個在鬆開期間都掛著一枚名稱標籤。萬一它們跑到你會後悔的地方，同一個「頭像框」分頁底部的「恢復預設」會把它們全部彈回原本的位置。',
   'guide.interfacePage.framesGovernedExtra':
     '「編輯框體」也會一併鬆開下方那疊追蹤面板(你追蹤中的任務與它們的目標、你的功績進度、你的聖物庫頁面、你所在的秘探、你正參與的任何裂隙，以及你正在追蹤的配方或委託)、寵物框架旁的寵物動作列、顯示你對附近敵人所施減益的「目標減益」框架、聖騎士的「虔誠」勳章、術士的「痛苦資源條」、法術觸發浮層、雙持武器時的副手揮擊條，以及附分頁的傷害統計視窗，每一個在鬆開期間都掛著一枚名稱標籤。',
+  'guide.interfacePage.framesGovernedAuraTracks':
+    '「編輯框體」也會鬆開六條可選的光環軌道，前提是你已在同一「介面」選項的「戰鬥」分頁中開啟它們：「我的增益」軌道、「防禦性冷卻」軌道、「我的護盾」軌道、「攻擊性冷卻」軌道、「移動與潛行」軌道，以及「我給隊友的增益」軌道。所有軌道預設關閉，每一條在鬆開期間都掛著一枚名稱標籤。',
   'guide.interfacePage.mapBodyZoneFirst':
     'M 會開啟世界地圖，直接落在你所站的區域上，上頭有你自己的箭頭、你周遭的興趣地點、帶著標記的任務發布者與你任務目標所在的範圍、製作站、郵箱、告示板與菜畦、地城入口，以及這個區域裡的每一個採集節點：重新長出之前它會呈灰色，你的工具還應付不了時則會加上標示。你的隊伍也會顯示在上面。在地圖上按右鍵，或按下它的「世界地圖」按鈕，地圖便會拉遠到整片大陸，每個區域都連同名稱一起畫出，點擊某個區域即可開啟那個區域的地圖。踏進秘探、地城、裂隙或城堡要塞，地圖會切換成你所在之處的平面圖；荊谷原野戰場則有一張自己專屬的戰場地圖。\n\n右側、小地圖下方，一疊追蹤面板讓你不必打開任何東西就能看見手邊的事務：你追蹤中的任務與它們的目標、你的功績進度、你的聖物庫頁面、你所在的秘探，以及你正參與的任何裂隙。想把畫面要回來時，任務追蹤面板可以收合。',
   'guide.interfacePage.gatheringGoalTrackerBody':
