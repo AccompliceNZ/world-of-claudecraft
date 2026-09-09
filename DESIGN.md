@@ -545,8 +545,11 @@ hotbar drag-and-drop and no backing plate.
 - Sockets are 46px (`--socket-size`) on a 4px gap (`--socket-gap`), with rows 6px apart
   (`--socket-row-gap`). The socket's own key chip sits at the top left; stack count stays
   bottom right.
-- Page chevrons and the row number sit outside the right edge. A cluster of round 30px
-  stance sockets hangs off the left edge.
+- Page chevrons and the row number sit outside the right edge. ACCEPTED DEVIATION: the
+  boards hung a cluster of round 30px stance sockets off the left edge; the shipped row is
+  40px square stance sockets seated inside the bottom stack above the primary bar, so showing
+  it lifts the player frame (and, via `body.stance-bar-shown`, the stock target seat) by one
+  row instead of floating beside the bar.
 - States (existing states, restyle only): ready, hover, pressed, cooldown sweep plus
   remaining seconds, `.is-used` proc glow, `.is-oor` out-of-range tint,
   `.is-unusable` desaturation, queued, `.is-empty`, and drop target.

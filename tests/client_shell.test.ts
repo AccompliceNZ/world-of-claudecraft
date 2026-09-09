@@ -3576,7 +3576,9 @@ describe('the stock unit-frame seats sit side by side above the action bar', () 
     expect(hudCss).toContain(
       'left: calc(50% + var(--action-rail-w) / 2 - var(--target-frame-box-w));',
     );
-    expect(hudCss).toContain('top: calc(100% - var(--unit-frame-seat-offset));');
+    expect(hudCss).toContain(
+      'top: calc(100% - var(--unit-frame-seat-offset) - var(--stance-row-lift, 0px));',
+    );
     expect(hudCss).not.toContain('#target-frame {\n    left: 12px;\n    top: 12px;');
   });
 

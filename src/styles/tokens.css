@@ -787,7 +787,7 @@
     --socket-art-inset: 1px;
     --socket-size-bag: 40px;
     --socket-size-bank: 32px;
-    --socket-size-stance: 30px;
+    --socket-size-stance: 40px;
     --action-rail-w: calc(12 * var(--socket-size) + 11 * var(--socket-gap));
     --aura-size: 28px;
     --aura-size-own: 30px;
@@ -1082,9 +1082,8 @@
     --color-woc-store-hero-hi: #030a10;
     --color-woc-store-hero-lo: #04111b;
     /* target size */
-    /* Stance disc on a coarse pointer: the 40x40 box the shipped desktop
-       stance button carried, so a touch device keeps the WCAG 2.5.5 floor the
-       30px board disc would lose. */
+    /* Stance socket on a coarse pointer: the same 40px box, kept as its own
+       token so touch can diverge from the desktop row without a rule rewrite. */
     --socket-size-stance-coarse: 40px;
     /* character window stage */
     /* Scrim under the paperdoll socket columns where they float over the live 3D

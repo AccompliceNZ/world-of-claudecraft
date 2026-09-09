@@ -1404,7 +1404,7 @@
       var(--target-frame-scale, 1)
     );
     left: calc(50% + var(--action-rail-w) / 2 - var(--target-frame-box-w));
-    top: calc(100% - var(--unit-frame-seat-offset));
+    top: calc(100% - var(--unit-frame-seat-offset) - var(--stance-row-lift, 0px));
     display: none;
     z-index: 6;
     width: var(--target-frame-box-w);
@@ -1423,14 +1423,21 @@
      the mirrored target seat lifts by the same step and the pair stays level. */
   body.show-actionbar2 #target-frame,
   body.show-actionbar3 #target-frame {
-    top: calc(100% - var(--unit-frame-seat-offset) - var(--socket-size) - var(--socket-row-gap));
+    top: calc(
+      100% -
+      var(--unit-frame-seat-offset) -
+      var(--socket-size) -
+      var(--socket-row-gap) -
+      var(--stance-row-lift, 0px)
+    );
   }
   body.show-actionbar2.show-actionbar3 #target-frame {
     top: calc(
       100% -
       var(--unit-frame-seat-offset) -
       2 *
-      (var(--socket-size) + var(--socket-row-gap))
+      (var(--socket-size) + var(--socket-row-gap)) -
+      var(--stance-row-lift, 0px)
     );
   }
   /* The target's debuff strip hangs off the frame instead of living inside the
@@ -3932,15 +3939,18 @@
   .pet-btn.cooldown.autocast {
     filter: grayscale(0.45) brightness(0.78);
   }
-  /* Stance-style choice bar: warrior stances and paladin auras share this exact
-     row beside the action bars (JS flips it to flex when applicable). */
+  /* Stance-style choice bar: warrior stances and paladin auras share this row,
+     a child of the bottom stack between the player frame and the action bars
+     (JS flips it to flex when applicable), so showing it lifts the docked
+     player frame by one row; body.stance-bar-shown lifts the target seat too. */
   #stancebar {
     display: none;
-    position: absolute;
-    left: -110px;
-    bottom: calc(var(--xp-rail-h) + var(--socket-row-gap) + var(--spacing-2xs));
-    margin: 0;
+    align-self: flex-start;
+    margin: 0 0 var(--socket-row-gap);
     padding: 0;
+  }
+  body.stance-bar-shown {
+    --stance-row-lift: calc(var(--socket-size-stance) + var(--socket-row-gap));
   }
   .stancebar-group {
     display: flex;

@@ -27,6 +27,8 @@ import { stanceRadialView } from './stance_radial_core';
 
 const GROUP_CLASS = 'stancebar-group';
 const BUTTON_CLASS = 'stance-btn ui-socket ui-socket--stance';
+/** Stamped while the row is up: the stock target-frame seat lifts by one stance row off it. */
+const SHOWN_BODY_CLASS = 'stance-bar-shown';
 const ACTIVE_CLASS = 'active';
 const ICON_CLASS = 'icon-label ui-socket-art';
 const ARIA_PRESSED_ATTR = 'aria-pressed';
@@ -121,6 +123,7 @@ export class StanceBarController {
   private clearRow(): void {
     const { bar } = this.deps;
     bar.style.display = 'none';
+    document.body.classList.remove(SHOWN_BODY_CLASS);
     if (this.lastRowSig !== '') {
       bar.querySelector(`.${GROUP_CLASS}`)?.remove();
       this.lastRowSig = '';
@@ -134,6 +137,7 @@ export class StanceBarController {
       return;
     }
     bar.style.display = 'flex';
+    document.body.classList.add(SHOWN_BODY_CLASS);
     if (model.sig === this.lastRowSig) return;
     this.lastRowSig = model.sig;
     bar.querySelector(`.${GROUP_CLASS}`)?.remove();

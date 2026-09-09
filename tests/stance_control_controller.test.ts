@@ -231,6 +231,8 @@ describe('StanceBarController chooses the shape', () => {
     const rig = makeBar(false);
     rig.controller.render();
     expect(rig.bar.style.display).toBe('flex');
+    // The stock target seat lifts by one stance row while the bar is up.
+    expect(document.body.classList.contains('stance-bar-shown')).toBe(true);
     const buttons = [
       ...rig.bar.querySelectorAll<HTMLButtonElement>('.stancebar-group .stance-btn'),
     ];
@@ -252,6 +254,7 @@ describe('StanceBarController chooses the shape', () => {
     // The inline write is what outranks any display the desktop path left behind
     // on a mid-session flip; the sheet's own display:none is the belt.
     expect(rig.bar.style.display).toBe('none');
+    expect(document.body.classList.contains('stance-bar-shown')).toBe(false);
     expect(rig.bar.querySelector('.stance-btn')).toBeNull();
     expect(rig.anchor?.getAttribute('aria-label')).toBe(`stance name:${STANCES[0]}`);
   });
