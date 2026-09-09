@@ -332,6 +332,7 @@ describe('CI workflow parity', () => {
       '            /docs/screenshots/guild-bank-tab/',
       '            /docs/screenshots/guild-pledge-board/',
       '            /docs/screenshots/guild-social-v1/',
+      '            /docs/screenshots/harvest-button-refresh/',
       '            /docs/screenshots/ignivar-raid/',
       '            /docs/screenshots/ignivar-raid-expansion/',
       '            /docs/screenshots/intentional-gathering-pr1/',

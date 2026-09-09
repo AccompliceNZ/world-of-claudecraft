@@ -72,7 +72,7 @@ function expectNoHorizontalOverflow(el: HTMLElement): void {
   expect(el.scrollWidth).toBeLessThanOrEqual(el.clientWidth + 1);
 }
 
-function mount(mobile: boolean, info: CorpseHarvestInfo | null) {
+function mount(mobile: boolean, info: CorpseHarvestInfo | null, now = () => Date.now()) {
   document.body.className = mobile
     ? 'game-active mobile-touch mobile-window-open hud-mobile-compact ' +
       (innerWidth > innerHeight ? 'hud-mobile-landscape' : 'hud-mobile-portrait')
@@ -170,7 +170,7 @@ function mount(mobile: boolean, info: CorpseHarvestInfo | null) {
       confirm,
       openHarvestPreference: (componentTags: readonly string[]) =>
         harvestPreference.open(componentTags),
-      now: () => Date.now(),
+      now,
       ...makeWindowFocus(fm, () => lootRoot),
     }),
   );
@@ -198,6 +198,59 @@ const SETTLED_ALL: CorpseHarvestInfo = {
 };
 
 describe('harvest-preference picker: real controllers, real DOM', () => {
+  it.each([
+    { name: 'desktop', mobile: false, width: 1280, height: 900 },
+    { name: 'portrait', mobile: true, width: 390, height: 844 },
+    { name: 'landscape', mobile: true, width: 844, height: 390 },
+  ])('keeps Harvest visually steady during background polls ($name)', async (viewport) => {
+    await page.viewport(viewport.width, viewport.height);
+    let now = 0;
+    const h = mount(viewport.mobile, SETTLED_ALL, () => now);
+    openCorpse(h);
+    const harvest = button(h.lootRoot, '.corpse-harvest-btn');
+    harvest.focus();
+    await userEvent.hover(harvest);
+    const appearance = () => {
+      const style = getComputedStyle(harvest);
+      return [style.filter, style.opacity, style.boxShadow, style.cursor];
+    };
+    await expect.poll(() => getComputedStyle(harvest).filter).toBe('brightness(1.25)');
+    const readyAppearance = appearance();
+    for (let cycle = 0; cycle < 3; cycle++) {
+      let reply!: (info: CorpseHarvestInfo) => void;
+      h.world.corpseHarvestInfo.mockImplementationOnce(
+        () =>
+          new Promise((resolve) => {
+            reply = resolve;
+          }),
+      );
+      now += 500;
+      h.loot.updateProximity();
+      expect(harvest.getAttribute('aria-disabled')).toBe('true');
+      expect(harvest.disabled).toBe(false);
+      if (cycle === 0) {
+        await page.screenshot({
+          path: `../../docs/screenshots/harvest-button-refresh/refresh-${viewport.name}.png`,
+        });
+      }
+      expect(appearance()).toEqual(readyAppearance);
+      expect(document.activeElement).toBe(harvest);
+      harvest.click();
+      expect(h.world.harvestCorpse).not.toHaveBeenCalled();
+      reply(SETTLED_ALL);
+      await Promise.resolve();
+      expect(harvest.hasAttribute('aria-disabled')).toBe(false);
+      expect(button(h.lootRoot, '.corpse-harvest-btn')).toBe(harvest);
+      expect(appearance()).toEqual(readyAppearance);
+    }
+    h.world.corpseHarvestInfo.mockReturnValue({ ...SETTLED_ALL, denial: 'no_field_kit' });
+    now += 500;
+    h.loot.updateProximity();
+    const denied = button(h.lootRoot, '.corpse-harvest-btn');
+    expect(denied.disabled).toBe(true);
+    expect(getComputedStyle(denied).filter).not.toBe(readyAppearance[0]);
+  });
+
   it('opening the corpse never auto-harvests', () => {
     const h = mount(false, SETTLED_ALL);
     openCorpse(h);
