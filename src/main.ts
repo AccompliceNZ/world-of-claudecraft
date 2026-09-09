@@ -1,3 +1,4 @@
+import { dispatchCollectionAction } from './ui/collection_actions_core';
 // Game-client style barrel (declares the @layer order, loads tokens + base, etc.).
 // index.html and play.html both bootstrap through this module, so this one import
 // styles both game entries; admin/guide use their own entries and inline CSS.
@@ -1791,6 +1792,7 @@ async function startGame(
       onInputIntent: (kind) => perf.markInputIntent(kind),
       onUiKey: (key) => {
         if (key !== 'escape') hud.cancelGroundAim();
+        if (dispatchCollectionAction(key, hud)) return;
         switch (key) {
           case 'interact':
             interactKey();
@@ -1851,24 +1853,7 @@ async function startGame(
           case 'discord':
             toggleDiscordPanel();
             break;
-          case 'deeds':
-            hud.toggleDeeds();
-            break;
-          case 'professions':
-            hud.toggleProfessions();
-            break;
-          case 'reliquary':
-            hud.toggleReliquary();
-            break;
-          case 'harvestJournal':
-            hud.toggleHarvestJournal();
-            break;
-          case 'perfecting':
-            hud.togglePerfecting();
-            break;
-          case 'lootExplorer':
-            hud.toggleLootExplorer();
-            break;
+
           case 'sheathe':
             // Cosmetic sheathe toggle (Z): the cue-on-state-change rule lives
             // in sheathe_toggle.ts, shared with the gamepad dispatch below.
@@ -2096,6 +2081,7 @@ async function startGame(
       return;
     }
     hud.cancelGroundAim();
+    if (dispatchCollectionAction(id, hud)) return;
     switch (id) {
       case 'target':
         world.tabTarget();
@@ -2194,24 +2180,7 @@ async function startGame(
       case 'discord':
         toggleDiscordPanel();
         break;
-      case 'deeds':
-        hud.toggleDeeds();
-        break;
-      case 'professions':
-        hud.toggleProfessions();
-        break;
-      case 'reliquary':
-        hud.toggleReliquary();
-        break;
-      case 'harvestJournal':
-        hud.toggleHarvestJournal();
-        break;
-      case 'perfecting':
-        hud.togglePerfecting();
-        break;
-      case 'lootExplorer':
-        hud.toggleLootExplorer();
-        break;
+
       case 'crafting':
         // The controller panel has always OFFERED this bind (it lists every
         // edge keybind action); the dispatch dropped it silently.

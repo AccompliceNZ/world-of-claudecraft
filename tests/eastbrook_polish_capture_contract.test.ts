@@ -663,8 +663,13 @@ interface AttributionTargetFixture {
 // neither parent. No capture was retaken.
 // Re-minted for the second v0.42.0 reconcile after the release branch advanced
 // with Drakelands/hotkey renderer work. No capture was retaken.
+// PR3946: remint the renderer leaf after restoring school-aware resurrection VFX.
+// Existing captures, performance measurements and capture identity are unchanged.
+// v0.42.0 dependency-floor bump (sharp, js-yaml, vitest): the lockfile is a
+// fingerprint input, so every shipping GLB was size-preserving re-minted and this
+// seal follows the swept evidence. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'ab1019ffc4c4608ac704ba7f791f77133c78d329b748be7829c8576147a8dab3';
+  '5ae21044dd1b636f9c293ec628a7d316f740bb92a5962f848c6e58c80218ebbc';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [

@@ -27,6 +27,7 @@ const labels = read('../src/ui/reliquary_labels.ts');
 const trackerView = read('../src/ui/reliquary_tracker_view.ts');
 const trackerPainter = read('../src/ui/reliquary_tracker_painter.ts');
 const hud = read('../src/ui/hud.ts');
+const sideButtons = read('../src/ui/hud/menu/side_buttons.ts');
 const mainSrc = read('../src/main.ts');
 const inputSrc = read('../src/game/input.ts');
 const keybindsSrc = read('../src/game/keybinds.ts');
@@ -949,7 +950,7 @@ describe('hud orchestration', () => {
     expect(hud).toContain(
       "$('#mm-reliquary')?.addEventListener('click', () => this.toggleReliquary())",
     );
-    expect(hud).toContain("['#mm-reliquary', 'reliquary', 'hudChrome.reliquary.title']");
+    expect(sideButtons).toContain("['#mm-reliquary', 'reliquary', 'hudChrome.reliquary.title']");
   });
 });
 
@@ -962,7 +963,7 @@ describe('keybind and input dispatch', () => {
   it('routes through input and main onUiKey', () => {
     expect(inputSrc).toContain("| 'reliquary'");
     expect(inputSrc).toContain("case 'reliquary':");
-    expect(mainSrc).toContain("case 'reliquary':");
+    expect(mainSrc).toContain('dispatchCollectionAction(key, hud)');
     expect(mainSrc).toContain('hud.toggleReliquary()');
   });
 

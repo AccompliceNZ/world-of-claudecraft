@@ -184,6 +184,8 @@ export interface CharWindowDeps extends Omit<PainterHostPresentation, 'itemToolt
   openPrestige(): void;
   /** Open the Book of Deeds (the active-title line's button). */
   openDeeds(): void;
+  /** Open the Cosmetics window (the skin row's manage button). */
+  openCosmetics(): void;
   /** Open The Reliquary (the sheet completion line's button). */
   openReliquary(): void;
   /** The shared in-flight bag-item drag (published by the bags grid). The paperdoll
@@ -314,7 +316,7 @@ export class CharWindow {
         </div>
         <div class="equip-col equip-col-right" id="equip-col-right"></div>
         <div class="equip-row-weapons" id="equip-row-weapons"></div>
-      </div>${this.masterwroughtSlotsHtml(world)}<div class="ui-divider char-footer-divider"></div><footer class="char-footer">${this.playtimeHtml(world)}<div class="pc-share-row"><button type="button" class="pc-share-btn ui-btn ui-btn--red" data-act="share-card">${SHARE_GLYPH}<span>${esc(t('playerCard.shareButton'))}</span></button></div></footer></section>`;
+      </div>${this.masterwroughtSlotsHtml(world)}<div class="ui-divider char-footer-divider"></div><footer class="char-footer">${this.playtimeHtml(world)}<div class="pc-share-row"><button type="button" class="btn ui-btn char-cosmetics-btn" data-act="open-cosmetics">${esc(t('hudChrome.cosmetics.title'))}</button><button type="button" class="pc-share-btn ui-btn ui-btn--red" data-act="share-card">${SHARE_GLYPH}<span>${esc(t('playerCard.shareButton'))}</span></button></div></footer></section>`;
     html += `<section class="char-sidebar">${tabStripHtml(
       tabStripModel({
         ariaLabel: t('hudChrome.charSidebar.label'),
@@ -347,6 +349,10 @@ export class CharWindow {
     el.querySelector('[data-act="open-deeds"]')?.addEventListener('click', () => {
       audio.click();
       this.deps.openDeeds();
+    });
+    el.querySelector('[data-act="open-cosmetics"]')?.addEventListener('click', () => {
+      audio.click();
+      this.deps.openCosmetics();
     });
     el.querySelector('[data-act="open-reliquary"]')?.addEventListener('click', () => {
       audio.click();
