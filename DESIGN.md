@@ -553,9 +553,10 @@ hotbar drag-and-drop and no backing plate.
   stack when a class has both), and the pet frame sits above the player frame, flush with its
   left edge at 0.8 of its scale, since a pet's bars carry less a player acts on. The paladin's
   Devotion medallion keeps its stock centre seat on desktop, steps down to 72px on short
-  viewports and 56px on touch, and in pad mode folds into the cross hotbar: the centre set rail carries a
-  vertical devotion meter fed by the same painter, so the standing medallion can hide there
-  (never lost: devotion is information the player acts on).
+  viewports and 56px on touch, and in pad mode becomes the cross hotbar's keystone: the halves part by a
+  socket and the medallion seats in the centre column between the set pips and the set-swap
+  chip, at 60px with its label and charge pips folded away (never lost: devotion is
+  information the player acts on).
 - States (existing states, restyle only): ready, hover, pressed, cooldown sweep plus
   remaining seconds, `.is-used` proc glow, `.is-oor` out-of-range tint,
   `.is-unusable` desaturation, queued, `.is-empty`, and drop target.

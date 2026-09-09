@@ -2828,11 +2828,29 @@
       height: 72px;
     }
   }
-  /* Pad mode: the medallion folds into the cross hotbar (the set rail's devotion
-     meter below), so the standing frame hides unless the interface is being
-     arranged; a player-chosen spot (hud-frame-detached) keeps the frame. */
+  /* Pad mode: the medallion is the cross hotbar's keystone. The bar parts its
+     halves for it (the .xhb devotion-live rules), and the frame seats in that
+     centre column, vertically centred on the bar, at a size that fits between
+     the set pips above and the set-swap chip below. Arranging the interface, or a
+     player-chosen spot (hud-frame-detached), keeps the frame where it is. */
   body.xhb-mode:not(.interface-unlocked) .paladin-devotion-frame:not(.hud-frame-detached) {
-    display: none !important;
+    left: 50%;
+    top: auto;
+    bottom: calc(var(--xhb-bottom, 18px) + (3 * var(--xhb-cell-live) + 26px) / 2 - 26px);
+    translate: -50% 0;
+    width: 60px;
+    height: 60px;
+    z-index: 7;
+  }
+  body.xhb-mode:not(.interface-unlocked)
+    .paladin-devotion-frame:not(.hud-frame-detached)
+    .paladin-devotion {
+    zoom: 0.625;
+  }
+  body.xhb-mode:not(.interface-unlocked)
+    .paladin-devotion-frame:not(.hud-frame-detached)
+    :is(.paladin-devotion-label, .paladin-ascension-charges) {
+    display: none;
   }
   .paladin-devotion::before,
   .paladin-devotion::after {
@@ -12035,7 +12053,10 @@
     /* Cells shrink just enough for the whole bar (twelve cells across plus its
        gaps, paddings and set rail) to fit the action rail, so the pad bar never
        runs wider than the XP bar under it or into the chat window. */
-    --xhb-cell: min(var(--socket-size), calc((var(--action-rail-w) - 99px) / 12));
+    --xhb-cell: var(
+      --xhb-cell-live,
+      min(var(--socket-size), calc((var(--action-rail-w) - 99px) / 12))
+    );
     /* Fixed, not in the HUD column's flow: the bar comes and goes with the pad, and
      anything in flow here shoves the player frame and XP bar as it does. Out of
      flow it can never move another element. Its BOTTOM sits where the action-bar
@@ -12166,41 +12187,22 @@
     gap: 7px;
     padding: 0 6px;
   }
-  /* Devotion meter (paladins): the set rail doubles as the medallion's pad-mode
-     home. A slim vertical track behind the set pips fills bottom-up from the
-     --devotion-fill the medallion painter mirrors onto #ui, and turns to the
-     glint tone once Ascension charges are up. Shown only while the medallion
-     is live (--devotion-live), so other classes see the plain rail. Actionable
-     information: no tier or motion knob touches it. */
-  .xhb-set-rail {
-    position: relative;
+  /* Paladin variant (devotion-live, stamped by the medallion painter): the halves
+     part by 26px for the medallion and the cells give that width back, so the
+     bar still spans the action rail; the rail column grows so the set pips sit
+     above the medallion and the set-swap chip below it. */
+  #ui.devotion-live {
+    --xhb-cell-live: min(var(--socket-size), calc((var(--action-rail-w) - 125px) / 12));
   }
-  .xhb-set-rail::before,
-  .xhb-set-rail::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: -8px;
-    bottom: -8px;
-    width: 8px;
-    translate: -50% 0;
-    border-radius: 4px;
-    z-index: -1;
-    opacity: var(--devotion-live, 0);
-    pointer-events: none;
+  #ui.devotion-live .xhb {
+    gap: 19px;
   }
-  .xhb-set-rail::before {
-    background: var(--color-ink-deep);
-    box-shadow: 0 0 0 1px var(--color-keyline);
+  #ui.devotion-live .xhb-set-rail {
+    height: calc(3 * var(--xhb-cell) + 8px);
+    justify-content: flex-start;
   }
-  .xhb-set-rail::after {
-    background: color-mix(
-      in srgb,
-      var(--color-glint) calc(min(1, var(--devotion-charges, 0)) * 100%),
-      var(--gold)
-    );
-    transform-origin: 50% 100%;
-    transform: scaleY(var(--devotion-fill, 0));
+  #ui.devotion-live .xhb-set-swap {
+    margin-top: auto;
   }
   .xhb-pip {
     position: static;

@@ -70,7 +70,7 @@ describe('PaladinDevotionPainter', () => {
       { method: 'toggleClass', args: [ROOT, 'ascended', false] },
       { method: 'toggleClass', args: [ROOT, 'last-charge', false] },
     ]);
-    // The seven charge pips follow the nine header writes; the host mirror comes after.
+    // The seven charge pips follow the nine header writes; the host stamp comes after.
     expect(calls.slice(9, 16)).toEqual(
       CHARGES_ARRAY.map((charge) => ({
         method: 'toggleClass',
@@ -154,29 +154,31 @@ describe('PaladinDevotionPainter', () => {
     });
   });
 
-  it('mirrors fill, charges and liveness onto the HUD host for the cross hotbar meter', () => {
+  it('stamps devotion-live on the HUD host while the medallion is shown', () => {
     const host = { id: 'host' } as unknown as HTMLElement;
     const frame = { id: 'frame', parentElement: host } as unknown as HTMLElement;
     const { calls, writers } = recordingWriters();
-    new PaladinDevotionPainter(writers, frame, ROOT, FILL, LABEL, CHARGES, STATUS).paint({
+    const painter = new PaladinDevotionPainter(writers, frame, ROOT, FILL, LABEL, CHARGES, STATUS);
+    const state = {
       visible: true,
       value: 8,
       fillFrac: 0.4,
       ready: false,
-      ascended: true,
-      charges: 2,
+      ascended: false,
+      charges: 0,
       lastCharge: false,
       label: '8 / 20',
       ariaValueText: 'Devotion 8 of 20',
       announcement: '',
-    });
-    const props = calls
-      .filter((c) => c.method === 'setStyleProp' && c.args[0] === host)
+    };
+    painter.paint(state);
+    painter.paint({ ...state, visible: false });
+    const stamps = calls
+      .filter((c) => c.method === 'toggleClass' && c.args[0] === host)
       .map((c) => c.args.slice(1));
-    expect(props).toEqual([
-      ['--devotion-live', '1'],
-      ['--devotion-fill', '0.400'],
-      ['--devotion-charges', '2'],
+    expect(stamps).toEqual([
+      ['devotion-live', true],
+      ['devotion-live', false],
     ]);
   });
 

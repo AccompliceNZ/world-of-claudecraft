@@ -251,8 +251,9 @@ describe('the cross hotbar stylesheet', () => {
   const section = hudCss.slice(hudCss.indexOf('---------- controller cross hotbar ----------'));
 
   it('sizes and rounds the cells off the shared socket tokens', () => {
-    expect(section).toContain(
-      '--xhb-cell: min(var(--socket-size), calc((var(--action-rail-w) - 99px) / 12));',
+    // The paladin variant (#ui.devotion-live) overrides the cell through --xhb-cell-live.
+    expect(section).toMatch(
+      /--xhb-cell: var\(\s*--xhb-cell-live,\s*min\(var\(--socket-size\), calc\(\(var\(--action-rail-w\) - 99px\) \/ 12\)\)\s*\);/,
     );
     expect(section).toContain('border-radius: var(--radius-cell);');
     // The art inset follows the cell's own radius rather than a second literal.
