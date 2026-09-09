@@ -7217,48 +7217,18 @@ function perfectingWalk(seed = 1): Scenario {
 // re-pick is one edit.
 export const HEROIC_FIVE_MAN_DUNGEON_ID = 'gravewyrm_sanctum';
 export const HEROIC_FIVE_MAN_BOSS_ID = 'korzul_the_gravewyrm';
-// A HEROIC FIVE-MAN clear, closing a coverage boundary the phase 09 ledger
-// recorded honestly and never filled: the gate pins a heroic RAID claim
-// (nythraxis_heroic_claim above) and a heroic DELVE (drowned_litany), but
-// nothing walked a heroic five-man, whose reward arms are a different set. Two
-// things are only true here: HEROIC_DUNGEON_TUNING pays marksPerParticipant to
-// EVERY participant of a five-man final boss (the raid pays on its own table),
-// and the heroic loot swap on a five-man reads HEROIC_VARIANT_SOURCE_LEVEL,
-// where the raid's reads the raid tier. hollow_crypt is the model five-man:
-// the tuning names morthen its final boss, and HEROIC_BOSS_LOOT carries a
-// morthen table, so one kill drives all three heroic arms at once (the
-// appended heroic loot draws, the heroicItem variant swap, and
-// awardHeroicMarks with its per-difficulty daily lockout).
-//
-// DELIBERATELY LEAN, the nythraxis_heroic_claim discipline: the trash pull is
-// not the residual and the boss dies to one lethal hit, which is what the
-// heroic arms of tests/dungeons.test.ts do. Every member walks the door
-// (enterDungeon per member, the shared instanceKeyFor join) because the marks
-// arm pays the PARTICIPATION snapshot: a party left at the door would record a
-// one-player payout and stop being a representative clear.
-//
-// SEED 4520 WAS MEASURED, NOT PICKED, against both heroic loot arms at once,
-// and it is the first seed from 4520 satisfying both (the hunt drove this very
-// scenario body and swapped only the Sim seed):
-//   1. THE VARIANT SWAP FIRING. A base drop must actually come back as its
-//      heroic_ copy, or the coverage line would claim an arm the recording
-//      never reached (the professions_craft "proc missed for the pinned seed"
-//      doctrine). This seed swaps heroic_wildgrowth_leggings.
-//   2. AN APPENDED HEROIC-TABLE DROP. At least one item from
-//      HEROIC_BOSS_LOOT[korzul] must land, which is what pins the stream
-//      position a base-table tail append would shift. This seed sheds
-//      sanctum_prowlers_grips and gravewyrm_claws.
-// Measured over seeds 4520 to 4559: 32 of 40 swap a variant, 40 of 40 shed an
-// appended drop (the korzul_heroic group's chances sum to 1.0, so it always
-// pays), and 32 clear both.
+// A shared heroic five-man claim pins the combined equipment partition,
+// per-participant marks and daily lockout. The v0.42.0 budget replaces the
+// former base-gear swap plus two bonus epics with one equipment slot.
+// Seed 4520 is retained from the original recording; only loot behavior changes.
 function heroicFiveManClear(): Scenario {
   return {
     name: 'heroic_five_man_clear',
     coverage: [
       'a heroic FIVE-MAN claim: setDungeonDifficulty heroic + enterDungeon per member sharing one instance (instanceKeyFor), the five-man counterpart of the raid claim above',
       'rollLoot HEROIC arm on a five-man final boss: the base-table walk, then the appended HEROIC_BOSS_LOOT draws in the SAME call',
-      'heroicItem(): base drops swapped IN PLACE for their heroic variants at the FIVE-MAN tier (HEROIC_VARIANT_SOURCE_LEVEL), the arm the raid claim cannot reach',
-      'awardHeroicMarks on a five-man heroic kill: marksPerParticipant to every participant, plus the hollow_crypt:heroic daily lockout',
+      'Normal-only base equipment skipped; one combined heroic partition preserves the existing base-variant and bespoke item tiers',
+      'awardHeroicMarks on a five-man heroic kill: marksPerParticipant to every participant, plus the gravewyrm_sanctum:heroic daily lockout',
       'class:warrior',
     ],
     sampleEvery: 10,

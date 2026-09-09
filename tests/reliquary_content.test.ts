@@ -974,6 +974,8 @@ describe('Reliquary heroic gear pins against HEROIC_BOSS_LOOT', () => {
     const include = opts?.includeCarvedOut === true;
     const liveIds: string[] = [];
     for (const e of entries) {
+      // Migrated base drops keep their existing normal-page curation.
+      if (e.preserveSourceTier) continue;
       if (typeof e.itemId !== 'string') continue;
       if (isMountReinsId(e.itemId) || isHeroicVariantId(e.itemId)) continue;
       if (isRedemptionTokenId(e.itemId)) continue;
@@ -1049,6 +1051,7 @@ describe('Reliquary heroic gear pins against HEROIC_BOSS_LOOT', () => {
     expect(droppedBosses.length).toBeGreaterThan(0);
     for (const bossId of droppedBosses) {
       for (const entry of HEROIC_BOSS_LOOT[bossId]) {
+        if (entry.preserveSourceTier) continue;
         expect(
           typeof entry.itemId === 'string' &&
             (isMountReinsId(entry.itemId) ||
