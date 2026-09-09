@@ -4004,7 +4004,7 @@ export const sv_SE: EnTranslations = {
       },
       "roster": {
         "seats": "{count} av {cap} säten",
-        "expand": "Utöka förteckningen (+{seats} platser för {price})",
+        "expand": "Utöka förteckningen",
         "maxed": "Listan är i sin största storlek",
         "confirm": "Utöka guildlistan med {seats}-platser för {price}? Guldet kommer från din egen handväska och återbetalas inte.",
         "confirmAction": "Expandera",

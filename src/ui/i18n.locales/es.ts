@@ -15708,7 +15708,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.roster.confirm':
     '¿Ampliar la lista del gremio con asientos {seats} para {price}? El oro proviene de tu propio bolso y no se reembolsa.',
   'hudChrome.social.roster.confirmAction': 'Expandir',
-  'hudChrome.social.roster.expand': 'Ampliar lista (+ asientos {seats} para {price})',
+  'hudChrome.social.roster.expand': 'Ampliar lista',
   'hudChrome.social.roster.expandedLine':
     '{name} ha ampliado la lista del gremio a miembros de {cap}.',
   'hudChrome.social.roster.maxed': 'La plantilla está en su mayor tamaño',

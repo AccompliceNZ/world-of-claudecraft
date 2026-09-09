@@ -4004,7 +4004,7 @@ export const nl_NL: EnTranslations = {
       },
       "roster": {
         "seats": "{count}- of {cap}-stoelen",
-        "expand": "Rooster uitbreiden (+{seats}-stoelen voor {price})",
+        "expand": "Rooster uitbreiden",
         "maxed": "De selectie heeft de grootste omvang",
         "confirm": "Het gilderooster uitbreiden met {seats}-stoelen voor {price}? Het goud komt uit uw eigen portemonnee en wordt niet terugbetaald.",
         "confirmAction": "Uitbreiden",

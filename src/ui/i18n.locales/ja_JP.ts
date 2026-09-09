@@ -1242,7 +1242,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.billboard.result.notOfficer':
     '掲示板を編集できるのは幹部とギルドマスターだけです。',
   'hudChrome.social.roster.seats': '{count} / {cap} 席',
-  'hudChrome.social.roster.expand': '名簿を拡張（+{seats}席、{price}）',
+  'hudChrome.social.roster.expand': '名簿を拡張',
   'hudChrome.social.roster.maxed': '名簿はすでに最大です',
   'hudChrome.social.roster.confirm':
     '{price}でギルド名簿を{seats}席拡張しますか？ゴールドはあなた自身の所持金から支払われ、返金されません。',

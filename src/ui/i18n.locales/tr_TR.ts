@@ -15438,7 +15438,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.roster.confirm':
     'Lonca kadrosu {price} için {seats} koltuklarıyla genişletilsin mi? Altın kendi kesenizden gelir ve iade edilmez.',
   'hudChrome.social.roster.confirmAction': 'Genişlet',
-  'hudChrome.social.roster.expand': 'Kadroyu genişlet (+{price} için {seats} koltuklar)',
+  'hudChrome.social.roster.expand': 'Kadroyu genişlet',
   'hudChrome.social.roster.expandedLine':
     '{name}, lonca kadrosunu {cap} üyelerini de içerecek şekilde genişletti.',
   'hudChrome.social.roster.maxed': 'Kadro en büyük boyutunda',

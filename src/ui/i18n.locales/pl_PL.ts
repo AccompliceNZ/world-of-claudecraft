@@ -15523,7 +15523,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.roster.confirm':
     'Rozszerzyć skład gildii o miejsca {seats} dla {price}? Złoto pochodzi z Twojego portfela i nie podlega zwrotowi.',
   'hudChrome.social.roster.confirmAction': 'Rozwiń',
-  'hudChrome.social.roster.expand': 'Rozszerz skład (+ miejsca {seats} dla {price})',
+  'hudChrome.social.roster.expand': 'Rozszerz skład',
   'hudChrome.social.roster.expandedLine': '{name} rozszerzył skład gildii o członków {cap}.',
   'hudChrome.social.roster.maxed': 'Lista jest w największym rozmiarze',
   'hudChrome.social.roster.result.cannotAfford':

@@ -4004,7 +4004,7 @@ export const vi_VN: EnTranslations = {
       },
       "roster": {
         "seats": "{count} của số ghế {cap}",
-        "expand": "Mở rộng danh sách (+ số ghế {seats} cho {price})",
+        "expand": "Mở rộng danh sách",
         "maxed": "Danh sách có kích thước lớn nhất",
         "confirm": "Mở rộng danh sách bang hội bằng số ghế {seats} cho {price}? Vàng đến từ ví của chính bạn và không được hoàn lại.",
         "confirmAction": "Mở rộng",

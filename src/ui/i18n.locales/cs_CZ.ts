@@ -15309,7 +15309,7 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.roster.confirm':
     'Rozšířit seznam cechů o místa ve {seats} pro {price}? Zlato pochází z vaší vlastní peněženky a není vráceno.',
   'hudChrome.social.roster.confirmAction': 'Rozbalit',
-  'hudChrome.social.roster.expand': 'Rozbalit seznam (+ sedadla {seats} pro {price})',
+  'hudChrome.social.roster.expand': 'Rozšířit seznam',
   'hudChrome.social.roster.expandedLine': '{name} rozšířil seznam cechů o členy {cap}.',
   'hudChrome.social.roster.maxed': 'Seznam je ve své největší velikosti',
   'hudChrome.social.roster.result.cannotAfford': 'K rozšíření seznamu cechu potřebujete {price}.',

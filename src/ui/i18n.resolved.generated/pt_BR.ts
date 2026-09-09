@@ -4004,7 +4004,7 @@ export const pt_BR: EnTranslations = {
       },
       "roster": {
         "seats": "{count} de assentos {cap}",
-        "expand": "Expandir lista (+ assentos {seats} para {price})",
+        "expand": "Expandir lista",
         "maxed": "A lista está em seu maior tamanho",
         "confirm": "Expandir a lista da guilda em assentos {seats} para {price}? O ouro vem da sua própria bolsa e não é reembolsado.",
         "confirmAction": "Expandir",
