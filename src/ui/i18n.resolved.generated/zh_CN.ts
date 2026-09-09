@@ -4040,17 +4040,6 @@ export const zh_CN: EnTranslations = {
         }
       }
     },
-    "interactPrompt": {
-      "talk": "交谈",
-      "loot": "拾取战利品",
-      "open": "打开",
-      "gather": "采集",
-      "mail": "查看邮件",
-      "bank": "使用银行",
-      "use": "使用",
-      "harvest": "剥取",
-      "gardenBed": "菜园苗床"
-    },
     "gathering": {
       "mining": "采矿",
       "logging": "伐木",

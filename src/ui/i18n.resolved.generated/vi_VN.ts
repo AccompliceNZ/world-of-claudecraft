@@ -4040,17 +4040,6 @@ export const vi_VN: EnTranslations = {
         }
       }
     },
-    "interactPrompt": {
-      "talk": "Speak with",
-      "loot": "Loot",
-      "open": "Open",
-      "gather": "Gather",
-      "mail": "Check mail",
-      "bank": "Use bank",
-      "use": "Use",
-      "harvest": "Harvest",
-      "gardenBed": "Garden Bed"
-    },
     "gathering": {
       "mining": "Khai mỏ",
       "logging": "Đốn gỗ",

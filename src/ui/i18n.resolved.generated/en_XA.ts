@@ -4040,17 +4040,6 @@ export const en_XA: EnTranslations = {
         }
       }
     },
-    "interactPrompt": {
-      "talk": "[Šþéáķ ŵíţĥ]",
-      "loot": "[Ļóóţ]",
-      "open": "[Óþéñ]",
-      "gather": "[Ĝáţĥéŕ]",
-      "mail": "[Çĥéçķ ɱáíļ]",
-      "bank": "[Úšé ƀáñķ]",
-      "use": "[Úšé]",
-      "harvest": "[Ĥáŕʋéšţ]",
-      "gardenBed": "[Ĝáŕðéñ Ɓéð]"
-    },
     "gathering": {
       "mining": "[Ɱíñíñĝ]",
       "logging": "[Ļóĝĝíñĝ]",

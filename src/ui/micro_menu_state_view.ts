@@ -4,7 +4,7 @@
 //
 // Host-agnostic on purpose: the caller supplies the open-window predicate and the
 // counts, so the whole decision is unit-testable without a DOM. The state object is
-// allocated once and mutated in place (the interact_prompt_view idiom), so a repaint
+// allocated once and mutated in place (the pure-view idiom), so a repaint
 // on the HUD's tick band allocates nothing.
 
 /** One launcher and the window whose open state lights its ring. */

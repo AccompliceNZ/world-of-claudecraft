@@ -46,7 +46,7 @@ const FILTERS: readonly MapAtlasFilterId[] = [
   'players',
 ];
 
-/** One explicit key per layer chip (the VERB_KEYS idiom in interact_prompt_view).
+/** One explicit key per layer chip (one literal key per row, never a built template).
  *  A computed `filters.${id}` key hides a typo from both tsc and the i18n
  *  completeness sweep; spelling every key out puts it back in front of them. */
 const FILTER_KEYS: Record<MapAtlasFilterId, TranslationKey> = {

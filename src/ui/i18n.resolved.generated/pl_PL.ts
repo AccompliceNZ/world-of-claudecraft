@@ -4040,17 +4040,6 @@ export const pl_PL: EnTranslations = {
         }
       }
     },
-    "interactPrompt": {
-      "talk": "Speak with",
-      "loot": "Loot",
-      "open": "Open",
-      "gather": "Gather",
-      "mail": "Check mail",
-      "bank": "Use bank",
-      "use": "Use",
-      "harvest": "Harvest",
-      "gardenBed": "Garden Bed"
-    },
     "gathering": {
       "mining": "Górnictwo",
       "logging": "Wyrąb",

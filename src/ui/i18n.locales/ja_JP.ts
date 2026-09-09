@@ -16744,16 +16744,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.controller.deviceDisconnected': 'コントローラーが見つかりません',
   'hudChrome.crafting.materialsFooter':
     '保管庫の素材は自動的に使用されます。ステーションでさらにレシピを習得できます。',
-  'hudChrome.interactPrompt.talk': '話す',
   'hudChrome.partyFrames.header': 'パーティ',
-  'hudChrome.interactPrompt.loot': '戦利品を拾う',
-  'hudChrome.interactPrompt.open': '開く',
-  'hudChrome.interactPrompt.gather': '採集する',
-  'hudChrome.interactPrompt.mail': '郵便を確認',
-  'hudChrome.interactPrompt.bank': '銀行を利用',
-  'hudChrome.interactPrompt.use': '使う',
-  'hudChrome.interactPrompt.harvest': '採取する',
-  'hudChrome.interactPrompt.gardenBed': '菜園の苗床',
   'hudChrome.professions.retentionFooter': 'リスペック時はスキルの60%を保持します。',
   'hudChrome.professions.tutorialLink': '専門技能チュートリアル',
   'hudChrome.marketWindow.mixedListingsFooter':

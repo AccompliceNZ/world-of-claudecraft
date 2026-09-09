@@ -445,7 +445,7 @@ const MONOLITHS: MonolithRow[] = [
     // measured combined count is below both parent pins (18574 / 18489).
     // Re-measured at the third release/v0.42.0 sync: the review-fix batches
     // and the release's own extractions both landed; wc -l on the merged tree.
-    ceiling: 18404,
+    ceiling: 18369,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

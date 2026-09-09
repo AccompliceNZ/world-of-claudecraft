@@ -4040,17 +4040,6 @@ export const ja_JP: EnTranslations = {
         }
       }
     },
-    "interactPrompt": {
-      "talk": "話す",
-      "loot": "戦利品を拾う",
-      "open": "開く",
-      "gather": "採集する",
-      "mail": "郵便を確認",
-      "bank": "銀行を利用",
-      "use": "使う",
-      "harvest": "採取する",
-      "gardenBed": "菜園の苗床"
-    },
     "gathering": {
       "mining": "採掘",
       "logging": "伐採",

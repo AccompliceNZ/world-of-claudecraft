@@ -16711,16 +16711,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.controller.deviceDisconnected': '컨트롤러가 감지되지 않음',
   'hudChrome.crafting.materialsFooter':
     '보관함의 재료는 자동으로 사용됩니다. 작업대에서 더 많은 제작법을 배우세요.',
-  'hudChrome.interactPrompt.talk': '대화',
   'hudChrome.partyFrames.header': '파티',
-  'hudChrome.interactPrompt.loot': '전리품 획득',
-  'hudChrome.interactPrompt.open': '열기',
-  'hudChrome.interactPrompt.gather': '채집',
-  'hudChrome.interactPrompt.mail': '우편 확인',
-  'hudChrome.interactPrompt.bank': '은행 이용',
-  'hudChrome.interactPrompt.use': '사용',
-  'hudChrome.interactPrompt.harvest': '수확',
-  'hudChrome.interactPrompt.gardenBed': '텃밭 이랑',
   'hudChrome.professions.retentionFooter': '전문 기술 재설정 시 숙련도의 60%가 유지됩니다.',
   'hudChrome.professions.tutorialLink': '전문 기술 튜토리얼',
   'hudChrome.marketWindow.mixedListingsFooter':

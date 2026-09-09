@@ -8614,38 +8614,6 @@
     }
   }
 
-  /* W6 companion: the desktop prompt sits 210px off the bottom, which on a
-     390px-tall landscape phone lands mid-screen over the nameplates it is
-     meant to sit under, and its nowrap line can run right into the action
-     ring. Seat it in the bottom-centre column instead, directly above the
-     off-hand swing rail (the topmost rail of that column, button-row lift plus
-     23px plus its own 5px), and bound its width to the free band between the
-     movement wheel and the ring so a long name can never reach either thumb
-     cluster. Same render model and markup as desktop: only the seat moves. */
-  body.mobile-touch #interact-prompt {
-    bottom: calc(var(--mobile-button-row-lift) + 34px);
-    max-width: max(180px, calc(var(--app-vw, 100vw) - 500px));
-  }
-  body.mobile-touch #interact-prompt-name {
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  /* Touch has no key to press: the ring's Interact button is the affordance, so the
-     pill keeps only the verb and the target name. */
-  body.mobile-touch #interact-prompt-keycap {
-    display: none;
-  }
-  /* The pad's own desktop lift (bottom: 352px) is taller than a landscape phone,
-     so the cross hotbar's measured lift is added to the mobile seat instead. */
-  body.mobile-touch.xhb-mode #interact-prompt {
-    bottom: calc(
-      var(--mobile-button-row-lift) +
-      34px +
-      var(--xhb-lift, var(--mobile-xhb-lift-fallback))
-    );
-  }
-
   /* ---------- touch focus ring (the new interactive surfaces) ---------- */
   /* The shared token-driven :focus-visible list in base.css covers .mobile-btn,
      .action-btn and .x-btn, but none of the controls the touch rework added.

@@ -6,15 +6,12 @@ import {
 import { CROSS_HOTBAR_ATTACK_ID } from '../game/cross_hotbar';
 import { syncDeathControllerHints } from '../game/death_controller_hint';
 import { farmPressTarget } from '../game/farm_press_target_core';
-import { labelForGamepadAction } from '../game/gamepad_bindings';
 import type { GamepadKind } from '../game/gamepad_map';
 import type { GraphicsSettingsSnapshot } from '../game/graphics_rebuild_core';
-import { currentInputHintMode } from '../game/input_hint_mode';
 import { InstanceMusicController, type InstanceMusicDecision } from '../game/instance_music';
 import { bindActionLabel, type Keybinds, keyCapLabel } from '../game/keybinds';
 import { trackMetaPixel } from '../game/meta_pixel';
 import { music } from '../game/music';
-import { resolveNearbyInteractionCandidate } from '../game/nearby_interaction_core';
 import {
   type BoolSettingKey,
   type GameSettings,
@@ -607,8 +604,6 @@ import {
 import { iconDataUrl, QUALITY_COLOR, raidMarkerDataUrl } from './icons';
 import { type InputDialogOpts, showInputDialog } from './input_controller';
 import { InspectWindow } from './inspect_window';
-import { InteractPromptPainter } from './interact_prompt_painter';
-import { createInteractPromptView } from './interact_prompt_view';
 import { InterfaceUnlock, makeUiRootDetacher, restoreFrameHome } from './interface_unlock';
 import {
   classGatedFrameActive,
@@ -1499,10 +1494,6 @@ export class Hud {
     this.targetDiscordEl,
     () => this.optionsHooks?.settings.get('showDevBadges') ?? true,
   );
-  private interactPromptEl = $('#interact-prompt');
-  private interactPromptKeycapEl = $('#interact-prompt-keycap');
-  private interactPromptVerbEl = $('#interact-prompt-verb');
-  private interactPromptNameEl = $('#interact-prompt-name');
   private targetHpEl = $('#tf-hp');
   private targetHpTextEl = $('#tf-hp-text');
   private targetPortraitEl = $('#tf-portrait') as unknown as HTMLCanvasElement;
@@ -2145,7 +2136,6 @@ export class Hud {
     private readonly features: HudFeatures = { dailyRewardsEnabled: true },
   ) {
     hydrateCrestImageFallbacks(document);
-    this.interactPromptEl.removeAttribute('hidden');
     this.mapMarkerTooltipContent = new MapMarkerTooltipContent(this.sim);
     this.mapMarkerInteraction = new MapMarkerInteractionController({
       names: {
@@ -4552,16 +4542,6 @@ export class Hud {
       this.hotDomSkippedWrites++;
     },
   );
-  private readonly interactPromptView = createInteractPromptView(
-    keyCapLabel,
-    labelForGamepadAction,
-  );
-  private readonly interactPromptPainter = new InteractPromptPainter(this.writerFacet, {
-    root: this.interactPromptEl,
-    keycap: this.interactPromptKeycapEl,
-    verb: this.interactPromptVerbEl,
-    name: this.interactPromptNameEl,
-  });
   // The micro-menu rail's open-window ring and count badges. The view core owns the
   // launcher-to-window table; the painter writes only through the elided facet.
   private readonly microMenuStateView = createMicroMenuStateView((value) =>
@@ -8913,20 +8893,6 @@ export class Hud {
     now: () => performance.now(),
   });
 
-  private updateInteractPrompt(): void {
-    const gamepad = this.optionsHooks?.gamepad;
-    const padActive = currentInputHintMode() === 'pad';
-    this.interactPromptPainter.paint(
-      this.interactPromptView.tick(
-        resolveNearbyInteractionCandidate(this.sim),
-        padActive,
-        this.keybinds.primaryLabel('interact'),
-        padActive ? (gamepad?.entries() ?? null) : null,
-        gamepad?.kind() ?? 'generic',
-      ),
-    );
-  }
-
   update(paint = true): void {
     const sim = this.sim;
     const p = sim.player;
@@ -8986,7 +8952,6 @@ export class Hud {
     // combat and chat live-region flushes, quest voice, the loot timers, and
     // the music state machine. Nothing below this line does anything but paint.
     if (!paint) return;
-    if (mediumHud) this.updateInteractPrompt();
     this.meters.update();
     this.mountRaceStrip.repaintIfChanged();
     this.mountRaceControls.update();

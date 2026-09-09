@@ -16197,16 +16197,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.controller.deviceDisconnected': 'Геймпад не обнаружен',
   'hudChrome.crafting.materialsFooter':
     'Материалы из хранилища используются автоматически. Новые рецепты можно изучить у станка.',
-  'hudChrome.interactPrompt.talk': 'Поговорить',
   'hudChrome.partyFrames.header': 'Группа',
-  'hudChrome.interactPrompt.loot': 'Собрать добычу',
-  'hudChrome.interactPrompt.open': 'Открыть',
-  'hudChrome.interactPrompt.gather': 'Собрать',
-  'hudChrome.interactPrompt.mail': 'Проверить почту',
-  'hudChrome.interactPrompt.bank': 'Открыть банк',
-  'hudChrome.interactPrompt.use': 'Использовать',
-  'hudChrome.interactPrompt.harvest': 'Освежевать',
-  'hudChrome.interactPrompt.gardenBed': 'Грядка',
   'hudChrome.professions.retentionFooter': 'При смене специализации сохраняется 60% навыка.',
   'hudChrome.professions.tutorialLink': 'Обучение профессиям',
   'hudChrome.marketWindow.mixedListingsFooter':

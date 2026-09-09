@@ -96,9 +96,6 @@ describe('talking head stylesheet seat', () => {
     expect(hud).toContain('margin-bottom: var(--unit-frame-bar-gap);');
     expect(hud).toContain('.talking-head[hidden] {\n    display: none;');
     expect(hud).not.toContain('.tut-voice {');
-    expect(hud).toContain(
-      '#ui:has(.talking-head:not([hidden])) #interact-prompt {\n    bottom: calc(210px + 90px);',
-    );
     expect(mobile).toContain('body.mobile-touch .talking-head {\n    position: fixed;');
   });
 });

@@ -4040,17 +4040,6 @@ export const ru_RU: EnTranslations = {
         }
       }
     },
-    "interactPrompt": {
-      "talk": "Поговорить",
-      "loot": "Собрать добычу",
-      "open": "Открыть",
-      "gather": "Собрать",
-      "mail": "Проверить почту",
-      "bank": "Открыть банк",
-      "use": "Использовать",
-      "harvest": "Освежевать",
-      "gardenBed": "Грядка"
-    },
     "gathering": {
       "mining": "Горное дело",
       "logging": "Лесозаготовка",

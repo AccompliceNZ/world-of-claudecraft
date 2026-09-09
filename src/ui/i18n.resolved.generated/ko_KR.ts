@@ -4040,17 +4040,6 @@ export const ko_KR: EnTranslations = {
         }
       }
     },
-    "interactPrompt": {
-      "talk": "대화",
-      "loot": "전리품 획득",
-      "open": "열기",
-      "gather": "채집",
-      "mail": "우편 확인",
-      "bank": "은행 이용",
-      "use": "사용",
-      "harvest": "수확",
-      "gardenBed": "텃밭 이랑"
-    },
     "gathering": {
       "mining": "채광",
       "logging": "벌목",

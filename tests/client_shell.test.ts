@@ -2195,13 +2195,6 @@ describe('client HTML shell', () => {
     expect(mainTs).not.toContain("visualViewport?.addEventListener('scroll', syncAppViewport)");
   });
 
-  it('drops the keyboard keycap from the touch interaction pill', () => {
-    // Touch has no key to press; the ring's Interact button carries the affordance.
-    expect(hudMobileCss).toContain(
-      'body.mobile-touch #interact-prompt-keycap {\n    display: none;\n  }',
-    );
-  });
-
   it('lets HUD windows scroll by touch on iOS (Bag / Market)', () => {
     // The HUD overlay must permit one-finger panning so scroll containers
     // inside it can scroll on iOS, `touch-action: none` here would block them

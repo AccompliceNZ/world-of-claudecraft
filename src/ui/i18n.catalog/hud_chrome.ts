@@ -5775,19 +5775,6 @@ export const hudChromeStrings = {
       },
     },
   },
-  interactPrompt: {
-    talk: 'Speak with',
-    loot: 'Loot',
-    open: 'Open',
-    gather: 'Gather',
-    mail: 'Check mail',
-    bank: 'Use bank',
-    use: 'Use',
-    harvest: 'Harvest',
-    // The garden bed the press opens: content, not an entity, so the prompt has
-    // no wire name to print and this word stands in as the target.
-    gardenBed: 'Garden Bed',
-  },
   // Gathering proficiency section on the character sheet (#1124). Profession
   // display names mirror src/sim/content/professions.ts (GatheringProfessionId).
   gathering: {
