@@ -1905,6 +1905,10 @@ export interface LootEntry {
   // predicate). Every entry of a group must agree, and the heroic-append
   // tables never carry it (both pinned by tests/loot_roll.test.ts).
   normalOnly?: true;
+  // A migrated base-loot acquisition in HEROIC_BOSS_LOOT keeps its original
+  // source level and stats; listing it here must not promote it to the
+  // bespoke heroic equipment tier or seed the higher-tier rift reward pool.
+  preserveSourceTier?: true;
 }
 
 export type MobFamily =

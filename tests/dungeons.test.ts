@@ -1451,42 +1451,18 @@ describe('dungeons: heroic boss drops', () => {
     return boss;
   }
 
-  it('a heroic final-boss corpse carries two epics, one from each roll group', () => {
-    // Morthen has two GEAR rollGroups (morthen_heroic + morthen_heroic2), so
-    // each heroic kill drops exactly two epics, one per group. Sweep seeds so
-    // the groups land on different entries over the run.
-    //
-    // The epic census is scoped to those two groups BY NAME, not to "any id on
-    // Morthen's heroic table". The table also carries the ungrouped mount row
-    // and, since Phase 11f, the appended farming pattern group, and a table-wide
-    // filter counted those as epics: the arm passed only while no low-rate row
-    // happened to hit inside the seed window, which is a latent flake rather
-    // than a pin. Scoping by group says what the assertion means.
-    const groups = ['morthen_heroic', 'morthen_heroic2'];
-    const byGroup: Record<string, string[]> = {};
-    for (const e of HEROIC_BOSS_LOOT.morthen) {
-      if (!e.rollGroup) continue;
-      byGroup[e.rollGroup] ??= [];
-      byGroup[e.rollGroup].push(e.itemId!);
-    }
-    const gearIds = new Set(groups.flatMap((g) => byGroup[g] ?? []));
-    expect(gearIds.size, 'the gear-group census must be non-empty').toBeGreaterThan(0);
+  it('a heroic final-boss corpse carries one equipment item', () => {
     const dropped = new Set<string>();
     for (let seed = 1; seed <= 8; seed++) {
       const sim = makeSim(seed);
       const boss = killFinalBoss(sim, 'hollow_crypt', 'morthen');
-      const epics = ((boss.loot?.items ?? []) as any[]).filter((s) => gearIds.has(s.itemId));
-      expect(epics.length, `seed ${seed}`).toBe(2);
-      // Exactly one from each group.
-      for (const g of groups) {
-        expect(
-          epics.filter((s: any) => byGroup[g].includes(s.itemId)).length,
-          `${g} seed ${seed}`,
-        ).toBe(1);
-      }
-      for (const s of epics) dropped.add(s.itemId);
+      const gear = (boss.loot?.items ?? []).filter(
+        (entry) => ITEMS[entry.itemId]?.slot && ITEMS[entry.itemId]?.kind !== 'bag',
+      );
+      expect(gear, 'seed ' + seed).toHaveLength(1);
+      dropped.add(gear[0].itemId);
     }
-    expect(dropped.size).toBeGreaterThan(2); // the groups actually vary
+    expect(dropped.size).toBeGreaterThan(1);
   });
 
   it('normal final bosses and heroic trash never drop the heroic epics', () => {
@@ -1510,6 +1486,7 @@ describe('dungeons: heroic boss drops', () => {
     const heroicIds = new Set(
       Object.values(HEROIC_BOSS_LOOT)
         .flat()
+        .filter((e) => !e.preserveSourceTier && e.itemId && ITEMS[e.itemId]?.quality === 'epic')
         .map((e) => e.itemId),
     );
     expect(((nBoss.loot?.items ?? []) as any[]).some((s) => heroicIds.has(s.itemId))).toBe(false);

@@ -16,8 +16,8 @@
     "Grave Eruption hash-placed warning + impact damage + Grave Flame residue tick",
     "class:warrior"
   ],
-  "draws": 11473,
-  "drawDigest": "b8e0702f",
+  "draws": 11455,
+  "drawDigest": "e4daefb2",
   "frames": [
     {
       "tick": 0,
@@ -17190,11 +17190,11 @@
       "tick": 1248,
       "time": 62.4,
       "nextId": 1021,
-      "state": "2bda6419",
-      "events": "2dab1093",
+      "state": "35c1eeb0",
+      "events": "8135da7e",
       "rng": {
-        "draws": 10961,
-        "digest": "5866ad2f"
+        "draws": 10956,
+        "digest": "29a6e190"
       },
       "label": "death",
       "players": [
@@ -17330,11 +17330,11 @@
               "itemId": "baked_bread"
             },
             {
-              "count": 3,
+              "count": 2,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 3,
+                  "count": 2,
                   "source": {}
                 }
               ]
@@ -17505,11 +17505,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 3,
+              "count": 2,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 3,
+                  "count": 2,
                   "source": {}
                 }
               ]
@@ -17676,11 +17676,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 3,
+              "count": 2,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 3,
+                  "count": 2,
                   "source": {}
                 }
               ]
@@ -17847,11 +17847,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 3,
+              "count": 2,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 3,
+                  "count": 2,
                   "source": {}
                 }
               ]
@@ -18018,11 +18018,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 3,
+              "count": 2,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 3,
+                  "count": 2,
                   "source": {}
                 }
               ]
@@ -18365,27 +18365,11 @@
             "items": [
               {
                 "count": 1,
-                "itemId": "soulflame_mantle"
+                "itemId": "gravecourt_hewer"
               },
               {
                 "count": 1,
-                "itemId": "nighttalon_crown"
-              },
-              {
-                "count": 1,
-                "itemId": "nighttalon_shoulderguards"
-              },
-              {
-                "count": 1,
-                "itemId": "stormcallers_spaulders"
-              },
-              {
-                "count": 1,
-                "itemId": "thornpeak_wardblade"
-              },
-              {
-                "count": 1,
-                "itemId": "pattern_makers_charm"
+                "itemId": "bramblehide_harness"
               }
             ]
           },
@@ -18667,77 +18651,77 @@
       "tick": 1250,
       "time": 62.5,
       "nextId": 1021,
-      "state": "08c28c5c",
+      "state": "f9e7753b",
       "events": "741638a5",
       "rng": {
-        "draws": 10972,
-        "digest": "b47205c2"
+        "draws": 10967,
+        "digest": "de84665c"
       }
     },
     {
       "tick": 1260,
       "time": 63,
       "nextId": 1021,
-      "state": "e6dbdb03",
+      "state": "58270282",
       "events": "741638a5",
       "rng": {
-        "draws": 11065,
-        "digest": "8518b3ae"
+        "draws": 11061,
+        "digest": "83ff17e8"
       }
     },
     {
       "tick": 1270,
       "time": 63.5,
       "nextId": 1021,
-      "state": "5b716fed",
+      "state": "af66fb98",
       "events": "741638a5",
       "rng": {
-        "draws": 11149,
-        "digest": "fdf4f7eb"
+        "draws": 11144,
+        "digest": "7046da5a"
       }
     },
     {
       "tick": 1280,
       "time": 64,
       "nextId": 1021,
-      "state": "3d884669",
+      "state": "99b776d0",
       "events": "741638a5",
       "rng": {
-        "draws": 11237,
-        "digest": "0f94149d"
+        "draws": 11228,
+        "digest": "81d3c97c"
       }
     },
     {
       "tick": 1290,
       "time": 64.5,
       "nextId": 1021,
-      "state": "744b00ef",
+      "state": "64fe1f4e",
       "events": "741638a5",
       "rng": {
-        "draws": 11331,
-        "digest": "6a70d35f"
+        "draws": 11321,
+        "digest": "61424e32"
       }
     },
     {
       "tick": 1300,
       "time": 65,
       "nextId": 1021,
-      "state": "3a4d0663",
+      "state": "6fcc79d6",
       "events": "741638a5",
       "rng": {
-        "draws": 11416,
-        "digest": "eacfce4d"
+        "draws": 11404,
+        "digest": "8c5720d9"
       }
     },
     {
       "tick": 1308,
       "time": 65.4,
       "nextId": 1021,
-      "state": "eb81869a",
+      "state": "8a657ce9",
       "events": "6e96776a",
       "rng": {
-        "draws": 11473,
-        "digest": "b8e0702f"
+        "draws": 11455,
+        "digest": "e4daefb2"
       },
       "label": "final",
       "players": [
@@ -18873,11 +18857,11 @@
               "itemId": "baked_bread"
             },
             {
-              "count": 3,
+              "count": 2,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 3,
+                  "count": 2,
                   "source": {}
                 }
               ]
@@ -19048,11 +19032,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 3,
+              "count": 2,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 3,
+                  "count": 2,
                   "source": {}
                 }
               ]
@@ -19219,11 +19203,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 3,
+              "count": 2,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 3,
+                  "count": 2,
                   "source": {}
                 }
               ]
@@ -19390,11 +19374,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 3,
+              "count": 2,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 3,
+                  "count": 2,
                   "source": {}
                 }
               ]
@@ -19561,11 +19545,11 @@
               "itemId": "spring_water"
             },
             {
-              "count": 3,
+              "count": 2,
               "itemId": "wyrmfall_core",
               "materialSources": [
                 {
-                  "count": 3,
+                  "count": 2,
                   "source": {}
                 }
               ]
@@ -19907,27 +19891,11 @@
             "items": [
               {
                 "count": 1,
-                "itemId": "soulflame_mantle"
+                "itemId": "gravecourt_hewer"
               },
               {
                 "count": 1,
-                "itemId": "nighttalon_crown"
-              },
-              {
-                "count": 1,
-                "itemId": "nighttalon_shoulderguards"
-              },
-              {
-                "count": 1,
-                "itemId": "stormcallers_spaulders"
-              },
-              {
-                "count": 1,
-                "itemId": "thornpeak_wardblade"
-              },
-              {
-                "count": 1,
-                "itemId": "pattern_makers_charm"
+                "itemId": "bramblehide_harness"
               }
             ]
           },
