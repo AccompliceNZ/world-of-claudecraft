@@ -578,7 +578,8 @@ describe('client HTML shell', () => {
   it('composes the unit-frame and cast primitives identically in both entries', () => {
     for (const entry of [html, playHtml]) {
       expect(entry.match(/class="portrait-wrap ui-portrait-wrap"/g) ?? []).toHaveLength(4);
-      expect(entry.match(/class="portrait ui-portrait"/g) ?? []).toHaveLength(4);
+      // Four unit-frame portraits plus the Talking Head's speaker portrait.
+      expect(entry.match(/class="portrait ui-portrait"/g) ?? []).toHaveLength(5);
       expect(entry.match(/class="level-chip ui-medal/g) ?? []).toHaveLength(4);
       expect(entry.match(/ui-cast-icon" hidden/g) ?? []).toHaveLength(2);
       expect(entry).toContain('class="ui-cast ui-cast--hostile"');

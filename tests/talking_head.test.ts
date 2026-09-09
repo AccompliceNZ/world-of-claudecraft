@@ -11,6 +11,7 @@ import {
   TALKING_HEAD_ID,
   TalkingHeadController,
 } from '../src/ui/hud/talking_head';
+import { HUD_FRAME_SPECS } from '../src/ui/interface_unlock_core';
 
 const view = { viewportWidth: 1600, viewportHeight: 900, distanceYd: 10 };
 
@@ -52,17 +53,15 @@ describe('TalkingHeadController: mounts once at the top of the bottom stack and 
   let now = 1000;
   beforeEach(() => {
     now = 1000;
-    document.body.innerHTML =
-      '<div id="ui"><div id="actionbar-stack"><div id="pet-cluster"></div></div></div>';
+    document.body.innerHTML = '<div id="ui"><div id="actionbar-stack"></div></div>';
   });
 
-  it('prepends the panel to the stack, paints name and line, and hides on expiry', () => {
+  it('uses the standing panel in #ui (minting one only when the entry lacks it), paints name and line, and hides on expiry', () => {
     const c = new TalkingHeadController(() => now);
     c.say({ speakerId: 'ferryman_odo', speakerName: 'Ferryman Odo', text: 'Welcome ashore.' });
     const el = document.getElementById(TALKING_HEAD_ID) as HTMLElement;
     expect(el).not.toBeNull();
-    expect(el.previousElementSibling).toBeNull();
-    expect(el.nextElementSibling?.id).toBe('pet-cluster');
+    expect(el.parentElement?.id).toBe('ui');
     expect(el.hidden).toBe(false);
     expect(el.getAttribute('role')).toBe('status');
     expect(el.querySelector('.th-name')?.textContent).toBe('Ferryman Odo');
@@ -91,11 +90,28 @@ describe('TalkingHeadController: mounts once at the top of the bottom stack and 
 describe('talking head stylesheet seat', () => {
   const hud = readFileSync(join(__dirname, '../src/styles/hud.css'), 'utf8');
   const mobile = readFileSync(join(__dirname, '../src/styles/hud.mobile.css'), 'utf8');
-  it('rides the bottom stack above the frames on desktop and the top lane on touch', () => {
-    expect(hud).toContain('.talking-head {\n    display: flex;');
-    expect(hud).toContain('margin-bottom: var(--unit-frame-bar-gap);');
+  it('seats a fifth of the way down the screen, centred, and is a movable HUD frame', () => {
+    expect(hud).toContain(
+      '.talking-head {\n    position: absolute;\n    left: 50%;\n    top: 20%;\n    translate: -50% 0;',
+    );
+    // A saved editor spot writes inline left/top; the centring translate must
+    // not keep shifting it.
+    expect(hud).toContain('#talking-head.hud-frame-detached {\n    translate: none;');
     expect(hud).toContain('.talking-head[hidden] {\n    display: none;');
     expect(hud).not.toContain('.tut-voice {');
     expect(mobile).toContain('body.mobile-touch .talking-head {\n    position: fixed;');
+  });
+
+  it('is registered in the movable-frame table so the frames editor can seat it', () => {
+    const spec = HUD_FRAME_SPECS.find((s) => s.id === 'talkingHead');
+    expect(spec?.elementId).toBe('talking-head');
+    expect(spec?.storageKey).toBe('woc_hud_frame_talking_head');
+    expect(spec?.labelKey).toBe('hudChrome.talkingHead.label');
+    // Hidden between lines, so editing has to force the placeholder like the
+    // devotion medallion's, or there is nothing to grab.
+    expect(hud).toContain(
+      'body.interface-unlocked #talking-head.tf-unlocked {\n    display: flex !important;',
+    );
+    expect(hud).toContain('#talking-head.tf-unlocked {\n    pointer-events: auto;');
   });
 });

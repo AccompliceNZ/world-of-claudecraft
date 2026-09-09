@@ -16,7 +16,7 @@ import {
   type TalkingHeadModel,
 } from './talking_head_core';
 
-const HOST_ID = 'actionbar-stack';
+const UI_ROOT_ID = 'ui';
 export const TALKING_HEAD_ID = 'talking-head';
 
 export class TalkingHeadController {
@@ -58,18 +58,23 @@ export class TalkingHeadController {
 
   private ensureDom(): boolean {
     if (this.root) return true;
-    const host = document.getElementById(HOST_ID);
-    if (!host) return false;
-    const el = document.createElement('div');
-    el.id = TALKING_HEAD_ID;
-    el.className = 'talking-head ui-panel-strong';
-    el.hidden = true;
-    el.setAttribute('role', 'status');
-    el.setAttribute('aria-label', t('hudChrome.talkingHead.label'));
-    el.innerHTML =
-      `<div class="portrait-wrap ui-portrait-wrap th-portrait-wrap"><div class="portrait ui-portrait"><canvas class="th-portrait" width="54" height="54"></canvas></div></div>` +
-      `<div class="th-body"><div class="th-name ui-h"></div><div class="th-text"></div></div>`;
-    host.prepend(el);
+    // The panel is standing HUD chrome in both entries (a movable frame, so it
+    // must exist at HUD boot); a headless document without it gets one minted.
+    let el = document.getElementById(TALKING_HEAD_ID);
+    if (!el) {
+      const host = document.getElementById(UI_ROOT_ID);
+      if (!host) return false;
+      el = document.createElement('div');
+      el.id = TALKING_HEAD_ID;
+      el.className = 'talking-head ui-panel-strong';
+      el.hidden = true;
+      el.setAttribute('role', 'status');
+      el.setAttribute('aria-label', t('hudChrome.talkingHead.label'));
+      el.innerHTML =
+        `<div class="portrait-wrap ui-portrait-wrap th-portrait-wrap"><div class="portrait ui-portrait"><canvas class="th-portrait" width="54" height="54"></canvas></div></div>` +
+        `<div class="th-body"><div class="th-name ui-h"></div><div class="th-text"></div></div>`;
+      host.appendChild(el);
+    }
     this.root = el;
     this.portraitEl = el.querySelector<HTMLCanvasElement>('.th-portrait');
     this.nameEl = el.querySelector<HTMLElement>('.th-name');

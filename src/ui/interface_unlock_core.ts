@@ -306,6 +306,17 @@ export const HUD_FRAME_SPECS: readonly HudFrameSpec[] = [
     fallbackSize: { w: 300, h: 232 },
     detachToUiRoot: false,
   },
+  // The Talking Head (an NPC line while the speaker is off screen): a #ui child
+  // with a stock seat a fifth of the way down the screen; the chip reuses the
+  // panel's own accessible name.
+  {
+    id: 'talkingHead',
+    elementId: 'talking-head',
+    storageKey: 'woc_hud_frame_talking_head',
+    labelKey: 'hudChrome.talkingHead.label',
+    fallbackSize: { w: 596, h: 72 },
+    detachToUiRoot: false,
+  },
   // The tabbed combat meter (#meters-window). Its two pop-out windows (heal,
   // threat) keep their own MeterFrame drag: they are transient windows, not
   // standing HUD chrome. Box resize: the row list genuinely reflows and the

@@ -46,6 +46,7 @@ describe('HUD_FRAME_SPECS', () => {
       'paladinDevotion',
       'doomMeter',
       'procOverlay',
+      'talkingHead',
       'damageMeter',
       'deedTracker',
       'delveTracker',
@@ -82,6 +83,7 @@ describe('HUD_FRAME_SPECS', () => {
       'paladin-devotion-frame',
       'warlock-doom-frame',
       'proc-overlay',
+      'talking-head',
       'meters-window',
       'deed-tracker',
       'delve-tracker',
@@ -142,6 +144,7 @@ describe('HUD_FRAME_SPECS', () => {
       // positions are player data; renaming the key orphans saved layouts).
       'woc_warlock_doom_frame_pos',
       'woc_hud_frame_proc_overlay',
+      'woc_hud_frame_talking_head',
       'woc_hud_frame_meters',
       'woc_hud_frame_deed_tracker',
       'woc_hud_frame_delve_tracker',

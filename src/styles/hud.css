@@ -486,18 +486,27 @@
      the top left lol"). It is a subtitle, so it sits where subtitles sit:
      low-center, above the movement bubble, clear of the unit frames. */
   /* Talking Head (src/ui/hud/talking_head/): an NPC line spoken to the player
-     while the speaker is off screen, where a world bubble would go unseen. It
-     rides the top of the bottom stack, so it sits above the unit frames and
-     grows the stack upward like the pet cluster. */
+     while the speaker is off screen, where a world bubble would go unseen. Its
+     stock seat is a fifth of the way down the screen, centred, between the
+     quest banner lane and the level banner, where a line appearing is noticed;
+     it is a movable HUD frame (HUD_FRAME_SPECS talkingHead), so a saved spot
+     outranks this seat. */
   .talking-head {
+    position: absolute;
+    left: 50%;
+    top: 20%;
+    translate: -50% 0;
+    z-index: 20;
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    width: 100%;
-    margin-bottom: var(--unit-frame-bar-gap);
+    width: min(var(--action-rail-w), calc(100% - 32px));
     padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm) var(--spacing-sm);
     pointer-events: none;
     text-align: left;
+  }
+  #talking-head.hud-frame-detached {
+    translate: none;
   }
   .talking-head[hidden] {
     display: none;
@@ -1627,6 +1636,7 @@
   #swingbar-offhand.tf-unlocked,
   #paladin-devotion-frame.tf-unlocked,
   #proc-overlay.tf-unlocked,
+  #talking-head.tf-unlocked,
   #meters-window.tf-unlocked {
     cursor: var(--cursor-move, move);
     outline: 1px dashed var(--gold);
@@ -1643,7 +1653,8 @@
   #delve-tracker.tf-unlocked,
   #rift-tracker.tf-unlocked,
   #paladin-devotion-frame.tf-unlocked,
-  #proc-overlay.tf-unlocked {
+  #proc-overlay.tf-unlocked,
+  #talking-head.tf-unlocked {
     pointer-events: auto;
   }
   /* The Target dots tracker and the six aura tracks are click-through in play
@@ -1925,7 +1936,8 @@
   body.interface-unlocked #petbar.tf-unlocked,
   body.interface-unlocked #stancebar.tf-unlocked,
   body.interface-unlocked #paladin-devotion-frame.tf-unlocked,
-  body.interface-unlocked .warlock-doom-frame.tf-unlocked {
+  body.interface-unlocked .warlock-doom-frame.tf-unlocked,
+  body.interface-unlocked #talking-head.tf-unlocked {
     display: flex !important;
     opacity: 0.55;
   }
