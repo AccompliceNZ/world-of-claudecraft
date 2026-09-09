@@ -4004,7 +4004,7 @@ export const es_ES: EnTranslations = {
       },
       "roster": {
         "seats": "{count} de asientos {cap}",
-        "expand": "Ampliar lista (+ asientos {seats} para {price})",
+        "expand": "Ampliar lista",
         "maxed": "La plantilla está en su mayor tamaño",
         "confirm": "¿Ampliar la lista del gremio con asientos {seats} para {price}? El oro proviene de tu propio bolso y no se reembolsa.",
         "confirmAction": "Expandir",

@@ -4004,7 +4004,7 @@ export const fr_FR: EnTranslations = {
       },
       "roster": {
         "seats": "Sièges {count} ou {cap}",
-        "expand": "Élargir la liste (+ sièges {seats} pour {price})",
+        "expand": "Élargir la liste",
         "maxed": "La liste est à sa plus grande taille",
         "confirm": "Étendre la liste de guilde de sièges {seats} pour {price}? L'or provient de votre propre porte-monnaie et n'est pas remboursé.",
         "confirmAction": "Développer",

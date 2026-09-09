@@ -15610,7 +15610,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.roster.confirm':
     'Perluas daftar guild dengan kursi {seats} untuk {price}? Emas tersebut berasal dari dompet Anda sendiri dan tidak dapat dikembalikan.',
   'hudChrome.social.roster.confirmAction': 'Perluas',
-  'hudChrome.social.roster.expand': 'Perluas daftar pemain (+kursi {seats} untuk {price})',
+  'hudChrome.social.roster.expand': 'Perluas daftar pemain',
   'hudChrome.social.roster.expandedLine':
     '{name} telah memperluas daftar guild menjadi anggota {cap}.',
   'hudChrome.social.roster.maxed': 'Daftar tersebut berada pada ukuran terbesarnya',

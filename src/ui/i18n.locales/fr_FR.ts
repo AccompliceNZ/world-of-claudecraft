@@ -15840,7 +15840,7 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.roster.confirm':
     "Étendre la liste de guilde de sièges {seats} pour {price}? L'or provient de votre propre porte-monnaie et n'est pas remboursé.",
   'hudChrome.social.roster.confirmAction': 'Développer',
-  'hudChrome.social.roster.expand': 'Élargir la liste (+ sièges {seats} pour {price})',
+  'hudChrome.social.roster.expand': 'Élargir la liste',
   'hudChrome.social.roster.expandedLine':
     '{name} a élargi la liste de la guilde aux membres {cap}.',
   'hudChrome.social.roster.maxed': 'La liste est à sa plus grande taille',

@@ -966,6 +966,8 @@ export type ItemUse =
   // player meets their first death somewhere nothing is hunting them.
   // Consumed on use and refused unless the lesson is active.
   | { type: 'passingStone' }
+  // Starts the one-time hammer quest; the Ember is consumed by crafting.
+  | { type: 'forgebreakerEmber' }
   | { type: 'mechChroma'; chromaId: string }
   // Opens the client-side event skin-select overlay. The server rolls a rank on
   // use (see Sim.openSkinSelect) and the player locks one in via claimEventSkin.
@@ -1903,6 +1905,10 @@ export interface LootEntry {
   // predicate). Every entry of a group must agree, and the heroic-append
   // tables never carry it (both pinned by tests/loot_roll.test.ts).
   normalOnly?: true;
+  // A migrated base-loot acquisition in HEROIC_BOSS_LOOT keeps its original
+  // source level and stats; listing it here must not promote it to the
+  // bespoke heroic equipment tier or seed the higher-tier rift reward pool.
+  preserveSourceTier?: true;
 }
 
 export type MobFamily =

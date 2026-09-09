@@ -1243,7 +1243,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.billboard.result.notOfficer':
     'Редактировать доску объявлений могут только офицеры и глава гильдии.',
   'hudChrome.social.roster.seats': '{count} из {cap} мест',
-  'hudChrome.social.roster.expand': 'Расширить состав (+{seats} мест за {price})',
+  'hudChrome.social.roster.expand': 'Расширить состав',
   'hudChrome.social.roster.maxed': 'Состав гильдии уже максимального размера',
   'hudChrome.social.roster.confirm':
     'Расширить состав гильдии на {seats} мест за {price}? Золото списывается из вашего собственного кошелька и не возвращается.',

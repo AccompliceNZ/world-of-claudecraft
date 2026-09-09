@@ -15579,7 +15579,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.roster.confirm':
     'Het gilderooster uitbreiden met {seats}-stoelen voor {price}? Het goud komt uit uw eigen portemonnee en wordt niet terugbetaald.',
   'hudChrome.social.roster.confirmAction': 'Uitbreiden',
-  'hudChrome.social.roster.expand': 'Rooster uitbreiden (+{seats}-stoelen voor {price})',
+  'hudChrome.social.roster.expand': 'Rooster uitbreiden',
   'hudChrome.social.roster.expandedLine': '{name} heeft de gildelijst uitgebreid naar {cap}-leden.',
   'hudChrome.social.roster.maxed': 'De selectie heeft de grootste omvang',
   'hudChrome.social.roster.result.cannotAfford':

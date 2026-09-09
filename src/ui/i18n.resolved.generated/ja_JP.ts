@@ -4004,7 +4004,7 @@ export const ja_JP: EnTranslations = {
       },
       "roster": {
         "seats": "{count} / {cap} 席",
-        "expand": "名簿を拡張（+{seats}席、{price}）",
+        "expand": "名簿を拡張",
         "maxed": "名簿はすでに最大です",
         "confirm": "{price}でギルド名簿を{seats}席拡張しますか？ゴールドはあなた自身の所持金から支払われ、返金されません。",
         "confirmAction": "拡張",

@@ -15497,7 +15497,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.roster.confirm':
     'Mở rộng danh sách bang hội bằng số ghế {seats} cho {price}? Vàng đến từ ví của chính bạn và không được hoàn lại.',
   'hudChrome.social.roster.confirmAction': 'Mở rộng',
-  'hudChrome.social.roster.expand': 'Mở rộng danh sách (+ số ghế {seats} cho {price})',
+  'hudChrome.social.roster.expand': 'Mở rộng danh sách',
   'hudChrome.social.roster.expandedLine':
     '{name} đã mở rộng danh sách bang hội cho các thành viên {cap}.',
   'hudChrome.social.roster.maxed': 'Danh sách có kích thước lớn nhất',

@@ -1234,7 +1234,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.billboard.result.notOfficer':
     '게시판은 임원과 길드 마스터만 수정할 수 있습니다.',
   'hudChrome.social.roster.seats': '{count} / {cap} 자리',
-  'hudChrome.social.roster.expand': '명단 확장 (+{seats}자리, {price})',
+  'hudChrome.social.roster.expand': '명단 확장',
   'hudChrome.social.roster.maxed': '명단이 이미 최대 규모입니다',
   'hudChrome.social.roster.confirm':
     '{price}(으)로 길드 명단을 {seats}자리 확장하시겠습니까? 골드는 본인의 소지금에서 차감되며 환불되지 않습니다.',

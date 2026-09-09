@@ -4004,7 +4004,7 @@ export const cs_CZ: EnTranslations = {
       },
       "roster": {
         "seats": "{count} sedadel {cap}",
-        "expand": "Rozbalit seznam (+ sedadla {seats} pro {price})",
+        "expand": "Rozšířit seznam",
         "maxed": "Seznam je ve své největší velikosti",
         "confirm": "Rozšířit seznam cechů o místa ve {seats} pro {price}? Zlato pochází z vaší vlastní peněženky a není vráceno.",
         "confirmAction": "Rozbalit",

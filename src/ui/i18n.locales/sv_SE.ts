@@ -15399,7 +15399,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.roster.confirm':
     'Utöka guildlistan med {seats}-platser för {price}? Guldet kommer från din egen handväska och återbetalas inte.',
   'hudChrome.social.roster.confirmAction': 'Expandera',
-  'hudChrome.social.roster.expand': 'Utöka förteckningen (+{seats} platser för {price})',
+  'hudChrome.social.roster.expand': 'Utöka förteckningen',
   'hudChrome.social.roster.expandedLine': '{name} har utökat guildlistan till {cap}-medlemmar.',
   'hudChrome.social.roster.maxed': 'Listan är i sin största storlek',
   'hudChrome.social.roster.result.cannotAfford': 'Du behöver {price} för att utöka guildlistan.',

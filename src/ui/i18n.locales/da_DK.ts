@@ -15367,7 +15367,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.roster.confirm':
     'Udvide guildlisten med {seats}-sæder til {price}? Guldet kommer fra din egen pung og refunderes ikke.',
   'hudChrome.social.roster.confirmAction': 'Udvid',
-  'hudChrome.social.roster.expand': 'Udvid liste (+{seats} pladser til {price})',
+  'hudChrome.social.roster.expand': 'Udvid liste',
   'hudChrome.social.roster.expandedLine': '{name} har udvidet guildlisten til {cap}-medlemmer.',
   'hudChrome.social.roster.maxed': 'Listen er i sin største størrelse',
   'hudChrome.social.roster.result.cannotAfford': 'Du skal bruge {price} for at udvide guildlisten.',

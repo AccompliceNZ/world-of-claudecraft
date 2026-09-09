@@ -1202,7 +1202,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.social.billboard.result.set': '公會公告板已更新。',
   'hudChrome.social.billboard.result.notOfficer': '只有幹部和會長可以編輯公告板。',
   'hudChrome.social.roster.seats': '{count} / {cap} 席位',
-  'hudChrome.social.roster.expand': '擴充名冊（+{seats} 席位，{price}）',
+  'hudChrome.social.roster.expand': '擴充名冊',
   'hudChrome.social.roster.maxed': '名冊已達最大規模',
   'hudChrome.social.roster.confirm':
     '花費 {price} 為公會名冊擴充 {seats} 個席位？金幣將從你自己的錢包扣除，不予退還。',
