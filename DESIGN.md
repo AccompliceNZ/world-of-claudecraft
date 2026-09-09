@@ -549,7 +549,9 @@ hotbar drag-and-drop and no backing plate.
   boards hung a cluster of round 30px stance sockets off the left edge; the shipped row is
   40px square stance sockets seated inside the bottom stack above the primary bar, so showing
   it lifts the player frame (and, via `body.stance-bar-shown`, the stock target seat) by one
-  row instead of floating beside the bar.
+  row instead of floating beside the bar. The pet command bar takes the same seat (both rows
+  stack when a class has both), and the pet frame sits above the player frame, flush with its
+  left edge at 0.8 of its scale, since a pet's bars carry less a player acts on.
 - States (existing states, restyle only): ready, hover, pressed, cooldown sweep plus
   remaining seconds, `.is-used` proc glow, `.is-oor` out-of-range tint,
   `.is-unusable` desaturation, queued, `.is-empty`, and drop target.

@@ -1340,6 +1340,8 @@
      becomes an ordinary flex item; the mobile sheet keeps the two apart instead (see
      hud.mobile.css), because there the command bar belongs under the thumb at the top
      of the screen while the health strip belongs in the bottom-centre column. */
+  /* The pet frame's own row above the player frame, flush with its left edge;
+     the pet command bar seats below the frames beside the stance row. */
   #pet-cluster {
     display: flex;
     align-items: center;
@@ -1347,15 +1349,7 @@
     gap: 8px;
     width: var(--action-rail-w);
     margin: 0 auto;
-    padding-left: var(--unit-frame-content-inset);
-  }
-  /* relative, not static: the docked bar stays an ordinary flex item but is
-     a containing block for its movable-frame chrome (corner button, grip,
-     name chip; the frame is HUD_FRAME_SPECS row 'petBar'). A static bar hung
-     that chrome off #actionbar-stack instead. */
-  #pet-cluster > #petbar {
-    position: relative;
-    margin-bottom: 4px;
+    padding-left: 0;
   }
   /* The health half of the cluster. Hidden until the player actually has a pet; the
      family painter sets the inline display:flex, which outranks the `none` here. It
@@ -1371,8 +1365,10 @@
     justify-content: flex-start;
     cursor: pointer;
   }
+  /* Smaller than the player frame it sits above: a pet's bars carry less a
+     player acts on, so the frame reads as a satellite, still scaled with it. */
   #pet-frame > * {
-    zoom: var(--player-frame-scale, 1);
+    zoom: calc(0.8 * var(--player-frame-scale, 1));
   }
   #pet-frame .uf-bars {
     flex: none;
@@ -1404,7 +1400,12 @@
       var(--target-frame-scale, 1)
     );
     left: calc(50% + var(--action-rail-w) / 2 - var(--target-frame-box-w));
-    top: calc(100% - var(--unit-frame-seat-offset) - var(--stance-row-lift, 0px));
+    top: calc(
+      100% -
+      var(--unit-frame-seat-offset) -
+      var(--stance-row-lift, 0px) -
+      var(--pet-row-lift, 0px)
+    );
     display: none;
     z-index: 6;
     width: var(--target-frame-box-w);
@@ -1428,7 +1429,8 @@
       var(--unit-frame-seat-offset) -
       var(--socket-size) -
       var(--socket-row-gap) -
-      var(--stance-row-lift, 0px)
+      var(--stance-row-lift, 0px) -
+      var(--pet-row-lift, 0px)
     );
   }
   body.show-actionbar2.show-actionbar3 #target-frame {
@@ -1437,7 +1439,8 @@
       var(--unit-frame-seat-offset) -
       2 *
       (var(--socket-size) + var(--socket-row-gap)) -
-      var(--stance-row-lift, 0px)
+      var(--stance-row-lift, 0px) -
+      var(--pet-row-lift, 0px)
     );
   }
   /* The target's debuff strip hangs off the frame instead of living inside the
@@ -3858,14 +3861,19 @@
     flex-direction: column;
     position: relative;
   }
+  /* The pet command bar seats in the bottom stack between the player frame and
+     the primary bar, the stance row's own seat (both rows can stack), so showing
+     it lifts the docked player frame; body.mobile-pet-active (stamped on every
+     host while a pet is out) lifts the stock target seat by the same row.
+     Relative, not static: the bar is the containing block for its movable-frame
+     chrome (HUD_FRAME_SPECS row 'petBar'). */
   #petbar {
     display: none;
-    position: absolute;
-    left: 0;
-    top: -52px;
+    position: relative;
+    align-self: flex-start;
     gap: var(--socket-row-gap);
     padding: 0;
-    margin: 0;
+    margin: 0 0 var(--socket-row-gap);
     background: transparent;
     border: 0;
     border-radius: 0;
@@ -3951,6 +3959,9 @@
   }
   body.stance-bar-shown {
     --stance-row-lift: calc(var(--socket-size-stance) + var(--socket-row-gap));
+  }
+  body.mobile-pet-active {
+    --pet-row-lift: calc(var(--socket-size-pet) + var(--socket-row-gap));
   }
   .stancebar-group {
     display: flex;

@@ -3577,7 +3577,7 @@ describe('the stock unit-frame seats sit side by side above the action bar', () 
       'left: calc(50% + var(--action-rail-w) / 2 - var(--target-frame-box-w));',
     );
     expect(hudCss).toContain(
-      'top: calc(100% - var(--unit-frame-seat-offset) - var(--stance-row-lift, 0px));',
+      'top: calc(\n      100% -\n      var(--unit-frame-seat-offset) -\n      var(--stance-row-lift, 0px) -\n      var(--pet-row-lift, 0px)\n    );',
     );
     expect(hudCss).not.toContain('#target-frame {\n    left: 12px;\n    top: 12px;');
   });
@@ -3596,18 +3596,23 @@ describe('pet cluster layout', () => {
   );
 
   it.each([['index.html'], ['play.html']])(
-    '%s wraps the pet bar and pet frame in one cluster above the player frame',
+    '%s seats the pet frame above the player frame and the pet bar in the stance row seat',
     (file) => {
       const src = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
       const cluster = src.indexOf('id="pet-cluster"');
       const petbar = src.indexOf('id="petbar"');
       const petFrame = src.indexOf('id="pet-frame"');
       const player = src.indexOf('id="player-frame"');
+      const stance = src.indexOf('id="stancebar"');
+      const bars = src.indexOf('id="actionbar-group"');
       expect(cluster).toBeGreaterThan(-1);
-      // Bar on the left, health on the right, and the whole row above the player.
-      expect(cluster).toBeLessThan(petbar);
-      expect(petbar).toBeLessThan(petFrame);
+      // The cluster holds the pet frame only, above the player frame; the command
+      // bar follows the stance row, between the player frame and the action bars.
+      expect(cluster).toBeLessThan(petFrame);
       expect(petFrame).toBeLessThan(player);
+      expect(player).toBeLessThan(stance);
+      expect(stance).toBeLessThan(petbar);
+      expect(petbar).toBeLessThan(bars);
     },
   );
 
@@ -3618,14 +3623,13 @@ describe('pet cluster layout', () => {
     // RELATIVE, not static: the docked bar is a containing block for its
     // movable-frame chrome (HUD_FRAME_SPECS row 'petBar') while staying an
     // ordinary flex item of the cluster row.
-    expect(hudCssSrc).toMatch(/#pet-cluster > #petbar \{[^}]*position: relative/);
+    expect(hudCssSrc).toMatch(/\n {2}#petbar \{[^}]*position: relative/);
   });
 
   it('shares one content inset with the player frame so the row lines up with it', () => {
     expect(hudCssSrc).toContain('--unit-frame-content-inset: 18px;');
-    expect(hudCssSrc).toMatch(
-      /#pet-cluster \{[^}]*padding-left: var\(--unit-frame-content-inset\)/,
-    );
+    // The pet frame's row sits flush with the player frame's left edge.
+    expect(hudCssSrc).toMatch(/#pet-cluster \{[^}]*padding-left: 0/);
   });
 
   // The bottom-centre column (player frame, cast bar, swing bar, pet strip) is nudged
