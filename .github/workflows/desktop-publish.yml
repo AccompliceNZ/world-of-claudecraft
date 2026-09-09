@@ -346,8 +346,10 @@ jobs:
           existing="$(security list-keychains -d user | tr -d '" ')"
           # shellcheck disable=SC2086
           security list-keychains -d user -s "$keychain" "$RUNNER_TEMP/electron-builder-root-certs.keychain" $existing
+          # electron-builder wants the name WITHOUT the "Developer ID Application:"
+          # prefix (it refuses the prefixed form and picks the certificate type itself).
           identity="$(security find-identity -v -p codesigning "$keychain" \
-            | sed -n 's/.*"\(Developer ID Application: [^"]*\)".*/\1/p' | head -n 1)"
+            | sed -n 's/.*"Developer ID Application: \([^"]*\)".*/\1/p' | head -n 1)"
           if [ -z "$identity" ]; then
             echo "No valid Developer ID Application identity in the imported certificate" >&2
             security find-identity -p codesigning "$keychain" >&2 || true
