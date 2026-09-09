@@ -8474,7 +8474,7 @@
         65px *
         var(--mobile-unit-frame-scale-landscape) *
         var(--mobile-chrome-scale, 1) +
-        4px
+        2px
       );
     }
     body.mobile-touch #pet-frame {
