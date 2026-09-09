@@ -1365,9 +1365,14 @@
     justify-content: flex-start;
     cursor: pointer;
   }
-  /* Smaller than the player frame it sits above: a pet's bars carry less a
-     player acts on, so the frame reads as a satellite, still scaled with it. */
   #pet-frame > * {
+    zoom: var(--player-frame-scale, 1);
+  }
+  /* Smaller than the player frame it sits above on pointer layouts: a pet's bars
+     carry less a player acts on, so the frame reads as a satellite, still scaled
+     with it. Touch keeps the full factor: its own scale already sits near the
+     24px target floor the browser suite pins. */
+  body:not(.mobile-touch) #pet-frame > * {
     zoom: calc(0.8 * var(--player-frame-scale, 1));
   }
   #pet-frame .uf-bars {
