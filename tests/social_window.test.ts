@@ -1,7 +1,11 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import type { GuildRow } from '../src/ui/social_view';
-import { guildMemberRowHtml, rosterExpandConfirmHtml } from '../src/ui/social_window';
+import {
+  guildMemberRowHtml,
+  rosterExpandConfirmHtml,
+  splicePriceHtml,
+} from '../src/ui/social_window';
 
 // Source-level guards for the social painter. The pure row + signature decisions are
 // unit-tested in social_view.test.ts; here we pin the no-magic-values
@@ -446,6 +450,12 @@ describe('social_window: guild roster expansion (source pins)', () => {
     expect(componentsCss).toContain(
       '.soc-add.soc-leave .soc-foot-start {\n    margin-right: auto;\n  }',
     );
+    // The shared row wraps rather than squeezing a long label beside the other button.
+    const leaveRule = componentsCss.slice(
+      componentsCss.indexOf('.soc-add.soc-leave {'),
+      componentsCss.indexOf('.soc-add.soc-leave .soc-foot-start {'),
+    );
+    expect(leaveRule).toContain('flex-wrap: wrap;');
   });
 
   it('a bought page (a structural change) rebuilds the footer around a preserved draft', () => {
@@ -486,6 +496,18 @@ describe('social_window: guild roster expansion (source pins)', () => {
     expect(rosterExpandConfirmHtml('20', '$&$1')).toContain('for $&$1?');
     // The seats value is escaped like any other interpolated text.
     expect(rosterExpandConfirmHtml('<b>', price)).toContain('by &lt;b&gt; seats');
+  });
+
+  it('the price splice fills every slot and never leaves the prompt unpriced', () => {
+    const price = '<span class="money-inline">7</span>';
+    // A sentence naming the price twice fills both (split/join, not first-only).
+    expect(splicePriceHtml('Pay \u0000 now, yes \u0000?', price)).toBe(
+      `Pay ${price} now, yes ${price}?`,
+    );
+    // Replacement-pattern characters in the markup are kept verbatim.
+    expect(splicePriceHtml('for \u0000?', '$&$1')).toBe('for $&$1?');
+    // A sentence that lost its slot still ends with the price.
+    expect(splicePriceHtml('Expand the roster?', price)).toBe(`Expand the roster? ${price}`);
   });
 
   it('the catalog carries the roster block with every key the painter and hud read', () => {

@@ -162,10 +162,20 @@ function roleLabel(role: GuildDisplayedRole): string {
 // in catalog text and esc() leaves it untouched (deed_i18n.ts uses the same token).
 const PRICE_SLOT = '\u0000';
 export function rosterExpandConfirmHtml(seats: string, priceHtml: string): string {
-  return esc(t('hudChrome.social.roster.confirm', { seats, price: PRICE_SLOT })).replace(
-    PRICE_SLOT,
-    () => priceHtml,
+  return splicePriceHtml(
+    esc(t('hudChrome.social.roster.confirm', { seats, price: PRICE_SLOT })),
+    priceHtml,
   );
+}
+
+/** Fill EVERY price slot of an escaped sentence with the trusted price markup
+ *  (split/join: verbatim, no replacement-pattern parsing). A sentence with no slot
+ *  at all (H10 pins the placeholder set, so only a hand-edited overlay could lose
+ *  it) still shows the price after the sentence: a gold spend is never confirmed
+ *  unpriced. */
+export function splicePriceHtml(escapedSentence: string, priceHtml: string): string {
+  if (!escapedSentence.includes(PRICE_SLOT)) return `${escapedSentence} ${priceHtml}`;
+  return escapedSentence.split(PRICE_SLOT).join(priceHtml);
 }
 
 /** One guild-roster row. A stateless string builder (module-level, exported so
