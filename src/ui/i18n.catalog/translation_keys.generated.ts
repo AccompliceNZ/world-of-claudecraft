@@ -6494,6 +6494,7 @@ export type TranslationKeyFlat =
   | 'guide.interfacePage.framesBody'
   | 'guide.interfacePage.framesGovernedAuraTracks'
   | 'guide.interfacePage.framesGovernedExtra'
+  | 'guide.interfacePage.framesGovernedTalkingHead'
   | 'guide.interfacePage.framesMoveBody'
   | 'guide.interfacePage.framesMoveBodyEditFrames'
   | 'guide.interfacePage.framesTitle'

@@ -210,6 +210,7 @@ describe('both tiles hydrate and stay under the rail height budget', () => {
       'mm-quest',
       'mm-deeds',
       'mm-reliquary',
+      'mm-loot-explorer',
       'mm-professions',
       'mm-harvest-journal',
       'mm-bag',

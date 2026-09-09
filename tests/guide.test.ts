@@ -6542,6 +6542,7 @@ describe('Guide wiki completeness corrections (Phase 20, 2026-09-03)', () => {
       auraTrack_power: `the ${t('hudChrome.auraTracks.power')} track`,
       auraTrack_utility: `the ${t('hudChrome.auraTracks.utility')} track`,
       auraTrack_friendly: `the ${t('hudChrome.auraTracks.friendly')} track`,
+      talkingHead: 'the Dialogue panel',
     };
     expect(Object.keys(phraseFor).sort()).toEqual(HUD_FRAME_SPECS.map((s) => s.id).sort());
     for (const spec of HUD_FRAME_SPECS) {

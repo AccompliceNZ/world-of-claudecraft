@@ -10,6 +10,7 @@
 
 export const pending: Record<string, readonly string[]> = {
   "es": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -55,6 +56,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "es_ES": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -100,6 +102,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "fr_FR": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -145,6 +148,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "fr_CA": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -191,6 +195,7 @@ export const pending: Record<string, readonly string[]> = {
   ],
   "en_CA": [],
   "it_IT": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -236,6 +241,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "de_DE": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -293,6 +299,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questTracker.objectiveValue"
   ],
   "pt_BR": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -341,6 +348,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questTracker.objectiveValue"
   ],
   "cs_CZ": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -386,6 +394,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "nl_NL": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -431,6 +440,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "pl_PL": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -476,6 +486,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "id_ID": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -521,6 +532,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "tr_TR": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -566,6 +578,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "sv_SE": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -611,6 +624,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "vi_VN": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",
@@ -656,6 +670,7 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.talkingHead.label"
   ],
   "da_DK": [
+    "guide.interfacePage.framesGovernedTalkingHead",
     "hudChrome.bugReport.online",
     "hudChrome.charSidebar.crafting",
     "hudChrome.charSidebar.gathering",

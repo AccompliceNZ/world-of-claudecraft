@@ -445,7 +445,7 @@ describe('social_window: guild roster expansion (source pins)', () => {
     // One .soc-add.soc-leave row holds both: the leader-only expand button first
     // (pushed to the start edge by .soc-foot-start), the disband or leave button last.
     expect(painter).toContain('foot += `<div class="soc-add soc-leave">${expand}${leave}</div>`;');
-    expect(painter).toContain('class="btn soc-foot-start" data-act="guild-expand"');
+    expect(painter).toContain('class="btn ui-btn soc-foot-start" data-act="guild-expand"');
     expect(painter).not.toContain('<div class="soc-add soc-leave"><button');
     expect(componentsCss).toContain(
       '.soc-add.soc-leave .soc-foot-start {\n    margin-right: auto;\n  }',
