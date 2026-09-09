@@ -337,7 +337,7 @@ jobs:
             -T /usr/bin/codesign -T /usr/bin/productbuild -T /usr/bin/security
           security set-key-partition-list -S apple-tool:,apple: -s -k "$keychain_password" "$keychain"
           rm -f "$cert"
-          root_certs="$(find node_modules/.pnpm -path '*/app-builder-lib/certs/root_certs.keychain' -print -quit)"
+          root_certs="$(find node_modules -name root_certs.keychain -path '*/app-builder-lib/certs/*' -print -quit)"
           if [ -z "$root_certs" ]; then
             echo "app-builder-lib's bundled root_certs.keychain was not found under node_modules" >&2
             exit 1
