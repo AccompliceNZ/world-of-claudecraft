@@ -70,7 +70,8 @@ describe('PaladinDevotionPainter', () => {
       { method: 'toggleClass', args: [ROOT, 'ascended', false] },
       { method: 'toggleClass', args: [ROOT, 'last-charge', false] },
     ]);
-    expect(calls.slice(9)).toEqual(
+    // The seven charge pips follow the nine header writes; the host mirror comes after.
+    expect(calls.slice(9, 16)).toEqual(
       CHARGES_ARRAY.map((charge) => ({
         method: 'toggleClass',
         args: [charge, 'on', false],
@@ -97,7 +98,7 @@ describe('PaladinDevotionPainter', () => {
       args: [FILL, '--devotion-scale', '0.300'],
     });
     expect(calls).toContainEqual({ method: 'toggleClass', args: [ROOT, 'ascended', true] });
-    expect(calls.slice(9).map((call) => call.args[2])).toEqual([
+    expect(calls.slice(9, 16).map((call) => call.args[2])).toEqual([
       true,
       true,
       true,
@@ -122,7 +123,7 @@ describe('PaladinDevotionPainter', () => {
       announcement: '',
     });
 
-    expect(calls.slice(9).map((call) => call.args[2])).toEqual([
+    expect(calls.slice(9, 16).map((call) => call.args[2])).toEqual([
       true,
       true,
       true,
@@ -151,6 +152,32 @@ describe('PaladinDevotionPainter', () => {
       method: 'toggleClass',
       args: [ROOT, 'last-charge', true],
     });
+  });
+
+  it('mirrors fill, charges and liveness onto the HUD host for the cross hotbar meter', () => {
+    const host = { id: 'host' } as unknown as HTMLElement;
+    const frame = { id: 'frame', parentElement: host } as unknown as HTMLElement;
+    const { calls, writers } = recordingWriters();
+    new PaladinDevotionPainter(writers, frame, ROOT, FILL, LABEL, CHARGES, STATUS).paint({
+      visible: true,
+      value: 8,
+      fillFrac: 0.4,
+      ready: false,
+      ascended: true,
+      charges: 2,
+      lastCharge: false,
+      label: '8 / 20',
+      ariaValueText: 'Devotion 8 of 20',
+      announcement: '',
+    });
+    const props = calls
+      .filter((c) => c.method === 'setStyleProp' && c.args[0] === host)
+      .map((c) => c.args.slice(1));
+    expect(props).toEqual([
+      ['--devotion-live', '1'],
+      ['--devotion-fill', '0.400'],
+      ['--devotion-charges', '2'],
+    ]);
   });
 
   it('routes all DOM changes through PainterHost writers', () => {

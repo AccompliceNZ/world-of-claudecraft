@@ -5,6 +5,11 @@ const READY_CLASS = 'ready';
 const ASCENDED_CLASS = 'ascended';
 const LAST_CHARGE_CLASS = 'last-charge';
 const CHARGE_ACTIVE_CLASS = 'on';
+/** Mirrored onto the frame's HUD host so the cross hotbar's set rail can draw
+ *  the same devotion as a meter in pad mode, where the medallion hides. */
+const HOST_FILL_PROP = '--devotion-fill';
+const HOST_CHARGES_PROP = '--devotion-charges';
+const HOST_LIVE_PROP = '--devotion-live';
 
 export class PaladinDevotionPainter {
   constructor(
@@ -15,7 +20,11 @@ export class PaladinDevotionPainter {
     private readonly label: HTMLElement,
     private readonly charges: HTMLCollection,
     private readonly status: HTMLElement,
-  ) {}
+  ) {
+    this.host = frame.parentElement ?? frame;
+  }
+
+  private readonly host: HTMLElement;
 
   paint(state: PaladinDevotionState): void {
     this.writers.setDisplay(this.frame, state.visible ? 'flex' : 'none');
@@ -34,5 +43,12 @@ export class PaladinDevotionPainter {
         state.ascended && index < state.charges,
       );
     }
+    this.writers.setStyleProp(this.host, HOST_LIVE_PROP, state.visible ? '1' : '0');
+    this.writers.setStyleProp(this.host, HOST_FILL_PROP, state.fillFrac.toFixed(3));
+    this.writers.setStyleProp(
+      this.host,
+      HOST_CHARGES_PROP,
+      String(state.ascended ? state.charges : 0),
+    );
   }
 }

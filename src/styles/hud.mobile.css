@@ -3250,12 +3250,12 @@
   /* Independent Devotion medallion: compact enough for the phone battlefield,
      but no longer attached to or covering the player portrait. */
   body.mobile-touch .paladin-devotion-frame {
-    width: 72px;
-    height: 72px;
+    width: 56px;
+    height: 56px;
   }
   body.mobile-touch .paladin-devotion {
-    width: 72px;
-    height: 72px;
+    width: 56px;
+    height: 56px;
   }
   body.mobile-touch .paladin-ascension-charges {
     top: -4px;
