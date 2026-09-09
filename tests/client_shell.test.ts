@@ -2887,12 +2887,12 @@ describe('client HTML shell', () => {
     // change on each side and a one-sided one fails here.
     const frames = [
       ...hudMobileCss.matchAll(
-        /body\.mobile-touch #target-frame \{[^}]*?left:\s*([^;]+);[^}]*?transform:\s*scale\(calc\(([\d.]+)\s*\*/g,
+        /body\.mobile-touch #target-frame \{[^}]*?left:\s*([^;]+);[^}]*?transform:\s*scale\(\s*calc\(\s*([\d.]+|var\([a-z-]+\))\s*\*/g,
       ),
     ].map((m) => ({ left: m[1].trim(), scale: m[2] }));
     const anchors = [
       ...hudMobileCss.matchAll(
-        /--quest-strip-anchor-left:\s*calc\(\s*var\(--ui-scale,\s*1\)\s*\*\s*\(\s*([\s\S]*?)\s*\+\s*var\(--target-frame-content-width\)\s*\*\s*var\(--target-frame-scale,\s*1\)\s*\*\s*([\d.]+)\s*\*/g,
+        /--quest-strip-anchor-left:\s*calc\(\s*var\(--ui-scale,\s*1\)\s*\*\s*\(\s*([\s\S]*?)\s*\+\s*var\(--target-frame-content-width\)\s*\*\s*var\(--target-frame-scale,\s*1\)\s*\*\s*([\d.]+|var\([a-z-]+\))\s*\*/g,
       ),
     ].map((m) => ({ left: m[1].trim(), scale: m[2] }));
     // Two tiers ship the pair today (standard and compact); a third tier that

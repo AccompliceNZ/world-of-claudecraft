@@ -49,6 +49,11 @@
        floor is never scaled: where 0.85x would dip a control under 40px, the calc is
        clamped with max()/clamp() so the effective size holds at 40px. */
     --mobile-chrome-scale: 0.85;
+    /* The stock unit-frame factor on top of the chrome scale, portrait and
+       landscape (the orientation the touch HUD actually plays in). Review round
+       3 raised both a step: the frames read too small at the board factors. */
+    --mobile-unit-frame-scale: 0.92;
+    --mobile-unit-frame-scale-landscape: 0.7;
 
     /* W13 additions (mobile touch HUD). Every mobile-only value the touch rules
        need is declared here, so no rule in this sheet carries a raw color and an
@@ -1856,7 +1861,7 @@
         max(20px, calc(env(safe-area-inset-left) + 10px)) +
         var(--target-frame-content-width) *
         var(--target-frame-scale, 1) *
-        0.82 *
+        var(--mobile-unit-frame-scale) *
         var(--mobile-chrome-scale, 1)
       ) +
       11px
@@ -2419,7 +2424,7 @@
        viewport bottom, because that line is where the player frame's top now
        sits: a raw inset would have to guess the frame's scaled height. */
     bottom: calc(var(--mobile-button-row-lift) + 6px);
-    width: calc(300px * 0.82 * var(--mobile-chrome-scale, 1));
+    width: calc(300px * var(--mobile-unit-frame-scale) * var(--mobile-chrome-scale, 1));
     min-width: 0;
     height: 6px;
     transform: translateX(-50%);
@@ -2452,7 +2457,7 @@
     position: fixed;
     left: 50%;
     bottom: calc(var(--mobile-button-row-lift) + 15px);
-    width: calc(300px * 0.82 * var(--mobile-chrome-scale, 1));
+    width: calc(300px * var(--mobile-unit-frame-scale) * var(--mobile-chrome-scale, 1));
     min-width: 0;
     height: 5px;
     transform: translateX(-50%);
@@ -2471,7 +2476,7 @@
     position: fixed;
     left: 50%;
     bottom: calc(var(--mobile-button-row-lift) + 23px);
-    width: calc(300px * 0.82 * var(--mobile-chrome-scale, 1));
+    width: calc(300px * var(--mobile-unit-frame-scale) * var(--mobile-chrome-scale, 1));
     min-width: 0;
     height: 5px;
     transform: translateX(-50%);
@@ -3131,7 +3136,8 @@
     margin: 0;
     display: flex;
     justify-content: flex-start;
-    transform: translateX(-50%) scale(calc(0.82 * var(--mobile-chrome-scale, 1)));
+    transform: translateX(-50%)
+      scale(calc(var(--mobile-unit-frame-scale) * var(--mobile-chrome-scale, 1)));
     transform-origin: center top;
   }
   /* xhb-mode's lift (hud.css's body.xhb-mode #player-frame, translateY only)
@@ -3145,7 +3151,7 @@
   body.mobile-touch.xhb-mode #player-frame {
     transform: translateX(-50%)
       translateY(calc(-1 * var(--xhb-lift, var(--mobile-xhb-lift-fallback))))
-      scale(calc(0.82 * var(--mobile-chrome-scale, 1)));
+      scale(calc(var(--mobile-unit-frame-scale) * var(--mobile-chrome-scale, 1)));
   }
   body.mobile-touch .warlock-doom-frame {
     position: fixed;
@@ -3189,10 +3195,15 @@
      floor. With the portrait the visible frame is ~48px rendered at this scale, so
      the tap area is the floor without an invisible band over the world. */
   body.mobile-touch {
-    /* Portrait scale (0.82): the frame renders ~53px, so the drop clears it with
+    /* Portrait: the 65px frame at the portrait factor, so the drop clears it with
        a 4px gap. The landscape media block below re-tunes it for that tier's
-       0.6 frame scale. */
-    --mobile-pet-frame-drop: calc(53px * var(--mobile-chrome-scale, 1) + 4px);
+       own factor. */
+    --mobile-pet-frame-drop: calc(
+      65px *
+      var(--mobile-unit-frame-scale) *
+      var(--mobile-chrome-scale, 1) +
+      4px
+    );
     /* RULED (qr-19-mobile-pet-frame-combo-overlap, 2026-09-01): the combo-row overlap
        raised against this constant is UNREACHABLE, so the drop stays as written and takes
        no class-conditional term. Checked live: the combo row paints only for resourceType
@@ -3224,7 +3235,8 @@
        right of the frame it hangs under. Reset, do not inherit. */
     padding-left: 0;
     zoom: 1;
-    transform: translateX(-50%) scale(calc(0.82 * var(--mobile-chrome-scale, 1)));
+    transform: translateX(-50%)
+      scale(calc(var(--mobile-unit-frame-scale) * var(--mobile-chrome-scale, 1)));
     transform-origin: center top;
   }
   body.mobile-touch #pet-frame .uf-bars {
@@ -3270,7 +3282,7 @@
   body.mobile-touch #target-frame {
     left: max(20px, calc(env(safe-area-inset-left) + 10px));
     top: max(8px, env(safe-area-inset-top));
-    transform: scale(calc(0.82 * var(--mobile-chrome-scale, 1)));
+    transform: scale(calc(var(--mobile-unit-frame-scale) * var(--mobile-chrome-scale, 1)));
     transform-origin: left top;
   }
   /* The desktop interface editor's frame-dimension settings
@@ -8432,17 +8444,17 @@
       /* The seat itself rides the shared button-row token from the base rule and
          needs no landscape notch; only the width, which matches the landscape
          #player-frame's rendered width (300px * 0.6 below), changes here. */
-      width: calc(300px * 0.6 * var(--mobile-chrome-scale, 1));
+      width: calc(300px * var(--mobile-unit-frame-scale-landscape) * var(--mobile-chrome-scale, 1));
       min-width: 0;
       height: 5px;
     }
     body.mobile-touch #swingbar {
-      width: calc(300px * 0.6 * var(--mobile-chrome-scale, 1));
+      width: calc(300px * var(--mobile-unit-frame-scale-landscape) * var(--mobile-chrome-scale, 1));
       min-width: 0;
       height: 4px;
     }
     body.mobile-touch #swingbar-offhand {
-      width: calc(300px * 0.6 * var(--mobile-chrome-scale, 1));
+      width: calc(300px * var(--mobile-unit-frame-scale-landscape) * var(--mobile-chrome-scale, 1));
       min-width: 0;
       height: 4px;
     }
@@ -8455,13 +8467,19 @@
        invert their visual hierarchy; the landscape tier trades size for the
        shorter viewport everywhere, and this follows the established baseline.
        The drop is the player frame's own rendered height at this scale
-       (65px * 0.6 * chrome-scale) plus a 4px gap, so the pet strip starts where
+       (65px times the landscape frame factor and the chrome scale) plus a 4px gap, so the pet strip starts where
        its owner ends. */
     body.mobile-touch {
-      --mobile-pet-frame-drop: calc(65px * 0.6 * var(--mobile-chrome-scale, 1) + 4px);
+      --mobile-pet-frame-drop: calc(
+        65px *
+        var(--mobile-unit-frame-scale-landscape) *
+        var(--mobile-chrome-scale, 1) +
+        4px
+      );
     }
     body.mobile-touch #pet-frame {
-      transform: translateX(-50%) scale(calc(0.6 * var(--mobile-chrome-scale, 1)));
+      transform: translateX(-50%)
+        scale(calc(var(--mobile-unit-frame-scale-landscape) * var(--mobile-chrome-scale, 1)));
     }
     body.mobile-touch #petbar {
       top: max(6px, env(safe-area-inset-top));
@@ -8502,7 +8520,8 @@
     body.mobile-touch #player-frame {
       left: 50%;
       width: 300px;
-      transform: translateX(-50%) scale(calc(0.6 * var(--mobile-chrome-scale, 1)));
+      transform: translateX(-50%)
+        scale(calc(var(--mobile-unit-frame-scale-landscape) * var(--mobile-chrome-scale, 1)));
     }
     /* Landscape's own scale (0.6, not the portrait rule's 0.82 above) needs the
        SAME composed lift, or a pad paired on the landscape-only touch HUD (the
@@ -8511,7 +8530,7 @@
     body.mobile-touch.xhb-mode #player-frame {
       transform: translateX(-50%)
         translateY(calc(-1 * var(--xhb-lift, var(--mobile-xhb-lift-fallback))))
-        scale(calc(0.6 * var(--mobile-chrome-scale, 1)));
+        scale(calc(var(--mobile-unit-frame-scale-landscape) * var(--mobile-chrome-scale, 1)));
     }
     body.mobile-touch #player-frame .uf-bars {
       width: 224px;
@@ -8520,7 +8539,9 @@
     body.mobile-touch #target-frame {
       left: max(6px, env(safe-area-inset-left));
       top: max(6px, env(safe-area-inset-top));
-      transform: scale(calc(0.6 * var(--mobile-chrome-scale, 1)));
+      transform: scale(
+        calc(var(--mobile-unit-frame-scale-landscape) * var(--mobile-chrome-scale, 1))
+      );
     }
     /* The quest strip's anchor tracks this tier's target seat: same derivation
        as the portrait one, reading THIS rule's left literal and scale. */
@@ -8531,7 +8552,7 @@
           max(6px, env(safe-area-inset-left)) +
           var(--target-frame-content-width) *
           var(--target-frame-scale, 1) *
-          0.6 *
+          var(--mobile-unit-frame-scale-landscape) *
           var(--mobile-chrome-scale, 1)
         ) +
         11px
@@ -8590,7 +8611,9 @@
     body.mobile-touch #minimap-wrap {
       right: max(6px, env(safe-area-inset-right));
       top: max(6px, env(safe-area-inset-top));
-      transform: scale(calc(0.6 * var(--mobile-chrome-scale, 1)));
+      transform: scale(
+        calc(var(--mobile-unit-frame-scale-landscape) * var(--mobile-chrome-scale, 1))
+      );
     }
     body.mobile-touch #meters-window {
       position: fixed;

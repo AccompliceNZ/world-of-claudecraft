@@ -251,15 +251,17 @@ describe('the lift composes into the mobile #player-frame/#castbar transform in 
     );
   });
 
-  it('composes the lift into the PORTRAIT #player-frame scale (0.82)', () => {
+  it('composes the lift into the PORTRAIT #player-frame scale (the portrait factor)', () => {
     const body = ruleBody('body\\.mobile-touch\\.xhb-mode #player-frame');
     expect(body).toContain(
       'translateY(calc(-1 * var(--xhb-lift, var(--mobile-xhb-lift-fallback))))',
     );
-    expect(body).toContain('scale(calc(0.82 * var(--mobile-chrome-scale, 1)))');
+    expect(body).toContain(
+      'scale(calc(var(--mobile-unit-frame-scale) * var(--mobile-chrome-scale, 1)))',
+    );
   });
 
-  it('ALSO composes the lift into the LANDSCAPE #player-frame scale (0.6): the touch HUD is landscape-only, so this is the rule that actually governs real play, not the portrait one above', () => {
+  it('ALSO composes the lift into the LANDSCAPE #player-frame scale (the landscape factor): the touch HUD is landscape-only, so this is the rule that actually governs real play, not the portrait one above', () => {
     const landscapeOpenAt = hudMobileCss.indexOf('@media (orientation: landscape) {');
     const bothRules = [
       ...hudMobileCss.matchAll(/body\.mobile-touch\.xhb-mode #player-frame \{([^}]*)\}/g),
@@ -277,6 +279,8 @@ describe('the lift composes into the mobile #player-frame/#castbar transform in 
     expect(body).toContain(
       'translateY(calc(-1 * var(--xhb-lift, var(--mobile-xhb-lift-fallback))))',
     );
-    expect(body).toContain('scale(calc(0.6 * var(--mobile-chrome-scale, 1)))');
+    expect(body).toContain(
+      'scale(calc(var(--mobile-unit-frame-scale-landscape) * var(--mobile-chrome-scale, 1)))',
+    );
   });
 });
