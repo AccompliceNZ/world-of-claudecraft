@@ -4642,9 +4642,9 @@
     box-sizing: border-box;
     overflow: hidden;
   }
-  /* The shared harvest-preference picker's Apply/Cancel ride the plain .btn
-     shape, whose desktop 6px/16px padding falls short of the 40px touch
-     floor; the picker's own radio rows already clear it unconditionally
+  /* The shared harvest-preference picker's Apply/Cancel ride the .ui-btn
+     plate, whose 32px desktop height falls short of the 40px touch floor;
+     the picker's own radio rows already clear it unconditionally
      (components.css min-height:40px). */
   body.mobile-touch #harvest-preference-window .btn {
     min-height: 40px;
@@ -4677,7 +4677,6 @@
     }
     body.mobile-touch .harvest-preference-header {
       margin-bottom: var(--spacing-sm);
-      padding-bottom: var(--spacing-sm);
     }
     body.mobile-touch .harvest-preference-actions {
       margin-top: var(--spacing-sm);

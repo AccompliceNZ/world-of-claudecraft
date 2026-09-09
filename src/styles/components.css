@@ -1075,14 +1075,12 @@
     min-width: 0;
     min-height: 0;
   }
+  /* Geometry only: the bar is the .ui-win-head primitive (ground, keyline and
+     height), so nothing here may re-declare them. */
   .harvest-preference-header {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-sm);
     flex: 0 0 auto;
-    padding-bottom: var(--spacing-md);
     margin-bottom: var(--spacing-md);
-    border-bottom: 1px solid var(--border);
+    padding-inline: 0;
   }
   .harvest-preference-emblem,
   .harvest-preference-icon {
@@ -1094,14 +1092,6 @@
     border: 1px solid var(--border);
     border-radius: var(--radius-sm);
     background: var(--panel-edge);
-  }
-  .harvest-preference-title {
-    font-family: var(--font-display);
-    font-size: 18px;
-    line-height: 1.3;
-    font-weight: 600;
-    color: var(--color-accent);
-    overflow-wrap: anywhere;
   }
   .harvest-preference-body {
     min-height: 0;
@@ -1133,6 +1123,7 @@
   .harvest-preference-rows li {
     min-width: 0;
   }
+  /* Geometry only: the row plate is the .ui-card primitive. */
   .harvest-preference-row {
     display: flex;
     align-items: center;
@@ -1140,11 +1131,6 @@
     width: 100%;
     min-height: 60px;
     padding: var(--spacing-sm);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    background: var(--panel-bg);
-    color: var(--color-text-light);
-    font-family: var(--ui-font);
     font-size: 15px;
     text-align: left;
     cursor: var(--cursor-point);
@@ -1153,9 +1139,6 @@
     flex: 1;
     min-width: 0;
     overflow-wrap: anywhere;
-  }
-  .harvest-preference-row:hover {
-    border-color: var(--color-accent);
   }
   .harvest-preference-row:focus-visible {
     outline: 2px solid var(--color-border-focus);
@@ -1186,13 +1169,13 @@
     border-radius: 50%;
     background: var(--color-accent);
   }
+  /* Geometry only: the pinned confirm row is the .ui-win-foot primitive (its
+     keyline and gutter). The window already carries --window-pad, so the foot
+     keeps its own inline padding at zero and the two buttons split the width. */
   .harvest-preference-actions {
-    display: flex;
-    gap: var(--spacing-sm);
     flex: 0 0 auto;
     margin-top: var(--spacing-md);
-    padding-top: var(--spacing-md);
-    border-top: 1px solid var(--border);
+    padding-inline: 0;
   }
   .harvest-preference-actions .btn {
     flex: 1;
@@ -1218,8 +1201,6 @@
   .harvest-preference-source {
     margin-bottom: 8px;
     padding: 8px;
-    border: 1px solid var(--color-border-default);
-    border-radius: 4px;
     font-size: 11px;
   }
   .harvest-preference-source-title {
@@ -11185,9 +11166,9 @@
      state, plant-time care), with a 1 Hz countdown that rewrites only the
      .hj-time text. IDENTICAL ON EVERY GRAPHICS PRESET AND FPS TIER: a crop
      timer is actionable information, so nothing here is preset- or tier-gated.
-     The rows ride the showcase inset-card idiom the professions sections use;
-     the two state hues are the shared success/error text tokens and never the
-     only signal (each state also says its word). */
+     The rows are .ui-card plates and the care chips .ui-chip pills (the
+     library primitives); the two state hues are the shared success/error text
+     tokens and never the only signal (each state also says its word). */
   #harvest-journal-window {
     width: 520px;
     max-height: calc(var(--app-vh, 100vh) * 0.8 / var(--window-scale) - 24px);
@@ -11215,9 +11196,6 @@
     grid-template-columns: minmax(0, 1fr) minmax(0, auto);
     gap: 2px 12px;
     padding: 8px 10px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
-    background: var(--color-card-inset);
   }
   .hj-crop {
     grid-column: 1;
@@ -11269,14 +11247,6 @@
     justify-content: flex-end;
     gap: 4px;
   }
-  .hj-care-chip {
-    padding: 1px 6px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 999px;
-    background: var(--color-bg-input);
-    font-size: 10px;
-    color: var(--color-text-muted);
-  }
   .hj-care-none {
     font-size: 10px;
     color: var(--color-text-muted);
@@ -11306,7 +11276,8 @@
      radiogroup (aria-checked carries the pick, the Phase 14 a11y batch) and
      the three care knobs are aria-pressed toggles, all on the 40px touch
      floor; hue is never the only signal (a short knob also says its reason).
-     Reuses the journal's inset-card idiom and the shared window chrome. */
+     Rows and knobs are .ui-card plates, Plant is a .ui-btn --gold pinned in a
+     .ui-win-foot, and the title bar is the shared .ui-win-head. */
   #plant-sheet-window {
     width: 440px;
     max-height: calc(var(--app-vh, 100vh) * 0.8 / var(--window-scale) - 24px);
@@ -11329,6 +11300,8 @@
     padding: 0;
     list-style: none;
   }
+  /* Geometry only: the row plate is the .ui-card primitive (edge, ground and
+     radius), so nothing here may re-declare them. */
   .ps-seed {
     display: flex;
     align-items: center;
@@ -11336,16 +11309,8 @@
     width: 100%;
     min-height: 40px;
     padding: 8px 10px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
-    /* The input-surface token its sibling .ps-knob already rides (Phase 14
-       style batch): the raw 24%-black scrim read a shade apart from the knobs
-       in the same sheet and drifted from the tokens the theme presets drive. */
-    background: var(--color-bg-input);
-    color: var(--color-text-light);
-    font: inherit;
     text-align: left;
-    cursor: pointer;
+    cursor: var(--cursor-point);
   }
   /* The seed rows are radios since the Phase 14 a11y batch (single-select),
      so the picked state rides aria-checked, never aria-pressed. */
@@ -11387,6 +11352,8 @@
     flex-wrap: wrap;
     gap: 6px;
   }
+  /* Geometry plus the unpressed tone: the plate is .ui-card, and the muted
+     label is the knob's own OFF state (the pressed rule below lifts it). */
   .ps-knob {
     display: flex;
     flex-direction: column;
@@ -11395,13 +11362,9 @@
     min-width: 40px;
     min-height: 40px;
     padding: 6px 10px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
-    background: var(--color-bg-input);
     color: var(--color-text-muted);
-    font: inherit;
     text-align: left;
-    cursor: pointer;
+    cursor: var(--cursor-point);
   }
   .ps-knob[aria-pressed="true"] {
     border-color: var(--gold);
@@ -11429,17 +11392,15 @@
     font-size: 10px;
     color: var(--color-text-error);
   }
+  /* The pinned action row: a sibling of the .ps-body scroller, so Plant (or
+     Harvest) stays reachable however long the seed list runs. The window
+     already carries --window-pad, so the foot only adds its vertical gutter. */
+  .ps-foot {
+    padding: var(--spacing-sm) 0 0;
+    margin-top: var(--spacing-sm);
+  }
   .ps-plant {
-    align-self: flex-end;
     min-height: 40px;
-    padding: 8px 18px;
-    border: 1px solid var(--gold-dim);
-    border-radius: 7px;
-    background: var(--color-bg-input);
-    color: var(--gold);
-    font: inherit;
-    font-weight: 600;
-    cursor: pointer;
   }
   /* ---------- perfecting window ---------- */
   /* The Perfecting window (#perfecting-window, Masterwrought phase 14): the
@@ -11491,6 +11452,7 @@
     padding: 0;
     list-style: none;
   }
+  /* Geometry only: the row plate is the .ui-card primitive. */
   .pf-cand {
     display: flex;
     align-items: center;
@@ -11498,13 +11460,8 @@
     width: 100%;
     min-height: 40px;
     padding: 6px 10px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
-    background: var(--color-bg-input);
-    color: var(--color-text-light);
-    font: inherit;
     text-align: left;
-    cursor: pointer;
+    cursor: var(--cursor-point);
   }
   .pf-cand[aria-checked="true"] {
     border-color: var(--gold);
@@ -11560,11 +11517,6 @@
   }
   .pf-chip {
     flex: none;
-    padding: 1px 6px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
-    font-size: 10px;
-    color: var(--color-text-muted);
   }
   .pf-cand-state {
     flex: none;
@@ -11577,8 +11529,6 @@
     flex-direction: column;
     gap: 8px;
     padding: 10px;
-    border: 1px solid var(--color-border-showcase);
-    border-radius: 7px;
   }
   .pf-detail-head {
     display: flex;
@@ -11663,21 +11613,12 @@
   .pf-skill.unmet .pf-skill-state {
     color: var(--color-text-error);
   }
+  /* Geometry only: the plate is .ui-btn --gold, including its disabled state.
+     The section action stays on the 40px touch floor and hugs its section's
+     trailing edge. */
   .pf-action {
     align-self: flex-end;
     min-height: 40px;
-    padding: 8px 18px;
-    border: 1px solid var(--gold-dim);
-    border-radius: 7px;
-    background: var(--color-bg-input);
-    color: var(--gold);
-    font: inherit;
-    font-weight: 600;
-    cursor: pointer;
-  }
-  .pf-action:disabled {
-    opacity: 0.6;
-    cursor: default;
   }
   .pf-swap-section {
     display: flex;
