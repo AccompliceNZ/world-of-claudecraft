@@ -4004,7 +4004,7 @@ export const tr_TR: EnTranslations = {
       },
       "roster": {
         "seats": "{cap} koltukların {count}'si",
-        "expand": "Kadroyu genişlet (+{price} için {seats} koltuklar)",
+        "expand": "Kadroyu genişlet",
         "maxed": "Kadro en büyük boyutunda",
         "confirm": "Lonca kadrosu {price} için {seats} koltuklarıyla genişletilsin mi? Altın kendi kesenizden gelir ve iade edilmez.",
         "confirmAction": "Genişlet",

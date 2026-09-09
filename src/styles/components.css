@@ -12319,6 +12319,11 @@
   .soc-add.soc-leave {
     justify-content: flex-end;
   }
+  /* The guild footer: the leader-only Expand roster button leads the same row the
+     disband / leave button ends, so the auto margin pushes it to the start edge. */
+  .soc-add.soc-leave .soc-foot-start {
+    margin-right: auto;
+  }
   .soc-add input {
     flex: 1;
     background: #120f0c;

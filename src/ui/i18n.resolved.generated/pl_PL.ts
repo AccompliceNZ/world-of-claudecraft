@@ -4004,7 +4004,7 @@ export const pl_PL: EnTranslations = {
       },
       "roster": {
         "seats": "{count} z siedzeń {cap}",
-        "expand": "Rozszerz skład (+ miejsca {seats} dla {price})",
+        "expand": "Rozszerz skład",
         "maxed": "Lista jest w największym rozmiarze",
         "confirm": "Rozszerzyć skład gildii o miejsca {seats} dla {price}? Złoto pochodzi z Twojego portfela i nie podlega zwrotowi.",
         "confirmAction": "Rozwiń",

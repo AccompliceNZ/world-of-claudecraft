@@ -4004,7 +4004,7 @@ export const it_IT: EnTranslations = {
       },
       "roster": {
         "seats": "{count} dei posti {cap}",
-        "expand": "Espandi elenco (+ posti {seats} per {price})",
+        "expand": "Espandi elenco",
         "maxed": "Il roster ha le sue dimensioni più grandi",
         "confirm": "Espandere l'elenco delle gilde aggiungendo posti {seats} per {price}? L'oro proviene dal tuo portafoglio e non viene rimborsato.",
         "confirmAction": "Espandi",

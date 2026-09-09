@@ -4004,7 +4004,7 @@ export const da_DK: EnTranslations = {
       },
       "roster": {
         "seats": "{count} af {cap} sæder",
-        "expand": "Udvid liste (+{seats} pladser til {price})",
+        "expand": "Udvid liste",
         "maxed": "Listen er i sin største størrelse",
         "confirm": "Udvide guildlisten med {seats}-sæder til {price}? Guldet kommer fra din egen pung og refunderes ikke.",
         "confirmAction": "Udvid",

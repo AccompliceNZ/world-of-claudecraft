@@ -4004,7 +4004,7 @@ export const zh_TW: EnTranslations = {
       },
       "roster": {
         "seats": "{count} / {cap} 席位",
-        "expand": "擴充名冊（+{seats} 席位，{price}）",
+        "expand": "擴充名冊",
         "maxed": "名冊已達最大規模",
         "confirm": "花費 {price} 為公會名冊擴充 {seats} 個席位？金幣將從你自己的錢包扣除，不予退還。",
         "confirmAction": "擴充",

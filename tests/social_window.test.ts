@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import type { GuildRow } from '../src/ui/social_view';
-import { guildMemberRowHtml } from '../src/ui/social_window';
+import { guildMemberRowHtml, rosterExpandConfirmHtml } from '../src/ui/social_window';
 
 // Source-level guards for the social painter. The pure row + signature decisions are
 // unit-tested in social_view.test.ts; here we pin the no-magic-values
@@ -415,18 +415,37 @@ describe('social_window: guild roster expansion (source pins)', () => {
   // The painter renders what the pure core decided (guildView memberCap /
   // nextRosterPrice / canExpandRoster), spends gold only through the shared
   // confirm prompt, and formats the price with the money formatter.
-  it('reads the seat cap off the pure core and formats the price, never a raw number', () => {
+  it('reads the seat cap off the pure core and renders the price as coin icons, never a raw number', () => {
     expect(painter).toContain("t('hudChrome.social.roster.seats'");
     expect(painter).toContain('cap: formatNumber(g.memberCap');
-    expect(painter).toContain('formatMoney(roster.nextRosterPrice)');
+    // The price lives in the confirm prompt only, as the shared coin-icon readout with
+    // formatMoney's compact coin set and bare digits (no thousands separators).
+    expect(painter).toContain(
+      'moneyHtml(roster.nextRosterPrice, { compact: true, grouping: false })',
+    );
+    expect(painter).not.toContain('formatMoney(');
     expect(painter).not.toMatch(/roster\.nextRosterPrice\s*\/\s*10_?000/);
   });
 
   it('shows the buy button to the leader only, disabled once the ladder is complete', () => {
-    expect(painter).toContain("if (roster && guild.rank === 'leader')");
+    expect(painter).toContain("roster && guild.rank === 'leader'");
     expect(painter).toContain('data-act="guild-expand" disabled');
     expect(painter).toContain("t('hudChrome.social.roster.maxed')");
-    expect(painter).toContain("t('hudChrome.social.roster.expand'");
+    // The button carries no seats or price (the catalog value is the bare label).
+    expect(painter).toContain("t('hudChrome.social.roster.expand')");
+    expect(painter).not.toContain("t('hudChrome.social.roster.expand',");
+    expect(hudChromeCatalog).toContain("expand: 'Expand roster',");
+  });
+
+  it('the expand button leads the footer row the disband / leave button ends', () => {
+    // One .soc-add.soc-leave row holds both: the leader-only expand button first
+    // (pushed to the start edge by .soc-foot-start), the disband or leave button last.
+    expect(painter).toContain('foot += `<div class="soc-add soc-leave">${expand}${leave}</div>`;');
+    expect(painter).toContain('class="btn soc-foot-start" data-act="guild-expand"');
+    expect(painter).not.toContain('<div class="soc-add soc-leave"><button');
+    expect(componentsCss).toContain(
+      '.soc-add.soc-leave .soc-foot-start {\n    margin-right: auto;\n  }',
+    );
   });
 
   it('a bought page (a structural change) rebuilds the footer around a preserved draft', () => {
@@ -450,9 +469,23 @@ describe('social_window: guild roster expansion (source pins)', () => {
     const body = handler.slice(0, handler.indexOf("act === 'guild-leave'"));
     expect(body).toContain('roster?.canExpandRoster && roster.nextRosterPrice !== null');
     expect(body).toContain('this.deps.showPrompt(');
-    expect(body).toContain("t('hudChrome.social.roster.confirm'");
+    expect(body).toContain('rosterExpandConfirmHtml(');
     expect(body).toContain("t('hudChrome.social.roster.confirmAction')");
     expect(body).toContain('() => w.guildBuyRosterPage()');
+  });
+
+  it('the confirm body escapes the localized sentence and splices the coin markup into its slot', () => {
+    // The sentence never reaches innerHTML raw: only the trusted price markup does.
+    const price = '<span class="money-inline">1736<span class="coin g"></span></span>';
+    const html = rosterExpandConfirmHtml('20', price);
+    expect(html).toBe(
+      `Expand the guild roster by 20 seats for ${price}? The gold comes from your own purse and is not refunded.`,
+    );
+    expect(html).not.toContain('\u0000');
+    // A price carrying replacement-pattern characters is spliced verbatim.
+    expect(rosterExpandConfirmHtml('20', '$&$1')).toContain('for $&$1?');
+    // The seats value is escaped like any other interpolated text.
+    expect(rosterExpandConfirmHtml('<b>', price)).toContain('by &lt;b&gt; seats');
   });
 
   it('the catalog carries the roster block with every key the painter and hud read', () => {

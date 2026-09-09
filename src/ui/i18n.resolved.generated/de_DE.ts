@@ -4004,7 +4004,7 @@ export const de_DE: EnTranslations = {
       },
       "roster": {
         "seats": "{count} von {cap} Sitzen",
-        "expand": "Kader erweitern (+{seats}-Plätze für {price})",
+        "expand": "Kader erweitern",
         "maxed": "Der Dienstplan ist am größten",
         "confirm": "Erweitern Sie die Gildenliste um {seats}-Plätze für {price}? Das Gold stammt aus Ihrem eigenen Portemonnaie und wird nicht erstattet.",
         "confirmAction": "Erweitern",

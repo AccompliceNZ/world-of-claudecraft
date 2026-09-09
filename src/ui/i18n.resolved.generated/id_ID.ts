@@ -4004,7 +4004,7 @@ export const id_ID: EnTranslations = {
       },
       "roster": {
         "seats": "Kursi {count} dari {cap}",
-        "expand": "Perluas daftar pemain (+kursi {seats} untuk {price})",
+        "expand": "Perluas daftar pemain",
         "maxed": "Daftar tersebut berada pada ukuran terbesarnya",
         "confirm": "Perluas daftar guild dengan kursi {seats} untuk {price}? Emas tersebut berasal dari dompet Anda sendiri dan tidak dapat dikembalikan.",
         "confirmAction": "Perluas",

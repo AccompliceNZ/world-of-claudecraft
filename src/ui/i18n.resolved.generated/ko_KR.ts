@@ -4004,7 +4004,7 @@ export const ko_KR: EnTranslations = {
       },
       "roster": {
         "seats": "{count} / {cap} 자리",
-        "expand": "명단 확장 (+{seats}자리, {price})",
+        "expand": "명단 확장",
         "maxed": "명단이 이미 최대 규모입니다",
         "confirm": "{price}(으)로 길드 명단을 {seats}자리 확장하시겠습니까? 골드는 본인의 소지금에서 차감되며 환불되지 않습니다.",
         "confirmAction": "확장",
