@@ -56,7 +56,9 @@ export function installPromptDialog(
   });
   const accept =
     prompt.querySelector<HTMLElement>('[data-store-prompt-confirm]') ??
-    prompt.querySelector<HTMLElement>('.btn:not([data-store-prompt-cancel])') ??
+    prompt.querySelector<HTMLElement>(
+      '.btn:not([data-store-prompt-cancel]):not([class*="cancel"])',
+    ) ??
     prompt.querySelector<HTMLElement>('button');
   accept?.classList.add('ui-btn--red');
   prompt.setAttribute('role', 'dialog');
