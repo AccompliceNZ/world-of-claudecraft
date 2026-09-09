@@ -8801,6 +8801,12 @@ export const TARGETS = [
     ],
     async capture(page, variant) {
       await dismissTutorialGreeting(page);
+      // Under load the entry flow can hand over before the offline Sim has a
+      // player; give the world a few seconds to appear before staging on it.
+      for (let i = 0; i < 20; i++) {
+        if (await page.evaluate(() => Boolean(window.__game?.sim?.player))) break;
+        await wait(500);
+      }
       const staged = await page.evaluate(() => {
         const sim = window.__game?.sim;
         if (!sim?.player) return { ok: false, reason: 'offline world is unavailable' };
