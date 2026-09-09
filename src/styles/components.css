@@ -949,16 +949,10 @@
   .corpse-harvest-btn {
     width: 100%;
   }
-  /* A background status refresh over a prior admitted answer disables via
-     aria-disabled rather than native `disabled` (loot_window_controller.ts
-     applyHarvestButtonState), so it must still READ as disabled: the same
-     treatment as the shared .btn:disabled family above, scoped to this one
-     control rather than a global aria-disabled rule. */
-  .corpse-harvest-btn[aria-disabled="true"] {
-    filter: grayscale(1) brightness(0.7);
-    cursor: default;
-    box-shadow: none;
-  }
+  /* Background harvest-status polls retain the last admitted appearance.
+     aria-disabled still blocks activation and preserves keyboard focus; styling
+     each half-second poll as disabled would make the button flash. Actual
+     denials and command waits keep the shared native .btn:disabled treatment. */
 
   /* ---------- town-focus ---------- */
   /* town focus (#1143): persistent town-set component harvest focus */
