@@ -32,7 +32,7 @@ import { formatNumber, t } from '../../i18n';
 import { itemNameColor } from '../../item_name_color';
 import type { PainterHostPresentation } from '../../painter_host';
 import { questMapLocation } from '../../quest_map_location_core';
-import { type QuestTrackingState, sharedQuestTracking } from '../../quest_tracking_core';
+import { QuestTrackingState, sharedQuestTracking } from '../../quest_tracking_core';
 import { svgIcon } from '../../ui_icons';
 import { buildQuestLogView, type QuestDetailModel } from './questlog_view';
 
@@ -79,7 +79,10 @@ export class QuestLogWindow {
   constructor(private readonly deps: QuestLogWindowDeps) {}
 
   private tracking(): QuestTrackingState {
-    return this.deps.tracking ?? sharedQuestTracking();
+    // Instance check, not nullish: a proxy-built test deps bag answers every
+    // key with a stub function, and a stub is not a tracking state.
+    const own = this.deps.tracking;
+    return own instanceof QuestTrackingState ? own : sharedQuestTracking();
   }
 
   get isOpen(): boolean {
