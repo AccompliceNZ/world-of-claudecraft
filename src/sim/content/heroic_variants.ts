@@ -14,12 +14,13 @@
 // key, and the entity manifest skips it.
 import {
   HEROIC_VARIANT_SOURCE_LEVEL,
-  normalizePrimaryStats,
-  PRIMARY_STATS,
+  normalizeToStaminaModel,
   primaryStatBudget,
   QUALITY_ILVL_BONUS,
   scaleWeaponDamage,
   slotStatMultForItem,
+  staminaBaseline,
+  statIdentity,
   TWOHAND_DPS_MULT,
   TWOHAND_STAT_MULT,
   weaponDpsBudget,
@@ -38,6 +39,14 @@ import { TEMPLE_DUNGEON_DEFS } from './temple';
 import { WILDHEART_DUNGEON_DEFS } from './wildheart';
 
 // The id of the Heroic variant of a base item (a stable, pure prefix).
+// The largest line whose model total (line plus its caster baseline) fits inside
+// `total`; exact for any item on the model, and never above the total.
+function lineFromTotal(total: number): number {
+  let line = total;
+  while (line > 0 && line + staminaBaseline(line) > total) line -= 1;
+  return line;
+}
+
 export function heroicVariantId(baseId: string): string {
   return `heroic_${baseId}`;
 }
@@ -123,14 +132,23 @@ function makeHeroicVariant(base: ItemDef, sourceLevel = HEROIC_VARIANT_SOURCE_LE
     primaryStatBudget(targetLevel, base.quality, base.slot, slotStatMultForItem(base)) *
       handMultiplier,
   );
-  const baseBudget = base.stats
-    ? PRIMARY_STATS.reduce((sum, stat) => sum + (base.stats?.[stat] ?? 0), 0)
+  // The base item's realized LINE: its whole primary total for a physical identity
+  // (stamina sits inside it), its total minus the free baseline for a caster one
+  // (item_budget.ts, the stamina baseline model). The caster baseline is a share of
+  // the line, so it is recovered from the total by solving line + baseline(line).
+  const baseTotal = base.stats
+    ? (['str', 'agi', 'sta', 'int', 'spi'] as const).reduce(
+        (sum, stat) => sum + (base.stats?.[stat] ?? 0),
+        0,
+      )
     : 0;
-  // normalizePrimaryStats keeps the item's stat identity (its str/agi/int ratio)
-  // and passes armor through untouched; only the primary-stat sum grows to the
-  // larger of the heroic target budget and the base item's realized budget.
+  const baseBudget = statIdentity(base.stats) === 'caster' ? lineFromTotal(baseTotal) : baseTotal;
+  // normalizeToStaminaModel keeps the item's stat identity (its str/agi/int ratio),
+  // places the free stamina baseline for the variant's line, and passes armor
+  // through untouched; the line grows to the larger of the heroic target and the
+  // base item's realized line.
   const stats = base.stats
-    ? normalizePrimaryStats(base.stats, Math.max(targetBudget, baseBudget))
+    ? normalizeToStaminaModel(base.stats, Math.max(targetBudget, baseBudget))
     : base.stats;
   // Weapon damage tracks item level too: scale the base weapon to the heroic-tier
   // dps for this variant's item level (two-handers ride TWOHAND_DPS_MULT above the

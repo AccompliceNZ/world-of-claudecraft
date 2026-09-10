@@ -8,6 +8,7 @@ import {
   occupiesHand,
 } from '../src/sim/equipment_rules';
 import {
+  expectedLineBudget,
   expectedStatBudget,
   itemLevel,
   primaryStatBudget,
@@ -378,12 +379,17 @@ describe('worn offhand budget', () => {
   });
 
   it('prices each quiver on the worn line, below the held offhand of its tier', () => {
-    // Same slot, same item level, same quality as the caster orb, lower budget:
-    // the orb costs you the two-hander and the quiver does not.
+    // Same slot, same item level, same quality as the caster orb; the quiver's
+    // LINE is lower because it is a worn offhand (WORN_OFFHAND_STAT_MULT) while
+    // the orb is a held one (SLOT_STAT_MULT.offhand): the orb costs you the
+    // two-hander and the quiver does not. The orb is also caster identity, so
+    // its TOTAL now carries the stamina baseline on top of that line
+    // (item_budget.ts, the stamina baseline model); compare LINES so the
+    // worn-vs-held comparison is not muddied by that extra stamina.
     expect(itemLevel(ITEMS.direfang_quiver)).toBe(itemLevel(ITEMS.wraithfire_orb));
     expect(ITEMS.direfang_quiver.quality).toBe(ITEMS.wraithfire_orb.quality);
     expect(primaryStatSum(ITEMS.direfang_quiver)).toBe(9);
-    expect(primaryStatSum(ITEMS.wraithfire_orb)).toBe(15);
+    expect(expectedLineBudget(ITEMS.wraithfire_orb)).toBe(15);
     expect(QUIVERS.map((id) => primaryStatSum(ITEMS[id]))).toEqual([1, 4, 6, 9]);
   });
 

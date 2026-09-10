@@ -31,7 +31,14 @@ describe('immutable Perfecting collection contributions', () => {
       expect(delta).toBeGreaterThan(0);
       expect(bonus.armor).toBeUndefined();
     }
-    expect(perfectedBonusStats(ITEMS.wyrmfall_pendant, { level: 25 })).toEqual({ int: 1, sta: 0 });
+    // wyrmfall_pendant is caster identity and now carries real Spirit (the
+    // stamina baseline model filled its old int-only line with Spirit), so
+    // the bake's profile keys include it too, even at a zero share.
+    expect(perfectedBonusStats(ITEMS.wyrmfall_pendant, { level: 25 })).toEqual({
+      int: 1,
+      sta: 0,
+      spi: 0,
+    });
   });
 
   it('retains the originally minted profile across later balance changes and adds no active stats', () => {

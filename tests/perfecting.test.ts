@@ -21,7 +21,7 @@ import {
 } from '../src/sim/item_budget';
 import { sanitizeItemInstancePayloadOnLoad } from '../src/sim/item_instance_load';
 import { itemInstancePayloadsEqual } from '../src/sim/item_instance_merge';
-import { expectedStatBudget } from '../src/sim/item_level';
+import { expectedStatBudget, staminaBaseline, statIdentity } from '../src/sim/item_level';
 import { archetypeCeilingFor, JACK_CEILING_TIER } from '../src/sim/professions/archetype';
 import { MASTERWORK_CHANCE_CAP, masterworkBumpedQuality } from '../src/sim/professions/masterwork';
 import {
@@ -601,10 +601,17 @@ describe('R5: the Perfected bonus is exactly the source-28 budget delta', () => 
       expect(recipe.level).toBe(25);
       const shipped = expectedStatBudget(def);
       expect(shipped, `${id}: the shipped budget resolves`).toBeDefined();
-      expect(budgetAtSource(def, recipe.level), `${id}: low side is the shipped budget`).toBe(
-        shipped,
-      );
-      const formulaDelta = budgetAtSource(def, PERFECTED_SOURCE_LEVEL) - (shipped ?? 0);
+      // perfectedBonusStats bakes off the raw LINE (item_budget.ts's
+      // primaryStatBudget), never touched by the stamina baseline model. The
+      // live shipped total additionally carries the caster baseline on top of
+      // that line (item_level.ts, expectedStatBudget), so a caster identity's
+      // low side needs the baseline added back before comparing to it.
+      const identity = statIdentity(def.stats);
+      const lowSideLine = budgetAtSource(def, recipe.level);
+      const lowSideShipped =
+        identity === 'caster' ? lowSideLine + staminaBaseline(lowSideLine) : lowSideLine;
+      expect(lowSideShipped, `${id}: low side is the shipped budget`).toBe(shipped);
+      const formulaDelta = budgetAtSource(def, PERFECTED_SOURCE_LEVEL) - lowSideLine;
       expect(statSum(bonus), `${id}: the bake sums to the formula delta`).toBe(formulaDelta);
       expect(statSum(bonus), `${id}: the pinned literal`).toBe(EXPECTED_DELTA_BY_ID[id]);
       // The bonus keeps the def's own stat identity: no stat outside the

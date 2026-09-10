@@ -95,12 +95,15 @@ describe('heroic loot flair: variant generation', () => {
     });
   });
 
-  it("preserves Moonwrack Robe's 15 primary-stat points in its Heroic variant", () => {
+  it("preserves Moonwrack Robe's 19 primary-stat points in its Heroic variant", () => {
+    // stamina baseline model: the line stayed 15 (int:10/spi:5), but a caster
+    // identity now carries its free stamina baseline on top, so the realized
+    // total is 19, matched on both the base item and its Heroic variant.
     const base = ITEMS.moonshroud_robe;
     const variant = ITEMS[heroicVariantId(base.id)];
     expect({ base: primaryStatSum(base), heroic: primaryStatSum(variant) }).toEqual({
-      base: 15,
-      heroic: 15,
+      base: 19,
+      heroic: 19,
     });
   });
 
