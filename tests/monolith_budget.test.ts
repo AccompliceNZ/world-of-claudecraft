@@ -457,10 +457,11 @@ const MONOLITHS: MonolithRow[] = [
     // release-side import/export panel composed with the batch settings rows.
     // Measured with wc -l on the merged tree. Exact count, zero headroom.
     file: 'src/ui/options_window.ts',
-    // Re-measured at the second release/v0.42.0 sync: both arms grew this file
-    // (the release's account toggle seam, the redesign's shell adoption); the
-    // shell mount already lives in options_window_shell.ts. Exact merged count.
-    ceiling: 2955,
+    // LOWERED 2955 -> 2840 on the redesign review: the Interface panel's three
+    // bespoke rows (the chat timestamp pair, the chat-window reset, the Unlock
+    // Interface action) moved to src/ui/options_interface_rows.ts. Exact count,
+    // zero slack.
+    ceiling: 2840,
     seam: 'a pure view model (src/ui/options_view.ts) painted with the shared settings_controls.ts builders; sub-panels as sibling modules',
   },
   {
@@ -2078,10 +2079,10 @@ const MONOLITHS: MonolithRow[] = [
     // another method cluster here.
     file: 'src/ui/hud/professions/professions_window.ts',
     // Harvest entry chrome and bindings now live in a sibling controller.
-    // Re-pinned at the release/v0.42.0 merge: the redesign's plated sections
-    // and the wiki footer button ride the release arm's harvest entries. Exact
-    // merged count, zero slack.
-    ceiling: 847,
+    // LOWERED 847 -> 824 on the redesign review: the craft row's role and
+    // ceiling chip labels and its next-unlock line moved to
+    // src/ui/hud/professions/craft_row_labels.ts. Exact count, zero slack.
+    ceiling: 824,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/hud/CLAUDE.md)',
   },
   {
@@ -2094,10 +2095,10 @@ const MONOLITHS: MonolithRow[] = [
     // apex-channel-to-translation-key table moved to apex_recipe_view.ts.
     // Exact count, zero slack.
     file: 'src/ui/hud/professions/crafting_window.ts',
-    // Re-pinned at the release/v0.42.0 merge: the redesign's title-bar and
-    // chip primitives ride the release arm's Perfecting entry and apex chips.
-    // Exact merged count, zero slack.
-    ceiling: 771,
+    // LOWERED 771 -> 747 on the redesign review: the difficulty label table and
+    // the cast-duration chip text moved to
+    // src/ui/hud/professions/craft_row_chip_text.ts. Exact count, zero slack.
+    ceiling: 747,
     seam: 'a pure view-core plus a thin painter sibling (src/ui/hud/CLAUDE.md)',
   },
 ];

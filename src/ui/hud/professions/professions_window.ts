@@ -24,16 +24,16 @@ import { markDialogRoot } from '../../dialog_root';
 import { itemDisplayName } from '../../entity_i18n';
 import { esc } from '../../esc';
 import { captureFocusKey, focusedWithin, restoreFirstEnabled } from '../../focus_restore';
-import { formatNumber, type TranslationKey, t } from '../../i18n';
+import { formatNumber, t } from '../../i18n';
 import { professionIconUrl } from '../../icons';
 import type { PainterHostPresentation } from '../../painter_host';
 import { toolEffectNameKey } from '../../tool_effect_name';
 import { hasToolEffectCard, toolEffectStandaloneTooltip } from '../../tool_effect_tooltip';
 import { svgIcon } from '../../ui_icons';
 import { craftNameText } from './craft_name_view';
+import { craftCeilingLabel, craftNextUnlockText, craftRoleLabel } from './craft_row_labels';
 import { gatheringProfessionNameKey } from './gathering_profession_name';
 import { archetypeImageUrl } from './profession_art';
-import type { EmpowermentCeiling, ProfessionRole } from './profession_identity_view';
 import {
   type HarvestEntryCallbacks,
   harvestBodyEntryHtml,
@@ -44,7 +44,6 @@ import {
 } from './professions_harvest_entry_controller';
 import {
   buildProfessionsView,
-  type CraftNextUnlock,
   type ProfessionsCraftRow,
   type ProfessionsGatheringRow,
   type ProfessionsViewInput,
@@ -66,19 +65,6 @@ const ROW_ICON_SIZE = 56;
 // (a dropped frame: closed socket, spectate, lane refusal). Comfortably
 // above a live round trip, far below "dead until reopen".
 const SENT_GUARD_REARM_MS = 2000;
-
-const ROLE_LABEL_KEYS: Record<ProfessionRole, TranslationKey> = {
-  major: 'hudChrome.professions.roleMajor',
-  hobby: 'hudChrome.professions.roleHobby',
-  dormant: 'hudChrome.professions.roleDormant',
-  unattuned: 'hudChrome.professions.roleUnattuned',
-};
-
-const CEILING_LABEL_KEYS: Record<EmpowermentCeiling, TranslationKey> = {
-  unlimited: 'hudChrome.professions.ceilingUnlimited',
-  rare: 'hudChrome.professions.ceilingRare',
-  common: 'hudChrome.professions.ceilingCommon',
-};
 
 /**
  * Hud-supplied glue: the shared presentation bag plus the window surface (the
@@ -494,24 +480,15 @@ export class ProfessionsWindow {
           max: this.fmt(row.bar.maxSkill),
         }),
       )}</span></div>` +
-      `<div class="prof-craft-chips"><span class="prof-role-badge ui-chip">${esc(t(ROLE_LABEL_KEYS[row.identity.role]))}</span>` +
-      `<span class="prof-ceiling ui-chip">${esc(t(CEILING_LABEL_KEYS[row.identity.ceiling]))}</span></div>` +
+      `<div class="prof-craft-chips"><span class="prof-role-badge ui-chip">${esc(craftRoleLabel(row.identity.role))}</span>` +
+      `<span class="prof-ceiling ui-chip">${esc(craftCeilingLabel(row.identity.ceiling))}</span></div>` +
       `<div class="prof-bar-wrap"><span class="prof-bar ui-bar"><span class="prof-bar-fill ui-bar-fill" style="width:${pct}%"></span></span>` +
       `<span class="prof-pips" role="img" aria-label="${esc(
         t('hudChrome.professions.tierPipAria', { tier: this.fmt(row.bar.tierIndex) }),
       )}">${pips}</span></div>` +
-      `<div class="prof-next">${esc(this.nextUnlockText(row.nextUnlock))}</div>` +
+      `<div class="prof-next">${esc(craftNextUnlockText(row.nextUnlock))}</div>` +
       `</div></li>`
     );
-  }
-
-  private nextUnlockText(unlock: CraftNextUnlock): string {
-    if (unlock.kind === 'mastered') return t('hudChrome.professions.nextUnlockMastered');
-    if (unlock.kind === 'specialized')
-      return t('hudChrome.professions.nextUnlockSpecialized', {
-        points: this.fmt(unlock.pointsRemaining),
-      });
-    return t('hudChrome.professions.nextUnlockTier', { points: this.fmt(unlock.pointsRemaining) });
   }
 
   /** Specialization readout: one line per specialized craft, or the single

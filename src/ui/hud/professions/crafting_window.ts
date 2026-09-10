@@ -47,7 +47,11 @@ import {
 } from './craft_cast_view';
 import { craftNameText } from './craft_name_view';
 import {
-  type CraftDifficulty,
+  craftDifficultyLabel,
+  DURATION_FRACTION_DIGITS,
+  durationChipText,
+} from './craft_row_chip_text';
+import {
   type CraftingView,
   type CraftLearnHint,
   craftingTabs,
@@ -57,24 +61,6 @@ import { renderGatheringGoalTrackRow, type TrackRowDeps } from './gathering_goal
 import { professionImageUrl } from './profession_art';
 import { renderProfessionIdentityCard } from './profession_identity_card';
 import type { ProfessionIdentityModel } from './profession_identity_view';
-
-// Duration chip and aria: up to two decimals when non-integer (1.75s),
-// whole seconds otherwise.
-const DURATION_FRACTION_DIGITS = 2;
-
-// Skill-gain difficulty labels, the classic four-color recipe intuition
-// orange = full gains, yellow = reduced, green = minimal,
-// gray = none. The tints live in CSS (`.crafting-difficulty[data-difficulty]`
-// over the --color-craft-* tokens in tokens.css), keyed by the data attribute
-// painted here. A tint is only ever a HINT: the adjacent difficulty LABEL and
-// the aria text carry the same information, and both are identical on every
-// graphics preset/tier (docs/design/graphics-settings-fairness.md).
-const DIFFICULTY_LABEL_KEY: Record<CraftDifficulty, TranslationKey> = {
-  full: 'hudChrome.crafting.difficultyFull',
-  reduced: 'hudChrome.crafting.difficultyReduced',
-  minimal: 'hudChrome.crafting.difficultyMinimal',
-  none: 'hudChrome.crafting.difficultyNone',
-} as const;
 
 // Station display names (Professions 2.0): StationType id -> the
 // localized station name, same id-to-key table shape as craftNameText
@@ -125,16 +111,6 @@ export interface CraftingWindowDeps extends PainterHostPresentation, TrackRowDep
    *  live tab list (resolveSelectedCraft) so a stale pick falls back safely. */
   selectedCraft(): string | null;
   onSelectCraft(professionId: string): void;
-}
-
-/** Format a cast duration for the row chip (localized number + s unit key). */
-function durationChipText(durationSec: number): string {
-  const whole = Number.isInteger(durationSec);
-  return t('hudChrome.crafting.durationChip', {
-    seconds: formatNumber(durationSec, {
-      maximumFractionDigits: whole ? 0 : DURATION_FRACTION_DIGITS,
-    }),
-  });
 }
 
 /** Paint the crafting panel from a prepared view. `learnHints` maps a
@@ -453,7 +429,7 @@ export function renderCraftingWindow(
         craft: craftNameText(row.professionId),
         skill: formatNumber(row.skillReq, { maximumFractionDigits: 0 }),
       });
-      const difficultyLabel = t(DIFFICULTY_LABEL_KEY[row.difficulty]);
+      const difficultyLabel = craftDifficultyLabel(row.difficulty);
       const stationLabel = row.station ? t('hudChrome.crafting.stationBadge') : '';
       const stationOutOfRange =
         row.station && !row.station.inRange

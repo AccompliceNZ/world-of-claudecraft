@@ -1,4 +1,3 @@
-import { NPCS } from '../sim/data';
 import { isQuestGatedGroundObjectHidden } from '../sim/quest_gated_entity';
 import { isObjectOpenedByViewer } from '../sim/quests/opened_object_view';
 import { dist2d, type Entity, INTERACT_RANGE, type QuestProgress } from '../sim/types';
@@ -9,18 +8,6 @@ import { nearestInteractableBed } from './farm_bed_interact';
 import { nearestInteractableFeast } from './feast_interact';
 import { objectInteractionRange } from './interactions';
 
-export type InteractionPromptVerb =
-  | 'talk'
-  | 'loot'
-  | 'open'
-  | 'gather'
-  | 'mail'
-  | 'bank'
-  | 'use'
-  | 'harvest';
-
-export type InteractionPromptTargetKind = 'mob' | 'npc' | 'gather' | 'bed' | 'raw';
-
 export interface NearbyInteractionScanWorld {
   player: Entity;
   playerId?: number;
@@ -30,40 +17,25 @@ export interface NearbyInteractionScanWorld {
   farmPatches: readonly FarmPatchDef[];
 }
 
-interface NearbyInteractionCandidateBase {
-  verb: InteractionPromptVerb | null;
-  targetKind: InteractionPromptTargetKind | null;
-  targetId: string;
-  targetName: string;
-  holdProgress: number | null;
-}
-
 export type NearbyInteractionCandidate =
-  | (NearbyInteractionCandidateBase & { kind: 'corpse'; id: number; entity: Entity })
-  | (NearbyInteractionCandidateBase & { kind: 'delve'; id: number; entity: Entity })
-  | (NearbyInteractionCandidateBase & { kind: 'object'; id: number; entity: Entity })
-  | (NearbyInteractionCandidateBase & { kind: 'npc'; id: number; entity: Entity })
-  | (NearbyInteractionCandidateBase & { kind: 'escort'; id: number; entity: Entity })
-  | (NearbyInteractionCandidateBase & { kind: 'feast'; id: number; entity: Entity })
-  | (NearbyInteractionCandidateBase & { kind: 'bed'; id: string })
-  | (NearbyInteractionCandidateBase & { kind: 'escortAway'; id: null });
+  | { kind: 'corpse'; id: number; entity: Entity }
+  | { kind: 'delve'; id: number; entity: Entity }
+  | { kind: 'object'; id: number; entity: Entity }
+  | { kind: 'npc'; id: number; entity: Entity }
+  | { kind: 'escort'; id: number; entity: Entity }
+  | { kind: 'feast'; id: number; entity: Entity }
+  | { kind: 'bed'; id: string }
+  | { kind: 'escortAway'; id: null };
 
-function objectVerb(entity: Entity): InteractionPromptVerb {
-  if (entity.templateId === 'mailbox') return 'mail';
-  if (entity.templateId === 'dungeon_door' || entity.templateId === 'dungeon_exit') return 'open';
-  return 'use';
-}
-
-/** Resolve one eligible nearby interaction without dispatching it.
- *
- *  The ladder IS the press ladder in nearby_interaction.ts, arm for arm, so
- *  the prompt can never name a verb the press would not run: corpse (ordinary
- *  loot only), delve, ground object, npc, escort start, placed feast, garden
- *  bed, then the escort-away last resort. Intentional gathering made the
- *  generic press ORDINARY INTERACTION ONLY, so there is deliberately no
- *  gather or corpse-harvest arm here: those are explicit actions with their
- *  own entry points (node/tool/crop click, the corpse picker, the bed
- *  sheet's own Harvest control). */
+/** Resolve the one eligible nearby interaction dispatch will run, without
+ *  running it. This is dispatch's shared candidate resolution: the ladder IS
+ *  the press ladder in nearby_interaction.ts, arm for arm, so the two can never
+ *  read a different world: corpse (ordinary loot only), delve, ground object,
+ *  npc, escort start, placed feast, garden bed, then the escort-away last
+ *  resort. Intentional gathering made the generic press ORDINARY INTERACTION
+ *  ONLY, so there is deliberately no gather or corpse-harvest arm here: those
+ *  are explicit actions with their own entry points (node/tool/crop click, the
+ *  corpse picker, the bed sheet's own Harvest control). */
 export function resolveNearbyInteractionCandidate(
   world: NearbyInteractionScanWorld,
   harvestStateReliable = true,
@@ -134,11 +106,6 @@ export function resolveNearbyInteractionCandidate(
       kind: 'corpse',
       id: bestCorpse.id,
       entity: bestCorpse,
-      verb: 'loot',
-      targetKind: 'mob',
-      targetId: bestCorpse.templateId,
-      targetName: bestCorpse.name,
-      holdProgress: null,
     };
   }
   if (bestDelve) {
@@ -146,11 +113,6 @@ export function resolveNearbyInteractionCandidate(
       kind: 'delve',
       id: bestDelve.id,
       entity: bestDelve,
-      verb: 'open',
-      targetKind: 'raw',
-      targetId: bestDelve.templateId,
-      targetName: bestDelve.name,
-      holdProgress: null,
     };
   }
   if (bestObject) {
@@ -158,11 +120,6 @@ export function resolveNearbyInteractionCandidate(
       kind: 'object',
       id: bestObject.id,
       entity: bestObject,
-      verb: objectVerb(bestObject),
-      targetKind: 'raw',
-      targetId: bestObject.templateId,
-      targetName: bestObject.name,
-      holdProgress: null,
     };
   }
   if (bestNpc) {
@@ -170,11 +127,6 @@ export function resolveNearbyInteractionCandidate(
       kind: 'npc',
       id: bestNpc.id,
       entity: bestNpc,
-      verb: NPCS[bestNpc.templateId]?.banker === true ? 'bank' : 'talk',
-      targetKind: 'npc',
-      targetId: bestNpc.templateId,
-      targetName: bestNpc.name,
-      holdProgress: null,
     };
   }
   const escort = player.dead
@@ -190,11 +142,6 @@ export function resolveNearbyInteractionCandidate(
           kind: 'escort',
           id: entity.id,
           entity,
-          verb: 'talk',
-          targetKind: 'mob',
-          targetId: entity.templateId,
-          targetName: entity.name,
-          holdProgress: null,
         }
       : null;
   }
@@ -209,27 +156,17 @@ export function resolveNearbyInteractionCandidate(
         kind: 'feast',
         id: feast.id,
         entity: feast,
-        verb: 'use',
-        targetKind: 'raw',
-        targetId: feast.templateId,
-        targetName: feast.name,
-        holdProgress: null,
       };
     }
   }
-  // The bed press only OPENS the bed sheet, in either mode, so the affordance
-  // is Open: nothing here ever harvests a crop.
+  // The bed press only OPENS the bed sheet, in either mode: nothing here ever
+  // harvests a crop.
   if (!player.dead) {
     const bedId = nearestInteractableBed(world.farmPatches, player.pos);
     if (bedId !== null) {
       return {
         kind: 'bed',
         id: bedId,
-        verb: 'open',
-        targetKind: 'bed',
-        targetId: bedId,
-        targetName: '',
-        holdProgress: null,
       };
     }
   }
@@ -237,11 +174,6 @@ export function resolveNearbyInteractionCandidate(
     return {
       kind: 'escortAway',
       id: null,
-      verb: null,
-      targetKind: null,
-      targetId: '',
-      targetName: '',
-      holdProgress: null,
     };
   }
   return null;

@@ -80,6 +80,24 @@ describe('TalkingHeadController: mounts once at the top of the bottom stack and 
     expect(document.querySelector('.th-text')?.textContent).toBe('Two.');
   });
 
+  it('leaves no line behind when it hides, so Unlock Interface shows an empty frame', () => {
+    // Unlock Interface forces every movable frame visible (hud.css), so a
+    // hidden panel still holding its last line paints that line as the editing
+    // placeholder. Both the expiry path and hide() must clear the words.
+    const c = new TalkingHeadController(() => now);
+    c.say({ speakerId: 'ferryman_odo', speakerName: 'Ferryman Odo', text: 'Mind the tide.' });
+    const el = document.getElementById(TALKING_HEAD_ID) as HTMLElement;
+    c.hide();
+    expect(el.querySelector('.th-name')?.textContent).toBe('');
+    expect(el.querySelector('.th-text')?.textContent).toBe('');
+
+    c.say({ speakerId: 'ferryman_odo', speakerName: 'Ferryman Odo', text: 'Mind the tide.' });
+    now += panelLineDurationMs('Mind the tide.') + 1;
+    (c as unknown as { expire(): void }).expire();
+    expect(el.hidden, 'the expired line is gone').toBe(true);
+    expect(el.querySelector('.th-text')?.textContent).toBe('');
+  });
+
   it('escapes the line text (player-visible text is inert markup)', () => {
     const c = new TalkingHeadController(() => now);
     c.say({ speakerId: 'ferryman_odo', speakerName: 'Odo', text: '<b>x</b>' });

@@ -93,7 +93,6 @@ import {
   t,
 } from './i18n';
 import type { TranslationKey } from './i18n.catalog';
-import { interfaceUnlockLabelKey } from './interface_unlock_core';
 import { BIND_CATEGORY_LABEL_KEYS, bindActionDisplayName } from './keybind_action_names_core';
 import { keybindConflictPrompt } from './keybind_conflict_prompt_core';
 import { buildKeybindCode, parseKeybindCode } from './keybind_transfer_core';
@@ -104,6 +103,11 @@ import {
 } from './keyboard_map';
 import type { KeyboardLayer } from './keyboard_map_core';
 import { KeyboardMapWindow } from './keyboard_map_window';
+import {
+  buildChatTimestampRows,
+  buildChatWindowResetRow,
+  buildInterfaceUnlockRow,
+} from './options_interface_rows';
 import {
   type BoolToggleControl,
   boolToggleNextValue,
@@ -1678,7 +1682,7 @@ export class OptionsWindow {
       // Frame editing is desktop-only (every gesture refuses touch layouts),
       // so the touch HUD never offers the entry row; Hud.toggleInterfaceUnlock
       // refuses on mobile as the backstop.
-      if (!env.touch) this.interfaceUnlockRow(body);
+      if (!env.touch) buildInterfaceUnlockRow(body, this.deps);
       this.transferRows(body, 'frames');
       subhead(body, t('hudChrome.partyFrames.optionsSection'), 'set-subhead');
     }
@@ -1702,8 +1706,8 @@ export class OptionsWindow {
     // Chat closes with the timestamp toggle + clock pair, the chat-window reset
     // row, the online deed-broadcast row, then the explanatory notes.
     if (tab === 'chat') {
-      this.chatTimestampRows(body);
-      this.chatWindowResetRow(body);
+      buildChatTimestampRows(body, this.deps);
+      buildChatWindowResetRow(body, this.deps);
       // Deed broadcasts (share deed unlocks with guildmates and followers, and
       // deed and masterwork cards with the Discord feed, R58): an ASYNC
       // account setting (accounts.deed_broadcasts), not a settings.ts key, so it
@@ -1933,125 +1937,6 @@ export class OptionsWindow {
 
   // The chat-timestamp on/off toggle plus the 12/24-hour clock-format pair (the
   // format buttons dim while timestamps are off). Chat tab.
-  private chatTimestampRows(body: HTMLElement): void {
-    const tsRow = document.createElement('div');
-    tsRow.className = 'set-row ui-stat-row';
-    const tsName = document.createElement('span');
-    tsName.className = 'set-name';
-    tsName.textContent = t('hudChrome.chatTimestamps.show');
-    const tsToggle = document.createElement('button');
-    tsToggle.className = 'btn ui-btn ui-btn--plate set-toggle';
-
-    const fmtRow = document.createElement('div');
-    fmtRow.className = 'set-row ui-stat-row';
-    const fmtName = document.createElement('span');
-    fmtName.className = 'set-name';
-    fmtName.textContent = t('hudChrome.chatTimestamps.format');
-    const seg = document.createElement('div');
-    seg.className = 'set-seg ui-seg';
-    const btn12 = document.createElement('button');
-    btn12.className = 'btn ui-seg-tab set-seg-btn';
-    btn12.textContent = t('hudChrome.chatTimestamps.clock12h');
-    const btn24 = document.createElement('button');
-    btn24.className = 'btn ui-seg-tab set-seg-btn';
-    btn24.textContent = t('hudChrome.chatTimestamps.clock24h');
-    seg.append(btn12, btn24);
-    fmtRow.append(fmtName, seg);
-
-    const sync = () => {
-      const on = this.deps.getChatTimestamps();
-      tsToggle.textContent = on ? t('hud.options.on') : t('hud.options.off');
-      tsToggle.classList.toggle('off', !on);
-      tsToggle.classList.toggle('is-off', !on);
-      tsToggle.setAttribute('aria-pressed', String(on));
-      btn12.classList.toggle('active', this.deps.getChatClock() === '12h');
-      btn24.classList.toggle('active', this.deps.getChatClock() === '24h');
-      btn12.classList.toggle('is-on', this.deps.getChatClock() === '12h');
-      btn24.classList.toggle('is-on', this.deps.getChatClock() === '24h');
-      fmtRow.classList.toggle('disabled', !on);
-      btn12.disabled = !on;
-      btn24.disabled = !on;
-    };
-    sync();
-
-    tsToggle.addEventListener('click', () => {
-      audio.click();
-      this.deps.setChatTimestamps(!this.deps.getChatTimestamps());
-      sync();
-    });
-    const setClock = (clock: ChatClock) => {
-      if (!this.deps.getChatTimestamps()) return;
-      audio.click();
-      this.deps.setChatClock(clock);
-      sync();
-    };
-    btn12.addEventListener('click', () => setClock('12h'));
-    btn24.addEventListener('click', () => setClock('24h'));
-
-    tsRow.append(tsName, tsToggle);
-    body.append(tsRow, fmtRow);
-  }
-
-  // Reset the movable/resizable chat window back to its default placement. Chat tab.
-  private chatWindowResetRow(body: HTMLElement): void {
-    const resetRow = document.createElement('div');
-    resetRow.className = 'set-row ui-stat-row';
-    const resetName = document.createElement('span');
-    resetName.className = 'set-name';
-    resetName.textContent = t('hudChrome.chatWindow.reset');
-    const resetBtn = document.createElement('button');
-    resetBtn.className = 'btn ui-btn ui-btn--plate set-toggle';
-    resetBtn.textContent = t('hudChrome.chatWindow.resetAction');
-    resetBtn.addEventListener('click', () => {
-      audio.click();
-      this.deps.resetChatWindow();
-    });
-    resetRow.append(resetName, resetBtn);
-    body.append(resetRow);
-  }
-
-  // Reset the movable player + target unit frames back to their stock spots
-  // (forgets the saved drag positions and re-docks the player frame). Frames tab.
-
-  // "Unlock interface": one press loosens every movable HUD frame (the three
-  // action bars, the cast bar, the menu rail, the minimap and the player / pet
-  // frames) so they can be dragged and scaled, and the button relabels itself to
-  // "Lock interface" while they are loose. An action rather than a stored
-  // setting, so it is a bespoke row rather than a boolToggle: the unlocked state
-  // deliberately does not survive a reload (a frame always loads locked, the
-  // same rule the per-frame corner buttons have always followed). Combat tab,
-  // rendered directly above Auto-Attack on Ability Use.
-  private interfaceUnlockRow(body: HTMLElement): void {
-    const row = document.createElement('div');
-    row.className = 'set-row ui-stat-row';
-    const name = document.createElement('span');
-    name.className = 'set-name';
-    name.textContent = t('hudChrome.interfaceUnlock.label');
-    const btn = document.createElement('button');
-    btn.className = 'btn ui-btn ui-btn--plate set-toggle';
-    const sync = (unlocked: boolean) => {
-      btn.textContent = t(interfaceUnlockLabelKey(unlocked));
-      btn.setAttribute('aria-pressed', String(unlocked));
-      btn.classList.toggle('active', unlocked);
-      btn.classList.toggle('is-on', unlocked);
-    };
-    sync(this.deps.isInterfaceUnlocked());
-    btn.addEventListener('click', () => {
-      audio.click();
-      sync(this.deps.toggleInterfaceUnlock());
-    });
-    row.append(name, btn);
-    body.append(row);
-    // One guidance note going in: the freeze while editing is deliberate
-    // rather than a hang. (The action-bars note was retired, owner request:
-    // the Frames Settings menu now lists bar 2/3 in both shapes, so the
-    // plus/minus preamble no longer needs explaining here.)
-    const note = document.createElement('div');
-    note.className = 'set-note';
-    note.textContent = t('hudChrome.interfaceUnlock.frozenNote');
-    body.appendChild(note);
-  }
-
   // -------------------------------------------------------------------------
   // Performance overlay panel (thin delegate to perf_overlay_settings.ts)
   // -------------------------------------------------------------------------

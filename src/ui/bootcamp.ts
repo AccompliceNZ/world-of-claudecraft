@@ -89,7 +89,12 @@ import {
   VEER_OFF_YD,
 } from './coach_prompt_view';
 import { tEntity } from './entity_i18n';
-import { routeSpeech, speakerInView, TalkingHeadController } from './hud/talking_head';
+import {
+  panelLineDurationMs,
+  routeSpeech,
+  speakerInView,
+  TalkingHeadController,
+} from './hud/talking_head';
 import { type TranslationKey, t } from './i18n';
 import { iconDataUrl } from './icons';
 import {
@@ -265,6 +270,7 @@ export class BootcampOverlay {
     this.paintObjectiveGlow(world, renderer);
     this.applyUiGlow(world);
     this.updateGuideVoice(world, focus);
+    this.rerouteLiveCaption();
   }
 
   // ---- Ferryman Odo's guiding voice --------------------------------------
@@ -375,10 +381,37 @@ export class BootcampOverlay {
     const route = routeSpeech(speaker !== null && this.speakerVisible(speaker));
     if (route === 'bubble' && speaker && this.lastRenderer) {
       this.talkingHead.hide();
+      this.liveBubble = { text, until: performance.now() + panelLineDurationMs(text) };
       this.lastRenderer.showChatBubble(speaker.id, text, false);
       return;
     }
+    this.liveBubble = null;
     this.talkingHead.say({ speakerId: ODO_NPC_ID, speakerName: odoName, text });
+  }
+
+  // The line currently riding a chat bubble, with the reading time it was
+  // given. Odo walks his own route, so a line routed while he was on screen can
+  // outlive the sight of him.
+  private liveBubble: { text: string; until: number } | null = null;
+
+  // Odo leaving view mid-line would strand the bubble unread, so the rest of
+  // the line moves to the panel. The panel starts its own reading clock: the
+  // player is only now reading it there.
+  private rerouteLiveCaption(): void {
+    const live = this.liveBubble;
+    if (!live) return;
+    if (performance.now() >= live.until) {
+      this.liveBubble = null;
+      return;
+    }
+    const speaker = this.findSpeaker(ODO_NPC_ID);
+    if (speaker !== null && this.speakerVisible(speaker)) return;
+    this.liveBubble = null;
+    this.talkingHead.say({
+      speakerId: ODO_NPC_ID,
+      speakerName: tEntity({ kind: 'npc', id: ODO_NPC_ID, field: 'name' }),
+      text: live.text,
+    });
   }
 
   private findSpeaker(templateId: string): Entity | null {
@@ -1023,6 +1056,7 @@ export class BootcampOverlay {
       for (const el of document.querySelectorAll<HTMLElement>(sel)) el.classList.remove('qd-coach');
     }
     this.talkingHead.hide();
+    this.liveBubble = null;
     this.guidePrevStation = null;
     this.guidePrevCounts = -1;
     this.guideOffPathSince = null;

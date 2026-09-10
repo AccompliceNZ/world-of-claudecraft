@@ -32,6 +32,14 @@ const painter = codeOnly(
 const craftingWindow = codeOnly(
   readFileSync(path.resolve(process.cwd(), 'src/ui/hud/professions/crafting_window.ts'), 'utf8'),
 );
+// The difficulty label table moved out of the painter into its own module; the
+// key-literal pin follows it there.
+const craftRowChipText = codeOnly(
+  readFileSync(
+    path.resolve(process.cwd(), 'src/ui/hud/professions/craft_row_chip_text.ts'),
+    'utf8',
+  ),
+);
 
 describe('profession identity card painter contract', () => {
   it('renders syncing and attuned identity models into labelled, populated regions', () => {
@@ -858,7 +866,7 @@ describe('crafting window pins', () => {
     }
     // The minimal state binds the NEW catalog key, full-literal for the
     // key scanner, alongside its three siblings.
-    expect(craftingWindow).toContain("minimal: 'hudChrome.crafting.difficultyMinimal'");
+    expect(craftRowChipText).toContain("minimal: 'hudChrome.crafting.difficultyMinimal'");
   });
 
   const attunedIdentity = () =>

@@ -87,6 +87,10 @@ export class TalkingHeadController {
     if (!root || !nameEl || !textEl || !portraitEl) return;
     const line = this.model.line;
     if (!line) {
+      // Clear before hiding: Unlock Interface forces the frame visible, so a
+      // line left behind would read as the editing placeholder's content.
+      nameEl.textContent = '';
+      textEl.textContent = '';
       root.hidden = true;
       return;
     }

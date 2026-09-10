@@ -80,12 +80,12 @@ describe('resolveNearbyInteractionCandidate', () => {
     });
 
     const cases = [
-      { targets: [corpse, delve, object, npc, feast], kind: 'corpse', id: 2, verb: 'loot' },
-      { targets: [delve, object, npc, feast], kind: 'delve', id: 3, verb: 'open' },
-      { targets: [object, npc, feast], kind: 'object', id: 4, verb: 'use' },
-      { targets: [npc, feast], kind: 'npc', id: 5, verb: 'talk' },
-      { targets: [feast], kind: 'feast', id: 6, verb: 'use' },
-      { targets: [], kind: 'bed', id: 'bed_test_1', verb: 'open' },
+      { targets: [corpse, delve, object, npc, feast], kind: 'corpse', id: 2 },
+      { targets: [delve, object, npc, feast], kind: 'delve', id: 3 },
+      { targets: [object, npc, feast], kind: 'object', id: 4 },
+      { targets: [npc, feast], kind: 'npc', id: 5 },
+      { targets: [feast], kind: 'feast', id: 6 },
+      { targets: [], kind: 'bed', id: 'bed_test_1' },
     ] as const;
 
     for (const expected of cases) {
@@ -95,7 +95,7 @@ describe('resolveNearbyInteractionCandidate', () => {
     }
   });
 
-  it('classifies the prompt verb without dispatching an interaction', () => {
+  it('resolves a ground object candidate dispatch can route, without dispatching it', () => {
     const mailbox = entity({
       id: 2,
       kind: 'object',
@@ -105,26 +105,21 @@ describe('resolveNearbyInteractionCandidate', () => {
     });
     const { world } = scan([mailbox]);
 
-    expect(resolveNearbyInteractionCandidate(world)).toMatchObject({
-      kind: 'object',
-      id: 2,
-      verb: 'mail',
-      targetKind: 'raw',
-      targetName: 'Mailbox',
-    });
+    // The candidate carries only what dispatch reads: the arm, the id, and the
+    // entity it routes on (nearby_interaction.ts branches on templateId here).
+    const candidate = resolveNearbyInteractionCandidate(world);
+    expect(candidate).toMatchObject({ kind: 'object', id: 2 });
+    expect(candidate?.kind === 'object' && candidate.entity.templateId).toBe('mailbox');
+    expect(Object.keys(candidate ?? {}).sort()).toEqual(['entity', 'id', 'kind']);
   });
 
-  it('names the bed family rather than a wire name, since a bed is content', () => {
+  it('carries the bed id, which is content and not an entity id', () => {
     const { world } = scan([], BED_PATCH);
-    expect(resolveNearbyInteractionCandidate(world)).toMatchObject({
-      kind: 'bed',
-      targetKind: 'bed',
-      targetId: 'bed_test_1',
-      targetName: '',
-    });
+    const candidate = resolveNearbyInteractionCandidate(world);
+    expect(candidate).toEqual({ kind: 'bed', id: 'bed_test_1' });
   });
 
-  it('ignores a harvest-only corpse entirely, and still reads a banker as bank', () => {
+  it('ignores a harvest-only corpse entirely, and still resolves the npc behind it', () => {
     // hasLoot, never canOpen: a corpse with nothing this viewer may loot is no
     // candidate at all, so it cannot swallow an interaction standing behind it.
     const corpse = entity({
@@ -146,7 +141,7 @@ describe('resolveNearbyInteractionCandidate', () => {
     expect(resolveNearbyInteractionCandidate(scan([corpse]).world)).toBeNull();
     expect(resolveNearbyInteractionCandidate(scan([corpse, banker]).world)).toMatchObject({
       kind: 'npc',
-      verb: 'bank',
+      id: 3,
     });
   });
 });

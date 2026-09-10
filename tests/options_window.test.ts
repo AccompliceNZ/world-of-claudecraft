@@ -453,12 +453,12 @@ describe('options_window: interface tab split', () => {
     // subhead (the unit-frames reset row was retired with the per-frame
     // Reset size buttons in the editor's Show or Hide Frames list)
     expect(painter).toMatch(
-      /if \(tab === 'frames'\) \{[\s\S]*?if \(!env\.touch\) this\.interfaceUnlockRow\(body\);\s*this\.transferRows\(body, 'frames'\);\s*subhead\(body, t\('hudChrome\.partyFrames\.optionsSection'\), 'set-subhead'\);/,
+      /if \(tab === 'frames'\) \{[\s\S]*?if \(!env\.touch\) buildInterfaceUnlockRow\(body, this\.deps\);\s*this\.transferRows\(body, 'frames'\);\s*subhead\(body, t\('hudChrome\.partyFrames\.optionsSection'\), 'set-subhead'\);/,
     );
     expect(painter).not.toContain('unitFramesResetRow');
     // the chat-timestamp / chat-reset / deed-broadcast rows live in the Chat tab
     expect(painter).toMatch(
-      /if \(tab === 'chat'\) \{[\s\S]*this\.chatTimestampRows\(body\);[\s\S]*this\.chatWindowResetRow\(body\);/,
+      /if \(tab === 'chat'\) \{[\s\S]*buildChatTimestampRows\(body, this\.deps\);[\s\S]*buildChatWindowResetRow\(body, this\.deps\);/,
     );
   });
 
@@ -1057,7 +1057,7 @@ describe('options_window: frame editing is locked out on touch', () => {
     // Every frame-editing gesture refuses touch layouts, so the touch HUD
     // never renders the entry row (the reviewer found the floating lock bar
     // and inert previews still reachable there).
-    expect(painter).toContain('if (!env.touch) this.interfaceUnlockRow(body);');
+    expect(painter).toContain('if (!env.touch) buildInterfaceUnlockRow(body, this.deps);');
   });
 
   it('Hud.toggleInterfaceUnlock refuses on the mobile layout as the backstop', () => {
