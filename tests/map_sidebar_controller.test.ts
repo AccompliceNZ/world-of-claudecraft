@@ -6,7 +6,21 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { NPCS, QUESTS, zoneAt } from '../src/sim/data';
 import type { QuestProgress } from '../src/sim/types';
 import { MapSidebarController } from '../src/ui/map_sidebar_controller';
+import { QuestTrackingState } from '../src/ui/quest_tracking_core';
 import type { IWorld } from '../src/world_api';
+
+/** An in-memory Storage stand-in, so the rail's tracking set never reaches (or
+ *  leaks into) the shared per-character rows. */
+function fakeStorage() {
+  const rows = new Map<string, string>();
+  return {
+    rows,
+    getItem: (key: string) => rows.get(key) ?? null,
+    setItem: (key: string, value: string) => {
+      rows.set(key, value);
+    },
+  };
+}
 
 function makeHarness(alsoTracked: readonly string[] = []) {
   const root = document.createElement('aside');
@@ -18,23 +32,25 @@ function makeHarness(alsoTracked: readonly string[] = []) {
     log.set(questId, { questId, counts: [0], state: 'active' });
   }
   const world = {
+    cfg: { playerClass: 'warrior' },
     player: { name: 'Adventurer', pos: { x: giver.pos.x, y: 0, z: giver.pos.z } },
     questLog: log,
     questState: () => 'unavailable',
   } as unknown as IWorld;
   const click = vi.fn();
-  const onFiltersChanged = vi.fn();
+  const onRepaintMap = vi.fn();
   const onShowRoute = vi.fn();
-  const onUntrackQuest = vi.fn();
+  const storage = fakeStorage();
+  const tracking = new QuestTrackingState(storage);
   const controller = new MapSidebarController({
     root: () => root,
     click,
-    onFiltersChanged,
+    onRepaintMap,
     onShowRoute,
-    onUntrackQuest,
+    tracking,
   });
   controller.update(world, zoneAt(giver.pos.x, giver.pos.z));
-  return { root, controller, click, onFiltersChanged, onShowRoute, onUntrackQuest, world };
+  return { root, controller, click, onRepaintMap, onShowRoute, world, tracking, storage };
 }
 
 describe('map sidebar controller', () => {
@@ -55,9 +71,8 @@ describe('map sidebar controller', () => {
   it('publishes filter changes and the selected quest route', () => {
     const test = makeHarness();
     test.root.querySelector<HTMLElement>('[data-map-filter="services"]')?.click();
-    expect(test.onFiltersChanged).toHaveBeenCalledWith(
-      expect.objectContaining({ services: false, quests: true }),
-    );
+    expect(test.onRepaintMap).toHaveBeenCalled();
+    expect(test.controller.filterState()).toMatchObject({ services: false, quests: true });
 
     test.root.querySelector<HTMLElement>('[data-map-route]')?.click();
     expect(test.onShowRoute).toHaveBeenCalledWith(expect.objectContaining({ questId: 'q_wolves' }));
@@ -115,18 +130,53 @@ describe('map sidebar controller', () => {
     expect(document.activeElement).toBe(outside);
   });
 
-  it('untracks selection without abandoning the authoritative quest', () => {
+  it('untracks a quest for real: the row LEAVES the rail, the quest is not abandoned', () => {
     const test = makeHarness();
     const abandonQuest = vi.fn();
     Object.assign(test.world, { abandonQuest });
+    expect(test.root.querySelector('[data-map-quest="q_wolves"]')).not.toBeNull();
 
     test.root.querySelector<HTMLElement>('[data-map-untrack]')?.click();
     test.controller.update(test.world, zoneAt(test.world.player.pos.x, test.world.player.pos.z));
 
-    expect(test.onUntrackQuest).toHaveBeenCalledWith('q_wolves');
+    // The regression this covers: the control used to clear the local selection
+    // only, leaving the same quest listed under "Tracked quests".
+    expect(test.root.querySelector('[data-map-quest="q_wolves"]')).toBeNull();
+    expect(test.root.textContent).toContain('No tracked quests');
+    expect(test.tracking.isTracked('q_wolves')).toBe(false);
     expect(test.controller.shownRoute()).toBeNull();
+    expect(test.onRepaintMap).toHaveBeenCalled();
+    // Presentation only: the sim's quest log is untouched.
     expect(abandonQuest).not.toHaveBeenCalled();
+    expect(test.world.questLog.has('q_wolves')).toBe(true);
     expect(test.root.querySelector('[data-map-untrack]')?.hasAttribute('disabled')).toBe(true);
+  });
+
+  it('persists the untracked quest per character and reloads it on the next session', () => {
+    const test = makeHarness();
+    test.root.querySelector<HTMLElement>('[data-map-untrack]')?.click();
+
+    const reloaded = new QuestTrackingState(test.storage);
+    reloaded.useCharacter('warrior', 'Adventurer');
+    expect(reloaded.isTracked('q_wolves')).toBe(false);
+
+    // Another character on the same browser starts fully tracked.
+    const other = new QuestTrackingState(test.storage);
+    other.useCharacter('mage', 'Someone');
+    expect(other.isTracked('q_wolves')).toBe(true);
+  });
+
+  it('re-tracking (the quest log toggle) brings the row back to the rail', () => {
+    const test = makeHarness();
+    test.root.querySelector<HTMLElement>('[data-map-untrack]')?.click();
+    expect(test.root.querySelector('[data-map-quest="q_wolves"]')).toBeNull();
+
+    test.tracking.setTracked('q_wolves', true);
+    test.controller.update(test.world, zoneAt(test.world.player.pos.x, test.world.player.pos.z));
+
+    // The rail's repaint signature carries the tracking revision, so nothing else
+    // has to move for the row to come back.
+    expect(test.root.querySelector('[data-map-quest="q_wolves"]')).not.toBeNull();
   });
 });
 
@@ -209,6 +259,7 @@ describe('map sidebar controller: walking cadence', () => {
     document.body.appendChild(root);
     const giver = NPCS[QUESTS.q_wolves.giverNpcId];
     const world = {
+      cfg: { playerClass: 'warrior' },
       player: { name: 'Adventurer', pos: { x: giver.pos.x, y: 0, z: giver.pos.z } },
       questLog: new Map<string, QuestProgress>([
         ['q_wolves', { questId: 'q_wolves', counts: [2], state: 'active' }],
@@ -218,9 +269,9 @@ describe('map sidebar controller: walking cadence', () => {
     const controller = new MapSidebarController({
       root: () => root,
       click: vi.fn(),
-      onFiltersChanged: vi.fn(),
+      onRepaintMap: vi.fn(),
       onShowRoute: vi.fn(),
-      onUntrackQuest: vi.fn(),
+      tracking: new QuestTrackingState(fakeStorage()),
     });
     const zone = zoneAt(giver.pos.x, giver.pos.z);
     const writes = { count: 0 };

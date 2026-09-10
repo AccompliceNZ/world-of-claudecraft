@@ -31,6 +31,8 @@ import { esc } from '../../esc';
 import { formatNumber, t } from '../../i18n';
 import { itemNameColor } from '../../item_name_color';
 import type { PainterHostPresentation } from '../../painter_host';
+import { questMapLocation } from '../../quest_map_location_core';
+import { type QuestTrackingState, sharedQuestTracking } from '../../quest_tracking_core';
 import { svgIcon } from '../../ui_icons';
 import { buildQuestLogView, type QuestDetailModel } from './questlog_view';
 
@@ -58,6 +60,12 @@ export interface QuestLogWindowDeps extends PainterHostPresentation {
     onOk: () => void,
   ): void;
   insertQuestChatLink(questId: string): void;
+  /** Open the world map on a world position and ring it (Hud.showFinderOnMap).
+   *  The generic map launcher is deliberately NOT the path: it opens the player's
+   *  current zone and clears the highlight, discarding the selected quest. */
+  showOnMap(x: number, z: number): void;
+  /** Injectable tracking set; production leaves it out and shares the HUD's one. */
+  tracking?: QuestTrackingState;
 }
 
 export class QuestLogWindow {
@@ -69,6 +77,10 @@ export class QuestLogWindow {
   private readonly collapsedGroups = new Set<string>(['completed']);
 
   constructor(private readonly deps: QuestLogWindowDeps) {}
+
+  private tracking(): QuestTrackingState {
+    return this.deps.tracking ?? sharedQuestTracking();
+  }
 
   get isOpen(): boolean {
     return this.deps.root().style.display === 'block';
@@ -267,7 +279,28 @@ export class QuestLogWindow {
     showMap.className = 'ui-btn';
     showMap.type = 'button';
     showMap.textContent = t('hudChrome.finder.showOnMap');
-    showMap.addEventListener('click', () => document.getElementById('mm-map')?.click());
+    showMap.dataset.questShowMap = d.questId;
+    // The SELECTED quest's own objective (or turn-in) position, resolved by the
+    // same rule the atlas rail's Show Route uses. A quest with no resolvable
+    // position (unknown content, no placed NPC) disables the control rather than
+    // opening the map somewhere unrelated.
+    const location = questMapLocation(d.questId, this.deps.world().questLog);
+    showMap.disabled = location === null;
+    showMap.addEventListener('click', () => {
+      if (location) this.deps.showOnMap(location.x, location.z);
+    });
+    const tracking = this.tracking();
+    const tracked = tracking.isTracked(d.questId);
+    const track = document.createElement('button');
+    track.className = 'ui-btn';
+    track.type = 'button';
+    track.dataset.questTrack = d.questId;
+    track.setAttribute('aria-pressed', tracked ? 'true' : 'false');
+    track.textContent = t(tracked ? 'hudChrome.mapAtlas.untrack' : 'hudChrome.mapAtlas.track');
+    track.addEventListener('click', () => {
+      tracking.setTracked(d.questId, !tracked);
+      this.render();
+    });
     const abandon = document.createElement('button');
     abandon.className = 'ui-btn ui-btn--red';
     abandon.type = 'button';
@@ -287,7 +320,7 @@ export class QuestLogWindow {
         },
       );
     });
-    actions.append(showMap, abandon);
+    actions.append(track, showMap, abandon);
     detail.appendChild(actions);
   }
 

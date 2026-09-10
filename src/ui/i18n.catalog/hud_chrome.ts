@@ -7812,7 +7812,11 @@ export const hudChromeStrings = {
     noNearbyQuests: 'No nearby quests',
     distance: '{distance} yards',
     showRoute: 'Show Route',
+    // The tracking pair. Both labels live here because the two controls that
+    // flip local quest tracking share them: the atlas rail's Untrack button and
+    // the quest log's per-quest toggle, which is the way back from untracked.
     untrack: 'Untrack',
+    track: 'Track',
     legend: {
       dungeon: 'Dungeon',
       ore: 'Ore',

@@ -5173,6 +5173,7 @@ export const id_ID: EnTranslations = {
       "distance": "{distance} yards",
       "showRoute": "Show Route",
       "untrack": "Untrack",
+      "track": "Track",
       "legend": {
         "dungeon": "Dungeon",
         "ore": "Ore",

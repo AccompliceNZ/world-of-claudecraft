@@ -16752,6 +16752,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.professions.tutorialLink': '専門技能チュートリアル',
   'hudChrome.marketWindow.mixedListingsFooter':
     '商人はコモンの商品を補充し、プレイヤーの出品は希望価格でその隣に並びます。',
+  'hudChrome.mapAtlas.track': '追跡',
   'hudChrome.mapAtlas.level': 'レベル {level}',
   'hudChrome.mapAtlas.landmarkCount': 'ランドマーク {count} 個',
   'hudChrome.mapAtlas.filtersAria': 'マップレイヤー',

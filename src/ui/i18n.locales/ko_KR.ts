@@ -16719,6 +16719,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.professions.tutorialLink': '전문 기술 튜토리얼',
   'hudChrome.marketWindow.mixedListingsFooter':
     '상인은 일반 상품을 보충하며, 플레이어 매물은 판매자가 정한 가격으로 함께 표시됩니다.',
+  'hudChrome.mapAtlas.track': '추적',
   'hudChrome.mapAtlas.level': '레벨 {level}',
   'hudChrome.mapAtlas.landmarkCount': '랜드마크 {count}개',
   'hudChrome.mapAtlas.filtersAria': '지도 레이어',

@@ -4,11 +4,11 @@
 // controller; this core only returns content identities, counts, and routes.
 
 import { NPCS, QUESTS, type ZoneDef } from '../sim/data';
-import { questObjectiveAreas } from '../sim/quest_targets';
 import { type QuestProgress, questObjectiveRequired } from '../sim/types';
 import type { IWorld } from '../world_api';
 import { ownEntry } from './known_item';
 import { questNumbersByLog } from './map_quest_list_view';
+import { type QuestMapLocation, questMapLocation } from './quest_map_location_core';
 
 export type MapAtlasFilterId = 'quests' | 'gather' | 'dungeons' | 'services' | 'players';
 
@@ -48,11 +48,9 @@ export interface MapAtlasNearbyQuest {
   minLevel: number | null;
 }
 
-export interface MapAtlasRoute {
-  questId: string;
-  x: number;
-  z: number;
-}
+/** Where "Show Route" pans to. The resolution rule is shared with the quest log's
+ *  "Show on Map" (quest_map_location_core), so the two controls never disagree. */
+export type MapAtlasRoute = QuestMapLocation;
 
 export interface MapSidebarView {
   zoneId: string;
@@ -70,6 +68,10 @@ export interface MapSidebarViewInput {
   zone: ZoneDef;
   filters: Readonly<MapAtlasFilters>;
   selectedQuestId: string | null;
+  /** Quests this client has untracked (quest_tracking_core). Presentation only:
+   *  the quest stays in the log and keeps its acceptance-order number, it just
+   *  leaves this rail, the map badges, and the HUD tracker. */
+  untrackedQuestIds?: ReadonlySet<string>;
 }
 
 export function toggleMapAtlasFilter(
@@ -85,6 +87,9 @@ export function toggleMapAtlasFilter(
  *  reading really changes. */
 export const MAP_ATLAS_DISTANCE_BUCKET = 10;
 
+/** The default tracking set: nothing untracked, so every accepted quest shows. */
+const NO_UNTRACKED_QUESTS: ReadonlySet<string> = new Set<string>();
+
 export function bucketMapAtlasDistance(distance: number): number {
   return Math.round(distance / MAP_ATLAS_DISTANCE_BUCKET) * MAP_ATLAS_DISTANCE_BUCKET;
 }
@@ -99,7 +104,7 @@ export function bucketMapAtlasDistance(distance: number): number {
  */
 export function mapSidebarSignature(
   view: MapSidebarView,
-  chrome: { shownRouteQuestId: string | null; i18nRevision: number },
+  chrome: { shownRouteQuestId: string | null; i18nRevision: number; trackingRevision: number },
 ): string {
   return JSON.stringify({
     view: {
@@ -137,24 +142,6 @@ function primaryObjective(progress: QuestProgress): {
   };
 }
 
-function routeForQuest(
-  questId: string | null,
-  questLog: ReadonlyMap<string, QuestProgress>,
-): MapAtlasRoute | null {
-  if (questId === null) return null;
-  const progress = questLog.get(questId);
-  const quest = ownEntry(QUESTS, questId);
-  if (!progress || !quest) return null;
-  if (progress.state !== 'ready') {
-    const area = questObjectiveAreas(new Map([[questId, progress]])).find((candidate) =>
-      candidate.objectives.some((objective) => objective.questId === questId),
-    );
-    if (area) return { questId, x: area.center.x, z: area.center.z };
-  }
-  const npc = NPCS[progress.state === 'ready' ? quest.turnInNpcId : quest.giverNpcId];
-  return npc ? { questId, x: npc.pos.x, z: npc.pos.z } : null;
-}
-
 function nearbyQuests(input: MapSidebarViewInput): MapAtlasNearbyQuest[] {
   const { world, zone } = input;
   const zoneMinX = zone.xMin ?? Number.NEGATIVE_INFINITY;
@@ -188,11 +175,22 @@ function nearbyQuests(input: MapSidebarViewInput): MapAtlasNearbyQuest[] {
 
 export function buildMapSidebarView(input: MapSidebarViewInput): MapSidebarView {
   const quests: MapAtlasQuestRow[] = [];
+  const untracked = input.untrackedQuestIds ?? NO_UNTRACKED_QUESTS;
+  // Resolved BEFORE the rows are built, so a selection that has left the log or
+  // the tracked set can never mark a row selected on its way out.
   let selectedQuestId = input.selectedQuestId;
+  if (
+    selectedQuestId !== null &&
+    (!input.world.questLog.has(selectedQuestId) || untracked.has(selectedQuestId))
+  ) {
+    selectedQuestId = null;
+  }
   // The SAME numbering the map paints on its gold objective badges, so a rail
-  // row and its badge can never drift apart.
+  // row and its badge can never drift apart. It is taken over the WHOLE log, so
+  // an untracked quest leaves a gap rather than renumbering the ones after it.
   const numbers = questNumbersByLog(input.world.questLog);
   for (const progress of input.world.questLog.values()) {
+    if (untracked.has(progress.questId)) continue;
     const objective = primaryObjective(progress);
     quests.push({
       questId: progress.questId,
@@ -202,12 +200,6 @@ export function buildMapSidebarView(input: MapSidebarViewInput): MapSidebarView 
       ...objective,
     });
   }
-  if (selectedQuestId !== null && !input.world.questLog.has(selectedQuestId)) {
-    selectedQuestId = null;
-  }
-  if (selectedQuestId !== input.selectedQuestId) {
-    for (const quest of quests) quest.selected = false;
-  }
   return {
     zoneId: input.zone.id,
     levelRange: input.zone.levelRange,
@@ -216,6 +208,6 @@ export function buildMapSidebarView(input: MapSidebarViewInput): MapSidebarView 
     quests,
     nearby: nearbyQuests(input),
     selectedQuestId,
-    route: routeForQuest(selectedQuestId, input.world.questLog),
+    route: questMapLocation(selectedQuestId, input.world.questLog),
   };
 }

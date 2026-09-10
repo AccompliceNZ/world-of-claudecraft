@@ -5173,6 +5173,7 @@ export const ru_RU: EnTranslations = {
       "distance": "{distance} ярдов",
       "showRoute": "Показать маршрут",
       "untrack": "Не отслеживать",
+      "track": "Отследить",
       "legend": {
         "dungeon": "Подземелье",
         "ore": "Руда",

@@ -5173,6 +5173,7 @@ export const zh_CN: EnTranslations = {
       "distance": "{distance} 码",
       "showRoute": "显示路线",
       "untrack": "取消追踪",
+      "track": "追踪",
       "legend": {
         "dungeon": "地下城",
         "ore": "矿石",

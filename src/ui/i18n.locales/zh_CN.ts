@@ -15918,6 +15918,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.professions.tutorialLink': '专业教程',
   'hudChrome.marketWindow.mixedListingsFooter':
     '商人会补充普通商品；玩家上架的物品会以其要价并列显示。',
+  'hudChrome.mapAtlas.track': '追踪',
   'hudChrome.mapAtlas.level': '等级 {level}',
   'hudChrome.mapAtlas.landmarkCount': '{count} 个地标',
   'hudChrome.mapAtlas.filtersAria': '地图图层',

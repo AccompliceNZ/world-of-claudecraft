@@ -5,6 +5,7 @@ import { esc } from '../../esc';
 import { formatNumber, t } from '../../i18n';
 import { ownEntry } from '../../known_item';
 import type { PainterHostWriters } from '../../painter_host';
+import { type QuestTrackingState, sharedQuestTracking } from '../../quest_tracking_core';
 import { buildQuestStrip, type QuestStripController } from './quest_strip_controller';
 import { type QuestTrackerView, questTrackerView, type TrackedQuest } from './quest_tracker';
 
@@ -20,7 +21,9 @@ export interface QuestTrackerControllerDeps {
   writers: PainterHostWriters;
   element: HTMLElement;
   document: Document;
-  world(): Pick<IWorld, 'questLog'>;
+  world(): Pick<IWorld, 'questLog' | 'cfg' | 'player'>;
+  /** Injectable tracking set; production leaves it out and shares the HUD's one. */
+  tracking?: QuestTrackingState;
   settings: QuestTrackerSettingsPort;
   questTitle(questId: string): string;
   objectiveLabel(questId: string, objectiveIndex: number): string;
@@ -65,18 +68,27 @@ export class QuestTrackerController {
     this.lastNow = now;
     let collapsed = this.deps.settings.collapsed();
     const quests: TrackedQuest[] = [];
-    for (const progress of this.deps.world().questLog.values()) {
+    const world = this.deps.world();
+    const tracking = this.deps.tracking ?? sharedQuestTracking();
+    tracking.useCharacter(world.cfg.playerClass, world.player.name);
+    const untracked = tracking.untrackedIds();
+    // The acceptance-order position in the WHOLE log, not this array's length: an
+    // untracked quest keeps its number reserved, so every remaining row still
+    // matches the world map's gold badge for the same quest.
+    let logPosition = 0;
+    for (const progress of world.questLog.values()) {
+      logPosition++;
+      if (untracked.has(progress.questId)) continue;
       // The log is SERVER truth: a quest id accepted on a current client can
       // reach a bundle that predates it (stale-client guard, R34), and the
       // tracker runs inside hud.update() every frame, so an unguarded deref
       // here killed the whole HUD tail. The unknown entry still PUSHES (raw
-      // id as its title, no objectives): the tracker numbers must match the
-      // world map's badges, and the map numbers every log entry, so a skip
-      // here would silently desync every number after it.
+      // id as its title, no objectives): a player must be able to see, and
+      // untrack, a row the client cannot name.
       const quest = ownEntry(QUESTS, progress.questId);
       quests.push({
         id: progress.questId,
-        number: quests.length + 1,
+        number: logPosition,
         // The unknown title SAYS unknown (a localizable sentence carrying the
         // raw id) instead of handing the player a bare content slug; the raw
         // id stays present so the row still matches a bug report.

@@ -30,7 +30,7 @@ import {
 } from '../world_api';
 import { markDialogRoot } from './dialog_root';
 import { dropdownKeyNav } from './dropdown_nav';
-import { computeDropdownPlacement } from './dropdown_position';
+import { computeDropdownPlacement, dropdownClipBounds } from './dropdown_position';
 import { itemDisplayName } from './entity_i18n';
 import { esc } from './esc';
 import {
@@ -555,11 +555,31 @@ export class MarketWindow {
       // border-inclusive box.
       const borderTop = Number.parseFloat(getComputedStyle(el).borderTopWidth) || 0;
       const borderBottom = Number.parseFloat(getComputedStyle(el).borderBottomWidth) || 0;
+      // On desktop `.mkt-controls` is a 200px column that SCROLLS, so it clips in
+      // its own right and starts well below the window's own top edge. Measuring
+      // only the window let a flipped-up menu render above the column, where its
+      // first option was invisible and hit-testing reached the window title. On
+      // mobile the same element gives up its scroller (overflow-y: visible, the
+      // whole sheet scrolls instead), so it clips nothing and must NOT constrain
+      // the menu: the computed overflow is what tells the two layouts apart.
+      const controls = trigger.closest<HTMLElement>('.mkt-controls');
+      const controlsRect =
+        controls && getComputedStyle(controls).overflowY !== 'visible'
+          ? controls.getBoundingClientRect()
+          : undefined;
+      const clip = dropdownClipBounds(
+        controlsRect
+          ? [
+              { top: c.top + borderTop, bottom: c.bottom - borderBottom },
+              { top: controlsRect.top, bottom: controlsRect.bottom },
+            ]
+          : [{ top: c.top + borderTop, bottom: c.bottom - borderBottom }],
+      );
       const placement = computeDropdownPlacement({
         triggerTop: t.top,
         triggerBottom: t.bottom,
-        containerTop: c.top + borderTop,
-        containerBottom: c.bottom - borderBottom,
+        containerTop: clip.top,
+        containerBottom: clip.bottom,
         preferredMaxHeight: MKT_MENU_PREFERRED_HEIGHT,
         gap: MKT_MENU_GAP,
         minHeight: MKT_MENU_MIN_HEIGHT,

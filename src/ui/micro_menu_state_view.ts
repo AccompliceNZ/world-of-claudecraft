@@ -28,7 +28,14 @@ export const MICRO_MENU_LAUNCHERS: readonly MicroMenuLauncherSpec[] = [
   { selector: '#mm-quest', windowId: 'quest-log-window' },
   { selector: '#mm-deeds', windowId: 'deeds-window' },
   { selector: '#mm-reliquary', windowId: 'reliquary-window' },
+  { selector: '#mm-loot-explorer', windowId: 'loot-explorer-window' },
+  { selector: '#mm-cosmetics', windowId: 'cosmetics-window' },
   { selector: '#mm-professions', windowId: 'professions-window' },
+  { selector: '#mm-harvest-journal', windowId: 'harvest-journal-window' },
+  // The one launcher whose window ships in no markup entry: the Perfecting
+  // painter mints #perfecting-window on first open (still a .window.panel, so
+  // Hud's window observer stamps data-window-open on it like any other).
+  { selector: '#mm-perfecting', windowId: 'perfecting-window' },
   { selector: '#mm-map', windowId: 'map-window' },
   { selector: '#mm-bag', windowId: 'bags' },
   { selector: '#mm-crafting', windowId: 'crafting-window' },

@@ -5173,6 +5173,7 @@ export const ko_KR: EnTranslations = {
       "distance": "{distance}야드",
       "showRoute": "경로 표시",
       "untrack": "추적 해제",
+      "track": "추적",
       "legend": {
         "dungeon": "던전",
         "ore": "광석",

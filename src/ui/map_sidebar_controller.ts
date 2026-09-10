@@ -37,6 +37,7 @@ import {
   mapSidebarSignature,
   toggleMapAtlasFilter,
 } from './map_sidebar_view';
+import { type QuestTrackingState, sharedQuestTracking } from './quest_tracking_core';
 
 const FILTERS: readonly MapAtlasFilterId[] = [
   'quests',
@@ -84,9 +85,12 @@ function mapQuestTitle(questId: string): string {
 export interface MapSidebarControllerDeps {
   root(): HTMLElement;
   click(): void;
-  onFiltersChanged(filters: Readonly<MapAtlasFilters>): void;
+  /** Repaint the open map: the layer chips and the tracking set both change what
+   *  the canvas draws, and the rail cannot reach the canvas itself. */
+  onRepaintMap(): void;
   onShowRoute(route: MapAtlasRoute): void;
-  onUntrackQuest(questId: string): void;
+  /** Injectable tracking set; production leaves it out and shares the HUD's one. */
+  tracking?: QuestTrackingState;
 }
 
 export class MapSidebarController {
@@ -109,6 +113,13 @@ export class MapSidebarController {
 
   constructor(private readonly deps: MapSidebarControllerDeps) {}
 
+  /** Resolved per call rather than in a field, so the shared instance is not
+   *  minted at construction time (field initializer order against the injected
+   *  dep is not worth relying on). */
+  private tracking(): QuestTrackingState {
+    return this.deps.tracking ?? sharedQuestTracking();
+  }
+
   filterState(): Readonly<MapAtlasFilters> {
     return this.filters;
   }
@@ -120,11 +131,22 @@ export class MapSidebarController {
   update(world: IWorld, zone: ZoneDef): void {
     this.world = world;
     this.zone = zone;
+    this.tracking().useCharacter(world.cfg.playerClass, world.player.name);
     if (!this.initializedSelection) {
-      this.selectedQuestId = world.questLog.keys().next().value ?? null;
+      this.selectedQuestId = this.firstTrackedQuestId(world);
       this.initializedSelection = true;
     }
     this.render();
+  }
+
+  /** The opening selection: the first quest the player still tracks, never an
+   *  untracked one (which the view would drop again on the very next build). */
+  private firstTrackedQuestId(world: IWorld): string | null {
+    const tracking = this.tracking();
+    for (const questId of world.questLog.keys()) {
+      if (tracking.isTracked(questId)) return questId;
+    }
+    return null;
   }
 
   /** The data-map-* identity of the focused control, or null when focus is
@@ -162,11 +184,13 @@ export class MapSidebarController {
     const world = this.world;
     const zone = this.zone;
     if (!world || !zone) return;
+    const tracking = this.tracking();
     const model = buildMapSidebarView({
       world,
       zone,
       filters: this.filters,
       selectedQuestId: this.selectedQuestId,
+      untrackedQuestIds: tracking.untrackedIds(),
     });
     this.selectedQuestId = model.selectedQuestId;
     if (this.route !== null) {
@@ -175,6 +199,9 @@ export class MapSidebarController {
     const signature = mapSidebarSignature(model, {
       shownRouteQuestId: this.route?.questId ?? null,
       i18nRevision: getI18nRevision(),
+      // Untracking moves nothing in the view a walking player also moves, so the
+      // rail would keep painting the row it just dropped without this counter.
+      trackingRevision: tracking.revision(),
     });
     if (signature === this.lastSig) return;
     this.lastSig = signature;
@@ -234,7 +261,7 @@ export class MapSidebarController {
     if (filter && FILTERS.includes(filter)) {
       this.filters = toggleMapAtlasFilter(this.filters, filter);
       this.deps.click();
-      this.deps.onFiltersChanged(this.filters);
+      this.deps.onRepaintMap();
       this.render();
       return;
     }
@@ -254,6 +281,7 @@ export class MapSidebarController {
               zone: this.zone,
               filters: this.filters,
               selectedQuestId: this.selectedQuestId,
+              untrackedQuestIds: this.tracking().untrackedIds(),
             }).route
           : null;
       if (route) {
@@ -265,11 +293,14 @@ export class MapSidebarController {
       return;
     }
     if (target.closest('[data-map-untrack]') && this.selectedQuestId !== null) {
-      const quest = this.selectedQuestId;
+      // Local tracking only: the quest stays accepted and keeps earning credit,
+      // it just leaves this rail, the map badges, and the HUD tracker until the
+      // player tracks it again from the quest log.
+      this.tracking().setTracked(this.selectedQuestId, false);
       this.selectedQuestId = null;
       this.route = null;
       this.deps.click();
-      this.deps.onUntrackQuest(quest);
+      this.deps.onRepaintMap();
       this.render();
     }
   };

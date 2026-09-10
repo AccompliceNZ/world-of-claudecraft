@@ -820,6 +820,10 @@ export interface OverworldMapInput {
   /** Player-controlled atlas layers. Omitted by legacy callers and tests to
    *  preserve the complete shipped map. */
   filters?: Readonly<MapAtlasFilters>;
+  /** Quests this client has untracked (quest_tracking_core): their gold objective
+   *  badges leave the map, exactly as their rows leave the atlas rail and the HUD
+   *  tracker. The quest itself stays accepted and keeps its acceptance number. */
+  untrackedQuestIds?: ReadonlySet<string>;
 }
 
 /** Which world-map surface the player's POSITION selects: rift, delve, battleground,
@@ -957,10 +961,16 @@ export function buildOverworldMapModel(input: OverworldMapInput): OverworldMapMo
   // map rect (inView) like every other grid-map marker; radius scales with zoom.
   // Each area carries its quests' acceptance-order numbers for the badges.
   const questNumbers = questNumbersByLog(world.questLog);
+  // Numbering stays over the WHOLE log so an untracked quest leaves a gap rather
+  // than renumbering the badges after it; only the DRAWING is filtered.
+  const untrackedQuests = input.untrackedQuestIds;
   const questAreas: MapQuestAreaMarker[] = [];
   for (const area of filters.quests ? questObjectiveAreas(world.questLog) : []) {
     if (!inZone(area.center.x, area.center.z) || !inView(area.center.x, area.center.z)) continue;
-    const objectives = area.objectives;
+    const objectives =
+      untrackedQuests === undefined || untrackedQuests.size === 0
+        ? area.objectives
+        : area.objectives.filter((ref) => !untrackedQuests.has(ref.questId));
     if (objectives.length === 0) continue;
     const numbers: number[] = [];
     for (const ref of objectives) {

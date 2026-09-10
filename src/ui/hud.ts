@@ -2321,9 +2321,8 @@ export class Hud {
     this.mapSidebar = new MapSidebarController({
       root: () => $('#map-sidebar'),
       click: () => audio.click(),
-      onFiltersChanged: () => this.repaintOpenMap(),
+      onRepaintMap: () => this.repaintOpenMap(),
       onShowRoute: (route) => this.showFinderOnMap(route.x, route.z),
-      onUntrackQuest: () => this.repaintOpenMap(),
     });
     this.fiesta = new FiestaController({
       document,
@@ -6012,6 +6011,7 @@ export class Hud {
     confirmDialog: (title, body, okText, cancelText, onOk) =>
       this.confirmDialog(title, body, okText, cancelText, onOk),
     insertQuestChatLink: (questId) => this.insertQuestChatLink(questId),
+    showOnMap: (x, z) => this.showFinderOnMap(x, z),
   });
 
   /** The player's own frame portrait.

@@ -17040,6 +17040,7 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'hudChrome.professions.tutorialLink': 'Обучение профессиям',
   'hudChrome.marketWindow.mixedListingsFooter':
     'Торговец пополняет обычные товары; лоты игроков размещаются рядом по назначенной ими цене.',
+  'hudChrome.mapAtlas.track': 'Отследить',
   'hudChrome.mapAtlas.level': 'Уровень {level}',
   'hudChrome.mapAtlas.landmarkCount': 'Ориентиров: {count}',
   'hudChrome.mapAtlas.filtersAria': 'Слои карты',

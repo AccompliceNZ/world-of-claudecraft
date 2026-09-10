@@ -984,6 +984,25 @@ describe('active-quest objective areas (the classic POI blobs)', () => {
     for (const a of model.questAreas) expect(a.numbers).toEqual([1]);
   });
 
+  it('drops the badges of an untracked quest and keeps the tracked numbering', () => {
+    // Untracking is presentation state (quest_tracking_core): the quest stays in
+    // the log and keeps its acceptance number, its BADGES just leave the map, the
+    // same way its row leaves the atlas rail and the HUD tracker.
+    const tracked = buildOverworldMapModel(input(makeOverworldWorld('sim', activeLog()), 1));
+    expect(tracked.questAreas.length).toBeGreaterThan(0);
+    const untracked = buildOverworldMapModel({
+      ...input(makeOverworldWorld('sim', activeLog()), 1),
+      untrackedQuestIds: new Set([quest.id]),
+    });
+    expect(untracked.questAreas).toEqual([]);
+    // An unrelated id in the set changes nothing.
+    const other = buildOverworldMapModel({
+      ...input(makeOverworldWorld('sim', activeLog()), 1),
+      untrackedQuestIds: new Set(['q_not_in_the_log']),
+    });
+    expect(other.questAreas).toEqual(tracked.questAreas);
+  });
+
   it('plots one blob per gather-node cluster, and the zone cull keeps them', () => {
     // The gather branch of questObjectiveAreas is the one that groups a flat node
     // table into clusters (quest_targets.ts pushNodeCluster), and it is the one

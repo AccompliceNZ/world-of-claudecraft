@@ -5173,6 +5173,7 @@ export const en_XA: EnTranslations = {
       "distance": "[{distance} ýáŕðš]",
       "showRoute": "[Šĥóŵ Ŕóúţé]",
       "untrack": "[Úñţŕáçķ]",
+      "track": "[Ţŕáçķ]",
       "legend": {
         "dungeon": "[Ðúñĝéóñ]",
         "ore": "[Óŕé]",

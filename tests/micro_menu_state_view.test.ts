@@ -18,6 +18,12 @@ import {
 const indexHtml = readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const playHtml = readFileSync(new URL('../play.html', import.meta.url), 'utf8');
 const hudCss = readFileSync(new URL('../src/styles/hud.css', import.meta.url), 'utf8');
+// Windows that ship in no markup entry: their painter mints the root on first
+// open. The value is the module that mints it, so the exemption stays anchored to
+// real code and a renamed or deleted mint fails here instead of going quiet.
+const RUNTIME_MINTED_WINDOWS: Readonly<Record<string, string>> = {
+  'perfecting-window': '../src/ui/hud/professions/perfecting_window.ts',
+};
 
 const view = () => createMicroMenuStateView((value) => String(value));
 
@@ -62,7 +68,18 @@ describe('micro_menu_state_view: the open-window ring', () => {
     // The positive control: an emptied registry would satisfy every exclusion below
     // without ringing anything, so name launchers that MUST still be here.
     expect(selectors, 'the window openers still take the ring').toEqual(
-      expect.arrayContaining(['#mm-map', '#mm-bag', '#mm-char', '#mm-options']),
+      expect.arrayContaining([
+        '#mm-map',
+        '#mm-bag',
+        '#mm-char',
+        '#mm-options',
+        // The four plain window toggles that were missing from the registry
+        // (2026-09 review): no ring and no aria-pressed until they landed here.
+        '#mm-cosmetics',
+        '#mm-harvest-journal',
+        '#mm-loot-explorer',
+        '#mm-perfecting',
+      ]),
     );
     for (const excluded of ['#mm-music', '#mm-emote', '#mm-wiki', '#mm-discord']) {
       expect(selectors, `${excluded} must not take the open-window ring`).not.toContain(excluded);
@@ -114,12 +131,40 @@ describe('micro_menu_state_view: the count badges', () => {
 });
 
 describe('micro_menu_state_view: the registry is real', () => {
+  it('rings each of the four late-added launchers from its own window', () => {
+    const cases: ReadonlyArray<readonly [string, string]> = [
+      ['#mm-cosmetics', 'cosmetics-window'],
+      ['#mm-harvest-journal', 'harvest-journal-window'],
+      ['#mm-loot-explorer', 'loot-explorer-window'],
+      ['#mm-perfecting', 'perfecting-window'],
+    ];
+    for (const [selector, windowId] of cases) {
+      const state = view().tick(openOnly(windowId), { talentPoints: 0 });
+      expect(
+        state.launchers.filter((l) => l.on).map((l) => l.selector),
+        `${windowId} must light ${selector} and nothing else`,
+      ).toEqual([selector]);
+    }
+  });
+
   it('names a launcher and a window that exist in BOTH entry documents', () => {
     expect(MICRO_MENU_LAUNCHERS.length).toBeGreaterThan(0);
     for (const { selector, windowId } of MICRO_MENU_LAUNCHERS) {
       const launcherId = `id="${selector.slice(1)}"`;
       expect(indexHtml, `index.html has no ${selector}`).toContain(launcherId);
       expect(playHtml, `play.html has no ${selector}`).toContain(launcherId);
+      const minter = RUNTIME_MINTED_WINDOWS[windowId];
+      if (minter) {
+        // The runtime-minted root: prove the mint really assigns this id AND the
+        // .window.panel classes Hud's observer keys its open-state stamp off, so
+        // the ring has something to read once the window opens.
+        const source = readFileSync(new URL(minter, import.meta.url), 'utf8');
+        expect(source, `${minter} does not mint #${windowId}`).toContain(`root.id = '${windowId}'`);
+        expect(source, `${minter} does not mint a .window.panel root`).toContain(
+          "root.className = 'window panel'",
+        );
+        continue;
+      }
       expect(indexHtml, `index.html has no #${windowId}`).toContain(`id="${windowId}"`);
       expect(playHtml, `play.html has no #${windowId}`).toContain(`id="${windowId}"`);
     }

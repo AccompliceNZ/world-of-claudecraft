@@ -242,6 +242,44 @@ describe.each([
     expect(model.quests.every((quest) => !quest.selected)).toBe(true);
     expect(model.route).toBeNull();
   });
+
+  it('drops an untracked quest from the rail while it keeps its acceptance number', () => {
+    const w = makeWorld([progress('q_wolves', 'active', 2), progress('q_boars', 'active', 1)]);
+    const zone = zoneAt(w.player.pos.x, w.player.pos.z);
+
+    const model = buildMapSidebarView({
+      world: w,
+      zone,
+      filters: DEFAULT_MAP_ATLAS_FILTERS,
+      selectedQuestId: 'q_boars',
+      untrackedQuestIds: new Set(['q_wolves']),
+    });
+
+    expect(model.quests.map((quest) => quest.questId)).toEqual(['q_boars']);
+    // The numbering is taken over the WHOLE log, so q_boars keeps the 2 that its
+    // gold badge on the map still paints.
+    expect(model.quests[0].number).toBe(2);
+    expect(model.selectedQuestId).toBe('q_boars');
+    // The quest is untracked, not abandoned: the log is untouched.
+    expect(w.questLog.has('q_wolves')).toBe(true);
+  });
+
+  it('drops a selection (and its route) the moment that quest is untracked', () => {
+    const w = makeWorld([progress('q_wolves', 'active', 2)]);
+    const zone = zoneAt(w.player.pos.x, w.player.pos.z);
+
+    const model = buildMapSidebarView({
+      world: w,
+      zone,
+      filters: DEFAULT_MAP_ATLAS_FILTERS,
+      selectedQuestId: 'q_wolves',
+      untrackedQuestIds: new Set(['q_wolves']),
+    });
+
+    expect(model.quests).toEqual([]);
+    expect(model.selectedQuestId).toBeNull();
+    expect(model.route).toBeNull();
+  });
 });
 
 // The online-only hazard the shared arms above cannot show: ClientWorld hands the

@@ -5173,6 +5173,7 @@ export const ja_JP: EnTranslations = {
       "distance": "{distance}ヤード",
       "showRoute": "ルートを表示",
       "untrack": "追跡を解除",
+      "track": "追跡",
       "legend": {
         "dungeon": "ダンジョン",
         "ore": "鉱石",

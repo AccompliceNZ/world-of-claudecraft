@@ -15926,6 +15926,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'hudChrome.professions.tutorialLink': '專業教學',
   'hudChrome.marketWindow.mixedListingsFooter':
     '商人會補充普通商品；玩家上架的物品會以其要價並列顯示。',
+  'hudChrome.mapAtlas.track': '追蹤',
   'hudChrome.mapAtlas.level': '等級 {level}',
   'hudChrome.mapAtlas.landmarkCount': '{count} 個地標',
   'hudChrome.mapAtlas.filtersAria': '地圖圖層',

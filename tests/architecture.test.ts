@@ -512,6 +512,8 @@ const UI_PURE_CORES = [
   'src/ui/continent_map_view.ts',
   'src/ui/map_open_sea_edge_core.ts',
   'src/ui/map_quest_list_view.ts',
+  'src/ui/quest_tracking_core.ts',
+  'src/ui/quest_map_location_core.ts',
   'src/ui/arena_window_view.ts',
   'src/ui/pvp_record_core.ts',
   'src/ui/pvp_tabs_view.ts',

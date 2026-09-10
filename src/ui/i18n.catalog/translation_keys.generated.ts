@@ -10548,6 +10548,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.mapAtlas.noNearbyQuests'
   | 'hudChrome.mapAtlas.noTrackedQuests'
   | 'hudChrome.mapAtlas.showRoute'
+  | 'hudChrome.mapAtlas.track'
   | 'hudChrome.mapAtlas.trackedQuests'
   | 'hudChrome.mapAtlas.untrack'
   | 'hudChrome.marketIndicator.aria'

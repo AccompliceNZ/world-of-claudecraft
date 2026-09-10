@@ -5173,6 +5173,7 @@ export const zh_TW: EnTranslations = {
       "distance": "{distance} 碼",
       "showRoute": "顯示路線",
       "untrack": "取消追蹤",
+      "track": "追蹤",
       "legend": {
         "dungeon": "地城",
         "ore": "礦石",

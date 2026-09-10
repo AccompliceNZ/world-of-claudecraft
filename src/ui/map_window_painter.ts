@@ -79,6 +79,7 @@ import {
   type MapViewRect,
   type OverworldMapModel,
 } from './map_window_view';
+import { sharedQuestTracking } from './quest_tracking_core';
 import { TextSpriteCache, type TextSpriteStyle } from './text_sprite_cache';
 
 // Label / title typography (Georgia, matching the inline site verbatim).
@@ -561,6 +562,7 @@ export class MapWindowPainter {
       markerProfile: profile,
       filters: opts.filters,
       route: opts.route,
+      untrackedQuestIds: sharedQuestTracking().untrackedIds(),
     });
     const colors = this.resolveColors();
     this.draw(ctx, model, opts.zoneBg, opts.canvasSize, colors, profile);
