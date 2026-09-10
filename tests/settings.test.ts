@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   clickMoveButtonLabel,
@@ -112,6 +113,12 @@ describe('Settings', () => {
     // The editor must be able to REACH the stock from either edge drag.
     expect(SETTING_RANGES.playerFrameWidth.min).toBeLessThan(UNIT_FRAME_STOCK_WIDTH);
     expect(SETTING_RANGES.targetFrameWidth.min).toBeLessThan(UNIT_FRAME_STOCK_WIDTH);
+
+    // The constant's doc comment claims it MIRRORS --unit-frame-w, and the legacy
+    // rescue in settings.ts keys off the exact stock, so the two homes have to
+    // agree: read the sheet rather than trusting the prose.
+    const tokensCss = readFileSync(new URL('../src/styles/tokens.css', import.meta.url), 'utf8');
+    expect(tokensCss).toContain(`--unit-frame-w: ${UNIT_FRAME_STOCK_WIDTH}px;`);
 
     // A player carrying the retired stocks (612 full row / 190 bars panel) is
     // re-stamped to the new stock rather than keeping a frame they never chose.

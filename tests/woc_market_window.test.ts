@@ -1818,7 +1818,7 @@ describe('woc_market_window: the Activity tab is an honest, actionable ledger (H
     expect(code).toContain('d.row.mine && canCancelListing(d.row)');
     expect(activity).toContain('data-action="cancel-listing"');
     // Focus survives the poll rebuild (the window-family focus-key contract).
-    expect(activity).toContain(`wm-activity-cancel-\${l.id}`);
+    expect(activity).toContain(`wm-activity-cancel-\${esc(l.id)}`);
   });
 });
 

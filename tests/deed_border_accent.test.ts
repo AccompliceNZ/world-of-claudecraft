@@ -1167,6 +1167,44 @@ describe('border accent graphics fairness (cosmetic identity, preset-identical)'
     }
   });
 
+  // The scan above now blesses any --glow-* token as tier-scalable, which is only
+  // safe because the three ACTIONABLE ability states draw their identity from an
+  // unscaled rim and use the glow purely as bloom. Nothing recorded that, so a
+  // future state could ship its whole readable signal inside a --glow-* and
+  // vanish at the low tier without failing anything.
+  it('keeps an unscaled rim on the proc, queued and empowered ability states', () => {
+    const library = read('src/styles/library.css');
+    const hudCss = read('src/styles/hud.css');
+    const rims = [
+      [
+        'socket proc rim',
+        library.match(/\.ui-socket\.is-proc,\s*\n\s*\.ui-socket\.proc \{([^}]*)\}/)?.[1],
+        'border-color: var(--color-proc-rim);',
+      ],
+      [
+        'queued rim',
+        hudCss.match(/\n {2}\.action-btn\.queued \{([^}]*)\}/)?.[1],
+        'border-color: var(--color-white);',
+      ],
+      [
+        'empowered rim',
+        hudCss.match(/\n {2}\.action-btn\.empowered \{([^}]*)\}/)?.[1],
+        'border-color: var(--gold);',
+      ],
+    ] as const;
+    for (const [name, body, rim] of rims) {
+      expect(body, `${name}: rule missing`).toBeTruthy();
+      expect(body, `${name}: the rim must not ride --fx-shadow`).toContain(rim);
+      const rimLine = (body ?? '')
+        .split(';')
+        .find((declaration) => declaration.includes('border-color'));
+      expect(rimLine, `${name}: rim scaled by the graphics tier`).not.toContain('--fx-shadow');
+    }
+    // The socket's own keyline ring is unscaled too, so the proc state keeps a
+    // hard edge even when every glow term collapses to zero.
+    expect(rims[0][1]).toContain('0 0 0 1px var(--color-keyline)');
+  });
+
   it('E35: changing activeBorder busts the character sheet refresh signature', () => {
     const base = {
       activeTitle: null as string | null,

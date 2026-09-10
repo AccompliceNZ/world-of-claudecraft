@@ -158,10 +158,10 @@ export class TalentsWindow {
       `${svgIcon('close')}</button>`;
     if (!talentsFor(cls)) {
       root.innerHTML =
-        `<div class="panel-title ui-win-head"><img class="ui-win-art" src="/ui/chrome/talents.webp" alt="" draggable="false"><span class="ui-win-title">${t('game.talents.title')}<span class="tal-class-name ui-win-sub">${esc(classDisplayName(cls))}</span></span>${close}</div>` +
+        `<div class="panel-title ui-win-head"><img class="ui-win-art" src="/ui/chrome/talents.webp" alt="" draggable="false"><span class="ui-win-title">${esc(t('game.talents.title'))}<span class="tal-class-name ui-win-sub">${esc(classDisplayName(cls))}</span></span>${close}</div>` +
         `<div class="tal-empty tal-coming-soon" data-talents-coming-soon>` +
-        `<b>${t('game.talents.comingSoonTitle')}</b>` +
-        `<span>${t('game.talents.comingSoonBody')}</span></div>`;
+        `<b>${esc(t('game.talents.comingSoonTitle'))}</b>` +
+        `<span>${esc(t('game.talents.comingSoonBody'))}</span></div>`;
       root.querySelector('[data-close]')?.addEventListener('click', () => this.close());
       return;
     }
@@ -169,7 +169,7 @@ export class TalentsWindow {
     const allocation = this.deps.currentAllocation();
     const view = buildTalentsView(allocation, cls, this.deps.playerLevel());
     root.innerHTML =
-      `<div class="panel-title ui-win-head"><img class="ui-win-art" src="/ui/chrome/talents.webp" alt="" draggable="false"><span class="ui-win-title">${t('game.talents.title')}<span class="tal-class-name ui-win-sub">${esc(classDisplayName(cls))}</span></span>${close}</div>` +
+      `<div class="panel-title ui-win-head"><img class="ui-win-art" src="/ui/chrome/talents.webp" alt="" draggable="false"><span class="ui-win-title">${esc(t('game.talents.title'))}<span class="tal-class-name ui-win-sub">${esc(classDisplayName(cls))}</span></span>${close}</div>` +
       // WAI-ARIA tabs, built from the shared tab_strip_view core (default
       // button tag; the Choices tab carries its picked-count badge via
       // extraHtml, the same markup contract social_window follows).
@@ -253,13 +253,13 @@ export class TalentsWindow {
         ) as TranslationKey;
         html +=
           `<div class="ts-det-meta">` +
-          `<div class="ts-det-attr"><span class="ts-det-attr-cap">${t('hudChrome.specPanel.primaryAttr')}</span><span class="ts-det-attr-val">${esc(statLabel)}</span></div>` +
-          `<div class="ts-det-cx ts-cx-${info.complexity}"><span class="ts-det-cx-cap">${t('hudChrome.specPanel.complexity')}</span> ${t(cxKey)}</div>` +
+          `<div class="ts-det-attr"><span class="ts-det-attr-cap">${esc(t('hudChrome.specPanel.primaryAttr'))}</span><span class="ts-det-attr-val">${esc(statLabel)}</span></div>` +
+          `<div class="ts-det-cx ts-cx-${info.complexity}"><span class="ts-det-cx-cap">${esc(t('hudChrome.specPanel.complexity'))}</span> ${esc(t(cxKey))}</div>` +
           `</div>`;
       }
       html += `<div class="ts-det-mastery"><b>${esc(masteryName)}</b> - ${esc(masteryDescription)}</div>`;
       if (info?.examples.length) {
-        html += `<div class="ts-ex-block"><div class="ts-det-label">${t('hudChrome.specPanel.exampleAbilities')}</div><div class="ts-ex-list">`;
+        html += `<div class="ts-ex-block"><div class="ts-det-label">${esc(t('hudChrome.specPanel.exampleAbilities'))}</div><div class="ts-ex-list">`;
         for (const id of info.examples) {
           html += `<div class="ts-ex" tabindex="0" data-ability="${esc(id)}"><span class="ts-ex-icon" style="background-image:url(${iconDataUrl('ability', id)})" aria-hidden="true"></span><span class="ts-ex-name">${esc(signatureName(id))}</span></div>`;
         }
@@ -335,8 +335,8 @@ export class TalentsWindow {
     if (!view.hasRows) {
       body.innerHTML =
         `<div class="tal-empty tal-coming-soon" data-talents-coming-soon>` +
-        `<b>${t('game.talents.comingSoonTitle')}</b>` +
-        `<span>${t('game.talents.comingSoonBody')}</span></div>`;
+        `<b>${esc(t('game.talents.comingSoonTitle'))}</b>` +
+        `<span>${esc(t('game.talents.comingSoonBody'))}</span></div>`;
       return;
     }
     const wrap = document.createElement('div');
@@ -381,7 +381,7 @@ export class TalentsWindow {
             `<b>${esc(name)}</b><br><span>${esc(description)}</span>` +
             (optionVM.pending
               ? `<br><i style="color:${TAL_COLOR.choiceDim}">${esc(soon)}</i>`
-              : `<br><i style="color:${TAL_COLOR.hint}">${t('game.talents.cycleHint')}</i>`),
+              : `<br><i style="color:${TAL_COLOR.hint}">${esc(t('game.talents.cycleHint'))}</i>`),
         );
         button.addEventListener('click', () => {
           this.deps.selectRow(

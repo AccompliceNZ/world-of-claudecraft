@@ -21,6 +21,26 @@
 
 import { FOCUSABLE_SELECTOR } from './focus_manager';
 
+/**
+ * Wall-clock life of a #prompt-stack prompt that nobody answers (party invite,
+ * trade request, duel challenge, ready check), after which it auto-dismisses.
+ * The countdown bar in src/styles/hud.css drains over --prompt-timeout-dur,
+ * which tests/prompt_timeout_duration.test.ts pins equal to this value.
+ */
+export const PROMPT_TIMEOUT_MS = 28_000;
+
+/**
+ * The prompt's countdown bar: a .ui-bar whose fill drains over
+ * --prompt-timeout-dur, hidden outright under reduced motion (a frozen fill
+ * would read as time remaining right up to the silent auto-dismiss).
+ */
+export function createPromptTimeoutBar(): HTMLElement {
+  const bar = document.createElement('div');
+  bar.className = 'prompt-timeout ui-bar';
+  bar.innerHTML = '<span class="ui-bar-fill"></span>';
+  return bar;
+}
+
 // Monotonic id source for the prompts' aria-labelledby target, so the id never
 // couples to class ordering. Shared across every consumer; ids only need to be
 // unique, not sequential per window.

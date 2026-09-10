@@ -307,7 +307,7 @@ export class CalendarWindow {
               timeZone: 'UTC',
             });
       rows.push(
-        `<div class="cal-event guild ui-card" data-cal-event="${ev.id}"><span class="cal-dot guild"></span>` +
+        `<div class="cal-event guild ui-card" data-cal-event="${esc(ev.id)}"><span class="cal-dot guild"></span>` +
           `<span class="cal-event-text"><span class="cal-event-title">${esc(ev.title)} <span class="cal-event-when">${esc(when)}</span></span>` +
           (ev.note ? `<span class="cal-event-note">${esc(ev.note)}</span>` : '') +
           (ev.createdBy
@@ -315,7 +315,7 @@ export class CalendarWindow {
             : '') +
           `</span>` +
           (manage
-            ? `<button type="button" class="cal-event-del ui-icon-btn" data-cal-del="${ev.id}" aria-label="${esc(t('hudChrome.calendar.deleteAria', { title: ev.title }))}">${svgIcon('close')}</button>`
+            ? `<button type="button" class="cal-event-del ui-icon-btn" data-cal-del="${esc(ev.id)}" aria-label="${esc(t('hudChrome.calendar.deleteAria', { title: ev.title }))}">${svgIcon('close')}</button>`
             : '') +
           `</div>`,
       );

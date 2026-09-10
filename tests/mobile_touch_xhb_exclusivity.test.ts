@@ -283,4 +283,13 @@ describe('the lift composes into the mobile #player-frame/#castbar transform in 
       'scale(calc(var(--mobile-unit-frame-scale-landscape) * var(--mobile-chrome-scale, 1)))',
     );
   });
+
+  // The three rules above pin TOKEN NAMES, which a token redefinition would sail
+  // through: the literal factors and the lift term have to be pinned somewhere,
+  // and this sheet declares all three.
+  it('pins the literal values behind the two unit-frame scale tokens and the lift fallback', () => {
+    expect(hudMobileCss).toContain('--mobile-unit-frame-scale: 0.92;');
+    expect(hudMobileCss).toContain('--mobile-unit-frame-scale-landscape: 0.7;');
+    expect(hudMobileCss).toContain('--mobile-xhb-lift-fallback: calc(var(--socket-size) + 10px);');
+  });
 });

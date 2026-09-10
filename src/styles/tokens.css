@@ -643,6 +643,16 @@
     --color-white: #ffffff;
     --color-ink: #0d0d13;
     --color-ink-deep: #0b0b10;
+    /* Foregrounds for the fixed-dark surfaces (ink grounds, the red and gold
+       button plates, the selected tab, the medal). theme.ts must never re-emit
+       these: a preset-derived text token on a fixed surface goes dark-on-dark
+       under Parchment. Pinned at AA per preset by tests/ui_library.test.ts. */
+    --color-text-on-ink: #f0ebd8;
+    --color-text-on-ink-soft: #e0dac4;
+    --color-text-on-red: #f0ebd8;
+    --color-text-on-tab-on: #ffd100;
+    --color-text-on-gold-btn: #ffe9a8;
+    --color-text-on-medal: #ffd100;
     --color-socket-rim: #4a3d1d;
     --color-socket-hi: #2c2c3a;
     --color-panel-hi: #1c1c29;
@@ -836,6 +846,10 @@
     --dur-press: 60ms;
     --dur-panel: 160ms;
     --dur-frame: 120ms;
+    /* The invite/trade/duel/ready-check countdown bar. PROMPT_TIMEOUT_MS in
+       src/ui/prompt_dialog.ts is the same duration and dismisses the prompt;
+       tests/prompt_timeout_duration.test.ts pins the two equal. */
+    --prompt-timeout-dur: 28s;
     /* Dim the live world while the modal options family is open. */
     --color-options-scrim: color-mix(in srgb, var(--color-keyline) 74%, transparent);
 

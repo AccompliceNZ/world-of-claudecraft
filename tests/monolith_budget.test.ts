@@ -445,7 +445,10 @@ const MONOLITHS: MonolithRow[] = [
     // measured combined count is below both parent pins (18574 / 18489).
     // Re-measured at the release/v0.43.0 sync: the review-fix batches
     // and the release's own extractions both landed; wc -l on the merged tree.
-    ceiling: 18352,
+    // LOWERED 18352 -> 18350 in the review-fix round: the prompt countdown bar
+    // moved to createPromptTimeoutBar in src/ui/prompt_dialog.ts alongside the
+    // PROMPT_TIMEOUT_MS the sheet's --prompt-timeout-dur mirrors.
+    ceiling: 18350,
     seam: 'pure view core + thin painter on PainterHost (src/ui/CLAUDE.md)',
   },
   {

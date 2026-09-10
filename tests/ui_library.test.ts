@@ -305,6 +305,138 @@ describe('ui library: theme derivations back the text and surface tokens', () =>
   });
 });
 
+// The Parchment contrast family (maintainer review): several primitives paired a
+// PRESET-DERIVED foreground with a FIXED-DARK surface, so the derived text went
+// dark under Parchment and the pair collapsed toward 1:1. The AA test above could
+// not see it, because it only pairs derived text against the derived --panel-base
+// / --panel-edge, which move together. The fix is a fixed light foreground per
+// fixed surface; this table is the pair list, asserted for real.
+//
+// Threshold: 4.5:1 everywhere. Not one of these primitives renders at the WCAG
+// large tier (the biggest is the 13px .ui-input; the 12px display-font buttons
+// and tabs are nowhere near 18.66px bold), so none earns the 3:1 relaxation.
+interface ContrastPair {
+  /** The library rule that must READ the foreground token. */
+  selector: string;
+  fg: string;
+  /** Every fixed stop of that rule's surface: the worst one has to clear AA. */
+  surfaces: string[];
+  min: number;
+}
+
+const LIBRARY_CONTRAST_PAIRS: ContrastPair[] = [
+  { selector: '.ui-keycap', fg: '--color-text-on-ink-soft', surfaces: ['--color-ink'], min: 4.5 },
+  {
+    selector: '.ui-socket-key',
+    fg: '--color-text-on-ink-soft',
+    surfaces: ['--color-ink-deep'],
+    min: 4.5,
+  },
+  {
+    selector: '.ui-pill',
+    fg: '--color-text-on-ink-soft',
+    surfaces: ['--color-ink-deep'],
+    min: 4.5,
+  },
+  { selector: '.ui-input', fg: '--color-text-on-ink', surfaces: ['--color-bg-input'], min: 4.5 },
+  {
+    selector: '.ui-card-tile',
+    fg: '--color-text-on-ink',
+    surfaces: ['--color-card-hi', '--color-card-lo'],
+    min: 4.5,
+  },
+  {
+    selector: '.ui-btn--red',
+    fg: '--color-text-on-red',
+    surfaces: ['--color-btn-red-hi', '--color-btn-red-lo'],
+    min: 4.5,
+  },
+  {
+    selector: '.ui-btn--gold',
+    fg: '--color-text-on-gold-btn',
+    surfaces: ['--color-btn-gold-hi', '--color-medal-hi', '--color-btn-gold-lo'],
+    min: 4.5,
+  },
+  {
+    selector: '.ui-btn[aria-pressed="true"]',
+    fg: '--color-text-on-medal',
+    surfaces: ['--color-medal-hi', '--color-medal-lo'],
+    min: 4.5,
+  },
+  {
+    selector: '.ui-chip[aria-pressed="true"]',
+    fg: '--color-text-on-medal',
+    surfaces: ['--color-medal-hi', '--color-medal-lo'],
+    min: 4.5,
+  },
+  {
+    selector: '.ui-medal',
+    fg: '--color-text-on-medal',
+    surfaces: ['--color-medal-hi', '--color-medal-lo'],
+    min: 4.5,
+  },
+  {
+    selector: '.ui-tab[aria-selected="true"]',
+    fg: '--color-text-on-tab-on',
+    surfaces: ['--color-tab-on-hi', '--color-tab-on-lo'],
+    min: 4.5,
+  },
+  {
+    selector: '.ui-seg-tab[aria-selected="true"]',
+    fg: '--color-text-on-tab-on',
+    surfaces: ['--color-tab-on-hi', '--color-tab-on-lo'],
+    min: 4.5,
+  },
+];
+
+describe('ui library: fixed foregrounds on the fixed-dark surfaces', () => {
+  const code = stripComments(library);
+  const tokenHex = (name: string): string => {
+    const m = stripComments(tokens).match(new RegExp(`${name}:\\s*(#[0-9a-fA-F]{6});`));
+    if (!m) throw new Error(`${name} is not a plain hex token in tokens.css`);
+    return m[1];
+  };
+
+  it('reads the fixed foreground token in every primitive that sits on a fixed surface', () => {
+    for (const pair of LIBRARY_CONTRAST_PAIRS) {
+      // The selector may sit in a comma list, so walk to its rule's own brace.
+      const at = code.indexOf(pair.selector);
+      expect(at, `library.css has no rule for ${pair.selector}`).toBeGreaterThan(-1);
+      const open = code.indexOf('{', at);
+      const body = code.slice(open, code.indexOf('}', open));
+      expect(body, `${pair.selector} must read ${pair.fg}`).toContain(`color: var(${pair.fg});`);
+    }
+  });
+
+  it('never lets a preset re-emit a fixed foreground or a fixed surface token', () => {
+    // This is the whole mechanism: the moment theme.ts derives one of these, the
+    // pair goes back to derived-on-fixed and Parchment breaks again.
+    const fixed = new Set(LIBRARY_CONTRAST_PAIRS.flatMap((pair) => [pair.fg, ...pair.surfaces]));
+    for (const id of PRESET_ORDER) {
+      const vars = themeCssVars(resolveTheme({ preset: id, custom: {} }));
+      for (const name of fixed) {
+        expect(vars[name], `${id} re-emits ${name}`).toBeUndefined();
+      }
+    }
+  });
+
+  it.each(PRESET_ORDER)('every primitive pair clears AA on the %s preset', (id) => {
+    const vars = themeCssVars(resolveTheme({ preset: id, custom: {} }));
+    for (const pair of LIBRARY_CONTRAST_PAIRS) {
+      // Fixed on both sides, so a preset can only break this by starting to
+      // derive one of them; read through the preset map anyway so it would.
+      const fg = vars[pair.fg] ?? tokenHex(pair.fg);
+      for (const surface of pair.surfaces) {
+        const bg = vars[surface] ?? tokenHex(surface);
+        expect(
+          contrastRatio(fg, bg),
+          `${id}: ${pair.selector} ${pair.fg} on ${surface}`,
+        ).toBeGreaterThanOrEqual(pair.min);
+      }
+    }
+  });
+});
+
 // W20 correctness sweep: three library-side findings.
 describe('ui library: hover states and the orphan tokens', () => {
   const code = stripComments(library);

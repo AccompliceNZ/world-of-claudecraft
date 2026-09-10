@@ -780,6 +780,7 @@ import {
   procOverlayState,
 } from './proc_overlay_view';
 import { maskProfanity } from './profanity';
+import { createPromptTimeoutBar, PROMPT_TIMEOUT_MS } from './prompt_dialog';
 import {
   QUEST_ITEM_TOOLTIP_COLOR,
   type QuestItemTooltipModel,
@@ -18114,10 +18115,7 @@ export class Hud {
     const actions = document.createElement('div');
     actions.className = 'prompt-actions';
     actions.append(accept, decline);
-    const timeout = document.createElement('div');
-    timeout.className = 'prompt-timeout ui-bar';
-    timeout.innerHTML = '<span class="ui-bar-fill"></span>';
-    prompt.append(actions, timeout);
+    prompt.append(actions, createPromptTimeoutBar());
     stack.appendChild(prompt);
     if (focusFirst) accept.focus();
     window.setTimeout(() => {
@@ -18125,7 +18123,7 @@ export class Hud {
         prompt.remove();
         onTimeout();
       }
-    }, 28000);
+    }, PROMPT_TIMEOUT_MS);
     return prompt;
   }
 

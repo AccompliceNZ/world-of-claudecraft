@@ -47,13 +47,13 @@ export function talentSummaryHtml(sim: IWorld): string {
   const sp = ct.specs.find((s) => s.id === sim.talentSpec);
   const specName = sp
     ? esc(tTalent({ kind: 'talentSpec', spec: sp, field: 'name' }))
-    : t('game.talents.noSpec');
-  let html = `<div class="char-progression ui-card"><div class="cp-title">${t('game.talents.specTab')}</div>`;
-  html += `<div class="char-stats cp-stats"><span>${t('game.talents.specTab')}: <b>${specName}</b></span>`;
-  if (sp) html += `<span>${t('game.talents.role')}: <b>${roleLabel(sp.role)}</b></span>`;
+    : esc(t('game.talents.noSpec'));
+  let html = `<div class="char-progression ui-card"><div class="cp-title">${esc(t('game.talents.specTab'))}</div>`;
+  html += `<div class="char-stats cp-stats"><span>${esc(t('game.talents.specTab'))}: <b>${specName}</b></span>`;
+  if (sp) html += `<span>${esc(t('game.talents.role'))}: <b>${esc(roleLabel(sp.role))}</b></span>`;
   html += `</div>`;
   if (sp)
-    html += `<div class="cp-milestones"><span class="cp-ms-label">${t('game.talents.mastery')}:</span> <b style="color:var(--gold)">${esc(tTalent({ kind: 'talentMastery', spec: sp, field: 'name' }))}</b> <span class="cp-none">${esc(tTalent({ kind: 'talentMastery', spec: sp, field: 'description' }))}</span></div>`;
+    html += `<div class="cp-milestones"><span class="cp-ms-label">${esc(t('game.talents.mastery'))}:</span> <b style="color:var(--gold)">${esc(tTalent({ kind: 'talentMastery', spec: sp, field: 'name' }))}</b> <span class="cp-none">${esc(tTalent({ kind: 'talentMastery', spec: sp, field: 'description' }))}</span></div>`;
   return `${html}</div>`;
 }
 

@@ -304,6 +304,29 @@ describe('hud wiring', () => {
     expect(hudMobile.match(/body\.mobile-touch #banner\.banner-deed/g)?.length).toBe(1);
   });
 
+  // The lift used to be a bespoke --fx-shadow box-shadow on this rule, so it shed
+  // with the graphics tier. Adopting the shared panel recipe moved it to
+  // --shadow-panel, and NOTHING recorded either half of that swap. Both halves
+  // are pinned here, including the honest consequence: --shadow-panel carries no
+  // --fx-shadow term, so the deed plate's lift is tier-independent today. If the
+  // tier contract is wanted back, it belongs in the token, not in this rule.
+  it('draws the deed plate lift from the shared --shadow-panel token, which is tier-independent', () => {
+    const tokensCss = read('../src/styles/tokens.css');
+    const platedIdx = hudCss.indexOf('#banner.banner-deed,\n  #banner.banner-skill {');
+    expect(platedIdx, 'no shared plated rule for the deed and skill banners').toBeGreaterThan(-1);
+    const plated = hudCss.slice(platedIdx, hudCss.indexOf('}', platedIdx));
+    expect(plated).toContain('box-shadow: var(--shadow-panel);');
+    // No bespoke shadow survives on the rule: the token is the single source.
+    expect(plated).not.toMatch(/box-shadow:[^;]*--fx-shadow/);
+    const shadowPanel = tokensCss.match(/--shadow-panel:([\s\S]*?);\n/);
+    expect(shadowPanel, '--shadow-panel missing from tokens.css').toBeTruthy();
+    expect(shadowPanel?.[1]).toContain('--color-keyline');
+    expect(
+      shadowPanel?.[1].includes('--fx-shadow'),
+      '--shadow-panel gained an --fx-shadow term: update this pin and the comment above it',
+    ).toBe(false);
+  });
+
   // The two source pins above prove hud.ts PASSES 'deed' and that showBanner
   // SETS the class, but neither executes the join. This drives the real
   // earned-moment arm end to end on the real Hud.prototype method.

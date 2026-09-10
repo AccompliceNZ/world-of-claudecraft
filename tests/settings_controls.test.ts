@@ -69,4 +69,38 @@ describe('settings controls interface-library adoption', () => {
     expect(value).toBe(40);
     expect(slider.style.getPropertyValue('--range-fill')).toBe('40%');
   });
+
+  // The case above runs min 0 / max 100, where the percent math collapses to
+  // identity: value === pct, so a fill that forgot --min or --span entirely
+  // would still pass. A non-zero min is what makes the arithmetic real.
+  it('offsets the fill by a non-zero min instead of reading the raw value', () => {
+    const host = document.createElement('div');
+    let value = 30;
+    const control = sliderControl({
+      parent: host,
+      label: 'Field of view',
+      get: () => value,
+      set: (next) => {
+        value = next;
+      },
+      min: 20,
+      max: 60,
+      step: 1,
+      format: (next) => `${next}`,
+    });
+    const slider = host.querySelector('input[type="range"]') as HTMLInputElement;
+
+    // (30 - 20) / (60 - 20) = 25%, NOT the raw 30.
+    expect(slider.style.getPropertyValue('--range-fill')).toBe('25%');
+    control.setValue(50);
+    expect(slider.style.getPropertyValue('--range-fill')).toBe('75%');
+    // Both ends clamp exactly, so an off-by-one in the span shows up here.
+    slider.value = '20';
+    slider.dispatchEvent(new Event('input'));
+    expect(value).toBe(20);
+    expect(slider.style.getPropertyValue('--range-fill')).toBe('0%');
+    slider.value = '60';
+    slider.dispatchEvent(new Event('input'));
+    expect(slider.style.getPropertyValue('--range-fill')).toBe('100%');
+  });
 });

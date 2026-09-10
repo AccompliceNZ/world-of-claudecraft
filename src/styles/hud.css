@@ -9947,7 +9947,7 @@
   }
   .prompt-timeout .ui-bar-fill {
     width: 100%;
-    animation: prompt-timeout 28s linear forwards;
+    animation: prompt-timeout var(--prompt-timeout-dur) linear forwards;
   }
   @keyframes prompt-timeout {
     from {
@@ -9957,15 +9957,16 @@
       width: 0;
     }
   }
+  /* A frozen fill lies: it read "most of the time left" until the prompt
+     silently auto-dismissed. With no animation there is no honest readout, so
+     the bar goes away and the prompt text carries the whole message. */
   @media (prefers-reduced-motion: reduce) {
-    .prompt-timeout .ui-bar-fill {
-      width: 62%;
-      animation: none;
+    .prompt-timeout {
+      display: none;
     }
   }
-  body.reduce-motion .prompt-timeout .ui-bar-fill {
-    width: 62%;
-    animation: none;
+  body.reduce-motion .prompt-timeout {
+    display: none;
   }
   /* Touch floor for the .prompt family's action buttons: the three quantity
      prompts (bags discard/sell, bank withdraw/deposit, vendor buy-quantity)
