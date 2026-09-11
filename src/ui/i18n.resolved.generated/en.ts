@@ -11920,7 +11920,7 @@ export const en: EnTranslations = {
       },
       "cat_form": {
         "name": "Wolf Form",
-        "description": "Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, and you generate 29% less threat. Cast again to return to caster form."
+        "description": "Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, you move 15% faster, and you generate 29% less threat. Cast again to return to caster form."
       },
       "claw": {
         "name": "Rendclaw",
@@ -11961,7 +11961,7 @@ export const en: EnTranslations = {
       },
       "travel_form": {
         "name": "Fleet Form",
-        "description": "Instantly shift into a swift fleet form, increasing movement speed by 40%. You cannot use other abilities while shifted, but can shift in or out of combat, ideal for escaping."
+        "description": "Instantly shift into a swift fleet form, increasing movement speed by 40% and removing breakable roots and slows. You cannot use other abilities while shifted, but can shift in or out of combat, ideal for escaping."
       },
       "enrage": {
         "name": "Stoke",
