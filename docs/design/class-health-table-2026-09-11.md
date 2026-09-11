@@ -93,7 +93,25 @@ arena: the real check is the PBE duel round the gear PR already owes.
 - The heroic difficulty floors, the practice dummy and the R5 envelope are calibrated
   on the prot warrior, which does not move.
 
+## Two things the larger pools exposed
+
+- **The potion ladder is sized against the old priest pool.** The vendor healing potions
+  (110 / 190 / 279) restored 72 to 90 percent of a naked priest at the three zone
+  bracket tops; on the new pools (198 / 408 / 653) they restore 56 / 47 / 43 percent, and
+  the crafted alchemy ladder (120 / 200 / 335) the same. This is the "fixed heals get
+  relatively weaker" consequence the stamina audit named. Restoring the documented
+  fractions means roughly 143 to 178, 294 to 367 and 470 to 588 on the vendor rungs, the
+  crafted ladder alongside (its values are quoted in the guide prose in every locale)
+  and the vendor-versus-crafted ordering law, so it is its own PR; this one pins the
+  measured fractions so the ladder cannot drift further unnoticed.
+- **Sacrilegious March lingered a tick on pools not divisible by five.** The drain
+  clamps health to a ceiling-rounded floor and then tested the fraction, so on a
+  677-HP warlock the clamped value sat a hair above 20 percent and the march ended one
+  second late with a zero-damage tick. It now compares in health units
+  (`src/sim/combat/warlock_talents.ts`); the existing talent test covers the case.
+
 ## Still owed
 
-The PBE duel and Varkhul heroic checks the gear PR owes cover this change as well; the
-drift cleanup and the identity-aware item score are unchanged by it.
+The potion ladder re-size above. The PBE duel and Varkhul heroic checks the gear PR owes
+cover this change as well; the drift cleanup and the identity-aware item score are
+unchanged by it.
