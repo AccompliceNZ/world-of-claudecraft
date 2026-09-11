@@ -1210,8 +1210,13 @@ const MONOLITHS: MonolithRow[] = [
     // merged count, zero slack: any further growth reds again.
     // OSSBrain integration: mobile preflight detection and copy moved to game/mobile_preflight.ts.
     // Measured after formatting; lower the ratchet with the extraction.
-    // Re-measured at the release/v0.43.0 sync; wc -l on the merged tree.
-    ceiling: 11326,
+    // Compose the mount cosmetics and practice lesson extractions.
+    // Measured combined size; retain zero headroom after the release merge.
+    // Weapon-coat amounts now share src/ui/ability_imbue_text.ts with live tooltips.
+    // Re-measured at the release/v0.43.0 sync that brought PR 3778 in: the
+    // release count 11327 minus the redesign's own 6 extracted lines = 11321
+    // (exact wc -l on the merged tree, zero headroom).
+    ceiling: 11321,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
