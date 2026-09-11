@@ -13,6 +13,10 @@ import { Sim } from '../src/sim/sim';
 // accidental stat buff from moving generated variants into HEROIC_BOSS_LOOT.
 // The nine gearDigest values below were re-minted for the stamina baseline
 // model (item_budget.ts, "The stamina baseline model"): every changed def
+// Receipt for every def behind the re-minted digests: the codemod's
+// before/after list (scripts/stamina_baseline_codemod.ts, run with --dry) and
+// the generated variants that follow their bases; the one boss whose digest
+// did not move (choirmother_selthe) is the one whose gear def did not change.
 // either gained its free stamina baseline (a caster identity) or had its
 // Strength/Agility trimmed onto its line with stamina added, and every heroic
 // variant recomputes through the same model at merge time
@@ -99,7 +103,7 @@ const BASELINE = {
       'tidewoven_trousers',
     ],
     normalDigest: 'aa4c9a380d095266e6cd74de3869ac1652f4a896af53c6bdd4cf406fa35ee01c',
-    gearDigest: 'ac8bbbfd151ae82bacafba1fc303750da3a3b546aa59a9a1739e8335cc7d02e2',
+    gearDigest: '9a57395e1bf2c6c01ed41bd56a891a386fa999e4014c23176a5513e9666338b9',
   },
   korgath_the_bound: {
     gearIds: [

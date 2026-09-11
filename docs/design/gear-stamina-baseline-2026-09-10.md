@@ -426,3 +426,73 @@ target's max HP, so on a caster they grow by the same third the pool did while h
 output does not; the absorb takes proportionally longer to clear on casters, offset by
 the caster surviving the raw damage it was dying to. The 6 Sep Varkhul Monte Carlo
 worktree no longer exists, so the heroic remeasure is owed on PBE, not here.
+
+## 9. Review round (2026-09-10 to 11): what the reviewers found and what was decided
+
+Three read-only reviewers (the QA checklist, the content-obligations reviewer and the
+test-coverage auditor) ran over the first three commits. Their findings and the
+resolutions, so the next reader does not rediscover them:
+
+- **Seven more suites pinned the old stat lines** (trophy domination claims, the R5
+  envelope probe, the retired heroic items, professions masterwork and crafting, the
+  inscription catalog, the WARFARE gear tier). All re-pinned to the model with the
+  cause named in each; none loosened.
+- **The masterwork and Perfecting bonus generators were not on the model.** Both
+  distributed the line delta over the item's live profile, which now carries stamina,
+  so a crafted caster piece's bonus had silently become `sta 1, int 1, spi 0`. They now
+  use `tierDeltaStats` (`src/sim/item_budget.ts`): the line delta over the offense
+  identity plus, for a caster profile, the growth of the free baseline between the two
+  lines (`int 1, spi 1, sta 1` on the level-9 vestments). Physical profiles keep the
+  historical delta exactly. Already-persisted bakes (`rolled.stats` on copies crafted
+  or Perfected before this lands) keep their old delta: they are grandfathered, one
+  Stamina short of a fresh bake, and no migration is run. The masterwork acceptance
+  bound ("a masterworked craft stays strictly below the raid floor") is now judged
+  like for like, the raid line's model total against the masterwork's model total.
+- **A heroic variant of an over-budget base lost one Intellect** (`heroic_moonshroud_robe`,
+  base on the drift list). The variant generator recovered the base's line by inverting
+  the model total, which only holds for on-model items. It now reads the realized line
+  budget from the stats (Intellect plus Spirit plus the premium on any stamina above
+  the baseline), so a variant never carries less of any stat than its base; the guard
+  pins that for every `heroicOf` item.
+- **The reference bodies that moved with the identity-aware picker** are all re-pinned
+  with the cause named: the balance druid probe, the feral and Bruin fixtures, the
+  friendly practice dummy (1,382 to 1,822 HP), the R5 envelope tank table (3,532 to
+  3,642) and the heroic difficulty floors' max-armor prot kit (1,582 to 1,922). In every
+  case the tank had been wearing caster jewelry a raw five-stat sum tied it with; it now
+  wears its own. The difficulty floors and `REF_ARMOR` are not retuned, the same
+  maintainer decision the previous re-pin recorded. The spec-less picker takes the line
+  of the class's first-listed spec (talent-tree order), which is the pick the raw sum
+  already landed on for paladins, shamans and druids; it is now stated in the scorer.
+- **The retired v0.24.2 restoration defs** (`soulforged_warplate`, `soulrend_diadem`)
+  stay on the model: a player still wearing one must not be the only caster without
+  stamina. Their frozen identity is the id, name, kind, slot, armor type and armor
+  value; the stat line follows the model like every other item.
+- **The crucible caster and healer collections gain Spirit, not only stamina.** They
+  were authored physical-style (Intellect plus stamina inside the line). On the caster
+  line their stamina became free and the line was filled with Spirit: the caster chest
+  goes from `int 17, sta 8` to `int 17, spi 8, sta 8`, stat-identical to the raid chest of
+  the same level; the healer chest from `int 14, spi 7, sta 4` to `int 14, spi 11, sta 8`
+  (the healer waist gains one Intellect from the profile ratio). That is a regen gain
+  for crucible-geared casters and healers of eight Spirit on a chest; no Spell Power
+  moves.
+- **The drift allowlist is split.** The WARFARE honor tier is priced at a deliberate
+  fraction of its slot budget and is exempt from the exact-line check permanently
+  (`FRACTIONAL_BY_DESIGN`, built from `FURY_STOCK`); the remaining 102 drift items sit on
+  `STAT_DRIFT_ALLOWLIST` under a ratchet that can only go down. The WARFARE budget
+  test now bounds each piece's line by its fraction target, and the honor-versus-badge
+  jewelry check keeps its tie (11 and 11 on rings, 12 and 12 on necks) pinned as
+  literals; that tie is the maintainer decision the reviewers flagged, since the stamina
+  floor brought the best honor jewelry exactly level with the worst badge piece.
+- **Sixteen authoring comments** on the badge jewelry, the crafted apex pieces and the
+  rift caster gear quoted the old "int plus sta equals budget" arithmetic; each now
+  names the line and the free baseline separately.
+- **Two constants are the model's own, not classic-era formulas:** the one-third share
+  and the premium of one. The share is fitted to this catalog's physical convention
+  (33 to 40 percent at every quality) and the crucible caster collections; the premium is
+  a placeholder so tank stamina can be priced differently by changing one number. Both
+  are maintainer-review items, recorded here rather than claimed as verified.
+- **Still owed after this PR:** the drift cleanup (the 102 allowlisted items and the
+  PvP set's line, which is nine short of the caster line by design), the Varkhul heroic
+  remeasure on PBE, and an identity-aware `itemScore` for the HUD's cross-identity
+  comparisons (a caster piece now scores a third higher than the physical piece of the
+  same tier in the raw score).

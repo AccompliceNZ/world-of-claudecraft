@@ -82,6 +82,28 @@ describe('Crucible crafted collections', () => {
       expect(primaryStatSum(item)).toBe(expectedStatBudget(item));
       expect((item.critRating ?? 0) + (item.hasteRating ?? 0) + (item.hitRating ?? 0)).toBe(85);
     }
+    // The baseline the caster pieces ride, pinned as literals so the generated
+    // totals above are checked against numbers and not the share constant that
+    // produced them.
+    expect([25, 17, 16].map(staminaBaseline)).toEqual([8, 6, 5]);
+    // And the chest lines as literals (stamina baseline model, 2026-09-10): the
+    // caster profile keeps its Intellect and takes its Spirit on the line, the
+    // healer profile its 14:11, the physical profiles their stamina inside the
+    // line. Swapping Intellect and Spirit would pass every check above and reds here.
+    expect(ITEMS.crucible_caster_cloth_chest.stats).toEqual({
+      int: 17,
+      spi: 8,
+      sta: 8,
+      armor: 105,
+    });
+    expect(ITEMS.crucible_healer_cloth_chest.stats).toEqual({
+      int: 14,
+      spi: 11,
+      sta: 8,
+      armor: 105,
+    });
+    expect(ITEMS.crucible_str_mail_chest.stats).toEqual({ str: 17, sta: 8, armor: 380 });
+    expect(ITEMS.crucible_tank_mail_chest.stats).toEqual({ str: 10, sta: 15, armor: 380 });
   });
 
   it('does not leave cat, bear, Stonebound, or conversion healers on the wrong stats', () => {

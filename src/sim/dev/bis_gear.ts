@@ -31,7 +31,11 @@ import { parseBisGearFor } from './parse_bis_loadouts';
 // baseline model (item_budget.ts) a caster piece totals a third more than the
 // physical piece of the same tier, so a raw five-stat sum would rank healer mail
 // above a warrior's own set; counting only the line the class spends keeps the
-// ordering within an identity exactly as before and never crosses it.
+// ordering within an identity exactly as before and never crosses it. A
+// spec-less caller takes the line of the class's FIRST-LISTED spec in
+// DEV_KIT_ROLES (talent-tree order: holy for paladins, elemental for shamans,
+// balance for druids), which is the same pick the raw sum happened to land on
+// for those classes; a deliberate rule, not an accident of the table.
 const CASTER_LINE = ['int', 'spi', 'sta'] as const;
 const PHYSICAL_LINE = ['str', 'agi', 'sta'] as const;
 function lineStatsFor(

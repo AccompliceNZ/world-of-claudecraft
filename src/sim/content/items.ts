@@ -3243,8 +3243,10 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     kind: 'armor',
     slot: 'neck',
     quality: 'epic',
-    // ilvl-31 neck epic budget = 14; int:8+sta:6 = 14. Two stats only (a
-    // primary plus stamina), the heroic-vendor jewelry shape law.
+    // ilvl-31 neck epic line = 14: int:8+spi:5 = 13 plus one stamina bought
+    // above the free baseline of 5 (sta:6). The stamina baseline model
+    // (item_budget.ts) prices the line; the heroic-vendor jewelry keeps its
+    // primary-plus-stamina shape with the Spirit the line owed on top.
     stats: { int: 8, sta: 6, spi: 5 },
     // Exactly one rating at the jewelry band's 25. Caster haste WITH
     // stamina complements the vendor necks: zense_meridian is the int/spi
@@ -3272,7 +3274,8 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     kind: 'armor',
     slot: 'ring',
     quality: 'epic',
-    // ilvl-31 ring epic budget = 13; int:8+sta:5 = 13.
+    // ilvl-31 ring epic line = 13: int:8+spi:4 = 12 plus one stamina bought
+    // above the free baseline of 4 (sta:5); stamina baseline model.
     stats: { int: 8, sta: 5, spi: 4 },
     // Caster int identity: haste. The vendor haste rings are spi/int splits
     // (zyzzs_deathless_signet, architects_cornerstone); an int-lead haste
@@ -3291,8 +3294,9 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     // (occupiesHand defaults true: the 0.75 held budget line, kept). NO use
     // field: R14 forbids new proc/effect mechanics and the codebase ships
     // no cosmetic-only item-use family to reuse, so the gadget is pure
-    // stats. ilvl-31 offhand epic budget = 16; int:10+sta:6 = 16, the
-    // dps-caster identity.
+    // stats. ilvl-31 offhand epic line = 16: int:10+spi:5 = 15 plus one
+    // stamina bought above the free baseline of 5 (sta:6), the dps-caster
+    // identity under the stamina baseline model.
     stats: { int: 10, sta: 6, spi: 5 },
     // The held/shield family band: one rating at 20; dps-caster throughput
     // is crit, like wraithfire_orb.
@@ -3309,9 +3313,9 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
     kind: 'held_offhand',
     slot: 'offhand',
     quality: 'epic',
-    // ilvl-31 offhand epic budget = 16; int:8+spi:5+sta:3 = 16, the
-    // wraithfire_orb three-stat healer-leaning distribution rescaled to the
-    // ilvl-31 budget.
+    // ilvl-31 offhand epic line = 16: int:8+spi:8, with the free stamina
+    // baseline of 5 on top (stamina baseline model); the wraithfire_orb
+    // healer-leaning distribution rescaled to the ilvl-31 line.
     stats: { int: 8, spi: 8, sta: 5 },
     // Healer-inclusive throughput: haste, never Hit (heals are not
     // resisted; the healer-facing rule at wraithfire_orb).

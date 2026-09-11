@@ -26,7 +26,7 @@ import {
 import { ITEMS } from '../src/sim/data';
 import { createPlayer, recalcPlayerStats } from '../src/sim/entity';
 import { canEquipItem } from '../src/sim/equipment_rules';
-import { expectedStatBudget, itemLevel, primaryStatSum } from '../src/sim/item_level';
+import { itemLevel, itemStaminaModel, primaryStatSum } from '../src/sim/item_level';
 import { PVP_DEFENSE_CAP, PVP_OFFENSE_CAP, pvpFractionsFromRatings } from '../src/sim/pvp';
 import type { Entity, EquipSlot, PlayerClass, SetBonusEffect } from '../src/sim/types';
 
@@ -203,11 +203,27 @@ describe('the WARFARE tier is authored from named fractions', () => {
 
     for (const id of FURY_STOCK) {
       const item = ITEMS[id];
-      const budget = expectedStatBudget(item) ?? 0;
+      // Ratings and the fraction discount key off the FULL, undiscounted slot
+      // budget (item_level.ts's expectedLineBudget, read here via
+      // itemStaminaModel().budget), never the stamina baseline model's
+      // identity-aware total: every WARFARE piece sits on that model's drift
+      // allowlist, so its line is never corrected and only its stamina floor is
+      // applied (see tests/pvp_honor_gear.test.ts, fixed the same way).
+      const model = itemStaminaModel(item);
+      const budget = model?.budget ?? 0;
       const jewelry = item.slot === 'neck' || item.slot === 'ring';
       const fraction = jewelry ? WARFARE_JEWELRY_STAT_FRACTION : WARFARE_STAT_FRACTION;
       expect(itemLevel(item), id).toBe(31);
-      expect(primaryStatSum(item), id).toBe(Math.round(budget * fraction));
+      // The offense line was authored at the fraction target and never touched
+      // by the stamina baseline model; only stamina was topped up where the
+      // fraction-scaled total fell short of the model's floor. Reconstruct both
+      // halves: the untouched line plus whichever is larger of the fraction
+      // target's implied stamina or the floor.
+      const line = model?.line ?? 0;
+      const floor = model?.baseline ?? 0;
+      const fractionTotal = Math.round(budget * fraction);
+      const impliedSta = fractionTotal - line;
+      expect(primaryStatSum(item), id).toBe(line + Math.max(impliedSta, floor));
       expect(item.pvpOffenseRating, id).toBe(Math.round(budget * WARFARE_RATING_FRACTION));
       expect(item.pvpDefenseRating, id).toBe(Math.round(budget * WARFARE_RATING_FRACTION));
     }

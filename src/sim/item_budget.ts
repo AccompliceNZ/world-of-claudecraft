@@ -358,3 +358,23 @@ export function normalizeToStaminaModel(
   );
   return { ...armor, ...lineStats, sta: baseline + extra };
 }
+
+// The bonus record a tier bump adds ON TOP of an item's own stats (masterwork,
+// Perfecting): the line delta redistributed over the profile's offense identity,
+// plus, for a caster identity, the growth of the free baseline between the two
+// lines. A physical profile keeps the historical behavior exactly (its stamina
+// is inside the line, so the ratio-preserving delta already carries it). Null
+// when the bump adds nothing.
+export function tierDeltaStats(
+  profile: Partial<CoreStats>,
+  lineBefore: number,
+  lineAfter: number,
+): Partial<CoreStats> | null {
+  const delta = lineAfter - lineBefore;
+  if (delta <= 0) return null;
+  if (statIdentity(profile) === 'physical') return normalizePrimaryStats(profile, delta);
+  const out = normalizePrimaryStats(pickStats(profile, ['int', 'spi']), delta);
+  const staDelta = staminaBaseline(lineAfter) - staminaBaseline(lineBefore);
+  if (staDelta > 0) out.sta = staDelta;
+  return out;
+}

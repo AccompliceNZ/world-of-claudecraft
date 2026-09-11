@@ -5,6 +5,7 @@
 // allowlist may only shrink. Measurements and the decision record:
 // docs/design/gear-stamina-baseline-2026-09-10.md.
 import { describe, expect, it } from 'vitest';
+import { FURY_STOCK } from '../src/sim/content/pvp_honor';
 import { ITEMS } from '../src/sim/data';
 import {
   checkStaminaModel,
@@ -20,35 +21,28 @@ import {
 } from '../src/sim/item_level';
 import type { ItemDef } from '../src/sim/types';
 
+// Two kinds of item sit off their line by the model's exact check, and they are
+// kept apart because they mean different things.
+//
+// The WARFARE honor tier is priced at a deliberate FRACTION of its slot budget
+// (content/pvp_honor.ts, tests/pvp_honor_gear.test.ts): off its line by design,
+// permanently, and exempt from the exact-line check here. It still meets the
+// stamina floor like everything else.
+const FRACTIONAL_BY_DESIGN: ReadonlySet<string> = new Set(FURY_STOCK);
+
 // Items whose primary total was off their budget BEFORE the stamina model landed
-// (the 2026-09-10 inventory: the honor-tier wardrobe 1 to 3 under, the level-18
-// crafted set 1 to 3 over, leveling drift of a point or two, and a few outliers
-// such as Kingsbane's Last Oath 21 under its legendary budget). They still meet
-// the stamina FLOOR like everything else; only the exact-line check is deferred.
-// An entry that conforms fails "only names items still off budget" so it gets
-// removed; nothing may be added without a design note.
+// (the 2026-09-10 inventory: the level-18 crafted set 1 to 3 over, leveling drift
+// of a point or two, and a few outliers such as Kingsbane's Last Oath 21 under
+// its legendary budget). They still meet the stamina FLOOR like everything else;
+// only the exact-line check is deferred until the drift cleanup. An entry that
+// conforms fails "only names items still off budget" so it gets removed, and the
+// ratchet below stops the list growing; nothing may be added without a design note.
 const STAT_DRIFT_ALLOWLIST: ReadonlySet<string> = new Set([
   'apprentice_staff',
   'arcanite_war_axe',
-  'ashen_focus_ring',
-  'ashstalker_cowl',
-  'ashstalker_grips',
-  'ashstalker_harness',
-  'ashstalker_legguards',
-  'ashstalker_shoulderguards',
-  'ashstalker_treads',
-  'ashstalker_waistband',
   'boneglass_shiv',
   'broodmother_silk_robe',
   'burnished_thorium_amulet',
-  'cinder_sigil_pendant',
-  'cinderweave_cord',
-  'cinderweave_cowl',
-  'cinderweave_handwraps',
-  'cinderweave_legwraps',
-  'cinderweave_mantle',
-  'cinderweave_raiment',
-  'cinderweave_slippers',
   'crag_warden_cudgel',
   'cragmaw_huntcord',
   'cragmaw_prowlboots',
@@ -73,32 +67,19 @@ const STAT_DRIFT_ALLOWLIST: ReadonlySet<string> = new Set([
   'eelscale_leggings',
   'eelscale_treads',
   'elderwood_battle_staff',
-  'emberglass_warstaff',
   'emberwing_legguards',
   'fen_reaver_glaive',
   'fenmist_robe',
-  'final_argument_greatblade',
-  'final_oath_medallion',
-  'first_blood_razor',
-  'fleetblood_band',
-  'furyforged_gauntlets',
-  'furyforged_girdle',
-  'furyforged_legguards',
-  'furyforged_sabatons',
-  'furyforged_warhelm',
-  'furyforged_warplate',
-  'furyforged_warspaulders',
   'goldweave_leggings',
   'greyjaw_hide_boots',
   'heroic_deathless_heartwood',
   'heroic_kingsbane_last_oath',
+  'heroic_moonshroud_robe',
   'hollow_vigil_staff',
-  'iron_vow_band',
   'ironvein_lantern_staff',
   'ironvein_pickblade',
   'kingsbane_last_oath',
   'knight_commanders_greaves',
-  'last_step_signet',
   'maldrecs_soulbinder',
   'mantle_of_the_unbroken_shore',
   'marrowlord_boneboots',
@@ -130,7 +111,6 @@ const STAT_DRIFT_ALLOWLIST: ReadonlySet<string> = new Set([
   'oiled_boots',
   'palecoil_rod',
   'quilted_trousers',
-  'razorwind_torque',
   'ridgestalker_treads',
   'riptide_dirk',
   'sableweb_slippers',
@@ -140,15 +120,7 @@ const STAT_DRIFT_ALLOWLIST: ReadonlySet<string> = new Set([
   'skullsmasher_warbelt',
   'sloomtooth_tidefang',
   'sootscale_mantle',
-  'spellbreakers_seal',
   'staff_of_drowned_prayers',
-  'stormbound_crown',
-  'stormbound_greaves',
-  'stormbound_handguards',
-  'stormbound_hauberk',
-  'stormbound_legmail',
-  'stormbound_spaulders',
-  'stormbound_waistguard',
   'stormshard_leggings',
   'sunweave_mantle',
   'sunweave_treads',
@@ -156,20 +128,12 @@ const STAT_DRIFT_ALLOWLIST: ReadonlySet<string> = new Set([
   'thoriumscale_cuirass',
   'thoriumscale_greathelm',
   'thoriumscale_leggings',
-  'thornhide_boots',
-  'thornhide_cinch',
-  'thornhide_gloves',
-  'thornhide_headdress',
-  'thornhide_leggings',
-  'thornhide_mantle',
-  'thornhide_vestment',
   'tideglass_dirk',
   'tidereaver_gaff',
   'tidescale_vest',
   'tidewatchers_wraps',
   'trail_leggings',
   'tunnelkings_spade',
-  'unbroken_circle',
   'veilsteel_blade',
   'wardens_oathband',
   'wardweave_cowl',
@@ -178,6 +142,11 @@ const STAT_DRIFT_ALLOWLIST: ReadonlySet<string> = new Set([
   'woven_robe',
   'ysols_pearl_greaves',
 ]);
+// The ratchet ceiling for the allowlist above and the count of untiered items the
+// proxy floor binds on (see the catalog test).
+const STAT_DRIFT_ALLOWLIST_CEILING = 103;
+const UNTIERED_WITH_PROXY_FLOOR = 51;
+const GENERATED_ITEM_COUNT = 111;
 
 // Items with no derivable source (vendor, starter and quest oddities) have no
 // tier to price against; their floor is taken from their own authored line, the
@@ -289,6 +258,14 @@ describe('stamina baseline model: primitives', () => {
     expect(normalizeToStaminaModel({ str: 1, agi: 1 }, 15)).toEqual({ str: 5, agi: 5, sta: 5 });
     // Zero budget: armor only.
     expect(normalizeToStaminaModel({ str: 3, armor: 40 }, 0)).toEqual({ armor: 40 });
+    // A caster profile carrying stamina above its share keeps the extra and
+    // pays for it from the line one for one: 2:3 on 25 scales to 13/20 on the
+    // model total of 33, the 12 above the baseline of 8 comes off the line.
+    expect(normalizeToStaminaModel({ int: 2, sta: 3 }, 25)).toEqual({ int: 13, sta: 20 });
+    // An empty profile has no identity to scale: only the baseline is placed.
+    // No generator feeds one (stat-less items are whites with a zero budget);
+    // pinned so the arm is a known shape, not a surprise.
+    expect(normalizeToStaminaModel({}, 25)).toEqual({ sta: 8 });
   });
 });
 
@@ -296,6 +273,19 @@ describe('stamina baseline model: the merged catalog', () => {
   it('covers the whole combat-gear catalog', () => {
     expect(eligible.length).toBeGreaterThanOrEqual(800);
     expect(tiered.length).toBeGreaterThanOrEqual(700);
+    // The untiered floor is a proxy from the item's own line, so it cannot see a
+    // proportional shrink; pin how many of them the proxy actually binds on, so
+    // the arm cannot erode to nothing without a reviewer noticing.
+    expect(untiered.filter((item) => proxyBaseline(item) > 0)).toHaveLength(
+      UNTIERED_WITH_PROXY_FLOOR,
+    );
+  });
+
+  it('the drift allowlist is a ratchet: it can only shrink', () => {
+    // Lower this number when an entry conforms and is removed; never raise it
+    // without a design note. Adding an id would otherwise silence the exact-line
+    // check for that item with nothing failing.
+    expect(STAT_DRIFT_ALLOWLIST.size).toBeLessThanOrEqual(STAT_DRIFT_ALLOWLIST_CEILING);
   });
 
   it('every eligible item meets its stamina floor', () => {
@@ -327,7 +317,7 @@ describe('stamina baseline model: the merged catalog', () => {
   it('every tiered item off the drift allowlist sits exactly on its line and total', () => {
     const failures: string[] = [];
     for (const item of tiered) {
-      if (STAT_DRIFT_ALLOWLIST.has(item.id)) continue;
+      if (STAT_DRIFT_ALLOWLIST.has(item.id) || FRACTIONAL_BY_DESIGN.has(item.id)) continue;
       const check = checkStaminaModel(item.stats, expectedLineBudget(item) as number);
       if (!check.onLine)
         failures.push(
@@ -345,6 +335,19 @@ describe('stamina baseline model: the merged catalog', () => {
       failures,
       `${failures.length} items off their line:\n${failures.slice(0, 40).join('\n')}`,
     ).toEqual([]);
+  });
+
+  it('the WARFARE exemption is real: every honor piece is off its line and not on the drift list', () => {
+    expect(FRACTIONAL_BY_DESIGN.size).toBeGreaterThanOrEqual(40);
+    for (const id of FRACTIONAL_BY_DESIGN) {
+      expect(STAT_DRIFT_ALLOWLIST.has(id), `${id} is on both lists`).toBe(false);
+      const item = ITEMS[id];
+      const line = expectedLineBudget(item);
+      expect(line, `${id} has a tier`).toBeDefined();
+      const check = checkStaminaModel(item.stats, line as number);
+      expect(check.meetsFloor, `${id} floor`).toBe(true);
+      expect(check.onLine, `${id} is priced at a fraction, so off its line`).toBe(false);
+    }
   });
 
   it('the drift allowlist only names real items that are still off their line', () => {
@@ -369,9 +372,13 @@ describe('stamina baseline model: the merged catalog', () => {
 
   it('generated heroic variants and crucible collection pieces are on the model', () => {
     const failures: string[] = [];
-    for (const item of tiered) {
-      if (!item.id.startsWith('heroic_') && !item.id.startsWith('crucible_')) continue;
-      if (STAT_DRIFT_ALLOWLIST.has(item.id)) continue;
+    const generated = tiered.filter(
+      (item) => item.id.startsWith('heroic_') || item.id.startsWith('crucible_'),
+    );
+    // Cardinality first, so a prefix change cannot make the sweep vacuous.
+    expect(generated.length).toBe(GENERATED_ITEM_COUNT);
+    for (const item of generated) {
+      if (STAT_DRIFT_ALLOWLIST.has(item.id) || FRACTIONAL_BY_DESIGN.has(item.id)) continue;
       const check = checkStaminaModel(item.stats, expectedLineBudget(item) as number);
       if (!check.meetsFloor || !check.onLine)
         failures.push(
@@ -380,6 +387,26 @@ describe('stamina baseline model: the merged catalog', () => {
             `floor ${check.meetsFloor} line ${check.line}/${check.expectedLine}`,
           ),
         );
+    }
+    expect(failures).toEqual([]);
+  });
+
+  it('a heroic variant never carries less of any stat than the item it upgrades', () => {
+    // The variant generator reads the base's realized line, so an off-budget
+    // base (the drift allowlist) upgrades from what it actually has; a variant
+    // with one point less Intellect than its base would be a downgrade in disguise.
+    const failures: string[] = [];
+    for (const item of eligible) {
+      const baseId = (item as ItemDef & { heroicOf?: string }).heroicOf;
+      if (!baseId) continue;
+      const base = ITEMS[baseId];
+      if (!base) continue;
+      for (const stat of ['str', 'agi', 'sta', 'int', 'spi'] as const) {
+        if ((item.stats?.[stat] ?? 0) < (base.stats?.[stat] ?? 0))
+          failures.push(
+            `${item.id} ${stat} ${item.stats?.[stat] ?? 0} < base ${base.stats?.[stat] ?? 0}`,
+          );
+      }
     }
     expect(failures).toEqual([]);
   });

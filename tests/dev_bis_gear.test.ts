@@ -36,6 +36,41 @@ describe('dev bis gear', () => {
     expect(flagged.length).toBeLessThanOrEqual(MASTERWROUGHT_EQUIP_CAP);
   });
 
+  it('scores the class line, never a raw five-stat sum (stamina baseline model)', () => {
+    // Two synthetic warrior-legal necks: a caster piece with the larger five-stat
+    // total (33) and a physical piece with the smaller one (25). Under the old
+    // raw sum the caster neck would win every warrior kit; the line-aware
+    // scorer counts Strength, Agility and stamina for a warrior and picks the
+    // physical piece. The reverse holds for a mage.
+    const synth: ItemDef[] = [
+      {
+        id: 'test_bis_line_caster_neck',
+        name: 'Test caster neck',
+        kind: 'armor',
+        slot: 'neck',
+        quality: 'epic',
+        stats: { int: 17, spi: 8, sta: 8 },
+        sellValue: 1,
+      } as ItemDef,
+      {
+        id: 'test_bis_line_physical_neck',
+        name: 'Test physical neck',
+        kind: 'armor',
+        slot: 'neck',
+        quality: 'epic',
+        stats: { str: 17, sta: 8 },
+        sellValue: 1,
+      } as ItemDef,
+    ];
+    for (const def of synth) ITEMS[def.id] = def;
+    try {
+      expect(bestEpicGearFor('warrior', 'arms').neck).toBe('test_bis_line_physical_neck');
+      expect(bestEpicGearFor('mage', 'fire').neck).toBe('test_bis_line_caster_neck');
+    } finally {
+      for (const def of synth) delete ITEMS[def.id];
+    }
+  });
+
   it('picks a legal epic for every coverable slot, deterministically', () => {
     const first = bestEpicGearFor('rogue', 'assassination');
     const second = bestEpicGearFor('rogue', 'assassination');

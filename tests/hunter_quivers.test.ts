@@ -11,6 +11,7 @@ import {
   expectedLineBudget,
   expectedStatBudget,
   itemLevel,
+  itemStaminaModel,
   primaryStatBudget,
   SLOT_STAT_MULT,
   TWOHAND_STAT_MULT,
@@ -390,6 +391,10 @@ describe('worn offhand budget', () => {
     expect(ITEMS.direfang_quiver.quality).toBe(ITEMS.wraithfire_orb.quality);
     expect(primaryStatSum(ITEMS.direfang_quiver)).toBe(9);
     expect(expectedLineBudget(ITEMS.wraithfire_orb)).toBe(15);
+    // The orb's realized line and total, so the comparison reads the item and
+    // not only the formula: 15 on the line plus the baseline of 5.
+    expect(itemStaminaModel(ITEMS.wraithfire_orb)?.line).toBe(15);
+    expect(primaryStatSum(ITEMS.wraithfire_orb)).toBe(20);
     expect(QUIVERS.map((id) => primaryStatSum(ITEMS[id]))).toEqual([1, 4, 6, 9]);
   });
 

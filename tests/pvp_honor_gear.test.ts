@@ -258,6 +258,11 @@ describe('FURY WARFARE item budgets', () => {
       const floor = model?.baseline ?? 0;
       const fractionTotal = Math.round(budget * statFraction);
       const impliedSta = fractionTotal - line;
+      // The line itself is bounded by the fraction target: when the floor binds,
+      // the sum check below no longer sees the line, so this is what keeps the
+      // discount real (a line raised to the full budget would otherwise pass).
+      expect(line, `${id} line within the WARFARE fraction`).toBeLessThanOrEqual(fractionTotal);
+      expect(line, `${id} carries an offense line`).toBeGreaterThan(0);
       expect(primaryStatSum(item), id).toBe(line + Math.max(impliedSta, floor));
       // Every piece's WARFARE ratings still mirror its FULL slot budget (drives 18.2%).
       // This pair is deliberately NOT rewritten as a fraction multiplication: the
@@ -316,6 +321,9 @@ describe('FURY WARFARE item budgets', () => {
         bestPvp,
         `${slot}: best PvP ${bestPvp} vs worst badge ${worstBadge}`,
       ).toBeLessThanOrEqual(worstBadge);
+      // The tie is the whole design margin, so pin the pair as literals: any
+      // further compression in either slot reds here rather than sliding past.
+      expect([bestPvp, worstBadge], `${slot} pair`).toEqual(slot === 'ring' ? [11, 11] : [12, 12]);
       // And below every same-or-higher-tier rival, which is the claim that matters.
       for (const rival of rivals) {
         const score = itemScore(rival);

@@ -12,7 +12,7 @@
 // modules. No rng in here either: the caller draws (exactly once) and passes
 // nothing but plain values in.
 
-import { normalizePrimaryStats, PRIMARY_STATS, primaryStatBudget } from '../item_budget';
+import { PRIMARY_STATS, primaryStatBudget, tierDeltaStats } from '../item_budget';
 import type { CoreStats, ItemDef, ItemSlot } from '../types';
 
 // Locked tuning, amended 2026-07-17: base chance at recipe-tier
@@ -135,10 +135,15 @@ export function masterworkBonusStats(input: MasterworkStatsInput): Partial<CoreS
     if (value > 0) primaryProfile[stat] = value;
   }
   if (Object.keys(primaryProfile).length === 0) return null;
-  const bonusBudget =
-    primaryStatBudget(level, bumped.quality, slot) - primaryStatBudget(level, quality, slot);
-  if (bonusBudget <= 0) return null;
-  return normalizePrimaryStats(primaryProfile, bonusBudget);
+  // Model-aware (item_budget.ts, the stamina baseline model): the line delta
+  // goes to the profile's offense identity, and a caster profile also gains the
+  // growth of its free stamina baseline; a physical profile keeps the historical
+  // ratio-preserving delta exactly.
+  return tierDeltaStats(
+    primaryProfile,
+    primaryStatBudget(level, quality, slot),
+    primaryStatBudget(level, bumped.quality, slot),
+  );
 }
 
 /** The per-player masterwork read surface (sim.ts PlayerMeta.lastMasterwork /

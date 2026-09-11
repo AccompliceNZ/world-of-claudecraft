@@ -1536,7 +1536,7 @@ export const PROFESSION_ITEMS: Record<string, ItemDef> = {
     armorType: 'mail',
     slot: 'waist',
     quality: 'epic',
-    // ilvl-31 waist epic budget = 15; int:9+spi:6 = 15. Armor: gravescale_girdle.
+    // ilvl-31 waist epic line = 15; int:9+spi:6 = 15, stamina baseline 5 on top. Armor: gravescale_girdle.
     stats: { armor: 224, int: 9, spi: 6, sta: 5 },
     hasteRating: 40,
     sellValue: 300,
@@ -1562,7 +1562,7 @@ export const PROFESSION_ITEMS: Record<string, ItemDef> = {
     armorType: 'mail',
     slot: 'feet',
     quality: 'epic',
-    // ilvl-31 feet epic budget = 14; int:8+spi:6 = 14. Armor: tideworn_warboots.
+    // ilvl-31 feet epic line = 14; int:8+spi:6 = 14, stamina baseline 5 on top. Armor: tideworn_warboots.
     stats: { armor: 212, int: 8, spi: 6, sta: 5 },
     hasteRating: 40,
     sellValue: 280,
@@ -1588,7 +1588,7 @@ export const PROFESSION_ITEMS: Record<string, ItemDef> = {
     armorType: 'leather',
     slot: 'legs',
     quality: 'epic',
-    // ilvl-31 legs epic budget = 20; int:12+spi:8 = 20. Armor: tidewoven_trousers.
+    // ilvl-31 legs epic line = 20; int:12+spi:8 = 20, stamina baseline 7 on top. Armor: tidewoven_trousers.
     stats: { armor: 132, int: 12, spi: 8, sta: 7 },
     hasteRating: 40,
     sellValue: 160,
@@ -1601,7 +1601,7 @@ export const PROFESSION_ITEMS: Record<string, ItemDef> = {
     armorType: 'leather',
     slot: 'gloves',
     quality: 'epic',
-    // ilvl-31 gloves epic budget = 15; int:9+spi:6 = 15. Armor: sanctum_prowlers_grips.
+    // ilvl-31 gloves epic line = 15; int:9+spi:6 = 15, stamina baseline 5 on top. Armor: sanctum_prowlers_grips.
     stats: { armor: 104, int: 9, spi: 6, sta: 5 },
     critRating: 40,
     sellValue: 140,
@@ -1614,7 +1614,7 @@ export const PROFESSION_ITEMS: Record<string, ItemDef> = {
     armorType: 'cloth',
     slot: 'chest',
     quality: 'epic',
-    // ilvl-31 chest epic budget = 22; int:12+spi:10 = 22. Armor: shroud_of_the_gravewyrm.
+    // ilvl-31 chest epic line = 22; int:12+spi:10 = 22, stamina baseline 7 on top. Armor: shroud_of_the_gravewyrm.
     stats: { armor: 90, int: 12, spi: 10, sta: 7 },
     // HASTE, not Hit, and Phase 15 moved it here: hit converts at twice the
     // rate of the other two ratings (HIT_RATING_PER_PCT 10 vs 20, types.ts),
@@ -1648,7 +1648,7 @@ export const PROFESSION_ITEMS: Record<string, ItemDef> = {
     armorType: 'cloth',
     slot: 'legs',
     quality: 'epic',
-    // ilvl-31 legs epic budget = 20; int:12+spi:8 = 20. Armor: lunar_choir_leggings.
+    // ilvl-31 legs epic line = 20; int:12+spi:8 = 20, stamina baseline 7 on top. Armor: lunar_choir_leggings.
     stats: { armor: 72, int: 12, spi: 8, sta: 7 },
     hasteRating: 40,
     sellValue: 190,
@@ -1661,7 +1661,7 @@ export const PROFESSION_ITEMS: Record<string, ItemDef> = {
     armorType: 'cloth',
     slot: 'gloves',
     quality: 'epic',
-    // ilvl-31 gloves epic budget = 15; int:9+spi:6 = 15. Armor: shadowpulse_handwraps.
+    // ilvl-31 gloves epic line = 15; int:9+spi:6 = 15, stamina baseline 5 on top. Armor: shadowpulse_handwraps.
     stats: { armor: 52, int: 9, spi: 6, sta: 5 },
     critRating: 40,
     sellValue: 170,
@@ -1703,7 +1703,7 @@ export const PROFESSION_ITEMS: Record<string, ItemDef> = {
   },
   // Engineering's own held-lens identity one register below gyrelens_array:
   // pure stats on the formula at the rung-25 convention (level 15 + uncommon
-  // bonus 1 = ilvl 16; held line 0.75: int:3+sta:2 = 5), no use field, no
+  // bonus 1 = ilvl 16; held line 0.75: int:3+spi:2 = 5, stamina baseline 2), no use field, no
   // ratings (masterwrought R14), no vendor twin (masterwrought R23; no vendor
   // sells any held_offhand). Caster lock per the wraithfire_orb gate.
   copperlens_ocular: {

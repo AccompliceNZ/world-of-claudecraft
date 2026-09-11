@@ -15,8 +15,10 @@
 import {
   HEROIC_VARIANT_SOURCE_LEVEL,
   normalizeToStaminaModel,
+  PRIMARY_STATS,
   primaryStatBudget,
   QUALITY_ILVL_BONUS,
+  STAMINA_PREMIUM,
   scaleWeaponDamage,
   slotStatMultForItem,
   staminaBaseline,
@@ -39,12 +41,23 @@ import { TEMPLE_DUNGEON_DEFS } from './temple';
 import { WILDHEART_DUNGEON_DEFS } from './wildheart';
 
 // The id of the Heroic variant of a base item (a stable, pure prefix).
-// The largest line whose model total (line plus its caster baseline) fits inside
-// `total`; exact for any item on the model, and never above the total.
-function lineFromTotal(total: number): number {
-  let line = total;
-  while (line > 0 && line + staminaBaseline(line) > total) line -= 1;
-  return line;
+// The line budget an item's stat line realizes under the stamina baseline model:
+// the five-stat total for a physical identity; for a caster identity the offense
+// line plus the premium on stamina above the baseline of that budget, solved by
+// iteration because the baseline depends on the budget (it settles in a step or
+// two: the baseline moves by a third of any change).
+function realizedLineBudget(stats: NonNullable<ItemDef['stats']>): number {
+  const total = PRIMARY_STATS.reduce((sum, stat) => sum + (stats[stat] ?? 0), 0);
+  if (statIdentity(stats) === 'physical') return total;
+  const line = (stats.int ?? 0) + (stats.spi ?? 0);
+  const sta = stats.sta ?? 0;
+  let budget = line;
+  for (let i = 0; i < 8; i++) {
+    const next = line + STAMINA_PREMIUM * Math.max(0, sta - staminaBaseline(budget));
+    if (next === budget) break;
+    budget = next;
+  }
+  return budget;
 }
 
 export function heroicVariantId(baseId: string): string {
@@ -132,17 +145,14 @@ function makeHeroicVariant(base: ItemDef, sourceLevel = HEROIC_VARIANT_SOURCE_LE
     primaryStatBudget(targetLevel, base.quality, base.slot, slotStatMultForItem(base)) *
       handMultiplier,
   );
-  // The base item's realized LINE: its whole primary total for a physical identity
-  // (stamina sits inside it), its total minus the free baseline for a caster one
-  // (item_budget.ts, the stamina baseline model). The caster baseline is a share of
-  // the line, so it is recovered from the total by solving line + baseline(line).
-  const baseTotal = base.stats
-    ? (['str', 'agi', 'sta', 'int', 'spi'] as const).reduce(
-        (sum, stat) => sum + (base.stats?.[stat] ?? 0),
-        0,
-      )
-    : 0;
-  const baseBudget = statIdentity(base.stats) === 'caster' ? lineFromTotal(baseTotal) : baseTotal;
+  // The base item's realized LINE budget (item_budget.ts, the stamina baseline
+  // model): its whole primary total for a physical identity (stamina sits inside
+  // it); for a caster identity its Intellect plus Spirit plus whatever stamina it
+  // carries above the baseline, since that extra was bought from the line. Read
+  // from the stats themselves so an off-budget base (the drift allowlist) keeps
+  // its realized line and its variant never carries less of any stat than the
+  // item it upgrades.
+  const baseBudget = base.stats ? realizedLineBudget(base.stats) : 0;
   // normalizeToStaminaModel keeps the item's stat identity (its str/agi/int ratio),
   // places the free stamina baseline for the variant's line, and passes armor
   // through untouched; the line grows to the larger of the heroic target and the
