@@ -218,6 +218,60 @@ describe('FURY WARFARE stock', () => {
   });
 });
 
+// The WARFARE line as literals, id to [offense line, stamina], read from the
+// catalog on 2026-09-11. The fraction and floor checks below cannot see a line
+// that moves while the floor binds (the stamina floor top-up covers the gap),
+// so every piece is pinned outright; a retune changes this table on purpose.
+const WARFARE_LINES: Record<string, [number, number]> = {
+  furyforged_warhelm: [6, 10],
+  furyforged_warspaulders: [6, 8],
+  furyforged_warplate: [8, 12],
+  furyforged_girdle: [5, 9],
+  furyforged_legguards: [8, 10],
+  furyforged_gauntlets: [5, 9],
+  furyforged_sabatons: [7, 6],
+  stormbound_crown: [11, 6],
+  stormbound_spaulders: [9, 5],
+  stormbound_hauberk: [13, 7],
+  stormbound_waistguard: [9, 5],
+  stormbound_legmail: [11, 7],
+  stormbound_handguards: [9, 5],
+  stormbound_greaves: [10, 5],
+  ashstalker_cowl: [8, 8],
+  ashstalker_shoulderguards: [6, 8],
+  ashstalker_harness: [8, 12],
+  ashstalker_waistband: [5, 9],
+  ashstalker_legguards: [8, 10],
+  ashstalker_grips: [5, 9],
+  ashstalker_treads: [7, 6],
+  cinderweave_cowl: [11, 6],
+  cinderweave_mantle: [9, 5],
+  cinderweave_raiment: [13, 7],
+  cinderweave_cord: [9, 5],
+  cinderweave_legwraps: [11, 7],
+  cinderweave_handwraps: [9, 5],
+  cinderweave_slippers: [10, 5],
+  thornhide_headdress: [11, 6],
+  thornhide_mantle: [9, 5],
+  thornhide_vestment: [13, 7],
+  thornhide_cinch: [9, 5],
+  thornhide_leggings: [11, 7],
+  thornhide_gloves: [9, 5],
+  thornhide_boots: [10, 5],
+  final_oath_medallion: [6, 5],
+  razorwind_torque: [6, 5],
+  cinder_sigil_pendant: [7, 5],
+  iron_vow_band: [4, 6],
+  unbroken_circle: [6, 4],
+  fleetblood_band: [6, 4],
+  last_step_signet: [4, 6],
+  ashen_focus_ring: [7, 4],
+  spellbreakers_seal: [7, 4],
+  final_argument_greatblade: [8, 12],
+  first_blood_razor: [8, 12],
+  emberglass_warstaff: [13, 7],
+};
+
 describe('FURY WARFARE item budgets', () => {
   it('makes every offer a soulbound, honor-priced item-level-31 epic with full WARFARE', () => {
     for (const id of FURY_STOCK) {
@@ -227,7 +281,8 @@ describe('FURY WARFARE item budgets', () => {
       // the stamina-baseline model's identity-aware total: the model's floor
       // is judged against this same full budget too (item_stamina_baseline.
       // test.ts), which is exactly why every WARFARE piece sits on that
-      // guard's drift allowlist, permanently, by design.
+      // guard's FRACTIONAL_BY_DESIGN exemption (built from FURY_STOCK itself,
+      // disjoint from the drift allowlist), permanently, by design.
       const model = itemStaminaModel(item);
       expect(model, id).toBeDefined();
       const budget = model?.budget ?? 0;
@@ -263,6 +318,7 @@ describe('FURY WARFARE item budgets', () => {
       // discount real (a line raised to the full budget would otherwise pass).
       expect(line, `${id} line within the WARFARE fraction`).toBeLessThanOrEqual(fractionTotal);
       expect(line, `${id} carries an offense line`).toBeGreaterThan(0);
+      expect([line, model?.sta ?? 0], `${id} line and stamina`).toEqual(WARFARE_LINES[id]);
       expect(primaryStatSum(item), id).toBe(line + Math.max(impliedSta, floor));
       // Every piece's WARFARE ratings still mirror its FULL slot budget (drives 18.2%).
       // This pair is deliberately NOT rewritten as a fraction multiplication: the

@@ -6,6 +6,7 @@
 // docs/design/gear-stamina-baseline-2026-09-10.md.
 import { describe, expect, it } from 'vitest';
 import { FURY_STOCK } from '../src/sim/content/pvp_honor';
+import { ALL_RECIPES } from '../src/sim/content/recipes';
 import { ITEMS } from '../src/sim/data';
 import {
   checkStaminaModel,
@@ -15,10 +16,15 @@ import {
   isItemLevelEligible,
   normalizeToStaminaModel,
   primaryStatSum,
+  realizedLineBudget,
   STAMINA_BASELINE_SHARE,
+  slotStatMultForItem,
   staminaBaseline,
   statIdentity,
 } from '../src/sim/item_level';
+import { craftBonusStatsFor } from '../src/sim/professions/crafting';
+import { masterworkLineBudgets } from '../src/sim/professions/masterwork';
+import { perfectedBonusStats, perfectedLineBudgets } from '../src/sim/professions/perfecting_bonus';
 import type { ItemDef } from '../src/sim/types';
 
 // Two kinds of item sit off their line by the model's exact check, and they are
@@ -147,6 +153,8 @@ const STAT_DRIFT_ALLOWLIST: ReadonlySet<string> = new Set([
 const STAT_DRIFT_ALLOWLIST_CEILING = 103;
 const UNTIERED_WITH_PROXY_FLOOR = 51;
 const GENERATED_ITEM_COUNT = 111;
+const WARFARE_STOCK_COUNT = 47;
+const HEROIC_VARIANT_COUNT = 78;
 
 // Items with no derivable source (vendor, starter and quest oddities) have no
 // tier to price against; their floor is taken from their own authored line, the
@@ -269,6 +277,19 @@ describe('stamina baseline model: primitives', () => {
   });
 });
 
+it('recovers the realized line budget from a stat line, and takes the larger side of a cycle', () => {
+  // On the model: a 25-point physical chest and a caster chest with its
+  // baseline placed both read 25; the Deathless Heartwood (int 21, spi 43,
+  // sta 23) reads 65, its extra stamina bought from the line.
+  expect(realizedLineBudget({ str: 17, sta: 8 })).toBe(25);
+  expect(realizedLineBudget({ int: 17, spi: 8, sta: 8 })).toBe(25);
+  expect(realizedLineBudget({ int: 21, spi: 43, sta: 23 })).toBe(65);
+  // The one-point line with one stamina alternates 1, 2, 1, 2 under the
+  // iteration; the larger value wins, never a bound-parity accident.
+  expect(realizedLineBudget({ int: 1, sta: 1 })).toBe(2);
+  expect(realizedLineBudget({ spi: 3, sta: 5 })).toBeGreaterThanOrEqual(3);
+});
+
 describe('stamina baseline model: the merged catalog', () => {
   it('covers the whole combat-gear catalog', () => {
     expect(eligible.length).toBeGreaterThanOrEqual(800);
@@ -285,7 +306,9 @@ describe('stamina baseline model: the merged catalog', () => {
     // Lower this number when an entry conforms and is removed; never raise it
     // without a design note. Adding an id would otherwise silence the exact-line
     // check for that item with nothing failing.
-    expect(STAT_DRIFT_ALLOWLIST.size).toBeLessThanOrEqual(STAT_DRIFT_ALLOWLIST_CEILING);
+    // Exact, not at-most: removing a conformed entry without lowering the
+    // ceiling would mint a permanent slot of slack.
+    expect(STAT_DRIFT_ALLOWLIST.size).toBe(STAT_DRIFT_ALLOWLIST_CEILING);
   });
 
   it('every eligible item meets its stamina floor', () => {
@@ -338,7 +361,8 @@ describe('stamina baseline model: the merged catalog', () => {
   });
 
   it('the WARFARE exemption is real: every honor piece is off its line and not on the drift list', () => {
-    expect(FRACTIONAL_BY_DESIGN.size).toBeGreaterThanOrEqual(40);
+    // Pinned exactly: a new honor piece must not join the exemption unseen.
+    expect(FRACTIONAL_BY_DESIGN.size).toBe(WARFARE_STOCK_COUNT);
     for (const id of FRACTIONAL_BY_DESIGN) {
       expect(STAT_DRIFT_ALLOWLIST.has(id), `${id} is on both lists`).toBe(false);
       const item = ITEMS[id];
@@ -396,11 +420,10 @@ describe('stamina baseline model: the merged catalog', () => {
     // base (the drift allowlist) upgrades from what it actually has; a variant
     // with one point less Intellect than its base would be a downgrade in disguise.
     const failures: string[] = [];
-    for (const item of eligible) {
-      const baseId = (item as ItemDef & { heroicOf?: string }).heroicOf;
-      if (!baseId) continue;
-      const base = ITEMS[baseId];
-      if (!base) continue;
+    const variants = eligible.filter((item) => item.heroicOf && ITEMS[item.heroicOf]);
+    expect(variants.length).toBe(HEROIC_VARIANT_COUNT);
+    for (const item of variants) {
+      const base = ITEMS[item.heroicOf as string];
       for (const stat of ['str', 'agi', 'sta', 'int', 'spi'] as const) {
         if ((item.stats?.[stat] ?? 0) < (base.stats?.[stat] ?? 0))
           failures.push(
@@ -408,6 +431,47 @@ describe('stamina baseline model: the merged catalog', () => {
           );
       }
     }
+    expect(failures).toEqual([]);
+  });
+  it('a masterwork or Perfecting bump keeps every copy at the floor of its new line', () => {
+    // The guard sweeps ItemDefs; the bumped copy lives in an instance payload,
+    // so it is rebuilt here from the same generators the craft path uses and
+    // held to the floor of the line it lands on (the double-rounding case:
+    // a 16-to-17 physical bump over 11/5 must not leave stamina at 5).
+    const failures: string[] = [];
+    let checked = 0;
+    for (const recipe of ALL_RECIPES) {
+      const def = ITEMS[recipe.resultItemId];
+      if (!def || !isItemLevelEligible(def) || !def.stats) continue;
+      const bonus = craftBonusStatsFor(def, recipe);
+      const lines = masterworkLineBudgets({
+        level: recipe.level,
+        quality: def.quality,
+        slot: def.slot,
+        stats: def.stats,
+        slotStatMult: slotStatMultForItem(def),
+        twoHand: def.kind === 'weapon' && def.hand === 'twohand',
+      });
+      if (bonus && lines) {
+        checked += 1;
+        const sta = (def.stats.sta ?? 0) + (bonus.sta ?? 0);
+        if (sta < staminaBaseline(lines.after))
+          failures.push(
+            `${def.id} masterworked: sta ${sta} < floor ${staminaBaseline(lines.after)} on line ${lines.after}`,
+          );
+      }
+      const perfected = perfectedBonusStats(def, recipe);
+      const perfectedLines = perfectedLineBudgets(def, recipe);
+      if (perfected && perfectedLines) {
+        checked += 1;
+        const sta = (def.stats.sta ?? 0) + (perfected.sta ?? 0);
+        if (sta < staminaBaseline(perfectedLines.after))
+          failures.push(
+            `${def.id} Perfected: sta ${sta} < floor ${staminaBaseline(perfectedLines.after)} on line ${perfectedLines.after}`,
+          );
+      }
+    }
+    expect(checked).toBeGreaterThanOrEqual(40);
     expect(failures).toEqual([]);
   });
 });

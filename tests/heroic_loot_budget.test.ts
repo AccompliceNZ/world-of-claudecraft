@@ -13,16 +13,16 @@ import { Sim } from '../src/sim/sim';
 // accidental stat buff from moving generated variants into HEROIC_BOSS_LOOT.
 // The nine gearDigest values below were re-minted for the stamina baseline
 // model (item_budget.ts, "The stamina baseline model"): every changed def
-// Receipt for every def behind the re-minted digests: the codemod's
-// before/after list (scripts/stamina_baseline_codemod.ts, run with --dry) and
-// the generated variants that follow their bases; the one boss whose digest
-// did not move (choirmother_selthe) is the one whose gear def did not change.
 // either gained its free stamina baseline (a caster identity) or had its
 // Strength/Agility trimmed onto its line with stamina added, and every heroic
 // variant recomputes through the same model at merge time
 // (heroic_variants.ts, makeHeroicVariant), so its digest moves even where the
 // base item's literal did not. normalDigest is untouched because the loot
-// table shape and chances did not change.
+// table shape and chances did not change. Receipt for every def behind the
+// re-minted digests: the codemod's before/after list
+// (scripts/stamina_baseline_codemod.ts, run with --dry) and the generated
+// variants that follow their bases; the one boss whose digest did not move
+// (choirmother_selthe) is the one whose gear def did not change.
 const BASELINE = {
   sexton_marrow: {
     gearIds: ['oiled_boots', 'quilted_trousers'],

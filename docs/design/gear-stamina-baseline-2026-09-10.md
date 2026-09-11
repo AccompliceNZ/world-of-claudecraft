@@ -393,8 +393,10 @@ so generated items conform by construction.
 **The guard** (`tests/item_stamina_baseline.test.ts`): every eligible item meets its
 floor (items with no derivable tier take a proxy from their own line); every tiered item
 not on the drift allowlist sits exactly on its line and total; the allowlist may only
-shrink (an entry that conforms fails the test). It went red against the release catalog
-on 277 floor failures and 231 line failures before the content change.
+shrink (an entry that conforms fails the test). Run against the release catalog with the final
+guard it reds on 298 floor failures and 286 line failures (the review's reproduction;
+the draft guard's first run, before the WARFARE split and the allowlist trims, read 277
+and 231).
 
 **The content change** (`scripts/stamina_baseline_codemod.ts`, receipt in
 `tmp_stamina_study/data/codemod_receipt.txt`): 306 literals in 20 content files.
@@ -477,7 +479,7 @@ resolutions, so the next reader does not rediscover them:
   moves.
 - **The drift allowlist is split.** The WARFARE honor tier is priced at a deliberate
   fraction of its slot budget and is exempt from the exact-line check permanently
-  (`FRACTIONAL_BY_DESIGN`, built from `FURY_STOCK`); the remaining 102 drift items sit on
+  (`FRACTIONAL_BY_DESIGN`, built from `FURY_STOCK`); the remaining 103 drift items sit on
   `STAT_DRIFT_ALLOWLIST` under a ratchet that can only go down. The WARFARE budget
   test now bounds each piece's line by its fraction target, and the honor-versus-badge
   jewelry check keeps its tie (11 and 11 on rings, 12 and 12 on necks) pinned as

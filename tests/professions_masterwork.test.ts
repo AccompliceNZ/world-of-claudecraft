@@ -283,10 +283,13 @@ describe('masterworkBonusStats (the baked tier-delta budget)', () => {
   });
 
   it('an absent quality reads as common and bumps to uncommon', () => {
-    // level 10 chest: uncommon budget 4 minus common budget 0, all on str.
+    // level 10 chest: uncommon budget 4 minus common budget 0. A common base has a
+    // zero floor, so it is on the model; the uncommon line it lands on carries a
+    // floor of 1, and the tier delta moves that one point from Strength to
+    // Stamina (item_budget.ts tierDeltaStats, the stamina baseline model).
     expect(
       masterworkBonusStats({ level: 10, quality: undefined, slot: 'chest', stats: { str: 4 } }),
-    ).toEqual({ str: 4 });
+    ).toEqual({ str: 3, sta: 1 });
   });
 
   it('returns null when the tier delta rounds to a zero budget', () => {
