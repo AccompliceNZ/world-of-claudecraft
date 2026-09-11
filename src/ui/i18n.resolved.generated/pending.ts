@@ -54,7 +54,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "es_ES": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -101,7 +112,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "fr_FR": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -148,7 +170,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "fr_CA": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -195,7 +228,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "en_CA": [],
   "it_IT": [
@@ -243,7 +287,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "de_DE": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -290,19 +345,42 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "zh_CN": [
-    "hudChrome.questTracker.objectiveValue"
+    "hudChrome.questTracker.objectiveValue",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "zh_TW": [
-    "hudChrome.questTracker.objectiveValue"
+    "hudChrome.questTracker.objectiveValue",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "ko_KR": [
-    "hudChrome.questTracker.objectiveValue"
+    "hudChrome.questTracker.objectiveValue",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "ja_JP": [
-    "hudChrome.questTracker.objectiveValue"
+    "hudChrome.questTracker.objectiveValue",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "pt_BR": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -349,10 +427,24 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "ru_RU": [
-    "hudChrome.questTracker.objectiveValue"
+    "hudChrome.questTracker.objectiveValue",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.saleTypeBuyNow"
   ],
   "cs_CZ": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -399,7 +491,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "nl_NL": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -446,7 +549,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "pl_PL": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -493,7 +607,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "id_ID": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -540,7 +665,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "tr_TR": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -587,7 +723,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "sv_SE": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -634,7 +781,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "vi_VN": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -681,7 +839,18 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ],
   "da_DK": [
     "guide.interfacePage.framesGovernedTalkingHead",
@@ -728,6 +897,17 @@ export const pending: Record<string, readonly string[]> = {
     "hudChrome.questLog.shiftHint",
     "hudChrome.questLog.zoneSummary",
     "hudChrome.questTracker.objectiveValue",
-    "hudChrome.talkingHead.label"
+    "hudChrome.talkingHead.label",
+    "hudChrome.wocMarket.colBuyer",
+    "hudChrome.wocMarket.colSalePrice",
+    "hudChrome.wocMarket.colSaleType",
+    "hudChrome.wocMarket.colSoldAt",
+    "hudChrome.wocMarket.historyEmpty",
+    "hudChrome.wocMarket.historyError",
+    "hudChrome.wocMarket.saleTypeAuction",
+    "hudChrome.wocMarket.saleTypeBuyNow",
+    "hudChrome.wocMarket.saleTypeDirected",
+    "hudChrome.wocMarket.saleTypeUnknown",
+    "hudChrome.wocMarket.tabHistory"
   ]
 };
