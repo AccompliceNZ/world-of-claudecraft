@@ -82,12 +82,11 @@ describe('class health table', () => {
     // top of the tier. Naked the ratio is the class table alone; the geared
     // ratios are measured in the design doc and pinned by the raid best-in-slot
     // probe there, not here.
-    const cloth = Math.min(
-      NAKED_LEVEL_20_HP.mage,
-      NAKED_LEVEL_20_HP.priest,
-      NAKED_LEVEL_20_HP.warlock,
-    );
-    expect(cloth / NAKED_LEVEL_20_HP.warrior).toBeGreaterThanOrEqual(0.78);
-    expect(cloth / NAKED_LEVEL_20_HP.warrior).toBeLessThanOrEqual(0.9);
+    // Read from the Sim rather than from the literal table above, so this is a
+    // guard in its own right and not a self-comparison of two pinned numbers.
+    const cloth = Math.min(nakedMaxHp('mage'), nakedMaxHp('priest'), nakedMaxHp('warlock'));
+    const plate = nakedMaxHp('warrior');
+    expect(cloth / plate).toBeGreaterThanOrEqual(0.78);
+    expect(cloth / plate).toBeLessThanOrEqual(0.9);
   });
 });

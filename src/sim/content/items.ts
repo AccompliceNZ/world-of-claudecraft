@@ -2059,8 +2059,9 @@ export const BASE_ITEMS: Record<string, ItemDef> = {
   // of the reference pool as it stood before the 2026-09-11 class health table;
   // the priest pool then grew by roughly six tenths (2 Stamina per level, 15 HP
   // per level), so the hp ladder now restores about 43-56% and its re-size is
-  // owed as its own change (tests/consumables.test.ts pins the measured
-  // fractions meanwhile). The intent stands: a real, meaningful topper-upper rather than a sliver,
+  // owed as its own change, issue #4000 (tests/consumables.test.ts pins the
+  // measured fractions meanwhile; the mana ladder is untouched, Intellect per
+  // level and base mana did not move). The intent stands: a real, meaningful topper-upper rather than a sliver,
   // with headroom against a geared character's larger pool (gear only grows the
   // pool from here, so a geared cast of the same level sees a SMALLER fraction
   // than the pinned floor, same as any flat-value consumable; the fix is that the

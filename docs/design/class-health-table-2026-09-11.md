@@ -85,7 +85,9 @@ arena: the real check is the PBE duel round the gear PR already owes.
 ## What moves with it
 
 - Every persisted character's pool changes on next load (the class table is read live;
-  nothing is stored), so the change is visible the moment it deploys.
+  nothing is stored), so the change is visible the moment it deploys. A stored absolute
+  `hp` loads under the larger `maxHp`, so cloth characters come in below full on their
+  first load after deploy: harmless, and the symptom to expect in that day's reports.
 - Warlock and hunter pets inherit a quarter of the owner's health (`PET_OWNER_HP_SHARE`),
   so warlock pets gain about 60 HP.
 - Parity goldens re-minted (player health in every trace with a cloth, priest or rogue
@@ -134,8 +136,10 @@ best-in-slot" reads 1,312 against its real parse kit's 1,722), which is one of t
   relatively weaker" consequence the stamina audit named. Restoring the documented
   fractions means roughly 143 to 178, 294 to 367 and 470 to 588 on the vendor rungs, the
   crafted ladder alongside (its values are quoted in the guide prose in every locale)
-  and the vendor-versus-crafted ordering law, so it is its own PR; this one pins the
-  measured fractions so the ladder cannot drift further unnoticed.
+  and the vendor-versus-crafted ordering law, so it is its own PR, issue 4000; this one
+  pins the measured fractions so the ladder cannot drift further unnoticed. The mana
+  ladder is out of that issue's scope: Intellect per level and base mana did not move,
+  so the mana potion band still holds.
 - **Sacrilegious March lingered a tick on pools not divisible by five.** The drain
   clamps health to a ceiling-rounded floor and then tested the fraction, so on a
   677-HP warlock the clamped value sat a hair above 20 percent and the march ended one

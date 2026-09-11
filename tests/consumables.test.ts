@@ -200,8 +200,8 @@ describe('#1608: potionHp/potionMana ladder', () => {
   // here: re-sizing the ladder back to 72-90% means 143-178 / 294-367 / 470-588
   // on the vendor rungs, the crafted alchemy ladder alongside (its values are
   // quoted in the guide prose in every locale), and the vendor-versus-crafted
-  // ordering law below, so it is its own PR. Until then this band pins the
-  // measured fractions so the ladder cannot drift further unnoticed.
+  // ordering law below, so it is its own PR: issue #4000. Until then this band
+  // pins the measured fractions so the ladder cannot drift further unnoticed.
   it.each(HP_TIERS)(
     "%s restores its measured fraction (0.40-0.60) of a priest's base hp pool at its bracket top, pending the ladder re-size",
     (itemId, topLevel) => {
