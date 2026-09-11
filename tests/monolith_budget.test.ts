@@ -1208,7 +1208,8 @@ const MONOLITHS: MonolithRow[] = [
     // Measured after formatting; lower the ratchet with the extraction.
     // Compose the mount cosmetics and practice lesson extractions.
     // Measured combined size; retain zero headroom after the release merge.
-    ceiling: 11332,
+    // Weapon-coat amounts now share src/ui/ability_imbue_text.ts with live tooltips.
+    ceiling: 11327,
     seam: 'a src/game/ or src/ui/ sibling module; main.ts is a firewall, not a home',
   },
   {
