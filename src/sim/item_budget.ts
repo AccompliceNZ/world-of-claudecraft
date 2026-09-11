@@ -372,9 +372,56 @@ export function tierDeltaStats(
 ): Partial<CoreStats> | null {
   const delta = lineAfter - lineBefore;
   if (delta <= 0) return null;
-  if (statIdentity(profile) === 'physical') return normalizePrimaryStats(profile, delta);
+  if (statIdentity(profile) === 'physical') {
+    const out = normalizePrimaryStats(profile, delta);
+    // Double rounding can leave the bumped piece under the floor of its new
+    // line (a 16-to-17 bump over 11/5 rounds to str 1, sta 0 against a floor of
+    // 6): move what the floor needs from the offense share of the delta. Only
+    // for a base that meets its own floor; a stamina-free profile (a probe
+    // fixture, a drift item) keeps the plain ratio delta rather than spending
+    // the bump on a floor the base never had.
+    const onModel = (profile.sta ?? 0) >= staminaBaseline(lineBefore);
+    let need = onModel ? staminaBaseline(lineAfter) - ((profile.sta ?? 0) + (out.sta ?? 0)) : 0;
+    for (const k of ['str', 'agi', 'int', 'spi'] as const) {
+      if (need <= 0) break;
+      const take = Math.min(out[k] ?? 0, need);
+      if (take > 0) {
+        out[k] = (out[k] ?? 0) - take;
+        out.sta = (out.sta ?? 0) + take;
+        need -= take;
+      }
+    }
+    return out;
+  }
   const out = normalizePrimaryStats(pickStats(profile, ['int', 'spi']), delta);
   const staDelta = staminaBaseline(lineAfter) - staminaBaseline(lineBefore);
   if (staDelta > 0) out.sta = staDelta;
   return out;
+}
+
+// The line budget an item's stat line realizes: the five-stat total for a
+// physical identity (stamina sits inside it); for a caster identity the offense
+// line plus the premium on stamina above the baseline of that budget. The
+// baseline depends on the budget, so it is solved by iteration; the iterate
+// settles in a step or two for any real item, and on the rare input where it
+// alternates (a one-point line with one stamina: 1, 2, 1, 2) the larger value
+// wins, which is the direction that never prices a piece under what it carries.
+export function realizedLineBudget(stats: Partial<CoreStats>): number {
+  let total = 0;
+  for (const k of PRIMARY_STATS) total += stats[k] ?? 0;
+  if (statIdentity(stats) === 'physical') return total;
+  const line = (stats.int ?? 0) + (stats.spi ?? 0);
+  const sta = stats.sta ?? 0;
+  const seen = new Set<number>();
+  let budget = line;
+  let best = line;
+  for (let i = 0; i < 16; i++) {
+    if (seen.has(budget)) break;
+    seen.add(budget);
+    best = Math.max(best, budget);
+    const next = line + STAMINA_PREMIUM * Math.max(0, sta - staminaBaseline(budget));
+    if (next === budget) return budget;
+    budget = next;
+  }
+  return best;
 }

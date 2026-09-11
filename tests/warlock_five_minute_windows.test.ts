@@ -38,6 +38,9 @@ describe('Affliction full-BiS five-minute inert-boss balance', () => {
     // headroom the 0.12 line carried over its 0.096 measurement; the pool is
     // still finite (starvation still binds below).
     expect(result.manaEndPct).toBeLessThan(0.3);
+    // And a floor under the measured 0.242, so the larger surviving pool is
+    // pinned from both sides rather than left open below.
+    expect(result.manaEndPct).toBeGreaterThan(0.18);
     expect(result.starvedPct).toBeLessThan(0.45);
   }, 120_000);
 });

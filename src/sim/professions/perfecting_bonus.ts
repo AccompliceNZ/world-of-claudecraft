@@ -45,6 +45,18 @@ export function perfectedBonusStats(
   return tierDeltaStats(profile, budgetAtSource(def, recipe.level), budgetAtSource(def, target));
 }
 
+/** The line budget on each side of the Perfecting bump, for the stamina guard. */
+export function perfectedLineBudgets(
+  def: ItemDef,
+  recipe: Pick<ProfessionRecipeRecord, 'level'>,
+): { before: number; after: number } | null {
+  if (!def.slot || !def.stats) return null;
+  const target = crucibleCollectionForItem(def.id)
+    ? recipe.level + COLLECTION_PERFECTING_SOURCE_INCREASE
+    : PERFECTED_SOURCE_LEVEL;
+  return { before: budgetAtSource(def, recipe.level), after: budgetAtSource(def, target) };
+}
+
 /** Atomic load bound. Unknown top-level payload fields stay untouched. */
 export function isValidPerfectingBonus(value: unknown): value is Partial<CoreStats> {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;

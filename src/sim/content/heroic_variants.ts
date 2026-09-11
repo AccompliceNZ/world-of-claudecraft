@@ -15,14 +15,11 @@
 import {
   HEROIC_VARIANT_SOURCE_LEVEL,
   normalizeToStaminaModel,
-  PRIMARY_STATS,
   primaryStatBudget,
   QUALITY_ILVL_BONUS,
-  STAMINA_PREMIUM,
+  realizedLineBudget,
   scaleWeaponDamage,
   slotStatMultForItem,
-  staminaBaseline,
-  statIdentity,
   TWOHAND_DPS_MULT,
   TWOHAND_STAT_MULT,
   weaponDpsBudget,
@@ -41,25 +38,6 @@ import { TEMPLE_DUNGEON_DEFS } from './temple';
 import { WILDHEART_DUNGEON_DEFS } from './wildheart';
 
 // The id of the Heroic variant of a base item (a stable, pure prefix).
-// The line budget an item's stat line realizes under the stamina baseline model:
-// the five-stat total for a physical identity; for a caster identity the offense
-// line plus the premium on stamina above the baseline of that budget, solved by
-// iteration because the baseline depends on the budget (it settles in a step or
-// two: the baseline moves by a third of any change).
-function realizedLineBudget(stats: NonNullable<ItemDef['stats']>): number {
-  const total = PRIMARY_STATS.reduce((sum, stat) => sum + (stats[stat] ?? 0), 0);
-  if (statIdentity(stats) === 'physical') return total;
-  const line = (stats.int ?? 0) + (stats.spi ?? 0);
-  const sta = stats.sta ?? 0;
-  let budget = line;
-  for (let i = 0; i < 8; i++) {
-    const next = line + STAMINA_PREMIUM * Math.max(0, sta - staminaBaseline(budget));
-    if (next === budget) break;
-    budget = next;
-  }
-  return budget;
-}
-
 export function heroicVariantId(baseId: string): string {
   return `heroic_${baseId}`;
 }

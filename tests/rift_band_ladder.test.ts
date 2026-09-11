@@ -104,6 +104,14 @@ describe('rift band ladder: primary stats', () => {
     expect(maxed).toEqual({ int: 8, spi: 6, sta: 5 });
   });
 
+  it('a maxed S caster band never out-stats the caster raid ring of the same tier', () => {
+    // Same ceiling as the physical check below, on the Insight shell against an
+    // Ignivar caster ring (int 10, spi 5, sta 5), like for like under the model.
+    const maxed = riftBandPrimaryStats(INSIGHT, riftBandItemLevel('S', RIFT_BAND_MAX_UPGRADE));
+    const total = (maxed.int ?? 0) + (maxed.spi ?? 0) + (maxed.sta ?? 0);
+    expect(total).toBeLessThan(primaryStatSum(ITEMS.circle_of_cinders));
+  });
+
   it('a maxed S band never out-stats the raid ring it is priced under', () => {
     const maxed = riftBandPrimaryStats(MIGHT, riftBandItemLevel('S', RIFT_BAND_MAX_UPGRADE));
     const sum = (maxed.str ?? 0) + (maxed.sta ?? 0);
