@@ -1,7 +1,24 @@
 // @vitest-environment happy-dom
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+// The controller paints its portrait through UnitPortraitPainter, which reaches
+// the 3D portrait pipeline in render/characters/portrait; under happy-dom that
+// pipeline starts real GLB loads (the virtual server serves public/ from disk)
+// that outlive this file's run, and once the environment is torn down Three's
+// FileLoader throws "ProgressEvent is not defined" as an unhandled rejection
+// (a CI shard failure, not a test failure). Stub the module the way the other
+// HUD tests do; the assertions here only need the canvas the controller mints.
+vi.mock('../src/render/characters/portrait', () => ({
+  modularPortraitDataUrl: vi.fn(() => null),
+  onPortraitsReady: vi.fn(),
+  onPortraitUpdate: vi.fn(),
+  playerPortraitDataUrl: vi.fn(() => null),
+  portraitsReady: vi.fn(() => false),
+  visualPortraitDataUrl: vi.fn(() => null),
+}));
+
 import {
   panelLineDurationMs,
   routeSpeech,
