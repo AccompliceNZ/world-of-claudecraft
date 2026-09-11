@@ -502,7 +502,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1007,
-      "state": "093e1b55",
+      "state": "8de61920",
       "events": "be8af4e6",
       "rng": {
         "draws": 2,
@@ -622,7 +622,7 @@
                   "masterwork": true,
                   "stats": {
                     "int": 1,
-                    "spi": 0,
+                    "spi": 1,
                     "sta": 1
                   }
                 },
@@ -754,7 +754,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1007,
-      "state": "9dde9f04",
+      "state": "b3ebd17d",
       "events": "81bf50b3",
       "rng": {
         "draws": 3,
@@ -874,7 +874,7 @@
                   "masterwork": true,
                   "stats": {
                     "int": 1,
-                    "spi": 0,
+                    "spi": 1,
                     "sta": 1
                   }
                 },
@@ -1004,7 +1004,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1007,
-      "state": "b1505f65",
+      "state": "95f9ea6e",
       "events": "f76603c0",
       "rng": {
         "draws": 4,
@@ -1135,7 +1135,7 @@
                   "masterwork": true,
                   "stats": {
                     "int": 1,
-                    "spi": 0,
+                    "spi": 1,
                     "sta": 1
                   }
                 },
@@ -1298,7 +1298,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1007,
-      "state": "4c81a738",
+      "state": "08b1fe55",
       "events": "38d6648f",
       "rng": {
         "draws": 4,
@@ -1429,7 +1429,7 @@
                   "masterwork": true,
                   "stats": {
                     "int": 1,
-                    "spi": 0,
+                    "spi": 1,
                     "sta": 1
                   }
                 },
@@ -1589,7 +1589,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1007,
-      "state": "c1799078",
+      "state": "89f7d021",
       "events": "1e2f0587",
       "rng": {
         "draws": 4,
@@ -1720,7 +1720,7 @@
                   "masterwork": true,
                   "stats": {
                     "int": 1,
-                    "spi": 0,
+                    "spi": 1,
                     "sta": 1
                   }
                 },
@@ -1915,7 +1915,7 @@
       "tick": 0,
       "time": 0,
       "nextId": 1007,
-      "state": "c1799078",
+      "state": "89f7d021",
       "events": "741638a5",
       "rng": {
         "draws": 4,
@@ -2046,7 +2046,7 @@
                   "masterwork": true,
                   "stats": {
                     "int": 1,
-                    "spi": 0,
+                    "spi": 1,
                     "sta": 1
                   }
                 },
