@@ -93,6 +93,38 @@ arena: the real check is the PBE duel round the gear PR already owes.
 - The heroic difficulty floors, the practice dummy and the R5 envelope are calibrated
   on the prot warrior, which does not move.
 
+## Live versus proposed, on real kits
+
+Live is the release base before either PR (b276778485, the same probes run on a
+sparse checkout of it); proposed is this branch (3993 plus 3995). The parse best-in-slot
+kits are the strongest observed live loadouts, so they are the faithful comparison at the
+cap; the leveling rows wear the best uncommon or rare piece per slot at each level.
+
+| Spec | Naked at 20 | Parse best-in-slot at 20 | Leveling L8 | L12 | L16 | L20 blues |
+|---|---|---|---|---|---|---|
+| mage fire | 418 to 665 | 638 to 1,235 | 204 to 365 | 302 to 535 | 450 to 795 | 708 to 1,135 |
+| mage frost | 418 to 665 | 718 to 1,295 | | | | |
+| priest shadow | 387 to 653 | 797 to 1,363 | 185 to 353 | 279 to 523 | 423 to 783 | 677 to 1,123 |
+| warlock destruction | 430 to 677 | 790 to 1,377 | 276 to 437 | 374 to 607 | 522 to 867 | 780 to 1,207 |
+| warlock affliction / demonology | 430 to 677 | 730 to 1,317 / 760 to 1,477 | | | | |
+| druid balance | 662 (same) | 882 to 1,352 | 316 to 386 | 428 to 528 | 640 to 820 | 932 to 1,112 |
+| shaman elemental | 733 (same) | 1,023 to 1,393 | | | | |
+| rogue combat | 510 to 700 | 1,230 to 1,570 | 340 to 410 | 470 to 590 | 750 to 900 | 980 to 1,180 |
+| rogue assassination / subtlety | 510 to 700 | 1,150 to 1,400 / 1,140 to 1,390 | | | | |
+| hunter marksmanship | 725 (same) | 1,415 (same) | 415 (same) | 575 to 585 | 915 (same) | 1,185 (same) |
+| hunter beast mastery | 783 (same) | 1,582 to 1,669 | | | | |
+| warrior arms | 822 (same) | 1,722 (same) | 506 to 516 | 738 to 748 | 1,070 (same) | 1,322 to 1,332 |
+| warrior fury / paladin ret / shaman enh | same | 1,872 / 1,738 / 1,773 (same) | | | | |
+
+Healers and tanks on the parse kits: holy paladin 1,008 to 1,428, discipline 731 to 1,440,
+holy priest 797 to 1,453, restoration shaman 1,023 to 1,393, restoration druid 842 to
+1,272, prot warrior 2,452 to 2,562, prot paladin 2,388 to 2,498, feral 1,852 to 1,892.
+
+The live catalog's best-in-slot picker is not a usable live anchor: it ranked by a raw
+five-stat sum and dressed every physical class in caster pieces (a live warrior "raid
+best-in-slot" reads 1,312 against its real parse kit's 1,722), which is one of the things
+3993 fixed. The proposed raid best-in-slot column in the section above stands on its own.
+
 ## Two things the larger pools exposed
 
 - **The potion ladder is sized against the old priest pool.** The vendor healing potions
