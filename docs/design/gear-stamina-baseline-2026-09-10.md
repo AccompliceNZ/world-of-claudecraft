@@ -491,7 +491,18 @@ resolutions, so the next reader does not rediscover them:
   (33 to 40 percent at every quality) and the crucible caster collections; the premium is
   a placeholder so tank stamina can be priced differently by changing one number. Both
   are maintainer-review items, recorded here rather than claimed as verified.
-- **Still owed after this PR:** the drift cleanup (the 102 allowlisted items and the
+- **The full-suite gate found five more** (the selective gate falls back to the whole
+  suite for a content change): the rogue DPS fixture had pinned the caster jewelry the
+  raw-sum picker gave rogues by accident (it now wears Ignivar's Ember Choker and the
+  Seal of the Forgewall; the three-seed bands held); the affliction five-minute mana
+  corridor widened from 0.12 to 0.30 because the Deathless Heartwood, authored with its
+  stamina inside its line, took its line back as Spirit (25 to 43) and the warlock kit's
+  badge jewelry and Soulflame pieces gained Spirit the same way, so a quarter of the
+  pool survives the window (no Spell Power moved; starvation still binds); the PBE boost
+  tank tripwire now states its premise on the tank offense stat, since every item carries
+  stamina; the professions blob ledger records the 249 bytes the model-aware bakes add;
+  the Windows path scan only timed out under full-suite IO load.
+- **Still owed after this PR:** the drift cleanup (the 103 allowlisted items and the
   PvP set's line, which is nine short of the caster line by design), the Varkhul heroic
   remeasure on PBE, and an identity-aware `itemScore` for the HUD's cross-identity
   comparisons (a caster piece now scores a third higher than the physical piece of the
