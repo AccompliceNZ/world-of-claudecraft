@@ -31,7 +31,9 @@ choice for the rest of the game.
    15 sec, 60 sec cooldown, off the global cooldown, Wolf Form only).
 
 The Wolf Form and Fleet Form tooltips state the new rules (`src/sim/content/classes.ts`
-and the English catalog `src/ui/i18n.catalog/abilities.ts`, same wording in both).
+and the English catalog `src/ui/i18n.catalog/abilities.ts`, same wording in both), and the
+Wolf Form buff-bar line (`hudChrome.auraEffect.wolfForm`, resolved in `src/ui/aura_effect.ts`)
+states the speed the way the Fleet Form and Ember Form lines already state theirs.
 
 ## Reasoning
 
@@ -84,12 +86,23 @@ the engage and control follow up below.
 
 ## Localization note
 
-The three reworded English values (`entities.abilities.cat_form.description`,
-`entities.abilities.travel_form.description`, and the Wildshift row description in
-`src/ui/talent_i18n.row_description_overrides.ts`) keep their existing keys, since ability
-and talent text is keyed by id. Per `docs/i18n-scaling/translation-workflow.md`
-("Rewording an existing English value"), the overlays and the talent overrides still carry
-translations of the old wording and are recorded here for the next maintainer locale pass.
+The buff-bar line is a hand-named key, so its reword followed the new-key convention:
+`hudChrome.auraEffect.formCat` is retired (removed from the English catalog, its rows removed
+from every overlay) and `hudChrome.auraEffect.wolfForm` replaces it, with the five non-Latin
+fills (zh_CN, zh_TW, ja_JP, ko_KR, ru_RU) the M16 wordy-copy rule requires, each composed from
+that locale's existing Wolf Form name and Fleet Form speed clause; the other fifteen locales
+are English-filled `pending` rows for the release fill.
+
+The three id-keyed English values keep their existing keys, since ability and talent text is
+keyed by id: `entities.abilities.cat_form.description` and
+`entities.abilities.travel_form.description` (English in `src/ui/i18n.catalog/abilities.ts`,
+translations in the `src/ui/i18n.locales/` overlays), and the Wildshift row description
+`dru_r5_improved_wrath` (English in `src/sim/content/choice_rows_classic.ts`;
+the non-English retained overrides live in
+`src/ui/talent_i18n.row_description_overrides.ts`). Per
+`docs/i18n-scaling/translation-workflow.md` ("Rewording an existing English value"), the
+overlays and the talent overrides still carry translations of the old wording and are
+recorded here for the next maintainer locale pass.
 
 ## Follow up (a separate PR: engage and control, measured apart from movement)
 
