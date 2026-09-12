@@ -11,10 +11,12 @@ import {
   PIN_SLOW_MULT,
 } from '../src/sim/combat/druid_engines';
 import { DRUID_CHOICE_ROWS } from '../src/sim/content/choice_rows_classic';
+import { abilitiesKnownAt, CLASSES } from '../src/sim/content/classes';
 import { ABILITIES, MOBS } from '../src/sim/data';
 import { createMob } from '../src/sim/entity';
 import { moveSpeedMult } from '../src/sim/player_motion';
 import { Sim } from '../src/sim/sim';
+import { stunDrCategory } from '../src/sim/stun_dr';
 import { dist2d, type Entity, MELEE_RANGE } from '../src/sim/types';
 
 // Wildfang kit pass 2 (engage, control, opener): the baseline shift sprint and
@@ -319,5 +321,60 @@ describe('Lunge, the out-of-stealth shape of Slinkstrike', () => {
     expect(events.some((e) => e.type === 'error')).toBe(false);
     expect(target.auras.some((a) => a.id === 'pounce_stun' && a.kind === 'stun')).toBe(true);
     expect(player.comboPoints).toBe(2);
+  });
+});
+
+describe('Hamstring Bite, the Wolf control finisher', () => {
+  it.each([
+    [1, 1],
+    [2, 1.5],
+    [3, 2],
+    [4, 2.5],
+    [5, 3],
+  ])(
+    'stuns for %s combo points for %s sec, consumes the points, and starts a 20 sec cooldown',
+    (points, seconds) => {
+      const { sim, player } = rig();
+      const target = addTargetMob(sim, 2);
+      cast(sim, 'cat_form');
+      player.comboPoints = points;
+      player.comboUntil = sim.time + 30;
+      player.resource = player.maxResource;
+      cast(sim, 'hamstring_bite');
+      const stun = target.auras.find((a) => a.id === 'hamstring_bite_stun');
+      expect(stun?.kind).toBe('stun');
+      expect(stun?.duration).toBeCloseTo(seconds);
+      expect(stun?.sourceId).toBe(player.id);
+      expect(player.comboPoints).toBe(0);
+      expect(player.cooldowns.get('hamstring_bite')).toBeCloseTo(20 - 0.05, 1);
+    },
+  );
+
+  it('does nothing without combo points', () => {
+    const { sim, player } = rig();
+    const target = addTargetMob(sim, 2);
+    cast(sim, 'cat_form');
+    player.comboPoints = 0;
+    cast(sim, 'hamstring_bite');
+    expect(target.auras.some((a) => a.kind === 'stun')).toBe(false);
+  });
+
+  it('diminishes on the controlled-stun ladder with Concuss and Low Blow', () => {
+    // The sim keeps the classic split: from-stealth openers (Slinkstrike, Gut
+    // Punch) diminish together, and deliberate stuns (Concuss, Low Blow,
+    // Hamstring Bite) diminish together, so a Slinkstrike opener never eats
+    // into the finisher stun that follows it.
+    expect(stunDrCategory('hamstring_bite')).toBe('controlledStun');
+    expect(stunDrCategory('bash')).toBe('controlledStun');
+    expect(stunDrCategory('kidney_shot')).toBe('controlledStun');
+    expect(stunDrCategory('pounce')).toBe('openerStun');
+  });
+
+  it('is learned at 12 as part of the Wolf kit', () => {
+    expect(CLASSES.druid.abilities).toContain('hamstring_bite');
+    expect(abilitiesKnownAt('druid', 11).map((k) => k.def.id)).not.toContain('hamstring_bite');
+    expect(abilitiesKnownAt('druid', 12).map((k) => k.def.id)).toContain('hamstring_bite');
+    expect(ABILITIES.hamstring_bite.requiresForm).toBe('cat');
+    expect(ABILITIES.hamstring_bite.spendsCombo).toBe(true);
   });
 });

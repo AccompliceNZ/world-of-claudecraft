@@ -20,6 +20,8 @@ import {
   RUINOUS_BRAND_VFX_SPEC,
 } from './destruction_vfx_specs';
 import {
+  HAMSTRING_BITE_VFX_FULL_SPEC,
+  HAMSTRING_BITE_VFX_SPEC,
   LUNGE_VFX_FULL_SPEC,
   LUNGE_VFX_SPEC,
   PIN_VFX_FULL_SPEC,
@@ -78,6 +80,7 @@ export function abilityVfxSpec(abilityId: string): AbilityVfxSpec | undefined {
   if (abilityId === 'abyssal_rift') return ABYSSAL_RIFT_VFX_SPEC;
   if (abilityId === 'pin') return PIN_VFX_SPEC;
   if (abilityId === 'lunge') return LUNGE_VFX_SPEC;
+  if (abilityId === 'hamstring_bite') return HAMSTRING_BITE_VFX_SPEC;
   return ABILITY_VFX_SPECS[abilityId];
 }
 
@@ -104,6 +107,7 @@ export function abilityVfxFullSpec(abilityId: string): AbilityVfxFullSpec | unde
   if (abilityId === 'abyssal_rift') return ABYSSAL_RIFT_VFX_FULL_SPEC;
   if (abilityId === 'pin') return PIN_VFX_FULL_SPEC;
   if (abilityId === 'lunge') return LUNGE_VFX_FULL_SPEC;
+  if (abilityId === 'hamstring_bite') return HAMSTRING_BITE_VFX_FULL_SPEC;
   return ABILITY_VFX_FULL_SPECS[abilityId];
 }
 

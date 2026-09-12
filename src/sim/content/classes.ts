@@ -609,6 +609,7 @@ export const CLASSES: Record<PlayerClass, ClassDef> = {
       'hibernate',
       'dash',
       'pounce',
+      'hamstring_bite',
       'insect_swarm',
       'tigers_fury',
       'rip',
@@ -6874,6 +6875,25 @@ export const ABILITIES: Record<string, AbilityDef> = {
     effects: [{ type: 'charge' }, { type: 'weaponStrike', bonus: 0, weaponMult: 0.6 }],
     description:
       'Lunge at an enemy up to 12 yd away, dealing 60% weapon damage and awarding 1 combo point. Wolf Form only.',
+  },
+  hamstring_bite: {
+    id: 'hamstring_bite',
+    name: 'Hamstring Bite',
+    class: 'druid',
+    learnLevel: 12,
+    cost: 30,
+    castTime: 0,
+    cooldown: 20,
+    range: 0,
+    school: 'physical',
+    requiresTarget: true,
+    spendsCombo: true,
+    requiresForm: 'cat',
+    // The Low Blow shape (finisherStun): 1 sec at 1 combo point up to 3 sec at
+    // 5; the controlled-stun diminishing category beside Concuss (stun_dr.ts).
+    effects: [{ type: 'finisherStun', base: 0.5, perCombo: 0.5 }],
+    description:
+      'Finishing move that stuns the target for 0.5 sec plus 0.5 sec per combo point. Wolf Form only.',
   },
   insect_swarm: {
     id: 'insect_swarm',

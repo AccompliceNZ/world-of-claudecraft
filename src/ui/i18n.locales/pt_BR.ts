@@ -973,6 +973,8 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Mudança de Forma',
   'guide.classPage.formsMoonwing':
     'Um druida Equilíbrio ganha mais uma forma, a Forma de Luniscante, a forma de conjurador em que um druida Equilíbrio luta. É a única forma animal que mantém suas magias, e sua varinha só funciona nela ou na sua forma normal de conjurador.',
+  'guide.classPage.formsWolfEngage':
+    'Um lobo abre a luta com Investida de Bruin, muda logo para a Forma de Lobo para fixar o alvo, fecha a distância com Bote quando não está furtivo e prende um inimigo com Mordida no Jarrete.',
   'guide.classPage.formsNote':
     'Um druida luta mudando de forma. A maioria das habilidades de druida pertence a uma forma específica, então a forma em que você está decide o que pode conjurar, e mudar de forma custa um pouco de mana. Você pode mudar de forma dentro ou fora de combate, quantas vezes quiser.',
   'guide.classPage.mageEleHeading': 'Elemental da Água',
@@ -6970,6 +6972,9 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.lunge.description':
     'Dá um bote em um inimigo a até 12 m, causando 60% do dano da arma e concedendo 1 ponto de combo. Apenas Forma de Lobo.',
   'entities.abilities.lunge.name': 'Bote',
+  'entities.abilities.hamstring_bite.description':
+    'Golpe final que atordoa o alvo por 0,5 s mais 0,5 s por ponto de combo. Apenas Forma de Lobo.',
+  'entities.abilities.hamstring_bite.name': 'Mordida no Jarrete',
   'entities.abilities.pounce.description':
     'Abertura furtiva que atordoa o alvo por 2 s. Concede 1 ponto de combo. Apenas Forma de Lobo. Fora da furtividade, este botão é Bote.',
   'entities.abilities.insect_swarm.name': 'Enxame Ferroante',

@@ -49,6 +49,38 @@ export const LUNGE_VFX_FULL_SPEC = {
   linger: 1,
 } satisfies AbilityVfxFullSpec;
 
+// VFX retune pending: Hamstring Bite, the Wolf control finisher. Slinkstrike's
+// claw strike (stars on, the stun read Concuss and Low Blow share).
+export const HAMSTRING_BITE_VFX_SPEC = {
+  c: '#d41f2e',
+  p: 'blood',
+  pw: 1,
+  sp: 8,
+  vr: 1,
+  sm: 1,
+  li: 0.4,
+  lg: 1.5,
+  a: 'strike',
+} satisfies AbilityVfxSpec;
+
+export const HAMSTRING_BITE_VFX_FULL_SPEC = {
+  archetype: 'strike',
+  palette: 'blood',
+  power: 1,
+  windupStyle: 'none',
+  strike: { swings: 1, arc: 'bite', bleed: true, stars: true },
+  impact: {
+    flipbook: false,
+    ring: false,
+    vRing: true,
+    sparks: 8,
+    debris: false,
+    smoke: true,
+    light: 0.4,
+  },
+  linger: 1.5,
+} satisfies AbilityVfxFullSpec;
+
 export const PIN_VFX_FULL_SPEC = {
   archetype: 'cc',
   palette: 'physical',

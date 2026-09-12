@@ -3830,6 +3830,9 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.lunge.description':
     '最大12メートル先の敵に飛びかかり、武器ダメージの60%を与えてコンボポイントを1獲得する。ウルフフォーム時のみ使用可能。',
   'entities.abilities.lunge.name': 'ランジ',
+  'entities.abilities.hamstring_bite.description':
+    'フィニッシュ技。対象を0.5秒に加えコンボポイント1つにつき0.5秒間スタンさせる。ウルフフォーム時のみ使用可能。',
+  'entities.abilities.hamstring_bite.name': 'ハムストリングバイト',
   'entities.abilities.pounce.description':
     '隠密状態から放つ先制攻撃で、対象を2秒間スタンさせます。コンボポイントを1獲得します。ウルフフォーム専用。 ステルス状態でない場合、このボタンはランジになる。',
   'entities.abilities.insect_swarm.name': '刺す虫の群れ',
@@ -14460,6 +14463,8 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': '変身',
   'guide.classPage.formsMoonwing':
     '均衡（ムーングローブ）のドルイドは、もう一つの姿、ムーンウィングフォームを得ます。均衡型のドルイドが戦うための術者の姿です。獣の姿でありながら呪文を保てる唯一の形であり、ワンドもこの姿か、通常の術者の姿でしか使えません。',
+  'guide.classPage.formsWolfEngage':
+    '狼はブルーインラッシュで戦いを開き、すぐにウルフフォームへ変身して対象を押さえ込み、ステルスでないときはランジで距離を詰め、ハムストリングバイトで敵を足止めする。',
   'guide.classPage.formsAutoUnshift':
     '変身中に回復や攻撃の呪文を唱えると、姿はひとりでに解けます。こうして姿を解くのはマナもかからず、グローバルクールダウンも使いません。ですから即時発動の呪文は押した瞬間に飛びます。もう一度変身するのは普通のアビリティなので、マナもグローバルクールダウンもかかります。',
   'guide.classPage.formsNote':

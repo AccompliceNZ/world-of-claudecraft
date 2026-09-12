@@ -3666,6 +3666,9 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.lunge.description':
     '撲向最遠 12 碼外的敵人，造成 60% 武器傷害並獲得 1 個連擊點。僅限狼形態。',
   'entities.abilities.lunge.name': '撲擊',
+  'entities.abilities.hamstring_bite.description':
+    '終結技，使目標昏迷 0.5 秒，每個連擊點額外增加 0.5 秒。僅限狼形態。',
+  'entities.abilities.hamstring_bite.name': '斷筋撕咬',
   'entities.abilities.pounce.description':
     '一個潛行開場技，昏迷目標 2 秒。獎勵 1 個連擊點。僅限狼形態。 未隱匿時，此按鈕為撲擊。',
   'entities.abilities.insect_swarm.name': '螫刺蟲群',
@@ -13785,6 +13788,8 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': '變形',
   'guide.classPage.formsMoonwing':
     '平衡專精的德魯伊會多獲得一種形態：梟獸形態，那是平衡德魯伊作戰時所處的施法形態。它是唯一保留你法術的動物形態，而你的魔杖也只有在它或你平常的施法形態下才能使用。',
+  'guide.classPage.formsWolfEngage':
+    '狼以巨熊衝鋒開戰，隨即變為狼形態釘制目標，未隱匿時用撲擊拉近距離，再用斷筋撕咬把敵人定在原地。',
   'guide.classPage.formsAutoUnshift':
     '變身時施放治療或傷害法術會自動為你解除變身。以這種方式離開形態不消耗法力，也不占用全域冷卻，因此瞬發法術會在你按下的那一刻釋放。重新變身是普通技能，依然消耗法力並占用全域冷卻。',
   'guide.classPage.formsNote':

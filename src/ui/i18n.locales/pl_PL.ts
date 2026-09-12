@@ -958,6 +958,8 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Zmiana kształtu',
   'guide.classPage.formsMoonwing':
     'Druid o specjalizacji Równowaga zyskuje jeszcze jedną postać, Postać księżycowej sowy, formę rzucającego, w jakiej walczy. To jedyna zwierzęca postać, która zachowuje twoje zaklęcia, a różdżka działa tylko w niej albo w twojej zwykłej postaci rzucającego.',
+  'guide.classPage.formsWolfEngage':
+    'Wilk otwiera walkę Szarżą Bruina, od razu zmienia się w postać wilka, by przygwoździć cel, skraca dystans Wypadem, gdy się nie skrada, i zatrzymuje wroga Ugryzieniem w ścięgno.',
   'guide.classPage.formsNote':
     'Druid walczy, zmieniając kształt. Większość zdolności druida należy do jednej postaci, więc to, w jakiej formie się znajdujesz, decyduje, co możesz rzucić, a przemiana kosztuje odrobinę many. Możesz przemieniać się w walce i poza nią, tak często, jak chcesz.',
   'guide.classPage.mageEleHeading': 'Żywiołak wody',
@@ -5577,6 +5579,9 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.lunge.description':
     'Rzucasz się na wroga oddalonego o maksymalnie 12 jardów, zadając 60% obrażeń broni i przyznając 1 punkt kombinacji. Tylko w postaci wilka.',
   'entities.abilities.lunge.name': 'Wypad',
+  'entities.abilities.hamstring_bite.description':
+    'Cios kończący, który ogłusza cel na 0,5 sek. plus 0,5 sek. za każdy punkt kombinacji. Tylko w postaci wilka.',
+  'entities.abilities.hamstring_bite.name': 'Ugryzienie w ścięgno',
   'entities.abilities.power_word_fortitude.description':
     'Zwiększa Wytrzymałość każdego członka drużyny o {buff}% na 30 min.',
   'entities.abilities.power_word_fortitude.name': 'Litania hartu',

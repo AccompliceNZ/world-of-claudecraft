@@ -2076,6 +2076,10 @@ export const GUIDE_CLASSES: GuideClassInfo[] = [
         "name": "Slinkstrike"
       },
       {
+        "id": "hamstring_bite",
+        "name": "Hamstring Bite"
+      },
+      {
         "id": "insect_swarm",
         "name": "Stinging Swarm"
       },

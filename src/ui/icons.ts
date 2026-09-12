@@ -3082,6 +3082,7 @@ const ABILITY_RECIPES: Record<string, IconRecipe> = {
   dash: r('nature', 'leafGreen', ['paw', { p: 'claw_slash', ...TR }], ['motion']),
   pounce: r('nature', 'leafGreen', ['fang', { p: 'claw_slash', ...BR }], ['motion']),
   lunge: r('nature', 'leafGreen', ['paw', { p: 'fang', ...TR }], ['motion', 'glow']),
+  hamstring_bite: r('blood', 'blood', ['fang', { p: 'boot', ...BR }], ['crack']),
   insect_swarm: r('nature', 'leafGreen', ['tendrils'], ['sparkle']),
   tigers_fury: r('fire', 'ember', ['fang'], ['glow']),
   rip: r('blood', 'blood', ['claw_slash'], ['drips']),
@@ -4959,6 +4960,7 @@ export const ABILITY_IMAGE_IDS = new Set<string>([
 export const ABILITY_ART_PENDING = new Set<string>([
   // Wildfang kit pass 2: the VFX and art retune owns the final paintings.
   'lunge',
+  'hamstring_bite',
 ]);
 
 /** Static URL of an ability's image icon, or null if it uses a recipe. */

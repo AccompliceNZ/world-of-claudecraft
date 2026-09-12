@@ -948,6 +948,8 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Formskiftning',
   'guide.classPage.formsMoonwing':
     'En Månlund-druid får en form till, Månugglaform, besvärjarformen en Balans-druid strider i. Det är den enda djurformen som behåller dina besvärjelser, och din trollstav fungerar bara i den eller i din vanliga besvärjarform.',
+  'guide.classPage.formsWolfEngage':
+    'En varg öppnar striden med Bruinrusning, skiftar genast till Vargform för att hålla fast målet, sluter avståndet med Utfall när den inte smyger och håller en fiende stilla med Hasbett.',
   'guide.classPage.formsNote':
     'En druid slåss genom att byta form. De flesta av druidens förmågor hör till en enda form, så formen du befinner dig i avgör vad du kan kasta, och att skifta kostar lite mana. Du kan skifta in eller ut ur strid, så ofta du vill.',
   'guide.classPage.mageEleHeading': 'Vattenelementar',
@@ -5388,6 +5390,9 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.lunge.description':
     'Kasta dig mot en fiende upp till 12 m bort, tillfoga 60% vapenskada och ge 1 kombopoäng. Endast i vargform.',
   'entities.abilities.lunge.name': 'Utfall',
+  'entities.abilities.hamstring_bite.description':
+    'Avslutande attack som bedövar målet i 0,5 sek plus 0,5 sek per kombopoäng. Endast i vargform.',
+  'entities.abilities.hamstring_bite.name': 'Hasbett',
   'entities.abilities.power_word_fortitude.description':
     'Ökar varje gruppmedlems Uthållighet med {buff}% i 30 min.',
   'entities.abilities.power_word_fortitude.name': 'Beslutsamhetens litania',

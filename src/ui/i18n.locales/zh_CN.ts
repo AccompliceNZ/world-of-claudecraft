@@ -3664,6 +3664,9 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.lunge.description':
     '扑向最远12码外的敌人，造成60%武器伤害并获得1个连击点。仅限狼形态使用。',
   'entities.abilities.lunge.name': '扑击',
+  'entities.abilities.hamstring_bite.description':
+    '终结技，使目标昏迷0.5秒，每个连击点额外增加0.5秒。仅限狼形态使用。',
+  'entities.abilities.hamstring_bite.name': '断筋撕咬',
   'entities.abilities.pounce.description':
     '一个潜行开场技，昏迷目标 2 秒。奖励 1 个连击点。仅限狼形态。 未潜行时，此按钮为扑击。',
   'entities.abilities.insect_swarm.name': '蜇刺虫群',
@@ -13780,6 +13783,8 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': '变形',
   'guide.classPage.formsMoonwing':
     '平衡系德鲁伊还会多得到一种形态：枭兽形态，也就是平衡德鲁伊作战时所用的施法形态。它是唯一保留法术的野兽形态，而你的魔杖也只在这个形态或你普通的施法形态下才能使用。',
+  'guide.classPage.formsWolfEngage':
+    '狼以巨熊冲锋开战，随即变为狼形态钉制目标，未潜行时用扑击拉近距离，再用断筋撕咬把敌人钉在原地。',
   'guide.classPage.formsAutoUnshift':
     '变身时施放治疗或伤害法术会自动为你解除变身。以这种方式离开形态不消耗法力，也不占用公共冷却时间，因此瞬发法术会在你按下的那一刻释放。重新变身是普通技能，依然消耗法力并占用公共冷却时间。',
   'guide.classPage.formsNote':

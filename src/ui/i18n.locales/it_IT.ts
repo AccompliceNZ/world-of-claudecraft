@@ -984,6 +984,8 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Trasformazioni',
   'guide.classPage.formsMoonwing':
     "Un druido di Equilibrio ottiene una forma in più, la Forma di Lunagufo, la forma da incantatore in cui combatte questa specializzazione. È l'unica forma animale che conserva i tuoi incantesimi, e la tua bacchetta funziona solo con essa o con la tua normale forma da incantatore.",
+  'guide.classPage.formsWolfEngage':
+    'Un lupo apre lo scontro con Carica di Bruin, passa subito in Forma del Lupo per bloccare il bersaglio, chiude la distanza con Balzo quando non è in furtività e ferma un nemico con Morso al garretto.',
   'guide.classPage.formsNote':
     "Un druido combatte cambiando forma. La maggior parte delle abilità del druido appartiene a una forma specifica, quindi la forma in cui ti trovi decide cosa puoi lanciare, e trasformarti costa un po' di mana. Puoi trasformarti dentro o fuori dal combattimento, tutte le volte che vuoi.",
   'guide.classPage.mageEleHeading': "Elementale dell'Acqua",
@@ -7036,6 +7038,9 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.lunge.description':
     "Balza su un nemico fino a 12 metri di distanza, infliggendo il 60% del danno dell'arma e conferendo 1 punto combo. Solo in Forma del Lupo.",
   'entities.abilities.lunge.name': 'Balzo',
+  'entities.abilities.hamstring_bite.description':
+    'Mossa finale che stordisce il bersaglio per 0,5 sec più 0,5 sec per punto combo. Solo in Forma del Lupo.',
+  'entities.abilities.hamstring_bite.name': 'Morso al garretto',
   'entities.abilities.pounce.description':
     'Apertura furtiva che stordisce il bersaglio per 2 sec. Conferisce 1 punto combo. Solo Forma del Lupo. Fuori dalla furtività questo pulsante è Balzo.',
   'entities.abilities.insect_swarm.name': 'Sciame Pungente',

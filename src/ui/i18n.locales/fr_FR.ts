@@ -1029,6 +1029,8 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Changement de forme',
   'guide.classPage.formsMoonwing':
     "Un druide Équilibre gagne une forme supplémentaire, la Forme de sélénien, la forme de lanceur de sorts dans laquelle il combat. C'est la seule forme animale qui conserve vos sorts, et votre baguette ne fonctionne que dans cette forme ou dans votre forme de lanceur de sorts normale.",
+  'guide.classPage.formsWolfEngage':
+    "Un loup ouvre le combat avec Ruée de Bruin, passe aussitôt en Forme de loup pour clouer la cible, comble la distance avec Bond quand il n'est pas camouflé et immobilise un ennemi avec Morsure au jarret.",
   'guide.classPage.formsNote':
     'Un druide combat en changeant de forme. La plupart des capacités de druide appartiennent à une forme précise, si bien que la forme que vous portez détermine ce que vous pouvez lancer, et changer de forme coûte un peu de mana. Vous pouvez changer de forme en combat ou hors combat, aussi souvent que vous le souhaitez.',
   'guide.classPage.mageEleHeading': "Élémentaire d'eau",
@@ -7596,6 +7598,9 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.lunge.description':
     "Bondit sur un ennemi jusqu'à 12 m, inflige 60% des dégâts de l'arme et octroie 1 point de combo. Forme de loup uniquement.",
   'entities.abilities.lunge.name': 'Bond',
+  'entities.abilities.hamstring_bite.description':
+    'Coup de grâce qui étourdit la cible pendant 0,5 s plus 0,5 s par point de combo. Forme de loup uniquement.',
+  'entities.abilities.hamstring_bite.name': 'Morsure au jarret',
   'entities.abilities.pounce.description':
     'Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement. Hors camouflage, ce bouton devient Bond.',
   'entities.abilities.insect_swarm.name': 'Nuée cinglante',

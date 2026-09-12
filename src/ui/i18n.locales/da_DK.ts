@@ -947,6 +947,8 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsHeading': 'Formskifte',
   'guide.classPage.formsMoonwing':
     'En Månelund-druide får endnu en form, Månekinform, den kasterform en Månelund-druide kæmper i. Det er den ene dyreform, der beholder dine besværgelser, og din tryllestav virker kun i den eller i din normale kasterform.',
+  'guide.classPage.formsWolfEngage':
+    'En ulv åbner kampen med Bruin-storm, skifter straks til Ulveform for at fastholde målet, lukker afstanden med Spring, når den ikke sniger, og holder en fjende fast med Hasebid.',
   'guide.classPage.formsNote':
     'En druide kæmper ved at skifte form. De fleste druideevner hører til én form, så den form, du er i, afgør, hvad du kan kaste, og at skifte koster lidt mana. Du kan skifte form både i og uden for kamp, så tit du vil.',
   'guide.classPage.mageEleHeading': 'Vandelementar',
@@ -5392,6 +5394,9 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.lunge.description':
     'Spring mod en fjende op til 12 m væk, påfør 60% våbenskade og giv 1 kombopoint. Kun i Ulveform.',
   'entities.abilities.lunge.name': 'Spring',
+  'entities.abilities.hamstring_bite.description':
+    'Afsluttende angreb, der bedøver målet i 0,5 sek. plus 0,5 sek. per kombopoint. Kun i Ulveform.',
+  'entities.abilities.hamstring_bite.name': 'Hasebid',
   'entities.abilities.power_word_fortitude.description':
     'Øger hvert gruppemedlems Udholdenhed med {buff}% i 30 min.',
   'entities.abilities.power_word_fortitude.name': 'Beslutsomhedens Litani',

@@ -1281,6 +1281,11 @@ const classAbilityNamesEn = {
         'Lunge at an enemy up to 12 yd away, dealing 60% weapon damage and awarding 1 combo point. Wolf Form only.',
       ],
       [
+        'hamstring_bite',
+        'Hamstring Bite',
+        'Finishing move that stuns the target for 0.5 sec plus 0.5 sec per combo point. Wolf Form only.',
+      ],
+      [
         'insect_swarm',
         'Stinging Swarm',
         'The enemy is swarmed by insects, taking {damage} Nature damage over 12 sec.',
