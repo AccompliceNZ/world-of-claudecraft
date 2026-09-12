@@ -12708,7 +12708,7 @@ export const da_DK: EnTranslations = {
       },
       "prowl": {
         "name": "Snig",
-        "description": "Gå i sneg-tilstand mens du er i Ulveform, og bevæg dig 5 % langsommere. Kan ikke bruges i kamp."
+        "description": "Gå i sneg-tilstand mens du er i Ulveform. Kan ikke bruges i kamp."
       },
       "rake": {
         "name": "Flæns",

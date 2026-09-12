@@ -232,3 +232,27 @@ describe('Pin, the Bruin Rush to Wolf Form rider', () => {
     expect(ABILITIES.hamstring.effects.some((e) => e.type === 'slow')).toBe(true);
   });
 });
+
+describe('Stalk moves at full speed', () => {
+  it('stealths a Wolf at 1.0x while rogue Duskveil keeps its 0.5x crawl', () => {
+    const { sim, player } = rig();
+    cast(sim, 'cat_form');
+    expect(moveSpeedMult(player)).toBeCloseTo(1.6); // the shift's Loping Stride
+    dropAura(player, 'loping_stride');
+    cast(sim, 'prowl');
+    const stealth = player.auras.find((a) => a.kind === 'stealth');
+    expect(stealth?.value).toBe(1);
+    expect(moveSpeedMult(player)).toBe(1);
+
+    const rogue = new Sim({ seed: 29, playerClass: 'rogue', autoEquip: true });
+    rogue.setPlayerLevel(20);
+    rogue.player.gcdRemaining = 0;
+    rogue.castAbility('stealth');
+    rogue.tick();
+    const duskveil = rogue.player.auras.find((a) => a.kind === 'stealth');
+    expect(duskveil?.value).toBe(0.5);
+    expect(moveSpeedMult(rogue.player)).toBe(0.5);
+    expect(ABILITIES.stealth.description).toContain('50% slower');
+    expect(ABILITIES.prowl.description).not.toContain('slower');
+  });
+});

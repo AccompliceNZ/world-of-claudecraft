@@ -3937,11 +3937,7 @@ const mergeExtraEn = {
       'Craven Roar',
       'Demoralizes nearby enemies, reducing their attack power by 20 for 20 sec. Bruin Form only.',
     ],
-    [
-      'prowl',
-      'Stalk',
-      'Enter stealth while in Wolf Form, moving 5% slower. Cannot be used in combat.',
-    ],
+    ['prowl', 'Stalk', 'Enter stealth while in Wolf Form. Cannot be used in combat.'],
     [
       'rake',
       'Flense',

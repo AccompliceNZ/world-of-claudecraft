@@ -5581,7 +5581,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Osłania sprzymierzony cel, pochłaniając {damage} obrażeń przez 30 s. Dyscyplina dodatkowo wiąże cel z twoimi obrażeniami świętymi na 30 s.',
   'entities.abilities.power_word_shield.name': 'Psalm ochrony',
   'entities.abilities.prowl.description':
-    'Wchodzi w skradanie w postaci wilka, poruszając się o 5% wolniej. Nie można użyć w walce.',
+    'Wchodzi w skradanie w postaci wilka. Nie można użyć w walce.',
   'entities.abilities.prowl.name': 'Podchody',
   'entities.abilities.pyroblast.description':
     'Ciska ogromnym ognistym głazem, który zadaje {damage} obrażeń od ognia oraz dodatkowe obrażenia w czasie.',
@@ -14016,7 +14016,8 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Kauteryzacja nie może ponownie zapobiec śmiertelnemu trafieniu',
   'hudChrome.auraEffect.cooldownCap':
     'Wykorzystano {used} z {cap} s skrócenia czasu odnowienia w tym oknie',
-  'hudChrome.auraEffect.bruinRushWindow': 'Postać wilka nie kosztuje many i przygważdża cel twojej Szarży Bruina, spowalniając go o {pct}% na {sec} sek.',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'Postać wilka nie kosztuje many i przygważdża cel twojej Szarży Bruina, spowalniając go o {pct}% na {sec} sek.',
   'hudChrome.auraEffect.desolation':
     'Pozostało {charges} ładunków: twój następny Pocisk Ruiny rzuca się o {castPct}% szybciej albo twój następny Deszcz ognia trafia natychmiast',
   'hudChrome.auraEffect.duskfireClaim': 'Śmierć celu przyznaje {value} Ruiny',

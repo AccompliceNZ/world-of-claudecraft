@@ -12708,7 +12708,7 @@ export const zh_CN: EnTranslations = {
       },
       "prowl": {
         "name": "潜行",
-        "description": "在狼形态下进入潜行状态，移动速度降低 5%。无法在战斗中使用。"
+        "description": "在狼形态下进入潜行状态。无法在战斗中使用。"
       },
       "rake": {
         "name": "剐削",

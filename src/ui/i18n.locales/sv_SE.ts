@@ -5392,7 +5392,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Skyddar ett vänligt mål och absorberar {damage} skada i 30 sek. Disciplin länkar dessutom målet till er Heliga skada i 30 sek.',
   'entities.abilities.power_word_shield.name': 'Värnpsalm',
   'entities.abilities.prowl.description':
-    'Gå i smyg medan du är i vargform och rör dig 5 % långsammare. Kan inte användas i strid.',
+    'Gå i smyg medan du är i vargform. Kan inte användas i strid.',
   'entities.abilities.prowl.name': 'Smygjaga',
   'entities.abilities.pyroblast.description':
     'Slungar ett väldigt brinnande stenblock som vållar {damage} eldskada plus ytterligare skada över tid.',
@@ -13912,7 +13912,8 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.cauterizeFatigue': 'Bränning kan inte förhindra ännu ett dödligt slag',
   'hudChrome.auraEffect.cooldownCap':
     '{used} av {cap} sek nedkylningsreduktion använd i detta fönster',
-  'hudChrome.auraEffect.bruinRushWindow': 'Vargform kostar ingen mana och håller fast målet för er Bruinrusning, vilket saktar ner det med {pct}% i {sec} sek',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'Vargform kostar ingen mana och håller fast målet för er Bruinrusning, vilket saktar ner det med {pct}% i {sec} sek',
   'hudChrome.auraEffect.desolation':
     '{charges} laddningar: din nästa Fördärvsbult kastas {castPct}% snabbare, eller din nästa Eldregn landar omedelbart',
   'hudChrome.auraEffect.duskfireClaim': 'Döden ger {value} Wrack',

@@ -7106,7 +7106,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
     'Demoralisiert nahe Gegner und senkt ihre Angriffskraft 20 Sek. lang um 20. Nur in Bruin Form.',
   'entities.abilities.prowl.name': 'Anpirschen',
   'entities.abilities.prowl.description':
-    'Geht in Wolfsgestalt in den Schleichmodus über und bewegt Euch 5% langsamer. Im Kampf nicht einsetzbar.',
+    'Geht in Wolfsgestalt in den Schleichmodus über. Im Kampf nicht einsetzbar.',
   'entities.abilities.rake.name': 'Schinden',
   'entities.abilities.revive_pet.name': 'Zusammenflicken',
   'entities.abilities.revive_pet.description':
@@ -14327,7 +14327,8 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
     'Kauterisieren kann keinen weiteren tödlichen Treffer verhindern',
   'hudChrome.auraEffect.cooldownCap':
     '{used} von {cap} Sek. Abklingzeit-Verkürzung in diesem Fenster verbraucht',
-  'hudChrome.auraEffect.bruinRushWindow': 'Die Wolfsgestalt kostet kein Mana und nagelt das Ziel eures Bruin-Ansturms fest, was es {sec} Sek. lang um {pct}% verlangsamt',
+  'hudChrome.auraEffect.bruinRushWindow':
+    'Die Wolfsgestalt kostet kein Mana und nagelt das Ziel eures Bruin-Ansturms fest, was es {sec} Sek. lang um {pct}% verlangsamt',
   'hudChrome.auraEffect.desolation':
     '{charges} Aufladungen: Euer nächster Verderbensblitz wirkt {castPct}% schneller, oder Euer nächster Feuerregen trifft sofort',
   'hudChrome.auraEffect.duskfireClaim': 'Tod gewährt {value} Verderben',
