@@ -3038,6 +3038,7 @@ export const ja_JP: EnTranslations = {
       "elementalConvergencePrimed": "次に異なる属性の呪文を唱えると、エレメンタル・コンバージェンスが発動します",
       "hunterFerocity": "群れの獰猛さ{stacks}スタック：ペットの与えるダメージが{pct}%上昇",
       "cooldownCap": "この時間枠でクールダウン短縮を{used}/{cap}秒使用済み",
+      "bruinRushWindow": "ウルフフォームのマナ消費がなくなり、ブルーインラッシュの対象を押さえ込んで{sec}秒間移動速度を{pct}%低下させる",
       "funeralHarvestLock": "フューネラル・ハーベストはまだ次の魂の欠片を生成できない",
       "leadenHexLock": "レドン・ヘックスはまだこの対象を再び移動不能にできない",
       "forbiddenReflectionReady": "次の対象となるウォーロックのクールダウンを再使用できる",
@@ -12699,7 +12700,7 @@ export const ja_JP: EnTranslations = {
       },
       "bear_charge": {
         "name": "ブルーインラッシュ",
-        "description": "敵に突進して激怒を9獲得し、1秒間スタンさせる。射程7～23メートル。ブルーインフォーム時のみ使用可能。"
+        "description": "敵に突進して激怒を9獲得し、1秒間スタンさせる。その後3秒間、ウルフフォームは無料になり、対象を押さえ込んで4秒間移動速度を50%低下させる。射程7～23メートル。ブルーインフォーム時のみ使用可能。"
       },
       "demoralizing_roar": {
         "name": "臆病の咆哮",

@@ -3038,6 +3038,7 @@ export const zh_TW: EnTranslations = {
       "elementalConvergencePrimed": "你的下一個不同元素學派法術將觸發元素匯聚",
       "hunterFerocity": "{stacks} 層獸群凶性：你的寵物造成的傷害提高 {pct}%",
       "cooldownCap": "此時間窗已使用 {used}/{cap} 秒冷卻縮減",
+      "bruinRushWindow": "狼形態無需法力，並釘制你的巨熊衝鋒目標，使其減速 {pct}%，持續 {sec} 秒",
       "funeralHarvestLock": "葬禮收割暫時無法再次產生靈魂碎片",
       "leadenHexLock": "鉛沉妖術暫時無法再次定身此目標",
       "forbiddenReflectionReady": "下一個符合條件的術士冷卻技能可再次施放",
@@ -12699,7 +12700,7 @@ export const zh_TW: EnTranslations = {
       },
       "bear_charge": {
         "name": "巨熊衝鋒",
-        "description": "向敵人衝鋒，產生 9 點怒氣並將其昏迷 1 秒。射程 8-25 公尺。僅限巨熊形態。"
+        "description": "向敵人衝鋒，產生 9 點怒氣並將其昏迷 1 秒。之後 3 秒內，狼形態無需消耗並釘制目標，使其減速 50%，持續 4 秒。射程 8-25 公尺。僅限巨熊形態。"
       },
       "demoralizing_roar": {
         "name": "怯懦咆哮",

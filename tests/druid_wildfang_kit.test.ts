@@ -1,11 +1,18 @@
 import { describe, expect, it } from 'vitest';
 import {
+  BRUIN_RUSH_WINDOW_ID,
+  BRUIN_RUSH_WINDOW_SECONDS,
   LONGSTRIDE,
   LOPING_STRIDE_DURATION,
   LOPING_STRIDE_ICD,
   LOPING_STRIDE_SPEED,
+  PIN_DURATION,
+  PIN_ID,
+  PIN_SLOW_MULT,
 } from '../src/sim/combat/druid_engines';
 import { DRUID_CHOICE_ROWS } from '../src/sim/content/choice_rows_classic';
+import { ABILITIES, MOBS } from '../src/sim/data';
+import { createMob } from '../src/sim/entity';
 import { moveSpeedMult } from '../src/sim/player_motion';
 import { Sim } from '../src/sim/sim';
 import type { Entity } from '../src/sim/types';
@@ -42,8 +49,29 @@ function aura(entity: Entity, id: string) {
   return entity.auras.find((a) => a.id === id);
 }
 
+function inForm(entity: Entity, kind: 'form_bear' | 'form_cat'): boolean {
+  return entity.auras.some((a) => a.kind === kind);
+}
+
 function dropAura(entity: Entity, id: string): void {
   entity.auras = entity.auras.filter((a) => a.id !== id);
+}
+
+// A hostile, effectively unkillable wolf dist yards in front of the druid,
+// targeted and faced (the sim.test.ts idiom).
+function addTargetMob(sim: Sim, dist: number, id = 9820): Entity {
+  const player = sim.player;
+  const mob = createMob(id, MOBS.forest_wolf, 20, {
+    x: player.pos.x,
+    y: player.pos.y,
+    z: player.pos.z + dist,
+  });
+  mob.hostile = true;
+  mob.maxHp = mob.hp = 1_000_000;
+  (sim as unknown as { addEntity(entity: Entity): void }).addEntity(mob);
+  sim.targetEntity(mob.id);
+  player.facing = 0;
+  return mob;
 }
 
 describe('Loping Stride is baseline and Longstride retunes it', () => {
@@ -102,5 +130,105 @@ describe('Loping Stride is baseline and Longstride retunes it', () => {
     });
     expect(option?.description).toContain(`${LONGSTRIDE.duration} sec`);
     expect(option?.description).toContain(`${LONGSTRIDE.icd} sec`);
+  });
+});
+
+describe('Pin, the Bruin Rush to Wolf Form rider', () => {
+  function rushRig() {
+    const { sim, player } = rig();
+    const target = addTargetMob(sim, 12);
+    cast(sim, 'bear_form');
+    expect(inForm(player, 'form_bear')).toBe(true);
+    return { sim, player, target };
+  }
+
+  it('makes Wolf Form free inside the 3 sec window and Pins the Rush target', () => {
+    const { sim, player, target } = rushRig();
+    const parkedBefore = player.savedMana;
+    cast(sim, 'bear_charge');
+    expect(aura(player, BRUIN_RUSH_WINDOW_ID)?.value).toBe(target.id);
+    expect(aura(player, BRUIN_RUSH_WINDOW_ID)?.duration).toBe(BRUIN_RUSH_WINDOW_SECONDS);
+    // The displayed cost and the bill agree: both worlds read the same tail.
+    expect(sim.resolvedAbility('cat_form')?.cost).toBe(0);
+    ticks(sim, 1);
+    cast(sim, 'cat_form');
+    expect(inForm(player, 'form_cat')).toBe(true);
+    expect(player.savedMana).toBe(parkedBefore);
+    const pin = aura(target, PIN_ID);
+    expect(pin?.kind).toBe('slow');
+    expect(pin?.value).toBe(PIN_SLOW_MULT);
+    expect(pin?.duration).toBe(PIN_DURATION);
+    expect(pin?.sourceId).toBe(player.id);
+    expect(moveSpeedMult(target)).toBeCloseTo(0.5);
+    // The window is consumed by the shift.
+    expect(aura(player, BRUIN_RUSH_WINDOW_ID)).toBeUndefined();
+    expect(sim.resolvedAbility('bear_form')?.cost).toBe(30);
+  });
+
+  it('charges the full 30 mana and Pins nothing once the window has closed', () => {
+    const { sim, player, target } = rushRig();
+    cast(sim, 'bear_charge');
+    ticks(sim, BRUIN_RUSH_WINDOW_SECONDS + 0.2);
+    expect(aura(player, BRUIN_RUSH_WINDOW_ID)).toBeUndefined();
+    expect(sim.resolvedAbility('cat_form')?.cost).toBe(30);
+    const parkedBefore = player.savedMana;
+    cast(sim, 'cat_form');
+    expect(inForm(player, 'form_cat')).toBe(true);
+    expect(player.savedMana).toBe(parkedBefore - 30);
+    expect(aura(target, PIN_ID)).toBeUndefined();
+  });
+
+  it('Pins the Rushed target even when the druid has retargeted', () => {
+    const { sim, player, target } = rushRig();
+    const other = addTargetMob(sim, 5, 9821);
+    sim.targetEntity(target.id);
+    cast(sim, 'bear_charge');
+    sim.targetEntity(other.id);
+    cast(sim, 'cat_form');
+    expect(aura(target, PIN_ID)).toBeDefined();
+    expect(aura(other, PIN_ID)).toBeUndefined();
+    expect(aura(player, BRUIN_RUSH_WINDOW_ID)).toBeUndefined();
+  });
+
+  it('closes the window on death and on leaving combat', () => {
+    const { sim, player, target } = rushRig();
+    const dealDamage = (sim as unknown as { dealDamage(...args: unknown[]): void }).dealDamage.bind(
+      sim,
+    );
+    cast(sim, 'bear_charge');
+    expect(aura(player, BRUIN_RUSH_WINDOW_ID)).toBeDefined();
+    // Leaving combat: the Rush target dies, the hate table empties, and the
+    // combat timer runs out; the engaged pass then closes the window.
+    dealDamage(player, target, target.hp + 1, false, 'physical', null, 'hit');
+    expect(target.dead).toBe(true);
+    player.autoAttack = false;
+    player.inCombat = false;
+    player.combatTimer = 99;
+    sim.tick();
+    expect(player.inCombat).toBe(false);
+    expect(aura(player, BRUIN_RUSH_WINDOW_ID)).toBeUndefined();
+
+    const second = addTargetMob(sim, 12, 9822);
+    player.cooldowns.delete('bear_charge');
+    cast(sim, 'bear_charge');
+    expect(aura(player, BRUIN_RUSH_WINDOW_ID)?.value).toBe(second.id);
+    dealDamage(null, player, player.hp + 1, false, 'physical', null, 'hit');
+    expect(player.dead).toBe(true);
+    expect(aura(player, BRUIN_RUSH_WINDOW_ID)).toBeUndefined();
+  });
+
+  it('applies the same no-ladder rule as every other slow, so a repeat Pin is never diminished', () => {
+    const { sim, player, target } = rushRig();
+    cast(sim, 'bear_charge');
+    cast(sim, 'cat_form');
+    expect(aura(target, PIN_ID)?.duration).toBe(PIN_DURATION);
+    dropAura(target, PIN_ID);
+    player.cooldowns.delete('bear_charge');
+    cast(sim, 'bear_form');
+    cast(sim, 'bear_charge');
+    cast(sim, 'cat_form');
+    expect(aura(target, PIN_ID)?.duration).toBe(PIN_DURATION);
+    // Hobbling Cut's slow aura is the reference: same kind, no DR category.
+    expect(ABILITIES.hamstring.effects.some((e) => e.type === 'slow')).toBe(true);
   });
 });

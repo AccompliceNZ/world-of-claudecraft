@@ -3442,6 +3442,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': 'El daño no puede interrumpir ni retrasar tus lanzamientos',
   'hudChrome.auraEffect.cooldownCap':
     'Has usado {used} de {cap} s de reducción de reutilización en esta ventana',
+  'hudChrome.auraEffect.bruinRushWindow': 'La Forma de lobo no cuesta maná y sujeta al objetivo de tu Embestida de Bruin, ralentizándolo un {pct}% durante {sec} s',
   'hudChrome.auraEffect.funeralHarvestLock':
     'Cosecha funeraria aún no puede crear otro fragmento de alma',
   'hudChrome.auraEffect.leadenHexLock':
@@ -7134,7 +7135,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
     'Somete a un Wraithborn a tu voluntad: un demonio de élite que descarga un fuerte daño de las Sombras desde lejos. Un largo tiempo de reutilización refrena su poder devastador. Invocar un nuevo demonio descarta el actual. Solo puedes tener un demonio a la vez.',
   'entities.abilities.bear_charge.name': 'Embestida de Bruin',
   'entities.abilities.bear_charge.description':
-    'Embiste a un enemigo, generando 9 de furia y aturdiéndolo durante 1 s. Alcance de 7 a 23 m. Solo en forma de Bruin.',
+    'Embiste a un enemigo, generando 9 de furia y aturdiéndolo durante 1 s. Durante los 3 s siguientes, la Forma de lobo es gratuita y sujeta al objetivo, ralentizándolo un 50% durante 4 s. Alcance de 7 a 23 m. Solo en forma de Bruin.',
   'entities.abilities.demoralizing_roar.name': 'Rugido Cobarde',
   'entities.abilities.demoralizing_roar.description':
     'Desmoraliza a los enemigos cercanos, reduciendo su poder de ataque en 20 durante 20 s. Solo en forma de Bruin.',

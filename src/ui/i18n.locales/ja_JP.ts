@@ -3876,7 +3876,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
     'レイスボーンを意のままに束縛します。遠方から強力なシャドウダメージを降らせるエリート悪魔です。長い再使用時間がその破壊的な力を制限します。新たな悪魔を召喚すると現在の悪魔は解放されます。悪魔は一度に1体しか従えられません。',
   'entities.abilities.bear_charge.name': 'ブルーインラッシュ',
   'entities.abilities.bear_charge.description':
-    '敵に突進して激怒を9獲得し、1秒間スタンさせる。射程7～23メートル。ブルーインフォーム時のみ使用可能。',
+    '敵に突進して激怒を9獲得し、1秒間スタンさせる。その後3秒間、ウルフフォームは無料になり、対象を押さえ込んで4秒間移動速度を50%低下させる。射程7～23メートル。ブルーインフォーム時のみ使用可能。',
   'entities.abilities.demoralizing_roar.name': '臆病の咆哮',
   'entities.abilities.demoralizing_roar.description':
     '周囲の敵を萎縮させ、20秒間その攻撃力を20低下させる。ブルーインフォーム時のみ使用可能。',
@@ -15305,6 +15305,7 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': 'ダメージで詠唱が中断または遅延しない',
   'hudChrome.auraEffect.cauterizeFatigue': 'コーテライズは次の致死ダメージを防げない',
   'hudChrome.auraEffect.cooldownCap': 'この時間枠でクールダウン短縮を{used}/{cap}秒使用済み',
+  'hudChrome.auraEffect.bruinRushWindow': 'ウルフフォームのマナ消費がなくなり、ブルーインラッシュの対象を押さえ込んで{sec}秒間移動速度を{pct}%低下させる',
   'hudChrome.auraEffect.dawnsWrath': '制裁の鎚: HP不問 · +1回 · CD0 · ダメージ+{pct}%',
   'hudChrome.auraEffect.desolation':
     '残り{charges}チャージ：次のカオス・ボルトの詠唱が{castPct}%短縮、または次のレイン・オブ・ファイアが即着弾する',

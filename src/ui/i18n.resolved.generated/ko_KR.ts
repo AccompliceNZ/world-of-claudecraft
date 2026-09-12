@@ -3038,6 +3038,7 @@ export const ko_KR: EnTranslations = {
       "elementalConvergencePrimed": "다음에 다른 원소 계열 주문을 시전하면 원소 융합이 발동합니다",
       "hunterFerocity": "무리의 흉포함 {stacks}중첩: 야수가 입히는 피해가 {pct}% 증가합니다",
       "cooldownCap": "이 구간에서 재사용 대기시간 감소 {used}/{cap}초를 사용했습니다",
+      "bruinRushWindow": "늑대 변신이 마나를 소모하지 않으며 큰곰 돌진 대상을 고정하여 {sec}초 동안 이동 속도를 {pct}% 감소시킵니다",
       "funeralHarvestLock": "장례 수확이 아직 다음 영혼 조각을 생성할 수 없습니다",
       "leadenHexLock": "납빛 주술이 아직 이 대상을 다시 이동 불가로 만들 수 없습니다",
       "forbiddenReflectionReady": "다음 적용 가능한 흑마법사 재사용 기술을 다시 사용할 수 있습니다",
@@ -12699,7 +12700,7 @@ export const ko_KR: EnTranslations = {
       },
       "bear_charge": {
         "name": "큰곰 돌진",
-        "description": "적에게 돌진하여 분노 9를 생성하고 1초 동안 기절시킵니다. 사거리 8-25yd. 큰곰 변신 상태에서만 사용 가능."
+        "description": "적에게 돌진하여 분노 9를 생성하고 1초 동안 기절시킵니다. 이후 3초 동안 늑대 변신은 무료이며 대상을 고정하여 4초 동안 이동 속도를 50% 감소시킵니다. 사거리 8-25yd. 큰곰 변신 상태에서만 사용 가능."
       },
       "demoralizing_roar": {
         "name": "비겁한 포효",

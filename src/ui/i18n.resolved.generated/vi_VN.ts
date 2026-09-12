@@ -3038,6 +3038,7 @@ export const vi_VN: EnTranslations = {
       "elementalConvergencePrimed": "Phép tiếp theo của bạn từ trường nguyên tố khác sẽ ban Hội Tụ Nguyên Tố",
       "hunterFerocity": "{stacks} Hung Tính Bầy Đàn: thú nuôi của bạn gây thêm {pct}% sát thương",
       "cooldownCap": "{used} trên {cap} giây giảm thời gian hồi chiêu đã dùng trong khung này",
+      "bruinRushWindow": "Hình Sói không tốn mana và ghim mục tiêu Cú Lao Bruin của bạn, làm chậm nó {pct}% trong {sec} giây",
       "funeralHarvestLock": "Thu Hoạch Tang Lễ chưa thể tạo thêm Mảnh Linh Hồn",
       "leadenHexLock": "Bùa Trì Trệ chưa thể trói mục tiêu này lại",
       "forbiddenReflectionReady": "Kỹ năng hồi chiêu Thuật Sĩ Hắc Ám hợp lệ tiếp theo của bạn có thể được thi triển lại",
@@ -12699,7 +12700,7 @@ export const vi_VN: EnTranslations = {
       },
       "bear_charge": {
         "name": "Cú Lao Bruin",
-        "description": "Lao vào kẻ địch, tạo 9 nộ khí và làm choáng nó trong 1 giây. Tầm 8-25 thước. Chỉ dùng được ở Bruin Form."
+        "description": "Lao vào kẻ địch, tạo 9 nộ khí và làm choáng nó trong 1 giây. Trong 3 giây sau đó, Hình Sói miễn phí và ghim mục tiêu, làm chậm nó 50% trong 4 giây. Tầm 8-25 thước. Chỉ dùng được ở Bruin Form."
       },
       "demoralizing_roar": {
         "name": "Tiếng Gầm Khiếp Đảm",

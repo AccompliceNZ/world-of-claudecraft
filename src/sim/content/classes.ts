@@ -6408,7 +6408,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresForm: 'bear',
     effects: [{ type: 'charge' }, { type: 'stun', duration: 1 }],
     description:
-      'Rush an enemy, generating 9 rage and stunning it for 1 sec. 8-25 yd range. Bruin Form only.',
+      'Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, Wolf Form is free and Pins the target, slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only.',
   },
   maul: {
     id: 'maul',

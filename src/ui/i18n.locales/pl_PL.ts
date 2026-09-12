@@ -5336,7 +5336,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Okrzyk, który zwiększa moc ataku wszystkich członków drużyny o {buff}% na 30 min.',
   'entities.abilities.battle_shout.name': 'Żelazny ryk',
   'entities.abilities.bear_charge.description':
-    'Szarżuj na wroga, generując 9 wściekłości i ogłuszając go na 1 sek. Zasięg 8-25 jardów. Tylko w postaci Bruina.',
+    'Szarżuj na wroga, generując 9 wściekłości i ogłuszając go na 1 sek. Przez 3 sek. potem Postać wilka jest darmowa i przygważdża cel, spowalniając go o 50% na 4 sek. Zasięg 8-25 jardów. Tylko w postaci Bruina.',
   'entities.abilities.bear_charge.name': 'Szarża Bruina',
   'entities.abilities.bear_form.description':
     'Zmień postać w niedźwiedzia: pancerz +110%, maksymalne zdrowie +30%, znacznie zwiększona moc ataku, twoje ataki budują wściekłość i generują 30% więcej zagrożenia. Rzuć ponownie, aby wrócić do postaci rzucającego.',
@@ -14016,6 +14016,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Kauteryzacja nie może ponownie zapobiec śmiertelnemu trafieniu',
   'hudChrome.auraEffect.cooldownCap':
     'Wykorzystano {used} z {cap} s skrócenia czasu odnowienia w tym oknie',
+  'hudChrome.auraEffect.bruinRushWindow': 'Postać wilka nie kosztuje many i przygważdża cel twojej Szarży Bruina, spowalniając go o {pct}% na {sec} sek.',
   'hudChrome.auraEffect.desolation':
     'Pozostało {charges} ładunków: twój następny Pocisk Ruiny rzuca się o {castPct}% szybciej albo twój następny Deszcz ognia trafia natychmiast',
   'hudChrome.auraEffect.duskfireClaim': 'Śmierć celu przyznaje {value} Ruiny',

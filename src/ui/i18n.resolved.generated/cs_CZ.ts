@@ -3038,6 +3038,7 @@ export const cs_CZ: EnTranslations = {
       "elementalConvergencePrimed": "Tvoje příští kouzlo z jiné živlové školy udělí Živlovou konvergenci",
       "hunterFerocity": "{stacks} Zuřivosti smečky: tvůj společník způsobuje o {pct}% větší poškození",
       "cooldownCap": "Využito {used} z {cap} s snížení doby obnovy v tomto okně",
+      "bruinRushWindow": "Vlčí podoba nestojí manu a přišpendlí cíl tvého Medvědího výpadu, čímž ho zpomalí o {pct} % na {sec} s",
       "funeralHarvestLock": "Funeral Harvest zatím nemůže vytvořit další Úlomek duše",
       "leadenHexLock": "Olověná kletba tento cíl zatím nemůže znovu zakořenit",
       "forbiddenReflectionReady": "Tvou příští způsobilou schopnost černokněžníka lze seslat znovu i mimo dobu obnovy",
@@ -12699,7 +12700,7 @@ export const cs_CZ: EnTranslations = {
       },
       "bear_charge": {
         "name": "Medvědí výpad",
-        "description": "Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Dosah 8-25 yardů. Pouze v medvědí podobě."
+        "description": "Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Po dobu 3 s poté je Vlčí podoba zdarma a přišpendlí cíl, čímž ho zpomalí o 50 % na 4 s. Dosah 8-25 yardů. Pouze v medvědí podobě."
       },
       "demoralizing_roar": {
         "name": "Zbabělý řev",

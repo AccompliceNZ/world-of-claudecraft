@@ -3038,6 +3038,7 @@ export const tr_TR: EnTranslations = {
       "elementalConvergencePrimed": "Diğer element okulundan bir sonraki büyün Element Yakınsaması kazandırır",
       "hunterFerocity": "{stacks} Sürü Vahşeti: evcil hayvanın {pct}% daha fazla hasar verir",
       "cooldownCap": "Bu pencerede {used} / {cap} sn bekleme süresi azaltımı kullanıldı",
+      "bruinRushWindow": "Kurt Formu mana harcamaz ve Bruin Hücumu hedefini sabitleyerek {sec} saniye boyunca %{pct} yavaşlatır",
       "funeralHarvestLock": "Cenaze Hasadı henüz başka bir Ruh Parçası oluşturamaz",
       "leadenHexLock": "Kurşun Büyüsü bu hedefi henüz yeniden kökleyemez",
       "forbiddenReflectionReady": "Uygun bir sonraki Karabüyücü bekleme süren yeniden kullanılabilir",
@@ -12699,7 +12700,7 @@ export const tr_TR: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin Hücumu",
-        "description": "Bir düşmana hücum ederek 9 öfke üretir ve onu 1 saniye sersemletir. 8-25 yarda menzil. Yalnızca Bruin Formu."
+        "description": "Bir düşmana hücum ederek 9 öfke üretir ve onu 1 saniye sersemletir. Sonraki 3 saniye boyunca Kurt Formu ücretsizdir ve hedefi sabitleyerek 4 saniye boyunca %50 yavaşlatır. 8-25 yarda menzil. Yalnızca Bruin Formu."
       },
       "demoralizing_roar": {
         "name": "Sindiren Kükreme",

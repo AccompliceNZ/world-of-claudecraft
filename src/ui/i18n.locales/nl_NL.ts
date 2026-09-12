@@ -5399,7 +5399,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Een kreet die de aanvalskracht van alle groepsleden met {buff}% verhoogt gedurende 30 min.',
   'entities.abilities.battle_shout.name': 'IJzeren Gebrul',
   'entities.abilities.bear_charge.description':
-    'Storm op een vijand af, genereer 9 woede en verdoof hem gedurende 1 sec. Bereik 8-25 m. Alleen in Bruingedaante.',
+    'Storm op een vijand af, genereer 9 woede en verdoof hem gedurende 1 sec. Gedurende 3 sec daarna is Wolfsgedaante gratis en pint het doelwit vast, wat het 4 sec lang 50% vertraagt. Bereik 8-25 m. Alleen in Bruingedaante.',
   'entities.abilities.bear_charge.name': 'Bruin-stormloop',
   'entities.abilities.bear_form.description':
     'Verander in een beer: pantser +110%, maximale gezondheid +30%, sterk verhoogde aanvalskracht, je aanvallen bouwen woede op en genereren 30% meer dreiging. Spreek opnieuw om terug te keren naar je oorspronkelijke gedaante.',
@@ -14065,6 +14065,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Cauteriseren kan geen volgende dodelijke treffer voorkomen',
   'hudChrome.auraEffect.cooldownCap':
     '{used} van {cap} sec afkoeltijdvermindering gebruikt in dit venster',
+  'hudChrome.auraEffect.bruinRushWindow': 'Wolfsgedaante kost geen mana en pint het doelwit van uw Bruin-stormloop vast, wat het {sec} sec lang {pct}% vertraagt',
   'hudChrome.auraEffect.desolation':
     '{charges} ladingen: je volgende Ruinenschicht wordt {castPct}% sneller gespreukt, of je volgende Vuurregen valt onmiddellijk neer',
   'hudChrome.auraEffect.duskfireClaim': 'Dood kent {value} Ruïne toe',

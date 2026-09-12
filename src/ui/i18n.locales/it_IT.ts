@@ -7080,7 +7080,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
     "Vincola un Wraithborn al tuo volere: un demone d'élite che scaglia da lontano ingenti danni d'Ombra. Un lungo tempo di recupero ne limita la potenza devastante. Evocare un nuovo demone congeda quello attuale. Puoi avere un solo demone alla volta.",
   'entities.abilities.bear_charge.name': 'Carica di Bruin',
   'entities.abilities.bear_charge.description':
-    'Carica un nemico, generando 9 punti rabbia e stordendolo per 1 sec. Gittata di 7-23 metri. Solo in Forma di Bruin.',
+    'Carica un nemico, generando 9 punti rabbia e stordendolo per 1 sec. Per i 3 sec successivi, la Forma del Lupo è gratuita e blocca il bersaglio, rallentandolo del 50% per 4 sec. Gittata di 7-23 metri. Solo in Forma di Bruin.',
   'entities.abilities.demoralizing_roar.name': 'Ruggito Codardo',
   'entities.abilities.demoralizing_roar.description':
     "Demoralizza i nemici vicini, riducendone la potenza d'attacco di 20 per 20 sec. Solo in Forma di Bruin.",
@@ -14779,6 +14779,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
     'La Cauterizzazione non può prevenire un altro colpo letale',
   'hudChrome.auraEffect.cooldownCap':
     '{used} di {cap} sec di riduzione del tempo di recupero usati in questa finestra',
+  'hudChrome.auraEffect.bruinRushWindow': 'La Forma del Lupo non costa mana e blocca il bersaglio della vostra Carica di Bruin, rallentandolo del {pct}% per {sec} sec',
   'hudChrome.auraEffect.desolation':
     '{charges} cariche: il tuo prossimo Dardo della Rovina si lancia il {castPct}% più veloce, oppure la tua prossima Pioggia di Fuoco atterra immediatamente',
   'hudChrome.auraEffect.duskfireClaim': 'La morte concede {value} Rovina',

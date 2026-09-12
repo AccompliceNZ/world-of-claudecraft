@@ -7014,7 +7014,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
     'Vincula um Wraithborn à sua vontade, um demônio de elite que faz chover pesado dano Sombrio à distância. Uma longa recarga limita seu poder devastador. Invocar um novo demônio dispensa o atual. Você só pode ter um demônio por vez.',
   'entities.abilities.bear_charge.name': 'Investida de Bruin',
   'entities.abilities.bear_charge.description':
-    'Investe contra um inimigo, gera 9 de raiva e o atordoa por 1 s. Alcance de 8 a 25 m. Apenas Forma de Bruin.',
+    'Investe contra um inimigo, gera 9 de raiva e o atordoa por 1 s. Durante os 3 s seguintes, a Forma de Lobo é gratuita e fixa o alvo, reduzindo sua velocidade em 50% por 4 s. Alcance de 8 a 25 m. Apenas Forma de Bruin.',
   'entities.abilities.demoralizing_roar.name': 'Rugido Covarde',
   'entities.abilities.demoralizing_roar.description':
     'Desmoraliza os inimigos próximos, reduzindo seu poder de ataque em 20 por 20 s. Apenas Forma de Bruin.',
@@ -14695,6 +14695,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': 'A conjuração não pode ser interrompida ou atrasada por dano',
   'hudChrome.auraEffect.cauterizeFatigue': 'Cauterizar não pode evitar outro acerto letal',
   'hudChrome.auraEffect.cooldownCap': '{used} de {cap} s de redução de recarga usados nesta janela',
+  'hudChrome.auraEffect.bruinRushWindow': 'A Forma de Lobo não custa mana e fixa o alvo da vossa Investida de Bruin, reduzindo sua velocidade em {pct}% por {sec} s',
   'hudChrome.auraEffect.desolation':
     '{charges} cargas: sua próxima Seta da Ruína conjura {castPct}% mais rápido ou sua próxima Chuva de Fogo cai imediatamente',
   'hudChrome.auraEffect.duskfireClaim': 'A morte concede {value} de Ruína',

@@ -3038,6 +3038,7 @@ export const de_DE: EnTranslations = {
       "elementalConvergencePrimed": "Dein nächster Zauber der anderen Elementarschule gewährt Elementarkonvergenz",
       "hunterFerocity": "{stacks} Rudelwildheit: Euer Begleiter verursacht {pct}% mehr Schaden",
       "cooldownCap": "{used} von {cap} Sek. Abklingzeit-Verkürzung in diesem Fenster verbraucht",
+      "bruinRushWindow": "Die Wolfsgestalt kostet kein Mana und nagelt das Ziel eures Bruin-Ansturms fest, was es {sec} Sek. lang um {pct}% verlangsamt",
       "funeralHarvestLock": "Funeral Harvest kann noch kein weiteres Seelenfragment erschaffen",
       "leadenHexLock": "Bleierner Fluch kann dieses Ziel noch nicht erneut verwurzeln",
       "forbiddenReflectionReady": "Eure nächste berechtigte Hexenmeister-Fähigkeit mit Abklingzeit kann erneut gewirkt werden",
@@ -12699,7 +12700,7 @@ export const de_DE: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin-Ansturm",
-        "description": "Stürmt auf einen Gegner zu, erzeugt 9 Wut und betäubt ihn für 1 Sek. Reichweite 8-25 m. Nur in Bruin Form."
+        "description": "Stürmt auf einen Gegner zu, erzeugt 9 Wut und betäubt ihn für 1 Sek. 3 Sek. lang danach ist die Wolfsgestalt kostenlos und nagelt das Ziel fest, was es 4 Sek. lang um 50% verlangsamt. Reichweite 8-25 m. Nur in Bruin Form."
       },
       "demoralizing_roar": {
         "name": "Feiges Gebrüll",

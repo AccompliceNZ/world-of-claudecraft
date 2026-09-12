@@ -5322,7 +5322,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Teriakan yang meningkatkan daya serang semua anggota kelompok sebesar {buff}% selama 30 menit.',
   'entities.abilities.battle_shout.name': 'Raungan Besi',
   'entities.abilities.bear_charge.description':
-    'Menerjang musuh, menghasilkan 9 amarah dan menyetrumnya selama 1 detik. Jangkauan 8-25 yard. Hanya dalam Wujud Bruin.',
+    'Menerjang musuh, menghasilkan 9 amarah dan menyetrumnya selama 1 detik. Selama 3 detik setelahnya, Wujud Serigala gratis dan menjepit target, memperlambatnya 50% selama 4 detik. Jangkauan 8-25 yard. Hanya dalam Wujud Bruin.',
   'entities.abilities.bear_charge.name': 'Terjangan Bruin',
   'entities.abilities.bear_form.description':
     'Berubah wujud menjadi beruang: zirah +110%, kesehatan maksimum +30%, daya serang sangat meningkat, seranganmu membangun amarah dan menghasilkan 30% lebih banyak ancaman. Rapal lagi untuk kembali ke wujud perapal.',
@@ -14102,6 +14102,7 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Kauterisasi tidak dapat mencegah hantaman mematikan lainnya',
   'hudChrome.auraEffect.cooldownCap':
     '{used} dari {cap} dtk pengurangan jeda terpakai dalam jendela ini',
+  'hudChrome.auraEffect.bruinRushWindow': 'Wujud Serigala tidak memakai mana dan menjepit target Terjangan Bruin-mu, memperlambatnya {pct}% selama {sec} dtk',
   'hudChrome.auraEffect.desolation':
     '{charges} muatan: Baut Reruntuhanmu berikutnya dirapal {castPct}% lebih cepat atau Hujan Apimu berikutnya mendarat seketika',
   'hudChrome.auraEffect.duskfireClaim': 'Kematian memberikan {value} Wrack',

@@ -3845,7 +3845,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
     '망령태생을 당신의 의지에 결속합니다. 망령태생은 멀리서 강력한 암흑 피해를 퍼붓는 정예 악마입니다. 긴 재사용 대기시간이 그 파괴적인 힘을 제한합니다. 새로운 악마를 소환하면 현재 악마는 사라집니다. 한 번에 하나의 악마만 부릴 수 있습니다.',
   'entities.abilities.bear_charge.name': '큰곰 돌진',
   'entities.abilities.bear_charge.description':
-    '적에게 돌진하여 분노 9를 생성하고 1초 동안 기절시킵니다. 사거리 8-25yd. 큰곰 변신 상태에서만 사용 가능.',
+    '적에게 돌진하여 분노 9를 생성하고 1초 동안 기절시킵니다. 이후 3초 동안 늑대 변신은 무료이며 대상을 고정하여 4초 동안 이동 속도를 50% 감소시킵니다. 사거리 8-25yd. 큰곰 변신 상태에서만 사용 가능.',
   'entities.abilities.demoralizing_roar.name': '비겁한 포효',
   'entities.abilities.demoralizing_roar.description':
     '주변의 적들을 위축시켜 20초 동안 그들의 전투력을 20만큼 감소시킵니다. 큰곰 변신 상태에서만 사용 가능.',
@@ -15275,6 +15275,7 @@ export const ko_KR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.cauterizeFatigue': '소작이 다음 치명타를 막을 수 없습니다',
   'hudChrome.auraEffect.cooldownCap':
     '이 구간에서 재사용 대기시간 감소 {used}/{cap}초를 사용했습니다',
+  'hudChrome.auraEffect.bruinRushWindow': '늑대 변신이 마나를 소모하지 않으며 큰곰 돌진 대상을 고정하여 {sec}초 동안 이동 속도를 {pct}% 감소시킵니다',
   'hudChrome.auraEffect.dawnsWrath': '천벌: 체력 무관 · +1회 · 재사용 0 · 피해 +{pct}%',
   'hudChrome.auraEffect.desolation':
     '충전 {charges}회 남음: 다음 혼돈의 화살 시전이 {castPct}% 빨라지거나 불의 비가 즉시 떨어집니다',

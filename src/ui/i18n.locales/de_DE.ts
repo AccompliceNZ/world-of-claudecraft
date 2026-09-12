@@ -7100,7 +7100,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
     'Bindet einen Wraithborn an Euren Willen, einen Elitedämon, der aus der Ferne schweren Schattenschaden niederregnen lässt. Eine lange Abklingzeit zügelt seine verheerende Kraft. Das Beschwören eines neuen Dämons entlässt Euren aktuellen. Ihr könnt nur einen Dämon zur Zeit haben.',
   'entities.abilities.bear_charge.name': 'Bruin-Ansturm',
   'entities.abilities.bear_charge.description':
-    'Stürmt auf einen Gegner zu, erzeugt 9 Wut und betäubt ihn für 1 Sek. Reichweite 8-25 m. Nur in Bruin Form.',
+    'Stürmt auf einen Gegner zu, erzeugt 9 Wut und betäubt ihn für 1 Sek. 3 Sek. lang danach ist die Wolfsgestalt kostenlos und nagelt das Ziel fest, was es 4 Sek. lang um 50% verlangsamt. Reichweite 8-25 m. Nur in Bruin Form.',
   'entities.abilities.demoralizing_roar.name': 'Feiges Gebrüll',
   'entities.abilities.demoralizing_roar.description':
     'Demoralisiert nahe Gegner und senkt ihre Angriffskraft 20 Sek. lang um 20. Nur in Bruin Form.',
@@ -14327,6 +14327,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
     'Kauterisieren kann keinen weiteren tödlichen Treffer verhindern',
   'hudChrome.auraEffect.cooldownCap':
     '{used} von {cap} Sek. Abklingzeit-Verkürzung in diesem Fenster verbraucht',
+  'hudChrome.auraEffect.bruinRushWindow': 'Die Wolfsgestalt kostet kein Mana und nagelt das Ziel eures Bruin-Ansturms fest, was es {sec} Sek. lang um {pct}% verlangsamt',
   'hudChrome.auraEffect.desolation':
     '{charges} Aufladungen: Euer nächster Verderbensblitz wirkt {castPct}% schneller, oder Euer nächster Feuerregen trifft sofort',
   'hudChrome.auraEffect.duskfireClaim': 'Tod gewährt {value} Verderben',

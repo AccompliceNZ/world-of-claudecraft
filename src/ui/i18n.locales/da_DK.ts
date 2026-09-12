@@ -5152,7 +5152,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Et råb, der øger angrebskraften hos alle gruppemedlemmer med {buff}% i 30 min.',
   'entities.abilities.battle_shout.name': 'Jernbrøl',
   'entities.abilities.bear_charge.description':
-    'Storm mod en fjende, generér 9 raseri og bedøv den i 1 sek. 8-25 m rækkevidde. Kun i Bruin-form.',
+    'Storm mod en fjende, generér 9 raseri og bedøv den i 1 sek. I 3 sek. derefter er Ulveform gratis og fastholder målet, hvilket nedsætter dets hastighed med 50% i 4 sek. 8-25 m rækkevidde. Kun i Bruin-form.',
   'entities.abilities.bear_charge.name': 'Bruin-storm',
   'entities.abilities.bear_form.description':
     'Forvandl dig til en bjørn: rustning +110%, maksimalt helbred +30%, stærkt øget angrebskraft, dine angreb opbygger raseri og genererer 30% mere trussel. Kast igen for at vende tilbage til besværgerform.',
@@ -13881,6 +13881,7 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Kauterisering kan ikke forhindre endnu et dræbende slag',
   'hudChrome.auraEffect.cooldownCap':
     '{used} af {cap} sek. nedkølingsreduktion brugt i dette vindue',
+  'hudChrome.auraEffect.bruinRushWindow': 'Ulveform koster ingen mana og fastholder målet for jeres Bruin-storm, hvilket nedsætter dets hastighed med {pct}% i {sec} sek.',
   'hudChrome.auraEffect.desolation':
     '{charges} ladninger: dit næste Undergangslyn kastes {castPct}% hurtigere, eller din næste Ildregn lander øjeblikkeligt',
   'hudChrome.auraEffect.duskfireClaim': 'Død giver {value} Wrack',

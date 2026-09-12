@@ -5272,7 +5272,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Tüm grup üyelerinin saldırı gücünü 30 dakika boyunca %{buff} artıran bir nara.',
   'entities.abilities.battle_shout.name': 'Demir Nara',
   'entities.abilities.bear_charge.description':
-    'Bir düşmana hücum ederek 9 öfke üretir ve onu 1 saniye sersemletir. 8-25 yarda menzil. Yalnızca Bruin Formu.',
+    'Bir düşmana hücum ederek 9 öfke üretir ve onu 1 saniye sersemletir. Sonraki 3 saniye boyunca Kurt Formu ücretsizdir ve hedefi sabitleyerek 4 saniye boyunca %50 yavaşlatır. 8-25 yarda menzil. Yalnızca Bruin Formu.',
   'entities.abilities.bear_charge.name': 'Bruin Hücumu',
   'entities.abilities.bear_form.description':
     'Bir ayıya dönüş: zırh +%110, azami sağlık +%30, saldırı gücü büyük ölçüde artar, saldırıların öfke biriktirir ve %30 daha fazla tehdit üretir. Büyücü formuna dönmek için tekrar kullan.',
@@ -13945,6 +13945,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.cauterizeFatigue': 'Dağlama başka bir öldürücü darbeyi henüz engelleyemez',
   'hudChrome.auraEffect.cooldownCap':
     'Bu pencerede {used} / {cap} sn bekleme süresi azaltımı kullanıldı',
+  'hudChrome.auraEffect.bruinRushWindow': 'Kurt Formu mana harcamaz ve Bruin Hücumu hedefini sabitleyerek {sec} saniye boyunca %{pct} yavaşlatır',
   'hudChrome.auraEffect.desolation':
     '{charges} yük: bir sonraki Yıkım Okun {castPct}% daha hızlı okunur ya da bir sonraki Ateş Yağmurun anında iner',
   'hudChrome.auraEffect.duskfireClaim': '{value} Harabiyet kazandıran ölüm',

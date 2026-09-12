@@ -4748,7 +4748,7 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.charge.description':
     'Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Dosah 8-25 yardů.',
   'entities.abilities.bear_charge.description':
-    'Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Dosah 8-25 yardů. Pouze v medvědí podobě.',
+    'Vyrazí k nepříteli, vygeneruje 9 vzteku a omráčí ho na 1 s. Po dobu 3 s poté je Vlčí podoba zdarma a přišpendlí cíl, čímž ho zpomalí o 50 % na 4 s. Dosah 8-25 yardů. Pouze v medvědí podobě.',
   'wallet.appConnected': 'Aplikace připojena',
   'wallet.balanceAmount': '{amount} $WOC',
   'wallet.balanceAria': 'Ověřený zůstatek peněženky Solana: {balance}',
@@ -13830,6 +13830,7 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': 'Sesílání nelze přerušit ani zpozdit poškozením',
   'hudChrome.auraEffect.cauterizeFatigue': 'Vypálení nemůže zabránit dalšímu smrtelnému zásahu',
   'hudChrome.auraEffect.cooldownCap': 'Využito {used} z {cap} s snížení doby obnovy v tomto okně',
+  'hudChrome.auraEffect.bruinRushWindow': 'Vlčí podoba nestojí manu a přišpendlí cíl tvého Medvědího výpadu, čímž ho zpomalí o {pct} % na {sec} s',
   'hudChrome.auraEffect.desolation':
     'Zbývá {charges} nabití: tvůj příští Zkázný šíp se sešle o {castPct} % rychleji, nebo tvůj příští Ohnivý déšť dopadne okamžitě',
   'hudChrome.auraEffect.duskfireClaim': 'Smrt uděluje {value} Zkázy',

@@ -3038,6 +3038,7 @@ export const id_ID: EnTranslations = {
       "elementalConvergencePrimed": "Mantra berikutmu dari sekolah elemen lain memberikan Konvergensi Elemen",
       "hunterFerocity": "{stacks} Keganasan Kawanan: hewan peliharaanmu memberi {pct}% lebih banyak kerusakan",
       "cooldownCap": "{used} dari {cap} dtk pengurangan jeda terpakai dalam jendela ini",
+      "bruinRushWindow": "Wujud Serigala tidak memakai mana dan menjepit target Terjangan Bruin-mu, memperlambatnya {pct}% selama {sec} dtk",
       "funeralHarvestLock": "Funeral Harvest belum bisa menciptakan Serpihan Jiwa lagi",
       "leadenHexLock": "Kutuk Timah belum bisa mengakar target ini lagi",
       "forbiddenReflectionReady": "Jeda Penyihir Iblis berikutnya yang memenuhi syarat dapat dirapal kembali",
@@ -12699,7 +12700,7 @@ export const id_ID: EnTranslations = {
       },
       "bear_charge": {
         "name": "Terjangan Bruin",
-        "description": "Menerjang musuh, menghasilkan 9 amarah dan menyetrumnya selama 1 detik. Jangkauan 8-25 yard. Hanya dalam Wujud Bruin."
+        "description": "Menerjang musuh, menghasilkan 9 amarah dan menyetrumnya selama 1 detik. Selama 3 detik setelahnya, Wujud Serigala gratis dan menjepit target, memperlambatnya 50% selama 4 detik. Jangkauan 8-25 yard. Hanya dalam Wujud Bruin."
       },
       "demoralizing_roar": {
         "name": "Auman Pengecut",

@@ -5148,7 +5148,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Ett rop som ökar attackkraften hos alla gruppmedlemmar med {buff}% i 30 min.',
   'entities.abilities.battle_shout.name': 'Järnvrål',
   'entities.abilities.bear_charge.description':
-    'Storma en fiende, generera 9 raseri och bedöva den i 1 sek. 8-25 m räckvidd. Endast i Bruinform.',
+    'Storma en fiende, generera 9 raseri och bedöva den i 1 sek. I 3 sek därefter är Vargform gratis och håller fast målet, vilket saktar ner det med 50% i 4 sek. 8-25 m räckvidd. Endast i Bruinform.',
   'entities.abilities.bear_charge.name': 'Bruinrusning',
   'entities.abilities.bear_form.description':
     'Skiftar gestalt till en björn: rustning +110 %, maximal hälsa +30 %, kraftigt ökad attackkraft, dina attacker bygger raseri och genererar 30 % mer hot. Kasta igen för att återgå till besvärjarform.',
@@ -13912,6 +13912,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.cauterizeFatigue': 'Bränning kan inte förhindra ännu ett dödligt slag',
   'hudChrome.auraEffect.cooldownCap':
     '{used} av {cap} sek nedkylningsreduktion använd i detta fönster',
+  'hudChrome.auraEffect.bruinRushWindow': 'Vargform kostar ingen mana och håller fast målet för er Bruinrusning, vilket saktar ner det med {pct}% i {sec} sek',
   'hudChrome.auraEffect.desolation':
     '{charges} laddningar: din nästa Fördärvsbult kastas {castPct}% snabbare, eller din nästa Eldregn landar omedelbart',
   'hudChrome.auraEffect.duskfireClaim': 'Döden ger {value} Wrack',

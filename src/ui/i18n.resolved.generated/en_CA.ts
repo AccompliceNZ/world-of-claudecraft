@@ -3038,6 +3038,7 @@ export const en_CA: EnTranslations = {
       "elementalConvergencePrimed": "Your next spell from the other elemental school grants Elemental Convergence",
       "hunterFerocity": "{stacks} Pack Ferocity: your pet deals {pct}% more damage",
       "cooldownCap": "{used} of {cap} sec of cooldown reduction used in this window",
+      "bruinRushWindow": "Wolf Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec",
       "funeralHarvestLock": "Funeral Harvest cannot create another Soul Fragment yet",
       "leadenHexLock": "Leaden Hex cannot root this target again yet",
       "forbiddenReflectionReady": "Your next eligible Warlock cooldown can be cast again",
@@ -12699,7 +12700,7 @@ export const en_CA: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin Rush",
-        "description": "Charge an enemy, generating 9 rage and stunning it for 1 sec. 8-25 yd range. Bruin Form only."
+        "description": "Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, Wolf Form is free and Pins the target, slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only."
       },
       "demoralizing_roar": {
         "name": "Craven Roar",

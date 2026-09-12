@@ -3038,6 +3038,7 @@ export const pl_PL: EnTranslations = {
       "elementalConvergencePrimed": "Twój następny czar z innej szkoły żywiołu nadaje Konwergencję Żywiołów",
       "hunterFerocity": "{stacks} Zaciekłości Sfory: twój towarzysz zadaje o {pct}% więcej obrażeń",
       "cooldownCap": "Wykorzystano {used} z {cap} s skrócenia czasu odnowienia w tym oknie",
+      "bruinRushWindow": "Postać wilka nie kosztuje many i przygważdża cel twojej Szarży Bruina, spowalniając go o {pct}% na {sec} sek.",
       "funeralHarvestLock": "Funeral Harvest nie może jeszcze stworzyć kolejnego Odłamka Duszy",
       "leadenHexLock": "Ołowiana Klątwa nie może jeszcze ponownie unieruchomić tego celu",
       "forbiddenReflectionReady": "Możesz ponownie rzucić swoją następną kwalifikującą się umiejętność czarnoksiężnika, mimo że jest w odnowieniu",
@@ -12699,7 +12700,7 @@ export const pl_PL: EnTranslations = {
       },
       "bear_charge": {
         "name": "Szarża Bruina",
-        "description": "Szarżuj na wroga, generując 9 wściekłości i ogłuszając go na 1 sek. Zasięg 8-25 jardów. Tylko w postaci Bruina."
+        "description": "Szarżuj na wroga, generując 9 wściekłości i ogłuszając go na 1 sek. Przez 3 sek. potem Postać wilka jest darmowa i przygważdża cel, spowalniając go o 50% na 4 sek. Zasięg 8-25 jardów. Tylko w postaci Bruina."
       },
       "demoralizing_roar": {
         "name": "Tchórzliwy ryk",

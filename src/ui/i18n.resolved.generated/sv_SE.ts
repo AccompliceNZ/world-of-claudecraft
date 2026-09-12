@@ -3038,6 +3038,7 @@ export const sv_SE: EnTranslations = {
       "elementalConvergencePrimed": "Din nästa besvärjelse från den andra elementarskolan ger Elementär konvergens",
       "hunterFerocity": "{stacks} Flockvildhet: ditt husdjur gör {pct}% mer skada",
       "cooldownCap": "{used} av {cap} sek nedkylningsreduktion använd i detta fönster",
+      "bruinRushWindow": "Vargform kostar ingen mana och håller fast målet för er Bruinrusning, vilket saktar ner det med {pct}% i {sec} sek",
       "funeralHarvestLock": "Funeral Harvest kan inte skapa ännu ett Själfragment än",
       "leadenHexLock": "Blytung förbannelse kan inte rota fast detta mål igen än",
       "forbiddenReflectionReady": "Din nästa kvalificerade häxmästarförmåga kan kastas igen",
@@ -12699,7 +12700,7 @@ export const sv_SE: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruinrusning",
-        "description": "Storma en fiende, generera 9 raseri och bedöva den i 1 sek. 8-25 m räckvidd. Endast i Bruinform."
+        "description": "Storma en fiende, generera 9 raseri och bedöva den i 1 sek. I 3 sek därefter är Vargform gratis och håller fast målet, vilket saktar ner det med 50% i 4 sek. 8-25 m räckvidd. Endast i Bruinform."
       },
       "demoralizing_roar": {
         "name": "Fegt vrål",

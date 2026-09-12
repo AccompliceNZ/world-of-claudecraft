@@ -3038,6 +3038,7 @@ export const fr_FR: EnTranslations = {
       "elementalConvergencePrimed": "Votre prochain sort de l'autre école élémentaire accorde la Convergence élémentaire",
       "hunterFerocity": "{stacks} Férocité de meute : votre familier inflige {pct}% de dégâts en plus",
       "cooldownCap": "{used} sur {cap} s de réduction de temps de recharge utilisés dans cette fenêtre",
+      "bruinRushWindow": "La Forme de loup ne coûte aucun mana et cloue la cible de votre Ruée de Bruin, la ralentissant de {pct}% pendant {sec} s",
       "funeralHarvestLock": "Moisson funéraire ne peut pas encore créer un autre Fragment d'âme",
       "leadenHexLock": "Hex de plomb ne peut pas encore enraciner cette cible de nouveau",
       "forbiddenReflectionReady": "Votre prochain temps de recharge de Démoniste éligible peut être relancé",
@@ -12699,7 +12700,7 @@ export const fr_FR: EnTranslations = {
       },
       "bear_charge": {
         "name": "Ruée de Bruin",
-        "description": "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Portée de 8-25 m. Forme de Bruin uniquement."
+        "description": "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Pendant les 3 s qui suivent, la Forme de loup est gratuite et cloue la cible, la ralentissant de 50% pendant 4 s. Portée de 8-25 m. Forme de Bruin uniquement."
       },
       "demoralizing_roar": {
         "name": "Rugissement lâche",

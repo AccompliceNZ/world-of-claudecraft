@@ -3038,6 +3038,7 @@ export const es: EnTranslations = {
       "elementalConvergencePrimed": "Tu próximo hechizo de la otra escuela elemental otorga Convergencia Elemental",
       "hunterFerocity": "{stacks} de Ferocidad de Manada: tu mascota inflige un {pct}% más de daño",
       "cooldownCap": "Has usado {used} de {cap} s de reducción de reutilización en esta ventana",
+      "bruinRushWindow": "La Forma de lobo no cuesta maná y sujeta al objetivo de tu Embestida de Bruin, ralentizándolo un {pct}% durante {sec} s",
       "funeralHarvestLock": "Cosecha funeraria aún no puede crear otro fragmento de alma",
       "leadenHexLock": "Maleficio plomizo aún no puede volver a inmovilizar a este objetivo",
       "forbiddenReflectionReady": "Puedes volver a usar tu próxima facultad de brujo con reutilización que cumpla los requisitos",
@@ -12699,7 +12700,7 @@ export const es: EnTranslations = {
       },
       "bear_charge": {
         "name": "Embestida de Bruin",
-        "description": "Embiste a un enemigo, generando 9 de furia y aturdiéndolo durante 1 s. Alcance de 7 a 23 m. Solo en forma de Bruin."
+        "description": "Embiste a un enemigo, generando 9 de furia y aturdiéndolo durante 1 s. Durante los 3 s siguientes, la Forma de lobo es gratuita y sujeta al objetivo, ralentizándolo un 50% durante 4 s. Alcance de 7 a 23 m. Solo en forma de Bruin."
       },
       "demoralizing_roar": {
         "name": "Rugido Cobarde",

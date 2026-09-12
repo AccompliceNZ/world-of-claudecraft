@@ -4150,6 +4150,9 @@ export const hudChromeStrings = {
       'Your next spell from the other elemental school grants Elemental Convergence',
     hunterFerocity: '{stacks} Pack Ferocity: your pet deals {pct}% more damage',
     cooldownCap: '{used} of {cap} sec of cooldown reduction used in this window',
+    // wordy (M16): filled in the five non-Latin locales in this change.
+    bruinRushWindow:
+      'Wolf Form costs no mana and Pins your Bruin Rush target, slowing it by {pct}% for {sec} sec',
     funeralHarvestLock: 'Funeral Harvest cannot create another Soul Fragment yet',
     leadenHexLock: 'Leaden Hex cannot root this target again yet',
     forbiddenReflectionReady: 'Your next eligible Warlock cooldown can be cast again',

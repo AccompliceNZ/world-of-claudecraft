@@ -3038,6 +3038,7 @@ export const pt_BR: EnTranslations = {
       "elementalConvergencePrimed": "Seu próximo feitiço da outra escola elemental concede Convergência Elemental",
       "hunterFerocity": "{stacks} de Ferocidade da Matilha: seu companheiro causa {pct}% mais dano",
       "cooldownCap": "{used} de {cap} s de redução de recarga usados nesta janela",
+      "bruinRushWindow": "A Forma de Lobo não custa mana e fixa o alvo da vossa Investida de Bruin, reduzindo sua velocidade em {pct}% por {sec} s",
       "funeralHarvestLock": "Funeral Harvest ainda não pode criar outro Fragmento de Alma",
       "leadenHexLock": "Maldição Chúmbea ainda não pode enraizar este alvo novamente",
       "forbiddenReflectionReady": "Sua próxima recarga elegível de Bruxo pode ser conjurada novamente",
@@ -12699,7 +12700,7 @@ export const pt_BR: EnTranslations = {
       },
       "bear_charge": {
         "name": "Investida de Bruin",
-        "description": "Investe contra um inimigo, gera 9 de raiva e o atordoa por 1 s. Alcance de 8 a 25 m. Apenas Forma de Bruin."
+        "description": "Investe contra um inimigo, gera 9 de raiva e o atordoa por 1 s. Durante os 3 s seguintes, a Forma de Lobo é gratuita e fixa o alvo, reduzindo sua velocidade em 50% por 4 s. Alcance de 8 a 25 m. Apenas Forma de Bruin."
       },
       "demoralizing_roar": {
         "name": "Rugido Covarde",

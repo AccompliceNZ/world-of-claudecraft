@@ -3038,6 +3038,7 @@ export const nl_NL: EnTranslations = {
       "elementalConvergencePrimed": "Je volgende spreuk van de andere elementaire school verleent Elementaire Convergentie",
       "hunterFerocity": "{stacks} Roedelfelheid: je huisdier richt {pct}% meer schade aan",
       "cooldownCap": "{used} van {cap} sec afkoeltijdvermindering gebruikt in dit venster",
+      "bruinRushWindow": "Wolfsgedaante kost geen mana en pint het doelwit van uw Bruin-stormloop vast, wat het {sec} sec lang {pct}% vertraagt",
       "funeralHarvestLock": "Funeral Harvest kan nog geen ander Zielfragment creëren",
       "leadenHexLock": "Loden vloek kan dit doelwit nog niet opnieuw vastwortelen",
       "forbiddenReflectionReady": "Je volgende in aanmerking komende Heksenmeester-afkoeltijd kan opnieuw worden ingezet",
@@ -12699,7 +12700,7 @@ export const nl_NL: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin-stormloop",
-        "description": "Storm op een vijand af, genereer 9 woede en verdoof hem gedurende 1 sec. Bereik 8-25 m. Alleen in Bruingedaante."
+        "description": "Storm op een vijand af, genereer 9 woede en verdoof hem gedurende 1 sec. Gedurende 3 sec daarna is Wolfsgedaante gratis en pint het doelwit vast, wat het 4 sec lang 50% vertraagt. Bereik 8-25 m. Alleen in Bruingedaante."
       },
       "demoralizing_roar": {
         "name": "Laf Gebrul",

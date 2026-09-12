@@ -3038,6 +3038,7 @@ export const da_DK: EnTranslations = {
       "elementalConvergencePrimed": "Din næste trolddom fra den anden elementarskole giver Elementar Konvergens",
       "hunterFerocity": "{stacks} Flokvildskab: dit kæledyr gør {pct}% mere skade",
       "cooldownCap": "{used} af {cap} sek. nedkølingsreduktion brugt i dette vindue",
+      "bruinRushWindow": "Ulveform koster ingen mana og fastholder målet for jeres Bruin-storm, hvilket nedsætter dets hastighed med {pct}% i {sec} sek.",
       "funeralHarvestLock": "Funeral Harvest kan ikke skabe endnu en Sjælesplint lige nu",
       "leadenHexLock": "Blytung forbandelse kan ikke rodfæste dette mål igen lige nu",
       "forbiddenReflectionReady": "Din næste kvalificerede Heksemester-nedkøling kan kastes igen",
@@ -12699,7 +12700,7 @@ export const da_DK: EnTranslations = {
       },
       "bear_charge": {
         "name": "Bruin-storm",
-        "description": "Storm mod en fjende, generér 9 raseri og bedøv den i 1 sek. 8-25 m rækkevidde. Kun i Bruin-form."
+        "description": "Storm mod en fjende, generér 9 raseri og bedøv den i 1 sek. I 3 sek. derefter er Ulveform gratis og fastholder målet, hvilket nedsætter dets hastighed med 50% i 4 sek. 8-25 m rækkevidde. Kun i Bruin-form."
       },
       "demoralizing_roar": {
         "name": "Fejt Brøl",

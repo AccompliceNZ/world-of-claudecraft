@@ -3709,7 +3709,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
     '将一只亡魂裔束缚于你的意志之下，这是一种精英恶魔，会从远处倾泻沉重的暗影伤害。漫长的冷却时间限制了它的毁灭性威力。召唤新的恶魔会驱散你当前的恶魔。你同时只能拥有一只恶魔。',
   'entities.abilities.bear_charge.name': '巨熊冲锋',
   'entities.abilities.bear_charge.description':
-    '冲向一名敌人，生成9点怒气并将其昏迷1秒。射程8-25码。仅限巨熊形态使用。',
+    '冲向一名敌人，生成9点怒气并将其昏迷1秒。之后3秒内，狼形态无需消耗并钉制目标，使其减速50%，持续4秒。射程8-25码。仅限巨熊形态使用。',
   'entities.abilities.demoralizing_roar.name': '怯懦咆哮',
   'entities.abilities.demoralizing_roar.description':
     '震慑附近的敌人，使其攻击强度降低 20 点，持续 20 秒。仅限巨熊形态使用。',
@@ -14574,6 +14574,7 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.castShield': '施法不会因受到伤害而中断或延迟',
   'hudChrome.auraEffect.cauterizeFatigue': '灸灼无法再次阻止致命伤害',
   'hudChrome.auraEffect.cooldownCap': '此时间窗已使用 {used}/{cap} 秒冷却缩减',
+  'hudChrome.auraEffect.bruinRushWindow': '狼形态无需法力，并钉制你的巨熊冲锋目标，使其减速 {pct}%，持续 {sec} 秒',
   'hudChrome.auraEffect.dawnsWrath': '制裁之锤：无生命限制 · +1次 · 冷却0 · 伤害+{pct}%',
   'hudChrome.auraEffect.desolation':
     '剩余 {charges} 层：下一次混乱箭施法加快 {castPct}%，或下一次火焰之雨立即落下',

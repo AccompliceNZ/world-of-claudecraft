@@ -8366,6 +8366,7 @@ export type TranslationKeyFlat =
   | 'hudChrome.auraEffect.blind'
   | 'hudChrome.auraEffect.bloodbath'
   | 'hudChrome.auraEffect.brainFreeze'
+  | 'hudChrome.auraEffect.bruinRushWindow'
   | 'hudChrome.auraEffect.carriedFlag'
   | 'hudChrome.auraEffect.castShield'
   | 'hudChrome.auraEffect.cauterizeFatigue'

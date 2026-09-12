@@ -3038,6 +3038,7 @@ export const it_IT: EnTranslations = {
       "elementalConvergencePrimed": "Il prossimo incantesimo dall'altra scuola elementale concede Convergenza Elementale",
       "hunterFerocity": "{stacks} Ferocia del Branco: il tuo famiglio infligge il {pct}% di danni in più",
       "cooldownCap": "{used} di {cap} sec di riduzione del tempo di recupero usati in questa finestra",
+      "bruinRushWindow": "La Forma del Lupo non costa mana e blocca il bersaglio della vostra Carica di Bruin, rallentandolo del {pct}% per {sec} sec",
       "funeralHarvestLock": "Funeral Harvest non può ancora creare un altro Frammento d'Anima",
       "leadenHexLock": "Maleficio Plum beo non può ancora radicare di nuovo questo bersaglio",
       "forbiddenReflectionReady": "Il tuo prossimo tempo di recupero idoneo dello Stregone può essere lanciato di nuovo",
@@ -12699,7 +12700,7 @@ export const it_IT: EnTranslations = {
       },
       "bear_charge": {
         "name": "Carica di Bruin",
-        "description": "Carica un nemico, generando 9 punti rabbia e stordendolo per 1 sec. Gittata di 7-23 metri. Solo in Forma di Bruin."
+        "description": "Carica un nemico, generando 9 punti rabbia e stordendolo per 1 sec. Per i 3 sec successivi, la Forma del Lupo è gratuita e blocca il bersaglio, rallentandolo del 50% per 4 sec. Gittata di 7-23 metri. Solo in Forma di Bruin."
       },
       "demoralizing_roar": {
         "name": "Ruggito Codardo",

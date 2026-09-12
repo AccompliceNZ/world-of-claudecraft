@@ -5349,7 +5349,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Một tiếng hô làm tăng {buff}% sức mạnh tấn công của tất cả thành viên tổ đội trong 30 phút.',
   'entities.abilities.battle_shout.name': 'Tiếng Gầm Thép',
   'entities.abilities.bear_charge.description':
-    'Lao vào kẻ địch, tạo 9 nộ khí và làm choáng nó trong 1 giây. Tầm 8-25 thước. Chỉ dùng được ở Bruin Form.',
+    'Lao vào kẻ địch, tạo 9 nộ khí và làm choáng nó trong 1 giây. Trong 3 giây sau đó, Hình Sói miễn phí và ghim mục tiêu, làm chậm nó 50% trong 4 giây. Tầm 8-25 thước. Chỉ dùng được ở Bruin Form.',
   'entities.abilities.bear_charge.name': 'Cú Lao Bruin',
   'entities.abilities.bear_form.description':
     'Biến hình thành gấu: giáp +110%, máu tối đa +30%, sức mạnh tấn công tăng mạnh, các đòn đánh của ngươi tích nộ khí và tạo thêm 30% đe dọa. Niệm lại để trở về hình pháp sư.',
@@ -14001,6 +14001,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.cauterizeFatigue': 'Thiêu Đốt không thể ngăn một đòn chí mạng khác',
   'hudChrome.auraEffect.cooldownCap':
     '{used} trên {cap} giây giảm thời gian hồi chiêu đã dùng trong khung này',
+  'hudChrome.auraEffect.bruinRushWindow': 'Hình Sói không tốn mana và ghim mục tiêu Cú Lao Bruin của bạn, làm chậm nó {pct}% trong {sec} giây',
   'hudChrome.auraEffect.desolation':
     '{charges} tầng: Tia Hủy Diệt tiếp theo của bạn thi triển nhanh hơn {castPct}%, hoặc Mưa Lửa tiếp theo của bạn đổ xuống ngay lập tức',
   'hudChrome.auraEffect.duskfireClaim': 'Cái chết cấp {value} Wrack',

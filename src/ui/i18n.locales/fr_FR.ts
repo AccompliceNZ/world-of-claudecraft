@@ -7640,7 +7640,7 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
     "Soumet un Wraithborn à votre volonté, un démon d'élite qui déverse de lourds dégâts d'Ombre à distance. Un long temps de recharge bride sa puissance dévastatrice. Invoquer un nouveau démon renvoie celui que vous avez. Vous ne pouvez avoir qu'un démon à la fois.",
   'entities.abilities.bear_charge.name': 'Ruée de Bruin',
   'entities.abilities.bear_charge.description':
-    "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Portée de 8-25 m. Forme de Bruin uniquement.",
+    "Charge un ennemi, génère 9 points de rage et l'étourdit pendant 1 s. Pendant les 3 s qui suivent, la Forme de loup est gratuite et cloue la cible, la ralentissant de 50% pendant 4 s. Portée de 8-25 m. Forme de Bruin uniquement.",
   'entities.abilities.demoralizing_roar.name': 'Rugissement lâche',
   'entities.abilities.demoralizing_roar.description':
     "Démoralise les ennemis proches, réduisant leur puissance d'attaque de 20 pendant 20 s. Forme de Bruin uniquement.",
@@ -14439,6 +14439,7 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'hudChrome.auraEffect.cauterizeFatigue': 'Cautérisation ne peut pas empêcher un autre coup fatal',
   'hudChrome.auraEffect.cooldownCap':
     '{used} sur {cap} s de réduction de temps de recharge utilisés dans cette fenêtre',
+  'hudChrome.auraEffect.bruinRushWindow': 'La Forme de loup ne coûte aucun mana et cloue la cible de votre Ruée de Bruin, la ralentissant de {pct}% pendant {sec} s',
   'hudChrome.auraEffect.desolation':
     "{charges} charges : votre prochain Trait de ruine s'incante {castPct}% plus vite, ou votre prochaine Pluie de feu s'abat immédiatement",
   'hudChrome.auraEffect.duskfireClaim': 'La mort accorde {value} Ruine',
