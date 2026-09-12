@@ -3626,7 +3626,7 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
     '對目標低吼：你的威脅值提高到其最仇恨敵人的水平，並強迫其攻擊你 3 秒。僅限巨熊形態。',
   'entities.abilities.cat_form.name': '狼形態',
   'entities.abilities.cat_form.description':
-    '將你化為一頭狼：敏捷隨你的等級提升，攻擊強度 +8 外加每級 2 點，你的攻擊消耗能量與連擊點，並且你產生的威脅降低 29%。再次施放即可變回施法形態。',
+    '將你化為一頭狼：敏捷隨你的等級提升，攻擊強度 +8 外加每級 2 點，你的攻擊消耗能量與連擊點，並且你產生的威脅降低 29%。變為任意形態都會獲得疾躍步伐：移動速度提高 60%，持續 3 秒，每 20 秒一次。再次施放即可變回施法形態。',
   'entities.abilities.claw.name': '裂爪',
   'entities.abilities.claw.description':
     '用利爪攻擊敵人，造成武器傷害加 {damage}。獎勵 1 個連擊點。僅限狼形態。',

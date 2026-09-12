@@ -6942,7 +6942,7 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
     'Rosna para o alvo: sua ameaça sobe para igualar a do inimigo mais odiado por ele, que é forçado a atacar você por 3 s. Apenas Forma de Bruin.',
   'entities.abilities.cat_form.name': 'Forma de Lobo',
   'entities.abilities.cat_form.description':
-    'Transforma-vos em lobo: a agilidade sobe com vosso nível, poder de ataque +8 mais 2 por nível, vossos ataques usam energia e pontos de combo, e gerais 29% menos ameaça. Conjurai novamente para voltar à forma de conjurador.',
+    'Transforma-vos em lobo: a agilidade sobe com vosso nível, poder de ataque +8 mais 2 por nível, vossos ataques usam energia e pontos de combo, e gerais 29% menos ameaça. Mudar para qualquer forma concede Passo ligeiro: 60% de velocidade de movimento por 3 s, uma vez a cada 20 s. Conjurai novamente para voltar à forma de conjurador.',
   'entities.abilities.claw.name': 'Garra Dilacerante',
   'entities.abilities.ferocious_bite.name': 'Mordida Sanguinária',
   'entities.abilities.swipe.name': 'Garras Varredoras',

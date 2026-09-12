@@ -4,6 +4,7 @@
 // Wildfang shares Old Blood across Wolf and Bruin forms, and Groveheart
 // grows Verdance toward Overbloom.
 
+import { DRUID_CHOICE_ROWS } from '../content/choice_rows_classic';
 import {
   CINDERBARK_2PC_EXTRA_OLD_BLOOD_CHANCE,
   GROVESPRING_4PC_VERDANCE_BANK,
@@ -32,16 +33,18 @@ export const WILD_APEX_MULT = 1.25;
 export const QUICKENING_ENERGY = 5;
 export const QUICKENING_RAGE = 3;
 export const QUICKENING_MANA_PCT = 0.02;
-// buff_speed auras carry a 1+fraction multiplier (moveSpeedMult takes the max
-// over 1), so +60% is 1.6; a bare 0.6 was silently discarded by the max.
+// Loping Stride: the baseline shift sprint every druid gets on any form shift
+// (Wildfang kit pass 2 made it talent-free). buff_speed auras carry a
+// 1+fraction multiplier (moveSpeedMult takes the max over 1), so +60% is 1.6;
+// a bare 0.6 was silently discarded by the max.
 export const LOPING_STRIDE_SPEED = 1.6;
 export const LOPING_STRIDE_DURATION = 3;
 const LOPING_STRIDE_ICD_KEY = 'dru_loping_stride';
-const LOPING_STRIDE_ICD = 20;
+export const LOPING_STRIDE_ICD = 20;
 
 export const DRUID_TALENT_IDS = {
   wildshift: 'dru_r5_improved_wrath',
-  lopingStride: 'dru_r5_ferocity',
+  longstride: 'dru_r5_ferocity',
   skylark: 'dru_r5_natures_bounty',
   highmoonTithe: 'dru_r14_moonfury',
   blooddrunk: 'dru_r14_savage_fury',
@@ -58,6 +61,32 @@ export const DRUID_PAYOFF_IDS = new Set([
   'marrowbreak',
   'overbloom',
 ]);
+
+// Longstride (row 5, mechanic druid_longstride) lengthens the baseline sprint
+// and shortens its cooldown. The row option's metrics are the ONE source of
+// those two numbers: the engine reads them here so the talent tooltip (which
+// tests/talent_tooltip_accuracy.test.ts holds to the same metrics) cannot drift
+// from what the sim applies. A missing metric falls back to the baseline value.
+export const LONGSTRIDE_MECHANIC = 'druid_longstride';
+function longstrideMetrics(): { duration: number; icd: number } {
+  for (const row of DRUID_CHOICE_ROWS.rows) {
+    for (const option of row.options) {
+      const intrinsic = option.effect.intrinsic;
+      if (
+        option.id !== DRUID_TALENT_IDS.longstride ||
+        intrinsic?.mechanic !== LONGSTRIDE_MECHANIC
+      ) {
+        continue;
+      }
+      return {
+        duration: intrinsic.metrics.duration ?? LOPING_STRIDE_DURATION,
+        icd: intrinsic.metrics.icd ?? LOPING_STRIDE_ICD,
+      };
+    }
+  }
+  return { duration: LOPING_STRIDE_DURATION, icd: LOPING_STRIDE_ICD };
+}
+export const LONGSTRIDE = longstrideMetrics();
 
 const ENGINE_AURA_IDS = new Set([MOONTIDE_ID, OLD_BLOOD_ID, VERDANCE_ID]);
 const FORM_ABILITY_IDS = new Set(['bear_form', 'cat_form', 'travel_form', 'moonkin_form']);
@@ -195,21 +224,24 @@ export function druidEngineOnCast(
         ctx.emit({ type: 'aura', targetId: player.id, name: aura.name, gained: false });
       }
     }
-    if (selectedRow(ctx, player, DRUID_TALENT_IDS.lopingStride)) {
-      if (!player.procState) player.procState = { counters: {}, icds: {} };
-      if (player.procState.icds[LOPING_STRIDE_ICD_KEY] === undefined) {
-        player.procState.icds[LOPING_STRIDE_ICD_KEY] = LOPING_STRIDE_ICD;
-        ctx.applyAura(player, {
-          id: 'loping_stride',
-          name: 'Loping Stride',
-          kind: 'buff_speed',
-          remaining: LOPING_STRIDE_DURATION,
-          duration: LOPING_STRIDE_DURATION,
-          value: LOPING_STRIDE_SPEED,
-          sourceId: player.id,
-          school: 'nature',
-        });
-      }
+    // Loping Stride is baseline: every form shift sprints, no talent check.
+    // Longstride only changes the two numbers (duration and cooldown).
+    const longstride = selectedRow(ctx, player, DRUID_TALENT_IDS.longstride);
+    const strideDuration = longstride ? LONGSTRIDE.duration : LOPING_STRIDE_DURATION;
+    const strideIcd = longstride ? LONGSTRIDE.icd : LOPING_STRIDE_ICD;
+    if (!player.procState) player.procState = { counters: {}, icds: {} };
+    if (player.procState.icds[LOPING_STRIDE_ICD_KEY] === undefined) {
+      player.procState.icds[LOPING_STRIDE_ICD_KEY] = strideIcd;
+      ctx.applyAura(player, {
+        id: 'loping_stride',
+        name: 'Loping Stride',
+        kind: 'buff_speed',
+        remaining: strideDuration,
+        duration: strideDuration,
+        value: LOPING_STRIDE_SPEED,
+        sourceId: player.id,
+        school: 'nature',
+      });
     }
   }
 

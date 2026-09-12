@@ -11920,7 +11920,7 @@ export const id_ID: EnTranslations = {
       },
       "cat_form": {
         "name": "Wujud Serigala",
-        "description": "Mengubahmu menjadi serigala: agility naik seiring levelmu, daya serang +8 ditambah 2 per level, seranganmu memakai energi dan poin kombo, dan kamu menghasilkan 29% ancaman lebih sedikit. Rapal lagi untuk kembali ke wujud pemantra."
+        "description": "Mengubahmu menjadi serigala: agility naik seiring levelmu, daya serang +8 ditambah 2 per level, seranganmu memakai energi dan poin kombo, dan kamu menghasilkan 29% ancaman lebih sedikit. Berubah ke wujud apa pun memberi Langkah Berderap Lambat: 60% kecepatan gerak selama 3 dtk, sekali setiap 20 dtk. Rapal lagi untuk kembali ke wujud pemantra."
       },
       "claw": {
         "name": "Cakar Perobek",

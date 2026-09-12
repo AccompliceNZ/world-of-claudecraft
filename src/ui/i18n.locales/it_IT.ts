@@ -7007,7 +7007,7 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
     'Ringhia al bersaglio: la tua minaccia sale fino a eguagliare quella del suo nemico più odiato e lo costringe ad attaccarti per 3 s. Solo in Forma di Bruin.',
   'entities.abilities.cat_form.name': 'Forma del Lupo',
   'entities.abilities.cat_form.description':
-    "Vi trasforma in lupo: l'agilità sale con il vostro livello, potenza d'attacco +8 più 2 per livello, i vostri attacchi usano energia e punti combo, e generate il 29% di minaccia in meno. Lanciate di nuovo per tornare alla forma da incantatore.",
+    "Vi trasforma in lupo: l'agilità sale con il vostro livello, potenza d'attacco +8 più 2 per livello, i vostri attacchi usano energia e punti combo, e generate il 29% di minaccia in meno. Passare a qualsiasi forma concede Passo leggero: il 60% di velocità di movimento per 3 sec, una volta ogni 20 sec. Lanciate di nuovo per tornare alla forma da incantatore.",
   'entities.abilities.claw.name': 'Artiglio Lacerante',
   'entities.abilities.ferocious_bite.name': 'Morso Cruento',
   'entities.abilities.swipe.name': 'Artigli Falcianti',

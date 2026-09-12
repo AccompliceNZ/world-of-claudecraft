@@ -11920,7 +11920,7 @@ export const pl_PL: EnTranslations = {
       },
       "cat_form": {
         "name": "Postać wilka",
-        "description": "Zmienia cię w wilka: zręczność rośnie z twoim poziomem, moc ataku +8 plus 2 na poziom, twoje ataki używają energii i punktów kombinacji, a ty generujesz o 29% mniejsze zagrożenie. Rzuć ponownie, by wrócić do postaci rzucającego zaklęcia."
+        "description": "Zmienia cię w wilka: zręczność rośnie z twoim poziomem, moc ataku +8 plus 2 na poziom, twoje ataki używają energii i punktów kombinacji, a ty generujesz o 29% mniejsze zagrożenie. Zmiana w dowolną postać przyznaje Długi krok: 60% prędkości ruchu na 3 sekundy, raz na 20 sekund. Rzuć ponownie, by wrócić do postaci rzucającego zaklęcia."
       },
       "claw": {
         "name": "Szarpiący pazur",

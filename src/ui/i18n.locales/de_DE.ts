@@ -7029,7 +7029,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
     'Knurrt das Ziel an: Eure Bedrohung steigt auf die seines meistgehassten Gegners und es wird 3 Sek. lang gezwungen, euch anzugreifen. Nur in Bruin Form.',
   'entities.abilities.cat_form.name': 'Wolfsgestalt',
   'entities.abilities.cat_form.description':
-    'Verwandelt euch in einen Wolf: Beweglichkeit steigt mit eurer Stufe, Angriffskraft +8 plus 2 je Stufe, eure Angriffe nutzen Energie und Combopunkte, und ihr erzeugt 29% weniger Bedrohung. Erneut wirken, um zur Zauberergestalt zurückzukehren.',
+    'Verwandelt euch in einen Wolf: Beweglichkeit steigt mit eurer Stufe, Angriffskraft +8 plus 2 je Stufe, eure Angriffe nutzen Energie und Combopunkte, und ihr erzeugt 29% weniger Bedrohung. Der Wechsel in eine beliebige Gestalt gewährt Weiter Schritt: 3 Sek. lang 60% Bewegungstempo, einmal alle 20 Sek. Erneut wirken, um zur Zauberergestalt zurückzukehren.',
   'entities.abilities.claw.name': 'Reißklaue',
   'entities.abilities.ferocious_bite.name': 'Blutbiss',
   'entities.abilities.swipe.name': 'Fegende Klauen',

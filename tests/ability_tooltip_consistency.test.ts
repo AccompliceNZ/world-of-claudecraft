@@ -70,8 +70,10 @@ const NUMBER_ALLOWLIST: Record<string, number[]> = {
   // Baleful Roar cites the same compel window plus its own aoeTaunt radius.
   challenging_roar: [3, 10],
   // "attack power +8 plus 2 per level": the cat-form AP constants in
-  // recalcPlayerStats (entity.ts), not effect fields.
-  cat_form: [8, 2],
+  // recalcPlayerStats (entity.ts), not effect fields. "60% ... for 3 sec, once
+  // every 20 sec": the baseline Loping Stride shift sprint, constants in
+  // combat/druid_engines.ts (LOPING_STRIDE_SPEED/DURATION/ICD).
+  cat_form: [8, 2, 60, 3, 20],
   // "for 30 sec": the sunder aura duration hardcoded in effect_dispatch.ts.
   faerie_fire: [30],
   sunder_armor: [30],

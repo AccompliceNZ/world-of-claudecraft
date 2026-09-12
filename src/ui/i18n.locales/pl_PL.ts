@@ -5356,7 +5356,7 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Natychmiast atakuj w krwawym szale, zadając 60% obrażeń broni plus {damage}. (Sygnatura furii)',
   'entities.abilities.bloodthirst.name': 'Upust krwi',
   'entities.abilities.cat_form.description':
-    'Zmienia cię w wilka: zręczność rośnie z twoim poziomem, moc ataku +8 plus 2 na poziom, twoje ataki używają energii i punktów kombinacji, a ty generujesz o 29% mniejsze zagrożenie. Rzuć ponownie, by wrócić do postaci rzucającego zaklęcia.',
+    'Zmienia cię w wilka: zręczność rośnie z twoim poziomem, moc ataku +8 plus 2 na poziom, twoje ataki używają energii i punktów kombinacji, a ty generujesz o 29% mniejsze zagrożenie. Zmiana w dowolną postać przyznaje Długi krok: 60% prędkości ruchu na 3 sekundy, raz na 20 sekund. Rzuć ponownie, by wrócić do postaci rzucającego zaklęcia.',
   'entities.abilities.cat_form.name': 'Postać wilka',
   'entities.abilities.charge.description':
     'Szarżuj na wroga, generując 9 wściekłości i ogłuszając go na 1 sek. Zasięg 8-25 jardów.',

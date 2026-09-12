@@ -11920,7 +11920,7 @@ export const en_CA: EnTranslations = {
       },
       "cat_form": {
         "name": "Wolf Form",
-        "description": "Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, and you generate 29% less threat. Cast again to return to caster form."
+        "description": "Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, and you generate 29% less threat. Shifting into any form grants Loping Stride: 60% movement speed for 3 sec, once every 20 sec. Cast again to return to caster form."
       },
       "claw": {
         "name": "Rendclaw",

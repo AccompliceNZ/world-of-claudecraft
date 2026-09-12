@@ -33,6 +33,13 @@ function placeOnGround(sim: Sim, pid: number, x: number, z: number) {
 function advanceTicks(sim: Sim, ticks: number) {
   for (let i = 0; i < ticks; i++) sim.tick();
 }
+// Every form shift now grants the baseline Loping Stride sprint (60% for 3 sec,
+// combat/druid_engines.ts); these cases measure the FORM's own speed, so the
+// burst is shed right after the shift the way a player 3 sec later feels it.
+function shedStride(sim: Sim, pid: number) {
+  const e = sim.entities.get(pid)!;
+  e.auras = e.auras.filter((a) => a.id !== 'loping_stride');
+}
 
 function castTravelForm(sim: Sim, pid: number) {
   const e = sim.entities.get(pid)!;
@@ -40,6 +47,7 @@ function castTravelForm(sim: Sim, pid: number) {
   e.resource = e.maxResource;
   sim.castAbility('travel_form', pid);
   sim.tick();
+  shedStride(sim, pid);
 }
 
 function horizontalTravel(sim: Sim, pid: number, ticks: number): number {
@@ -175,6 +183,7 @@ describe('druid spell pack — casting applies effects', () => {
     e.resource = 100;
     sim.castAbility('travel_form', a);
     sim.tick();
+    shedStride(sim, a);
     const form = e.auras.find((au) => au.kind === 'form_travel');
     expect(form, 'travel_form should apply a form_travel aura').toBeTruthy();
     expect(form!.value).toBeCloseTo(1.4);
@@ -197,6 +206,7 @@ describe('druid spell pack — casting applies effects', () => {
       if (withForm) {
         sim.castAbility('travel_form', a);
         sim.tick();
+        shedStride(sim, a);
       }
       const meta = (sim as any).players.get(a);
       meta.moveInput = {
@@ -232,6 +242,7 @@ describe('druid spell pack — casting applies effects', () => {
       e.resource = e.maxResource;
       sim.castAbility('cat_form', pid);
       sim.tick();
+      shedStride(sim, pid);
       advanceTicks(sim, 40);
       if (withProwl) {
         e.resource = e.maxResource;
@@ -270,10 +281,12 @@ describe('druid spell pack — casting applies effects', () => {
     e.resource = 100;
     sim.castAbility('travel_form', a);
     sim.tick();
+    shedStride(sim, a);
     expect(e.auras.some((au) => au.kind === 'form_travel')).toBe(true);
     for (let i = 0; i < 40; i++) sim.tick(); // wait out the GCD (forms are on-GCD)
     sim.castAbility('travel_form', a); // recast = shift out
     sim.tick();
+    shedStride(sim, a);
     expect(e.auras.some((au) => au.kind === 'form_travel')).toBe(false);
     expect((sim as any).moveSpeedMult(e)).toBeCloseTo(1);
   });
@@ -287,6 +300,7 @@ describe('druid spell pack — casting applies effects', () => {
     e.inCombat = true; // mid-fight
     sim.castAbility('travel_form', a);
     sim.tick();
+    shedStride(sim, a);
     expect(
       e.auras.some((au) => au.kind === 'form_travel'),
       'travel_form should shift even in combat',
@@ -380,6 +394,7 @@ describe('druid spell pack — casting applies effects', () => {
     e.resource = e.maxResource;
     sim.castAbility('cat_form', pid);
     sim.tick();
+    shedStride(sim, pid);
     expect(e.auras.some((a) => a.kind === 'form_cat')).toBe(true);
     advanceTicks(sim, 40);
 
@@ -393,6 +408,7 @@ describe('druid spell pack — casting applies effects', () => {
     e.resource = e.maxResource;
     sim.castAbility('travel_form', pid);
     sim.tick();
+    shedStride(sim, pid);
 
     expect(e.auras.some((a) => a.kind === 'form_travel')).toBe(true);
     expect(e.auras.some((a) => a.kind === 'stealth')).toBe(false);

@@ -510,7 +510,8 @@ describe('Groveheart engine', () => {
 
 describe('Loping Stride', () => {
   it('stamps a real move-speed multiplier so shapeshifting actually sprints', () => {
-    const { sim, player } = rig('feral', { 5: 'dru_r5_ferocity' });
+    // Baseline since the Wildfang kit pass 2: no row 5 talent selected.
+    const { sim, player } = rig('feral');
     expect(moveSpeedMult(player)).toBe(1);
 
     completed(sim, 'bear_form');
@@ -527,7 +528,7 @@ describe('Loping Stride', () => {
   });
 
   it('holds the 20s internal cooldown between shifts', () => {
-    const { sim, player } = rig('feral', { 5: 'dru_r5_ferocity' });
+    const { sim, player } = rig('feral');
     completed(sim, 'cat_form');
     player.auras = player.auras.filter((aura) => aura.id !== 'loping_stride');
     completed(sim, 'bear_form');

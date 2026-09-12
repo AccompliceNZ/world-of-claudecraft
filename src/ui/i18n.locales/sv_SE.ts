@@ -5168,7 +5168,7 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Attackera omedelbart i ett blodsraseri för 60 % vapenskada plus {damage}. (Raserisignatur)',
   'entities.abilities.bloodthirst.name': 'Åderlåtning',
   'entities.abilities.cat_form.description':
-    'Förvandlar er till en varg: smidigheten stiger med er nivå, anfallskraft +8 plus 2 per nivå, era anfall använder energi och kombopoäng, och ni alstrar 29% mindre hot. Besvärj igen för att återgå till besvärjarskepnaden.',
+    'Förvandlar er till en varg: smidigheten stiger med er nivå, anfallskraft +8 plus 2 per nivå, era anfall använder energi och kombopoäng, och ni alstrar 29% mindre hot. Att skifta till vilken gestalt som helst ger Lunkande steg: 60% förflyttningshastighet i 3 sek, en gång var 20:e sek. Besvärj igen för att återgå till besvärjarskepnaden.',
   'entities.abilities.cat_form.name': 'Vargform',
   'entities.abilities.charge.description':
     'Stormar en fiende, genererar 9 raseri och bedövar den i 1 sek. 8-25 m räckvidd.',
