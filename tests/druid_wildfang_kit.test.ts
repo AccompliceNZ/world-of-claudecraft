@@ -15,7 +15,7 @@ import { ABILITIES, MOBS } from '../src/sim/data';
 import { createMob } from '../src/sim/entity';
 import { moveSpeedMult } from '../src/sim/player_motion';
 import { Sim } from '../src/sim/sim';
-import type { Entity } from '../src/sim/types';
+import { dist2d, type Entity, MELEE_RANGE } from '../src/sim/types';
 
 // Wildfang kit pass 2 (engage, control, opener): the baseline shift sprint and
 // its Longstride talent, the Bruin Rush to Wolf Form Pin rider, full-speed
@@ -254,5 +254,70 @@ describe('Stalk moves at full speed', () => {
     expect(moveSpeedMult(rogue.player)).toBe(0.5);
     expect(ABILITIES.stealth.description).toContain('50% slower');
     expect(ABILITIES.prowl.description).not.toContain('slower');
+  });
+});
+
+describe('Lunge, the out-of-stealth shape of Slinkstrike', () => {
+  it('resolves the button to Slinkstrike when stealthed and to Lunge when not', () => {
+    const { sim, player } = rig();
+    cast(sim, 'cat_form');
+    expect(sim.resolvedAbility('pounce')?.def.id).toBe('lunge');
+    expect(sim.resolvedAbility('pounce')?.cost).toBe(40);
+    cast(sim, 'prowl');
+    expect(player.auras.some((a) => a.kind === 'stealth')).toBe(true);
+    expect(sim.resolvedAbility('pounce')?.def.id).toBe('pounce');
+    expect(sim.resolvedAbility('pounce')?.cost).toBe(50);
+  });
+
+  it('closes to melee, awards 1 combo point, applies no stun, and starts its own 12 sec cooldown', () => {
+    const { sim, player } = rig();
+    const target = addTargetMob(sim, 10);
+    cast(sim, 'cat_form');
+    dropAura(player, 'loping_stride');
+    player.resource = player.maxResource;
+    const energyBefore = player.resource;
+    const startDist = dist2d(player.pos, target.pos);
+    player.gcdRemaining = 0;
+    sim.castAbility('pounce'); // the button id; out of stealth it is Lunge
+    const events = sim.tick();
+    expect(events.some((e) => e.type === 'damage' && e.ability === 'Lunge')).toBe(true);
+    expect(player.comboPoints).toBe(1);
+    expect(target.auras.some((a) => a.kind === 'stun')).toBe(false);
+    expect(player.resource).toBeLessThanOrEqual(energyBefore - 40 + 1);
+    expect(player.cooldowns.get('lunge')).toBeCloseTo(12 - 0.05, 1);
+    expect(player.cooldowns.has('pounce')).toBe(false);
+    expect(player.chargeTargetId).toBe(target.id);
+    ticks(sim, 2);
+    expect(dist2d(player.pos, target.pos)).toBeLessThan(startDist);
+    expect(dist2d(player.pos, target.pos)).toBeLessThan(MELEE_RANGE);
+    expect(player.chargeTargetId).toBeNull();
+  });
+
+  it('a restealth Slinkstrike is never blocked by the Lunge cooldown', () => {
+    const { sim, player } = rig();
+    const target = addTargetMob(sim, 10);
+    cast(sim, 'cat_form');
+    cast(sim, 'pounce');
+    expect(player.cooldowns.has('lunge')).toBe(true);
+    ticks(sim, 2);
+    // Stalk itself needs combat to end; the stealth aura is what the button
+    // reads, so wear it directly and press the same button.
+    player.auras.push({
+      id: 'prowl',
+      name: 'Stalk',
+      kind: 'stealth',
+      remaining: 3600,
+      duration: 3600,
+      value: 1,
+      sourceId: player.id,
+      school: 'physical',
+    });
+    expect(sim.resolvedAbility('pounce')?.def.id).toBe('pounce');
+    player.resource = player.maxResource;
+    player.gcdRemaining = 0;
+    const events = [...(sim.castAbility('pounce'), sim.tick())];
+    expect(events.some((e) => e.type === 'error')).toBe(false);
+    expect(target.auras.some((a) => a.id === 'pounce_stun' && a.kind === 'stun')).toBe(true);
+    expect(player.comboPoints).toBe(2);
   });
 });

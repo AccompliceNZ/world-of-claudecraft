@@ -11986,7 +11986,11 @@ export const tr_TR: EnTranslations = {
       },
       "pounce": {
         "name": "Sinsi Darbe",
-        "description": "Hedefi 2 saniye boyunca sersemleten gizlilik açılışı. 1 kombo puanı kazandırır. Yalnızca Kurt Formu."
+        "description": "Hedefi 2 saniye boyunca sersemleten gizlilik açılışı. 1 kombo puanı kazandırır. Yalnızca Kurt Formu. Gizlilik dışında bu düğme Atılış olur."
+      },
+      "lunge": {
+        "name": "Atılış",
+        "description": "12 yardaya kadar uzaktaki bir düşmana atılır, %60 silah hasarı verir ve 1 kombo puanı kazandırır. Yalnızca Kurt Formu."
       },
       "insect_swarm": {
         "name": "Sokan Sürü",

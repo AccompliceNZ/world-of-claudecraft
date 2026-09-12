@@ -6967,8 +6967,11 @@ export const pt_BR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     'Dispara para a frente, aumentando a velocidade de movimento em 50% por 15 s. Apenas Forma de Lobo.',
   'entities.abilities.pounce.name': 'Bote Furtivo',
+  'entities.abilities.lunge.description':
+    'Dá um bote em um inimigo a até 12 m, causando 60% do dano da arma e concedendo 1 ponto de combo. Apenas Forma de Lobo.',
+  'entities.abilities.lunge.name': 'Bote',
   'entities.abilities.pounce.description':
-    'Abertura furtiva que atordoa o alvo por 2 s. Concede 1 ponto de combo. Apenas Forma de Lobo.',
+    'Abertura furtiva que atordoa o alvo por 2 s. Concede 1 ponto de combo. Apenas Forma de Lobo. Fora da furtividade, este botão é Bote.',
   'entities.abilities.insect_swarm.name': 'Enxame Ferroante',
   'entities.abilities.insect_swarm.description':
     'O inimigo é atacado por um enxame de insetos, sofrendo {damage} de dano de Natureza ao longo de 12 s.',

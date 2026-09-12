@@ -11986,7 +11986,11 @@ export const es_ES: EnTranslations = {
       },
       "pounce": {
         "name": "Golpe Sigiloso",
-        "description": "Apertura desde el sigilo que aturde al objetivo durante 2 s. Otorga 1 punto de combo. Solo en Forma de lobo."
+        "description": "Apertura desde el sigilo que aturde al objetivo durante 2 s. Otorga 1 punto de combo. Solo en Forma de lobo. Fuera del sigilo, este botón es Embate."
+      },
+      "lunge": {
+        "name": "Embate",
+        "description": "Te abalanzas sobre un enemigo a hasta 12 m, infligiendo un 60% del daño de arma y otorgando 1 punto de combo. Solo en Forma de lobo."
       },
       "insect_swarm": {
         "name": "Enjambre Punzante",

@@ -7053,8 +7053,11 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     'Sprintet vorwärts und erhöht das Lauftempo 15 Sek. lang um 50%. Nur in Wolfsgestalt.',
   'entities.abilities.pounce.name': 'Schleichschlag',
+  'entities.abilities.lunge.description':
+    'Springt einen bis zu 12 m entfernten Gegner an, verursacht 60% Waffenschaden und gewährt 1 Combopunkt. Nur in Wolfsgestalt.',
+  'entities.abilities.lunge.name': 'Ansprung',
   'entities.abilities.pounce.description':
-    'Ein Eröffnungsangriff aus der Verstohlenheit, der das Ziel 2 Sek. lang betäubt. Gewährt 1 Combopunkt. Nur in Wolfsgestalt.',
+    'Ein Eröffnungsangriff aus der Verstohlenheit, der das Ziel 2 Sek. lang betäubt. Gewährt 1 Combopunkt. Nur in Wolfsgestalt. Außerhalb des Schleichmodus ist diese Taste Ansprung.',
   'entities.abilities.insect_swarm.name': 'Stechender Schwarm',
   'entities.abilities.insect_swarm.description':
     'Der Gegner wird von Insekten umschwärmt und erleidet {damage} Naturschaden über 12 Sek.',

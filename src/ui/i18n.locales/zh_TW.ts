@@ -3663,8 +3663,11 @@ export const zh_TW: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.name': '急奔',
   'entities.abilities.dash.description': '向前衝刺，使移動速度提高 50%，持續 15 秒。僅限狼形態。',
   'entities.abilities.pounce.name': '匿蹤突襲',
+  'entities.abilities.lunge.description':
+    '撲向最遠 12 碼外的敵人，造成 60% 武器傷害並獲得 1 個連擊點。僅限狼形態。',
+  'entities.abilities.lunge.name': '撲擊',
   'entities.abilities.pounce.description':
-    '一個潛行開場技，昏迷目標 2 秒。獎勵 1 個連擊點。僅限狼形態。',
+    '一個潛行開場技，昏迷目標 2 秒。獎勵 1 個連擊點。僅限狼形態。 未隱匿時，此按鈕為撲擊。',
   'entities.abilities.insect_swarm.name': '螫刺蟲群',
   'entities.abilities.insect_swarm.description':
     '敵人被蟲群侵襲，在 12 秒內受到 {damage} 點自然傷害。',

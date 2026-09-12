@@ -11986,7 +11986,11 @@ export const sv_SE: EnTranslations = {
       },
       "pounce": {
         "name": "Smyghugg",
-        "description": "En smygöppnare som bedövar målet i 2 sek. Ger 1 kombopoäng. Endast i vargform."
+        "description": "En smygöppnare som bedövar målet i 2 sek. Ger 1 kombopoäng. Endast i vargform. Utanför smyg är den här knappen Utfall."
+      },
+      "lunge": {
+        "name": "Utfall",
+        "description": "Kasta dig mot en fiende upp till 12 m bort, tillfoga 60% vapenskada och ge 1 kombopoäng. Endast i vargform."
       },
       "insect_swarm": {
         "name": "Stickande svärm",

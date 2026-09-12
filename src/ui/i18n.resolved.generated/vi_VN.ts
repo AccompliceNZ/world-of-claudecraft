@@ -11986,7 +11986,11 @@ export const vi_VN: EnTranslations = {
       },
       "pounce": {
         "name": "Đòn Lẻn Vồ",
-        "description": "Một đòn mở màn từ trạng thái ẩn thân làm choáng mục tiêu trong 2 giây. Tặng 1 điểm liên hoàn. Chỉ dùng được ở Hình Sói."
+        "description": "Một đòn mở màn từ trạng thái ẩn thân làm choáng mục tiêu trong 2 giây. Tặng 1 điểm liên hoàn. Chỉ dùng được ở Hình Sói. Khi không ẩn thân, nút này là Lao Vồ."
+      },
+      "lunge": {
+        "name": "Lao Vồ",
+        "description": "Lao vào kẻ địch cách xa tới 12 thước, gây 60% sát thương vũ khí và nhận 1 điểm combo. Chỉ dùng được ở Hình Sói."
       },
       "insect_swarm": {
         "name": "Bầy Đốt Chích",

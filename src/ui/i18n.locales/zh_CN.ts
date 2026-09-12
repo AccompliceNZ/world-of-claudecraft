@@ -3661,8 +3661,11 @@ export const zh_CN: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.name': '急奔',
   'entities.abilities.dash.description': '向前冲刺，使移动速度提高 50%，持续 15 秒。仅限狼形态。',
   'entities.abilities.pounce.name': '匿袭',
+  'entities.abilities.lunge.description':
+    '扑向最远12码外的敌人，造成60%武器伤害并获得1个连击点。仅限狼形态使用。',
+  'entities.abilities.lunge.name': '扑击',
   'entities.abilities.pounce.description':
-    '一个潜行开场技，昏迷目标 2 秒。奖励 1 个连击点。仅限狼形态。',
+    '一个潜行开场技，昏迷目标 2 秒。奖励 1 个连击点。仅限狼形态。 未潜行时，此按钮为扑击。',
   'entities.abilities.insect_swarm.name': '蜇刺虫群',
   'entities.abilities.insect_swarm.description':
     '敌人被虫群侵袭，在 12 秒内受到 {damage} 点自然伤害。',

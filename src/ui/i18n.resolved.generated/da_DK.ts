@@ -11986,7 +11986,11 @@ export const da_DK: EnTranslations = {
       },
       "pounce": {
         "name": "Luskeslag",
-        "description": "En snigeåbner der bedøver målet i 2 sek. Giver 1 kombopoint. Kun i Ulveform."
+        "description": "En snigeåbner der bedøver målet i 2 sek. Giver 1 kombopoint. Kun i Ulveform. Uden sneg-tilstand er denne knap Spring."
+      },
+      "lunge": {
+        "name": "Spring",
+        "description": "Spring mod en fjende op til 12 m væk, påfør 60% våbenskade og giv 1 kombopoint. Kun i Ulveform."
       },
       "insect_swarm": {
         "name": "Stikkende Sværm",

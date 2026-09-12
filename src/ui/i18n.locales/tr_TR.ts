@@ -5507,8 +5507,11 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     'Düşmanı {duration} saniyeye kadar bir kurbağaya dönüştürür. Kurbağa başıboş dolaşır ve hızla iyileşir. Herhangi bir hasar etkiyi bozar. Yalnızca canavarlar ve insansılar.',
   'entities.abilities.polymorph.name': 'Büyüleme',
   'entities.abilities.pounce.description':
-    'Hedefi 2 saniye boyunca sersemleten gizlilik açılışı. 1 kombo puanı kazandırır. Yalnızca Kurt Formu.',
+    'Hedefi 2 saniye boyunca sersemleten gizlilik açılışı. 1 kombo puanı kazandırır. Yalnızca Kurt Formu. Gizlilik dışında bu düğme Atılış olur.',
   'entities.abilities.pounce.name': 'Sinsi Darbe',
+  'entities.abilities.lunge.description':
+    '12 yardaya kadar uzaktaki bir düşmana atılır, %60 silah hasarı verir ve 1 kombo puanı kazandırır. Yalnızca Kurt Formu.',
+  'entities.abilities.lunge.name': 'Atılış',
   'entities.abilities.power_word_fortitude.description':
     'Her grup üyesinin Dayanıklılığını 30 dakika boyunca %{buff} artırır.',
   'entities.abilities.power_word_fortitude.name': 'Azim Yakarışı',

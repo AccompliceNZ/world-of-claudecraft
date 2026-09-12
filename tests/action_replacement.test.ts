@@ -93,6 +93,40 @@ describe('resolveActionReplacement', () => {
     );
     expect(inForm.def.id).toBe('sunlance');
   });
+  it('resolves an ABSENCE rule: Slinkstrike is Lunge out of stealth, on its own clock', () => {
+    const base = resolved('pounce');
+    // Stealthed: the base opener stays.
+    expect(resolveActionReplacement(base, actorWith({ kind: 'stealth' }))).toBe(base);
+    const out = resolveActionReplacement(base, actorWith({ kind: 'form_cat' }));
+    expect(out.def.id).toBe('lunge');
+    expect(out.cooldown).toBe(12);
+    // A mode rule (absence only) never stamps the base key: Lunge's 12 sec
+    // clock must not lock a restealth Slinkstrike, which has no cooldown.
+    expect(out.cooldownId).toBeUndefined();
+  });
+
+  it('a rule naming both a present and an absent kind needs both to hold', () => {
+    const def = {
+      ...ABILITIES.pounce,
+      actionReplacement: { abilityId: 'lunge', auraKind: 'form_cat', absentAuraKind: 'stealth' },
+    } as typeof ABILITIES.pounce;
+    const base = { ...resolved('pounce'), def };
+    expect(resolveActionReplacement(base, actorWith())).toBe(base);
+    expect(resolveActionReplacement(base, actorWith({ kind: 'stealth' }))).toBe(base);
+    expect(
+      resolveActionReplacement(base, actorWith({ kind: 'form_cat' }, { kind: 'stealth' })),
+    ).toBe(base);
+    expect(resolveActionReplacement(base, actorWith({ kind: 'form_cat' })).def.id).toBe('lunge');
+  });
+
+  it('a rule naming neither kind never matches', () => {
+    const def = {
+      ...ABILITIES.pounce,
+      actionReplacement: { abilityId: 'lunge' },
+    } as typeof ABILITIES.pounce;
+    const base = { ...resolved('pounce'), def };
+    expect(resolveActionReplacement(base, actorWith())).toBe(base);
+  });
 });
 
 describe('replaceResolvedAbility', () => {

@@ -3860,8 +3860,10 @@ export const ru_RU: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     'Рывок вперед, повышающий скорость передвижения на 50% на 15 сек. Только в облике волка.',
   'entities.abilities.pounce.name': 'Крадущийся удар',
+  'entities.abilities.lunge.description': 'Бросок на врага на расстоянии до 12 м, наносящий 60% урона от оружия и дающий 1 очко серии приёмов. Только в облике волка.',
+  'entities.abilities.lunge.name': 'Выпад',
   'entities.abilities.pounce.description':
-    'Открывающая атака из скрытности, оглушающая цель на 2 сек. Дает 1 прием серии. Только в облике волка.',
+    'Открывающая атака из скрытности, оглушающая цель на 2 сек. Дает 1 прием серии. Только в облике волка. Вне скрытности эта кнопка становится Выпадом.',
   'entities.abilities.insect_swarm.name': 'Жалящий рой',
   'entities.abilities.insect_swarm.description':
     'Враг атакован роем насекомых и получает {damage} ед. урона от сил Природы в течение 12 сек.',

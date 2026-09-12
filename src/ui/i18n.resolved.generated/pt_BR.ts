@@ -11986,7 +11986,11 @@ export const pt_BR: EnTranslations = {
       },
       "pounce": {
         "name": "Bote Furtivo",
-        "description": "Abertura furtiva que atordoa o alvo por 2 s. Concede 1 ponto de combo. Apenas Forma de Lobo."
+        "description": "Abertura furtiva que atordoa o alvo por 2 s. Concede 1 ponto de combo. Apenas Forma de Lobo. Fora da furtividade, este botão é Bote."
+      },
+      "lunge": {
+        "name": "Bote",
+        "description": "Dá um bote em um inimigo a até 12 m, causando 60% do dano da arma e concedendo 1 ponto de combo. Apenas Forma de Lobo."
       },
       "insect_swarm": {
         "name": "Enxame Ferroante",

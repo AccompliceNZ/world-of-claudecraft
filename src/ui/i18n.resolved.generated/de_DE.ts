@@ -11986,7 +11986,11 @@ export const de_DE: EnTranslations = {
       },
       "pounce": {
         "name": "Schleichschlag",
-        "description": "Ein Eröffnungsangriff aus der Verstohlenheit, der das Ziel 2 Sek. lang betäubt. Gewährt 1 Combopunkt. Nur in Wolfsgestalt."
+        "description": "Ein Eröffnungsangriff aus der Verstohlenheit, der das Ziel 2 Sek. lang betäubt. Gewährt 1 Combopunkt. Nur in Wolfsgestalt. Außerhalb des Schleichmodus ist diese Taste Ansprung."
+      },
+      "lunge": {
+        "name": "Ansprung",
+        "description": "Springt einen bis zu 12 m entfernten Gegner an, verursacht 60% Waffenschaden und gewährt 1 Combopunkt. Nur in Wolfsgestalt."
       },
       "insect_swarm": {
         "name": "Stechender Schwarm",

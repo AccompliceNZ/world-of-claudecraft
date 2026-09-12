@@ -11986,7 +11986,11 @@ export const pl_PL: EnTranslations = {
       },
       "pounce": {
         "name": "Skradający cios",
-        "description": "Otwarcie ze skradania, które ogłusza cel na 2 sek. Przyznaje 1 punkt kombinacji. Tylko w postaci wilka."
+        "description": "Otwarcie ze skradania, które ogłusza cel na 2 sek. Przyznaje 1 punkt kombinacji. Tylko w postaci wilka. Poza skradaniem ten przycisk to Wypad."
+      },
+      "lunge": {
+        "name": "Wypad",
+        "description": "Rzucasz się na wroga oddalonego o maksymalnie 12 jardów, zadając 60% obrażeń broni i przyznając 1 punkt kombinacji. Tylko w postaci wilka."
       },
       "insect_swarm": {
         "name": "Żądlący rój",

@@ -5572,8 +5572,11 @@ export const pl_PL: Partial<Record<TranslationKey, string>> = {
     'Przemienia wroga w ropuchę na nawet {duration} sek. Ropucha błąka się i szybko się leczy. Każde obrażenie przerywa efekt. Tylko bestie i humanoidy.',
   'entities.abilities.polymorph.name': 'Zauroczenie',
   'entities.abilities.pounce.description':
-    'Otwarcie ze skradania, które ogłusza cel na 2 sek. Przyznaje 1 punkt kombinacji. Tylko w postaci wilka.',
+    'Otwarcie ze skradania, które ogłusza cel na 2 sek. Przyznaje 1 punkt kombinacji. Tylko w postaci wilka. Poza skradaniem ten przycisk to Wypad.',
   'entities.abilities.pounce.name': 'Skradający cios',
+  'entities.abilities.lunge.description':
+    'Rzucasz się na wroga oddalonego o maksymalnie 12 jardów, zadając 60% obrażeń broni i przyznając 1 punkt kombinacji. Tylko w postaci wilka.',
+  'entities.abilities.lunge.name': 'Wypad',
   'entities.abilities.power_word_fortitude.description':
     'Zwiększa Wytrzymałość każdego członka drużyny o {buff}% na 30 min.',
   'entities.abilities.power_word_fortitude.name': 'Litania hartu',

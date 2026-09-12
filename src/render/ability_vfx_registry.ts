@@ -19,7 +19,12 @@ import {
   RUINOUS_BRAND_VFX_FULL_SPEC,
   RUINOUS_BRAND_VFX_SPEC,
 } from './destruction_vfx_specs';
-import { PIN_VFX_FULL_SPEC, PIN_VFX_SPEC } from './druid_vfx_specs';
+import {
+  LUNGE_VFX_FULL_SPEC,
+  LUNGE_VFX_SPEC,
+  PIN_VFX_FULL_SPEC,
+  PIN_VFX_SPEC,
+} from './druid_vfx_specs';
 import {
   ARMY_OF_THE_DEAD_VFX_FULL_SPEC,
   ARMY_OF_THE_DEAD_VFX_SPEC,
@@ -72,6 +77,7 @@ export function abilityVfxSpec(abilityId: string): AbilityVfxSpec | undefined {
   if (abilityId === 'army_of_the_dead') return ARMY_OF_THE_DEAD_VFX_SPEC;
   if (abilityId === 'abyssal_rift') return ABYSSAL_RIFT_VFX_SPEC;
   if (abilityId === 'pin') return PIN_VFX_SPEC;
+  if (abilityId === 'lunge') return LUNGE_VFX_SPEC;
   return ABILITY_VFX_SPECS[abilityId];
 }
 
@@ -97,6 +103,7 @@ export function abilityVfxFullSpec(abilityId: string): AbilityVfxFullSpec | unde
   if (abilityId === 'army_of_the_dead') return ARMY_OF_THE_DEAD_VFX_FULL_SPEC;
   if (abilityId === 'abyssal_rift') return ABYSSAL_RIFT_VFX_FULL_SPEC;
   if (abilityId === 'pin') return PIN_VFX_FULL_SPEC;
+  if (abilityId === 'lunge') return LUNGE_VFX_FULL_SPEC;
   return ABILITY_VFX_FULL_SPECS[abilityId];
 }
 

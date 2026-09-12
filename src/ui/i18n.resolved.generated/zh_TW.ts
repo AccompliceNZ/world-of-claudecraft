@@ -11986,7 +11986,11 @@ export const zh_TW: EnTranslations = {
       },
       "pounce": {
         "name": "匿蹤突襲",
-        "description": "一個潛行開場技，昏迷目標 2 秒。獎勵 1 個連擊點。僅限狼形態。"
+        "description": "一個潛行開場技，昏迷目標 2 秒。獎勵 1 個連擊點。僅限狼形態。 未隱匿時，此按鈕為撲擊。"
+      },
+      "lunge": {
+        "name": "撲擊",
+        "description": "撲向最遠 12 碼外的敵人，造成 60% 武器傷害並獲得 1 個連擊點。僅限狼形態。"
       },
       "insect_swarm": {
         "name": "螫刺蟲群",

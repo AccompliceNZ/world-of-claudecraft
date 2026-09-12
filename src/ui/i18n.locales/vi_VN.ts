@@ -5585,8 +5585,11 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Biến kẻ địch thành một con cóc trong tối đa {duration} giây. Con cóc đi lang thang và hồi máu rất nhanh. Mọi sát thương sẽ phá vỡ hiệu ứng. Chỉ với quái thú và nhân hình.',
   'entities.abilities.polymorph.name': 'Mê Hoặc',
   'entities.abilities.pounce.description':
-    'Một đòn mở màn từ trạng thái ẩn thân làm choáng mục tiêu trong 2 giây. Tặng 1 điểm liên hoàn. Chỉ dùng được ở Hình Sói.',
+    'Một đòn mở màn từ trạng thái ẩn thân làm choáng mục tiêu trong 2 giây. Tặng 1 điểm liên hoàn. Chỉ dùng được ở Hình Sói. Khi không ẩn thân, nút này là Lao Vồ.',
   'entities.abilities.pounce.name': 'Đòn Lẻn Vồ',
+  'entities.abilities.lunge.description':
+    'Lao vào kẻ địch cách xa tới 12 thước, gây 60% sát thương vũ khí và nhận 1 điểm combo. Chỉ dùng được ở Hình Sói.',
+  'entities.abilities.lunge.name': 'Lao Vồ',
   'entities.abilities.power_word_fortitude.description':
     'Tăng Thể Lực của mọi thành viên trong nhóm thêm {buff}% trong 30 phút.',
   'entities.abilities.power_word_fortitude.name': 'Kinh Cầu Kiên Định',

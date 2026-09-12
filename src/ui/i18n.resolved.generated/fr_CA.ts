@@ -11986,7 +11986,11 @@ export const fr_CA: EnTranslations = {
       },
       "pounce": {
         "name": "Frappe furtive",
-        "description": "Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement."
+        "description": "Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement. Hors camouflage, ce bouton devient Bond."
+      },
+      "lunge": {
+        "name": "Bond",
+        "description": "Bondit sur un ennemi jusqu'à 12 m, inflige 60% des dégâts de l'arme et octroie 1 point de combo. Forme de loup uniquement."
       },
       "insect_swarm": {
         "name": "Nuée cinglante",

@@ -7814,8 +7814,11 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
     'Promění nepřítele v ropuchu až na {duration} s. Ropucha bloudí a rychle se léčí. Jakékoli poškození efekt přeruší. Jen bestie a humanoidi.',
   'entities.abilities.polymorph.name': 'Očarování',
   'entities.abilities.pounce.description':
-    'Zahajovací útok z plížení, který omráčí cíl na 2 s. Udělí 1 combo bod. Pouze ve vlčí podobě.',
+    'Zahajovací útok z plížení, který omráčí cíl na 2 s. Udělí 1 combo bod. Pouze ve vlčí podobě. Bez plížení je toto tlačítko Výpad.',
   'entities.abilities.pounce.name': 'Plíživý úder',
+  'entities.abilities.lunge.description':
+    'Vrhni se na nepřítele až 12 yardů daleko, způsob 60 % poškození zbraní a získej 1 combo bod. Pouze ve vlčí podobě.',
+  'entities.abilities.lunge.name': 'Výpad',
   'entities.abilities.power_word_fortitude.description':
     'Zvyšuje Výdrž každého člena skupiny o {buff} % na 30 min.',
   'entities.abilities.power_word_fortitude.name': 'Litanie odhodlání',

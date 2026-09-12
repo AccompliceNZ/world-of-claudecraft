@@ -1273,7 +1273,12 @@ const classAbilityNamesEn = {
       [
         'pounce',
         'Slinkstrike',
-        'A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Wolf Form only.',
+        'A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Wolf Form only. Out of stealth this button is Lunge.',
+      ],
+      [
+        'lunge',
+        'Lunge',
+        'Lunge at an enemy up to 12 yd away, dealing 60% weapon damage and awarding 1 combo point. Wolf Form only.',
       ],
       [
         'insect_swarm',

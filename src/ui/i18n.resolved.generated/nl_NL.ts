@@ -11986,7 +11986,11 @@ export const nl_NL: EnTranslations = {
       },
       "pounce": {
         "name": "Sluipslag",
-        "description": "Een sluipopener die het doelwit 2 sec verdooft. Levert 1 combopunt op. Alleen in Wolfsgedaante."
+        "description": "Een sluipopener die het doelwit 2 sec verdooft. Levert 1 combopunt op. Alleen in Wolfsgedaante. Buiten sluiptocht is deze knop Uitval."
+      },
+      "lunge": {
+        "name": "Uitval",
+        "description": "Stort je op een vijand tot 12 m ver, wat 60% wapenschade toebrengt en 1 combopunt oplevert. Alleen in Wolfsgedaante."
       },
       "insect_swarm": {
         "name": "Stekende Zwerm",

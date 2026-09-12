@@ -11986,7 +11986,11 @@ export const id_ID: EnTranslations = {
       },
       "pounce": {
         "name": "Terkaman Senyap",
-        "description": "Pembuka siluman yang membuat target terpana selama 2 detik. Memberi 1 poin kombo. Hanya dalam Wujud Serigala."
+        "description": "Pembuka siluman yang membuat target terpana selama 2 detik. Memberi 1 poin kombo. Hanya dalam Wujud Serigala. Di luar siluman, tombol ini adalah Terkaman."
+      },
+      "lunge": {
+        "name": "Terkaman",
+        "description": "Terkam musuh hingga 12 yard jauhnya, memberikan 60% kerusakan senjata dan menghasilkan 1 poin kombo. Hanya dalam Wujud Serigala."
       },
       "insect_swarm": {
         "name": "Kerumunan Penyengat",

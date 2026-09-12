@@ -5562,8 +5562,11 @@ export const id_ID: Partial<Record<TranslationKey, string>> = {
     'Mengubah musuh menjadi katak hingga {duration} detik. Katak itu berkeliaran dan menyembuh dengan cepat. Kerusakan apa pun mematahkan efeknya. Hanya hewan buas dan makhluk humanoid.',
   'entities.abilities.polymorph.name': 'Guna-guna',
   'entities.abilities.pounce.description':
-    'Pembuka siluman yang membuat target terpana selama 2 detik. Memberi 1 poin kombo. Hanya dalam Wujud Serigala.',
+    'Pembuka siluman yang membuat target terpana selama 2 detik. Memberi 1 poin kombo. Hanya dalam Wujud Serigala. Di luar siluman, tombol ini adalah Terkaman.',
   'entities.abilities.pounce.name': 'Terkaman Senyap',
+  'entities.abilities.lunge.description':
+    'Terkam musuh hingga 12 yard jauhnya, memberikan 60% kerusakan senjata dan menghasilkan 1 poin kombo. Hanya dalam Wujud Serigala.',
+  'entities.abilities.lunge.name': 'Terkaman',
   'entities.abilities.power_word_fortitude.description':
     'Meningkatkan Stamina setiap anggota kelompok sebesar {buff}% selama 30 menit.',
   'entities.abilities.power_word_fortitude.name': 'Litani Ketabahan',

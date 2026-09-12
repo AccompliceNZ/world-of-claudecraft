@@ -11986,7 +11986,11 @@ export const cs_CZ: EnTranslations = {
       },
       "pounce": {
         "name": "Plíživý úder",
-        "description": "Zahajovací útok z plížení, který omráčí cíl na 2 s. Udělí 1 combo bod. Pouze ve vlčí podobě."
+        "description": "Zahajovací útok z plížení, který omráčí cíl na 2 s. Udělí 1 combo bod. Pouze ve vlčí podobě. Bez plížení je toto tlačítko Výpad."
+      },
+      "lunge": {
+        "name": "Výpad",
+        "description": "Vrhni se na nepřítele až 12 yardů daleko, způsob 60 % poškození zbraní a získej 1 combo bod. Pouze ve vlčí podobě."
       },
       "insect_swarm": {
         "name": "Bodavý roj",

@@ -5387,8 +5387,11 @@ export const da_DK: Partial<Record<TranslationKey, string>> = {
     'Forvandler fjenden til en tudse i op til {duration} sek. Tudsen vandrer omkring og helbredes hurtigt. Enhver skade bryder effekten. Kun bæster og humanoider.',
   'entities.abilities.polymorph.name': 'Forheks',
   'entities.abilities.pounce.description':
-    'En snigeåbner der bedøver målet i 2 sek. Giver 1 kombopoint. Kun i Ulveform.',
+    'En snigeåbner der bedøver målet i 2 sek. Giver 1 kombopoint. Kun i Ulveform. Uden sneg-tilstand er denne knap Spring.',
   'entities.abilities.pounce.name': 'Luskeslag',
+  'entities.abilities.lunge.description':
+    'Spring mod en fjende op til 12 m væk, påfør 60% våbenskade og giv 1 kombopoint. Kun i Ulveform.',
+  'entities.abilities.lunge.name': 'Spring',
   'entities.abilities.power_word_fortitude.description':
     'Øger hvert gruppemedlems Udholdenhed med {buff}% i 30 min.',
   'entities.abilities.power_word_fortitude.name': 'Beslutsomhedens Litani',

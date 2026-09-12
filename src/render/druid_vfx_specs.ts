@@ -24,6 +24,31 @@ export const PIN_VFX_SPEC = {
   a: 'cc',
 } satisfies AbilityVfxSpec;
 
+// VFX retune pending: Lunge, the out-of-stealth Slinkstrike. Bruin Rush's
+// dash (no spectral bear, the wolf is its own body) into Slinkstrike's claw
+// strike at the landing.
+export const LUNGE_VFX_SPEC = {
+  c: '#b4a8e0',
+  p: 'moon',
+  pw: 0.95,
+  sp: 10,
+  rg: 1.2,
+  sm: 1,
+  li: 0.4,
+  lg: 1,
+  a: 'dash',
+} satisfies AbilityVfxSpec;
+
+export const LUNGE_VFX_FULL_SPEC = {
+  archetype: 'dash',
+  palette: 'moon',
+  power: 0.95,
+  windupStyle: 'none',
+  strike: { swings: 1, arc: 'claws', stars: false },
+  impact: { flipbook: false, ring: 1.2, sparks: 8, debris: true, smoke: true, light: 0.4 },
+  linger: 1,
+} satisfies AbilityVfxFullSpec;
+
 export const PIN_VFX_FULL_SPEC = {
   archetype: 'cc',
   palette: 'physical',

@@ -5383,8 +5383,11 @@ export const sv_SE: Partial<Record<TranslationKey, string>> = {
     'Förvandlar fienden till en padda i upp till {duration} sek. Paddan vandrar omkring och läks snabbt. All skada bryter effekten. Endast bestar och humanoider.',
   'entities.abilities.polymorph.name': 'Förhäxa',
   'entities.abilities.pounce.description':
-    'En smygöppnare som bedövar målet i 2 sek. Ger 1 kombopoäng. Endast i vargform.',
+    'En smygöppnare som bedövar målet i 2 sek. Ger 1 kombopoäng. Endast i vargform. Utanför smyg är den här knappen Utfall.',
   'entities.abilities.pounce.name': 'Smyghugg',
+  'entities.abilities.lunge.description':
+    'Kasta dig mot en fiende upp till 12 m bort, tillfoga 60% vapenskada och ge 1 kombopoäng. Endast i vargform.',
+  'entities.abilities.lunge.name': 'Utfall',
   'entities.abilities.power_word_fortitude.description':
     'Ökar varje gruppmedlems Uthållighet med {buff}% i 30 min.',
   'entities.abilities.power_word_fortitude.name': 'Beslutsamhetens litania',

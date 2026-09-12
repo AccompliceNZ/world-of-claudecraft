@@ -3827,8 +3827,11 @@ export const ja_JP: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     '前方へ駆け出し、移動速度を15秒間50%上昇させます。ウルフフォーム専用。',
   'entities.abilities.pounce.name': '忍び強襲',
+  'entities.abilities.lunge.description':
+    '最大12メートル先の敵に飛びかかり、武器ダメージの60%を与えてコンボポイントを1獲得する。ウルフフォーム時のみ使用可能。',
+  'entities.abilities.lunge.name': 'ランジ',
   'entities.abilities.pounce.description':
-    '隠密状態から放つ先制攻撃で、対象を2秒間スタンさせます。コンボポイントを1獲得します。ウルフフォーム専用。',
+    '隠密状態から放つ先制攻撃で、対象を2秒間スタンさせます。コンボポイントを1獲得します。ウルフフォーム専用。 ステルス状態でない場合、このボタンはランジになる。',
   'entities.abilities.insect_swarm.name': '刺す虫の群れ',
   'entities.abilities.insect_swarm.description':
     '敵が虫の群れに襲われ、12秒かけて{damage}の自然ダメージを受けます。',

@@ -5638,8 +5638,11 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Verandert de vijand in een pad gedurende maximaal {duration} sec. De pad dwaalt rond en geneest snel. Elke schade verbreekt het effect. Alleen beesten en humanoïden.',
   'entities.abilities.polymorph.name': 'Beheksen',
   'entities.abilities.pounce.description':
-    'Een sluipopener die het doelwit 2 sec verdooft. Levert 1 combopunt op. Alleen in Wolfsgedaante.',
+    'Een sluipopener die het doelwit 2 sec verdooft. Levert 1 combopunt op. Alleen in Wolfsgedaante. Buiten sluiptocht is deze knop Uitval.',
   'entities.abilities.pounce.name': 'Sluipslag',
+  'entities.abilities.lunge.description':
+    'Stort je op een vijand tot 12 m ver, wat 60% wapenschade toebrengt en 1 combopunt oplevert. Alleen in Wolfsgedaante.',
+  'entities.abilities.lunge.name': 'Uitval',
   'entities.abilities.power_word_fortitude.description':
     'Verhoogt het Uithoudingsvermogen van elk groepslid 30 min lang met {buff}%.',
   'entities.abilities.power_word_fortitude.name': 'Litanie van Vastberadenheid',

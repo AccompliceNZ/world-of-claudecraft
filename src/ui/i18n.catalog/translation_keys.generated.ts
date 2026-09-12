@@ -1719,6 +1719,8 @@ export type TranslationKeyFlat =
   | 'entities.abilities.lightning_shield.name'
   | 'entities.abilities.litany_of_guilt.description'
   | 'entities.abilities.litany_of_guilt.name'
+  | 'entities.abilities.lunge.description'
+  | 'entities.abilities.lunge.name'
   | 'entities.abilities.maledict_gaze.description'
   | 'entities.abilities.maledict_gaze.name'
   | 'entities.abilities.mark_of_the_wild.description'

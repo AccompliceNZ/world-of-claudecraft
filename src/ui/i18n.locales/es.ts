@@ -7089,8 +7089,11 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     'Esprinta hacia delante, aumentando la velocidad de movimiento un 50% durante 15 s. Solo en Forma de lobo.',
   'entities.abilities.pounce.name': 'Golpe Sigiloso',
+  'entities.abilities.lunge.description':
+    'Te abalanzas sobre un enemigo a hasta 12 m, infligiendo un 60% del daño de arma y otorgando 1 punto de combo. Solo en Forma de lobo.',
+  'entities.abilities.lunge.name': 'Embate',
   'entities.abilities.pounce.description':
-    'Apertura desde el sigilo que aturde al objetivo durante 2 s. Otorga 1 punto de combo. Solo en Forma de lobo.',
+    'Apertura desde el sigilo que aturde al objetivo durante 2 s. Otorga 1 punto de combo. Solo en Forma de lobo. Fuera del sigilo, este botón es Embate.',
   'entities.abilities.insect_swarm.name': 'Enjambre Punzante',
   'entities.abilities.insect_swarm.description':
     'Un enjambre de insectos acosa al enemigo, causando {damage} de daño de Naturaleza durante 12 s.',

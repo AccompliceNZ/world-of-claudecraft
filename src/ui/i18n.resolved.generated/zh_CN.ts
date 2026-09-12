@@ -11986,7 +11986,11 @@ export const zh_CN: EnTranslations = {
       },
       "pounce": {
         "name": "匿袭",
-        "description": "一个潜行开场技，昏迷目标 2 秒。奖励 1 个连击点。仅限狼形态。"
+        "description": "一个潜行开场技，昏迷目标 2 秒。奖励 1 个连击点。仅限狼形态。 未潜行时，此按钮为扑击。"
+      },
+      "lunge": {
+        "name": "扑击",
+        "description": "扑向最远12码外的敌人，造成60%武器伤害并获得1个连击点。仅限狼形态使用。"
       },
       "insect_swarm": {
         "name": "蜇刺虫群",

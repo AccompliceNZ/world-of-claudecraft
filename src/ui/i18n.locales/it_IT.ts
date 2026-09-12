@@ -7033,8 +7033,11 @@ export const it_IT: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     'Scatta in avanti, aumentando la velocità di movimento del 50% per 15 sec. Solo Forma del Lupo.',
   'entities.abilities.pounce.name': 'Colpo Strisciante',
+  'entities.abilities.lunge.description':
+    "Balza su un nemico fino a 12 metri di distanza, infliggendo il 60% del danno dell'arma e conferendo 1 punto combo. Solo in Forma del Lupo.",
+  'entities.abilities.lunge.name': 'Balzo',
   'entities.abilities.pounce.description':
-    'Apertura furtiva che stordisce il bersaglio per 2 sec. Conferisce 1 punto combo. Solo Forma del Lupo.',
+    'Apertura furtiva che stordisce il bersaglio per 2 sec. Conferisce 1 punto combo. Solo Forma del Lupo. Fuori dalla furtività questo pulsante è Balzo.',
   'entities.abilities.insect_swarm.name': 'Sciame Pungente',
   'entities.abilities.insect_swarm.description':
     'Il nemico è assalito da uno sciame di insetti, subendo {damage} danni da Natura in 12 sec.',

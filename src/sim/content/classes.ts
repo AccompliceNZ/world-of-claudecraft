@@ -6846,8 +6846,34 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresForm: 'cat',
     requiresStealth: true,
     effects: [{ type: 'stun', duration: 2 }],
+    // Out of stealth the same button is Lunge, the in-combat gap closer
+    // (combat/action_replacement.ts absentAuraKind). The hotbar keeps the
+    // pounce id; Lunge is never learned as a second action.
+    actionReplacement: { abilityId: 'lunge', absentAuraKind: 'stealth' },
     description:
-      'A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Wolf Form only.',
+      'A stealth opener that stuns the target for 2 sec. Awards 1 combo point. Wolf Form only. Out of stealth this button is Lunge.',
+  },
+  lunge: {
+    id: 'lunge',
+    name: 'Lunge',
+    class: 'druid',
+    // Reached only through the Slinkstrike button (learnLevel 7); listed at
+    // the same level for the record, never in the druid kit list.
+    learnLevel: 7,
+    cost: 40,
+    castTime: 0,
+    cooldown: 12,
+    range: 12,
+    minRange: 0,
+    school: 'physical',
+    requiresTarget: true,
+    awardsCombo: 1,
+    requiresForm: 'cat',
+    // The strike lands at cast, the way Bruin Rush's stun does; the body
+    // then runs the charge route (sim.ts updateChargeMovement).
+    effects: [{ type: 'charge' }, { type: 'weaponStrike', bonus: 0, weaponMult: 0.6 }],
+    description:
+      'Lunge at an enemy up to 12 yd away, dealing 60% weapon damage and awarding 1 combo point. Wolf Form only.',
   },
   insect_swarm: {
     id: 'insect_swarm',

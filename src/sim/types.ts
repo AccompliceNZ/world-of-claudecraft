@@ -3642,12 +3642,17 @@ export interface AbilityRank {
 }
 
 // One transform-in-place rule: while the actor wears at least minStacks of the
-// aura kind, the base action resolves as abilityId (see combat/action_replacement.ts).
+// aura kind (auraKind), and/or wears NO aura of absentAuraKind, the base action
+// resolves as abilityId (see combat/action_replacement.ts). A presence rule is
+// a payoff over the base and shares its clock; an absence-only rule is a MODE
+// of the same button (Slinkstrike stealthed, Lunge unstealthed) and keeps the
+// replacement's own cooldown key.
 export interface ActionReplacementRule {
   abilityId: string;
-  auraKind: AuraKind;
+  auraKind?: AuraKind;
   minStacks?: number;
   actorAuraKind?: AuraKind;
+  absentAuraKind?: AuraKind;
 }
 
 export interface AbilityDef {

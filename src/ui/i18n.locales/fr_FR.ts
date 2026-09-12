@@ -7593,8 +7593,11 @@ export const fr_FR: Partial<Record<TranslationKey, string>> = {
   'entities.abilities.dash.description':
     'Bondit en avant, augmentant la vitesse de déplacement de 50% pendant 15 s. Forme de loup uniquement.',
   'entities.abilities.pounce.name': 'Frappe furtive',
+  'entities.abilities.lunge.description':
+    "Bondit sur un ennemi jusqu'à 12 m, inflige 60% des dégâts de l'arme et octroie 1 point de combo. Forme de loup uniquement.",
+  'entities.abilities.lunge.name': 'Bond',
   'entities.abilities.pounce.description':
-    'Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement.',
+    'Ouverture furtive qui étourdit la cible pendant 2 s. Confère 1 point de combo. Forme de loup uniquement. Hors camouflage, ce bouton devient Bond.',
   'entities.abilities.insect_swarm.name': 'Nuée cinglante',
   'entities.abilities.insect_swarm.description':
     "L'ennemi est assailli par une nuée d'insectes, subissant {damage} points de dégâts de Nature sur 12 s.",

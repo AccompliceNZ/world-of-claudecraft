@@ -11986,7 +11986,11 @@ export const it_IT: EnTranslations = {
       },
       "pounce": {
         "name": "Colpo Strisciante",
-        "description": "Apertura furtiva che stordisce il bersaglio per 2 sec. Conferisce 1 punto combo. Solo Forma del Lupo."
+        "description": "Apertura furtiva che stordisce il bersaglio per 2 sec. Conferisce 1 punto combo. Solo Forma del Lupo. Fuori dalla furtività questo pulsante è Balzo."
+      },
+      "lunge": {
+        "name": "Balzo",
+        "description": "Balza su un nemico fino a 12 metri di distanza, infliggendo il 60% del danno dell'arma e conferendo 1 punto combo. Solo in Forma del Lupo."
       },
       "insect_swarm": {
         "name": "Sciame Pungente",
