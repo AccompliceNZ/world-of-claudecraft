@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { FishingBobberVisual } from '../src/render/fishing_bobber';
 import { LAKE } from '../src/sim/content/zone1';
 import { PLAYER_SWIM_DEPTH } from '../src/sim/pathfind';
@@ -52,12 +52,15 @@ describe('FishingBobberVisual water feedback', () => {
       strengths.push(strength);
     });
 
+    // The renderer's per-view loop notes every drawn angler ahead of update.
+    visual.noteAngler(player.id);
     visual.update(0.01, sim.entities, SEED);
     expect(strengths).toEqual([]);
 
     visual.bite(player.id);
     expect(strengths).toEqual([0.65]);
 
+    visual.noteAngler(player.id);
     visual.update(0.55, sim.entities, SEED);
     expect(strengths).toEqual([0.65, 0.38]);
 
@@ -67,5 +70,35 @@ describe('FishingBobberVisual water feedback', () => {
 
     visual.update(0.1, sim.entities, SEED);
     expect(strengths).toEqual([0.65, 0.38, 0.35]);
+  });
+});
+
+describe('FishingBobberVisual idle frames', () => {
+  it('touches no entity when nobody was noted fishing and no bobber is afloat', () => {
+    const sim = new Sim({ seed: SEED, playerClass: 'mage' });
+    const values = vi.spyOn(sim.entities, 'values');
+    const get = vi.spyOn(sim.entities, 'get');
+    const visual = new FishingBobberVisual(new THREE.Scene());
+    for (let frame = 0; frame < 30; frame++) visual.update(1 / 60, sim.entities, SEED);
+    expect(values).not.toHaveBeenCalled();
+    expect(get).not.toHaveBeenCalled();
+  });
+
+  it('sinks the bobber of an angler the renderer stopped noting (the view left the draw range)', () => {
+    const sim = new Sim({ seed: SEED, playerClass: 'mage' });
+    const player = sim.player;
+    const spot = fishingShoreSpot();
+    player.pos.x = spot.x;
+    player.pos.z = spot.z;
+    player.facing = spot.facing;
+    player.castingAbility = FISHING_CAST_ID;
+    const strengths: number[] = [];
+    const visual = new FishingBobberVisual(new THREE.Scene(), (_x, _z, _radius, strength) => {
+      strengths.push(strength);
+    });
+    visual.noteAngler(player.id);
+    visual.update(0.05, sim.entities, SEED);
+    visual.update(0.05, sim.entities, SEED);
+    expect(strengths).toEqual([0.35]);
   });
 });

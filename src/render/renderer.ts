@@ -37,6 +37,7 @@ import type { BiomeId, ZoneDef } from '../sim/types';
 import {
   ALL_CLASSES,
   type Entity,
+  FISHING_CAST_ID,
   IGNIVAR_BOSS_ID,
   isMechWearer,
   type SimEvent,
@@ -10062,6 +10063,7 @@ export class Renderer {
       }
       const visuallyDead = isVisuallyDead(e) && !e.ghost;
       const waterJetVisualChannel = this.waterJetVisualChannels.has(e.id);
+      if (e.castingAbility === FISHING_CAST_ID) this.fishingBobbers.noteAngler(e.id);
       // This is the final render-side casting state, including Water Jet's
       // spellfx-driven channel. It feeds both the rig and the fairness carve-out.
       const characterCasting = characterPresentationCasting(
