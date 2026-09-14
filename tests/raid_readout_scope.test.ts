@@ -3,6 +3,7 @@
 // open-field world with no raid they must touch no entity at all, and inside
 // the instance they must answer exactly what a walk of the whole roster does.
 import { describe, expect, it, vi } from 'vitest';
+import { RIFT_BAND_X_MIN, RIFT_REGION_HALF_X, RIFT_X_MIN } from '../src/sim/data';
 import * as nythraxis from '../src/sim/encounters/nythraxis';
 import { updateVarkhulEncounter, VARKHUL_BOSS_ID } from '../src/sim/encounters/varkhul';
 import { activeIgnivarMeteorWarnings } from '../src/sim/ignivar_meteors';
@@ -81,6 +82,12 @@ describe('raid readouts in the open field', () => {
 });
 
 describe('riftInstanceAtPos', () => {
+  it('rests on the rift band starting exactly at the floor region west edge', () => {
+    // Every rift origin sits at RIFT_X_MIN; the early-out is exact only while
+    // the band's west edge is the region's west edge.
+    expect(RIFT_X_MIN - RIFT_REGION_HALF_X).toBe(RIFT_BAND_X_MIN);
+  });
+
   it('never consults the rift slots for a position outside the rift band', () => {
     const sim = new Sim({ seed: 11, playerClass: 'warrior' });
     let reads = 0;
@@ -124,6 +131,29 @@ function ignivarRoom() {
   return { sim, sentinel };
 }
 
+/** A view of `ctx` whose instance list ends with one synthetic slot owning
+ *  every roster entity no real slot owns: the readouts then see the whole
+ *  roster, exactly as the whole-roster walk did, while every real lookup
+ *  (`find` over the slots) still resolves the real slot first. */
+function wholeRosterCtx(sim: Sim): SimContext {
+  const owned = new Set<number>();
+  for (const inst of sim.instances) for (const id of inst.mobIds) owned.add(id);
+  const rest = [...sim.entities.keys()].filter((id) => !owned.has(id));
+  const instances = [...sim.instances, { mobIds: rest, partyKey: null, dungeonId: '' }];
+  return new Proxy(sim.ctx, {
+    get(target, key, receiver) {
+      return key === 'instances' ? instances : Reflect.get(target, key, receiver);
+    },
+  });
+}
+
+function expectEveryCollectorMatchesTheRosterWalk(sim: Sim): void {
+  const reference = wholeRosterCtx(sim);
+  for (const collect of COLLECTORS) {
+    expect(collect(sim.ctx), collect.name).toEqual(collect(reference));
+  }
+}
+
 describe('raid readouts inside the instance', () => {
   it('answer the Ignivar meteor warnings a whole-roster walk answers', () => {
     const { sim, sentinel } = ignivarRoom();
@@ -137,6 +167,7 @@ describe('raid readouts inside the instance', () => {
     }
     expect(reference.some((w) => w.id.startsWith(`ignivar-trash:${sentinel.id}:`))).toBe(true);
     expect(sim.activeIgnivarMeteors).toEqual(reference);
+    expectEveryCollectorMatchesTheRosterWalk(sim);
   });
 
   it('answer the Varkhul assemblies a whole-roster walk answers', () => {
@@ -170,6 +201,7 @@ describe('raid readouts inside the instance', () => {
     }
     expect(reference.length).toBe(1);
     expect(sim.activeVarkhulAssemblies).toEqual(reference);
+    expectEveryCollectorMatchesTheRosterWalk(sim);
   });
 
   it('answer the Nythraxis gravefires a whole-roster walk answers', () => {
@@ -192,5 +224,27 @@ describe('raid readouts inside the instance', () => {
     }
     expect(reference.length).toBe(1);
     expect(sim.activeNythraxisGravefires).toEqual(reference);
+    expectEveryCollectorMatchesTheRosterWalk(sim);
+  });
+});
+
+describe('a raid boss outside every instance slot', () => {
+  it('has no readouts: the dev-only /dev spawn path is knowingly outside the scope', () => {
+    const sim = new Sim({ seed: 11, playerClass: 'warrior', devCommands: true });
+    const before = sim.entities.size;
+    sim.chat(`/dev spawn ${IGNIVAR_BOSS_ID}`);
+    const boss = [...sim.entities.values()].find((e) => e.templateId === IGNIVAR_BOSS_ID);
+    if (!boss) {
+      // The command did not spawn a boss on this build: nothing to pin.
+      expect(sim.entities.size).toBe(before);
+      return;
+    }
+    expect(sim.instances.some((inst) => inst.mobIds.includes(boss.id))).toBe(false);
+    boss.ignivar = {
+      meteorCastKey: 1,
+      meteorImpactRemaining: 1.4,
+      meteorPoints: [{ x: boss.pos.x, z: boss.pos.z }],
+    } as NonNullable<typeof boss.ignivar>;
+    expect(sim.activeIgnivarMeteors).toEqual([]);
   });
 });

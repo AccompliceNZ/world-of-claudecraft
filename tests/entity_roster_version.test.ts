@@ -2,6 +2,8 @@
 // a per-frame consumer skip its whole-roster walk. Both worlds bump it on every
 // entity add or drop and on nothing else, so a consumer keyed on it re-walks
 // exactly when membership changed.
+import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import { pruneMissingEntities } from '../src/net/despawn_grace';
 import { MOBS } from '../src/sim/data';
@@ -10,6 +12,8 @@ import { addEntityToRoster, dropEntityFromRoster } from '../src/sim/entity_roste
 import { Sim } from '../src/sim/sim';
 import type { Entity } from '../src/sim/types';
 import { bareClient } from './helpers/bare_client';
+import { expectScansOnlyThroughSharedWalkers } from './helpers/scan_guard_self_audit';
+import { tsFilesUnder } from './helpers/ts_files_under';
 
 const wire = (id: number, x: number, k = 'mob', tid = 'ridge_stalker') => ({
   id,
@@ -148,5 +152,35 @@ describe('pruneMissingEntities', () => {
     ).toBe(0);
     expect(entities.has(9)).toBe(true);
     expect(missingSince.has(9)).toBe(false);
+  });
+});
+
+describe('the roster is written only where the version is bumped', () => {
+  // Three per-frame consumers (view candidates, the meters party set, the
+  // rift ambience) key on entityRosterVersion, so a direct entities.set or
+  // entities.delete anywhere else would go stale in all three at once.
+  const ALLOWED = new Set([
+    'entity_roster.ts', // src/sim: addEntityToRoster / dropEntityFromRoster
+    'despawn_grace.ts', // src/net: the online drop, counted by the caller
+    'online.ts', // src/net: the online create, bumped on the next line
+  ]);
+  const WRITE = /\bentities\.(set|delete|clear)\(/;
+
+  it.each(['src/sim', 'src/net'])(
+    '%s writes the entity map only through the roster ops',
+    (root) => {
+      const offenders: string[] = [];
+      const dir = fileURLToPath(new URL(`../${root}`, import.meta.url));
+      for (const { file, full } of tsFilesUnder(dir)) {
+        if (ALLOWED.has(file)) continue;
+        const source = readFileSync(full, 'utf8');
+        if (WRITE.test(source)) offenders.push(`${root}/${file}`);
+      }
+      expect(offenders).toEqual([]);
+    },
+  );
+
+  it('scans through the shared walker only', () => {
+    expectScansOnlyThroughSharedWalkers(import.meta.url, ['ts_files_under']);
   });
 });

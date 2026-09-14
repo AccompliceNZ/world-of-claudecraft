@@ -47,6 +47,7 @@ export class NythraxisMechanicVisuals {
   private readonly sigils: NythraxisBindingSigilVisuals;
   private readonly cages: NythraxisBoundCageVisuals;
   private readonly soulRendMarkers: NythraxisSoulRendMarkers;
+  private readonly painterRoster = { entities: EMPTY_ROSTER };
 
   constructor(scene: THREE.Scene, groundY: (x: number, z: number) => number) {
     this.flames = new NythraxisGraveFlameVisuals(scene, groundY);
@@ -60,7 +61,8 @@ export class NythraxisMechanicVisuals {
     this.flames.syncWorld(world);
     this.gravefires.syncWorld(world);
     this.sigils.syncWorld(world);
-    const roster = { entities: nythraxisPainterRoster(world) };
+    const roster = this.painterRoster;
+    roster.entities = nythraxisPainterRoster(world);
     this.cages.syncWorld(roster);
     this.soulRendMarkers.syncWorld(roster);
   }

@@ -25,8 +25,12 @@ export interface TreeHideIndexEntry {
  *  dozen, most of them skipped once their trees latched. */
 export const TREE_HIDE_CELL_SIZE = 16;
 
-const KEY_BIAS = 0x4000;
-const KEY_SPAN = 0x8000;
+// Cell coordinates are packed into one exact double: +/- 2^16 cells, which at
+// the 16 yd cell is +/- 1,048,576 world units, ten times the farthest
+// instanced band (the rift band ends near x = 109,400). Beyond that a key would
+// alias silently, so the constructor refuses such a tree instead.
+const KEY_BIAS = 0x10000;
+const KEY_SPAN = 0x20000;
 
 function cellKey(cx: number, cz: number): number {
   return (cx + KEY_BIAS) * KEY_SPAN + (cz + KEY_BIAS);
@@ -57,8 +61,13 @@ export class TreeHideIndex {
   constructor(
     trees: readonly TreeHideIndexEntry[],
     readonly cellSize: number = TREE_HIDE_CELL_SIZE,
+    /** The in-flight fades of the index this one replaces (a grown registry
+     *  keeps its earlier trees at the same indices), so a rebuild never strands
+     *  a ghosted tree. */
+    carriedActive: Iterable<number> = [],
   ) {
     this.count = trees.length;
+    for (const i of carriedActive) if (i < trees.length) this.active.add(i);
     this.cellOfTree = new Float64Array(trees.length);
     this.stamp = new Int32Array(trees.length);
     let maxR = 0;
@@ -67,6 +76,9 @@ export class TreeHideIndex {
       if (t.r > maxR) maxR = t.r;
       const cx = Math.floor(t.x / cellSize);
       const cz = Math.floor(t.z / cellSize);
+      if (Math.abs(cx) >= KEY_BIAS || Math.abs(cz) >= KEY_BIAS) {
+        throw new Error(`tree ${i} at (${t.x}, ${t.z}) is outside the hide index's key range`);
+      }
       const key = cellKey(cx, cz);
       this.cellOfTree[i] = key;
       let cell = this.cells.get(key);

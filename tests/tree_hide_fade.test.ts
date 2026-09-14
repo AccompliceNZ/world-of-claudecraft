@@ -20,12 +20,17 @@ function fakeGhosts(): InstancedOccluderGhosts & {
   acquired: number;
   released: number;
   prefetched: number;
+  consulted: number;
 } {
   const pool = {
     acquired: 0,
     released: 0,
     prefetched: 0,
-    allReady: () => true,
+    consulted: 0,
+    allReady: () => {
+      pool.consulted++;
+      return true;
+    },
     ready: () => true,
     prefetch: () => {
       pool.prefetched++;
@@ -144,6 +149,9 @@ describe('updateTreeHides', () => {
     expect(ghostsA.acquired).toBe(ghostsB.acquired);
     expect(ghostsA.released).toBe(ghostsB.released);
     expect(ghostsA.prefetched).toBe(ghostsB.prefetched);
+    // The pool is consulted for the same occlusions (never for every tree).
+    expect(ghostsA.consulted).toBeGreaterThan(0);
+    expect(ghostsA.consulted).toBe(ghostsB.consulted);
   });
 
   it('reads no tree at all on an idle frame away from every trunk', () => {
@@ -170,9 +178,10 @@ describe('updateTreeHides', () => {
     expect(reads).toBe(0);
   });
 
-  it('touches only the cells inside the prefetch reach once their trees latched', () => {
+  it('sweeps the prefetch reach only where a tree is still unlatched', () => {
     let reads = 0;
-    const trees = field(3000, 5).map(
+    // A sparse field (one tree per 20 yd) so a cell's trees are few.
+    const trees = field(3000, 20).map(
       (t) =>
         new Proxy(t, {
           get(target, key, receiver) {
@@ -182,16 +191,16 @@ describe('updateTreeHides', () => {
         }),
     );
     const ghosts = fakeGhosts();
-    // Standing in a clearing inside the field: the segment crosses no trunk
-    // and, after the first frame, every cell in reach has latched.
-    const clearing = trees.findIndex((t) => Math.abs(t.x) < 1 && Math.abs(t.z) < 1);
-    expect(clearing).toBe(-1);
-    updateTreeHides(trees, ghosts, 0, 1.7, 0, 0, 2.4, -1.5, 1 / 60, false);
+    // Standing in a clearing: the first frame latches every tree in reach.
+    updateTreeHides(trees, ghosts, 3, 1.7, 3, 3, 2.4, 1.5, 1 / 60, false);
+    const latched = ghosts.prefetched;
+    expect(latched).toBeGreaterThan(10);
+    // The camera moves a hair: the sweep runs again but skips every cell whose
+    // trees all latched, so the frame reads a few dozen trees, not the field.
     reads = 0;
-    updateTreeHides(trees, ghosts, 0, 1.7, 0, 0, 2.4, -1.5, 1 / 60, false);
-    // A handful of cells' trees for the hit test (about fourteen property
-    // reads each), never the field: fewer reads in total than trees.
-    expect(reads).toBeLessThan(trees.length);
+    updateTreeHides(trees, ghosts, 3, 1.7, 3, 3, 2.4, 1.49, 1 / 60, false);
+    expect(ghosts.prefetched).toBe(latched);
+    expect(reads).toBeLessThan(trees.length / 20);
     expect(ghosts.acquired).toBe(0);
   });
 });
@@ -235,5 +244,43 @@ describe('TreeHideIndex', () => {
       fresh.notePrefetched(i);
     });
     expect(seen).toEqual([0, 1]);
+  });
+});
+
+describe('updateTreeHides over a grown registry', () => {
+  it('keeps an in-flight fade stepping across the index rebuild', () => {
+    const trees = field(400, 6);
+    const ghosts = fakeGhosts();
+    // Find a tree and cross it with the segment until it holds ghosts.
+    const target = trees[0];
+    const eye = [target.x - 3, 1.7, target.z] as const;
+    const cam = [target.x + 3, 2.4, target.z] as const;
+    updateTreeHides(trees, ghosts, eye[0], eye[1], eye[2], cam[0], cam[1], cam[2], 1 / 60, false);
+    expect(target.ghosts.length).toBeGreaterThan(0);
+    // The registry grows (a later build appends), and the camera moves away:
+    // the ghosted tree must still fade back and release its ghosts.
+    trees.push(...field(20, 6).map((t) => ({ ...t, x: t.x + 5000 })));
+    for (let frame = 0; frame < 120; frame++) {
+      updateTreeHides(trees, ghosts, 900, 1.7, 900, 900, 2.4, 891, 1 / 60, false);
+    }
+    expect(target.ghosts.length).toBe(0);
+    expect(target.alpha).toBe(1);
+    expect(ghosts.released).toBe(ghosts.acquired);
+    // And a tree the growth added fades when the segment crosses it.
+    const added = trees[trees.length - 1];
+    updateTreeHides(
+      trees,
+      ghosts,
+      added.x - 3,
+      1.7,
+      added.z,
+      added.x + 3,
+      2.4,
+      added.z,
+      1 / 60,
+      false,
+    );
+    expect(added.ghosts.length).toBeGreaterThan(0);
+    expect(added.hidden).toBe(true);
   });
 });

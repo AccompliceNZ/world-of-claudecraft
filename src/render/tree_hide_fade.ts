@@ -143,7 +143,7 @@ const indexes = new WeakMap<TreeHideable[], TreeHideIndex>();
 function indexFor(trees: TreeHideable[]): TreeHideIndex {
   let index = indexes.get(trees);
   if (!index || index.count !== trees.length) {
-    index = new TreeHideIndex(trees);
+    index = new TreeHideIndex(trees, undefined, index?.active ?? []);
     indexes.set(trees, index);
   }
   return index;

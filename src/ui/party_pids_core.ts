@@ -4,8 +4,11 @@
 // (for the pets) plus two Set allocations. The set only changes when the
 // viewer changes, the member list changes, or an entity joins or leaves the
 // roster (a pet summoned or dismissed), so this keeps the last answer and
-// rebuilds it on exactly those three keys. Callers read the set; they never
-// write into it.
+// rebuilds it on exactly those three keys. A pet's `kind` and `ownerId` are
+// fixed at its creation on both worlds (the online mirror creates an entity
+// only from a record that carries its identity), which is what lets the
+// roster version stand in for them. Callers read the set; they never write
+// into it.
 //
 // Pure (UI_PURE_CORES): no DOM, no i18n, no IWorld import.
 

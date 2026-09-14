@@ -4703,11 +4703,11 @@ export class Renderer {
       this.viewCandidateScan,
       this.sim.entityRosterVersion,
       this.views.size,
-      center.id,
-      center.targetId,
+      center,
       rangeSq,
+      force,
     );
-    if (!force && !scanDue) return;
+    if (!scanDue) return;
     collectMissingViewCandidatesInto(this.viewCandidates, this.viewCandidatePool, {
       entities: this.sim.entities,
       views: this.views,
@@ -9993,6 +9993,7 @@ export class Renderer {
           this.entityViewDestroyRangeSq,
         );
       v.inDrawRange = inDrawRange;
+      if (e.castingAbility === FISHING_CAST_ID) this.fishingBobbers.noteAngler(e.id);
       if (!inDrawRange) {
         v.group.visible = false;
         continue;
@@ -10063,7 +10064,6 @@ export class Renderer {
       }
       const visuallyDead = isVisuallyDead(e) && !e.ghost;
       const waterJetVisualChannel = this.waterJetVisualChannels.has(e.id);
-      if (e.castingAbility === FISHING_CAST_ID) this.fishingBobbers.noteAngler(e.id);
       // This is the final render-side casting state, including Water Jet's
       // spellfx-driven channel. It feeds both the rig and the fairness carve-out.
       const characterCasting = characterPresentationCasting(
@@ -12510,7 +12510,7 @@ export class Renderer {
       // Only at the water's edge / in it, sampled at the player, so a loose
       // threshold made the loop bleed across the low marsh from far off.
       const nearWater = !inDungeon && groundHeight(px, pz, seed) < waterLevelAt(px, pz, seed) + 0.4;
-      this.riftAmbience.collect(this.sim, cpx, this.riftAmbienceScratch);
+      this.riftAmbience.collect(this.sim, this.sim.player.pos.x, this.riftAmbienceScratch);
       // Early-out: no live rift ambience this frame, so skip building the
       // merged array entirely and hand the static set straight through.
       let points: readonly AmbientPointSource[] = this.ambientPointSources;

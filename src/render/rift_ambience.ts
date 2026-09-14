@@ -72,13 +72,15 @@ export class RiftAmbienceSources {
   private rosterVersion = -1;
   private readonly portalIds: number[] = [];
 
+  /** `playerX` is the viewer's own x: the chase camera can trail past the
+   *  band's west edge from a rift room's west wall, the player cannot. */
   collect(
     world: { entities: ReadonlyMap<number, Entity>; entityRosterVersion: number },
-    cameraX: number,
+    playerX: number,
     out: AmbientPointSource[],
   ): void {
     const { entities, entityRosterVersion: rosterVersion } = world;
-    if (isRiftPos(cameraX)) {
+    if (isRiftPos(playerX)) {
       this.rosterVersion = -1;
       collectRiftAmbientSources(entities, out);
       return;

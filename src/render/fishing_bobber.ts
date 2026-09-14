@@ -24,6 +24,9 @@ const BITE_JITTER_AMPLITUDE = 0.09;
 const BITE_JITTER_SPEED = 14;
 const SPLASH_PERIOD = 0.55;
 const SINK_DURATION = 0.35;
+/** Far more anglers than a view set can hold: only a frame that skipped
+ *  update could ever reach it. */
+const MAX_NOTED_ANGLERS = 512;
 
 interface BobberInstance {
   group: THREE.Group;
@@ -72,10 +75,11 @@ export class FishingBobberVisual {
     }
   }
 
-  /** Called once per frame per drawn entity whose cast is the fishing
-   *  sentinel; the next update drives that angler's bobber. */
+  /** Called once per frame per viewed entity whose cast is the fishing
+   *  sentinel; the next update drives that angler's bobber and drains the
+   *  list. Bounded so a frame that never reaches update cannot grow it. */
   noteAngler(id: number): void {
-    this.anglers.push(id);
+    if (this.anglers.length < MAX_NOTED_ANGLERS) this.anglers.push(id);
   }
 
   update(dt: number, entities: ReadonlyMap<number, Entity>, seed: number): void {

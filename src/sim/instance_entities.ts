@@ -4,7 +4,11 @@
 // instance through), so a readout that walks the slots' mob lists instead of
 // the whole roster does the same work inside the instance and none of it in
 // the open field, where the world has thousands of entities and no raid. A
-// free slot holds no mob ids, and a stale id resolves to nothing.
+// free slot holds no mob ids, and a stale id resolves to nothing. The one
+// path that puts a raid boss in no slot is the dev-only `/dev spawn <boss>`
+// (dev_commands.ts spawnMobsForDev, never a player path): such a boss keeps
+// its drivers but shows no telegraph readouts; the sanctioned dev raids all
+// enter through enterDungeon and are covered.
 import type { SimContext } from './sim_context';
 import type { Entity } from './types';
 

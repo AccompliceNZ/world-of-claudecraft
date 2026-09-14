@@ -32,11 +32,25 @@ import {
  *  the edge is invisible while the walk itself is not. */
 export const VIEW_CANDIDATE_RESCAN_FRAMES = 4;
 
+/** A center that jumped farther than this since the last scan (a teleport, a
+ *  rift or dungeon entry) rescans at once: the last ranked list describes the
+ *  old spot and would spend the frame's creation budget on entities the drop
+ *  pass then retires. A running player covers well under a yard per frame. */
+export const VIEW_CANDIDATE_RESCAN_MOVE_YD = 8;
+
+export interface ViewCandidateScanCenter {
+  id: number;
+  targetId: number | null;
+  pos: { x: number; z: number };
+}
+
 export interface ViewCandidateScanState {
   rosterVersion: number;
   viewCount: number;
   centerId: number;
   targetId: number | null;
+  centerX: number;
+  centerZ: number;
   rangeSq: number;
   /** Frames since the last scan; -1 before the first. */
   framesSinceScan: number;
@@ -48,37 +62,46 @@ export function createViewCandidateScanState(): ViewCandidateScanState {
     viewCount: -1,
     centerId: -1,
     targetId: null,
+    centerX: Number.NaN,
+    centerZ: Number.NaN,
     rangeSq: -1,
     framesSinceScan: -1,
   };
 }
 
-/** Whether this frame walks the roster; records the frame either way. */
+/** Whether this frame walks the roster; records the frame either way. A
+ *  `force`d frame always walks and records its keys like any other scan. */
 export function viewCandidateScanDue(
   state: ViewCandidateScanState,
   rosterVersion: number,
   viewCount: number,
-  centerId: number,
-  targetId: number | null,
+  center: ViewCandidateScanCenter,
   rangeSq: number,
+  force = false,
   cadenceFrames: number = VIEW_CANDIDATE_RESCAN_FRAMES,
 ): boolean {
+  const dx = center.pos.x - state.centerX;
+  const dz = center.pos.z - state.centerZ;
   const due =
+    force ||
     state.framesSinceScan < 0 ||
     state.framesSinceScan + 1 >= cadenceFrames ||
     state.rosterVersion !== rosterVersion ||
     state.viewCount !== viewCount ||
-    state.centerId !== centerId ||
-    state.targetId !== targetId ||
-    state.rangeSq !== rangeSq;
+    state.centerId !== center.id ||
+    state.targetId !== center.targetId ||
+    state.rangeSq !== rangeSq ||
+    !(dx * dx + dz * dz <= VIEW_CANDIDATE_RESCAN_MOVE_YD * VIEW_CANDIDATE_RESCAN_MOVE_YD);
   if (!due) {
     state.framesSinceScan++;
     return false;
   }
   state.rosterVersion = rosterVersion;
   state.viewCount = viewCount;
-  state.centerId = centerId;
-  state.targetId = targetId;
+  state.centerId = center.id;
+  state.targetId = center.targetId;
+  state.centerX = center.pos.x;
+  state.centerZ = center.pos.z;
   state.rangeSq = rangeSq;
   state.framesSinceScan = 0;
   return true;

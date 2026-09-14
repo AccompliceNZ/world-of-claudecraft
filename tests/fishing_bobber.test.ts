@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import * as THREE from 'three';
 import { describe, expect, it, vi } from 'vitest';
 import { FishingBobberVisual } from '../src/render/fishing_bobber';
@@ -7,6 +8,7 @@ import { FISHING_SAMPLE_DISTANCES } from '../src/sim/professions/fishing';
 import { Sim } from '../src/sim/sim';
 import { FISHING_CAST_ID } from '../src/sim/types';
 import { groundHeight, waterLevelAt } from '../src/sim/world';
+import { codeWithoutLineComments } from './helpers/code_without_line_comments';
 
 const SEED = 1;
 
@@ -100,5 +102,27 @@ describe('FishingBobberVisual idle frames', () => {
     visual.update(0.05, sim.entities, SEED);
     visual.update(0.05, sim.entities, SEED);
     expect(strengths).toEqual([0.35]);
+  });
+});
+
+describe('the renderer is the one producer of noted anglers', () => {
+  it('notes every viewed angler in the per-view loop, culled or not, before the bobbers update', () => {
+    const renderer = codeWithoutLineComments(
+      readFileSync(new URL('../src/render/renderer.ts', import.meta.url), 'utf8'),
+    );
+    const note = renderer.indexOf(
+      'if (e.castingAbility === FISHING_CAST_ID) this.fishingBobbers.noteAngler(e.id);',
+    );
+    expect(note).toBeGreaterThan(-1);
+    // Inside the view loop, ahead of the draw-range rejection that hides a far view.
+    const loop = renderer.lastIndexOf('for (const [id, v] of this.views) {', note);
+    const cull = renderer.indexOf('if (!inDrawRange) {', loop);
+    expect(loop).toBeGreaterThan(-1);
+    expect(note).toBeLessThan(cull);
+    const update = renderer.indexOf(
+      'this.fishingBobbers.update(dt, this.sim.entities, this.sim.cfg.seed);',
+    );
+    expect(update).toBeGreaterThan(note);
+    expect(renderer.split('.noteAngler(')).toHaveLength(2);
   });
 });

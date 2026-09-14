@@ -1,6 +1,7 @@
 // The missing-view candidate scan (view_candidate_scan_core.ts): the walk
 // itself, and when it runs. The fairness pin is the roster one: an entity
 // that joins the world gets its candidate on the very next frame.
+import { readFileSync } from 'node:fs';
 import { describe, expect, it, vi } from 'vitest';
 import { makeQuestObjectGate } from '../src/render/quest_object_gate_core';
 import type { ViewCandidate } from '../src/render/view_candidate_pool_core';
@@ -9,11 +10,13 @@ import {
   collectMissingViewCandidatesInto,
   createViewCandidateScanState,
   VIEW_CANDIDATE_RESCAN_FRAMES,
+  VIEW_CANDIDATE_RESCAN_MOVE_YD,
   viewCandidateScanDue,
 } from '../src/render/view_candidate_scan_core';
 import { MOBS } from '../src/sim/data';
 import { createMob, createPlayer } from '../src/sim/entity';
 import type { Entity, QuestProgress } from '../src/sim/types';
+import { codeWithoutLineComments } from './helpers/code_without_line_comments';
 
 const mob = (id: number, x: number, z = 0): Entity =>
   createMob(id, MOBS.ridge_stalker, 3, { x, y: 0, z });
@@ -71,7 +74,16 @@ describe('viewCandidateScanDue', () => {
     center = 1,
     target: number | null = null,
     range = 6400,
-  ) => viewCandidateScanDue(state, roster, views, center, target, range);
+    x = 0,
+    z = 0,
+  ) =>
+    viewCandidateScanDue(
+      state,
+      roster,
+      views,
+      { id: center, targetId: target, pos: { x, z } },
+      range,
+    );
 
   it('scans on the first frame, then rests until the cadence elapses', () => {
     const state = createViewCandidateScanState();
@@ -104,13 +116,46 @@ describe('viewCandidateScanDue', () => {
     expect(due(state, 1, 5, 2, 77, 1000)).toBe(false);
   });
 
+  it('a forced scan walks at once and records its keys like any other scan', () => {
+    const state = createViewCandidateScanState();
+    expect(due(state, 1, 4)).toBe(true);
+    expect(
+      viewCandidateScanDue(state, 2, 9, { id: 1, targetId: null, pos: { x: 0, z: 0 } }, 6400, true),
+    ).toBe(true);
+    // The forced frame's keys are the recorded ones: the same inputs rest.
+    expect(due(state, 2, 9)).toBe(false);
+  });
+
+  it('scans at once when the center jumped (a teleport), not for a running step', () => {
+    const state = createViewCandidateScanState();
+    expect(due(state)).toBe(true);
+    expect(due(state, 1, 4, 1, null, 6400, 0.4, 0)).toBe(false);
+    expect(due(state, 1, 4, 1, null, 6400, VIEW_CANDIDATE_RESCAN_MOVE_YD + 1, 0)).toBe(true);
+    expect(due(state, 1, 4, 1, null, 6400, VIEW_CANDIDATE_RESCAN_MOVE_YD + 1, 0)).toBe(false);
+  });
+
+  it('is fed the roster version and forced by the boot prewarm in the renderer', () => {
+    const renderer = codeWithoutLineComments(
+      readFileSync(new URL('../src/render/renderer.ts', import.meta.url), 'utf8'),
+    );
+    const method = renderer.slice(renderer.indexOf('private collectMissingViewCandidates('));
+    const body = method.slice(0, method.indexOf('\n  }\n'));
+    expect(body).toContain('this.sim.entityRosterVersion,');
+    expect(body).toContain('this.views.size,');
+    expect(body).toContain('if (!scanDue) return;');
+    expect(renderer).toContain(
+      'this.collectMissingViewCandidates(p, VIEW_PREWARM_RANGE_SQ, false, true);',
+    );
+  });
+
   it('never walks the roster on a rested frame', () => {
     const state = createViewCandidateScanState();
     const entities = new Map<number, Entity>();
     const values = vi.spyOn(entities, 'values');
     const player = createPlayer(1, 'warrior', { x: 0, y: 0, z: 0 }, 'Probe');
     const frame = () => {
-      if (!viewCandidateScanDue(state, 1, 0, 1, null, 6400)) return;
+      if (!viewCandidateScanDue(state, 1, 0, { id: 1, targetId: null, pos: { x: 0, z: 0 } }, 6400))
+        return;
       collectMissingViewCandidatesInto([], [], {
         entities,
         views: new Set(),

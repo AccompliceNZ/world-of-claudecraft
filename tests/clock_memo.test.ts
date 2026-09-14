@@ -3,6 +3,7 @@
 // and reads exactly what formatClockTime reads at every instant.
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { formatClockTime, formatClockTimeMemo } from '../src/ui/clock';
+import { getLanguage, setLanguage } from '../src/ui/i18n';
 
 // A fixed local instant one millisecond before a minute boundary.
 const at = (h: number, m: number, s: number, ms: number) =>
@@ -64,5 +65,21 @@ describe('formatClockTimeMemo', () => {
     expect(formatterBuilds).toBe(after + 4);
     formatClockTimeMemo(start + 60_000, false, 'fr_FR');
     expect(formatterBuilds).toBe(after + 4);
+  });
+});
+
+describe('formatClockTimeMemo with no explicit language (the HUD call shape)', () => {
+  it('follows the active language on the very next read after a switch', () => {
+    const initial = getLanguage();
+    try {
+      setLanguage('en');
+      const t = at(15, 8, 0, 0);
+      expect(formatClockTimeMemo(t, false)).toBe('3:08 PM');
+      setLanguage('ja_JP');
+      expect(formatClockTimeMemo(t, false)).toBe(formatClockTime(new Date(t), false, 'ja_JP'));
+      expect(formatClockTimeMemo(t, false)).not.toBe('3:08 PM');
+    } finally {
+      setLanguage(initial);
+    }
   });
 });
