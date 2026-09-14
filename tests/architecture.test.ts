@@ -209,6 +209,7 @@ describe('live graphics profile architecture', () => {
 // import), so it is registered here even though it lives in src/game. Paths are
 // repo-relative for the failure messages.
 const UI_PURE_CORES = [
+  'src/ui/party_pids_core.ts',
   // The one face-button tone rule, shared by the interact prompt and the pad
   // hint strip so a printed glyph and its colour can never disagree.
   'src/ui/micro_menu_state_view.ts',
