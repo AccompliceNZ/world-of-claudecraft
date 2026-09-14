@@ -271,12 +271,10 @@ import { buildEmberFeatures, type EmberFeaturesView } from './ember_features';
 import { buildEmberPools, type EmberPoolsView } from './ember_pools';
 import { applyCharacterFormVisibility } from './entity_gate_stand_in_core';
 import {
-  entityViewCandidatePriority,
   entityViewDistanceSq,
   entityViewIsAdmitted,
   isDistanceCullExemptObject,
   isPersistentPortalObject,
-  entityViewShouldDrop as shouldDropView,
   viewBuildClass,
 } from './entity_view_policy_core';
 import { EntryDetailHorizonAdmission } from './entry_detail_horizon';
@@ -763,12 +761,13 @@ import type { VehicleSuspensionRig } from './vehicle_suspension_fx';
 import { SCHOOL_COLORS, Vfx } from './vfx';
 import { createOffsetVfxAnchor, createVfxAnchor, type VfxAnchorPose } from './vfx_anchor';
 import { buildCastVfxBasicStandIns } from './vfx_basic_materials';
+import { sampleCreatedViewType, type ViewCandidate } from './view_candidate_pool_core';
 import {
-  finishViewCandidates,
-  sampleCreatedViewType,
-  type ViewCandidate,
-  writeViewCandidate,
-} from './view_candidate_pool_core';
+  collectDoomedViewsInto,
+  collectMissingViewCandidatesInto,
+  createViewCandidateScanState,
+  viewCandidateScanDue,
+} from './view_candidate_scan_core';
 import {
   runtimeViewCreateBudget,
   type ViewCreateBudgetInput,
@@ -1467,6 +1466,7 @@ export class Renderer {
   private tmpV = new THREE.Vector3();
   private viewCandidates: ViewCandidate[] = [];
   private viewCandidatePool: ViewCandidate[] = [];
+  private readonly viewCandidateScan = createViewCandidateScanState();
   private readonly characterLodPlan: CharacterLodBands = {
     shadowRangeSq: 0,
     lodRangeSq: 0,
@@ -4690,31 +4690,31 @@ export class Renderer {
     return runtimeViewCreateBudget(input, this.viewCreateBudgetState);
   }
 
+  // The walk runs when view_candidate_scan_core says so unless forced.
   private collectMissingViewCandidates(
     center: Entity,
     rangeSq: number,
     includeRequired: boolean,
+    force = false,
   ): void {
-    let count = 0;
-    const questLog = this.sim.questLog;
-    for (const e of this.sim.entities.values()) {
-      if (this.views.has(e.id)) continue;
-      if (!entityViewIsAdmitted(e, questLog, this.questObjectHidden)) continue;
-      const required = e.id === center.id || e.id === center.targetId;
-      if (required && !includeRequired) continue;
-      const d2 = entityViewDistanceSq(e, center);
-      if (!required && d2 > rangeSq && !isDistanceCullExemptObject(e)) continue;
-      writeViewCandidate(
-        this.viewCandidatePool,
-        this.viewCandidates,
-        count,
-        e.id,
-        d2,
-        entityViewCandidatePriority(e, center, d2),
-      );
-      count++;
-    }
-    finishViewCandidates(this.viewCandidates, count);
+    const scanDue = viewCandidateScanDue(
+      this.viewCandidateScan,
+      this.sim.entityRosterVersion,
+      this.views.size,
+      center.id,
+      center.targetId,
+      rangeSq,
+    );
+    if (!force && !scanDue) return;
+    collectMissingViewCandidatesInto(this.viewCandidates, this.viewCandidatePool, {
+      entities: this.sim.entities,
+      views: this.views,
+      questLog: this.sim.questLog,
+      questObjectHidden: this.questObjectHidden,
+      center,
+      rangeSq,
+      includeRequired,
+    });
   }
 
   private createRequiredView(id: number | null, createdViewTypes: string[]): number {
@@ -6109,7 +6109,7 @@ export class Renderer {
         priority: 20,
         required: true,
         run: () => {
-          this.collectMissingViewCandidates(p, VIEW_PREWARM_RANGE_SQ, false);
+          this.collectMissingViewCandidates(p, VIEW_PREWARM_RANGE_SQ, false, true);
           candidateViews = this.viewCandidates.length;
           const result = this.createCandidateViews(
             nearbyPrewarmViewBudget(policy.maxViews, createdViews, policy.nearbyViewFloor),
@@ -9931,16 +9931,13 @@ export class Renderer {
       Infinity,
       true,
     ).created;
-    this.doomedIds.length = 0;
-    for (const id of this.views.keys()) {
-      const e = sim.entities.get(id);
-      // The pure policy also retires quest objects after turn-in or abandon.
-      if (
-        shouldDropView(e, p, sim.questLog, this.questObjectHidden, this.entityViewDestroyRangeSq)
-      ) {
-        this.doomedIds.push(id);
-      }
-    }
+    collectDoomedViewsInto(this.doomedIds, this.views.keys(), {
+      entities: sim.entities,
+      questLog: sim.questLog,
+      questObjectHidden: this.questObjectHidden,
+      center: p,
+      destroyRangeSq: this.entityViewDestroyRangeSq,
+    });
     for (const id of this.doomedIds) {
       this.removeView(id);
       removedViews++;
