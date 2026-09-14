@@ -2052,8 +2052,25 @@ function profileFromHints(
 }
 
 /** Capture device and live-adapter facts without reading graphics preferences. */
+// The adapter string each three renderer's boot capture read, by renderer:
+// the one place a later consumer (the shader corpus record) takes it from
+// instead of issuing the same synchronous UNMASKED_RENDERER_WEBGL query a
+// second time.
+const GPU_RENDERER_NAMES = new WeakMap<object, string>();
+
+/** Records the adapter string read off `renderer`'s context. */
+export function rememberGpuRendererName(renderer: object, name: string): void {
+  GPU_RENDERER_NAMES.set(renderer, name);
+}
+
+/** The adapter string the boot capture read off `renderer`, if it ran. */
+export function rememberedGpuRendererName(renderer: object): string | undefined {
+  return GPU_RENDERER_NAMES.get(renderer);
+}
+
 export function captureGfxCapabilities(webgl: THREE.WebGLRenderer): GfxCapabilities {
   const gpuRenderer = rendererName(webgl);
+  rememberGpuRendererName(webgl, gpuRenderer);
   return Object.freeze({
     ...runtimeDeviceHints(),
     gpuRenderer,
