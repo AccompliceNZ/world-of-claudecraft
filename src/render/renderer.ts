@@ -659,7 +659,7 @@ import { createRevealGate } from './reveal_gate';
 import type { RevealGateCore } from './reveal_gate_core';
 import { type RickshawMountViewState, updateRollingMountLoop } from './rickshaw_mount';
 import { FOOT_RUN_SPEED, updateRiddenMountAudio } from './ridden_mount_audio';
-import { collectRiftAmbientSources } from './rift_ambience';
+import { RiftAmbienceSources } from './rift_ambience';
 import { buildRiftRankBadge } from './rift_rank';
 import { syncRigMatrixFreeze, unfreezeRigMatrices } from './rig_visibility_freeze';
 import { RingOfFrostVisuals } from './ring_of_frost_visual';
@@ -1905,6 +1905,7 @@ export class Renderer {
   // updateCamera: avoids allocating two arrays plus an object per match every
   // frame regardless of whether a rift is nearby (review finding, PR #2687).
   private readonly riftAmbienceScratch: AmbientPointSource[] = [];
+  private readonly riftAmbience = new RiftAmbienceSources();
   private readonly ambientPointsMergedScratch: AmbientPointSource[] = [];
 
   // 2v2 Fiesta juice: trauma-based screen shake (decays each frame). The
@@ -12507,7 +12508,7 @@ export class Renderer {
       // Only at the water's edge / in it, sampled at the player, so a loose
       // threshold made the loop bleed across the low marsh from far off.
       const nearWater = !inDungeon && groundHeight(px, pz, seed) < waterLevelAt(px, pz, seed) + 0.4;
-      collectRiftAmbientSources(this.sim.entities, this.riftAmbienceScratch);
+      this.riftAmbience.collect(this.sim, cpx, this.riftAmbienceScratch);
       // Early-out: no live rift ambience this frame, so skip building the
       // merged array entirely and hand the static set straight through.
       let points: readonly AmbientPointSource[] = this.ambientPointSources;
