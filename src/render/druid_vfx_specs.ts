@@ -1,6 +1,6 @@
 import type { AbilityVfxFullSpec, AbilityVfxSpec } from './ability_vfx_core';
 
-// Wildfang kit pass 2 (Pin, Lunge, Hamstring Bite) placeholder identities.
+// Wildfang kit pass 2 (Pin, Lunge, Takedown) placeholder identities.
 // Every spec here is a clearly labelled PLACEHOLDER borrowed from the nearest
 // shipped druid read (Bruin Rush's dash, Slinkstrike's claw strike, Hobbling
 // Cut's victim-worn speedlines) so the new actions are not silent while the
@@ -49,7 +49,7 @@ export const LUNGE_VFX_FULL_SPEC = {
   linger: 1,
 } satisfies AbilityVfxFullSpec;
 
-// VFX retune pending: Hamstring Bite, the Wolf control finisher. Slinkstrike's
+// VFX retune pending: Takedown (id hamstring_bite), the Wolf control finisher. Slinkstrike's
 // claw strike (stars on, the stun read Concuss and Low Blow share).
 export const HAMSTRING_BITE_VFX_SPEC = {
   c: '#d41f2e',

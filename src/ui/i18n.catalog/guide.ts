@@ -1341,7 +1341,7 @@ export const guideStrings = {
     // The Wolf engage loop (Wildfang kit pass 2): names the abilities, never
     // their numbers, so the sentence stays spoiler-safe.
     formsWolfEngage:
-      'A Wolf opens a fight with Bruin Rush, shifts straight into Wolf Form to Pin the target, closes the gap with Lunge when it is not stalking, and holds an enemy still with Hamstring Bite.',
+      'A Wolf opens a fight with Bruin Rush, shifts straight into Wolf Form to Pin the target, closes the gap with Lunge when it is not stalking, and holds an enemy still with Takedown.',
     formLine: {
       form_bear:
         'The tanking shape: a heavy hide, rage instead of mana, and extra threat so enemies keep swinging at you.',

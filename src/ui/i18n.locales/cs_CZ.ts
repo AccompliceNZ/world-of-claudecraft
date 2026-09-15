@@ -946,7 +946,7 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsMoonwing':
     'Druid Měsíčního háje získá ještě jednu podobu, Podobu měsíčního křídla, v níž bojuje jako sesilatel. Je to jediná zvířecí podoba, která si ponechá tvá kouzla, a hůlka funguje jen v ní nebo v tvé běžné sesilatelské podobě.',
   'guide.classPage.formsWolfEngage':
-    'Vlk zahajuje boj Medvědím výpadem, hned se přemění do Vlčí podoby, aby cíl přišpendlil, mimo plížení se přiblíží Výpadem a nepřítele zastaví Kousnutím do šlach.',
+    'Vlk zahajuje boj Medvědím výpadem, hned se přemění do Vlčí podoby, aby cíl přišpendlil, mimo plížení se přiblíží Výpadem a nepřítele zastaví Sražením.',
   'guide.classPage.formsNote':
     'Druid bojuje měněním podoby. Většina druidských schopností patří k jedné podobě, takže to, v jaké jsi právě podobě, rozhoduje, co můžeš seslat, a přeměna stojí trochu many. Měnit podobu můžeš v boji i mimo něj, tak často, jak chceš.',
   'guide.classPage.mageEleHeading': 'Vodní elementál',
@@ -7822,8 +7822,8 @@ export const cs_CZ: Partial<Record<TranslationKey, string>> = {
     'Vrhni se na nepřítele až 12 yardů daleko, způsob 60 % poškození zbraní a získej 1 combo bod. Pouze ve vlčí podobě.',
   'entities.abilities.lunge.name': 'Výpad',
   'entities.abilities.hamstring_bite.description':
-    'Zakončovací pohyb, který omráčí cíl na 0,5 s plus 0,5 s za každý combo bod. Pouze ve vlčí podobě.',
-  'entities.abilities.hamstring_bite.name': 'Kousnutí do šlach',
+    'Dokončovací útok, který omráčí cíl na 1 s plus 1 s za combo bod (5 combo bodů: 6 s). Pouze ve vlčí podobě.',
+  'entities.abilities.hamstring_bite.name': 'Sražení',
   'entities.abilities.power_word_fortitude.description':
     'Zvyšuje Výdrž každého člena skupiny o {buff} % na 30 min.',
   'entities.abilities.power_word_fortitude.name': 'Litanie odhodlání',

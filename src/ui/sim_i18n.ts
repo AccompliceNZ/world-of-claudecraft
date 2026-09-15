@@ -14367,9 +14367,23 @@ const WARLOCK_TALENT_AURA_NAMES: ReadonlySet<string> = new Set([
   'Forbidden Reflection',
 ]);
 
+// Engine auras named after the ability that opened them: the Bruin Rush Pin
+// window and the Bruin Rush stun (combat/druid_engines.ts, the stun arm of
+// combat/effect_dispatch.ts) and the Lunge in-flight marker
+// (combat/druid_lunge.ts). Their aura ids are not ABILITIES keys, so the
+// HUD's ability-name fallback never fires for them; resolve the name to the
+// ability's localized name here so the buff bar and combat log never paint
+// raw English in a non-English locale.
+const ABILITY_NAMED_AURA_IDS: Readonly<Record<string, string>> = {
+  'Bruin Rush': 'bear_charge',
+  Lunge: 'lunge',
+};
+
 export function localizeSimAuraName(name: string): string | null {
   const key = AURA_NAME_KEY[name];
   if (key) return tSim(key);
+  const namedAbilityId = ABILITY_NAMED_AURA_IDS[name];
+  if (namedAbilityId) return tEntity({ kind: 'ability', id: namedAbilityId, field: 'name' });
   if (name === 'Condemnation') return t('hudChrome.warlock.doomLabel');
   if (name === 'Fate Threads') return t('hudChrome.warlock.fateThreadsLabel');
   if (name === 'Soul Fragments') return t('hudChrome.procOverlay.soulFragmentsMeter');

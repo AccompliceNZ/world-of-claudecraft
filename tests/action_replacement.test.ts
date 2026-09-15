@@ -212,3 +212,24 @@ describe('replacement rank resolution', () => {
     expect(finisherOf(out)).toMatchObject({ base: 35, perCombo: 20 });
   });
 });
+
+describe('actionReplacement content pin', () => {
+  it('every rule names an aura kind that must be present or absent, and a real ability', () => {
+    // A rule naming neither kind never matches in the resolver, so a typo in a
+    // content field would hide as a button that quietly never transforms.
+    for (const def of Object.values(ABILITIES)) {
+      const rules = def.actionReplacement;
+      if (!rules) continue;
+      for (const rule of Array.isArray(rules) ? rules : [rules]) {
+        expect(
+          rule.auraKind !== undefined || rule.absentAuraKind !== undefined,
+          `${def.id}: actionReplacement -> ${rule.abilityId} names neither auraKind nor absentAuraKind`,
+        ).toBe(true);
+        expect(
+          ABILITIES[rule.abilityId],
+          `${def.id}: unknown replacement ${rule.abilityId}`,
+        ).toBeDefined();
+      }
+    }
+  });
+});

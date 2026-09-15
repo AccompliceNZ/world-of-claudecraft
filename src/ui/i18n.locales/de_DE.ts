@@ -990,7 +990,7 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsMoonwing':
     'Ein Gleichgewichts-Druide erhält eine weitere Gestalt, die Mondkingestalt, die Zaubergestalt, in der er kämpft. Sie ist die einzige Tiergestalt, die deine Zauber behält, und dein Zauberstab funktioniert nur in ihr oder in deiner gewöhnlichen Zaubergestalt.',
   'guide.classPage.formsWolfEngage':
-    'Ein Wolf eröffnet den Kampf mit Bruin-Ansturm, wechselt sofort in die Wolfsgestalt, um das Ziel festzunageln, schließt die Lücke mit Ansprung, wenn er nicht schleicht, und hält einen Gegner mit Sehnenbiss fest.',
+    'Ein Wolf eröffnet den Kampf mit Bruin-Ansturm, wechselt sofort in die Wolfsgestalt, um das Ziel festzunageln, schließt die Lücke mit Ansprung, wenn er nicht schleicht, und hält einen Gegner mit Niederreißen fest.',
   'guide.classPage.formsNote':
     'Ein Druide kämpft, indem er die Gestalt wechselt. Die meisten Druidenfähigkeiten gehören zu einer bestimmten Gestalt, sodass die Form, in der du dich befindest, entscheidet, was du wirken kannst, und der Wechsel kostet etwas Mana. Du kannst innerhalb oder außerhalb des Kampfes wechseln, so oft du willst.',
   'guide.classPage.mageEleHeading': 'Wasserelementar',
@@ -7059,8 +7059,8 @@ export const de_DE: Partial<Record<TranslationKey, string>> = {
     'Springt einen bis zu 12 m entfernten Gegner an, verursacht 60% Waffenschaden und gewährt 1 Combopunkt. Nur in Wolfsgestalt.',
   'entities.abilities.lunge.name': 'Ansprung',
   'entities.abilities.hamstring_bite.description':
-    'Abschlussangriff, der das Ziel 0,5 Sek. plus 0,5 Sek. je Combopunkt betäubt. Nur in Wolfsgestalt.',
-  'entities.abilities.hamstring_bite.name': 'Sehnenbiss',
+    'Finishing-Move, der das Ziel 1 Sek. plus 1 Sek. pro Combopunkt betäubt (5 Combopunkte: 6 Sek.). Nur in Wolfsgestalt.',
+  'entities.abilities.hamstring_bite.name': 'Niederreißen',
   'entities.abilities.pounce.description':
     'Ein Eröffnungsangriff aus der Verstohlenheit, der das Ziel 2 Sek. lang betäubt. Gewährt 1 Combopunkt. Nur in Wolfsgestalt. Außerhalb des Schleichmodus ist diese Taste Ansprung.',
   'entities.abilities.insect_swarm.name': 'Stechender Schwarm',

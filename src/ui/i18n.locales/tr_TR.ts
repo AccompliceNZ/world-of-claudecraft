@@ -943,7 +943,7 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsMoonwing':
     'Bir Denge druidi bir şekil daha kazanır: Aykuşu Formu, bu uzmanlığın dövüştüğü büyücü şeklidir. Büyülerini koruyan tek hayvan şeklidir ve değneğin yalnızca bu şekilde ya da normal büyücü şeklinde çalışır.',
   'guide.classPage.formsWolfEngage':
-    'Bir kurt dövüşü Bruin Hücumu ile açar, hedefi sabitlemek için hemen Kurt Formuna geçer, gizli değilken Atılış ile mesafeyi kapatır ve Tendon Isırığı ile düşmanı yerinde tutar.',
+    'Bir kurt dövüşü Bruin Hücumu ile açar, hedefi sabitlemek için hemen Kurt Formuna geçer, gizli değilken Atılış ile mesafeyi kapatır ve Yere Serme ile düşmanı yerinde tutar.',
   'guide.classPage.formsNote':
     'Bir druid, şekil değiştirerek dövüşür. Çoğu druid yeteneği tek bir şekle aittir, bu yüzden içinde bulunduğun form neyi büyüleyebileceğine karar verir, ve şekil değiştirmek biraz mana harcar. İstediğin kadar sık, dövüş içinde ya da dışında şekil değiştirebilirsin.',
   'guide.classPage.mageEleHeading': 'Su Elementali',
@@ -5515,8 +5515,8 @@ export const tr_TR: Partial<Record<TranslationKey, string>> = {
     '12 yardaya kadar uzaktaki bir düşmana atılır, %60 silah hasarı verir ve 1 kombo puanı kazandırır. Yalnızca Kurt Formu.',
   'entities.abilities.lunge.name': 'Atılış',
   'entities.abilities.hamstring_bite.description':
-    'Hedefi 0,5 saniye artı kombo puanı başına 0,5 saniye sersemleten bitirici hamle. Yalnızca Kurt Formu.',
-  'entities.abilities.hamstring_bite.name': 'Tendon Isırığı',
+    'Hedefi 1 sn artı kombo puanı başına 1 sn sersemleten bitirici hamle (5 kombo puanı: 6 sn). Yalnızca Kurt Formu.',
+  'entities.abilities.hamstring_bite.name': 'Yere Serme',
   'entities.abilities.power_word_fortitude.description':
     'Her grup üyesinin Dayanıklılığını 30 dakika boyunca %{buff} artırır.',
   'entities.abilities.power_word_fortitude.name': 'Azim Yakarışı',

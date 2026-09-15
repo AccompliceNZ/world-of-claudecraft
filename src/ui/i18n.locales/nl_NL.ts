@@ -966,7 +966,7 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsMoonwing':
     'Een Balans-druïde krijgt er nog één gedaante bij: de Maanuilvorm, de spreukgedaante waarin hij vecht. Het is de enige diergedaante die je spreuken behoudt, en je toverstaf werkt alleen in deze vorm of in je normale spreukgedaante.',
   'guide.classPage.formsWolfEngage':
-    'Een wolf opent het gevecht met Bruin-stormloop, wisselt meteen naar Wolfsgedaante om het doelwit vast te pinnen, dicht de afstand met Uitval wanneer hij niet sluipt, en houdt een vijand stil met Peesbeet.',
+    'Een wolf opent het gevecht met Bruin-stormloop, wisselt meteen naar Wolfsgedaante om het doelwit vast te pinnen, dicht de afstand met Uitval wanneer hij niet sluipt, en houdt een vijand stil met Neerhalen.',
   'guide.classPage.formsNote':
     'Een druïde vecht door van gedaante te veranderen. De meeste druïdenvaardigheden horen bij één gedaante, dus de vorm waarin je verkeert bepaalt wat je kunt gebruiken, en van gedaante wisselen kost een beetje mana. Je kunt in of buiten gevecht van gedaante wisselen, zo vaak je wilt.',
   'guide.classPage.mageEleHeading': 'Waterelementaal',
@@ -5646,8 +5646,8 @@ export const nl_NL: Partial<Record<TranslationKey, string>> = {
     'Stort je op een vijand tot 12 m ver, wat 60% wapenschade toebrengt en 1 combopunt oplevert. Alleen in Wolfsgedaante.',
   'entities.abilities.lunge.name': 'Uitval',
   'entities.abilities.hamstring_bite.description':
-    'Afmaker die het doelwit 0,5 sec plus 0,5 sec per combopunt verdooft. Alleen in Wolfsgedaante.',
-  'entities.abilities.hamstring_bite.name': 'Peesbeet',
+    'Afmaakactie die het doelwit verdooft voor 1 sec plus 1 sec per combopunt (5 combopunten: 6 sec). Alleen in Wolfsgedaante.',
+  'entities.abilities.hamstring_bite.name': 'Neerhalen',
   'entities.abilities.power_word_fortitude.description':
     'Verhoogt het Uithoudingsvermogen van elk groepslid 30 min lang met {buff}%.',
   'entities.abilities.power_word_fortitude.name': 'Litanie van Vastberadenheid',

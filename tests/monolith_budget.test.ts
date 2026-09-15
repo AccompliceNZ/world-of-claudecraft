@@ -1024,7 +1024,10 @@ const MONOLITHS: MonolithRow[] = [
     // measures 11923, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 11879,
+    // Lowered by one at the Wildfang kit pass 2: the charge route's speed and
+    // arrive-range constants moved to combat/charge_route.ts beside the settle
+    // hook (finishChargeArrival) that Lunge and Bloodhook share.
+    ceiling: 11878,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {

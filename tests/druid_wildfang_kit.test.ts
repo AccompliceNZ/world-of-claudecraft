@@ -2,14 +2,15 @@ import { describe, expect, it } from 'vitest';
 import {
   BRUIN_RUSH_WINDOW_ID,
   BRUIN_RUSH_WINDOW_SECONDS,
-  LONGSTRIDE,
   LOPING_STRIDE_DURATION,
   LOPING_STRIDE_ICD,
   LOPING_STRIDE_SPEED,
+  longstrideMetrics,
   PIN_DURATION,
   PIN_ID,
   PIN_SLOW_MULT,
 } from '../src/sim/combat/druid_engines';
+import { lungePendingTargetId } from '../src/sim/combat/druid_lunge';
 import { DRUID_CHOICE_ROWS } from '../src/sim/content/choice_rows_classic';
 import { abilitiesKnownAt, CLASSES } from '../src/sim/content/classes';
 import { ABILITIES, MOBS } from '../src/sim/data';
@@ -18,10 +19,11 @@ import { moveSpeedMult } from '../src/sim/player_motion';
 import { Sim } from '../src/sim/sim';
 import { stunDrCategory } from '../src/sim/stun_dr';
 import { dist2d, type Entity, MELEE_RANGE } from '../src/sim/types';
+import { localizeSimAuraName } from '../src/ui/sim_i18n';
 
 // Wildfang kit pass 2 (engage, control, opener): the baseline shift sprint and
 // its Longstride talent, the Bruin Rush to Wolf Form Pin rider, full-speed
-// Stalk, the Lunge shape of Slinkstrike, and the Hamstring Bite finisher. Every
+// Stalk, the Lunge shape of Slinkstrike, and the Takedown finisher. Every
 // case drives the real cast path (Sim.castAbility plus ticks) so the cost gate,
 // the replacement resolver, and the aura funnels are the ones the game runs.
 
@@ -105,7 +107,9 @@ describe('Loping Stride is baseline and Longstride retunes it', () => {
   });
 
   it('Longstride makes the sprint last 5 sec on a 12 sec cooldown', () => {
-    expect(LONGSTRIDE).toEqual({ duration: 5, icd: 12 });
+    expect(longstrideMetrics()).toEqual({ duration: 5, icd: 12 });
+    // Memoised: one read of the row table, the same object every call.
+    expect(longstrideMetrics()).toBe(longstrideMetrics());
     const { sim, player } = rig({ [LONGSTRIDE_ROW]: LONGSTRIDE_ID });
     cast(sim, 'bear_form');
     const stride = aura(player, 'loping_stride');
@@ -128,10 +132,10 @@ describe('Loping Stride is baseline and Longstride retunes it', () => {
     expect(option?.name).toBe('Longstride');
     expect(option?.effect.intrinsic).toEqual({
       mechanic: 'druid_longstride',
-      metrics: { duration: LONGSTRIDE.duration, icd: LONGSTRIDE.icd },
+      metrics: { duration: longstrideMetrics().duration, icd: longstrideMetrics().icd },
     });
-    expect(option?.description).toContain(`${LONGSTRIDE.duration} sec`);
-    expect(option?.description).toContain(`${LONGSTRIDE.icd} sec`);
+    expect(option?.description).toContain(`${longstrideMetrics().duration} sec`);
+    expect(option?.description).toContain(`${longstrideMetrics().icd} sec`);
   });
 });
 
@@ -219,6 +223,19 @@ describe('Pin, the Bruin Rush to Wolf Form rider', () => {
     expect(aura(player, BRUIN_RUSH_WINDOW_ID)).toBeUndefined();
   });
 
+  it('names the window after Bruin Rush and resolves that name through the ability catalog', () => {
+    const { sim, player } = rig();
+    addTargetMob(sim, 10);
+    cast(sim, 'bear_form');
+    cast(sim, 'bear_charge');
+    const window = aura(player, BRUIN_RUSH_WINDOW_ID);
+    expect(window?.name).toBe(ABILITIES.bear_charge.name);
+    // The window's id is not an ABILITIES key, so the HUD's ability-name
+    // fallback never fires for it: the sim aura localizer owns the name.
+    expect(localizeSimAuraName(window?.name ?? '')).toBe(ABILITIES.bear_charge.name);
+    expect(localizeSimAuraName('Lunge')).toBe(ABILITIES.lunge.name);
+  });
+
   it('applies the same no-ladder rule as every other slow, so a repeat Pin is never diminished', () => {
     const { sim, player, target } = rushRig();
     cast(sim, 'bear_charge');
@@ -271,7 +288,7 @@ describe('Lunge, the out-of-stealth shape of Slinkstrike', () => {
     expect(sim.resolvedAbility('pounce')?.cost).toBe(50);
   });
 
-  it('closes to melee, awards 1 combo point, applies no stun, and starts its own 12 sec cooldown', () => {
+  it('starts the route at cast and lands the strike and combo point on arrival, on its own 12 sec cooldown', () => {
     const { sim, player } = rig();
     const target = addTargetMob(sim, 10);
     cast(sim, 'cat_form');
@@ -281,18 +298,76 @@ describe('Lunge, the out-of-stealth shape of Slinkstrike', () => {
     const startDist = dist2d(player.pos, target.pos);
     player.gcdRemaining = 0;
     sim.castAbility('pounce'); // the button id; out of stealth it is Lunge
-    const events = sim.tick();
-    expect(events.some((e) => e.type === 'damage' && e.ability === 'Lunge')).toBe(true);
-    expect(player.comboPoints).toBe(1);
-    expect(target.auras.some((a) => a.kind === 'stun')).toBe(false);
+    const castTick = sim.tick();
+    // The cast tick bills the energy and the cooldown and starts the route;
+    // nothing has hit and no point is banked from 10 yd away.
+    expect(castTick.some((e) => e.type === 'damage' && e.ability === 'Lunge')).toBe(false);
+    expect(player.comboPoints).toBe(0);
     expect(player.resource).toBeLessThanOrEqual(energyBefore - 40 + 1);
     expect(player.cooldowns.get('lunge')).toBeCloseTo(12 - 0.05, 1);
     expect(player.cooldowns.has('pounce')).toBe(false);
     expect(player.chargeTargetId).toBe(target.id);
-    ticks(sim, 2);
+    expect(lungePendingTargetId(player)).toBe(target.id);
+    // Run the route: the tick that arrives is the tick that strikes.
+    let landed = false;
+    for (let i = 0; i < 40 && !landed; i++) {
+      landed = sim.tick().some((e) => e.type === 'damage' && e.ability === 'Lunge');
+    }
+    expect(landed).toBe(true);
+    expect(player.chargeTargetId).toBeNull();
+    expect(lungePendingTargetId(player)).toBeNull();
     expect(dist2d(player.pos, target.pos)).toBeLessThan(startDist);
     expect(dist2d(player.pos, target.pos)).toBeLessThan(MELEE_RANGE);
+    expect(player.comboPoints).toBe(1);
+    expect(target.auras.some((a) => a.kind === 'stun')).toBe(false);
+    // The strike landed, so the cooldown stays armed.
+    expect(player.cooldowns.get('lunge')).toBeGreaterThan(10);
+  });
+
+  it('a lunge from melee range settles on the first tick', () => {
+    const { sim, player } = rig();
+    const target = addTargetMob(sim, 2);
+    cast(sim, 'cat_form');
+    player.resource = player.maxResource;
+    player.gcdRemaining = 0;
+    sim.castAbility('pounce');
+    const events = sim.tick();
+    expect(events.some((e) => e.type === 'damage' && e.ability === 'Lunge')).toBe(true);
+    expect(player.comboPoints).toBe(1);
     expect(player.chargeTargetId).toBeNull();
+    expect(lungePendingTargetId(player)).toBeNull();
+    expect(target.auras.some((a) => a.kind === 'stun')).toBe(false);
+  });
+
+  it('a lunge cut short strikes nothing and hands the cooldown back', () => {
+    const { sim, player } = rig();
+    const target = addTargetMob(sim, 10);
+    cast(sim, 'cat_form');
+    player.resource = player.maxResource;
+    player.gcdRemaining = 0;
+    sim.castAbility('pounce');
+    sim.tick();
+    expect(player.cooldowns.has('lunge')).toBe(true);
+    expect(lungePendingTargetId(player)).toBe(target.id);
+    // A root lands mid-route: the mover ends the charge short of the target.
+    player.auras.push({
+      id: 'test_root',
+      name: 'Root',
+      kind: 'root',
+      remaining: 5,
+      duration: 5,
+      value: 1,
+      sourceId: target.id,
+      school: 'nature',
+    });
+    const events = sim.tick();
+    expect(events.some((e) => e.type === 'damage' && e.ability === 'Lunge')).toBe(false);
+    expect(player.chargeTargetId).toBeNull();
+    expect(lungePendingTargetId(player)).toBeNull();
+    expect(player.comboPoints).toBe(0);
+    expect(player.cooldowns.has('lunge')).toBe(false);
+    // The energy stays spent: the bill a dodged strike pays.
+    expect(player.resource).toBeLessThan(player.maxResource);
   });
 
   it('a restealth Slinkstrike is never blocked by the Lunge cooldown', () => {
@@ -324,13 +399,14 @@ describe('Lunge, the out-of-stealth shape of Slinkstrike', () => {
   });
 });
 
-describe('Hamstring Bite, the Wolf control finisher', () => {
+describe('Takedown (id hamstring_bite), the Wolf control finisher', () => {
+  // The Low Blow numbers: 1 sec plus 1 sec per point, 6 sec at five.
   it.each([
-    [1, 1],
-    [2, 1.5],
-    [3, 2],
-    [4, 2.5],
-    [5, 3],
+    [1, 2],
+    [2, 3],
+    [3, 4],
+    [4, 5],
+    [5, 6],
   ])(
     'stuns for %s combo points for %s sec, consumes the points, and starts a 20 sec cooldown',
     (points, seconds) => {
@@ -362,7 +438,7 @@ describe('Hamstring Bite, the Wolf control finisher', () => {
   it('diminishes on the controlled-stun ladder with Concuss and Low Blow', () => {
     // The sim keeps the classic split: from-stealth openers (Slinkstrike, Gut
     // Punch) diminish together, and deliberate stuns (Concuss, Low Blow,
-    // Hamstring Bite) diminish together, so a Slinkstrike opener never eats
+    // Takedown) diminish together, so a Slinkstrike opener never eats
     // into the finisher stun that follows it.
     expect(stunDrCategory('hamstring_bite')).toBe('controlledStun');
     expect(stunDrCategory('bash')).toBe('controlledStun');
@@ -376,5 +452,7 @@ describe('Hamstring Bite, the Wolf control finisher', () => {
     expect(abilitiesKnownAt('druid', 12).map((k) => k.def.id)).toContain('hamstring_bite');
     expect(ABILITIES.hamstring_bite.requiresForm).toBe('cat');
     expect(ABILITIES.hamstring_bite.spendsCombo).toBe(true);
+    expect(ABILITIES.hamstring_bite.name).toBe('Takedown');
+    expect(ABILITIES.hamstring_bite.description).toContain('(5 combo points: 6 sec)');
   });
 });

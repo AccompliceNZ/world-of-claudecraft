@@ -6391,7 +6391,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: false,
     effects: [{ type: 'selfBuff', kind: 'form_bear', value: 0.65, duration: 3600 }],
     description:
-      'Shapeshift into a bear: armor +110%, maximum health +30%, greatly increased attack power, your attacks build rage and generate 30% more threat. Cast again to return to caster form.',
+      'Shapeshift into a bear: armor +110%, maximum health +30%, greatly increased attack power, your attacks build rage and generate 30% more threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form.',
   },
   bear_charge: {
     id: 'bear_charge',
@@ -6409,7 +6409,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresForm: 'bear',
     effects: [{ type: 'charge' }, { type: 'stun', duration: 1 }],
     description:
-      'Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, Wolf Form is free and Pins the target, slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only.',
+      'Rush an enemy, generating 9 rage and stunning it for 1 sec. For 3 sec afterwards, or until you leave combat, Wolf Form is free and Pins that target (the one you Rushed), slowing it by 50% for 4 sec. 8-25 yd range. Bruin Form only.',
   },
   maul: {
     id: 'maul',
@@ -6524,7 +6524,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: false,
     effects: [{ type: 'selfBuff', kind: 'form_cat', value: 0.71, duration: 3600 }],
     description:
-      'Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, and you generate 29% less threat. Shifting into any form grants Loping Stride: 60% movement speed for 3 sec, once every 20 sec. Cast again to return to caster form.',
+      'Shapeshift into a wolf: agility rises with your level, attack power +8 plus 2 per level, your attacks use energy and combo points, and you generate 29% less threat. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form.',
   },
   prowl: {
     id: 'prowl',
@@ -6752,7 +6752,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: false,
     effects: [{ type: 'selfBuff', kind: 'form_travel', value: 1.4, duration: 3600 }],
     description:
-      'Instantly shift into a swift travel form, increasing movement speed by 40%. You cannot use other abilities while shifted, but can shift in or out of combat, ideal for escaping.',
+      'Instantly shift into a swift travel form, increasing movement speed by 40%. You cannot use other abilities while shifted, but can shift in or out of combat, ideal for escaping. Shifting into any form grants Loping Stride, a short burst of movement speed.',
   },
   enrage: {
     id: 'enrage',
@@ -6870,15 +6870,17 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: true,
     awardsCombo: 1,
     requiresForm: 'cat',
-    // The strike lands at cast, the way Bruin Rush's stun does; the body
-    // then runs the charge route (sim.ts updateChargeMovement).
-    effects: [{ type: 'charge' }, { type: 'weaponStrike', bonus: 0, weaponMult: 0.6 }],
+    // The cast only starts the charge route; the 60% weapon strike and the
+    // combo point land on ARRIVAL through combat/druid_lunge.ts (the
+    // Bloodhook shape), so a route that ends short strikes nothing and hands
+    // the cooldown back. LUNGE_WEAPON_MULT there owns the 60.
+    effects: [{ type: 'charge' }],
     description:
-      'Lunge at an enemy up to 12 yd away, dealing 60% weapon damage and awarding 1 combo point. Wolf Form only.',
+      'Lunge at an enemy up to 12 yd away. On arrival, deals 60% weapon damage and awards 1 combo point; a lunge cut short refunds its cooldown. Wolf Form only.',
   },
   hamstring_bite: {
     id: 'hamstring_bite',
-    name: 'Hamstring Bite',
+    name: 'Takedown',
     class: 'druid',
     learnLevel: 12,
     cost: 30,
@@ -6889,11 +6891,13 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: true,
     spendsCombo: true,
     requiresForm: 'cat',
-    // The Low Blow shape (finisherStun): 1 sec at 1 combo point up to 3 sec at
-    // 5; the controlled-stun diminishing category beside Concuss (stun_dr.ts).
-    effects: [{ type: 'finisherStun', base: 0.5, perCombo: 0.5 }],
+    // The Low Blow shape and numbers (finisherStun): 2 sec at 1 combo point up
+    // to 6 sec at 5, retuned on review from 0.5 + 0.5 per point (a 3 sec cap
+    // was one GCD of control); the controlled-stun diminishing category
+    // beside Concuss (stun_dr.ts).
+    effects: [{ type: 'finisherStun', base: 1, perCombo: 1 }],
     description:
-      'Finishing move that stuns the target for 0.5 sec plus 0.5 sec per combo point. Wolf Form only.',
+      'Finishing move that stuns the target for 1 sec plus 1 sec per combo point (5 combo points: 6 sec). Wolf Form only.',
   },
   insect_swarm: {
     id: 'insect_swarm',
@@ -7818,7 +7822,7 @@ export const ABILITIES: Record<string, AbilityDef> = {
     requiresTarget: false,
     effects: [{ type: 'selfBuff', kind: 'form_moonkin', value: 0, duration: 3600 }],
     description:
-      'Shapeshift into a fearsome Moonkin, increasing your spell damage by 20% and your armor by 50%. Lasts until you shift out. Cast again to return to caster form. (Balance signature)',
+      'Shapeshift into a fearsome Moonkin, increasing your spell damage by 20% and your armor by 50%. Lasts until you shift out. Shifting into any form grants Loping Stride, a short burst of movement speed. Cast again to return to caster form. (Balance signature)',
   },
   feral_charge: {
     id: 'feral_charge',

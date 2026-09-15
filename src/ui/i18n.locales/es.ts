@@ -977,7 +977,7 @@ export const es: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsMoonwing':
     'Un druida de Equilibrio gana una forma más, la Forma de lechúcico lunar, la forma de conjurador en la que lucha un druida de Equilibrio. Es la única forma animal que conserva tus hechizos, y tu varita solo funciona en ella o en tu forma de conjurador normal.',
   'guide.classPage.formsWolfEngage':
-    'Un lobo abre el combate con Embestida de Bruin, cambia enseguida a Forma de lobo para sujetar al objetivo, cierra la distancia con Embate cuando no está en sigilo y frena a un enemigo con Mordisco tendinoso.',
+    'Un lobo abre el combate con Embestida de Bruin, cambia enseguida a Forma de lobo para sujetar al objetivo, cierra la distancia con Embate cuando no está en sigilo y frena a un enemigo con Derribo.',
   'guide.classPage.formsNote':
     'Un druida lucha cambiando de forma. La mayoría de las habilidades de druida pertenecen a una forma concreta, así que la forma en la que estás decide lo que puedes lanzar, y cambiar de forma cuesta un poco de maná. Puedes cambiar de forma dentro o fuera de combate, tantas veces como quieras.',
   'guide.classPage.mageEleHeading': 'Elemental de agua',
@@ -7095,8 +7095,8 @@ export const es: Partial<Record<TranslationKey, string>> = {
     'Te abalanzas sobre un enemigo a hasta 12 m, infligiendo un 60% del daño de arma y otorgando 1 punto de combo. Solo en Forma de lobo.',
   'entities.abilities.lunge.name': 'Embate',
   'entities.abilities.hamstring_bite.description':
-    'Remate que aturde al objetivo durante 0,5 s más 0,5 s por punto de combo. Solo en Forma de lobo.',
-  'entities.abilities.hamstring_bite.name': 'Mordisco tendinoso',
+    'Movimiento final que aturde al objetivo durante 1 s más 1 s por punto de combo (5 puntos de combo: 6 s). Solo en Forma de lobo.',
+  'entities.abilities.hamstring_bite.name': 'Derribo',
   'entities.abilities.pounce.description':
     'Apertura desde el sigilo que aturde al objetivo durante 2 s. Otorga 1 punto de combo. Solo en Forma de lobo. Fuera del sigilo, este botón es Embate.',
   'entities.abilities.insect_swarm.name': 'Enjambre Punzante',

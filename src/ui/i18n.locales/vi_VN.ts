@@ -961,7 +961,7 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
   'guide.classPage.formsMoonwing':
     'Một Druid Moongrove có thêm một hình dạng nữa, Dạng Cú Mặt Trăng, hình dạng pháp thuật mà một Druid Cân Bằng chiến đấu trong đó. Đây là hình thú duy nhất giữ lại các phép của bạn, và đũa phép của bạn chỉ dùng được trong hình đó hoặc trong hình pháp sư bình thường.',
   'guide.classPage.formsWolfEngage':
-    'Sói mở màn trận đấu bằng Cú Lao Bruin, lập tức chuyển sang Hình Sói để ghim mục tiêu, thu hẹp khoảng cách bằng Lao Vồ khi không ẩn thân, và giữ chân kẻ địch bằng Cắn Gân.',
+    'Sói mở màn trận đấu bằng Cú Lao Bruin, lập tức chuyển sang Hình Sói để ghim mục tiêu, thu hẹp khoảng cách bằng Lao Vồ khi không ẩn thân, và giữ chân kẻ địch bằng Quật Ngã.',
   'guide.classPage.formsNote':
     'Druid chiến đấu bằng cách đổi hình dạng. Hầu hết kỹ năng của Druid thuộc về một hình dạng riêng, nên hình bạn đang mang quyết định bạn có thể thi triển gì, và việc đổi hình tốn một chút mana. Bạn có thể đổi hình trong hoặc ngoài chiến đấu, bao nhiêu lần tùy thích.',
   'guide.classPage.mageEleHeading': 'Nguyên Tố Nước',
@@ -5593,8 +5593,8 @@ export const vi_VN: Partial<Record<TranslationKey, string>> = {
     'Lao vào kẻ địch cách xa tới 12 thước, gây 60% sát thương vũ khí và nhận 1 điểm combo. Chỉ dùng được ở Hình Sói.',
   'entities.abilities.lunge.name': 'Lao Vồ',
   'entities.abilities.hamstring_bite.description':
-    'Đòn kết liễu làm choáng mục tiêu trong 0,5 giây cộng 0,5 giây mỗi điểm combo. Chỉ dùng được ở Hình Sói.',
-  'entities.abilities.hamstring_bite.name': 'Cắn Gân',
+    'Chiêu kết liễu làm choáng mục tiêu trong 1 giây cộng thêm 1 giây mỗi điểm liên hoàn (5 điểm liên hoàn: 6 giây). Chỉ dùng được ở Hình Sói.',
+  'entities.abilities.hamstring_bite.name': 'Quật Ngã',
   'entities.abilities.power_word_fortitude.description':
     'Tăng Thể Lực của mọi thành viên trong nhóm thêm {buff}% trong 30 phút.',
   'entities.abilities.power_word_fortitude.name': 'Kinh Cầu Kiên Định',

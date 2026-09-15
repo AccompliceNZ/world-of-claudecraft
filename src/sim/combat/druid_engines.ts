@@ -17,6 +17,7 @@ import { primaryHealingMultiplier } from '../spec_output_tuning';
 import { abilityScalingPower, dotTickBonus, hotTickBonus } from '../spell_scaling';
 import { resolveTalentHitMult } from '../talent_hit_mult';
 import type { Aura, AuraKind, Entity } from '../types';
+import { LUNGE_ID, startLunge } from './druid_lunge';
 import { wearsSetBonus } from './set_bonus_wearer';
 
 export const MOONTIDE_ID = 'moontide';
@@ -67,8 +68,16 @@ export const DRUID_PAYOFF_IDS = new Set([
 // those two numbers: the engine reads them here so the talent tooltip (which
 // tests/talent_tooltip_accuracy.test.ts holds to the same metrics) cannot drift
 // from what the sim applies. A missing metric falls back to the baseline value.
+// Read lazily on first use and memoised, never at module load: a content
+// module that one day imports combat code would otherwise crash at import
+// time instead of falling back.
 export const LONGSTRIDE_MECHANIC = 'druid_longstride';
-function longstrideMetrics(): { duration: number; icd: number } {
+export interface LongstrideMetrics {
+  duration: number;
+  icd: number;
+}
+let longstrideCache: LongstrideMetrics | null = null;
+function readLongstrideMetrics(): LongstrideMetrics {
   for (const row of DRUID_CHOICE_ROWS.rows) {
     for (const option of row.options) {
       const intrinsic = option.effect.intrinsic;
@@ -86,7 +95,10 @@ function longstrideMetrics(): { duration: number; icd: number } {
   }
   return { duration: LOPING_STRIDE_DURATION, icd: LOPING_STRIDE_ICD };
 }
-export const LONGSTRIDE = longstrideMetrics();
+export function longstrideMetrics(): LongstrideMetrics {
+  if (longstrideCache === null) longstrideCache = readLongstrideMetrics();
+  return longstrideCache;
+}
 
 // Pin, the Bruin Rush to Wolf Form rider (Wildfang kit pass 2). Landing Bruin
 // Rush opens a short window in which Wolf Form costs nothing and Pins the
@@ -262,8 +274,8 @@ export function druidEngineOnCast(
     // Loping Stride is baseline: every form shift sprints, no talent check.
     // Longstride only changes the two numbers (duration and cooldown).
     const longstride = selectedRow(ctx, player, DRUID_TALENT_IDS.longstride);
-    const strideDuration = longstride ? LONGSTRIDE.duration : LOPING_STRIDE_DURATION;
-    const strideIcd = longstride ? LONGSTRIDE.icd : LOPING_STRIDE_ICD;
+    const strideDuration = longstride ? longstrideMetrics().duration : LOPING_STRIDE_DURATION;
+    const strideIcd = longstride ? longstrideMetrics().icd : LOPING_STRIDE_ICD;
     if (!player.procState) player.procState = { counters: {}, icds: {} };
     if (player.procState.icds[LOPING_STRIDE_ICD_KEY] === undefined) {
       player.procState.icds[LOPING_STRIDE_ICD_KEY] = strideIcd;
@@ -319,6 +331,10 @@ export function druidEngineOnCast(
       }
     }
   }
+
+  // Lunge parks its strike on the charge route the cast just started
+  // (combat/druid_lunge.ts); the route's settle hook lands it on arrival.
+  if (abilityId === LUNGE_ID) startLunge(ctx, player, target);
 
   const spec = specOf(ctx, player);
   if (spec === 'balance') {

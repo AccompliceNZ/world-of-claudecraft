@@ -2077,7 +2077,7 @@ export const GUIDE_CLASSES: GuideClassInfo[] = [
       },
       {
         "id": "hamstring_bite",
-        "name": "Hamstring Bite"
+        "name": "Takedown"
       },
       {
         "id": "insect_swarm",
