@@ -672,8 +672,11 @@ interface AttributionTargetFixture {
 // half of the view policy moved out of renderer.ts, and the rift ambience,
 // fishing bobber and Nythraxis painter consumers changed there, so the
 // runtimeRender.renderer leaf moved. No capture was retaken.
+// Re-minted again for its review round: the ranked and required view
+// candidates now share the scan module's liveViewCandidate check, so the
+// same leaf moved once more. No capture was retaken.
 const PINNED_POLISH_COMPOSITE_FINGERPRINT =
-  'd32bc61c7174bbc19e86daaf033fb0e6d563961b98af270d2cd65ba241287f06';
+  '07b43fcb404bb316c61f8efff90e4e54755fe3392de832f2aee8e09fbcaa8abf';
 
 function validPolishAttributionTargets(): AttributionTargetFixture[] {
   return [
