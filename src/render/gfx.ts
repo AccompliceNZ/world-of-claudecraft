@@ -2051,7 +2051,6 @@ function profileFromHints(
   });
 }
 
-/** Capture device and live-adapter facts without reading graphics preferences. */
 // The adapter string each three renderer's boot capture read, by renderer:
 // the one place a later consumer (the shader corpus record) takes it from
 // instead of issuing the same synchronous UNMASKED_RENDERER_WEBGL query a
@@ -2068,6 +2067,7 @@ export function rememberedGpuRendererName(renderer: object): string | undefined 
   return GPU_RENDERER_NAMES.get(renderer);
 }
 
+/** Capture device and live-adapter facts without reading graphics preferences. */
 export function captureGfxCapabilities(webgl: THREE.WebGLRenderer): GfxCapabilities {
   const gpuRenderer = rendererName(webgl);
   rememberGpuRendererName(webgl, gpuRenderer);

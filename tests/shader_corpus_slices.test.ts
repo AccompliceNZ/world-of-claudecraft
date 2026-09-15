@@ -137,6 +137,15 @@ describe('readProgramSourcesQueued', () => {
     expect(sources.map((p) => p.vertex.slice(0, 7))).toEqual(['void v0', 'void v1']);
   });
 
+  it('skips a program the context reports deleted without querying its shaders', async () => {
+    const gl = fakeGl(3);
+    const deleted = entriesOf(gl)[1].program;
+    (gl as unknown as { isProgram: (p: unknown) => boolean }).isProgram = (p) => p !== deleted;
+    const sources = await readProgramSourcesQueued(gl, entriesOf(gl), recordingQueue());
+    expect(sources.map((p) => p.vertex.slice(0, 7))).toEqual(['void v0', 'void v2']);
+    expect(gl.queries).toBe(2);
+  });
+
   it('walks a snapshot, so a program removed from the live list mid-walk is still read', async () => {
     const gl = fakeGl(20);
     const live = entriesOf(gl);
@@ -207,9 +216,9 @@ describe('encodeCorpusQueued', () => {
     expect(Buffer.from(queued.bytes).equals(Buffer.from(single.bytes))).toBe(true);
     expect(q.units).toHaveLength(14);
     for (const [i, unit] of q.units.entries()) {
-      // The wait for the compressor is the unit's released tail.
+      // The deflate runs on the main thread inside the write: the tail is held.
       expect(unit.label).toBe(`${CORPUS_GZIP_KIND}:${i}`);
-      expect(unit.releaseTail).toBe(true);
+      expect(unit.releaseTail).toBe(false);
     }
   });
 

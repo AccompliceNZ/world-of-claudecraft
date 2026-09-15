@@ -47,7 +47,8 @@
 // shared cache, which is the measured gain. The RECORD arm runs in live
 // frames after the reveal, so it IS a client: main.ts hands it the renderer's
 // background GPU queue and shader_corpus_slices.ts runs it as BACKGROUND
-// units, one per program read and per chunk encoded, behind every live gate.
+// units, one per batch of program reads and per chunk encoded, behind every
+// live gate.
 
 import { trackWebGLContext } from '../render/context_release';
 import { GFX, mobilePlatformFromNavigator, rememberedGpuRendererName } from '../render/gfx';
@@ -109,6 +110,8 @@ export interface CorpusGl extends WarmupGl {
   ACTIVE_ATTRIBUTES: number;
   getActiveAttrib(program: WebGLProgram, index: number): { name: string } | null;
   getAttribLocation(program: WebGLProgram, name: string): number;
+  /** Optional: a fake context in tests may omit it; a deleted program is skipped quietly. */
+  isProgram?(program: WebGLProgram): boolean;
   getAttachedShaders(program: WebGLProgram): WebGLShader[] | null;
   getShaderParameter(shader: WebGLShader, pname: number): unknown;
   getShaderSource(shader: WebGLShader): string | null;

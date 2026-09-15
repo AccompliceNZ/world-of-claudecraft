@@ -689,9 +689,11 @@ GPU work signs. Each rule names its seam and its guard.
   the shared cache. Its RECORD half runs in live frames 25 s after the reveal, so it
   IS a client: `main.ts` hands it the renderer's queue
   (`finishShaderWarmup(renderer.webgl, { queue: renderer.backgroundGpuWork })`) and
-  `src/game/shader_corpus_slices.ts` runs one BACKGROUND unit per program read
-  (a synchronous driver round trip that waits for the GPU frame in flight), per
-  chunk encoded and per chunk fed to the gzip stream, under the `corpus-read`,
+  `src/game/shader_corpus_slices.ts` runs one BACKGROUND unit per BATCH of
+  program reads (`CORPUS_READ_BATCH`; a read is a synchronous driver round trip
+  that waits for the GPU frame in flight, paid once per batch), per chunk
+  encoded and per chunk fed to the gzip stream (the deflate runs on the main
+  thread inside the write, so the gzip unit holds its tail), under the `corpus-read`,
   `corpus-encode` and `corpus-gzip` label kinds the budget prices separately. It
   reads the same stored option and the same pin as the worker (`readWarmupQuery`):
   Off silences it, `auto` and On keep it (the backend rule is the worker's: a

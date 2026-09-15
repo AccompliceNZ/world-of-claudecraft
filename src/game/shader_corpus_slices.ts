@@ -3,12 +3,12 @@
 // getShaderSource, the attribute walk) is a synchronous round trip that
 // waits for the GPU to finish the frame in flight, and the whole record used
 // to do it for every program of the session in one idle callback: about
-// 1.1 s of main thread on an Intel HD 530 (a 367 ms long task on a desktop
+// 1.1 s of main thread on an Intel HD 530 (a 237 ms long task on a desktop
 // iGPU), the window's only long task, 25 s into play. The record is now a
 // client of the renderer's background GPU queue (src/render/CLAUDE.md, "GPU
 // work: every new producer is a client of the scheduler"): one unit per
-// BATCH of program reads, one per program encoded, one per chunk fed to the
-// gzip stream, each at the BACKGROUND priority under its own label kind, so
+// BATCH of program reads, one per JSON chunk encoded, one per chunk fed to
+// the gzip stream, each at the BACKGROUND priority under its own label kind, so
 // the queue's per-frame budget learns what a unit costs on this machine and
 // admits what the frame can carry, behind every live gate. A read unit is a
 // batch, not a program, because the first driver query of a frame waits for
@@ -48,8 +48,8 @@ export const CORPUS_RECORD_PRIORITY = GPU_WORK_PRIORITY.BACKGROUND;
 export const CORPUS_READ_BATCH = 8;
 /** Three label KINDS (the part before the colon), so the budget prices a
  *  driver read-back, a JSON encode and a gzip feed separately; the instance
- *  after the colon names the program or chunk, so the queue's slowest-unit
- *  readouts say which one cost the frame. */
+ *  after the colon names the read batch or the chunk, so the queue's
+ *  slowest-unit readouts say which one cost the frame. */
 export const CORPUS_READ_KIND = 'corpus-read';
 export const CORPUS_ENCODE_KIND = 'corpus-encode';
 export const CORPUS_GZIP_KIND = 'corpus-gzip';
@@ -88,6 +88,9 @@ function index0AttributeOf(gl: CorpusGl, program: WebGLProgram): string {
 export function programSourcesOfEntry(gl: CorpusGl, entry: unknown): ShaderProgramSources | null {
   const program = (entry as { program?: unknown } | null)?.program;
   if (!program) return null;
+  // The walk spans frames: a material disposed meanwhile had its program
+  // deleted, and querying a deleted object logs a WebGL warning per call.
+  if (gl.isProgram && !gl.isProgram(program as WebGLProgram)) return null;
   const shaders = gl.getAttachedShaders(program as WebGLProgram);
   if (!shaders) return null;
   let vertex = '';
@@ -197,10 +200,12 @@ function concatBytes(parts: Uint8Array[]): Uint8Array {
 
 /** encodeCorpus(record), as queue units: each unit stringifies and encodes
  *  one chunk and, where the platform has CompressionStream, writes it into
- *  the gzip stream; the wait for the compressor to take the chunk is the
- *  unit's released tail (the stream's own backpressure, not main-thread work
- *  the budget should price), so nothing but the compressor's own buffers is
- *  held between units. Raw bytes with the flag down on a platform without
+ *  the gzip stream and waits for the compressor to take it. That wait is
+ *  NOT released: Chromium deflates the chunk synchronously on the main
+ *  thread inside the stream's transform, after write() has returned its
+ *  promise, so the deflate is the costliest part of the unit and belongs in
+ *  its held window where the budget prices it and no other lane runs next
+ *  to it. Raw bytes with the flag down on a platform without
  *  CompressionStream. A unit that rejects (the queue shut down under a
  *  renderer rebuild) aborts the writer so no stream is left locked. */
 export async function encodeCorpusQueued(
@@ -233,7 +238,6 @@ export async function encodeCorpusQueued(
         () => writer.write(encoder.encode(corpusJsonChunk(record, i)) as BufferSource),
         CORPUS_RECORD_PRIORITY,
         `${CORPUS_GZIP_KIND}:${i}`,
-        { releaseTail: true },
       );
     }
   } catch (error) {
