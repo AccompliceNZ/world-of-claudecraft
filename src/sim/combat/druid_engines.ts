@@ -179,6 +179,11 @@ function inMoonwing(player: Entity): boolean {
 // Strip every breakable root and slow the player wears (an aura stamped
 // unbreakableControl stays). Fleet Form runs this on every cast, baseline;
 // the other three forms run it only with Wildshift selected. Draws no rng.
+// A form button reaches this hook in BOTH directions of the shift: the
+// toggle-off press that returns to caster form runs the same
+// casting_lifecycle path as the shift in, so a druid rooted while in Fleet
+// Form breaks the root on the way out too. Wildshift has always behaved this
+// way for every form; the baseline Fleet Form arm inherits it.
 function breakMovementControl(ctx: SimContext, player: Entity): void {
   for (let index = player.auras.length - 1; index >= 0; index--) {
     const aura = player.auras[index];
