@@ -7808,6 +7808,8 @@ describe('Ignivar meteor snapshot parity', () => {
       ],
     } as NonNullable<typeof boss.ignivar>;
     server.sim.entities.set(boss.id, boss);
+    // The raid readouts walk the instance slots' mob lists, never the roster.
+    server.sim.instances[0].mobIds.push(boss.id);
 
     broadcast(server);
 
@@ -8049,6 +8051,8 @@ describe('Nythraxis Grave Eruption snapshot parity', () => {
       },
     } as unknown as NonNullable<typeof boss.nythraxis>;
     server.sim.entities.set(boss.id, boss);
+    // The raid readouts walk the instance slots' mob lists, never the roster.
+    server.sim.instances[0].mobIds.push(boss.id);
 
     broadcast(server);
 
@@ -8189,6 +8193,8 @@ describe('Varkhul Forgestorm snapshot parity', () => {
       ],
     } as unknown as NonNullable<typeof boss.varkhul>;
     server.sim.entities.set(boss.id, boss);
+    // The raid readouts walk the instance slots' mob lists, never the roster.
+    server.sim.instances[0].mobIds.push(boss.id);
 
     broadcast(server);
 
@@ -8442,6 +8448,8 @@ describe('Varkhul Cinder Orbs snapshot parity', () => {
       ],
     } as unknown as NonNullable<typeof boss.varkhul>;
     server.sim.entities.set(boss.id, boss);
+    // The raid readouts walk the instance slots' mob lists, never the roster.
+    server.sim.instances[0].mobIds.push(boss.id);
 
     broadcast(server);
 
