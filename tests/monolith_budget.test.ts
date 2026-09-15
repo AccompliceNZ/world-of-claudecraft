@@ -851,7 +851,10 @@ const MONOLITHS: MonolithRow[] = [
     // Measured after formatting; lower the ratchet with the extraction.
     // Mount skins: bank the coordinator extraction at its measured size.
     // Restored per-ability resurrection school lookup removes one line.
-    ceiling: 12851,
+    // CPU-hygiene review: the ranked and required view candidates share the
+    // scan module's liveViewCandidate check (present, view-less, admitted),
+    // which drops the coordinator's own admission call. Exact count.
+    ceiling: 12850,
     seam: 'a new src/render/<thing>.ts module the renderer calls (src/render/CLAUDE.md)',
   },
   {
@@ -1024,7 +1027,11 @@ const MONOLITHS: MonolithRow[] = [
     // measures 11923, below both arms, so the ceiling follows it down. Exact
     // merged count, zero slack: any further growth reds again.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 11879,
+    // Down 11879 -> 11857 at the CPU-hygiene lot: the rift floor descriptor
+    // builder moved to src/sim/rift/rift_floor_view.ts, and the lot's own
+    // addition (the entityRosterVersion field plus its SimContext binding)
+    // landed under the old count. Exact count, zero slack.
+    ceiling: 11857,
     seam: 'a sim system module behind SimContext (src/sim/CLAUDE.md)',
   },
   {
@@ -1581,7 +1588,10 @@ const MONOLITHS: MonolithRow[] = [
     // OSSBrain integration: entity flair decoding moved to net/entity_flair_wire.ts.
     // Measured after formatting; lower the ratchet with the extraction.
     // Main hotfix integration: combined extractions, exact merged count.
-    ceiling: 5540,
+    // Down 5540 -> 5523 at the CPU-hygiene lot: the interest-boundary despawn
+    // grace moved to src/net/despawn_grace.ts, and the lot's entityRosterVersion
+    // field and bumps landed under the old count. Exact count, zero slack.
+    ceiling: 5523,
     seam: 'a src/net sibling module (the refactor/net-online split is the template)',
   },
   {
