@@ -18,7 +18,7 @@ import { createMob } from '../src/sim/entity';
 import { moveSpeedMult } from '../src/sim/player_motion';
 import { Sim } from '../src/sim/sim';
 import { stunDrCategory } from '../src/sim/stun_dr';
-import { dist2d, type Entity, MELEE_RANGE } from '../src/sim/types';
+import { dist2d, type Entity, MELEE_RANGE, WOLF_FORM_MOVE_MULT } from '../src/sim/types';
 import { localizeSimAuraName } from '../src/ui/sim_i18n';
 
 // Wildfang kit pass 2 (engage, control, opener): the baseline shift sprint and
@@ -261,7 +261,9 @@ describe('Stalk moves at full speed', () => {
     cast(sim, 'prowl');
     const stealth = player.auras.find((a) => a.kind === 'stealth');
     expect(stealth?.value).toBe(1);
-    expect(moveSpeedMult(player)).toBe(1);
+    // Full speed means the Wolf Form passive (+15%, the mobility pass) is
+    // untouched by stealth: 1.0 x WOLF_FORM_MOVE_MULT.
+    expect(moveSpeedMult(player)).toBeCloseTo(WOLF_FORM_MOVE_MULT);
 
     const rogue = new Sim({ seed: 29, playerClass: 'rogue', autoEquip: true });
     rogue.setPlayerLevel(20);
