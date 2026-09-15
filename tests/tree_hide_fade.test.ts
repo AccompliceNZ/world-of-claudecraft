@@ -3,7 +3,7 @@
 // eye-to-camera segment can cross, the unprefetched trees inside the prefetch
 // reach, and the trees whose fade is in flight, and every tree ends each
 // frame in the state the linear walk over the whole registry left it in.
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import type { InstancedOccluderGhosts } from '../src/render/instanced_occluder_ghosts';
 import { OCCLUDER_FADE_PREFETCH_YD } from '../src/render/occluder_fade_core';
 import {
@@ -244,6 +244,44 @@ describe('TreeHideIndex', () => {
       fresh.notePrefetched(i);
     });
     expect(seen).toEqual([0, 1]);
+  });
+
+  it('clamps a tree beyond the key range into the edge cell and warns, never throws', () => {
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    try {
+      // Cell 0x10000 along x aliases with the key packing; both stray trees
+      // land in the last honest cell (0xffff) instead, and the well-placed
+      // tree is indexed exactly as before.
+      const trees = [
+        { x: 0, z: 0, r: 1, prefetched: false },
+        { x: 16 * 0x10000 + 3, z: 0, r: 1, prefetched: false },
+        { x: 0, z: -16 * 0x20000, r: 1, prefetched: false },
+      ];
+      let index: TreeHideIndex | null = null;
+      expect(() => {
+        index = new TreeHideIndex(trees, 16);
+      }).not.toThrow();
+      if (!index) throw new Error('index not built');
+      const built: TreeHideIndex = index;
+      expect(warn).toHaveBeenCalledTimes(1);
+      expect(warn.mock.calls[0][0]).toContain('2 trees');
+      built.beginFrame();
+      const origin: number[] = [];
+      built.forEachNearSegment(0, 0, 1, 0, (i) => origin.push(i));
+      expect(origin).toEqual([0]);
+      const edgeX: number[] = [];
+      built.forEachNearSegment(16 * 0xffff, 0, 16 * 0xffff + 1, 0, (i) => edgeX.push(i));
+      expect(edgeX).toEqual([1]);
+      const edgeZ: number[] = [];
+      built.forEachNearSegment(0, -16 * 0xffff, 1, -16 * 0xffff, (i) => edgeZ.push(i));
+      expect(edgeZ).toEqual([2]);
+      built.notePrefetched(1);
+      const still: number[] = [];
+      built.forEachUnprefetchedWithin(16 * 0xffff, 0, 8, (i) => still.push(i));
+      expect(still).toEqual([]);
+    } finally {
+      warn.mockRestore();
+    }
   });
 });
 

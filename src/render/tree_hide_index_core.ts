@@ -28,12 +28,20 @@ export const TREE_HIDE_CELL_SIZE = 16;
 // Cell coordinates are packed into one exact double: +/- 2^16 cells, which at
 // the 16 yd cell is +/- 1,048,576 world units, ten times the farthest
 // instanced band (the rift band ends near x = 109,400). Beyond that a key would
-// alias silently, so the constructor refuses such a tree instead.
+// alias silently, so the constructor clamps such a tree into the edge cell
+// instead (it then fades only for a camera at that edge, a degraded fade for
+// a tree no player can stand near) and warns once per build: the index is
+// built on the frame path, so it never throws.
 const KEY_BIAS = 0x10000;
 const KEY_SPAN = 0x20000;
+const CELL_MAX = KEY_BIAS - 1;
 
 function cellKey(cx: number, cz: number): number {
   return (cx + KEY_BIAS) * KEY_SPAN + (cz + KEY_BIAS);
+}
+
+function clampCell(c: number): number {
+  return c > CELL_MAX ? CELL_MAX : c < -CELL_MAX ? -CELL_MAX : c;
 }
 
 interface Cell {
@@ -71,14 +79,15 @@ export class TreeHideIndex {
     this.cellOfTree = new Float64Array(trees.length);
     this.stamp = new Int32Array(trees.length);
     let maxR = 0;
+    let clamped = 0;
     for (let i = 0; i < trees.length; i++) {
       const t = trees[i];
       if (t.r > maxR) maxR = t.r;
-      const cx = Math.floor(t.x / cellSize);
-      const cz = Math.floor(t.z / cellSize);
-      if (Math.abs(cx) >= KEY_BIAS || Math.abs(cz) >= KEY_BIAS) {
-        throw new Error(`tree ${i} at (${t.x}, ${t.z}) is outside the hide index's key range`);
-      }
+      const rawCx = Math.floor(t.x / cellSize);
+      const rawCz = Math.floor(t.z / cellSize);
+      const cx = clampCell(rawCx);
+      const cz = clampCell(rawCz);
+      if (cx !== rawCx || cz !== rawCz) clamped++;
       const key = cellKey(cx, cz);
       this.cellOfTree[i] = key;
       let cell = this.cells.get(key);
@@ -90,6 +99,11 @@ export class TreeHideIndex {
       if (!t.prefetched) cell.unlatched.push(i);
     }
     this.maxR = maxR;
+    if (clamped > 0) {
+      console.warn(
+        `TreeHideIndex: ${clamped} trees lie outside the key range and were clamped to its edge cells`,
+      );
+    }
   }
 
   /** Opens a frame: the per-frame visit stamps start fresh. */

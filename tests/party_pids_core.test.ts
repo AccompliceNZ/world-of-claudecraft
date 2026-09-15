@@ -84,4 +84,16 @@ describe('PartyPidsCache', () => {
     w.player = { id: 3 };
     expect([...cache.get(w)]).toEqual([3]);
   });
+
+  it('rebuilds on a same-length swap (one raider replaced by another between two reads)', () => {
+    const w = world([2, 3]);
+    const cache = new PartyPidsCache();
+    const before = cache.get(w);
+    expect([...before]).toEqual([1, 2, 3]);
+    w.partyInfo = { members: [{ pid: 2 }, { pid: 4 }] };
+    const after = cache.get(w);
+    expect(after).not.toBe(before);
+    expect([...after]).toEqual([1, 2, 4]);
+    expect(after.has(3)).toBe(false);
+  });
 });

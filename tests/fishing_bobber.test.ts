@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import * as THREE from 'three';
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { FishingBobberVisual } from '../src/render/fishing_bobber';
 import { LAKE } from '../src/sim/content/zone1';
 import { PLAYER_SWIM_DEPTH } from '../src/sim/pathfind';
@@ -78,12 +78,19 @@ describe('FishingBobberVisual water feedback', () => {
 describe('FishingBobberVisual idle frames', () => {
   it('touches no entity when nobody was noted fishing and no bobber is afloat', () => {
     const sim = new Sim({ seed: SEED, playerClass: 'mage' });
-    const values = vi.spyOn(sim.entities, 'values');
-    const get = vi.spyOn(sim.entities, 'get');
+    // Every property read on the roster counts (the map iterator the old walk
+    // used, values, get, size, all of them), so any walk at all trips it.
+    let touches = 0;
+    const entities = new Proxy(sim.entities, {
+      get(target, key) {
+        touches++;
+        const value = Reflect.get(target, key);
+        return typeof value === 'function' ? value.bind(target) : value;
+      },
+    });
     const visual = new FishingBobberVisual(new THREE.Scene());
-    for (let frame = 0; frame < 30; frame++) visual.update(1 / 60, sim.entities, SEED);
-    expect(values).not.toHaveBeenCalled();
-    expect(get).not.toHaveBeenCalled();
+    for (let frame = 0; frame < 30; frame++) visual.update(1 / 60, entities, SEED);
+    expect(touches).toBe(0);
   });
 
   it('sinks the bobber of an angler the renderer stopped noting (the view left the draw range)', () => {

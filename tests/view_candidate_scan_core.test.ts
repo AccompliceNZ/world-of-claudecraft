@@ -9,17 +9,31 @@ import {
   collectDoomedViewsInto,
   collectMissingViewCandidatesInto,
   createViewCandidateScanState,
+  liveViewCandidate,
   VIEW_CANDIDATE_RESCAN_FRAMES,
   VIEW_CANDIDATE_RESCAN_MOVE_YD,
   viewCandidateScanDue,
 } from '../src/render/view_candidate_scan_core';
 import { MOBS } from '../src/sim/data';
-import { createMob, createPlayer } from '../src/sim/entity';
+import { createGroundObject, createMob, createPlayer } from '../src/sim/entity';
 import type { Entity, QuestProgress } from '../src/sim/types';
 import { codeWithoutLineComments } from './helpers/code_without_line_comments';
 
 const mob = (id: number, x: number, z = 0): Entity =>
   createMob(id, MOBS.ridge_stalker, 3, { x, y: 0, z });
+
+// An overworld collectable whose quest is not in the (empty) log: the sim's
+// quest gate hides it from the game viewer.
+const crate = (id: number, x: number): Entity =>
+  createGroundObject(id, 'supply_crate', 'Supply Crate', { x, y: 0, z: 0 });
+
+const portal = (id: number, x: number): Entity => {
+  const door = createGroundObject(id, 'supply_crate', 'Door', { x, y: 0, z: 0 });
+  door.templateId = 'dungeon_door';
+  door.objectItemId = null;
+  door.lootable = false;
+  return door;
+};
 
 function scan(
   entities: Entity[],
@@ -27,13 +41,14 @@ function scan(
   views: Set<number>,
   rangeSq: number,
   includeRequired = false,
+  questObjectHidden = makeQuestObjectGate({}),
 ): ViewCandidate[] {
   const active: ViewCandidate[] = [];
   collectMissingViewCandidatesInto(active, [], {
     entities: new Map(entities.map((e) => [e.id, e])),
     views,
     questLog: new Map<string, QuestProgress>(),
-    questObjectHidden: makeQuestObjectGate({}),
+    questObjectHidden,
     center,
     rangeSq,
     includeRequired,
@@ -64,6 +79,85 @@ describe('collectMissingViewCandidatesInto', () => {
     corpse.corpseTimer = 0;
     expect(scan([player, corpse], player, new Set(), 100 * 100)).toEqual([]);
   });
+
+  it('withholds an in-range entity the admission policy rejects (an off-quest collectable)', () => {
+    const player = createPlayer(1, 'warrior', { x: 0, y: 0, z: 0 }, 'Probe');
+    const hidden = crate(20, 4);
+    expect(scan([player, hidden], player, new Set(), 100 * 100)).toEqual([]);
+    // The same walk lists it once the gate admits it (the editor viewport).
+    const shown = scan(
+      [player, hidden],
+      player,
+      new Set(),
+      100 * 100,
+      false,
+      makeQuestObjectGate({ showAllQuestObjects: true }),
+    );
+    expect(shown.map((c) => c.id)).toEqual([20]);
+  });
+
+  it('lists a distance-cull-exempt object beyond the range, never an ordinary one', () => {
+    const player = createPlayer(1, 'warrior', { x: 0, y: 0, z: 0 }, 'Probe');
+    const door = portal(21, 500);
+    const farCrate = crate(22, 500);
+    const out = scan(
+      [player, door, farCrate],
+      player,
+      new Set(),
+      100 * 100,
+      false,
+      makeQuestObjectGate({ showAllQuestObjects: true }),
+    );
+    expect(out.map((c) => c.id)).toEqual([21]);
+    expect(out[0].d2).toBe(500 * 500);
+  });
+});
+
+describe('liveViewCandidate', () => {
+  const gate = makeQuestObjectGate({});
+
+  it('hands back the entity only while it is present, view-less, and still admitted', () => {
+    const near = mob(10, 5);
+    const corpse = mob(11, 5);
+    corpse.dead = true;
+    corpse.corpseTimer = 0;
+    const world = {
+      entities: new Map([near, corpse, crate(12, 3)].map((e) => [e.id, e])),
+      questLog: new Map<string, QuestProgress>(),
+    };
+    expect(liveViewCandidate(10, world, new Set(), gate)).toBe(near);
+    expect(liveViewCandidate(10, world, new Set([10]), gate)).toBeNull();
+    expect(liveViewCandidate(99, world, new Set(), gate)).toBeNull();
+    expect(liveViewCandidate(11, world, new Set(), gate)).toBeNull();
+    expect(liveViewCandidate(12, world, new Set(), gate)).toBeNull();
+  });
+
+  it('never builds a candidate that stopped being admissible since the scan', () => {
+    const player = createPlayer(1, 'warrior', { x: 0, y: 0, z: 0 }, 'Probe');
+    const target = mob(10, 5);
+    const ranked = scan([player, target], player, new Set(), 100 * 100);
+    expect(ranked.map((c) => c.id)).toEqual([10]);
+    // The corpse decays between the scan and the frame that consumes it.
+    target.dead = true;
+    target.corpseTimer = 0;
+    const world = { entities: new Map([[10, target]]), questLog: new Map<string, QuestProgress>() };
+    expect(liveViewCandidate(ranked[0].id, world, new Set(), gate)).toBeNull();
+  });
+
+  it('is the one check the renderer applies to ranked and required candidates alike', () => {
+    const renderer = codeWithoutLineComments(
+      readFileSync(new URL('../src/render/renderer.ts', import.meta.url), 'utf8'),
+    );
+    const candidates = renderer.slice(renderer.indexOf('private createCandidateViews('));
+    expect(candidates.slice(0, candidates.indexOf('\n  }\n'))).toContain(
+      'liveViewCandidate(candidate.id, this.sim, this.views, this.questObjectHidden)',
+    );
+    const required = renderer.slice(renderer.indexOf('private createRequiredView('));
+    expect(required.slice(0, required.indexOf('\n  }\n'))).toContain(
+      'liveViewCandidate(id, this.sim, this.views, this.questObjectHidden)',
+    );
+    expect(renderer).not.toContain('entityViewIsAdmitted(');
+  });
 });
 
 describe('viewCandidateScanDue', () => {
@@ -85,14 +179,31 @@ describe('viewCandidateScanDue', () => {
       range,
     );
 
-  it('scans on the first frame, then rests until the cadence elapses', () => {
+  it('pins the cadence and the teleport threshold to their literal values', () => {
+    // The worst-case pop-in latency at the draw-range edge, and the step that
+    // tells a teleport from a running player: a change here is a design change.
+    expect(VIEW_CANDIDATE_RESCAN_FRAMES).toBe(4);
+    expect(VIEW_CANDIDATE_RESCAN_MOVE_YD).toBe(8);
+  });
+
+  it('scans on the first frame, then rests three frames until the cadence elapses', () => {
     const state = createViewCandidateScanState();
     expect(due(state)).toBe(true);
-    for (let frame = 1; frame < VIEW_CANDIDATE_RESCAN_FRAMES; frame++) {
-      expect(due(state), `frame ${frame}`).toBe(false);
-    }
+    expect(due(state)).toBe(false);
+    expect(due(state)).toBe(false);
+    expect(due(state)).toBe(false);
     expect(due(state)).toBe(true);
     expect(due(state)).toBe(false);
+  });
+
+  it('honours an explicit cadence', () => {
+    const state = createViewCandidateScanState();
+    const center = { id: 1, targetId: null, pos: { x: 0, z: 0 } };
+    expect(viewCandidateScanDue(state, 1, 4, center, 6400, false, 2)).toBe(true);
+    expect(viewCandidateScanDue(state, 1, 4, center, 6400, false, 2)).toBe(false);
+    expect(viewCandidateScanDue(state, 1, 4, center, 6400, false, 2)).toBe(true);
+    expect(viewCandidateScanDue(state, 1, 4, center, 6400, false, 1)).toBe(true);
+    expect(viewCandidateScanDue(state, 1, 4, center, 6400, false, 1)).toBe(true);
   });
 
   it('scans on the very next frame after the roster changed (a new entity is never held)', () => {
@@ -130,8 +241,15 @@ describe('viewCandidateScanDue', () => {
     const state = createViewCandidateScanState();
     expect(due(state)).toBe(true);
     expect(due(state, 1, 4, 1, null, 6400, 0.4, 0)).toBe(false);
-    expect(due(state, 1, 4, 1, null, 6400, VIEW_CANDIDATE_RESCAN_MOVE_YD + 1, 0)).toBe(true);
-    expect(due(state, 1, 4, 1, null, 6400, VIEW_CANDIDATE_RESCAN_MOVE_YD + 1, 0)).toBe(false);
+    // Just under the 8 yd threshold rests (the recorded center stays at the
+    // origin on a rested frame); one yard past it scans on its second rested
+    // frame, two short of the cadence, so the jump alone explains the scan.
+    expect(due(state, 1, 4, 1, null, 6400, 7.9, 0)).toBe(false);
+    expect(due(state, 1, 4, 1, null, 6400, 9, 0)).toBe(true);
+    expect(due(state, 1, 4, 1, null, 6400, 9, 0)).toBe(false);
+    // Exactly 8 yd from the recorded center rests; 9 yd scans.
+    expect(due(state, 1, 4, 1, null, 6400, 17, 0)).toBe(false);
+    expect(due(state, 1, 4, 1, null, 6400, 18, 0)).toBe(true);
   });
 
   it('is fed the roster version and forced by the boot prewarm in the renderer', () => {

@@ -143,6 +143,23 @@ export function collectMissingViewCandidatesInto(
   finishViewCandidates(active, count);
 }
 
+/** The entity a ranked (or required) candidate still stands for when its
+ *  view is about to be built, or null. The ranked list can be up to
+ *  VIEW_CANDIDATE_RESCAN_FRAMES old, so the build re-asks the whole
+ *  admission question: the entity is still in the roster, still view-less,
+ *  and still admitted (a corpse that decayed or a quest object hidden since
+ *  the scan would otherwise be built now and dropped a frame later). */
+export function liveViewCandidate(
+  id: number,
+  world: { entities: ReadonlyMap<number, Entity>; questLog: Map<string, QuestProgress> },
+  views: { has(id: number): boolean },
+  questObjectHidden: QuestObjectGate,
+): Entity | null {
+  const e = world.entities.get(id);
+  if (!e || views.has(id)) return null;
+  return entityViewIsAdmitted(e, world.questLog, questObjectHidden) ? e : null;
+}
+
 export interface DoomedViewScanInput {
   entities: ReadonlyMap<number, Entity>;
   questLog: Map<string, QuestProgress>;

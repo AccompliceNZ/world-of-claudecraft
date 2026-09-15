@@ -273,7 +273,6 @@ import { buildEmberPools, type EmberPoolsView } from './ember_pools';
 import { applyCharacterFormVisibility } from './entity_gate_stand_in_core';
 import {
   entityViewDistanceSq,
-  entityViewIsAdmitted,
   isDistanceCullExemptObject,
   isPersistentPortalObject,
   viewBuildClass,
@@ -767,6 +766,7 @@ import {
   collectDoomedViewsInto,
   collectMissingViewCandidatesInto,
   createViewCandidateScanState,
+  liveViewCandidate,
   viewCandidateScanDue,
 } from './view_candidate_scan_core';
 import {
@@ -4721,9 +4721,8 @@ export class Renderer {
 
   private createRequiredView(id: number | null, createdViewTypes: string[]): number {
     if (id === null) return 0;
-    const e = this.sim.entities.get(id);
-    if (!e || this.views.has(e.id)) return 0;
-    if (!entityViewIsAdmitted(e, this.sim.questLog, this.questObjectHidden)) return 0;
+    const e = liveViewCandidate(id, this.sim, this.views, this.questObjectHidden);
+    if (!e) return 0;
     if (!this.viewCreateRetry.canAttempt(e.id, 'view', performance.now())) return 0;
     this.createView(e);
     sampleCreatedViewType(createdViewTypes, e);
@@ -4822,8 +4821,8 @@ export class Renderer {
         trimmed = true;
         break;
       }
-      const e = this.sim.entities.get(candidate.id);
-      if (!e || this.views.has(e.id)) continue;
+      const e = liveViewCandidate(candidate.id, this.sim, this.views, this.questObjectHidden);
+      if (!e) continue;
       // a recent failed build (assets unavailable) sits out its cooldown so it
       // cannot burn a budget slot every frame
       if (!this.viewCreateRetry.canAttempt(e.id, 'view', performance.now())) continue;
