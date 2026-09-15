@@ -50,6 +50,7 @@
 // units, one per batch of program reads and per chunk encoded, behind every
 // live gate.
 
+import { isGpuQueueShutdown } from '../render/background_gpu_queue';
 import { trackWebGLContext } from '../render/context_release';
 import { GFX, mobilePlatformFromNavigator, rememberedGpuRendererName } from '../render/gfx';
 import { enableRendererExtensions } from '../render/renderer_extensions';
@@ -110,8 +111,6 @@ export interface CorpusGl extends WarmupGl {
   ACTIVE_ATTRIBUTES: number;
   getActiveAttrib(program: WebGLProgram, index: number): { name: string } | null;
   getAttribLocation(program: WebGLProgram, name: string): number;
-  /** Optional: a fake context in tests may omit it; a deleted program is skipped quietly. */
-  isProgram?(program: WebGLProgram): boolean;
   getAttachedShaders(program: WebGLProgram): WebGLShader[] | null;
   getShaderParameter(shader: WebGLShader, pname: number): unknown;
   getShaderSource(shader: WebGLShader): string | null;
@@ -688,6 +687,11 @@ export async function recordShaderCorpus(
     console.info(`${LOG} recorded ${record.programs.length} programs for the next boot`);
     return record.programs.length;
   } catch (error) {
+    // A queue shut down under a renderer rebuild is an expected exit, not a fault.
+    if (isGpuQueueShutdown(error)) {
+      console.info(`${LOG} recording skipped: the background GPU queue shut down`);
+      return 0;
+    }
     console.warn(`${LOG} recording failed`, error);
     return 0;
   }

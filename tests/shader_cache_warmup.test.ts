@@ -31,7 +31,7 @@ import {
   CORPUS_READ_KIND,
   type CorpusRecordQueue,
 } from '../src/game/shader_corpus_slices';
-import { GPU_WORK_PRIORITY } from '../src/render/background_gpu_queue';
+import { createBackgroundGpuQueue, GPU_WORK_PRIORITY } from '../src/render/background_gpu_queue';
 import { releaseTrackedWebGLContexts } from '../src/render/context_release';
 import { rememberGpuRendererName } from '../src/render/gfx';
 import { setShaderWarmStoredSettingSource } from '../src/render/shader_warm_client';
@@ -992,6 +992,27 @@ describe('recordShaderCorpus as background queue units', () => {
     expect(count).toBe(4);
     const decoded = await decodeCorpus(values.get(shaderWarmupInternalsForTest.corpusKey));
     expect(decoded?.programs).toHaveLength(4);
+  });
+
+  it('logs a queue shut down mid-record at info level and keeps the stored corpus', async () => {
+    const gl = fakeGl();
+    const entries = attachedPrograms(gl, 3);
+    const queue = createBackgroundGpuQueue();
+    const shutdown = queue.shutdown(new Error('Renderer shut down'));
+    const info = vi.spyOn(console, 'info').mockImplementation(() => {});
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    const values = new Map<string, unknown>([[shaderWarmupInternalsForTest.corpusKey, 'kept']]);
+    const count = await recordShaderCorpus(renderer(gl, entries), {
+      store: createMemoryStore(values),
+      buildId: BUILD,
+      tier: TIER,
+      queue,
+    });
+    await shutdown;
+    expect(count).toBe(0);
+    expect(values.get(shaderWarmupInternalsForTest.corpusKey)).toBe('kept');
+    expect(warn).not.toHaveBeenCalled();
+    expect(info.mock.calls.some(([line]) => String(line).includes('queue shut down'))).toBe(true);
   });
 
   it('leaves the stored corpus alone when the context is lost during the read', async () => {

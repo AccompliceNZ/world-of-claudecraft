@@ -137,15 +137,6 @@ describe('readProgramSourcesQueued', () => {
     expect(sources.map((p) => p.vertex.slice(0, 7))).toEqual(['void v0', 'void v1']);
   });
 
-  it('skips a program the context reports deleted without querying its shaders', async () => {
-    const gl = fakeGl(3);
-    const deleted = entriesOf(gl)[1].program;
-    (gl as unknown as { isProgram: (p: unknown) => boolean }).isProgram = (p) => p !== deleted;
-    const sources = await readProgramSourcesQueued(gl, entriesOf(gl), recordingQueue());
-    expect(sources.map((p) => p.vertex.slice(0, 7))).toEqual(['void v0', 'void v2']);
-    expect(gl.queries).toBe(2);
-  });
-
   it('walks a snapshot, so a program removed from the live list mid-walk is still read', async () => {
     const gl = fakeGl(20);
     const live = entriesOf(gl);

@@ -369,6 +369,14 @@ export interface BackgroundGpuQueueStats {
   recent: GpuQueueWindowStats;
 }
 
+/** The `name` every rejection a shut-down queue hands its clients carries, so a
+ *  client can tell the expected exit (a renderer rebuild) from a failed unit. */
+export const GPU_QUEUE_SHUTDOWN_ERROR_NAME = 'GpuQueueShutdown';
+
+export function isGpuQueueShutdown(error: unknown): boolean {
+  return error instanceof Error && error.name === GPU_QUEUE_SHUTDOWN_ERROR_NAME;
+}
+
 export interface BackgroundGpuQueue {
   run<T>(
     work: () => T | Promise<T>,
@@ -1014,6 +1022,7 @@ export function createBackgroundGpuQueue(opts?: {
     shutdown(reason = new Error('Background GPU queue is shut down')): Promise<void> {
       if (shutdownPromise) return shutdownPromise;
       accepting = false;
+      if (reason.name === 'Error') reason.name = GPU_QUEUE_SHUTDOWN_ERROR_NAME;
       shutdownReason = reason;
       for (const entry of pending.splice(0)) entry.reject(reason);
       // A loop parked on the admission has no other way out: nothing will feed

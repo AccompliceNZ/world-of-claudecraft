@@ -87,10 +87,11 @@ function index0AttributeOf(gl: CorpusGl, program: WebGLProgram): string {
  *  linked program, no attached shaders, or a missing stage. */
 export function programSourcesOfEntry(gl: CorpusGl, entry: unknown): ShaderProgramSources | null {
   const program = (entry as { program?: unknown } | null)?.program;
+  // The walk spans frames; a material disposed meanwhile has had its wrapper's
+  // `.program` nulled by three's destroy() right after deleteProgram, so this
+  // check is what skips it (no isProgram query: that is one more synchronous
+  // round trip per program, of the class this record exists to avoid).
   if (!program) return null;
-  // The walk spans frames: a material disposed meanwhile had its program
-  // deleted, and querying a deleted object logs a WebGL warning per call.
-  if (gl.isProgram && !gl.isProgram(program as WebGLProgram)) return null;
   const shaders = gl.getAttachedShaders(program as WebGLProgram);
   if (!shaders) return null;
   let vertex = '';

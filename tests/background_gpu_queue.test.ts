@@ -2,9 +2,11 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import {
   createBackgroundGpuQueue,
+  GPU_QUEUE_SHUTDOWN_ERROR_NAME,
   GPU_WORK_PRIORITY,
   type GpuWorkAdmission,
   type GpuWorkAdmissionCandidate,
+  isGpuQueueShutdown,
 } from '../src/render/background_gpu_queue';
 import { withHiddenPrewarmGroups } from '../src/render/prewarm_pass';
 
@@ -80,6 +82,19 @@ describe('createBackgroundGpuQueue', () => {
     releaseActive();
     await Promise.all([active, pendingRejected, shutdown]);
     expect(events).toEqual(['active:start', 'shutdown']);
+  });
+
+  it('names its shutdown rejection so a client can tell the expected exit from a fault', async () => {
+    const queue = createBackgroundGpuQueue();
+    await queue.shutdown(new Error('Renderer shut down'));
+    const rejection = queue.run(async () => {}).catch((error: unknown) => error);
+    const error = await rejection;
+    expect(isGpuQueueShutdown(error)).toBe(true);
+    expect((error as Error).name).toBe(GPU_QUEUE_SHUTDOWN_ERROR_NAME);
+    expect(isGpuQueueShutdown(new Error('unit failed'))).toBe(false);
+    const idle = createBackgroundGpuQueue();
+    await idle.shutdown();
+    expect(isGpuQueueShutdown(await idle.run(async () => {}).catch((e: unknown) => e))).toBe(true);
   });
 
   it('shuts down idempotently while idle', async () => {
